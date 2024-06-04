@@ -35,6 +35,11 @@ extension LocationClient: DependencyKey {
             }
         )
     }
+    public static var testValue: LocationClient {
+        LocationClient {
+            .init(ip: "1.2.3.4", country: "PL", isp: "Play")
+        }
+    }
 }
 
 extension DependencyValues {

@@ -31,6 +31,7 @@ import Ergonomics
 import LocalFeatureFlags
 import Localization
 import VPNShared
+import Dependencies
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -81,7 +82,7 @@ public class VpnApiService {
 
         return await VpnProperties(
             serverModels: try serverInfo(
-                ip: TruncatedIp(ip: asyncLocation?.ip),
+                ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
             ),
             vpnCredentials: asyncCredentials,
@@ -101,7 +102,7 @@ public class VpnApiService {
 
         return await (
             serverModels: try serverInfo(
-                ip: TruncatedIp(ip: location?.ip),
+                ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                 freeTier: freeTier
             ),
             location: location,
@@ -210,32 +211,12 @@ public class VpnApiService {
     }
 
     public func userLocation() async -> UserLocation? {
-        return await withCheckedContinuation { continuation in
-            userLocation { result in
-                switch result {
-                case .success(let success):
-                    continuation.resume(with: .success(success))
-                case .failure:
-                    continuation.resume(with: .success(nil))
-                }
-            }
-        }
-    }
-
-    private func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
-        networking.request(LocationRequest()) { (result: Result<JSONDictionary, Error>) in
-            switch result {
-            case let .success(response):
-                guard let userLocation = try? UserLocation(dic: response) else {
-                    let error = ParseError.userIpParse
-                    log.error("'IP' field not present in user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
-                    completion(.failure(error))
-                    return
-                }
-                completion(.success(userLocation))
-            case let .failure(error):
-                completion(.failure(error))
-            }
+        @Dependency(\.locationClient) var client
+        do {
+            return try await client.fetchLocation()
+        } catch {
+            log.error("Couldn't parse user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
+            return nil
         }
     }
 

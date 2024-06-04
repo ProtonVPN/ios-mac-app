@@ -1,5 +1,5 @@
 //
-//  Created on 24/05/2024.
+//  Created on 03/06/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -17,28 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import ComposableArchitecture
+import Theme
 
-struct CountryListBackgroundGradient: View {
-
-    @Bindable var store: StoreOf<MainFeature>
-
-    var color: Color {
-        switch store.connect.connectionState {
-        case .connected:
-            return Color(.connectedGradient)
-        case .disconnected:
-            return Color(.disconnectedGradient)
-        case .connecting, .disconnecting, .none:
-            return Color(.connectingGradient)
-        }
-    }
+struct CountryListSectionHeaderView: View {
+    let name: String
 
     var body: some View {
-        Image(.statusGradient)
-            .resizable()
-            .ignoresSafeArea()
-            .scaledToFill()
-            .foregroundStyle(color)
+        VStack(spacing: .themeSpacing24) {
+            Spacer()
+            Text(name)
+                .font(Font.headline) // need to use the specific Font.headline as `headline` clashes with Theme value
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  Created on 03/06/2024.
+//  Created on 20/05/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -19,16 +19,15 @@
 import SwiftUI
 import Theme
 
-struct CountryListSectionHeaderView: View {
-    let name: String
-
+struct ConnectedCircleView: View {
     var body: some View {
-        VStack(spacing: .themeSpacing24) {
-            Spacer()
-            Text(name)
-                .font(Font.headline) // need Font.headline as `headline` clashes with Theme value
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, CountryListView.cellSpacing)
+        ZStack {
+            Circle()
+                .opacity(0.3)
+            Circle()
+                .frame(width: 14.4, height: 14.4, alignment: .center)
         }
+        .foregroundStyle(Asset.vpnGreen.swiftUIColor)
+        .frame(width: 36, height: 36, alignment: .center)
     }
 }

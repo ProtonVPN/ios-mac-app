@@ -1,5 +1,5 @@
 //
-//  Created on 20/05/2024.
+//  Created on 24/05/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -17,18 +17,28 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import Theme
+import ComposableArchitecture
 
-struct ConnectedCircleView: View {
-    var body: some View {
-        ZStack {
-            Circle()
-                .foregroundStyle(Asset.vpnGreen.swiftUIColor)
-                .opacity(0.3)
-            Circle()
-                .frame(width: 14.4, height: 14.4, alignment: .center)
-                .foregroundStyle(Asset.vpnGreen.swiftUIColor)
+struct HomeBackgroundGradient: View {
+
+    @Bindable var store: StoreOf<MainFeature>
+
+    var color: Color {
+        switch store.home.connect.connectionState {
+        case .connected:
+            return Color(.connectedGradient)
+        case .disconnected:
+            return Color(.disconnectedGradient)
+        case .connecting, .disconnecting, .none:
+            return Color(.connectingGradient)
         }
-        .frame(width: 36, height: 36, alignment: .center)
+    }
+
+    var body: some View {
+        Image(.statusGradient)
+            .resizable()
+            .ignoresSafeArea()
+            .scaledToFill()
+            .foregroundStyle(color)
     }
 }

@@ -21,6 +21,7 @@ import Dependencies
 import Domain
 import Ergonomics
 import SwiftUI
+import ComposableArchitecture
 
 /// Use `refreshLogicalsIfNeeded()` to refresh logicals, but not more often than
 /// predefined in `Constants.Time.fullServerRefresh`.
@@ -28,15 +29,17 @@ public class LogicalsRefresher {
 
     var refreshInterval = Constants.Time.fullServerRefresh
     @AppStorage("lastLogicalsRefresh") private var lastLogicalsRefresh: TimeInterval = 0
+    @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
 
     public func refreshLogicalsIfNeeded() async throws {
         guard shouldRefreshLogicals() else { return }
 
         @Dependency(\.userLocationService) var userLocationService
-        let location = try? await userLocationService.getUserLocation()
+        try? await userLocationService.updateUserLocation()
 
         @Dependency(\.logicalsClient) var client
-        let logicalsResponse = try await client.fetchLogicals(TruncatedIp(ip: location?.ip))
+        let truncatedIp = (userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
+        let logicalsResponse = try await client.fetchLogicals(truncatedIp)
 
         @Dependency(\.serverRepository) var repository
         repository.upsert(servers: logicalsResponse)

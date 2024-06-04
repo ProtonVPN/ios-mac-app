@@ -27,18 +27,20 @@ import SwiftUI
     }
 
     enum ConnectionState: Codable, Equatable {
-        case connected(String) // country code
+        case connected(countryCode: String, ip: String)
         case connecting
         case disconnected
         case disconnecting
     }
 
     enum Action {
-        case userClickedConnect(HomeListItem)
+        case userClickedConnect(HomeListItem?)
+        case userClickedCancel
         case userClickedDisconnect
-        case connectionEstablished(countryCode: String)
+        case connectionEstablished(countryCode: String, ip: String)
         case connectionFailed
         case connectionTerminated
+        case initialize
     }
 
     @Dependency(\.connectionClient) var client
@@ -46,16 +48,21 @@ import SwiftUI
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .initialize:
+                state.connectionState = .disconnected // TODO: properly initialise the connection state
+                return .none
             case .userClickedConnect(let item):
                 withAnimation {
                     state.connectionState = .connecting
                 }
                 return .run { send in
-                    try await client.connect(item.name)
-                    await send(.connectionEstablished(countryCode: item.code))
+                    let (countryCode, ip) = try await client.connect(item?.code)
+                    await send(.connectionEstablished(countryCode: countryCode, ip: ip))
                 } catch: { error, send in
                     await send(.connectionFailed)
                 }
+            case .userClickedCancel:
+                return .none
             case .userClickedDisconnect:
                 withAnimation {
                     state.connectionState = .disconnecting
@@ -64,9 +71,9 @@ import SwiftUI
                     try await client.disconnect()
                     await send(.connectionTerminated)
                 }
-            case .connectionEstablished(let countryCode):
+            case .connectionEstablished(let countryCode, let ip):
                 withAnimation {
-                    state.connectionState = .connected(countryCode)
+                    state.connectionState = .connected(countryCode: countryCode, ip: ip)
                 }
                 return .none
             case .connectionTerminated, .connectionFailed:

@@ -18,16 +18,19 @@
 
 import SwiftUI
 import Theme
+import ComposableArchitecture
 
 struct CountryListItemView: View {
     let item: HomeListItem
     let isFocused: Bool
     @State var duration = inFocusDuration
 
+    @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
+
     private static var outFocusDuration = 0.4
     private static var inFocusDuration = 0.1
-    private let normalScale = CGSize(width: 1, height: 1)
-    private let focusedScale = CGSize(width: 1.3, height: 1.3)
+    private let normalScale: CGFloat = 1
+    private let focusedScale: CGFloat = 1.3
 
     var body: some View {
         VStack(spacing: 0) {
@@ -35,25 +38,34 @@ struct CountryListItemView: View {
                 .hoverEffect(.highlight)
             Spacer()
                 .frame(height: 34)
-            VStack(spacing: 0) {
-                Text(item.name)
-                    .font(.body)
-                Spacer()
-                    .frame(height: .themeSpacing16)
-                HStack(spacing: .themeSpacing12) {
-                    Text("Connected")
-                        .font(.caption)
-                        .foregroundStyle(Asset.vpnGreen.swiftUIColor)
-                    ConnectedCircleView()
-                }
-                .opacity(item.isConnected ? 1 : 0)
-            }
-            // This scaleEffect aims to mimic ".hoverEffect(.highlight)"
-            .scaleEffect(isFocused ? focusedScale : normalScale)
-            .animation(.easeOut(duration: duration), value: isFocused)
-            .onChange(of: isFocused) { _, newValue in
-                duration = newValue ? Self.outFocusDuration : Self.inFocusDuration
-            }
+            connectedLabel
         }
+    }
+
+    private var connectedLabel: some View {
+        VStack(spacing: 0) {
+            Text(item.name)
+                .font(.body)
+            Spacer()
+                .frame(height: .themeSpacing16)
+            HStack(spacing: .themeSpacing12) {
+                Text("Connected")
+                    .font(.caption)
+                    .foregroundStyle(Asset.vpnGreen.swiftUIColor)
+                ConnectedCircleView()
+            }
+            .opacity(item.code == connectedCode ? 1 : 0)
+        }
+        // This scaleEffect aims to mimic ".hoverEffect(.highlight)"
+        .scaleEffect(isFocused ? focusedScale : normalScale)
+        .animation(.easeOut(duration: duration), value: isFocused)
+        .onChange(of: isFocused) { _, newValue in
+            duration = newValue ? Self.outFocusDuration : Self.inFocusDuration
+        }
+    }
+
+    private var connectedCode: String? {
+        guard case .connected(let code, _) = connectionState else { return nil }
+        return code
     }
 }
