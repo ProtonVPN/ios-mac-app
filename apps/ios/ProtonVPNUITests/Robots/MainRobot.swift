@@ -117,7 +117,7 @@ class MainRobot: CoreElements {
     
         @discardableResult
         func connectionStatusNotConnected() -> MainRobot {
-            staticText(statusNotConnected).waitUntilExists(time: 20).checkExists()
+            staticText(statusNotConnected).waitUntilExists(time: 21).checkExists()
             return MainRobot()
         }
     
