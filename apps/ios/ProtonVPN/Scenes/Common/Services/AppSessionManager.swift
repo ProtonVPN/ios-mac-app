@@ -113,7 +113,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     var sessionStatus: SessionStatus = .notEstablished
 
-    var isRefreshingUserInfo: Bool = false
+    private var refreshUserInfoTask: Task<Void, Error>?
 
     init(factory: Factory) {
         self.factory = factory
@@ -363,9 +363,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func refreshUserInfo() {
-        guard !isRefreshingUserInfo else { return }
-        isRefreshingUserInfo = true
-        Task { [weak self] in
+        guard refreshUserInfoTask == nil else { return }
+        refreshUserInfoTask = Task { [weak self] in
             guard let self else { return }
             do {
                 let user = try await self.vpnApiService.userInfo()
@@ -376,7 +375,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             } catch {
                 log.error("Could not refresh User info", category: .api)
             }
-            self.isRefreshingUserInfo = false
+            refreshUserInfoTask = nil
         }
     }
 

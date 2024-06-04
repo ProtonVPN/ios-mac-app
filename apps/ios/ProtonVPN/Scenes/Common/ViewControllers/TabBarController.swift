@@ -130,7 +130,8 @@ extension TabBarController: UITabBarControllerDelegate {
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let viewModel, viewController == viewControllers?.last { // settings
+        if let viewModel, let navigationController = viewController as? UINavigationController,
+           navigationController.visibleViewController is SettingsViewController {
             viewModel.settingsTabTapped()
         }
     }

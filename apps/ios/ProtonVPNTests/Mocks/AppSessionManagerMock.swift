@@ -94,4 +94,8 @@ class AppSessionManagerMock: AppSessionManager {
     func refreshVpnAuthCertificate() async throws {
         
     }
+
+    func refreshUserInfo() {
+        
+    }
 }
