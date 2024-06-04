@@ -128,4 +128,10 @@ extension TabBarController: UITabBarControllerDelegate {
             return true
         }
     }
+
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if let viewModel, viewController == viewControllers?.last { // settings
+            viewModel.settingsTabTapped()
+        }
+    }
 }

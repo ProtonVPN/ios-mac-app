@@ -245,7 +245,6 @@ final class SettingsViewModel {
 
     private var accountRecoveryStatus: AccountRecovery? {
         propertiesManager.userAccountRecovery
-        
     }
 
     private var securitySection: TableViewSection {

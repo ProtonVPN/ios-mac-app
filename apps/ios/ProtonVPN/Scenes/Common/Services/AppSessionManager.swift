@@ -64,6 +64,7 @@ protocol AppSessionManager {
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin() async throws
     func canPreviewApp() -> Bool
+    func refreshUserInfo()
 }
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
@@ -111,6 +112,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
 
     var sessionStatus: SessionStatus = .notEstablished
+
+    var isRefreshingUserInfo: Bool = false
 
     init(factory: Factory) {
         self.factory = factory
@@ -358,7 +361,25 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         // or a failure. Now if finishes successfully in case ifs above haven't finished
         // execution earlier.
     }
-    
+
+    func refreshUserInfo() {
+        guard !isRefreshingUserInfo else { return }
+        isRefreshingUserInfo = true
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                let user = try await self.vpnApiService.userInfo()
+                self.propertiesManager.userAccountRecovery = user.accountRecovery
+                await MainActor.run {
+                    NotificationCenter.default.post(name: self.dataReloaded, object: nil)
+                }
+            } catch {
+                log.error("Could not refresh User info", category: .api)
+            }
+            self.isRefreshingUserInfo = false
+        }
+    }
+
     // MARK: - Log out
     func logOut(force: Bool = false, reason: String?) {
         let logOutRoutine: () -> Void = { [weak self] in

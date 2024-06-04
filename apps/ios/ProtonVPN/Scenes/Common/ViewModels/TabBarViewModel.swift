@@ -100,7 +100,11 @@ class TabBarViewModel {
             }
         }
     }
-    
+
+    func settingsTabTapped() {
+        sessionManager.refreshUserInfo()
+    }
+
     // MARK: - Private
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
