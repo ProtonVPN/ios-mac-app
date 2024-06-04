@@ -70,7 +70,7 @@ struct WelcomeView: View {
                 .fontWeight(.bold)
                 .font(.title2)
 
-            Text("Connect to high-speed servers in %n countries and stream your favorite shows with VPN protection.")
+            Text("Connect to high-speed servers around the world and stream your favorite shows with VPN protection.")
                 .font(.body)
                 .foregroundStyle(Color(.text, .weak))
                 .multilineTextAlignment(.center)

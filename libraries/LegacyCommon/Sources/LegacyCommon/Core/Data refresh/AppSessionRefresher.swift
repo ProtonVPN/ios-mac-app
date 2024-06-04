@@ -114,7 +114,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @objc public func refreshServerLoads() {
         guard loggedIn else { return }
 
-        vpnApiService.loads(lastKnownIp: propertiesManager.userLocation?.ip) { result in
+        vpnApiService.loads(lastKnownIp: TruncatedIp(ip: propertiesManager.userLocation?.ip)) { result in
             switch result {
             case let .success(properties):
                 let loads = properties.map { $0.value }

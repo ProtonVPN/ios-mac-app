@@ -22,6 +22,7 @@
 
 import Foundation
 import ProtonCoreDataModel
+import Domain
 
 public struct VpnProperties {
     

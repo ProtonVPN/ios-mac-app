@@ -27,10 +27,12 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $store.currentTab.sending(\.selectTab)) {
             NavigationStack {
-                EmptyView()
+                CountryListView(store: store.scope(state: \.countryList,
+                                                   action: \.countryList))
             }
             .tag(MainFeature.Tab.home)
             .tabItem { Text("Home") }
+
             NavigationStack {
                 EmptyView()
             }
@@ -51,6 +53,8 @@ struct MainView: View {
         // Only show the stage background for the drill down settings views
         if store.settings.destination != nil {
             Image(.backgroundStage)
+        } else if store.currentTab == .home {
+            CountryListBackgroundGradient(store: store)
         } else {
             Color.clear
         }

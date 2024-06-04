@@ -26,15 +26,25 @@ struct MainFeature {
     @ObservableState
     struct State: Equatable {
         var currentTab: Tab = .home
-        var settings: SettingsFeature.State = .init()
+        var countryList = CountryListFeature.State()
+        var settings = SettingsFeature.State()
+        var connect = ConnectFeature.State()
     }
 
     enum Action {
         case selectTab(Tab)
+        case countryList(CountryListFeature.Action)
         case settings(SettingsFeature.Action)
+        case connect(ConnectFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
+        Scope(state: \.connect, action: \.connect) {
+            ConnectFeature()
+        }
+        Scope(state: \.countryList, action: \.countryList) {
+            CountryListFeature()
+        }
         Scope(state: \.settings, action: \.settings) {
             SettingsFeature()
         }
@@ -44,6 +54,14 @@ struct MainFeature {
                 state.currentTab = tab
                 return .none
             case .settings:
+                return .none
+            case .countryList(.selectItem(let item)):
+                return .run { send in
+                    await send(.connect(.userClickedConnect(item)))
+                }
+            case .connect:
+                return .none
+            case .countryList:
                 return .none
             }
         }

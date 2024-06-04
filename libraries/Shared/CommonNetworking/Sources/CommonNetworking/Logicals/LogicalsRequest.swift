@@ -1,38 +1,35 @@
 //
-//  VPNLogicalServicesRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  Created on 23/05/2024.
 //
-//  Copyright (c) 2019 Proton Technologies AG
+//  Copyright (c) 2024 Proton AG
 //
-//  This file is part of LegacyCommon.
-//
-//  vpncore is free software: you can redistribute it and/or modify
+//  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  vpncore is distributed in the hope that it will be useful,
+//  ProtonVPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
-//
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
+import ProtonCoreAPIClient
 import ProtonCoreNetworking
-
 import Domain
 import LocalFeatureFlags
 import VPNShared
+import Ergonomics
 
-final class VPNLogicalServicesRequest: Request {
+/// The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
+public struct LogicalsRequest: Request {
     private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
 
     /// Truncated ip as seen from VPN API
-    let ip: String?
+    let ip: TruncatedIp?
 
     /// Country codes, if available, to show relay IPs for specific countries
     let countryCodes: [String]
@@ -40,18 +37,17 @@ final class VPNLogicalServicesRequest: Request {
     /// Whether or not this request is just for the free logicals.
     let freeTier: Bool
 
-    init(ip: String?, countryCodes: [String], freeTier: Bool) {
+    public init(ip: TruncatedIp?, countryCodes: [String], freeTier: Bool) {
         self.ip = ip
         self.countryCodes = countryCodes
         self.freeTier = freeTier
     }
 
-    var path: String {
+    public var path: String {
         let path = URL(string: "/vpn/v1/logicals")!
 
         let queryItems: [URLQueryItem] = Array(
-            ("WithTranslations", nil),
-            ("WithPartnerLogicals", "1")
+            ("WithTranslations", nil)
         )
         .appending(Array(("WithEntriesForProtocols", Self.protocolDescriptions)), if: shouldUseProtocolEntries)
         .appending(Array(("Tier", "0")), if: freeTier)
@@ -63,15 +59,15 @@ final class VPNLogicalServicesRequest: Request {
         LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries)
     }
 
-    var isAuth: Bool {
+    public var isAuth: Bool {
         true
     }
 
-    var header: [String: Any] {
+    public var header: [String: Any] {
         var result: [String: Any] = [:]
 
-        if let ip = ip {
-            result["x-pm-netzone"] = ip
+        if let ip {
+            result["x-pm-netzone"] = ip.value
         }
 
         if !countryCodes.isEmpty {
@@ -81,7 +77,7 @@ final class VPNLogicalServicesRequest: Request {
         return result
     }
 
-    var retryPolicy: ProtonRetryPolicy.RetryMode {
+    public var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }
 }
