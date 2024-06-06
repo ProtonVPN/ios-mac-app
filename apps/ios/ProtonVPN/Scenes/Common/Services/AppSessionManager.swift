@@ -363,7 +363,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func refreshUserInfo() {
-        guard refreshUserInfoTask == nil else { return }
+        guard FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery, reloadValue: true),
+              refreshUserInfoTask == nil else { return }
         refreshUserInfoTask = Task { [weak self] in
             guard let self else { return }
             do {
