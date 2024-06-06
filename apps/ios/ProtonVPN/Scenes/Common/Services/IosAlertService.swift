@@ -307,12 +307,14 @@ extension IosAlertService: CoreAlertService {
         case .unlimited:
             modalType = .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            modalType = .welcomePlus(numberOfServers: numberOfServers,
-                                     numberOfDevices: numberOfDevices,
-                                     numberOfCountries: numberOfCountries)
+            modalType = .welcomePlus(
+                numberOfServers: numberOfServers,
+                numberOfDevices: numberOfDevices,
+                numberOfCountries: numberOfCountries)
         }
         let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)
+            NotificationCenter.default.post(name: .userDismissedWelcomeScreen, object: nil)
         })
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)

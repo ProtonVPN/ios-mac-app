@@ -52,6 +52,14 @@ final class OneClickPayment {
         self.alertService = alertService
         self.planService = planService
         self.payments = payments
+        // listen to notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(userDidDismissWelcomeScreen), name: .userDismissedWelcomeScreen, object: nil)
+    }
+
+    @objc
+    private func userDidDismissWelcomeScreen(_ notification: Notification) {
+        log.debug("Received UserDismissedWelcomeScreen notification, completing flow", category: .iap)
+        completionHandler()
     }
 
     func plansClient(validationHandler: (() -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
@@ -84,29 +92,34 @@ final class OneClickPayment {
 
     @MainActor
     private func buyPlanResultHandler(_ result: PurchaseResult) async {
+        // calling `completionHandler()` should dismiss the flow but we should do it only under certain conditions:
         switch result {
+        // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
         case .purchasedPlan(let plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             await planService.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
-            completionHandler()
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
             break
         case .planPurchaseProcessingInProgress(let plan):
             log.debug("Purchasing \(plan.protonName)", category: .iap)
             break
+        // a purchaseError, we don't dismiss the flow so user can retry (user can manually dismiss the flow)
         case let .purchaseError(error, _):
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
             break
+        // same, we don't dismiss the flow, we're displaying an alert (user can manually dismiss the flow)
         case let .apiMightBeBlocked(message, originalError, _):
             log.error("\(message)", category: .connection, metadata: ["error": "\(originalError)"])
             alertService.push(alert: PaymentAlert(message: message, isError: true))
             break
         case .purchaseCancelled:
             break
+        // renewal is not triggering the welcome screen immediately, so dismissing the flow after payment succeeds
         case .renewalNotification:
             log.debug("Notification of automatic renewal arrived", category: .iap)
+            completionHandler() // we have no welcome back screen (for now?) so let's just complete the flow
         }
     }
 
@@ -155,6 +168,10 @@ final class OneClickPayment {
                                              finishCallback: $0.resume(returning:))
         }
     }
+}
+ extension Notification.Name {
+     /// A user has been shown the welcome screen after an upsell and did interact with it.
+     static let userDismissedWelcomeScreen: Self = .init("UserDismissedWelcomeScreen")
 }
 
 enum OneClickPurchaseError: Error, LocalizedError {

@@ -54,6 +54,9 @@ final class EnvironmentsViewController: UIViewController {
     private func showAlert(environment: String) {
         let alert = UIAlertController(title: "Environment changed", message: "Environment has been changed to \(environment)\n\nYou need to KILL THE APP and start it again for the change to take effect.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Kill", style: .destructive, handler: { _ in
+            exit(EXIT_SUCCESS)
+        }))
         present(alert, animated: true)
     }
 }
