@@ -19,24 +19,28 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct CreateAccountView: View {
-    
-    var store: StoreOf<CreateAccountFeature>
+struct WelcomeInfoView: View {
+
+    var store: StoreOf<WelcomeInfoFeature>
 
     var body: some View {
+        view(model: store.state.model)
+    }
+
+    private func view(model: WelcomeInfoFeature.State.Model) -> some View {
         HStack {
             VStack(spacing: .themeSpacing32) {
                 HStack(spacing: 0) {
-                    Text("Create your Proton Account")
+                    Text(model.title)
                         .font(.title)
                         .bold()
                     Spacer(minLength: 0)
                 }
                 HStack {
-                    Text("Scan the QR code or go to\n")
+                    Text(model.subtitle)
                         .font(.title3)
                         .foregroundStyle(Color(.text, .weak)) +
-                    Text("protonvpn.com/tv")
+                    Text(model.displayURL)
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Color(.text, .interactive))
@@ -44,7 +48,7 @@ struct CreateAccountView: View {
                 }
             }
             .frame(maxWidth: Constants.maxPreferredContentViewWidth)
-            QRCodeView(string: "www.protonvpn.com/tv")
+            QRCodeView(string: model.url)
         }
         .background(Image(.backgroundStage))
     }

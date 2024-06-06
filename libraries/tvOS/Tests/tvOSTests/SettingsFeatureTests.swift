@@ -24,17 +24,18 @@ final class SettingsFeatureTests: XCTestCase {
 
     @MainActor
     func testClearLoginDetails() async {
-        let store = TestStore(initialState: SettingsFeature.State(userName: .init("user"))) {
+        let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.finishSignOut) {
-            $0.userName = nil
+            $0.isLoading = false
+            $0.userDisplayName = nil
         }
     }
 
     @MainActor
     func testSignOut() async {
-        let store = TestStore(initialState: SettingsFeature.State(userName: .init("user"))) {
+        let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.signOutSelected) {
@@ -46,7 +47,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.receive(\.finishSignOut) {
             $0.isLoading = false
-            $0.userName = nil
+            $0.userDisplayName = nil
         }
     }
 

@@ -28,7 +28,7 @@ final class AppFeatureTests: XCTestCase {
             AppFeature()
         }
         await store.send(.welcome(.showCreateAccount)) {
-            $0.welcome.destination = .createAccount(.init())
+            $0.welcome.destination = .welcomeInfo(.createAccount)
         }
     }
 

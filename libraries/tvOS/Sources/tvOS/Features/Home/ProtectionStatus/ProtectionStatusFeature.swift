@@ -26,10 +26,6 @@ import Domain
 struct ProtectionStatusFeature {
     @ObservableState
     struct State: Equatable {
-        var icon: Image?
-        var title: String = "Disconnected"
-        var foregroundColor: Color = Color(.text)
-        var buttonTitle: String = Localizable.quickConnect
 
         @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
         @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
@@ -46,38 +42,13 @@ struct ProtectionStatusFeature {
             switch action {
             case .userTappedButton:
                 return .none
-            case .connectionStateUpdated(let connectionState):
-                switch connectionState ?? .disconnected {
-                case .connected:
-                    state.icon = IconProvider.lockFilled
-                    state.title = "Protected"
-                    state.foregroundColor = Color(.text, .success)
-                    state.buttonTitle = "Disconnect"
-                case .connecting:
-                    state.icon = nil
-                    state.title = "Connecting"
-                    state.foregroundColor = Color(.text)
-                    state.buttonTitle = "Cancel"
-                case .disconnected:
-                    state.icon = IconProvider.lockOpenFilled
-                    state.title = "Unprotected"
-                    state.foregroundColor = Color(.text, .danger)
-                    state.buttonTitle = Localizable.quickConnect
-                case .disconnecting:
-                    state.icon = nil
-                    state.title = "Disconnecting"
-                    state.foregroundColor = Color(.text)
-                    state.buttonTitle = Localizable.quickConnect
-                }
+            case .connectionStateUpdated:
                 return .none
             case .onAppear:
-                return .merge(
-                    .publisher { state.$connectionState.publisher.map(Action.connectionStateUpdated) },
-                    .run { send in
-                        @Dependency(\.userLocationService) var userLocationService
-                        try? await userLocationService.updateUserLocation()
-                    }
-                )
+                return .run { send in
+                    @Dependency(\.userLocationService) var userLocationService
+                    try? await userLocationService.updateUserLocation()
+                }
             }
         }
     }

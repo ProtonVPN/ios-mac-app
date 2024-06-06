@@ -31,7 +31,6 @@ import Ergonomics
 import LocalFeatureFlags
 import Localization
 import VPNShared
-import Dependencies
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -211,12 +210,32 @@ public class VpnApiService {
     }
 
     public func userLocation() async -> UserLocation? {
-        @Dependency(\.locationClient) var client
-        do {
-            return try await client.fetchLocation()
-        } catch {
-            log.error("Couldn't parse user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
-            return nil
+        return await withCheckedContinuation { continuation in
+            userLocation { result in
+                switch result {
+                case .success(let success):
+                    continuation.resume(with: .success(success))
+                case .failure:
+                    continuation.resume(with: .success(nil))
+                }
+            }
+        }
+    }
+
+    private func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
+        networking.request(LocationRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                guard let userLocation = try? UserLocation(dic: response) else {
+                    let error = ParseError.userIpParse
+                    log.error("'IP' field not present in user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(userLocation))
+            case let .failure(error):
+                completion(.failure(error))
+            }
         }
     }
 

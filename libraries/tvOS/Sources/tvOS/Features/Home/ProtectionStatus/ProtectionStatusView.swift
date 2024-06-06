@@ -21,17 +21,54 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 import Localization
 import Domain
+import Strings
 
 struct ProtectionStatusView: View {
 
     @Bindable var store: StoreOf<ProtectionStatusFeature>
 
+    struct Model {
+        var icon: Image?
+        var title: String
+        var foregroundColor: Color
+        var buttonTitle: String
+
+        init(connectionState: ConnectFeature.ConnectionState?) {
+            switch connectionState ?? .disconnected {
+            case .connected:
+                icon = IconProvider.lockFilled
+                title = "Protected"
+                foregroundColor = Color(.text, .success)
+                buttonTitle = "Disconnect"
+            case .connecting:
+                icon = nil
+                title = "Connecting"
+                foregroundColor = Color(.text)
+                buttonTitle = "Cancel"
+            case .disconnected:
+                icon = IconProvider.lockOpenFilled
+                title = "Unprotected"
+                foregroundColor = Color(.text, .danger)
+                buttonTitle = Localizable.quickConnect
+            case .disconnecting:
+                icon = nil
+                title = "Disconnecting"
+                foregroundColor = Color(.text)
+                buttonTitle = Localizable.quickConnect
+            }
+        }
+    }
+
     var body: some View {
+        view(model: .init(connectionState: store.connectionState ?? .disconnected))
+    }
+
+    private func view(model: Model) -> some View {
         HStack {
             VStack(alignment: .leading) {
-                protectionTitle
+                protectionTitle(model: model)
                 location
-                button
+                button(model: model)
             }
             Spacer()
                 .frame(maxWidth: .infinity)
@@ -40,18 +77,18 @@ struct ProtectionStatusView: View {
         .focusSection()
     }
 
-    private var protectionTitle: some View {
+    private func protectionTitle(model: Model) -> some View {
         HStack(spacing: .themeSpacing24) {
-            protectionIcon
-            Text(store.title)
+            protectionIcon(model: model)
+            Text(model.title)
                 .font(.title3)
         }
-        .foregroundStyle(store.foregroundColor)
+        .foregroundStyle(model.foregroundColor)
     }
 
     @ViewBuilder
-    private var protectionIcon: some View {
-        if let icon = store.icon {
+    private func protectionIcon(model: Model) -> some View {
+        if let icon = model.icon {
             icon.resizable()
                 .frame(.square(56))
         } else {
@@ -93,11 +130,11 @@ struct ProtectionStatusView: View {
             .clipRectangle(cornerRadius: .radius16)
     }
 
-    private var button: some View {
+    private func button(model: Model) -> some View {
         Button {
             store.send(.userTappedButton)
         } label: {
-            Text(store.buttonTitle)
+            Text(model.buttonTitle)
                 .font(.body)
                 .bold()
                 .padding(.vertical, .themeSpacing12)
