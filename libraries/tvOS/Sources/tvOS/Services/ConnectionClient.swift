@@ -28,14 +28,16 @@ struct ConnectionClient: Sendable {
 
 extension ConnectionClient: DependencyKey {
     static var liveValue: ConnectionClient {
-
         return ConnectionClient(
             disconnect: {
                 try await Task.sleep(for: .seconds(1))
             }, connect: { server in
                 try await Task.sleep(for: .seconds(1))
+                if Task.isCancelled {
+                    throw "Failed to connect"
+                }
                 if server == "Fastest" {
-                    return ("PL", "1.2.3.4")
+                    throw "Failed to connect"
                 } else if let server {
                     return (server, "1.2.3.4")
                 } else {

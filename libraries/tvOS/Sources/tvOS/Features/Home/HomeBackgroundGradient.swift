@@ -24,7 +24,10 @@ struct HomeBackgroundGradient: View {
     @Bindable var store: StoreOf<MainFeature>
 
     var color: Color {
-        switch store.home.connect.connectionState {
+        guard case .loaded(let state) = store.homeLoading else {
+            return Color(.connectingGradient)
+        }
+        switch state.connect.connectionState {
         case .connected:
             return Color(.connectedGradient)
         case .disconnected:

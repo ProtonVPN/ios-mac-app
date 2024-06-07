@@ -68,12 +68,12 @@ struct CountryListView: View {
             }
         }
         .onAppear {
-            store.send(.onAppear)
+            store.send(.updateList)
         }
     }
 
     @ViewBuilder
-    func itemList(items: [HomeListItem], sectionIndex: Int) -> some View {
+    func itemList(items: [CountryListItem], sectionIndex: Int) -> some View {
         ForEach(items) { item in
             let coordinate = ItemCoordinate(section: sectionIndex, item: item)
             Button {
@@ -107,10 +107,10 @@ struct CountryListView: View {
 
     private struct ItemCoordinate: Hashable {
         let section: Int
-        let item: HomeListItem
+        let item: CountryListItem
         let row: Int
 
-        init(section: Int, item: HomeListItem) {
+        init(section: Int, item: CountryListItem) {
             self.section = section
             self.item = item
             self.row = item.row

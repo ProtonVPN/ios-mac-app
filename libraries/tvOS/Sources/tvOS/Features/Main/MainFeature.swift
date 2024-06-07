@@ -26,19 +26,19 @@ struct MainFeature {
     @ObservableState
     struct State: Equatable {
         var currentTab: Tab = .home
-        var home = HomeFeature.State()
+        var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
     }
 
     enum Action {
         case selectTab(Tab)
-        case home(HomeFeature.Action)
+        case homeLoading(HomeLoadingFeature.Action)
         case settings(SettingsFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.home, action: \.home) {
-            HomeFeature()
+        Scope(state: \.homeLoading, action: \.homeLoading) {
+            HomeLoadingFeature()
         }
         Scope(state: \.settings, action: \.settings) {
             SettingsFeature()
@@ -50,7 +50,10 @@ struct MainFeature {
                 return .none
             case .settings:
                 return .none
-            case .home:
+            case .homeLoading(.finishedLoading):
+                state.homeLoading = .loaded(.init())
+                return .none
+            case .homeLoading:
                 return .none
             }
         }

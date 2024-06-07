@@ -25,16 +25,16 @@ import SwiftUI
     struct State: Equatable {
         @Shared(.inMemory("connectionState")) var connectionState: ConnectionState?
     }
-
+    
     enum ConnectionState: Codable, Equatable {
         case connected(countryCode: String, ip: String)
-        case connecting
+        case connecting(countryCode: String?)
         case disconnected
         case disconnecting
     }
-
+    
     enum Action {
-        case userClickedConnect(HomeListItem?)
+        case userClickedConnect(CountryListItem?)
         case userClickedCancel
         case userClickedDisconnect
         case connectionEstablished(countryCode: String, ip: String)
@@ -42,18 +42,22 @@ import SwiftUI
         case connectionTerminated
         case initialize
     }
-
+    
     @Dependency(\.connectionClient) var client
-
+    
+    private enum CancelID { case connect }
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .initialize:
-                state.connectionState = .disconnected // TODO: properly initialise the connection state
+                if state.connectionState == nil {
+                    state.connectionState = .disconnected // TODO: properly initialise the connection state
+                }
                 return .none
             case .userClickedConnect(let item):
                 withAnimation {
-                    state.connectionState = .connecting
+                    state.connectionState = .connecting(countryCode: item?.code)
                 }
                 return .run { send in
                     let (countryCode, ip) = try await client.connect(item?.code)
@@ -61,8 +65,12 @@ import SwiftUI
                 } catch: { error, send in
                     await send(.connectionFailed)
                 }
+                    .cancellable(id: CancelID.connect)
             case .userClickedCancel:
-                return .none
+                withAnimation {
+                    state.connectionState = .disconnected
+                }
+                return .cancel(id: CancelID.connect)
             case .userClickedDisconnect:
                 withAnimation {
                     state.connectionState = .disconnecting
