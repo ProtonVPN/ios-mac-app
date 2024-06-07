@@ -46,6 +46,9 @@
          location = "container:"
          name = "Shared">
          <FileRef
+            location = "group:libraries/Shared/Connection">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Shared/CommonNetworking">
          </FileRef>
          <FileRef
