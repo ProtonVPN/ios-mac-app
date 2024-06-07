@@ -81,7 +81,7 @@ public class VpnApiService {
 
         return await VpnProperties(
             serverModels: try serverInfo(
-                ip: TruncatedIp(ip: asyncLocation?.ip),
+                ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
             ),
             vpnCredentials: asyncCredentials,
@@ -101,7 +101,7 @@ public class VpnApiService {
 
         return await (
             serverModels: try serverInfo(
-                ip: TruncatedIp(ip: location?.ip),
+                ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                 freeTier: freeTier
             ),
             location: location,

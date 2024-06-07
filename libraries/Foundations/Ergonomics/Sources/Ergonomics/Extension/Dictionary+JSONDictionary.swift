@@ -24,8 +24,14 @@ import Foundation
 public typealias JSONDictionary = [String: Any]
 public typealias JSONArray = [JSONDictionary]
 
-public extension Dictionary where Key: ExpressibleByStringLiteral, Value: Any {
-    
+public extension Dictionary where Key: ExpressibleByStringLiteral {
+
+    subscript<ReturnType>(throwing key: Key) -> ReturnType {
+        get throws {
+            return try valueOrThrow(key)
+        }
+    }
+
     // MARK: String
     func string(_ key: Key) -> String? {
         return self[key] as? String

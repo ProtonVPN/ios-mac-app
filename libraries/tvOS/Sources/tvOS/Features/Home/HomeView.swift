@@ -1,5 +1,5 @@
 //
-//  Created on 20/05/2024.
+//  Created on 04/06/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,19 +16,26 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import SwiftUI
-import Theme
 
-struct ConnectedCircleView: View {
+struct HomeView: View {
+
+    @Bindable var store: StoreOf<HomeFeature>
+
+    private static let contentAllowedWidth: Double = 1460
+
     var body: some View {
-        ZStack {
-            Circle()
-                .foregroundStyle(Asset.vpnGreen.swiftUIColor)
-                .opacity(0.3)
-            Circle()
-                .frame(width: 14.4, height: 14.4, alignment: .center)
-                .foregroundStyle(Asset.vpnGreen.swiftUIColor)
+        ScrollView {
+            ProtectionStatusView(store: store.scope(state: \.protectionStatus, action: \.protectionStatus))
+                .frame(width: Self.contentAllowedWidth)
+            CountryListView(store: store.scope(state: \.countryList, action: \.countryList),
+                            contentAllowedWidth: Self.contentAllowedWidth)
         }
-        .frame(width: 36, height: 36, alignment: .center)
+        .scrollClipDisabled()
+        .frame(width: Self.contentAllowedWidth)
+        .onAppear {
+            store.send(.connect(.initialize))
+        }
     }
 }

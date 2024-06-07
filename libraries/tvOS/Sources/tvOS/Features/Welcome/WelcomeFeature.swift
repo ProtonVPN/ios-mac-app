@@ -23,19 +23,22 @@ struct WelcomeFeature {
     @Reducer(state: .equatable)
     enum Destination {
         case signIn(SignInFeature)
-        case createAccount(CreateAccountFeature)
+        case welcomeInfo(WelcomeInfoFeature)
         case codeExpired(CodeExpiredFeature)
     }
 
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
+        @Shared(.appStorage("userTier")) var userTier: Int?
     }
 
     enum Action {
         case destination(PresentationAction<Destination.Action>)
         case showSignIn
         case showCreateAccount
+        case userTierUpdated(Int?)
+        case onAppear
     }
 
     var body: some Reducer<State, Action> {
@@ -45,12 +48,7 @@ struct WelcomeFeature {
                 state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none
             case .showCreateAccount:
-                state.destination = .createAccount(.init())
-                return .none
-            case .destination(.presented(.signIn(.signInFinished(.success(_))))):
-                /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
-                /// the welcome page will be shown, not the sign in page
-                state.destination = nil
+                state.destination = .welcomeInfo(.createAccount)
                 return .none
             case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
                 state.destination = .codeExpired(.init())
@@ -59,6 +57,18 @@ struct WelcomeFeature {
                 state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none
             case .destination:
+                return .none
+            case .onAppear:
+                return .publisher { state.$userTier.publisher.receive(on: UIScheduler.shared).map(Action.userTierUpdated) }
+            case .userTierUpdated(let tier):
+                guard let tier else { return .none }
+                if tier == 0 {
+                    state.destination = .welcomeInfo(.freeUpsell)
+                } else if tier > 0 {
+                    /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
+                    /// the welcome page will be shown, not the sign in page
+                    state.destination = nil
+                }
                 return .none
             }
         }

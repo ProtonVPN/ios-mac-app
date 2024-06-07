@@ -40,7 +40,7 @@ struct SettingsView: View {
                     store.send(.signOutSelected)
                 }
                 Spacer()
-                if let userName = store.userName {
+                if let userName = store.userDisplayName {
                     Text("\(userName)")
                 }
                 Text(Bundle.appVersion)

@@ -1,5 +1,5 @@
 //
-//  Created on 30/04/2024.
+//  Created on 24/05/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,18 +16,29 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import SwiftUI
 import ComposableArchitecture
 
-@Reducer
-struct CreateAccountFeature {
-    @ObservableState
-    struct State: Equatable { }
+struct HomeBackgroundGradient: View {
 
-    enum Action { }
+    @Bindable var store: StoreOf<MainFeature>
 
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            return .none
+    var color: Color {
+        switch store.home.connect.connectionState {
+        case .connected:
+            return Color(.connectedGradient)
+        case .disconnected:
+            return Color(.disconnectedGradient)
+        case .connecting, .disconnecting, .none:
+            return Color(.connectingGradient)
         }
+    }
+
+    var body: some View {
+        Image(.statusGradient)
+            .resizable()
+            .ignoresSafeArea()
+            .scaledToFill()
+            .foregroundStyle(color)
     }
 }

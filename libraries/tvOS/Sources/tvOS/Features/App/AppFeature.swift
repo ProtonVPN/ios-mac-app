@@ -43,8 +43,9 @@ import CommonNetworking
 @Reducer struct AppFeature {
     @ObservableState
     struct State: Equatable {
-        @Shared(.appStorage("username")) var user: String?
-        var main: MainFeature.State = .init()
+        @Shared(.appStorage("userDisplayName")) var userDisplayName: String?
+        @Shared(.appStorage("userTier")) var userTier: Int?
+        var main = MainFeature.State()
         var welcome = WelcomeFeature.State()
 
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
@@ -87,6 +88,14 @@ import CommonNetworking
             case .welcome:
                 return .none
 
+            case .networking(.userTierRetrieved(let tier, _)):
+                state.userTier = tier
+                return .none
+
+            case .networking(.userDisplayNameRetrieved(let name)):
+                state.userDisplayName = name
+                return .none
+                
             case .networking:
                 return .none
             }

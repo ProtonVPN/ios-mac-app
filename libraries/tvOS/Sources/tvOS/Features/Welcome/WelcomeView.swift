@@ -40,9 +40,11 @@ struct WelcomeView: View {
                                                       action: \.destination.signIn)) {
                 SignInView(store: $0)
             }
-            .navigationDestination(item: $store.scope(state: \.destination?.createAccount, action: \.destination.createAccount)) { CreateAccountView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.welcomeInfo, action: \.destination.welcomeInfo)) { WelcomeInfoView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.codeExpired, action: \.destination.codeExpired)) { CodeExpiredView(store: $0) }
-
+        }
+        .onAppear {
+            store.send(.onAppear)
         }
     }
 

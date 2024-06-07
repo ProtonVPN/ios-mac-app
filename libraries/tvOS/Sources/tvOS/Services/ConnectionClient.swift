@@ -23,7 +23,7 @@ import CommonNetworking
 
 struct ConnectionClient: Sendable {
     var disconnect: @Sendable () async throws -> Void
-    var connect: @Sendable (_ server: String) async throws -> Void
+    var connect: @Sendable (_ server: String?) async throws -> (String, String) // nil server means connect to fastest; returns the connected server
 }
 
 extension ConnectionClient: DependencyKey {
@@ -32,8 +32,15 @@ extension ConnectionClient: DependencyKey {
         return ConnectionClient(
             disconnect: {
                 try await Task.sleep(for: .seconds(1))
-            }, connect: { selector in
+            }, connect: { server in
                 try await Task.sleep(for: .seconds(1))
+                if server == "Fastest" {
+                    return ("PL", "1.2.3.4")
+                } else if let server {
+                    return (server, "1.2.3.4")
+                } else {
+                    return ("AL", "1.2.3.4")
+                }
             }
         )
     }

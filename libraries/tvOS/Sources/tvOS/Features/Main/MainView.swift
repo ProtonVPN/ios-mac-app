@@ -27,14 +27,14 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $store.currentTab.sending(\.selectTab)) {
             NavigationStack {
-                CountryListView(store: store.scope(state: \.countryList,
-                                                   action: \.countryList))
+                HomeView(store: store.scope(state: \.home, 
+                                            action: \.home))
             }
             .tag(MainFeature.Tab.home)
             .tabItem { Text("Home") }
 
             NavigationStack {
-                EmptyView()
+                Text("Comming soon!")
             }
             .tag(MainFeature.Tab.search)
             .tabItem { Text("Search") }
@@ -54,7 +54,7 @@ struct MainView: View {
         if store.settings.destination != nil {
             Image(.backgroundStage)
         } else if store.currentTab == .home {
-            CountryListBackgroundGradient(store: store)
+            HomeBackgroundGradient(store: store)
         } else {
             Color.clear
         }
