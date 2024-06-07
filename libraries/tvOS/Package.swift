@@ -15,6 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.16.0"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),
@@ -49,6 +50,7 @@ let package = Package(
                 "tvOS",
                 "tvOSTestSupport",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]),
     ]
 )
