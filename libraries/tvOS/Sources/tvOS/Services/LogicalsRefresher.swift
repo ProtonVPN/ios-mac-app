@@ -37,7 +37,6 @@ public struct LogicalsRefresher {
 
 public struct LogicalsRefresherProvider {
 
-    var refreshInterval = Constants.Time.fullServerRefresh
     @Shared(.appStorage("lastLogicalsRefresh")) private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
 
@@ -63,6 +62,7 @@ public struct LogicalsRefresherProvider {
 
     public func shouldRefreshLogicals() -> Bool {
         let now = Dependency(\.date).wrappedValue.now
+        let refreshInterval = Constants.Time.fullServerRefresh
         if now.timeIntervalSince1970 - lastLogicalsRefresh > refreshInterval {
             return true
         }
@@ -75,7 +75,7 @@ public struct LogicalsRefresherProvider {
 }
 
 extension LogicalsRefresher: DependencyKey {
-    public static var liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
+    public static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
 }
 
 extension DependencyValues {

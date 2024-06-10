@@ -27,7 +27,7 @@ final class HomeFeatureTests: XCTestCase {
         let store = TestStore(initialState: HomeFeature.State()) {
             HomeFeature()
         } withDependencies: {
-            $0.serverRepository = .previewValue
+            $0.serverRepository = .empty()
             $0.connectionClient = .testValue
             $0.continuousClock = clock
         }
@@ -50,7 +50,7 @@ final class HomeFeatureTests: XCTestCase {
         let store = TestStore(initialState: HomeFeature.State()) {
             HomeFeature()
         } withDependencies: {
-            $0.serverRepository = .previewValue
+            $0.serverRepository = .empty()
             $0.connectionClient = .testValue
             $0.continuousClock = clock
         }
@@ -72,7 +72,7 @@ final class HomeFeatureTests: XCTestCase {
         let store = TestStore(initialState: HomeFeature.State()) {
             HomeFeature()
         } withDependencies: {
-            $0.serverRepository = .previewValue
+            $0.serverRepository = .empty()
         }
         @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
 

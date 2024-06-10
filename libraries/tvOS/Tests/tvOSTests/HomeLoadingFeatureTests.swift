@@ -30,7 +30,6 @@ final class HomeLoadingFeatureTests: XCTestCase {
             HomeLoadingFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
-            $0.countryNameProvider = .mock(codeToNameDictionary: [:])
         }
         await store.send(.finishedLoading(.success(Void()))) {
             $0 = .loaded(.init())

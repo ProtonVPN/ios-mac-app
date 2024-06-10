@@ -49,6 +49,7 @@ let package = Package(
             dependencies: [
                 "tvOS",
                 "tvOSTestSupport",
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]),

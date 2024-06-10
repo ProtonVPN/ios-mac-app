@@ -21,14 +21,20 @@ import ComposableArchitecture
 @testable import CommonNetworking
 @testable import tvOS
 @testable import tvOSTestSupport
+@testable import PersistenceTestSupport
 import Persistence
 import Domain
 
 final class LogicalsRefresherTests: XCTestCase {
 
+    let enoughTimePassed: TimeInterval = Date().timeIntervalSince1970 - Constants.Time.fullServerRefresh
+    let notEnoughTimePassed: TimeInterval = Date().timeIntervalSince1970 - Constants.Time.fullServerRefresh + 1
+
     @MainActor
     func testShouldRefreshLogicalsWithEmptyRepository() async {
-        @Shared(.appStorage("lastLogicalsRefresh")) var lastLogicalsRefresh: TimeInterval = Date().timeIntervalSince1970
+        @Shared(.appStorage("lastLogicalsRefresh"))
+        var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
+        
         withDependencies {
             $0.serverRepository = .empty()
             $0.date = .constant(.distantPast)
@@ -40,11 +46,12 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testShouldRefreshLogicalsWithTimeInterval() async {
+        @Shared(.appStorage("lastLogicalsRefresh")) 
+        var lastLogicalsRefresh: TimeInterval = enoughTimePassed
 
-        @Shared(.appStorage("lastLogicalsRefresh")) var lastLogicalsRefresh: TimeInterval = Date().timeIntervalSince1970
         withDependencies {
             $0.serverRepository = .notEmpty()
-            $0.date = .constant(.distantFuture)
+            $0.date = .constant(.now)
         } operation: {
             let sut = LogicalsRefresherProvider().liveValue
             XCTAssertTrue(sut.shouldRefreshLogicals())
@@ -53,7 +60,9 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testShouldNotRefreshLogicals() async {
-        @Shared(.appStorage("lastLogicalsRefresh")) var lastLogicalsRefresh: TimeInterval = Date().timeIntervalSince1970
+        @Shared(.appStorage("lastLogicalsRefresh")) 
+        var lastLogicalsRefresh: TimeInterval = notEnoughTimePassed
+
         withDependencies {
             $0.serverRepository = .notEmpty()
             $0.date = .constant(.distantPast)
@@ -65,12 +74,13 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testRefreshLogicals() async throws {
-        @Shared(.appStorage("lastLogicalsRefresh")) var lastLogicalsRefresh: TimeInterval = Date().timeIntervalSince1970
+        @Shared(.appStorage("lastLogicalsRefresh")) 
+        var lastLogicalsRefresh: TimeInterval = enoughTimePassed
+
         var upserted: [VPNServer] = []
 
-        var repository = ServerRepository(serverCount: { 0 },
-                                          upsertServers: { upserted = $0 },
-                                          groups: { _, _ in [] })
+        let repository = ServerRepository(serverCount: { 0 },
+                                          upsertServers: { upserted = $0 })
 
         try await withDependencies {
             $0.serverRepository = repository
