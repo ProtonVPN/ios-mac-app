@@ -547,6 +547,7 @@
 		4CF298142A7D3B8E00DEB23F /* pt-PT.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "pt-PT.lproj"; sourceTree = "<group>"; };
 		4CF298152A7D3B8E00DEB23F /* hr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hr.lproj; sourceTree = "<group>"; };
 		4CF298162A7D3B8E00DEB23F /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
+		570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-DEBUG.entitlements"; sourceTree = "<group>"; };
 		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
 		57E3438D28E573D60012B2DF /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
 		57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsRobot.swift; sourceTree = "<group>"; };
@@ -1106,6 +1107,7 @@
 			isa = PBXGroup;
 			children = (
 				79FCFB7020D4A34D00C829D4 /* ProtonVPN.entitlements */,
+				570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */,
 				791DE5EA208DDA3200A29EA5 /* Info.plist */,
 				7995FCE1209092F30030E1EB /* Extensions */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
