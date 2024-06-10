@@ -50,9 +50,6 @@ struct MainFeature {
                 return .none
             case .settings:
                 return .none
-            case .homeLoading(.finishedLoading):
-                state.homeLoading = .loaded(.init())
-                return .none
             case .homeLoading:
                 return .none
             }

@@ -30,10 +30,9 @@ struct HomeLoadingFeature {
 
     enum Action {
         case loaded(HomeFeature.Action)
-        case loading
-        case loadingFailed
-        case onAppear
-        case finishedLoading
+        case startLoading
+        case loadingViewOnAppear
+        case finishedLoading(Result<Void, Error>)
     }
 
     private enum CancelID { case timer }
@@ -45,31 +44,33 @@ struct HomeLoadingFeature {
             switch action {
             case .loaded:
                 return .none
-            case .loading:
+            case .startLoading:
+                state = .loading
                 return .none
-            case .finishedLoading:
-                return .none
-            case .loadingFailed:
-                state = .loadingFailed
-                return .run { send in
-                    try? await clock.sleep(for: .seconds(30))
-                    await send(.onAppear)
+            case .finishedLoading(let result):
+                switch result {
+                case .success:
+                    state = .loaded(.init())
+                    break
+                case .failure:
+                    state = .loadingFailed
+                    return .run { send in
+                        try? await clock.sleep(for: .seconds(30))
+                        await send(.startLoading)
+                    }
+                    .cancellable(id: CancelID.timer, cancelInFlight: true)
                 }
-                .cancellable(id: CancelID.timer, cancelInFlight: true)
-            case .onAppear:
+                return .none
+            case .loadingViewOnAppear:
                 @Dependency(\.serverRepository) var repository
                 @Dependency(\.logicalsRefresher) var refresher
-                if repository.isEmpty || refresher.shouldRefreshLogicals() {
-                    state = .loading
+                if true || repository.isEmpty || refresher.shouldRefreshLogicals() {
                     return .run { send in
-                        try await refresher.refreshLogicalsIfNeeded()
-                        await send(.finishedLoading)
-                    } catch: { error, action in
-                        await action(.loadingFailed)
+                        await send(.finishedLoading(Result { try await refresher.refreshLogicalsIfNeeded() }))
                     }
                 } else {
                     return .run { send in
-                        await send(.finishedLoading)
+                        await send(.finishedLoading(.success(Void())))
                     }
                 }
             }

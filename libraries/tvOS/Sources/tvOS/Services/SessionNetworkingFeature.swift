@@ -84,7 +84,7 @@ struct SessionNetworkingFeature: Reducer {
                     let userTier = try await networking.userTier()
                     await send(.userTierRetrieved(userTier, session))
                 } catch: { error, send in
-                    print(error) // Couldn't retrieve user tier after user already logged in in the previous session, ignore.
+                    log.debug("Couldn't retrieve user tier after user already logged in in the previous session, ignoring", category: .api)
                 }
 
             case .sessionFetched(.success(.sessionUnavailableAndNotFetched)):

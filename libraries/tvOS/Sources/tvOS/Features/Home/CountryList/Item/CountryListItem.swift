@@ -20,14 +20,17 @@ import Foundation
 import Localization
 
 struct CountryListItem: Identifiable, Equatable, Hashable {
-    var id: String {
-        "\(section)" + code
-    }
-
+    var id: String
     let section: Int
     let row: Int
     let code: String
     var name: String {
         LocalizationUtility.default.countryName(forCode: code) ?? code
+    }
+    init(section: Int, row: Int, code: String) {
+        self.id = "\(section)" + code
+        self.section = section
+        self.row = row
+        self.code = code
     }
 }

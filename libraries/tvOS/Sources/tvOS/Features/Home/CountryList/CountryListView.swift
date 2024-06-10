@@ -52,23 +52,18 @@ struct CountryListView: View {
 
     var body: some View {
         LazyVGrid(columns: columns) {
-            store.recommendedSection.map { section in
-                Section  {
-                    itemList(items: section.items, sectionIndex: 0)
-                } header: {
-                    CountryListSectionHeaderView(name: section.name)
-                }
+            Section {
+                itemList(items: store.recommendedSection.items, sectionIndex: 0)
+            } header: {
+                CountryListSectionHeaderView(name: store.recommendedSection.name)
             }
-            store.countriesSection.map { section in
-                Section  {
-                    itemList(items: section.items, sectionIndex: 1)
-                } header: {
-                    CountryListSectionHeaderView(name: section.name)
-                }
+
+
+            Section {
+                itemList(items: store.countriesSection.items, sectionIndex: 1)
+            } header: {
+                CountryListSectionHeaderView(name: store.countriesSection.name)
             }
-        }
-        .onAppear {
-            store.send(.updateList)
         }
     }
 

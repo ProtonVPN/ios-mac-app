@@ -33,7 +33,7 @@ struct HomeLoadingView: View {
                     .foregroundStyle(Color(.text))
             }
             .onAppear {
-                store.send(.onAppear)
+                store.send(.loadingViewOnAppear)
             }
         case .loaded:
             if let store = store.scope(state: \.loaded, action: \.loaded) {
