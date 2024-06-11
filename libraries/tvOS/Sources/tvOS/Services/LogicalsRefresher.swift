@@ -31,9 +31,7 @@ public class LogicalsRefresher {
     @AppStorage("lastLogicalsRefresh") private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
 
-    public func refreshLogicalsIfNeeded() async throws {
-        guard shouldRefreshLogicals() else { return }
-
+    public func refreshLogicals() async throws {
         @Dependency(\.userLocationService) var userLocationService
         try? await userLocationService.updateUserLocation()
 

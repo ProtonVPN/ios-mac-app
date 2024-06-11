@@ -35,6 +35,8 @@ struct HomeLoadingFeature {
         case finishedLoading(Result<Void, Error>)
     }
 
+    static let tryAgainPeriod: Duration = .seconds(30)
+
     private enum CancelID { case timer }
 
     @Dependency(\.continuousClock) var clock
@@ -55,7 +57,7 @@ struct HomeLoadingFeature {
                 case .failure:
                     state = .loadingFailed
                     return .run { send in
-                        try? await clock.sleep(for: .seconds(30))
+                        try? await clock.sleep(for: Self.tryAgainPeriod)
                         await send(.startLoading)
                     }
                     .cancellable(id: CancelID.timer, cancelInFlight: true)
@@ -64,9 +66,9 @@ struct HomeLoadingFeature {
             case .loadingViewOnAppear:
                 @Dependency(\.serverRepository) var repository
                 @Dependency(\.logicalsRefresher) var refresher
-                if true || repository.isEmpty || refresher.shouldRefreshLogicals() {
+                if refresher.shouldRefreshLogicals() || repository.isEmpty {
                     return .run { send in
-                        await send(.finishedLoading(Result { try await refresher.refreshLogicalsIfNeeded() }))
+                        await send(.finishedLoading(Result { try await refresher.refreshLogicals() }))
                     }
                 } else {
                     return .run { send in
