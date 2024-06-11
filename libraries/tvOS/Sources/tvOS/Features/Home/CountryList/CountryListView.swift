@@ -52,28 +52,23 @@ struct CountryListView: View {
 
     var body: some View {
         LazyVGrid(columns: columns) {
-            store.recommendedSection.map { section in
-                Section  {
-                    itemList(items: section.items, sectionIndex: 0)
-                } header: {
-                    CountryListSectionHeaderView(name: section.name)
-                }
+            Section {
+                itemList(items: store.recommendedSection.items, sectionIndex: 0)
+            } header: {
+                CountryListSectionHeaderView(name: store.recommendedSection.name)
             }
-            store.countriesSection.map { section in
-                Section  {
-                    itemList(items: section.items, sectionIndex: 1)
-                } header: {
-                    CountryListSectionHeaderView(name: section.name)
-                }
+
+
+            Section {
+                itemList(items: store.countriesSection.items, sectionIndex: 1)
+            } header: {
+                CountryListSectionHeaderView(name: store.countriesSection.name)
             }
-        }
-        .onAppear {
-            store.send(.onAppear)
         }
     }
 
     @ViewBuilder
-    func itemList(items: [HomeListItem], sectionIndex: Int) -> some View {
+    func itemList(items: [CountryListItem], sectionIndex: Int) -> some View {
         ForEach(items) { item in
             let coordinate = ItemCoordinate(section: sectionIndex, item: item)
             Button {
@@ -107,10 +102,10 @@ struct CountryListView: View {
 
     private struct ItemCoordinate: Hashable {
         let section: Int
-        let item: HomeListItem
+        let item: CountryListItem
         let row: Int
 
-        init(section: Int, item: HomeListItem) {
+        init(section: Int, item: CountryListItem) {
             self.section = section
             self.item = item
             self.row = item.row

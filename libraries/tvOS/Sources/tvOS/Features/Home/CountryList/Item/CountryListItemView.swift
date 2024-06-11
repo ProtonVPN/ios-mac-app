@@ -21,7 +21,7 @@ import Theme
 import ComposableArchitecture
 
 struct CountryListItemView: View {
-    let item: HomeListItem
+    let item: CountryListItem
     let isFocused: Bool
     @State var duration = inFocusDuration
 
@@ -48,13 +48,26 @@ struct CountryListItemView: View {
                 .font(.body)
             Spacer()
                 .frame(height: .themeSpacing16)
-            HStack(spacing: .themeSpacing12) {
-                Text("Connected")
-                    .font(.caption)
-                    .foregroundStyle(Asset.vpnGreen.swiftUIColor)
-                ConnectedCircleView()
+            switch connectionState ?? .disconnected {
+            case .connected:
+                HStack(spacing: .themeSpacing12) {
+                    Text("Connected")
+                        .font(.caption)
+                        .foregroundStyle(Asset.vpnGreen.swiftUIColor)
+                    ConnectedCircleView()
+                }
+                .opacity(item.code == connectedCode ? 1 : 0)
+            case .connecting:
+                HStack(spacing: .themeSpacing12) {
+                    Text("Connecting")
+                        .font(.caption)
+                        .foregroundStyle(Color(.text, .weak))
+                    ProgressView()
+                }
+                .opacity(item.code == connectedCode ? 1 : 0)
+            default:
+                EmptyView()
             }
-            .opacity(item.code == connectedCode ? 1 : 0)
         }
         // This scaleEffect aims to mimic ".hoverEffect(.highlight)"
         .scaleEffect(isFocused ? focusedScale : normalScale)
@@ -65,7 +78,13 @@ struct CountryListItemView: View {
     }
 
     private var connectedCode: String? {
-        guard case .connected(let code, _) = connectionState else { return nil }
-        return code
+        switch connectionState {
+        case .connected(let code, _):
+            return code
+        case .connecting(countryCode: let code):
+            return code
+        default:
+            return nil
+        }
     }
 }

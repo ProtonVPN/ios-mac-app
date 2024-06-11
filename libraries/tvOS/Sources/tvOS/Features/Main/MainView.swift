@@ -27,8 +27,8 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $store.currentTab.sending(\.selectTab)) {
             NavigationStack {
-                HomeView(store: store.scope(state: \.home, 
-                                            action: \.home))
+                HomeLoadingView(store: store.scope(state: \.homeLoading,
+                                                   action: \.homeLoading))
             }
             .tag(MainFeature.Tab.home)
             .tabItem { Text("Home") }

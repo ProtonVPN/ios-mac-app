@@ -20,6 +20,7 @@ let package = Package(
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/PMLogger"),
     ],
     targets: [
         .target(
@@ -29,6 +30,7 @@ let package = Package(
                 "CommonNetworking",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Persistence", package: "Persistence"),
+                .product(name: "PMLogger", package: "PMLogger"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
                 .core(module: "UIFoundations"),

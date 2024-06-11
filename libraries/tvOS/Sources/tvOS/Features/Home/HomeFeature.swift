@@ -25,12 +25,20 @@ struct HomeFeature {
         var protectionStatus = ProtectionStatusFeature.State()
         var countryList = CountryListFeature.State()
         var connect = ConnectFeature.State()
+        @Presents var alert: AlertState<Action.Alert>?
     }
 
     enum Action {
         case protectionStatus(ProtectionStatusFeature.Action)
         case countryList(CountryListFeature.Action)
         case connect(ConnectFeature.Action)
+
+        case alert(PresentationAction<Alert>)
+
+        @CasePathable
+        enum Alert {
+          case errorMessage
+        }
     }
 
     var body: some Reducer<State, Action> {
@@ -45,11 +53,18 @@ struct HomeFeature {
         }
         Reduce { state, action in
             switch action {
+            case .alert:
+                return .none
             case .countryList(.selectItem(let item)):
                 return .run { send in
                     await send(.connect(.userClickedConnect(item)))
                 }
             case .countryList:
+                return .none
+            case .connect(.connectionFailed):
+                state.alert = AlertState<Action.Alert> {
+                    TextState("Connection failed")
+                }
                 return .none
             case .connect:
                 return .none
@@ -70,5 +85,6 @@ struct HomeFeature {
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }
