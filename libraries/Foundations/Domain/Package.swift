@@ -10,11 +10,8 @@ let package = Package(
         .macOS(.v11)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "Domain",
-            targets: ["Domain"]
-        ),
+        .library(name: "Domain", targets: ["Domain"]),
+        .library(name: "DomainTestSupport", targets: ["DomainTestSupport"]),
     ],
     dependencies: [
         .package(path: "../Strings"),
@@ -22,8 +19,6 @@ let package = Package(
         .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "Domain",
             dependencies: [
@@ -32,6 +27,7 @@ let package = Package(
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
             ]
         ),
+        .target(name: "DomainTestSupport", dependencies: ["Domain"]),
         .testTarget(
             name: "DomainTests",
             dependencies: ["Domain"]
