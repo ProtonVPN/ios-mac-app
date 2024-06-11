@@ -49,7 +49,7 @@ final class MockVPNConnection: VPNSession {
 
     func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
 
-    func startVPNTunnel() throws {
+    func startTunnel() throws {
         self.status = .connecting
         connectionTask = Task {
             @Dependency(\.continuousClock) var clock
@@ -61,7 +61,7 @@ final class MockVPNConnection: VPNSession {
         }
     }
 
-    func stopVPNTunnel() {
+    func stopTunnel() {
         disconnectionTask = Task {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: .seconds(1))

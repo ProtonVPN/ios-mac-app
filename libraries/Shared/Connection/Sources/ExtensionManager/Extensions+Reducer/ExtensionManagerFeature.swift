@@ -47,7 +47,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case startObservingStateChanges
         case stopObservingStateChanges
         case connect(VPNServer, VPNConnectionFeatures)
-        case tunnelStarted(Result<VPNSession, Error>)
+        case tunnelStartRequestFinished(Result<VPNSession, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect
     }
@@ -58,12 +58,12 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .startObservingStateChanges:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
-                    let status = try await self.tunnelManager.getConnection().status
+                    let status = try await self.tunnelManager.session.status
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
                     // TODO: make sure we are only subscribed to state changes for the active tunnel
-                    for await status in try await self.tunnelManager.statusChanged() {
+                    for await status in try await self.tunnelManager.statusStream {
                         await send(.tunnelStatusChanged(status))
                     }
                 }
@@ -77,16 +77,16 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .connect(let server, let features):
                 state = .connecting(server, features)
                 return .run { send in
-                    await send(.tunnelStarted(Result {
+                    await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(to: server)
                     }))
                 }
 
-            case .tunnelStarted(.failure(let error)):
+            case .tunnelStartRequestFinished(.failure(let error)):
                 log.error("Failed to start tunnel", category: .connection, metadata: ["error": "\(error)"])
                 return .none
 
-            case .tunnelStarted(.success(let session)):
+            case .tunnelStartRequestFinished(.success(let session)):
                 return .none
 
             case .tunnelStatusChanged(.connecting):

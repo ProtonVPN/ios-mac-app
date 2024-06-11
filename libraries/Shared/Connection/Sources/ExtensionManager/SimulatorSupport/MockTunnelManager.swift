@@ -24,31 +24,33 @@ import Dependencies
 
 import struct Domain.VPNServer
 
- final class MockTunnelManager: TunnelManager {
-     var connection: MockVPNConnection
+final class MockTunnelManager: TunnelManager {
+    var connection: MockVPNConnection
 
-     init(connection: MockVPNConnection = .init(status: .disconnected)) {
+    init(connection: MockVPNConnection = .init(status: .disconnected)) {
         self.connection = connection
     }
 
-     func startTunnel(to server: VPNServer) async throws -> VPNSession {
-        try connection.startVPNTunnel()
+    func startTunnel(to server: VPNServer) async throws -> VPNSession {
+        try connection.startTunnel()
         return connection
     }
 
-     func stopTunnel() async throws {
+    func stopTunnel() async throws {
         connection.status = .disconnected
     }
 
-     func getConnection() async throws -> VPNSession {
-         connection
-     }
+    var session: VPNSession {
+        get async throws {
+            connection
+        }
+    }
 
-     func statusChanged() async throws -> AsyncStream<NEVPNStatus> {
-         let statusChangedNotifications = NotificationCenter.default
-             .notifications(named: Notification.Name.NEVPNStatusDidChange, object: connection)
-             .map { _ in self.connection.status }
-         return AsyncStream(statusChangedNotifications)
-     }
- }
+    var statusStream: AsyncStream<NEVPNStatus> {
+        let statusChangedNotifications = NotificationCenter.default
+            .notifications(named: Notification.Name.NEVPNStatusDidChange, object: connection)
+            .map { _ in self.connection.status }
+        return AsyncStream(statusChangedNotifications)
+    }
+}
 #endif

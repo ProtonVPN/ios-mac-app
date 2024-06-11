@@ -26,13 +26,13 @@ extension TunnelProviderManagerFactory {
 
     static var liveValue: TunnelProviderManagerFactory {
         .init(
-            createNewManager: {
+            create: {
                 log.info("Creating new Tunnel Provider Manager")
                 let manager = NETunnelProviderManager()
                 manager.localizedDescription = "Proton VPN Tunnel"
                 return manager
             },
-            removeManagers: {
+            removeAll: {
                 let managers = try await NETunnelProviderManager.loadAllFromPreferences()
 
                 var errors: [Error] = []
@@ -48,7 +48,7 @@ extension TunnelProviderManagerFactory {
                     throw TunnelProviderManagerError.removalFailure(errors: errors)
                 }
             },
-            loadManagersFromPreferences: {
+            loadFromPreferences: {
                 return try await NETunnelProviderManager.loadAllFromPreferences()
             }
         )

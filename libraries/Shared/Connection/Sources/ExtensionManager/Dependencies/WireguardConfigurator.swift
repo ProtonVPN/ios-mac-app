@@ -34,9 +34,9 @@ extension ManagerConfigurator {
         protocolConfiguration.providerBundleIdentifier = bundleID
 
         protocolConfiguration.connectedLogicalId = server.logical.id
-        protocolConfiguration.connectedServerIpId = server.endpoints.first?.id ?? "nil"
-        protocolConfiguration.serverAddress = server.endpoints.first?.entryIp ?? "nil"
-        // TODO: Set transport type and other required properties
+        protocolConfiguration.connectedServerIpId = server.endpoints.first?.id
+        protocolConfiguration.serverAddress = server.endpoints.first?.entryIp
+        // TODO: Set correct endpoint, transport type and other required properties
 
         return protocolConfiguration
     }

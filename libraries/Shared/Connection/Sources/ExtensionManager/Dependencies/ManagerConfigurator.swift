@@ -24,6 +24,7 @@ import Dependencies
 
 import struct Domain.VPNServer
 import struct Domain.ConnectionSpec
+import let ConnectionFoundations.log
 
 enum TunnelConfigurationOperation {
     case connection(VPNServer)
@@ -31,13 +32,19 @@ enum TunnelConfigurationOperation {
 }
 
 struct ManagerConfigurator: Sendable {
-    private var configure: @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
+    typealias ConfigurationHandler = (@Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void)
 
-    init(configure: @escaping @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void) {
+    private var configure: ConfigurationHandler
+
+    init(configure: @escaping ConfigurationHandler) {
         self.configure = configure
     }
+}
 
+/// Convenience API with labels
+extension ManagerConfigurator {
     func configure(_ manager: inout TunnelProviderManager, for operation: TunnelConfigurationOperation) async throws {
+        log.debug("Configuring manager", category: .connection, metadata: ["manager": "\(manager)", "operation": ["\(operation)"]])
         try await configure(&manager, operation)
     }
 }

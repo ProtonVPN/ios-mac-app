@@ -32,8 +32,8 @@ public protocol VPNSession: ProviderMessageSender {
     var connectedDate: Date? { get }
     func fetchLastDisconnectError() async throws -> Error?
 
-    func startVPNTunnel() throws
-    func stopVPNTunnel()
+    func startTunnel() throws
+    func stopTunnel()
     func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws
 }
 

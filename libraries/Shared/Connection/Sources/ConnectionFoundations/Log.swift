@@ -21,6 +21,6 @@ import Logging
 import PMLogger
 
 /// Logger shared across all targets in this module.
-/// Requires importing via `import let ConnectionFoundations.log` or a blanket import `import ConnetionFoundations`
+/// Requires importing via `import let ConnectionFoundations.log` or a blanket import `import ConnectionFoundations`
 /// before it can be used outside this target.
 package let log = Logging.Logger(label: "ProtonVPN.Connection.logger")

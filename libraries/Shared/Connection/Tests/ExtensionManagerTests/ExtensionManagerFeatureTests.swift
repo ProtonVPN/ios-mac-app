@@ -58,7 +58,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
             $0 = .connecting(server, features)
         }
 
-        await store.receive(\.tunnelStarted.success)
+        await store.receive(\.tunnelStartRequestFinished.success)
         // NEVPNStatus is not @CasePathable.
         // We could improve testability here by mirroring it creating our own VPNStatus to mirror it
         await store.receive(\.tunnelStatusChanged) // .connecting

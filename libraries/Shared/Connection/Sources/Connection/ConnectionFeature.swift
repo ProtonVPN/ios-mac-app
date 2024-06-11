@@ -71,7 +71,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .send(.tunnel(.disconnect))
                 )
 
-            case .tunnel(.tunnelStarted(.success(let session))):
+            case .tunnel(.tunnelStartRequestFinished(.success(let session))):
                 // TODO: certificate authentication - update reference to session
                 return .none
 
@@ -135,7 +135,7 @@ public enum ConnectionState: Equatable {
     }
 }
 
-// For now, let's override the dump descsriptions so `_printChanges` reducer is easier to read
+// For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
 extension Domain.VPNServer: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         return "VPNServer(\(logical.name))"

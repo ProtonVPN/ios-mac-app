@@ -21,9 +21,9 @@ import Foundation
 import Dependencies
 
 struct TunnelProviderManagerFactory: DependencyKey, Sendable {
-    var createNewManager: @Sendable () -> TunnelProviderManager
-    var removeManagers: @Sendable () async throws -> Void
-    var loadManagersFromPreferences: @Sendable () async throws -> [TunnelProviderManager]
+    var create: @Sendable () -> TunnelProviderManager
+    var removeAll: @Sendable () async throws -> Void
+    var loadFromPreferences: @Sendable () async throws -> [TunnelProviderManager]
 }
 
 extension DependencyValues {

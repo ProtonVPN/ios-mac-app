@@ -23,11 +23,14 @@ import protocol ExtensionIPC.ProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 
 extension VPNSession {
+
+    private var defaultMaxRetries: Int { 5 }
+
     public func send<R: ProviderRequest>(
         _ message: R,
         completion: ((Result<R.Response, ProviderMessageError>) -> Void)?
     ) {
-        send(message, maxRetries: 5, completion: completion)
+        send(message, maxRetries: defaultMaxRetries, completion: completion)
     }
 
     private func send<R: ProviderRequest>(

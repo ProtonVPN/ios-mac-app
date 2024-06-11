@@ -23,7 +23,13 @@ import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NETunnelProviderSession
 import class NetworkExtension.NEVPNManager
 
+import let ConnectionFoundations.log
+
 extension NETunnelProviderSession: VPNSession {
+    public func startTunnel() throws {
+        try startVPNTunnel()
+    }
+
     public func fetchLastDisconnectError() async -> Error? {
         // For some reason, the native async alternative returns `Void`
         // return try await fetchLastDisconnectError()
@@ -36,12 +42,13 @@ extension NETunnelProviderSession: VPNSession {
 extension NETunnelProviderManager: TunnelProviderManager {
     public var vpnProtocolConfiguration: NETunnelProviderProtocol? {
         get {
-            guard let configuration = connection.manager.protocolConfiguration else {
+            guard let configuration = protocolConfiguration else {
+                log.assertionFailure("Manager has no configuration", category: .connection)
                 return nil
             }
 
             guard let protocolConfiguration = configuration as? NETunnelProviderProtocol else {
-                assertionFailure("Expected TunnelProvider configuration")
+                log.assertionFailure("Unexpected config type", category: .connection, metadata: ["config": "\(type(of: configuration))"])
                 return nil
             }
 
@@ -54,10 +61,11 @@ extension NETunnelProviderManager: TunnelProviderManager {
     
     public var session: VPNSession {
         guard let session = connection as? NETunnelProviderSession else {
-            // If we cannot communicate with the extension, VPN functionality is crippled.
+            // If we cannot communicate with the extension, VPN functionality is crippled (e.g. IPC is impossible).
             // This can only happen if we seriously misconfigure the tunnel provider manager.
             // Let's make this obvious by instantly crashing here.
-            fatalError()
+            log.error("Unexpected connection type", category: .connection, metadata: ["connection": "\(type(of: connection))"])
+            fatalError("Unexpected connection type: \(type(of: connection))")
         }
 
         return session

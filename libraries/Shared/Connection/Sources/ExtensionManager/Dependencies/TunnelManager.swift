@@ -26,8 +26,8 @@ import Domain
 protocol TunnelManager {
     @discardableResult func startTunnel(to server: VPNServer) async throws -> VPNSession
     func stopTunnel() async throws -> Void
-    func getConnection() async throws -> VPNSession
-    func statusChanged() async throws -> AsyncStream<NEVPNStatus>
+    var session: VPNSession { get async throws }
+    var statusStream: AsyncStream<NEVPNStatus> { get async throws }
 }
 
 enum TunnelManagerKey: DependencyKey {
@@ -80,26 +80,29 @@ final class PacketTunnelManager: TunnelManager {
 
     func startTunnel(to server: VPNServer) async throws -> VPNSession {
         let manager = try await updateTunnel(for: .connection(server))
-        try manager.session.startVPNTunnel()
+        try manager.session.startTunnel()
         return manager.session
     }
 
     func stopTunnel() async throws {
         let manager = try await updateTunnel(for: .disconnection)
-        manager.session.stopVPNTunnel()
+        manager.session.stopTunnel()
     }
 
-    func getConnection() async throws -> VPNSession {
-        let manager = try await loadedManager
-        return manager.session
+    var session: VPNSession {
+        get async throws {
+            try await loadedManager.session
+        }
     }
 
-    func statusChanged() async throws -> AsyncStream<NEVPNStatus> {
-        let manager = try await loadedManager
-        let statusChangedNotifications = NotificationCenter.default
-            .notifications(named: Notification.Name.NEVPNStatusDidChange, object: manager.session)
-            .map { _ in manager.session.status }
-        return AsyncStream(statusChangedNotifications)
+    var statusStream: AsyncStream<NEVPNStatus> {
+        get async throws {
+            let manager = try await loadedManager
+            let statusChangedNotifications = NotificationCenter.default
+                .notifications(named: Notification.Name.NEVPNStatusDidChange, object: manager.session)
+                .map { _ in manager.session.status }
+            return AsyncStream(statusChangedNotifications)
+        }
     }
 }
 

@@ -28,5 +28,3 @@ extension VPNConnectionFeatures {
         safeMode: false
     )
 }
-
-

@@ -38,15 +38,15 @@ final class PacketTunnelManagerTests: XCTestCase {
 
         _ = try await withDependencies {
             $0.tunnelProviderManagerFactory = .init(
-                createNewManager: { newManager },
-                removeManagers: unimplemented(),
-                loadManagersFromPreferences: {
+                create: { newManager },
+                removeAll: unimplemented(),
+                loadFromPreferences: {
                     existingManagersLoaded.fulfill()
                     return []
                 }
             )
         } operation: { 
-            try await PacketTunnelManager().getConnection()
+            try await PacketTunnelManager().session
         }
 
         await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)
@@ -59,15 +59,15 @@ final class PacketTunnelManagerTests: XCTestCase {
 
         _ = try await withDependencies {
             $0.tunnelProviderManagerFactory = .init(
-                createNewManager: unimplemented(),
-                removeManagers: unimplemented(),
-                loadManagersFromPreferences: {
+                create: unimplemented(),
+                removeAll: unimplemented(),
+                loadFromPreferences: {
                     existingManagersLoaded.fulfill()
                     return [existingManager]
                 }
             )
         } operation: {
-            try await PacketTunnelManager().getConnection()
+            try await PacketTunnelManager().session
         }
 
         await fulfillment(of: [existingManagersLoaded], timeout: 1)
@@ -93,9 +93,9 @@ final class PacketTunnelManagerTests: XCTestCase {
         _ = try await withDependencies {
             $0.continuousClock = clock
             $0.tunnelProviderManagerFactory = .init(
-                createNewManager: unimplemented(),
-                removeManagers: unimplemented(),
-                loadManagersFromPreferences: { [providerManager] }
+                create: unimplemented(),
+                removeAll: unimplemented(),
+                loadFromPreferences: { [providerManager] }
             )
             $0.tunnelProviderConfigurator = .init(configure: { manager, operation in
                 let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
@@ -124,9 +124,9 @@ final class PacketTunnelManagerTests: XCTestCase {
         _ = try await withDependencies {
             $0.continuousClock = clock
             $0.tunnelProviderManagerFactory = .init(
-                createNewManager: unimplemented(),
-                removeManagers: unimplemented(),
-                loadManagersFromPreferences: { [providerManager] }
+                create: unimplemented(),
+                removeAll: unimplemented(),
+                loadFromPreferences: { [providerManager] }
             )
             $0.tunnelProviderConfigurator = .init(configure: { manager, operation in
                 let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
