@@ -22,14 +22,29 @@ import Domain
 import Ergonomics
 import SwiftUI
 import ComposableArchitecture
+import XCTestDynamicOverlay
 
-/// Use `refreshLogicalsIfNeeded()` to refresh logicals, but not more often than
-/// predefined in `Constants.Time.fullServerRefresh`.
-public class LogicalsRefresher {
+public struct LogicalsRefresher {
+    public var refreshLogicals: () async throws -> Void
+    public var shouldRefreshLogicals: () -> Bool
+
+    public init(refreshLogicals: @escaping () async throws -> Void = unimplemented(),
+         shouldRefreshLogicals: @escaping () -> Bool = unimplemented()) {
+        self.refreshLogicals = refreshLogicals
+        self.shouldRefreshLogicals = shouldRefreshLogicals
+    }
+}
+
+public struct LogicalsRefresherProvider {
 
     var refreshInterval = Constants.Time.fullServerRefresh
     @AppStorage("lastLogicalsRefresh") private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
+
+    var liveValue: LogicalsRefresher {
+        .init(refreshLogicals: refreshLogicals,
+              shouldRefreshLogicals: shouldRefreshLogicals)
+    }
 
     public func refreshLogicals() async throws {
         @Dependency(\.userLocationService) var userLocationService
@@ -48,15 +63,20 @@ public class LogicalsRefresher {
 
     public func shouldRefreshLogicals() -> Bool {
         let now = Dependency(\.date).wrappedValue.now
-        if now.timeIntervalSince1970 - lastLogicalsRefresh < refreshInterval {
-            return false
+        if now.timeIntervalSince1970 - lastLogicalsRefresh > refreshInterval {
+            return true
         }
-        return true
+        @Dependency(\.serverRepository) var repository
+        if repository.isEmpty {
+            return true
+        }
+        return false
     }
 }
 
 extension LogicalsRefresher: DependencyKey {
-    public static var liveValue: LogicalsRefresher = LogicalsRefresher()
+    public static var liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
+    public static var testValue: LogicalsRefresher = .init { } shouldRefreshLogicals: { false }
 }
 
 extension DependencyValues {

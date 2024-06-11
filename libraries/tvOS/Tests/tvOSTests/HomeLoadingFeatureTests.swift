@@ -18,7 +18,9 @@
 
 import XCTest
 import ComposableArchitecture
+@testable import CommonNetworking
 @testable import tvOS
+import tvOSTestSupport
 
 final class HomeLoadingFeatureTests: XCTestCase {
 
@@ -27,7 +29,7 @@ final class HomeLoadingFeatureTests: XCTestCase {
         let store = TestStore(initialState: HomeLoadingFeature.State.loading) {
             HomeLoadingFeature()
         } withDependencies: {
-            $0.serverRepository = .previewValue // .testValue results in unimplemented failures
+            $0.serverRepository = .empty()
             $0.countryNameProvider = .mock(codeToNameDictionary: [:])
         }
         await store.send(.finishedLoading(.success(Void()))) {
@@ -58,12 +60,15 @@ final class HomeLoadingFeatureTests: XCTestCase {
         let store = TestStore(initialState: HomeLoadingFeature.State.loading) {
             HomeLoadingFeature()
         } withDependencies: {
-            $0.serverRepository = .previewValue // .testValue results in unimplemented failures
-            $0.logicalsRefresher = .testValue
-            $0.date = .constant(.distantPast) // logicalsRefresher
+            $0.serverRepository = .empty()
+            $0.logicalsRefresher = LogicalsRefresher(
+                refreshLogicals: { throw "" },
+                shouldRefreshLogicals: { true })
+            $0.date = .constant(.distantFuture) // logicalsRefresher
             $0.continuousClock = clock
-            $0.logicalsClient = .testValue
-            $0.userLocationService = .testValue
+            $0.logicalsClient = LogicalsClient(fetchLogicals: { _ in
+                throw ""
+            })
         }
         await store.send(.loadingViewOnAppear)
         await store.receive(\.finishedLoading) {
@@ -72,6 +77,22 @@ final class HomeLoadingFeatureTests: XCTestCase {
         await clock.advance(by: HomeLoadingFeature.tryAgainPeriod)
         await store.receive(\.startLoading) {
             $0 = .loading
+        }
+    }
+
+    @MainActor
+    func testFinishedLoadingAfterOnAppearWithNotEmptyRepository() async {
+        let store = TestStore(initialState: HomeLoadingFeature.State.loading) {
+            HomeLoadingFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
+            $0.logicalsRefresher = LogicalsRefresher(
+                refreshLogicals: {},
+                shouldRefreshLogicals: { false })
+        }
+        await store.send(.loadingViewOnAppear)
+        await store.receive(\.finishedLoading) {
+            $0 = .loaded(.init())
         }
     }
 

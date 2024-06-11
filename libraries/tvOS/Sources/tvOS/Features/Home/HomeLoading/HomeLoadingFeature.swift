@@ -64,9 +64,8 @@ struct HomeLoadingFeature {
                 }
                 return .none
             case .loadingViewOnAppear:
-                @Dependency(\.serverRepository) var repository
                 @Dependency(\.logicalsRefresher) var refresher
-                if refresher.shouldRefreshLogicals() || repository.isEmpty {
+                if refresher.shouldRefreshLogicals() {
                     return .run { send in
                         await send(.finishedLoading(Result { try await refresher.refreshLogicals() }))
                     }

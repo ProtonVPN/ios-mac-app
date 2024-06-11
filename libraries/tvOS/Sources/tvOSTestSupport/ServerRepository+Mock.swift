@@ -1,5 +1,5 @@
 //
-//  Created on 21/05/2024.
+//  Created on 12/06/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,29 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import struct CommonNetworking.SessionAuthResponse
-import class VPNShared.AuthCredentials
+import Persistence
+import Domain
 
-extension AuthCredentials {
-
-    static let mock = AuthCredentials(
-        username: "username",
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        sessionId: "session_id",
-        userId: "user_id",
-        scopes: ["scope"],
-        mailboxPassword: nil
-    )
-}
-
-extension SessionAuthResponse {
-    static let mock = SessionAuthResponse(
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        uid: "session_id",
-        userID: "user_id",
-        scopes: ["scope"]
-    )
+extension ServerRepository {
+    public static func empty() -> Self {
+        .init(serverCount: { 0 }, groups: { _, _ in [] })
+    }
+    public static func notEmpty() -> Self {
+        .init(serverCount: { 1 }, groups: { _, _ in [] })
+    }
 }

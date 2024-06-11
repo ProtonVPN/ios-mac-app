@@ -40,6 +40,10 @@ struct HomeFeature {
           case errorMessage
         }
     }
+    
+    static let connectionFailedAlert = AlertState<Action.Alert> {
+        TextState("Connection failed")
+    }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.connect, action: \.connect) {
@@ -61,28 +65,24 @@ struct HomeFeature {
                 }
             case .countryList:
                 return .none
-            case .connect(.connectionFailed):
-                state.alert = AlertState<Action.Alert> {
-                    TextState("Connection failed")
-                }
+            case .connect(.finishedConnecting(.failure)):
+                state.alert = Self.connectionFailedAlert
                 return .none
             case .connect:
                 return .none
-            case .protectionStatus(.userTappedButton):
-                return .run { [connectionState = state.connect.connectionState] send in
-                    switch connectionState ?? .disconnected {
-                    case .connected:
+            case .protectionStatus(let action):
+                return .run { send in
+                    switch action {
+                    case .userClickedDisconnect:
                         await send(.connect(.userClickedDisconnect))
-                    case .connecting:
+                    case .userClickedCancel:
                         await send(.connect(.userClickedCancel))
-                    case .disconnected:
+                    case .userClickedConnect:
                         await send(.connect(.userClickedConnect(nil)))
-                    case .disconnecting:
+                    default:
                         break
                     }
                 }
-            case .protectionStatus:
-                return .none
             }
         }
         .ifLet(\.$alert, action: \.alert)

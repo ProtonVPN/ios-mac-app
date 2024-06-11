@@ -10,9 +10,8 @@ let package = Package(
         .tvOS(.v17)
     ],
     products: [
-        .library(
-            name: "tvOS",
-            targets: ["tvOS"]),
+        .library(name: "tvOS", targets: ["tvOS"]),
+        .library(name: "tvOSTestSupport", targets: ["tvOSTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
@@ -40,10 +39,15 @@ let package = Package(
             resources: [
                 .process("Resources/Assets.xcassets")
             ]),
+        .target(
+            name: "tvOSTestSupport",
+            dependencies: ["tvOS"]
+        ),
         .testTarget(
             name: "tvOSTests",
             dependencies: [
                 "tvOS",
+                "tvOSTestSupport",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]),
     ]

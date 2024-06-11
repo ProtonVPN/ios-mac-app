@@ -73,18 +73,6 @@ public struct CoreNetworkingWrapper: VPNNetworking {
 
 /// If using this dependency, make sure `liveValue` owns the only `CoreNetworking` instance.
 public enum VPNNetworkingKey: DependencyKey {
-    public static var testValue: VPNNetworking {
-        let networking = CoreNetworking(
-            delegate: Dependency(\.networkingDelegate).wrappedValue,
-            appInfo: Dependency(\.appInfo).wrappedValue,
-            authKeychain: Dependency(\.authKeychain).wrappedValue,
-            unauthKeychain: Dependency(\.unauthKeychain).wrappedValue,
-            pinApiEndpoints: false
-        )
-
-        return CoreNetworkingWrapper(wrapped: networking)
-    }
-
     public static var liveValue: VPNNetworking {
         #if TLS_PIN_DISABLE
         let pinAPIEndpoints = false
