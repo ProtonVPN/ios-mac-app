@@ -552,6 +552,16 @@ public enum Localizable {
   public static var homeUnprotectedHeader: String { return Localizable.tr("Localizable", "_home_unprotected_header", fallback: "You are unprotected") }
   /// Button in Kill switch error alert
   public static var ignore: String { return Localizable.tr("Localizable", "_ignore", fallback: "Ignore") }
+  /// Button title for 'Continue with IKEv2'
+  public static var ikeDeprecationAlertContinueButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_continue_button_title", fallback: "Continue with IKEv2") }
+  /// Button title for 'Enable Smart protocol'
+  public static var ikeDeprecationAlertEnableSmartButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_enable_smart_button_title", fallback: "Enable Smart protocol") }
+  /// Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
+  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more") }
+  /// Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
+  public static var ikeDeprecationAlertMessageLinkText: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message_link_text", fallback: "Learn more") }
+  /// Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol.
+  public static var ikeDeprecationAlertTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_title", fallback: "Enable IKEv2?") }
   /// iOS Settings -> Protocol: IKEv2 option
   public static var ikev2: String { return Localizable.tr("Localizable", "_ikev2", fallback: "IKEv2") }
   /// Information
