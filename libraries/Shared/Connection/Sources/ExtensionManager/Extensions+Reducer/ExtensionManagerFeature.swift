@@ -24,6 +24,7 @@ import Dependencies
 
 import struct Domain.VPNServer
 import struct Domain.VPNConnectionFeatures
+import struct ConnectionFoundations.LogicalServerInfo
 import ExtensionIPC
 import let ConnectionFoundations.log
 
@@ -38,8 +39,8 @@ public struct ExtensionFeature: Reducer, Sendable {
     public enum State: Equatable, Sendable {
         case disconnected
         case disconnecting
-        case connecting(VPNServer, VPNConnectionFeatures)
-        case connected
+        case connecting
+        case connected(LogicalServerInfo)
     }
 
     @CasePathable
@@ -47,7 +48,8 @@ public struct ExtensionFeature: Reducer, Sendable {
         case startObservingStateChanges
         case stopObservingStateChanges
         case connect(VPNServer, VPNConnectionFeatures)
-        case tunnelStartRequestFinished(Result<VPNSession, Error>)
+        case tunnelStartRequestFinished(Result<Void, Error>)
+        case connectionFinished(Result<LogicalServerInfo, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect
     }
@@ -58,7 +60,7 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .startObservingStateChanges:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
-                    let status = try await self.tunnelManager.session.status
+                    let status = try await self.tunnelManager.status
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
@@ -75,26 +77,33 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .cancel(id: CancelID.observation)
 
             case .connect(let server, let features):
-                state = .connecting(server, features)
+                state = .connecting
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(to: server)
                     }))
                 }
 
-            case .tunnelStartRequestFinished(.failure(let error)):
-                log.error("Failed to start tunnel", category: .connection, metadata: ["error": "\(error)"])
+            case .tunnelStartRequestFinished(.success):
+                // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
-            case .tunnelStartRequestFinished(.success(let session)):
+            case .connectionFinished(.success(let logicalServerInfo)):
+                // Tunnel has started, and responded with information about what logical and server it has connected to
+                state = .connected(logicalServerInfo)
                 return .none
 
             case .tunnelStatusChanged(.connecting):
+                state = .connecting
                 return .none
 
             case .tunnelStatusChanged(.connected):
-                state = .connected
-                return .none
+                state = .connecting
+                return .run { send in
+                    await send(.connectionFinished(Result {
+                        try await tunnelManager.connectedServer
+                    }))
+                }
 
             case .tunnelStatusChanged(.disconnecting):
                 state = .disconnecting
@@ -107,7 +116,7 @@ public struct ExtensionFeature: Reducer, Sendable {
 
             case .tunnelStatusChanged(.disconnected):
                 state = .disconnected
-                // TODO: Detect if we initiated disconnection, or someone else. Log last disconnection error
+                // TODO: Detect if we initiated the disconnection. If it was unexpected, log last disconnection error
                 return .none
 
             case .tunnelStatusChanged(.reasserting):
@@ -117,6 +126,15 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .disconnect:
                 state = .disconnecting
                 return .run { _ in try await tunnelManager.stopTunnel() }
+
+            case .tunnelStartRequestFinished(.failure(let error)):
+                log.error("Failed to start tunnel", category: .connection, metadata: ["error": "\(error)"])
+                return .none
+
+            case .connectionFinished(.failure(let error)):
+                // TODO: Recovery? We don't know what endpoint LocalAgent should connect to
+                log.error("Failed to determine active server", category: .connection, metadata: ["error": "\(error)"])
+                return .none
 
             case .tunnelStatusChanged(let unknownFutureStatus):
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])

@@ -22,27 +22,35 @@ import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
 
+import ExtensionIPC
 import struct Domain.VPNServer
+import struct ConnectionFoundations.LogicalServerInfo
 
 final class MockTunnelManager: TunnelManager {
-    var connection: MockVPNConnection
+    var connection: VPNSessionMock
 
-    init(connection: MockVPNConnection = .init(status: .disconnected)) {
+    init(connection: VPNSessionMock = .init(status: .disconnected)) {
         self.connection = connection
     }
 
-    func startTunnel(to server: VPNServer) async throws -> VPNSession {
+    func startTunnel(to server: VPNServer) async throws {
+        connection.connectedServer = .init(logicalID: server.id, serverID: server.endpoints.first!.id)
         try connection.startTunnel()
-        return connection
     }
 
     func stopTunnel() async throws {
-        connection.status = .disconnected
+        connection.stopTunnel()
     }
 
-    var session: VPNSession {
+    var status: NEVPNStatus {
         get async throws {
-            connection
+            connection.status
+        }
+    }
+
+    var connectedServer: LogicalServerInfo {
+        get async throws {
+            connection.connectedServer
         }
     }
 
