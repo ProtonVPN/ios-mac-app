@@ -26,4 +26,34 @@ extension ServerRepository {
     public static func notEmpty() -> Self {
         .init(serverCount: { 1 }, groups: { _, _ in [] })
     }
+    public static func emptyWithUpsert() -> Self {
+        .init(serverCount: { 0 }, upsertServers: { _ in }, groups: { _, _ in [] })
+    }
+}
+
+extension VPNServer {
+    static var mock: Self {
+        .init(logical: .mock, endpoints: [])
+    }
+}
+
+extension Logical {
+    static var mock: Self {
+        .init(id: "",
+              name: "",
+              domain: "",
+              load: 0,
+              entryCountryCode: "",
+              exitCountryCode: "",
+              tier: 0,
+              score: 0,
+              status: 0,
+              feature: [],
+              city: nil,
+              hostCountry: nil,
+              translatedCity: nil,
+              latitude: 0,
+              longitude: 0,
+              gatewayName: nil)
+    }
 }
