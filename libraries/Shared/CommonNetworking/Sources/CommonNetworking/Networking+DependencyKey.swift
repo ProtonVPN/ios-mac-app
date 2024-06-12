@@ -23,9 +23,14 @@ import XCTestDynamicOverlay
 
 import ProtonCoreServices
 import ProtonCoreNetworking
+import ProtonCoreAuthentication
+import ProtonCoreDataModel
+
 
 public protocol VPNNetworking {
     func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
+    func userTier() async throws -> Int
+    func userDisplayName() async throws -> String?
     func set(session: Session)
     func perform<T: Decodable>(request: Request) async throws -> T
 }
@@ -37,7 +42,24 @@ public struct CoreNetworkingWrapper: VPNNetworking {
             wrapped.apiService.acquireSessionIfNeeded(completion: continuation.resume(with:))
         }
     }
-    
+
+    public func userDisplayName() async throws -> String? {
+        let user = try await withCheckedThrowingContinuation { continuation in
+            Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
+        }
+        return user.displayName
+    }
+
+    // TODO: Hopefully when we start supporting free users we can ignore the MaxTier so this code would go away
+    public func userTier() async throws -> Int {
+        let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
+        guard let vpn: [String: Any] = try json[throwing: "VPN"],
+              let maxTier: Int = try vpn[throwing: "MaxTier"] else {
+            return 0
+        }
+        return maxTier
+    }
+
     public func set(session: Session) {
         wrapped.apiService.setSessionUID(uid: session.uid)
     }
@@ -74,5 +96,15 @@ extension DependencyValues {
     public var networking: VPNNetworking {
         get { self[VPNNetworkingKey.self] }
         set { self[VPNNetworkingKey.self] = newValue }
+    }
+}
+
+final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate in legacy common, but we don't want to import that beast
+    var path: String {
+        return "/vpn/v2"
+    }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
     }
 }

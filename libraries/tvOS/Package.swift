@@ -18,8 +18,10 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Shared/CommonNetworking"),
+        .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/PMLogger"),
     ],
     targets: [
         .target(
@@ -27,8 +29,9 @@ let package = Package(
             dependencies: [
                 "Theme",
                 "CommonNetworking",
+                "Connection",
+                "Persistence",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Persistence", package: "Persistence"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
                 .core(module: "UIFoundations"),

@@ -51,6 +51,8 @@ struct SessionNetworkingFeature: Reducer {
         case sessionFetched(Result<SessionAcquiringResult, Error>)
         case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
         case sessionExpired
+        case userTierRetrieved(Int, CommonNetworking.Session)
+        case userDisplayNameRetrieved(String?)
     }
 
     @Dependency(\.networking) var networking
@@ -77,7 +79,13 @@ struct SessionNetworkingFeature: Reducer {
                     ? .unauth(uid: credentials.sessionID)
                     : .auth(uid: credentials.sessionID)
                 state = .authenticated(session)
-                return .none
+                return .run { send in
+                    // we have a session, now get the user tier
+                    let userTier = try await networking.userTier()
+                    await send(.userTierRetrieved(userTier, session))
+                } catch: { error, send in
+                    log.debug("Couldn't retrieve user tier after user already logged in in the previous session, ignoring", category: .api)
+                }
 
             case .sessionFetched(.success(.sessionUnavailableAndNotFetched)):
                 state = .unauthenticated(.sessionUnavailable)
@@ -95,12 +103,31 @@ struct SessionNetworkingFeature: Reducer {
             case .forkedSessionAuthenticated(.success(let credentials)):
                 // We forked a session ourselves, and web client just authenticated it
                 let session = Session.auth(uid: credentials.sessionId)
-                state = .authenticated(session)
-                networking.set(session: session)
-                unauthKeychain.clear()
                 try? authKeychain.store(credentials)
+                return .run { send in
+                    // we have a session, now get the user tier
+                    let (userTier, userDisplayName) = try await (networking.userTier(), 
+                                                                 networking.userDisplayName())
+                    _ = await (send(.userTierRetrieved(userTier, session)),
+                               send(.userDisplayNameRetrieved(userDisplayName)))
+                } catch: { error, send in
+                    await send(.startLogout)
+                }
+            case .userTierRetrieved(let tier, let session):
+                // TODO: This is an additional step before logging user in, when we'll start to support free users, we can remove this code
+                if tier > 0 {
+                    state = .authenticated(session)
+                    networking.set(session: session)
+                    unauthKeychain.clear()
+                    return .none
+                } else {
+                    authKeychain.clear()
+                    return .run { send in
+                        await send(.startLogout) // tier detected to be free, log the user out
+                    }
+                }
+            case .userDisplayNameRetrieved:
                 return .none
-
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }

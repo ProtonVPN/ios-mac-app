@@ -28,7 +28,8 @@ struct SettingsFeature {
 
     @ObservableState
     struct State: Equatable {
-        @Shared(.appStorage("username")) var userName: String?
+        @Shared(.appStorage("userDisplayName")) var userDisplayName: String?
+        @Shared(.appStorage("userTier")) var userTier: Int?
 
         @Presents var destination: Destination.State?
         @Presents var alert: AlertState<Action.Alert>?
@@ -97,7 +98,8 @@ struct SettingsFeature {
                 return .none
             case .finishSignOut:
                 state.isLoading = false
-                state.userName = nil
+                state.userDisplayName = nil
+                state.userTier = nil
                 return .none
             case .showProgressView:
                 state.isLoading = true

@@ -22,23 +22,15 @@ import Foundation
 public struct TruncatedIp {
     public let value: String
 
-    public init?(ip: String?) {
-        guard let ip,
-              let value = TruncatedIp.truncatedIp(ip) else { return nil }
-        self.value = value
-    }
-
-    // MARK: -
-
-    private static func truncatedIp(_ ip: String?) -> String? {
-        guard let ip else { return nil }
+    public init?(ip: String) {
         // Remove the last octet
         if let index = ip.lastIndex(of: ".") { // IPv4
-            return ip.replacingCharacters(in: index..<ip.endIndex, with: ".0")
+            value = ip.replacingCharacters(in: index..<ip.endIndex, with: ".0")
         } else if let index = ip.lastIndex(of: ":") { // IPv6
-            return ip.replacingCharacters(in: index..<ip.endIndex, with: "::")
+            value = ip.replacingCharacters(in: index..<ip.endIndex, with: "::")
         } else {
-            return ip
+            value = ip
         }
+        return nil
     }
 }

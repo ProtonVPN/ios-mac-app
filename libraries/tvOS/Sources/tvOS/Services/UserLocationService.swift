@@ -19,24 +19,25 @@
 import Foundation
 import Dependencies
 import Domain
+import ComposableArchitecture
 
 public class UserLocationService {
 
-    private var userLocation: UserLocation?
+    @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
 
-    /// Get user location (ip)
+    /// Update user location (ip)
     ///
     /// If it is not known, tries to get it
-    public func getUserLocation() async throws -> UserLocation? {
+    public func updateUserLocation() async throws {
         if userLocation == nil {
             try await refresh()
         }
-        return userLocation
     }
 
+    @MainActor
     private func refresh() async throws {
         @Dependency(\.locationClient) var client
-        userLocation = try await client.fetchLocation()
+        self.userLocation = try await client.fetchLocation()
     }
 }
 

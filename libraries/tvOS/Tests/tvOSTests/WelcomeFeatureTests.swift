@@ -28,7 +28,7 @@ final class WelcomeFeatureTests: XCTestCase {
             WelcomeFeature()
         }
         await store.send(.showCreateAccount) {
-            $0.destination = .createAccount(.init())
+            $0.destination = .welcomeInfo(.createAccount)
         }
     }
 
@@ -41,9 +41,7 @@ final class WelcomeFeatureTests: XCTestCase {
             $0.destination = .signIn(.init(authentication: .loadingSignInCode))
         }
 
-        await store.send(.destination(.presented(.signIn(.signInFinished(.success(.mock)))))) {
-            $0.destination = nil
-        }
+        await store.send(.destination(.presented(.signIn(.signInFinished(.success(.mock))))))
     }
 
     @MainActor
