@@ -258,7 +258,7 @@ final class ConnectionSettingsViewModel {
         case .smartProtocol:
             self.confirmEnableSmartProtocol(completion)
         case .vpnProtocol(let transportProtocol):
-            vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { [weak self] result in
+            let changeCompletionHandler: (Result<(), Error>) -> Void = { [weak self] result in
                 self?.sysexPending = false
                 if case .success = result {
                     self?.propertiesManager.smartProtocol = false
@@ -266,8 +266,19 @@ final class ConnectionSettingsViewModel {
                 }
                 completion(result)
             }
+            if transportProtocol == .ike { // Show IKEv2 deprecation warning
+                self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+                    SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart instead of IKEv2")
+                    self?.confirmEnableSmartProtocol(completion)
+                }, continueHandler: { [weak self] in
+                    SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")
+                    self?.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
+                }))
+            } else {
+                self.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
+            }
         }
-    }    
+    }
         
     @objc private func settingsChanged() {
         reloadNeeded?()

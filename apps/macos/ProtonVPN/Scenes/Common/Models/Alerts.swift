@@ -63,6 +63,29 @@ public class QuitWarningAlert: SystemAlert {
     }
 }
 
+public class IkeDeprecatedAlert: SystemAlert {
+    public var title: String? = Localizable.ikeDeprecationAlertTitle
+    public var message: String? = Localizable.ikeDeprecationAlertMessage
+    public let linkText: String = Localizable.ikeDeprecationAlertMessageLinkText
+    public let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle
+    public let dismissTitle: String = Localizable.ikeDeprecationAlertContinueButtonTitle
+
+    public var actions = [AlertAction]()
+    public var isError: Bool = false
+    public let enableSmartProtocol: () -> Void
+    public var dismiss: (() -> Void)?
+
+    public static let kbURLString = "https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios"
+
+    public init(enableSmartProtocolHandler: @escaping () -> Void, continueHandler: @escaping () -> Void) {
+        self.enableSmartProtocol = enableSmartProtocolHandler
+        self.dismiss = continueHandler
+
+        actions.append(AlertAction(title: confirmTitle, style: .confirmative, handler: enableSmartProtocolHandler))
+        actions.append(AlertAction(title: dismissTitle, style: .secondary, handler: continueHandler))
+    }
+}
+
 public class ForceUpgradeAlert: SystemAlert {
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.quitWarning

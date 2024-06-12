@@ -59,5 +59,12 @@ public final class SentryHelper {
         // if crash reporting is enabled.
         SentrySDK.capture(error: error)
     }
+    
+    public func log(message: String, extra: [String: Any] = [:]) {
+        let event = Event()
+        event.message = SentryMessage(formatted: message)
+        event.extra = extra
+        SentrySDK.capture(event: event)
+    }
 
 }
