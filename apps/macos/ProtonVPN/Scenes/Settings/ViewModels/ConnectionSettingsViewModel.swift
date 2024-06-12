@@ -268,11 +268,17 @@ final class ConnectionSettingsViewModel {
             }
             if transportProtocol == .ike { // Show IKEv2 deprecation warning
                 self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
                     SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart instead of IKEv2")
-                    self?.confirmEnableSmartProtocol(completion)
+                    self.confirmEnableSmartProtocol(completion)
                 }, continueHandler: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
                     SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")
-                    self?.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
+                    self.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
                 }))
             } else {
                 self.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
