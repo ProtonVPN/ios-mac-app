@@ -59,9 +59,9 @@ final class WelcomeFeatureTests: XCTestCase {
 
     @MainActor
     func testCodeExpired() async {
-        let store = TestStore(initialState: WelcomeFeature.State(destination: .signIn(.init(authentication: .loadingSignInCode)))) {
+        let store = TestStore(initialState: WelcomeFeature.State(destination: .signIn(.init(authentication: .waitingForAuthentication(code: .init(selector: "", userCode: ""), remainingAttempts: 0))))) {
             WelcomeFeature()
-        }
+        } 
         await store.send(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))) {
             $0.destination = .codeExpired(.init())
         }

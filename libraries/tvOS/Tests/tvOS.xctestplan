@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "C0CB7C60-A9C2-4F77-AD5C-550BA1558504",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "tvOS",
+          "name" : "tvOS"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "tvOSTests",
+        "name" : "tvOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}

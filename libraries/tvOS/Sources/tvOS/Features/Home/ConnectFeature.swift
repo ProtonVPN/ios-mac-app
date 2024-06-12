@@ -25,28 +25,27 @@ import SwiftUI
     struct State: Equatable {
         @Shared(.inMemory("connectionState")) var connectionState: ConnectionState?
     }
-    
+
     enum ConnectionState: Codable, Equatable {
         case connected(countryCode: String, ip: String)
         case connecting(countryCode: String?)
         case disconnected
         case disconnecting
     }
-    
+
     enum Action {
         case userClickedConnect(CountryListItem?)
         case userClickedCancel
         case userClickedDisconnect
-        case connectionEstablished(countryCode: String, ip: String)
-        case connectionFailed
+        case finishedConnecting(Result<(countryCode: String, ip: String), Error>)
         case connectionTerminated
         case initialize
     }
-    
+
     @Dependency(\.connectionClient) var client
-    
+
     private enum CancelID { case connect }
-    
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -60,12 +59,21 @@ import SwiftUI
                     state.connectionState = .connecting(countryCode: item?.code)
                 }
                 return .run { send in
-                    let (countryCode, ip) = try await client.connect(item?.code)
-                    await send(.connectionEstablished(countryCode: countryCode, ip: ip))
-                } catch: { error, send in
-                    await send(.connectionFailed)
+                    await send(.finishedConnecting(Result { try await client.connect(item?.code) }))
                 }
-                    .cancellable(id: CancelID.connect)
+                .cancellable(id: CancelID.connect)
+            case .finishedConnecting(let result):
+                switch result {
+                case let .success((countryCode, ip)):
+                    withAnimation {
+                        state.connectionState = .connected(countryCode: countryCode, ip: ip)
+                    }
+                case .failure:
+                    withAnimation {
+                        state.connectionState = .disconnected
+                    }
+                }
+                return .none
             case .userClickedCancel:
                 withAnimation {
                     state.connectionState = .disconnected
@@ -79,12 +87,7 @@ import SwiftUI
                     try await client.disconnect()
                     await send(.connectionTerminated)
                 }
-            case .connectionEstablished(let countryCode, let ip):
-                withAnimation {
-                    state.connectionState = .connected(countryCode: countryCode, ip: ip)
-                }
-                return .none
-            case .connectionTerminated, .connectionFailed:
+            case .connectionTerminated:
                 withAnimation {
                     state.connectionState = .disconnected
                 }

@@ -10,12 +10,12 @@ let package = Package(
         .tvOS(.v17)
     ],
     products: [
-        .library(
-            name: "tvOS",
-            targets: ["tvOS"]),
+        .library(name: "tvOS", targets: ["tvOS"]),
+        .library(name: "tvOSTestSupport", targets: ["tvOSTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.16.0"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),
@@ -40,11 +40,18 @@ let package = Package(
             resources: [
                 .process("Resources/Assets.xcassets")
             ]),
+        .target(
+            name: "tvOSTestSupport",
+            dependencies: ["tvOS"]
+        ),
         .testTarget(
             name: "tvOSTests",
             dependencies: [
                 "tvOS",
+                "tvOSTestSupport",
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]),
     ]
 )

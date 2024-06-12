@@ -30,12 +30,34 @@ extension ConnectionClient: DependencyKey {
     static var liveValue: ConnectionClient {
         return ConnectionClient(
             disconnect: {
-                try await Task.sleep(for: .seconds(1))
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: .seconds(1))
             }, connect: { server in
-                try await Task.sleep(for: .seconds(1))
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: .seconds(1))
                 if Task.isCancelled {
                     throw "Failed to connect"
                 }
+                if server == "Fastest" {
+                    throw "Failed to connect"
+                } else if let server {
+                    return (server, "1.2.3.4")
+                } else {
+                    return ("AL", "1.2.3.4")
+                }
+            }
+        )
+    }
+
+    static var testValue: ConnectionClient {
+        return ConnectionClient(
+            disconnect: { 
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: .seconds(1))
+            },
+            connect: { server in
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: .seconds(1))
                 if server == "Fastest" {
                     throw "Failed to connect"
                 } else if let server {
