@@ -271,7 +271,7 @@ final class ConnectionSettingsViewModel {
                     guard let self = self else {
                         return
                     }
-                    SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart instead of IKEv2")
+                    SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
                     self.confirmEnableSmartProtocol(completion)
                 }, continueHandler: { [weak self] in
                     guard let self = self else {
