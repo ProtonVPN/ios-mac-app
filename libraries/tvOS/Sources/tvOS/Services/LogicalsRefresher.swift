@@ -22,18 +22,30 @@ import Domain
 import Ergonomics
 import SwiftUI
 import ComposableArchitecture
+import XCTestDynamicOverlay
 
-/// Use `refreshLogicalsIfNeeded()` to refresh logicals, but not more often than
-/// predefined in `Constants.Time.fullServerRefresh`.
-public class LogicalsRefresher {
+public struct LogicalsRefresher {
+    public var refreshLogicals: () async throws -> Void
+    public var shouldRefreshLogicals: () -> Bool
 
-    var refreshInterval = Constants.Time.fullServerRefresh
-    @AppStorage("lastLogicalsRefresh") private var lastLogicalsRefresh: TimeInterval = 0
+    public init(refreshLogicals: @escaping () async throws -> Void = unimplemented(),
+         shouldRefreshLogicals: @escaping () -> Bool = unimplemented()) {
+        self.refreshLogicals = refreshLogicals
+        self.shouldRefreshLogicals = shouldRefreshLogicals
+    }
+}
+
+public struct LogicalsRefresherProvider {
+
+    @Shared(.appStorage("lastLogicalsRefresh")) private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
 
-    public func refreshLogicalsIfNeeded() async throws {
-        guard shouldRefreshLogicals() else { return }
+    var liveValue: LogicalsRefresher {
+        .init(refreshLogicals: refreshLogicals,
+              shouldRefreshLogicals: shouldRefreshLogicals)
+    }
 
+    public func refreshLogicals() async throws {
         @Dependency(\.userLocationService) var userLocationService
         try? await userLocationService.updateUserLocation()
 
@@ -50,15 +62,20 @@ public class LogicalsRefresher {
 
     public func shouldRefreshLogicals() -> Bool {
         let now = Dependency(\.date).wrappedValue.now
-        if now.timeIntervalSince1970 - lastLogicalsRefresh < refreshInterval {
-            return false
+        let refreshInterval = Constants.Time.fullServerRefresh
+        if now.timeIntervalSince1970 - lastLogicalsRefresh > refreshInterval {
+            return true
         }
-        return true
+        @Dependency(\.serverRepository) var repository
+        if repository.isEmpty {
+            return true
+        }
+        return false
     }
 }
 
 extension LogicalsRefresher: DependencyKey {
-    public static var liveValue: LogicalsRefresher = LogicalsRefresher()
+    public static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
 }
 
 extension DependencyValues {

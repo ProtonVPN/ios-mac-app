@@ -33,6 +33,9 @@ struct ProtectionStatusFeature {
 
     enum Action {
         case userTappedButton
+        case userClickedDisconnect
+        case userClickedCancel
+        case userClickedConnect
         case onAppear
         case connectionStateUpdated(ConnectFeature.ConnectionState?)
     }
@@ -41,7 +44,18 @@ struct ProtectionStatusFeature {
         Reduce { state, action in
             switch action {
             case .userTappedButton:
-                return .none
+                return .run { [connectionState = state.connectionState] send in
+                    switch connectionState ?? .disconnected {
+                    case .connected:
+                        await send(.userClickedDisconnect)
+                    case .connecting:
+                        await send(.userClickedCancel)
+                    case .disconnected:
+                        await send(.userClickedConnect)
+                    case .disconnecting:
+                        break
+                    }
+                }
             case .connectionStateUpdated:
                 return .none
             case .onAppear:
@@ -49,6 +63,12 @@ struct ProtectionStatusFeature {
                     @Dependency(\.userLocationService) var userLocationService
                     try? await userLocationService.updateUserLocation()
                 }
+            case .userClickedDisconnect:
+                return .none
+            case .userClickedCancel:
+                return .none
+            case .userClickedConnect:
+                return .none
             }
         }
     }

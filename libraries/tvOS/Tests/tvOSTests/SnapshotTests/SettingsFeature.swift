@@ -1,5 +1,5 @@
 //
-//  Created on 21/05/2024.
+//  Created on 07/06/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,29 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import struct CommonNetworking.SessionAuthResponse
-import class VPNShared.AuthCredentials
+import XCTest
+import SnapshotTesting
+import ComposableArchitecture
+@testable import tvOS
 
-extension AuthCredentials {
+class SettingsFeatureSnapshotTests: BaseTestClass {
+    
+    override func setUp() {
+        super.setUp()
+    }
+        
+    func testSettingsView() {
+        let store = Store(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        let settingsView = SettingsView(store: store)
+            .frame(.rect(width: 1920, height: 1080))
 
-    static let mock = AuthCredentials(
-        username: "username",
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        sessionId: "session_id",
-        userId: "user_id",
-        scopes: ["scope"],
-        mailboxPassword: nil
-    )
-}
-
-extension SessionAuthResponse {
-    static let mock = SessionAuthResponse(
-        accessToken: "access_token",
-        refreshToken: "refresh_token",
-        uid: "session_id",
-        userID: "user_id",
-        scopes: ["scope"]
-    )
+        assertSnapshot(of: settingsView, as: .image(traits: traitDarkMode))
+      }
 }

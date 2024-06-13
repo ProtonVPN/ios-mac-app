@@ -56,13 +56,14 @@ struct CountryListView: View {
                 itemList(items: store.recommendedSection.items, sectionIndex: 0)
             } header: {
                 CountryListSectionHeaderView(name: store.recommendedSection.name)
+                    .opacity((focusedIndex?.section ?? 0) == 0 ? 1 : Self.unfocusedOpacity)
             }
-
 
             Section {
                 itemList(items: store.countriesSection.items, sectionIndex: 1)
             } header: {
                 CountryListSectionHeaderView(name: store.countriesSection.name)
+                    .opacity(focusedIndex?.section == 1 ? 1 : Self.unfocusedOpacity)
             }
         }
     }
@@ -78,7 +79,7 @@ struct CountryListView: View {
                     item: item,
                     isFocused: focusedIndex?.item == item // this only affects the country name and connected label
                 )
-                .opacity(calculateOpacity(forCoordinate: coordinate))
+                .opacity(opacity(forCoordinate: coordinate))
             }
             .buttonStyle(CountryListButtonStyle())
             .padding(.top, .themeSpacing8)
@@ -89,7 +90,7 @@ struct CountryListView: View {
 
     /// We "highlight" current row by making it fully opaque, while other rows and
     /// sections are half transparent.
-    private func calculateOpacity(forCoordinate coordinate: ItemCoordinate) -> Double {
+    private func opacity(forCoordinate coordinate: ItemCoordinate) -> Double {
         guard let focused = focusedIndex else {
             if coordinate.section == 0 && coordinate.row == 0 {
                 return 1 // by default highlight the recommended section
