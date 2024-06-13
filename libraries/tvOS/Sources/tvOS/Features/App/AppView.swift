@@ -21,7 +21,7 @@ import SwiftUI
 
 public struct AppView: View {
     var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
-        AppFeature()
+        AppFeature()._printChanges()
     }
 
     @Environment(\.scenePhase) var scenePhase
@@ -50,6 +50,8 @@ public struct AppView: View {
     }
 
     private func startup() {
+        store.send(.connection(.tunnel(.startObservingStateChanges)))
+        store.send(.connection(.localAgent(.startObservingEvents)))
         store.send(.networking(.startAcquiringSession))
     }
 
