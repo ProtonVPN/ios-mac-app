@@ -398,8 +398,7 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: IkeDeprecatedAlert) {
-        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert
-        ))
+        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)
     }
 
