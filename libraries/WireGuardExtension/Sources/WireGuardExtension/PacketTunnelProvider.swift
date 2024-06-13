@@ -18,6 +18,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider {
 
     open override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         setupLogging()
+        completionHandler(nil)
     }
 
     open override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {

@@ -66,7 +66,7 @@ import Persistence
 
     var body: some Reducer<State, Action> {
         Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()
+            ConnectionFeature()._printChanges()
         }
         Scope(state: \.networking, action: \.networking) {
             SessionNetworkingFeature()

@@ -21,7 +21,7 @@ import SwiftUI
 
 public struct AppView: View {
     var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
-        AppFeature()._printChanges()
+        AppFeature()
     }
 
     @Environment(\.scenePhase) var scenePhase
