@@ -32,7 +32,7 @@ extension DatabaseConfiguration {
     ///  - Note: duplicates DatabaseConfiguration.live from LegacyCommon, with the omission
     ///     of logging and Sentry error reporting.
     public static var live: DatabaseConfiguration {
-        let directoryURLs = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
         guard let directoryURL = directoryURLs.first else {
             fatalError("Failed to initialise app DB: cannot find URL for application support directory")
         }
