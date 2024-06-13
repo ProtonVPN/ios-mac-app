@@ -46,7 +46,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 }
             )
         } operation: { 
-            try await PacketTunnelManager().session
+            try await PacketTunnelManager().status
         }
 
         await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)
@@ -67,7 +67,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 }
             )
         } operation: {
-            try await PacketTunnelManager().session
+            try await PacketTunnelManager().status
         }
 
         await fulfillment(of: [existingManagersLoaded], timeout: 1)
@@ -150,7 +150,7 @@ extension MockTunnelProviderManager {
         configuration.providerBundleIdentifier = bundleIdentifier
 
         return MockTunnelProviderManager(
-            session: MockVPNConnection(status: .disconnected),
+            session: VPNSessionMock(status: .disconnected),
             vpnProtocolConfiguration: configuration,
             isOnDemandEnabled: true,
             isEnabled: true,

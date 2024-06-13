@@ -24,12 +24,14 @@ import Dependencies
 
 import struct Domain.VPNServer
 import struct Domain.VPNConnectionFeatures
-
-import let ConnectionFoundations.log
+import ConnectionFoundations
+import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
 
 public struct ConnectionFeature: Reducer, Sendable {
+    @Dependency(\.certificateAuthentication) var certificateAuthentication
+    @Dependency(\.serverIdentifier) var serverIdentifier
 
     public init() { }
 
@@ -71,20 +73,23 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .send(.tunnel(.disconnect))
                 )
 
+            case .tunnel(.connectionFinished(.success(let logicalServerInfo))):
+                // certificateAuthentication.
+                guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
+                    // TODO: log, disconnect, or handle this in an otherwise sensible way
+                    fatalError("We don't have information about this server in our DB")
+                }
+                return .run { send in
+                    // TODO: Cert-Auth - ensure correct features, handle failures
+                    let endpoint = server.endpoints.first!
+                    let authData = try await certificateAuthentication.loadAuthenticationData()
+                    await send(.localAgent(.connect(endpoint, authData)))
+                }
+
             case .tunnel(.tunnelStartRequestFinished(.success(let session))):
-                // TODO: certificate authentication - update reference to session
+                print(session)
                 return .none
-
-            case .tunnel(.tunnelStatusChanged(.connected)):
-                // TODO: certificate authentication
-                state.localAgent = .connected // TODO: local agent integration
-                return .send(.stateChanged(state.connectionState))
-
-            case .tunnel(.tunnelStatusChanged):
-                // for now, just send stateChanged on every state transition
-                // TODO: Only send stateChanged on relevant state changes (e.g. local agent connected, disconnected)
-                return .send(.stateChanged(state.connectionState))
-
+                
             case .tunnel:
                 return .none
 
@@ -96,16 +101,6 @@ public struct ConnectionFeature: Reducer, Sendable {
             }
         }
     }
-}
-
-extension VPNConnectionFeatures {
-    public static let mock: Self = VPNConnectionFeatures(
-        netshield: .level1,
-        vpnAccelerator: true,
-        bouncing: "1",
-        natType: .moderateNAT,
-        safeMode: false
-    )
 }
 
 @CasePathable
