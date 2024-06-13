@@ -45,6 +45,7 @@ import Logging
 import PMLogger
 import VPNShared
 import Timer
+import SystemExtensions
 
 import AppKit
 
@@ -250,23 +251,23 @@ extension AppDelegate: NSApplicationDelegate {
 
     private func checkSysexAndAdjustGlobalProtocol() {
         let connectionProtocol = propertiesManager.connectionProtocol
-        if connectionProtocol.isDeprecated {
+        if connectionProtocol.isDeprecated || connectionProtocol == .vpnProtocol(.ike) {
             // At this time on MacOS, OpenVPN is the only deprecated protocol, and it requires sysex approval, so can
-            // safely fall back to smart protocol
+            // safely fall back to smart protocol. Also, for IKEv2, which is preparing for deprecation, we will switch to the smart protocol.
             propertiesManager.connectionProtocol = .smartProtocol
         }
 
-        guard connectionProtocol.requiresSystemExtension else {
-            // Only check for sysex approval if settings have been modified to where the current protocol requires it
-            // This prevents showing the scary 'System Extension Blocked' system dialog without sysex tour to explain it
-            return
-        }
-
-        // Sysex tour is skipped in order to revert to IKE if necessary without waiting for user to cancel the tour
-        container.makeSystemExtensionManager().installOrUpdateExtensionsIfNeeded(shouldStartTour: false) { result in
-            if case .failure = result {
+        // The sysex tour will be shown if the sysex is not installed. If the installation fails or is skipped/cancelled by the user, we will revert to IKE.
+        container.makeSystemExtensionManager().installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+            if case .failure(let failure) = result {
+                switch failure {
+                case .installationError(let internalError):
+                    SentryHelper.shared?.log(error: internalError)
+                case .tourCancelled, .tourSkipped:
+                    SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : failure])
+                }
                 // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
-                log.warning("\(connectionProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
+                log.warning("\(self.propertiesManager.connectionProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
                 self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
             }
         }
