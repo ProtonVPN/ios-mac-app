@@ -538,6 +538,7 @@ public class VpnGateway: VpnGatewayProtocol {
             }
             if let services = properties.streamingServices {
                 self.propertiesManager.streamingServices = services.streamingServices
+                self.propertiesManager.streamingResourcesUrl = services.resourceBaseURL
             }
 
             @Dependency(\.serverManager) var serverManager
