@@ -63,7 +63,8 @@ extension WarningPopupViewModel {
             url: IkeDeprecatedAlert.kbURLString,
             onConfirm: alert.enableSmartProtocol,
             confirmTitle: alert.confirmTitle,
-            onCancel: alert.dismiss,cancelTitle: alert.dismissTitle
+            onCancel: alert.dismiss,
+            cancelTitle: alert.dismissTitle
         )
     }
 }
