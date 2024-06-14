@@ -39,6 +39,7 @@ public enum LocalAgentEvent: Sendable {
     case state(LocalAgentState)
     case features(VPNConnectionFeatures)
     case connectionDetails(ConnectionDetailsMessage)
+    case stats(FeatureStatisticsMessage)
 }
 
 struct LocalAgentKey: DependencyKey {

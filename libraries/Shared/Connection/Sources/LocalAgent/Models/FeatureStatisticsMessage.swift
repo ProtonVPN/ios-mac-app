@@ -21,10 +21,10 @@ import Foundation
 import GoLibs
 
 /// Data Transfer Object used for the features-statistics response received by Local Agent
-struct FeatureStatisticsMessage {
-    let netShield: NetShieldStats
+public struct FeatureStatisticsMessage {
+    public let netShield: NetShieldStats
 
-    struct NetShieldStats: Decodable {
+    public struct NetShieldStats: Decodable {
         let malwareBlocked: Int?
         let adsBlocked: Int?
         let trackersBlocked: Int?
@@ -35,8 +35,6 @@ struct FeatureStatisticsMessage {
 extension FeatureStatisticsMessage {
 
     init(localAgentStatsDictionary: LocalAgentStringToValueMap) throws {
-        let data = try localAgentStatsDictionary.marshalJSON()
-
         let statsKey = localAgentConsts.statsNetshieldLevelKey
         guard let netShieldDictionary = localAgentStatsDictionary.getMap(statsKey) else {
             throw LocalAgentMessageDecodingError.missingRequiredValue(key: statsKey)

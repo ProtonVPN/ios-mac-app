@@ -41,10 +41,7 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
     }
 
     func onError(_ code: Int, description: String?) {
-        guard let error = LocalAgentError.from(code: code) else {
-            ConnectionFoundations.log.error("Ignoring unknown local agent error", category: .localAgent, event: .error)
-            return
-        }
+        let error = LocalAgentError.from(code: code)
         delegate?.didReceive(event: .error(error))
     }
 
@@ -78,7 +75,7 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
         do {
             let stats = try FeatureStatisticsMessage(localAgentStatsDictionary: statistics)
             ConnectionFoundations.log.info("Local agent shared library received statistics: \(stats)", category: .localAgent, event: .stateChange)
-            // delegate?.didReceive(event: .stats(stats))
+            delegate?.didReceive(event: .stats(stats))
         } catch {
             ConnectionFoundations.log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
         }
