@@ -41,6 +41,10 @@ struct MainView: View {
             .tabItem { Text("Settings", comment: "Title of the tab bar item.") }
         }
         .background(background)
+        .alert($store.scope(state: \.alert, action: \.alert))
+        .onAppear {
+            store.send(.onAppear)
+        }
     }
 
     @ViewBuilder

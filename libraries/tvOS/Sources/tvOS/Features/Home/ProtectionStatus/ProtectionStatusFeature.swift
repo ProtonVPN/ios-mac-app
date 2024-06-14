@@ -21,13 +21,14 @@ import SwiftUI
 import ProtonCoreUIFoundations
 import Strings
 import Domain
+import Connection
 
 @Reducer
 struct ProtectionStatusFeature {
     @ObservableState
     struct State: Equatable {
 
-        @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
+        @Shared(.inMemory("connectionState")) var connectionState: Connection.ConnectionState?
         @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
     }
 
@@ -37,7 +38,7 @@ struct ProtectionStatusFeature {
         case userClickedCancel
         case userClickedConnect
         case onAppear
-        case connectionStateUpdated(ConnectFeature.ConnectionState?)
+        case connectionStateUpdated(Connection.ConnectionState?)
     }
 
     var body: some Reducer<State, Action> {

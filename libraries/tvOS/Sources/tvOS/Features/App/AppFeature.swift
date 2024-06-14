@@ -17,11 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-
-import struct Domain.VPNConnectionFeatures
 import CommonNetworking
-import Connection
-import Persistence
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
@@ -53,21 +49,18 @@ import Persistence
 
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
-        var connection: ConnectionFeature.State = .init(tunnelState: .disconnected, localAgentState: .disconnected)
     }
 
     enum Action {
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
 
+        case onAppear
+
         case networking(SessionNetworkingFeature.Action)
-        case connection(ConnectionFeature.Action)
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()._printChanges()
-        }
         Scope(state: \.networking, action: \.networking) {
             SessionNetworkingFeature()
         }
@@ -79,23 +72,13 @@ import Persistence
         }
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                return .run { send in
+                    await send(.networking(.startAcquiringSession))
+                }
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
                 return .run { send in await send(.networking(.startLogout)) }
-
-            case .main(.homeLoading(.loaded(.connect(.userClickedConnect(let item))))):
-                guard let code = item?.code else {
-                    log.error("Connection item is nil")
-                    return .none
-                }
-                @Dependency(\.serverRepository) var repository
-                let filters = code == "Fastest" ?  [] : [VPNServerFilter.kind(.country(code: code))]
-                let server = repository.getFirstServer(filteredBy: filters, orderedBy: .fastest)!
-                let features = VPNConnectionFeatures(netshield: .level1, vpnAccelerator: true, bouncing: "1", natType: .moderateNAT, safeMode: false)
-                return .send(.connection(.connect(server, features)))
-
-            case .main(.homeLoading(.loaded(.connect(.userClickedDisconnect)))):
-                return .send(.connection(.disconnect))
 
             case .main:
                 return .none
@@ -119,9 +102,6 @@ import Persistence
                 return .none
                 
             case .networking:
-                return .none
-
-            case .connection:
                 return .none
             }
         }
