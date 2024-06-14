@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct ServerEndpoint: Codable, Equatable, Identifiable {
+public struct ServerEndpoint: Codable, Equatable, Identifiable, Sendable {
     public let id: String
     public let entryIp: String?
     public let exitIp: String
