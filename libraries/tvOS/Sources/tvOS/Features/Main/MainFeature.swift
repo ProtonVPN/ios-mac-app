@@ -96,9 +96,9 @@ struct MainFeature {
                 return .run { send in
                     switch action {
                     case .userClickedDisconnect:
-                        await send(.connection(.disconnect))
+                        await send(.connection(.disconnect(nil)))
                     case .userClickedCancel:
-                        await send(.connection(.disconnect))
+                        await send(.connection(.disconnect(nil)))
                     case .userClickedConnect:
                         guard let (connectServer, features) = serverWithFeatures(code: "Fastest") else {
                             return
@@ -112,10 +112,11 @@ struct MainFeature {
 
             case .homeLoading:
                 return .none
-//            case .connection(.finishedConnecting(.failure)):
-//                state.alert = Self.connectionFailedAlert
-//                return .none
-
+            case .connection(.disconnect(let error)):
+                if let error, error == .failedToConnect {
+                    state.alert = Self.connectionFailedAlert
+                }
+                return .none
             case .connection:
                 return .none
             case .alert:

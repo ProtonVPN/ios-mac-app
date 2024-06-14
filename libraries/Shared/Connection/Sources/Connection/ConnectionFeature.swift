@@ -55,7 +55,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     @CasePathable
     public enum Action: Sendable {
         case connect(Server, VPNConnectionFeatures)
-        case disconnect
+        case disconnect(ConnectionError?)
         case tunnel(ExtensionFeature.Action)
         case localAgent(LocalAgentFeature.Action)
         case stateChanged(ConnectionState)
@@ -79,7 +79,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 // certificateAuthentication.
                 guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
                     log.error("Detected connection to unknown server, disconnecting", category: .connection, metadata: ["logicalServerInfo": "\(logicalServerInfo)"])
-                    return .send(.disconnect)
+                    return .send(.disconnect(.tunnel(.unknownServer)))
                 }
                 return .run { send in
                     // TODO: Cert-Auth - ensure correct features, handle failures
@@ -106,13 +106,14 @@ public struct ConnectionFeature: Reducer, Sendable {
     }
 }
 
+@CasePathable
 public enum ConnectionError: Error, Equatable {
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
 }
 
 @CasePathable
-public enum ConnectionState: Equatable, Sendable {
+public enum ConnectionState: Equatable {
     case disconnected(ConnectionError?)
     case connecting
     case connected(Server)

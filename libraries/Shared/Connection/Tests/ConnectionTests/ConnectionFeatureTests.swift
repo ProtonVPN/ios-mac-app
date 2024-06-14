@@ -99,7 +99,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Disconnection
 
-        await store.send(\.disconnect)
+        await store.send(ConnectionFeature.Action.disconnect(nil))
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnected(nil)
         }
