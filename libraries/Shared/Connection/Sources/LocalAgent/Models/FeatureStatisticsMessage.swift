@@ -21,33 +21,32 @@ import Foundation
 import GoLibs
 
 /// Data Transfer Object used for the features-statistics response received by Local Agent
-struct FeatureStatisticsMessage: Decodable {
+struct FeatureStatisticsMessage {
     let netShield: NetShieldStats
-
-    enum CodingKeys: String, CodingKey {
-        case netShield = "netshield-level"
-    }
 
     struct NetShieldStats: Decodable {
         let malwareBlocked: Int?
         let adsBlocked: Int?
         let trackersBlocked: Int?
         let bytesSaved: Int // The only field guaranteed to be present
-
-        // Unable to use non-literals like LocalAgentConsts().statsAdsKey as enum rawvalues.
-        // We could maybe implement CodingKey using a struct, or not use Codable for this at all
-        enum CodingKeys: String, CodingKey {
-            case malwareBlocked = "DNSBL/1b"
-            case adsBlocked = "DNSBL/2a"
-            case trackersBlocked = "DNSBL/2b"
-            case bytesSaved = "savedBytes"
-        }
     }
 }
 
 extension FeatureStatisticsMessage {
+
     init(localAgentStatsDictionary: LocalAgentStringToValueMap) throws {
         let data = try localAgentStatsDictionary.marshalJSON()
-        self = try JSONDecoder().decode(FeatureStatisticsMessage.self, from: data)
+
+        let statsKey = localAgentConsts.statsNetshieldLevelKey
+        guard let netShieldDictionary = localAgentStatsDictionary.getMap(statsKey) else {
+            throw LocalAgentMessageDecodingError.missingRequiredValue(key: statsKey)
+        }
+
+        self.init(netShield: .init(
+            malwareBlocked: netShieldDictionary.int(forKey: localAgentConsts.statsMalwareKey),
+            adsBlocked: netShieldDictionary.int(forKey: localAgentConsts.statsAdsKey),
+            trackersBlocked: netShieldDictionary.int(forKey: localAgentConsts.statsTrackerKey),
+            bytesSaved: try netShieldDictionary.intOrThrow(forKey: localAgentConsts.statsSavedBytesKey)
+        ))
     }
 }

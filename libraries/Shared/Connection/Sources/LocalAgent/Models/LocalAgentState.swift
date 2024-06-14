@@ -40,29 +40,24 @@ extension LocalAgentState {
 
     // swiftlint:disable cyclomatic_complexity
     static func from(string: String) -> LocalAgentState {
-        guard let consts = LocalAgentConstants() else {
-            log.error("Failed to create local agent constants", category: .localAgent)
-            return .invalid
-        }
-
         switch string {
-        case consts.stateConnected:
+        case localAgentConsts.stateConnected:
             return .connected
-        case consts.stateConnecting:
+        case localAgentConsts.stateConnecting:
             return .connecting
-        case consts.stateConnectionError:
+        case localAgentConsts.stateConnectionError:
             return .connectionError
-        case consts.stateDisconnected:
+        case localAgentConsts.stateDisconnected:
             return .disconnected
-        case consts.stateHardJailed:
+        case localAgentConsts.stateHardJailed:
             return .hardJailed
-        case consts.stateServerUnreachable:
+        case localAgentConsts.stateServerUnreachable:
             return .serverUnreachable
-        case consts.stateServerCertificateError, consts.stateClientCertificateUnknownCA:
+        case localAgentConsts.stateServerCertificateError, localAgentConsts.stateClientCertificateUnknownCA:
             return .serverCertificateError
-        case consts.stateClientCertificateExpiredError:
+        case localAgentConsts.stateClientCertificateExpiredError:
             return .clientCertificateError
-        case consts.stateSoftJailed:
+        case localAgentConsts.stateSoftJailed:
             return .softJailed
         default:
             log.error("Trying to parse unknown local agent state \(string)", category: .localAgent)

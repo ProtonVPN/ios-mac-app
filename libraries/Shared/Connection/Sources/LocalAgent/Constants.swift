@@ -17,6 +17,32 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import class GoLibs.LocalAgentConsts
+import class GoLibs.LocalAgentStringToValueMap
+
+/// Shared instance containing coding keys
+let localAgentConsts = LocalAgentConsts()
+
+extension LocalAgentStringToValueMap {
+    func int(forKey key: String) -> Int? {
+        guard hasKey(key) else {
+            return nil
+        }
+        return Int(getInt(key))
+    }
+
+    func intOrThrow(forKey key: String) throws -> Int {
+        guard let value = int(forKey: key) else {
+            throw LocalAgentMessageDecodingError.missingRequiredValue(key: key)
+        }
+
+        return value
+    }
+}
+
+enum LocalAgentMessageDecodingError: Error {
+    case missingRequiredValue(key: String)
+}
 
 extension LAConfiguration {
     static let hostname: String = "10.2.0.1:65432"

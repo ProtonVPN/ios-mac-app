@@ -18,8 +18,8 @@
 
 import Foundation
 import Network
-
-import GoLibs
+import class GoLibs.LocalAgentConnectionDetails
+import ConnectionFoundations
 
 public struct ConnectionDetailsMessage: Sendable {
     let exitIp: IPAddress?
@@ -39,12 +39,14 @@ extension ConnectionDetailsMessage {
             self.exitIp = ipv6
         } else {
             self.exitIp = nil
+            log.error("Invalid exitIP in `ConnectionDetails` response", category: .localAgent)
         }
 
         if !details.deviceCountry.isEmpty {
             self.deviceCountry = details.deviceCountry
         } else {
             self.deviceCountry = nil
+            log.error("deviceCountry missing from `ConnectionDetails` response", category: .localAgent)
         }
 
         if !details.deviceIp.isEmpty {
@@ -57,6 +59,7 @@ extension ConnectionDetailsMessage {
             }
         } else {
             self.deviceIp = nil
+            log.error("Invalid deviceIP in `ConnectionDetails` response", category: .localAgent)
         }
     }
 }

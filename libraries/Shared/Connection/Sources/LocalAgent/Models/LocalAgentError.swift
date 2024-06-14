@@ -50,52 +50,48 @@ public enum LocalAgentError: Error {
     case certificateNotProvided
     case serverSessionDoesNotMatch
     case systemError(LocalAgentErrorSystemError)
+    case unknown(code: Int)
 }
 
 extension LocalAgentError {
     // swiftlint:disable cyclomatic_complexity function_body_length
-    static func from(code: Int) -> LocalAgentError? {
-        guard let consts = LocalAgentConstants() else {
-            log.error("Failed to create local agent constants", category: .localAgent)
-            return nil
-        }
-
+    static func from(code: Int) -> LocalAgentError {
         switch code {
-        case consts.errorCodeRestrictedServer:
+        case localAgentConsts.errorCodeRestrictedServer:
             return .restrictedServer
-        case consts.errorCodeCertificateExpired:
+        case localAgentConsts.errorCodeCertificateExpired:
             return .certificateExpired
-        case consts.errorCodeCertificateRevoked:
+        case localAgentConsts.errorCodeCertificateRevoked:
             return .certificateRevoked
-        case consts.errorCodeMaxSessionsUnknown:
+        case localAgentConsts.errorCodeMaxSessionsUnknown:
             return .maxSessionsUnknown
-        case consts.errorCodeMaxSessionsFree:
+        case localAgentConsts.errorCodeMaxSessionsFree:
             return .maxSessionsFree
-        case consts.errorCodeMaxSessionsBasic:
+        case localAgentConsts.errorCodeMaxSessionsBasic:
             return .maxSessionsBasic
-        case consts.errorCodeMaxSessionsPlus:
+        case localAgentConsts.errorCodeMaxSessionsPlus:
             return .maxSessionsPlus
-        case consts.errorCodeMaxSessionsVisionary:
+        case localAgentConsts.errorCodeMaxSessionsVisionary:
             return .maxSessionsVisionary
-        case consts.errorCodeMaxSessionsPro:
+        case localAgentConsts.errorCodeMaxSessionsPro:
             return .maxSessionsPro
-        case consts.errorCodeKeyUsedMultipleTimes:
+        case localAgentConsts.errorCodeKeyUsedMultipleTimes:
             return .keyUsedMultipleTimes
-        case consts.errorCodeServerError:
+        case localAgentConsts.errorCodeServerError:
             return .serverError
-        case consts.errorCodePolicyViolationLowPlan:
+        case localAgentConsts.errorCodePolicyViolationLowPlan:
             return .policyViolationLowPlan
-        case consts.errorCodePolicyViolationDelinquent:
+        case localAgentConsts.errorCodePolicyViolationDelinquent:
             return .policyViolationDelinquent
-        case consts.errorCodeUserTorrentNotAllowed:
+        case localAgentConsts.errorCodeUserTorrentNotAllowed:
             return .userTorrentNotAllowed
-        case consts.errorCodeUserBadBehavior:
+        case localAgentConsts.errorCodeUserBadBehavior:
             return .userBadBehavior
-        case consts.errorCodeGuestSession:
+        case localAgentConsts.errorCodeGuestSession:
             return .guestSession
-        case consts.errorCodeBadCertSignature:
+        case localAgentConsts.errorCodeBadCertSignature:
             return .badCertificateSignature
-        case consts.errorCodeCertNotProvided:
+        case localAgentConsts.errorCodeCertNotProvided:
             return .certificateNotProvided
         case 86202: // Server session doesn't match: Use the correct ed25519/x25519 key
             return .serverSessionDoesNotMatch
@@ -109,7 +105,7 @@ extension LocalAgentError {
             return .systemError(.safeMode)
         default:
             log.error("Trying to parse unknown local agent error \(code)", category: .localAgent)
-            return nil
+            return .unknown(code: code)
         }
     }
 }
