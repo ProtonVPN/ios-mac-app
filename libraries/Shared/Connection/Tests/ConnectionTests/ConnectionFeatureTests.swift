@@ -70,6 +70,8 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.localAgent(.startObservingEvents))
 
+        // Connection
+
         await store.send(.connect(logical, features))
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .connecting
@@ -90,6 +92,26 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.event.state.connected) {
             $0.localAgent = .connected
         }
+
+        let expectedConnectedState = ConnectionFeature.State(tunnelState: .connected(connectedLogicalServer), localAgentState: .connected)
+        XCTAssertEqual(store.state, expectedConnectedState)
+
+        // Disconnection
+
+        await store.send(\.disconnect)
+        await store.receive(\.localAgent.disconnect) {
+            $0.localAgent = .disconnected
+        }
+        await store.receive(\.tunnel.disconnect) {
+            $0.tunnel = .disconnecting
+        }
+
+        await mockClock.advance(by: .seconds(1))
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
+            $0.tunnel = .disconnected
+        }
+
+        XCTAssertEqual(store.state, disconnected, "Sanity check - whether we are fully disconnected")
 
         await store.send(.tunnel(.stopObservingStateChanges))
         await store.send(.localAgent(.stopObservingEvents))
