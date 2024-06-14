@@ -107,6 +107,7 @@ final class PacketTunnelManager: TunnelManager {
             }
             let id = ids.components(separatedBy: ";")
             guard id.count == 2 else {
+                log.error("Unexpected number of elements in getCurrentLogicalAndServerId repsonse (expected 2, got \(id.count))", category: .connection)
                 throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
             }
 

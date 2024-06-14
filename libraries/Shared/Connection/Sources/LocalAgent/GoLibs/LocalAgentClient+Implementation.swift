@@ -66,15 +66,30 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
     }
 
     private func didReceive(connectionDetails: LocalAgentConnectionDetails) {
-        let detailsMessage = ConnectionDetailsMessage(details: connectionDetails)
-        ConnectionFoundations.log.info("Local agent shared library received connection details: \("\(detailsMessage)".maskIPs)", category: .localAgent, event: .connect)
-        delegate?.didReceive(event: .connectionDetails(detailsMessage))
+        do {
+            let detailsMessage = try ConnectionDetailsMessage(details: connectionDetails)
+            ConnectionFoundations.log.info(
+                "Received connection details: \("\(detailsMessage)".maskIPs)",
+                category: .localAgent,
+                event: .connect
+            )
+            delegate?.didReceive(event: .connectionDetails(detailsMessage))
+        } catch {
+            let errorMessageWithMaskedIPs = "\(error)".maskIPs
+            ConnectionFoundations.log.error(
+                "Failed to decode connection details",
+                category: .localAgent,
+                event: .error,
+                metadata: ["error": "\(errorMessageWithMaskedIPs)"]
+            )
+        }
+
     }
 
     private func didReceive(statistics: LocalAgentStringToValueMap) {
         do {
             let stats = try FeatureStatisticsMessage(localAgentStatsDictionary: statistics)
-            ConnectionFoundations.log.info("Local agent shared library received statistics: \(stats)", category: .localAgent, event: .stateChange)
+            ConnectionFoundations.log.info("Received statistics: \(stats)", category: .localAgent, event: .stateChange)
             delegate?.didReceive(event: .stats(stats))
         } catch {
             ConnectionFoundations.log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])

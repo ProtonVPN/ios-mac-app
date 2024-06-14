@@ -22,44 +22,43 @@ import class GoLibs.LocalAgentConnectionDetails
 import ConnectionFoundations
 
 public struct ConnectionDetailsMessage: Sendable {
-    let exitIp: IPAddress?
-    let deviceIp: IPAddress?
-    let deviceCountry: String?
+    let exitIp: IPAddress
+    let deviceIp: IPAddress
+    let deviceCountry: String
 }
 
 extension ConnectionDetailsMessage {
+
     /// `LocalAgentConnectionDetails` is received with the `StatusUpdate` LocalAgent message.
     ///
     /// None of the fields of `LocalAgentConnectionDetails` are optional, so an empty string indicates a missing field.
     /// This wrapper struct makes sure that the IPs are valid before doing anything with them.
-    init(details: LocalAgentConnectionDetails) {
+    init(details: LocalAgentConnectionDetails) throws {
         if !details.serverIpv4.isEmpty, let ipv4 = IPv4Address(details.serverIpv4) {
             self.exitIp = ipv4
         } else if !details.serverIpv6.isEmpty, let ipv6 = IPv6Address(details.serverIpv6) {
             self.exitIp = ipv6
         } else {
-            self.exitIp = nil
-            log.error("Invalid exitIP in `ConnectionDetails` response", category: .localAgent)
+            throw LocalAgentMessageDecodingError.missingRequiredValue(key: "exitIP")
         }
 
         if !details.deviceCountry.isEmpty {
             self.deviceCountry = details.deviceCountry
         } else {
-            self.deviceCountry = nil
-            log.error("deviceCountry missing from `ConnectionDetails` response", category: .localAgent)
+            throw LocalAgentMessageDecodingError.missingRequiredValue(key: "deviceCountry")
         }
 
-        if !details.deviceIp.isEmpty {
-            if let ipv4 = IPv4Address(details.deviceIp) {
-                self.deviceIp = ipv4
-            } else if let ipv6 = IPv6Address(details.deviceIp) {
-                self.deviceIp = ipv6
-            } else {
-                self.deviceIp = nil
-            }
+        guard !details.deviceIp.isEmpty else {
+            throw LocalAgentMessageDecodingError.missingRequiredValue(key: "deviceIP")
+        }
+
+        if let ipv4 = IPv4Address(details.deviceIp) {
+            self.deviceIp = ipv4
+        } else if let ipv6 = IPv6Address(details.deviceIp) {
+            self.deviceIp = ipv6
         } else {
-            self.deviceIp = nil
-            log.error("Invalid deviceIP in `ConnectionDetails` response", category: .localAgent)
+            // We may end up logging this error. But since deviceIP is not a valid IP, it should be ok to log.
+            throw LocalAgentMessageDecodingError.invalidValue(key: "deviceIP", value: details.deviceIp)
         }
     }
 }

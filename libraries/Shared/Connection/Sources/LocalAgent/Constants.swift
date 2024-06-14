@@ -42,6 +42,7 @@ extension LocalAgentStringToValueMap {
 
 enum LocalAgentMessageDecodingError: Error {
     case missingRequiredValue(key: String)
+    case invalidValue(key: String, value: String)
 }
 
 extension LAConfiguration {
