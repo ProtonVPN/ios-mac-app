@@ -19,7 +19,7 @@
 import Foundation
 import Dependencies
 import struct ConnectionFoundations.LogicalServerInfo
-import struct Domain.VPNServer
+import struct Domain.Server
 
 /// We need to fetch full server information to determine e.g. what country the extension is connected to.
 /// The server is identified by its logical and server IDs.
@@ -27,12 +27,9 @@ import struct Domain.VPNServer
 /// We could avoid defining this dependency and instead have `Connection` depend on `Persistence`, but it's preferable
 /// to not depend on packages in the same layer.
 public struct ServerIdentifier: TestDependencyKey {
-    /// For now let's return a `VPNServer` for convenience.
-    /// But it would be preferable to return a `Logical` + `ServerEndpoint` combo so there is no ambiguity about which
-    /// endpoint we are specifying (and the error case of an empty endpoint array).
-    var fullServerInfo: (LogicalServerInfo) -> VPNServer?
+    var fullServerInfo: (LogicalServerInfo) -> Server?
 
-    public init(fullServerInfo: @escaping (LogicalServerInfo) -> VPNServer?) {
+    public init(fullServerInfo: @escaping (LogicalServerInfo) -> Server?) {
         self.fullServerInfo = fullServerInfo
     }
 

@@ -22,7 +22,7 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
-import struct Domain.VPNServer
+import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import ConnectionFoundations
 import CertificateAuthentication
@@ -51,7 +51,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     @CasePathable
     public enum Action: Sendable {
-        case connect(VPNServer, VPNConnectionFeatures)
+        case connect(Server, VPNConnectionFeatures)
         case disconnect
         case tunnel(ExtensionFeature.Action)
         case localAgent(LocalAgentFeature.Action)
@@ -80,9 +80,8 @@ public struct ConnectionFeature: Reducer, Sendable {
                 }
                 return .run { send in
                     // TODO: Cert-Auth - ensure correct features, handle failures
-                    let endpoint = server.endpoints.first!
                     let authData = try await certificateAuthentication.loadAuthenticationData()
-                    await send(.localAgent(.connect(endpoint, authData)))
+                    await send(.localAgent(.connect(server.endpoint, authData)))
                 }
 
             case .tunnel(.tunnelStartRequestFinished(.success(let session))):
@@ -130,9 +129,9 @@ public enum ConnectionState: Equatable {
 }
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
-extension Domain.VPNServer: CustomDumpStringConvertible {
+extension Domain.Server: CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "VPNServer(\(logical.name))"
+        return "Server(\(logical.name))"
     }
 }
 extension Domain.VPNConnectionFeatures: CustomDumpStringConvertible {

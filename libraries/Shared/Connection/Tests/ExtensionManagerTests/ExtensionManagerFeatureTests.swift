@@ -34,9 +34,9 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let mockManager = MockTunnelManager()
         let mockClock = TestClock()
 
-        let server = VPNServer.mock
+        let server = Server.mock
         let features = VPNConnectionFeatures.mock
-        let logicalServerInfo = LogicalServerInfo(logicalID: server.id, serverID: server.endpoints.first!.id)
+        let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,

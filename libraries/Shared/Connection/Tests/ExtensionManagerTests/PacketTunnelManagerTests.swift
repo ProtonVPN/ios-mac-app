@@ -78,7 +78,7 @@ final class PacketTunnelManagerTests: XCTestCase {
     ///
     /// Configuration specifics are up to the `tunnelProviderConfigurator`.
     func testStartingTunnelToServerConfiguresExistingManager() async throws {
-        let server = VPNServer.mock
+        let server = Server.mock
         let clock = TestClock()
 
         let providerManager = MockTunnelProviderManager.manager(state: .ready)

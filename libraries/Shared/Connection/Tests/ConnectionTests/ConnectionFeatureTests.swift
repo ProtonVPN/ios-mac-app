@@ -45,9 +45,9 @@ final class ConnectionFeatureTests: XCTestCase {
             lastDisconnectError: nil
         )
 
-        let logical = VPNServer.mock
+        let server = Server.mock
         let features = VPNConnectionFeatures.mock
-        let connectedLogicalServer = LogicalServerInfo(logicalID: logical.id, serverID: logical.endpoints.first!.id)
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected, localAgentState: .disconnected)
 
@@ -72,7 +72,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        await store.send(.connect(logical, features))
+        await store.send(.connect(server, features))
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .connecting
         }

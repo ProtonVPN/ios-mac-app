@@ -27,7 +27,7 @@ import struct ConnectionFoundations.LogicalServerInfo
 import ExtensionIPC
 
 protocol TunnelManager {
-    func startTunnel(to server: VPNServer) async throws
+    func startTunnel(to server: Server) async throws
     func stopTunnel() async throws -> Void
     var connectedServer: LogicalServerInfo { get async throws}
     var status: NEVPNStatus { get async throws }
@@ -82,7 +82,7 @@ final class PacketTunnelManager: TunnelManager {
         return manager
     }
 
-    func startTunnel(to server: VPNServer) async throws {
+    func startTunnel(to server: Server) async throws {
         let manager = try await updateTunnel(for: .connection(server))
         try manager.session.startTunnel()
     }

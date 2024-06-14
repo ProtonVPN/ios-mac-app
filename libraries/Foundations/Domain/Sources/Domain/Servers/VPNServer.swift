@@ -44,4 +44,9 @@ public struct VPNServer: Codable, Equatable, Identifiable {
 public struct Server: Equatable, Sendable {
     public let logical: Logical
     public let endpoint: ServerEndpoint
+
+    public init(logical: Logical, endpoint: ServerEndpoint) {
+        self.logical = logical
+        self.endpoint = endpoint
+    }
 }

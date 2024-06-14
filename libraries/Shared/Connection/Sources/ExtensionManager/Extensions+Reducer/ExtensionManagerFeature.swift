@@ -22,7 +22,7 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
-import struct Domain.VPNServer
+import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import struct ConnectionFoundations.LogicalServerInfo
 import ExtensionIPC
@@ -47,7 +47,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     public enum Action: Sendable {
         case startObservingStateChanges
         case stopObservingStateChanges
-        case connect(VPNServer, VPNConnectionFeatures)
+        case connect(Server, VPNConnectionFeatures)
         case tunnelStartRequestFinished(Result<Void, Error>)
         case connectionFinished(Result<LogicalServerInfo, Error>)
         case tunnelStatusChanged(NEVPNStatus)
