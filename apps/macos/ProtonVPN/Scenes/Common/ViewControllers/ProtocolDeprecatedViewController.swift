@@ -54,4 +54,17 @@ extension WarningPopupViewModel {
             cancelTitle: alert.dismissTitle
         )
     }
+    
+    convenience init(alert: IkeDeprecatedAlert) {
+        self.init(
+            title: alert.title!,
+            description: alert.message!,
+            linkDescription: alert.linkText,
+            url: IkeDeprecatedAlert.kbURLString,
+            onConfirm: alert.enableSmartProtocol,
+            confirmTitle: alert.confirmTitle,
+            onCancel: alert.dismiss,
+            cancelTitle: alert.dismissTitle
+        )
+    }
 }

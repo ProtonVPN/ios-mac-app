@@ -152,6 +152,9 @@ extension MacAlertService: CoreAlertService {
             
         case is QuitWarningAlert:
             showDefaultSystemAlert(alert)
+        
+        case let alert as IkeDeprecatedAlert:
+            show(alert)
 
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
@@ -390,6 +393,11 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: ProtocolDeprecatedAlert) {
+        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
+        windowService.presentKeyModal(viewController: vc)
+    }
+    
+    private func show(_ alert: IkeDeprecatedAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)
     }
