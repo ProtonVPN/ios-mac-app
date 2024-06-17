@@ -22,6 +22,7 @@ import struct Domain.VPNConnectionFeatures
 import struct Domain.Server
 import Connection
 import Persistence
+import Foundation
 
 @Reducer
 struct MainFeature {
@@ -112,8 +113,9 @@ struct MainFeature {
 
             case .homeLoading:
                 return .none
-            case .connection(.disconnect(let error)):
-                if let error, error == .failedToConnect {
+            case .connection(.stateChanged(let connectionState)):
+                state.connectionState = connectionState
+                if case .disconnected(let error) = connectionState, let error {
                     state.alert = Self.connectionFailedAlert
                 }
                 return .none

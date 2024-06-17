@@ -46,7 +46,7 @@ struct ProtectionStatusFeature {
             switch action {
             case .userTappedButton:
                 return .run { [connectionState = state.connectionState] send in
-                    switch connectionState ?? .disconnected {
+                    switch connectionState ?? .disconnected(nil) {
                     case .connected:
                         await send(.userClickedDisconnect)
                     case .connecting:

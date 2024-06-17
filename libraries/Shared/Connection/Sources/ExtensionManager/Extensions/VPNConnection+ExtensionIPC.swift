@@ -38,6 +38,7 @@ extension VPNSession {
         maxRetries: Int,
         completion: ((Result<R.Response, ProviderMessageError>) -> Void)?
     )  {
-        // TODO: Certificate Authentication: bring over implementation from ExtensionIPC, bonus: structured concurrency
+        // TODO: Retry failed messages sensibly
+        fatalError("Remember to fix this!!!")
     }
 }

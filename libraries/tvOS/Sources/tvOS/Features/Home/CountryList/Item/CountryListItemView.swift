@@ -50,7 +50,7 @@ struct CountryListItemView: View {
                 .font(.body)
             Spacer()
                 .frame(height: .themeSpacing16)
-            switch connectionState ?? .disconnected {
+            switch connectionState ?? .disconnected(nil) {
             case .connected:
                 HStack(spacing: .themeSpacing12) {
                     Text("Connected", comment: "VPN connection state")

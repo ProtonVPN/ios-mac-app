@@ -94,10 +94,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.tunnel(.disconnect))
 
             case .tunnel:
-                return .none
+                return .send(.stateChanged(state.connectionState))
 
             case .localAgent:
-                return .none
+                return .send(.stateChanged(state.connectionState))
 
             case .stateChanged:
                 return .none
@@ -113,7 +113,7 @@ public enum ConnectionError: Error, Equatable {
 }
 
 @CasePathable
-public enum ConnectionState: Equatable {
+public enum ConnectionState: Equatable, Sendable {
     case disconnected(ConnectionError?)
     case connecting
     case connected(Server)
