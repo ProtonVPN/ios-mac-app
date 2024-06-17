@@ -27,9 +27,6 @@ final class MainFeatureTests: XCTestCase {
         let store = TestStore(initialState: MainFeature.State()) {
             MainFeature()
         }
-        await store.send(.selectTab(.search)) {
-            $0.currentTab = .search
-        }
         await store.send(.selectTab(.settings)) {
             $0.currentTab = .settings
         }
@@ -44,7 +41,7 @@ final class MainFeatureTests: XCTestCase {
             MainFeature()
         }
         await store.send(.settings(.showDrillDown(.contactUs))) {
-            $0.settings.destination = .settingsDrillDown(.contactUs())
+            $0.settings.destination = .settingsDrillDown(.contactUs)
         }
     }
 }

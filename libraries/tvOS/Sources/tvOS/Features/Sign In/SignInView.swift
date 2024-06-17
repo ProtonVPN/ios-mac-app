@@ -27,7 +27,7 @@ struct SignInView: View {
 
     var body: some View {
         VStack(spacing: .themeSpacing64) {
-            Text("Sign in")
+            Text("Sign in", comment: "Button title on the login page")
                 .font(.title)
                 .bold()
 
@@ -61,11 +61,11 @@ struct SignInView: View {
 struct StepView: View {
     private static let bulletPointSize: CGFloat = 56
 
-    let title: String
+    let title: LocalizedStringKey
     let accent: String
     let stepNumber: Int
 
-    init(title: String, accent: String?, stepNumber: Int) {
+    init(title: LocalizedStringKey, accent: String?, stepNumber: Int) {
         self.title = title
         if let accent {
             self.accent = " " + accent
@@ -77,7 +77,7 @@ struct StepView: View {
 
     var body: some View {
         HStack(alignment: .top) {
-            Text("\(stepNumber)")
+            Text(verbatim: "\(stepNumber)")
                 .font(.body)
                 .frame(.square(Self.bulletPointSize))
                 .background(Color(.background, .weak))

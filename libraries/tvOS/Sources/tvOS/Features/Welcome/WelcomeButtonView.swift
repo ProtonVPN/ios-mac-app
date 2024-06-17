@@ -20,7 +20,7 @@ import SwiftUI
 
 struct WelcomeButtonView: View {
 
-    let title: String
+    let title: LocalizedStringKey
     let action: () -> Void
 
     @FocusState var focusState: Bool

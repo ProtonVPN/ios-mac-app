@@ -21,7 +21,7 @@ import ComposableArchitecture
 @Reducer
 struct MainFeature {
 
-    enum Tab { case home, search, settings }
+    enum Tab { case home, settings }
 
     @ObservableState
     struct State: Equatable {

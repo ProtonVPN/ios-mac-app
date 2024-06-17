@@ -31,19 +31,14 @@ struct MainView: View {
                                                    action: \.homeLoading))
             }
             .tag(MainFeature.Tab.home)
-            .tabItem { Text("Home") }
+            .tabItem { Text("Home", comment: "Title of the tab bar item.") }
 
-            NavigationStack {
-                Text("Comming soon!")
-            }
-            .tag(MainFeature.Tab.search)
-            .tabItem { Text("Search") }
             NavigationStack {
                 SettingsView(store: store.scope(state: \.settings, 
                                                 action: \.settings))
             }
             .tag(MainFeature.Tab.settings)
-            .tabItem { Text("Settings") }
+            .tabItem { Text("Settings", comment: "Title of the tab bar item.") }
         }
         .background(background)
     }

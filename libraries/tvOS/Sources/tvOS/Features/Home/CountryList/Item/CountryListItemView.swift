@@ -44,14 +44,14 @@ struct CountryListItemView: View {
 
     private var connectedLabel: some View {
         VStack(spacing: 0) {
-            Text(item.name)
+            Text(verbatim: item.name)
                 .font(.body)
             Spacer()
                 .frame(height: .themeSpacing16)
             switch connectionState ?? .disconnected {
             case .connected:
                 HStack(spacing: .themeSpacing12) {
-                    Text("Connected")
+                    Text("Connected", comment: "VPN connection state")
                         .font(.caption)
                         .foregroundStyle(Asset.vpnGreen.swiftUIColor)
                     ConnectedCircleView()
@@ -59,7 +59,7 @@ struct CountryListItemView: View {
                 .opacity(item.code == connectedCode ? 1 : 0)
             case .connecting:
                 HStack(spacing: .themeSpacing12) {
-                    Text("Connecting")
+                    Text("Connecting", comment: "VPN connection state")
                         .font(.caption)
                         .foregroundStyle(Color(.text, .weak))
                     ProgressView()
