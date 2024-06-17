@@ -22,7 +22,7 @@ import CasePaths
 
 extension NEVPNStatus: CasePathable {
     public struct AllCasePaths {
-        public var disconnecting: AnyCasePath<NEVPNStatus, Void>{
+        public var disconnecting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.disconnecting },
                 extract: {
@@ -40,7 +40,7 @@ extension NEVPNStatus: CasePathable {
                 }
             )
         }
-        public var connecting: AnyCasePath<NEVPNStatus, Void>{
+        public var connecting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.connecting },
                 extract: {
@@ -49,7 +49,7 @@ extension NEVPNStatus: CasePathable {
                 }
             )
         }
-        public var connected: AnyCasePath<NEVPNStatus, Void>{
+        public var connected: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.connected },
                 extract: {
@@ -58,7 +58,7 @@ extension NEVPNStatus: CasePathable {
                 }
             )
         }
-        public var reasserting: AnyCasePath<NEVPNStatus, Void>{
+        public var reasserting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.reasserting },
                 extract: {
@@ -67,7 +67,7 @@ extension NEVPNStatus: CasePathable {
                 }
             )
         }
-        public var invalid: AnyCasePath<NEVPNStatus, Void>{
+        public var invalid: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.invalid },
                 extract: {

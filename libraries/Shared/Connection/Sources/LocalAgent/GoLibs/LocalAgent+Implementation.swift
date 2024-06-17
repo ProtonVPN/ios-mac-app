@@ -23,16 +23,22 @@ import ConnectionFoundations
 final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.localAgentConnectionFactory) var factory
 
-    private var eventHandler: ((LocalAgentEvent) -> Void)?
+    let eventStream: AsyncStream<LocalAgentEvent>
+
     private var connection: LocalAgentConnection?
     private let client: LocalAgentClient
     private var previousState: LocalAgentState?
+    private let continuation: AsyncStream<LocalAgentEvent>.Continuation
 
     var state: LocalAgentState {
         connection?.currentState ?? .disconnected
     }
 
     init() {
+        let (eventStream, continuation) = AsyncStream<LocalAgentEvent>.makeStream()
+        self.eventStream = eventStream
+        self.continuation = continuation
+
         client = LocalAgentClientImplementation()
         client.delegate = self
     }
@@ -42,22 +48,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func handle(event: LocalAgentEvent) {
-        guard let handler = eventHandler else {
-            log.error("Received event but handler is missing", category: .localAgent, metadata: ["event": "\(event)"])
-            return
-        }
-        handler(event)
-    }
-
-    var eventStream: AsyncStream<LocalAgentEvent> {
-        return AsyncStream { continuation in
-            eventHandler = { event in
-                continuation.yield(event)
-            }
-            continuation.onTermination = { @Sendable _ in
-                self.eventHandler = nil
-            }
-        }
+        continuation.yield(event)
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {

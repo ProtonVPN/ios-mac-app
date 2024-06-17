@@ -29,26 +29,26 @@ public struct VPNKeysGenerator: DependencyKey {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)
             if let error {
-                throw VPNKeysGeneratorError.generationFailure(error)
+                throw GoLibsCryptoError.keyGenerationFailure(error)
             }
             guard let keyPair else {
-                throw VPNKeysGeneratorError.missingKeypair
+                throw GoLibsCryptoError.missingData(nil)
             }
 
             do {
-                let privateKey = PrivateKey(keyPair: keyPair)
+                let privateKey = try PrivateKey(keyPair: keyPair)
                 let publicKey = try PublicKey(keyPair: keyPair)
                 return VPNKeys(privateKey: privateKey, publicKey: publicKey)
             } catch {
-                throw VPNKeysGeneratorError.publicKeyFailure(error)
+                throw GoLibsCryptoError.keyConversionFailure(error)
             }
         })
 
     }
 }
 
-enum VPNKeysGeneratorError: Error {
-    case generationFailure(Error)
-    case publicKeyFailure(Error)
-    case missingKeypair
+enum GoLibsCryptoError: Error {
+    case keyConversionFailure(Error)
+    case keyGenerationFailure(Error)
+    case missingData(Error?)
 }

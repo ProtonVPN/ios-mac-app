@@ -71,7 +71,7 @@ extension ConnectionFactory {
                 localAgentConfiguration.localAgentHostname,
                 connectionConfiguration.hostname,
                 client,
-                LocalAgentNewFeatures()?.with(configuration: connectionConfiguration),
+                LocalAgentNewFeatures(),
                 true, // TODO: what should we pass for `connectivity`? Is it crucial to import and use Reachability?
                 &error
             )

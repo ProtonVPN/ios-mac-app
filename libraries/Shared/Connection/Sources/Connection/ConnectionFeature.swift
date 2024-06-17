@@ -67,7 +67,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.tunnel(.connect(server, features)))
 
             case .disconnect:
-                return .concatenate(
+                return .merge(
                     .send(.localAgent(.disconnect)),
                     .send(.tunnel(.disconnect))
                 )

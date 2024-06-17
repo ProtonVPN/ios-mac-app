@@ -27,17 +27,23 @@ extension PublicKey {
         if let error {
             throw error
         }
+        guard let publicKeyBytes = keyPair.publicKeyBytes() else {
+            throw GoLibsCryptoError.missingData(nil)
+        }
         self.init(
-            rawRepresentation: ([UInt8])(keyPair.publicKeyBytes()!),
+            rawRepresentation: ([UInt8])(publicKeyBytes),
             derRepresentation: derRepresentation
         )
     }
 }
 
 extension PrivateKey {
-    package init(keyPair: Ed25519KeyPair) {
+    package init(keyPair: Ed25519KeyPair) throws {
+        guard let privateKeyBytes = keyPair.privateKeyBytes() else {
+            throw GoLibsCryptoError.missingData(nil)
+        }
         self.init(
-            rawRepresentation: ([UInt8])(keyPair.privateKeyBytes()!),
+            rawRepresentation: ([UInt8])(privateKeyBytes),
             derRepresentation: keyPair.privateKeyPKIXPem(),
             base64X25519Representation: keyPair.toX25519Base64()
         )

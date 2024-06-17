@@ -20,7 +20,6 @@ import Foundation
 
 import protocol GoLibs.LocalAgentNativeClientProtocol
 
-
 protocol LocalAgentClient: LocalAgentNativeClientProtocol {
     var delegate: LocalAgentClientDelegate? { get set }
 }

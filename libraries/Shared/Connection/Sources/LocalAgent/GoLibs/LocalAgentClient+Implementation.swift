@@ -25,19 +25,19 @@ import class GoLibs.LocalAgentStringToValueMap
 import let ConnectionFoundations.log
 
 final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
-    func onTlsSessionEnded() { }
-
-    func onTlsSessionStarted() { }
-
     weak var delegate: LocalAgentClientDelegate?
+
+    func onTlsSessionStarted() {
+        ConnectionFoundations.log.debug("TLS session started", category: .localAgent)
+    }
+
+    func onTlsSessionEnded() {
+        ConnectionFoundations.log.debug("TLS session ended", category: .localAgent)
+    }
 
     /// Logging callback required by `LocalAgentNativeClientProtocol` protocol
     func log(_ text: String?) {
-        guard let text = text else {
-            return
-        }
-
-        ConnectionFoundations.log.info("\(text)", category: .localAgent, event: .log)
+        text.map { ConnectionFoundations.log.info("\($0)", category: .localAgent, event: .log) }
     }
 
     func onError(_ code: Int, description: String?) {
