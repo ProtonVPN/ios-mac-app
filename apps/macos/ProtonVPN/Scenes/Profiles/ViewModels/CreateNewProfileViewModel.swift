@@ -98,7 +98,12 @@ class CreateNewProfileViewModel {
     /// on viewmodels that will be removed during redesign.
     private func createStartingState() -> ModelState {
         let defaultServerType = ModelState.default.serverType
-
+        var connectionProtocol = propertiesManager.connectionProtocol
+        // If IKEv2 is the user's selected protocol, we will switch to smart protocol instead.
+        if connectionProtocol == .vpnProtocol(.ike) {
+            connectionProtocol = .smartProtocol
+        }
+        
         return ModelState.default
             .updating(
                 serverType: defaultServerType,
@@ -106,7 +111,7 @@ class CreateNewProfileViewModel {
                 selectedCountryGroup: nil,
                 smartProtocolConfig: propertiesManager.smartProtocolConfig
             )
-            .updating(connectionProtocol: propertiesManager.connectionProtocol)
+            .updating(connectionProtocol: connectionProtocol)
     }
 
     // MARK: Getters derived from model state
@@ -301,7 +306,7 @@ class CreateNewProfileViewModel {
         self.state = self.createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
-        checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
+        checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)
 
         setupUserTier()
 
