@@ -49,7 +49,7 @@ struct WelcomeView: View {
     }
 
     var availableView: some View = {
-        Text("Available with Proton VPN Plus")
+        Text("Available with Proton VPN Plus", comment: "Badge title on the login page")
             .font(.caption)
             .foregroundColor(Color(.text))
             .background(Color(.background, .strong))
@@ -68,11 +68,11 @@ struct WelcomeView: View {
 
     var titleView: some View = {
         VStack(spacing: 24) {
-            Text("Watch without being watched.")
+            Text("Watch without being watched.", comment: "Subtitle on the login page")
                 .fontWeight(.bold)
                 .font(.title2)
 
-            Text("Connect to high-speed servers around the world and stream your favorite shows with VPN protection.")
+            Text("Connect to high-speed servers around the world and stream your favorite shows with VPN protection.", comment: "Subtitle on the login page")
                 .font(.body)
                 .foregroundStyle(Color(.text, .weak))
                 .multilineTextAlignment(.center)
@@ -82,7 +82,7 @@ struct WelcomeView: View {
 
     var buttonsView: some View {
         HStack(spacing: .themeSpacing32) {
-            WelcomeButtonView(title: "Sign In", action: {
+            WelcomeButtonView(title: "Sign in", action: {
                 store.send(.showSignIn)
             })
             WelcomeButtonView(title: "Create account", action: {

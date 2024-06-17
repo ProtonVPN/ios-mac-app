@@ -38,8 +38,8 @@ final class AppFeatureTests: XCTestCase {
         let store = TestStore(initialState: state) {
             AppFeature()
         }
-        await store.send(.main(.selectTab(.search))) { state in
-            state.main.currentTab = .search
+        await store.send(.main(.selectTab(.settings))) { state in
+            state.main.currentTab = .settings
         }
     }
 }

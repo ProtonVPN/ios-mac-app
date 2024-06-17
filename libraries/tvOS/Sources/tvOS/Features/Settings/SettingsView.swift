@@ -27,11 +27,11 @@ struct SettingsView: View {
         NavigationStack {
             VStack(spacing: .themeSpacing24) {
                 Spacer()
+                SettingsCellView(title: "Support Center", icon: IconProvider.lifeRing) {
+                    store.send(.showDrillDown(.supportCenter))
+                }
                 SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
                     store.send(.showDrillDown(.contactUs))
-                }
-                SettingsCellView(title: "Report an issue", icon: IconProvider.exclamationCircle) {
-                    store.send(.showDrillDown(.reportAnIssue))
                 }
                 SettingsCellView(title: "Privacy policy", icon: IconProvider.fileEmpty) {
                     store.send(.showDrillDown(.privacyPolicy))
@@ -41,9 +41,9 @@ struct SettingsView: View {
                 }
                 Spacer()
                 if let userName = store.userDisplayName {
-                    Text("\(userName)")
+                    Text(verbatim: "\(userName)")
                 }
-                Text(Bundle.appVersion)
+                Text(verbatim: Bundle.appVersion)
                     .font(.caption)
                     .foregroundStyle(Color(.text, .weak))
             }

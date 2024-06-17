@@ -20,7 +20,7 @@ import SwiftUI
 import Theme
 
 struct CountryListSectionHeaderView: View {
-    let name: String
+    let name: LocalizedStringKey
 
     var body: some View {
         VStack(spacing: .themeSpacing24) {

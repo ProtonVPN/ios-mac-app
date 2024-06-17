@@ -51,7 +51,7 @@ struct SettingsFeature {
 
         enum DrillDown {
             case contactUs
-            case reportAnIssue
+            case supportCenter
             case privacyPolicy
         }
     }
@@ -76,11 +76,11 @@ struct SettingsFeature {
                 let destination: Destination.State
                 switch type {
                 case .contactUs:
-                    destination = .settingsDrillDown(.contactUs())
-                case .reportAnIssue:
-                    destination = .settingsDrillDown(.reportAnIssue())
+                    destination = .settingsDrillDown(.contactUs)
+                case .supportCenter:
+                    destination = .settingsDrillDown(.supportCenter)
                 case .privacyPolicy:
-                    destination = .settingsDrillDown(.privacyPolicy())
+                    destination = .settingsDrillDown(.privacyPolicy)
                 }
                 withAnimation {
                     state.destination = destination

@@ -25,13 +25,13 @@ struct CodeExpiredView: View {
 
     var body: some View {
         VStack(spacing: .themeSpacing64) {
-            Text("Your verification code expired")
+            Text("Your verification code expired", comment: "Header text, appears when the verification code expires and user can no longer use it to authenticate")
                 .font(.title)
                 .fontWeight(.bold)
             Button {
                 store.send(.generateNewCode)
             } label: {
-                Text("Generate new code")
+                Text("Generate new code", comment: "Button title, when user clicks on it, a new verification code is generated and user can try to authenticate again")
             }
         }
         .background(Image(.backgroundStage))
