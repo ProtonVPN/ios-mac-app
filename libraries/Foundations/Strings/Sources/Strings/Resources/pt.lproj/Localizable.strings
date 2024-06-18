@@ -2094,7 +2094,7 @@
 "welcome_to_proton_subtitle" = "Browse privately, access blocked content, and enjoy digital freedom.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Certified no-logs VPN";
+"welcome_to_proton_banner_title" = "VPN certificada sem registos";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
@@ -2230,3 +2230,18 @@
 
 /* Change password alert message */
 "_password_changed_successfully" = "A palavra-passe foi alterada.";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Enable IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Learn more";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";

@@ -1654,13 +1654,13 @@
 "proton_website_unreachable" = "El sitio web de Proton VPN podría estar temporalmente inaccesible debido a restricciones de la red. Utilice la aplicación móvil para crear una nueva cuenta de Proton.";
 
 /* Title for the Two-factor authentication screen */
-"two_factor_authentication" = "Autenticación de doble factor";
+"two_factor_authentication" = "Autenticación de dos factores";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Código de doble factor";
+"two_factor_code" = "Código de dos factores";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Utilizar código de doble factor";
+"use_two_factor_code" = "Utilizar código de dos factores";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Código de recuperación";
@@ -2230,3 +2230,18 @@
 
 /* Change password alert message */
 "_password_changed_successfully" = "Se ha cambiado la contraseña.";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Enable IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Learn more";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";

@@ -1503,7 +1503,7 @@
 
 "_feature_smart_routing_description" = "Această tehnologie permite ca Proton VPN să ofere viteză și securitate mai mare în țările dificil de accesat.";
 
-"_feature_streaming_description" = "Serverele Plus suportă trasmisii în flux (Netflix, Disney+ etc.) de oriunde din lume.";
+"_feature_streaming_description" = "Serverele Plus suportă transmisii în flux (Netflix, Disney+ etc.) de oriunde din lume.";
 
 "_feature_p2p_description" = "Aceste servere oferă cea mai bună performanță pentru BitTorrent și partajarea de fișiere.";
 
@@ -2230,3 +2230,18 @@
 
 /* Change password alert message */
 "_password_changed_successfully" = "Parola a fost modificată.";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Enable IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Learn more";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";

@@ -1371,7 +1371,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch абараняе ваш IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Ваша падключэнне да інтэрнэту будзе адноўлена як толькі Proton VPN паўторна падключыцца да сервера.\nДля таго, каб карыстацца інтэрнэтам без VPN і абароны Kill Switch, скасуйце паўторнае падключэнне да сервера.";
+"_kill_switch_reconnection" = "Ваша падключэнне да інтэрнэту будзе ўзноўлена як толькі Proton VPN паўторна падключыцца да сервера.\nДля таго, каб карыстацца інтэрнэтам без VPN і абароны Kill Switch, скасуйце паўторнае падключэнне да сервера.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "без";
@@ -2230,3 +2230,18 @@
 
 /* Change password alert message */
 "_password_changed_successfully" = "Пароль паспяхова зменены";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Уключыць IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "Гэты пратакол будзе неўзабаве выдалены. Падумайце, каб перайсці на пратакол Smart. Даведацца больш";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Даведацца больш";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Працягнуць з дапамогай IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Уключыць пратакол Smart";
