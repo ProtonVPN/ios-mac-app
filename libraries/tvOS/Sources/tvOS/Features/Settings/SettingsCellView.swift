@@ -20,7 +20,7 @@ import SwiftUI
 
 struct SettingsCellView: View {
 
-    let title: String
+    let title: LocalizedStringKey
     let icon: Image
     let action: () -> Void
 

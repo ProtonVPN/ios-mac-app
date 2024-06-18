@@ -17,9 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import SwiftUI
 
-struct CountryListSection: Equatable, Hashable, Identifiable {
-    let name: String
+struct CountryListSection: Equatable, Identifiable {
+    let name: LocalizedStringKey
     let items: [CountryListItem]
-    var id: String { name }
+    let sectionIndex: Int
+    var id: Int { sectionIndex }
 }

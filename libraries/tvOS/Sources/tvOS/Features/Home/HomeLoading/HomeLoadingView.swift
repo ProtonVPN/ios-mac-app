@@ -28,7 +28,7 @@ struct HomeLoadingView: View {
         case .loading:
             VStack(spacing: .themeSpacing24) {
                 ProgressView()
-                Text("Loading countries")
+                Text("Loading countries", comment: "Informative text when the app is downloading the country list.")
                     .font(Font.headline)
                     .foregroundStyle(Color(.text))
             }
@@ -40,7 +40,7 @@ struct HomeLoadingView: View {
                 HomeView(store: store)
             }
         case .loadingFailed:
-            Text("There was a problem.\nPlease check your network connection")
+            Text("There was a problem.\nPlease check your network connection", comment: "Informative text when the app failed to download the country list.")
                 .font(Font.headline)
                 .foregroundStyle(Color(.text))
                 .multilineTextAlignment(.center)
