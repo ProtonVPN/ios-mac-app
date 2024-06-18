@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct VPNConnectionFeatures: Equatable {
+public struct VPNConnectionFeatures: Equatable, Sendable {
     public let netshield: NetShieldType
     public let vpnAccelerator: Bool
     public let bouncing: String?

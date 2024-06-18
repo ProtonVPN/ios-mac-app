@@ -17,5 +17,34 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
+import ExtensionIPC
+import ConnectionFoundations
 
-// TODO: Move VpnKeys, VpnAuthenticationData and others here, so we don't duplicate more LegacyCommon objects than necessary
+package struct CertificateAuthentication: DependencyKey {
+    // We might not need to set the sender explicitly
+    // Maybe we can just use the ExtensionManager dependency to send the message directly
+    package var setMessageSender: (ProviderMessageSender?) -> Void
+    package var loadAuthenticationData: () async throws -> VPNAuthenticationData
+
+    package init(
+        setMessageSender: @escaping (ProviderMessageSender?) -> Void,
+        loadAuthenticationData: @escaping () async throws -> VPNAuthenticationData
+    ) {
+        self.setMessageSender = setMessageSender
+        self.loadAuthenticationData = loadAuthenticationData
+    }
+
+    // TODO: Implement this once ExtensionAPIService has been integrated
+    package static let liveValue = CertificateAuthentication(
+        setMessageSender: unimplemented(),
+        loadAuthenticationData: unimplemented()
+    )
+}
+
+extension DependencyValues {
+    package var certificateAuthentication: CertificateAuthentication {
+        get { self[CertificateAuthentication.self] }
+        set { self[CertificateAuthentication.self] = newValue }
+    }
+}

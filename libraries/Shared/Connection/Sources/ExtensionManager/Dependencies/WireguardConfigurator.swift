@@ -23,20 +23,20 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
-import struct Domain.VPNServer
+import struct Domain.Server
 
 extension ManagerConfigurator {
 
-    private static func configuration(forConnectionTo server: VPNServer) -> NETunnelProviderProtocol {
+    private static func configuration(forConnectionTo server: Server) -> NETunnelProviderProtocol {
         // TODO: Provide bundle ID using a Dependency
         let bundleID: String = "ch.protonmail.vpn.WireGuard-tvOS"
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleID
 
         protocolConfiguration.connectedLogicalId = server.logical.id
-        protocolConfiguration.connectedServerIpId = server.endpoints.first?.id
-        protocolConfiguration.serverAddress = server.endpoints.first?.entryIp
-        // TODO: Set correct endpoint, transport type and other required properties
+        protocolConfiguration.connectedServerIpId = server.endpoint.id
+        protocolConfiguration.serverAddress = server.endpoint.entryIp ?? server.endpoint.exitIp
+        // TODO: Set transport type and other required properties
 
         return protocolConfiguration
     }

@@ -22,11 +22,15 @@ import enum NetworkExtension.NEVPNStatus
 import Dependencies
 
 import Domain
+import let ConnectionFoundations.log
+import struct ConnectionFoundations.LogicalServerInfo
+import ExtensionIPC
 
 protocol TunnelManager {
-    @discardableResult func startTunnel(to server: VPNServer) async throws -> VPNSession
+    func startTunnel(to server: Server) async throws
     func stopTunnel() async throws -> Void
-    var session: VPNSession { get async throws }
+    var connectedServer: LogicalServerInfo { get async throws}
+    var status: NEVPNStatus { get async throws }
     var statusStream: AsyncStream<NEVPNStatus> { get async throws }
 }
 
@@ -78,10 +82,9 @@ final class PacketTunnelManager: TunnelManager {
         return manager
     }
 
-    func startTunnel(to server: VPNServer) async throws -> VPNSession {
+    func startTunnel(to server: Server) async throws {
         let manager = try await updateTunnel(for: .connection(server))
         try manager.session.startTunnel()
-        return manager.session
     }
 
     func stopTunnel() async throws {
@@ -89,9 +92,26 @@ final class PacketTunnelManager: TunnelManager {
         manager.session.stopTunnel()
     }
 
-    var session: VPNSession {
+    var status: NEVPNStatus {
         get async throws {
-            try await loadedManager.session
+            try await loadedManager.session.status
+        }
+    }
+
+    var connectedServer: LogicalServerInfo {
+        get async throws {
+            let response = try await loadedManager.session.send(WireguardProviderRequest.getCurrentLogicalAndServerId)
+            guard case .ok(let data) = response, let data, let ids = String(data: data, encoding: .utf8) else {
+                log.error("Error decoding getCurrentLogicalAndServerId response", category: .connection)
+                throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
+            }
+            let id = ids.components(separatedBy: ";")
+            guard id.count == 2 else {
+                log.error("Unexpected number of elements in getCurrentLogicalAndServerId repsonse (expected 2, got \(id.count))", category: .connection)
+                throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
+            }
+
+            return LogicalServerInfo(logicalID: id[0], serverID: id[1])
         }
     }
 
@@ -104,6 +124,10 @@ final class PacketTunnelManager: TunnelManager {
             return AsyncStream(statusChangedNotifications)
         }
     }
+}
+
+enum TunnelManagerError: Error {
+    case ipc(WireguardProviderRequest, Error?)
 }
 
 extension DependencyValues {

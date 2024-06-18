@@ -46,7 +46,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 }
             )
         } operation: { 
-            try await PacketTunnelManager().session
+            try await PacketTunnelManager().status
         }
 
         await fulfillment(of: [existingManagersLoaded, newManagerLoaded], timeout: 1)
@@ -67,7 +67,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 }
             )
         } operation: {
-            try await PacketTunnelManager().session
+            try await PacketTunnelManager().status
         }
 
         await fulfillment(of: [existingManagersLoaded], timeout: 1)
@@ -78,7 +78,7 @@ final class PacketTunnelManagerTests: XCTestCase {
     ///
     /// Configuration specifics are up to the `tunnelProviderConfigurator`.
     func testStartingTunnelToServerConfiguresExistingManager() async throws {
-        let server = VPNServer.mock
+        let server = Server.mock
         let clock = TestClock()
 
         let providerManager = MockTunnelProviderManager.manager(state: .ready)
@@ -150,7 +150,7 @@ extension MockTunnelProviderManager {
         configuration.providerBundleIdentifier = bundleIdentifier
 
         return MockTunnelProviderManager(
-            session: MockVPNConnection(status: .disconnected),
+            session: VPNSessionMock(status: .disconnected),
             vpnProtocolConfiguration: configuration,
             isOnDemandEnabled: true,
             isEnabled: true,

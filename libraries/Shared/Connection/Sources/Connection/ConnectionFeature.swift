@@ -22,14 +22,16 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
-import struct Domain.VPNServer
+import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
-
-import let ConnectionFoundations.log
+import ConnectionFoundations
+import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
 
 public struct ConnectionFeature: Reducer, Sendable {
+    @Dependency(\.certificateAuthentication) var certificateAuthentication
+    @Dependency(\.serverIdentifier) var serverIdentifier
 
     public init() { }
 
@@ -49,7 +51,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     @CasePathable
     public enum Action: Sendable {
-        case connect(VPNServer, VPNConnectionFeatures)
+        case connect(Server, VPNConnectionFeatures)
         case disconnect
         case tunnel(ExtensionFeature.Action)
         case localAgent(LocalAgentFeature.Action)
@@ -65,26 +67,27 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.tunnel(.connect(server, features)))
 
             case .disconnect:
-                state.localAgent = .disconnected
                 return .merge(
                     .send(.localAgent(.disconnect)),
                     .send(.tunnel(.disconnect))
                 )
 
+            case .tunnel(.connectionFinished(.success(let logicalServerInfo))):
+                // certificateAuthentication.
+                guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
+                    // TODO: log, disconnect, or handle this in an otherwise sensible way
+                    fatalError("We don't have information about this server in our DB")
+                }
+                return .run { send in
+                    // TODO: Cert-Auth - ensure correct features, handle failures
+                    let authData = try await certificateAuthentication.loadAuthenticationData()
+                    await send(.localAgent(.connect(server.endpoint, authData)))
+                }
+
             case .tunnel(.tunnelStartRequestFinished(.success(let session))):
-                // TODO: certificate authentication - update reference to session
+                print(session)
                 return .none
-
-            case .tunnel(.tunnelStatusChanged(.connected)):
-                // TODO: certificate authentication
-                state.localAgent = .connected // TODO: local agent integration
-                return .send(.stateChanged(state.connectionState))
-
-            case .tunnel(.tunnelStatusChanged):
-                // for now, just send stateChanged on every state transition
-                // TODO: Only send stateChanged on relevant state changes (e.g. local agent connected, disconnected)
-                return .send(.stateChanged(state.connectionState))
-
+                
             case .tunnel:
                 return .none
 
@@ -96,16 +99,6 @@ public struct ConnectionFeature: Reducer, Sendable {
             }
         }
     }
-}
-
-extension VPNConnectionFeatures {
-    public static let mock: Self = VPNConnectionFeatures(
-        netshield: .level1,
-        vpnAccelerator: true,
-        bouncing: "1",
-        natType: .moderateNAT,
-        safeMode: false
-    )
 }
 
 @CasePathable
@@ -136,9 +129,9 @@ public enum ConnectionState: Equatable {
 }
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
-extension Domain.VPNServer: CustomDumpStringConvertible {
+extension Domain.Server: CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "VPNServer(\(logical.name))"
+        return "Server(\(logical.name))"
     }
 }
 extension Domain.VPNConnectionFeatures: CustomDumpStringConvertible {
