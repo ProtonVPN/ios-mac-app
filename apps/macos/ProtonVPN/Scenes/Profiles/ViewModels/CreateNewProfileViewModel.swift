@@ -360,7 +360,6 @@ class CreateNewProfileViewModel {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
-                self.update(connectionProtocol: .vpnProtocol(.ike))
             }))
         }
     }
