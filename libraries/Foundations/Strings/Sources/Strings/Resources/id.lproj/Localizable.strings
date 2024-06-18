@@ -1434,7 +1434,7 @@
 
 "_vpnauth_too_many_certs_title" = "Kesalahan autentikasi";
 
-"_vpnauth_too_many_certs_description" = "Anda telah mencapai batas jumlah perubahan yang diperkenankan. Harap coba lagi dalam beberapa menit";
+"_vpnauth_too_many_certs_description" = "Anda telah mencapai batas jumlah perubahan pengaturan yang diperkenankan. Silakan coba lagi dalam beberapa menit";
 
 "_from_server_title" = "Dari Server:";
 
@@ -1818,7 +1818,7 @@
 "modals_upsell_features_safe_mode_subtitle" = "Memiliki keperluan tertentu yang memerlukan penggunaan port non-standar?\n\nTingkatkan akun Anda ke VPN Plus untuk menggunakan fitur ini dan berbagai fitur premium lainnya.";
 
 /* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Izinkan lalu lintas data melalui port non-standar";
+"modals_upsell_safe_mode_title" = "Izinkan lalu lintas data menuju port non-standar";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Bawa pengalaman gaming Anda ke level selanjutnya";
@@ -2230,3 +2230,18 @@
 
 /* Change password alert message */
 "_password_changed_successfully" = "Kata sandi berhasil diubah";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Aktifkan IKEv2?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "Protokol ini akan segera dihapus. Pertimbangkan untuk beralih ke protokol Smart. Pelajari lebih lanjut";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "Pelajari lebih lanjut";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Lanjut dengan IKEv2";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Aktifkan protokol Smart";
