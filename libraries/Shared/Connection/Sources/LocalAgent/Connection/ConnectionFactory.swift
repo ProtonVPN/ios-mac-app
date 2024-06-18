@@ -72,11 +72,11 @@ extension ConnectionFactory {
                 connectionConfiguration.hostname,
                 client,
                 LocalAgentNewFeatures(),
-                true, // TODO: what should we pass for `connectivity`? Is it crucial to import and use Reachability?
+                true,
                 &error
             )
 
-            if let error = error {
+            if let error {
                 throw error
             }
 

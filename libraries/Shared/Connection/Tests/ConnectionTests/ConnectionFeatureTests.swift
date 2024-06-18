@@ -49,7 +49,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let features = VPNConnectionFeatures.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected, localAgentState: .disconnected)
+        let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
 
         let store = TestStore(initialState: disconnected) {
             ConnectionFeature()
@@ -89,9 +89,10 @@ final class ConnectionFeatureTests: XCTestCase {
         }
 
         mockAgent.state = .connected
-        await store.receive(\.localAgent.event.state.connected) {
+        await store.receive(\.localAgent.connectionFinished.success){
             $0.localAgent = .connected
         }
+        await store.receive(\.localAgent.event.state.connected)
 
         let expectedConnectedState = ConnectionFeature.State(tunnelState: .connected(connectedLogicalServer), localAgentState: .connected)
         XCTAssertEqual(store.state, expectedConnectedState)
@@ -100,15 +101,16 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(\.disconnect)
         await store.receive(\.localAgent.disconnect) {
-            $0.localAgent = .disconnected
+            $0.localAgent = .disconnected(nil)
         }
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting
         }
+        await store.receive(\.localAgent.event.state.disconnected)
 
         await mockClock.advance(by: .seconds(1))
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-            $0.tunnel = .disconnected
+            $0.tunnel = .disconnected(nil)
         }
 
         XCTAssertEqual(store.state, disconnected, "Sanity check - whether we are fully disconnected")

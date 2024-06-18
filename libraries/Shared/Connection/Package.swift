@@ -30,6 +30,7 @@ let package = Package(
             dependencies: [
                 "Domain",
                 "Ergonomics",
+                "ExtensionIPC",
                 "PMLogger",
             ]
         ),

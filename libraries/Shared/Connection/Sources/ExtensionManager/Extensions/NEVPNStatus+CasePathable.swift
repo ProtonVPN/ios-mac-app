@@ -25,55 +25,37 @@ extension NEVPNStatus: CasePathable {
         public var disconnecting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.disconnecting },
-                extract: {
-                    guard case .disconnecting = $0 else { return nil }
-                    return ()
-                }
+                extract: { guard case .disconnecting = $0 else { return nil } }
             )
         }
         public var disconnected: AnyCasePath<NEVPNStatus, Void>{
             AnyCasePath(
                 embed: { NEVPNStatus.disconnected },
-                extract: {
-                    guard case .disconnected = $0 else { return nil }
-                    return ()
-                }
+                extract: { guard case .disconnected = $0 else { return nil } }
             )
         }
         public var connecting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.connecting },
-                extract: {
-                    guard case .connecting = $0 else { return nil }
-                    return ()
-                }
+                extract: { guard case .connecting = $0 else { return nil } }
             )
         }
         public var connected: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.connected },
-                extract: {
-                    guard case .connected = $0 else { return nil }
-                    return ()
-                }
+                extract: { guard case .connected = $0 else { return nil } }
             )
         }
         public var reasserting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.reasserting },
-                extract: {
-                    guard case .reasserting = $0 else { return nil }
-                    return ()
-                }
+                extract: { guard case .reasserting = $0 else { return nil } }
             )
         }
         public var invalid: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.invalid },
-                extract: {
-                    guard case .invalid = $0 else { return nil }
-                    return ()
-                }
+                extract: { guard case .invalid = $0 else { return nil } }
             )
         }
     }

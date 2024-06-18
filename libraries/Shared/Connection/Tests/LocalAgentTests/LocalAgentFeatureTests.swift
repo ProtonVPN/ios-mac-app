@@ -33,15 +33,15 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         let server = ServerEndpoint(id: "serverID", exitIp: "", domain: "", status: 1, label: "1", protocolEntries: nil)
 
-        let state = LocalAgentFeature.State.disconnected
+        let disconnected = LocalAgentFeature.State.disconnected(nil)
 
-        let localAgent = LocalAgentMock(state: .disconnected)
+        let localAgentMock = LocalAgentMock(state: .disconnected)
 
-        let store = TestStore(initialState: state) {
+        let store = TestStore(initialState: disconnected) {
             LocalAgentFeature()
         } withDependencies: {
             $0.continuousClock = mockClock
-            $0.localAgent = localAgent
+            $0.localAgent = localAgentMock
             $0.date = .constant(.now)
         }
 
@@ -50,10 +50,12 @@ final class LocalAgentFeatureTests: XCTestCase {
             $0 = .connecting
         }
 
-        localAgent.state = .connected
-        await store.receive(\.event.state.connected) {
+        localAgentMock.state = .connected
+        await store.receive(\.connectionFinished.success) {
             $0 = .connected
         }
+
+        await store.receive(\.event.state.connected)
 
         await store.send(.stopObservingEvents)
     }
