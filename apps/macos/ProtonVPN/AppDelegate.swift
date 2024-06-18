@@ -258,7 +258,10 @@ extension AppDelegate: NSApplicationDelegate {
 
         // The sysex tour will be shown if the sysex is not installed. If the installation fails or is skipped/cancelled by the user, we will revert to IKE.
         container.makeSystemExtensionManager().installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
-            if case .failure(let failure) = result {
+            switch result {
+            case .success:
+                self.propertiesManager.connectionProtocol = .smartProtocol
+            case .failure(let failure):
                 switch failure {
                 case .installationError(let internalError):
                     SentryHelper.shared?.log(error: internalError)
