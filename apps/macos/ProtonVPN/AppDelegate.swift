@@ -260,7 +260,10 @@ extension AppDelegate: NSApplicationDelegate {
         container.makeSystemExtensionManager().installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
             switch result {
             case .success:
-                self.propertiesManager.connectionProtocol = .smartProtocol
+                // Switch away from ike to smart protocol if success.
+                if self.propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
+                    self.propertiesManager.connectionProtocol = .smartProtocol
+                }
             case .failure(let failure):
                 switch failure {
                 case .installationError(let internalError):
