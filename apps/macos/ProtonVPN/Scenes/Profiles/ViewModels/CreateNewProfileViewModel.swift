@@ -355,10 +355,7 @@ class CreateNewProfileViewModel {
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol for a new profile.")
                 self.update(connectionProtocol: .smartProtocol)
-            }, continueHandler: { [weak self] in
-                guard let self = self else {
-                    return
-                }
+            }, continueHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
             }))
         }
