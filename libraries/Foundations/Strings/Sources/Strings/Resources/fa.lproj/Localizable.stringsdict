@@ -313,13 +313,13 @@ stopped</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d ساعت</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d ساعت</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -340,13 +340,13 @@ stopped</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d ساعت</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d ساعت</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -356,13 +356,13 @@ stopped</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d hr</string>
+        <string>%d ساعت</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d hr</string>
+        <string>%d ساعت</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -383,13 +383,13 @@ stopped</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d ثانیه</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d ثانیه</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -415,13 +415,13 @@ stopped</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sec</string>
+        <string>%d ثانیه</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sec</string>
+        <string>%d ثانیه</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -458,13 +458,13 @@ stopped</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Free server locations (%d)</string>
+        <string>مکان‌های سرور رایگان (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free server locations (%d)</string>
+        <string>مکان‌های سرور رایگان (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>
