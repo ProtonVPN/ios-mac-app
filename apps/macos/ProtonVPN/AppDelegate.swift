@@ -45,7 +45,6 @@ import Logging
 import PMLogger
 import VPNShared
 import Timer
-import SystemExtensions
 
 import AppKit
 
