@@ -23,10 +23,12 @@ import Dependencies
 import XCTestDynamicOverlay
 import ExtensionIPC
 import let ConnectionFoundations.log
+import struct ConnectionFoundations.LogicalServerInfo
 
-final class MockVPNConnection: VPNSession {
-    package var connectedDate: Date?
-    package var status: NEVPNStatus {
+final class VPNSessionMock: VPNSession {
+    var connectedDate: Date?
+    var connectedServer: LogicalServerInfo = .init(logicalID: "", serverID: "")
+    var status: NEVPNStatus {
         didSet {
             NotificationCenter.default.post(name: Notification.Name.NEVPNStatusDidChange, object: self)
         }
@@ -41,7 +43,7 @@ final class MockVPNConnection: VPNSession {
         connectedDate: Date? = nil,
         lastDisconnectError: Error? = nil
     ) {
-        log.info("MockVPNConnection created")
+        log.info("VPNSessionMock init")
         self.status = status
         self.connectedDate = connectedDate
         self.lastDisconnectError = lastDisconnectError
@@ -77,6 +79,10 @@ final class MockVPNConnection: VPNSession {
 
     func send<R: ProviderRequest>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?)  {
         XCTFail("Unimplemented")
+    }
+
+    func send<R>(_ message: R) async throws -> R.Response where R : ExtensionIPC.ProviderRequest {
+        unimplemented()
     }
 }
 #endif

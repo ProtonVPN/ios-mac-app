@@ -39,3 +39,14 @@ public struct VPNServer: Codable, Equatable, Identifiable {
         return endpoints.reduce(.zero) { $0.union($1.supportedProtocols) }
     }
 }
+
+/// A pairing of a logical and a single server, used to reduce ambiguity when choosing what server to connect to
+public struct Server: Equatable, Sendable {
+    public let logical: Logical
+    public let endpoint: ServerEndpoint
+
+    public init(logical: Logical, endpoint: ServerEndpoint) {
+        self.logical = logical
+        self.endpoint = endpoint
+    }
+}

@@ -24,7 +24,7 @@ import Foundation
 /// 1. If `e.ipv4` is `nil`, `s` only supports `p`, and must use `s.entryIp` when connecting.
 /// 2. If `e.ipv4` is not `nil`, `s` supports all protocols. Client must use `e.ipv4` when connecting with `p`.
 /// 3. If `e.ports` is non-empty, client must choose from these ports when connecting, instead of ports from config.
-public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDictionaryLiteral, Codable {
+public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDictionaryLiteral, Codable, Sendable {
     public let rawValue: [String : Value]
 
     public init(rawValue: [String : Value]) {
@@ -103,7 +103,7 @@ extension PerProtocolEntries {
     }
 }
 
-public struct ServerProtocolEntry: Equatable, Codable {
+public struct ServerProtocolEntry: Equatable, Codable, Sendable {
     public let ipv4: String?
     public let ports: [Int]?
 

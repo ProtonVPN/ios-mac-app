@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct Logical: Codable, Equatable {
+public struct Logical: Codable, Equatable, Sendable {
     public let id: String
     public let kind: Kind
     public let name: String
@@ -35,7 +35,7 @@ public struct Logical: Codable, Equatable {
     public let latitude: Double
     public let longitude: Double
 
-    public enum Kind: Codable, Equatable {
+    public enum Kind: Codable, Equatable, Sendable {
         case country
         case secureCore(entryCountryCode: String)
         case gateway(name: String)

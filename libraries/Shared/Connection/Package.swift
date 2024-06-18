@@ -7,6 +7,7 @@ let package = Package(
     name: "Connection",
     platforms: [
         .iOS(.v16),
+        .macOS(.v12),
         .tvOS(.v17)
     ],
     products: [
@@ -16,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.10.2")),
-        // .package(path: "../../../external/protoncore"), // Will be required for GoLibs for LocalAgent
+        .package(path: "../../../external/protoncore"), // GoLibs
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
@@ -45,8 +46,7 @@ let package = Package(
             name: "LocalAgent",
             dependencies: [
                 "ConnectionFoundations",
-                .product(name: "VPNShared", package: "NEHelper"),
-                // .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -68,12 +68,28 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
-        .testTarget(name: "ConnectionTests", dependencies: ["Connection"]),
+        .target(name: "LocalAgentTestSupport", dependencies: ["LocalAgent"]),
+        .testTarget(
+            name: "ConnectionTests",
+            dependencies: [
+                "Connection",
+                "LocalAgentTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+            ]
+        ),
         .testTarget(
             name: "ExtensionManagerTests",
             dependencies: [
                 "ExtensionManager",
-                .product(name: "DomainTestSupport", package: "Domain")
+                .product(name: "DomainTestSupport", package: "Domain"),
+            ]
+        ),
+        .testTarget(
+            name: "LocalAgentTests",
+            dependencies: [
+                "LocalAgent",
+                "LocalAgentTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),
     ]

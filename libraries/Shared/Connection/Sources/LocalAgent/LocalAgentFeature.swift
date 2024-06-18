@@ -20,34 +20,78 @@ import Foundation
 
 import ComposableArchitecture
 
-import struct Domain.VPNConnectionFeatures
-import struct Domain.VPNServer
+import struct Domain.ServerEndpoint
+import ConnectionFoundations
 
 public struct LocalAgentFeature: Reducer, Sendable {
-    // @Dependency(\.localAgent) var localAgent
+    @Dependency(\.localAgent) var localAgent
+    @Dependency(\.localAgentConfiguration) var configuration
 
     public init() { }
 
+    @CasePathable
     public enum State: Equatable, Sendable {
         case disconnected
         case connecting
         case connected
     }
 
+    @CasePathable
     public enum Action: Sendable {
-        case startObservingStateChanges
-        case connect // (VPNServer, VPNConnectionFeatures, VpnAuthenticationData)
+        case startObservingEvents
+        case stopObservingEvents
+        case event(LocalAgentEvent)
+        case connect(ServerEndpoint, VPNAuthenticationData)
         case disconnect
     }
+
+    private enum CancelID { case observation }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .startObservingStateChanges:
+            case .startObservingEvents:
+                return .run { send in
+                    for await event in self.localAgent.eventStream {
+                        await send(.event(event))
+                    }
+                }
+                .cancellable(id: CancelID.observation)
+
+            case .stopObservingEvents:
+                return .cancel(id: CancelID.observation)
+
+            case .event(.state(.disconnected)):
+                state = .disconnected
                 return .none
 
-            case .connect: // (let server, let features, let authenticationData):
+            case .event(.state(.connected)):
                 state = .connected
+                return .none
+
+            case .event(.state(let state)):
+                XCTFail("Unhandled state: \(state)")
+                return .none
+
+            case .event:
+                return .none
+
+            case .connect(let server, let authenticationData):
+                state = .connecting
+
+                let connectionConfiguration = ConnectionConfiguration(
+                    hostname: server.domain,
+                    netshield: .level1,
+                    vpnAccelerator: true,
+                    bouncing: server.label,
+                    natType: .moderateNAT,
+                    safeMode: false
+                )
+                do {
+                    try localAgent.connect(configuration: connectionConfiguration, data: authenticationData)
+                } catch {
+                    state = .disconnected
+                }
                 return .none
 
             case .disconnect:
