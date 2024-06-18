@@ -17,31 +17,53 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import SwiftUI
 
 @Reducer
 struct SettingsDrillDownFeature {
     @ObservableState
-    struct State: Equatable {
-        let title: String
-        let description: String
+    enum State: Equatable {
+        case supportCenter
+        case contactUs
+        case privacyPolicy
+
+        func model() -> Model {
+            switch self {
+            case .supportCenter:
+                return .supportCenter()
+            case .contactUs:
+                return .contactUs()
+            case .privacyPolicy:
+                return .privacyPolicy()
+            }
+        }
+    }
+
+    struct Model {
+        let title: LocalizedStringKey
+        let description: LocalizedStringKey
         let url: String
+        let displayURL: String
 
         static func contactUs() -> Self {
-            return .init(title: "Title goes here",
-                         description: "And here’s a description that gives a little more context to the screen. Since there’s a QR code it probably also includes a",
-                         url: "protonvpn.com/url")
+            return .init(title: "Contact us",
+                         description: "If you’re having trouble using Proton VPN, our customer support team is happy to help.\n\nJust scan the QR code or go to",
+                         url: "https://protonvpn.com/support-form",
+                         displayURL: " protonvpn.com/support-form")
         }
 
-        static func reportAnIssue() -> Self {
-            return .init(title: "Found a bug? Something missing?",
-                         description: "And here’s a description that gives a little more context to the screen. Since there’s a QR code it probably also includes a",
-                         url: "protonvpn.com/url")
+        static func supportCenter() -> Self {
+            return .init(title: "Support Center",
+                         description: "Need help setting up or using Proton VPN?\n\nVisit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.\n\nJust scan the QR code or go to",
+                         url: "https://protonvpn.com/support/",
+                         displayURL: " protonvpn.com/support")
         }
 
         static func privacyPolicy() -> Self {
-            return .init(title: "Privacy Policy",
-                         description: "And here’s a description that gives a little more context to the screen. Since there’s a QR code it probably also includes a",
-                         url: "protonvpn.com/url")
+            return .init(title: "Privacy policy",
+                         description: "To read our privacy policy, scan the QR code or go to",
+                         url: "https://protonvpn.com/privacy-policy",
+                         displayURL: " protonvpn.com/privacy-policy")
         }
     }
 
@@ -50,8 +72,6 @@ struct SettingsDrillDownFeature {
     }
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            return .none
-        }
+        EmptyReducer()
     }
 }

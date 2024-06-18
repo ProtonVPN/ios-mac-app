@@ -25,20 +25,21 @@ struct SettingsDrillDownView: View {
     var store: StoreOf<SettingsDrillDownFeature>
 
     var body: some View {
+        let model = store.state.model()
         HStack(spacing: .themeSpacing120) {
             VStack(alignment: .leading, spacing: .themeSpacing24) {
-                Text(store.title)
+                Text(model.title)
                     .font(.title)
                     .fontWeight(.bold)
-                Text(store.description + " ")
+                Text(model.description)
                     .font(.title3)
                     .foregroundStyle(Color(.text, .weak)) +
-                Text(store.url)
+                Text(verbatim: model.displayURL)
                     .font(.title3)
                     .foregroundStyle(Color(.text, .interactive))
                     .fontWeight(.bold)
             }
-            QRCodeView(string: store.url)
+            QRCodeView(string: model.url)
         }
         .frame(width: Self.maximumContentWidth)
         .focusable()

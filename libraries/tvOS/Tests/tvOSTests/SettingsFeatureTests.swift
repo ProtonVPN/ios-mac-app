@@ -70,7 +70,7 @@ final class SettingsFeatureTests: XCTestCase {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.contactUs)) {
-            $0.destination = .settingsDrillDown(.contactUs())
+            $0.destination = .settingsDrillDown(.contactUs)
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
@@ -82,8 +82,8 @@ final class SettingsFeatureTests: XCTestCase {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
-        await store.send(.showDrillDown(.reportAnIssue)) {
-            $0.destination = .settingsDrillDown(.reportAnIssue())
+        await store.send(.showDrillDown(.supportCenter)) {
+            $0.destination = .settingsDrillDown(.supportCenter)
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
@@ -96,7 +96,7 @@ final class SettingsFeatureTests: XCTestCase {
             SettingsFeature()
         }
             await store.send(.showDrillDown(.privacyPolicy)) {
-            $0.destination = .settingsDrillDown(.privacyPolicy())
+            $0.destination = .settingsDrillDown(.privacyPolicy)
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil

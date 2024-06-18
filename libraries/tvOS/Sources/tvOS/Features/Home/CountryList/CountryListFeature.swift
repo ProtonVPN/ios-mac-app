@@ -46,8 +46,12 @@ struct CountryListFeature {
                     .map { CountryListItem(section: 0, row: 0, code: $0) }
             }()
             let fastest = CountryListItem(section: 0, row: 0, code: "Fastest")
-            countriesSection = .init(name: "All countries", items: allCountries)
-            recommendedSection = .init(name: "Recommended", items: [fastest] + recommendedCountries)
+            countriesSection = .init(name: "All countries", 
+                                     items: allCountries, 
+                                     sectionIndex: 1)
+            recommendedSection = .init(name: "Recommended",
+                                       items: [fastest] + recommendedCountries, 
+                                       sectionIndex: 0)
         }
     }
 

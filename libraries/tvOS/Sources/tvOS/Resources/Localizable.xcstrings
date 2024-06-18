@@ -1,0 +1,156 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%@" : {
+
+    },
+    "%lld" : {
+
+    },
+    "All countries" : {
+      "comment" : "Section title with all countries to connect to",
+      "extractionState" : "manual"
+    },
+    "Are you sure you want to sign out of Proton VPN?" : {
+      "comment" : "Appears when user clicks on sing out button",
+      "extractionState" : "manual"
+    },
+    "Available with Proton VPN Plus" : {
+      "comment" : "Badge title on the login page"
+    },
+    "Cancel" : {
+      "comment" : "Button title, cancels the connection attempt",
+      "extractionState" : "manual"
+    },
+    "Connect to high-speed servers around the world and stream your favorite shows with VPN protection." : {
+      "comment" : "Subtitle on the login page"
+    },
+    "Connected" : {
+      "comment" : "VPN connection state"
+    },
+    "Connecting" : {
+      "comment" : "VPN connection state"
+    },
+    "Connection failed" : {
+      "comment" : "Title of the alert that is shown after we failed to connect to a vpn server",
+      "extractionState" : "manual"
+    },
+    "Contact us" : {
+      "comment" : "Title of the \"contact us\" screen",
+      "extractionState" : "manual"
+    },
+    "Create account" : {
+      "comment" : "Button title in the login screen",
+      "extractionState" : "manual"
+    },
+    "Create your Proton Account" : {
+      "comment" : "Title of the \"Create Account\" screen",
+      "extractionState" : "manual"
+    },
+    "Disconnect" : {
+      "comment" : "Button title for disconnecting from the VPN",
+      "extractionState" : "manual"
+    },
+    "Disconnecting" : {
+      "comment" : "VPN connection state",
+      "extractionState" : "manual"
+    },
+    "Generate new code" : {
+      "comment" : "Button title, when user clicks on it, a new verification code is generated and user can try to authenticate again"
+    },
+    "Home" : {
+      "comment" : "Title of the tab bar item."
+    },
+    "If you’re having trouble using Proton VPN, our customer support team is happy to help.\n\nJust scan the QR code or go to" : {
+      "comment" : "Subtitle of the \"contact us\" screen",
+      "extractionState" : "manual"
+    },
+    "Loading countries" : {
+      "comment" : "Informative text when the app is downloading the country list."
+    },
+    "Need help setting up or using Proton VPN?\n\nVisit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.\n\nJust scan the QR code or go to" : {
+      "comment" : "Subtitle of the \"support center\" screen",
+      "extractionState" : "manual"
+    },
+    "Privacy policy" : {
+      "comment" : "Title of the \"privacy policy\" screen",
+      "extractionState" : "manual"
+    },
+    "Protected" : {
+      "comment" : "State of the VPN connection visible on the home page",
+      "extractionState" : "manual"
+    },
+    "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website." : {
+      "comment" : "Subtitle of the free upsell. Appears when a free user tries to log in to the tv app.",
+      "extractionState" : "manual"
+    },
+    "Quick Connect" : {
+      "comment" : "Button title",
+      "extractionState" : "manual"
+    },
+    "Recommended" : {
+      "comment" : "Section title with recommended countries to connect to",
+      "extractionState" : "manual"
+    },
+    "Scan the QR code or go to\n" : {
+      "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string.",
+      "extractionState" : "manual"
+    },
+    "Settings" : {
+      "comment" : "Title of the tab bar item."
+    },
+    "Sign in" : {
+      "comment" : "Button title on the login page"
+    },
+    "Sign in to your account." : {
+      "comment" : "2nd step of the login process",
+      "extractionState" : "manual"
+    },
+    "Sign out" : {
+      "comment" : "Button title in the settings page",
+      "extractionState" : "manual"
+    },
+    "Signing out..." : {
+      "comment" : "Title of the progress view when user starts signing out",
+      "extractionState" : "manual"
+    },
+    "Support Center" : {
+      "comment" : "Title of the \"support center\" screen",
+      "extractionState" : "manual"
+    },
+    "There was a problem.\nPlease check your network connection" : {
+      "comment" : "Informative text when the app failed to download the country list."
+    },
+    "To read our privacy policy, scan the QR code or go to" : {
+      "comment" : "Subtitle of the \"privacy policy\" screen",
+      "extractionState" : "manual"
+    },
+    "Unprotected" : {
+      "comment" : "State of the VPN connection visible on the home page",
+      "extractionState" : "manual"
+    },
+    "Using another device, go to" : {
+      "comment" : "1st step of the login process",
+      "extractionState" : "manual"
+    },
+    "Using Proton Free?" : {
+      "comment" : "Title of the free upsell. Appears when a free user tries to log in to the tv app.",
+      "extractionState" : "manual"
+    },
+    "Watch without being watched." : {
+      "comment" : "Subtitle on the login page"
+    },
+    "When asked for your verification code, enter" : {
+      "comment" : "3rd step of the login process. We append an 8 character code to the end of this string.",
+      "extractionState" : "manual"
+    },
+    "When asked for your verification code, enter (retrieving...)" : {
+      "comment" : "3rd step of the login process",
+      "extractionState" : "manual"
+    },
+    "Your verification code expired" : {
+      "comment" : "Header text, appears when the verification code expires and user can no longer use it to authenticate"
+    }
+  },
+  "version" : "1.0"
+}

@@ -29,9 +29,9 @@ struct ProtectionStatusView: View {
 
     struct Model {
         var icon: Image?
-        var title: String
+        var title: LocalizedStringKey
         var foregroundColor: Color
-        var buttonTitle: String
+        var buttonTitle: LocalizedStringKey
 
         init(connectionState: ConnectFeature.ConnectionState?) {
             switch connectionState ?? .disconnected {
@@ -46,15 +46,15 @@ struct ProtectionStatusView: View {
                 foregroundColor = Color(.text)
                 buttonTitle = "Cancel"
             case .disconnected:
-                icon = IconProvider.lockOpenFilled
+                icon = IconProvider.lockOpenFilled2 // TODO: change to lockOpenFilled with a core upgrade
                 title = "Unprotected"
                 foregroundColor = Color(.text, .danger)
-                buttonTitle = Localizable.quickConnect
+                buttonTitle = "Quick Connect"
             case .disconnecting:
                 icon = nil
                 title = "Disconnecting"
                 foregroundColor = Color(.text)
-                buttonTitle = Localizable.quickConnect
+                buttonTitle = "Quick Connect"
             }
         }
     }
@@ -99,9 +99,9 @@ struct ProtectionStatusView: View {
     @ViewBuilder
     private var locationText: Text? {
         if let location = displayedLocation {
-            Text(LocalizationUtility.default.countryName(forCode: location.country) ?? "")
+            Text(verbatim: LocalizationUtility.default.countryName(forCode: location.country) ?? "")
             +
-            Text(" • \(location.ip)")
+            Text(verbatim: " • \(location.ip)")
                 .foregroundStyle(Color(.text, .weak))
         }
     }

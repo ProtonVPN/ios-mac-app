@@ -18,6 +18,7 @@
 
 import Foundation
 import ComposableArchitecture
+import SwiftUI
 
 @Reducer
 struct WelcomeInfoFeature {
@@ -27,10 +28,10 @@ struct WelcomeInfoFeature {
         case freeUpsell
 
         struct Model {
-            let title: String
-            let subtitle: String
+            let title: LocalizedStringKey
+            let subtitle: LocalizedStringKey
             let url: String
-            let displayURL: String
+            let displayURL: String?
         }
 
         var model: Model {
@@ -41,10 +42,10 @@ struct WelcomeInfoFeature {
                           url: "www.protonvpn.com/tv",
                           displayURL: "protonvpn.com/tv")
             case .freeUpsell:
-                    .init(title: "Proton VPN for Apple TV is not available on free plans",
-                          subtitle: "Check your subscription on\n",
+                    .init(title: "Using Proton Free?",
+                          subtitle: "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website.",
                           url: "https://account.protonvpn.com/subscription",
-                          displayURL: "account.protonvpn.com/subscription")
+                          displayURL: nil)
             }
         }
     }
@@ -52,8 +53,6 @@ struct WelcomeInfoFeature {
     enum Action { }
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            return .none
-        }
+        EmptyReducer()
     }
 }
