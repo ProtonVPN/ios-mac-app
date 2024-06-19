@@ -38,7 +38,6 @@ struct ProtectionStatusFeature {
         case userClickedCancel
         case userClickedConnect
         case onAppear
-        case connectionStateUpdated(Connection.ConnectionState?)
     }
 
     var body: some Reducer<State, Action> {
@@ -57,8 +56,6 @@ struct ProtectionStatusFeature {
                         break
                     }
                 }
-            case .connectionStateUpdated:
-                return .none
             case .onAppear:
                 return .run { send in
                     @Dependency(\.userLocationService) var userLocationService

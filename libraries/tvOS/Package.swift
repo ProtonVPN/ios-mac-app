@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../Shared/Persistence"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/PMLogger"),
+        .package(path: "../Foundations/Domain"),
     ],
     targets: [
         .target(
@@ -49,6 +50,8 @@ let package = Package(
             dependencies: [
                 "tvOS",
                 "tvOSTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "ConnectionTestSupport", package: "Connection"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

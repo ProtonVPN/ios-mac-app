@@ -46,9 +46,11 @@ public struct ConnectionFeature: Reducer, Sendable {
             self.tunnel = tunnelState
             self.localAgent = localAgentState
         }
+        
+        @Shared(.inMemory("connectionState")) var connectionState: Connection.ConnectionState?
 
-        var connectionState: ConnectionState {
-            return ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
+        var computedConnectionState: ConnectionState {
+            ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
         }
     }
 
@@ -58,7 +60,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         case disconnect(ConnectionError?)
         case tunnel(ExtensionFeature.Action)
         case localAgent(LocalAgentFeature.Action)
-        case stateChanged(ConnectionState)
+        case connectionStateChanged(ConnectionState)
     }
 
     public var body: some Reducer<State, Action> {
@@ -93,13 +95,14 @@ public struct ConnectionFeature: Reducer, Sendable {
                 // state.localAgent will contain the failure reason so this can be shown in the UI
                 return .send(.tunnel(.disconnect))
 
-            case .tunnel:
-                return .send(.stateChanged(state.connectionState))
+            case .tunnel: // TODO: we can try to reduce the number of actions that cause the connectionState to recompute
+                return .send(.connectionStateChanged(state.computedConnectionState))
 
-            case .localAgent:
-                return .send(.stateChanged(state.connectionState))
+            case .localAgent: // TODO: we can try to reduce the number of actions that cause the connectionState to recompute
+                return .send(.connectionStateChanged(state.computedConnectionState))
 
-            case .stateChanged:
+            case .connectionStateChanged(let connectionState):
+                state.connectionState = connectionState
                 return .none
             }
         }

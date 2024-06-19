@@ -53,6 +53,8 @@ struct MainFeature {
         
         case alert(PresentationAction<Alert>)
 
+        case connectionStateUpdated(Connection.ConnectionState?)
+
         @CasePathable
         enum Alert {
           case errorMessage
@@ -76,10 +78,13 @@ struct MainFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { send in
-                    await send(.connection(.tunnel(.startObservingStateChanges)))
-                    await send(.connection(.localAgent(.startObservingEvents)))
-                }
+                return .merge(
+                    .publisher { state.$connectionState.publisher.receive(on: UIScheduler.shared).map(Action.connectionStateUpdated) },
+                    .run { send in
+                        await send(.connection(.tunnel(.startObservingStateChanges)))
+                        await send(.connection(.localAgent(.startObservingEvents)))
+                    }
+                )
             case .selectTab(let tab):
                 state.currentTab = tab
                 return .none
@@ -113,8 +118,7 @@ struct MainFeature {
 
             case .homeLoading:
                 return .none
-            case .connection(.stateChanged(let connectionState)):
-                state.connectionState = connectionState
+            case .connectionStateUpdated(let connectionState):
                 if case .disconnected(let error) = connectionState, let error {
                     state.alert = Self.connectionFailedAlert
                 }
