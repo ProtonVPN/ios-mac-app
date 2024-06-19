@@ -364,6 +364,8 @@ class VpnServerSelectorTests: XCTestCase {
                     exitIp: "2.2.2.2",
                     domain: id,
                     status: status,
+                    label: "1",
+                    x25519PublicKey: nil,
                     protocolEntries: mockProtocolEntries(supporting: protocols)
                 )
             ]

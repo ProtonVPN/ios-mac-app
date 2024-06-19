@@ -73,9 +73,12 @@ extension LogicalDTO {
             endpoints: servers.map {
                 ServerEndpoint(
                     id: $0.id,
+                    entryIp: $0.entryIp,
                     exitIp: $0.exitIp,
                     domain: $0.domain,
                     status: $0.status,
+                    label: $0.label,
+                    x25519PublicKey: $0.x25519PublicKey,
                     protocolEntries: nil // TODO: pass actual value, when we'll have it
                 )
             }

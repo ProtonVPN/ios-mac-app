@@ -17,17 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+@testable import VPNShared
 @testable import LegacyCommon
 
 final class CoreVPNKeysGeneratorTests: XCTestCase {
 
     func testDifferentKeysAreGenerated() throws {
-        let generator = CoreVPNKeysGenerator()
-        let key1 = generator.generateKeys()
+        let generator = VPNKeysGenerator.liveValue
+        let key1 = try generator.generateKeys()
         XCTAssertFalse(key1.publicKey.derRepresentation.isEmpty)
         XCTAssertFalse(key1.privateKey.derRepresentation.isEmpty)
         
-        let key2 = generator.generateKeys()
+        let key2 = try generator.generateKeys()
         XCTAssertFalse(key2.publicKey.derRepresentation.isEmpty)
         XCTAssertFalse(key2.privateKey.derRepresentation.isEmpty)
         

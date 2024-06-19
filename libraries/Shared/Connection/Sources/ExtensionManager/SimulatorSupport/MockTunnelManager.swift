@@ -27,6 +27,9 @@ import struct Domain.Server
 import struct ConnectionFoundations.LogicalServerInfo
 
 final class MockTunnelManager: TunnelManager {
+
+    var session: VPNSession { connection }
+
     var connection: VPNSessionMock
 
     init(connection: VPNSessionMock = .init(status: .disconnected)) {

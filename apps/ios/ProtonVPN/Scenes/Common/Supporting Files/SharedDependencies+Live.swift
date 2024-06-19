@@ -17,7 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
+import struct VPNShared.DefaultsProvider
+import enum VPNShared.VPNAuthenticationStorageConfigKey
 import Dependencies
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
@@ -29,4 +30,11 @@ extension DefaultsProvider: DependencyKey {
             UserDefaults(suiteName: AppConstants.AppGroups.main)!
         }
     )
+}
+
+extension VPNAuthenticationStorageConfigKey: DependencyKey {
+    public static let liveValue: String = {
+        let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        return "\(accessGroup)prt.ProtonVPN"
+    }()
 }

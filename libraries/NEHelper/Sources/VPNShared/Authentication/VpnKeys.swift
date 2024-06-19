@@ -25,7 +25,7 @@ import Foundation
 /**
  Ed25519 public key
  */
-public struct PublicKey: Codable, CustomStringConvertible, CustomDebugStringConvertible {
+public struct PublicKey: Sendable, Codable, CustomStringConvertible, CustomDebugStringConvertible {
 
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
@@ -52,7 +52,7 @@ public struct PublicKey: Codable, CustomStringConvertible, CustomDebugStringConv
 /**
  Ed25519 private key
  */
-public struct PrivateKey: Codable, CustomStringConvertible, CustomDebugStringConvertible {
+public struct PrivateKey: Sendable, Codable, CustomStringConvertible, CustomDebugStringConvertible {
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
@@ -82,7 +82,7 @@ public struct PrivateKey: Codable, CustomStringConvertible, CustomDebugStringCon
 /**
  Ed25519 key pair
  */
-public struct VpnKeys: Codable {
+public struct VpnKeys: Sendable, Codable {
     public let privateKey: PrivateKey
     public let publicKey: PublicKey
     

@@ -55,7 +55,8 @@ let package = Package(
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
-            ]),
+            ]
+        ),
     ]
 )
 

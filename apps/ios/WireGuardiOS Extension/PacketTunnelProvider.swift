@@ -45,12 +45,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     public var dataTaskFactory: DataTaskFactory!
 
     public var transport: WireGuardTransport? {
-        guard let socketType = self.tunnelProviderProtocol?.wgProtocol else {
-            return nil
-        }
-
-        return WireGuardTransport(rawValue: socketType) ?? .udp
+        return tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
+
 
     private var shouldStartServerRefreshOnWake: Bool {
         isEnabled(VpnReconnectionFeatureFlag())
@@ -61,8 +58,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     override init() {
         AppContext.default = .wireGuardExtension
 
-        vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
-                                                             vpnKeysGenerator: ExtensionVPNKeysGenerator())
+        vpnAuthenticationStorage = VpnAuthenticationKeychain()
 
         appInfo = AppInfoImplementation()
 

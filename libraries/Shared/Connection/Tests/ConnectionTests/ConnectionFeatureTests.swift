@@ -60,8 +60,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
             $0.certificateAuthentication = .init(
-                setMessageSender: { _ in },
-                loadAuthenticationData: { .empty }
+                loadAuthenticationData: { _ in .empty }
             )
         }
 

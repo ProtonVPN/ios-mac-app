@@ -23,6 +23,7 @@ import Dependencies
 import ProtonCoreFoundations
 
 import CommonNetworking
+import VPNShared
 import LegacyCommon
 import Persistence
 

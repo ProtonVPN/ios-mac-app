@@ -27,3 +27,10 @@ extension DefaultsProvider: DependencyKey {
         getDefaults: { UserDefaults.standard }
     )
 }
+
+extension VPNAuthenticationStorageConfigKey: DependencyKey {
+    public static let liveValue: String = {
+        let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        return "\(accessGroup)prt.ProtonVPN"
+    }()
+}

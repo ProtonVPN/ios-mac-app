@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Domain
 import NetworkExtension
 import Timer
 import Localization
@@ -83,8 +84,7 @@ open class Container: PropertiesToOverride {
     private lazy var profileManager = ProfileManager(self)
     private lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: config.accessGroup,
-                                                                           vpnKeysGenerator: CoreVPNKeysGenerator())
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain()
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
     private lazy var vpnGateway: VpnGatewayProtocol = VpnGateway(self)
 

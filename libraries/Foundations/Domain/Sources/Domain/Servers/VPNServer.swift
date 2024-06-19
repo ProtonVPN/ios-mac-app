@@ -24,7 +24,7 @@ import CoreLocation
 /// Functions mapping `VpnServer` to legacy `ServerModel` DTO and vice versa are available in `LegacyCommon`.
 ///
 /// The plan is to get rid of `ServerModel` whenever possible and move to using this struct only.
-public struct VPNServer: Codable, Equatable, Identifiable {
+public struct VPNServer: Codable, Equatable, Identifiable, Sendable {
     public let logical: Logical
     public let endpoints: [ServerEndpoint]
 

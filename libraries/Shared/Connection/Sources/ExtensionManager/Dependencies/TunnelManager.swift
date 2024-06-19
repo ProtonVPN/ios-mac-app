@@ -29,7 +29,8 @@ import ExtensionIPC
 protocol TunnelManager {
     func startTunnel(to server: Server) async throws
     func stopTunnel() async throws -> Void
-    var connectedServer: LogicalServerInfo { get async throws}
+    var session: VPNSession { get async throws }
+    var connectedServer: LogicalServerInfo { get async throws }
     var status: NEVPNStatus { get async throws }
     var statusStream: AsyncStream<NEVPNStatus> { get async throws }
 }
@@ -92,9 +93,15 @@ final class PacketTunnelManager: TunnelManager {
         manager.session.stopTunnel()
     }
 
+    var session: VPNSession {
+        get async throws {
+            try await loadedManager.session
+        }
+    }
+
     var status: NEVPNStatus {
         get async throws {
-            try await loadedManager.session.status
+            try await session.status
         }
     }
 
@@ -121,6 +128,7 @@ final class PacketTunnelManager: TunnelManager {
             let statusChangedNotifications = NotificationCenter.default
                 .notifications(named: Notification.Name.NEVPNStatusDidChange, object: manager.session)
                 .map { _ in manager.session.status }
+
             return AsyncStream(statusChangedNotifications)
         }
     }

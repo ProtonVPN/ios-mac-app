@@ -64,11 +64,11 @@ public protocol VpnKeychainFactory {
 }
 
 internal enum KeychainEnvironment {
-    static var secItemAdd = SecItemAdd
-    static var secItemDelete = SecItemDelete
-    static var secItemCopyMatching = SecItemCopyMatching
-    static var secKeyCreateWithData = SecKeyCreateWithData
-    static var secKeyVerifySignature = SecKeyVerifySignature
+    static let secItemAdd = SecItemAdd
+    static let secItemDelete = SecItemDelete
+    static let secItemCopyMatching = SecItemCopyMatching
+    static let secKeyCreateWithData = SecKeyCreateWithData
+    static let secKeyVerifySignature = SecKeyVerifySignature
 }
 
 public class VpnKeychain: VpnKeychainProtocol {
@@ -249,14 +249,13 @@ public class VpnKeychain: VpnKeychainProtocol {
 
             // If current item is the same as the one we want to write, just skip it
             guard let secItemDict = secItem as? [String: AnyObject],
-                let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
-                  data == oldPasswordData else {
+                  let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
+                  data == oldPasswordData
+            else {
                 throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
             }
         } catch {
-            do {
-                try clearPassword(forKey: key)
-            } catch { }
+            try clearPassword(forKey: key)
 
             var query = formBaseQuery(forKey: key)
             query[kSecValueData as AnyHashable] = data

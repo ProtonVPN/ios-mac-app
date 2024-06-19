@@ -24,6 +24,34 @@ import class NetworkExtension.NETunnelProviderProtocol
 import Dependencies
 
 import struct Domain.Server
+import struct ConnectionFoundations.WireguardConfig
+import struct ConnectionFoundations.StoredWireguardConfig
+
+public struct ConnectionConfiguration {
+
+    /// Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
+    public let username: String
+    public let wireguardConfig: WireguardConfig
+
+
+}
+public enum ConnectionConfigurationKey: DependencyKey {
+
+    public static var liveValue: ConnectionConfiguration {
+        return .init(
+            username: "mockman",
+            wireguardConfig: .init()
+        )
+    }
+}
+
+extension DependencyValues {
+    var connectionConfiguration: ConnectionConfiguration {
+        get { self[ConnectionConfigurationKey.self] }
+        set { self[ConnectionConfigurationKey.self] = newValue }
+    }
+}
+
 
 extension ManagerConfigurator {
 
@@ -36,7 +64,33 @@ extension ManagerConfigurator {
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
         protocolConfiguration.serverAddress = server.endpoint.entryIp ?? server.endpoint.exitIp
-        // TODO: Set transport type and other required properties
+        protocolConfiguration.wgProtocol = "udp" // TODO: specify transport type
+
+        @Dependency(\.connectionConfiguration) var connectionConfiguration
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        authenticationStorage.deleteKeys()
+        @Dependency(\.tunnelKeychain) var tunnelKeychain
+        @Dependency(\.date) var date
+        protocolConfiguration.username = connectionConfiguration.username
+
+        // This should be done outside connection and passed in
+        // let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
+
+        let encoder = JSONEncoder()
+        let version: StoredWireguardConfig.Version = .v1
+        let storedConfig = StoredWireguardConfig(
+            wireguardConfig: connectionConfiguration.wireguardConfig,
+            clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
+            serverPublicKey: server.endpoint.x25519PublicKey,
+            entryServerAddress: server.endpoint.entryIp ?? server.endpoint.exitIp, // TODO: select entry IP according to protocol
+            ports: connectionConfiguration.wireguardConfig.defaultUdpPorts, // TODO: select ports
+            timestamp: date.now
+        )
+
+        var configData = Data([UInt8(version.rawValue)])
+        configData.append(try! encoder.encode(storedConfig)) // TODO: error handling
+        let passwordReference = try! tunnelKeychain.storeWireguardConfig(configData)
+        protocolConfiguration.passwordReference = passwordReference
 
         return protocolConfiguration
     }

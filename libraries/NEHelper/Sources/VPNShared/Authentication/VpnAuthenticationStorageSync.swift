@@ -21,7 +21,7 @@
 //
 
 import Foundation
-
+import Dependencies
 import Domain
 
 public protocol VpnAuthenticationStorageFactory {
@@ -49,4 +49,24 @@ public protocol VpnAuthenticationStorageDelegate: AnyObject {
 
 public protocol VpnAuthenticationStorageUserDefaults {
     var vpnCertificateFeatures: VPNConnectionFeatures? { get set }
+}
+
+public enum VPNAuthenticationStorageConfigKey: TestDependencyKey {
+    public static let testValue: String = "test.prt.ProtonVPN"
+}
+
+public enum VPNAuthenticationStorageKey: DependencyKey {
+    public static let liveValue: VpnAuthenticationStorageSync = VpnAuthenticationKeychain()
+}
+
+extension DependencyValues {
+    public var vpnAuthenticationStorage: VpnAuthenticationStorageSync {
+        get { self[VPNAuthenticationStorageKey.self] }
+        set { self[VPNAuthenticationStorageKey.self] = newValue }
+    }
+
+    public var vpnAuthenticationStorageConfig: String {
+        get { self[VPNAuthenticationStorageConfigKey.self] }
+        set { self[VPNAuthenticationStorageConfigKey.self] = newValue }
+    }
 }
