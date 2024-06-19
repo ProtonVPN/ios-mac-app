@@ -52,7 +52,7 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testDisconnect() async {
+    func testUserClickedDisconnect() async {
         let clock = TestClock()
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()
@@ -77,6 +77,46 @@ final class MainFeatureTests: XCTestCase {
             $0.connection.tunnel = .disconnecting
         }
         await store.receive(\.connection.connectionStateChanged.disconnected)
+        await store.receive(\.connection.connectionStateChanged.disconnected)
+    }
+
+    @MainActor
+    func testErrorConnectingShowsAlert() async {
+        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        let error = ConnectionError.serverMissing
+        await store.send(.connectionStateUpdated(.disconnected(error))) {
+            $0.alert = MainFeature.connectionFailedAlert(reason: error.description)
+        }
+    }
+
+
+    @MainActor
+    func testUserClickedConnect() async {
+        let clock = TestClock()
+        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
+            $0.connectionClient = .testValue
+            $0.continuousClock = clock
+            $0.localAgent = LocalAgentMock(state: .disconnected)
+            $0.tunnelManager = MockTunnelManager()
+        }
+        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
+
+        connectionState = .disconnected(nil)
+        await store.send(.homeLoading(.loaded(.protectionStatus(.userClickedConnect))))
+
+        await store.receive(\.connection.connect)
+        await store.receive(\.connection.tunnel.connect) {
+            $0.connection.tunnel = .connecting
+        }
+        await store.receive(\.connection.connectionStateChanged.disconnected)
+        await store.receive(\.connection.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.connection.connectionStateChanged.disconnected)
     }
 }

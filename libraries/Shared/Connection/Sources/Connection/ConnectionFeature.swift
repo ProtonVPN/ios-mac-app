@@ -113,6 +113,19 @@ public struct ConnectionFeature: Reducer, Sendable {
 public enum ConnectionError: Error, Equatable {
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
+    case serverMissing
+
+    public var description: String {
+        switch self {
+
+        case .tunnel(_):
+            return ""
+        case .agent(_):
+            return ""
+        case .serverMissing:
+            return "Couldn't find specified server"
+        }
+    }
 }
 
 @CasePathable

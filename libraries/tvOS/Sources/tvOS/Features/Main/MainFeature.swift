@@ -61,8 +61,12 @@ struct MainFeature {
         }
     }
 
-    static let connectionFailedAlert = AlertState<Action.Alert> {
-        TextState("Connection failed")
+    static func connectionFailedAlert(reason: String) -> AlertState<Action.Alert> {
+        .init {
+            TextState("Connection failed")
+        } message: {
+            TextState(reason)
+        }
     }
 
     var body: some Reducer<State, Action> {
@@ -107,6 +111,7 @@ struct MainFeature {
                         await send(.connection(.disconnect(nil)))
                     case .userClickedConnect:
                         guard let (connectServer, features) = serverWithFeatures(code: "Fastest") else {
+                            await send(.connectionStateUpdated(.disconnected(.serverMissing)))
                             return
                         }
                         // quick connect
@@ -120,7 +125,7 @@ struct MainFeature {
                 return .none
             case .connectionStateUpdated(let connectionState):
                 if case .disconnected(let error) = connectionState, let error {
-                    state.alert = Self.connectionFailedAlert
+                    state.alert = Self.connectionFailedAlert(reason: error.description)
                 }
                 return .none
             case .connection:
@@ -135,8 +140,8 @@ struct MainFeature {
     func serverWithFeatures(code: String) -> (Server, VPNConnectionFeatures)? {
         @Dependency(\.serverRepository) var repository
         let filters = code == "Fastest" ?  [] : [VPNServerFilter.kind(.country(code: code))]
-        let server = repository.getFirstServer(filteredBy: filters, orderedBy: .fastest)!
-        guard let endpoint = server.endpoints.first else {
+        guard let server = repository.getFirstServer(filteredBy: filters, orderedBy: .fastest),
+              let endpoint = server.endpoints.first else {
             return nil
         }
         let connectServer = Server(logical: server.logical, endpoint: endpoint)
