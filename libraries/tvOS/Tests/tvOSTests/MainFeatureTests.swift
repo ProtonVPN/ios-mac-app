@@ -24,6 +24,7 @@ import ComposableArchitecture
 
 import DomainTestSupport
 @testable import LocalAgentTestSupport
+@testable import LocalAgent
 
 final class MainFeatureTests: XCTestCase {
 
@@ -62,7 +63,7 @@ final class MainFeatureTests: XCTestCase {
             $0.localAgent = LocalAgentMock(state: .connected)
             $0.tunnelManager = MockTunnelManager()
         }
-        @Shared(.inMemory("connectionState")) var connectionState: Connection.ConnectionState?
+        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
 
         connectionState = .connected(.mock)
         await store.send(.homeLoading(.loaded(.protectionStatus(.userClickedDisconnect))))

@@ -47,7 +47,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             self.localAgent = localAgentState
         }
         
-        @Shared(.inMemory("connectionState")) var connectionState: Connection.ConnectionState?
+        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
 
         var computedConnectionState: ConnectionState {
             ConnectionState(tunnelState: tunnel, localAgentState: localAgent)

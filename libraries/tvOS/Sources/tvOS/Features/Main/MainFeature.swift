@@ -39,7 +39,7 @@ struct MainFeature {
 
         @Presents var alert: AlertState<Action.Alert>?
         
-        @Shared(.inMemory("connectionState")) var connectionState: Connection.ConnectionState?
+        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
     }
 
     enum Action {

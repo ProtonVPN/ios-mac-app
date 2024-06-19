@@ -23,7 +23,7 @@ import ComposableArchitecture
 
 public class UserLocationService {
 
-    @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
+    @Shared(.userLocation) var userLocation: UserLocation?
 
     /// Update user location (ip)
     ///
