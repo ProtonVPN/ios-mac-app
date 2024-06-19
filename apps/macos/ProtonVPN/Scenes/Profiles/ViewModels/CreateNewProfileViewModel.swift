@@ -84,7 +84,7 @@ class CreateNewProfileViewModel {
     private var state: ModelState {
         didSet {
             if oldValue.connectionProtocol != state.connectionProtocol {
-                checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
+                checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)
             }
             if let contentUpdate = oldValue.menuContentUpdate(forNewValue: state) {
                 menuContentChanged?(contentUpdate)
@@ -261,7 +261,7 @@ class CreateNewProfileViewModel {
                 PopUpButtonItemViewModel(
                     title: menuStyle(`protocol`.localizedString),
                     checked: `protocol` == state.connectionProtocol,
-                    handler: { [weak self] in self?.update(connectionProtocol: `protocol`) }
+                    handler: { [weak self] in self?.update(connectionProtocol: `protocol`, userInitiated: true) }
                 )
             }
     }
@@ -343,10 +343,22 @@ class CreateNewProfileViewModel {
     }
 
     /// Starts the system extension tour if system extensions are required for `connection protocol` but are not enabled
-    private func update(connectionProtocol: ConnectionProtocol?) {
-        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
+    private func update(connectionProtocol: ConnectionProtocol?, userInitiated: Bool = false) {
 
+        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
         state = state.updating(connectionProtocol: connectionProtocol)
+
+        if connectionProtocol == .vpnProtocol(.ike) && userInitiated {
+            self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol for a new profile.")
+                self.update(connectionProtocol: .smartProtocol)
+            }, continueHandler: {
+                SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
+            }))
+        }
     }
 
     func clearContent() {
