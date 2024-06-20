@@ -39,7 +39,7 @@ struct MainFeature {
 
         @Presents var alert: AlertState<Action.Alert>?
         
-        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
+        @Shared(.connectionState) var connectionState: ConnectionState?
     }
 
     enum Action {
@@ -54,7 +54,7 @@ struct MainFeature {
         
         case alert(PresentationAction<Alert>)
 
-        case connectionStateUpdated(Connection.ConnectionState?)
+        case connectionFailed(ConnectionError)
 
         @CasePathable
         enum Alert {
@@ -83,13 +83,11 @@ struct MainFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .merge(
-                    .publisher { state.$connectionState.publisher.receive(on: UIScheduler.shared).map(Action.connectionStateUpdated) },
-                    .run { send in
-                        await send(.connection(.tunnel(.startObservingStateChanges)))
-                        await send(.connection(.localAgent(.startObservingEvents)))
-                    }
-                )
+                return .run { send in
+                    await send(.connection(.tunnel(.startObservingStateChanges)))
+                    await send(.connection(.localAgent(.startObservingEvents)))
+                }
+
             case .onLogout:
                 return .run { send in
                     await send(.connection(.disconnect(nil)))
@@ -119,7 +117,7 @@ struct MainFeature {
                         await send(.connection(.disconnect(nil)))
                     case .userClickedConnect:
                         guard let (connectServer, features) = serverWithFeatures(code: "Fastest") else {
-                            await send(.connectionStateUpdated(.disconnected(.serverMissing)))
+                            await send(.connectionFailed(.serverMissing))
                             return
                         }
                         // quick connect
@@ -131,8 +129,11 @@ struct MainFeature {
 
             case .homeLoading:
                 return .none
-            case .connectionStateUpdated(let connectionState):
-                if case .disconnected(let error) = connectionState, let error {
+            case .connectionFailed(let error):
+                state.alert = Self.connectionFailedAlert(reason: error.description)
+                return .none
+            case .connection(.disconnect(let error)):
+                if let error {
                     state.alert = Self.connectionFailedAlert(reason: error.description)
                 }
                 return .none
@@ -143,7 +144,6 @@ struct MainFeature {
                 )
                 if newConnectionState != state.connectionState {
                     state.connectionState = newConnectionState
-                    return .send(.connectionStateUpdated(newConnectionState))
                 }
                 return .none
             case .alert:

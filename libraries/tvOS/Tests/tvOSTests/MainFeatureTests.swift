@@ -78,7 +78,7 @@ final class MainFeatureTests: XCTestCase {
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
         }
-        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
+        @Shared(.connectionState) var connectionState: ConnectionState?
 
         store.exhaustivity = .off
 
