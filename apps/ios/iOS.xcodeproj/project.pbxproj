@@ -4089,7 +4089,7 @@
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
 			requirement = {
 				kind = exactVersion;
-				version = 8.18.0;
+				version = 8.29.0;
 			};
 		};
 		4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {

@@ -57,7 +57,7 @@ let package = Package(
 
         // External dependencies
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
-        .github("getsentry", repo: "sentry-cocoa", exact: "8.18.0"),
+        .github("getsentry", repo: "sentry-cocoa", exact: "8.29.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.0")),
         .github("pointfreeco", repo: "swift-composable-architecture", exact: "1.10.2"),
