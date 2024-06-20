@@ -78,8 +78,8 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .tunnel(.connectionFinished(.success(let logicalServerInfo))):
                 // certificateAuthentication.
                 guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
-                    // TODO: log, disconnect, or handle this in an otherwise sensible way
-                    fatalError("We don't have information about this server in our DB")
+                    log.error("Detected connection to unknown server, disconnecting", category: .connection, metadata: ["logicalServerInfo": "\(logicalServerInfo)"])
+                    return .send(.disconnect)
                 }
                 return .run { send in
                     // TODO: Cert-Auth - ensure correct features, handle failures
