@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import XCTestDynamicOverlay
 import ConnectionFoundations
 @testable import LocalAgent
@@ -47,6 +48,7 @@ final class LocalAgentMock: LocalAgent {
         }
     }
 
+    var connectionTask: Task<Void, Error>?
     var connectionErrorToThrow: Error?
 
     init(
@@ -58,8 +60,16 @@ final class LocalAgentMock: LocalAgent {
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
-        if let connectionErrorToThrow {
-            throw connectionErrorToThrow
+        connectionTask = Task {
+            @Dependency(\.continuousClock) var clock
+
+            try await clock.sleep(for: .seconds(1))
+
+            if let connectionErrorToThrow {
+                throw connectionErrorToThrow
+            }
+
+            self.state = .connected
         }
     }
     

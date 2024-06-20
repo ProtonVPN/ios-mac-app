@@ -137,6 +137,14 @@ struct MainFeature {
                 }
                 return .none
             case .connection:
+                let newConnectionState = ConnectionState(
+                    tunnelState: state.connection.tunnel,
+                    localAgentState: state.connection.localAgent
+                )
+                if newConnectionState != state.connectionState {
+                    state.connectionState = newConnectionState
+                    return .send(.connectionStateUpdated(newConnectionState))
+                }
                 return .none
             case .alert:
                 return .none

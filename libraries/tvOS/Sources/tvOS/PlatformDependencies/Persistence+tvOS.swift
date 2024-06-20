@@ -34,7 +34,7 @@ extension DatabaseConfiguration {
     public static var live: DatabaseConfiguration {
         let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
         guard let directoryURL = directoryURLs.first else {
-            fatalError("Failed to initialise app DB: cannot find URL for application support directory")
+            fatalError("Failed to initialise app DB: cannot find URL for caches Directory")
         }
 
         if !FileManager.default.fileExists(atPath: directoryURL.absolutePath) {

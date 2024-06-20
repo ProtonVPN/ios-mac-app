@@ -36,8 +36,8 @@ public struct ConnectionFeature: Reducer, Sendable {
     public init() { }
 
     public struct State: Equatable, Sendable {
-        var tunnel: ExtensionFeature.State
-        var localAgent: LocalAgentFeature.State
+        public var tunnel: ExtensionFeature.State
+        public var localAgent: LocalAgentFeature.State
 
         public init(
             tunnelState: ExtensionFeature.State = .disconnected(nil),
@@ -46,8 +46,6 @@ public struct ConnectionFeature: Reducer, Sendable {
             self.tunnel = tunnelState
             self.localAgent = localAgentState
         }
-        
-        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
 
         var computedConnectionState: ConnectionState {
             ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
@@ -60,7 +58,6 @@ public struct ConnectionFeature: Reducer, Sendable {
         case disconnect(ConnectionError?)
         case tunnel(ExtensionFeature.Action)
         case localAgent(LocalAgentFeature.Action)
-        case connectionStateChanged(ConnectionState)
     }
 
     public var body: some Reducer<State, Action> {
@@ -95,14 +92,9 @@ public struct ConnectionFeature: Reducer, Sendable {
                 // state.localAgent will contain the failure reason so this can be shown in the UI
                 return .send(.tunnel(.disconnect))
 
-            case .tunnel: // TODO: we can try to reduce the number of actions that cause the connectionState to recompute
-                return .send(.connectionStateChanged(state.computedConnectionState))
-
-            case .localAgent: // TODO: we can try to reduce the number of actions that cause the connectionState to recompute
-                return .send(.connectionStateChanged(state.computedConnectionState))
-
-            case .connectionStateChanged(let connectionState):
-                state.connectionState = connectionState
+            case .tunnel:
+                return .none
+            case .localAgent:
                 return .none
             }
         }
@@ -124,45 +116,6 @@ public enum ConnectionError: Error, Equatable {
             return ""
         case .serverMissing:
             return "Couldn't find specified server"
-        }
-    }
-}
-
-@CasePathable
-public enum ConnectionState: Equatable, Sendable {
-    case disconnected(ConnectionError?)
-    case connecting
-    case connected(Server)
-    case disconnecting
-
-    public init(
-        tunnelState: ExtensionFeature.State,
-        localAgentState: LocalAgentFeature.State
-    ) {
-        switch (tunnelState, localAgentState) {
-        case (.disconnected(let tunnelError), .disconnected(let agentError)):
-            // Once both components are disconnected, prioritise returning tunnel errors over local agent errors
-            let potentialError: ConnectionError? = tunnelError.map { .tunnel($0) } ?? agentError.map { .agent($0) }
-            self = .disconnected(potentialError)
-
-        case (.disconnected(let tunnelError), _):
-            self = .disconnected(tunnelError.map { .tunnel($0) })
-
-        case (_, .disconnected(let agentError)):
-            self = .disconnected(agentError.map { .agent($0) })
-
-        case (.connected(let logicalServerInfo), .connected):
-            @Dependency(\.serverIdentifier) var serverIdentifier
-            guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
-                fatalError("Unknown server")
-            }
-            self = .connected(server)
-
-        case (.connected, _), (.connecting, _):
-            self = .connecting
-
-        case (.disconnecting, _):
-            self = .disconnecting
         }
     }
 }

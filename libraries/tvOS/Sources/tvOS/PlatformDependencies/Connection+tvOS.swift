@@ -31,6 +31,14 @@ extension ServerIdentifier: DependencyKey {
                 return nil
             }
             guard let endpoint = server.endpoints.first(where: { $0.id == logicalServerInfo.serverID }) else {
+                log.debug(
+                    "Unable to identify server - missing endpoint",
+                    category: .persistence,
+                    metadata: [
+                        "logicalID": "\(logicalServerInfo.logicalID)",
+                        "serverID": "\(logicalServerInfo.serverID)"
+                    ]
+                )
                 return nil
             }
             return Server(logical: server.logical, endpoint: endpoint)
