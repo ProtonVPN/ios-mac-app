@@ -39,7 +39,10 @@ public struct ConnectionFeature: Reducer, Sendable {
         var tunnel: ExtensionFeature.State
         var localAgent: LocalAgentFeature.State
 
-        public init(tunnelState: ExtensionFeature.State, localAgentState: LocalAgentFeature.State) {
+        public init(
+            tunnelState: ExtensionFeature.State = .disconnected(nil),
+            localAgentState: LocalAgentFeature.State = .disconnected(nil)
+        ) {
             self.tunnel = tunnelState
             self.localAgent = localAgentState
         }
@@ -75,8 +78,8 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .tunnel(.connectionFinished(.success(let logicalServerInfo))):
                 // certificateAuthentication.
                 guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
-                    // TODO: log, disconnect, or handle this in an otherwise sensible way
-                    fatalError("We don't have information about this server in our DB")
+                    log.error("Detected connection to unknown server, disconnecting", category: .connection, metadata: ["logicalServerInfo": "\(logicalServerInfo)"])
+                    return .send(.disconnect)
                 }
                 return .run { send in
                     // TODO: Cert-Auth - ensure correct features, handle failures
@@ -84,10 +87,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                     await send(.localAgent(.connect(server.endpoint, authData)))
                 }
 
-            case .tunnel(.tunnelStartRequestFinished(.success(let session))):
-                print(session)
-                return .none
-                
+            case .localAgent(.connectionFinished(.failure)):
+                // TODO: Certificate Authentication: check if error is retriable, try connecting again
+                // For now, let's just disconnect the tunnel.
+                // state.localAgent will contain the failure reason so this can be shown in the UI
+                return .send(.tunnel(.disconnect))
+
             case .tunnel:
                 return .none
 
@@ -101,11 +106,16 @@ public struct ConnectionFeature: Reducer, Sendable {
     }
 }
 
+public enum ConnectionError: Error, Equatable {
+    case tunnel(TunnelConnectionError)
+    case agent(LocalAgentConnectionError)
+}
+
 @CasePathable
-public enum ConnectionState: Equatable {
-    case disconnected
+public enum ConnectionState: Equatable, Sendable {
+    case disconnected(ConnectionError?)
     case connecting
-    case connected(country: String, ip: String)
+    case connected(Server)
     case disconnecting
 
     public init(
@@ -113,17 +123,29 @@ public enum ConnectionState: Equatable {
         localAgentState: LocalAgentFeature.State
     ) {
         switch (tunnelState, localAgentState) {
-        case (.connected, .connected):
-            self = .connected(country: "CH", ip: "1.2.3.4")
+        case (.disconnected(let tunnelError), .disconnected(let agentError)):
+            // Once both components are disconnected, prioritise returning tunnel errors over local agent errors
+            let potentialError: ConnectionError? = tunnelError.map { .tunnel($0) } ?? agentError.map { .agent($0) }
+            self = .disconnected(potentialError)
+
+        case (.disconnected(let tunnelError), _):
+            self = .disconnected(tunnelError.map { .tunnel($0) })
+
+        case (_, .disconnected(let agentError)):
+            self = .disconnected(agentError.map { .agent($0) })
+
+        case (.connected(let logicalServerInfo), .connected):
+            @Dependency(\.serverIdentifier) var serverIdentifier
+            guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
+                fatalError("Unknown server")
+            }
+            self = .connected(server)
 
         case (.connected, _), (.connecting, _):
             self = .connecting
 
         case (.disconnecting, _):
             self = .disconnecting
-
-        case (.disconnected, _):
-            self = .disconnected
         }
     }
 }

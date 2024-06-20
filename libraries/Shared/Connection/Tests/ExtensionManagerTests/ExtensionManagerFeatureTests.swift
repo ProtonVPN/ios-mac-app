@@ -44,8 +44,8 @@ final class ExtensionManagerFeatureTests: XCTestCase {
             lastDisconnectError: nil
         )
 
-        let state = ExtensionFeature.State.disconnected
-        let store = TestStore(initialState: state) {
+        let disconnected = ExtensionFeature.State.disconnected(nil)
+        let store = TestStore(initialState: disconnected) {
             ExtensionFeature()
         } withDependencies: {
             $0.continuousClock = mockClock
@@ -83,8 +83,8 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let previouslyConnectedServer = LogicalServerInfo(logicalID: "logical", serverID: "server")
         mockManager.connection.connectedServer = previouslyConnectedServer
 
-        let state = ExtensionFeature.State.disconnected
-        let store = TestStore(initialState: state) {
+        let disconnected = ExtensionFeature.State.disconnected(nil)
+        let store = TestStore(initialState: disconnected) {
             ExtensionFeature()
         } withDependencies: {
             $0.tunnelManager = mockManager

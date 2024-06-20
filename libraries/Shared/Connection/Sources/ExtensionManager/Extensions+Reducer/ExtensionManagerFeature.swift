@@ -37,7 +37,7 @@ public struct ExtensionFeature: Reducer, Sendable {
 
     @CasePathable
     public enum State: Equatable, Sendable {
-        case disconnected
+        case disconnected(TunnelConnectionError?)
         case disconnecting
         case connecting
         case connected(LogicalServerInfo)
@@ -98,6 +98,10 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .tunnelStatusChanged(.connected):
+                // When we receive this event, it means the extension has called the completion handler on
+                // `PacketTunnelProvider`'s `startTunnel` method, so technically we are 'connected' at this point.
+                // But before we can actually start (re)connecting local agent, we need to know the details of the
+                // server we are connected to, fetched through `tunnelManager.connectedServer`
                 state = .connecting
                 return .run { send in
                     await send(.connectionFinished(Result {
@@ -112,11 +116,12 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .tunnelStatusChanged(.invalid):
                 // TODO: error state? How can we recover? Remove and recreate manager?
                 // TODO: log lastDisconnectionError
+                state = .disconnected(nil)
                 return .none
 
             case .tunnelStatusChanged(.disconnected):
-                state = .disconnected
                 // TODO: Detect if we initiated the disconnection. If it was unexpected, log last disconnection error
+                state = .disconnected(nil)
                 return .none
 
             case .tunnelStatusChanged(.reasserting):
@@ -132,15 +137,33 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .connectionFinished(.failure(let error)):
-                // TODO: Recovery? We don't know what endpoint LocalAgent should connect to
-                log.error("Failed to determine active server", category: .connection, metadata: ["error": "\(error)"])
-                return .none
+                state = .disconnected(.unknownServer)
+                return .send(.disconnect)
 
             case .tunnelStatusChanged(let unknownFutureStatus):
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])
                 assertionFailure("Unknown tunnel status \(unknownFutureStatus)")
                 return .none
             }
+        }
+    }
+}
+
+@CasePathable
+public enum TunnelConnectionError: Error, Equatable {
+    case tunnelStartFailed(Error)
+    case unknownServer
+
+    public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
+        switch (lhs, rhs) {
+        case (.tunnelStartFailed, .tunnelStartFailed):
+            return true
+
+        case (.unknownServer, .unknownServer):
+            return true
+
+        default:
+            return false
         }
     }
 }
