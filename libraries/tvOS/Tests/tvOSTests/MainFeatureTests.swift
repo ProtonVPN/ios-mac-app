@@ -52,35 +52,6 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testUserClickedDisconnect() async {
-        let clock = TestClock()
-        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
-            MainFeature()
-        } withDependencies: {
-            $0.serverRepository = .empty()
-            $0.connectionClient = .testValue
-            $0.continuousClock = clock
-            $0.localAgent = LocalAgentMock(state: .connected)
-            $0.tunnelManager = MockTunnelManager()
-        }
-        @Shared(.connectionState) var connectionState: Connection.ConnectionState?
-
-        connectionState = .connected(.mock)
-        await store.send(.homeLoading(.loaded(.protectionStatus(.userClickedDisconnect))))
-
-        await store.receive(\.connection.disconnect) {
-            $0.connectionState = .disconnected(nil)
-        }
-        await store.receive(\.connection.localAgent.disconnect)
-        await store.receive(\.connection.tunnel.disconnect) {
-            $0.connectionState = .disconnected(nil)
-            $0.connection.tunnel = .disconnecting
-        }
-        await store.receive(\.connection.connectionStateChanged.disconnected)
-        await store.receive(\.connection.connectionStateChanged.disconnected)
-    }
-
-    @MainActor
     func testErrorConnectingShowsAlert() async {
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()

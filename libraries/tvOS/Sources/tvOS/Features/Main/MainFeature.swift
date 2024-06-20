@@ -48,6 +48,7 @@ struct MainFeature {
         case settings(SettingsFeature.Action)
 
         case onAppear
+        case onLogout
 
         case connection(ConnectionFeature.Action)
         
@@ -89,6 +90,13 @@ struct MainFeature {
                         await send(.connection(.localAgent(.startObservingEvents)))
                     }
                 )
+            case .onLogout:
+                return .run { send in
+                    await send(.connection(.disconnect(nil)))
+                    await send(.connection(.tunnel(.stopObservingStateChanges)))
+                    await send(.connection(.localAgent(.stopObservingEvents)))
+                }
+
             case .selectTab(let tab):
                 state.currentTab = tab
                 return .none

@@ -78,7 +78,10 @@ import CommonNetworking
                 }
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
-                return .run { send in await send(.networking(.startLogout)) }
+                return .run { send in
+                    await send(.main(.onLogout))
+                    await send(.networking(.startLogout))
+                }
 
             case .main:
                 return .none
