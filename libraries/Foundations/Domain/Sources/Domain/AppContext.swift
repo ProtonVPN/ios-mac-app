@@ -36,7 +36,7 @@ public enum AppContext: String {
         }
     }
 
-    public static let `default`: Self = .mainApp
+    public static var `default`: Self = .mainApp
 }
 
 extension AppContext: DependencyKey {

@@ -64,11 +64,11 @@ public protocol VpnKeychainFactory {
 }
 
 internal enum KeychainEnvironment {
-    static let secItemAdd = SecItemAdd
-    static let secItemDelete = SecItemDelete
-    static let secItemCopyMatching = SecItemCopyMatching
-    static let secKeyCreateWithData = SecKeyCreateWithData
-    static let secKeyVerifySignature = SecKeyVerifySignature
+    static var secItemAdd = SecItemAdd
+    static var secItemDelete = SecItemDelete
+    static var secItemCopyMatching = SecItemCopyMatching
+    static var secKeyCreateWithData = SecKeyCreateWithData
+    static var secKeyVerifySignature = SecKeyVerifySignature
 }
 
 public class VpnKeychain: VpnKeychainProtocol {

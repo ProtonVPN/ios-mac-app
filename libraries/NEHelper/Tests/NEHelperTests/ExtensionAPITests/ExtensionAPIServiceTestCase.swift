@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 
-import Domain
+@testable import Domain
 import TimerMock
 @testable import NEHelper
 @testable import VPNShared
