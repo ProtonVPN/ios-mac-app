@@ -24,6 +24,8 @@ struct ServerPollConfiguration: DependencyKey {
     let period: Duration
     let failAfterAttempts: Int
 
+    /// Consult this page for the polling configuration
+    /// https://confluence.protontech.ch/display/API/Authentication%2C+sessions%2C+and+tokens#Authentication,sessions,andtokens-Generatingauser-friendlycode(optional)
     static let liveValue: ServerPollConfiguration = ServerPollConfiguration(
         delayBeforePollingStarts: .seconds(5),
         period: .seconds(5),

@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Domain"),
+        .package(path: "../Core/NEHelper"),
     ],
     targets: [
         .target(
@@ -32,6 +33,7 @@ let package = Package(
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
+                .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
@@ -52,6 +54,7 @@ let package = Package(
                 "tvOSTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ConnectionTestSupport", package: "Connection"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

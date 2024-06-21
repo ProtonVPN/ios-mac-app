@@ -41,6 +41,10 @@ struct WelcomeFeature {
         case onAppear
     }
 
+    enum CancelId {
+        case userTier
+    }
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -60,6 +64,7 @@ struct WelcomeFeature {
                 return .none
             case .onAppear:
                 return .publisher { state.$userTier.publisher.receive(on: UIScheduler.shared).map(Action.userTierUpdated) }
+                    .cancellable(id: CancelId.userTier)
             case .userTierUpdated(let tier):
                 guard let tier else { return .none }
                 if tier == 0 {
@@ -69,7 +74,7 @@ struct WelcomeFeature {
                     /// the welcome page will be shown, not the sign in page
                     state.destination = nil
                 }
-                return .none
+                return .cancel(id: CancelId.userTier)
             }
         }
         .ifLet(\.$destination, action: \.destination)

@@ -121,7 +121,6 @@ struct SessionNetworkingFeature: Reducer {
                     unauthKeychain.clear()
                     return .none
                 } else {
-                    authKeychain.clear()
                     return .run { send in
                         await send(.startLogout) // tier detected to be free, log the user out
                     }
@@ -145,6 +144,25 @@ enum SessionFetchingError: Error, Equatable {
             return true
         case (.network, .network):
             return true
+        default:
+            return false
+        }
+    }
+}
+
+extension SessionNetworkingFeature.Action: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case
+            (.startLogout, .startLogout),
+            (.startAcquiringSession, .startAcquiringSession),
+            (.sessionFetched, .sessionFetched),
+            (.forkedSessionAuthenticated, .forkedSessionAuthenticated),
+            (.sessionExpired, .sessionExpired),
+            (.userTierRetrieved, .userTierRetrieved),
+            (.userDisplayNameRetrieved, .userDisplayNameRetrieved):
+            return true
+
         default:
             return false
         }

@@ -24,6 +24,10 @@ import Domain
 @Reducer
 struct CountryListFeature {
 
+    /// More info about recommended countries selection:
+    /// https://confluence.protontech.ch/pages/viewpage.action?pageId=128215858#Productmetricsforbusiness-Streaming
+    static let recommendedCountries: [String] = ["US", "UK", "CA", "FR", "DE"]
+
     @ObservableState
     struct State: Equatable {
         var recommendedSection: CountryListSection
@@ -38,10 +42,8 @@ struct CountryListFeature {
                     defer { counter += 1 }
                     return group.item(index: counter, section: 1)
                 }
-            /// More info about recommended countries selection:
-            /// https://confluence.protontech.ch/pages/viewpage.action?pageId=128215858#Productmetricsforbusiness-Streaming
             let recommendedCountries: [CountryListItem] = {
-                ["US", "UK", "CA", "FR", "DE"]
+                CountryListFeature.recommendedCountries
                     .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
                     .map { CountryListItem(section: 0, row: 0, code: $0) }
             }()

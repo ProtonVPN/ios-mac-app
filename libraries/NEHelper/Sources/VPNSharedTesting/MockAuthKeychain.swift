@@ -29,6 +29,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
     let defaultContext: AppContext
 
     var credentialsWereStored: (() -> Void)?
+    var credentialsWereCleared: (() -> Void)?
 
     public init(context: AppContext = .default) {
         self.defaultContext = context
@@ -50,6 +51,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
     public func clear() {
         self.credentials = [:]
+        credentialsWereCleared?()
     }
 }
 

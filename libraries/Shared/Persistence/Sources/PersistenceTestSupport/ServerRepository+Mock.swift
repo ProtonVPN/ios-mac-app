@@ -30,14 +30,51 @@ extension ServerRepository {
               server: { _, _ in .mock },
               groups: { _, _ in [] })
     }
+
+    public static func somePlusRecommendedCountries() -> Self {
+        .init(serverCount: { 0 },
+              server: { _, _ in nil },
+              groups: { _, _ in .recommendedCountries + .someCountries })
+    }
+    
     public static func emptyWithUpsert() -> Self {
-        .init(serverCount: { 0 }, upsertServers: { _ in }, groups: { _, _ in [] })
+        .init(serverCount: { 0 }, 
+              upsertServers: { _ in },
+              groups: { _, _ in [] })
     }
 }
 
 extension VPNServer {
     static var mock: Self {
         .init(logical: .mock, endpoints: [.mock])
+    }
+}
+
+extension [ServerGroupInfo] {
+    static var recommendedCountries: Self {
+        ["US", "UK", "CA", "FR", "DE"]
+            .map { .country(code: $0) }
+    }
+    static var someCountries: Self {
+        ["PL", "AR", "RO", "LT", "CZ"]
+            .map { .country(code: $0) }
+    }
+}
+
+extension ServerGroupInfo {
+    static func country(code: String) -> Self {
+        .init(kind: .country(code: code),
+              featureIntersection: .zero,
+              featureUnion: .zero,
+              minTier: 0,
+              maxTier: 0,
+              serverCount: 5,
+              cityCount: 0,
+              latitude: 0,
+              longitude: 0,
+              supportsSmartRouting: false,
+              isUnderMaintenance: false,
+              protocolSupport: .all)
     }
 }
 
