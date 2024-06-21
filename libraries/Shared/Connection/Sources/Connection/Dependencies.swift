@@ -27,9 +27,9 @@ import struct Domain.Server
 /// We could avoid defining this dependency and instead have `Connection` depend on `Persistence`, but it's preferable
 /// to not depend on packages in the same layer.
 public struct ServerIdentifier: TestDependencyKey {
-    var fullServerInfo: (LogicalServerInfo) -> Server?
+    var fullServerInfo: ((LogicalServerInfo) -> Server?)
 
-    public init(fullServerInfo: @escaping (LogicalServerInfo) -> Server?) {
+    public init(fullServerInfo: @escaping ((LogicalServerInfo) -> Server?)) {
         self.fullServerInfo = fullServerInfo
     }
 

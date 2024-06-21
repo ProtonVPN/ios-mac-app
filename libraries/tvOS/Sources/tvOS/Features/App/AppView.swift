@@ -32,7 +32,7 @@ public struct AppView: View {
         viewBody
             .onChange(of: scenePhase, scenePhaseChanged)
             .onAppear {
-                self.startup()
+                store.send(.onAppear)
             }
     }
 
@@ -47,10 +47,6 @@ public struct AppView: View {
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }
-    }
-
-    private func startup() {
-        store.send(.networking(.startAcquiringSession))
     }
 
     func scenePhaseChanged(oldScenePhase: ScenePhase, newScenePhase: ScenePhase) {

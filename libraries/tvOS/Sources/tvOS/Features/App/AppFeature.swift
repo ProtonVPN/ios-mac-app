@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-
 import CommonNetworking
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
@@ -43,8 +42,8 @@ import CommonNetworking
 @Reducer struct AppFeature {
     @ObservableState
     struct State: Equatable {
-        @Shared(.appStorage("userDisplayName")) var userDisplayName: String?
-        @Shared(.appStorage("userTier")) var userTier: Int?
+        @Shared(.userDisplayName) var userDisplayName: String?
+        @Shared(.userTier) var userTier: Int?
         var main = MainFeature.State()
         var welcome = WelcomeFeature.State()
 
@@ -55,6 +54,8 @@ import CommonNetworking
     enum Action {
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
+
+        case onAppear
 
         case networking(SessionNetworkingFeature.Action)
     }
@@ -71,9 +72,16 @@ import CommonNetworking
         }
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                return .run { send in
+                    await send(.networking(.startAcquiringSession))
+                }
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
-                return .run { send in await send(.networking(.startLogout)) }
+                return .run { send in
+                    await send(.main(.onLogout))
+                    await send(.networking(.startLogout))
+                }
 
             case .main:
                 return .none

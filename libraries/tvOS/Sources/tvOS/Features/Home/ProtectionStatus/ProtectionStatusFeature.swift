@@ -21,14 +21,15 @@ import SwiftUI
 import ProtonCoreUIFoundations
 import Strings
 import Domain
+import Connection
 
 @Reducer
 struct ProtectionStatusFeature {
     @ObservableState
     struct State: Equatable {
 
-        @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
-        @Shared(.inMemory("userLocation")) var userLocation: UserLocation?
+        @Shared(.connectionState) var connectionState: ConnectionState?
+        @Shared(.userLocation) var userLocation: UserLocation?
     }
 
     enum Action {
@@ -37,7 +38,6 @@ struct ProtectionStatusFeature {
         case userClickedCancel
         case userClickedConnect
         case onAppear
-        case connectionStateUpdated(ConnectFeature.ConnectionState?)
     }
 
     var body: some Reducer<State, Action> {
@@ -45,7 +45,7 @@ struct ProtectionStatusFeature {
             switch action {
             case .userTappedButton:
                 return .run { [connectionState = state.connectionState] send in
-                    switch connectionState ?? .disconnected {
+                    switch connectionState ?? .disconnected(nil) {
                     case .connected:
                         await send(.userClickedDisconnect)
                     case .connecting:
@@ -56,8 +56,6 @@ struct ProtectionStatusFeature {
                         break
                     }
                 }
-            case .connectionStateUpdated:
-                return .none
             case .onAppear:
                 return .run { send in
                     @Dependency(\.userLocationService) var userLocationService

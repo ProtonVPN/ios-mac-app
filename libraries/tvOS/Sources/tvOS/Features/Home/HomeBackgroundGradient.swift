@@ -27,7 +27,7 @@ struct HomeBackgroundGradient: View {
         guard case .loaded(let state) = store.homeLoading else {
             return Color(.connectingGradient)
         }
-        switch state.connect.connectionState {
+        switch store.connectionState {
         case .connected:
             return Color(.connectedGradient)
         case .disconnected:

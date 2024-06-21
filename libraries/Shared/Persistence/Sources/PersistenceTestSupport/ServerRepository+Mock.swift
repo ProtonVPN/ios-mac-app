@@ -21,10 +21,14 @@ import Domain
 
 extension ServerRepository {
     public static func empty() -> Self {
-        .init(serverCount: { 0 }, groups: { _, _ in [] })
+        .init(serverCount: { 0 },
+              server: { _, _ in nil },
+              groups: { _, _ in [] })
     }
     public static func notEmpty() -> Self {
-        .init(serverCount: { 1 }, groups: { _, _ in [] })
+        .init(serverCount: { 1 },
+              server: { _, _ in .mock },
+              groups: { _, _ in [] })
     }
     public static func emptyWithUpsert() -> Self {
         .init(serverCount: { 0 }, upsertServers: { _ in }, groups: { _, _ in [] })
@@ -33,7 +37,17 @@ extension ServerRepository {
 
 extension VPNServer {
     static var mock: Self {
-        .init(logical: .mock, endpoints: [])
+        .init(logical: .mock, endpoints: [.mock])
+    }
+}
+
+extension ServerEndpoint {
+    static var mock: Self {
+        .init(id: "some id",
+              exitIp: "1.2.3.4",
+              domain: "domain",
+              status: 1,
+              protocolEntries: nil)
     }
 }
 

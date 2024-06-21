@@ -88,7 +88,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .connecting
         }
 
-        mockAgent.state = .connected
+        await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
         await store.receive(\.localAgent.connectionFinished.success){
             $0.localAgent = .connected
         }
@@ -99,7 +99,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Disconnection
 
-        await store.send(\.disconnect)
+        await store.send(ConnectionFeature.Action.disconnect(nil))
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnected(nil)
         }

@@ -18,6 +18,12 @@
 
 import ComposableArchitecture
 
+import struct Domain.VPNConnectionFeatures
+import struct Domain.Server
+import Connection
+import Persistence
+import Foundation
+
 @Reducer
 struct MainFeature {
 
@@ -28,15 +34,46 @@ struct MainFeature {
         var currentTab: Tab = .home
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
+
+        var connection = ConnectionFeature.State()
+
+        @Presents var alert: AlertState<Action.Alert>?
+        
+        @Shared(.connectionState) var connectionState: ConnectionState?
     }
 
     enum Action {
         case selectTab(Tab)
         case homeLoading(HomeLoadingFeature.Action)
         case settings(SettingsFeature.Action)
+
+        case onAppear
+        case onLogout
+
+        case connection(ConnectionFeature.Action)
+        
+        case alert(PresentationAction<Alert>)
+
+        case connectionFailed(ConnectionError)
+
+        @CasePathable
+        enum Alert {
+          case errorMessage
+        }
+    }
+
+    static func connectionFailedAlert(reason: String) -> AlertState<Action.Alert> {
+        .init {
+            TextState("Connection failed")
+        } message: {
+            TextState(reason)
+        }
     }
 
     var body: some Reducer<State, Action> {
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()._printChanges()
+        }
         Scope(state: \.homeLoading, action: \.homeLoading) {
             HomeLoadingFeature()
         }
@@ -45,14 +82,91 @@ struct MainFeature {
         }
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                return .run { send in
+                    await send(.connection(.tunnel(.startObservingStateChanges)))
+                    await send(.connection(.localAgent(.startObservingEvents)))
+                }
+
+            case .onLogout:
+                return .run { send in
+                    await send(.connection(.disconnect(nil)))
+                    await send(.connection(.tunnel(.stopObservingStateChanges)))
+                    await send(.connection(.localAgent(.stopObservingEvents)))
+                }
+
             case .selectTab(let tab):
                 state.currentTab = tab
                 return .none
             case .settings:
                 return .none
+
+            case .homeLoading(.loaded(.countryList(.selectItem(let item)))):
+                guard let (connectServer, features) = serverWithFeatures(code: item.code) else {
+                    return .none
+                }
+
+                return .send(.connection(.connect(connectServer, features)))
+
+            case .homeLoading(.loaded(.protectionStatus(let action))):
+                return .run { send in
+                    switch action {
+                    case .userClickedDisconnect:
+                        await send(.connection(.disconnect(nil)))
+                    case .userClickedCancel:
+                        await send(.connection(.disconnect(nil)))
+                    case .userClickedConnect:
+                        guard let (connectServer, features) = serverWithFeatures(code: "Fastest") else {
+                            await send(.connectionFailed(.serverMissing))
+                            return
+                        }
+                        // quick connect
+                        await send(.connection(.connect(connectServer, features)))
+                    default:
+                        break
+                    }
+                }
+
             case .homeLoading:
+                return .none
+            case .connectionFailed(let error):
+                state.alert = Self.connectionFailedAlert(reason: error.description)
+                return .none
+            case .connection(.disconnect(let error)):
+                if let error {
+                    state.alert = Self.connectionFailedAlert(reason: error.description)
+                }
+                return .none
+            case .connection:
+                let newConnectionState = ConnectionState(
+                    tunnelState: state.connection.tunnel,
+                    localAgentState: state.connection.localAgent
+                )
+                if newConnectionState != state.connectionState {
+                    state.connectionState = newConnectionState
+                }
+                return .none
+            case .alert:
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
+    }
+
+    func serverWithFeatures(code: String) -> (Server, VPNConnectionFeatures)? {
+        @Dependency(\.serverRepository) var repository
+        let filters = code == "Fastest" ?  [] : [VPNServerFilter.kind(.country(code: code))]
+        guard let server = repository.getFirstServer(filteredBy: filters, orderedBy: .fastest),
+              let endpoint = server.endpoints.first else {
+            return nil
+        }
+        let connectServer = Server(logical: server.logical, endpoint: endpoint)
+
+        let features = VPNConnectionFeatures(netshield: .level1,
+                                             vpnAccelerator: true,
+                                             bouncing: "1",
+                                             natType: .moderateNAT,
+                                             safeMode: false)
+        return (connectServer, features)
     }
 }

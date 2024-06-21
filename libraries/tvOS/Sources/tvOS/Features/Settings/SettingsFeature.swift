@@ -28,8 +28,8 @@ struct SettingsFeature {
 
     @ObservableState
     struct State: Equatable {
-        @Shared(.appStorage("userDisplayName")) var userDisplayName: String?
-        @Shared(.appStorage("userTier")) var userTier: Int?
+        @Shared(.userDisplayName) var userDisplayName: String?
+        @Shared(.userTier) var userTier: Int?
 
         @Presents var destination: Destination.State?
         @Presents var alert: AlertState<Action.Alert>?

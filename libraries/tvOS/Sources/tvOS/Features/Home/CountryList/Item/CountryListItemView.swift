@@ -19,13 +19,15 @@
 import SwiftUI
 import Theme
 import ComposableArchitecture
+import Connection
+import struct Domain.Server
 
 struct CountryListItemView: View {
     let item: CountryListItem
     let isFocused: Bool
     @State var duration = inFocusDuration
 
-    @Shared(.inMemory("connectionState")) var connectionState: ConnectFeature.ConnectionState?
+    @Shared(.connectionState) var connectionState: ConnectionState?
 
     private static var outFocusDuration = 0.4
     private static var inFocusDuration = 0.1
@@ -48,7 +50,7 @@ struct CountryListItemView: View {
                 .font(.body)
             Spacer()
                 .frame(height: .themeSpacing16)
-            switch connectionState ?? .disconnected {
+            switch connectionState ?? .disconnected(nil) {
             case .connected:
                 HStack(spacing: .themeSpacing12) {
                     Text("Connected", comment: "VPN connection state")
@@ -79,10 +81,11 @@ struct CountryListItemView: View {
 
     private var connectedCode: String? {
         switch connectionState {
-        case .connected(let code, _):
-            return code
-        case .connecting(countryCode: let code):
-            return code
+        case .connected(let server):
+            return server.logical.entryCountryCode
+        case .connecting:
+//            return code
+            return nil
         default:
             return nil
         }

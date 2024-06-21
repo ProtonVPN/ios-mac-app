@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
+import XCTestDynamicOverlay
 import ConnectionFoundations
 @testable import LocalAgent
 
@@ -25,7 +27,13 @@ final class LocalAgentMock: LocalAgent {
     private var eventHandler: ((LocalAgentEvent) -> Void)?
     var state: LocalAgentState {
         didSet {
-            eventHandler?(.state(state))
+            guard let eventHandler else {
+                // If this failure is triggered in tests, this mock was used before a reducer subscribed to receive
+                // events through `eventStream`.
+                XCTFail("Event was emitted but handler is nil")
+                return
+            }
+            eventHandler(.state(state))
         }
     }
 
@@ -40,6 +48,7 @@ final class LocalAgentMock: LocalAgent {
         }
     }
 
+    var connectionTask: Task<Void, Error>?
     var connectionErrorToThrow: Error?
 
     init(
@@ -51,8 +60,16 @@ final class LocalAgentMock: LocalAgent {
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
-        if let connectionErrorToThrow {
-            throw connectionErrorToThrow
+        connectionTask = Task {
+            @Dependency(\.continuousClock) var clock
+
+            try await clock.sleep(for: .seconds(1))
+
+            if let connectionErrorToThrow {
+                throw connectionErrorToThrow
+            }
+
+            self.state = .connected
         }
     }
     

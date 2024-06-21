@@ -19,6 +19,12 @@
 import XCTest
 import ComposableArchitecture
 @testable import tvOS
+@testable import Connection
+@testable import ExtensionManager
+
+import DomainTestSupport
+@testable import LocalAgentTestSupport
+@testable import LocalAgent
 
 final class MainFeatureTests: XCTestCase {
 
@@ -42,6 +48,47 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.settings(.showDrillDown(.contactUs))) {
             $0.settings.destination = .settingsDrillDown(.contactUs)
+        }
+    }
+
+    @MainActor
+    func testErrorConnectingShowsAlert() async {
+        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .empty()
+        }
+        let error = ConnectionError.serverMissing
+        await store.send(.connectionStateUpdated(.disconnected(error))) {
+            $0.alert = MainFeature.connectionFailedAlert(reason: error.description)
+        }
+    }
+
+
+    @MainActor
+    func testUserClickedConnect() async {
+        let clock = TestClock()
+        let mockVPNSession = VPNSessionMock(status: .disconnected)
+        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
+            MainFeature()
+        } withDependencies: {
+            $0.serverRepository = .notEmpty()
+            $0.connectionClient = .testValue
+            $0.continuousClock = clock
+            $0.localAgent = LocalAgentMock(state: .disconnected)
+            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+        }
+        @Shared(.connectionState) var connectionState: ConnectionState?
+
+        store.exhaustivity = .off
+
+        connectionState = .disconnected(nil)
+        await store.send(.homeLoading(.loaded(.protectionStatus(.userClickedConnect))))
+
+        await store.receive(\.connection.connect)
+        await store.receive(\.connection.tunnel.connect) {
+            $0.connection.tunnel = .connecting
+            $0.connectionState = .connecting
         }
     }
 }

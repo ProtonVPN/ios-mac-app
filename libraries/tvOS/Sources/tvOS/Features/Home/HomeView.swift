@@ -32,11 +32,7 @@ struct HomeView: View {
             CountryListView(store: store.scope(state: \.countryList, action: \.countryList),
                             contentAllowedWidth: Self.contentAllowedWidth)
         }
-        .alert($store.scope(state: \.alert, action: \.alert))
         .scrollClipDisabled()
         .frame(width: Self.contentAllowedWidth)
-        .onAppear {
-            store.send(.connect(.initialize))
-        }
     }
 }

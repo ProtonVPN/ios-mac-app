@@ -36,8 +36,8 @@ public struct ConnectionFeature: Reducer, Sendable {
     public init() { }
 
     public struct State: Equatable, Sendable {
-        var tunnel: ExtensionFeature.State
-        var localAgent: LocalAgentFeature.State
+        public var tunnel: ExtensionFeature.State
+        public var localAgent: LocalAgentFeature.State
 
         public init(
             tunnelState: ExtensionFeature.State = .disconnected(nil),
@@ -47,18 +47,17 @@ public struct ConnectionFeature: Reducer, Sendable {
             self.localAgent = localAgentState
         }
 
-        var connectionState: ConnectionState {
-            return ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
+        var computedConnectionState: ConnectionState {
+            ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
         }
     }
 
     @CasePathable
     public enum Action: Sendable {
         case connect(Server, VPNConnectionFeatures)
-        case disconnect
+        case disconnect(ConnectionError?)
         case tunnel(ExtensionFeature.Action)
         case localAgent(LocalAgentFeature.Action)
-        case stateChanged(ConnectionState)
     }
 
     public var body: some Reducer<State, Action> {
@@ -79,7 +78,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 // certificateAuthentication.
                 guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
                     log.error("Detected connection to unknown server, disconnecting", category: .connection, metadata: ["logicalServerInfo": "\(logicalServerInfo)"])
-                    return .send(.disconnect)
+                    return .send(.disconnect(.tunnel(.unknownServer)))
                 }
                 return .run { send in
                     // TODO: Cert-Auth - ensure correct features, handle failures
@@ -95,57 +94,28 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .tunnel:
                 return .none
-
             case .localAgent:
-                return .none
-
-            case .stateChanged:
                 return .none
             }
         }
     }
 }
 
+@CasePathable
 public enum ConnectionError: Error, Equatable {
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
-}
+    case serverMissing
 
-@CasePathable
-public enum ConnectionState: Equatable, Sendable {
-    case disconnected(ConnectionError?)
-    case connecting
-    case connected(Server)
-    case disconnecting
+    public var description: String {
+        switch self {
 
-    public init(
-        tunnelState: ExtensionFeature.State,
-        localAgentState: LocalAgentFeature.State
-    ) {
-        switch (tunnelState, localAgentState) {
-        case (.disconnected(let tunnelError), .disconnected(let agentError)):
-            // Once both components are disconnected, prioritise returning tunnel errors over local agent errors
-            let potentialError: ConnectionError? = tunnelError.map { .tunnel($0) } ?? agentError.map { .agent($0) }
-            self = .disconnected(potentialError)
-
-        case (.disconnected(let tunnelError), _):
-            self = .disconnected(tunnelError.map { .tunnel($0) })
-
-        case (_, .disconnected(let agentError)):
-            self = .disconnected(agentError.map { .agent($0) })
-
-        case (.connected(let logicalServerInfo), .connected):
-            @Dependency(\.serverIdentifier) var serverIdentifier
-            guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
-                fatalError("Unknown server")
-            }
-            self = .connected(server)
-
-        case (.connected, _), (.connecting, _):
-            self = .connecting
-
-        case (.disconnecting, _):
-            self = .disconnecting
+        case .tunnel(_):
+            return ""
+        case .agent(_):
+            return ""
+        case .serverMissing:
+            return "Couldn't find specified server"
         }
     }
 }

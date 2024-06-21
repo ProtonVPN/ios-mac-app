@@ -30,7 +30,7 @@ struct WelcomeFeature {
     @ObservableState
     struct State: Equatable {
         @Presents var destination: Destination.State?
-        @Shared(.appStorage("userTier")) var userTier: Int?
+        @Shared(.userTier) var userTier: Int?
     }
 
     enum Action {

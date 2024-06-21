@@ -14,6 +14,7 @@ let package = Package(
         .library(name: "CertificateAuthentication", targets: ["CertificateAuthentication"]),
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
+        .library(name: "ConnectionTestSupport", targets: ["LocalAgentTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.10.2")),

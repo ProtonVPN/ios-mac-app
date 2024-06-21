@@ -22,6 +22,7 @@ import ProtonCoreUIFoundations
 import Localization
 import Domain
 import Strings
+import Connection
 
 struct ProtectionStatusView: View {
 
@@ -33,8 +34,8 @@ struct ProtectionStatusView: View {
         var foregroundColor: Color
         var buttonTitle: LocalizedStringKey
 
-        init(connectionState: ConnectFeature.ConnectionState?) {
-            switch connectionState ?? .disconnected {
+        init(connectionState: Connection.ConnectionState?) {
+            switch connectionState ?? .disconnected(nil) {
             case .connected:
                 icon = IconProvider.lockFilled
                 title = "Protected"
@@ -60,7 +61,7 @@ struct ProtectionStatusView: View {
     }
 
     var body: some View {
-        view(model: .init(connectionState: store.connectionState ?? .disconnected))
+        view(model: .init(connectionState: store.connectionState ?? .disconnected(nil)))
     }
 
     private func view(model: Model) -> some View {
@@ -109,10 +110,10 @@ struct ProtectionStatusView: View {
     private var displayedLocation: UserLocation? {
         var country: String?
         var ip: String?
-        switch store.connectionState ?? .disconnected {
-        case .connected(let connectedCountry, let connectedIP):
-            country = connectedCountry
-            ip = connectedIP
+        switch store.connectionState ?? .disconnected(nil) {
+        case .connected(let server):
+            country = server.logical.entryCountryCode
+            ip = server.endpoint.entryIp
         default:
             country = store.userLocation?.country
             ip = store.userLocation?.ip
