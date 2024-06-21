@@ -61,6 +61,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         super.init()
 
         self.dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
+        apiService.delegate = self
         setupLogging()
     }
 

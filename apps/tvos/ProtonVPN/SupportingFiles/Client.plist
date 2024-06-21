@@ -6,5 +6,7 @@
 	<string>31e7dcced342f546df6edc7146577090</string>
 	<key>Id</key>
 	<string>appletv-vpn</string>
+	<key>WireGuardId</key>
+	<string>ios-wireguardextension</string>
 </dict>
 </plist>
