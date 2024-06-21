@@ -84,7 +84,7 @@ class CreateNewProfileViewModel {
     private var state: ModelState {
         didSet {
             if oldValue.connectionProtocol != state.connectionProtocol {
-                checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)
+                checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
             }
             if let contentUpdate = oldValue.menuContentUpdate(forNewValue: state) {
                 menuContentChanged?(contentUpdate)
