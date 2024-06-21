@@ -24,10 +24,9 @@ import enum ExtensionIPC.ProviderMessageError
 import ConnectionFoundations
 
 extension TunnelMessageSender: DependencyKey {
-
     public static let liveValue: TunnelMessageSender = {
         @Dependency(\.tunnelManager) var tunnelManager
-        return .init(
+        return TunnelMessageSender(
             send: { message in
                 try await tunnelManager.session.send(message)
             }

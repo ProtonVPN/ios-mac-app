@@ -68,7 +68,6 @@ extension ManagerConfigurator {
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        authenticationStorage.deleteKeys()
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         @Dependency(\.date) var date
         protocolConfiguration.username = connectionConfiguration.username

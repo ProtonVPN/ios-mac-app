@@ -30,3 +30,7 @@ public enum HttpStatusCode: Int { // http status codes returned by the api
     case internalServerError = 500
     case serviceUnavailable = 503
 }
+
+public enum Constants {
+    public static let sessionIDCookieName = "Session-Id"
+}

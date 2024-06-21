@@ -59,9 +59,13 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.tunnelManager = mockManager
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
+<<<<<<< HEAD
             $0.certificateAuthentication = .init(
                 loadAuthenticationData: { _ in .empty }
             )
+=======
+            $0.vpnAuthenticationStorage = mockStorage
+>>>>>>> e937840b6 (refactor(connection): cert auth feature actions)
         }
 
         await store.send(.tunnel(.startObservingStateChanges))
@@ -83,6 +87,15 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connectionFinished.success) {
             $0.tunnel = .connected(connectedLogicalServer)
         }
+
+        await store.receive(\.certAuth.loadAuthenticationData) {
+            $0.certAuth = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.certAuth.loadFromStorage)
+        await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
+        }
+        await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect) {
             $0.localAgent = .connecting
         }

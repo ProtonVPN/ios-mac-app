@@ -74,6 +74,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
+        .target(name: "ConnectionFoundationsTestSupport", dependencies: ["ConnectionFoundations"]),
         .target(name: "LocalAgentTestSupport", dependencies: ["LocalAgent"]),
         .testTarget(
             name: "ConnectionTests",
@@ -88,6 +89,15 @@ let package = Package(
             dependencies: [
                 "ExtensionManager",
                 .product(name: "DomainTestSupport", package: "Domain"),
+            ]
+        ),
+        .testTarget(
+            name: "CertificateAuthenticationTests",
+            dependencies: [
+                "CertificateAuthentication",
+                "ConnectionFoundationsTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
         .testTarget(

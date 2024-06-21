@@ -32,9 +32,19 @@ public protocol VPNNetworking {
     func userDisplayName() async throws -> String?
     func set(session: Session)
     func perform<T: Decodable>(request: Request) async throws -> T
+    var sessionCookie: HTTPCookie? { get }
 }
 
 public struct CoreNetworkingWrapper: VPNNetworking {
+    public var sessionCookie: HTTPCookie? {
+        @Dependency(\.dohConfiguration) var doh
+        guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
+
+        return wrapped.apiService.getSession()?
+            .sessionConfiguration.httpCookieStorage?
+            .cookies(for: apiUrl)?
+            .first(where: { $0.name == CommonNetworking.Constants.sessionIDCookieName })
+    }
     
     public func acquireSessionIfNeeded() async throws -> SessionAcquiringResult {
         try await withCheckedThrowingContinuation { continuation in
@@ -109,6 +119,7 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
 }
 
 struct VPNNetworkingMock: VPNNetworking {
+
     func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
         throw ""
     }
@@ -129,5 +140,7 @@ struct VPNNetworkingMock: VPNNetworking {
         throw ""
     }
 
-
+    var sessionCookie: HTTPCookie? {
+        nil
+    }
 }

@@ -26,6 +26,7 @@ import ProtonCoreNetworking
 import ProtonCoreServices
 
 import CommonNetworking
+import CertificateAuthentication // VPN Auth Keychain
 import VPNShared
 import VPNAppCore
 
@@ -58,12 +59,15 @@ struct SessionNetworkingFeature: Reducer {
     @Dependency(\.networking) var networking
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.unauthKeychain) var unauthKeychain
+    @Dependency(\.vpnAuthenticationStorage) var vpnAuthStorage
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .startLogout:
                 authKeychain.clear()
+                vpnAuthStorage.deleteKeys()
+                vpnAuthStorage.deleteCertificate()
                 return .run { send in await send(.startAcquiringSession) }
 
             case .startAcquiringSession:
