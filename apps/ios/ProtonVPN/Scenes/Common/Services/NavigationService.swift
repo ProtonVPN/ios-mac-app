@@ -36,6 +36,7 @@ import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery
 import ProtonCorePasswordChange
 import ProtonCoreDataModel
+import ProtonCoreLoginUI
 import ProtonCoreNetworking
 
 // MARK: Country Service
@@ -413,6 +414,11 @@ extension NavigationService: SettingsService {
             guard let self else { return }
             self.processPasswordChange(authCredential: authCredential, userInfo: userInfo)
         }
+    }
+
+    @MainActor
+    func makeSecurityKeysViewController() -> SecurityKeysViewController? {
+        LoginUIModule.makeSecurityKeysViewController(apiService: networking.apiService, clientApp: ClientApp.vpn)
     }
 
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {

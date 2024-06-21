@@ -1106,6 +1106,8 @@ public enum Localizable {
   public static var secureStreamingTitle: String { return Localizable.tr("Localizable", "_secure_streaming_title", fallback: "Secure Streaming") }
   /// iOS status view
   public static var security: String { return Localizable.tr("Localizable", "_security", fallback: "Security") }
+  /// iOS Setings: table section cell
+     public static var securityKeys: String { return Localizable.tr("Localizable", "_security_keys", fallback: "Security Keys")}
   /// iOS Settings: table section header
   public static var securityOptions: String { return Localizable.tr("Localizable", "_security_options", fallback: "Security Options") }
   /// Profile create/change form
