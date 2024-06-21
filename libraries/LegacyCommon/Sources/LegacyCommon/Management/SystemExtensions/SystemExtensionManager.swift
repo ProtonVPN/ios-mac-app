@@ -231,11 +231,13 @@ public class SystemExtensionManager: NSObject {
             didRequireUserApproval = true
 
             guard shouldStartTour else {
+                SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : "skipped"])
                 actionHandler(.failure(.tourSkipped))
                 return
             }
 
             let tour = SystemExtensionTourAlert(cancelHandler: {
+                SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : "cancelled"])
                 DispatchQueue.main.async {
                     actionHandler(.failure(.tourCancelled))
                     NotificationCenter.default.post(name: Self.userCancelledTour, object: nil)
@@ -247,6 +249,15 @@ public class SystemExtensionManager: NSObject {
             let result = self.reduce(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
             log.debug("Finished installation with result: \(result)", category: .sysex)
 
+            switch result {
+            case .success(let success):
+                SentryHelper.shared?.log(message: "Sysex installation succeeded.", extra: ["success": success])
+            case .failure(let failure):
+                if case .installationError(let internalError) = failure {
+                    SentryHelper.shared?.log(error: internalError)
+                }
+            }
+            
             DispatchQueue.main.async {
                 actionHandler(result)
                 if case .success(.installed) = result {
