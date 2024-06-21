@@ -18,25 +18,25 @@
 
 import Foundation
 import Dependencies
-import ExtensionIPC
 
-public protocol TunnelMessageSender {
-    func send<R: ProviderRequest>(_ message: R) async throws -> R.Response
-}
+import enum ExtensionIPC.WireguardProviderRequest
+import enum ExtensionIPC.ProviderMessageError
 
-public enum TunnelMessageSenderKey: TestDependencyKey {
-    public static let testValue: TunnelMessageSender = TunnelMessageSenderStub()
+public struct TunnelMessageSender: TestDependencyKey {
+    public var send: (WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
+
+    public init(
+        send: @escaping (WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
+    ) {
+        self.send = send
+    }
+
+    public static let testValue = TunnelMessageSender(send: unimplemented())
 }
 
 extension DependencyValues {
     public var tunnelMessageSender: TunnelMessageSender {
-        get { self[TunnelMessageSenderKey.self] }
-        set { self[TunnelMessageSenderKey.self] = newValue }
-    }
-}
-
-public struct TunnelMessageSenderStub: TunnelMessageSender {
-    public func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
-        unimplemented()
+        get { self[TunnelMessageSender.self] }
+        set { self[TunnelMessageSender.self] = newValue }
     }
 }

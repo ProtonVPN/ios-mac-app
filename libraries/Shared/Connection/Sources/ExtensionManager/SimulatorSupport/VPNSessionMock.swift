@@ -73,16 +73,9 @@ final class VPNSessionMock: VPNSession {
 
     // MARK: ProviderMessageSender conformance
 
-    func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws {
-        XCTFail("Unimplemented")
-    }
-
-    func send<R: ProviderRequest>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?)  {
-        XCTFail("Unimplemented")
-    }
-
-    func send<R>(_ message: R) async throws -> R.Response where R : ExtensionIPC.ProviderRequest {
-        unimplemented()
+    func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response {
+        XCTFail("Unimplemented message handler")
+        return .error(message: "unimplemented message handler")
     }
 }
 #endif

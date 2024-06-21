@@ -34,6 +34,7 @@ let package = Package(
                 "Ergonomics",
                 "ExtensionIPC",
                 "PMLogger",
+                "ExtensionIPC",
                 .product(name: "VPNShared", package: "NEHelper"),
             ]
         ),
@@ -43,7 +44,7 @@ let package = Package(
                 "ConnectionFoundations",
                 "ExtensionIPC",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

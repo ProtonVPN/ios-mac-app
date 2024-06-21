@@ -24,8 +24,35 @@ import class NetworkExtension.NETunnelProviderSession
 import class NetworkExtension.NEVPNManager
 
 import let ConnectionFoundations.log
+import enum ExtensionIPC.WireguardProviderRequest
+import enum ExtensionIPC.ProviderMessageError
 
 extension NETunnelProviderSession: VPNSession {
+    func send(_ messageData: Data) async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            do {
+                try sendProviderMessage(messageData) { data in
+                    guard let data else {
+                        continuation.resume(throwing: ProviderMessageError.noDataReceived)
+                        return
+                    }
+                    continuation.resume(returning: data)
+                }
+            } catch {
+                continuation.resume(throwing: error)
+            }
+        }
+    }
+
+    public func send(
+        _ message: WireguardProviderRequest
+    ) async throws -> WireguardProviderRequest.Response {
+        // TODO: retries
+        log.debug("Sending provider message: \(message)", category: .ipc)
+        let data = try await send(message.asData)
+        return try WireguardProviderRequest.Response.decode(data: data)
+    }
+
     public func startTunnel() throws {
         try startVPNTunnel()
     }
