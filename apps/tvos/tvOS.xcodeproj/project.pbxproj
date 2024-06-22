@@ -62,7 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-TV.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C54B0172BC027FD00315A3B /* ProtonVPN-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProtonVPN-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
 		4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,7 +130,7 @@
 		4C54B0182BC027FD00315A3B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */,
+				4C54B0172BC027FD00315A3B /* ProtonVPN-tvOS.app */,
 				4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */,
 				4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */,
 			);
@@ -215,9 +215,9 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		4C54B0162BC027FD00315A3B /* ProtonVPN-TV */ = {
+		4C54B0162BC027FD00315A3B /* ProtonVPN-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4C54B03B2BC027FF00315A3B /* Build configuration list for PBXNativeTarget "ProtonVPN-TV" */;
+			buildConfigurationList = 4C54B03B2BC027FF00315A3B /* Build configuration list for PBXNativeTarget "ProtonVPN-tvOS" */;
 			buildPhases = (
 				4C54B0132BC027FD00315A3B /* Sources */,
 				4C54B0142BC027FD00315A3B /* Frameworks */,
@@ -229,14 +229,14 @@
 			dependencies = (
 				66465B7A2BFF9112002232B3 /* PBXTargetDependency */,
 			);
-			name = "ProtonVPN-TV";
+			name = "ProtonVPN-tvOS";
 			packageProductDependencies = (
 				E53729F62BFDF777003D7409 /* tvOS */,
 				E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */,
 				E53729FC2BFDFBF4003D7409 /* CommonNetworking */,
 			);
 			productName = ProtonVPN;
-			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-TV.app */;
+			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4C54B0302BC027FF00315A3B /* tvOSUITests */ = {
@@ -318,7 +318,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4C54B0162BC027FD00315A3B /* ProtonVPN-TV */,
+				4C54B0162BC027FD00315A3B /* ProtonVPN-tvOS */,
 				4C54B0302BC027FF00315A3B /* tvOSUITests */,
 				4C54B0482BC02AB200315A3B /* WireGuard-tvOS */,
 				66302D442C00E8EB00C220A3 /* WireGuardGoBridgetvOS */,
@@ -385,7 +385,7 @@
 /* Begin PBXTargetDependency section */
 		4C54B0332BC027FF00315A3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4C54B0162BC027FD00315A3B /* ProtonVPN-TV */;
+			target = 4C54B0162BC027FD00315A3B /* ProtonVPN-tvOS */;
 			targetProxy = 4C54B0322BC027FF00315A3B /* PBXContainerItemProxy */;
 		};
 		66302D492C00E92600C220A3 /* PBXTargetDependency */ = {
@@ -725,7 +725,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C54B03B2BC027FF00315A3B /* Build configuration list for PBXNativeTarget "ProtonVPN-TV" */ = {
+		4C54B03B2BC027FF00315A3B /* Build configuration list for PBXNativeTarget "ProtonVPN-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C54B03C2BC027FF00315A3B /* Debug */,

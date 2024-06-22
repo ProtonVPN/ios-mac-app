@@ -41,7 +41,7 @@ struct WelcomeFeature {
         case onAppear
     }
 
-    enum CancelId {
+    private enum CancelId {
         case userTier
     }
 

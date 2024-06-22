@@ -47,7 +47,7 @@ struct ProtectionStatusView: View {
                 foregroundColor = Color(.text)
                 buttonTitle = "Cancel"
             case .disconnected:
-                icon = IconProvider.lockOpenFilled2 // TODO: change to lockOpenFilled with a core upgrade
+                icon = IconProvider.lockOpenFilled
                 title = "Unprotected"
                 foregroundColor = Color(.text, .danger)
                 buttonTitle = "Quick Connect"
@@ -127,7 +127,7 @@ struct ProtectionStatusView: View {
             .font(.body)
             .padding(.vertical, .themeSpacing24)
             .padding(.horizontal, 32)
-            .background(.ultraThickMaterial)
+            .background(Color(hex: 0x0F0F0F, alpha: 0.48))
             .clipRectangle(cornerRadius: .radius16)
     }
 
