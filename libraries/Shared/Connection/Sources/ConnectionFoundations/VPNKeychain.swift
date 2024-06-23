@@ -34,6 +34,20 @@ package struct TunnelKeychain: DependencyKey {
     }()
 }
 
+extension TunnelKeychain {
+    package func store(wireguardConfigData data: Data) throws -> Data {
+        try storeWireguardConfig(data)
+    }
+
+    package func store(wireguardConfigString: String) throws -> Data {
+        guard let configData = wireguardConfigString.data(using: .utf8) else {
+            throw VPNKeychainError.encodingError
+        }
+
+        return try store(wireguardConfigData: configData)
+    }
+}
+
 extension DependencyValues {
     package var tunnelKeychain: TunnelKeychain {
       get { self[TunnelKeychain.self] }
@@ -60,7 +74,7 @@ struct TunnelKeychainImplementation {
         try clearPassword(forKey: StorageKey.wireguardSettings)
     }
 
-    // Password is set and retrieved without using the library because NEVPNProtocol reuquires it to be
+    // Password is set and retrieved without using the library because NEVPNProtocol requires it to be
     // a "persistent keychain reference to a keychain item containing the password component of the
     // tunneling protocol authentication credential".
     public func getPasswordReference(forKey key: String) throws -> Data {
@@ -81,50 +95,75 @@ struct TunnelKeychainImplementation {
         }
     }
 
+    public func setPassword(_ passwordData: Data, forKey key: String) throws {
+        guard let existingPasswordData = try getPasswordData(forKey: key) else {
+            try setPasswordData(passwordData, forKey: key)
+            return
+        }
+
+        if existingPasswordData == passwordData {
+            return // No need to overwrite the keychain item - the password is unchanged
+        }
+
+        try clearPassword(forKey: key) // Attempting to overwrite the keychain item results in `errSecDuplicateItem`
+        try setPasswordData(passwordData, forKey: key)
+    }
+
+    private func getPasswordData(forKey key: String) throws -> Data? {
+        var query = formBaseQuery(forKey: key)
+        query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
+        query[kSecReturnAttributes as AnyHashable] = kCFBooleanTrue
+        query[kSecReturnData as AnyHashable] = kCFBooleanTrue
+
+        var secItem: AnyObject?
+        let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
+        switch result {
+        case errSecItemNotFound:
+            return nil
+
+        case errSecSuccess:
+            guard let secItemDict = secItem as? [String: AnyObject] else {
+                throw VPNKeychainError.resultIsNotADictionary
+            }
+            guard let passwordData = secItemDict[kSecValueData as String] as? Data else {
+                throw VPNKeychainError.resultDictionaryHasNoData
+            }
+            return passwordData
+
+        default:
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
+        }
+    }
+
     private func setPasswordData(_ data: Data, forKey key: String) throws {
-        do {
-            var query = formBaseQuery(forKey: key)
-            query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
-            query[kSecReturnAttributes as AnyHashable] = kCFBooleanTrue
-            query[kSecReturnData as AnyHashable] = kCFBooleanTrue
+        var query = formBaseQuery(forKey: key)
+        query[kSecValueData as AnyHashable] = data
 
-            var secItem: AnyObject?
-            let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
-            if result != errSecSuccess {
-                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
-            }
+        let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
+        switch result {
+        case errSecSuccess:
+            return
 
-            // If current item is the same as the one we want to write, just skip it
-            guard let secItemDict = secItem as? [String: AnyObject],
-                  let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
-                  data == oldPasswordData else {
-                throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
-            }
-        } catch {
-            try clearPassword(forKey: key)
+        case errSecDuplicateItem:
+            throw VPNKeychainError.referenceAlreadyExists
 
-            var query = formBaseQuery(forKey: key)
-            query[kSecValueData as AnyHashable] = data
-
-            let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
-            if result != errSecSuccess {
-                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
-            }
+        default:
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
     }
 
-    public func setPassword(_ password: String, forKey key: String) throws {
-        guard let data = password.data(using: .utf8) else {
-            throw VPNKeychainError.encodingError
-        }
-        try setPasswordData(data, forKey: key)
-    }
-
-    private func clearPassword(forKey key: String) throws {
+    @discardableResult private func clearPassword(forKey key: String) throws -> Bool {
         let query = formBaseQuery(forKey: key)
-
         let result = KeychainEnvironment.secItemDelete(query as CFDictionary)
-        if result != errSecSuccess {
+
+        switch result {
+        case errSecItemNotFound:
+            return false
+
+        case errSecSuccess:
+            return true
+
+        default:
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
     }
@@ -141,8 +180,8 @@ struct TunnelKeychainImplementation {
 
     // MARK: - Wireguard
 
-    public func store(wireguardConfiguration: Data) throws -> Data {
-        try setPasswordData(wireguardConfiguration, forKey: StorageKey.wireguardSettings)
+    public func store(_ configData: Data) throws -> Data {
+        try setPassword(configData, forKey: StorageKey.wireguardSettings)
         return try fetchWireguardConfigurationReference()
     }
 
@@ -177,4 +216,7 @@ struct TunnelKeychainImplementation {
 
 enum VPNKeychainError: Error {
     case encodingError
+    case referenceAlreadyExists
+    case resultIsNotADictionary
+    case resultDictionaryHasNoData
 }

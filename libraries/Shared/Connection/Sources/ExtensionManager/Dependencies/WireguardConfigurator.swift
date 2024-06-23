@@ -88,7 +88,7 @@ extension ManagerConfigurator {
 
         var configData = Data([UInt8(version.rawValue)])
         configData.append(try! encoder.encode(storedConfig)) // TODO: error handling
-        let passwordReference = try! tunnelKeychain.storeWireguardConfig(configData)
+        let passwordReference = try! tunnelKeychain.store(wireguardConfigData: configData)
         protocolConfiguration.passwordReference = passwordReference
 
         return protocolConfiguration
