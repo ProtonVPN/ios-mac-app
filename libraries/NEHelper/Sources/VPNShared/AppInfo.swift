@@ -22,40 +22,9 @@ import UIKit
 #endif
 
 import Dependencies
-
+import Domain
 import Ergonomics
 
-public enum AppContext: String {
-    case mainApp
-    case siriIntentHandler
-    case wireGuardExtension
-    case openVpnExtension
-
-    fileprivate var clientIdKey: String {
-        switch self {
-        case .mainApp, .siriIntentHandler:
-            return "Id"
-        case .wireGuardExtension:
-            return "WireGuardId"
-        case .openVpnExtension:
-            return "OpenVpnId"
-        }
-    }
-
-    public static var `default`: Self = .mainApp
-}
-
-extension AppContext: DependencyKey {
-    public static var liveValue: AppContext { .default }
-    public static var testValue: AppContext = liveValue
-}
-
-extension DependencyValues {
-    public var appContext: AppContext {
-        get { self[AppContext.self] }
-        set { self[AppContext.self] = newValue }
-    }
-}
 
 public protocol AppInfoFactory {
     func makeAppInfo(context: AppContext) -> AppInfo

@@ -20,6 +20,7 @@ import Foundation
 import Dependencies
 import CommonNetworking
 import VPNShared
+import Domain
 
 public protocol SessionServiceFactory {
     func makeSessionService() -> SessionService

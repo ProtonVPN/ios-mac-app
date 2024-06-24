@@ -18,6 +18,7 @@
 
 import Foundation
 import VPNShared
+import Domain
 
 public class MockAuthKeychain: AuthKeychainHandle {
     public var username: String?

@@ -32,6 +32,10 @@ extension FileManager {
         return sharedFolderURL?.appendingPathComponent("WireGuard.log")
     }
 
+    static var networkExtensionLastErrorFileURL: URL? {
+        return sharedFolderURL?.appendingPathComponent("last-error.txt")
+    }
+
     static func deleteFile(at url: URL) -> Bool {
         do {
             try FileManager.default.removeItem(at: url)

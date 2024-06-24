@@ -21,6 +21,7 @@ import Dependencies
 import func GoLibs.Ed25519NewKeyPair
 import ConnectionFoundations
 
+// This should supercede our old VPNShared.VPNKeysGenerator
 public struct VPNKeysGenerator: DependencyKey {
     var generateKeys: @Sendable () throws -> VPNKeys
 

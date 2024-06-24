@@ -19,27 +19,20 @@
 import Foundation
 import Dependencies
 import ExtensionIPC
+import struct Domain.VPNConnectionFeatures
 import ConnectionFoundations
 
 package struct CertificateAuthentication: DependencyKey {
-    // We might not need to set the sender explicitly
-    // Maybe we can just use the ExtensionManager dependency to send the message directly
-    package var setMessageSender: (ProviderMessageSender?) -> Void
-    package var loadAuthenticationData: () async throws -> VPNAuthenticationData
+    package var loadAuthenticationData: (VPNConnectionFeatures?) async throws -> VPNAuthenticationData
 
-    package init(
-        setMessageSender: @escaping (ProviderMessageSender?) -> Void,
-        loadAuthenticationData: @escaping () async throws -> VPNAuthenticationData
-    ) {
-        self.setMessageSender = setMessageSender
+    package init(loadAuthenticationData: @escaping (VPNConnectionFeatures?) async throws -> VPNAuthenticationData) {
         self.loadAuthenticationData = loadAuthenticationData
     }
 
-    // TODO: Implement this once ExtensionAPIService has been integrated
-    package static let liveValue = CertificateAuthentication(
-        setMessageSender: unimplemented(),
-        loadAuthenticationData: unimplemented()
-    )
+    package static let liveValue: CertificateAuthentication = {
+        // Stubbed out for now while Certificate Authentication is under development
+        return .init(loadAuthenticationData: { _ in .empty })
+    }()
 }
 
 extension DependencyValues {

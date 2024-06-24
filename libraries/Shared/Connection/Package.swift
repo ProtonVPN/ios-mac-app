@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "ConnectionTestSupport", targets: ["LocalAgentTestSupport"]),
+        .library(name: "ConnectionFoundations", targets: ["ConnectionFoundations"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.10.2")),
@@ -33,6 +34,7 @@ let package = Package(
                 "Ergonomics",
                 "ExtensionIPC",
                 "PMLogger",
+                .product(name: "VPNShared", package: "NEHelper"),
             ]
         ),
         .target(
@@ -40,6 +42,7 @@ let package = Package(
             dependencies: [
                 "ConnectionFoundations",
                 "ExtensionIPC",
+                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

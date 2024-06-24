@@ -17,17 +17,28 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
-public protocol VPNKeysGenerator {
-    func generateKeys() -> VpnKeys
+/// Used by `VpnAuthenticationStorage` to generate new keys. However, keys should not be generated inside extensions,
+/// only in the app targets. The real implementation also requires GoLibs, which are too heavy to pull into extension
+/// targets. Therefore, this dependency is stubbed out, with the real implementation being linked in `LegacyCommon` for
+/// iOS and MacOS, and in `Connection` for tvOS.
+public struct VPNKeysGenerator: TestDependencyKey {
+    var generateKeys: @Sendable () throws -> VpnKeys
+
+    // Will crash if the implementation is missing, since we want to make sure it is linked everywhere it needs to be.
+    public static let testValue: VPNKeysGenerator = .init(generateKeys: {
+        fatalError("Either live implementation is missing or `generateKeys` should not be used in this environment")
+    })
+
+    public init(generateKeys: @Sendable @escaping () -> VpnKeys) {
+        self.generateKeys = generateKeys
+    }
 }
 
-/// Generator that should be used in app extensions (NE, intent handler, etc.), where keys are not supposed to be created.
-public struct ExtensionVPNKeysGenerator: VPNKeysGenerator {
-    public init() {
-    }
-    
-    public func generateKeys() -> VPNShared.VpnKeys {
-        fatalError("VpnKeys can't be generated outside the main app")
+extension DependencyValues {
+    var vpnKeysGenerator: VPNKeysGenerator {
+        get { self[VPNKeysGenerator.self] }
+        set { self[VPNKeysGenerator.self] = newValue }
     }
 }

@@ -249,14 +249,13 @@ public class VpnKeychain: VpnKeychainProtocol {
 
             // If current item is the same as the one we want to write, just skip it
             guard let secItemDict = secItem as? [String: AnyObject],
-                let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
-                  data == oldPasswordData else {
+                  let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
+                  data == oldPasswordData
+            else {
                 throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
             }
         } catch {
-            do {
-                try clearPassword(forKey: key)
-            } catch { }
+            try clearPassword(forKey: key)
 
             var query = formBaseQuery(forKey: key)
             query[kSecValueData as AnyHashable] = data

@@ -43,31 +43,38 @@ extension VPNServer {
 
 extension ServerEndpoint {
     static var mock: Self {
-        .init(id: "some id",
-              exitIp: "1.2.3.4",
-              domain: "domain",
-              status: 1,
-              protocolEntries: nil)
+        .init(
+            id: "some id",
+            entryIp: "1.2.3.4",
+            exitIp: "4.3.2.1",
+            domain: "domain",
+            status: 1,
+            label: nil,
+            x25519PublicKey: nil,
+            protocolEntries: nil
+        )
     }
 }
 
 extension Logical {
     static var mock: Self {
-        .init(id: "",
-              name: "",
-              domain: "",
-              load: 0,
-              entryCountryCode: "",
-              exitCountryCode: "",
-              tier: 0,
-              score: 0,
-              status: 0,
-              feature: [],
-              city: nil,
-              hostCountry: nil,
-              translatedCity: nil,
-              latitude: 0,
-              longitude: 0,
-              gatewayName: nil)
+        .init(
+            id: "",
+            name: "",
+            domain: "",
+            load: 0,
+            entryCountryCode: "",
+            exitCountryCode: "",
+            tier: 0,
+            score: 0,
+            status: 0,
+            feature: [],
+            city: nil,
+            hostCountry: nil,
+            translatedCity: nil,
+            latitude: 0,
+            longitude: 0,
+            gatewayName: nil
+        )
     }
 }

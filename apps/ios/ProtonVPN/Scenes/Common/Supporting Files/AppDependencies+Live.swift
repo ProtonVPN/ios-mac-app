@@ -20,6 +20,7 @@ import Foundation
 
 import Dependencies
 
+import VPNShared
 import LegacyCommon
 import Persistence
 

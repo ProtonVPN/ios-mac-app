@@ -19,6 +19,7 @@
 #if DEBUG
 import Foundation
 import VPNShared
+import Domain
 
 public class SessionServiceMock: SessionService {
     public var sessionCookie: HTTPCookie?

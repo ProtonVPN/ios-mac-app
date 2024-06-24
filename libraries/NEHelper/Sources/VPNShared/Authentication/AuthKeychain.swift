@@ -23,6 +23,7 @@ import Foundation
 import KeychainAccess
 import Dependencies
 import Ergonomics
+import Domain
 
 public protocol AuthKeychainHandle {
     var username: String? { get }

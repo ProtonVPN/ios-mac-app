@@ -30,12 +30,12 @@ public struct ServerEndpoint: Codable, Equatable, Identifiable, Sendable {
 
     public init(
         id: String,
-        entryIp: String? = nil,
+        entryIp: String?,
         exitIp: String,
         domain: String,
         status: Int,
-        label: String? = nil,
-        x25519PublicKey: String? = nil,
+        label: String?,
+        x25519PublicKey: String?,
         protocolEntries: PerProtocolEntries?
     ) {
         self.id = id

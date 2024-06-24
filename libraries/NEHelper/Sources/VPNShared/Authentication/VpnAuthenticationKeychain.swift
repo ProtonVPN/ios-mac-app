@@ -26,6 +26,7 @@ import Ergonomics
 import PMLogger
 
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
+    @Dependency(\.vpnKeysGenerator) var vpnKeysGenerator
 
     private struct KeychainStorageKey {
         static let vpnKeys = "vpnKeys"
@@ -37,12 +38,11 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     }
 
     private let appKeychain: KeychainActor
-    private let vpnKeysGenerator: VPNKeysGenerator
     public weak var delegate: VpnAuthenticationStorageDelegate?
 
-    public init(accessGroup: String, vpnKeysGenerator: VPNKeysGenerator) {
+    public init() {
+        @Dependency(\.vpnAuthenticationStorageConfig) var accessGroup
         appKeychain = KeychainActor(accessGroup: accessGroup)
-        self.vpnKeysGenerator = vpnKeysGenerator
     }
 
     public func deleteKeys() {
@@ -64,7 +64,9 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
             keys = existingKeys
         } else {
             log.info("No vpn auth keys, generating and storing", category: .userCert)
-            keys = vpnKeysGenerator.generateKeys()
+            // We have already been force unwrapping the result of key generation for some time in
+            // `LegacyCommon.CoreVPNKeysGenerator`.
+            keys = try! vpnKeysGenerator.generateKeys()
             log.info("Storing new VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
             self.store(keys: keys)
         }

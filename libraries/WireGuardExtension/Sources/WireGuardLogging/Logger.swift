@@ -11,9 +11,9 @@ package final class Logger: @unchecked Sendable {
     }
 
 #if swift(>=5.10)
-    nonisolated(unsafe) static private(set) var global: Logger?
+    nonisolated(unsafe) package private(set) static var global: Logger?
 #else
-    static private(set) var global: Logger?
+    package private(set) static var global: Logger?
 #endif
 
     private static let lock = NSLock()
@@ -35,7 +35,7 @@ package final class Logger: @unchecked Sendable {
         write_msg_to_log(log, tag, message.trimmingCharacters(in: .newlines))
     }
 
-    func writeLog(to targetFile: String) -> Bool {
+    package func writeLog(to targetFile: String) -> Bool {
         return write_log_to_file(targetFile, self.log) == 0
     }
 

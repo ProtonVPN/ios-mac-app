@@ -22,6 +22,7 @@ import Dependencies
 
 import CommonNetworking
 import CommonNetworkingTestSupport
+import Domain
 import Ergonomics
 import LegacyCommon
 import Localization
@@ -496,7 +497,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
     func saveToCache(_ credentials: VPNShared.AuthCredentials?) {
         self.credentials = credentials
     }
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws {
+    func store(_ credentials: VPNShared.AuthCredentials, forContext: AppContext?) throws {
         self.credentials = credentials
     }
     func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }

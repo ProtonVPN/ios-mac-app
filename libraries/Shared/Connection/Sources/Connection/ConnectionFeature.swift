@@ -82,7 +82,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 }
                 return .run { send in
                     // TODO: Cert-Auth - ensure correct features, handle failures
-                    let authData = try await certificateAuthentication.loadAuthenticationData()
+                    let authData = try await certificateAuthentication.loadAuthenticationData(nil) // features: nil for now
                     await send(.localAgent(.connect(server.endpoint, authData)))
                 }
 

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import GoLibs
 import VPNShared
 
@@ -36,12 +37,14 @@ extension PrivateKey {
     }
 }
 
-struct CoreVPNKeysGenerator: VPNKeysGenerator {
-    func generateKeys() -> VPNShared.VpnKeys {
-        var error: NSError?
-        let keyPair = Ed25519NewKeyPair(&error)!
-        let privateKey = PrivateKey(keyPair: keyPair)
-        let publicKey = PublicKey(keyPair: keyPair)
-        return VpnKeys(privateKey: privateKey, publicKey: publicKey)
+extension VPNKeysGenerator: DependencyKey {
+    public static var liveValue: VPNShared.VPNKeysGenerator {
+        return .init(generateKeys: {
+            var error: NSError?
+            let keyPair = Ed25519NewKeyPair(&error)!
+            let privateKey = PrivateKey(keyPair: keyPair)
+            let publicKey = PublicKey(keyPair: keyPair)
+            return VpnKeys(privateKey: privateKey, publicKey: publicKey)
+        })
     }
 }

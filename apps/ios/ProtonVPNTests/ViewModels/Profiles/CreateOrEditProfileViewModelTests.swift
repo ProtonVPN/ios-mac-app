@@ -163,9 +163,12 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             endpoints: [
                 ServerEndpoint(
                     id: UUID().uuidString,
+                    entryIp: "192.168.1.1",
                     exitIp: "127.0.0.1",
                     domain: "Endpoint",
                     status: 1,
+                    label: "1",
+                    x25519PublicKey: nil,
                     protocolEntries: nil
                 ),
             ]

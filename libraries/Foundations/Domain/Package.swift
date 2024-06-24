@@ -16,6 +16,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Strings"),
         .package(path: "../Ergonomics"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.2.2")),
         .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [
@@ -25,6 +26,7 @@ let package = Package(
                 "Strings",
                 "Ergonomics",
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .target(name: "DomainTestSupport", dependencies: ["Domain"]),

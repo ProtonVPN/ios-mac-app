@@ -23,6 +23,7 @@
 @testable import LegacyCommon
 import XCTest
 import VPNShared
+import Domain
 
 class AnnouncementsViewModelTests: XCTestCase {
     
