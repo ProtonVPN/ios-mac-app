@@ -76,4 +76,54 @@ final class WelcomeFeatureTests: XCTestCase {
             $0.destination = .signIn(.init(authentication: .loadingSignInCode))
         }
     }
+
+    @MainActor
+    func testUserTierUpdatedToPaid() async {
+        let store = TestStore(initialState: WelcomeFeature.State()) {
+            WelcomeFeature()
+        }
+        @Shared(.userTier) var userTier: Int?
+
+        await store.send(.onAppear)
+
+        userTier = 0
+
+        await store.receive(\.userTierUpdated) {
+            $0.destination = .welcomeInfo(.freeUpsell)
+        }
+    }
+
+    @MainActor
+    func testUserTierUpdatedToNil() async {
+        let store = TestStore(initialState: WelcomeFeature.State()) {
+            WelcomeFeature()
+        }
+        @Shared(.userTier) var userTier: Int?
+
+        await store.send(.onAppear)
+
+        userTier = nil
+
+        await store.receive(\.userTierUpdated)
+        await store.receive(\.userTierUpdated) // for some reason setting nil sends the publisher event twice...
+
+        userTier = 1 // to cancel the publisher
+        await store.receive(\.userTierUpdated)
+    }
+
+    @MainActor
+    func testUserTierUpdatedToFree() async {
+        let store = TestStore(initialState: WelcomeFeature.State(destination: .signIn(.init(authentication: .loadingSignInCode)))) {
+            WelcomeFeature()
+        }
+        @Shared(.userTier) var userTier: Int?
+
+        await store.send(.onAppear)
+
+        userTier = 1
+
+        await store.receive(\.userTierUpdated) {
+            $0.destination = nil
+        }
+    }
 }

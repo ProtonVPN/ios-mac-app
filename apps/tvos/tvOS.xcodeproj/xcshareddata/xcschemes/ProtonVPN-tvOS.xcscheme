@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4C54B0162BC027FD00315A3B"
-               BuildableName = "ProtonVPN-TV.app"
-               BlueprintName = "ProtonVPN-TV"
+               BuildableName = "ProtonVPN-tvOS.app"
+               BlueprintName = "ProtonVPN-tvOS"
                ReferencedContainer = "container:tvOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -68,8 +68,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C54B0162BC027FD00315A3B"
-            BuildableName = "ProtonVPN-TV.app"
-            BlueprintName = "ProtonVPN-TV"
+            BuildableName = "ProtonVPN-tvOS.app"
+            BlueprintName = "ProtonVPN-tvOS"
             ReferencedContainer = "container:tvOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -85,8 +85,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4C54B0162BC027FD00315A3B"
-            BuildableName = "ProtonVPN-TV.app"
-            BlueprintName = "ProtonVPN-TV"
+            BuildableName = "ProtonVPN-tvOS.app"
+            BlueprintName = "ProtonVPN-tvOS"
             ReferencedContainer = "container:tvOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

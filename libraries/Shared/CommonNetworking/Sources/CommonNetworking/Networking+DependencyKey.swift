@@ -26,7 +26,6 @@ import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
 
-
 public protocol VPNNetworking {
     func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
     func userTier() async throws -> Int
@@ -107,4 +106,28 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }
+}
+
+struct VPNNetworkingMock: VPNNetworking {
+    func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
+        throw ""
+    }
+
+    func userTier() async throws -> Int {
+        throw ""
+    }
+
+    func userDisplayName() async throws -> String? {
+        throw ""
+    }
+
+    func set(session: CommonNetworking.Session) {
+        
+    }
+
+    func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {
+        throw ""
+    }
+
+
 }

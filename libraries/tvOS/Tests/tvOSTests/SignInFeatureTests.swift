@@ -24,6 +24,22 @@ import XCTestDynamicOverlay
 final class SignInFeatureTests: XCTestCase {
 
     @MainActor
+    func testPollServerShouldCancelIfNotWaitingForAuthentication() async {
+        let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {
+            SignInFeature()
+        }
+        await store.send(\.pollServer)
+    }
+
+    @MainActor
+    func testAuthenticationFinishedWithFailure() async {
+        let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {
+            SignInFeature()
+        }
+        await store.send(.authenticationFinished(.failure("")))
+    }
+
+    @MainActor
     func testSignInSuccess() async {
         let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {
             SignInFeature()

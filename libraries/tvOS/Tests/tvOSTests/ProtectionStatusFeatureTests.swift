@@ -20,17 +20,64 @@ import XCTest
 import ComposableArchitecture
 @testable import tvOS
 import Connection
+import DomainTestSupport
 
 final class ProtectionStatusFeatureTests: XCTestCase {
 
     @MainActor
-    func testUserTappedButton() async {
+    func testOnAppear() async {
+        let store = TestStore(initialState: ProtectionStatusFeature.State()) {
+            ProtectionStatusFeature()
+        } withDependencies: {
+            $0.userLocationService = .testValue
+        }
+
+        await store.send(.onAppear)
+    }
+
+    @MainActor
+    func testUserTappedButtonConnect() async {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState?
-        connectionState = .disconnected(nil)
+        @Shared(.connectionState) var connectionState: ConnectionState? = .disconnected(nil)
+
         await store.send(.userTappedButton)
         await store.receive(\.userClickedConnect)
+    }
+
+    @MainActor
+    func testUserTappedButtonCancel() async {
+        let store = TestStore(initialState: ProtectionStatusFeature.State()) {
+            ProtectionStatusFeature()
+        }
+        @Shared(.connectionState) var connectionState: ConnectionState? = .connecting
+        connectionState = .connecting
+
+        await store.send(.userTappedButton)
+        await store.receive(\.userClickedCancel)
+    }
+
+    @MainActor
+    func testUserTappedButtonDisconnect() async {
+        let store = TestStore(initialState: ProtectionStatusFeature.State()) {
+            ProtectionStatusFeature()
+        }
+        @Shared(.connectionState) var connectionState: ConnectionState? 
+        connectionState = .connected(.mock)
+
+        await store.send(.userTappedButton)
+        await store.receive(\.userClickedDisconnect)
+    }
+
+    @MainActor
+    func testUserTappedButtonDisconnecting() async {
+        let store = TestStore(initialState: ProtectionStatusFeature.State()) {
+            ProtectionStatusFeature()
+        }
+        @Shared(.connectionState) var connectionState: ConnectionState? 
+        connectionState = .disconnecting
+
+        await store.send(.userTappedButton)
     }
 }

@@ -59,7 +59,7 @@ final class MainFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
         }
         let error = ConnectionError.serverMissing
-        await store.send(.connectionStateUpdated(.disconnected(error))) {
+        await store.send(.connectionFailed(.serverMissing)) {
             $0.alert = MainFeature.connectionFailedAlert(reason: error.description)
         }
     }
