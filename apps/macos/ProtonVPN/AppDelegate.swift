@@ -90,6 +90,8 @@ extension AppDelegate: NSApplicationDelegate {
 
         log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
 
+        AppStartup.processStartAppleEvent()
+
         LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
 
         // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
