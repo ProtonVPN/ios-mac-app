@@ -82,6 +82,7 @@ let package = Package(
                 "Connection",
                 "LocalAgentTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
         .testTarget(

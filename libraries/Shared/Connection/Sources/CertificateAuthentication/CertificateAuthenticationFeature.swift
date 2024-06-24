@@ -82,18 +82,22 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return .send(.loadingFinished(.failure(refreshError)))
 
             case .refreshCertificate:
-                state = .loading(shouldRefreshIfNecessary: false)
                 return .run { send in
                     await send(.refreshFinished(Result { try await refreshClient.refreshCertificate() }))
                 }
 
             case .refreshFinished(.success(.ok)):
+                state = .loading(shouldRefreshIfNecessary: false)
                 return .send(.loadFromStorage)
 
             case .refreshFinished(.success(.sessionMissingOrExpired)):
                 return .run { send in
                     await send(.selectorPushingFinished(Result { try await refreshClient.pushSelector() }))
                 }
+
+            case .selectorPushingFinished(.success):
+                // Extension now has a session. Let's try again
+                return .send(.refreshCertificate)
 
             case .refreshFinished(.success(.tooManyCertRequests(let retryAfter))):
                 // TODO: Wait and retry
@@ -117,12 +121,17 @@ public struct CertificateAuthenticationFeature: Reducer {
                 state = .loaded(authData)
                 return .none
 
-            case .refreshFinished(.failure(let error)), .loadingFinished(.failure(let error)):
-                return .none
+            case .refreshFinished(.failure(let error)):
+                state = .failed(.unexpected(error))
+                return .send(.loadingFinished(.failure(CertificateAuthenticationError.unexpected(error))))
 
-            case .selectorPushingFinished(let error):
+            case .selectorPushingFinished(.failure(let error)):
                 log.error("Failed to update extension session selector \(error)")
                 state = .failed(.ipc(message: "\(error)"))
+                return .none
+
+            case .loadingFinished(.failure):
+                // End result of this feature, to be handled by parent.
                 return .none
             }
         }
@@ -137,6 +146,7 @@ public enum CertificateLoadingResult: Sendable, Equatable {
     case certificateExpired
 }
 
+@CasePathable
 public enum CertificateRefreshResult: Sendable {
     case ok // happy path
     case sessionMissingOrExpired
@@ -150,4 +160,24 @@ public enum CertificateAuthenticationError: Error, Equatable {
     case wontRefresh(CertificateLoadingResult)
     case refreshWasRateLimited(retryAfter: Int?)
     case ipc(message: String)
+    case unexpected(Error)
+
+    public static func == (lhs: CertificateAuthenticationError, rhs: CertificateAuthenticationError) -> Bool {
+        switch (lhs, rhs) {
+        case (.wontRefresh, .wontRefresh):
+            return true
+
+        case (.refreshWasRateLimited, .refreshWasRateLimited):
+            return true
+
+        case (.ipc, .ipc):
+            return true
+
+        case (.unexpected, .unexpected):
+            return true
+
+        default:
+            return false
+        }
+    }
 }

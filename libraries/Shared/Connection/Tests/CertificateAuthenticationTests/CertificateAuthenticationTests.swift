@@ -27,13 +27,19 @@ import ConnectionFoundationsTestSupport
 
 final class CertificateAuthenticationTests: XCTestCase {
 
-    @MainActor func testChecksForExistingCertificateBeforeRequestingRefresh() async {
-        // let server = ServerEndpoint(id: "serverID", entryIp: "", exitIp: "", domain: "", status: 1, label: "1", x25519PublicKey: nil, protocolEntries: nil)
+    /// Tests authentication with no existing keys or certificates present.
+    /// This mimics a 'fresh installation' scenario
+    @MainActor func testEndToEndCertificateGeneration() async {
+        let storageMock = MockVpnAuthenticationStorage() // Empty storage at the start of the test
+
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))
-        let storageMock = MockVpnAuthenticationStorage()
+
+        // Keys and certificate that we will place in the keychain during the test
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+
+        var hasSelector: Bool = false
 
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
@@ -43,29 +49,62 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0.vpnKeysGenerator = .init(generateKeys: { mockKeys })
             $0.certificateRefreshClient = .init(
                 refreshCertificate: {
+                    guard hasSelector else { return .sessionMissingOrExpired }
                     storageMock.cert = mockCertificate
                     return .ok
                 },
-                pushSelector: { }
+                pushSelector: { hasSelector = true}
             )
         }
-
-        let keysStored = XCTestExpectation(description: "Expected feature to generate new keys")
-        storageMock.keysStored = { _ in keysStored.fulfill() }
 
         await store.send(.loadAuthenticationData) {
             $0 = .loading(shouldRefreshIfNecessary: true)
         }
+
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.keysMissing)
 
-        await fulfillment(of: [keysStored], timeout: 1)
-
-        await store.receive(\.refreshCertificate) {
+        await store.receive(\.refreshCertificate)
+        await store.receive(\.refreshFinished.success.sessionMissingOrExpired)
+        await store.receive(\.selectorPushingFinished.success)
+        await store.receive(\.refreshCertificate)
+        await store.receive(\.refreshFinished.success) {
             $0 = .loading(shouldRefreshIfNecessary: false)
         }
-        await store.receive(\.refreshFinished.success)
 
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.loaded) {
+            $0 = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
+        }
+
+        await store.receive(\.loadingFinished.success)
+    }
+
+    /// This asserts that we do unnecessarily push a session selector, or attempt to refresh the certificate
+    @MainActor func testLoadsExistingCertificateIfNotExpired() async {
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+
+        let storageMock = MockVpnAuthenticationStorage()
+        storageMock.keys = mockKeys
+        storageMock.cert = mockCertificate
+
+        let store = TestStore(initialState: .idle) {
+            CertificateAuthenticationFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.vpnAuthenticationStorage = storageMock
+            $0.certificateRefreshClient = .init(
+                refreshCertificate: unimplemented("Unexpected certificate refresh"),
+                pushSelector: unimplemented("Unexpected session fork + selector push")
+            )
+        }
+
+        await store.send(.loadAuthenticationData) {
+            $0 = .loading(shouldRefreshIfNecessary: true)
+        }
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.loaded) {
             $0 = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
@@ -73,7 +112,76 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadingFinished.success)
     }
 
-    func testPromptsForCertificateRefreshIfCertificateExpired() {
+    @MainActor func testRefreshesMissingOrExpiredCertificate() async {
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
 
+        let storageMock = MockVpnAuthenticationStorage()
+        storageMock.keys = mockKeys
+        storageMock.cert = nil
+
+        let store = TestStore(initialState: .idle) {
+            CertificateAuthenticationFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.vpnAuthenticationStorage = storageMock
+            $0.certificateRefreshClient = .init(
+                refreshCertificate: {
+                    storageMock.cert = mockCertificate
+                    return .ok
+                },
+                pushSelector: unimplemented("Unexpected session fork + selector push")
+            )
+        }
+
+        await store.send(.loadAuthenticationData) {
+            $0 = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.certificateMissing)
+        await store.receive(\.refreshCertificate)
+        await store.receive(\.refreshFinished.success.ok) {
+            $0 = .loading(shouldRefreshIfNecessary: false)
+        }
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.loaded) {
+            $0 = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
+        }
+        await store.receive(\.loadingFinished.success)
+    }
+
+    @MainActor func testEntersFailedStateIfExtensionLiesAboutRefreshingCertificate() async {
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+
+        let storageMock = MockVpnAuthenticationStorage()
+        storageMock.keys = mockKeys
+        storageMock.cert = nil
+
+        let store = TestStore(initialState: .idle) {
+            CertificateAuthenticationFeature()
+        } withDependencies: {
+            $0.vpnAuthenticationStorage = storageMock
+            $0.certificateRefreshClient = .init(
+                refreshCertificate: { .ok }, // Extension responds with .ok but doesn't actually update the certificate
+                pushSelector: unimplemented("Unexpected session fork + selector push")
+            )
+        }
+
+        await store.send(.loadAuthenticationData) {
+            $0 = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.certificateMissing)
+        await store.receive(\.refreshCertificate)
+        await store.receive(\.refreshFinished.success.ok) {
+            $0 = .loading(shouldRefreshIfNecessary: false)
+        }
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.certificateMissing) {
+            $0 = .failed(.wontRefresh(.certificateMissing))
+        }
+        await store.receive(\.loadingFinished.failure)
     }
 }

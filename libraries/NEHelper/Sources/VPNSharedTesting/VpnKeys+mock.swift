@@ -36,6 +36,24 @@ public extension VpnKeys {
             )
         )
     }
+
+    /// Initialiser with non-random contents is useful for TCA tests where we assert on equatable state
+    static func mock(
+        privateKey: String,
+        publicKey: String
+    ) -> VpnKeys {
+        VpnKeys(
+            privateKey: PrivateKey(
+                rawRepresentation: [UInt8](privateKey.data(using: .utf8)!),
+                derRepresentation: privateKey,
+                base64X25519Representation: privateKey
+            ),
+            publicKey: PublicKey(
+                rawRepresentation: [UInt8](publicKey.data(using: .utf8)!),
+                derRepresentation: publicKey
+            )
+        )
+    }
 }
 
 fileprivate extension String {

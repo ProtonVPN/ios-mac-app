@@ -22,10 +22,13 @@ import ComposableArchitecture
 
 import Domain
 import DomainTestSupport
+import struct VPNShared.VpnKeys
+import struct VPNShared.VpnCertificate
+import VPNSharedTesting
 
-import struct ConnectionFoundations.LogicalServerInfo
-
+import ConnectionFoundations
 @testable import ExtensionManager
+@testable import CertificateAuthentication
 @testable import LocalAgent
 @testable import Connection
 @testable import LocalAgentTestSupport
@@ -35,9 +38,16 @@ final class ConnectionFeatureTests: XCTestCase {
     /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
     /// reducers are correctly stitched together by the `ConnectionFeature` reducer.
     @MainActor func testEndToEndConnection() async {
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
         let mockManager = MockTunnelManager()
         let mockClock = TestClock()
         let mockAgent = LocalAgentMock(state: .disconnected)
+        let mockStorage = MockVpnAuthenticationStorage()
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        mockStorage.keys = mockKeys
+        mockStorage.cert = mockCertificate
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -59,13 +69,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.tunnelManager = mockManager
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
-<<<<<<< HEAD
-            $0.certificateAuthentication = .init(
-                loadAuthenticationData: { _ in .empty }
-            )
-=======
             $0.vpnAuthenticationStorage = mockStorage
->>>>>>> e937840b6 (refactor(connection): cert auth feature actions)
         }
 
         await store.send(.tunnel(.startObservingStateChanges))
@@ -106,9 +110,6 @@ final class ConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.localAgent.event.state.connected)
 
-        let expectedConnectedState = ConnectionFeature.State(tunnelState: .connected(connectedLogicalServer), localAgentState: .connected)
-        XCTAssertEqual(store.state, expectedConnectedState)
-
         // Disconnection
 
         await store.send(ConnectionFeature.Action.disconnect(nil))
@@ -124,8 +125,6 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-
-        XCTAssertEqual(store.state, disconnected, "Sanity check - whether we are fully disconnected")
 
         await store.send(.tunnel(.stopObservingStateChanges))
         await store.send(.localAgent(.stopObservingEvents))

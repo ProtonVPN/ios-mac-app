@@ -25,7 +25,8 @@ final class ConnectionStateTests: XCTestCase {
 
     func testLocalAgentErrorResolvesToError() async {
         let state = ConnectionState(
-            tunnelState: .disconnected(nil), 
+            tunnelState: .disconnected(nil),
+            certAuthState: .idle,
             localAgentState: .disconnected(.failedToEstablishConnection(""))
         )
 
@@ -35,6 +36,7 @@ final class ConnectionStateTests: XCTestCase {
     func testTunnelConnectingResolvesToConnecting() async {
         let state = ConnectionState(
             tunnelState: .connecting,
+            certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
@@ -46,6 +48,7 @@ final class ConnectionStateTests: XCTestCase {
 
         let state = ConnectionState(
             tunnelState: .connected(server),
+            certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
@@ -55,6 +58,7 @@ final class ConnectionStateTests: XCTestCase {
     func testTunnelConnectingLocalAgentDisconnectedResolvesToConnecting() async {
         let state = ConnectionState(
             tunnelState: .connecting,
+            certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 

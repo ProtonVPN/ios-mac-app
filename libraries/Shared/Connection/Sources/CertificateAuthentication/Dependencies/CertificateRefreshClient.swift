@@ -50,7 +50,7 @@ extension CertificateRefreshClient {
                 return .ipcError(message: message)
 
             case .errorSessionExpired:
-                return .sessionExpired
+                return .sessionMissingOrExpired
 
             case .errorNeedKeyRegeneration:
                 return .requiresNewKeys
