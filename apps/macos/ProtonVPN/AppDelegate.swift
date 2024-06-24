@@ -266,14 +266,7 @@ extension AppDelegate: NSApplicationDelegate {
                 if self.propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
                     self.propertiesManager.connectionProtocol = .smartProtocol
                 }
-                SentryHelper.shared?.log(message: "Sysex installation succeeded.", extra: ["success": success])
-            case .failure(let failure):
-                switch failure {
-                case .installationError(let internalError):
-                    SentryHelper.shared?.log(error: internalError)
-                case .tourCancelled, .tourSkipped:
-                    SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : failure])
-                }
+            case .failure:
                 // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
                 log.warning("\(self.propertiesManager.connectionProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
                 self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
