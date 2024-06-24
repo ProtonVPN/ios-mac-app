@@ -17,23 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-import SnapshotTesting
-import ComposableArchitecture
-@testable import tvOS
 
-class SettingsFeatureSnapshotTests: BaseTestClass {
-    
-    override func setUp() {
-        super.setUp()
-    }
-        
-    func testSettingsView() {
-        let store = Store(initialState: SettingsFeature.State()) {
-            SettingsFeature()
-        }
-        let settingsView = SettingsView(store: store)
-            .frame(.rect(width: 1920, height: 1080))
-
-        assertSnapshot(of: settingsView, as: .image(traits: traitDarkMode))
-      }
+extension UITraitCollection {
+    static let darkMode = UITraitCollection(userInterfaceStyle: .dark)
 }

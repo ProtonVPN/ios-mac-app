@@ -66,6 +66,7 @@ struct CountryListView: View {
                     .opacity(focusedIndex?.section == 1 ? 1 : Self.unfocusedOpacity)
             }
         }
+        .bind($store.focusedIndex, to: self.$focusedIndex)
     }
 
     @ViewBuilder
@@ -101,7 +102,7 @@ struct CountryListView: View {
         return focused.row == coordinate.row && focused.section == coordinate.section ? 1 : Self.unfocusedOpacity
     }
 
-    private struct ItemCoordinate: Hashable {
+    struct ItemCoordinate: Hashable {
         let section: Int
         let item: CountryListItem
         let row: Int
@@ -112,6 +113,10 @@ struct CountryListView: View {
             self.row = item.row
         }
     }
+}
+
+extension CountryListView.ItemCoordinate {
+    static let fastest: Self = .init(section: 0, item: .fastest)
 }
 
 fileprivate struct CountryListButtonStyle: ButtonStyle {

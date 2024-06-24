@@ -32,6 +32,7 @@ struct CountryListFeature {
     struct State: Equatable {
         var recommendedSection: CountryListSection
         var countriesSection: CountryListSection
+        var focusedIndex: CountryListView.ItemCoordinate? = .fastest
 
         init() {
             @Dependency(\.serverRepository) var repository
@@ -47,24 +48,27 @@ struct CountryListFeature {
                     .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
                     .map { CountryListItem(section: 0, row: 0, code: $0) }
             }()
-            let fastest = CountryListItem(section: 0, row: 0, code: "Fastest")
             countriesSection = .init(name: "All countries", 
                                      items: allCountries, 
                                      sectionIndex: 1)
             recommendedSection = .init(name: "Recommended",
-                                       items: [fastest] + recommendedCountries, 
+                                       items: [.fastest] + recommendedCountries, 
                                        sectionIndex: 0)
         }
     }
 
-    enum Action {
+    enum Action: BindableAction {
         case selectItem(CountryListItem)
+        case binding(BindingAction<State>)
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .selectItem:
+                return .none
+            case .binding:
                 return .none
             }
         }

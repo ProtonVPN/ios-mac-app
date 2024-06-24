@@ -52,3 +52,8 @@ extension DependencyValues {
     }
 }
 
+class UserLocationServiceMock: UserLocationService {
+    public override func updateUserLocation() async throws {
+
+    }
+}
