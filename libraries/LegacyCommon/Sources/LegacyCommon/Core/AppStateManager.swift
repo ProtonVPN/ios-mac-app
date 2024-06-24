@@ -85,6 +85,7 @@ public class AppStateManagerImplementation: AppStateManager {
         
     public weak var alertService: CoreAlertService?
     
+    // Be aware that `whenReachable` handler is used in `checkNetworkConditionsAndCredentialsAndConnect` on macOS
     private var reachability: Reachability?
 
     private var _state: AppState = .disconnected
@@ -248,12 +249,36 @@ public class AppStateManagerImplementation: AppStateManager {
     public func refreshState() {
         vpnManager.refreshState()
     }
-        
+
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
         
         if reachability.connection == .unavailable {
+            #if os(macOS)
+            // we want to show the alert if app was not launched at login, or if it was, then after a small delay
+            if AppStartup.isLaunchedAtLogin {
+                let timeAmount: TimeInterval = 10
+                if let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
+                    // App has been launched at login within the last `timeAmount` seconds.
+                    let retryWorkItem = DispatchWorkItem { [weak self] in
+                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                    }
+                    reachability.whenReachable = { [weak self, retryWorkItem] _ in
+                        // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
+                        retryWorkItem.cancel()
+                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
+                    return
+                }
+            }
+            reachability.whenReachable = nil // cleanup
+            #endif
+            // let's finally show the alert if:
+            //     - !os(macOS)
+            // OR  - app wasn't launched at login
+            // OR  - we gave it some delay but reachability is still unavailable
             notifyNetworkUnreachable()
             return
         }
@@ -567,11 +592,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func notifyObservers() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            
+        DispatchQueue.main.async {
             NotificationCenter.default.post(name: .AppStateManager.stateChange, object: self.state)
         }
     }
@@ -581,11 +602,7 @@ public class AppStateManagerImplementation: AppStateManager {
         cancelTimeout()
         connectionFailed()
         
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-
+        DispatchQueue.main.async {
             self.alertService?.push(alert: VpnNetworkUnreachableAlert())
         }
     }
