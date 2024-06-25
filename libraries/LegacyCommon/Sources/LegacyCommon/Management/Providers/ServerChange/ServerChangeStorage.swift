@@ -115,6 +115,6 @@ extension ServerChangeStorage {
     )
 
     #if DEBUG
-    public static let testValue = liveValue
+    public static let testValue: ServerChangeStorage = liveValue
     #endif
 }
