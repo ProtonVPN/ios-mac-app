@@ -1721,6 +1721,22 @@
         }
       }
     },
+    "Fastest" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fastest"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najszybszy"
+          }
+        }
+      }
+    },
     "Generate new code" : {
       "comment" : "Button title, when user clicks on it, a new verification code is generated and user can try to authenticate again",
       "localizations" : {

@@ -47,5 +47,7 @@ class AppFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "5 CodeExpired")
         store.send(.welcome(.userTierUpdated(0)))
         assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "6 Upsell")
+        store.send(.networking(.startAcquiringSession))
+        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "7 AcquiringSession")
     }
 }

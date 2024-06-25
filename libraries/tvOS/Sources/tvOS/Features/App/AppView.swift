@@ -24,19 +24,16 @@ public struct AppView: View {
 
     @Environment(\.scenePhase) var scenePhase
 
-    public init() {
-        self.store = .init(initialState: AppFeature.State()) {
-            AppFeature()
-        }
-    }
-    
     init(store: StoreOf<AppFeature>) {
         self.store = store
     }
 
+    public init() {
+        self.store = .init(initialState: AppFeature.State(), reducer: { AppFeature() })
+    }
+
     public var body: some View {
         viewBody
-            .onChange(of: scenePhase, scenePhaseChanged)
             .onAppear {
                 store.send(.onAppear)
             }
@@ -47,24 +44,13 @@ public struct AppView: View {
         switch store.networking {
         case .unauthenticated, .acquiringSession:
             ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(.background, .strong))
         case .authenticated(.auth):
             MainView(store: store.scope(state: \.main, action: \.main))
                 .background(Color(.background, .strong))
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
-        }
-    }
-
-    func scenePhaseChanged(oldScenePhase: ScenePhase, newScenePhase: ScenePhase) {
-        switch newScenePhase {
-        case .active:
-            print("App is active")
-        case .inactive:
-            print("App is inactive")
-        case .background:
-            print("App is in background")
-        @unknown default:
-            print("App Received an unexpected new value.")
         }
     }
 }

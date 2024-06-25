@@ -66,10 +66,10 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         await store.send(.sessionExpired) {
             $0 = .unauthenticated(nil)
         }
-        await store.receive(.startAcquiringSession) {
+        await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
         }
-        await store.receive(.sessionFetched(.failure(""))) {
+        await store.receive(\.sessionFetched.failure) {
             $0 = .unauthenticated(.network(internalError: ""))
         }
     }
@@ -85,12 +85,12 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0.authKeychain = keychainMock
             $0.networking = VPNNetworkingMock()
         }
-        await store.send(.startLogout)
+        await store.send(\.startLogout)
         await fulfillment(of: [e])
-        await store.receive(.startAcquiringSession) {
+        await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
         }
-        await store.receive(.sessionFetched(.failure(""))) {
+        await store.receive(\.sessionFetched.failure) {
             $0 = .unauthenticated(.network(internalError: ""))
         }
     }
@@ -108,7 +108,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         }
         store.exhaustivity = .off
         await store.send(.forkedSessionAuthenticated(.success(.mock)))
-        await store.receive(.startLogout)
+        await store.receive(\.startLogout)
         await fulfillment(of: [e])
     }
 
@@ -125,7 +125,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         }
         store.exhaustivity = .off
         await store.send(.userTierRetrieved(0, .auth(uid: "")))
-        await store.receive(.startLogout)
+        await store.receive(\.startLogout)
         await fulfillment(of: [e])
     }
 
