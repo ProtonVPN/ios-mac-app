@@ -140,6 +140,7 @@ struct MainFeature {
             case .connection:
                 let newConnectionState = ConnectionState(
                     tunnelState: state.connection.tunnel,
+                    certAuthState: state.connection.certAuth,
                     localAgentState: state.connection.localAgent
                 )
                 if newConnectionState != state.connectionState {

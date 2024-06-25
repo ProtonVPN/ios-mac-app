@@ -22,6 +22,7 @@ import CasePaths
 import Dependencies
 
 import ConnectionFoundations
+import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
 import struct Domain.Server
@@ -35,10 +36,16 @@ public enum ConnectionState: Equatable, Sendable {
 
     public init(
         tunnelState: ExtensionFeature.State,
+        certAuthState: CertificateAuthenticationFeature.State,
         localAgentState: LocalAgentFeature.State
     ) {
         if case .disconnected(let tunnelConnectionError) = tunnelState, let tunnelConnectionError {
             self = .disconnected(.tunnel(tunnelConnectionError))
+            return
+        }
+
+        if case .failed(let certAuthError) = certAuthState {
+            self = .disconnected(.certAuth(certAuthError))
             return
         }
 

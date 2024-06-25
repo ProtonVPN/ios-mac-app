@@ -50,7 +50,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
 
         var computedConnectionState: ConnectionState {
-            ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
+            ConnectionState(tunnelState: tunnel, certAuthState: certAuth, localAgentState: localAgent)
         }
     }
 
@@ -99,8 +99,13 @@ public struct ConnectionFeature: Reducer, Sendable {
                 let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
                 return .run { send in await send(.localAgent(.connect(server.endpoint, data))) }
 
+            case .certAuth(.loadingFinished(.failure(let error))):
+                log.error("Failed to load authentication data: \(error)")
+                return .send(.disconnect(nil))
+
             case .tunnel:
                 return .none
+
             case .localAgent:
                 return .none
 
@@ -113,17 +118,22 @@ public struct ConnectionFeature: Reducer, Sendable {
 
 @CasePathable
 public enum ConnectionError: Error, Equatable {
+    case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
     case serverMissing
 
     public var description: String {
         switch self {
+        case .certAuth:
+            return ""
 
-        case .tunnel(_):
+        case .tunnel:
             return ""
-        case .agent(_):
+
+        case .agent:
             return ""
+
         case .serverMissing:
             return "Couldn't find specified server"
         }

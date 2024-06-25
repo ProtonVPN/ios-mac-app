@@ -77,8 +77,9 @@ public struct CertificateAuthenticationFeature: Reducer {
                 if shouldRefresh {
                     return .send(.refreshCertificate)
                 }
-                state = .failed(.wontRefresh(failureReason))
-                return .none
+                let refreshError = CertificateAuthenticationError.wontRefresh(failureReason)
+                state = .failed(refreshError)
+                return .send(.loadingFinished(.failure(refreshError)))
 
             case .refreshCertificate:
                 state = .loading(shouldRefreshIfNecessary: false)
@@ -104,8 +105,9 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return .none
 
             case .refreshFinished(.success(.ipcError(message: let message))):
-                state = .failed(.ipc(message: message))
-                return .none
+                let refreshError = CertificateAuthenticationError.ipc(message: message)
+                state = .failed(refreshError)
+                return .send(.loadingFinished(.failure(refreshError)))
 
             case .refreshFinished(.success(.requiresNewKeys)):
                 assertionFailure("Should have generated keys while fetching stored certificate")
@@ -116,7 +118,6 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return .none
 
             case .refreshFinished(.failure(let error)), .loadingFinished(.failure(let error)):
-                
                 return .none
 
             case .selectorPushingFinished(let error):

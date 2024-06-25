@@ -29,7 +29,6 @@ extension SessionService: DependencyKey {
             selector: {
                 // TODO: Uncomment real implementation once recursive forking is supported
                 return "abcd" // For testing, hardcode your main selector (fetched during signin) here
-
                 // let clientId = "Wireguard-tvOS"
                 // let forkRequest = ForkSessionRequest(useCase: .getSelector(clientId: clientId, independent: false))
                 // let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
