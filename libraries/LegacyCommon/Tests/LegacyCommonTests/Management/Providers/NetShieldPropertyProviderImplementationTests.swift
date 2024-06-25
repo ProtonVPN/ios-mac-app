@@ -46,9 +46,9 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         }
     }
     
-    func testWhenNothingIsSetReturnsLevel1ForPaidUsers() throws {
+    func testWhenNothingIsSetReturnsLevel2ForPaidUsers() throws {
         withProvider(netShieldType: nil, tier: .paidTier) {
-            XCTAssertEqual($0.netShieldType, .level1)
+            XCTAssertEqual($0.netShieldType, .level2)
         }
     }
 
