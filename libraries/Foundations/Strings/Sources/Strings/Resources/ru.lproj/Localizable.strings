@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Предотвращает утечку информации о DNS запросах третьим лицам. Нельзя отключить.";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Security Keys";
+
 /* iOS Settings: table section header */
 "_security_options" = "Параметры безопасности";
 
@@ -2244,4 +2247,4 @@
 "_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
-"_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";
+"_ike_deprecation_alert_enable_smart_button_title" = "Включить Smart Protocol";

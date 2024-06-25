@@ -726,7 +726,7 @@
 "_ne_unable_to_connect_to_host" = "Layanan VPN tidak dapat dijangkau";
 
 /* Network error */
-"_ne_network_connection_lost" = "Koneksi internet terputus";
+"_ne_network_connection_lost" = "Koneksi jaringan hilang";
 
 /* Network error */
 "_ne_not_connected_to_the_internet" = "Tidak terhubung ke internet";
@@ -930,6 +930,9 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Mencegah agar rincian kueri DNS Anda tidak bocor ke pihak ketiga. Selalu aktif.";
+
+/* iOS Settings: table section cell */
+"_security_keys" = "Kunci Keamanan";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opsi Keamanan";
@@ -1483,7 +1486,7 @@
 
 "_smart_routing_title" = "Smart Routing";
 
-"_streaming_title" = "Aliran";
+"_streaming_title" = "Streaming";
 
 "_p2p_title" = "P2P/BitTorrent";
 
@@ -1493,7 +1496,7 @@
 
 "_streaming_servers_description" = "Hubungkan diri Anda ke server Plus di negara ini untuk mulai menonton tayangan streaming.";
 
-"_streaming_servers_note" = "Perhatian: Matikan Layanan Lokasi dan bersihkan tembolok aplikasi pengaliran untuk memastikan konten baru muncul.";
+"_streaming_servers_note" = "Catatan: Matikan Layanan Lokasi dan bersihkan cache aplikasi streaming untuk memastikan kemunculan konten baru.";
 
 "_streaming_servers_extra" = "dan masih banyak lagi";
 
@@ -1633,7 +1636,7 @@
 "_settings_mac_crash_reports_title" = "Bagikan laporan crash anonim";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Laporan crash dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
+"_settings_mac_crash_reports_tooltip" = "Laporan crash membantu kami dalam memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
 
 /* Section title in Settings */
 "_advanced" = "Lanjutan";
@@ -2126,7 +2129,7 @@
 
 "onboarding_crash_reports_title" = "Bagikan laporan crash anonim";
 
-"onboarding_crash_reports_description" = "Laporan crash dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
+"onboarding_crash_reports_description" = "Laporan crash membantu kami dalam memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
 
 "onboarding_footer" = "Statistik ini tidak mengandung alamat IP Anda dan tidak dapat digunakan untuk mengenali diri Anda. Kami tidak akan pernah membagikan statistik ini kepada pihak ketiga manapun.";
 

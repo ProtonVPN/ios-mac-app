@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Prepreči razkrivanje podrobnosti poizvedb DNS tretjim osebam. Vedno aktivno.";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Security Keys";
+
 /* iOS Settings: table section header */
 "_security_options" = "Varnostne možnosti";
 

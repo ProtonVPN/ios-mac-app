@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Verhindert das Weitergeben von Details der DNS‐Anfragen an Dritte. Dauerhaft aktiv.";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Sicherheitsschlüssel";
+
 /* iOS Settings: table section header */
 "_security_options" = "Sicherheitsoptionen";
 
@@ -2238,10 +2241,10 @@
 "_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Learn more";
+"_ike_deprecation_alert_message_link_text" = "Mehr erfahren";
 
 /* Button title for 'Continue with IKEv2' */
-"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
+"_ike_deprecation_alert_continue_button_title" = "Mit IKEv2 fortfahren";
 
 /* Button title for 'Enable Smart protocol' */
-"_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";
+"_ike_deprecation_alert_enable_smart_button_title" = "Smart Protocol aktivieren";
