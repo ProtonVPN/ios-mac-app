@@ -2925,7 +2925,7 @@
       }
     },
     "Scan the QR code or go to\n" : {
-      "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string.",
+      "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string. Remember about the new line character",
       "extractionState" : "manual",
       "localizations" : {
         "be" : {
@@ -2937,7 +2937,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanne den QR-Code oder gehe zu"
+            "value" : "Scanne den QR-Code oder gehe zu\n"
           }
         },
         "el" : {
@@ -3009,7 +3009,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zeskanuj kod QR lub przejdź do"
+            "value" : "Zeskanuj kod QR lub przejdź do\n"
           }
         },
         "pt-BR" : {
@@ -3021,7 +3021,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanați codul QR sau accesați"
+            "value" : "Scanați codul QR sau accesați\n"
           }
         },
         "sk" : {
