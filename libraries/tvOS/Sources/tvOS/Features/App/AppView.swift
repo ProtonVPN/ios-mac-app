@@ -20,13 +20,19 @@ import ComposableArchitecture
 import SwiftUI
 
 public struct AppView: View {
-    var store: StoreOf<AppFeature> = .init(initialState: AppFeature.State()) {
-        AppFeature()
-    }
+    var store: StoreOf<AppFeature>
 
     @Environment(\.scenePhase) var scenePhase
 
-    public init() { } 
+    public init() {
+        self.store = .init(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+    }
+    
+    init(store: StoreOf<AppFeature>) {
+        self.store = store
+    }
 
     public var body: some View {
         viewBody

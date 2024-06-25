@@ -34,3 +34,7 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
         self.code = code
     }
 }
+
+extension CountryListItem {
+    static let fastest: Self = .init(section: 0, row: 0, code: "Fastest")
+}

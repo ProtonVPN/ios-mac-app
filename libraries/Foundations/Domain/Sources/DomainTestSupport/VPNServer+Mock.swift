@@ -37,6 +37,23 @@ extension Logical {
         longitude: 4.3,
         gatewayName: nil
     )
+    public static let ca = Logical(
+        id: "oMDUA_xB",
+        name: "CA#1", domain: "node-ca-1.mock.protonvpn.net",
+        load: 50,
+        entryCountryCode: "CA",
+        exitCountryCode: "CA",
+        tier: 2,
+        score: 2.0,
+        status: 1,
+        feature: [.p2p, .streaming],
+        city: "Toronto",
+        hostCountry: nil,
+        translatedCity: "Toronto",
+        latitude: 50.8,
+        longitude: 4.3,
+        gatewayName: nil
+    )
 }
 
 extension ServerEndpoint {
@@ -58,4 +75,5 @@ extension VPNServer {
 
 extension Server {
     public static let mock = Server(logical: .mock, endpoint: .mock)
+    public static let ca = Server(logical: .ca, endpoint: .mock)
 }
