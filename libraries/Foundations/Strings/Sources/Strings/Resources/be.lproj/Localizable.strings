@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Прадухіляе ўцечку падрабязнасцяў аб запытах DNS староннім асобам. Заўсёды ўключана.";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Ключы бяспекі";
+
 /* iOS Settings: table section header */
 "_security_options" = "Параметры бяспекі";
 

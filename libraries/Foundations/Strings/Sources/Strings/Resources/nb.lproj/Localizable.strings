@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Forhindre lekkasje av detaljer om DNS-spørringer til tredjeparter. Alltid på.";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Sikkerhetsnøkler";
+
 /* iOS Settings: table section header */
 "_security_options" = "Alternativer for sikkerhet";
 

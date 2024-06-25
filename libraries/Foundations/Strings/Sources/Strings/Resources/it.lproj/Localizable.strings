@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Impedire la perdita di dettagli delle query DNS a terzi. Sempre attivo.";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Chiavi di sicurezza";
+
 /* iOS Settings: table section header */
 "_security_options" = "Opzioni di sicurezza";
 

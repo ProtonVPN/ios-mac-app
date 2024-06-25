@@ -931,6 +931,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "DNS クエリの内容が外部に漏洩するのを防ぎます。この設定は常に有効です。";
 
+/* iOS Settings: table section cell */
+"_security_keys" = "Security Keys";
+
 /* iOS Settings: table section header */
 "_security_options" = "セキュリティ設定";
 
