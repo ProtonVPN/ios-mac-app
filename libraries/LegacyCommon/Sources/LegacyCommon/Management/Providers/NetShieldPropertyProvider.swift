@@ -136,7 +136,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     }
     
     private var defaultNetShieldType: NetShieldType {
-        authorizer(.level1) == .success ? .level1 : .off
+        authorizer(.level2) == .success ? .level2 : .off
     }
 
     public init() {}
