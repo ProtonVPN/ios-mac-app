@@ -5,7 +5,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "%@"
           }
         },
@@ -21,7 +21,7 @@
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "%lld"
           }
         },
@@ -57,7 +57,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "All countries"
           }
         },
@@ -177,7 +177,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Are you sure you want to sign out of Proton VPN?"
           }
         },
@@ -296,7 +296,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Available with Proton VPN Plus"
           }
         },
@@ -422,7 +422,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Cancel"
           }
         },
@@ -577,7 +577,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Connect to high-speed servers around the world and stream your favorite shows with VPN protection."
           }
         },
@@ -684,7 +684,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Connected"
           }
         },
@@ -809,7 +809,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Connecting"
           }
         },
@@ -935,7 +935,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Connection failed"
           }
         },
@@ -1097,7 +1097,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Contact us"
           }
         },
@@ -1217,7 +1217,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Create account"
           }
         },
@@ -1343,7 +1343,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Create your Proton Account"
           }
         },
@@ -1505,7 +1505,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Disconnect"
           }
         },
@@ -1625,7 +1625,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Disconnecting"
           }
         },
@@ -1744,7 +1744,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Generate new code"
           }
         },
@@ -1863,7 +1863,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Home"
           }
         },
@@ -1977,7 +1977,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "If you’re having trouble using Proton VPN, our customer support team is happy to help.\n\nJust scan the QR code or go to"
           }
         },
@@ -2084,7 +2084,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Loading countries"
           }
         },
@@ -2198,7 +2198,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Need help setting up or using Proton VPN?\n\nVisit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.\n\nJust scan the QR code or go to"
           }
         },
@@ -2312,7 +2312,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Privacy policy"
           }
         },
@@ -2474,7 +2474,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Protected"
           }
         },
@@ -2594,7 +2594,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website."
           }
         },
@@ -2702,7 +2702,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Quick Connect"
           }
         },
@@ -2822,7 +2822,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Recommended"
           }
         },
@@ -2948,7 +2948,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Scan the QR code or go to\n"
           }
         },
@@ -3073,7 +3073,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Settings"
           }
         },
@@ -3240,7 +3240,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Sign in"
           }
         },
@@ -3408,7 +3408,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Sign in to your account."
           }
         },
@@ -3564,7 +3564,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Sign out"
           }
         },
@@ -3726,7 +3726,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Signing out..."
           }
         },
@@ -3846,7 +3846,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Support Center"
           }
         },
@@ -3959,7 +3959,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "There was a problem.\nPlease check your network connection"
           }
         },
@@ -4067,7 +4067,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "To read our privacy policy, scan the QR code or go to"
           }
         },
@@ -4187,7 +4187,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Unprotected"
           }
         },
@@ -4307,7 +4307,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Using another device, go to"
           }
         },
@@ -4427,7 +4427,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Using Proton Free?"
           }
         },
@@ -4540,7 +4540,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Watch without being watched."
           }
         },
@@ -4648,7 +4648,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "When asked for your verification code, enter"
           }
         },
@@ -4756,7 +4756,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "When asked for your verification code, enter (retrieving...)"
           }
         },
@@ -4869,7 +4869,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "manual",
+            "state" : "translated",
             "value" : "Your verification code expired"
           }
         },
