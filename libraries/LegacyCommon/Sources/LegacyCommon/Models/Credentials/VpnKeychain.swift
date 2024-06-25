@@ -255,7 +255,7 @@ public class VpnKeychain: VpnKeychainProtocol {
                 throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
             }
         } catch {
-            try clearPassword(forKey: key)
+            try? clearPassword(forKey: key)
 
             var query = formBaseQuery(forKey: key)
             query[kSecValueData as AnyHashable] = data
