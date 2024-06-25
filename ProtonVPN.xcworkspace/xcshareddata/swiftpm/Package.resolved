@@ -213,8 +213,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-clocks",
         "state": {
           "branch": null,
-          "revision": "d1fd837326aa719bee979bdde1f53cd5797443eb",
-          "version": "1.0.0"
+          "revision": "a8421d68068d8f45fbceb418fbf22c5dad4afd33",
+          "version": "1.0.2"
         }
       },
       {
@@ -222,8 +222,8 @@
         "repositoryURL": "https://github.com/apple/swift-collections",
         "state": {
           "branch": null,
-          "revision": "94cf62b3ba8d4bed62680a282d4c25f9c63c2efb",
-          "version": "1.1.0"
+          "revision": "ee97538f5b81ae89698fd95938896dec5217b148",
+          "version": "1.1.1"
         }
       },
       {
@@ -267,8 +267,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-identified-collections",
         "state": {
           "branch": null,
-          "revision": "d1e45f3e1eee2c9193f5369fa9d70a6ddad635e8",
-          "version": "1.0.0"
+          "revision": "2f5ab6e091dd032b63dacbda052405756010dc3b",
+          "version": "1.1.0"
         }
       },
       {
@@ -294,8 +294,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-perception",
         "state": {
           "branch": null,
-          "revision": "8e8ca36c02abc7775a3ab81f9468c0df5fe22c2c",
-          "version": "1.1.7"
+          "revision": "d3ab98dc2887d1cc3bed676f6fa354da4cb22b3c",
+          "version": "1.2.4"
         }
       },
       {
@@ -309,11 +309,11 @@
       },
       {
         "package": "swift-syntax",
-        "repositoryURL": "https://github.com/apple/swift-syntax.git",
+        "repositoryURL": "https://github.com/apple/swift-syntax",
         "state": {
           "branch": null,
-          "revision": "6ad4ea24b01559dde0773e3d091f1b9e36175036",
-          "version": "509.0.2"
+          "revision": "303e5c5c36d6a558407d364878df131c3546fad8",
+          "version": "510.0.2"
         }
       },
       {
@@ -336,11 +336,11 @@
       },
       {
         "package": "swiftui-navigation",
-        "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation",
+        "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation.git",
         "state": {
           "branch": null,
-          "revision": "a3aa5d46e8bf174d773d23b030f1c103999398ac",
-          "version": "1.1.0"
+          "revision": "b7c9a79f6f6b1fefb87d3e5a83a9c2fe7cdc9720",
+          "version": "1.5.0"
         }
       },
       {
