@@ -36,23 +36,26 @@ struct CountryListFeature {
 
         init() {
             @Dependency(\.serverRepository) var repository
-            var counter = 0
             let allCountries = repository
-                .getGroups(filteredBy: [.isNotUnderMaintenance])
-                .compactMap { group in
-                    defer { counter += 1 }
-                    return group.item(index: counter, section: 1)
+                .getGroups(filteredBy: [
+                    .isNotUnderMaintenance,
+                    .kind(.country)
+                ])
+                .enumerated()
+                .compactMap { (index, group) in
+                    return group.item(index: index, section: 1)
                 }
+
             let recommendedCountries: [CountryListItem] = {
                 CountryListFeature.recommendedCountries
                     .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
                     .map { CountryListItem(section: 0, row: 0, code: $0) }
             }()
-            countriesSection = .init(name: "All countries", 
-                                     items: allCountries, 
+            countriesSection = .init(name: "All countries",
+                                     items: allCountries,
                                      sectionIndex: 1)
             recommendedSection = .init(name: "Recommended",
-                                       items: [.fastest] + recommendedCountries, 
+                                       items: [.fastest] + recommendedCountries,
                                        sectionIndex: 0)
         }
     }
@@ -79,11 +82,7 @@ struct CountryListFeature {
 private extension ServerGroupInfo {
     func item(index: Int, section: Int) -> CountryListItem? {
         guard case .country(let code) = kind else { return nil }
-
-        return CountryListItem(
-            section: section,
-            row: Int(floor(Double(index) / Double(CountryListView.columnCount))),
-            code: code
-        )
+        let row = Int(floor(Double(index) / Double(CountryListView.columnCount)))
+        return CountryListItem(section: section, row: row, code: code)
     }
 }
