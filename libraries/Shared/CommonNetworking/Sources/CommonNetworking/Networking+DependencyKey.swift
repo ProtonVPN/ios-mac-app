@@ -28,10 +28,10 @@ import ProtonCoreDataModel
 
 public protocol VPNNetworking {
     func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
-    func userTier() async throws -> Int
-    func userDisplayName() async throws -> String?
     func set(session: Session)
     func perform<T: Decodable>(request: Request) async throws -> T
+    var userTier: Int { get async throws }
+    var userDisplayName: String? { get async throws }
     var sessionCookie: HTTPCookie? { get }
 }
 
@@ -52,22 +52,22 @@ public struct CoreNetworkingWrapper: VPNNetworking {
         }
     }
 
-    public func userDisplayName() async throws -> String? {
+    public var userDisplayName: String? {get async throws {
         let user = try await withCheckedThrowingContinuation { continuation in
             Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
         }
         return user.displayName
-    }
+    } }
 
     // TODO: Hopefully when we start supporting free users we can ignore the MaxTier so this code would go away
-    public func userTier() async throws -> Int {
+    public var userTier: Int { get async throws {
         let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
         guard let vpn: [String: Any] = try json[throwing: "VPN"],
               let maxTier: Int = try vpn[throwing: "MaxTier"] else {
             return 0
         }
         return maxTier
-    }
+    } }
 
     public func set(session: Session) {
         wrapped.apiService.setSessionUID(uid: session.uid)
@@ -124,13 +124,13 @@ struct VPNNetworkingMock: VPNNetworking {
         throw ""
     }
 
-    func userTier() async throws -> Int {
+    var userTier: Int { get async throws {
         throw ""
-    }
+    } }
 
-    func userDisplayName() async throws -> String? {
+    var userDisplayName: String? { get async throws {
         throw ""
-    }
+    } }
 
     func set(session: CommonNetworking.Session) {
         

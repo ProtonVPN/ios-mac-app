@@ -23,6 +23,7 @@ import enum ExtensionIPC.WireguardProviderRequest
 import Ergonomics
 import struct Domain.Server
 
+// TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {
     @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
     @Dependency(\.vpnKeysGenerator) var keysGenerator
@@ -101,9 +102,8 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .refreshFinished(.success(.tooManyCertRequests(let retryAfter))):
                 // TODO: Wait and retry
-                // Waiting for a retry could increase connection delation siginificantly, but this usually happens when
-                // we refresh certificates many times in a short period when changing features, and not during the
-                // initial connection
+                // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
+                // certificates many times in a short period when changing features, not during the initial connection
                 log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)")
                 state = .failed(.refreshWasRateLimited(retryAfter: retryAfter))
                 return .none

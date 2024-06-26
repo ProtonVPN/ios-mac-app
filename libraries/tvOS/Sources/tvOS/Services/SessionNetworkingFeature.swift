@@ -67,7 +67,6 @@ struct SessionNetworkingFeature: Reducer {
             case .startLogout:
                 authKeychain.clear()
                 vpnAuthStorage.deleteKeys()
-                vpnAuthStorage.deleteCertificate()
                 return .run { send in await send(.startAcquiringSession) }
 
             case .startAcquiringSession:

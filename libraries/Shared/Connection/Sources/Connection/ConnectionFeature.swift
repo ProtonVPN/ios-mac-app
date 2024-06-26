@@ -78,7 +78,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .send(.tunnel(.disconnect))
                 )
 
-            case .tunnel(.connectionFinished(.success(let logicalServerInfo))):
+            case .tunnel(.connectionFinished(.success)):
                 return .send(.certAuth(.loadAuthenticationData))
 
             case .localAgent(.connectionFinished(.failure)):
@@ -97,7 +97,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .send(.disconnect(nil))
                 }
                 let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
-                return .run { send in await send(.localAgent(.connect(server.endpoint, data))) }
+                return .send(.localAgent(.connect(server.endpoint, data)))
 
             case .certAuth(.loadingFinished(.failure(let error))):
                 log.error("Failed to load authentication data: \(error)")
@@ -122,22 +122,6 @@ public enum ConnectionError: Error, Equatable {
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
     case serverMissing
-
-    public var description: String {
-        switch self {
-        case .certAuth:
-            return ""
-
-        case .tunnel:
-            return ""
-
-        case .agent:
-            return ""
-
-        case .serverMissing:
-            return "Couldn't find specified server"
-        }
-    }
 }
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read

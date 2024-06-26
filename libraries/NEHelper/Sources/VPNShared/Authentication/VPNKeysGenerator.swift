@@ -24,7 +24,7 @@ import Dependencies
 /// targets. Therefore, this dependency is stubbed out, with the real implementation being linked in `LegacyCommon` for
 /// iOS and MacOS, and in `Connection` for tvOS.
 public struct VPNKeysGenerator: TestDependencyKey {
-    public var generateKeys: @Sendable () throws -> VpnKeys
+    public private(set) var generateKeys: @Sendable () throws -> VpnKeys
 
     // Will crash if the implementation is missing, since we want to make sure it is linked everywhere it needs to be.
     public static let testValue: VPNKeysGenerator = .init(generateKeys: {

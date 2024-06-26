@@ -34,7 +34,6 @@ let package = Package(
                 "Ergonomics",
                 "ExtensionIPC",
                 "PMLogger",
-                "ExtensionIPC",
                 .product(name: "VPNShared", package: "NEHelper"),
             ]
         ),
