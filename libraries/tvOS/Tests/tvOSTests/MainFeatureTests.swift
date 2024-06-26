@@ -73,7 +73,6 @@ final class MainFeatureTests: XCTestCase {
             MainFeature()
         } withDependencies: {
             $0.serverRepository = .notEmpty()
-            $0.connectionClient = .testValue
             $0.continuousClock = clock
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)

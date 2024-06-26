@@ -44,7 +44,7 @@ struct SessionNetworkingFeature: Reducer {
         /// Can contain auth or unauth session
         case authenticated(CommonNetworking.Session)
     }
-
+    @CasePathable
     enum Action {
         case startLogout
         case startAcquiringSession
@@ -144,25 +144,6 @@ enum SessionFetchingError: Error, Equatable {
             return true
         case (.network, .network):
             return true
-        default:
-            return false
-        }
-    }
-}
-
-extension SessionNetworkingFeature.Action: Equatable {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        switch (lhs, rhs) {
-        case
-            (.startLogout, .startLogout),
-            (.startAcquiringSession, .startAcquiringSession),
-            (.sessionFetched, .sessionFetched),
-            (.forkedSessionAuthenticated, .forkedSessionAuthenticated),
-            (.sessionExpired, .sessionExpired),
-            (.userTierRetrieved, .userTierRetrieved),
-            (.userDisplayNameRetrieved, .userDisplayNameRetrieved):
-            return true
-
         default:
             return false
         }

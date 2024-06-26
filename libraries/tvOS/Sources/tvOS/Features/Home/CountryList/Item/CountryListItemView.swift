@@ -46,9 +46,15 @@ struct CountryListItemView: View {
 
     private var connectedLabel: some View {
         VStack(spacing: 0) {
-            Text(verbatim: item.name)
-                .font(.body)
-                .lineLimit(1)
+            if item.code == CountryListItem.fastest.code {
+                Text("Fastest")
+                    .font(.body)
+                    .lineLimit(1)
+            } else {
+                Text(verbatim: item.name)
+                    .font(.body)
+                    .lineLimit(1)
+            }
             Spacer()
                 .frame(height: .themeSpacing16)
             switch connectionState ?? .disconnected(nil) {
