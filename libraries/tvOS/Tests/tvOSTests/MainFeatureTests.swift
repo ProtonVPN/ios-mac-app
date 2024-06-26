@@ -25,6 +25,7 @@ import ComposableArchitecture
 import DomainTestSupport
 @testable import LocalAgentTestSupport
 @testable import LocalAgent
+import PersistenceTestSupport
 
 final class MainFeatureTests: XCTestCase {
 
@@ -72,6 +73,7 @@ final class MainFeatureTests: XCTestCase {
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()
         } withDependencies: {
+            $0.serverIdentifier = .init(fullServerInfo: { _ in nil })
             $0.serverRepository = .notEmpty()
             $0.continuousClock = clock
             $0.localAgent = LocalAgentMock(state: .disconnected)
@@ -84,10 +86,11 @@ final class MainFeatureTests: XCTestCase {
         connectionState = .disconnected(nil)
         await store.send(.homeLoading(.loaded(.protectionStatus(.userClickedConnect))))
 
-        await store.receive(\.connection.connect)
+        await store.receive(\.connection.connect) {
+            $0.connection.tunnel = .disconnected(nil)
+        }
         await store.receive(\.connection.tunnel.connect) {
-            $0.connection.tunnel = .connecting
-            $0.connectionState = .connecting
+            $0.connection.tunnel = .connecting(.init(logicalID: "", serverID: "some id"))
         }
     }
 }

@@ -90,9 +90,8 @@ struct CountryListItemView: View {
         switch connectionState {
         case .connected(let server):
             return server.logical.entryCountryCode
-        case .connecting:
-//            return code
-            return nil
+        case .connecting(let server):
+            return server?.logical.entryCountryCode
         default:
             return nil
         }

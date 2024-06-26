@@ -51,8 +51,8 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState? = .connecting
-        connectionState = .connecting
+        @Shared(.connectionState) var connectionState: ConnectionState?
+        connectionState = .connecting(.ca)
 
         await store.send(.userTappedButton)
         await store.receive(\.userClickedCancel)

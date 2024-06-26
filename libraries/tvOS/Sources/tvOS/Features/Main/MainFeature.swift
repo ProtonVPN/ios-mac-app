@@ -23,6 +23,7 @@ import struct Domain.Server
 import Connection
 import Persistence
 import Foundation
+import Domain
 
 @Reducer
 struct MainFeature {
@@ -40,6 +41,7 @@ struct MainFeature {
         @Presents var alert: AlertState<Action.Alert>?
         
         @Shared(.connectionState) var connectionState: ConnectionState?
+        @Shared(.userLocation) var userLocation: UserLocation?
     }
 
     enum Action {
@@ -101,10 +103,14 @@ struct MainFeature {
                 return .none
 
             case .homeLoading(.loaded(.countryList(.selectItem(let item)))):
+                if case let .connected(server) = state.connectionState {
+                    if server.logical.exitCountryCode == item.code {
+                        return .send(.connection(.disconnect(nil)))
+                    }
+                }
                 guard let (connectServer, features) = serverWithFeatures(code: item.code) else {
                     return .none
                 }
-
                 return .send(.connection(.connect(connectServer, features)))
 
             case .homeLoading(.loaded(.protectionStatus(let action))):
@@ -135,6 +141,12 @@ struct MainFeature {
                 if let error {
                     state.alert = Self.connectionFailedAlert(reason: error.localizedMessage)
                 }
+                if state.userLocation == nil {
+                    return .run { _ in
+                        @Dependency(\.userLocationService) var userLocationService
+                        try? await userLocationService.updateUserLocation()
+                    }
+                }
                 return .none
             case .connection:
                 let newConnectionState = ConnectionState(
@@ -143,6 +155,12 @@ struct MainFeature {
                     localAgentState: state.connection.localAgent
                 )
                 if newConnectionState != state.connectionState {
+                    if case let .connecting(server) = state.connectionState,
+                       server != nil,
+                       case let .connecting(server) = newConnectionState,
+                       server == nil {
+                        return .none // ignore this event
+                    }
                     state.connectionState = newConnectionState
                 }
                 return .none
