@@ -30,7 +30,6 @@ import ExtensionManager
 import LocalAgent
 
 public struct ConnectionFeature: Reducer, Sendable {
-    @Dependency(\.certificateAuthentication) var certificateAuthentication
     @Dependency(\.serverIdentifier) var serverIdentifier
 
     public init() { }
@@ -38,17 +37,20 @@ public struct ConnectionFeature: Reducer, Sendable {
     public struct State: Equatable, Sendable {
         public var tunnel: ExtensionFeature.State
         public var localAgent: LocalAgentFeature.State
+        public var certAuth: CertificateAuthenticationFeature.State
 
         public init(
             tunnelState: ExtensionFeature.State = .disconnected(nil),
+            certAuthState: CertificateAuthenticationFeature.State = .idle,
             localAgentState: LocalAgentFeature.State = .disconnected(nil)
         ) {
             self.tunnel = tunnelState
+            self.certAuth = certAuthState
             self.localAgent = localAgentState
         }
 
         var computedConnectionState: ConnectionState {
-            ConnectionState(tunnelState: tunnel, localAgentState: localAgent)
+            ConnectionState(tunnelState: tunnel, certAuthState: certAuth, localAgentState: localAgent)
         }
     }
 
@@ -57,11 +59,13 @@ public struct ConnectionFeature: Reducer, Sendable {
         case connect(Server, VPNConnectionFeatures)
         case disconnect(ConnectionError?)
         case tunnel(ExtensionFeature.Action)
+        case certAuth(CertificateAuthenticationFeature.Action)
         case localAgent(LocalAgentFeature.Action)
     }
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
+        Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
             switch action {
@@ -74,27 +78,38 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .send(.tunnel(.disconnect))
                 )
 
-            case .tunnel(.connectionFinished(.success(let logicalServerInfo))):
-                // certificateAuthentication.
-                guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
-                    log.error("Detected connection to unknown server, disconnecting", category: .connection, metadata: ["logicalServerInfo": "\(logicalServerInfo)"])
-                    return .send(.disconnect(.tunnel(.unknownServer)))
-                }
-                return .run { send in
-                    // TODO: Cert-Auth - ensure correct features, handle failures
-                    let authData = try await certificateAuthentication.loadAuthenticationData(nil) // features: nil for now
-                    await send(.localAgent(.connect(server.endpoint, authData)))
-                }
+            case .tunnel(.connectionFinished(.success)):
+                return .send(.certAuth(.loadAuthenticationData))
 
             case .localAgent(.connectionFinished(.failure)):
-                // TODO: Certificate Authentication: check if error is retriable, try connecting again
+                // TODO: if we encountered a certificate error, try regenerating the certificate
                 // For now, let's just disconnect the tunnel.
                 // state.localAgent will contain the failure reason so this can be shown in the UI
                 return .send(.tunnel(.disconnect))
 
+            case .certAuth(.loadingFinished(.success(let authData))):
+                guard case .connected(let logicalInfo) = state.tunnel else {
+                    log.error("Finished loading auth data but tunnel is not connected")
+                    return .none
+                }
+                guard let server = serverIdentifier.fullServerInfo(logicalInfo) else {
+                    log.error("Detected connection to unknown server, disconnecting", category: .connection)
+                    return .send(.disconnect(nil))
+                }
+                let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
+                return .send(.localAgent(.connect(server.endpoint, data)))
+
+            case .certAuth(.loadingFinished(.failure(let error))):
+                log.error("Failed to load authentication data: \(error)")
+                return .send(.disconnect(nil))
+
             case .tunnel:
                 return .none
+
             case .localAgent:
+                return .none
+
+            case .certAuth:
                 return .none
             }
         }
@@ -103,21 +118,10 @@ public struct ConnectionFeature: Reducer, Sendable {
 
 @CasePathable
 public enum ConnectionError: Error, Equatable {
+    case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
     case serverMissing
-
-    public var description: String {
-        switch self {
-
-        case .tunnel(_):
-            return ""
-        case .agent(_):
-            return ""
-        case .serverMissing:
-            return "Couldn't find specified server"
-        }
-    }
 }
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read

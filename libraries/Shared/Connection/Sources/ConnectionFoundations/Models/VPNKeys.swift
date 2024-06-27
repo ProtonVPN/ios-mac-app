@@ -19,7 +19,7 @@
 import Foundation
 
 /// Ed25519 package key
-public struct PublicKey: Sendable, Codable {
+public struct PublicKey: Equatable, Sendable, Codable {
 
     /// 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
@@ -34,7 +34,7 @@ public struct PublicKey: Sendable, Codable {
 }
 
 /// Ed25519 private key
-public struct PrivateKey: Sendable, Codable {
+public struct PrivateKey: Equatable, Sendable, Codable {
     /// 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
@@ -52,7 +52,7 @@ public struct PrivateKey: Sendable, Codable {
 }
 
 /// Ed25519 key pair
-public struct VPNKeys: Sendable, Codable {
+public struct VPNKeys: Equatable, Sendable, Codable {
     public let privateKey: PrivateKey
     public let publicKey: PublicKey
 

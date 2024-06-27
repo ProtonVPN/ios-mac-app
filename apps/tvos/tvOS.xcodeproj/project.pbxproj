@@ -16,6 +16,8 @@
 		4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 667C97BD2C08848F001AB9D6 /* WireGuardExtension */; };
+		AD3BF61A2C259D6000441E27 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
+		AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181632C10C42300E59BD4 /* Dependencies.swift */; };
 		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
 		E53729F72BFDF777003D7409 /* tvOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53729F62BFDF777003D7409 /* tvOS */; };
 		E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E53729F82BFDF7AE003D7409 /* Assets.xcassets */; };
@@ -376,6 +378,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD3BF61A2C259D6000441E27 /* Client.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */,
 				4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -669,7 +673,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "";
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.WireGuard-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -700,7 +704,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = "";
+				MARKETING_VERSION = 5.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.WireGuard-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

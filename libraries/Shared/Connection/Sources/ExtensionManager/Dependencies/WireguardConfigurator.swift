@@ -68,7 +68,6 @@ extension ManagerConfigurator {
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
-        authenticationStorage.deleteKeys()
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         @Dependency(\.date) var date
         protocolConfiguration.username = connectionConfiguration.username
@@ -89,7 +88,7 @@ extension ManagerConfigurator {
 
         var configData = Data([UInt8(version.rawValue)])
         configData.append(try! encoder.encode(storedConfig)) // TODO: error handling
-        let passwordReference = try! tunnelKeychain.storeWireguardConfig(configData)
+        let passwordReference = try! tunnelKeychain.store(wireguardConfigData: configData)
         protocolConfiguration.passwordReference = passwordReference
 
         return protocolConfiguration

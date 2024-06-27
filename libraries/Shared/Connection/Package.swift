@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../NEHelper"),
     ],
@@ -43,7 +44,7 @@ let package = Package(
                 "ConnectionFoundations",
                 "ExtensionIPC",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -67,12 +68,14 @@ let package = Package(
         .target(
             name: "Connection",
             dependencies: [
+                "Strings",
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
+        .target(name: "ConnectionFoundationsTestSupport", dependencies: ["ConnectionFoundations"]),
         .target(name: "LocalAgentTestSupport", dependencies: ["LocalAgent"]),
         .testTarget(
             name: "ConnectionTests",
@@ -80,6 +83,7 @@ let package = Package(
                 "Connection",
                 "LocalAgentTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
         .testTarget(
@@ -87,6 +91,15 @@ let package = Package(
             dependencies: [
                 "ExtensionManager",
                 .product(name: "DomainTestSupport", package: "Domain"),
+            ]
+        ),
+        .testTarget(
+            name: "CertificateAuthenticationTests",
+            dependencies: [
+                "CertificateAuthentication",
+                "ConnectionFoundationsTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
         ),
         .testTarget(

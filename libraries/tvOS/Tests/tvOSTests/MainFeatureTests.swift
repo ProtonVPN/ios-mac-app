@@ -58,9 +58,9 @@ final class MainFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        let error = ConnectionError.serverMissing
+        let error: ConnectionError = .serverMissing
         await store.send(.connectionFailed(.serverMissing)) {
-            $0.alert = MainFeature.connectionFailedAlert(reason: error.description)
+            $0.alert = MainFeature.connectionFailedAlert(reason: error.localizedMessage)
         }
     }
 

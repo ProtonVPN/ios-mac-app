@@ -28,13 +28,23 @@ import ProtonCoreDataModel
 
 public protocol VPNNetworking {
     func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
-    func userTier() async throws -> Int
-    func userDisplayName() async throws -> String?
     func set(session: Session)
     func perform<T: Decodable>(request: Request) async throws -> T
+    var userTier: Int { get async throws }
+    var userDisplayName: String? { get async throws }
+    var sessionCookie: HTTPCookie? { get }
 }
 
 public struct CoreNetworkingWrapper: VPNNetworking {
+    public var sessionCookie: HTTPCookie? {
+        @Dependency(\.dohConfiguration) var doh
+        guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
+
+        return wrapped.apiService.getSession()?
+            .sessionConfiguration.httpCookieStorage?
+            .cookies(for: apiUrl)?
+            .first(where: { $0.name == CommonNetworking.Constants.sessionIDCookieName })
+    }
     
     public func acquireSessionIfNeeded() async throws -> SessionAcquiringResult {
         try await withCheckedThrowingContinuation { continuation in
@@ -42,21 +52,26 @@ public struct CoreNetworkingWrapper: VPNNetworking {
         }
     }
 
-    public func userDisplayName() async throws -> String? {
-        let user = try await withCheckedThrowingContinuation { continuation in
-            Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
+    public var userDisplayName: String? {
+        get async throws {
+            let user = try await withCheckedThrowingContinuation { continuation in
+                Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
+            }
+            return user.displayName
         }
-        return user.displayName
     }
 
+
     // TODO: Hopefully when we start supporting free users we can ignore the MaxTier so this code would go away
-    public func userTier() async throws -> Int {
-        let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
-        guard let vpn: [String: Any] = try json[throwing: "VPN"],
-              let maxTier: Int = try vpn[throwing: "MaxTier"] else {
-            return 0
+    public var userTier: Int {
+        get async throws {
+            let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
+            guard let vpn: [String: Any] = try json[throwing: "VPN"],
+                  let maxTier: Int = try vpn[throwing: "MaxTier"] else {
+                return 0
+            }
+            return maxTier
         }
-        return maxTier
     }
 
     public func set(session: Session) {
@@ -109,25 +124,32 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
 }
 
 struct VPNNetworkingMock: VPNNetworking {
+
     func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
         throw ""
     }
 
-    func userTier() async throws -> Int {
-        throw ""
+    var userTier: Int {
+        get async throws {
+            throw ""
+        }
     }
 
-    func userDisplayName() async throws -> String? {
-        throw ""
+    var userDisplayName: String? {
+        get async throws {
+            throw ""
+        }
     }
 
     func set(session: CommonNetworking.Session) {
-        
+
     }
 
     func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {
         throw ""
     }
 
-
+    var sessionCookie: HTTPCookie? {
+        nil
+    }
 }

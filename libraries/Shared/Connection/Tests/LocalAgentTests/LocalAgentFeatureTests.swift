@@ -31,7 +31,7 @@ final class LocalAgentFeatureTests: XCTestCase {
     @MainActor func testReceivesStateUpdateWhenConnectionIsEstablished() async {
         let mockClock = TestClock()
 
-        let server = ServerEndpoint(id: "serverID", exitIp: "", domain: "", status: 1, label: "1", protocolEntries: nil)
+        let server = ServerEndpoint(id: "serverID", entryIp: "", exitIp: "", domain: "", status: 1, label: "1", x25519PublicKey: nil, protocolEntries: nil)
 
         let disconnected = LocalAgentFeature.State.disconnected(nil)
 

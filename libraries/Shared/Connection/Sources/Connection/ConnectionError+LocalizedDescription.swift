@@ -1,5 +1,5 @@
 //
-//  Created on 22/04/2024.
+//  Created on 27/06/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -17,16 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
-public enum HttpStatusCode: Int { // http status codes returned by the api
-
-    case notModified = 304
-
-    case badRequest = 400
-    case invalidAccessToken = 401
-    case accessForbidden = 403
-    case invalidRefreshToken = 422
-    case tooManyRequests = 429
-    case internalServerError = 500
-    case serviceUnavailable = 503
+extension ConnectionError {
+    public var localizedMessage: String? {
+        // TODO: Gather actionable failure cases, tips on how to fix them, and add localizations
+        return nil
+    }
 }

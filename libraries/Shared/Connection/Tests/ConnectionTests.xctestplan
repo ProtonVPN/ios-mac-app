@@ -1,0 +1,45 @@
+{
+  "configurations" : [
+    {
+      "id" : "0F5DDA1D-B6FA-4DBA-B15E-1C462ABF48D3",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CertificateAuthenticationTests",
+        "name" : "CertificateAuthenticationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ExtensionManagerTests",
+        "name" : "ExtensionManagerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "LocalAgentTests",
+        "name" : "LocalAgentTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ConnectionTests",
+        "name" : "ConnectionTests"
+      }
+    }
+  ],
+  "version" : 1
+}

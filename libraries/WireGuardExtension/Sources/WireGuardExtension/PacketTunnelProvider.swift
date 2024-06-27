@@ -36,6 +36,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     }
 
     public override init() {
+        AppContext.default = .wireGuardExtension
         self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
         self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
         
@@ -61,6 +62,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         super.init()
 
         self.dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
+        apiService.delegate = self
         setupLogging()
     }
 

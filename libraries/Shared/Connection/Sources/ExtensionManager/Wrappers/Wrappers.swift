@@ -24,17 +24,18 @@ import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
 
-import protocol ExtensionIPC.ProviderMessageSender
+import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
 
 /// Wraps `NETunnelProviderSession`.
-public protocol VPNSession: ProviderMessageSender {
+public protocol VPNSession: AnyObject {
     var status: NEVPNStatus { get }
     var connectedDate: Date? { get }
     func fetchLastDisconnectError() async throws -> Error?
 
     func startTunnel() throws
     func stopTunnel()
-    func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws
+    func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
 }
 
 /// Wraps `NETunnelProviderManager`

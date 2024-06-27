@@ -37,7 +37,11 @@ protocol TunnelManager {
 
 enum TunnelManagerKey: DependencyKey {
 #if targetEnvironment(simulator)
-    static let liveValue: TunnelManager = MockTunnelManager()
+    static let liveValue: TunnelManager = {
+        let mockSession = VPNSessionMock(status: .disconnected)
+        mockSession.messageHandler = MessageHandler.full
+        return MockTunnelManager(connection: mockSession)
+    }()
 #else
     static let liveValue: TunnelManager = PacketTunnelManager()
 #endif

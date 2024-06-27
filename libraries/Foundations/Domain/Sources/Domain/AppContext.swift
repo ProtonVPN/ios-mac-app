@@ -36,6 +36,7 @@ public enum AppContext: String {
         }
     }
 
+    // TODO: remove this property in favour of providing context with liveValue
     public static var `default`: Self = .mainApp
 }
 

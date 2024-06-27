@@ -27,7 +27,7 @@ import Domain
 import Ergonomics
 import VPNCrypto
 
-public struct VpnCertificate {
+public struct VpnCertificate: Sendable, Equatable {
     public let certificate: String // PEM representation
     public let validUntil: Date
     public let refreshTime: Date

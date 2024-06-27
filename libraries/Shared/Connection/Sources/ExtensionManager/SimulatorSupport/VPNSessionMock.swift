@@ -37,6 +37,7 @@ final class VPNSessionMock: VPNSession {
     var connectionTask: Task<Void, Error>?
     var disconnectionTask: Task<Void, Error>?
     var lastDisconnectError: Error?
+    var messageHandler: ((VPNSessionMock, WireguardProviderRequest) -> WireguardProviderRequest.Response)?
 
     init(
         status: NEVPNStatus,
@@ -73,16 +74,31 @@ final class VPNSessionMock: VPNSession {
 
     // MARK: ProviderMessageSender conformance
 
-    func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws {
-        XCTFail("Unimplemented")
+    func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response {
+        guard let messageHandler else {
+            XCTFail("Unimplemented message handler")
+            return .error(message: "unimplemented message handler")
+        }
+        return messageHandler(self, message)
     }
+}
 
-    func send<R: ProviderRequest>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?)  {
-        XCTFail("Unimplemented")
-    }
+enum MessageHandler {
+    static let full: (VPNSessionMock, WireguardProviderRequest) -> WireguardProviderRequest.Response = { session, message in
+        switch message {
+        case .getCurrentLogicalAndServerId:
+            return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
 
-    func send<R>(_ message: R) async throws -> R.Response where R : ExtensionIPC.ProviderRequest {
-        unimplemented()
+        case .refreshCertificate:
+            return .ok(data: nil)
+
+        case .setApiSelector:
+            return .ok(data: nil)
+
+        default:
+            XCTFail("Unimplemented message handler for \(message)")
+            return .error(message: "")
+        }
     }
 }
 #endif

@@ -25,7 +25,7 @@ import struct VPNShared.VpnKeys
 // Bridge between new key models with improved error handling and old keys from LegacyCommon
 
 extension ConnectionFoundations.PrivateKey {
-    init(fromLegacyKey legacyKey: VPNShared.PrivateKey) {
+    package init(fromLegacyKey legacyKey: VPNShared.PrivateKey) {
         self.init(
             rawRepresentation: legacyKey.rawRepresentation,
             derRepresentation: legacyKey.derRepresentation,
@@ -35,7 +35,7 @@ extension ConnectionFoundations.PrivateKey {
 }
 
 extension ConnectionFoundations.PublicKey {
-    init(fromLegacyKey legacyKey: VPNShared.PublicKey) {
+    package init(fromLegacyKey legacyKey: VPNShared.PublicKey) {
         self.init(
             rawRepresentation: legacyKey.rawRepresentation,
             derRepresentation: legacyKey.derRepresentation
@@ -44,40 +44,10 @@ extension ConnectionFoundations.PublicKey {
 }
 
 extension ConnectionFoundations.VPNKeys {
-    init(fromLegacyKey legacyKeys: VPNShared.VpnKeys) {
+    package init(fromLegacyKeys legacyKeys: VPNShared.VpnKeys) {
         self.init(
             privateKey: .init(fromLegacyKey: legacyKeys.privateKey),
             publicKey: .init(fromLegacyKey: legacyKeys.publicKey)
         )
     }
-}
-
-extension VpnAuthenticationStorageSync {
-    public func loadFullData() throws -> FullAuthenticationData {
-        guard let keys = getStoredKeys(), let certificate = getStoredCertificate() else {
-            throw AuthenticationStorageError.credentialsMissing
-        }
-
-        return FullAuthenticationData(
-            keys: .init(fromLegacyKey: keys),
-            certificate: certificate
-        )
-    }
-
-    public func loadAuthenticationData() throws -> VPNAuthenticationData {
-        guard let keys = getStoredKeys(), let certificate = getStoredCertificate() else {
-            throw AuthenticationStorageError.credentialsMissing
-        }
-
-        return VPNAuthenticationData(
-            clientKey: .init(fromLegacyKey: keys.privateKey),
-            clientCertificate: certificate.certificate
-        )
-    }
-}
-
-
-public enum AuthenticationStorageError: Error {
-    case credentialsMissing
-    case credentialsExpired
 }

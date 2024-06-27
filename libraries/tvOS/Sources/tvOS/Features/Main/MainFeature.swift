@@ -62,12 +62,11 @@ struct MainFeature {
         }
     }
 
-    static func connectionFailedAlert(reason: String) -> AlertState<Action.Alert> {
-        .init {
-            TextState("Connection failed")
-        } message: {
-            TextState(reason)
-        }
+    static func connectionFailedAlert(reason: String?) -> AlertState<Action.Alert> {
+        .init(
+            title: TextState("Connection failed"),
+            message: reason.map(TextState.init(verbatim:))
+        )
     }
 
     var body: some Reducer<State, Action> {
@@ -130,16 +129,17 @@ struct MainFeature {
             case .homeLoading:
                 return .none
             case .connectionFailed(let error):
-                state.alert = Self.connectionFailedAlert(reason: error.description)
+                state.alert = Self.connectionFailedAlert(reason: error.localizedMessage)
                 return .none
             case .connection(.disconnect(let error)):
                 if let error {
-                    state.alert = Self.connectionFailedAlert(reason: error.description)
+                    state.alert = Self.connectionFailedAlert(reason: error.localizedMessage)
                 }
                 return .none
             case .connection:
                 let newConnectionState = ConnectionState(
                     tunnelState: state.connection.tunnel,
+                    certAuthState: state.connection.certAuth,
                     localAgentState: state.connection.localAgent
                 )
                 if newConnectionState != state.connectionState {

@@ -19,9 +19,14 @@
 import Foundation
 import struct VPNShared.VpnCertificate
 
-public struct FullAuthenticationData {
+public struct FullAuthenticationData: Equatable, Sendable {
     public let keys: VPNKeys
     public let certificate: VpnCertificate
+
+    public init(keys: VPNKeys, certificate: VpnCertificate) {
+        self.keys = keys
+        self.certificate = certificate
+    }
 
     /// Returns a subset of data necessary to authenticate a LocalAgent connection
     public var authenticationData: VPNAuthenticationData {
