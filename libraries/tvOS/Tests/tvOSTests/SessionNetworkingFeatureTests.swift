@@ -92,7 +92,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         }
         await store.send(.startLogout)
         await fulfillment(of: [authKeychainCleared, vpnAuthStorageCleared])
-        await store.receive(.startAcquiringSession) {
+        await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
         }
         await store.receive(\.sessionFetched.failure) {

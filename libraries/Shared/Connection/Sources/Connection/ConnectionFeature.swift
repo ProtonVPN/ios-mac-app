@@ -66,6 +66,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         Reduce { state, action in
             switch action {
             case .connect(let server, let features):
+                clearErrorsFromPreviousAttempts(state: &state)
                 return .send(.tunnel(.connect(server, features)))
 
             case .disconnect:
@@ -108,6 +109,21 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .certAuth:
                 return .none
             }
+        }
+    }
+
+    private func clearErrorsFromPreviousAttempts(state: inout State) {
+        if case .disconnected(let tunnelError) = state.tunnel, let tunnelError {
+            log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
+            state.tunnel = .disconnected(nil)
+        }
+        if case .failed(let certAuthError) = state.certAuth {
+            log.info("Resetting cert auth error from previous connection attempt: \(certAuthError)")
+            state.certAuth = .idle
+        }
+        if case .disconnected(let agentError) = state.localAgent, let agentError {
+            log.info("Resetting local agent connection error from previous connection attempt: \(agentError)")
+            state.localAgent = .disconnected(nil)
         }
     }
 }
