@@ -20,19 +20,19 @@ import Foundation
 import Dependencies
 import CertificateAuthentication
 import CommonNetworking
+import VPNShared
 
 extension SessionService: DependencyKey {
     public static let liveValue: SessionService = {
         @Dependency(\.networking) var networking
+        @Dependency(\.appInfo) var appInfo
 
         return SessionService(
             selector: {
-                // TODO: Uncomment real implementation once recursive forking is supported
-                return "abcd" // For testing, hardcode your main selector (fetched during signin) here
-                // let clientId = "Wireguard-tvOS"
-                // let forkRequest = ForkSessionRequest(useCase: .getSelector(clientId: clientId, independent: false))
-                // let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
-                // return response.selector
+                let clientId = appInfo.clientId(forContext: .wireGuardExtension)
+                let forkRequest = ForkSessionRequest(useCase: .getSelector(clientId: clientId, independent: false))
+                let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
+                return response.selector
             },
             sessionCookie: { networking.sessionCookie }
         )
