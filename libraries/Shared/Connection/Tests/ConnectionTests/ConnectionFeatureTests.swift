@@ -79,9 +79,11 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        await store.send(.connect(server, features))
+        let intent = ServerConnectionIntent(server: server, features: features)
+
+        await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
-            $0.tunnel = .connecting
+            $0.tunnel = .connecting(connectedLogicalServer)
         }
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.tunnel.tunnelStatusChanged.connecting)
@@ -112,7 +114,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Disconnection
 
-        await store.send(ConnectionFeature.Action.disconnect(nil))
+        await store.send(ConnectionFeature.Action.disconnect(.userIntent))
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnected(nil)
         }
@@ -125,7 +127,6 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-
         await store.send(.tunnel(.stopObservingStateChanges))
         await store.send(.localAgent(.stopObservingEvents))
     }

@@ -35,12 +35,12 @@ final class ConnectionStateTests: XCTestCase {
 
     func testTunnelConnectingResolvesToConnecting() async {
         let state = ConnectionState(
-            tunnelState: .connecting,
+            tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting)
+        XCTAssertEqual(state, .connecting(nil))
     }
 
     func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
@@ -52,16 +52,16 @@ final class ConnectionStateTests: XCTestCase {
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting)
+        XCTAssertEqual(state, .connecting(nil))
     }
 
     func testTunnelConnectingLocalAgentDisconnectedResolvesToConnecting() async {
         let state = ConnectionState(
-            tunnelState: .connecting,
+            tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting)
+        XCTAssertEqual(state, .connecting(nil))
     }
 }

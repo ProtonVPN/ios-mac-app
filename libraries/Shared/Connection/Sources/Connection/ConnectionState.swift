@@ -26,6 +26,7 @@ import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
 import struct Domain.Server
+import struct Domain.VPNConnectionFeatures
 
 @CasePathable
 public enum ConnectionState: Equatable, Sendable {

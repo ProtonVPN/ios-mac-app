@@ -37,6 +37,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+        let intent = ServerConnectionIntent(server: server, features: features)
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -56,8 +57,8 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await store.send(.startObservingStateChanges)
         await store.receive(\.tunnelStatusChanged.disconnected)
 
-        await store.send(.connect(server, features)) {
-            $0 = .connecting
+        await store.send(.connect(intent)) {
+            $0 = .connecting(logicalServerInfo)
         }
 
         await store.receive(\.tunnelStartRequestFinished.success)
@@ -92,7 +93,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
 
         await store.send(.startObservingStateChanges)
         await store.receive(\.tunnelStatusChanged.connected) {
-            $0 = .connecting
+            $0 = .connecting(nil)
         }
         await store.receive(\.connectionFinished.success) {
             $0 = .connected(previouslyConnectedServer)
