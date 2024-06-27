@@ -84,7 +84,7 @@ struct SessionNetworkingFeature: Reducer {
                 state = .authenticated(session)
                 return .run { send in
                     // we have a session, now get the user tier
-                    let userTier = try await networking.userTier()
+                    let userTier = try await networking.userTier
                     await send(.userTierRetrieved(userTier, session))
                 } catch: { error, send in
                     log.debug("Couldn't retrieve user tier after user already logged in in the previous session, ignoring", category: .api)
@@ -109,8 +109,7 @@ struct SessionNetworkingFeature: Reducer {
                 try? authKeychain.store(credentials)
                 return .run { send in
                     // we have a session, now get the user tier
-                    let (userTier, userDisplayName) = try await (networking.userTier(), 
-                                                                 networking.userDisplayName())
+                    let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)
                     _ = await (send(.userTierRetrieved(userTier, session)),
                                send(.userDisplayNameRetrieved(userDisplayName)))
                 } catch: { error, send in

@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Strings"),
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../NEHelper"),
     ],
@@ -67,6 +68,7 @@ let package = Package(
         .target(
             name: "Connection",
             dependencies: [
+                "Strings",
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",

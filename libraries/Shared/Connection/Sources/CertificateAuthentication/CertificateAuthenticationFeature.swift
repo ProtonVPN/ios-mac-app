@@ -54,6 +54,11 @@ public struct CertificateAuthenticationFeature: Reducer {
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
+            let finishWithError: (inout State, CertificateAuthenticationError) -> Effect<Action> = { state, error in
+                state = .failed(error)
+                return .send(.loadingFinished(.failure(error)))
+            }
+
             switch action {
             case .loadAuthenticationData:
                 state = .loading(shouldRefreshIfNecessary: true)
@@ -68,19 +73,21 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .loadingFromStorageFinished(let failureReason):
                 guard case .loading(let shouldRefresh) = state else {
-                    assertionFailure("We expecting a loading state, but got: \(state)")
+                    assertionFailure("We were expecting a loading state, but got: \(state)")
                     return .none
                 }
                 if case .keysMissing = failureReason {
-                    let keys = try! keysGenerator.generateKeys()
-                    authenticationStorage.store(keys: keys)
+                    do {
+                        let keys = try keysGenerator.generateKeys()
+                        authenticationStorage.store(keys: keys)
+                    } catch {
+                        return finishWithError(&state, .keyGenerationFailed(error))
+                    }
                 }
                 if shouldRefresh {
                     return .send(.refreshCertificate)
                 }
-                let refreshError = CertificateAuthenticationError.wontRefresh(failureReason)
-                state = .failed(refreshError)
-                return .send(.loadingFinished(.failure(refreshError)))
+                return finishWithError(&state, .wontRefresh(failureReason))
 
             case .refreshCertificate:
                 return .run { send in
@@ -105,8 +112,7 @@ public struct CertificateAuthenticationFeature: Reducer {
                 // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
                 // certificates many times in a short period when changing features, not during the initial connection
                 log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)")
-                state = .failed(.refreshWasRateLimited(retryAfter: retryAfter))
-                return .none
+                return finishWithError(&state, .refreshWasRateLimited(retryAfter: retryAfter))
 
             case .refreshFinished(.success(.ipcError(message: let message))):
                 let refreshError = CertificateAuthenticationError.ipc(message: message)
@@ -117,20 +123,10 @@ public struct CertificateAuthenticationFeature: Reducer {
                 assertionFailure("Should have generated keys while fetching stored certificate")
                 return .none
 
-            case .loadingFinished(.success(let authData)):
-                state = .loaded(authData)
-                return .none
+            case .refreshFinished(.failure(let error)), .selectorPushingFinished(.failure(let error)):
+                return finishWithError(&state, .unexpected(error))
 
-            case .refreshFinished(.failure(let error)):
-                state = .failed(.unexpected(error))
-                return .send(.loadingFinished(.failure(CertificateAuthenticationError.unexpected(error))))
-
-            case .selectorPushingFinished(.failure(let error)):
-                log.error("Failed to update extension session selector \(error)")
-                state = .failed(.ipc(message: "\(error)"))
-                return .none
-
-            case .loadingFinished(.failure):
+            case .loadingFinished:
                 // End result of this feature, to be handled by parent.
                 return .none
             }
@@ -157,6 +153,7 @@ public enum CertificateRefreshResult: Sendable {
 
 @CasePathable
 public enum CertificateAuthenticationError: Error, Equatable {
+    case keyGenerationFailed(Error)
     case wontRefresh(CertificateLoadingResult)
     case refreshWasRateLimited(retryAfter: Int?)
     case ipc(message: String)
@@ -174,6 +171,9 @@ public enum CertificateAuthenticationError: Error, Equatable {
             return true
 
         case (.unexpected, .unexpected):
+            return true
+
+        case (.keyGenerationFailed, .keyGenerationFailed):
             return true
 
         default:

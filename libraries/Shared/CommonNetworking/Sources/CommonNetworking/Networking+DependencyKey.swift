@@ -52,22 +52,27 @@ public struct CoreNetworkingWrapper: VPNNetworking {
         }
     }
 
-    public var userDisplayName: String? {get async throws {
-        let user = try await withCheckedThrowingContinuation { continuation in
-            Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
+    public var userDisplayName: String? {
+        get async throws {
+            let user = try await withCheckedThrowingContinuation { continuation in
+                Authenticator(api: wrapped.apiService).getUserInfo(completion: continuation.resume(with:))
+            }
+            return user.displayName
         }
-        return user.displayName
-    } }
+    }
+
 
     // TODO: Hopefully when we start supporting free users we can ignore the MaxTier so this code would go away
-    public var userTier: Int { get async throws {
-        let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
-        guard let vpn: [String: Any] = try json[throwing: "VPN"],
-              let maxTier: Int = try vpn[throwing: "MaxTier"] else {
-            return 0
+    public var userTier: Int {
+        get async throws {
+            let json = try await wrapped.perform(request: VPNClientCredentialsRequest())
+            guard let vpn: [String: Any] = try json[throwing: "VPN"],
+                  let maxTier: Int = try vpn[throwing: "MaxTier"] else {
+                return 0
+            }
+            return maxTier
         }
-        return maxTier
-    } }
+    }
 
     public func set(session: Session) {
         wrapped.apiService.setSessionUID(uid: session.uid)
@@ -124,16 +129,20 @@ struct VPNNetworkingMock: VPNNetworking {
         throw ""
     }
 
-    var userTier: Int { get async throws {
-        throw ""
-    } }
+    var userTier: Int {
+        get async throws {
+            throw ""
+        }
+    }
 
-    var userDisplayName: String? { get async throws {
-        throw ""
-    } }
+    var userDisplayName: String? {
+        get async throws {
+            throw ""
+        }
+    }
 
     func set(session: CommonNetworking.Session) {
-        
+
     }
 
     func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {
