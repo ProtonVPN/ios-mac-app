@@ -163,6 +163,10 @@ struct MainFeature {
                     }
                     state.connectionState = newConnectionState
                 }
+                if case .disconnected(let error) = state.connectionState, let error {
+                    state.alert = Self.connectionFailedAlert(reason: error.localizedMessage)
+                }
+
                 return .none
             case .alert:
                 return .none
