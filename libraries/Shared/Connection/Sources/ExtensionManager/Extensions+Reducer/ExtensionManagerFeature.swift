@@ -39,7 +39,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     public enum State: Equatable, Sendable {
         case disconnected(TunnelConnectionError?)
         case disconnecting
-        case connecting
+        case connecting(LogicalServerInfo?)
         case connected(LogicalServerInfo)
     }
 
@@ -77,7 +77,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .cancel(id: CancelID.observation)
 
             case .connect(let server, let features):
-                state = .connecting
+                state = .connecting(.init(logicalID: server.logical.id, serverID: server.endpoint.id))
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(to: server)
@@ -94,7 +94,6 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .tunnelStatusChanged(.connecting):
-                state = .connecting
                 return .none
 
             case .tunnelStatusChanged(.connected):
@@ -102,7 +101,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // `PacketTunnelProvider`'s `startTunnel` method, so technically we are 'connected' at this point.
                 // But before we can actually start (re)connecting local agent, we need to know the details of the
                 // server we are connected to, fetched through `tunnelManager.connectedServer`
-                state = .connecting
+                state = .connecting(nil)
                 return .run { send in
                     await send(.connectionFinished(Result {
                         try await tunnelManager.connectedServer

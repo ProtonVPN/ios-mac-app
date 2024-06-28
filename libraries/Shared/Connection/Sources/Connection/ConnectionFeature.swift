@@ -48,10 +48,6 @@ public struct ConnectionFeature: Reducer, Sendable {
             self.certAuth = certAuthState
             self.localAgent = localAgentState
         }
-
-        var computedConnectionState: ConnectionState {
-            ConnectionState(tunnelState: tunnel, certAuthState: certAuth, localAgentState: localAgent)
-        }
     }
 
     @CasePathable

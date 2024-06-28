@@ -30,7 +30,7 @@ import struct Domain.Server
 @CasePathable
 public enum ConnectionState: Equatable, Sendable {
     case disconnected(ConnectionError?)
-    case connecting
+    case connecting(Server?)
     case connected(Server)
     case disconnecting
 
@@ -64,8 +64,16 @@ public enum ConnectionState: Equatable, Sendable {
             }
             self = .connected(server)
 
-        case (.connected, _), (.connecting, _):
-            self = .connecting
+        case (.connected, _):
+            self = .connecting(nil)
+            break
+
+        case (.connecting(let logicalServerInfo), _):
+            let server = logicalServerInfo.flatMap {
+                @Dependency(\.serverIdentifier) var serverIdentifier
+                return serverIdentifier.fullServerInfo($0)
+            }
+            self = .connecting(server)
 
         case (.disconnecting, _):
             self = .disconnecting
