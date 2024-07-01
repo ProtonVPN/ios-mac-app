@@ -133,6 +133,12 @@
             "value" : "Toate țările"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все страны"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -253,6 +259,12 @@
             "value" : "Sigur doriți să vă deconectați din Proton VPN?"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы уверены, что хотите выйти из Proton VPN?"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -370,6 +382,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disponibil cu Proton VPN Plus"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступно с Proton VPN Plus"
           }
         },
         "sk" : {
@@ -641,6 +659,12 @@
             "value" : "Conectați-vă la servere de mare viteză din întreaga lume și vizionați în flux emisiunile preferate cu protecția prin VPN."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключитесь к высокоскоростным серверам по всему миру и смотрите свои любимые телепрограммы под защитой VPN."
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -758,6 +782,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conectat"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключено"
           }
         },
         "sk" : {
@@ -883,6 +913,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se conectează"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключение"
           }
         },
         "sk" : {
@@ -1173,6 +1209,12 @@
             "value" : "Contactați-ne"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Связаться с нами"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1291,6 +1333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Creare cont"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать аккаунт"
           }
         },
         "sk" : {
@@ -1581,6 +1629,12 @@
             "value" : "Deconectare"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключиться"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1701,6 +1755,12 @@
             "value" : "Se deconectează"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отключение"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1723,16 +1783,100 @@
     },
     "Fastest" : {
       "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найхутчэйшы"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γρηγορότερο"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fastest"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El más rápido"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más rápido"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nopein"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La plus rapide"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tercepat"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Più veloce"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უსწრაფესი"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raskeste"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Najszybszy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais rápido"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Самый быстрый"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snabbast"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En hızlı"
           }
         }
       }
@@ -1834,6 +1978,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Generare cod nou"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сгенерировать новый код"
           }
         },
         "sk" : {
@@ -1955,6 +2105,12 @@
             "value" : "Început"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главная"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2055,6 +2211,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dacă întâmpinați probleme la utilizarea Proton VPN, echipa noastră de asistență pentru clienți este bucuroasă să vă ajute.\n\nDoar scanați codul QR sau accesați"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если у вас возникли проблемы с использованием Proton VPN, наша поддержка клиентов всегда рада помочь.\n\nПросто отсканируйте QR-код или перейдите"
           }
         },
         "sk" : {
@@ -2176,6 +2338,12 @@
             "value" : "Se încarcă țările"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка стран"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2276,6 +2444,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aveți nevoie de ajutor pentru configurarea sau utilizarea Proton VPN?\n\nVizitați Centrul de asistență online pentru sfaturi de depanare, ghiduri de configurare și răspunsuri la întrebări frecvente.\n\nDoar scanați codul QR sau accesați"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нужна помощь в настройке или использовании Proton VPN?\n\nПосетите наш вправочый отлайн-центр, где вы найдете советы по устранению неполадок, руководства по настройке и ответы на часто задаваемые вопросы.\n\nПросто отсканируйте QR-код или перейдите по ссылке"
           }
         },
         "sk" : {
@@ -2566,6 +2740,12 @@
             "value" : "Protejat"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Защищено"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2672,6 +2852,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN pentru Apple TV este disponibil pentru toate planurile cu plată. Vă puteți verifica și gestiona abonamentul pe site-ul nostru."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN для Apple TV доступен на всех платных тарифах. Проверить и управлять подпиской можно на нашем сайте."
           }
         },
         "sk" : {
@@ -2794,6 +2980,12 @@
             "value" : "Conectare rapidă"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Быстрое подключение"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2914,6 +3106,12 @@
             "value" : "Recomandat"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рекомендуется"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2953,7 +3151,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanne den QR-Code oder gehe zu\n"
+            "value" : "Scanne den QR-Code oder gehe zu"
           }
         },
         "el" : {
@@ -3025,7 +3223,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zeskanuj kod QR lub przejdź do\n"
+            "value" : "Zeskanuj kod QR lub przejdź do"
           }
         },
         "pt-BR" : {
@@ -3037,7 +3235,13 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanați codul QR sau accesați\n"
+            "value" : "Scanați codul QR sau accesați"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сканируйте QR-код или перейдите по ссылке:"
           }
         },
         "sk" : {
@@ -3818,6 +4022,12 @@
             "value" : "Se deconectează…"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выход..."
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3938,6 +4148,12 @@
             "value" : "Centrul de asistență"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Справочный центр"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4043,6 +4259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A apărut o problemă.\nVerificați conexiunea la rețea."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возникла проблема.\nПроверьте подключение к сети"
           }
         },
         "sk" : {
@@ -4157,6 +4379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pentru a citi politica noastră de confidențialitate, scanați codul QR sau accesați"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы ознакомиться с нашей Политикой конфиденциальности, отсканируйте QR-код или перейдите по ссылке:"
           }
         },
         "sk" : {
@@ -4279,6 +4507,12 @@
             "value" : "Neprotejat"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не защищено"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4397,6 +4631,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Folosiți alt dispozitiv, accesați"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используя другое устройство, перейдите к"
           }
         },
         "sk" : {
@@ -4519,6 +4759,12 @@
             "value" : "Folosiți Proton Free?"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Используете Proton Free"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4624,6 +4870,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vizionați fără ca altcineva să vă urmărească"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наблюдайте так, чтобы не наблюдали за вами."
           }
         },
         "sk" : {
@@ -4734,6 +4986,12 @@
             "value" : "Când vi se solicită codul de verificare, introduceți"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда вас попросят ввести код подтверждения, введите"
+          }
+        },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4840,6 +5098,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Când vi se solicită codul de verificare, introduceți (se preia...)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда вас попросят ввести код подтверждения, введите его (получение...)"
           }
         },
         "sk" : {
@@ -4959,6 +5223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Codul de verificare a expirat"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Срок действия вашего кода подтверждения истек"
           }
         },
         "sk" : {
