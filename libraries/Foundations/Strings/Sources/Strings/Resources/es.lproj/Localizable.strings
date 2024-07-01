@@ -2205,7 +2205,7 @@
 "_br_success_subtitle" = "Nos pondremos en contacto contigo tan pronto como podamos.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Entiendo";
+"_br_success_button" = "Entendido";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "No se ha enviado tu informe.";
