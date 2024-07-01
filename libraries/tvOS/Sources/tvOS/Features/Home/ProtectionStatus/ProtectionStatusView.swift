@@ -111,9 +111,9 @@ struct ProtectionStatusView: View {
         var country: String?
         var ip: String?
         switch store.connectionState ?? .disconnected(nil) {
-        case .connected(let server):
-            country = server.logical.entryCountryCode
-            ip = server.endpoint.entryIp
+        case .connected(let server, let connectionDetails):
+            country = server.logical.exitCountryCode
+            ip = connectionDetails.map { String(describing: $0.exitIp) } ?? server.endpoint.exitIp
         default:
             country = store.userLocation?.country
             ip = store.userLocation?.ip

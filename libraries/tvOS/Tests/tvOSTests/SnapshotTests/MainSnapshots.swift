@@ -58,7 +58,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "2 Disconnected")
         connectionState = .connecting(.ca)
         assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "3 Connecting")
-        connectionState = .connected(.ca)
+        connectionState = .connected(.ca, nil)
         assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "4 Connected")
     }
 }

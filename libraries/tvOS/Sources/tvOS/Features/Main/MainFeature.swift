@@ -114,7 +114,7 @@ struct MainFeature {
                 }
                 // these two below are separate because the server is optional in one and non-optional in the other case
                 // which causes the compiler to ignore the non-optional and just send a nil instead
-                if case let .connected(server) = state.connectionState {
+                if case let .connected(server, _) = state.connectionState {
                     return effect(server)
                 }
                 if case let .connecting(server) = state.connectionState {

@@ -64,7 +64,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState? 
-        connectionState = .connected(.mock)
+        connectionState = .connected(.mock, nil)
 
         await store.send(.userTappedButton)
         await store.receive(\.userClickedDisconnect)

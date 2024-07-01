@@ -36,6 +36,7 @@ let package = Package(
                 "ExtensionIPC",
                 "PMLogger",
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -45,7 +46,6 @@ let package = Package(
                 "ExtensionIPC",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -53,7 +53,6 @@ let package = Package(
             dependencies: [
                 "ConnectionFoundations",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -62,7 +61,6 @@ let package = Package(
                 "ConnectionFoundations",
                 "Domain",
                 "ExtensionIPC",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -72,7 +70,6 @@ let package = Package(
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(name: "ConnectionFoundationsTestSupport", dependencies: ["ConnectionFoundations"]),

@@ -24,7 +24,7 @@ import ConnectionFoundations
 
 final class LocalAgentMock: LocalAgent {
 
-    private var eventHandler: ((LocalAgentEvent) -> Void)?
+    var eventHandler: ((LocalAgentEvent) -> Void)?
     var state: LocalAgentState {
         didSet {
             guard let eventHandler else {

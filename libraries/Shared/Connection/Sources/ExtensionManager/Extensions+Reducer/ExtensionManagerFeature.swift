@@ -37,6 +37,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     private enum CancelID { case observation }
 
     @CasePathable
+    @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case disconnected(TunnelConnectionError?)
         case disconnecting
@@ -103,11 +104,10 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // `PacketTunnelProvider`'s `startTunnel` method, so technically we are 'connected' at this point.
                 // But before we can actually start (re)connecting local agent, we need to know the details of the
                 // server we are connected to, fetched through `tunnelManager.connectedServer`
-                if case .connecting = state {
-                    // don't change the state
-                } else {
-                    state = .connecting(nil)
-                }
+
+                // Don't reset server we are connecting to if it's already set
+                state = .connecting(state.connecting ?? nil)
+
                 return .run { send in
                     await send(.connectionFinished(Result {
                         try await tunnelManager.connectedServer

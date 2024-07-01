@@ -88,7 +88,7 @@ struct CountryListItemView: View {
 
     private var connectedCode: String? {
         switch connectionState {
-        case .connected(let server):
+        case .connected(let server, let connectionDetails):
             return server.logical.entryCountryCode
         case .connecting(let server):
             return server?.logical.entryCountryCode

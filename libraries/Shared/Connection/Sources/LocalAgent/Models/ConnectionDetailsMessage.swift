@@ -21,10 +21,16 @@ import Network
 import class GoLibs.LocalAgentConnectionDetails
 import ConnectionFoundations
 
-public struct ConnectionDetailsMessage: Sendable {
-    let exitIp: IPAddress
-    let deviceIp: IPAddress
-    let deviceCountry: String
+public struct ConnectionDetailsMessage: Sendable, Equatable {
+    public let exitIp: IPAddress
+    public let deviceIp: IPAddress
+    public let deviceCountry: String
+
+    public static func == (lhs: ConnectionDetailsMessage, rhs: ConnectionDetailsMessage) -> Bool {
+        return lhs.deviceCountry == rhs.deviceCountry
+            && lhs.exitIp.rawValue == rhs.exitIp.rawValue
+            && lhs.deviceIp.rawValue == rhs.deviceIp.rawValue
+    }
 }
 
 extension ConnectionDetailsMessage {

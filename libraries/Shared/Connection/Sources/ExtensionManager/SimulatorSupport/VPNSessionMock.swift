@@ -90,7 +90,8 @@ enum MessageHandler {
             return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
 
         case .refreshCertificate:
-            return .ok(data: nil)
+            return .errorSessionExpired
+            // return .ok(data: nil)
 
         case .setApiSelector:
             return .ok(data: nil)

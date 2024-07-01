@@ -61,6 +61,7 @@ extension LocalAgentState {
             return .softJailed
         default:
             log.error("Trying to parse unknown local agent state \(string)", category: .localAgent)
+            assertionFailure("Unknown local agent state: \(string)")
             return .invalid
         }
     }
