@@ -40,11 +40,11 @@ struct WelcomeInfoFeature {
                     .init(title: "Create your Proton Account",
                           subtitle: "Scan the QR code or go to\n",
                           url: "www.protonvpn.com/tv",
-                          displayURL: "protonvpn.com/tv")
+                          displayURL: "https://account.protonvpn.com/pricing")
             case .freeUpsell:
                     .init(title: "Using Proton Free?",
                           subtitle: "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website.",
-                          url: "https://account.protonvpn.com/subscription",
+                          url: "https://account.protonvpn.com/pricing",
                           displayURL: nil)
             }
         }
