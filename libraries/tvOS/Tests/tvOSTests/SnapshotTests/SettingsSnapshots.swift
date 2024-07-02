@@ -23,7 +23,6 @@ import ComposableArchitecture
 import SwiftUI
 @testable import CommonNetworking
 @testable import ExtensionManager
-@testable import LocalAgentTestSupport
 @testable import LocalAgent
 
 class SettingsFeatureSnapshotTests: XCTestCase {

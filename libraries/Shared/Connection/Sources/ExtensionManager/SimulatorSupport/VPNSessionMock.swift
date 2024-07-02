@@ -90,8 +90,11 @@ enum MessageHandler {
             return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
 
         case .refreshCertificate:
-            return .errorSessionExpired
-            // return .ok(data: nil)
+            @Dependency(\.date) var date
+            @Dependency(\.vpnAuthenticationStorage) var storage
+            let tomorrow = date.now.addingTimeInterval(.days(1))
+            storage.store(.init(certificate: "abcd", validUntil: tomorrow, refreshTime: tomorrow))
+            return .ok(data: nil)
 
         case .setApiSelector:
             return .ok(data: nil)

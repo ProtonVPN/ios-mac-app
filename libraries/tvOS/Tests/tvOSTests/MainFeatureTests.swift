@@ -23,7 +23,6 @@ import ComposableArchitecture
 @testable import ExtensionManager
 
 import DomainTestSupport
-@testable import LocalAgentTestSupport
 @testable import LocalAgent
 import PersistenceTestSupport
 

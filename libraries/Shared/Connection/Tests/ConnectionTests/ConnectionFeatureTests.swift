@@ -31,7 +31,6 @@ import ConnectionFoundations
 @testable import CertificateAuthentication
 @testable import LocalAgent
 @testable import Connection
-@testable import LocalAgentTestSupport
 
 final class ConnectionFeatureTests: XCTestCase {
    

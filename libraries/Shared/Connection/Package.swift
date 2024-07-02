@@ -14,8 +14,8 @@ let package = Package(
         .library(name: "CertificateAuthentication", targets: ["CertificateAuthentication"]),
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
-        .library(name: "ConnectionTestSupport", targets: ["LocalAgentTestSupport"]),
         .library(name: "ConnectionFoundations", targets: ["ConnectionFoundations"]),
+        .library(name: "ConnectionTestSupport", targets: ["ConnectionFoundationsTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.10.2")),
@@ -73,12 +73,10 @@ let package = Package(
             ]
         ),
         .target(name: "ConnectionFoundationsTestSupport", dependencies: ["ConnectionFoundations"]),
-        .target(name: "LocalAgentTestSupport", dependencies: ["LocalAgent"]),
         .testTarget(
             name: "ConnectionTests",
             dependencies: [
                 "Connection",
-                "LocalAgentTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
@@ -103,7 +101,6 @@ let package = Package(
             name: "LocalAgentTests",
             dependencies: [
                 "LocalAgent",
-                "LocalAgentTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),

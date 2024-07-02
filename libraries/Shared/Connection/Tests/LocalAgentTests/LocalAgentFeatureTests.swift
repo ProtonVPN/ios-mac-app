@@ -25,7 +25,6 @@ import ComposableArchitecture
 import Domain
 import DomainTestSupport
 @testable import LocalAgent
-@testable import LocalAgentTestSupport
 
 final class LocalAgentFeatureTests: XCTestCase {
 

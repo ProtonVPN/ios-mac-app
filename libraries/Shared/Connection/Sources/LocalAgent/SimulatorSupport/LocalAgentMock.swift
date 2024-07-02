@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if targetEnvironment(simulator)
+
 import Foundation
 import Dependencies
 import XCTestDynamicOverlay
@@ -77,3 +79,5 @@ final class LocalAgentMock: LocalAgent {
         state = .disconnected
     }
 }
+
+#endif

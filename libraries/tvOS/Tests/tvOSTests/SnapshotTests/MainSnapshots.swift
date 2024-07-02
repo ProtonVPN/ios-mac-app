@@ -24,7 +24,6 @@ import SwiftUI
 @testable import Connection
 import Domain
 @testable import ExtensionManager
-@testable import LocalAgentTestSupport
 @testable import LocalAgent
 
 final class MainFeatureSnapshotTests: XCTestCase {
