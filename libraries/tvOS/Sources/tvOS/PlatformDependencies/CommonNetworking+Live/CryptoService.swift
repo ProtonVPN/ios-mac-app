@@ -19,14 +19,14 @@
 import Foundation
 
 import Dependencies
+import GoLibs
 
 import CommonNetworking
 
 extension CryptoService: DependencyKey {
     public static var liveValue: CryptoService {
         .init(updateTime: { serverTime in
-            // VPNAPPL-2170: pull in implementation based on GoLibs from LegacyCommon
-            print("Server time: \(Date(timeIntervalSince1970: TimeInterval(serverTime)))")
+            CryptoUpdateTime(serverTime)
         })
     }
 }
