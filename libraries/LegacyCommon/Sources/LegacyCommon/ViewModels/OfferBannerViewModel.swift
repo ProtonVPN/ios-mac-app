@@ -32,7 +32,7 @@ public struct OfferBannerViewModel {
     public var imageURL: URL
     public var endTime: Date
     public var showCountdown: Bool
-    public var action: @MainActor () -> Void
+    public var action: @MainActor (SessionService) async -> Void
     public var dismiss: () -> Void
 
     public init(imageURL: URL,
@@ -45,8 +45,9 @@ public struct OfferBannerViewModel {
         self.endTime = endTime
         self.showCountdown = showCountdown
         self.dismiss = dismiss
-        self.action = {
-            SafariService.openLink(url: buttonURL)
+        self.action = { sessionService in
+            let url = await sessionService.getUpgradePlanSession(url: buttonURL.absoluteString)
+            SafariService().open(url: url)
             NotificationCenter.default.post(name: .userWasDisplayedAnnouncement,
                                             object: offerReference)
             NotificationCenter.default.post(name: .userEngagedWithAnnouncement,

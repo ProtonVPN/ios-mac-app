@@ -40,6 +40,8 @@ final class OfferBannerView: NSView {
 
     var timer: BackgroundTimer?
 
+    var sessionService: SessionService?
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -93,7 +95,10 @@ final class OfferBannerView: NSView {
     // MARK: - Actions
 
     @IBAction private func didTap(_ sender: Any) {
-        viewModel.action()
+        guard let sessionService else { return }
+        Task {
+            await viewModel.action(sessionService)
+        }
     }
 
     @IBAction private func didDismiss(_ sender: Any) {
