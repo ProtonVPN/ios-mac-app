@@ -101,19 +101,19 @@ class CreateProfileViewController: UITableViewController {
             return
         }
         
-        viewModel.saveProfile { success in
+        viewModel.saveProfile { [weak self] success in
             guard success else {
                 return
             }
 
             if viewModel.editingExistingProfile {
-                self.profilesViewControllerDelegate?.showProfileEditedSuccessMessage()
+                self?.profilesViewControllerDelegate?.showProfileEditedSuccessMessage()
             } else {
-                self.profilesViewControllerDelegate?.showProfileCreatedSuccessMessage()
+                self?.profilesViewControllerDelegate?.showProfileCreatedSuccessMessage()
             }
 
-            self.navigationController?.popViewController(animated: true)
-            self.profilesViewControllerDelegate?.reloadProfiles()
+            self?.navigationController?.popViewController(animated: true)
+            self?.profilesViewControllerDelegate?.reloadProfiles()
         }
     }
 

@@ -23,7 +23,7 @@ import Foundation
 
 import Ergonomics
 
-public class AuthCredentials: NSObject, NSSecureCoding, Codable {
+public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     static let VERSION: Int = 0 // Current build version.
 
     public static var supportsSecureCoding: Bool = true

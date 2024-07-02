@@ -58,7 +58,6 @@ final class SettingsViewModel {
     AuthKeychainHandleFactory &
     NetworkingFactory
 
-
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
