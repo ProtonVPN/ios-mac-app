@@ -18,6 +18,7 @@
 
 import Foundation
 
+import VPNAppCore
 import Persistence
 
 extension DatabaseConfiguration {

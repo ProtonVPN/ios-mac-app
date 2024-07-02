@@ -12,13 +12,15 @@ import VPNShared
 import ProtonCoreFeatureFlags
 import Domain
 
-public final class SentryHelper {
+/// `SentryHelper` defines a `log` instance method, we need to rename `log` in this file
+fileprivate let moduleLog = VPNAppCore.log
 
+public final class SentryHelper {
     public private(set) static var shared: SentryHelper?
 
     public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId: @escaping () -> String?) {
         guard shared == nil else {
-            LegacyCommon.log.assertionFailure("Sentry already setup")
+            moduleLog.assertionFailure("Sentry already setup")
             return
         }
 
@@ -32,7 +34,7 @@ public final class SentryHelper {
                 // Make sure crash reporting is still enabled.
                 // If not, returning nil will prevent Sentry from sending the report.
                 guard isEnabled() else {
-                    LegacyCommon.log.warning("Crash reports sharing is disabled. Won't send error report.", metadata: ["error": "\(String(describing: event.error))"])
+                    moduleLog.warning("Crash reports sharing is disabled. Won't send error report.", metadata: ["error": "\(String(describing: event.error))"])
                     return nil
                 }
 
@@ -66,5 +68,4 @@ public final class SentryHelper {
         event.extra = extra
         SentrySDK.capture(event: event)
     }
-
 }

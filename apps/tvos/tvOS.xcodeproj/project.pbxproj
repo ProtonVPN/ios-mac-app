@@ -77,6 +77,9 @@
 		4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		4C54B0502BC02AB200315A3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C8AB2862C33F4EC00879600 /* ProtonVPN-tvOS-UI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-tvOS-UI-All.xctestplan"; sourceTree = "<group>"; };
+		4C8AB2872C33F4EC00879600 /* ProtonVPN-tvOS-UI-Smoke.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-tvOS-UI-Smoke.xctestplan"; sourceTree = "<group>"; };
+		4C8AB2882C33F4EC00879600 /* ProtonVPN-tvOS-Unit-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-tvOS-Unit-All.xctestplan"; sourceTree = "<group>"; };
 		66E03DB42C088C010063E453 /* ProtonVPN-TV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-TV.entitlements"; sourceTree = "<group>"; };
 		66EB74B02C08D8760025A115 /* WireGuard_tvOS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WireGuard_tvOS.entitlements; sourceTree = "<group>"; };
 		AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedDependencies+Live.swift"; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 		4C54B00E2BC027FD00315A3B = {
 			isa = PBXGroup;
 			children = (
+				4C8AB2892C33F4EC00879600 /* TestPlans */,
 				AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */,
 				66E03DB42C088C010063E453 /* ProtonVPN-TV.entitlements */,
 				4C54B0442BC0288F00315A3B /* Config.xcconfig */,
@@ -186,6 +190,16 @@
 				AD8181632C10C42300E59BD4 /* Dependencies.swift */,
 			);
 			path = "WireGuard-tvOS";
+			sourceTree = "<group>";
+		};
+		4C8AB2892C33F4EC00879600 /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				4C8AB2862C33F4EC00879600 /* ProtonVPN-tvOS-UI-All.xctestplan */,
+				4C8AB2872C33F4EC00879600 /* ProtonVPN-tvOS-UI-Smoke.xctestplan */,
+				4C8AB2882C33F4EC00879600 /* ProtonVPN-tvOS-Unit-All.xctestplan */,
+			);
+			path = TestPlans;
 			sourceTree = "<group>";
 		};
 		AD8FA9002BEB958C00E751F6 /* SupportingFiles */ = {
@@ -548,6 +562,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -579,6 +594,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,13 +654,14 @@
 				CODE_SIGN_ENTITLEMENTS = "WireGuard-tvOS/WireGuard_tvOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2407031421;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Proton VPN WireGuard Extension (tvOS)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -667,15 +684,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "WireGuard-tvOS/WireGuard_tvOS.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2407031421;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Proton VPN WireGuard Extension (tvOS)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arm64;
 				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

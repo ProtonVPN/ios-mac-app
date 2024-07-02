@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "C001FC88-ABD3-4928-8C1A-39950A195E17",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/apps\/tvos\/tvOS.xcodeproj",
+        "identifier" : "4C54B0302BC027FF00315A3B",
+        "name" : "tvOSUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

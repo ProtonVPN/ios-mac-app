@@ -34,6 +34,7 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", exact: "1.2.2"),
+        .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.29.0"),
     ],
     targets: [
         .target(
@@ -66,13 +67,15 @@ let package = Package(
         .target(
             name: "VPNAppCore",
             dependencies: [
+                "Domain",
                 "VPNShared",
                 "VPNCrypto",
                 "Strings",
                 "Localization",
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "Sentry", package: "sentry-cocoa"),
             ]
         ),
         .target(

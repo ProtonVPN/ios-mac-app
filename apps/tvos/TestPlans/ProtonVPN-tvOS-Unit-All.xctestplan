@@ -1,0 +1,45 @@
+{
+  "configurations" : [
+    {
+      "id" : "C001FC88-ABD3-4928-8C1A-39950A195E17",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true,
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+          "identifier" : "ConnectionDetails",
+          "name" : "ConnectionDetails"
+        },
+        {
+          "containerPath" : "container:..\/..\/libraries\/tvOS",
+          "identifier" : "tvOS",
+          "name" : "tvOS"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+        "identifier" : "ConnectionDetailsTests",
+        "name" : "ConnectionDetailsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/tvOS",
+        "identifier" : "tvOSTests",
+        "name" : "tvOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}
