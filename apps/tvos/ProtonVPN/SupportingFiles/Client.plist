@@ -7,6 +7,6 @@
 	<key>Id</key>
 	<string>appletv-vpn</string>
 	<key>WireGuardId</key>
-	<string>ios-wireguardextension</string>
+	<string>appletv-wireguardextension</string>
 </dict>
 </plist>
