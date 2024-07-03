@@ -51,8 +51,12 @@ extension AppInfo {
         clientId + "@" + bundleShortVersion
     }
 
+    public func clientId(forContext specificContext: AppContext) -> String {
+        return clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
+    }
+
     public var clientId: String {
-        return clientInfoDictionary[context.clientIdKey] as? String ?? ""
+        clientId(forContext: context)
     }
 
     public var bundleShortVersion: String {
