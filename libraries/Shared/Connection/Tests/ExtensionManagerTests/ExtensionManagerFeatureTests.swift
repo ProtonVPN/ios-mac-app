@@ -34,7 +34,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let mockManager = MockTunnelManager()
         let mockClock = TestClock()
 
-        let server = Server.mock
+        let server = Server.ca // Canadian server mock
         let features = VPNConnectionFeatures.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
         let intent = ServerConnectionIntent(server: server, features: features)

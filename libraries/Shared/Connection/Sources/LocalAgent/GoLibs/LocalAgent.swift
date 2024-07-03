@@ -43,7 +43,13 @@ public enum LocalAgentEvent: Sendable {
 }
 
 struct LocalAgentKey: DependencyKey {
+
+#if targetEnvironment(simulator)
+    static let liveValue: LocalAgent = LocalAgentMock(state: .disconnected)
+#else
     static let liveValue: LocalAgent = LocalAgentImplementation()
+#endif
+
 }
 
 extension DependencyValues {
@@ -52,4 +58,3 @@ extension DependencyValues {
         set { self[LocalAgentKey.self] = newValue }
     }
 }
-

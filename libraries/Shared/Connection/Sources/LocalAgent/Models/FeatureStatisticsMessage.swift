@@ -21,10 +21,10 @@ import Foundation
 import GoLibs
 
 /// Data Transfer Object used for the features-statistics response received by Local Agent
-public struct FeatureStatisticsMessage {
+public struct FeatureStatisticsMessage: Sendable {
     public let netShield: NetShieldStats
 
-    public struct NetShieldStats: Decodable {
+    public struct NetShieldStats: Sendable, Decodable {
         let malwareBlocked: Int?
         let adsBlocked: Int?
         let trackersBlocked: Int?

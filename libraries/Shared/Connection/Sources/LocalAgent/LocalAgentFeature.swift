@@ -30,10 +30,11 @@ public struct LocalAgentFeature: Reducer, Sendable {
     public init() { }
 
     @CasePathable
+    @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case disconnected(LocalAgentConnectionError?)
         case connecting
-        case connected
+        case connected(ConnectionDetailsMessage?)
     }
 
     @CasePathable
@@ -67,11 +68,16 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .event(.state(.connected)):
-                state = .connected
+                let existingConnectionDetails = state.connected ?? nil
+                state = .connected(existingConnectionDetails)
                 return .none
 
             case .event(.state(let state)):
                 XCTFail("Unhandled state: \(state)")
+                return .none
+
+            case .event(.connectionDetails(let connectionDetails)):
+                state = .connected(connectionDetails)
                 return .none
 
             case .event:
@@ -102,7 +108,6 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .connectionFinished(.success):
-                state = .connected
                 return .none
 
             case .disconnect:
@@ -117,7 +122,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
 @CasePathable
 public enum LocalAgentConnectionError: Error, Equatable {
-    case failedToEstablishConnection(Error)
+    case failedToEstablishConnection(Error?)
 
     /// Equatable conformance is only required because feature state must be equatable. We could probably always return
     /// `true`, but for now let's just ignore associated values

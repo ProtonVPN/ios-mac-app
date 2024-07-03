@@ -17,11 +17,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import func GoLibs.LocalAgentConstants
 import class GoLibs.LocalAgentConsts
 import class GoLibs.LocalAgentStringToValueMap
+import ConnectionFoundations
 
 /// Shared instance containing coding keys
-let localAgentConsts = LocalAgentConsts()
+let localAgentConsts = {
+    guard let consts = LocalAgentConstants() else {
+        log.error("Failed to create local agent consts")
+        assertionFailure("Failed to create local agent consts")
+        return LocalAgentConsts() // This constructor seems to return empty strings for its keys. Use as last resort
+    }
+    return consts
+}()
 
 extension LocalAgentStringToValueMap {
     func int(forKey key: String) -> Int? {

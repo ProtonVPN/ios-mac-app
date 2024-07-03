@@ -18,13 +18,13 @@
 
 import Foundation
 import XCTest
+import struct Network.IPv4Address
 
 import ComposableArchitecture
 
 import Domain
 import DomainTestSupport
 @testable import LocalAgent
-@testable import LocalAgentTestSupport
 
 final class LocalAgentFeatureTests: XCTestCase {
 
@@ -51,11 +51,21 @@ final class LocalAgentFeatureTests: XCTestCase {
         }
 
         localAgentMock.state = .connected
-        await store.receive(\.connectionFinished.success) {
-            $0 = .connected
+        await store.receive(\.connectionFinished.success)
+        await store.receive(\.event.state.connected) {
+            $0 = .connected(nil)
         }
 
-        await store.receive(\.event.state.connected)
+        let mockConnectionDetails = ConnectionDetailsMessage(
+            exitIp: IPv4Address("1.2.3.4")!,
+            deviceIp: IPv4Address("5.6.7.8")!,
+            deviceCountry: "CH"
+        )
+
+        localAgentMock.eventHandler?(.connectionDetails(mockConnectionDetails))
+        await store.receive(\.event.connectionDetails) {
+            $0 = .connected(mockConnectionDetails)
+        }
 
         await store.send(.stopObservingEvents)
     }

@@ -171,15 +171,3 @@ public enum ConnectionError: Error, Equatable, Sendable {
     case agent(LocalAgentConnectionError)
     case serverMissing
 }
-
-// For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
-extension Domain.Server: CustomDumpStringConvertible {
-    public var customDumpDescription: String {
-        return "Server(\(logical.name))"
-    }
-}
-extension Domain.VPNConnectionFeatures: CustomDumpStringConvertible {
-    public var customDumpDescription: String {
-        return "VPNConnectionFeatures"
-    }
-}
