@@ -198,6 +198,6 @@ struct MainFeature {
         }
         let connectServer = Server(logical: server.logical, endpoint: endpoint)
 
-        return .init(server: connectServer, features: .defaultTVFeatures)
+        return .init(server: connectServer, transport: .udp, features: .defaultTVFeatures)
     }
 }

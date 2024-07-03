@@ -78,7 +78,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {

@@ -37,7 +37,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let server = Server.ca // Canadian server mock
         let features = VPNConnectionFeatures.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-        let intent = ServerConnectionIntent(server: server, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
