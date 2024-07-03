@@ -77,6 +77,7 @@ protocol CountriesSettingsDelegate: AnyObject {
 class CountriesSectionViewModel {
     @Dependency(\.serverRepository) var repository
 
+    let sessionService: SessionService
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
@@ -157,6 +158,7 @@ class CountriesSectionViewModel {
         & ModelIdCheckerFactory
         & SystemExtensionManagerFactory
         & AnnouncementManagerFactory
+        & SessionServiceFactory
 
     private let factory: Factory
 
@@ -164,6 +166,7 @@ class CountriesSectionViewModel {
 
     init(factory: Factory) {
         self.factory = factory
+        self.sessionService = factory.makeSessionService()
         self.vpnGateway = factory.makeVpnGateway()
         self.vpnKeychain = factory.makeVpnKeychain()
         self.appStateManager = factory.makeAppStateManager()

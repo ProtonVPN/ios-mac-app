@@ -448,6 +448,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         case .offerBanner(let viewModel):
             let cell = tableView.makeView(withIdentifier: Cell.offerBanner.identifier, owner: nil) as! OfferBannerView
             cell.updateView(withModel: viewModel)
+            cell.sessionService = self.viewModel.sessionService
             return cell
         }
     }

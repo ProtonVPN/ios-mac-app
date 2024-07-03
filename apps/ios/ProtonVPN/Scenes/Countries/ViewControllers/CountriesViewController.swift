@@ -40,7 +40,8 @@ final class CountriesViewController: UIViewController {
     var connectionBarViewController: ConnectionBarViewController?
 
     var coordinator: SearchCoordinator?
-    
+    var sessionService: SessionService?
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -228,7 +229,10 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             viewModel.action()
 
         case .offerBanner(let viewModel):
-            viewModel.action()
+            guard let sessionService else { return }
+            Task {
+                await viewModel.action(sessionService)
+            }
         }
     }
 
