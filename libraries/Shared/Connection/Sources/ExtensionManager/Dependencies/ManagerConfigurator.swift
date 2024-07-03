@@ -22,12 +22,12 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
-import struct Domain.Server
+import struct Domain.ServerConnectionIntent
 import struct Domain.ConnectionSpec
 import let ConnectionFoundations.log
 
 enum TunnelConfigurationOperation {
-    case connection(Server)
+    case connection(ServerConnectionIntent)
     case disconnection
 }
 

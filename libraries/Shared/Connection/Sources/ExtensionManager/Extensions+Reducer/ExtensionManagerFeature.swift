@@ -83,7 +83,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                                           serverID: intent.server.endpoint.id))
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
-                        try await tunnelManager.startTunnel(to: intent.server)
+                        try await tunnelManager.startTunnel(with: intent)
                     }))
                 }
 

@@ -96,9 +96,11 @@ extension VPNConnectionFeatures {
 }
 
 public extension VPNConnectionFeatures {
-    static let defaultTVFeatures = VPNConnectionFeatures(netshield: .level1,
-                                                         vpnAccelerator: true,
-                                                         bouncing: "1",
-                                                         natType: .moderateNAT,
-                                                         safeMode: false)
+    static let defaultTVFeatures = VPNConnectionFeatures(
+        netshield: .level1,
+        vpnAccelerator: true,
+        bouncing: nil, // This is set to the target server's `label` property during connection
+        natType: .moderateNAT,
+        safeMode: false
+    )
 }

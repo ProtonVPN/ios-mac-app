@@ -23,7 +23,7 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
-import struct Domain.Server
+import struct Domain.ServerConnectionIntent
 import struct ConnectionFoundations.WireguardConfig
 import struct ConnectionFoundations.StoredWireguardConfig
 
@@ -55,16 +55,18 @@ extension DependencyValues {
 
 extension ManagerConfigurator {
 
-    private static func configuration(forConnectionTo server: Server) -> NETunnelProviderProtocol {
+    private static func configuration(with connectionIntent: ServerConnectionIntent) -> NETunnelProviderProtocol {
         // TODO: Provide bundle ID using a Dependency
         let bundleID: String = "ch.protonmail.vpn.WireGuard-tvOS"
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleID
 
+        let server = connectionIntent.server
+
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
         protocolConfiguration.serverAddress = server.endpoint.entryIp ?? server.endpoint.exitIp
-        protocolConfiguration.wgProtocol = "udp" // TODO: specify transport type
+        protocolConfiguration.wgProtocol = connectionIntent.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
@@ -100,8 +102,8 @@ extension ManagerConfigurator {
                 manager.onDemandRules = [NEOnDemandRuleConnect()]
 
                 switch operation {
-                case .connection(let server):
-                    manager.vpnProtocolConfiguration = configuration(forConnectionTo: server)
+                case .connection(let connectionIntent):
+                    manager.vpnProtocolConfiguration = configuration(with: connectionIntent)
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 

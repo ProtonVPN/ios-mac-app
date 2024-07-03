@@ -21,13 +21,13 @@ import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
 
-import Domain
+import struct Domain.ServerConnectionIntent
 import let ConnectionFoundations.log
 import struct ConnectionFoundations.LogicalServerInfo
 import ExtensionIPC
 
 protocol TunnelManager {
-    func startTunnel(to server: Server) async throws
+    func startTunnel(with intent: ServerConnectionIntent) async throws
     func stopTunnel() async throws -> Void
     var session: VPNSession { get async throws }
     var connectedServer: LogicalServerInfo { get async throws }
@@ -87,8 +87,8 @@ final class PacketTunnelManager: TunnelManager {
         return manager
     }
 
-    func startTunnel(to server: Server) async throws {
-        let manager = try await updateTunnel(for: .connection(server))
+    func startTunnel(with intent: ServerConnectionIntent) async throws {
+        let manager = try await updateTunnel(for: .connection(intent))
         try manager.session.startTunnel()
     }
 

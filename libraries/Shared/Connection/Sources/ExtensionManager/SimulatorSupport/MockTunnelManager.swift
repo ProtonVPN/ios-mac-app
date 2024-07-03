@@ -23,7 +23,7 @@ import enum NetworkExtension.NEVPNStatus
 import Dependencies
 
 import ExtensionIPC
-import struct Domain.Server
+import struct Domain.ServerConnectionIntent
 import struct ConnectionFoundations.LogicalServerInfo
 
 final class MockTunnelManager: TunnelManager {
@@ -36,7 +36,8 @@ final class MockTunnelManager: TunnelManager {
         self.connection = connection
     }
 
-    func startTunnel(to server: Server) async throws {
+    func startTunnel(with intent: ServerConnectionIntent) async throws {
+        let server = intent.server
         connection.connectedServer = .init(logicalID: server.logical.id, serverID: server.endpoint.id)
         try connection.startTunnel()
     }
