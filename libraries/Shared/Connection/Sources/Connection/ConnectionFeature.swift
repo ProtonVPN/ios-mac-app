@@ -57,6 +57,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         case tunnel(ExtensionFeature.Action)
         case certAuth(CertificateAuthenticationFeature.Action)
         case localAgent(LocalAgentFeature.Action)
+        case clearErrors
     }
 
     public var body: some Reducer<State, Action> {
@@ -107,6 +108,17 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .none
 
             case .certAuth:
+                return .none
+            case .clearErrors:
+                if case .failed = state.certAuth{
+                    state.certAuth = .idle
+                }
+                if case let .disconnected(error) = state.tunnel, error != nil  {
+                    state.tunnel = .disconnected(nil)
+                }
+                if case let .disconnected(error) = state.localAgent, error != nil  {
+                    state.localAgent = .disconnected(nil)
+                }
                 return .none
             }
         }
