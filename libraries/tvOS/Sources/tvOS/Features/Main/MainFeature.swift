@@ -51,6 +51,7 @@ struct MainFeature {
 
         case onAppear
         case onLogout
+        case updateUserLocation
 
         case connection(ConnectionFeature.Action)
         
@@ -91,7 +92,7 @@ struct MainFeature {
 
             case .onLogout:
                 return .run { send in
-                    await send(.connection(.disconnect(nil)))
+                    await send(.connection(.disconnect(.userIntent)))
                     await send(.connection(.tunnel(.stopObservingStateChanges)))
                     await send(.connection(.localAgent(.stopObservingEvents)))
                 }
@@ -103,33 +104,42 @@ struct MainFeature {
                 return .none
 
             case .homeLoading(.loaded(.countryList(.selectItem(let item)))):
-                if case let .connected(server) = state.connectionState {
-                    if server.logical.exitCountryCode == item.code {
-                        return .send(.connection(.disconnect(nil)))
+                func effect(_ server: Server?) -> Effect<Action> { // when connecting/connected to a country
+                    if let server, server.logical.exitCountryCode == item.code { // and the selected server is the same as the connecting/connected one
+                        return .send(.connection(.disconnect(.userIntent))) // just disconnect
+                    } else { // and the selected server is different
+                        guard let intent = serverConnectionIntent(code: item.code) else { return .none }
+                        return .send(.connection(.disconnect(.reconnection(intent)))) // start reconnection, which will first cancel/disconnect current connection
                     }
                 }
-                guard let (connectServer, features) = serverWithFeatures(code: item.code) else {
-                    return .none
+                // these two below are separate because the server is optional in one and non-optional in the other case
+                // which causes the compiler to ignore the non-optional and just send a nil instead
+                if case let .connected(server) = state.connectionState {
+                    return effect(server)
                 }
-                return .send(.connection(.connect(connectServer, features)))
+                if case let .connecting(server) = state.connectionState {
+                    return effect(server)
+                }
+                guard let intent = serverConnectionIntent(code: item.code) else { return .none }
+                return .send(.connection(.connect(intent)))
 
             case .homeLoading(.loaded(.protectionStatus(let action))):
-                return .run { send in
-                    switch action {
-                    case .userClickedDisconnect:
-                        await send(.connection(.disconnect(nil)))
-                    case .userClickedCancel:
-                        await send(.connection(.disconnect(nil)))
-                    case .userClickedConnect:
-                        guard let (connectServer, features) = serverWithFeatures(code: "Fastest") else {
-                            await send(.connectionFailed(.serverMissing))
-                            return
-                        }
-                        // quick connect
-                        await send(.connection(.connect(connectServer, features)))
-                    default:
-                        break
+                switch action {
+                case .userClickedDisconnect:
+                    return .send(.connection(.disconnect(.userIntent)))
+                case .userClickedCancel:
+                    return .send(.connection(.disconnect(.userIntent)))
+                case .userClickedConnect:
+                    guard let intent = serverConnectionIntent(code: "Fastest") else {
+                        return .send(.connectionFailed(.serverMissing))
                     }
+                    // quick connect
+                    if case .connected = state.connectionState {
+                        return .send(.connection(.disconnect(.reconnection(intent))))
+                    }
+                    return .send(.connection(.connect(intent)))
+                default:
+                    return .none
                 }
 
             case .homeLoading:
@@ -137,10 +147,14 @@ struct MainFeature {
             case .connectionFailed(let error):
                 state.alert = Self.connectionFailedAlert(reason: error.localizedMessage)
                 return .send(.connection(.clearErrors))
-            case .connection(.disconnect(let error)):
-                if let error {
-                    return .send(.connectionFailed(error))
-                }
+            case .connection(.disconnect(.connectionFailure(let error))):
+                return .merge(
+                    .send(.connectionFailed(error)),
+                    .send(.updateUserLocation)
+                )
+            case .connection(.disconnect):
+                return .send(.updateUserLocation)
+            case .updateUserLocation:
                 if state.userLocation == nil {
                     return .run { _ in
                         @Dependency(\.userLocationService) var userLocationService
@@ -175,7 +189,7 @@ struct MainFeature {
         .ifLet(\.$alert, action: \.alert)
     }
 
-    func serverWithFeatures(code: String) -> (Server, VPNConnectionFeatures)? {
+    func serverConnectionIntent(code: String) -> ServerConnectionIntent? {
         @Dependency(\.serverRepository) var repository
         let filters = code == "Fastest" ?  [] : [VPNServerFilter.kind(.country(code: code))]
         guard let server = repository.getFirstServer(filteredBy: filters, orderedBy: .fastest),
@@ -184,11 +198,6 @@ struct MainFeature {
         }
         let connectServer = Server(logical: server.logical, endpoint: endpoint)
 
-        let features = VPNConnectionFeatures(netshield: .level1,
-                                             vpnAccelerator: true,
-                                             bouncing: "1",
-                                             natType: .moderateNAT,
-                                             safeMode: false)
-        return (connectServer, features)
+        return .init(server: connectServer, features: .defaultTVFeatures)
     }
 }

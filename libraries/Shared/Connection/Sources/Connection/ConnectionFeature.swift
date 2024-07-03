@@ -24,6 +24,7 @@ import Dependencies
 
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
+import struct Domain.ServerConnectionIntent
 import ConnectionFoundations
 import CertificateAuthentication
 import ExtensionManager
@@ -38,6 +39,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         public var tunnel: ExtensionFeature.State
         public var localAgent: LocalAgentFeature.State
         public var certAuth: CertificateAuthenticationFeature.State
+        var serverReconnectionIntent: ServerConnectionIntent?
 
         public init(
             tunnelState: ExtensionFeature.State = .disconnected(nil),
@@ -52,12 +54,19 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     @CasePathable
     public enum Action: Sendable {
-        case connect(Server, VPNConnectionFeatures)
-        case disconnect(ConnectionError?)
+        case connect(ServerConnectionIntent)
+        case disconnect(DisconnectReason)
         case tunnel(ExtensionFeature.Action)
         case certAuth(CertificateAuthenticationFeature.Action)
         case localAgent(LocalAgentFeature.Action)
         case clearErrors
+    }
+
+    @CasePathable
+    public enum DisconnectReason: Equatable, Sendable {
+        case reconnection(ServerConnectionIntent)
+        case connectionFailure(ConnectionError)
+        case userIntent
     }
 
     public var body: some Reducer<State, Action> {
@@ -66,11 +75,14 @@ public struct ConnectionFeature: Reducer, Sendable {
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
             switch action {
-            case .connect(let server, let features):
+            case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
-                return .send(.tunnel(.connect(server, features)))
+                return .send(.tunnel(.connect(intent)))
 
-            case .disconnect:
+            case .disconnect(let reason):
+                if case let .reconnection(intent) = reason {
+                    state.serverReconnectionIntent = intent
+                }
                 return .merge(
                     .send(.localAgent(.disconnect)),
                     .send(.tunnel(.disconnect))
@@ -92,14 +104,26 @@ public struct ConnectionFeature: Reducer, Sendable {
                 }
                 guard let server = serverIdentifier.fullServerInfo(logicalInfo) else {
                     log.error("Detected connection to unknown server, disconnecting", category: .connection)
-                    return .send(.disconnect(nil))
+                    return .send(.disconnect(.connectionFailure(.serverMissing)))
                 }
                 let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
                 return .send(.localAgent(.connect(server.endpoint, data)))
 
             case .certAuth(.loadingFinished(.failure(let error))):
                 log.error("Failed to load authentication data: \(error)")
-                return .send(.disconnect(nil))
+                return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
+
+            case .tunnel(.tunnelStatusChanged(.disconnected)):
+                guard case .disconnected = state.localAgent,
+                      let intent = state.serverReconnectionIntent else { return .none }
+                state.serverReconnectionIntent = nil
+                return .send(.connect(intent))
+
+            case .localAgent(.event(.state(.disconnected))):
+                guard case .disconnected = state.tunnel,
+                      let intent = state.serverReconnectionIntent else { return .none }
+                state.serverReconnectionIntent = nil
+                return .send(.connect(intent))
 
             case .tunnel:
                 return .none
@@ -141,7 +165,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 }
 
 @CasePathable
-public enum ConnectionError: Error, Equatable {
+public enum ConnectionError: Error, Equatable, Sendable {
     case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)

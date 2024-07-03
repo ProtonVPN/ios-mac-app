@@ -33,6 +33,7 @@ struct CountryListView: View {
     static let columnCount = 6
     static private let gridItemWidth: Double = 210
     static private let unfocusedOpacity: Double = 0.5 // "Unfocused" items are half transparent
+    static private let gridItemHeight: Double = 315
 
     let columns: [GridItem]
 
@@ -86,6 +87,7 @@ struct CountryListView: View {
             .padding(.top, .themeSpacing8)
             .padding(.bottom, .themeSpacing32)
             .focused($focusedIndex, equals: coordinate)
+            .frame(height: Self.gridItemHeight, alignment: .top) // prevents the item UI from jumping up and down
         }
     }
 

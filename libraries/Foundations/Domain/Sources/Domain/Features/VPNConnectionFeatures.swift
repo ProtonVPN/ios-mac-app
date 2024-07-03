@@ -94,3 +94,11 @@ extension VPNConnectionFeatures {
         return equalsWithoutSafeMode && self.safeMode == other?.safeMode
     }
 }
+
+public extension VPNConnectionFeatures {
+    static let defaultTVFeatures = VPNConnectionFeatures(netshield: .level1,
+                                                         vpnAccelerator: true,
+                                                         bouncing: "1",
+                                                         natType: .moderateNAT,
+                                                         safeMode: false)
+}

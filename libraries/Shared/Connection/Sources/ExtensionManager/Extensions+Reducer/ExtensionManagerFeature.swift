@@ -24,6 +24,7 @@ import Dependencies
 
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
+import struct Domain.ServerConnectionIntent
 import struct ConnectionFoundations.LogicalServerInfo
 import ExtensionIPC
 import let ConnectionFoundations.log
@@ -47,7 +48,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     public enum Action: Sendable {
         case startObservingStateChanges
         case stopObservingStateChanges
-        case connect(Server, VPNConnectionFeatures)
+        case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Void, Error>)
         case connectionFinished(Result<LogicalServerInfo, Error>)
         case tunnelStatusChanged(NEVPNStatus)
@@ -76,11 +77,12 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .stopObservingStateChanges:
                 return .cancel(id: CancelID.observation)
 
-            case .connect(let server, let features):
-                state = .connecting(.init(logicalID: server.logical.id, serverID: server.endpoint.id))
+            case .connect(let intent):
+                state = .connecting(.init(logicalID: intent.server.logical.id,
+                                          serverID: intent.server.endpoint.id))
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
-                        try await tunnelManager.startTunnel(to: server)
+                        try await tunnelManager.startTunnel(to: intent.server)
                     }))
                 }
 
@@ -101,7 +103,11 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // `PacketTunnelProvider`'s `startTunnel` method, so technically we are 'connected' at this point.
                 // But before we can actually start (re)connecting local agent, we need to know the details of the
                 // server we are connected to, fetched through `tunnelManager.connectedServer`
-                state = .connecting(nil)
+                if case .connecting = state {
+                    // don't change the state
+                } else {
+                    state = .connecting(nil)
+                }
                 return .run { send in
                     await send(.connectionFinished(Result {
                         try await tunnelManager.connectedServer
