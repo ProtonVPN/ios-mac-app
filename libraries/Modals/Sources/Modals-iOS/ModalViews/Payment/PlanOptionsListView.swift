@@ -48,8 +48,11 @@ struct PlanOptionsListView: View {
                     contentView
                 }
             }
-
-            buttonsView
+            if viewModel.plans.isEmpty {
+                EmptyView()
+            } else {
+                buttonsView
+            }
         }
         .task {
             await viewModel.onAppear()
