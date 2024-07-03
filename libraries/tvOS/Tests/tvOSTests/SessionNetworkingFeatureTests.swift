@@ -62,10 +62,12 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             SessionNetworkingFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
+            $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
         }
         await store.send(.sessionExpired) {
             $0 = .unauthenticated(nil)
         }
+        await store.receive(\.startLogout)
         await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
         }

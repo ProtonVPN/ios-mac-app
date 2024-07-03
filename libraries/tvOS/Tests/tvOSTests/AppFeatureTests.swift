@@ -52,6 +52,46 @@ final class AppFeatureTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
         }
+
+        await testOnAppearActions(store: store)
+
+        await store.send(.tornAlertListening)
+    }
+
+    @MainActor
+    func testErrorAndAlertServiceHandling() async {
+        enum CustomError: LocalizedError {
+            case anExampleError
+
+            var errorDescription: String? { "An example Error." }
+            var failureReason: String? { "An explicit Error with no reason. It just fails!" }
+        }
+
+        let state = AppFeature.State()
+        let alertService = AlertService.testValue
+        let error: CustomError = .anExampleError
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        } withDependencies: {
+            $0.networking = VPNNetworkingMock()
+            $0.alertService = alertService
+        }
+
+        await testOnAppearActions(store: store)
+
+        await alertService.feed(error)
+
+        await store.receive(\.incomingAlert) {
+            $0.alert = AlertState(title: .init(error.errorDescription!), message: .init(error.failureReason!))
+        }
+
+        await store.send(.tornAlertListening)
+    }
+}
+
+private extension AppFeatureTests {
+    @MainActor
+    func testOnAppearActions(store: TestStoreOf<AppFeature>) async {
         await store.send(.onAppear)
         await store.receive(\.networking) { // startAcquiringSession
             $0.networking = .acquiringSession

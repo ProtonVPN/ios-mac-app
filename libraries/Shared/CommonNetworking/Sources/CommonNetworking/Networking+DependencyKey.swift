@@ -27,15 +27,19 @@ import ProtonCoreAuthentication
 import ProtonCoreDataModel
 
 public protocol VPNNetworking {
-    func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
-    func set(session: Session)
-    func perform<T: Decodable>(request: Request) async throws -> T
     var userTier: Int { get async throws }
     var userDisplayName: String? { get async throws }
     var sessionCookie: HTTPCookie? { get }
+
+    func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
+    func setSession(_ session: Session)
+
+    func perform<T: Decodable>(request: Request) async throws -> T
 }
 
 public struct CoreNetworkingWrapper: VPNNetworking {
+    let wrapped: Networking
+
     public var sessionCookie: HTTPCookie? {
         @Dependency(\.dohConfiguration) var doh
         guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
@@ -61,7 +65,6 @@ public struct CoreNetworkingWrapper: VPNNetworking {
         }
     }
 
-
     // TODO: Hopefully when we start supporting free users we can ignore the MaxTier so this code would go away
     public var userTier: Int {
         get async throws {
@@ -74,11 +77,9 @@ public struct CoreNetworkingWrapper: VPNNetworking {
         }
     }
 
-    public func set(session: Session) {
+    public func setSession(_ session: Session) {
         wrapped.apiService.setSessionUID(uid: session.uid)
     }
-    
-    let wrapped: Networking
 
     public func perform<T: Decodable>(request: Request) async throws -> T {
         try await wrapped.perform(request: request)
@@ -141,7 +142,7 @@ struct VPNNetworkingMock: VPNNetworking {
         }
     }
 
-    func set(session: CommonNetworking.Session) {
+    func setSession(_ session: Session) {
 
     }
 

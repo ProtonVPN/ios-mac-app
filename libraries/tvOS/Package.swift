@@ -21,7 +21,6 @@ let package = Package(
         .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../Core/NEHelper"),
     ],

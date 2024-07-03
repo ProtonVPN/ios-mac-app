@@ -14,18 +14,26 @@ import CommonNetworking
 
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {
+    let sessionAuthenticatedEvents: AsyncStream<Bool>
+
     // these belong to HumanVerifyDelegate
     weak var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     weak var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
 
     private let alertService: CoreAlertService
 
+    private let continuation: AsyncStream<Bool>.Continuation
+
     init(alertService: CoreAlertService) {
         self.alertService = alertService
+        let (stream, continuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = stream
+        self.continuation = continuation
     }
 
     func onLogout() {
         alertService.push(alert: RefreshTokenExpiredAlert())
+        continuation.yield(false)
     }
 
     func set(apiService: APIService) {}

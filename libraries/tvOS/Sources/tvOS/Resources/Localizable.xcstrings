@@ -165,6 +165,10 @@
         }
       }
     },
+    "An error occurred." : {
+      "comment" : "Fallback message for a generic error alert, when we don't have anything more specific.",
+      "extractionState" : "manual"
+    },
     "Are you sure you want to sign out of Proton VPN?" : {
       "comment" : "Appears when user clicks on sing out button",
       "extractionState" : "manual",
@@ -1780,6 +1784,10 @@
           }
         }
       }
+    },
+    "Error" : {
+      "comment" : "Fallback title for a generic error alert, when we don't have anything more specific.",
+      "extractionState" : "manual"
     },
     "Fastest" : {
       "localizations" : {

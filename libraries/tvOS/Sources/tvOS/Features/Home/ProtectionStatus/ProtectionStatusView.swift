@@ -21,7 +21,6 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 import Localization
 import Domain
-import Strings
 import Connection
 
 struct ProtectionStatusView: View {

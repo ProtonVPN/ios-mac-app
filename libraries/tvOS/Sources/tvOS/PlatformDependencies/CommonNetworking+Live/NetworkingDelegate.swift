@@ -27,10 +27,22 @@ import enum ProtonCoreServices.HumanVerifyFinishReason
 
 import CommonNetworking
 
-class TVOSNetworkingDelegate: NetworkingDelegate {
+final class TVOSNetworkingDelegate: NetworkingDelegate {
+    let sessionAuthenticatedEvents: AsyncStream<Bool>
+    private let continuation: AsyncStream<Bool>.Continuation
+
+    init() {
+        let (stream, continuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = stream
+        self.continuation = continuation
+    }
+
     func set(apiService: APIService) { }
 
-    func onLogout() { }
+    func onLogout() {
+        continuation.yield(false)
+    }
+
     func onForceUpgrade(message: String) { }
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?

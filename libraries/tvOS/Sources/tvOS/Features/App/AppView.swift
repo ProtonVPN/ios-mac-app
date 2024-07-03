@@ -20,27 +20,29 @@ import ComposableArchitecture
 import SwiftUI
 
 public struct AppView: View {
-    var store: StoreOf<AppFeature>
+    @Binding var store: StoreOf<AppFeature>
 
     @Environment(\.scenePhase) var scenePhase
 
     init(store: StoreOf<AppFeature>) {
-        self.store = store
+        self._store = .constant(store)
     }
 
     public init() {
-        self.store = .init(initialState: AppFeature.State(), reducer: { AppFeature() })
+        self._store = .constant(.init(initialState: AppFeature.State(), reducer: { AppFeature() }))
     }
 
     public var body: some View {
         viewBody
+            .alert($store.scope(state: \.alert, action: \.alert))
             .onAppear {
                 store.send(.onAppear)
             }
     }
 
     @ViewBuilder
-    var viewBody: some View {
+    @MainActor
+    private var viewBody: some View {
         switch store.networking {
         case .unauthenticated, .acquiringSession:
             ProgressView()

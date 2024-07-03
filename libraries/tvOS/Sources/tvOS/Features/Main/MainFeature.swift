@@ -27,8 +27,10 @@ import Domain
 
 @Reducer
 struct MainFeature {
-
-    enum Tab { case home, settings }
+    enum Tab {
+        case home
+        case settings
+    }
 
     @ObservableState
     struct State: Equatable {
@@ -38,12 +40,11 @@ struct MainFeature {
 
         var connection = ConnectionFeature.State()
 
-        @Presents var alert: AlertState<Action.Alert>?
-        
         @Shared(.connectionState) var connectionState: ConnectionState?
         @Shared(.userLocation) var userLocation: UserLocation?
     }
 
+    @CasePathable
     enum Action {
         case selectTab(Tab)
         case homeLoading(HomeLoadingFeature.Action)
@@ -54,22 +55,8 @@ struct MainFeature {
         case updateUserLocation
 
         case connection(ConnectionFeature.Action)
-        
-        case alert(PresentationAction<Alert>)
 
-        case connectionFailed(ConnectionError)
-
-        @CasePathable
-        enum Alert {
-          case errorMessage
-        }
-    }
-
-    static func connectionFailedAlert(reason: String?) -> AlertState<Action.Alert> {
-        .init(
-            title: TextState("Connection failed"),
-            message: reason.map(TextState.init(verbatim:))
-        )
+        case errorOccurred(Error)
     }
 
     var body: some Reducer<State, Action> {
@@ -131,7 +118,7 @@ struct MainFeature {
                     return .send(.connection(.disconnect(.userIntent)))
                 case .userClickedConnect:
                     guard let intent = serverConnectionIntent(code: "Fastest") else {
-                        return .send(.connectionFailed(.serverMissing))
+                        return .send(.errorOccurred(ConnectionError.serverMissing))
                     }
                     // quick connect
                     if case .connected = state.connectionState {
@@ -144,12 +131,9 @@ struct MainFeature {
 
             case .homeLoading:
                 return .none
-            case .connectionFailed(let error):
-                state.alert = Self.connectionFailedAlert(reason: error.localizedMessage)
-                return .send(.connection(.clearErrors))
             case .connection(.disconnect(.connectionFailure(let error))):
                 return .merge(
-                    .send(.connectionFailed(error)),
+                    .send(.errorOccurred(error)),
                     .send(.updateUserLocation)
                 )
             case .connection(.disconnect):
@@ -178,15 +162,18 @@ struct MainFeature {
                     state.connectionState = newConnectionState
                 }
                 if case .disconnected(let error) = state.connectionState, let error {
-                    return .send(.connectionFailed(error))
+                    return .send(.errorOccurred(error))
                 }
 
                 return .none
-            case .alert:
-                return .none
+            case .errorOccurred(let error):
+                return .run { send in
+                    @Dependency(\.alertService) var alertService
+                    await alertService.feed(error)
+                    await send(.connection(.clearErrors))
+                }
             }
         }
-        .ifLet(\.$alert, action: \.alert)
     }
 
     func serverConnectionIntent(code: String) -> ServerConnectionIntent? {

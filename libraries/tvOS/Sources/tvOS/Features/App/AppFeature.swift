@@ -39,13 +39,18 @@ import CommonNetworking
 ///
 /// The reverse of this flow is used for logging out, where a user action from the `MainFeature` is observed by the
 /// `AppFeature`, at which it sends a `SessionNetworkingFeature.Action` which is handled by the `SessionNetworkingFeature`
-@Reducer struct AppFeature {
+@Reducer
+struct AppFeature {
+    @Dependency(\.alertService) var alertService
+
     @ObservableState
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userTier) var userTier: Int?
         var main = MainFeature.State()
         var welcome = WelcomeFeature.State()
+
+        @Presents var alert: AlertState<Action.Alert>?
 
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
@@ -57,8 +62,19 @@ import CommonNetworking
 
         case onAppear
 
+        case incomingAlert(AlertService.Alert)
+        case alert(PresentationAction<Alert>)
+        case tornAlertListening
+
         case networking(SessionNetworkingFeature.Action)
+
+        @CasePathable
+        enum Alert {
+            case errorMessage
+        }
     }
+
+    private enum CancelID { case alerts }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.networking, action: \.networking) {
@@ -73,9 +89,17 @@ import CommonNetworking
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .run { send in
-                    await send(.networking(.startAcquiringSession))
-                }
+                return .merge(
+                    .run { send in
+                        await send(.networking(.startAcquiringSession))
+                    },
+                    .run { send in
+                        for await alert in alertService.alerts() {
+                            await send(.incomingAlert(alert))
+                        }
+                    }
+                    .cancellable(id: CancelID.alerts)
+                )
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
                 return .run { send in
@@ -106,7 +130,15 @@ import CommonNetworking
                 
             case .networking:
                 return .none
+            case .incomingAlert(let alert):
+                state.alert = alert.alertState(from: Action.Alert.self)
+                return .none
+            case .tornAlertListening:
+                return .cancel(id: CancelID.alerts)
+            case .alert:
+                return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }
