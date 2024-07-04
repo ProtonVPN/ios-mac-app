@@ -47,15 +47,17 @@ final class AppFeatureTests: XCTestCase {
     @MainActor
     func testOnAppear() async {
         let state = AppFeature.State()
+        let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
+            $0.alertService = alertService
         }
 
-        await testOnAppearActions(store: store)
+        let task = await testOnAppearActions(store: store)
 
-        await store.send(.tornAlertListening)
+        await task.cancel()
     }
 
     @MainActor
@@ -69,7 +71,6 @@ final class AppFeatureTests: XCTestCase {
 
         let state = AppFeature.State()
         let alertService = AlertService.testValue
-        let error: CustomError = .anExampleError
         let store = TestStore(initialState: state) {
             AppFeature()
         } withDependencies: {
@@ -77,7 +78,9 @@ final class AppFeatureTests: XCTestCase {
             $0.alertService = alertService
         }
 
-        await testOnAppearActions(store: store)
+        let error: CustomError = .anExampleError
+
+        let task = await testOnAppearActions(store: store)
 
         await alertService.feed(error)
 
@@ -85,19 +88,22 @@ final class AppFeatureTests: XCTestCase {
             $0.alert = AlertState(title: .init(error.errorDescription!), message: .init(error.failureReason!))
         }
 
-        await store.send(.tornAlertListening)
+        await task.cancel()
     }
 }
 
 private extension AppFeatureTests {
     @MainActor
-    func testOnAppearActions(store: TestStoreOf<AppFeature>) async {
-        await store.send(.onAppear)
+    func testOnAppearActions(store: TestStoreOf<AppFeature>) async -> TestStoreTask {
+        let task = await store.send(.onAppearTask)
+
         await store.receive(\.networking) { // startAcquiringSession
             $0.networking = .acquiringSession
         }
         await store.receive(\.networking) { // session fetched failure
             $0.networking = .unauthenticated(.network(internalError: ""))
         }
+
+        return task
     }
 }

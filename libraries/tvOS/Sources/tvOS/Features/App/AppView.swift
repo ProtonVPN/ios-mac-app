@@ -35,8 +35,8 @@ public struct AppView: View {
     public var body: some View {
         viewBody
             .alert($store.scope(state: \.alert, action: \.alert))
-            .onAppear {
-                store.send(.onAppear)
+            .task {
+                await store.send(.onAppearTask).finish()
             }
     }
 

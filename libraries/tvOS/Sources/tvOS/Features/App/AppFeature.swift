@@ -60,11 +60,10 @@ struct AppFeature {
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
 
-        case onAppear
+        case onAppearTask
 
         case incomingAlert(AlertService.Alert)
         case alert(PresentationAction<Alert>)
-        case tornAlertListening
 
         case networking(SessionNetworkingFeature.Action)
 
@@ -73,8 +72,6 @@ struct AppFeature {
             case errorMessage
         }
     }
-
-    private enum CancelID { case alerts }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.networking, action: \.networking) {
@@ -88,17 +85,16 @@ struct AppFeature {
         }
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .onAppearTask:
                 return .merge(
                     .run { send in
                         await send(.networking(.startAcquiringSession))
                     },
                     .run { send in
-                        for await alert in alertService.alerts() {
+                        for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
                         }
                     }
-                    .cancellable(id: CancelID.alerts)
                 )
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
@@ -123,18 +119,15 @@ struct AppFeature {
             case .networking(.userTierRetrieved(let tier, _)):
                 state.userTier = tier
                 return .none
-
             case .networking(.userDisplayNameRetrieved(let name)):
                 state.userDisplayName = name
                 return .none
-                
             case .networking:
                 return .none
+
             case .incomingAlert(let alert):
                 state.alert = alert.alertState(from: Action.Alert.self)
                 return .none
-            case .tornAlertListening:
-                return .cancel(id: CancelID.alerts)
             case .alert:
                 return .none
             }

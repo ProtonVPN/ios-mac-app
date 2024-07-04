@@ -29,7 +29,7 @@ extension AlertService.Alert {
 }
 
 extension AlertService {
-    public struct Alert {
+    public struct Alert: Equatable {
         let title: LocalizedStringKey?
         let message: LocalizedStringKey
 
@@ -59,19 +59,5 @@ let ConnectionFailedAlert = AlertService.Alert(message: .init(Localizable.connec
 extension AlertService.Alert {
     func alertState<Action>(from: Action.Type) -> AlertState<Action> {
         return AlertState<Action>(title: TextState(title ?? Self.titleFallback), message: TextState(message))
-    }
-}
-
-// MARK: - Dependency
-
-extension AlertService: DependencyKey {
-    public static let liveValue: AlertService = .live
-    public static let testValue: AlertService = .live // live implementation is already generic enough and lightweight
-}
-
-extension DependencyValues {
-    public var alertService: AlertService {
-      get { self[AlertService.self] }
-      set { self[AlertService.self] = newValue }
     }
 }

@@ -18,6 +18,7 @@
 
 import enum Connection.ConnectionError
 
+import Combine
 import ComposableArchitecture
 import Dependencies
 import protocol Foundation.LocalizedError
@@ -29,19 +30,26 @@ public protocol AlertConvertibleError: Error {
     var alert: AlertService.Alert { get }
 }
 
+// TODO: - When Swift 6 is available, consider generalizing to an AsyncSequence<Alert> instead of a concrete AsyncStream
+
 /// A basic AlertService.
 public struct AlertService {
     /// A stream of alerts.
-    public internal(set) var alerts: () -> AsyncStream<Alert> = unimplemented()
+    public internal(set) var alerts: @Sendable () async -> AsyncStream<Alert> = unimplemented()
     /// Entry point of errors that will be treated accordingly by the service.
     var feed: @Sendable (Error) async -> Void = unimplemented()
+    /// Manually interrupt alert listening.
+    public internal(set) var finish: @Sendable () async -> Void = unimplemented()
 }
 
 extension AlertService {
     public static var live: AlertService {
-        let (asyncStream, continuation) = AsyncStream<Alert>.makeStream(bufferingPolicy: .unbounded)
+        let subject = CurrentValueSubject<Alert?, Never>(nil)
+        let stream = subject.compactMap { $0 }.values.eraseToStream()
 
-        return AlertService { asyncStream } feed: { error in
+        return AlertService {
+            return stream
+        } feed: { error in
             let alert: Alert
             if let alertConvertibleError = error as? AlertConvertibleError {
                 alert = alertConvertibleError.alert
@@ -50,8 +58,28 @@ extension AlertService {
             } else {
                 alert = Alert()
             }
-            continuation.yield(alert)
+            if let currentAlert = subject.value, alert == currentAlert {
+                log.warning("An error of this type has already been received, feeding anyway...")
+            } else {
+                subject.send(alert)
+            }
+        } finish: {
+            subject.send(completion: .finished)
         }
+    }
+}
+
+// MARK: - Dependency
+
+extension AlertService: DependencyKey {
+    public static let liveValue: AlertService = .live
+    public static let testValue: AlertService = .live // live implementation is already generic enough and lightweight
+}
+
+extension DependencyValues {
+    public var alertService: AlertService {
+      get { self[AlertService.self] }
+      set { self[AlertService.self] = newValue }
     }
 }
 
