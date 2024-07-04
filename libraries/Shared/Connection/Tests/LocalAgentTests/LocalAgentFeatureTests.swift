@@ -51,7 +51,6 @@ final class LocalAgentFeatureTests: XCTestCase {
         }
 
         localAgentMock.state = .connected
-        await store.receive(\.connectionFinished.success)
         await store.receive(\.event.state.connected) {
             $0 = .connected(nil)
         }

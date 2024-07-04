@@ -43,7 +43,6 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case stopObservingEvents
         case event(LocalAgentEvent)
         case connect(ServerEndpoint, VPNAuthenticationData)
-        case connectionFinished(Result<Void, Error>)
         case disconnect
     }
 
@@ -67,13 +66,40 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 state = .disconnected(nil)
                 return .none
 
+            case .event(.state(.connecting)):
+                state = .connecting
+                return .none
+
+            case .event(.state(.serverUnreachable)):
+                // LA can briefly enter this state when its connection times out before retrying
+
+                // Set state as connecting just in case this happens after connection
+                // This should update the UI to reflect that we are reconnecting.
+                state = .connecting
+                return .none
+
             case .event(.state(.connected)):
                 let existingConnectionDetails = state.connected ?? nil
                 state = .connected(existingConnectionDetails)
                 return .none
 
-            case .event(.state(let state)):
-                XCTFail("Unhandled state: \(state)")
+            case .event(.state(.connectionError)):
+                // Possible if we attempt to connect to a different server than the one the tunnel is established with
+                // `tls: failed to verify certificate: x509: certificate is valid for node-abc.net, not node-xyz.net`
+
+                // Set state as connecting just in case this happens after connection
+                // This should update the UI to reflect that we are (re)connecting.
+                state = .connecting
+                return .none
+
+            case .event(.state(.softJailed)),
+                .event(.state(.hardJailed)),
+                .event(.state(.clientCertificateError)):
+
+                return .none
+
+            case .event(.state(.invalid)):
+                log.assertionFailure("LocalAgent entered invalid/unknown state")
                 return .none
 
             case .event(.connectionDetails(let connectionDetails)):
@@ -95,19 +121,13 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     safeMode: false
                 )
 
-                // While not explicitly an async operation, `connect` is a blocking call that might take a
-                // significant amount of time, so let's perform it as an effect
-                return .run { send in
-                    await send(.connectionFinished(Result {
-                        try localAgent.connect(configuration: connectionConfiguration, data: authenticationData)
-                    }))
+                do {
+                    // Not a blocking call. Starts the LA connection process which, if unsuccessful, will continue to
+                    // retry with increasing backoff delays.
+                    try localAgent.connect(configuration: connectionConfiguration, data: authenticationData)
+                } catch {
+                    state = .disconnected(.failedToEstablishConnection(error))
                 }
-
-            case .connectionFinished(.failure(let error)):
-                state = .disconnected(.failedToEstablishConnection(error))
-                return .none
-
-            case .connectionFinished(.success):
                 return .none
 
             case .disconnect:
@@ -115,7 +135,6 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 state = .disconnected(nil)
                 return .none
             }
-
         }
     }
 }

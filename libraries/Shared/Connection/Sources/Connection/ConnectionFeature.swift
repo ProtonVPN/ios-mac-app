@@ -103,11 +103,11 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .tunnel(.connectionFinished(.success)):
                 return .send(.certAuth(.loadAuthenticationData))
 
-            case .localAgent(.connectionFinished(.failure)):
-                // TODO: if we encountered a certificate error, try regenerating the certificate
-                // For now, let's just disconnect the tunnel.
-                // state.localAgent will contain the failure reason so this can be shown in the UI
-                return .send(.tunnel(.disconnect))
+//            case .localAgent(.connectionFinished(.failure)):
+//                // TODO: if we encountered a certificate error, try regenerating the certificate
+//                // For now, let's just disconnect the tunnel.
+//                // state.localAgent will contain the failure reason so this can be shown in the UI
+//                return .send(.tunnel(.disconnect))
 
             case .certAuth(.loadingFinished(.success(let authData))):
                 guard case .connected(let logicalInfo) = state.tunnel else {
