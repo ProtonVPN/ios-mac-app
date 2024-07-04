@@ -191,12 +191,12 @@ public enum LocalAgentConnectionError: Error, Equatable {
 }
 
 
-enum LocalAgentErrorResolutionStrategy {
+package enum LocalAgentErrorResolutionStrategy {
     case none // do nothing, error might resolve itself or doesn't warrant a response
     case disconnect
     case reconnect(ReconnectionStrategy)
 
-    enum ReconnectionStrategy {
+    package enum ReconnectionStrategy {
         case withNewKeysAndCertificate
         case withNewCertificate
         case withExistingCertificate
@@ -205,7 +205,7 @@ enum LocalAgentErrorResolutionStrategy {
 
 extension LocalAgentError {
 
-    var resolutionStrategy: LocalAgentErrorResolutionStrategy {
+    package var resolutionStrategy: LocalAgentErrorResolutionStrategy {
         switch self {
         case .systemError:
             // Most likely we just failed to apply a feature/setting

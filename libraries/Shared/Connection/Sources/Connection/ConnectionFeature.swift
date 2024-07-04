@@ -103,12 +103,6 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .tunnel(.connectionFinished(.success)):
                 return .send(.certAuth(.loadAuthenticationData))
 
-//            case .localAgent(.connectionFinished(.failure)):
-//                // TODO: if we encountered a certificate error, try regenerating the certificate
-//                // For now, let's just disconnect the tunnel.
-//                // state.localAgent will contain the failure reason so this can be shown in the UI
-//                return .send(.tunnel(.disconnect))
-
             case .certAuth(.loadingFinished(.success(let authData))):
                 guard case .connected(let logicalInfo) = state.tunnel else {
                     log.error("Finished loading auth data but tunnel is not connected")
@@ -137,6 +131,38 @@ public struct ConnectionFeature: Reducer, Sendable {
                 state.serverReconnectionIntent = nil
                 return .send(.connect(intent))
 
+            case .localAgent(.errorReceived(let error)):
+                switch error.resolutionStrategy {
+                case .none:
+                    return .none
+
+                case .disconnect:
+                    return .merge(
+                        .send(.localAgent(.disconnect(.agentError(error)))),
+                        .send(.tunnel(.disconnect))
+                    )
+
+                case .reconnect(.withNewKeysAndCertificate):
+                    return .concatenate(
+                        .send(.localAgent(.disconnect(nil))),
+                        .send(.certAuth(.regenerateKeys)),
+                        .send(.certAuth(.loadAuthenticationData))
+                    )
+
+                case .reconnect(.withNewCertificate):
+                    return .concatenate(
+                        .send(.localAgent(.disconnect(nil))),
+                        .send(.certAuth(.regenerateKeys)),
+                        .send(.certAuth(.loadAuthenticationData))
+                    )
+
+                case .reconnect(.withExistingCertificate):
+                    return .concatenate(
+                        .send(.localAgent(.disconnect(nil))),
+                        .send(.certAuth(.loadAuthenticationData))
+                    )
+                }
+
             case .tunnel:
                 return .none
 
@@ -145,6 +171,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .certAuth:
                 return .none
+
             case .clearErrors:
                 if case .failed = state.certAuth{
                     state.certAuth = .idle

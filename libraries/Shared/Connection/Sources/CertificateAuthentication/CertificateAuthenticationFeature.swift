@@ -43,6 +43,8 @@ public struct CertificateAuthenticationFeature: Reducer {
 
     @CasePathable
     public enum Action: Sendable {
+        case regenerateKeys
+        case purgeCertificate
         case loadAuthenticationData // load stored data, potentially refreshing missing or expired certificates
         case loadFromStorage
         case loadingFromStorageFinished(CertificateLoadingResult)
@@ -60,6 +62,15 @@ public struct CertificateAuthenticationFeature: Reducer {
             }
 
             switch action {
+            case .regenerateKeys:
+                authenticationStorage.deleteKeys() // also deletes any existing certificates
+                _ = authenticationStorage.getKeys() // generates new keys
+                return .none
+
+            case .purgeCertificate:
+                authenticationStorage.deleteCertificate()
+                return .none
+
             case .loadAuthenticationData:
                 state = .loading(shouldRefreshIfNecessary: true)
                 return .send(.loadFromStorage)
