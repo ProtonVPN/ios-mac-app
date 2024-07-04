@@ -71,10 +71,11 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.vpnAuthenticationStorage = mockStorage
         }
 
-        await store.send(.tunnel(.startObservingStateChanges))
-        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
 
-        await store.send(.localAgent(.startObservingEvents))
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
 
         // Connection
 
@@ -126,8 +127,9 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-        await store.send(.tunnel(.stopObservingStateChanges))
-        await store.send(.localAgent(.stopObservingEvents))
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopObservingEvents)
     }
 }
 #endif

@@ -28,7 +28,8 @@ import SwiftUI
 class SettingsFeatureSnapshotTests: XCTestCase {
     
     func testSettings() {
-        let store = Store(initialState: AppFeature.State(main: .init(currentTab: .settings),
+        let store = Store(initialState: AppFeature.State(main: .init(currentTab: .settings,
+                                                                     mainBackground: .clear),
                                                          networking: .authenticated(.auth(uid: "")))) {
             AppFeature()
         } withDependencies: {

@@ -86,29 +86,31 @@ struct AppFeature {
         Reduce { state, action in
             switch action {
             case .onAppearTask:
-                return .merge(
-                    .run { send in
-                        await send(.networking(.startAcquiringSession))
-                    },
+                var effects: [Effect<AppFeature.Action>] = [
                     .run { send in
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
                         }
-                    }
-                )
+                    }]
+                if case .unauthenticated = state.networking {
+                    effects.insert(.send(.networking(.startAcquiringSession)), at: 0)
+                }
+
+                return .merge(effects)
+
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
-                return .run { send in
-                    await send(.main(.onLogout))
-                    await send(.networking(.startLogout))
-                }
+                return .concatenate(
+                    .send(.main(.onLogout)),
+                    .send(.networking(.startLogout))
+                )
 
             case .main:
                 return .none
 
             case .welcome(.destination(.presented(.signIn(.signInFinished(.success(let credentials)))))):
                 state.main.currentTab = .home
-                return .run { send in await send(.networking(.forkedSessionAuthenticated(.success(credentials)))) }
+                return .send(.networking(.forkedSessionAuthenticated(.success(credentials))))
 
             case .welcome(.destination(.presented(.signIn(.signInFinished(.failure))))):
                 return .none
@@ -116,10 +118,11 @@ struct AppFeature {
             case .welcome:
                 return .none
 
-            case .networking(.userTierRetrieved(let tier, _)):
+            case .networking(.delegate(.tier(let tier))):
                 state.userTier = tier
                 return .none
-            case .networking(.userDisplayNameRetrieved(let name)):
+
+            case .networking(.delegate(.displayName(let name))):
                 state.userDisplayName = name
                 return .none
             case .networking:

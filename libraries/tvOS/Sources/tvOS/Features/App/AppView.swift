@@ -51,6 +51,9 @@ public struct AppView: View {
         case .authenticated(.auth):
             MainView(store: store.scope(state: \.main, action: \.main))
                 .background(Color(.background, .strong))
+                .onAppear {
+                    store.send(.main(.onAppear))
+                }
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }

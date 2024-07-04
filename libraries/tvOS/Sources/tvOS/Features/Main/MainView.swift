@@ -40,20 +40,18 @@ struct MainView: View {
             .tabItem { Text("Settings", comment: "Title of the tab bar item.") }
         }
         .background(background)
-        .onAppear {
-            store.send(.onAppear)
-        }
+        .animation(.default, value: store.mainBackground)
     }
 
     @ViewBuilder
     private var background: some View {
-        // Only show the stage background for the drill down settings views
-        if store.settings.destination != nil {
-            Image(.backgroundStage)
-        } else if store.currentTab == .home {
-            HomeBackgroundGradient(store: store)
-        } else {
+        switch store.mainBackground {
+        case .clear:
             Color.clear
+        case .settingsDrillDown:
+            Image(.backgroundStage)
+        default:
+            HomeBackgroundGradient(mainBackground: store.mainBackground)
         }
     }
 }

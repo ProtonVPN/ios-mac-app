@@ -43,5 +43,8 @@ struct SettingsDrillDownView: View {
         }
         .frame(width: Self.maximumContentWidth)
         .focusable()
+        .onExitCommand {
+            store.send(.onExitCommand)
+        }
     }
 }

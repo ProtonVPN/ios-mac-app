@@ -35,9 +35,12 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.selectTab(.settings)) {
             $0.currentTab = .settings
+            $0.mainBackground = .clear
         }
+        await store.receive(\.settings.tabSelected)
         await store.send(.selectTab(.home)) {
             $0.currentTab = .home
+            $0.mainBackground = .connecting
         }
     }
 
@@ -48,6 +51,7 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.settings(.showDrillDown(.contactUs))) {
             $0.settings.destination = .settingsDrillDown(.contactUs)
+            $0.mainBackground = .settingsDrillDown
         }
     }
 
@@ -102,7 +106,7 @@ final class MainFeatureTests: XCTestCase {
         store.exhaustivity = .off
 
         connectionState = .disconnected(nil)
-        await store.send(.homeLoading(.loaded(.protectionStatus(.userClickedConnect))))
+        await store.send(.homeLoading(.loaded(.protectionStatus(.delegate(.userClickedConnect)))))
 
         await store.receive(\.connection.connect) {
             $0.connection.tunnel = .disconnected(nil)

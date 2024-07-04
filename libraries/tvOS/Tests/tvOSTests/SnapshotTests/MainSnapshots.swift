@@ -29,14 +29,33 @@ import Domain
 final class MainFeatureSnapshotTests: XCTestCase {
 
     @MainActor
-    func testMain() async {
+    func testMainLoading() async {
         let store = Store(initialState: MainFeature.State(homeLoading: .loading)) {
             MainFeature()
         } withDependencies: {
             $0.userLocationService = UserLocationServiceMock()
+            $0.serverRepository = .empty()
+            $0.logicalsRefresher = .init(refreshLogicals: { throw "" },
+                                         shouldRefreshLogicals: { true })
+            $0.tunnelManager = MockTunnelManager()
+            $0.localAgent = LocalAgentMock(state: .disconnected)
+            $0.continuousClock = TestClock()
+        }
+
+        let mainView = MainView(store: store)
+            .frame(.rect(width: 1920, height: 1080))
+            .background(Color(.background, .strong))
+
+        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "1 Loading")
+    }
+
+    @MainActor
+    func testMainLoaded() async {
+        let store = Store(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
+            MainFeature()
+        } withDependencies: {
+            $0.userLocationService = UserLocationServiceMock()
             $0.serverRepository = .somePlusRecommendedCountries()
-            $0.logicalsRefresher = .init(refreshLogicals: { },
-                                         shouldRefreshLogicals: { false })
             $0.tunnelManager = MockTunnelManager()
             $0.localAgent = LocalAgentMock(state: .disconnected)
         }
@@ -47,17 +66,16 @@ final class MainFeatureSnapshotTests: XCTestCase {
         let mainView = MainView(store: store)
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
-
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "1 Loading")
-        store.send(.homeLoading(.finishedLoading(.success(Void()))))
+        
+        store.send(.observeConnectionState)
 
         @Shared(.connectionState) var connectionState: ConnectionState?
 
         connectionState = .disconnected(nil)
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "2 Disconnected")
+        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "1 Disconnected")
         connectionState = .connecting(.ca)
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "3 Connecting")
+        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "2 Connecting")
         connectionState = .connected(.ca, nil)
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "4 Connected")
+        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "3 Connected")
     }
 }

@@ -68,10 +68,19 @@ struct SettingsDrillDownFeature {
     }
 
     enum Action {
-
+        case onExitCommand
     }
 
+    @Shared(.mainBackground) var mainBackground: MainBackground = .settingsDrillDown
+    @Dependency(\.dismiss) var dismiss
+
     var body: some Reducer<State, Action> {
-        EmptyReducer()
+        Reduce { state, action in
+            switch action {
+            case .onExitCommand:
+                mainBackground = .clear
+                return .run { _ in await dismiss() }
+            }
+        }
     }
 }

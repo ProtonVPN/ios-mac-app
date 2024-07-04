@@ -42,6 +42,7 @@ struct MainFeature {
 
         @Shared(.connectionState) var connectionState: ConnectionState?
         @Shared(.userLocation) var userLocation: UserLocation?
+        @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }
 
     @CasePathable
@@ -57,6 +58,13 @@ struct MainFeature {
         case connection(ConnectionFeature.Action)
 
         case errorOccurred(Error)
+        
+        case connectionStateUpdated(ConnectionState?)
+        case observeConnectionState
+    }
+
+    private enum CancelId {
+        case connectionState
     }
 
     var body: some Reducer<State, Action> {
@@ -71,22 +79,34 @@ struct MainFeature {
         }
         Reduce { state, action in
             switch action {
+            case .connectionStateUpdated(let connectionState):
+                if state.currentTab == .home {
+                    state.mainBackground = .init(connectionState: connectionState)
+                }
+                return .none
+            case .observeConnectionState:
+                return .publisher { state.$connectionState.publisher.receive(on: UIScheduler.shared).map(Action.connectionStateUpdated) }
+                    .cancellable(id: CancelId.connectionState)
             case .onAppear:
-                return .run { send in
-                    await send(.connection(.tunnel(.startObservingStateChanges)))
-                    await send(.connection(.localAgent(.startObservingEvents)))
-                }
-
+                return .merge(
+                    .send(.observeConnectionState),
+                    .send(.connection(.startObserving))
+                )
             case .onLogout:
-                return .run { send in
-                    await send(.connection(.disconnect(.userIntent)))
-                    await send(.connection(.tunnel(.stopObservingStateChanges)))
-                    await send(.connection(.localAgent(.stopObservingEvents)))
-                }
+                return .concatenate(
+                    .send(.connection(.disconnect(.userIntent))),
+                    .send(.connection(.stopObserving))
+                )
 
             case .selectTab(let tab):
                 state.currentTab = tab
-                return .none
+                switch tab {
+                case .home:
+                    state.mainBackground = .init(connectionState: state.connectionState)
+                    return .none
+                case .settings:
+                    return .send(.settings(.tabSelected))
+                }
             case .settings:
                 return .none
 
@@ -110,7 +130,7 @@ struct MainFeature {
                 guard let intent = serverConnectionIntent(code: item.code) else { return .none }
                 return .send(.connection(.connect(intent)))
 
-            case .homeLoading(.loaded(.protectionStatus(let action))):
+            case .homeLoading(.loaded(.protectionStatus(.delegate(let action)))):
                 switch action {
                 case .userClickedDisconnect:
                     return .send(.connection(.disconnect(.userIntent)))
@@ -125,8 +145,6 @@ struct MainFeature {
                         return .send(.connection(.disconnect(.reconnection(intent))))
                     }
                     return .send(.connection(.connect(intent)))
-                default:
-                    return .none
                 }
 
             case .homeLoading:

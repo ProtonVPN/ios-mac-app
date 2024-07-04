@@ -33,10 +33,15 @@ struct ProtectionStatusFeature {
 
     enum Action {
         case userTappedButton
-        case userClickedDisconnect
-        case userClickedCancel
-        case userClickedConnect
         case onAppear
+        case delegate(Delegate)
+
+        @CasePathable
+        enum Delegate: Equatable {
+            case userClickedDisconnect
+            case userClickedCancel
+            case userClickedConnect
+        }
     }
 
     var body: some Reducer<State, Action> {
@@ -46,11 +51,11 @@ struct ProtectionStatusFeature {
                 return .run { [connectionState = state.connectionState] send in
                     switch connectionState ?? .disconnected(nil) {
                     case .connected:
-                        await send(.userClickedDisconnect)
+                        await send(.delegate(.userClickedDisconnect))
                     case .connecting:
-                        await send(.userClickedCancel)
+                        await send(.delegate(.userClickedCancel))
                     case .disconnected:
-                        await send(.userClickedConnect)
+                        await send(.delegate(.userClickedConnect))
                     case .disconnecting:
                         break
                     }
@@ -60,11 +65,7 @@ struct ProtectionStatusFeature {
                     @Dependency(\.userLocationService) var userLocationService
                     try? await userLocationService.updateUserLocation()
                 }
-            case .userClickedDisconnect:
-                return .none
-            case .userClickedCancel:
-                return .none
-            case .userClickedConnect:
+            case .delegate:
                 return .none
             }
         }

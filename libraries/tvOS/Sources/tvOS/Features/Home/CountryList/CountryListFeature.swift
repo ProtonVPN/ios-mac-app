@@ -67,16 +67,7 @@ struct CountryListFeature {
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        Reduce { state, action in
-            switch action {
-            case .selectItem:
-                return .none
-            case .binding:
-                return .none
-            }
-        }
     }
-
 }
 
 private extension ServerGroupInfo {

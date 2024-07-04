@@ -18,22 +18,40 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Connection
+
+enum MainBackground: Equatable, Sendable {
+    case settingsDrillDown
+    case connecting
+    case connected
+    case disconnected
+    case clear
+    init(connectionState: ConnectionState?) {
+        switch connectionState {
+        case .disconnected:
+            self = .disconnected
+        case .connecting, .disconnecting, .none:
+            self = .connecting
+        case .connected:
+            self = .connected
+        }
+    }
+}
 
 struct HomeBackgroundGradient: View {
 
-    @Bindable var store: StoreOf<MainFeature>
+    var mainBackground: MainBackground
 
     var color: Color {
-        guard case .loaded(let state) = store.homeLoading else {
-            return Color(.connectingGradient)
-        }
-        switch store.connectionState {
+        switch mainBackground {
         case .connected:
             return Color(.connectedGradient)
         case .disconnected:
             return Color(.disconnectedGradient)
-        case .connecting, .disconnecting, .none:
+        case .connecting:
             return Color(.connectingGradient)
+        default:
+            return .clear
         }
     }
 
