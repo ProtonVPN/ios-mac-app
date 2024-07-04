@@ -96,7 +96,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     state.serverReconnectionIntent = intent
                 }
                 return .merge(
-                    .send(.localAgent(.disconnect)),
+                    .send(.localAgent(.disconnect(nil))),
                     .send(.tunnel(.disconnect))
                 )
 

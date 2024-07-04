@@ -51,7 +51,10 @@ final class LocalAgentMock: LocalAgent {
     }
 
     var connectionTask: Task<Void, Error>?
+    var connectionDuration: Duration = .milliseconds(250)
     var connectionErrorToThrow: Error?
+    var disconnectionTask: Task<Void, Error>?
+    var disconnectionDuration: Duration = .milliseconds(250)
 
     init(
         state: LocalAgentState,
@@ -65,7 +68,7 @@ final class LocalAgentMock: LocalAgent {
         connectionTask = Task {
             @Dependency(\.continuousClock) var clock
 
-            try await clock.sleep(for: .seconds(1))
+            try await clock.sleep(for: connectionDuration)
 
             if let connectionErrorToThrow {
                 throw connectionErrorToThrow
@@ -76,7 +79,11 @@ final class LocalAgentMock: LocalAgent {
     }
 
     func disconnect() {
-        state = .disconnected
+        connectionTask = Task {
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: disconnectionDuration)
+            self.state = .disconnected
+        }
     }
 }
 

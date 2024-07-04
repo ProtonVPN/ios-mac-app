@@ -114,15 +114,18 @@ final class ConnectionFeatureTests: XCTestCase {
         // Disconnection
 
         await store.send(ConnectionFeature.Action.disconnect(.userIntent))
-        await store.receive(\.localAgent.disconnect) {
-            $0.localAgent = .disconnected(nil)
+        await store.receive(\.localAgent.disconnect){
+            $0.localAgent = .disconnecting(nil)
         }
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting
         }
-        await store.receive(\.localAgent.event.state.disconnected)
 
-        await mockClock.advance(by: .seconds(1))
+        await mockClock.advance(by: .milliseconds(250))
+        await store.receive(\.localAgent.event.state.disconnected){
+            $0.localAgent = .disconnected(nil)
+        }
+        await mockClock.advance(by: .milliseconds(750))
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
