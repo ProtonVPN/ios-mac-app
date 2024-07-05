@@ -30,12 +30,14 @@ struct SettingsFeature {
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userTier) var userTier: Int?
+        @Shared(.mainBackground) var mainBackground: MainBackground = .clear
 
         @Presents var destination: Destination.State?
         @Presents var alert: AlertState<Action.Alert>?
         var isLoading: Bool = false
     }
 
+    @CasePathable
     enum Action {
         case alert(PresentationAction<Alert>)
         case destination(PresentationAction<Destination.Action>)
@@ -43,6 +45,7 @@ struct SettingsFeature {
         case signOutSelected
         case showProgressView
         case finishSignOut
+        case tabSelected
 
         @CasePathable
         enum Alert {
@@ -72,19 +75,23 @@ struct SettingsFeature {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .tabSelected:
+                if state.destination == nil {
+                    state.mainBackground = .clear
+                } else {
+                    state.mainBackground = .settingsDrillDown
+                }
+                return .none
             case .showDrillDown(let type):
-                let destination: Destination.State
                 switch type {
                 case .contactUs:
-                    destination = .settingsDrillDown(.contactUs)
+                    state.destination = .settingsDrillDown(.contactUs)
                 case .supportCenter:
-                    destination = .settingsDrillDown(.supportCenter)
+                    state.destination = .settingsDrillDown(.supportCenter)
                 case .privacyPolicy:
-                    destination = .settingsDrillDown(.privacyPolicy)
+                    state.destination = .settingsDrillDown(.privacyPolicy)
                 }
-                withAnimation {
-                    state.destination = destination
-                }
+                state.mainBackground = .settingsDrillDown
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert

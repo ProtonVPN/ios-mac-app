@@ -43,7 +43,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         @Shared(.connectionState) var connectionState: ConnectionState? = .disconnected(nil)
 
         await store.send(.userTappedButton)
-        await store.receive(\.userClickedConnect)
+        await store.receive(\.delegate.userClickedConnect)
     }
 
     @MainActor
@@ -55,7 +55,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         connectionState = .connecting(.ca)
 
         await store.send(.userTappedButton)
-        await store.receive(\.userClickedCancel)
+        await store.receive(\.delegate.userClickedCancel)
     }
 
     @MainActor
@@ -67,7 +67,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         connectionState = .connected(.mock, nil)
 
         await store.send(.userTappedButton)
-        await store.receive(\.userClickedDisconnect)
+        await store.receive(\.delegate.userClickedDisconnect)
     }
 
     @MainActor

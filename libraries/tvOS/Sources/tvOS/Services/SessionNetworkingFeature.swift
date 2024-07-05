@@ -54,7 +54,13 @@ struct SessionNetworkingFeature: Reducer {
         case forkedSessionAuthenticated(Result<AuthCredentials, Error>)
         case sessionExpired
         case userTierRetrieved(Int, CommonNetworking.Session)
-        case userDisplayNameRetrieved(String?)
+
+        case delegate(Delegate)
+
+        enum Delegate: Equatable {
+            case tier(Int)
+            case displayName(String?)
+        }
     }
 
     @Dependency(\.networking) var networking
@@ -66,6 +72,9 @@ struct SessionNetworkingFeature: Reducer {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .delegate:
+                return .none // We should never actually perform any logic in this case
+
             case .startLogout:
                 authKeychain.clear()
                 vpnAuthStorage.deleteKeys()
@@ -111,10 +120,8 @@ struct SessionNetworkingFeature: Reducer {
                 return .run { send in
                     // we have a session, now get the user tier
                     let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)
-                    _ = await (
-                        send(.userTierRetrieved(userTier, session)),
-                        send(.userDisplayNameRetrieved(userDisplayName))
-                    )
+                    _ = await (send(.userTierRetrieved(userTier, session)),
+                               send(.delegate(.displayName(userDisplayName))))
                     // let's listen to logout events
                     for await authenticated in networkingDelegate.sessionAuthenticatedEvents where !authenticated {
                         await send(.sessionExpired)
@@ -128,14 +135,12 @@ struct SessionNetworkingFeature: Reducer {
                     state = .authenticated(session)
                     networking.setSession(session)
                     unauthKeychain.clear()
-                    return .none
+                    return .send(.delegate(.tier(tier)))
                 } else {
                     return .run { send in
                         await send(.startLogout) // tier detected to be free, log the user out
                     }
                 }
-            case .userDisplayNameRetrieved:
-                return .none
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }

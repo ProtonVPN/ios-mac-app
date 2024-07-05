@@ -32,7 +32,8 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         let store = TestStore(initialState: SessionNetworkingFeature.State.unauthenticated(nil)) {
             SessionNetworkingFeature()
         }
-        await store.send(.userDisplayNameRetrieved(nil))
+        await store.send(.delegate(.displayName(nil)))
+        await store.send(.delegate(.tier(0)))
         await store.send(.forkedSessionAuthenticated(.failure("")))
     }
 
@@ -148,6 +149,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         await store.send(.userTierRetrieved(1, .auth(uid: ""))) {
             $0 = .authenticated(.auth(uid: ""))
         }
+        await store.receive(\.delegate)
     }
 
     @MainActor

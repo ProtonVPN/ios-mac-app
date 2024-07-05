@@ -39,14 +39,16 @@ final class AppFeatureTests: XCTestCase {
         let store = TestStore(initialState: state) {
             AppFeature()
         }
-        await store.send(.main(.selectTab(.settings))) { state in
-            state.main.currentTab = .settings
+        await store.send(.main(.selectTab(.settings))) {
+            $0.main.currentTab = .settings
+            $0.main.mainBackground = .clear
         }
+        await store.receive(\.main.settings.tabSelected)
     }
 
     @MainActor
     func testOnAppear() async {
-        let state = AppFeature.State()
+        let state = AppFeature.State(networking: .unauthenticated(nil))
         let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()
@@ -69,7 +71,7 @@ final class AppFeatureTests: XCTestCase {
             var failureReason: String? { "An explicit Error with no reason. It just fails!" }
         }
 
-        let state = AppFeature.State()
+        let state = AppFeature.State(networking: .unauthenticated(nil))
         let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()

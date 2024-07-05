@@ -60,6 +60,8 @@ public struct ConnectionFeature: Reducer, Sendable {
         case certAuth(CertificateAuthenticationFeature.Action)
         case localAgent(LocalAgentFeature.Action)
         case clearErrors
+        case startObserving
+        case stopObserving
     }
 
     @CasePathable
@@ -75,6 +77,16 @@ public struct ConnectionFeature: Reducer, Sendable {
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
             switch action {
+            case .startObserving:
+                return .merge(
+                    .send(.tunnel(.startObservingStateChanges)),
+                    .send(.localAgent(.startObservingEvents))
+                )
+            case .stopObserving:
+                return .merge(
+                    .send(.tunnel(.stopObservingStateChanges)),
+                    .send(.localAgent(.stopObservingEvents))
+                )
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
                 return .send(.tunnel(.connect(intent)))
