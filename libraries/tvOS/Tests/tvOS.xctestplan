@@ -26,6 +26,13 @@
         "identifier" : "tvOSTests",
         "name" : "tvOSTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "tvOSSnapshotTests",
+        "name" : "tvOSSnapshotTests"
+      }
     }
   ],
   "version" : 1
