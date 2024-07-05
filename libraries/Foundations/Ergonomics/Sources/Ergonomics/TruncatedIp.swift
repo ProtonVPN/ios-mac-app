@@ -29,8 +29,7 @@ public struct TruncatedIp {
         } else if let index = ip.lastIndex(of: ":") { // IPv6
             value = ip.replacingCharacters(in: index..<ip.endIndex, with: "::")
         } else {
-            value = ip
+            return nil
         }
-        return nil
     }
 }
