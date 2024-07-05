@@ -19,6 +19,7 @@
 import Foundation
 import enum NetworkExtension.NEVPNStatus
 
+import Clocks
 import ComposableArchitecture
 import Dependencies
 
@@ -31,7 +32,10 @@ import ExtensionManager
 import LocalAgent
 
 public struct ConnectionFeature: Reducer, Sendable {
+    @Dependency(\.continuousClock) var clock
     @Dependency(\.serverIdentifier) var serverIdentifier
+
+    private static let defaultConnectionTimeout = Duration.seconds(30)
 
     public init() { }
 
@@ -71,6 +75,8 @@ public struct ConnectionFeature: Reducer, Sendable {
         case userIntent
     }
 
+    private enum CancelID { case connectionTimeout }
+
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
         Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
@@ -89,13 +95,22 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
-                return .send(.tunnel(.connect(intent)))
+
+                return .run { send in
+                    await send(.tunnel(.connect(intent)))
+                    try await clock.sleep(for: Self.defaultConnectionTimeout)
+                    try Task.checkCancellation()
+                    await send(.disconnect(.connectionFailure(.timeout)))
+                } catch: { error, _ in
+                    log.info("Timeout task cancellation error: \(error)")
+                }.cancellable(id: CancelID.connectionTimeout)
 
             case .disconnect(let reason):
                 if case let .reconnection(intent) = reason {
                     state.serverReconnectionIntent = intent
                 }
                 return .merge(
+                    .cancel(id: CancelID.connectionTimeout),
                     .send(.localAgent(.disconnect(nil))),
                     .send(.tunnel(.disconnect))
                 )
@@ -130,6 +145,9 @@ public struct ConnectionFeature: Reducer, Sendable {
                       let intent = state.serverReconnectionIntent else { return .none }
                 state.serverReconnectionIntent = nil
                 return .send(.connect(intent))
+
+            case .localAgent(.event(.state(.connected))):
+                return .cancel(id: CancelID.connectionTimeout)
 
             case .localAgent(.delegate(.errorReceived(let error))):
                 switch error.resolutionStrategy {
@@ -209,4 +227,5 @@ public enum ConnectionError: Error, Equatable, Sendable {
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
     case serverMissing
+    case timeout
 }
