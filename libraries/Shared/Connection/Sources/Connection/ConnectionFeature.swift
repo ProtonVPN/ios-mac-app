@@ -34,6 +34,7 @@ import LocalAgent
 public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) var clock
     @Dependency(\.serverIdentifier) var serverIdentifier
+    @Dependency(\.tunnelKeychain) var tunnelConfigKeychain
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
@@ -66,6 +67,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         case clearErrors
         case startObserving
         case stopObserving
+        case handleLogout
     }
 
     @CasePathable
@@ -201,6 +203,18 @@ public struct ConnectionFeature: Reducer, Sendable {
                     state.localAgent = .disconnected(nil)
                 }
                 return .none
+
+            case .handleLogout:
+                do {
+                    try tunnelConfigKeychain.clear()
+                } catch {
+                    // An error will be thrown if we haven't made any connections and there is nothing to clear.
+                    log.debug("Error clearing VPN keychain: \(error)")
+                }
+                return .merge(
+                    .send(.tunnel(.removeManagers)),
+                    .send(.certAuth(.clearEverything))
+                )
             }
         }
     }

@@ -45,6 +45,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     public enum Action: Sendable {
         case regenerateKeys
         case purgeCertificate
+        case clearEverything
         case loadAuthenticationData // load stored data, potentially refreshing missing or expired certificates
         case loadFromStorage
         case loadingFromStorageFinished(CertificateLoadingResult)
@@ -70,6 +71,11 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .purgeCertificate:
                 authenticationStorage.deleteCertificate()
+                state = .idle
+                return .none
+
+            case .clearEverything:
+                authenticationStorage.deleteKeys() // also deletes any existing certificates
                 state = .idle
                 return .none
 
