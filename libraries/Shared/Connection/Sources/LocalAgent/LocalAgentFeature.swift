@@ -75,7 +75,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 state = .connecting
 
                 let connectionConfiguration = ConnectionConfiguration(
-                    hostname: server.domain, // "node-kr-03.protonvpn.net",
+                    hostname: server.domain,
                     netshield: .level1,
                     vpnAccelerator: true,
                     bouncing: server.label,
@@ -223,8 +223,22 @@ extension LocalAgentError {
         case .badCertificateSignature, .certificateRevoked, .keyUsedMultipleTimes, .serverSessionDoesNotMatch:
             return .reconnect(.withNewKeysAndCertificate)
 
-        default:
+        case .maxSessionsUnknown,
+                .maxSessionsFree,
+                .maxSessionsBasic,
+                .maxSessionsPlus,
+                .maxSessionsVisionary,
+                .maxSessionsPro,
+                .serverError,
+                .policyViolationLowPlan,
+                .policyViolationDelinquent,
+                .userTorrentNotAllowed,
+                .userBadBehavior,
+                .guestSession:
             return .disconnect
+
+        case .unknown:
+            return .none
         }
     }
 }
