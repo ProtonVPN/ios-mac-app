@@ -25,6 +25,8 @@ import SwiftUI
 import Domain
 @testable import ExtensionManager
 @testable import LocalAgent
+import PersistenceTestSupport
+import DomainTestSupport
 
 final class MainFeatureSnapshotTests: XCTestCase {
 

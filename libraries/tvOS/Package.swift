@@ -56,9 +56,21 @@ let package = Package(
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         ),
+        .testTarget(
+            name: "tvOSSnapshotTests",
+            dependencies: [
+                "tvOS",
+                "tvOSTestSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "ConnectionTestSupport", package: "Connection"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
+                .product(name: "PersistenceTestSupport", package: "Persistence"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ]
+        )
     ]
 )
 
