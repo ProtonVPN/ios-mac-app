@@ -22,7 +22,6 @@ import Foundation
 import Dependencies
 import XCTestDynamicOverlay
 import ConnectionFoundations
-@testable import LocalAgent
 
 final class LocalAgentMock: LocalAgent {
     var eventHandler: ((LocalAgentEvent) -> Void)?
@@ -51,7 +50,7 @@ final class LocalAgentMock: LocalAgent {
     }
 
     var connectionTask: Task<Void, Error>?
-    var connectionDuration: Duration = .milliseconds(250)
+    var connectionDuration: Duration = .milliseconds(500)
     var connectionErrorToThrow: Error?
     var disconnectionTask: Task<Void, Error>?
     var disconnectionDuration: Duration = .milliseconds(250)
@@ -65,6 +64,7 @@ final class LocalAgentMock: LocalAgent {
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
+        disconnectionTask?.cancel()
         connectionTask = Task {
             @Dependency(\.continuousClock) var clock
 
@@ -79,7 +79,7 @@ final class LocalAgentMock: LocalAgent {
     }
 
     func disconnect() {
-        connectionTask = Task {
+        disconnectionTask = Task {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: disconnectionDuration)
             self.state = .disconnected

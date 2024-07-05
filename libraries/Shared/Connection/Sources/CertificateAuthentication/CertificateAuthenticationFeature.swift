@@ -65,13 +65,18 @@ public struct CertificateAuthenticationFeature: Reducer {
             case .regenerateKeys:
                 authenticationStorage.deleteKeys() // also deletes any existing certificates
                 _ = authenticationStorage.getKeys() // generates new keys
+                state = .idle
                 return .none
 
             case .purgeCertificate:
                 authenticationStorage.deleteCertificate()
+                state = .idle
                 return .none
 
             case .loadAuthenticationData:
+                if case .loaded(let data) = state, data.certificate.refreshTime > date.now {
+                    return .send(.loadingFinished(.success(data)))
+                }
                 state = .loading(shouldRefreshIfNecessary: true)
                 return .send(.loadFromStorage)
 

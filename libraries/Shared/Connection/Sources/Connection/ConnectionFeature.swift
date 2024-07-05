@@ -131,7 +131,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 state.serverReconnectionIntent = nil
                 return .send(.connect(intent))
 
-            case .localAgent(.errorReceived(let error)):
+            case .localAgent(.delegate(.errorReceived(let error))):
                 switch error.resolutionStrategy {
                 case .none:
                     return .none
@@ -152,7 +152,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 case .reconnect(.withNewCertificate):
                     return .concatenate(
                         .send(.localAgent(.disconnect(nil))),
-                        .send(.certAuth(.regenerateKeys)),
+                        .send(.certAuth(.purgeCertificate)), // In case it's not just expired
                         .send(.certAuth(.loadAuthenticationData))
                     )
 

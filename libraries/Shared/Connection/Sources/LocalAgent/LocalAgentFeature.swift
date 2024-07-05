@@ -45,10 +45,14 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case event(LocalAgentEvent)
         case connect(ServerEndpoint, VPNAuthenticationData)
         case disconnect(LocalAgentConnectionError?)
+        case delegate(DelegateAction)
 
-        case certificateRefreshRequired
-        case keyRegenerationRequired
-        case errorReceived(LocalAgentError)
+        @CasePathable
+        public enum DelegateAction: Sendable {
+            case certificateRefreshRequired
+            case keyRegenerationRequired
+            case errorReceived(LocalAgentError)
+        }
     }
 
     private enum CancelID { case observation }
@@ -136,7 +140,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
             case .event(.state(.softJailed)),
                 .event(.state(.hardJailed)),
                 .event(.state(.clientCertificateError)):
-                return .send(.certificateRefreshRequired)
+                return .send(.delegate(.certificateRefreshRequired))
 
             case .event(.state(.invalid)):
                 log.assertionFailure("LocalAgent entered invalid/unknown state")
@@ -147,7 +151,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .event(.error(let error)):
-                return .send(.errorReceived(error))
+                return .send(.delegate(.errorReceived(error)))
 
             case .event(.features(let features)):
                 log.info("Features received: \(features)")
@@ -157,12 +161,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 log.info("Feature statistics received: \(stats)")
                 return .none
 
-            case .certificateRefreshRequired,
-                    .keyRegenerationRequired,
-                    .errorReceived:
-
-                // Delegate actions to be handled by parent
-                return .none
+            case .delegate:
+                return .none // Delegate actions to be handled by parent
             }
         }
     }
@@ -216,7 +216,9 @@ extension LocalAgentError {
             return .none
 
         case .certificateExpired, .certificateNotProvided:
-            return .reconnect(.withNewCertificate)
+            // If the certificate is expired or missing, we will detect this and refresh it, there is no need to
+            // explicitly regenerate it
+            return .reconnect(.withExistingCertificate)
 
         case .badCertificateSignature, .certificateRevoked, .keyUsedMultipleTimes, .serverSessionDoesNotMatch:
             return .reconnect(.withNewKeysAndCertificate)
