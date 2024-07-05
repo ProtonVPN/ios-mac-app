@@ -64,5 +64,7 @@ final class MockTunnelManager: TunnelManager {
             .map { _ in self.connection.status }
         return AsyncStream(statusChangedNotifications)
     }
+
+    func removeManagers() async throws { }
 }
 #endif

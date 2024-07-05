@@ -54,6 +54,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case connectionFinished(Result<LogicalServerInfo, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect
+        case removeManagers
     }
 
     public var body: some Reducer<State, Action> {
@@ -149,6 +150,13 @@ public struct ExtensionFeature: Reducer, Sendable {
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])
                 assertionFailure("Unknown tunnel status \(unknownFutureStatus)")
                 return .none
+
+            case .removeManagers:
+                return .run { _ in
+                    try await tunnelManager.removeManagers()
+                } catch: { error, _ in
+                    log.assertionFailure("Failed to remove managers: \(error)")
+                }
             }
         }
     }

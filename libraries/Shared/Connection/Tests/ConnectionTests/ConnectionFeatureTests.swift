@@ -446,7 +446,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .connecting
         }
 
-        // Fast forward to the xxact time at which the connection should time out
+        // Fast forward to the exact time at which the connection should time out
         await mockClock.advance(by: .seconds(29)) // Default timeout minus time spent connecting tunnel (1s)
         await store.receive(\.disconnect.connectionFailure.timeout)
         await store.receive(\.localAgent.disconnect) {

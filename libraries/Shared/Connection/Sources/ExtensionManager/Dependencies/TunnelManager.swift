@@ -28,11 +28,14 @@ import ExtensionIPC
 
 protocol TunnelManager {
     func startTunnel(with intent: ServerConnectionIntent) async throws
-    func stopTunnel() async throws -> Void
+    func stopTunnel() async throws
+    func removeManagers() async throws
+
     var session: VPNSession { get async throws }
     var connectedServer: LogicalServerInfo { get async throws }
     var status: NEVPNStatus { get async throws }
     var statusStream: AsyncStream<NEVPNStatus> { get async throws }
+
 }
 
 enum TunnelManagerKey: DependencyKey {
@@ -48,11 +51,13 @@ enum TunnelManagerKey: DependencyKey {
 }
 
 final class PacketTunnelManager: TunnelManager {
+    @Dependency(\.tunnelProviderManagerFactory) var managerFactory
+    @Dependency(\.tunnelProviderConfigurator) var configurator
+
     private var cachedLoadedManager: TunnelProviderManager?
 
     /// Creates and loads a new `TunnelProviderManager`.
     private func loadManager() async throws -> TunnelProviderManager {
-        @Dependency(\.tunnelProviderManagerFactory) var managerFactory
         // TODO: Provide bundle ID using a Dependency
         let bundleID = "ch.protonmail.vpn.WireGuard-tvOS"
         let manager = try await managerFactory.loadManager(forProviderBundleID: bundleID)
@@ -78,7 +83,6 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     private func updateTunnel(for operation: TunnelConfigurationOperation) async throws -> TunnelProviderManager {
-        @Dependency(\.tunnelProviderConfigurator) var configurator
         var manager = try await loadedManager
         try await configurator.configure(&manager, for: operation)
         try await manager.saveToPreferences()
@@ -135,6 +139,10 @@ final class PacketTunnelManager: TunnelManager {
 
             return AsyncStream(statusChangedNotifications)
         }
+    }
+
+    func removeManagers() async throws {
+        try await managerFactory.removeAll()
     }
 }
 

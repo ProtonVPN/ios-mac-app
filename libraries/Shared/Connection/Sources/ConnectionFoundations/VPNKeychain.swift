@@ -21,7 +21,7 @@ import Foundation
 import Dependencies
 
 package struct TunnelKeychain: DependencyKey {
-    package var storeWireguardConfig: (Data) throws -> Data
+    private var storeWireguardConfig: (Data) throws -> Data
     package var clear: () throws -> Void
 
     package static let liveValue: TunnelKeychain = {
@@ -50,8 +50,8 @@ extension TunnelKeychain {
 
 extension DependencyValues {
     package var tunnelKeychain: TunnelKeychain {
-      get { self[TunnelKeychain.self] }
-      set { self[TunnelKeychain.self] = newValue }
+        get { self[TunnelKeychain.self] }
+        set { self[TunnelKeychain.self] = newValue }
     }
 }
 
@@ -102,7 +102,8 @@ struct TunnelKeychainImplementation {
         }
 
         if existingPasswordData == passwordData {
-            return // No need to overwrite the keychain item - the password is unchanged
+            log.debug("Skipping storing password data for key \(key), data is unchanged")
+            return // No need to overwrite the keychain item - the data is unchanged
         }
 
         try clearPassword(forKey: key) // Attempting to overwrite the keychain item results in `errSecDuplicateItem`
@@ -142,6 +143,7 @@ struct TunnelKeychainImplementation {
         let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
         switch result {
         case errSecSuccess:
+            log.debug("Stored password data for key \(key)")
             return
 
         case errSecDuplicateItem:
@@ -161,6 +163,7 @@ struct TunnelKeychainImplementation {
             return false
 
         case errSecSuccess:
+            log.debug("Cleared password data for key \(key)")
             return true
 
         default:

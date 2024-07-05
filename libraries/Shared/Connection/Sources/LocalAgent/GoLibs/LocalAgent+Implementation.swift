@@ -35,6 +35,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     init() {
+        log.info("LocalAgentImplementation init")
         let (eventStream, continuation) = AsyncStream<LocalAgentEvent>.makeStream()
         self.eventStream = eventStream
         self.continuation = continuation
@@ -44,6 +45,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     deinit {
+        log.info("LocalAgentImplementation deinit")
         connection?.close()
     }
 
