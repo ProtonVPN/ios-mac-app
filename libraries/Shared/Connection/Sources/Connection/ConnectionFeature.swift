@@ -137,10 +137,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                 if case .failed = state.certAuth{
                     state.certAuth = .idle
                 }
-                if case let .disconnected(error) = state.tunnel, error != nil  {
+                if case let .disconnected(error) = state.tunnel, error != nil {
                     state.tunnel = .disconnected(nil)
                 }
-                if case let .disconnected(error) = state.localAgent, error != nil  {
+                if case let .disconnected(error) = state.localAgent, error != nil {
                     state.localAgent = .disconnected(nil)
                 }
                 return .none

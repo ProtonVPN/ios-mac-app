@@ -24,6 +24,7 @@ import ProtonCoreNetworking
 import ProtonCoreServices
 
 public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
+    var sessionAuthenticatedEvents: AsyncStream<Bool> { get }
     func set(apiService: APIService)
     func onLogout()
 }
@@ -37,6 +38,8 @@ public protocol NetworkingFactory {
 }
 
 final class CoreNetworkingDelegateMock: NetworkingDelegate {
+    var sessionAuthenticatedEvents: AsyncStream<Bool> { .init { $0.finish() } }
+
     func set(apiService: APIService) { }
     func onLogout() { }
 

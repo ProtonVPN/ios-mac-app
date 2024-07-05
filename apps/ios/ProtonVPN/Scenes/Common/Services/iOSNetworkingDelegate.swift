@@ -17,13 +17,21 @@ import ProtonCoreHumanVerification
 import CommonNetworking
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
+    let sessionAuthenticatedEvents: AsyncStream<Bool>
+
     private let forceUpgradeService: ForceUpgradeDelegate
     private var humanVerify: HumanVerifyDelegate?
     private let alertingService: CoreAlertService
 
+    private let continuation: AsyncStream<Bool>.Continuation
+
     init(alertingService: CoreAlertService) {
         self.forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
         self.alertingService = alertingService
+
+        let (stream, continuation) = AsyncStream<Bool>.makeStream()
+        self.sessionAuthenticatedEvents = stream
+        self.continuation = continuation
     }
 
     func set(apiService: APIService) {
@@ -37,6 +45,7 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
 
     func onLogout() {
         alertingService.push(alert: RefreshTokenExpiredAlert())
+        continuation.yield(false)
     }
 }
 

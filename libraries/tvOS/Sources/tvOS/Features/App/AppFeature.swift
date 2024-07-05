@@ -39,13 +39,18 @@ import CommonNetworking
 ///
 /// The reverse of this flow is used for logging out, where a user action from the `MainFeature` is observed by the
 /// `AppFeature`, at which it sends a `SessionNetworkingFeature.Action` which is handled by the `SessionNetworkingFeature`
-@Reducer struct AppFeature {
+@Reducer
+struct AppFeature {
+    @Dependency(\.alertService) var alertService
+
     @ObservableState
     struct State: Equatable {
         @Shared(.userDisplayName) var userDisplayName: String?
         @Shared(.userTier) var userTier: Int?
         var main = MainFeature.State()
         var welcome = WelcomeFeature.State()
+
+        @Presents var alert: AlertState<Action.Alert>?
 
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
@@ -55,9 +60,17 @@ import CommonNetworking
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
 
-        case onAppear
+        case onAppearTask
+
+        case incomingAlert(AlertService.Alert)
+        case alert(PresentationAction<Alert>)
 
         case networking(SessionNetworkingFeature.Action)
+
+        @CasePathable
+        enum Alert {
+            case errorMessage
+        }
     }
 
     var body: some Reducer<State, Action> {
@@ -72,10 +85,17 @@ import CommonNetworking
         }
         Reduce { state, action in
             switch action {
-            case .onAppear:
-                return .run { send in
-                    await send(.networking(.startAcquiringSession))
-                }
+            case .onAppearTask:
+                return .merge(
+                    .run { send in
+                        await send(.networking(.startAcquiringSession))
+                    },
+                    .run { send in
+                        for await alert in await alertService.alerts() {
+                            await send(.incomingAlert(alert))
+                        }
+                    }
+                )
             case .main(.settings(.alert(.presented(.signOut)))):
                 // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
                 return .run { send in
@@ -99,14 +119,19 @@ import CommonNetworking
             case .networking(.userTierRetrieved(let tier, _)):
                 state.userTier = tier
                 return .none
-
             case .networking(.userDisplayNameRetrieved(let name)):
                 state.userDisplayName = name
                 return .none
-                
             case .networking:
+                return .none
+
+            case .incomingAlert(let alert):
+                state.alert = alert.alertState(from: Action.Alert.self)
+                return .none
+            case .alert:
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }

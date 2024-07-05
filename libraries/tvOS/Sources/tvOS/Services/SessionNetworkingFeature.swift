@@ -45,6 +45,7 @@ struct SessionNetworkingFeature: Reducer {
         /// Can contain auth or unauth session
         case authenticated(CommonNetworking.Session)
     }
+
     @CasePathable
     enum Action {
         case startLogout
@@ -57,6 +58,7 @@ struct SessionNetworkingFeature: Reducer {
     }
 
     @Dependency(\.networking) var networking
+    @Dependency(\.networkingDelegate) var networkingDelegate
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.unauthKeychain) var unauthKeychain
     @Dependency(\.vpnAuthenticationStorage) var vpnAuthStorage
@@ -100,8 +102,7 @@ struct SessionNetworkingFeature: Reducer {
 
             case .sessionExpired:
                 state = .unauthenticated(nil)
-                // VPNAPPL-2180: `NetworkingDelegate` must send `.sessionExpired` action
-                return .send(.startAcquiringSession)
+                return .send(.startLogout)
 
             case .forkedSessionAuthenticated(.success(let credentials)):
                 // We forked a session ourselves, and web client just authenticated it
@@ -110,8 +111,14 @@ struct SessionNetworkingFeature: Reducer {
                 return .run { send in
                     // we have a session, now get the user tier
                     let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)
-                    _ = await (send(.userTierRetrieved(userTier, session)),
-                               send(.userDisplayNameRetrieved(userDisplayName)))
+                    _ = await (
+                        send(.userTierRetrieved(userTier, session)),
+                        send(.userDisplayNameRetrieved(userDisplayName))
+                    )
+                    // let's listen to logout events
+                    for await authenticated in networkingDelegate.sessionAuthenticatedEvents where !authenticated {
+                        await send(.sessionExpired)
+                    }
                 } catch: { error, send in
                     await send(.startLogout)
                 }
@@ -119,7 +126,7 @@ struct SessionNetworkingFeature: Reducer {
                 // TODO: This is an additional step before logging user in, when we'll start to support free users, we can remove this code
                 if tier > 0 {
                     state = .authenticated(session)
-                    networking.set(session: session)
+                    networking.setSession(session)
                     unauthKeychain.clear()
                     return .none
                 } else {

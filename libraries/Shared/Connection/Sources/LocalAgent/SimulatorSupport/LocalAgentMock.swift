@@ -25,8 +25,8 @@ import ConnectionFoundations
 @testable import LocalAgent
 
 final class LocalAgentMock: LocalAgent {
-
     var eventHandler: ((LocalAgentEvent) -> Void)?
+
     var state: LocalAgentState {
         didSet {
             guard let eventHandler else {
@@ -74,7 +74,7 @@ final class LocalAgentMock: LocalAgent {
             self.state = .connected
         }
     }
-    
+
     func disconnect() {
         state = .disconnected
     }

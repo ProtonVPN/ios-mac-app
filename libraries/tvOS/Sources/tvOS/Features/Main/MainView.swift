@@ -21,7 +21,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MainView: View {
-    
     @Bindable var store: StoreOf<MainFeature>
 
     var body: some View {
@@ -41,7 +40,6 @@ struct MainView: View {
             .tabItem { Text("Settings", comment: "Title of the tab bar item.") }
         }
         .background(background)
-        .alert($store.scope(state: \.alert, action: \.alert))
         .onAppear {
             store.send(.onAppear)
         }

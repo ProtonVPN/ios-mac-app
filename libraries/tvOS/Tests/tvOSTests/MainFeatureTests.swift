@@ -52,21 +52,37 @@ final class MainFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testErrorConnectingShowsAlert() async {
+    func testErrorConnectingNotifiesError() async {
+        let clock = TestClock()
+        let mockVPNSession = VPNSessionMock(status: .disconnected)
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()
         } withDependencies: {
             $0.serverRepository = .empty()
+            $0.continuousClock = clock
+            $0.localAgent = LocalAgentMock(state: .disconnected)
+            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+            $0.userLocationService = UserLocationServiceMock()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState?
-        let error: ConnectionError = .serverMissing
-        await store.send(.connectionFailed(.serverMissing)) {
-            $0.alert = MainFeature.connectionFailedAlert(reason: error.localizedMessage)
-            connectionState = .disconnected(nil)
-        }
-        await store.receive(\.connection.clearErrors)
-    }
 
+        await store.send(.connection(.localAgent(.startObservingEvents))) {
+            $0.connectionState = .disconnected(nil)
+        }
+        await store.send(.connection(.disconnect(.connectionFailure(.serverMissing)))) {
+            $0.connectionState = .disconnecting
+        }
+        await store.receive(\.connection.localAgent.disconnect)
+        await store.receive(\.connection.tunnel.disconnect) {
+            $0.connection.tunnel = .disconnecting
+        }
+
+        await store.receive(\.errorOccurred) // TODO: Check error is serverMissing
+
+        await store.receive(\.updateUserLocation)
+        await store.receive(\.connection.localAgent.event.state.disconnected)
+        await store.receive(\.connection.clearErrors)
+        await store.send(.connection(.localAgent(.stopObservingEvents)))
+    }
 
     @MainActor
     func testUserClickedConnect() async {

@@ -47,17 +47,63 @@ final class AppFeatureTests: XCTestCase {
     @MainActor
     func testOnAppear() async {
         let state = AppFeature.State()
+        let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
+            $0.alertService = alertService
         }
-        await store.send(.onAppear)
+
+        let task = await testOnAppearActions(store: store)
+
+        await task.cancel()
+    }
+
+    @MainActor
+    func testErrorAndAlertServiceHandling() async {
+        enum CustomError: LocalizedError {
+            case anExampleError
+
+            var errorDescription: String? { "An example Error." }
+            var failureReason: String? { "An explicit Error with no reason. It just fails!" }
+        }
+
+        let state = AppFeature.State()
+        let alertService = AlertService.testValue
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        } withDependencies: {
+            $0.networking = VPNNetworkingMock()
+            $0.alertService = alertService
+        }
+
+        let error: CustomError = .anExampleError
+
+        let task = await testOnAppearActions(store: store)
+
+        await alertService.feed(error)
+
+        await store.receive(\.incomingAlert) {
+            $0.alert = AlertState(title: .init(error.errorDescription!), message: .init(error.failureReason!))
+        }
+
+        await task.cancel()
+    }
+}
+
+private extension AppFeatureTests {
+    @MainActor
+    func testOnAppearActions(store: TestStoreOf<AppFeature>) async -> TestStoreTask {
+        let task = await store.send(.onAppearTask)
+
         await store.receive(\.networking) { // startAcquiringSession
             $0.networking = .acquiringSession
         }
         await store.receive(\.networking) { // session fetched failure
             $0.networking = .unauthenticated(.network(internalError: ""))
         }
+
+        return task
     }
 }

@@ -31,7 +31,9 @@ struct ProtonVPNApp: App {
                 .onAppear { self.startup() }
         }
     }
+}
 
+extension ProtonVPNApp {
     private func startup() {
         @Dependency(\.dohConfiguration) var doh
         if doh.defaultHost.contains("black") {
