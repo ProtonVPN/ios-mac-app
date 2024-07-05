@@ -18,6 +18,7 @@
 
 #if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
 import XCTest
+import Clocks
 import ComposableArchitecture
 
 import Domain
@@ -250,7 +251,6 @@ final class ConnectionFeatureTests: XCTestCase {
         let mockManager = MockTunnelManager()
         let mockClock = TestClock()
         let mockAgent = LocalAgentMock(state: .disconnected)
-        mockAgent.disconnectionDuration = .zero
         let mockStorage = MockVpnAuthenticationStorage()
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
@@ -362,12 +362,103 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .connected(nil)
         }
 
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopObservingEvents)
+
         let connectedWithRefreshedCertificate: ConnectionFeature.State = .init(
             tunnelState: .connected(connectedLogicalServer),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate)),
             localAgentState: .connected(nil)
         )
         XCTAssertEqual(store.state, connectedWithRefreshedCertificate)
+    }
+
+    @MainActor func testDisconnectsWithTimeoutErrorWhenConnectionTimesOut() async {
+        let now = Date.now
+        let tomorrow = now.addingTimeInterval(.days(1))
+
+        let mockVPNSession = VPNSessionMock(status: .disconnected)
+        let mockManager = MockTunnelManager(connection: mockVPNSession)
+        let mockClock = TestClock()
+        let mockAgent = LocalAgentMock(state: .disconnected)
+        mockAgent.connectionDuration = .seconds(45) // Longer than our default connection timeout of 30 seconds
+
+        let mockStorage = MockVpnAuthenticationStorage()
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        mockStorage.keys = mockKeys
+        mockStorage.cert = mockCertificate
+
+        mockManager.connection = VPNSessionMock(
+            status: .disconnected,
+            connectedDate: nil,
+            lastDisconnectError: nil
+        )
+
+        let server = Server.mock
+        let features = VPNConnectionFeatures.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+        let disconnected = ConnectionFeature.State.init(
+            tunnelState: .disconnected(nil),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
+            localAgentState: .disconnected(nil)
+        )
+
+        let store = TestStore(initialState: disconnected) {
+            ConnectionFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            $0.localAgent = mockAgent
+        }
+
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
+
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+
+        // Connection
+
+        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+
+        await store.send(.connect(intent))
+        await store.receive(\.tunnel.connect) {
+            $0.tunnel = .connecting(connectedLogicalServer)
+        }
+
+        await store.receive(\.tunnel.tunnelStartRequestFinished.success)
+        await store.receive(\.tunnel.tunnelStatusChanged.connecting)
+
+        await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
+        await store.receive(\.tunnel.tunnelStatusChanged.connected)
+        await store.receive(\.tunnel.connectionFinished.success) {
+            $0.tunnel = .connected(connectedLogicalServer)
+        }
+
+        await store.receive(\.certAuth.loadAuthenticationData)
+        await store.receive(\.certAuth.loadingFinished.success)
+        await store.receive(\.localAgent.connect) {
+            $0.localAgent = .connecting
+        }
+
+        // Fast forward to the xxact time at which the connection should time out
+        await mockClock.advance(by: .seconds(29)) // Default timeout minus time spent connecting tunnel (1s)
+        await store.receive(\.disconnect.connectionFailure.timeout)
+        await store.receive(\.localAgent.disconnect) {
+            $0.localAgent = .disconnecting(nil)
+        }
+        await store.receive(\.tunnel.disconnect) {
+            $0.tunnel = .disconnecting
+        }
+
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopObservingEvents)
     }
 }
 #endif

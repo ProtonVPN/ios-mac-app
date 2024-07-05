@@ -34,6 +34,7 @@ final class VPNSessionMock: VPNSession {
         }
     }
 
+    var connectionDuration: Duration = .seconds(1)
     var connectionTask: Task<Void, Error>?
     var disconnectionTask: Task<Void, Error>?
     var lastDisconnectError: Error?
@@ -56,7 +57,7 @@ final class VPNSessionMock: VPNSession {
         self.status = .connecting
         connectionTask = Task {
             @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: .seconds(1))
+            try await clock.sleep(for: connectionDuration)
 
             @Dependency(\.date) var date
             connectedDate = date.now
