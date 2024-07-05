@@ -372,6 +372,10 @@ final class ConnectionFeatureTests: XCTestCase {
             localAgentState: .connected(nil)
         )
         XCTAssertEqual(store.state, connectedWithRefreshedCertificate)
+
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopObservingEvents)
     }
 
     @MainActor func testDisconnectsWithTimeoutErrorWhenConnectionTimesOut() async {

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import struct Domain.PerProtocolEntries
 
 struct ServerIpDTO: Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
@@ -26,8 +27,7 @@ struct ServerIpDTO: Codable {
     public let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
     public let label: String?
     public let x25519PublicKey: String?
-    // TODO: I don't have these in my response, so no way to test them atm:
-//    public let protocolEntries: PerProtocolEntries?
+    public let protocolEntries: PerProtocolEntries?
 
     enum CodingKeys: String, CodingKey {
         case id = "ID"
@@ -37,6 +37,6 @@ struct ServerIpDTO: Codable {
         case status
         case label
         case x25519PublicKey = "x25519PublicKey"
-//        case protocolEntries = "entryPerProtocol"
+        case protocolEntries = "entryPerProtocol"
     }
 }

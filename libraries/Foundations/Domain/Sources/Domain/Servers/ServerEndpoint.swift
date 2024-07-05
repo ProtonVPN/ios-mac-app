@@ -66,6 +66,14 @@ extension ServerEndpoint {
         return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
 
+    public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
+        guard let protocolEntries else {
+            return nil
+        }
+
+        return protocolEntries[vpnProtocol]??.ports
+    }
+
     /// Returns true if any of the protocols in the set are supported by this server ip.
     public func supports(protocolSet: ProtocolSupport) -> Bool {
         return !supportedProtocols.isDisjoint(with: protocolSet)

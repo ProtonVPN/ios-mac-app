@@ -79,7 +79,7 @@ extension LogicalDTO {
                     status: $0.status,
                     label: $0.label,
                     x25519PublicKey: $0.x25519PublicKey,
-                    protocolEntries: nil // TODO: pass actual value, when we'll have it
+                    protocolEntries: $0.protocolEntries
                 )
             }
         )

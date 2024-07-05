@@ -109,7 +109,7 @@ public struct ServerProtocolEntry: Equatable, Codable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case ipv4 = "IPv4"
-        case ports = "Ports"
+        case ports
     }
 
     public init(ipv4: String?, ports: [Int]?) {

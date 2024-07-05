@@ -23,6 +23,7 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
+import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
 import struct ConnectionFoundations.WireguardConfig
 import struct ConnectionFoundations.StoredWireguardConfig
@@ -56,7 +57,7 @@ extension DependencyValues {
 
 extension ManagerConfigurator {
 
-    private static func configuration(with connectionIntent: ServerConnectionIntent) -> NETunnelProviderProtocol {
+    private static func configuration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
         // TODO: Provide bundle ID using a Dependency
         let bundleID: String = "ch.protonmail.vpn.WireGuard-tvOS"
         let protocolConfiguration = NETunnelProviderProtocol()
@@ -66,7 +67,7 @@ extension ManagerConfigurator {
 
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
-        protocolConfiguration.serverAddress = server.endpoint.entryIp ?? server.endpoint.exitIp
+        protocolConfiguration.serverAddress = server.endpoint.exitIp
         protocolConfiguration.wgProtocol = connectionIntent.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
@@ -75,8 +76,10 @@ extension ManagerConfigurator {
         @Dependency(\.date) var date
         protocolConfiguration.username = connectionConfiguration.username
 
-        // This should be done outside connection and passed in
-        // let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
+        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.transport)) else {
+            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.transport)
+        }
+        let overridePorts = server.endpoint.overridePorts(using: .wireGuard(connectionIntent.transport))
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
@@ -84,17 +87,25 @@ extension ManagerConfigurator {
             wireguardConfig: connectionConfiguration.wireguardConfig,
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             serverPublicKey: server.endpoint.x25519PublicKey,
-            entryServerAddress: server.endpoint.entryIp ?? server.endpoint.exitIp, // TODO: select entry IP according to protocol
-            ports: connectionConfiguration.wireguardConfig.defaultUdpPorts, // TODO: select ports
+            entryServerAddress: entryIP,
+            ports: overridePorts ?? connectionConfiguration.wireguardConfig.defaultPorts(for: connectionIntent.transport),
             timestamp: date.now
         )
 
         var configData = Data([UInt8(version.rawValue)])
-        configData.append(try! encoder.encode(storedConfig)) // TODO: error handling
-        let passwordReference = try! tunnelKeychain.store(wireguardConfigData: configData)
-        protocolConfiguration.passwordReference = passwordReference
+        do {
+            configData.append(try encoder.encode(storedConfig))
+        } catch {
+            throw WireguardConfiguratorError.configurationEncodingError(error)
+        }
+        do {
+            let passwordReference = try tunnelKeychain.store(wireguardConfigData: configData)
+            protocolConfiguration.passwordReference = passwordReference
 
-        return protocolConfiguration
+            return protocolConfiguration
+        } catch {
+            throw WireguardConfiguratorError.storageError(error)
+        }
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
@@ -104,7 +115,7 @@ extension ManagerConfigurator {
 
                 switch operation {
                 case .connection(let connectionIntent):
-                    manager.vpnProtocolConfiguration = configuration(with: connectionIntent)
+                    manager.vpnProtocolConfiguration = try configuration(with: connectionIntent)
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 
@@ -115,4 +126,10 @@ extension ManagerConfigurator {
             }
         )
     }
+}
+
+enum WireguardConfiguratorError: Error {
+    case entryUnavailableForTransport(WireGuardTransport)
+    case configurationEncodingError(Error)
+    case storageError(Error)
 }

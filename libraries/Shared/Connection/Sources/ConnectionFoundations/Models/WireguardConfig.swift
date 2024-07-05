@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import enum Domain.WireGuardTransport
 import Ergonomics
 
 public struct WireguardConfig: Codable, Equatable {
@@ -49,6 +50,19 @@ public struct WireguardConfig: Codable, Equatable {
 
     public init() {
         self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
+    }
+
+    public func defaultPorts(for transport: WireGuardTransport) -> [Int] {
+        switch transport {
+        case .udp:
+            return defaultUdpPorts
+
+        case .tcp:
+            return defaultTcpPorts
+
+        case .tls:
+            return defaultTlsPorts
+        }
     }
 }
 
