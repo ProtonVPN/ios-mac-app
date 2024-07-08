@@ -39,8 +39,8 @@ extension AlertService {
         }
 
         init(localizedError: LocalizedError) {
-            self.title = localizedError.errorDescription.map { .init($0) } ?? Self.titleFallback
-            self.message = localizedError.failureReason.map { .init($0) } ?? Self.messageFallback
+            self.title = localizedError.failureReason.map { .init($0) } ?? Self.titleFallback
+            self.message = localizedError.errorDescription.map { .init($0) } ?? Self.messageFallback
         }
 
         func callAsFunction() -> Self {

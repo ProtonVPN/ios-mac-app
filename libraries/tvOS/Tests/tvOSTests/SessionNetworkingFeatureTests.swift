@@ -94,7 +94,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0.networking = VPNNetworkingMock()
         }
         await store.send(.startLogout)
-        await fulfillment(of: [authKeychainCleared, vpnAuthStorageCleared])
+        await fulfillment(of: [authKeychainCleared, vpnAuthStorageCleared], timeout: 1)
         await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
         }

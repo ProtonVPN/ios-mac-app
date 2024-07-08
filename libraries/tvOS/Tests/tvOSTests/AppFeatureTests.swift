@@ -87,7 +87,7 @@ final class AppFeatureTests: XCTestCase {
         await alertService.feed(error)
 
         await store.receive(\.incomingAlert) {
-            $0.alert = AlertState(title: .init(error.errorDescription!), message: .init(error.failureReason!))
+            $0.alert = AlertState(title: .init(error.failureReason!), message: .init(error.errorDescription!))
         }
 
         await task.cancel()
