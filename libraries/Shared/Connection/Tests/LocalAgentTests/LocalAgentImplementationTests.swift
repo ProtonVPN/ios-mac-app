@@ -31,23 +31,26 @@ final class LocalAgentImplementationTests: XCTestCase {
         } operation: { LocalAgentImplementation() }
 
         let firstSubscriptionEventReceived = XCTestExpectation()
-        let secondSubscriptionEventReceived = XCTestExpectation()
 
-        Task {
-            for await _ in agent.eventStream {
-                firstSubscriptionEventReceived.fulfill()
-            }
+        let firstEventStream = agent.createEventStream()
+        agent.didReceive(event: .state(.connecting))
+
+        for await _ in firstEventStream {
+            firstSubscriptionEventReceived.fulfill()
+            break
         }
 
-        agent.didReceive(event: .state(.connected))
         await fulfillment(of: [firstSubscriptionEventReceived], timeout: 1.0)
 
-        Task {
-            for await _ in agent.eventStream {
-                secondSubscriptionEventReceived.fulfill()
-            }
+        let secondSubscriptionEventReceived = XCTestExpectation()
+
+        let secondEventStream = agent.createEventStream()
+        agent.didReceive(event: .state(.connecting))
+
+        for await _ in secondEventStream {
+            secondSubscriptionEventReceived.fulfill()
+            break
         }
-        agent.didReceive(event: .state(.connected))
 
         await fulfillment(of: [secondSubscriptionEventReceived], timeout: 1.0)
     }

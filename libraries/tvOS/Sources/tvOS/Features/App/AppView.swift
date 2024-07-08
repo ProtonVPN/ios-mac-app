@@ -29,7 +29,7 @@ public struct AppView: View {
     }
 
     public init() {
-        self._store = .constant(.init(initialState: AppFeature.State(), reducer: { AppFeature() }))
+        self._store = .constant(.init(initialState: AppFeature.State(), reducer: { AppFeature()._printChanges() }))
     }
 
     public var body: some View {

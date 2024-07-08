@@ -19,6 +19,7 @@
 import Foundation
 import protocol GoLibs.LocalAgentNativeClientProtocol
 import class GoLibs.LocalAgentStatusMessage
+@testable import LocalAgent
 
 class MockLocalAgentClient: NSObject, LocalAgentClient {
     func log(_ text: String?) { }

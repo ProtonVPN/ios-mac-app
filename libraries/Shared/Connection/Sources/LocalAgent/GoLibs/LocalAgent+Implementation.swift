@@ -17,28 +17,31 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import XCTestDynamicOverlay
 import Dependencies
 import ConnectionFoundations
 
 final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.localAgentConnectionFactory) var connectionFactory
 
-    let eventStream: AsyncStream<LocalAgentEvent>
-
     private var connection: LocalAgentConnection?
     private let client: LocalAgentClient
     private var previousState: LocalAgentState?
-    private let continuation: AsyncStream<LocalAgentEvent>.Continuation
+    private var listener: ((LocalAgentEvent) -> Void)?
 
-    var state: LocalAgentState {
-        connection?.currentState ?? .disconnected
+    func createEventStream() -> AsyncStream<LocalAgentEvent> {
+        return AsyncStream<LocalAgentEvent> { continuation in
+            listener = { event in
+                continuation.yield(event)
+            }
+            continuation.onTermination = { @Sendable [weak self] _ in
+                self?.listener = nil
+            }
+        }
     }
 
     init() {
         log.info("LocalAgentImplementation init")
-        let (eventStream, continuation) = AsyncStream<LocalAgentEvent>.makeStream()
-        self.eventStream = eventStream
-        self.continuation = continuation
 
         @Dependency(\.localAgentClientFactory) var clientFactory
         client = clientFactory.createLocalAgentClient()
@@ -48,10 +51,6 @@ final class LocalAgentImplementation: LocalAgent {
     deinit {
         log.info("LocalAgentImplementation deinit")
         connection?.close()
-    }
-
-    private func handle(event: LocalAgentEvent) {
-        continuation.yield(event)
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
@@ -73,6 +72,10 @@ final class LocalAgentImplementation: LocalAgent {
 
 extension LocalAgentImplementation: LocalAgentClientDelegate {
     func didReceive(event: LocalAgentEvent) {
-        handle(event: event)
+        guard let listener else {
+            log.assertionFailure("No listener available to receive event: \(event)")
+            return
+        }
+        listener(event)
     }
 }
