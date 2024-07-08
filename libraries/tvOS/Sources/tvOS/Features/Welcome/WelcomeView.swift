@@ -52,7 +52,6 @@ struct WelcomeView: View {
         Text("Available with Proton VPN Plus", comment: "Badge title on the login page")
             .font(.caption)
             .foregroundColor(Color(.text))
-            .background(Color(.background, .strong))
             .padding(.vertical, .themeSpacing8)
             .padding(.horizontal, .themeSpacing16)
             .overlay(

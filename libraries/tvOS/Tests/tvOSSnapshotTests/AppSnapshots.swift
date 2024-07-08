@@ -25,7 +25,15 @@ import SwiftUI
 
 class AppFeatureSnapshotTests: XCTestCase {
 
-    func testApp() {
+    func testLightApp() {
+        app(trait: .light)
+    }
+
+    func testDarkApp() {
+        app(trait: .dark)
+    }
+
+    func app(trait: Trait) {
         let store = Store(initialState: AppFeature.State(networking: .authenticated(.unauth(uid: "")))) {
             AppFeature()
         } withDependencies: {
@@ -36,18 +44,18 @@ class AppFeatureSnapshotTests: XCTestCase {
         let appView = AppView(store: store)
             .frame(.rect(width: 1920, height: 1080))
 
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "1 Welcome")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "1 Welcome " + trait.name)
         store.send(.welcome(.showCreateAccount))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "2 CreateAccount")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "2 CreateAccount " + trait.name)
         store.send(.welcome(.showSignIn))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "3 SignInRetrievingCode")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "3 SignInRetrievingCode " + trait.name)
         store.send(.welcome(.destination(.presented(.signIn(.codeFetchingFinished(.success(SignInCode(selector: "", userCode: "1234ABCD"))))))))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "4 SignInWithCode")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "4 SignInWithCode " + trait.name)
         store.send(.welcome(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "5 CodeExpired")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "5 CodeExpired " + trait.name)
         store.send(.welcome(.userTierUpdated(0)))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "6 Upsell")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "6 Upsell " + trait.name)
         store.send(.networking(.startAcquiringSession))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "7 AcquiringSession")
+        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "7 AcquiringSession " + trait.name)
     }
 }

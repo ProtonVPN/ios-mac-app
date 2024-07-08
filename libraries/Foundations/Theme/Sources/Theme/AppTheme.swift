@@ -60,6 +60,7 @@ public enum AppTheme {
         public static let active = Self(bitPosition: 15)
         public static let hovered = Self(bitPosition: 16)
         public static let info = Self(bitPosition: 17)
+        public static let selected = Self(bitPosition: 18)
 
         public init(rawValue: Int) {
             self.rawValue = rawValue

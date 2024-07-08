@@ -22,6 +22,7 @@ import ProtonCoreUIFoundations
 import Localization
 import Domain
 import Connection
+import Theme
 
 struct ProtectionStatusView: View {
 
@@ -38,7 +39,7 @@ struct ProtectionStatusView: View {
             case .connected:
                 icon = IconProvider.lockFilled
                 title = "Protected"
-                foregroundColor = Color(.text, .success)
+                foregroundColor = Asset.vpnGreen.swiftUIColor
                 buttonTitle = "Disconnect"
             case .connecting:
                 icon = nil
@@ -65,7 +66,7 @@ struct ProtectionStatusView: View {
 
     private func view(model: Model) -> some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: .themeSpacing32) {
                 protectionTitle(model: model)
                 location
                 button(model: model)
@@ -127,7 +128,7 @@ struct ProtectionStatusView: View {
             .font(.body)
             .padding(.vertical, .themeSpacing24)
             .padding(.horizontal, 32)
-            .background(Color(hex: 0x0F0F0F, alpha: 0.48))
+            .background(Color(.materialRegular))
             .clipRectangle(cornerRadius: .radius16)
     }
 
@@ -138,7 +139,22 @@ struct ProtectionStatusView: View {
             Text(model.buttonTitle)
                 .font(.body)
                 .bold()
-                .padding(.vertical, .themeSpacing12)
         }
+        .buttonStyle(ConnectButtonStyle())
+    }
+}
+
+private struct ConnectButtonStyle: ButtonStyle {
+
+    @Environment(\.isFocused) var isFocused
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(.vertical, .themeSpacing24)
+            .padding(.horizontal, .themeSpacing32)
+            .background(isFocused ? Color(.background, .selected) : Color(.background, .weak))
+            .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
+            .cornerRadius(.themeRadius16)
+            .hoverEffect(.highlight)
     }
 }

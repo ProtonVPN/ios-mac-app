@@ -44,7 +44,7 @@ private struct WelcomeButtonStyle: ButtonStyle {
         configuration.label
             .padding(.horizontal, .themeSpacing32)
             .padding(.vertical, .themeSpacing24)
-            .background(isFocused ? Color(.background, .hovered) : Color(.background, .weak))
+            .background(isFocused ? Color(.background, .selected) : Color(.background, .weak))
             .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
             .cornerRadius(.themeRadius16)
             .hoverEffect(.highlight)

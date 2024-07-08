@@ -52,7 +52,7 @@ private struct SettingsButtonStyle: ButtonStyle {
         configuration.label
             .padding(.leading, .themeSpacing48)
             .frame(width: Self.size.width, height: Self.size.height)
-            .background(isFocused ? Color(.background, .hovered) : Color(.background))
+            .background(isFocused ? Color(.background, .selected) : Color(.background))
             .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
             .cornerRadius(.themeRadius24)
             .hoverEffect(.highlight)
