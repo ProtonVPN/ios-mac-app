@@ -30,7 +30,7 @@ public class DoHVPN: DoH, ServerConfig {
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
-        #if RELEASE
+        #if !DEBUG
         if !Bundle.isTestflightBeta {
             return liveURL
         }

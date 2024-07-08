@@ -29,7 +29,7 @@ extension DoHVPN {
 
         let apiHost: String = ObfuscatedConstants.apiHost
         let humanVerificationV3Host = ObfuscatedConstants.humanVerificationV3Host
-#if !RELEASE
+#if DEBUG
         let atlasSecret: String? = ObfuscatedConstants.atlasSecret
 #else
         let atlasSecret: String? = nil
