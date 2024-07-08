@@ -125,6 +125,8 @@ struct SessionNetworkingFeature: Reducer {
                     }
                 } catch: { error, send in
                     await send(.startLogout)
+                    @Dependency(\.alertService) var alertService
+                    await alertService.feed(error)
                 }
             case .userTierRetrieved(let tier, let session):
                 // TODO: This is an additional step before logging user in, when we'll start to support free users, we can remove this code

@@ -118,6 +118,10 @@ struct AppFeature {
             case .welcome:
                 return .none
 
+            case .networking(.startLogout):
+                state.welcome = .init() // Reset welcome state
+                return .none
+
             case .networking(.delegate(.tier(let tier))):
                 state.userTier = tier
                 return .none

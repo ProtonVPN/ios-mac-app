@@ -1787,7 +1787,15 @@
     },
     "Error" : {
       "comment" : "Fallback title for a generic error alert, when we don't have anything more specific.",
-      "extractionState" : "manual"
+      "extractionState" : "manual",
+      "localizations" : {
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Błąd"
+          }
+        }
+      }
     },
     "Fastest" : {
       "localizations" : {
