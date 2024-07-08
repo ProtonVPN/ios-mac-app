@@ -235,6 +235,7 @@ extension LocalAgentError {
                 .userTorrentNotAllowed,
                 .userBadBehavior,
                 .guestSession:
+            // The error shown on disconnection is customised through its implementation of AlertConvertibleError
             return .disconnect
 
         case .unknown:
