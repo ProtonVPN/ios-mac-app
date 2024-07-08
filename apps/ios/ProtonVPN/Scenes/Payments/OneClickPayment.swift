@@ -66,7 +66,6 @@ final class OneClickPayment {
         let client = PlansClient(
             retrievePlans: { [weak self] in
                 guard let self else { throw "Presenting screen was dismissed" }
-                guard planService.allowUpgrade else { return [] }
                 return try await self.planOptions(with: plansDataSource)
             },
             validate: { @MainActor [weak self] in
