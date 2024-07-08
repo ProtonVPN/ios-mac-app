@@ -142,7 +142,7 @@ public final class ExtensionAPIService {
     // MARK: - Private variables
 
     private var apiUrl: String {
-        #if !RELEASE
+        #if DEBUG
         if storage.contains(apiEndpointStorageKey), let url = storage.getValue(forKey: apiEndpointStorageKey) as? String {
             log.debug("Using API: \(url) ", category: .api)
             return url

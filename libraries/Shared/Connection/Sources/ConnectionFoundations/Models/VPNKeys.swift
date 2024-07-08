@@ -34,7 +34,7 @@ public struct PublicKey: Equatable, Sendable, Codable {
 }
 
 /// Ed25519 private key
-public struct PrivateKey: Equatable, Sendable, Codable {
+public struct PrivateKey: Equatable, Sendable, Codable, CustomStringConvertible, CustomDebugStringConvertible {
     /// 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
@@ -49,6 +49,16 @@ public struct PrivateKey: Equatable, Sendable, Codable {
         self.derRepresentation = derRepresentation
         self.base64X25519Representation = base64X25519Representation
     }
+
+    public var description: String {
+    #if DEBUG
+        return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+    #else
+        return "PrivateKey(<redacted>)"
+    #endif
+    }
+
+    public var debugDescription: String  { description }
 }
 
 /// Ed25519 key pair

@@ -18,6 +18,7 @@
 
 import Foundation
 import CustomDump
+import Ergonomics
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import struct VPNShared.VpnCertificate
@@ -28,6 +29,7 @@ extension Domain.Server: CustomDumpStringConvertible {
         return "Server(name: \(logical.name))"
     }
 }
+
 extension Domain.VPNConnectionFeatures: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         return "VPNConnectionFeatures"
@@ -43,5 +45,25 @@ extension VPNKeys: CustomDumpStringConvertible {
 extension VpnCertificate: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         return "VPNCertificate(validUntil: \(validUntil))"
+    }
+}
+
+extension PrivateKey: CustomDumpStringConvertible {
+    public var customDumpDescription: String {
+        #if DEBUG
+        return "PrivateKey(fingerprint: \(rawRepresentation.fingerprint))"
+        #else
+        return "PrivateKey"
+        #endif
+    }
+}
+
+extension PublicKey: CustomDumpStringConvertible {
+    public var customDumpDescription: String {
+        #if DEBUG
+        return "PublicKey(fingerprint: \(rawRepresentation.fingerprint))"
+        #else
+        return "PublicKey"
+        #endif
     }
 }
