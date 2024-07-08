@@ -26,12 +26,14 @@ import func GoLibs.LocalAgentNewFeatures
 
 import ConnectionFoundations
 
+typealias ConnectionCreator = @Sendable (ConnectionConfiguration, VPNAuthenticationData, LocalAgentNativeClientProtocol) throws -> LocalAgentConnection
+
 struct ConnectionFactory: DependencyKey {
-    var makeLocalAgentConnection: @Sendable (
-        ConnectionConfiguration,
-        VPNAuthenticationData,
-        LocalAgentNativeClientProtocol
-    ) throws -> LocalAgentConnection
+    var makeLocalAgentConnection: ConnectionCreator
+
+    init(makeLocalAgentConnection: @escaping ConnectionCreator) {
+        self.makeLocalAgentConnection = makeLocalAgentConnection
+    }
 }
 
 struct LAConfiguration: DependencyKey {
@@ -59,7 +61,7 @@ extension DependencyValues {
 }
 
 extension ConnectionFactory {
-    static var liveValue = ConnectionFactory(
+    static let liveValue = ConnectionFactory(
         makeLocalAgentConnection: { connectionConfiguration, authenticationData, client in
             @Dependency(\.localAgentConfiguration) var localAgentConfiguration
 

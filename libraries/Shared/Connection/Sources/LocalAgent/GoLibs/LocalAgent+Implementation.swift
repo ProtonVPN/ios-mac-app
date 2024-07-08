@@ -21,7 +21,7 @@ import Dependencies
 import ConnectionFoundations
 
 final class LocalAgentImplementation: LocalAgent {
-    @Dependency(\.localAgentConnectionFactory) var factory
+    @Dependency(\.localAgentConnectionFactory) var connectionFactory
 
     let eventStream: AsyncStream<LocalAgentEvent>
 
@@ -40,7 +40,8 @@ final class LocalAgentImplementation: LocalAgent {
         self.eventStream = eventStream
         self.continuation = continuation
 
-        client = LocalAgentClientImplementation()
+        @Dependency(\.localAgentClientFactory) var clientFactory
+        client = clientFactory.createLocalAgentClient()
         client.delegate = self
     }
 
@@ -54,13 +55,15 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
+        connection?.close()
+
         log.debug(
             "Local agent connecting to \(configuration.hostname)",
             category: .localAgent,
             metadata: ["config": "\(configuration)"]
         )
 
-        connection = try factory.makeLocalAgentConnection(configuration, data, client)
+        connection = try connectionFactory.makeLocalAgentConnection(configuration, data, client)
     }
 
     func disconnect() {
