@@ -62,7 +62,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
             switch action {
             case .startObservingEvents:
                 return .run { send in
-                    for await event in self.localAgent.eventStream {
+                    for await event in self.localAgent.createEventStream() {
                         await send(.event(event))
                     }
                 }

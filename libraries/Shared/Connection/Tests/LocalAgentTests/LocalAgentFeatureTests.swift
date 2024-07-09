@@ -68,4 +68,39 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         await store.send(.stopObservingEvents)
     }
+
+    @MainActor
+    func testEventsAreHandledAfterResubscribing() async throws {
+        let clientDelegateSet = XCTestExpectation(description: "Expected agent to be set as the delegate of the client")
+        let client = MockLocalAgentClient()
+        client.didSetDelegate = { _ in
+            clientDelegateSet.fulfill()
+        }
+
+        let agent = withDependencies {
+            $0.localAgentClientFactory = .init(createLocalAgentClient: { client })
+        } operation: { LocalAgentImplementation() }
+
+        await fulfillment(of: [clientDelegateSet])
+
+        let store = TestStore(initialState: .connecting) {
+            LocalAgentFeature()
+        } withDependencies: {
+            $0.localAgent = agent
+        }
+
+        await store.send(.startObservingEvents)
+
+        client.delegate?.didReceive(event: .state(.connecting))
+        await store.receive(\.event.state.connecting)
+
+        // Now, test that events are still received after resubscribing to mimic logging out and logging back in
+        await store.send(.stopObservingEvents)
+        await store.send(.startObservingEvents)
+
+        client.delegate?.didReceive(event: .state(.connecting))
+        await store.receive(\.event.state.connecting)
+
+        await store.send(.stopObservingEvents)
+    }
 }

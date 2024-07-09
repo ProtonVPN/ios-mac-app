@@ -27,8 +27,7 @@ import Domain
 import ConnectionFoundations
 
 protocol LocalAgent {
-    var state: LocalAgentState { get }
-    var eventStream: AsyncStream<LocalAgentEvent> { get }
+    func createEventStream() -> AsyncStream<LocalAgentEvent>
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws
     func disconnect()
 }

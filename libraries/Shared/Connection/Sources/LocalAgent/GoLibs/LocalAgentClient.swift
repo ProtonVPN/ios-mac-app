@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
 import protocol GoLibs.LocalAgentNativeClientProtocol
 
@@ -26,4 +27,21 @@ protocol LocalAgentClient: LocalAgentNativeClientProtocol {
 
 protocol LocalAgentClientDelegate: AnyObject {
     func didReceive(event: LocalAgentEvent)
+}
+
+struct LocalAgentClientFactory: DependencyKey {
+    var createLocalAgentClient: () -> LocalAgentClient
+
+    init(createLocalAgentClient: @escaping () -> LocalAgentClient) {
+        self.createLocalAgentClient = createLocalAgentClient
+    }
+
+    static let liveValue: LocalAgentClientFactory = .init(createLocalAgentClient: { LocalAgentClientImplementation() })
+}
+
+extension DependencyValues {
+    var localAgentClientFactory: LocalAgentClientFactory {
+        get { self[LocalAgentClientFactory.self] }
+        set { self[LocalAgentClientFactory.self] = newValue }
+    }
 }

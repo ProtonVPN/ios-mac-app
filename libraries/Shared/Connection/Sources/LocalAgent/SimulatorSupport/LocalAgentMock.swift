@@ -38,7 +38,7 @@ final class LocalAgentMock: LocalAgent {
         }
     }
 
-    var eventStream: AsyncStream<LocalAgentEvent> {
+    func createEventStream() -> AsyncStream<LocalAgentEvent> {
         AsyncStream { continuation in
             eventHandler = { event in
                 continuation.yield(event)
