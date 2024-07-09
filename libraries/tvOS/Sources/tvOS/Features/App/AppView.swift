@@ -23,6 +23,7 @@ public struct AppView: View {
     @Binding var store: StoreOf<AppFeature>
 
     @Environment(\.scenePhase) var scenePhase
+    @Environment(\.locale) var locale
 
     init(store: StoreOf<AppFeature>) {
         self._store = .constant(store)
@@ -38,6 +39,7 @@ public struct AppView: View {
             .task {
                 await store.send(.onAppearTask).finish()
             }
+            .environment(\.layoutDirection, locale.isRTLLanguage ? .rightToLeft : .leftToRight)
     }
 
     @ViewBuilder
