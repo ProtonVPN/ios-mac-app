@@ -43,6 +43,12 @@
             "value" : "Усе краіны"
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Všechny země"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -167,7 +173,171 @@
     },
     "An error occurred." : {
       "comment" : "Fallback message for a generic error alert, when we don't have anything more specific.",
-      "extractionState" : "manual"
+      "extractionState" : "manual",
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Адбылася памылка."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Došlo k chybě."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Fehler ist aufgetreten."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρουσιάστηκε σφάλμα."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se ha producido un error."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocurrió un error."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطایی رخ داد."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tapahtui virhe."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une erreur s'est produite."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Došlo je do pogreške."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terdapat suatu kesalahan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si è verificato un errore."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラーが発生しました。"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ნაპოვნია შეცდომა."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오류 발생."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En feil oppstod."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is iets fout gegaan."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wystąpił błąd."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorreu um erro."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A apărut o eroare."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyskytla sa chyba."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prišlo je do napake."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ett fel uppstod."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir sorun çıktı."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сталася помилка."
+          }
+        }
+      }
     },
     "Are you sure you want to sign out of Proton VPN?" : {
       "comment" : "Appears when user clicks on sing out button",
@@ -177,6 +347,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы сапраўды хочаце выйсці з Proton VPN?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jste si jisti, že se chcete odhlásit z Proton VPN?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher, dass du dich von Proton VPN abmelden willst?"
           }
         },
         "el" : {
@@ -286,6 +468,12 @@
             "state" : "translated",
             "value" : "Proton VPN uygulamasından çıkmak istediğinize emin misiniz?"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви дійсно хочете вийти з Proton VPN?"
+          }
         }
       }
     },
@@ -296,6 +484,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Даступна з Proton VPN Plus"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "K dispozici s Proton VPN Plus"
           }
         },
         "de" : {
@@ -410,6 +604,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN Plus ile kullanılabilir"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Доступно з Proton VPN Plus"
           }
         }
       }
@@ -591,6 +791,12 @@
             "value" : "Падключэнне да высакахуткасных сервераў па ўсім свеце і прагляд вашых абраных тэлеперадач з абароненым падключэннем па VPN."
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připojte se k vysokorychlostním serverům po celém světě a streamujte své oblíbené pořady s ochranou VPN."
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -637,6 +843,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connettiti a server ad alta velocità in tutto il mondo e riproduci in streaming i tuoi programmi preferiti con la protezione VPN."
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მიუერთდით ჩქაროსნულ სერვერს მთელ მსოფლიოში და დასტრიმეთ თქვენი სერიალები VPN-ით დაცვით."
           }
         },
         "ko" : {
@@ -686,6 +898,12 @@
             "state" : "translated",
             "value" : "Dünyanın dört bir yanındaki yüksek hızlı sunuculara bağlanın ve sevdiğiniz dizileri VPN korumasıyla izleyin."
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Під'єднуйтеся до високошвидкісних серверів у всьому світі й транслюйте улюблені шоу із захистом VPN."
+          }
         }
       }
     },
@@ -696,6 +914,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Падключана"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připojeno"
           }
         },
         "de" : {
@@ -829,6 +1053,12 @@
             "value" : "Падключэнне"
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Připojování"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -941,6 +1171,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bağlanıyor"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "З'єднання"
           }
         }
       }
@@ -1108,7 +1344,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Помилка з'єднання"
+            "value" : "Не вдалося встановити з'єднання"
           }
         }
       }
@@ -1121,6 +1357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Звязацца з намі"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontaktujte nás"
           }
         },
         "de" : {
@@ -1236,6 +1478,12 @@
             "state" : "translated",
             "value" : "Bizimle görüşün"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зв'яжіться з нами"
+          }
         }
       }
     },
@@ -1247,6 +1495,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Стварыць уліковы запіс"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vytvořit účet"
           }
         },
         "de" : {
@@ -1361,6 +1615,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hesap aç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зареєструватися"
           }
         }
       }
@@ -1543,6 +1803,12 @@
             "value" : "Адключыцца"
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpojit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1656,6 +1922,12 @@
             "state" : "translated",
             "value" : "Bağlantıyı kes"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Від'єднатися"
+          }
         }
       }
     },
@@ -1667,6 +1939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Адключэнне"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpojování"
           }
         },
         "de" : {
@@ -1782,6 +2060,12 @@
             "state" : "translated",
             "value" : "Bağlantı kesiliyor"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Від'єднання"
+          }
         }
       }
     },
@@ -1789,10 +2073,166 @@
       "comment" : "Fallback title for a generic error alert, when we don't have anything more specific.",
       "extractionState" : "manual",
       "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Памылка"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehler"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σφάλμα"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطا"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virhe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pogreška"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kesalahan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラー"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეცდომა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오류"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feil"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fout"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Błąd"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eroare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napaka"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fel"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hata"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помилка"
           }
         }
       }
@@ -1803,6 +2243,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Найхутчэйшы"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nejrychlejší"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am schnellsten"
           }
         },
         "el" : {
@@ -1820,7 +2272,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El más rápido"
+            "value" : "Más rápido"
           }
         },
         "es-419" : {
@@ -1838,7 +2290,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La plus rapide"
+            "value" : "Le plus rapide"
           }
         },
         "id" : {
@@ -1859,6 +2311,12 @@
             "value" : "უსწრაფესი"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가장 빠르게"
+          }
+        },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1877,10 +2335,22 @@
             "value" : "Mais rápido"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cel mai rapid"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Самый быстрый"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najrýchlejší"
           }
         },
         "sv" : {
@@ -1894,6 +2364,12 @@
             "state" : "translated",
             "value" : "En hızlı"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найшвидший"
+          }
         }
       }
     },
@@ -1904,6 +2380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Згенерыраваць новы код"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vygenerovat nový kód"
           }
         },
         "de" : {
@@ -2019,6 +2501,12 @@
             "state" : "translated",
             "value" : "Yeni kod oluştur"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Генерувати новий код"
+          }
         }
       }
     },
@@ -2029,6 +2517,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Галоўная"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domů"
           }
         },
         "de" : {
@@ -2144,6 +2638,12 @@
             "state" : "translated",
             "value" : "Giriş"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Домівка"
+          }
         }
       }
     },
@@ -2154,7 +2654,13 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Наша каманда падтрымкі кліентаў заўсёды гатовая дапамагчы ў выпадку ўзнікнення праблем з Proton VPN."
+            "value" : "Наша каманда падтрымкі кліентаў заўсёды гатовая дапамагчы ў выпадку ўзнікнення праблем з Proton VPN.\n\nПроста адсканіруйце QR-код або перайдзіце па спасылцы:"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pokud máte s používáním Proton VPN potíže, náš tým zákaznické podpory vám rád pomůže.\n\nStačí naskenovat QR kód nebo přejít na stránku"
           }
         },
         "el" : {
@@ -2252,6 +2758,12 @@
             "state" : "translated",
             "value" : "Proton VPN kullanırken sorun yaşıyorsanız, müşteri destek ekibimiz size yardımcı olmaktan mutluluk duyacaktır.\n\nQR kodunu tarayın ya da şuraya gidin"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У разі виникнення проблем з використанням Proton VPN наша команда підтримки клієнтів залюбки вам допоможе.\n\nПросто скануйте QR-код або перейдіть на"
+          }
         }
       }
     },
@@ -2262,6 +2774,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузка краін"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načítání zemí"
           }
         },
         "de" : {
@@ -2377,6 +2895,12 @@
             "state" : "translated",
             "value" : "Ülkeler yükleniyor"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завантаження країн"
+          }
         }
       }
     },
@@ -2387,7 +2911,13 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Неабходна дапамога ў наладжванні або выкарыстанні Proton VPN?\n\nНаведайце наш цэнтр падтрымкі ў інтэрнэце для атрымання парад у выпраўленні непаладак, дапаможнікаў па наладцы і адказаў на частыя пытанні."
+            "value" : "Неабходна дапамога ў наладжванні або выкарыстанні Proton VPN?\n\nНаведайце наш цэнтр падтрымкі ў інтэрнэце для атрымання парад у выпраўленні непаладак, дапаможнікаў па наладцы і адказаў на частыя пытанні.\n\nПроста адсканіруйце QR-код або перайдзіце па спасылцы:"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potřebujete pomoc s nastavením nebo používáním Proton VPN?\n\nNavštivte naše online centrum podpory, kde najdete tipy pro řešení problémů, průvodce nastavením a odpovědi na nejčastější dotazy.\n\nStačí naskenovat QR kód nebo přejít na stránku"
           }
         },
         "el" : {
@@ -2456,6 +2986,12 @@
             "value" : "Potrzebujesz pomocy z Proton VPN?\n\nOdwiedź nasze centrum pomocy dla wskazówek, poradników i odpowiedzi na najczęściej zadawane pytania.\n\nZeskanuj kod QR lub przejdź do"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precisa de ajuda para configurar o Proton VPN?\n\nVisite nosso centro de ajuda para soluções de problemas, dicas, gias de configuração e respostas para as perguntasse frequentes.\n\nDigitalize o código QR ou acesse"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2484,6 +3020,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN kurulumu veya kullanımı için yardıma mı gerek duyuyorsunuz?\n\nSorun giderme ipuçları, kurulum rehberleri ve sık sorulan soruların yanıtlaru için çevrim içi destek merkezimize bakabilirsiniz.\n\nQR kodunu tarayın ya da şuraya gidin"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Потрібна допомога з налаштуванням чи використанням Proton VPN?\n\nВідвідайте наш довідковий центр для отримання порад щодо усунення проблем, налаштування та відповідей на поширені запитання.\n\nПросто скануйте QR-код або перейдіть на"
           }
         }
       }
@@ -2666,6 +3208,12 @@
             "value" : "Абаронена"
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chráněno"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2798,6 +3346,12 @@
             "value" : "Proton VPN для Apple TV даступны на ўсіх платных тарыфных планах. Вы можаце праверыць і кіраваць сваёй падпіскай на нашым вэб-сайце."
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN pro Apple TV je k dispozici ve všech placených tarifech. Své předplatné si můžete zkontrolovat a spravovat na našich webových stránkách."
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2864,6 +3418,12 @@
             "value" : "Proton VPN na Apple TV jest dostępny w płatnych planach. Sprawdź i zarządzaj subskrypcją na naszej stronie internetowej."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN para Apple TV está disponível para todos os planos pagos. Você pode verificar e gerenciar sia assinatura no nosso site."
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2893,6 +3453,12 @@
             "state" : "translated",
             "value" : "Apple TV için Proton VPN tüm ücretli tarifelerde kullanılabilir. Aboneliğinizi sitemizden kontrol edebilir ve yönetebilirsiniz."
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN для Apple TV доступна у всіх платних тарифних планах. Ви можете перевірити й керувати своєю передплатою на нашому вебсайті."
+          }
         }
       }
     },
@@ -2904,6 +3470,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Хуткае падлучэнне"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rychlé připojení"
           }
         },
         "de" : {
@@ -3019,6 +3591,12 @@
             "state" : "translated",
             "value" : "Hızlı bağlan"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Швидке з'єднання"
+          }
         }
       }
     },
@@ -3030,6 +3608,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рэкамендавана"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doporučené"
           }
         },
         "de" : {
@@ -3161,13 +3745,19 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Адсканіруйце QR-кода або перайдзіце\n"
+            "value" : "Адсканіруйце QR-кода або перайдзіце па спасылцы:\n"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naskenujte QR kód nebo přejděte na\n"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanne den QR-Code oder gehe zu"
+            "value" : "Scanne den QR-Code oder gehe zu\n"
           }
         },
         "el" : {
@@ -3239,7 +3829,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zeskanuj kod QR lub przejdź do"
+            "value" : "Zeskanuj kod QR lub przejdź do\n"
           }
         },
         "pt-BR" : {
@@ -3251,13 +3841,13 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scanați codul QR sau accesați"
+            "value" : "Scanați codul QR sau accesați\n"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сканируйте QR-код или перейдите по ссылке:"
+            "value" : "Сканируйте QR-код или перейдите по ссылке:\n"
           }
         },
         "sk" : {
@@ -3276,6 +3866,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "QR kodunu tarayın ya da şuraya gidin\n"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скануйте QR-код або перейдіть на\n"
           }
         }
       }
@@ -3948,6 +4544,12 @@
             "value" : "Адбываецца выхад..."
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odhlašování..."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4061,6 +4663,12 @@
             "state" : "translated",
             "value" : "Oturum kapatılıyor..."
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Триває вихід..."
+          }
         }
       }
     },
@@ -4072,6 +4680,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Цэнтр падтрымкі"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centrum podpory"
           }
         },
         "de" : {
@@ -4187,6 +4801,12 @@
             "state" : "translated",
             "value" : "Destek merkezi"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Довідковий центр"
+          }
         }
       }
     },
@@ -4197,6 +4817,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Узнікла праблема.\nПраверце падключэнне да вашай сеткі"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastal problém.\nZkontrolujte prosím vaše síťové připojení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Fehler ist aufgetreten.\nBitte überprüfe deine Internetverbindung."
           }
         },
         "el" : {
@@ -4271,6 +4903,12 @@
             "value" : "Wystąpił problem.\nSprawdź połączenie z Internetem"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Houve um problema.\nVerifique sua conexão á rede"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4300,6 +4938,12 @@
             "state" : "translated",
             "value" : "Bir sorun çıktı.\nLütfen ağ bağlantınızı denetleyin"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виникла проблема.\nПеревірте своє мережеве з'єднання"
+          }
         }
       }
     },
@@ -4310,7 +4954,19 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Каб прачытаць нашу палітыку прыватнасці, адсканіруйце QR-код або перайдзіце"
+            "value" : "Каб прачытаць нашу палітыку прыватнасці, адсканіруйце QR-код або перайдзіце па спасылцы:"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chcete-li si přečíst naše zásady ochrany osobních údajů, naskenujte kód QR nebo přejděte na"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um unsere Datenschutzerklärung zu lesen, scanne den QR-Code oder gehe zu"
           }
         },
         "el" : {
@@ -4420,6 +5076,12 @@
             "state" : "translated",
             "value" : "Gizlilik ilkemizi okumak için QR kodunu tarayın ya da şuraya gidin"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Щоб ознайомитися з нашою політикою приватності, скануйте QR-код або перейдіть на"
+          }
         }
       }
     },
@@ -4431,6 +5093,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не абаронена"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nechráněno"
           }
         },
         "de" : {
@@ -4472,7 +5140,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Non protégé"
+            "value" : "Sans protection"
           }
         },
         "id" : {
@@ -4562,7 +5230,13 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выкарыстоўвайце іншую прыладу, перайдзіце"
+            "value" : "Выкарыстоўвайце іншую прыладу? Перайдзіце па спасылцы:"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Při použití jiného zařízení přejděte na"
           }
         },
         "el" : {
@@ -4672,6 +5346,12 @@
             "state" : "translated",
             "value" : "Başka bir aygıt kullanarak şuraya gidin"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовуєте інший пристрій? Перейдіть на"
+          }
         }
       }
     },
@@ -4683,6 +5363,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выкарыстоўваеце Proton Free?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používáte Proton Free?"
           }
         },
         "de" : {
@@ -4778,7 +5464,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Используете Proton Free"
+            "value" : "Используете Proton Free?"
           }
         },
         "sk" : {
@@ -4798,6 +5484,12 @@
             "state" : "translated",
             "value" : "Proton Free tarifesini mi kullanıyorsunuz?"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Використовуєте Proton Free?"
+          }
         }
       }
     },
@@ -4808,6 +5500,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Праглядайце без назірання"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sledujte, aniž byste byli sledováni."
           }
         },
         "el" : {
@@ -4911,6 +5609,12 @@
             "state" : "translated",
             "value" : "İzlenmeden izleyin."
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Користуйтеся інтернетом без стеження."
+          }
         }
       }
     },
@@ -4921,7 +5625,13 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Калі спытаць ваш праверачны код, увядзіце"
+            "value" : "Калі ў вас спытаюць праверачны код, увядзіце"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po výzvě k zadání ověřovacího kódu zadejte"
           }
         },
         "el" : {
@@ -5025,6 +5735,12 @@
             "state" : "translated",
             "value" : "Doğrulama kodu sorulduğunda şunu yazın"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримавши запит коду підтвердження, введіть"
+          }
         }
       }
     },
@@ -5035,7 +5751,13 @@
         "be" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Калі спытаць ваш праверачны код, увядзіце (аднаўленне...)"
+            "value" : "Калі ў вас спытаюць праверачны код, увядзіце (аднаўленне...)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Po výzvě k zadání ověřovacího kódu zadejte (načítání...)"
           }
         },
         "el" : {
@@ -5139,6 +5861,12 @@
             "state" : "translated",
             "value" : "Doğrulama kodu sorulduğunda şunu yazın (alınıyor...)"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отримавши запит коду підтвердження, введіть (готується код...)"
+          }
         }
       }
     },
@@ -5149,6 +5877,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ваш праверачны код пратэрмінаваны"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ověřovací kód vypršel"
           }
         },
         "de" : {
@@ -5263,6 +5997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Doğrulama kodunuzun geçerlilik süresi dolmuş"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Термін дії коду підтвердження минув"
           }
         }
       }
