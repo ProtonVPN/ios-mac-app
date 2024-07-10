@@ -18,16 +18,21 @@
 
 import Foundation
 
-import Dependencies
 import CasePaths
+import Dependencies
 
 import protocol GoLibs.LocalAgentNativeClientProtocol
 
-import Domain
 import ConnectionFoundations
+import Domain
+import Ergonomics
 
+#if swift(>=6.0)
+#warning("Improve LocalAgent in order to generalize createEventStream() to return an AsyncSequence<LocalAgentEvent>")
+#endif
 protocol LocalAgent {
-    func createEventStream() -> AsyncStream<LocalAgentEvent>
+    var state: LocalAgentState { get throws }
+    func createEventStream() -> AsyncThrowingStream<LocalAgentEvent, Error>
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws
     func disconnect()
 }
@@ -42,7 +47,6 @@ public enum LocalAgentEvent: Sendable {
 }
 
 struct LocalAgentKey: DependencyKey {
-
 #if targetEnvironment(simulator)
     static let liveValue: LocalAgent = LocalAgentMock(state: .disconnected)
 #else
