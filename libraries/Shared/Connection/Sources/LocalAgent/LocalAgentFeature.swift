@@ -62,8 +62,13 @@ public struct LocalAgentFeature: Reducer, Sendable {
             switch action {
             case .startObservingEvents:
                 return .run { send in
-                    for await event in self.localAgent.createEventStream() {
-                        await send(.event(event))
+                    do {
+                        for try await event in self.localAgent.createEventStream() {
+                            await send(.event(event))
+                        }
+                    } catch {
+                        log.assertionFailure("An error occured when listening to localAgent eventStream: \(error)")
+                        await send(.disconnect(.other(error)))
                     }
                 }
                 .cancellable(id: CancelID.observation)
@@ -173,6 +178,7 @@ public enum LocalAgentConnectionError: Error, Equatable {
     case failedToEstablishConnection(Error) // Thrown during the initial connection attempt
     case agentError(LocalAgentError) // Raised by the agent after connecting
     case serverCertificateError
+    case other(Error)
 
     /// Equatable conformance is only required because feature state must be equatable. We could probably always return
     /// `true`, but for now let's just ignore associated values
@@ -182,6 +188,9 @@ public enum LocalAgentConnectionError: Error, Equatable {
             return true
 
         case (.agentError, .agentError):
+            return true
+
+        case (.other, .other):
             return true
 
         default:
