@@ -63,7 +63,6 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             SessionNetworkingFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
-            $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
         }
         await store.send(.sessionExpired) {
             $0 = .unauthenticated(nil)
@@ -80,21 +79,17 @@ final class SessionNetworkingFeatureTests: XCTestCase {
     @MainActor
     func testStartLogout() async {
         let authKeychainCleared = expectation(description: "Should call clear keychain")
-        let vpnAuthStorageCleared = expectation(description: "Should clear vpn storage keychain")
         let keychainMock = MockAuthKeychain()
-        let vpnAuthStorageMock = MockVpnAuthenticationStorage()
         keychainMock.credentialsWereCleared = { authKeychainCleared.fulfill() }
-        vpnAuthStorageMock.certDeleted = { vpnAuthStorageCleared.fulfill() }
 
         let store = TestStore(initialState: SessionNetworkingFeature.State.authenticated(.auth(uid: ""))) {
             SessionNetworkingFeature()
         } withDependencies: {
             $0.authKeychain = keychainMock
-            $0.vpnAuthenticationStorage = vpnAuthStorageMock
             $0.networking = VPNNetworkingMock()
         }
         await store.send(.startLogout)
-        await fulfillment(of: [authKeychainCleared, vpnAuthStorageCleared], timeout: 1)
+        await fulfillment(of: [authKeychainCleared], timeout: 1)
         await store.receive(\.startAcquiringSession) {
             $0 = .acquiringSession
         }
