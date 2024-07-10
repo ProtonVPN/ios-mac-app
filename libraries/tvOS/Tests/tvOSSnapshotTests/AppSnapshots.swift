@@ -33,7 +33,7 @@ class AppFeatureSnapshotTests: XCTestCase {
         app(trait: .dark)
     }
 
-    func app(trait: Trait) {
+    func app(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(networking: .authenticated(.unauth(uid: "")))) {
             AppFeature()
         } withDependencies: {
@@ -44,18 +44,18 @@ class AppFeatureSnapshotTests: XCTestCase {
         let appView = AppView(store: store)
             .frame(.rect(width: 1920, height: 1080))
 
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "1 Welcome " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "1 Welcome " + trait.name)
         store.send(.welcome(.showCreateAccount))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "2 CreateAccount " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "2 CreateAccount " + trait.name)
         store.send(.welcome(.showSignIn))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "3 SignInRetrievingCode " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "3 SignInRetrievingCode " + trait.name)
         store.send(.welcome(.destination(.presented(.signIn(.codeFetchingFinished(.success(SignInCode(selector: "", userCode: "1234ABCD"))))))))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "4 SignInWithCode " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 SignInWithCode " + trait.name)
         store.send(.welcome(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "5 CodeExpired " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "5 CodeExpired " + trait.name)
         store.send(.welcome(.userTierUpdated(0)))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "6 Upsell " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "6 Upsell " + trait.name)
         store.send(.networking(.startAcquiringSession))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "7 AcquiringSession " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "7 AcquiringSession " + trait.name)
     }
 }

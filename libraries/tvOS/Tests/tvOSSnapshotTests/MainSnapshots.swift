@@ -46,7 +46,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         mainLoaded(trait: .dark)
     }
 
-    func mainLoading(trait: Trait) {
+    func mainLoading(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: MainFeature.State(homeLoading: .loading)) {
             MainFeature()
         } withDependencies: {
@@ -63,10 +63,10 @@ final class MainFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
 
-        assertSnapshot(of: mainView, as: .image(traits: trait.rawValue), testName: "1 Loading " + trait.name)
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Loading " + trait.name)
     }
 
-    func mainLoaded(trait: Trait) {
+    func mainLoaded(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()
         } withDependencies: {
@@ -88,10 +88,10 @@ final class MainFeatureSnapshotTests: XCTestCase {
         @Shared(.connectionState) var connectionState: ConnectionState?
         
         connectionState = .disconnected(nil)
-        assertSnapshot(of: mainView, as: .image(traits: trait.rawValue), testName: "1 Disconnected " + trait.name)
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
         connectionState = .connecting(.ca)
-        assertSnapshot(of: mainView, as: .image(traits: trait.rawValue), testName: "2 Connecting " + trait.name)
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
         connectionState = .connected(.ca, nil)
-        assertSnapshot(of: mainView, as: .image(traits: trait.rawValue), testName: "3 Connected " + trait.name)
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "3 Connected " + trait.name)
     }
 }

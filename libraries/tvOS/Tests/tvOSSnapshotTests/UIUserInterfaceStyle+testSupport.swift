@@ -18,30 +18,21 @@
 
 import XCTest
 
-extension UITraitCollection {
-    static let darkMode = UITraitCollection(userInterfaceStyle: .dark)
-    static let lightMode = UITraitCollection(userInterfaceStyle: .light)
-}
-
-enum Trait {
-    case light
-    case dark
-
-    var rawValue: UITraitCollection {
-        switch self {
-        case .light:
-            return .lightMode
-        case .dark:
-            return .darkMode
-        }
-    }
-
+extension UIUserInterfaceStyle {
     var name: String {
         switch self {
         case .light:
             return "light"
         case .dark:
             return "dark"
+        case .unspecified:
+            return "unspecified"
+        @unknown default:
+            return "unknown"
         }
+    }
+
+    var collection: UITraitCollection {
+        UITraitCollection(userInterfaceStyle: self)
     }
 }

@@ -35,7 +35,7 @@ class SettingsFeatureSnapshotTests: XCTestCase {
         settings(trait: .dark)
     }
 
-    func settings(trait: Trait) {
+    func settings(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(main: .init(currentTab: .settings,
                                                                      mainBackground: .clear),
                                                          networking: .authenticated(.auth(uid: "")))) {
@@ -55,12 +55,12 @@ class SettingsFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
 
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "1 List " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "1 List " + trait.name)
         store.send(.main(.settings(.showDrillDown(.contactUs))))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "2 ContactUs " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "2 ContactUs " + trait.name)
         store.send(.main(.settings(.showDrillDown(.supportCenter))))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "3 SupportCenter " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "3 SupportCenter " + trait.name)
         store.send(.main(.settings(.showDrillDown(.privacyPolicy))))
-        assertSnapshot(of: appView, as: .image(traits: trait.rawValue), testName: "4 PrivacyPolicy " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 PrivacyPolicy " + trait.name)
     }
 }
