@@ -60,9 +60,8 @@ extension AlertService {
             }
             if let currentAlert = subject.value, alert == currentAlert {
                 log.warning("An error of this type has already been received, feeding anyway...")
-            } else {
-                subject.send(alert)
             }
+            subject.send(alert)
         } finish: {
             subject.send(completion: .finished)
         }
