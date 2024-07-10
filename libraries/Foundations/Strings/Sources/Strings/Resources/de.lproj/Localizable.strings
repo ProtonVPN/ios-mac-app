@@ -2235,10 +2235,10 @@
 "_password_changed_successfully" = "Passwort erfolgreich geändert";
 
 /* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
-"_ike_deprecation_alert_title" = "Enable IKEv2?";
+"_ike_deprecation_alert_title" = "IKEv2 aktivieren?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
+"_ike_deprecation_alert_message" = "Dieses Protokoll wird bald entfernt. Ziehe einen Wechsel zu Smart Protocol in Erwägung. Mehr erfahren";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Mehr erfahren";
