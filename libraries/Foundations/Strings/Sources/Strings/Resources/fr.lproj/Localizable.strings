@@ -199,7 +199,7 @@
 "_countries_premium" = "Pays premium";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "La connexion %@.";
+"_connecting_vpn" = "Connexion à %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "Connexion à %@";

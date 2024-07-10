@@ -932,7 +932,7 @@
 "_dns_leak_protection_tooltip" = "Impede a fuga de detalhes das consultas de DNS para terceiros. Sempre ligada.";
 
 /* iOS Settings: table section cell */
-"_security_keys" = "Security Keys";
+"_security_keys" = "Chaves de segurança";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opções de segurança";
@@ -2241,7 +2241,7 @@
 "_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Learn more";
+"_ike_deprecation_alert_message_link_text" = "Saiba mais";
 
 /* Button title for 'Continue with IKEv2' */
 "_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
