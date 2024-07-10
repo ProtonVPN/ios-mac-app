@@ -48,8 +48,6 @@ extension LocalAgentConnectionError: AlertConvertibleError {
             return agentError.alert
         case .serverCertificateError:
             break
-        case .other:
-            break
         }
         return ConnectionFailedAlert()
     }
