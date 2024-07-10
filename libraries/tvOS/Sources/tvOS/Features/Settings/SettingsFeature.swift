@@ -62,7 +62,7 @@ struct SettingsFeature {
     static let signOutAlert = AlertState<Action.Alert> {
         TextState("Sign out")
     } actions: {
-        ButtonState(action: .signOut) {
+        ButtonState(role: .destructive, action: .signOut) {
             TextState("Sign out")
         }
         ButtonState(role: .cancel) {

@@ -18,6 +18,21 @@
 
 import XCTest
 
-extension UITraitCollection {
-    static let darkMode = UITraitCollection(userInterfaceStyle: .dark)
+extension UIUserInterfaceStyle {
+    var name: String {
+        switch self {
+        case .light:
+            return "light"
+        case .dark:
+            return "dark"
+        case .unspecified:
+            return "unspecified"
+        @unknown default:
+            return "unknown"
+        }
+    }
+
+    var collection: UITraitCollection {
+        UITraitCollection(userInterfaceStyle: self)
+    }
 }

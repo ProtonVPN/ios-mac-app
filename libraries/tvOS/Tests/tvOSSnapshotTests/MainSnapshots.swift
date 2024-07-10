@@ -30,8 +30,23 @@ import DomainTestSupport
 
 final class MainFeatureSnapshotTests: XCTestCase {
 
-    @MainActor
-    func testMainLoading() async {
+    func testLightMainLoading() {
+        mainLoading(trait: .light)
+    }
+
+    func testDarkMainLoading() {
+        mainLoading(trait: .dark)
+    }
+
+    func testLightMainLoaded() {
+        mainLoaded(trait: .light)
+    }
+
+    func testDarkMainLoaded() {
+        mainLoaded(trait: .dark)
+    }
+
+    func mainLoading(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: MainFeature.State(homeLoading: .loading)) {
             MainFeature()
         } withDependencies: {
@@ -48,11 +63,10 @@ final class MainFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
 
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "1 Loading")
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Loading " + trait.name)
     }
 
-    @MainActor
-    func testMainLoaded() async {
+    func mainLoaded(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
             MainFeature()
         } withDependencies: {
@@ -72,12 +86,12 @@ final class MainFeatureSnapshotTests: XCTestCase {
         store.send(.observeConnectionState)
 
         @Shared(.connectionState) var connectionState: ConnectionState?
-
+        
         connectionState = .disconnected(nil)
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "1 Disconnected")
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
         connectionState = .connecting(.ca)
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "2 Connecting")
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
         connectionState = .connected(.ca, nil)
-        assertSnapshot(of: mainView, as: .image(traits: .darkMode), named: "3 Connected")
+        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "3 Connected " + trait.name)
     }
 }

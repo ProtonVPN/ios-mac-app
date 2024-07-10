@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Type=background-brand, Light=Yes.png",
+      "filename" : "backgroundLight.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -17,7 +17,7 @@
       "scale" : "1x"
     },
     {
-      "filename" : "Type=background-brand, Light=Yes@2x.png",
+      "filename" : "background_light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -28,7 +28,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "background@2x.png",
+      "filename" : "background_dark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

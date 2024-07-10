@@ -40,12 +40,14 @@ struct SettingsView: View {
                     store.send(.signOutSelected)
                 }
                 Spacer()
-                if let userName = store.userDisplayName {
-                    Text(verbatim: "\(userName)")
+                VStack(spacing: .themeSpacing8) {
+                    if let userName = store.userDisplayName {
+                        Text(verbatim: "\(userName)")
+                    }
+                    Text(verbatim: Bundle.appVersion)
+                        .font(.caption)
+                        .foregroundStyle(Color(.text, .weak))
                 }
-                Text(verbatim: Bundle.appVersion)
-                    .font(.caption)
-                    .foregroundStyle(Color(.text, .weak))
             }
         }
         .alert($store.scope(state: \.alert, action: \.alert))

@@ -27,7 +27,15 @@ import SwiftUI
 
 class SettingsFeatureSnapshotTests: XCTestCase {
     
-    func testSettings() {
+    func testLightSettings() {
+        settings(trait: .light)
+    }
+
+    func testDarkSettings() {
+        settings(trait: .dark)
+    }
+
+    func settings(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(main: .init(currentTab: .settings,
                                                                      mainBackground: .clear),
                                                          networking: .authenticated(.auth(uid: "")))) {
@@ -47,12 +55,12 @@ class SettingsFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
 
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "1 List")
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "1 List " + trait.name)
         store.send(.main(.settings(.showDrillDown(.contactUs))))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "2 ContactUs")
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "2 ContactUs " + trait.name)
         store.send(.main(.settings(.showDrillDown(.supportCenter))))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "3 SupportCenter")
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "3 SupportCenter " + trait.name)
         store.send(.main(.settings(.showDrillDown(.privacyPolicy))))
-        assertSnapshot(of: appView, as: .image(traits: .darkMode), named: "4 PrivacyPolicy")
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 PrivacyPolicy " + trait.name)
     }
 }

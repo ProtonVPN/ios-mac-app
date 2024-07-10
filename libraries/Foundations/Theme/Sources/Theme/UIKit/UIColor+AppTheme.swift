@@ -20,6 +20,7 @@ import Foundation
 import SwiftUI
 import var ProtonCoreUIFoundations.ColorProvider
 import PMLogger
+import Ergonomics
 #if canImport(UIKit)
 import UIKit
 
@@ -77,8 +78,8 @@ private extension AppTheme.Style {
             return ColorProvider.BackgroundDeep
         } else if contains(.success) {
             return ColorProvider.NotificationSuccess
-        } else if contains(.hovered) {
-            return ColorProvider.TextNorm
+        } else if contains(.selected) {
+            return UIColor(Color(hex: 0xFAFAFB)) // (tv) prevent color scheme from changing this color
         } else {
             return ColorProvider.BackgroundNorm
         }
