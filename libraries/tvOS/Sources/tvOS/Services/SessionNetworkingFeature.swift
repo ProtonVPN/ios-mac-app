@@ -136,9 +136,10 @@ struct SessionNetworkingFeature: Reducer {
                     unauthKeychain.clear()
                     return .send(.delegate(.tier(tier)))
                 } else {
-                    return .run { send in
-                        await send(.startLogout) // tier detected to be free, log the user out
-                    }
+                    return .merge(
+                        .send(.delegate(.tier(tier))),
+                        .send(.startLogout) // tier detected to be free, log the user out
+                    )
                 }
             case .forkedSessionAuthenticated(.failure):
                 return .none
