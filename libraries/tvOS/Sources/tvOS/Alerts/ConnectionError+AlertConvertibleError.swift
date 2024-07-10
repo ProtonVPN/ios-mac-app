@@ -68,23 +68,25 @@ extension LocalAgentError: AlertConvertibleError {
                 .maxSessionsPro:
             let message = Localizable.maximumDeviceReachedDescription
             let title = Localizable.maximumDeviceTitle
-            return .init(title: .init(title), message: .init(message))
+            return .init(title: title, message: message)
         case .keyUsedMultipleTimes:
             break
         case .serverError:
             let title = Localizable.localAgentServerErrorTitle
             let message = Localizable.localAgentServerErrorMessage
-            return .init(title: .init(title), message: .init(message))
+            return .init(title: title, message: message)
         case .policyViolationLowPlan:
             let title = Localizable.localAgentPolicyViolationErrorTitle
             let message = Localizable.localAgentPolicyViolationErrorMessage
-            return .init(title: .init(title), message: .init(message))
+            return .init(title: title, message: message)
         case .policyViolationDelinquent:
             let title = Localizable.delinquentUserTitle
             let message = Localizable.delinquentUserDescription
-            return .init(title: .init(title), message: .init(message))
+            return .init(title: title, message: message)
         case .userTorrentNotAllowed:
-            break // Possible disconnection error, but no specific message to the user
+            let title = Localizable.p2pDetectedPopupTitle
+            let message = Localizable.p2pDetectedPopupBody
+            return .init(title: title, message: message)
         case .userBadBehavior:
             break // Possible disconnection error, but no specific message to the user
         case .guestSession:

@@ -30,12 +30,22 @@ extension AlertService.Alert {
 
 extension AlertService {
     public struct Alert: Equatable {
-        let title: LocalizedStringKey?
+        let title: LocalizedStringKey
         let message: LocalizedStringKey
 
-        init(title: LocalizedStringKey? = nil, message: LocalizedStringKey? = nil) {
+        init() {
+            self.title = Self.titleFallback
+            self.message = Self.messageFallback
+        }
+
+        init(title: LocalizedStringKey = Self.titleFallback, message: LocalizedStringKey = Self.messageFallback) {
             self.title = title
-            self.message = message ?? Self.messageFallback
+            self.message = message
+        }
+
+        init(title: String? = nil, message: String? = nil) {
+            self.title = title.flatMap { LocalizedStringKey($0) } ?? Self.titleFallback
+            self.message = message.flatMap { LocalizedStringKey($0) } ?? Self.messageFallback
         }
 
         init(localizedError: LocalizedError) {
@@ -51,8 +61,8 @@ extension AlertService {
 
 // MARK: - Error alerts definitions
 
-let RefreshTokenExpiredAlert = AlertService.Alert(message: .init(Localizable.invalidRefreshTokenPleaseLogin))
-let ConnectionFailedAlert = AlertService.Alert(message: .init(Localizable.connectionFailed))
+let RefreshTokenExpiredAlert = AlertService.Alert(message: Localizable.invalidRefreshTokenPleaseLogin)
+let ConnectionFailedAlert = AlertService.Alert(message: Localizable.connectionFailed)
 
 // MARK: - Helpers
 
