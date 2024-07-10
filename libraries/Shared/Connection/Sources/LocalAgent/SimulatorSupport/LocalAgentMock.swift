@@ -17,35 +17,36 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator)
+
 import Foundation
-import ConnectionFoundations
 import Dependencies
-@_spi(Internals) import Ergonomics
 import XCTestDynamicOverlay
+import ConnectionFoundations
 
 final class LocalAgentMock: LocalAgent {
-    enum MockError: Swift.Error {
-        case priorListeningIsMandatory
-    }
+    var eventHandler: ((LocalAgentEvent) -> Void)?
 
     var state: LocalAgentState {
-        get throws {
-            // If this failure is triggered in tests, this mock was used before a reducer subscribed to receive
-            // events through `eventStream`.
-            guard eventAwareStream.hasBeenListened else {
-                throw MockError.priorListeningIsMandatory
+        didSet {
+            guard let eventHandler else {
+                // If this failure is triggered in tests, this mock was used before a reducer subscribed to receive
+                // events through `eventStream`.
+                XCTFail("Event was emitted but handler is nil")
+                return
             }
-            return _state
+            eventHandler(.state(state))
         }
     }
 
-    private var _state: LocalAgentState
-
-    func createEventStream() -> AsyncThrowingStream<LocalAgentEvent, Swift.Error> {
-        let (awareStream, continuation) = AwareAsyncThrowingStream<LocalAgentEvent, Swift.Error>.makeStream()
-        self.eventAwareStream = awareStream
-        self.continuation = continuation
-        return awareStream.stream
+    func createEventStream() -> AsyncStream<LocalAgentEvent> {
+        AsyncStream { continuation in
+            eventHandler = { event in
+                continuation.yield(event)
+            }
+            continuation.onTermination = { @Sendable _ in
+                self.eventHandler = nil
+            }
+        }
     }
 
     var connectionTask: Task<Void, Error>?
@@ -54,24 +55,17 @@ final class LocalAgentMock: LocalAgent {
     var disconnectionTask: Task<Void, Error>?
     var disconnectionDuration: Duration = .milliseconds(250)
 
-    private var eventAwareStream: AwareAsyncThrowingStream<LocalAgentEvent, Swift.Error>
-    private var continuation: AsyncThrowingStream<LocalAgentEvent, Swift.Error>.Continuation
-
     init(
         state: LocalAgentState,
         connectionErrorToThrow: Error? = nil
     ) {
-        self._state = state
+        self.state = state
         self.connectionErrorToThrow = connectionErrorToThrow
-
-        let (stream, continuation) = AwareAsyncThrowingStream<LocalAgentEvent, Swift.Error>.makeStream()
-        self.eventAwareStream = stream
-        self.continuation = continuation
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
         disconnectionTask?.cancel()
-        connectionTask = Task { [connectionErrorToThrow, continuation, connectionDuration] in
+        connectionTask = Task {
             @Dependency(\.continuousClock) var clock
 
             try await clock.sleep(for: connectionDuration)
@@ -80,16 +74,17 @@ final class LocalAgentMock: LocalAgent {
                 throw connectionErrorToThrow
             }
 
-            continuation.yield(.state(.connected))
+            self.state = .connected
         }
     }
 
     func disconnect() {
-        disconnectionTask = Task { [continuation, disconnectionDuration] in
+        disconnectionTask = Task {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: disconnectionDuration)
-            continuation.yield(.state(.disconnected))
+            self.state = .disconnected
         }
     }
 }
+
 #endif

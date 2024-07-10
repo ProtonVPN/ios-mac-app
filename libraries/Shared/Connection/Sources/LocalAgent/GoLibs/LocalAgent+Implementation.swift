@@ -17,49 +17,31 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ConnectionFoundations
-import Dependencies
-@_spi(Internals) import Ergonomics
 import XCTestDynamicOverlay
+import Dependencies
+import ConnectionFoundations
 
 final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.localAgentConnectionFactory) var connectionFactory
 
-    enum Error: Swift.Error {
-        case priorListeningIsMandatory
-        case missedEvents
-    }
+    private var connection: LocalAgentConnection?
+    private let client: LocalAgentClient
+    private var previousState: LocalAgentState?
+    private var listener: ((LocalAgentEvent) -> Void)?
 
-    var state: LocalAgentState {
-        get throws {
-            guard awareStream.hasBeenListened else {
-                throw Error.priorListeningIsMandatory
+    func createEventStream() -> AsyncStream<LocalAgentEvent> {
+        return AsyncStream<LocalAgentEvent> { continuation in
+            listener = { event in
+                continuation.yield(event)
             }
-            return connection?.currentState ?? .disconnected
+            continuation.onTermination = { @Sendable [weak self] _ in
+                self?.listener = nil
+            }
         }
     }
 
-    func createEventStream() -> AsyncThrowingStream<LocalAgentEvent, Swift.Error> {
-        let (awareStream, continuation) = AwareAsyncThrowingStream<LocalAgentEvent, Swift.Error>.makeStream()
-        self.awareStream = awareStream
-        self.continuation = continuation
-        return awareStream.stream
-    }
-
-    private let client: LocalAgentClient
-
-    private var previousState: LocalAgentState?
-
-    private var awareStream: AwareAsyncThrowingStream<LocalAgentEvent, Swift.Error>
-    private var continuation: AsyncThrowingStream<LocalAgentEvent, Swift.Error>.Continuation
-
-    private var connection: LocalAgentConnection?
-
     init() {
         log.info("LocalAgentImplementation init")
-        let (eventStream, continuation) = AwareAsyncThrowingStream<LocalAgentEvent, Swift.Error>.makeStream()
-        self.awareStream = eventStream
-        self.continuation = continuation
 
         @Dependency(\.localAgentClientFactory) var clientFactory
         client = clientFactory.createLocalAgentClient()
@@ -90,10 +72,10 @@ final class LocalAgentImplementation: LocalAgent {
 
 extension LocalAgentImplementation: LocalAgentClientDelegate {
     func didReceive(event: LocalAgentEvent) {
-        guard awareStream.hasBeenListened else {
-            continuation.yield(with: .failure(Error.missedEvents))
+        guard let listener else {
+            log.assertionFailure("No listener available to receive event: \(event)")
             return
         }
-        continuation.yield(event)
+        listener(event)
     }
 }
