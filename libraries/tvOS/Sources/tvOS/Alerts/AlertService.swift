@@ -82,11 +82,3 @@ extension DependencyValues {
       set { self[AlertService.self] = newValue }
     }
 }
-
-// MARK: - Error Conformances
-
-extension ConnectionError: AlertConvertibleError {
-    public var alert: AlertService.Alert {
-        return ConnectionFailedAlert()
-    }
-}
