@@ -99,26 +99,35 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             settingsApp.terminate()
         }
         settingsApp.tables.staticTexts["PASSWORDS"].tap()
-
-        let passcodeInput = springboard.secureTextFields["Passcode field"]
-        passcodeInput.tap()
-        passcodeInput.typeText("1\r")
+        
+        if #available(iOS 17.1, *) {
+            navigateToPasswordOptions(settingsApp: settingsApp)
+        } else {
+            let passcodeInput = springboard.secureTextFields["Passcode field"]
+            passcodeInput.tap()
+            passcodeInput.typeText("1\r")
+            navigateToPasswordOptions(settingsApp: settingsApp)
+        }
+        
+        var settingsText = "AutoFill Passwords"
+        if #available(iOS 17.0, *) {
+            settingsText = "AutoFill Passwords and Passkeys"
+        }
+        let autofillSwitch = settingsApp.switches[settingsText]
+        
+        if (autofillSwitch.value as? String) == "1" {
+            autofillSwitch.tap()
+        }
+        isAutoFillPasswordsEnabled = false
+    }
+    
+    private static func navigateToPasswordOptions(settingsApp: XCUIApplication) {
         let cell = settingsApp.tables.cells["PasswordOptionsCell"]
         _ = cell.waitForExistence(timeout: 1)
         guard cell.exists else {
             return
         }
         cell.buttons["chevron"].tap()
-
-        var settingsText = "AutoFill Passwords"
-        if #available(iOS 17.0, *) {
-            settingsText = "AutoFill Passwords and Passkeys"
-        }
-        let autofillSwitch = settingsApp.switches[settingsText]
-        if (autofillSwitch.value as? String) == "1" {
-            autofillSwitch.tap()
-        }
-        isAutoFillPasswordsEnabled = false
     }
     
     func setupAtlasEnvironment() {
