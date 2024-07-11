@@ -36,3 +36,6 @@ fastlane/ios/screenshots
 
 # Obfuscated constants
 **/ObfuscatedConstants.swift
+
+# Configuration
+.gitconfig
