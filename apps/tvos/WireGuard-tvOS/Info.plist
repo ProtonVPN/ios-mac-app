@@ -7,9 +7,13 @@
 		<string>arm64</string>
 	</array>
 	<key>CFBundleName</key>
-	<string>Proton VPN WireGuard Extension (tvOS)</string>
+	<string>WireGuard-tvOS</string>
+	<key>CFBundlePackageType</key>
+	<string>XPC!</string>
 	<key>CFBundleDisplayName</key>
-	<string>Proton VPN WireGuard Extension (tvOS)</string>
+	<string>WireGuard-tvOS</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -40,8 +44,16 @@
 		</dict>
 	</dict>
 	<key>CFBundleShortVersionString</key>
-	<string>$(MARKETING_VERSION)</string>
+	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>2407112124</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>AppleTVOS</string>
+	</array>
 </dict>
 </plist>
