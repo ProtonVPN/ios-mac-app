@@ -1,22 +1,22 @@
 {
-  "images": [
+  "images" : [
     {
-      "filename": "flag_fastest_light.pdf",
-      "idiom": "tv"
+      "filename" : "flag_fastest_light.pdf",
+      "idiom" : "tv"
     },
     {
-      "appearances": [
+      "appearances" : [
         {
-          "appearance": "luminosity",
-          "value": "dark"
+          "appearance" : "luminosity",
+          "value" : "dark"
         }
       ],
-      "filename": "flag_fastest_dark.pdf",
-      "idiom": "tv"
+      "filename" : "flag_fastest_dark.pdf",
+      "idiom" : "tv"
     }
   ],
-  "info": {
-    "author": "xcode",
-    "version": 1
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
   }
 }
