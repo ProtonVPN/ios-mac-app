@@ -28,6 +28,7 @@ import struct ConnectionFoundations.LogicalServerInfo
 
 final class MockTunnelManager: TunnelManager {
 
+    var tunnelStartErrorToThrow: Error?
     var session: VPNSession { connection }
 
     var connection: VPNSessionMock
@@ -37,6 +38,9 @@ final class MockTunnelManager: TunnelManager {
     }
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
+        if let tunnelStartErrorToThrow {
+            throw tunnelStartErrorToThrow
+        }
         let server = intent.server
         connection.connectedServer = .init(logicalID: server.logical.id, serverID: server.endpoint.id)
         try connection.startTunnel()
