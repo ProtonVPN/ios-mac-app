@@ -40,7 +40,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case disconnected(TunnelConnectionError?)
-        case disconnecting
+        case disconnecting(TunnelConnectionError?)
         case connecting(LogicalServerInfo?)
         case connected(LogicalServerInfo)
     }
@@ -53,7 +53,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case tunnelStartRequestFinished(Result<Void, Error>)
         case connectionFinished(Result<LogicalServerInfo, Error>)
         case tunnelStatusChanged(NEVPNStatus)
-        case disconnect
+        case disconnect(TunnelConnectionError?)
         case removeManagers
     }
 
@@ -116,35 +116,41 @@ public struct ExtensionFeature: Reducer, Sendable {
                 }
 
             case .tunnelStatusChanged(.disconnecting):
-                state = .disconnecting
+                let existingError = state.disconnecting ?? nil // Potential cause of disconnection
+                state = .disconnecting(existingError)
                 return .none
 
             case .tunnelStatusChanged(.invalid):
-                // TODO: error state? How can we recover? Remove and recreate manager?
-                // TODO: log lastDisconnectionError
+                // A notable scenario in which the tunnel state is invalid is before the user gives the app permission
+                // to manage VPN configurations
                 state = .disconnected(nil)
                 return .none
 
             case .tunnelStatusChanged(.disconnected):
-                // TODO: Detect if we initiated the disconnection. If it was unexpected, log last disconnection error
-                state = .disconnected(nil)
+                let existingError = state.disconnecting ?? nil // Potential cause of disconnection
+                state = .disconnected(existingError)
                 return .none
 
             case .tunnelStatusChanged(.reasserting):
                 // We don't need to model a reasserting status. Our tunnel should only briefly enter this state
                 return .none
 
-            case .disconnect:
-                state = .disconnecting
-                return .run { _ in try await tunnelManager.stopTunnel() }
+            case .disconnect(let error):
+                state = .disconnecting(error)
+                return .run {
+                    _ in try await tunnelManager.stopTunnel()
+                } catch: { error, _ in
+                    log.assertionFailure("Failed to stop tunnel: \(error)")
+                }
 
             case .tunnelStartRequestFinished(.failure(let error)):
-                log.error("Failed to start tunnel", category: .connection, metadata: ["error": "\(error)"])
+                // Start request failed, so there's no need to disconnect
+                state = .disconnected(.tunnelStartFailed(error))
                 return .none
 
             case .connectionFinished(.failure(let error)):
-                state = .disconnected(.unknownServer)
-                return .send(.disconnect)
+                log.error("Tunnel failed to connect", category: .connection, metadata: ["error": "\(error)"])
+                return .send(.disconnect(.unknownServer))
 
             case .tunnelStatusChanged(let unknownFutureStatus):
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])

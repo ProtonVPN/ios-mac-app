@@ -119,7 +119,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .disconnecting(nil)
         }
         await store.receive(\.tunnel.disconnect) {
-            $0.tunnel = .disconnecting
+            $0.tunnel = .disconnecting(nil)
         }
 
         await mockClock.advance(by: .milliseconds(250))
@@ -218,7 +218,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .disconnecting(.agentError(.policyViolationDelinquent))
         }
         await store.receive(\.tunnel.disconnect) {
-            $0.tunnel = .disconnecting
+            $0.tunnel = .disconnecting(nil)
         }
 
         await mockClock.advance(by: .milliseconds(250))
@@ -457,7 +457,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .disconnecting(nil)
         }
         await store.receive(\.tunnel.disconnect) {
-            $0.tunnel = .disconnecting
+            $0.tunnel = .disconnecting(nil)
         }
 
         await store.send(.stopObserving)

@@ -102,5 +102,43 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await store.send(.stopObservingStateChanges)
     }
 
+    @MainActor func testDisconnectsWhenVPNConfigurationPermissionDenied() async {
+        let mockClock = TestClock()
+        let mockManager = MockTunnelManager()
+        mockManager.connection = VPNSessionMock(
+            status: .invalid,
+            connectedDate: nil,
+            lastDisconnectError: nil
+        )
+
+        let disconnected = ExtensionFeature.State.disconnected(nil)
+        let store = TestStore(initialState: disconnected) {
+            ExtensionFeature()
+        } withDependencies: {
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+        }
+
+        let server = Server.mock
+        let features = VPNConnectionFeatures.mock
+        let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+
+        await store.send(.startObservingStateChanges)
+        await store.receive(\.tunnelStatusChanged.invalid)
+
+        let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied"
+        mockManager.tunnelStartErrorToThrow = permissionDenied
+
+        await store.send(.connect(intent)) {
+            $0 = .connecting(logicalServerInfo)
+        }
+        await store.receive(\.tunnelStartRequestFinished.failure)
+        await store.receive(\.disconnect.tunnelStartFailed) {
+            $0 = .disconnected(.tunnelStartFailed(permissionDenied))
+        }
+
+        await store.send(.stopObservingStateChanges)
+    }
 }
 #endif
