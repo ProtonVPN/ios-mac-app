@@ -29,7 +29,7 @@ struct QRCodeView: View {
             .background(Color(.background, .selected))
             .frame(.square(466))
             .clipRectangle(cornerRadius: .radius32)
-            .shadow(color: .black.opacity(0.16), radius: 160, y: 32)
+            .shadow(color: .black.opacity(0.26), radius: 160, y: 32)
     }
 }
 
