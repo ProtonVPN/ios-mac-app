@@ -151,6 +151,11 @@ public struct ConnectionFeature: Reducer, Sendable {
                 state.serverReconnectionIntent = nil
                 return .send(.connect(intent)) // Connect action cancels any existing timeouts
 
+            case .tunnel(.tunnelStartRequestFinished(.failure)):
+                // Special case of failure that occurs before the tunnel is started
+                assert(state.serverReconnectionIntent == nil)
+                return .cancel(id: CancelID.connectionTimeout)
+
             case .localAgent(.event(.state(.disconnected))):
                 guard case .disconnected = state.tunnel else { return .none }
                 guard let intent = state.serverReconnectionIntent else {
