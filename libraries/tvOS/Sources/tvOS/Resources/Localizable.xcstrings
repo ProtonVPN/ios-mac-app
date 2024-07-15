@@ -2711,6 +2711,12 @@
             "value" : "Se riscontri problemi nell'utilizzo di Proton VPN, il nostro team di assistenza clienti sarà lieto di aiutarti.\n\nTi basta scansionare il codice QR o andare su"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "თუ გაქვთ პრობლემა Proton VPN-ის გამოყენებასთან, ჩვენი მხარდაჭერის გუნდი მხოლოდ მოხარული იქნება, დაგეხმაროთ."
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3398,6 +3404,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN per Apple TV è disponibile su tutti i piani a pagamento. Puoi controllare e gestire il tuo abbonamento sul nostro sito web."
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Proton VPN' 'Apple TV'-სთვის ხელმისაწვდომია ყველა ფასიან სატარიფო გეგმაზე. თქვენი გამოწერების შემოწმება და ნახვა ჩვენს ვებგვერდზე შეგიძლიათ."
           }
         },
         "ko" : {
