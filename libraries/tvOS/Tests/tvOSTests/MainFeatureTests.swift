@@ -79,7 +79,7 @@ final class MainFeatureTests: XCTestCase {
             $0.connection.localAgent = .disconnecting(nil)
         }
         await store.receive(\.connection.tunnel.disconnect) {
-            $0.connection.tunnel = .disconnecting
+            $0.connection.tunnel = .disconnecting(nil)
         }
 
         await store.receive(\.errorOccurred) // TODO: Check error is serverMissing

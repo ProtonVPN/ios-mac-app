@@ -54,7 +54,6 @@ private struct SettingsButtonStyle: ButtonStyle {
             .frame(width: Self.size.width, height: Self.size.height)
             .background(isFocused ? Color(.background, .selected) : Color(.background))
             .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
-            .cornerRadius(.themeRadius24)
             .hoverEffect(.highlight)
     }
 }
