@@ -46,7 +46,8 @@ final class LocalAgentFeatureTests: XCTestCase {
         }
 
         await store.send(.startObservingEvents)
-        await store.send(.connect(server, .empty)) {
+        await store.send(.connect(server, .empty))
+        await store.receive(\.event.state.connecting) {
             $0 = .connecting
         }
 

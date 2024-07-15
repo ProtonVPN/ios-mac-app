@@ -133,8 +133,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await store.send(.connect(intent)) {
             $0 = .connecting(logicalServerInfo)
         }
-        await store.receive(\.tunnelStartRequestFinished.failure)
-        await store.receive(\.disconnect.tunnelStartFailed) {
+        await store.receive(\.tunnelStartRequestFinished.failure) {
             $0 = .disconnected(.tunnelStartFailed(permissionDenied))
         }
 

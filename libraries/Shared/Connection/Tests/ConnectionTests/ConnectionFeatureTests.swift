@@ -104,7 +104,8 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
         }
         await store.receive(\.certAuth.loadingFinished.success)
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
@@ -202,7 +203,8 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
         }
         await store.receive(\.certAuth.loadingFinished.success)
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
@@ -318,7 +320,8 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
@@ -354,7 +357,8 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Reconnect with refreshed certificate
 
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
@@ -447,7 +451,8 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
@@ -546,7 +551,8 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
@@ -629,7 +635,8 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
         }
         await store.receive(\.certAuth.loadingFinished.success)
-        await store.receive(\.localAgent.connect) {
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
