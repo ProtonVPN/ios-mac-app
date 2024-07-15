@@ -98,6 +98,12 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
 
+                if case .disconnecting = connectionState(state: state) {
+                    // Save the reconnection intent for once the disconnection process is finished
+                    state.serverReconnectionIntent = intent
+                    return .none
+                }
+
                 return .run { send in
                     await send(.tunnel(.connect(intent)))
                     try await clock.sleep(for: Self.defaultConnectionTimeout)
@@ -137,16 +143,22 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
 
             case .tunnel(.tunnelStatusChanged(.disconnected)):
-                guard case .disconnected = state.localAgent,
-                      let intent = state.serverReconnectionIntent else { return .none }
+                guard case .disconnected = state.localAgent else { return .none }
+                guard let intent = state.serverReconnectionIntent else {
+                    // Now that we're fully disconnected, let's cancel the timeout
+                    return .cancel(id: CancelID.connectionTimeout)
+                }
                 state.serverReconnectionIntent = nil
-                return .send(.connect(intent))
+                return .send(.connect(intent)) // Connect action cancels any existing timeouts
 
             case .localAgent(.event(.state(.disconnected))):
-                guard case .disconnected = state.tunnel,
-                      let intent = state.serverReconnectionIntent else { return .none }
+                guard case .disconnected = state.tunnel else { return .none }
+                guard let intent = state.serverReconnectionIntent else {
+                    // Now that we're fully disconnected, let's cancel the timeout
+                    return .cancel(id: CancelID.connectionTimeout)
+                }
                 state.serverReconnectionIntent = nil
-                return .send(.connect(intent))
+                return .send(.connect(intent)) // Connect action cancels any existing timeouts
 
             case .localAgent(.event(.state(.connected))):
                 return .cancel(id: CancelID.connectionTimeout)
@@ -217,6 +229,15 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
             }
         }
+
+    }
+
+    private func connectionState(state: State) -> ConnectionState {
+        return ConnectionState(
+            tunnelState: state.tunnel,
+            certAuthState: state.certAuth,
+            localAgentState: state.localAgent
+        )
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {
