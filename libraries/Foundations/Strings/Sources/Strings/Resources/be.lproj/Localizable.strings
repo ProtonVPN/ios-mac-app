@@ -2123,7 +2123,7 @@
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Даступна з VPN Business.";
 
-"onboarding_usage_stats_title" = "Абагульванне ананімнай статыстыкі выкарыстання";
+"onboarding_usage_stats_title" = "Абагульваць ананімную статыстыку выкарыстання";
 
 "onboarding_usage_stats_description" = "Даныя аб выкарыстанні дапамагаюць нам пераадольваць блакіроўкі VPN і паляпшаць прадукцыйнасць праграмы.";
 
