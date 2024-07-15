@@ -54,10 +54,8 @@ struct ProtectionStatusFeature {
                         await send(.delegate(.userClickedDisconnect))
                     case .connecting:
                         await send(.delegate(.userClickedCancel))
-                    case .disconnected:
+                    case .disconnected, .disconnecting:
                         await send(.delegate(.userClickedConnect))
-                    case .disconnecting:
-                        break
                     }
                 }
             case .onAppear:

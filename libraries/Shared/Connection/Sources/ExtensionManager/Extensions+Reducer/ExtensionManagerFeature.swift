@@ -136,6 +136,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .disconnect(let error):
+                if case .disconnecting = state { return .none }
                 state = .disconnecting(error)
                 return .run {
                     _ in try await tunnelManager.stopTunnel()

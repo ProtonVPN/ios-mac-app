@@ -79,5 +79,6 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         connectionState = .disconnecting
 
         await store.send(.userTappedButton)
+        await store.receive(\.delegate.userClickedConnect)
     }
 }

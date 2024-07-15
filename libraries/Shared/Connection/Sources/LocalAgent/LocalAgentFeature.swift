@@ -93,6 +93,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .disconnect(let error):
+                if case .disconnecting = state { return .none }
                 state = .disconnecting(error)
                 localAgent.disconnect()
                 return .none
