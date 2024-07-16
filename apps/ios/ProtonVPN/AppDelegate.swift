@@ -100,7 +100,7 @@ extension AppDelegate: UIApplicationDelegate {
         
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan,
                                                       overrideWithValue: true)
-        print(FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan))
+
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
         setupDebugHelpers()
