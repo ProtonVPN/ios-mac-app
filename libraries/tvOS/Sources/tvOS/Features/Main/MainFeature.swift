@@ -166,24 +166,9 @@ struct MainFeature {
                 }
                 return .none
             case .connection:
-                let newConnectionState = ConnectionState(
-                    tunnelState: state.connection.tunnel,
-                    certAuthState: state.connection.certAuth,
-                    localAgentState: state.connection.localAgent
-                )
-                if newConnectionState != state.connectionState {
-                    if case let .connecting(server) = state.connectionState,
-                       server != nil,
-                       case let .connecting(server) = newConnectionState,
-                       server == nil {
-                        return .none // ignore this event
-                    }
-                    state.connectionState = newConnectionState
-                }
                 if case .disconnected(let error) = state.connectionState, let error {
                     return .send(.errorOccurred(error))
                 }
-
                 return .none
             case .errorOccurred(let error):
                 return .run { send in

@@ -640,7 +640,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = .connecting
         }
 
-        // Let's simulate a max sessions error being received before we are able to finished connecting
+        // Let's simulate a max sessions error being received before we are able to finish connecting
         mockAgent.eventHandler?(.error(.maxSessionsPro))
         mockAgent.connectionTask?.cancel()
 
@@ -661,8 +661,6 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-
-        await mockClock.advance(by: .seconds(30))
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)

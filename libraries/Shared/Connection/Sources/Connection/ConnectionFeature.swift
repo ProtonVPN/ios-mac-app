@@ -79,11 +79,16 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     private enum CancelID { case connectionTimeout }
 
+    @Shared(.connectionState) var connectionState: ConnectionState? = nil
+
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
         Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
+            defer {
+                updateConnectionState(action: action, state: state)
+            }
             switch action {
             case .startObserving:
                 return .merge(
@@ -98,7 +103,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
 
-                if case .disconnecting = connectionState(state: state) {
+                if case .disconnecting = ConnectionState(connectionFeatureState: state) {
                     // Save the reconnection intent for once the disconnection process is finished
                     state.serverReconnectionIntent = intent
                     return .none
@@ -237,14 +242,6 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     }
 
-    private func connectionState(state: State) -> ConnectionState {
-        return ConnectionState(
-            tunnelState: state.tunnel,
-            certAuthState: state.certAuth,
-            localAgentState: state.localAgent
-        )
-    }
-
     private func clearErrorsFromPreviousAttempts(state: inout State) {
         if case .disconnected(let tunnelError) = state.tunnel, let tunnelError {
             log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
@@ -257,6 +254,20 @@ public struct ConnectionFeature: Reducer, Sendable {
         if case .disconnected(let agentError) = state.localAgent, let agentError {
             log.info("Resetting local agent connection error from previous connection attempt: \(agentError)")
             state.localAgent = .disconnected(nil)
+        }
+    }
+
+    func updateConnectionState(action: ConnectionFeature.Action, state: ConnectionFeature.State) {
+        let newConnectionState = ConnectionState(connectionFeatureState: state)
+        if newConnectionState != connectionState {
+            if case let .connecting(server) = connectionState,
+               server != nil,
+               case let .connecting(server) = newConnectionState,
+               server == nil {
+                return
+            } else {
+                connectionState = newConnectionState
+            }
         }
     }
 }
