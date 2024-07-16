@@ -97,6 +97,10 @@ class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan,
+                                                      overrideWithValue: true)
+        print(FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan))
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
         setupDebugHelpers()
