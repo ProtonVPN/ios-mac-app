@@ -68,6 +68,6 @@ let ConnectionFailedAlert = AlertService.Alert(message: Localizable.connectionFa
 
 extension AlertService.Alert {
     func alertState<Action>(from: Action.Type) -> AlertState<Action> {
-        return AlertState<Action>(title: TextState(title ?? Self.titleFallback), message: TextState(message))
+        return AlertState<Action>(title: TextState(title), message: TextState(message))
     }
 }

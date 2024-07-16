@@ -114,7 +114,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .merge(
                     .cancel(id: CancelID.connectionTimeout),
                     .send(.localAgent(.disconnect(nil))),
-                    .send(.tunnel(.disconnect))
+                    .send(.tunnel(.disconnect(nil)))
                 )
 
             case .tunnel(.connectionFinished(.success)):
@@ -159,7 +159,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 case .disconnect:
                     return .merge(
                         .send(.localAgent(.disconnect(.agentError(error)))),
-                        .send(.tunnel(.disconnect))
+                        .send(.tunnel(.disconnect(nil)))
                     )
 
                 case .reconnect(.withNewKeysAndCertificate):
