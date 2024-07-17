@@ -692,6 +692,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var accountTier: Int
 
     public init(accountTier: Int) {
+        // @Dependency(\.serverRepository) var repository
         self.accountTier = accountTier
         if accountTier.isFreeTier {
             message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus) + Localizable.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)

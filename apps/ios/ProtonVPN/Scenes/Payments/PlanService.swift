@@ -20,6 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
@@ -60,13 +61,16 @@ extension PlanService {
 }
 
 final class CorePlanService: PlanService {
+    @Dependency(\.serverRepository) var serverRepository
     private var paymentsUI: PaymentsUI?
     let payments: Payments
     private let alertService: CoreAlertService
     private let authKeychain: AuthKeychainHandle
     private let userCachedStatus: UserCachedStatus
 
-    var countriesCount: Int = AccountPlan.plus.countriesCount
+    var countriesCount: Int {
+        serverRepository.countryCount()
+    }
 
     let tokenStorage: PaymentTokenStorage?
 
@@ -101,34 +105,6 @@ final class CorePlanService: PlanService {
                 alertService.push(alert: ReportBugAlert())
             }
         )
-
-        updateCountriesCount { [weak self] result in
-            switch result {
-            case .success(let count):
-                self?.countriesCount = count
-            case .failure:
-                self?.countriesCount = AccountPlan.plus.countriesCount
-            }
-        }
-    }
-
-    private func updateCountriesCount(completion: @escaping (Result<Int, Error>) -> Void) {
-        guard case .left(let planService) = payments.planService else { return }
-        if let counts = planService.countriesCount {
-            return completion(.success(counts.maxCountries()))
-        }
-        planService.updateCountriesCount {
-            if let count = planService.countriesCount?.maxCountries() {
-                return completion(.success(count))
-            }
-            return completion(.failure(CountriesCountError.internalError))
-        } failure: { error in
-            return completion(.failure(error))
-        }
-    }
-
-    private enum CountriesCountError: Error {
-        case internalError
     }
 
     func updateServicePlans() async throws {

@@ -72,7 +72,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         ProfileManagerFactory &
                         AppCertificateRefreshManagerFactory &
                         SystemExtensionManagerFactory &
-                        PlanServiceFactory &
                         AuthKeychainHandleFactory &
                         UnauthKeychainHandleFactory
     private let factory: Factory
@@ -84,7 +83,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
@@ -100,7 +98,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         super.init(factory: factory)
         self.propertiesManager.restoreStartOnBootStatus()
 
-        planService.updateCountriesCount()
     }
 
     // MARK: public log in interface (completion handlers)

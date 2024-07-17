@@ -94,7 +94,7 @@ public class CoreAppConstants {
             return Localizable.testServers
         }
     }
-    
+
     public struct UpdateTime {
         public static let quickUpdateTime: TimeInterval = 3.0
         public static let quickReconnectTime: TimeInterval = 0.5
