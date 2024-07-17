@@ -19,7 +19,7 @@
 import Foundation
 
 /// View model used for the only connection type available to free users.
-/// Was overriden, because `ProfileAuthorizes` forbids all profiles.
+/// Was overridden, because `ProfileAuthorizes` forbids all profiles.
 class FastestConnectionViewModel: ProfileItemViewModel {
     override var canUseProfile: Bool { true }
 }
