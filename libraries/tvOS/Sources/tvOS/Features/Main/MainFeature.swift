@@ -40,7 +40,7 @@ struct MainFeature {
 
         var connection = ConnectionFeature.State()
 
-        @Shared(.connectionState) var connectionState: ConnectionState?
+        @SharedReader(.connectionState) var connectionState: ConnectionState?
         @Shared(.userLocation) var userLocation: UserLocation?
         @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }

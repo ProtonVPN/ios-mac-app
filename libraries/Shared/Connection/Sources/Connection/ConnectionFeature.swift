@@ -79,7 +79,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     private enum CancelID { case connectionTimeout }
 
-    @Shared(.connectionState) var connectionState: ConnectionState? = nil
+    @Shared(.connectionState) var connectionState: ConnectionState?
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }

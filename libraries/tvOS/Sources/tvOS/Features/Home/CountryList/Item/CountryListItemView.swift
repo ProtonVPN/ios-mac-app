@@ -27,7 +27,7 @@ struct CountryListItemView: View {
     let isFocused: Bool
     @State var duration = inFocusDuration
 
-    @Shared(.connectionState) var connectionState: ConnectionState?
+    @SharedReader(.connectionState) var connectionState: ConnectionState?
 
     private static var outFocusDuration = 0.4
     private static var inFocusDuration = 0.1
