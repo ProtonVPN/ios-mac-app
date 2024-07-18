@@ -20,7 +20,7 @@ import fusion
 
 fileprivate let upgradeButton = "Upgrade"
 fileprivate let getStartedButton = "Get started"
-fileprivate let notNowButton = "Not now"
+fileprivate let closeButton = "Close"
 
 class OnboardingRobot: CoreElements {
     
@@ -32,7 +32,7 @@ class OnboardingRobot: CoreElements {
     
     @discardableResult
     func skipUpgrade() -> OnboardingRobot {
-        button(notNowButton).tap()
+        button(closeButton).tap()
         return OnboardingRobot()
     }
     
