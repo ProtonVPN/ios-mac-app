@@ -79,11 +79,16 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     private enum CancelID { case connectionTimeout }
 
+    @Shared(.connectionState) var connectionState: ConnectionState?
+
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
         Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
+            defer {
+                updateConnectionState(action: action, state: state)
+            }
             switch action {
             case .startObserving:
                 return .merge(
@@ -97,6 +102,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
+
+                if case .disconnecting = ConnectionState(connectionFeatureState: state) {
+                    // Save the reconnection intent for once the disconnection process is finished
+                    state.serverReconnectionIntent = intent
+                    return .none
+                }
 
                 return .run { send in
                     await send(.tunnel(.connect(intent)))
@@ -137,16 +148,27 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
 
             case .tunnel(.tunnelStatusChanged(.disconnected)):
-                guard case .disconnected = state.localAgent,
-                      let intent = state.serverReconnectionIntent else { return .none }
+                guard case .disconnected = state.localAgent else { return .none }
+                guard let intent = state.serverReconnectionIntent else {
+                    // Now that we're fully disconnected, let's cancel the timeout
+                    return .cancel(id: CancelID.connectionTimeout)
+                }
                 state.serverReconnectionIntent = nil
-                return .send(.connect(intent))
+                return .send(.connect(intent)) // Connect action cancels any existing timeouts
+
+            case .tunnel(.tunnelStartRequestFinished(.failure)):
+                // Special case of failure that occurs before the tunnel is started
+                assert(state.serverReconnectionIntent == nil)
+                return .cancel(id: CancelID.connectionTimeout)
 
             case .localAgent(.event(.state(.disconnected))):
-                guard case .disconnected = state.tunnel,
-                      let intent = state.serverReconnectionIntent else { return .none }
+                guard case .disconnected = state.tunnel else { return .none }
+                guard let intent = state.serverReconnectionIntent else {
+                    // Now that we're fully disconnected, let's cancel the timeout
+                    return .cancel(id: CancelID.connectionTimeout)
+                }
                 state.serverReconnectionIntent = nil
-                return .send(.connect(intent))
+                return .send(.connect(intent)) // Connect action cancels any existing timeouts
 
             case .localAgent(.event(.state(.connected))):
                 return .cancel(id: CancelID.connectionTimeout)
@@ -217,6 +239,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
             }
         }
+
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {
@@ -231,6 +254,20 @@ public struct ConnectionFeature: Reducer, Sendable {
         if case .disconnected(let agentError) = state.localAgent, let agentError {
             log.info("Resetting local agent connection error from previous connection attempt: \(agentError)")
             state.localAgent = .disconnected(nil)
+        }
+    }
+
+    func updateConnectionState(action: ConnectionFeature.Action, state: ConnectionFeature.State) {
+        let newConnectionState = ConnectionState(connectionFeatureState: state)
+        if newConnectionState != connectionState {
+            if case let .connecting(server) = connectionState,
+               server != nil,
+               case let .connecting(server) = newConnectionState,
+               server == nil {
+                return
+            } else {
+                connectionState = newConnectionState
+            }
         }
     }
 }
