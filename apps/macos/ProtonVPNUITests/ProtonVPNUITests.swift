@@ -22,6 +22,7 @@
 
 import XCTest
 import PMLogger
+import Strings
 
 class ProtonVPNUITests: XCTestCase {
 
@@ -46,6 +47,7 @@ class ProtonVPNUITests: XCTestCase {
         app.launch()
 
         window = XCUIApplication().windows["Proton VPN"]
+        waitForLoaderDisappear()
         
     }
 
@@ -102,6 +104,10 @@ class ProtonVPNUITests: XCTestCase {
     func loginAsTwoPassUser() {
          login(withCredentials: twopassusercredentials[0])
      }
+    
+    func waitForLoaderDisappear() {
+        _ = waitForElementToDisappear(app.staticTexts[Localizable.loadingScreenSlogan], 10)
+    }
 
     func login(withCredentials credentials: Credentials) {
         
@@ -112,7 +118,7 @@ class ProtonVPNUITests: XCTestCase {
              
         dismissDialogs()
              
-        _ = waitForElementToDisappear(app.otherElements["loader"])
+        waitForLoaderDisappear()
                      
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
@@ -146,7 +152,7 @@ class ProtonVPNUITests: XCTestCase {
             expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Sign in"], handler: nil)
             waitForExpectations(timeout: 10, handler: nil)
         }
-        _ = waitForElementToDisappear(app.otherElements["loader"])
+        waitForLoaderDisappear()
 
         guard !tryLoggingOut() else {
             return
@@ -162,7 +168,6 @@ class ProtonVPNUITests: XCTestCase {
     }
 
     func tryLoggingOut() -> Bool {
-        let protonVPNButton = app.menuBars.menuItems["Proton VPN"].click()
         let logoutButton = app.menuBars.menuItems["Sign out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
             return false
@@ -179,7 +184,7 @@ class ProtonVPNUITests: XCTestCase {
             loginRobot
                 .loginUser(credentials: credentials[2])
             
-            _ = waitForElementToDisappear(app.otherElements["loader"])
+            waitForLoaderDisappear()
                          
             expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
             waitForExpectations(timeout: 10, handler: nil)
@@ -201,12 +206,12 @@ class ProtonVPNUITests: XCTestCase {
         return true
     }
     
-    func waitForElementToDisappear(_ element: XCUIElement) -> Bool {
+    func waitForElementToDisappear(_ element: XCUIElement, _ timeout: Int = 5) -> Bool {
         let predicate = NSPredicate(format: "exists == false")
         let expectation = XCTNSPredicateExpectation(predicate: predicate,
                                                     object: element)
 
-        let result = XCTWaiter().wait(for: [expectation], timeout: 5)
+        let result = XCTWaiter().wait(for: [expectation], timeout: TimeInterval(timeout))
         return result == .completed
     }
     
