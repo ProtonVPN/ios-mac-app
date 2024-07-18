@@ -32,6 +32,12 @@ extension VPNServerFilter {
         case .logicalID(let id):
             return logical[Logical.Columns.id] == id
 
+        case .entryCountryCode(let code):
+            return logical[Logical.Columns.entryCountryCode] == code
+
+        case .exitCountryCode(let code):
+            return logical[Logical.Columns.exitCountryCode] == code
+
         case .tier(let tierFilter):
             switch tierFilter {
             case .max(let tier):
