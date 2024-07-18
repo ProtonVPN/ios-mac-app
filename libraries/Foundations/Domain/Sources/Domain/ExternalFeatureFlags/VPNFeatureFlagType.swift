@@ -55,4 +55,7 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Async VPNManager
     case asyncVPNManager = "AsyncVPNManager"
+
+    /// Authorize payments on TestFlight builds.
+    case paymentsEnabledOnTestFlight = "PaymentsEnabledOnTestFlight"
 }

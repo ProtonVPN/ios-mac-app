@@ -35,6 +35,10 @@ final class OneClickPayment {
         assertionFailure("You have to override this completionHandler!")
     }
 
+    private static var paymentsEnabledForThisBuild: Bool {
+        return !Bundle.isTestflightBeta || FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.paymentsEnabledOnTestFlight)
+    }
+
     private let alertService: CoreAlertService
     private let planService: PlanService
     private let payments: Payments
@@ -44,6 +48,9 @@ final class OneClickPayment {
     init(alertService: CoreAlertService, planService: PlanService, payments: Payments) throws {
         guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment) else {
             throw "OneClickAIAP FF disabled!"
+        }
+        guard Self.paymentsEnabledForThisBuild else {
+            throw "PaymentsEnabledOnTestFlight disabled for this build (TestFlight build with FF disabled)"
         }
         guard case .right(let plansDataSource) = payments.planService else {
             throw "DynamicPlan FF disabled!"
