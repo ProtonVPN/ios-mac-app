@@ -48,7 +48,7 @@ struct SettingsDrillDownFeature {
         static func contactUs() -> Self {
             return .init(title: "Contact us",
                          description: "If you’re having trouble using Proton VPN, our customer support team is happy to help.\n\nJust scan the QR code or go to",
-                         url: "https://protonvpn.com/support-form",
+                         url: "https://protonvpn.com/support-form?platform=appletv",
                          displayURL: " protonvpn.com/support-form")
         }
 
