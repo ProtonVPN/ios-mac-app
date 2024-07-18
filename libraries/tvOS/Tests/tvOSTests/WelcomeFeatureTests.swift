@@ -89,7 +89,7 @@ final class WelcomeFeatureTests: XCTestCase {
         userTier = 0
 
         await store.receive(\.userTierUpdated) {
-            $0.destination = .welcomeInfo(.freeUpsell)
+            $0.destination = .welcomeInfo(.freeUpsellAlternative)
         }
     }
 

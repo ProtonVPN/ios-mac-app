@@ -28,25 +28,8 @@ struct WelcomeButtonView: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.body)
-                .fontWeight(.bold)
         }
         .focused($focusState, equals: true)
-        .buttonStyle(WelcomeButtonStyle())
-    }
-}
-
-private struct WelcomeButtonStyle: ButtonStyle {
-
-    @Environment(\.isFocused) var isFocused
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding(.horizontal, .themeSpacing32)
-            .padding(.vertical, .themeSpacing24)
-            .background(isFocused ? Color(.background, .selected) : Color(.background, .weak))
-            .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
-            .cornerRadius(.themeRadius16)
-            .hoverEffect(.highlight)
+        .buttonStyle(TVButtonStyle())
     }
 }

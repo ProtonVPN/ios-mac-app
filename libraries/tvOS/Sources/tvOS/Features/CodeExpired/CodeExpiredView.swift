@@ -23,6 +23,8 @@ struct CodeExpiredView: View {
 
     var store: StoreOf<CodeExpiredFeature>
 
+    @FocusState var focusState: Bool
+
     var body: some View {
         VStack(spacing: .themeSpacing64) {
             Text("Your verification code expired", comment: "Header text, appears when the verification code expires and user can no longer use it to authenticate")
@@ -33,6 +35,8 @@ struct CodeExpiredView: View {
             } label: {
                 Text("Generate new code", comment: "Button title, when user clicks on it, a new verification code is generated and user can try to authenticate again")
             }
+            .focused($focusState, equals: true)
+            .buttonStyle(TVButtonStyle())
         }
         .background(Image(.backgroundStage))
     }
