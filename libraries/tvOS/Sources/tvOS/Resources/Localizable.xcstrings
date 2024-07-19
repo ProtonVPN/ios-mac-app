@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@" : {
       "localizations" : {
         "en" : {
@@ -2509,6 +2512,9 @@
           }
         }
       }
+    },
+    "Got it" : {
+
     },
     "Home" : {
       "comment" : "Title of the tab bar item.",
@@ -5507,9 +5513,6 @@
           }
         }
       }
-    },
-    "Visit your account on web to check your subscription" : {
-
     },
     "Watch without being watched." : {
       "comment" : "Subtitle on the login page",

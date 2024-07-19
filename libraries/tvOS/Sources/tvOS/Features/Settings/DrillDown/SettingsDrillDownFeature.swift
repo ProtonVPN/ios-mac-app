@@ -42,14 +42,14 @@ struct SettingsDrillDownFeature {
     struct Model {
         let title: LocalizedStringKey
         let description: LocalizedStringKey
-        let url: String
+        let url: String?
         let displayURL: String
 
         static func contactUs() -> Self {
             return .init(title: "Contact us",
-                         description: "If you’re having trouble using Proton VPN, our customer support team is happy to help.\n\nJust scan the QR code or go to",
-                         url: "https://protonvpn.com/support-form?platform=appletv",
-                         displayURL: " protonvpn.com/support-form")
+                         description: "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.",
+                         url: nil, // "https://protonvpn.com/support-form?platform=appletv",
+                         displayURL: "") //" protonvpn.com/support-form")
         }
 
         static func supportCenter() -> Self {
