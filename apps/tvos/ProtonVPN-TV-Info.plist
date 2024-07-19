@@ -5,6 +5,6 @@
 	<key>AppIdentifierPrefix</key>
 	<string>$(AppIdentifierPrefix)</string>
 	<key>CFBundleAllowMixedLocalizations</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
