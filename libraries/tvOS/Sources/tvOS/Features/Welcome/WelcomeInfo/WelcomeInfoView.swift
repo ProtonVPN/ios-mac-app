@@ -70,7 +70,7 @@ struct UpsellAlternativeView: View {
     @FocusState var focusState: Bool
 
     var body: some View {
-        VStack(alignment: .center, spacing: .themeSpacing32) {
+        VStack(alignment: .center, spacing: .themeSpacing64) {
             Text(model.title)
                 .font(.title)
                 .bold()

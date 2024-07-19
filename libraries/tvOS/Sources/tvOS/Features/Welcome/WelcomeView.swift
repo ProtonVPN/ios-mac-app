@@ -84,9 +84,9 @@ struct WelcomeView: View {
             WelcomeButtonView(title: "Sign in", action: {
                 store.send(.showSignIn)
             })
-            WelcomeButtonView(title: "Create account", action: {
-                store.send(.showCreateAccount)
-            })
+//            WelcomeButtonView(title: "Create account", action: {
+//                store.send(.showCreateAccount)
+//            })
         }
     }
 }

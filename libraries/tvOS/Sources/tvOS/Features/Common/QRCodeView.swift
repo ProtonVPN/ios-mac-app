@@ -19,6 +19,7 @@
 import SwiftUI
 
 struct QRCodeView: View {
+    static let size: CGFloat = 466
     let string: String
     var body: some View {
         Image(uiImage: .generateQRCode(from: string))
@@ -27,7 +28,7 @@ struct QRCodeView: View {
             .scaledToFit()
             .padding()
             .background(Color(.background, .selected))
-            .frame(.square(466))
+            .frame(.square(Self.size))
             .clipRectangle(cornerRadius: .radius32)
             .shadow(color: .black.opacity(0.26), radius: 160, y: 32)
     }
