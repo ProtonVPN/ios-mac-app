@@ -39,4 +39,13 @@ final class WelcomeInfoFeatureTests: XCTestCase {
         let model = store.state.model
         XCTAssertNotNil(model)
     }
+
+    @MainActor
+    func testFreeUpsellAlternative() async {
+        let store = TestStore(initialState: WelcomeInfoFeature.State.freeUpsellAlternative) {
+            WelcomeInfoFeature()
+        }
+        let model = store.state.model
+        XCTAssertNotNil(model)
+    }
 }

@@ -3474,6 +3474,9 @@
         }
       }
     },
+    "Proton VPN for Apple TV is not available on free plans" : {
+
+    },
     "Quick Connect" : {
       "comment" : "Button title",
       "extractionState" : "manual",
@@ -5504,6 +5507,9 @@
           }
         }
       }
+    },
+    "Visit your account on web to check your subscription" : {
+
     },
     "Watch without being watched." : {
       "comment" : "Subtitle on the login page",
