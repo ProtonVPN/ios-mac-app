@@ -61,8 +61,7 @@ class ServerTierChecker {
             case .protocolNotSupported:
                 self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
             case .locationNotFound:
-                // TODO: Add the correct alert
-                self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
+                self?.alertService?.push(alert: LocationNotAvailableForServerAlert())
             }
         }
     }

@@ -126,10 +126,9 @@ class VpnServerSelector {
     ) {
         let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
 
-        // If servers are already empty, we will return `protocolNotSupported` unless we add a new `locationNotFound`
-
         if servers.isEmpty {
             notifyResolutionUnavailable?(forSpecificCountry, type, .locationNotFound)
+            return
         }
 
         let serversSupportingProtocol = servers.filter { !$0.protocolSupport.isDisjoint(with: supportedProtocols) }

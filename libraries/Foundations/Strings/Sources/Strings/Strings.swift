@@ -622,6 +622,10 @@ public enum Localizable {
   public static var localAgentServerErrorTitle: String { return Localizable.tr("Localizable", "_local_agent_server_error_title", fallback: "Server error") }
   /// iOS status view
   public static var location: String { return Localizable.tr("Localizable", "_location", fallback: "Location") }
+  /// User is trying to connect to a server that isn't available at this moment. (text)
+  public static var locationNotAvailableText: String { return Localizable.tr("Localizable", "_location_not_available_text", fallback: "The server you selected is currently unavailable. Select a different server or try again later.") }
+  /// User is trying to connect to a server that isn't available at this moment. (title)
+  public static var locationNotAvailableTitle: String { return Localizable.tr("Localizable", "_location_not_available_title", fallback: "Connection failed") }
   /// All locations
   public static var locationsAll: String { return Localizable.tr("Localizable", "_locations_all", fallback: "All locations") }
   /// Free locations
@@ -1106,8 +1110,8 @@ public enum Localizable {
   public static var secureStreamingTitle: String { return Localizable.tr("Localizable", "_secure_streaming_title", fallback: "Secure Streaming") }
   /// iOS status view
   public static var security: String { return Localizable.tr("Localizable", "_security", fallback: "Security") }
-  /// iOS Setings: table section cell
-     public static var securityKeys: String { return Localizable.tr("Localizable", "_security_keys", fallback: "Security Keys")}
+  /// iOS Settings: table section cell
+  public static var securityKeys: String { return Localizable.tr("Localizable", "_security_keys", fallback: "Security Keys") }
   /// iOS Settings: table section header
   public static var securityOptions: String { return Localizable.tr("Localizable", "_security_options", fallback: "Security Options") }
   /// Profile create/change form
