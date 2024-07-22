@@ -39,7 +39,12 @@ struct SettingsDrillDownView: View {
                     .foregroundStyle(Color(.text, .interactive))
                     .fontWeight(.bold)
             }
-            QRCodeView(string: model.url)
+            if let url = model.url {
+                QRCodeView(string: url)
+            } else {
+                Spacer()
+                    .frame(width: QRCodeView.size)
+            }
         }
         .frame(width: Self.maximumContentWidth)
         .focusable()

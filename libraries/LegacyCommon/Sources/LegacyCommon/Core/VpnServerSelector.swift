@@ -158,8 +158,12 @@ extension ConnectionRequest {
             return [.kind(.country(code: countryCode))] // inherently excludes gateways
 
         case .country(_, .server(let model)):
-            return [.logicalID(model.id)]
-
+            if serverType == .secureCore {
+                // We don’t need to find the exact server. Instead, we should focus on finding the best one based on the entryCountryCode and exitCountryCode.
+                return [.entryCountryCode(model.entryCountryCode), .exitCountryCode(model.exitCountryCode)]
+            } else {
+                return [.logicalID(model.id)]
+            }
         case .city(let countryCode, let city):
             return [.kind(.country(code: countryCode)), .city(city)]
 

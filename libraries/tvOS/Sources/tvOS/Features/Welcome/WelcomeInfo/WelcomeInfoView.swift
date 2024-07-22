@@ -24,7 +24,12 @@ struct WelcomeInfoView: View {
     var store: StoreOf<WelcomeInfoFeature>
 
     var body: some View {
-        view(model: store.state.model)
+        switch store.state {
+        case .freeUpsellAlternative:
+            UpsellAlternativeView(model: store.state.model)
+        default:
+            view(model: store.state.model)
+        }
     }
 
     private func view(model: WelcomeInfoFeature.State.Model) -> some View {
@@ -50,6 +55,35 @@ struct WelcomeInfoView: View {
             .frame(maxWidth: Constants.maxPreferredContentViewWidth)
             QRCodeView(string: model.url)
         }
+        .background(Image(.backgroundStage))
+    }
+}
+
+struct UpsellAlternativeView: View {
+
+    static let contentViewWidth: CGFloat = 928
+
+    @Environment(\.dismiss) var dismiss
+
+    var model: WelcomeInfoFeature.State.Model
+
+    @FocusState var focusState: Bool
+
+    var body: some View {
+        VStack(alignment: .center, spacing: .themeSpacing64) {
+            Text(model.title)
+                .font(.title)
+                .bold()
+            Button {
+                dismiss()
+            } label: {
+                Text("Got it", comment: "Button title when user was presented an informative screen")
+            }
+            .focused($focusState, equals: true)
+            .buttonStyle(TVButtonStyle())
+        }
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: Self.contentViewWidth)
         .background(Image(.backgroundStage))
     }
 }

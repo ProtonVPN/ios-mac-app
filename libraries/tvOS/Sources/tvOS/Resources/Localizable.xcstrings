@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@" : {
       "localizations" : {
         "en" : {
@@ -32,6 +35,9 @@
           }
         }
       }
+    },
+    "Agree and Sign in" : {
+
     },
     "All countries" : {
       "comment" : "Section title with all countries to connect to",
@@ -784,6 +790,7 @@
     },
     "Connect to high-speed servers around the world and stream your favorite shows with VPN protection." : {
       "comment" : "Subtitle on the login page",
+      "extractionState" : "stale",
       "localizations" : {
         "be" : {
           "stringUnit" : {
@@ -2510,6 +2517,9 @@
         }
       }
     },
+    "Got it" : {
+
+    },
     "Home" : {
       "comment" : "Title of the tab bar item.",
       "localizations" : {
@@ -3473,6 +3483,12 @@
           }
         }
       }
+    },
+    "Proton VPN for Apple TV is not available on free plans" : {
+
+    },
+    "Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties." : {
+
     },
     "Quick Connect" : {
       "comment" : "Button title",
@@ -5504,6 +5520,9 @@
           }
         }
       }
+    },
+    "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs." : {
+
     },
     "Watch without being watched." : {
       "comment" : "Subtitle on the login page",

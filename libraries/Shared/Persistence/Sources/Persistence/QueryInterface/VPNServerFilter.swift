@@ -26,6 +26,12 @@ public enum VPNServerFilter {
     /// Filter by logical ID
     case logicalID(String)
 
+    /// Filter by entryCountryCode
+    case entryCountryCode(String)
+
+    /// Filter by exitCountryCode
+    case exitCountryCode(String)
+
     /// Filter results by servers tier
     case tier(ServerTierFilter)
 

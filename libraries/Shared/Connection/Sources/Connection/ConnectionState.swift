@@ -84,4 +84,12 @@ public enum ConnectionState: Equatable, Sendable {
             self = .disconnected(nil)
         }
     }
+
+    init(connectionFeatureState: ConnectionFeature.State) {
+        self.init(
+            tunnelState: connectionFeatureState.tunnel,
+            certAuthState: connectionFeatureState.certAuth,
+            localAgentState: connectionFeatureState.localAgent
+        )
+    }
 }

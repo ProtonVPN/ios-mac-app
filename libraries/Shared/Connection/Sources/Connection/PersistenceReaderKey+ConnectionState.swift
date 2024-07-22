@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Connection
 
 public extension PersistenceReaderKey where Self == InMemoryKey<ConnectionState?> {
     static var connectionState: Self {

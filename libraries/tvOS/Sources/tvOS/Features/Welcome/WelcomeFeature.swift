@@ -68,7 +68,7 @@ struct WelcomeFeature {
             case .userTierUpdated(let tier):
                 guard let tier else { return .none }
                 if tier == 0 {
-                    state.destination = .welcomeInfo(.freeUpsell)
+                    state.destination = .welcomeInfo(.freeUpsellAlternative)
                 } else if tier > 0 {
                     /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
                     /// the welcome page will be shown, not the sign in page
