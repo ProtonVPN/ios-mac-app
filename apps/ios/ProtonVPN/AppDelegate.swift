@@ -98,8 +98,7 @@ extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan,
-                                                      overrideWithValue: true)
+        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
