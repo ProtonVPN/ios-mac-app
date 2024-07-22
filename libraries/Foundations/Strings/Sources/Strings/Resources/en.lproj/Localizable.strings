@@ -2439,3 +2439,9 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";
+
+/* User is trying to connect to a server that isn't available at this moment. (title) */
+"_location_not_available_title" = "Connection failed";
+
+/* User is trying to connect to a server that isn't available at this moment. (text) */
+"_location_not_available_text" = "The server you selected is currently unavailable. Select a different server or try again later.";
