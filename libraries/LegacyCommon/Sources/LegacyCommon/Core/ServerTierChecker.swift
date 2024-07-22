@@ -60,6 +60,9 @@ class ServerTierChecker {
                 self?.alertService?.push(alert: MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:
                 self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
+            case .locationNotFound:
+                // TODO: Add the correct alert
+                self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
             }
         }
     }
