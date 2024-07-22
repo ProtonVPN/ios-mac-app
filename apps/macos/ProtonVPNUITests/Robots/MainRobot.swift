@@ -48,12 +48,12 @@ class MainRobot {
         app.buttons[qcButton].forceClick()
         return SettingsRobot()
     }
-
+    
     func logOut() -> LoginRobot {
-            let logoutButton = app.menuBars.menuItems["Sign out"]
-            logoutButton.click()
-            return LoginRobot()
-        }
+        let logoutButton = app.menuBars.menuItems["Sign out"]
+        logoutButton.click()
+        return LoginRobot()
+    }
     
     let verify = Verify()
     
