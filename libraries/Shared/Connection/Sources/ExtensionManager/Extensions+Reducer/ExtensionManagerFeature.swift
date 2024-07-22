@@ -75,7 +75,11 @@ public struct ExtensionFeature: Reducer, Sendable {
                 }
                     .cancellable(id: CancelID.observation)
 
-                return .merge(initial, observation)
+                // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
+                // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`
+                // objects, with us potentially observing the status changes of one pair, while sending `startTunnel`
+                // and `stopTunnel` commands to the other, resulting in failure to connect.
+                return .concatenate(initial, observation)
 
             case .stopObservingStateChanges:
                 return .cancel(id: CancelID.observation)
