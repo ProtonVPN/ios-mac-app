@@ -36,6 +36,9 @@
         }
       }
     },
+    "Agree and Sign in" : {
+
+    },
     "All countries" : {
       "comment" : "Section title with all countries to connect to",
       "extractionState" : "manual",
@@ -787,6 +790,7 @@
     },
     "Connect to high-speed servers around the world and stream your favorite shows with VPN protection." : {
       "comment" : "Subtitle on the login page",
+      "extractionState" : "stale",
       "localizations" : {
         "be" : {
           "stringUnit" : {
@@ -3481,6 +3485,9 @@
       }
     },
     "Proton VPN for Apple TV is not available on free plans" : {
+
+    },
+    "Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties." : {
 
     },
     "Quick Connect" : {
