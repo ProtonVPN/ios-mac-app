@@ -31,6 +31,7 @@ import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
 
+@available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) var clock
     @Dependency(\.serverIdentifier) var serverIdentifier

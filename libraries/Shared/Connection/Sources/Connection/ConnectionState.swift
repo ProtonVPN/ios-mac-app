@@ -28,6 +28,7 @@ import LocalAgent
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 
+@available(iOS 16, *)
 @CasePathable
 public enum ConnectionState: Equatable, Sendable {
     case disconnected(ConnectionError?)

@@ -23,7 +23,6 @@
 import UIKit
 import LegacyCommon
 import Strings
-import Domain
 
 import ProtonCoreFeatureFlags
 
@@ -43,7 +42,7 @@ final class TabBarController: UITabBarController {
         
         delegate = self
         setupView()
-        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
+        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
             setupQuickConnectView()
         }
     }

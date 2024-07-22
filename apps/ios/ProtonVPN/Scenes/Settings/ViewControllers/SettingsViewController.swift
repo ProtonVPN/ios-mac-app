@@ -25,7 +25,6 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
 import ProtonCoreFeatureFlags
-import Domain
 
 final class SettingsViewController: UIViewController {
 
@@ -53,7 +52,7 @@ final class SettingsViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
             tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
         } else {
             tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 4)

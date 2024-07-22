@@ -25,6 +25,7 @@ import ExtensionIPC
 import let ConnectionFoundations.log
 import struct ConnectionFoundations.LogicalServerInfo
 
+@available(iOS 16, *)
 final class VPNSessionMock: VPNSession {
     var connectedDate: Date?
     var connectedServer: LogicalServerInfo = .init(logicalID: "", serverID: "")
@@ -96,6 +97,7 @@ final class VPNSessionMock: VPNSession {
     }
 }
 
+@available(iOS 16, *)
 enum MessageHandler {
     static let full: (VPNSessionMock, WireguardProviderRequest) -> WireguardProviderRequest.Response = { session, message in
         switch message {

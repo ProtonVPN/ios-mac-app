@@ -233,8 +233,8 @@ final class NavigationService {
         tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
         
         var tabViewControllers = [UIViewController]()
-        
-        let isRedesign = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
+
+        let isRedesign = FeatureFlagsRepository.shared.isRedesigniOSEnabled
 
         if isRedesign {
             let hostingController = UIHostingController(rootView: HomeView())

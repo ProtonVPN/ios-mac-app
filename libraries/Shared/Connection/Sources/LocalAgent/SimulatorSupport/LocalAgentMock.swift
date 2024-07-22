@@ -23,6 +23,7 @@ import Dependencies
 import XCTestDynamicOverlay
 import ConnectionFoundations
 
+@available(iOS 16, *)
 final class LocalAgentMock: LocalAgent {
     @Dependency(\.continuousClock) var clock
 

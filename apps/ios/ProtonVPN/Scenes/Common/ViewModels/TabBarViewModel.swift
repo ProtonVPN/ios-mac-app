@@ -22,7 +22,6 @@
 
 import Foundation
 import LegacyCommon
-import Domain
 import ProtonCoreFeatureFlags
 
 protocol TabBarViewModelModelDelegate: AnyObject {
@@ -91,7 +90,7 @@ class TabBarViewModel {
     }
     
     @objc func stateChanged() {
-        guard !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) else { return }
+        guard !FeatureFlagsRepository.shared.isRedesigniOSEnabled else { return }
         DispatchQueue.main.async { [weak self] in
             switch self?.appStateManager.displayState {
             case .connected:
