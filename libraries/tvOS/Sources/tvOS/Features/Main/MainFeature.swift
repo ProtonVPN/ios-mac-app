@@ -69,7 +69,7 @@ struct MainFeature {
 
     var body: some Reducer<State, Action> {
         Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()._printChanges()
+            ConnectionFeature()
         }
         Scope(state: \.homeLoading, action: \.homeLoading) {
             HomeLoadingFeature()

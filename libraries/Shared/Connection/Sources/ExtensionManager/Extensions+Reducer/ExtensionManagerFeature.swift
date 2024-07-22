@@ -41,7 +41,8 @@ public struct ExtensionFeature: Reducer, Sendable {
     public enum State: Equatable, Sendable {
         case disconnected(TunnelConnectionError?)
         case disconnecting(TunnelConnectionError?)
-        case connecting(LogicalServerInfo?)
+        case preparingConnection(LogicalServerInfo) // Preparing managers and requesting tunnel start
+        case connecting(LogicalServerInfo?) // Tunnel has been launched
         case connected(LogicalServerInfo)
     }
 
@@ -80,8 +81,8 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .cancel(id: CancelID.observation)
 
             case .connect(let intent):
-                state = .connecting(.init(logicalID: intent.server.logical.id,
-                                          serverID: intent.server.endpoint.id))
+                let logicalServerInfo = LogicalServerInfo(logicalServer: intent.server)
+                state = .preparingConnection(logicalServerInfo)
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(with: intent)
@@ -98,6 +99,10 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .tunnelStatusChanged(.connecting):
+                // We should be transitioning into this state from `.preparingConnection`
+                // Let's try to propagate server info from this previous state.
+                let existingServerInfo: LogicalServerInfo? = state.preparingConnection ?? nil
+                state = .connecting(existingServerInfo)
                 return .none
 
             case .tunnelStatusChanged(.connected):
@@ -136,6 +141,11 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .disconnect(let error):
+                if case .preparingConnection = state {
+                    // The tunnel has not yet been started, so we can transition straight into `.disconnected`.
+                    state = .disconnected(error)
+                    return .none
+                }
                 if case .disconnecting = state { return .none }
                 state = .disconnecting(error)
                 return .run {
