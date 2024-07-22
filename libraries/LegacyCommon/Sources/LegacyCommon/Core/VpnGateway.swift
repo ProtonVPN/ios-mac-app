@@ -52,6 +52,7 @@ public enum ResolutionUnavailableReason: Equatable {
     case upgrade(Int)
     case maintenance
     case protocolNotSupported
+    case locationNotFound
 }
 
 public enum RestrictedServerGroup {

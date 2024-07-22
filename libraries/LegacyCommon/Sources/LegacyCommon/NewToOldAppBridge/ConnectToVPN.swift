@@ -50,6 +50,9 @@ extension ConnectToVPNKey {
                 alert(MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:
                 alert(ProtocolNotAvailableForServerAlert())
+            case .locationNotFound:
+                // TODO: Add the correct alert
+                alert(ProtocolNotAvailableForServerAlert())
             }
 
         }
