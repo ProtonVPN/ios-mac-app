@@ -135,6 +135,18 @@ class SettingsRobot {
         }
         
         @discardableResult
+        func checkAccountTabUserName(username: String) -> SettingsRobot {
+            XCTAssert(app.staticTexts[username].exists)
+            return SettingsRobot()
+        }
+        
+        @discardableResult
+        func checkAccountTabPlan(planName: String) -> SettingsRobot {
+            XCTAssert(app.staticTexts[planName].exists)
+            return SettingsRobot()
+        }
+        
+        @discardableResult
         func checkModalIsOpen() -> SettingsRobot {
             XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: 5))
             XCTAssert(app.staticTexts[modalDescription].waitForExistence(timeout: 5))

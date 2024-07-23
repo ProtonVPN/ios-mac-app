@@ -86,8 +86,15 @@ class ProtonVPNUITests: XCTestCase {
     // MARK: - Helper methods
     
     private let loginRobot = LoginRobot()
-    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-    private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
+    private let mainRobot = MainRobot()
+    
+    lazy var credentials = self.getCredentials(fromResource: "credentials")
+    lazy var twopassusercredentials = self.getCredentials(fromResource: "twopassusercredentials")
+    
+
+    func getCredentials(fromResource resource: String) -> [Credentials] {
+        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+    }
 
     func loginAsFreeUser() {
         login(withCredentials: credentials[0])
@@ -111,60 +118,52 @@ class ProtonVPNUITests: XCTestCase {
 
     func login(withCredentials credentials: Credentials) {
         
-        let buttonQuickConnect = app.buttons["Quick Connect"]
-        super.setUp()
-           loginRobot
-               .loginUser(credentials: credentials)
-             
+        loginRobot
+            .loginUser(credentials: credentials)
+        
         dismissDialogs()
-             
+        
         waitForLoaderDisappear()
-                     
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
-        waitForExpectations(timeout: 10, handler: nil)
-             
+        _ = waitForElementToAppear(app.buttons[Localizable.quickConnect])
+        
         dismissDialogs()
         dismissPopups()
-             
+        
         if waitForElementToAppear(app.dialogs["Enabling custom protocols"]) {
             dismissDialogs()
         }
-
-        window.typeKey(",", modifierFlags: [.command]) // Settings…
-        
-        let preferencesWindow = app.windows["Preferences"]
-        let accountTabButton = app.tabGroups["Account"]
-        
-        XCTAssert(accountTabButton.waitForExistence(timeout: 5))
-        XCTAssert(accountTabButton.isHittable)
-        accountTabButton.click()
-
-        XCTAssert(app.staticTexts[credentials.username].exists)
+    }
+    
+    func verifyLoggedInUser(withCredentials credentials: Credentials) {
         let plan = credentials.plan.replacingOccurrences(of: "ProtonVPN", with: "Proton VPN")
-        XCTAssert(app.staticTexts[plan].exists)
-
-        preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
+        
+        mainRobot
+            .openAppSettings()
+            .verify.checkSettingsIsOpen()
+            .accountTabClick()
+            .verify.checkAccountTabIsOpen()
+            .verify.checkAccountTabUserName(username: credentials.username)
+            .verify.checkAccountTabPlan(planName: plan)
+            .closeSettings()
     }
     
     func logoutIfNeeded() {
         defer {
             // Make sure app is fully logged out
-            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Sign in"], handler: nil)
-            waitForExpectations(timeout: 10, handler: nil)
+            _ = waitForElementToAppear(app.buttons[Localizable.logIn])
         }
-        waitForLoaderDisappear()
 
-        guard !tryLoggingOut() else {
+        let buttonQuickConnect = app.buttons[Localizable.quickConnect]
+        if buttonQuickConnect.waitForExistence(timeout: 4) {
+            _ = mainRobot.logOut()
+            // give the main window time to load and show OpenVPN alert if needed
+            sleep(2)
+
+            dismissPopups()
+            dismissDialogs()
+        } else {
             return
         }
-
-        // give the main window time to load and show OpenVPN alert if needed
-        sleep(2)
-             
-        dismissPopups()
-        dismissDialogs()
-            
-        _ = tryLoggingOut()
     }
 
     func tryLoggingOut() -> Bool {

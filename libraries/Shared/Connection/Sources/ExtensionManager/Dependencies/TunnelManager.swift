@@ -93,7 +93,8 @@ final class PacketTunnelManager: TunnelManager {
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
         let manager = try await updateTunnel(for: .connection(intent))
-        try manager.session.startTunnel()
+        let session = manager.session
+        try session.startTunnel()
     }
 
     func stopTunnel() async throws {
@@ -132,10 +133,10 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<NEVPNStatus> {
         get async throws {
-            let manager = try await loadedManager
+            let session = try await loadedManager.session
             let statusChangedNotifications = NotificationCenter.default
-                .notifications(named: Notification.Name.NEVPNStatusDidChange, object: manager.session)
-                .map { _ in manager.session.status }
+                .notifications(named: Notification.Name.NEVPNStatusDidChange, object: session)
+                .map { _ in session.status }
 
             return AsyncStream(statusChangedNotifications)
         }

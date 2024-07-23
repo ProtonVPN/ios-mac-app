@@ -49,6 +49,12 @@ class MainRobot {
         return SettingsRobot()
     }
     
+    func logOut() -> LoginRobot {
+        let logoutButton = app.menuBars.menuItems["Sign out"]
+        logoutButton.click()
+        return LoginRobot()
+    }
+    
     let verify = Verify()
     
     class Verify {
