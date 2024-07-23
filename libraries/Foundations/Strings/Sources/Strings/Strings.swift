@@ -622,6 +622,10 @@ public enum Localizable {
   public static var localAgentServerErrorTitle: String { return Localizable.tr("Localizable", "_local_agent_server_error_title", fallback: "Server error") }
   /// iOS status view
   public static var location: String { return Localizable.tr("Localizable", "_location", fallback: "Location") }
+  /// User is trying to connect to a server for a profile that isn't available at this moment. %@ is the profile name (text)
+  public static func locationNotAvailableForProfileText(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_location_not_available_for_profile_text", String(describing: p1), fallback: "The server you selected for '%@' is currently unavailable. Select a different server or try again later.")
+  }
   /// User is trying to connect to a server that isn't available at this moment. (text)
   public static var locationNotAvailableText: String { return Localizable.tr("Localizable", "_location_not_available_text", fallback: "The server you selected is currently unavailable. Select a different server or try again later.") }
   /// User is trying to connect to a server that isn't available at this moment. (title)

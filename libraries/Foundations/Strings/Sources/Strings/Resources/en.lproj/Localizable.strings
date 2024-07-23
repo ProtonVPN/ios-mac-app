@@ -2445,3 +2445,6 @@
 
 /* User is trying to connect to a server that isn't available at this moment. (text) */
 "_location_not_available_text" = "The server you selected is currently unavailable. Select a different server or try again later.";
+
+/* User is trying to connect to a server for a profile that isn't available at this moment. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "The server you selected for '%@' is currently unavailable. Select a different server or try again later.";
