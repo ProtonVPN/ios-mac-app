@@ -71,7 +71,7 @@ struct WelcomeView: View {
                 .fontWeight(.bold)
                 .font(.title2)
 
-            Text("Connect to high-speed servers around the world and stream your favorite shows with VPN protection.", comment: "Subtitle on the login page")
+            Text("Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties.", comment: "Subtitle on the login page")
                 .font(.body)
                 .foregroundStyle(Color(.text, .weak))
                 .multilineTextAlignment(.center)
@@ -81,12 +81,12 @@ struct WelcomeView: View {
 
     var buttonsView: some View {
         HStack(spacing: .themeSpacing32) {
-            WelcomeButtonView(title: "Sign in", action: {
+            WelcomeButtonView(title: "Agree and Sign in", action: {
                 store.send(.showSignIn)
             })
-            WelcomeButtonView(title: "Create account", action: {
-                store.send(.showCreateAccount)
-            })
+//            WelcomeButtonView(title: "Create account", action: {
+//                store.send(.showCreateAccount)
+//            })
         }
     }
 }

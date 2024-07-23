@@ -72,8 +72,6 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .cancel(id: CancelID.observation)
 
             case .connect(let server, let authenticationData):
-                state = .connecting
-
                 let connectionConfiguration = ConnectionConfiguration(
                     hostname: server.domain,
                     netshield: .level1,

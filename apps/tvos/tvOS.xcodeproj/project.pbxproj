@@ -316,34 +316,6 @@
 			knownRegions = (
 				en,
 				Base,
-				be,
-				cs,
-				de,
-				el,
-				es,
-				"es-419",
-				fa,
-				fi,
-				fr,
-				hr,
-				id,
-				it,
-				ja,
-				ka,
-				ko,
-				nb,
-				nl,
-				pl,
-				"pt-BR",
-				"pt-PT",
-				ro,
-				ru,
-				sk,
-				sl,
-				sv,
-				tr,
-				uk,
-				"zh-Hant",
 			);
 			mainGroup = 4C54B00E2BC027FD00315A3B;
 			packageReferences = (
@@ -581,7 +553,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(TVOS_APP_VERSION)";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -612,7 +584,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(TVOS_APP_VERSION)";
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

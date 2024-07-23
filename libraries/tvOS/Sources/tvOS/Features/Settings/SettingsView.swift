@@ -27,9 +27,10 @@ struct SettingsView: View {
         NavigationStack {
             VStack(spacing: .themeSpacing24) {
                 Spacer()
-                SettingsCellView(title: "Support Center", icon: IconProvider.lifeRing) {
-                    store.send(.showDrillDown(.supportCenter))
-                }
+                // TODO: We might bring this back
+//                SettingsCellView(title: "Support Center", icon: IconProvider.lifeRing) {
+//                    store.send(.showDrillDown(.supportCenter))
+//                }
                 SettingsCellView(title: "Contact us", icon: IconProvider.speechBubble) {
                     store.send(.showDrillDown(.contactUs))
                 }

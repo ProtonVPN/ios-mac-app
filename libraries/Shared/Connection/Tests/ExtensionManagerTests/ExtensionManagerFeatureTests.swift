@@ -44,6 +44,8 @@ final class ExtensionManagerFeatureTests: XCTestCase {
             connectedDate: nil,
             lastDisconnectError: nil
         )
+        mockManager.connection.startupDuration = .milliseconds(250)
+        mockManager.connection.connectionDuration = .milliseconds(500)
 
         let disconnected = ExtensionFeature.State.disconnected(nil)
         let store = TestStore(initialState: disconnected) {
@@ -58,13 +60,16 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await store.receive(\.tunnelStatusChanged.disconnected)
 
         await store.send(.connect(intent)) {
-            $0 = .connecting(logicalServerInfo)
+            $0 = .preparingConnection(logicalServerInfo)
         }
 
         await store.receive(\.tunnelStartRequestFinished.success)
-        await store.receive(\.tunnelStatusChanged.connecting)
+        await mockClock.advance(by: .milliseconds(250))
+        await store.receive(\.tunnelStatusChanged.connecting) {
+            $0 = .connecting(logicalServerInfo)
+        }
 
-        await mockClock.advance(by: .seconds(1))
+        await mockClock.advance(by: .milliseconds(500))
         await store.receive(\.tunnelStatusChanged.connected)
         await store.receive(\.connectionFinished.success) {
             $0 = .connected(logicalServerInfo)
@@ -131,10 +136,9 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         mockManager.tunnelStartErrorToThrow = permissionDenied
 
         await store.send(.connect(intent)) {
-            $0 = .connecting(logicalServerInfo)
+            $0 = .preparingConnection(logicalServerInfo)
         }
-        await store.receive(\.tunnelStartRequestFinished.failure)
-        await store.receive(\.disconnect.tunnelStartFailed) {
+        await store.receive(\.tunnelStartRequestFinished.failure) {
             $0 = .disconnected(.tunnelStartFailed(permissionDenied))
         }
 

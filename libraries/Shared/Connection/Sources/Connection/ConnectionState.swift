@@ -69,6 +69,11 @@ public enum ConnectionState: Equatable, Sendable {
             self = .connecting(nil)
             break
 
+        case (.preparingConnection(let logicalServerInfo), _):
+            @Dependency(\.serverIdentifier) var serverIdentifier
+            let server = serverIdentifier.fullServerInfo(logicalServerInfo)
+            self = .connecting(server)
+
         case (.connecting(let logicalServerInfo), _):
             let server = logicalServerInfo.flatMap {
                 @Dependency(\.serverIdentifier) var serverIdentifier
@@ -83,5 +88,13 @@ public enum ConnectionState: Equatable, Sendable {
             // Disconnected with errors is already covered before the switch.
             self = .disconnected(nil)
         }
+    }
+
+    init(connectionFeatureState: ConnectionFeature.State) {
+        self.init(
+            tunnelState: connectionFeatureState.tunnel,
+            certAuthState: connectionFeatureState.certAuth,
+            localAgentState: connectionFeatureState.localAgent
+        )
     }
 }

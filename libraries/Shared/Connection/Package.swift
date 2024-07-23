@@ -77,6 +77,7 @@ let package = Package(
             name: "ConnectionTests",
             dependencies: [
                 "Connection",
+                "ConnectionFoundationsTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

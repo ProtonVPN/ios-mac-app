@@ -26,6 +26,7 @@ struct WelcomeInfoFeature {
     enum State: Equatable {
         case createAccount
         case freeUpsell
+        case freeUpsellAlternative
 
         struct Model {
             let title: LocalizedStringKey
@@ -45,6 +46,11 @@ struct WelcomeInfoFeature {
                     .init(title: "Using Proton Free?",
                           subtitle: "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website.",
                           url: "https://account.protonvpn.com/pricing",
+                          displayURL: nil)
+            case .freeUpsellAlternative:
+                    .init(title: "Proton VPN for Apple TV is not available on free plans",
+                          subtitle: "",
+                          url: "",
                           displayURL: nil)
             }
         }

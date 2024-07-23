@@ -69,12 +69,8 @@ final class MainFeatureTests: XCTestCase {
             $0.userLocationService = UserLocationServiceMock()
         }
 
-        await store.send(.connection(.localAgent(.startObservingEvents))) {
-            $0.connectionState = .disconnected(nil)
-        }
-        await store.send(.connection(.disconnect(.connectionFailure(.serverMissing)))) {
-            $0.connectionState = .disconnecting
-        }
+        await store.send(.connection(.localAgent(.startObservingEvents)))
+        await store.send(.connection(.disconnect(.connectionFailure(.serverMissing))))
         await store.receive(\.connection.localAgent.disconnect) {
             $0.connection.localAgent = .disconnecting(nil)
         }
@@ -117,7 +113,7 @@ final class MainFeatureTests: XCTestCase {
             $0.connection.tunnel = .disconnected(nil)
         }
         await store.receive(\.connection.tunnel.connect) {
-            $0.connection.tunnel = .connecting(.init(logicalID: "", serverID: "some id"))
+            $0.connection.tunnel = .preparingConnection(.init(logicalID: "", serverID: "some id"))
         }
     }
 }
