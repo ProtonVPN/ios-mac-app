@@ -51,7 +51,7 @@ extension ConnectToVPNKey {
             case .protocolNotSupported:
                 alert(ProtocolNotAvailableForServerAlert())
             case .locationNotFound:
-                alert(LocationNotAvailableForServerAlert())
+                alert(LocationNotAvailableAlert())
             }
 
         }
