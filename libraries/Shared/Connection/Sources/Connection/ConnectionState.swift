@@ -69,6 +69,11 @@ public enum ConnectionState: Equatable, Sendable {
             self = .connecting(nil)
             break
 
+        case (.preparingConnection(let logicalServerInfo), _):
+            @Dependency(\.serverIdentifier) var serverIdentifier
+            let server = serverIdentifier.fullServerInfo(logicalServerInfo)
+            self = .connecting(server)
+
         case (.connecting(let logicalServerInfo), _):
             let server = logicalServerInfo.flatMap {
                 @Dependency(\.serverIdentifier) var serverIdentifier

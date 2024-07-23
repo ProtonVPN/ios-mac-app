@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import struct Domain.Server
 
 /// Contains information required to identify the server and logical that the extension is currently connected to
 public struct LogicalServerInfo: Equatable, Sendable {
@@ -26,5 +27,9 @@ public struct LogicalServerInfo: Equatable, Sendable {
     public init(logicalID: String, serverID: String) {
         self.logicalID = logicalID
         self.serverID = serverID
+    }
+
+    public init(logicalServer: Server) {
+        self.init(logicalID: logicalServer.logical.id, serverID: logicalServer.endpoint.id)
     }
 }

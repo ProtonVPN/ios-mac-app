@@ -34,6 +34,7 @@ final class VPNSessionMock: VPNSession {
         }
     }
 
+    var startupDuration: Duration = .seconds(0) // Time taken to enter the `.connecting` state
     var connectionDuration: Duration = .seconds(1)
     var connectionTask: Task<Void, Error>?
     var disconnectionTask: Task<Void, Error>?
@@ -54,10 +55,21 @@ final class VPNSessionMock: VPNSession {
     func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
 
     func startTunnel() throws {
-        self.status = .connecting
+        let shouldTransitionToConnectingImmediately = startupDuration == .zero
+        if shouldTransitionToConnectingImmediately {
+            self.status = .connecting
+        }
+
         connectionTask = Task {
             @Dependency(\.continuousClock) var clock
+            if !shouldTransitionToConnectingImmediately {
+                try await clock.sleep(for: startupDuration)
+                if Task.isCancelled { return }
+                self.status = .connecting
+            }
+
             try await clock.sleep(for: connectionDuration)
+            if Task.isCancelled { return }
 
             @Dependency(\.date) var date
             connectedDate = date.now

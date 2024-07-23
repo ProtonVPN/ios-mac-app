@@ -113,7 +113,7 @@ final class MainFeatureTests: XCTestCase {
             $0.connection.tunnel = .disconnected(nil)
         }
         await store.receive(\.connection.tunnel.connect) {
-            $0.connection.tunnel = .connecting(.init(logicalID: "", serverID: "some id"))
+            $0.connection.tunnel = .preparingConnection(.init(logicalID: "", serverID: "some id"))
         }
     }
 }
