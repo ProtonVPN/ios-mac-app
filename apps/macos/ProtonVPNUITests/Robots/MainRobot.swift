@@ -18,23 +18,27 @@
 
 import Foundation
 import XCTest
+import Strings
 
-fileprivate let qcButton = "Quick Connect"
-fileprivate let preferencesTitle = "Preferences"
-fileprivate let menuItemReportAnIssue = "Report an Issue..."
-fileprivate let menuItemProfiles = "Overview"
-fileprivate let statusTitle = "You are not connected"
+fileprivate let qcButton = Localizable.quickConnect
+fileprivate let disconnectButton = Localizable.disconnect
+fileprivate let preferencesTitle = Localizable.preferences
+fileprivate let menuItemReportAnIssue = Localizable.reportAnIssue
+fileprivate let menuItemProfiles = Localizable.overview
+fileprivate let statusTitle = Localizable.youAreNotConnected
+fileprivate let initializingConnectionTitle = Localizable.initializingConnection
+fileprivate let successfullyConnectedTitle = Localizable.successfullyConnected
 
 class MainRobot {
-
+    
     func openProfiles() -> ManageProfilesRobot {
-        app.tabGroups["Profiles"].forceClick()
-        app.buttons["Create Profile"].click()
+        app.tabGroups[Localizable.profiles].forceClick()
+        app.buttons[Localizable.createProfile].click()
         return ManageProfilesRobot()
     }
     
     func closeProfilesOverview() -> MainRobot {
-        let preferencesWindow = app.windows["Profiles Overview"]
+        let preferencesWindow = app.windows[Localizable.profilesOverview]
         preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
         return MainRobot()
     }
@@ -44,13 +48,22 @@ class MainRobot {
         return SettingsRobot()
     }
     
-    func quickConnectToAServer() -> SettingsRobot {
+    func quickConnectToAServer() -> MainRobot {
         app.buttons[qcButton].forceClick()
-        return SettingsRobot()
+        return MainRobot()
+    }
+    
+    func isConnected() -> Bool {
+        return app.buttons[disconnectButton].waitForExistence(timeout: 5)
+    }
+    
+    func disconnect() -> MainRobot {
+        app.buttons[disconnectButton].forceClick()
+        return MainRobot()
     }
     
     func logOut() -> LoginRobot {
-        let logoutButton = app.menuBars.menuItems["Sign out"]
+        let logoutButton = app.menuBars.menuItems[Localizable.menuLogout]
         logoutButton.click()
         return LoginRobot()
     }
@@ -71,6 +84,19 @@ class MainRobot {
             XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: 10))
             XCTAssert(app.buttons[qcButton].waitForExistence(timeout: 10))
             return SettingsRobot()
+        }
+        
+        @discardableResult
+        func checkVPNConnecting() -> MainRobot {
+            XCTAssert(app.staticTexts[initializingConnectionTitle].waitForExistence(timeout: 10), "\(initializingConnectionTitle) element not found.")
+            return MainRobot()
+        }
+        
+        @discardableResult
+        func checkVPNConnected() -> MainRobot {
+            XCTAssert(app.staticTexts[successfullyConnectedTitle].waitForExistence(timeout: 10), "\(successfullyConnectedTitle) element not found.")
+            XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "'\(Localizable.disconnect)' button not found.")
+            return MainRobot()
         }
     }
 }

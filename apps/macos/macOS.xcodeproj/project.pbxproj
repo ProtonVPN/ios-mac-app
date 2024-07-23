@@ -84,6 +84,7 @@
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
 		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
+		77656B892C46AA4300E730AA /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77656B862C46AA2F00E730AA /* ConnectionTests.swift */; };
 		79DAC5E0FFC36981E0DC7FC5 /* BannerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3F63494AD347F2FCD626D /* BannerCellView.swift */; };
 		7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E93E4DC7EC79388198005F1 /* BannerCellView.xib */; };
 		85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA91B78C375F475C3F8608 /* BannerViewModel.swift */; };
@@ -603,6 +604,7 @@
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		66FEF8782B7A680F00452A8D /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewController.swift; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		77656B862C46AA2F00E730AA /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		78C16264DDB60F80353FA5CA /* LogViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewHelper.swift; sourceTree = "<group>"; };
 		8E93E4DC7EC79388198005F1 /* BannerCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BannerCellView.xib; sourceTree = "<group>"; };
 		9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
@@ -1173,6 +1175,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		77656B872C46AA2F00E730AA /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				77656B862C46AA2F00E730AA /* ConnectionTests.swift */,
+			);
+			path = Connections;
+			sourceTree = "<group>";
+		};
 		91CA1173E5C488025F0435F9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1208,6 +1218,7 @@
 		B22F32FE278DC44D00DBB8CA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				77656B872C46AA2F00E730AA /* Connections */,
 				B270C2D427BE950B00EC7B53 /* Components */,
 				B22F3313278ECAFF00DBB8CA /* Settings */,
 				B22F330B278DCF2C00DBB8CA /* Login */,
@@ -3073,6 +3084,7 @@
 				B2C6CF78298D3F370039BC90 /* GenerateTwoFaCode.swift in Sources */,
 				B2C6CF7F298D42A10039BC90 /* ObfuscatedConstants.swift in Sources */,
 				B270C2CA27BBA9DD00EC7B53 /* QuickSettingsRobot.swift in Sources */,
+				77656B892C46AA4300E730AA /* ConnectionTests.swift in Sources */,
 				B22F3302278DC70900DBB8CA /* ProfileRobot.swift in Sources */,
 				B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */,
 				B2C6CF76298D3EFD0039BC90 /* TwoFaRobot.swift in Sources */,
