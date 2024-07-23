@@ -59,7 +59,7 @@ class LoginTests: ProtonVPNUITests {
     
     func testLoginAsSubuserWithNoConnectionAssigned() {
         
-        let subusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "subusercredentials", withExtension: "plist")!)
+        let subusercredentials = getCredentials(fromResource: "subusercredentials")
             
         loginRobot
             .loginAsSubuser(subusercredentials: subusercredentials[0])
@@ -73,10 +73,11 @@ class LoginTests: ProtonVPNUITests {
     
     func testLoginWithCorrectCredentials() {
 
-        let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-
+        let credentials = getCredentials(fromResource: "credentials")
+        
         for credentials in credentials {
             login(withCredentials: credentials)
+            verifyLoggedInUser(withCredentials: credentials)
             logoutIfNeeded()
             app.terminate()
             app.launch()
@@ -90,7 +91,7 @@ class LoginTests: ProtonVPNUITests {
     @MainActor
     func testLoginAsTwoFa() async {
         
-        let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
+        let twofausercredentials = getCredentials(fromResource: "twofausercredentials")
             
         loginRobot
             .loginUser(credentials: twofausercredentials[0])
@@ -104,7 +105,7 @@ class LoginTests: ProtonVPNUITests {
     @MainActor
     func testLoginWithTwoPassAnd2FAUser() async {
             
-        let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
+        let twopasstwofausercredentials = getCredentials(fromResource: "twopasstwofausercredentials")
             
         loginRobot
             .loginUser(credentials: twopasstwofausercredentials[0])
