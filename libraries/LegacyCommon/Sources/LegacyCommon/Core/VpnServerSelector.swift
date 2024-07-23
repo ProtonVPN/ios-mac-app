@@ -109,6 +109,7 @@ class VpnServerSelector {
 
             determineAndNotifyUnavailabilityReason(
                 forSpecificCountry: true,
+                forProfileName: connectionRequest.profileName,
                 type: type,
                 baseFilters: baseFilters
             )
@@ -121,13 +122,14 @@ class VpnServerSelector {
 
     private func determineAndNotifyUnavailabilityReason(
         forSpecificCountry: Bool,
+        forProfileName: String?,
         type: ServerType,
         baseFilters: [VPNServerFilter]
     ) {
         let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
 
         if servers.isEmpty {
-            notifyResolutionUnavailable?(forSpecificCountry, type, .locationNotFound)
+            notifyResolutionUnavailable?(forSpecificCountry, type, .locationNotFound(forProfileName))
             return
         }
 

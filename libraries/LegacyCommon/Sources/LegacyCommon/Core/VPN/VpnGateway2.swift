@@ -209,6 +209,7 @@ fileprivate extension ConnectionSpec {
             natType: .default,
             safeMode: nil,
             profileId: nil,
+            profileName: nil,
             trigger: nil
         )
     }

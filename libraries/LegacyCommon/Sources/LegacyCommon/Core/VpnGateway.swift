@@ -52,7 +52,7 @@ public enum ResolutionUnavailableReason: Equatable {
     case upgrade(Int)
     case maintenance
     case protocolNotSupported
-    case locationNotFound
+    case locationNotFound(String?)
 }
 
 public enum RestrictedServerGroup {
@@ -325,6 +325,7 @@ public class VpnGateway: VpnGatewayProtocol {
             natType: natType,
             safeMode: safeMode,
             profileId: nil,
+            profileName: nil,
             trigger: trigger
         )
 
@@ -347,20 +348,20 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: ConnectionDimensions.VPNTrigger = .country) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, trigger: trigger)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
         
         connect(with: connectionRequest)
     }
 
     public func connectTo(country countryCode: String, city: String) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, trigger: .city)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .city)
 
         connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, trigger: .server)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .server)
         
         connect(with: connectionRequest)
     }
@@ -779,6 +780,7 @@ fileprivate extension VpnGateway {
             natType: natTypePropertyProvider.natType,
             safeMode: safeModePropertyProvider.safeMode,
             profileId: nil,
+            profileName: nil,
             trigger: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }

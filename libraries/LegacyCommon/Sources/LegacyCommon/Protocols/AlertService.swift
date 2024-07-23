@@ -345,12 +345,12 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
 
 public class LocationNotAvailableForServerAlert: SystemAlert {
     public var title: String? = Localizable.locationNotAvailableTitle
-    public var message: String? = Localizable.locationNotAvailableText
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init(confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
+    public init(profileName: String? = nil, confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
             actions.append(AlertAction(title: Localizable.disconnect,
                                        style: .destructive,
@@ -360,6 +360,11 @@ public class LocationNotAvailableForServerAlert: SystemAlert {
         actions.append(AlertAction(title: dismissText,
                                    style: .cancel,
                                    handler: cancelHandler ?? dismiss))
+        if let profileName {
+            message = Localizable.locationNotAvailableForProfileText(profileName)
+        } else {
+            message = Localizable.locationNotAvailableText
+        }
     }
 }
 
