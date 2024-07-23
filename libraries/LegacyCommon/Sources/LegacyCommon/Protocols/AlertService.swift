@@ -343,7 +343,7 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
     }
 }
 
-public class LocationNotAvailableForServerAlert: SystemAlert {
+public class LocationNotAvailableAlert: SystemAlert {
     public var title: String? = Localizable.locationNotAvailableTitle
     public var message: String?
     public var actions = [AlertAction]()

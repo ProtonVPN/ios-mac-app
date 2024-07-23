@@ -61,7 +61,7 @@ class ServerTierChecker {
             case .protocolNotSupported:
                 self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
             case .locationNotFound(let profileName):
-                self?.alertService?.push(alert: LocationNotAvailableForServerAlert(profileName: profileName))
+                self?.alertService?.push(alert: LocationNotAvailableAlert(profileName: profileName))
             }
         }
     }
