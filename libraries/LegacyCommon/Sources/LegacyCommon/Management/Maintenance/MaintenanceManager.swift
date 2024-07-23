@@ -26,6 +26,7 @@ import Dependencies
 
 import CommonNetworking
 import Domain
+import Ergonomics
 
 public protocol MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol
@@ -85,6 +86,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     }
     
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {
+        @Dependency(\.propertiesManager) var propertiesManager
+        let location = propertiesManager.userLocation
         guard let activeConnection = appStateManager.activeConnection() else {
             log.info("No active connection", category: .app)
             completion?(false)
@@ -114,7 +117,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 }
 
                 self.vpnApiService.serverInfo(
-                    ip: nil,
+                    ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
+                    countryCode: location?.country,
                     freeTier: isFree
                 ) { result in
                     switch result {
