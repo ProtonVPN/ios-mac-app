@@ -21,6 +21,7 @@ import Foundation
 import Domain
 import Strings
 import VPNAppCore
+import NetShield
 
 public enum ProtectionState: Equatable {
     case protected(netShield: NetShieldModel)

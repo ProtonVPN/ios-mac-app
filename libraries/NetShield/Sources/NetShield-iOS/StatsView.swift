@@ -1,5 +1,5 @@
 //
-//  Created on 23/03/2023.
+//  Created on 11/06/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -16,58 +16,37 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Home
+import NetShield
 import SwiftUI
-import Theme
-
-public struct NetShieldStatsView: View {
-
-    @ObservedObject public var viewModel = NetShieldModel(trackers: 0, ads: 0, data: 0, enabled: false)
-
-    public var body: some View {
-        HStack(spacing: 0) {
-            StatsView(model: $viewModel.ads)
-            StatsView(model: $viewModel.trackers)
-            StatsView(model: $viewModel.data)
-        }
-        .padding(8)
-        .background(RoundedRectangle(cornerRadius: .themeRadius8)
-            .fill(Color(.background, .weak)))
-    }
-    public init() {
-
-    }
-}
 
 struct StatsView: View {
     @State var isHovered = false
 
-    var statsViewHeight: CGFloat = 56
-    var statsViewWidth: CGFloat = 80
+    var statsViewHeight: CGFloat = 64
 
-    @Binding var model: NetShieldModel.Stat
+    let model: NetShieldModel.Stat
 
     public var body: some View {
         VStack(alignment: .center) {
             Text(model.value)
-                .themeFont(.title3(emphasised: true))
+                .themeFont(.body2(emphasised: true))
                 .foregroundColor(valueForegroundColor())
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(model.title)
-                .themeFont(.footnote())
+                .themeFont(.overline())
                 .foregroundColor(titleForegroundColor())
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
                 .minimumScaleFactor(0.6)
         }
-        .frame(width: statsViewWidth, height: statsViewHeight)
+        .frame(maxWidth: .infinity, idealHeight: statsViewHeight)
         .onHover { isHovered = $0 }
         .background(
             RoundedRectangle(cornerRadius: .themeRadius4)
                 .fill(backgroundColor())
         )
-        .help(model.help)
+//        .help(model.help)
     }
 
     func valueForegroundColor() -> Color {
@@ -88,14 +67,21 @@ struct StatsView: View {
     }
 }
 
-struct NetShieldStatsView_Previews: PreviewProvider {
-    static var view = NetShieldStatsView()
+struct StatsView_Previews: PreviewProvider {
     static var previews: some View {
-        view
+        StatsView(model: .random)
+            .background(RoundedRectangle(cornerRadius: .themeRadius8)
+                .fill(Color(.background, .weak)))
             .background(Color(.background))
             .previewLayout(.sizeThatFits)
-            .onAppear {
-                view.viewModel = .random
-            }
+    }
+}
+
+private extension NetShieldModel.Stat {
+    static var random: NetShieldModel.Stat {
+        .init(value: "\(Int.random(in: 1...1000))",
+              title: "Trackers\nstopped",
+              help: "",
+              isEnabled: .random())
     }
 }

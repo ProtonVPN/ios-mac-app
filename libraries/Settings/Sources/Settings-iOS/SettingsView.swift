@@ -39,6 +39,16 @@ public struct SettingsView: View {
         self.store = store
     }
 
+    public init() {
+        store = .init(initialState: .init(destination: nil,
+                                          netShield: .off,
+                                          killSwitch: .off,
+                                          protocol: ProtocolSettingsFeature.State(),
+                                          theme: .auto)) {
+            SettingsFeature()
+        }
+    }
+
     struct ChildFeature {
         let icon: Image
         let title: String

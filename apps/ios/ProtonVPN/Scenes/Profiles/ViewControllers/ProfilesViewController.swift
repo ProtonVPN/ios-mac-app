@@ -26,6 +26,7 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 import Theme
 import Strings
+import ProtonCoreFeatureFlags
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()
@@ -44,7 +45,11 @@ class ProfilesViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.bookmark, tag: 3)
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.windowTerminal, tag: 2)
+        } else {
+            tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.bookmark, tag: 3)
+        }
         tabBarItem.accessibilityIdentifier = "Profiles"
     }
     
@@ -52,7 +57,11 @@ class ProfilesViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        setupConnectionBar()
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            connectionBarContainerView.removeFromSuperview()
+        } else {
+            setupConnectionBar()
+        }
         setupTableView()
         addObservers()
         

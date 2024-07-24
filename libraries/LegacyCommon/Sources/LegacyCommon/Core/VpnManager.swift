@@ -32,7 +32,7 @@ import ExtensionIPC
 import VPNShared
 import ProtonCoreFeatureFlags
 
-import Home
+import NetShield
 
 public protocol VpnManagerProtocol {
 

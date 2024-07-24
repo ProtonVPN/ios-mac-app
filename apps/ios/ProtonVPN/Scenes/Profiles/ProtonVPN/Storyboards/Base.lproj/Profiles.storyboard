@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -111,8 +111,9 @@
                         <viewLayoutGuide key="safeArea" id="Qfr-hS-4fk"/>
                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="JmD-Yg-QIU" firstAttribute="top" secondItem="ssn-A0-biC" secondAttribute="bottom" id="GnO-CW-c7t"/>
                             <constraint firstItem="ssn-A0-biC" firstAttribute="top" secondItem="Qfr-hS-4fk" secondAttribute="top" id="IXs-xl-8gq"/>
-                            <constraint firstItem="JmD-Yg-QIU" firstAttribute="top" secondItem="ssn-A0-biC" secondAttribute="bottom" id="L7F-Pt-2ei"/>
+                            <constraint firstItem="JmD-Yg-QIU" firstAttribute="top" secondItem="Qfr-hS-4fk" secondAttribute="top" priority="999" id="L7F-Pt-2ei"/>
                             <constraint firstItem="Qfr-hS-4fk" firstAttribute="bottom" secondItem="JmD-Yg-QIU" secondAttribute="bottom" id="VlJ-mz-uHL"/>
                             <constraint firstItem="Qfr-hS-4fk" firstAttribute="trailing" secondItem="JmD-Yg-QIU" secondAttribute="trailing" id="WcP-I6-mdR"/>
                             <constraint firstItem="JmD-Yg-QIU" firstAttribute="leading" secondItem="Qfr-hS-4fk" secondAttribute="leading" id="eVL-LB-em1"/>
@@ -293,7 +294,7 @@
     <resources>
         <image name="placeholdertext.fill" catalog="system" width="78" height="128"/>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.42699998617172241" green="0.28999999165534973" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

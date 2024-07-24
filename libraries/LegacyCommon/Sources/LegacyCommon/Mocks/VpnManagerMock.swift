@@ -25,7 +25,7 @@ import Foundation
 import Domain
 import VPNShared
 
-import Home
+import NetShield
 
 public class VpnManagerMock: VpnManagerProtocol {
 

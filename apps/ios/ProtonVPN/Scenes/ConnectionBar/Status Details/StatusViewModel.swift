@@ -32,7 +32,8 @@ import Domain
 import Ergonomics
 import LocalFeatureFlags
 import Strings
-import Home
+import NetShield
+import NetShield_iOS
 import Theme
 import VPNShared
 import LegacyCommon

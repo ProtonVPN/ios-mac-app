@@ -320,8 +320,8 @@
 		E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E55B1A642B922031001EF2C6 /* PMLogger */; };
 		E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */; };
 		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
+		E5867D812C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
-		E58E5AB42A4AD33000891B77 /* InitialStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
@@ -345,7 +345,6 @@
 		E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D02A73AF1D00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */; };
-		E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -784,7 +783,7 @@
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfferBannerViewCell.xib; sourceTree = "<group>"; };
 		E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferBannerViewCell.swift; sourceTree = "<group>"; };
-		E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
+		E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagsRepository+Redesign.swift"; sourceTree = "<group>"; };
 		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
 		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
@@ -795,7 +794,6 @@
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E5FD25C92A73ADC500D9BDC0 /* country-names.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "country-names.plist"; sourceTree = "<group>"; };
 		E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = "<group>"; };
-		E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E93F769227C788740033B88F /* WGLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGLogFormatter.swift; sourceTree = "<group>"; };
 		E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuardiOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1115,8 +1113,6 @@
 				D580AB8F2452CA08003C34B9 /* Scenes */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
-				E58E5AB32A4AD33000891B77 /* InitialStateProvider.swift */,
-				E5FFB24329F80185000C65A9 /* ProtonVPNApp.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
 				D5C7C8AA2B0B72A100641808 /* main.swift */,
@@ -1196,6 +1192,7 @@
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				F34AC17C27F439B40007FF93 /* Review+Configuration.swift */,
 				F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */,
+				E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2820,6 +2817,7 @@
 				F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
 				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
+				E5867D812C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift in Sources */,
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
 				7904DA4920E6BA3E008A4FCB /* ColorPickerViewModel.swift in Sources */,
@@ -2833,7 +2831,6 @@
 				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */,
-				E5FFB24429F80185000C65A9 /* ProtonVPNApp.swift in Sources */,
 				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				E5BE14942BBE99A00093F30F /* OneClickPayment.swift in Sources */,
@@ -2920,7 +2917,6 @@
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */,
-				E58E5AB42A4AD33000891B77 /* InitialStateProvider.swift in Sources */,
 				428DF9B5262F126600944379 /* StreamingServiceCell.swift in Sources */,
 				D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */,
 				66E34BB627ABEC45002FC827 /* SettingsAccountViewController.swift in Sources */,
@@ -3331,7 +3327,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MODULEMAP_FILE = "";
-				OTHER_SWIFT_FLAGS = "$(REDESIGN_SWIFTFLAGS)";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3388,7 +3384,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = ProtonVPNTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3411,7 +3407,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = ProtonVPNTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3492,7 +3488,7 @@
 					"TEST_VAR=$(TEST_VAR)",
 				);
 				INFOPLIST_FILE = ProtonVPNUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3515,7 +3511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = ProtonVPNUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3705,7 +3701,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = ProtonVPNTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3732,7 +3728,7 @@
 					"TEST_VAR=$(TEST_VAR)",
 				);
 				INFOPLIST_FILE = ProtonVPNUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4113,8 +4109,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = exactVersion;
+				version = 1.10.2;
 			};
 		};
 		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */ = {

@@ -51,7 +51,7 @@ let package = Package(
 
         .package(path: "../BugReport"),
         .package(path: "../Modals"),
-        .package(path: "../Home"),
+        .package(path: "../NetShield"),
         .package(path: "../NEHelper"),
         .package(path: "../Settings"),
 
@@ -88,7 +88,7 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNCrypto", package: "NEHelper"),
 
-                "Home",
+                "NetShield",
                 "Modals",
                 "Settings",
                 "BugReport",

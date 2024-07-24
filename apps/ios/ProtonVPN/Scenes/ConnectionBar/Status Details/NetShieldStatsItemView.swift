@@ -18,7 +18,7 @@
 
 import UIKit
 import LegacyCommon
-import Home
+import NetShield
 
 class NetShieldStatsItemView: UIView {
     @IBOutlet weak var contentView: UIView!

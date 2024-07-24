@@ -21,18 +21,16 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../SharedViews"),
-        .package(path: "../NEHelper"),
+        .package(path: "../NetShield"),
+        .package(path: "../Core/NEHelper"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
-        .package(
-            url: "https://github.com/pointfreeco/swift-case-paths",
-            exact: "1.3.0"
-        ),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "1.2.2"),
+        .package(path: "../Shared/Connection"),
+        .package(path: "../Shared/Persistence"),
     ],
     targets: [
         .target(
@@ -41,12 +39,14 @@ let package = Package(
                 "Theme",
                 "Strings",
                 "Ergonomics",
+                "Connection",
+                "Persistence",
+                "SharedViews",
+                "NetShield",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
-                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             exclude: ["swiftgen.yml"],
             resources: [
@@ -57,10 +57,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "Home",
-                "SharedViews",
-                "Strings",
-                "Theme",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "NetShield-iOS", package: "NetShield"),
             ],
             resources: []
         ),
@@ -68,11 +65,7 @@ let package = Package(
             name: "Home-macOS",
             dependencies: [
                 "Home",
-                "Theme",
-                "SharedViews",
-                "Strings",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "NetShield-macOS", package: "NetShield"),
             ],
             resources: []
         ),

@@ -27,6 +27,7 @@ import let ConnectionFoundations.log
 import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 
+@available(iOS 16, *)
 extension NETunnelProviderSession: VPNSession {
     func send(_ messageData: Data) async throws -> Data {
         try await withCheckedThrowingContinuation { continuation in

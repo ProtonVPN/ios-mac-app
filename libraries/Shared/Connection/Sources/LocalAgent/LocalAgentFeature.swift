@@ -23,6 +23,7 @@ import ComposableArchitecture
 import struct Domain.ServerEndpoint
 import ConnectionFoundations
 
+@available(iOS 16, *)
 public struct LocalAgentFeature: Reducer, Sendable {
     @Dependency(\.localAgent) var localAgent
     @Dependency(\.localAgentConfiguration) var configuration
