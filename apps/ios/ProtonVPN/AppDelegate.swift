@@ -49,10 +49,8 @@ import PMLogger
 import VPNShared
 import VPNAppCore
 
-
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-#if !REDESIGN
 class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
 
@@ -75,30 +73,15 @@ class AppDelegate: UIResponder {
         setUpNSCoding(withModuleName: "ProtonVPN")
     }
 }
-#else
-class AppDelegate: UIResponder {
-    private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
-
-    @Dependency(\.defaultsProvider) var defaultsProvider
-    @Dependency(\.cryptoService) var cryptoService
-
-    private let container = DependencyContainer.shared
-    private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
-    private lazy var vpnKeychain: VpnKeychainProtocol = container.makeVpnKeychain()
-    private lazy var navigationService: NavigationService = container.makeNavigationService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
-    private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
-    private lazy var planService: PlanService = container.makePlanService()
-    private lazy var pushNotificationService = container.makePushNotificationService()
-}
-#endif
 
 // MARK: - UIApplicationDelegate
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
+        // safety measure to not accidentally switch on the redesign before it's ready
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, false)
 
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()

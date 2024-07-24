@@ -48,6 +48,13 @@ public struct HomeFeature: Reducer {
             self.vpnConnectionStatus = vpnConnectionStatus
         }
 
+        public init() {
+            let connectionState = ConnectionStatusFeature.State(protectionState: .unprotected(country: "", ip: ""))
+            self.init(connections: [],
+                      connectionStatus: connectionState,
+                      vpnConnectionStatus: .disconnected)
+        }
+
         mutating func trimConnections() {
             @Dependency(\.storage) var storage
             while connections.count > Self.maxConnections,
@@ -156,9 +163,9 @@ public struct HomeFeature: Reducer {
                     @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
 
                     if #available(macOS 12.0, *) {
-                        for await vpnStatus in vpnConnectionStatusPublisher().values {
-                            await send(.newConnectionStatus(vpnStatus), animation: .default)
-                        }
+//                        for await vpnStatus in vpnConnectionStatusPublisher().values {
+//                            await send(.newConnectionStatus(vpnStatus), animation: .default)
+//                        }
                     } else {
                         assertionFailure("Use target at least macOS 12.0")
                     }

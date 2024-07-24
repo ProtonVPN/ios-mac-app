@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 
+@available(iOS 16, *)
 public extension PersistenceReaderKey where Self == InMemoryKey<ConnectionState?> {
     static var connectionState: Self {
         inMemory("connectionState")

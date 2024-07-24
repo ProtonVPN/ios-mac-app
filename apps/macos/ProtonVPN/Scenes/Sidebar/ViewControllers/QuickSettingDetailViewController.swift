@@ -26,8 +26,8 @@ import Modals_macOS
 import SwiftUI
 import LocalFeatureFlags
 import Theme
-import Home
-import Home_macOS
+import NetShield
+import NetShield_macOS
 import Strings
 
 protocol QuickSettingsDetailViewControllerProtocol: AnyObject {

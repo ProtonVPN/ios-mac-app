@@ -34,7 +34,7 @@ import LocalFeatureFlags
 import Timer
 import VPNShared
 
-import Home
+import NetShield
 
 private enum LocalAgentFeature: String, FeatureFlag {
     var category: String { "LocalAgent" }

@@ -24,6 +24,8 @@ import UIKit
 import LegacyCommon
 import Strings
 
+import ProtonCoreFeatureFlags
+
 final class TabBarController: UITabBarController {
 
     private var quickConnectButtonConnecting = false
@@ -40,7 +42,9 @@ final class TabBarController: UITabBarController {
         
         delegate = self
         setupView()
-        setupQuickConnectView()
+        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            setupQuickConnectView()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

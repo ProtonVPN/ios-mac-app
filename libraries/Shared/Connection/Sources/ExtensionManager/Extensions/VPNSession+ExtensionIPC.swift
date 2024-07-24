@@ -23,6 +23,7 @@ import protocol ExtensionIPC.ProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 import ConnectionFoundations
 
+@available(iOS 16, *)
 extension TunnelMessageSender: DependencyKey {
     public static let liveValue: TunnelMessageSender = {
         @Dependency(\.tunnelManager) var tunnelManager

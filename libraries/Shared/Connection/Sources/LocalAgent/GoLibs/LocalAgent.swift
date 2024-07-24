@@ -41,6 +41,7 @@ public enum LocalAgentEvent: Sendable {
     case stats(FeatureStatisticsMessage)
 }
 
+@available(iOS 16, *)
 struct LocalAgentKey: DependencyKey {
 
 #if targetEnvironment(simulator)
@@ -51,6 +52,7 @@ struct LocalAgentKey: DependencyKey {
 
 }
 
+@available(iOS 16, *)
 extension DependencyValues {
     var localAgent: LocalAgent {
         get { self[LocalAgentKey.self] }

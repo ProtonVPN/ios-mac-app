@@ -30,7 +30,7 @@ import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared
 
-import Home
+import NetShield
 
 private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
 

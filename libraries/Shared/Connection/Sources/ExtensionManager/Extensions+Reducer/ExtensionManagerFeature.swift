@@ -29,6 +29,7 @@ import struct ConnectionFoundations.LogicalServerInfo
 import ExtensionIPC
 import let ConnectionFoundations.log
 
+@available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {
     @Dependency(\.tunnelManager) var tunnelManager
 
