@@ -629,7 +629,7 @@ public enum Localizable {
   /// User is trying to connect to a server with a profile, but the server is currently unavailable. (title)
   public static var locationNotAvailableForProfileTitle: String { return Localizable.tr("Localizable", "_location_not_available_for_profile_title", fallback: "Connection failed") }
   /// User is trying to connect to a server that is currently unavailable. (text)
-  public static var locationNotAvailableText: String { return Localizable.tr("Localizable", "_location_not_available_text", fallback: "The server you selected is currently unavailable. Select a different server or try again later.") }
+  public static var locationNotAvailableText: String { return Localizable.tr("Localizable", "_location_not_available_text", fallback: "This server has been removed. Try connecting to another server.") }
   /// User is trying to connect to a server that is currently unavailable. (title)
   public static var locationNotAvailableTitle: String { return Localizable.tr("Localizable", "_location_not_available_title", fallback: "Server unavailable") }
   /// All locations
