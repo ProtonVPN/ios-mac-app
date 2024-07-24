@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import Strings
 
 var window: XCUIElement!
 
@@ -79,13 +80,20 @@ class SettingsRobot {
     }
     
     func selectAutoConnect(_ autoConnect: String) -> SettingsRobot {
-        app.popUpButtons[autoConnect].click()
-        app.popUpButtons[autoConnect].click()
+        app.popUpButtons[Localizable.autoConnect].popUpButtons.element.click()
+        app.menuItems[autoConnect].click()
         return SettingsRobot()
     }
     
     func selectQuickConnect(_ qc: String) -> SettingsRobot {
-        app.popUpButtons[qc].click()
+        app.popUpButtons[Localizable.quickConnect].popUpButtons.element.click()
+        app.menuItems[qc].click()
+        return SettingsRobot()
+    }
+    
+    func selectProtocol(_ pr: String) -> SettingsRobot {
+        app.popUpButtons[Localizable.protocol].popUpButtons.element.click()
+        app.menuItems[pr].click()
         return SettingsRobot()
     }
     
@@ -169,6 +177,13 @@ class SettingsRobot {
             XCTAssertTrue(app.staticTexts[modalDescription].exists)
             XCTAssertTrue(app.buttons[modalUpgradeButton].isEnabled)
             return QuickSettingsRobot()
+        }
+        
+        @discardableResult
+        func checkProtocolSelected(_ expectedProtocolLabel: String) -> SettingsRobot {
+            XCTAssert(app.popUpButtons[Localizable.protocol].waitForExistence(timeout: 5))
+            XCTAssertEqual(app.popUpButtons[Localizable.protocol].value as! String, expectedProtocolLabel)
+            return SettingsRobot()
         }
     }
 }
