@@ -344,12 +344,13 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
 }
 
 public class LocationNotAvailableAlert: SystemAlert {
-    public var title: String? = Localizable.locationNotAvailableTitle
+    public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
+    /// Switching the title and message according to the presence of profileName.
     public init(profileName: String? = nil, confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
             actions.append(AlertAction(title: Localizable.disconnect,
@@ -361,8 +362,10 @@ public class LocationNotAvailableAlert: SystemAlert {
                                    style: .cancel,
                                    handler: cancelHandler ?? dismiss))
         if let profileName {
+            title = Localizable.locationNotAvailableForProfileTitle
             message = Localizable.locationNotAvailableForProfileText(profileName)
         } else {
+            title = Localizable.locationNotAvailableTitle
             message = Localizable.locationNotAvailableText
         }
     }
