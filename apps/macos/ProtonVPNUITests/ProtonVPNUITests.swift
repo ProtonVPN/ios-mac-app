@@ -113,7 +113,7 @@ class ProtonVPNUITests: XCTestCase {
      }
     
     func waitForLoaderDisappear() {
-        _ = waitForElementToDisappear(app.staticTexts[Localizable.loadingScreenSlogan], 10)
+        _ = app.staticTexts[Localizable.loadingScreenSlogan].waitForExistence(timeout: 10)
     }
 
     func login(withCredentials credentials: Credentials) {
@@ -203,15 +203,6 @@ class ProtonVPNUITests: XCTestCase {
         clearAppDataButton.click()
         deleteButton.click()
         return true
-    }
-    
-    func waitForElementToDisappear(_ element: XCUIElement, _ timeout: Int = 5) -> Bool {
-        let predicate = NSPredicate(format: "exists == false")
-        let expectation = XCTNSPredicateExpectation(predicate: predicate,
-                                                    object: element)
-
-        let result = XCTWaiter().wait(for: [expectation], timeout: TimeInterval(timeout))
-        return result == .completed
     }
     
     func waitForElementToAppear(_ element: XCUIElement) -> Bool {
