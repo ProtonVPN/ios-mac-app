@@ -68,6 +68,23 @@ class MainRobot {
         return LoginRobot()
     }
     
+    func waitForConnecting(_ timeout: Int) -> Bool {
+        return app.staticTexts[initializingConnectionTitle].waitForNonExistence(timeout: TimeInterval(timeout))
+    }
+    
+    func isConnecting() -> Bool {
+        return app.staticTexts[initializingConnectionTitle].exists
+    }
+    
+    func cancelConnecting() -> MainRobot {
+        app.buttons[Localizable.cancel].click()
+        return MainRobot()
+    }
+    
+    func isConnectionTimedOut() -> Bool {
+        return app.staticTexts[Localizable.connectionTimedOut].exists
+    }
+    
     let verify = Verify()
     
     class Verify {
@@ -93,10 +110,34 @@ class MainRobot {
         }
         
         @discardableResult
-        func checkVPNConnected() -> MainRobot {
+        func checkVPNConnected(with expectedProtocolName: String) -> MainRobot {
+            // verify successfully connected label appears
             XCTAssert(app.staticTexts[successfullyConnectedTitle].waitForExistence(timeout: 10), "\(successfullyConnectedTitle) element not found.")
+            
+            // verify Disconnect button appears
             XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "'\(Localizable.disconnect)' button not found.")
+            
+            // verify correct connected protocol appears
+            let actualProtocol = app.staticTexts["protocolLabel"].value as! String
+            XCTAssertEqual(expectedProtocolName, actualProtocol, "Invalid protol shown, expected: \(expectedProtocolName), actual: \(actualProtocol)")
+            
+            // verify IP Address label appears
+            let actualIPAddress = app.staticTexts["ipLabel"].value as! String
+            XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
+            
             return MainRobot()
+        }
+        
+        // MARK: private methods
+        
+        private func validateIPAddress(from string: String) -> Bool {
+            let prefix = "IP: "
+            guard string.hasPrefix(prefix) else {
+                return false
+            }
+            
+            let ipAddress = String(string.dropFirst(prefix.count))
+            return ipAddress.isValidIPv4Address
         }
     }
 }

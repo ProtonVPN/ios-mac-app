@@ -19,6 +19,13 @@
 import Foundation
 import XCTest
 
+struct ConnectionProtocol {
+    let name: String
+
+    static let wireGuardUDP = ConnectionProtocol(name: "WireGuard")
+    static let wireGuardTCP = ConnectionProtocol(name: "WireGuard (TCP)")
+}
+
 class ConnectionTests: ProtonVPNUITests {
     
     private let mainRobot = MainRobot()
@@ -35,23 +42,45 @@ class ConnectionTests: ProtonVPNUITests {
         super.tearDown()
         if mainRobot.isConnected() {
             mainRobot.disconnect()
+        } else if mainRobot.isConnecting() || mainRobot.isConnectionTimedOut() {
+            mainRobot.cancelConnecting()
         }
     }
     
     @MainActor
     func testConnectViaWireGuardUdp() {
-        let connectionProtocol = "WireGuard"
-        
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.wireGuardUDP)
+    }
+    
+    @MainActor
+    func testConnectViaWireGuardTcp() {
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.wireGuardTCP)
+    }
+    
+    @MainActor
+    func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
+
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()
             .connectionTabClick()
             .verify.checkConnectionTabIsOpen()
-            .selectProtocol(connectionProtocol)
-            .verify.checkProtocolSelected(connectionProtocol)
+            .selectProtocol(connectionProtocol.name)
+            .verify.checkProtocolSelected(connectionProtocol.name)
             .closeSettings()
             .quickConnectToAServer()
-            .verify.checkVPNConnected()
         
+        let connectingTimeout = 30
+        guard mainRobot.waitForConnecting(connectingTimeout) else {
+            XCTFail("VPN is not connected using \(connectionProtocol.name) in \(connectingTimeout) seconds")
+            return
+        }
+        
+        if mainRobot.isConnectionTimedOut() {
+            XCTFail("Connection timeout while connecting to \(connectionProtocol.name) protocol")
+        }
+        
+        mainRobot
+            .verify.checkVPNConnected(with: connectionProtocol.name)
     }
 }
