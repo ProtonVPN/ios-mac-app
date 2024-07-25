@@ -23,6 +23,7 @@ import Dependencies
 import VPNShared
 import LegacyCommon
 import Persistence
+import Ergonomics
 
 // MARK: Live implementations of app dependencies
 
@@ -42,11 +43,11 @@ extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
-#if DEBUG || STAGING
-        let customHost = propertiesManager.apiEndpoint
-#else
+        #if DEBUG || STAGING
+        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
+        #else
         let customHost: String? = nil
-#endif
+        #endif
 
         let doh = DoHVPN(
             alternativeRouting: propertiesManager.alternativeRouting,
@@ -62,8 +63,8 @@ extension DoHConfigurationKey: DependencyKey {
 
 extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?) {
-        #if !RELEASE
-        let atlasSecret = Bundle.main.infoDictionary?["ProtonVPNAtlasSecret"] as? String
+        #if DEBUG || STAGING
+        let atlasSecret = Bundle.atlasSecret
         #else
         let atlasSecret: String? = nil
         #endif

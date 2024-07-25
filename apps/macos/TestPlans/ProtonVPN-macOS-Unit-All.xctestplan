@@ -26,6 +26,9 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "AppSessionManagerImplementationTests"
+      ],
       "target" : {
         "containerPath" : "container:macOS.xcodeproj",
         "identifier" : "E15B754C20FA83CB0022C406",

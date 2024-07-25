@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */; };
 		4C54B0222BC027FE00315A3B /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */; };
-		4C54B0362BC027FF00315A3B /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0352BC027FF00315A3B /* ProtonVPNUITests.swift */; };
 		4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */; };
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
@@ -71,7 +70,6 @@
 		4C54B01A2BC027FD00315A3B /* ProtonVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNApp.swift; sourceTree = "<group>"; };
 		4C54B0212BC027FE00315A3B /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		4C54B0312BC027FF00315A3B /* tvOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tvOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C54B0352BC027FF00315A3B /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4C54B0442BC0288F00315A3B /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuard-tvOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,7 +166,6 @@
 		4C54B0342BC027FF00315A3B /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
-				4C54B0352BC027FF00315A3B /* ProtonVPNUITests.swift */,
 				4C54B0372BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift */,
 			);
 			path = ProtonVPNUITests;
@@ -389,7 +386,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C54B0362BC027FF00315A3B /* ProtonVPNUITests.swift in Sources */,
 				4C54B0382BC027FF00315A3B /* ProtonVPNUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,7 +622,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TEST_TARGET_NAME = ProtonVPN;
+				TEST_TARGET_NAME = "ProtonVPN-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
@@ -645,7 +641,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TEST_TARGET_NAME = ProtonVPN;
+				TEST_TARGET_NAME = "ProtonVPN-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Release;

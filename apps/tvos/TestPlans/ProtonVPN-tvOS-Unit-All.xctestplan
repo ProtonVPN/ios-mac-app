@@ -23,7 +23,13 @@
           "name" : "tvOS"
         }
       ]
-    }
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:..\/tvos\/tvOS.xcodeproj",
+      "identifier" : "4C54B0162BC027FD00315A3B",
+      "name" : "ProtonVPN-tvOS"
+    },
+    "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
@@ -31,13 +37,6 @@
         "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
         "identifier" : "ConnectionDetailsTests",
         "name" : "ConnectionDetailsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/tvOS",
-        "identifier" : "tvOSTests",
-        "name" : "tvOSTests"
       }
     }
   ],

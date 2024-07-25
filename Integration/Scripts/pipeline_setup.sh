@@ -25,12 +25,16 @@ git config --local user.name $GIT_CI_USERNAME
 # Change origin to use ssh as the backend
 git remote rm origin && git remote add origin "git@${CI_SERVER_HOST}:${CI_PROJECT_PATH}.git"
 
-# Download obfuscated constants
-"$CREDENTIALS" cleanup
-"$CREDENTIALS" setup -s \
-    -p .secrets-ci-${CI_JOB_ID} \
-    -r "https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}"
-"$CREDENTIALS" checkout -- .
+# Don't fetch secrets unless we're cloning the whole repository, i.e., for a build
+if [ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]; then
+    echo "Cloning secrets..."
+    # Download obfuscated constants
+    "$CREDENTIALS" cleanup
+    GIT_LFS_SKIP_SMUDGE=1 "$CREDENTIALS" setup -s \
+        -p .secrets-ci-${CI_JOB_ID} \
+        -r "https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}"
+    "$CREDENTIALS" checkout -- .
+fi
 
 # Install allowlist of macros, or Xcode gets very fussy and cryptic with builds
 cat "$MACROS_ALLOWLIST_PATH"
@@ -38,7 +42,4 @@ rm -f "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)" || tr
 mkdir -p "$MACROS_ALLOWLIST_INSTALL_DIR" || true
 cp "$MACROS_ALLOWLIST_PATH" "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)"
 
-mint bootstrap --link
-if [ -z "$MINT_PATH" ]; then
-    echo "export PATH=\$MINT_PATH:\$PATH" >> ~/.zprofile
-fi
+mint bootstrap --link --overwrite=y
