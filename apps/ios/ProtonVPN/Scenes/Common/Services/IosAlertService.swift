@@ -227,6 +227,9 @@ extension IosAlertService: CoreAlertService {
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 
+        case is LocationNotAvailableAlert:
+            showDefaultSystemAlert(alert)
+
         case is ProtocolDeprecatedAlert:
             showDefaultSystemAlert(alert)
 

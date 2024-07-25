@@ -50,6 +50,8 @@ extension ConnectToVPNKey {
                 alert(MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:
                 alert(ProtocolNotAvailableForServerAlert())
+            case .locationNotFound(let profileName):
+                alert(LocationNotAvailableAlert(profileName: profileName))
             }
 
         }

@@ -63,6 +63,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
                                     natType: .moderateNAT,
                                     safeMode: true,
                                     profileId: nil,
+                                    profileName: nil,
                                     trigger: nil)
 
     func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {

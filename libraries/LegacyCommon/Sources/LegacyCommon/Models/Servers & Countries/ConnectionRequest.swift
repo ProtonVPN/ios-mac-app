@@ -80,33 +80,35 @@ public struct ConnectionRequest: Identifiable {
     public let natType: NATType
     public let safeMode: Bool?
     public let profileId: String?
+    public let profileName: String?
     public let trigger: ConnectionDimensions.VPNTrigger?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, trigger: ConnectionDimensions.VPNTrigger?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, profileName: String?, trigger: ConnectionDimensions.VPNTrigger?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
         self.netShieldType = netShieldType
         self.profileId = profileId
+        self.profileName = profileName
         self.natType = natType
         self.safeMode = safeMode
         self.trigger = trigger
     }
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, trigger: self.trigger)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(natType: NATType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId, trigger: self.trigger)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(safeMode: Bool) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId, trigger: self.trigger)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, trigger: self.trigger)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     private enum Keys: CodingKey {
@@ -115,6 +117,7 @@ public struct ConnectionRequest: Identifiable {
         case connectionProtocol
         case netShieldType
         case profileId
+        case profileName
         case vpnProtocol
         case natType
         case safeMode
@@ -129,6 +132,7 @@ extension ConnectionRequest: Codable {
         connectionType = try container.decode(ConnectionRequestType.self, forKey: .connectionType)
         netShieldType = try container.decode(NetShieldType.self, forKey: .netShieldType)
         profileId = try container.decodeIfPresent(String.self, forKey: .profileId)
+        profileName = try container.decodeIfPresent(String.self, forKey: .profileName)
 
         // compatibility with previous format
         if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {

@@ -100,6 +100,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             natType: .moderateNAT,
             safeMode: true,
             profileId: nil,
+            profileName: nil,
             trigger: .country
         )
 
@@ -148,6 +149,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         natType: .moderateNAT,
                                         safeMode: true,
                                         profileId: nil,
+                                        profileName: nil,
                                         trigger: .country)
 
         let tunnelProviderExpectation = XCTestExpectation()
@@ -184,6 +186,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         natType: .moderateNAT,
                                         safeMode: true,
                                         profileId: nil,
+                                        profileName: nil,
                                         trigger: .country)
 
         let stateChangedToErrorExpectation = XCTestExpectation()
@@ -264,6 +267,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         natType: .moderateNAT,
                                         safeMode: true,
                                         profileId: nil,
+                                        profileName: nil,
                                         trigger: .country)
 
         var tunnelProviderExpectation = expectations.initialConnection
@@ -514,6 +518,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         natType: .moderateNAT,
                                         safeMode: true,
                                         profileId: nil,
+                                        profileName: nil,
                                         trigger: .country)
 
         // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
@@ -650,6 +655,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         natType: .moderateNAT,
                                         safeMode: true,
                                         profileId: nil,
+                                        profileName: nil,
                                         trigger: .country)
 
         var (nConnections,
@@ -1059,6 +1065,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 natType: .moderateNAT,
                 safeMode: false,
                 profileId: nil,
+                profileName: nil,
                 trigger: nil
             )
         }

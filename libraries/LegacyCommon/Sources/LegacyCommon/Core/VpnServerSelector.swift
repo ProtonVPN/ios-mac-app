@@ -109,6 +109,7 @@ class VpnServerSelector {
 
             determineAndNotifyUnavailabilityReason(
                 forSpecificCountry: true,
+                forProfileName: connectionRequest.profileName,
                 type: type,
                 baseFilters: baseFilters
             )
@@ -121,12 +122,16 @@ class VpnServerSelector {
 
     private func determineAndNotifyUnavailabilityReason(
         forSpecificCountry: Bool,
+        forProfileName: String?,
         type: ServerType,
         baseFilters: [VPNServerFilter]
     ) {
         let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
 
-        // If servers are already empty, we will return `protocolNotSupported` unless we add a new `locationNotFound`
+        if servers.isEmpty {
+            notifyResolutionUnavailable?(forSpecificCountry, type, .locationNotFound(forProfileName))
+            return
+        }
 
         let serversSupportingProtocol = servers.filter { !$0.protocolSupport.isDisjoint(with: supportedProtocols) }
         if serversSupportingProtocol.isEmpty {

@@ -343,6 +343,36 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
     }
 }
 
+public final class LocationNotAvailableAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    /// Switching the title and message according to the presence of profileName.
+    public init(profileName: String? = nil, confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
+        if let confirmHandler {
+            actions.append(AlertAction(title: Localizable.disconnect,
+                                       style: .destructive,
+                                       handler: confirmHandler))
+        }
+        let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
+        actions.append(AlertAction(title: dismissText,
+                                   style: .cancel,
+                                   handler: cancelHandler ?? dismiss))
+        dismiss = cancelHandler
+
+        if let profileName {
+            title = Localizable.locationNotAvailableForProfileTitle
+            message = Localizable.locationNotAvailableForProfileText(profileName)
+        } else {
+            title = Localizable.locationNotAvailableTitle
+            message = Localizable.locationNotAvailableText
+        }
+    }
+}
+
 public class ProtocolDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.alertProtocolDeprecatedTitle
     public let linkText: String = Localizable.alertProtocolDeprecatedLinkText
