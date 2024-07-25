@@ -32,5 +32,5 @@ struct ServerPollConfiguration: DependencyKey {
         failAfterAttempts: 60 // ~5 minutes of polling every 5s (disregarding time to complete each request)
     )
 
-    static let testValue = liveValue
+    static let testValue: ServerPollConfiguration = ServerPollConfiguration.liveValue
 }
