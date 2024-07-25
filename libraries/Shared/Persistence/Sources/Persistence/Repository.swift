@@ -50,7 +50,10 @@ public struct ServerRepository: DependencyKey {
     public var closeConnection: () throws -> Void
 
     /// Default unimplemented test value
-    public static let testValue = ServerRepository()
+    ///
+    /// `serverCount` and `countryCount` are invoked in many places in `LegacyCommon` where dependencies are not
+    /// propagated across escaping closures. For now, let's provide implementations to prevent failing legacy tests.
+    public static let testValue = ServerRepository(serverCount: { -1 }, countryCount: { -1 })
 
     public init(
         serverCount: @escaping () -> Int = unimplemented(placeholder: 0),
