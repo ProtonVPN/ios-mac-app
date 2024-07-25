@@ -27,6 +27,11 @@ import Theme
 import Ergonomics
 
 final class HeaderViewController: NSViewController {
+    
+    private enum AccessibilityIdentifiers {
+        static let ipLabel: String = "ipLabel"
+        static let protocolLabel: String = "protocolLabel"
+    }
 
     @IBOutlet private weak var backgroundView: NSView!
     @IBOutlet private weak var flagView: FlagView!
@@ -100,6 +105,7 @@ final class HeaderViewController: NSViewController {
         
         headerLabel.attributedStringValue = viewModel.headerLabel
         ipLabel.attributedStringValue = viewModel.ipLabel
+        ipLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.ipLabel)
         
         setupLoad()
         setupProtocol()
@@ -152,6 +158,7 @@ final class HeaderViewController: NSViewController {
 
         protocolLabel.isHidden = false
         protocolLabel.attributedStringValue = vpnProcol
+        protocolLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.protocolLabel)
     }
     
     private func setupBitrate() {
