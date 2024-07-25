@@ -24,6 +24,14 @@ package struct TunnelKeychain: DependencyKey {
     private var storeWireguardConfig: (Data) throws -> Data
     package var clear: () throws -> Void
 
+    package init(
+        storeWireguardConfig: @escaping (Data) throws -> Data,
+        clear: @escaping () throws -> Void
+    ) {
+        self.storeWireguardConfig = storeWireguardConfig
+        self.clear = clear
+    }
+
     package static let liveValue: TunnelKeychain = {
         let keychain = TunnelKeychainImplementation()
 

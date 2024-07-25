@@ -94,7 +94,6 @@ struct MainFeature {
                 )
             case .onLogout:
                 return .concatenate(
-                    .send(.connection(.disconnect(.userIntent))),
                     .send(.connection(.handleLogout)),
                     .send(.connection(.stopObserving))
                 )

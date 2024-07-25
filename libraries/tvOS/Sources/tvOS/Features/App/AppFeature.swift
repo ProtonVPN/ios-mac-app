@@ -54,6 +54,7 @@ struct AppFeature {
 
         /// Determines whether we show the `MainFeature` or `WelcomeFeature` (sign in flow)
         var networking: SessionNetworkingFeature.State = .unauthenticated(nil)
+        var shouldSignOutAfterDisconnecting: Bool = false
     }
 
     enum Action {
@@ -66,6 +67,8 @@ struct AppFeature {
         case alert(PresentationAction<Alert>)
 
         case networking(SessionNetworkingFeature.Action)
+
+        case signOut
 
         @CasePathable
         enum Alert {
@@ -99,11 +102,19 @@ struct AppFeature {
                 return .merge(effects)
 
             case .main(.settings(.alert(.presented(.signOut)))):
-                // Send an action to inform SessionNetworkingFeature, which will clear keychains and acquire unauth session
-                return .concatenate(
-                    .send(.main(.onLogout)),
-                    .send(.networking(.startLogout))
-                )
+                guard case .disconnected = state.main.connectionState else {
+                    state.shouldSignOutAfterDisconnecting = true
+                    return .send(.main(.connection(.disconnect(.userIntent))))
+                }
+                return .send(.signOut)
+
+            case .main(.connection(.tunnel(.tunnelStatusChanged(.disconnected)))):
+                if state.shouldSignOutAfterDisconnecting {
+                    // Now that VPN is fully disconnected, we can clear keychains and acquire an unauth session
+                    state.shouldSignOutAfterDisconnecting = false
+                    return .send(.signOut)
+                }
+                return .none
 
             case .main:
                 return .none
@@ -137,6 +148,13 @@ struct AppFeature {
                 return .none
             case .alert:
                 return .none
+
+            case .signOut:
+                state.shouldSignOutAfterDisconnecting = false
+                return .concatenate(
+                    .send(.main(.onLogout)),
+                    .send(.networking(.startLogout))
+                )
             }
         }
         .ifLet(\.$alert, action: \.alert)
