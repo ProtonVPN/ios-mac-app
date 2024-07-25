@@ -132,11 +132,8 @@ final class CorePlanService: PlanService {
     }
 
     func updateServicePlans() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            payments.activate(delegate: self) { [weak self] _ in
-                self?.payments.updateService(completion: continuation.resume(with: ))
-            }
-        }
+        await payments.startObservingPaymentQueue(delegate: self)
+        try await payments.updateServiceIAPAvailability()
     }
 
     func presentPlanSelection(modalSource: UpsellEvent.ModalSource?) {
