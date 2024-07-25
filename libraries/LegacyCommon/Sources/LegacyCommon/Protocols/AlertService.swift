@@ -343,7 +343,7 @@ public class ProtocolNotAvailableForServerAlert: SystemAlert {
     }
 }
 
-public class LocationNotAvailableAlert: SystemAlert {
+public final class LocationNotAvailableAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -361,6 +361,8 @@ public class LocationNotAvailableAlert: SystemAlert {
         actions.append(AlertAction(title: dismissText,
                                    style: .cancel,
                                    handler: cancelHandler ?? dismiss))
+        dismiss = cancelHandler
+
         if let profileName {
             title = Localizable.locationNotAvailableForProfileTitle
             message = Localizable.locationNotAvailableForProfileText(profileName)
