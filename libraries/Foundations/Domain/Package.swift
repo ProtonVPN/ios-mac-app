@@ -26,6 +26,7 @@ let package = Package(
                 "Strings",
                 "Ergonomics",
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
