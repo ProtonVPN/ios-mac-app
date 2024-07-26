@@ -33,6 +33,7 @@ import Localization
 import Modals
 import Search
 import LegacyCommon
+import ProtonCoreFeatureFlags
 
 typealias Row = RowViewModel
 
@@ -257,7 +258,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
             planService: planService,
             serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
-            showFeatureIcons: showFeatureIcons
+            showFeatureIcons: showFeatureIcons,
+            isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled
         )
     }
     
@@ -371,20 +373,25 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         let banner = offerBannerCellModel ?? upsellBanner
 
+        let isRedesign = FeatureFlagsRepository.shared.isRedesigniOSEnabled
+
+        let fastest = RowViewModel.profile(FastestConnectionViewModel(
+            serverOffering: ServerOffering.fastest(nil),
+            vpnGateway: vpnGateway,
+            alertService: alertService,
+            propertiesManager: propertiesManager,
+            connectionStatusService: connectionStatusService,
+            netShieldPropertyProvider: netShieldPropertyProvider,
+            natTypePropertyProvider: natTypePropertyProvider,
+            safeModePropertyProvider: safeModePropertyProvider
+        ))
+        
+        // fastestRow is visible for old design free users, also in the redesign, visible for all tiers.
+        let fastestRow = (isRedesign || userTier == 0) ? [fastest] : []
+        
         switch userTier {
         case 0: // Free
-            let rowsFree = [
-                RowViewModel.profile(FastestConnectionViewModel(
-                    serverOffering: ServerOffering.fastest(nil),
-                    vpnGateway: vpnGateway,
-                    alertService: alertService,
-                    propertiesManager: propertiesManager,
-                    connectionStatusService: connectionStatusService,
-                    netShieldPropertyProvider: netShieldPropertyProvider,
-                    natTypePropertyProvider: natTypePropertyProvider,
-                    safeModePropertyProvider: safeModePropertyProvider
-                ))
-            ]
+            let rowsFree = fastestRow
             newTableData.append(.profiles(
                 title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
                 rows: rowsFree
@@ -404,7 +411,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 showFeatureIcons: true
             ))
         case 1: // Basic
-            let rows = currentContent
+            let rows = fastestRow + currentContent
                 .filter { $0.minTier < 2 }
                 .map {
                     RowViewModel.serverGroup(countryCellModel(
@@ -421,7 +428,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 showFeatureIcons: true
             ))
         default: // Plus and up
-            let rows = currentContent
+            let rows = fastestRow + currentContent
                 .map {
                     RowViewModel.serverGroup(countryCellModel(
                         serversGroup: $0,
