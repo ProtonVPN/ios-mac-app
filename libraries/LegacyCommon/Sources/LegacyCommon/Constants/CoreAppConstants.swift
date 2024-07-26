@@ -41,7 +41,9 @@ public class CoreAppConstants {
         static let plus = 2 // also visionary
         static let `internal` = 3
     }
-    
+
+    public static let maxDeviceCount: Int = 10
+
     public struct ProtonMailLinks {
         public static let about = "https://protonmail.com/about"
     }

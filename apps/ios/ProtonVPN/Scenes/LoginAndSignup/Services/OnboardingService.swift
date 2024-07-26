@@ -23,6 +23,8 @@ import LocalFeatureFlags
 import VPNShared
 import Modals
 import Modals_iOS
+import Dependencies
+import Persistence
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
@@ -95,9 +97,11 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func allCountriesUpsellViewController() -> UIViewController {
-        let serversCount = AccountPlan.plus.serversCount
-        let countriesCount = self.planService.countriesCount
-        let allCountriesUpsell: ModalType = .allCountries(numberOfServers: serversCount, numberOfCountries: countriesCount)
+        @Dependency(\.serverRepository) var repository
+        let allCountriesUpsell: ModalType = .allCountries(
+            numberOfServers: repository.roundedServerCount,
+            numberOfCountries: repository.countryCount()
+        )
         return modalsFactory.modalViewController(modalType: allCountriesUpsell) {
             self.planService.createPlusPlanUI {
                 self.onboardingCoordinatorDidFinish()

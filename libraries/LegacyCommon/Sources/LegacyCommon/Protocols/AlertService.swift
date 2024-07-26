@@ -22,6 +22,8 @@
 import Foundation
 import Strings
 import Network
+import Dependencies
+import Persistence
 
 public enum PrimaryActionType {
     case confirmative
@@ -692,10 +694,10 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var accountTier: Int
 
     public init(accountTier: Int) {
-        // @Dependency(\.serverRepository) var repository
         self.accountTier = accountTier
         if accountTier.isFreeTier {
-            message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus) + Localizable.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
+            message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus)
+                + Localizable.maximumDevicePlanLimitPart2(CoreAppConstants.maxDeviceCount)
         } else {
             message = Localizable.maximumDeviceReachedDescription
         }
@@ -839,9 +841,10 @@ public extension WelcomeScreenAlert.Plan {
         if info.to.planName == "bundle2022" {
             self = .unlimited
         } else if info.to.maxTier.isPaidTier {
-            self = .plus(numberOfServers: AccountPlan.plus.serversCount,
-                         numberOfDevices: AccountPlan.plus.devicesCount,
-                         numberOfCountries: AccountPlan.plus.countriesCount)
+            @Dependency(\.serverRepository) var repository
+            self = .plus(numberOfServers: repository.roundedServerCount,
+                         numberOfDevices: CoreAppConstants.maxDeviceCount,
+                         numberOfCountries: repository.countryCount())
         } else if info.to.maxTier > info.from.maxTier {
             self = .fallback
         } else {

@@ -88,9 +88,10 @@ extension MacAlertService: CoreAlertService {
             show(alert: alert, modalType: welcomeScreenType(plan: alert.plan))
 
         case let alert as AllCountriesUpsellAlert:
-            let plus = AccountPlan.plus
-            let countriesCount = serverRepository.countryCount()
-            let allCountriesUpsell = ModalType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
+            let allCountriesUpsell = ModalType.allCountries(
+                numberOfServers: serverRepository.roundedServerCount,
+                numberOfCountries: serverRepository.countryCount()
+            )
             show(alert: alert, modalType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:
@@ -117,7 +118,7 @@ extension MacAlertService: CoreAlertService {
         case let alert as CountryUpsellAlert:
             let countryModal = ModalType.country(
                 countryFlag: alert.countryFlag,
-                numberOfDevices: AccountPlan.plus.devicesCount,
+                numberOfDevices: CoreAppConstants.maxDeviceCount,
                 numberOfCountries: serverRepository.countryCount()
             )
             show(alert: alert, modalType: countryModal)

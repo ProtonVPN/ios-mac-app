@@ -20,29 +20,6 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Dependencies
-import Persistence
-
-public enum AccountPlan {
-    case plus
-
-    public var devicesCount: Int {
-        switch self {
-        case .plus:
-            return 10
-        }
-    }
-
-    public var countriesCount: Int {
-        @Dependency(\.serverRepository) var repository
-        return repository.countryCount()
-    }
-
-    public var serversCount: Int {
-        @Dependency(\.serverRepository) var repository
-        return repository.roundedServerCount
-    }
-}
 
 // This is an "exception", we don't want to keep this. VPNAPPL-2142
 public extension String {
