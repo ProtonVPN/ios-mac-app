@@ -55,7 +55,6 @@ class DefaultProfileViewModel {
     fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
     fileprivate let natTypePropertyProvider: NATTypePropertyProvider
     fileprivate let safeModePropertyProvider: SafeModePropertyProvider
-    fileprivate let isRedesign: Bool
     
     private let defaultAccessTier: Int
 
@@ -82,6 +81,8 @@ class DefaultProfileViewModel {
         }
     }
     
+    let isRedesign: Bool
+
     var isConnected: Bool {
         if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)

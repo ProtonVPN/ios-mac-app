@@ -28,7 +28,8 @@ class DefaultProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var connectButton: UIButton!
-    
+    @IBOutlet weak var connectButtonTrailingConstraint: NSLayoutConstraint!
+
     var viewModel: DefaultProfileViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
@@ -40,6 +41,7 @@ class DefaultProfileTableViewCell: UITableViewCell {
                 leftImageView.alpha = viewModel.alphaOfMainElements
                 leftImageView.image = viewModel.image
                 stateChanged()
+                connectButtonTrailingConstraint.constant = viewModel.isRedesign ? 32 : 0
             }
         }
     }
