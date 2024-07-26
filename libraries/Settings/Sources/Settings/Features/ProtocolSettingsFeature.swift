@@ -51,6 +51,7 @@ public struct ProtocolSettingsFeature: Reducer {
         }
     }
 
+    @CasePathable
     public enum Action: Equatable {
         case protocolTapped(ConnectionProtocol)
         case setProtocol(TaskResult<ConnectionProtocol>)

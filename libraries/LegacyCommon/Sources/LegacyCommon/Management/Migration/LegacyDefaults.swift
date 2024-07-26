@@ -46,7 +46,7 @@ public enum LegacyDefaultsMigration {
             // In the future, we may choose to migrate Profiles too.
         ] // hardcoded in case the keys are changed in the future
         keysForDataToRemove.forEach { key in
-            if let data = userDefaults.data(forKey: key) {
+            if userDefaults.data(forKey: key) != nil {
                 log.debug("Removing value for key \(key)", category: .persistence)
                 userDefaults.removeObject(forKey: key)
             }

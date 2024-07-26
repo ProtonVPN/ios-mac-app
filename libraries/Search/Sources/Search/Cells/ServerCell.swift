@@ -53,8 +53,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
                 return "ic-play"
             case .p2p:
                 return "ic-arrows-switch"
-            default:
-                return ""
             }
         }
     }

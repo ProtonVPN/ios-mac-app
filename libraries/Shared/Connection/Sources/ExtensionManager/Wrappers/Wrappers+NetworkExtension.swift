@@ -27,7 +27,6 @@ import let ConnectionFoundations.log
 import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 
-@available(iOS 16, *)
 extension NETunnelProviderSession: VPNSession {
     func send(_ messageData: Data) async throws -> Data {
         try await withCheckedThrowingContinuation { continuation in
@@ -58,6 +57,7 @@ extension NETunnelProviderSession: VPNSession {
         try startVPNTunnel()
     }
 
+    @available(iOS 16.0, *)
     public func fetchLastDisconnectError() async -> Error? {
         // For some reason, the native async alternative returns `Void`
         // return try await fetchLastDisconnectError()

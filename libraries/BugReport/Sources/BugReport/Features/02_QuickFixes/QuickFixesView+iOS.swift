@@ -102,7 +102,7 @@ public struct QuickFixesView: View {
 
                     VStack {
                         NavigationLink(
-                            unwrapping: $store.contactFormState,
+                            item: $store.contactFormState,
                             onNavigate: { active in
                                 if active {
                                     store.send(.next)
