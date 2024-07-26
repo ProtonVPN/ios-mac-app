@@ -387,12 +387,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
             isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled
         ))
         
-        // fastestRow is visible for old design free users, also in the redesign, visible for all tiers.
-        let fastestRow = (isRedesign || userTier == 0) ? [fastest] : []
+        // 'fastest' is visible for old design free users, also in the redesign, visible for all tiers.
+        let firstRows = (isRedesign || userTier == 0) ? [fastest] : []
         
         switch userTier {
         case 0: // Free
-            let rowsFree = fastestRow
+            let rowsFree = firstRows
             newTableData.append(.profiles(
                 title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
                 rows: rowsFree
@@ -412,7 +412,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 showFeatureIcons: true
             ))
         case 1: // Basic
-            let rows = fastestRow + currentContent
+            let rows = firstRows + currentContent
                 .filter { $0.minTier < 2 }
                 .map {
                     RowViewModel.serverGroup(countryCellModel(
@@ -429,7 +429,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 showFeatureIcons: true
             ))
         default: // Plus and up
-            let rows = fastestRow + currentContent
+            let rows = firstRows + currentContent
                 .map {
                     RowViewModel.serverGroup(countryCellModel(
                         serversGroup: $0,
