@@ -85,7 +85,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
             flagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
             flagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
             flagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
-            flagIcon.layer.masksToBounds = true
+            flagIcon.layer.masksToBounds = viewModel.isRedesign
 
             entrySeparator.isHidden = !viewModel.isSecureCoreCountry
             flagsStackView.spacing = viewModel.isSecureCoreCountry ? 8 : 16
