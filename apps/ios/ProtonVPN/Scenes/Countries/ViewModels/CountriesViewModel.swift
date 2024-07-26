@@ -383,7 +383,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
             connectionStatusService: connectionStatusService,
             netShieldPropertyProvider: netShieldPropertyProvider,
             natTypePropertyProvider: natTypePropertyProvider,
-            safeModePropertyProvider: safeModePropertyProvider
+            safeModePropertyProvider: safeModePropertyProvider,
+            isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled
         ))
         
         // fastestRow is visible for old design free users, also in the redesign, visible for all tiers.
