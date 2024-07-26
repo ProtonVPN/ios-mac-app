@@ -55,7 +55,8 @@ class DefaultProfileViewModel {
     fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
     fileprivate let natTypePropertyProvider: NATTypePropertyProvider
     fileprivate let safeModePropertyProvider: SafeModePropertyProvider
-
+    fileprivate let isRedesign: Bool
+    
     private let defaultAccessTier: Int
 
     fileprivate var profile: Profile {
@@ -121,7 +122,7 @@ class DefaultProfileViewModel {
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            return IconProvider.bolt
+            return isRedesign ? Asset.fastest.image : IconProvider.bolt
         case .random:
             return IconProvider.arrowsSwapRight
         default:
@@ -137,7 +138,7 @@ class DefaultProfileViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -147,7 +148,7 @@ class DefaultProfileViewModel {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.defaultAccessTier = .paidTier
-
+        self.isRedesign = isRedesign
         startObserving()
     }
     

@@ -21,6 +21,8 @@ import UIKit
 @testable import Search
 
 final class CountryViewModelMock: CountryViewModel {
+    var isRedesign: Bool = false
+    
     var showCountryConnectButton: Bool = true
 
     var showFeatureIcons: Bool = true
