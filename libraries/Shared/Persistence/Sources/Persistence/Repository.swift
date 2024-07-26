@@ -45,6 +45,9 @@ public struct ServerRepository: DependencyKey {
     /// Connectable, includes logical + server, less suitable for UI
     private var server: ([VPNServerFilter], VPNServerOrder) -> VPNServer?
 
+    public var getMetadata: (DatabaseMetadata.Key) -> String?
+    public var setMetadata: (DatabaseMetadata.Key, String?) -> Void
+
     /// Close the underlying database connection. It is considered a fatal error to continue using other repository
     /// functions after invoking this.
     public var closeConnection: () throws -> Void
@@ -64,6 +67,8 @@ public struct ServerRepository: DependencyKey {
         deleteServers: @escaping (Set<String>, Int) -> Int = unimplemented(placeholder: 0),
         upsertLoads: @escaping ([ContinuousServerProperties]) -> Void = unimplemented(),
         groups: @escaping ([VPNServerFilter], VPNServerGroupOrder) -> [ServerGroupInfo] = unimplemented(placeholder: []),
+        getMetadata: @escaping (DatabaseMetadata.Key) -> String? = unimplemented(placeholder: nil),
+        setMetadata: @escaping (DatabaseMetadata.Key, String?) -> Void = unimplemented(),
         closeConnection: @escaping () throws -> Void = unimplemented()
     ) {
         self.serverCount = serverCount
@@ -74,6 +79,8 @@ public struct ServerRepository: DependencyKey {
         self.deleteServers = deleteServers
         self.upsertLoads = upsertLoads
         self.groups = groups
+        self.getMetadata = getMetadata
+        self.setMetadata = setMetadata
         self.closeConnection = closeConnection
     }
 }

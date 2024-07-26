@@ -60,6 +60,8 @@ final class CountriesViewModelTests: XCTestCase {
                 deleteServers: { _, _ in 0 },
                 upsertLoads: { _ in },
                 groups: { _, _ in self.serverGroups },
+                getMetadata: { _ in nil },
+                setMetadata: { _, _ in },
                 closeConnection: { }
             )
         } operation: {
