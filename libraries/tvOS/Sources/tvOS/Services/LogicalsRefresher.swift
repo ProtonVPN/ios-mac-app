@@ -51,7 +51,7 @@ public struct LogicalsRefresherProvider {
 
         @Dependency(\.logicalsClient) var client
         let truncatedIp = (userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
-        let logicalsResponse = try await client.fetchLogicals(truncatedIp)
+        let logicalsResponse = try await client.fetchLogicals(truncatedIp, userLocation?.country)
 
         @Dependency(\.serverRepository) var repository
         repository.upsert(servers: logicalsResponse)
