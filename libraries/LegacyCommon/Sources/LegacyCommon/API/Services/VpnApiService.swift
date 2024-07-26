@@ -161,7 +161,10 @@ public class VpnApiService {
         freeTier: Bool,
         completion: @escaping (Result<[ServerModel], Error>) -> Void
     ) {
-        let countryCodes = countryCode.map { [$0] } ?? countryCodeProvider.countryCodes
+        let countryCodes: [String] = (countryCode.map { [$0] } ?? []) // country code from v1/locations response
+            .appending(countryCodeProvider.countryCodes) // local guesses at appropriate country codes
+            .uniqued
+
         networking.request(
             LogicalsRequest(
                 ip: ip,

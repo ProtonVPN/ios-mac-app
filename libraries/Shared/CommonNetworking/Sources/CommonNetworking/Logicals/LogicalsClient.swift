@@ -22,17 +22,17 @@ import Domain
 import Ergonomics
 
 public struct LogicalsClient: Sendable {
-    public var fetchLogicals: @Sendable (TruncatedIp?) async throws -> [VPNServer]
+    public var fetchLogicals: @Sendable (TruncatedIp?, String?) async throws -> [VPNServer]
 }
 
 extension LogicalsClient: DependencyKey {
     public static var liveValue: LogicalsClient {
         @Dependency(\.networking) var networking
         return LogicalsClient(
-            fetchLogicals: { ip in
+            fetchLogicals: { ip, countryCode in
                 let request = LogicalsRequest(
                     ip: ip,
-                    countryCodes: [],
+                    countryCodes: (countryCode.map { [$0] }) ?? [],
                     freeTier: false
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)

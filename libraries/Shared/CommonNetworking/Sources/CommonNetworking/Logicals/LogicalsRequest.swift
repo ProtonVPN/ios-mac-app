@@ -32,6 +32,7 @@ public struct LogicalsRequest: Request {
     let ip: TruncatedIp?
 
     /// Country codes, if available, to show relay IPs for specific countries
+    /// Currently, the first country code provided heavily impacts server scoring.
     let countryCodes: [String]
 
     /// Whether or not this request is just for the free logicals.
