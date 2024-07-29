@@ -89,7 +89,7 @@ public struct ContactFormView: View {
                         }
                     }
 
-                    NavigationLink(unwrapping: $store.resultState,
+                    NavigationLink(item: $store.resultState,
                                    onNavigate: { _ in },
                                    destination: { _ in
                                         IfLetStore(self.store.scope(state: \.resultState,

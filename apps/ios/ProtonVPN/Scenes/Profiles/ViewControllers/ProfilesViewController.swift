@@ -52,7 +52,7 @@ class ProfilesViewController: UIViewController {
         }
         tabBarItem.accessibilityIdentifier = "Profiles"
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,7 +64,6 @@ class ProfilesViewController: UIViewController {
         }
         setupTableView()
         addObservers()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

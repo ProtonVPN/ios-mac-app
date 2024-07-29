@@ -69,7 +69,7 @@ public struct WhatsTheIssueView: View {
 
     private func nextView() -> some View {
         NavigationLink(
-            unwrapping: $store.route,
+            item: $store.route,
             onNavigate: { _ in
                 print("navigate")
             },
