@@ -53,6 +53,7 @@ final class CountriesViewModelTests: XCTestCase {
             // Normally we would be able to omit all arguments except groups, but doing so triggers a linker bug with XCTDynamicOverlay.
             $0.serverRepository = .init(
                 serverCount: { 0 },
+                countryCount: { 0 },
                 upsertServers: { _ in },
                 server: { _, _ in nil },
                 servers: { _, _ in [] },

@@ -25,15 +25,6 @@ import ProtonCorePayments
 import CommonNetworking
 import LegacyCommon
 
-protocol PlanServiceFactory {
-    func makePlanService() -> PlanService
-}
-
-protocol PlanService {
-    var countriesCount: Int { get }
-    func updateCountriesCount()
-}
-
 class UserCachedStatus: ServicePlanDataStorage {
     var servicePlansDetails: [Plan]?
     var defaultPlanDetails: Plan?
@@ -51,52 +42,4 @@ class AlertManager: AlertManagerProtocol {
     var confirmButtonStyle: AlertActionStyle = .default
     var cancelButtonStyle: AlertActionStyle = .default
     func showAlert(confirmAction: ActionCallback, cancelAction: ActionCallback) { }
-}
-
-// This class is currently only used for retrieving the count of countries for the upsell modal.
-final class CorePlanService: PlanService {
-    private let payments: Payments
-
-    var countriesCount: Int = AccountPlan.plus.countriesCount
-
-    init(networking: Networking) {
-        payments = Payments(
-            inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
-            apiService: networking.apiService,
-            localStorage: UserCachedStatus(),
-            alertManager: AlertManager(),
-            reportBugAlertHandler: { _ in }
-        )
-    }
-
-    func updateCountriesCount() {
-        updateCountriesCount { [weak self] result in
-            switch result {
-            case .success(let count):
-                self?.countriesCount = count
-            case .failure:
-                self?.countriesCount = AccountPlan.plus.countriesCount
-            }
-        }
-
-    }
-
-    private func updateCountriesCount(completion: @escaping (Result<Int, Error>) -> Void) {
-        guard case .left(let planService) = payments.planService else { return }
-        if let counts = planService.countriesCount {
-            return completion(.success(counts.maxCountries()))
-        }
-        planService.updateCountriesCount {
-            if let count = planService.countriesCount?.maxCountries() {
-                return completion(.success(count))
-            }
-            return completion(.failure(CountriesCountError.internalError))
-        } failure: { error in
-            return completion(.failure(error))
-        }
-    }
-
-    private enum CountriesCountError: Error {
-        case internalError
-    }
 }

@@ -32,8 +32,9 @@ import Theme
 import Strings
 
 final class MacAlertService {
-    
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    @Dependency(\.serverRepository) var serverRepository
+
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -42,7 +43,6 @@ final class MacAlertService {
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var sessionService: SessionService = factory.makeSessionService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
@@ -88,9 +88,10 @@ extension MacAlertService: CoreAlertService {
             show(alert: alert, modalType: welcomeScreenType(plan: alert.plan))
 
         case let alert as AllCountriesUpsellAlert:
-            let plus = AccountPlan.plus
-            let countriesCount = planService.countriesCount
-            let allCountriesUpsell = ModalType.allCountries(numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
+            let allCountriesUpsell = ModalType.allCountries(
+                numberOfServers: serverRepository.roundedServerCount,
+                numberOfCountries: serverRepository.countryCount()
+            )
             show(alert: alert, modalType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:
@@ -115,10 +116,12 @@ extension MacAlertService: CoreAlertService {
             show(alert: alert, modalType: .customization)
 
         case let alert as CountryUpsellAlert:
-            let plus = AccountPlan.plus
-            show(alert: alert, modalType: .country(countryFlag: alert.countryFlag,
-                                                    numberOfDevices: plus.devicesCount,
-                                                    numberOfCountries: planService.countriesCount))
+            let countryModal = ModalType.country(
+                countryFlag: alert.countryFlag,
+                numberOfDevices: CoreAppConstants.maxDeviceCount,
+                numberOfCountries: serverRepository.countryCount()
+            )
+            show(alert: alert, modalType: countryModal)
 
         case let alert as DiscourageSecureCoreAlert:
             show(alert)

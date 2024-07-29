@@ -28,6 +28,8 @@ import Modals_iOS
 import UIKit
 import ProtonCoreUIFoundations
 import Strings
+import Dependencies
+import Persistence
 
 final class IosAlertService {
         
@@ -192,10 +194,10 @@ extension IosAlertService: CoreAlertService {
             show(alert: moderateNatUpsell, modalType: .moderateNAT)
 
         case let allCountriesUpsell as AllCountriesUpsellAlert:
-            let plus = AccountPlan.plus
+            @Dependency(\.serverRepository) var repository
             let allCountriesModalType = ModalType.allCountries(
-                numberOfServers: plus.serversCount,
-                numberOfCountries: planService.countriesCount
+                numberOfServers: repository.roundedServerCount,
+                numberOfCountries: repository.countryCount()
             )
             show(alert: allCountriesUpsell, modalType: allCountriesModalType)
 
@@ -209,12 +211,13 @@ extension IosAlertService: CoreAlertService {
             show(alert: customizationUpsell, modalType: .customization)
 
         case let countryUpsell as CountryUpsellAlert:
+            @Dependency(\.serverRepository) var repository
             show(
                 alert: countryUpsell,
                 modalType: .country(
                     countryFlag: countryUpsell.countryFlag,
-                    numberOfDevices: AccountPlan.plus.devicesCount,
-                    numberOfCountries: planService.countriesCount
+                    numberOfDevices: CoreAppConstants.maxDeviceCount,
+                    numberOfCountries: repository.countryCount()
                 )
             )
             
@@ -276,16 +279,16 @@ extension IosAlertService: CoreAlertService {
         case is UserPlanDowngradedAlert:
             if let server = server {
                 viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
-                                                              numberOfDevices: AccountPlan.plus.devicesCount,
+                                                                numberOfDevices: CoreAppConstants.maxDeviceCount,
                                                               fromServer: server.from,
                                                               toServer: server.to)
             } else {
                 viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
-                                                  numberOfDevices: AccountPlan.plus.devicesCount)
+                                                  numberOfDevices: CoreAppConstants.maxDeviceCount)
             }
         case let alert as MaxSessionsAlert:
             if alert.accountTier.isFreeTier {
-                viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: AccountPlan.plus.devicesCount)
+                viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: CoreAppConstants.maxDeviceCount)
             } else {
                 viewModel = .reachedDeviceLimit
             }

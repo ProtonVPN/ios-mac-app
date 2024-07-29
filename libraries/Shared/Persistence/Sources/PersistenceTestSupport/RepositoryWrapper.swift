@@ -37,6 +37,7 @@ public final class ServerRepositoryWrapper {
     }
 
     public var serverCount: Int { repository.serverCount() }
+    public var countryCount: Int { repository.countryCount() }
 
     public func getFirstServer(filteredBy filters: [VPNServerFilter], orderedBy order: VPNServerOrder) -> VPNServer? {
         repository.getFirstServer(filteredBy: filters, orderedBy: order)
@@ -82,6 +83,7 @@ extension ServerRepository {
     public static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
         return .init(
             serverCount: { wrapper.serverCount },
+            countryCount: { wrapper.countryCount },
             upsertServers: wrapper.upsert,
             server: wrapper.getFirstServer,
             servers: wrapper.getServers,

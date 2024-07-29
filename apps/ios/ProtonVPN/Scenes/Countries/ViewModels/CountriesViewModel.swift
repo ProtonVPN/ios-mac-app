@@ -397,8 +397,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
                     showFeatureIcons: true
                 ))
             }
+            let countryCount = rows.count - 1 // Subtract one to account for the banner row
             newTableData.append(.countries(
-                title: "\(Localizable.locationsPlus) (\(rows.count))",
+                title: "\(Localizable.locationsPlus) (\(countryCount))",
                 rows: rows,
                 serversFilter: defaultServersFilter,
                 showFeatureIcons: true

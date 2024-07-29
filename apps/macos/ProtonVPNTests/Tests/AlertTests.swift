@@ -191,10 +191,6 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
         return sessionService
     }
 
-    func makePlanService() -> PlanService {
-        return PlanServiceMock()
-    }
-
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return PropertiesManagerMock()
     }
@@ -249,10 +245,4 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
 
 fileprivate class NotificationManagerMock: NotificationManagerProtocol {
     func displayServerGoingOnMaintenance() { }
-}
-
-class PlanServiceMock: PlanService {
-    var countriesCount: Int = 59
-
-    func updateCountriesCount() { }
 }

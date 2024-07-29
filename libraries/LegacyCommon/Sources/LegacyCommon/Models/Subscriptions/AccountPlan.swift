@@ -20,30 +20,6 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-public enum AccountPlan {
-    case plus
-
-    public var devicesCount: Int {
-        switch self {
-        case .plus:
-            return 10
-        }
-    }
-
-    public var countriesCount: Int {
-        switch self {
-        case .plus:
-            return 85
-        }
-    }
-
-    public var serversCount: Int {
-        switch self {
-        case .plus:
-            return 4000
-        }
-    }
-}
 
 // This is an "exception", we don't want to keep this. VPNAPPL-2142
 public extension String {

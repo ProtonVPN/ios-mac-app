@@ -22,10 +22,12 @@ import Search
 import LegacyCommon
 import UIKit
 import VPNShared
+import Persistence
 
 extension Search.Configuration {
     init() {
-        self.init(constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
+        @Dependency(\.serverRepository) var repository
+        self.init(constants: Constants(numberOfCountries: repository.countryCount()))
     }
 }
 

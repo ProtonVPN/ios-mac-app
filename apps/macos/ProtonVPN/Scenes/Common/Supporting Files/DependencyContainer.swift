@@ -70,7 +70,6 @@ final class DependencyContainer: Container {
 
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
 
-    private lazy var planService = CorePlanService(networking: makeNetworking())
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
     public init() {
@@ -172,13 +171,6 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 
     func shouldRefreshStreaming() -> Bool {
         wasRecentlyActive()
-    }
-}
-
-// MARK: PlanServiceFactory
-extension DependencyContainer: PlanServiceFactory {
-    func makePlanService() -> PlanService {
-        return planService
     }
 }
 

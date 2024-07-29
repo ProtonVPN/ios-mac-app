@@ -31,6 +31,7 @@ import Domain
 public struct ServerRepository: DependencyKey {
 
     public var serverCount: () -> Int
+    public var countryCount: () -> Int
 
     private var upsertServers: ([VPNServer]) -> Void
     private var deleteServers: (Set<String>, Int) -> Int
@@ -49,10 +50,14 @@ public struct ServerRepository: DependencyKey {
     public var closeConnection: () throws -> Void
 
     /// Default unimplemented test value
-    public static let testValue = ServerRepository()
+    ///
+    /// `serverCount` and `countryCount` are invoked in many places in `LegacyCommon` where dependencies are not
+    /// propagated across escaping closures. For now, let's provide implementations to prevent failing legacy tests.
+    public static let testValue = ServerRepository(serverCount: { -1 }, countryCount: { -1 })
 
     public init(
         serverCount: @escaping () -> Int = unimplemented(placeholder: 0),
+        countryCount: @escaping () -> Int = unimplemented(placeholder: 0),
         upsertServers: @escaping ([VPNServer]) -> Void = unimplemented(),
         server: @escaping ([VPNServerFilter], VPNServerOrder) -> VPNServer? = unimplemented(placeholder: nil),
         servers: @escaping ([VPNServerFilter], VPNServerOrder) -> [Domain.ServerInfo] = unimplemented(placeholder: []),
@@ -62,6 +67,7 @@ public struct ServerRepository: DependencyKey {
         closeConnection: @escaping () throws -> Void = unimplemented()
     ) {
         self.serverCount = serverCount
+        self.countryCount = countryCount
         self.upsertServers = upsertServers
         self.server = server
         self.servers = servers
@@ -111,6 +117,27 @@ extension ServerRepository {
         orderedBy order: VPNServerOrder
     ) -> [ServerInfo] {
         servers(filters, order)
+    }
+}
+
+public extension ServerRepository {
+    var roundedServerCount: Int {
+        serverCount().roundedServerCount()
+    }
+}
+
+extension BinaryInteger {
+    /// We're rounding the servers here in a "special" way. It's because we want to be exact in this non-exactness 😄
+    /// In upsells we say for example 4400+ servers. The + indicates being there more than 4400 servers.
+    /// So if we have exactly 4400, we'd be lying to say we have 4400+ servers.
+    func roundedServerCount() -> Self {
+        guard self > 100 else { return self }
+        let remainder = self % 100
+        if remainder == 0 {
+            return self - 100
+        } else {
+            return self - remainder
+        }
     }
 }
 
