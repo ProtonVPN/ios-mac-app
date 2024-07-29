@@ -25,6 +25,8 @@ import LegacyCommon
 import Theme
 import Ergonomics
 import Strings
+import Dependencies
+import Persistence
 
 class UserAccountUpdateViewController: NSViewController {
 
@@ -114,8 +116,10 @@ class UserAccountUpdateViewController: NSViewController {
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
         guard alert.displayFeatures else { return }
-        feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(AccountPlan.plus.countriesCount)
-        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(AccountPlan.plus.devicesCount)
+
+        @Dependency(\.serverRepository) var repository
+        feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(repository.countryCount())
+        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(CoreAppConstants.maxDeviceCount)
         feature3Lbl.stringValue = Localizable.subscriptionUpgradeOption3
     }
     

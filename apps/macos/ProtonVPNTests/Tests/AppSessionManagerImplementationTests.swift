@@ -446,7 +446,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
     )
 
-    func makePlanService() -> PlanService { PlanServiceMock() }
     func makeAuthKeychainHandle() -> AuthKeychainHandle { authKeychain }
     func makeUnauthKeychainHandle() -> UnauthKeychainHandle { unauthKeychain }
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { appCertificateRefreshManagerMock }
