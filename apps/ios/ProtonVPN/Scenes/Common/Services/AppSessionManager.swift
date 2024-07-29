@@ -38,6 +38,8 @@ import protocol VPNAppCore.UnauthKeychainHandle
 import VPNShared
 import LegacyCommon
 
+import ComposableArchitecture
+
 enum SessionStatus {
     
     case notEstablished
@@ -293,6 +295,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime
             propertiesManager.userLocation = properties.location
+            @Shared(.userCountry) var userCountry: String?
+            @Shared(.userIP) var userIP: String?
+            userCountry = properties.location?.country
+            userIP = properties.location?.ip
             propertiesManager.userAccountRecovery = properties.userAccountRecovery
             propertiesManager.userInfo = properties.userInfo
             if let clientConfig = properties.clientConfig {

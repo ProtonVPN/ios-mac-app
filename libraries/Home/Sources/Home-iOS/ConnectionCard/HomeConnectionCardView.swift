@@ -126,6 +126,7 @@ struct HomeConnectionCardView: View {
             header
             card
         }
+        .frame(maxWidth: 736)
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {

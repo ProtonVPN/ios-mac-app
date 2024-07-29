@@ -31,7 +31,7 @@ extension InitialStateProvider: DependencyKey {
                                                       .connectionSecureCoreFastest,
                                                       .connectionRegion,
                                                       .connectionSecureCore],
-                                        connectionStatus: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
+                                        connectionStatus: .init(protectionState: .unprotected(country: "PL", ip: "192.168.1.0")),
                                         vpnConnectionStatus: .disconnected),
                             connectionDetailsVisible: true)
     )

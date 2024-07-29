@@ -26,24 +26,24 @@ import NetShield
 public enum ProtectionState: Equatable {
     case protected(netShield: NetShieldModel)
     case protectedSecureCore(netShield: NetShieldModel)
-    case unprotected(country: String, ip: String)
+    case unprotected
     case protecting(country: String, ip: String)
 }
 
 extension VPNConnectionStatus {
-    var protectionState: ProtectionState {
+    func protectionState(country: String, ip: String) -> ProtectionState {
         switch self {
         case .disconnected:
-            return .unprotected(country: "Country", ip: "127.0.0.1") // todo: get real values
+            return .unprotected // todo: get real values
         case .connected(let spec, _):
             if case .secureCore = spec.location {
                 return .protectedSecureCore(netShield: .random)
             }
             return .protected(netShield: .random) // todo:
         case .connecting, .loadingConnectionInfo:
-            return .protecting(country: "Country", ip: "127.0.0.2") // todo:
+            return .protecting(country: country, ip: ip)
         case .disconnecting:
-            return .unprotected(country: "Country", ip: "127.0.0.1") // todo:
+            return .unprotected
         }
     }
 }

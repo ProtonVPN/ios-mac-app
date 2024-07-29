@@ -31,7 +31,9 @@ public struct NetShieldStatsView: View {
             StatsView(model: viewModel.data)
         }
         .padding(8)
+        .frame(maxWidth: 440)
     }
+
     public init(viewModel: NetShieldModel) {
         self.viewModel = viewModel
     }

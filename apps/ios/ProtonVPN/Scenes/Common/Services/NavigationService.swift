@@ -23,7 +23,6 @@
 import GSMessages
 import UIKit
 import LegacyCommon
-import SwiftUI
 import BugReport
 import VPNShared
 import Strings
@@ -38,12 +37,6 @@ import ProtonCorePasswordChange
 import ProtonCoreDataModel
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
-import ProtonCoreUIFoundations
-
-import Home
-import Home_iOS
-import Settings_iOS
-import ComposableArchitecture
 
 // MARK: Country Service
 
@@ -244,11 +237,8 @@ final class NavigationService {
         let isRedesign = FeatureFlagsRepository.shared.isRedesigniOSEnabled
 
         if isRedesign {
-            let hostingController = UIHostingController(rootView: HomeView())
-            hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab,
-                                                        image: IconProvider.houseFilled,
-                                                        tag: 0)
-            tabViewControllers.append(hostingController)
+            let home = HomeFeatureCreator.homeViewController()
+            tabViewControllers.append(home)
         }
 
         tabViewControllers.append(UINavigationController(rootViewController: makeCountriesViewController()))
@@ -263,13 +253,7 @@ final class NavigationService {
         
         tabViewControllers.append(UINavigationController(rootViewController: makeProfilesViewController()))
         
-        if isRedesign {
-            let hostingController = UIHostingController(rootView: SettingsView())
-            hostingController.tabBarItem = UITabBarItem(title: Localizable.settingsTab,
-                                                        image: IconProvider.cogWheel,
-                                                        tag: 0)
-            tabViewControllers.append(hostingController)
-        } else if let settingsViewController = makeSettingsViewController() {
+        if let settingsViewController = makeSettingsViewController() {
             tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
         }
 

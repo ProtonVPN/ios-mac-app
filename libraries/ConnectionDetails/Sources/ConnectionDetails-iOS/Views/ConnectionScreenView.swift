@@ -129,6 +129,10 @@ public struct ConnectionScreenFeature: Reducer {
         case newServer(VPNServer)
     }
 
+    private enum CancelId {
+        case watchConnectionStatus
+    }
+
     public init() {
     }
 
@@ -136,13 +140,9 @@ public struct ConnectionScreenFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .watchConnectionStatus:
-                return .run { send in
-                    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
-
-                    for await vpnStatus in vpnConnectionStatusPublisher().values {
-                        await send(.newConnectionStatus(vpnStatus), animation: .default)
-                    }
-                }
+                @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
+                return .publisher { vpnConnectionStatusPublisher().receive(on: UIScheduler.shared).map(Action.newConnectionStatus) }
+                    .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let connectionStatus):
                 switch connectionStatus {
