@@ -52,9 +52,7 @@ public struct ConnectionDetailsFeature: Reducer {
     }
 
     public var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            return .none
-        }
+        EmptyReducer()
     }
 }
 

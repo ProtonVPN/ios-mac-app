@@ -87,7 +87,7 @@ public class VpnManager: VpnManagerProtocol {
     
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
 
-    public internal (set) var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
+    public internal(set) var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
 
     // hacky way to initiase DependencyValues before we enter LocalAgentQueue to avoid deadlock during tests
     @Dependency(\.timerFactory) var timerFactory

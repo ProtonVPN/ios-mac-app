@@ -242,7 +242,7 @@ public struct SettingsView: View {
     }
 
     private func destination(
-        case: CasePath<SettingsFeature.Destination, Void>,
+        case: AnyCasePath<SettingsFeature.Destination, Void>,
         view destination: @escaping () -> some View
     ) -> some View {
         return WithViewStore(store, observe: { $0.destination }) { viewStore in
