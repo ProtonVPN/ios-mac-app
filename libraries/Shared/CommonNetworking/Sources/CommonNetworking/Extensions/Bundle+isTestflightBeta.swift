@@ -1,7 +1,7 @@
 //
-//  Created on 15/07/2024.
+//  Created on 2022-06-08.
 //
-//  Copyright (c) 2024 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,8 @@
 import Foundation
 
 extension Bundle {
-    public static var isTestflightBeta: Bool {
+
+    static var isTestflightBeta: Bool {
         // If we're running on simulator, we're definitely not TestFlight version
         #if targetEnvironment(simulator)
         return false
@@ -44,6 +45,7 @@ extension Bundle {
         */
         #else
         return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+
         #endif
     }
 }
