@@ -20,7 +20,10 @@ import XCTest
 
 import Dependencies
 
+import ProtonCoreFeatureFlags
+
 import Domain
+import Persistence
 import PersistenceTestSupport
 @testable import LegacyCommon
 
@@ -28,18 +31,30 @@ final class ServerManagerTests: XCTestCase {
 
     private var upsertCallback: (([VPNServer]) -> Void)?
     private var deleteCallback: ((Set<String>, Int) -> Void)?
+    private var metadataCallback: ((DatabaseMetadata.Key, String?) -> Void)?
 
-    private func testServerUpdate(servers: [VPNServer], freeServersOnly: Bool) {
+    class override func setUp() {
+        super.setUp()
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.timestampedLogicals, true)
+    }
+
+    class override func tearDown() {
+        super.tearDown()
+        FeatureFlagsRepository.shared.resetFlagOverride(VPNFeatureFlagType.timestampedLogicals)
+    }
+
+    private func performServerUpdate(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
         withDependencies {
             $0.serverRepository = .init(
-                upsertServers: { servers in self.upsertCallback?(servers) },
-                deleteServers: { ids, maxTier in
-                    self.deleteCallback?(ids, maxTier)
+                upsertServers: { [weak self] servers in self?.upsertCallback?(servers) },
+                deleteServers: { [weak self] ids, maxTier in
+                    self?.deleteCallback?(ids, maxTier)
                     return -1
-                }
+                },
+                setMetadata: { [weak self] key, value in self?.metadataCallback?(key, value) }
             )
         } operation: {
-            ServerManager.liveValue.update(servers: servers, freeServersOnly: freeServersOnly)
+            ServerManager.liveValue.update(servers: servers, freeServersOnly: freeServersOnly, lastModifiedAt: lastModifiedAt)
         }
     }
 
@@ -60,7 +75,7 @@ final class ServerManagerTests: XCTestCase {
             upsertInvoked.fulfill()
         }
 
-        testServerUpdate(servers: servers, freeServersOnly: true)
+        performServerUpdate(servers: servers, freeServersOnly: true, lastModifiedAt: nil)
 
         wait(for: [deleteInvoked, upsertInvoked], timeout: 1.0)
     }
@@ -73,8 +88,30 @@ final class ServerManagerTests: XCTestCase {
             deleteInvoked.fulfill()
         }
 
-        testServerUpdate(servers: [], freeServersOnly: false)
+        performServerUpdate(servers: [], freeServersOnly: false, lastModifiedAt: nil)
 
         wait(for: [deleteInvoked], timeout: 1.0)
+    }
+
+    func testUpdatesLastModifiedValueWhenNotNil() {
+        let lastModified = "A few moments ago"
+        let metadataExpectation = XCTestExpectation(description: "Expected last modified metadata to be updated")
+        metadataExpectation.expectedFulfillmentCount = 1
+
+        self.metadataCallback = { key, value in
+            XCTAssertEqual(key, .lastModifiedFree)
+            XCTAssertEqual(value, lastModified)
+            metadataExpectation.fulfill()
+        }
+
+        performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: lastModified)
+
+        wait(for: [metadataExpectation], timeout: 1.0)
+    }
+
+    func testDoesNotOverwriteLastModifiedValueWhenNil() {
+        self.metadataCallback = { _, _ in XCTFail("Metadata should not be cleared when the new last modified value is nil") }
+
+        performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: nil)
     }
 }

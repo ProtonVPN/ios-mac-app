@@ -27,15 +27,15 @@ final class MetadataTests: TestIsolatedDatabaseTestCase {
 
     func testStoreRetrieveAndDeleteMetadata() throws {
         let valueToStore = DateFormatter.imf.string(from: Date())
-        repository.setMetadata(.lastModified, valueToStore)
+        repository.setMetadata(.lastModifiedFree, valueToStore)
 
-        let result = repository.getMetadata(.lastModified)
+        let result = repository.getMetadata(.lastModifiedFree)
         let valueRetrieved = try XCTUnwrap(result)
 
         XCTAssertEqual(valueToStore, valueRetrieved)
 
         // Let's check that storing nil deletes the existing value for this key
-        repository.setMetadata(.lastModified, nil)
-        XCTAssertNil(repository.getMetadata(.lastModified))
+        repository.setMetadata(.lastModifiedFree, nil)
+        XCTAssertNil(repository.getMetadata(.lastModifiedFree))
     }
 }

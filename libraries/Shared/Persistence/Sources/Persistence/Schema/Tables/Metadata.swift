@@ -18,11 +18,12 @@
 
 import Foundation
 
-public struct DatabaseMetadata: Codable {
+public struct DatabaseMetadata: Codable, Sendable {
     let key: Key
     let value: String
 
-    public enum Key: String, Codable {
-        case lastModified
+    public enum Key: String, Codable, Sendable {
+        case lastModifiedFree
+        case lastModifiedAll
     }
 }

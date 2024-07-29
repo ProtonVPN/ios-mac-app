@@ -21,6 +21,9 @@
 
 import Foundation
 
+import Dependencies
+
+import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
@@ -28,6 +31,7 @@ import ProtonCoreDataModel
 import CommonNetworking
 import Domain
 import Ergonomics
+import Persistence
 import LocalFeatureFlags
 import Localization
 import VPNShared
@@ -42,11 +46,17 @@ extension Container: VpnApiServiceFactory {
     }
 }
 
+public enum ServerInfoResponse {
+    case notModified(since: String)
+    case modified(at: String?, servers: [ServerModel], freeServersOnly: Bool)
+}
+
 public class VpnApiService {
+    @Dependency(\.serverRepository) var serverRepository
     public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory & AuthKeychainHandleFactory
 
     public typealias ServerInfoTuple = (
-        serverModels: [ServerModel],
+        serverInfo: ServerInfoResponse?,
         location: UserLocation?,
         streamingServices: VPNStreamingResponse?
     )
@@ -80,7 +90,7 @@ public class VpnApiService {
         let asyncCredentials = try await clientCredentials()
 
         return await VpnProperties(
-            serverModels: try serverInfo(
+            serverInfo: try serverInfo(
                 ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: asyncLocation?.country,
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
@@ -101,7 +111,7 @@ public class VpnApiService {
         }
 
         return await (
-            serverModels: try serverInfo(
+            serverInfo: try serverInfo(
                 ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: location?.country,
                 freeTier: freeTier
@@ -159,25 +169,37 @@ public class VpnApiService {
         ip: TruncatedIp?,
         countryCode: String?,
         freeTier: Bool,
-        completion: @escaping (Result<[ServerModel], Error>) -> Void
+        completion: @escaping (Result<ServerInfoResponse, Error>) -> Void
     ) {
         let countryCodes: [String] = (countryCode.map { [$0] } ?? []) // country code from v1/locations response
             .appending(countryCodeProvider.countryCodes) // local guesses at appropriate country codes
             .uniqued
 
+        let shouldSendLastModifiedValue = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.timestampedLogicals)
+        let lastModifiedMetadataKey: DatabaseMetadata.Key = freeTier ? .lastModifiedFree : .lastModifiedAll
+        let lastModified = serverRepository.getMetadata(lastModifiedMetadataKey)
+
         networking.request(
             LogicalsRequest(
                 ip: ip,
                 countryCodes: countryCodes,
-                freeTier: freeTier
+                freeTier: freeTier,
+                lastModified: shouldSendLastModifiedValue ? lastModified : nil
             )
-        ) { (result: Result<JSONDictionary, Error>) in
-            switch result {
-            case let .success(json):
+        ) { (response: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) in
+            let result: Result<ServerInfoResponse, Error>
+            defer { completion(result) }
+
+            switch response {
+            case .success(.notModified(let lastModified)):
+                log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(lastModified)"])
+                result = .success(.notModified(since: lastModified))
+
+            case .success(.modified(let lastModified, let json)):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
                     log.error("'Servers' field not present in server info request's response", category: .api, event: .response)
                     let error = ParseError.serverParse
-                    completion(.failure(error))
+                    result = .failure(error)
                     return
                 }
 
@@ -189,14 +211,15 @@ public class VpnApiService {
                         log.error("Failed to parse server info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(json)"])
                     }
                 }
-                completion(.success(serverModels))
+                result = .success(.modified(at: lastModified, servers: serverModels, freeServersOnly: freeTier))
+
             case let .failure(error):
-                completion(.failure(error))
+                result = .failure(error)
             }
         }
     }
 
-    public func serverInfo(ip: TruncatedIp?, countryCode: String?, freeTier: Bool) async throws -> [ServerModel] {
+    public func serverInfo(ip: TruncatedIp?, countryCode: String?, freeTier: Bool) async throws -> ServerInfoResponse {
         return try await withCheckedThrowingContinuation { continuation in
             serverInfo(ip: ip, countryCode: countryCode, freeTier: freeTier, completion: continuation.resume(with:))
         }

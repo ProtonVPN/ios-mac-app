@@ -46,7 +46,7 @@ public struct ServerRepository: DependencyKey {
     private var server: ([VPNServerFilter], VPNServerOrder) -> VPNServer?
 
     public var getMetadata: (DatabaseMetadata.Key) -> String?
-    public var setMetadata: (DatabaseMetadata.Key, String?) -> Void
+    package var setMetadata: (DatabaseMetadata.Key, String?) -> Void
 
     /// Close the underlying database connection. It is considered a fatal error to continue using other repository
     /// functions after invoking this.
@@ -124,6 +124,14 @@ extension ServerRepository {
         orderedBy order: VPNServerOrder
     ) -> [ServerInfo] {
         servers(filters, order)
+    }
+
+    public func setMetadata(_ value: String, for key: DatabaseMetadata.Key) {
+        setMetadata(key, value)
+    }
+
+    public func deleteMetadata(for key: DatabaseMetadata.Key) {
+        setMetadata(key, nil)
     }
 }
 

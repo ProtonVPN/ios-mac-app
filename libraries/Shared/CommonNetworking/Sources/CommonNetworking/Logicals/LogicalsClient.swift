@@ -33,7 +33,8 @@ extension LogicalsClient: DependencyKey {
                 let request = LogicalsRequest(
                     ip: ip,
                     countryCodes: (countryCode.map { [$0] }) ?? [],
-                    freeTier: false
+                    freeTier: false,
+                    lastModified: nil
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)
                 return response.logicalServers.map { $0.vpnServer }

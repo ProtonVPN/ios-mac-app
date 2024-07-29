@@ -205,10 +205,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         review.update(plan: credentials.planName)
 
-        serverManager.update(
-            servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
-            freeServersOnly: shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
-        )
+        if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
+            let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
+            assert(isFreeTierRequest == isFreeTier)
+            self.serverManager.update(
+                servers: servers.map { VPNServer(legacyModel: $0) },
+                freeServersOnly: isFreeTierRequest,
+                lastModifiedAt: lastModified
+            )
+        }
 
         propertiesManager.userLocation = properties.location
         do {
@@ -275,10 +280,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
 
-            serverManager.update(
-                servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
-                freeServersOnly: shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
-            )
+            if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
+                let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
+                assert(isFreeTierRequest == isFreeTier)
+                self.serverManager.update(
+                    servers: servers.map { VPNServer(legacyModel: $0) },
+                    freeServersOnly: isFreeTierRequest,
+                    lastModifiedAt: lastModified
+                )
+            }
 
             propertiesManager.userRole = properties.userRole
             propertiesManager.userAccountCreationDate = properties.userCreateTime

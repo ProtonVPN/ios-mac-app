@@ -182,7 +182,7 @@ public final class CoreNetworking: Networking {
         log.debug("Request started", category: .net, metadata: [
             "url": "\(url)",
             "method": "\(route.method.rawValue.uppercased())",
-            "condition": "\(route.condition)"
+            "condition": "\(optional: route.condition)"
         ])
 
         apiService.request(

@@ -126,7 +126,6 @@ extension ServerRepository {
                         .select(DatabaseMetadata.columns.value)
                         .filter(DatabaseMetadata.columns.key == key.rawValue)
 
-
                     return try String.fetchOne(db, request)
                 }
             },
@@ -134,7 +133,6 @@ extension ServerRepository {
                 return executor.write(dbWriter: dbWriter) { db in
                     guard let value else {
                         try DatabaseMetadata
-                            .select()
                             .filter(DatabaseMetadata.columns.key == key.rawValue)
                             .deleteAll(db)
                         return
