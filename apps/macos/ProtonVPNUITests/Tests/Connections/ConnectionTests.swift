@@ -19,13 +19,6 @@
 import Foundation
 import XCTest
 
-struct ConnectionProtocol {
-    let name: String
-
-    static let wireGuardUDP = ConnectionProtocol(name: "WireGuard")
-    static let wireGuardTCP = ConnectionProtocol(name: "WireGuard (TCP)")
-}
-
 class ConnectionTests: ProtonVPNUITests {
     
     private let mainRobot = MainRobot()
@@ -49,38 +42,48 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectViaWireGuardUdp() {
-        performProtocolConnectionTest(withProtocol: ConnectionProtocol.wireGuardUDP)
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.WireGuard)
     }
     
     @MainActor
     func testConnectViaWireGuardTcp() {
-        performProtocolConnectionTest(withProtocol: ConnectionProtocol.wireGuardTCP)
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.WireGuardTCP)
+    }
+    
+    @MainActor
+    func testConnectViaSmartProtocol() {
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.Smart)
+    }
+    
+    @MainActor
+    func testConnectViaStealthProtocol() {
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.Stealth)
     }
     
     @MainActor
     func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
-
+        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()
             .connectionTabClick()
             .verify.checkConnectionTabIsOpen()
-            .selectProtocol(connectionProtocol.name)
-            .verify.checkProtocolSelected(connectionProtocol.name)
+            .selectProtocol(connectionProtocol)
+            .verify.checkProtocolSelected(connectionProtocol)
             .closeSettings()
             .quickConnectToAServer()
         
         let connectingTimeout = 30
-        guard mainRobot.waitForConnecting(connectingTimeout) else {
-            XCTFail("VPN is not connected using \(connectionProtocol.name) in \(connectingTimeout) seconds")
+        guard mainRobot.waitForConnectingFinish(connectingTimeout) else {
+            XCTFail("VPN is not connected using \(connectionProtocol) in \(connectingTimeout) seconds")
             return
         }
         
         if mainRobot.isConnectionTimedOut() {
-            XCTFail("Connection timeout while connecting to \(connectionProtocol.name) protocol")
+            XCTFail("Connection timeout while connecting to \(connectionProtocol) protocol")
         }
         
         mainRobot
-            .verify.checkVPNConnected(with: connectionProtocol.name)
+            .verify.checkVPNConnected(with: connectionProtocol)
     }
 }

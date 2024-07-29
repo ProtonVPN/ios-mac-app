@@ -91,9 +91,9 @@ class SettingsRobot {
         return SettingsRobot()
     }
     
-    func selectProtocol(_ pr: String) -> SettingsRobot {
+    func selectProtocol(_ connectionProtocol: ConnectionProtocol) -> SettingsRobot {
         app.popUpButtons[Localizable.protocol].popUpButtons.element.click()
-        app.menuItems[pr].click()
+        app.menuItems[connectionProtocol.rawValue].click()
         return SettingsRobot()
     }
     
@@ -180,9 +180,9 @@ class SettingsRobot {
         }
         
         @discardableResult
-        func checkProtocolSelected(_ expectedProtocolLabel: String) -> SettingsRobot {
+        func checkProtocolSelected(_ expectedProtocol: ConnectionProtocol) -> SettingsRobot {
             XCTAssert(app.popUpButtons[Localizable.protocol].waitForExistence(timeout: 5))
-            XCTAssertEqual(app.popUpButtons[Localizable.protocol].value as! String, expectedProtocolLabel)
+            XCTAssertEqual(app.popUpButtons[Localizable.protocol].value as! String, expectedProtocol.rawValue)
             return SettingsRobot()
         }
     }

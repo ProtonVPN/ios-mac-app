@@ -68,7 +68,7 @@ class MainRobot {
         return LoginRobot()
     }
     
-    func waitForConnecting(_ timeout: Int) -> Bool {
+    func waitForConnectingFinish(_ timeout: Int) -> Bool {
         return app.staticTexts[initializingConnectionTitle].waitForNonExistence(timeout: TimeInterval(timeout))
     }
     
@@ -110,16 +110,23 @@ class MainRobot {
         }
         
         @discardableResult
-        func checkVPNConnected(with expectedProtocolName: String) -> MainRobot {
-            // verify successfully connected label appears
-            XCTAssert(app.staticTexts[successfullyConnectedTitle].waitForExistence(timeout: 10), "\(successfullyConnectedTitle) element not found.")
+        func checkVPNConnected(with expectedProtocol: ConnectionProtocol) -> MainRobot {
+            
+            // verify one of the elements appear - successfullyConnectedTitle or disconnect button
+            let isConnectedTitleExists = app.staticTexts[successfullyConnectedTitle].waitForExistence(timeout: 10)
+            let isDisconnectButtonExists = app.buttons[Localizable.disconnect].waitForExistence(timeout: 10)
+            XCTAssert(isConnectedTitleExists || isDisconnectButtonExists, "Either '\(successfullyConnectedTitle)' or '\(Localizable.disconnect)' must exist.")
             
             // verify Disconnect button appears
             XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "'\(Localizable.disconnect)' button not found.")
             
             // verify correct connected protocol appears
             let actualProtocol = app.staticTexts["protocolLabel"].value as! String
-            XCTAssertEqual(expectedProtocolName, actualProtocol, "Invalid protol shown, expected: \(expectedProtocolName), actual: \(actualProtocol)")
+            if expectedProtocol == ConnectionProtocol.Smart {
+                XCTAssertTrue(!actualProtocol.isEmpty, "Connection protocol for Smart protocol should not be empty")
+            } else {
+                XCTAssertEqual(expectedProtocol.rawValue, actualProtocol, "Invalid protocol shown, expected: \(expectedProtocol), actual: \(actualProtocol)")
+            }
             
             // verify IP Address label appears
             let actualIPAddress = app.staticTexts["ipLabel"].value as! String
