@@ -30,7 +30,6 @@ import Dependencies
 import Localization
 
 public struct ConnectionStatusView: View {
-
     let store: StoreOf<ConnectionStatusFeature>
 
     func title(protectionState: ProtectionState) -> String? {
@@ -110,34 +109,36 @@ public struct ConnectionStatusView: View {
 
     public var body: some View {
         ZStack(alignment: .top) {
-            LinearGradient(colors: [gradientColor(protectionState: store.protectionState).opacity(0.5), .clear],
-                           startPoint: .top,
-                           endPoint: .bottom)
-            .ignoresSafeArea()
-            VStack(spacing: 0) {
-                titleView(protectionState: store.protectionState)
-                    .frame(height: 58)
-                if let title = title(protectionState: store.protectionState) {
-                    Text(title)
-                        .font(.themeFont(.body1(.semibold)))
-                    Spacer()
-                        .frame(height: 8)
-                }
-                ZStack {
-                    if let locationText = locationText(protectionState: store.protectionState) {
-                        locationText
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                    } else if case .protected(let netShield) = store.protectionState {
-                        NetShieldStatsView(viewModel: netShield)
-                    } else if case .protectedSecureCore(let netShield) = store.protectionState {
-                        NetShieldStatsView(viewModel: netShield)
+            WithPerceptionTracking {
+                LinearGradient(colors: [gradientColor(protectionState: store.protectionState).opacity(0.5), .clear],
+                               startPoint: .top,
+                               endPoint: .bottom)
+                .ignoresSafeArea()
+                VStack(spacing: 0) {
+                    titleView(protectionState: store.protectionState)
+                        .frame(height: 58)
+                    if let title = title(protectionState: store.protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.semibold)))
+                        Spacer()
+                            .frame(height: 8)
                     }
+                    ZStack {
+                        if let locationText = locationText(protectionState: store.protectionState) {
+                            locationText
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                        } else if case .protected(let netShield) = store.protectionState {
+                            NetShieldStatsView(viewModel: netShield)
+                        } else if case .protectedSecureCore(let netShield) = store.protectionState {
+                            NetShieldStatsView(viewModel: netShield)
+                        }
+                    }
+                    .background(.translucentLight,
+                                in: RoundedRectangle(cornerRadius: .themeRadius8,
+                                                     style: .continuous))
+                    .padding(.horizontal, .themeSpacing16)
                 }
-                .background(.translucentLight,
-                            in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                 style: .continuous))
-                .padding(.horizontal, .themeSpacing16)
             }
         }
         .frame(height: 200)

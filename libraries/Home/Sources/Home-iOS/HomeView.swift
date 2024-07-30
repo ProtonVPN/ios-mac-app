@@ -41,24 +41,26 @@ public struct HomeView: View {
 
     public var body: some View {
         ZStack(alignment: .top) {
-            ScrollView {
-                HomeMapView()
-                    .frame(minHeight: Self.mapHeight)
-                HomeConnectionCardView(
-                    item: store.mostRecent ?? .defaultFastest,
-                    vpnConnectionStatus: store.vpnConnectionStatus,
-                    sendAction: { _ = store.send($0) }
-                )
-                .padding(.horizontal, .themeSpacing16)
-                RecentsSectionView(
-                    items: store.state.remainingConnections,
-                    sendAction: { _ = store.send($0) }
-                )
+            WithPerceptionTracking {
+                ScrollView {
+                    HomeMapView()
+                        .frame(minHeight: Self.mapHeight)
+                    HomeConnectionCardView(
+                        item: store.mostRecent ?? .defaultFastest,
+                        vpnConnectionStatus: store.vpnConnectionStatus,
+                        sendAction: { _ = store.send($0) }
+                    )
+                    .padding(.horizontal, .themeSpacing16)
+                    RecentsSectionView(
+                        items: store.state.remainingConnections,
+                        sendAction: { _ = store.send($0) }
+                    )
+                }
+                .background(Color(.background))
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                        action: \.connectionStatusViewAction))
+                .allowsHitTesting(false)
             }
-            .background(Color(.background))
-            ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                    action: \.connectionStatusViewAction))
-            .allowsHitTesting(false)
         }
         .task {
             store.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
