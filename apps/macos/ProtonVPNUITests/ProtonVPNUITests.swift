@@ -113,7 +113,11 @@ class ProtonVPNUITests: XCTestCase {
      }
     
     func waitForLoaderDisappear() {
-        _ = app.staticTexts[Localizable.loadingScreenSlogan].waitForExistence(timeout: 10)
+        let loadingScreen = app.staticTexts[Localizable.loadingScreenSlogan]
+        _ = loadingScreen.waitForExistence(timeout: 2)
+        if !loadingScreen.waitForNonExistence(timeout: 10) {
+            XCTFail("Loading screen does not disappear after 10 seconds")
+        }
     }
 
     func login(withCredentials credentials: Credentials) {
@@ -121,17 +125,10 @@ class ProtonVPNUITests: XCTestCase {
         loginRobot
             .loginUser(credentials: credentials)
         
-        dismissDialogs()
-        
         waitForLoaderDisappear()
-        _ = waitForElementToAppear(app.buttons[Localizable.quickConnect])
-        
-        dismissDialogs()
-        dismissPopups()
-        
-        if waitForElementToAppear(app.dialogs["Enabling custom protocols"]) {
-            dismissDialogs()
-        }
+        mainRobot
+            .verify
+            .checkVPNDisconnected()
     }
     
     func verifyLoggedInUser(withCredentials credentials: Credentials) {
@@ -149,21 +146,18 @@ class ProtonVPNUITests: XCTestCase {
     
     func logoutIfNeeded() {
         defer {
-            // Make sure app is fully logged out
-            _ = waitForElementToAppear(app.buttons[Localizable.logIn])
+            if !app.buttons[Localizable.logIn].waitForExistence(timeout: 5) {
+                XCTFail("Failed to log out. Login screen does not appear")
+            }
         }
+        _ = mainRobot
+            .logOut()
 
-        let buttonQuickConnect = app.buttons[Localizable.quickConnect]
-        if buttonQuickConnect.waitForExistence(timeout: 4) {
-            _ = mainRobot.logOut()
-            // give the main window time to load and show OpenVPN alert if needed
-            sleep(2)
+        // give the main window time to load and show OpenVPN alert if needed
+        sleep(2)
 
-            dismissPopups()
-            dismissDialogs()
-        } else {
-            return
-        }
+        dismissPopups()
+        dismissDialogs()
     }
 
     func tryLoggingOut() -> Bool {
