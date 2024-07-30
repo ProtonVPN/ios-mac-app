@@ -27,6 +27,7 @@ import Domain
 public struct VpnProperties {
     
     public let serverInfo: ServerInfoResponse
+    public let streamingResponse: VPNStreamingResponse?
     public let vpnCredentials: VpnCredentials
     public let location: UserLocation?
     public let clientConfig: ClientConfig?
@@ -37,6 +38,7 @@ public struct VpnProperties {
 
     public init(
         serverInfo: ServerInfoResponse,
+        streamingServices: VPNStreamingResponse?,
         vpnCredentials: VpnCredentials,
         location: UserLocation?,
         clientConfig: ClientConfig?,
@@ -44,6 +46,7 @@ public struct VpnProperties {
         addresses: [Address]?
     ) {
         self.serverInfo = serverInfo
+        self.streamingResponse = streamingServices
         self.vpnCredentials = vpnCredentials
         self.location = location
         self.clientConfig = clientConfig
