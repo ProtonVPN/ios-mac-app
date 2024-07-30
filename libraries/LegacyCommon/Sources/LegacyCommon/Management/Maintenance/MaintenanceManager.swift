@@ -122,13 +122,19 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                     freeTier: isFree
                 ) { result in
                     switch result {
-                    case let .success(servers):
+                    case let .success(.modified(at: modifiedAt, servers: servers, freeServersOnly: isFreeTier)):
                         @Dependency(\.serverManager) var serverManager
                         serverManager.update(
                             servers: servers.map { VPNServer(legacyModel: $0) },
-                            freeServersOnly: isFree
+                            freeServersOnly: isFreeTier,
+                            lastModifiedAt: modifiedAt
                         )
                         completion?(true)
+
+                    case .success(.notModified(let lastModified)):
+                        log.debug("Servers not modified", category: .api, metadata: ["LastModified": "\(lastModified)"])
+                        completion?(true)
+
                     case let .failure(error):
                         failure?(error)
                     }

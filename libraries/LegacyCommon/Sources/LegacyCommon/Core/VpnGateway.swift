@@ -543,12 +543,16 @@ public class VpnGateway: VpnGatewayProtocol {
                 self.propertiesManager.streamingResourcesUrl = services.resourceBaseURL
             }
 
-            @Dependency(\.serverManager) var serverManager
-            serverManager.update(
-                servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
-                freeServersOnly: refreshFreeTierInfo
-            )
-            self.profileManager.refreshProfiles()
+            if case .modified(let modifiedAt, let servers, let isFreeTier) = properties.serverInfo {
+                assert(isFreeTier == refreshFreeTierInfo)
+                @Dependency(\.serverManager) var serverManager
+                serverManager.update(
+                    servers: servers.map { VPNServer(legacyModel: $0) },
+                    freeServersOnly: isFreeTier,
+                    lastModifiedAt: modifiedAt
+                )
+                self.profileManager.refreshProfiles()
+            }
 
         case let .failure(error):
             // Ignore failures as this is a non-critical call

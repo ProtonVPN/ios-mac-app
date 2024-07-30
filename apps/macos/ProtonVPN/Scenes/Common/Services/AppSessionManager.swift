@@ -172,11 +172,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-
-        self.serverManager.update(
-            servers: properties.serverModels.map { VPNServer(legacyModel: $0) },
-            freeServersOnly: await shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
-        )
+        if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
+            let isFreeTierRequest = await shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
+            assert(isFreeTierRequest == isFreeTier)
+            self.serverManager.update(
+                servers: servers.map { VPNServer(legacyModel: $0) },
+                freeServersOnly: isFreeTierRequest,
+                lastModifiedAt: lastModified
+            )
+        }
 
         if await appState.isDisconnected {
             propertiesManager.userLocation = properties.location

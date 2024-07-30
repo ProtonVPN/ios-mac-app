@@ -106,7 +106,7 @@ public struct SchemaVersion {
     let migrationBlock: MigrationBlock
 
     /// Order of migrations is important! Make sure new migrations are added at the end of this array.
-    public static let all: [SchemaVersion] = [.v1]
+    public static let all: [SchemaVersion] = [.v1, .v2]
 
     public static let latest: SchemaVersion = .all.last!
 }
