@@ -42,7 +42,7 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectViaWireGuardUdp() {
-        performProtocolConnectionTest(withProtocol: ConnectionProtocol.WireGuard)
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.WireGuardUDP)
     }
     
     @MainActor
@@ -60,6 +60,11 @@ class ConnectionTests: ProtonVPNUITests {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.Stealth)
     }
     
+    @MainActor
+    func testConnectViaIKEv2Protocol() {
+        performProtocolConnectionTest(withProtocol: ConnectionProtocol.IKEv2)
+    }
+
     @MainActor
     func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
         
