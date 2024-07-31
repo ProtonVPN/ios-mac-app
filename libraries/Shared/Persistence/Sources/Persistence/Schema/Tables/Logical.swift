@@ -17,9 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
-import GRDB
-
 import Domain
 
 /// Contains static information about a logical server.

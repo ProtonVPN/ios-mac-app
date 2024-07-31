@@ -63,8 +63,7 @@ class MainRobot {
     }
     
     func logOut() -> LoginRobot {
-        let logoutButton = app.menuBars.menuItems[Localizable.menuLogout]
-        logoutButton.click()
+        window.typeKey("w", modifierFlags: [.shift, .command])
         return LoginRobot()
     }
     
@@ -122,7 +121,8 @@ class MainRobot {
             
             // verify correct connected protocol appears
             let actualProtocol = app.staticTexts["protocolLabel"].value as! String
-            if expectedProtocol == ConnectionProtocol.Smart {
+            
+            if case .Smart = expectedProtocol {
                 XCTAssertTrue(!actualProtocol.isEmpty, "Connection protocol for Smart protocol should not be empty")
             } else {
                 XCTAssertEqual(expectedProtocol.rawValue, actualProtocol, "Invalid protocol shown, expected: \(expectedProtocol), actual: \(actualProtocol)")
@@ -133,6 +133,11 @@ class MainRobot {
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
             
             return MainRobot()
+        }
+        
+        @discardableResult
+        func checkVPNDisconnected() {
+            XCTAssert(app.buttons[Localizable.quickConnect].waitForExistence(timeout: 5), "'\(Localizable.quickConnect)' button not found.")
         }
         
         // MARK: private methods

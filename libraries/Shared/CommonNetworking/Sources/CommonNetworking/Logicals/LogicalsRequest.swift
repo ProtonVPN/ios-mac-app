@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCoreFeatureFlags
 import ProtonCoreAPIClient
 import ProtonCoreNetworking
 import Domain
@@ -25,8 +26,10 @@ import VPNShared
 import Ergonomics
 
 /// The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-public struct LogicalsRequest: Request {
+public struct LogicalsRequest: ConditionalRequest {
+
     private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
+    public let condition: RequestCondition? // public because of protocol requirement
 
     /// Truncated ip as seen from VPN API
     let ip: TruncatedIp?
@@ -38,10 +41,17 @@ public struct LogicalsRequest: Request {
     /// Whether or not this request is just for the free logicals.
     let freeTier: Bool
 
-    public init(ip: TruncatedIp?, countryCodes: [String], freeTier: Bool) {
+    public init(ip: TruncatedIp?, countryCodes: [String], freeTier: Bool, lastModified: String?) {
         self.ip = ip
         self.countryCodes = countryCodes
         self.freeTier = freeTier
+
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.timestampedLogicals) {
+            let lastModifiedIMFString = lastModified ?? DateFormatter.imf.string(from: Date(timeIntervalSince1970: 0))
+            self.condition = .ifModifiedSince(date: lastModifiedIMFString)
+        } else {
+            self.condition = nil
+        }
     }
 
     public var path: String {
@@ -64,8 +74,8 @@ public struct LogicalsRequest: Request {
         true
     }
 
-    public var header: [String: Any] {
-        var result: [String: Any] = [:]
+    public var baseHeaders: [String: Any] {
+        var result: [String: String] = [:]
 
         if let ip {
             result["x-pm-netzone"] = ip.value

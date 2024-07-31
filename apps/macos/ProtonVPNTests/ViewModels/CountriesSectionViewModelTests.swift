@@ -52,7 +52,9 @@ final class CountriesViewModelTests: XCTestCase {
                 servers: { _, _ in [] },
                 deleteServers: { _, _ in 0 },
                 upsertLoads: { _ in },
-                groups: { _, _ in self.serverGroups }
+                groups: { _, _ in self.serverGroups },
+                getMetadata: { _ in nil },
+                setMetadata: { _, _ in }
             )
         } operation: {
             operation()

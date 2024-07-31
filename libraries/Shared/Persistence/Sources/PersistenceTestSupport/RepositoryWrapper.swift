@@ -89,7 +89,9 @@ extension ServerRepository {
             servers: wrapper.getServers,
             deleteServers: wrapper.deleteServers,
             upsertLoads: wrapper.upsert,
-            groups: wrapper.getGroups
+            groups: wrapper.getGroups,
+            getMetadata: wrapper.repository.getMetadata,
+            setMetadata: wrapper.repository.setMetadata
         )
     }
 }

@@ -94,10 +94,17 @@ class SettingsRobot {
     func selectProtocol(_ connectionProtocol: ConnectionProtocol) -> SettingsRobot {
         app.popUpButtons[Localizable.protocol].popUpButtons.element.click()
         app.menuItems[connectionProtocol.rawValue].click()
+
+        if case .IKEv2 = connectionProtocol {
+            let continueIkeButton = app.buttons[Localizable.ikeDeprecationAlertContinueButtonTitle]
+            continueIkeButton.waitForExistence(timeout: 5)
+            continueIkeButton.click()
+        }
         return SettingsRobot()
     }
     
     func selectProfile(_ name: String) -> SettingsRobot {
+        app.popUpButtons[Localizable.quickConnect].popUpButtons.element.click()
         app.menuItems[name].click()
         return SettingsRobot()
     }
@@ -113,8 +120,11 @@ class SettingsRobot {
         }
         
         @discardableResult
-        func checkProfileIsCreated(_ name: String) -> SettingsRobot {
-            XCTAssertTrue(app.menuItems[name].exists)
+        func checkProfileIsCreated(_ profileName: String) -> SettingsRobot {
+            app.popUpButtons[Localizable.quickConnect].popUpButtons.element.click()
+            XCTAssertTrue(app.menuItems[profileName].exists, "\(profileName) profile does not exist at the \(Localizable.quickConnect) Preferences dropdown")
+            // close Quick Connect dropdown
+            app.popUpButtons[Localizable.quickConnect].click()
             return SettingsRobot()
         }
         

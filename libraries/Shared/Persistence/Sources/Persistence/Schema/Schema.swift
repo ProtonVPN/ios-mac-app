@@ -72,3 +72,10 @@ extension EndpointOverrides: TableRecord, FetchableRecord, PersistableRecord {
         case protocolMask // bit flags/mask representing protocol support
     }
 }
+
+extension DatabaseMetadata: TableRecord, FetchableRecord, PersistableRecord {
+    enum columns: String, ColumnExpression {
+        case key
+        case value
+    }
+}

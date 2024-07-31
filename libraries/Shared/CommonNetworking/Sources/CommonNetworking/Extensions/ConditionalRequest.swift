@@ -23,12 +23,15 @@ import protocol ProtonCoreNetworking.Request
 /// Inheriting from `Request` allows us to slap on `If-Modified-Since` to a `Request` without touching
 /// `ProtonCoreNetworking`.
 public protocol ConditionalRequest: Request {
-    var condition: RequestCondition { get }
+    var condition: RequestCondition? { get }
     var baseHeaders: [String: Any] { get }
 }
 
 extension ConditionalRequest {
-    var header: [String: Any] {
+    public var header: [String: Any] {
+        guard let condition else {
+            return baseHeaders
+        }
         return baseHeaders.merging(condition.additionalHeaders, uniquingKeysWith: { lhs, _ in lhs })
     }
 }

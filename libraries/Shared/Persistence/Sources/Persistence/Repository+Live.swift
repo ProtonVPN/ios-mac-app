@@ -120,6 +120,26 @@ extension ServerRepository {
                         .map { $0.domainModel }
                 }
             },
+            getMetadata: { key in
+                return executor.read(dbWriter: dbWriter) { db in
+                    let request = DatabaseMetadata
+                        .select(DatabaseMetadata.columns.value)
+                        .filter(DatabaseMetadata.columns.key == key.rawValue)
+
+                    return try String.fetchOne(db, request)
+                }
+            },
+            setMetadata: { key, value in
+                return executor.write(dbWriter: dbWriter) { db in
+                    guard let value else {
+                        try DatabaseMetadata
+                            .filter(DatabaseMetadata.columns.key == key.rawValue)
+                            .deleteAll(db)
+                        return
+                    }
+                    try DatabaseMetadata(key: key, value: value).insert(db, onConflict: .replace)
+                }
+            },
             closeConnection: { try dbWriter.close() }
         )
     }
