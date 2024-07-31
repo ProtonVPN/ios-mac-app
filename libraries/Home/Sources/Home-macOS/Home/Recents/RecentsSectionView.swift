@@ -29,6 +29,7 @@ import Strings
 import Theme
 import SharedViews
 
+@available(iOS 17, *)
 struct RecentsSectionView: View {
 
     let items: [RecentConnection]

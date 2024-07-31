@@ -21,7 +21,7 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.10.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.12.1"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../SharedViews"),

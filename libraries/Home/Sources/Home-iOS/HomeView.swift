@@ -34,33 +34,32 @@ public struct HomeTabView: View {
     }
 }
 
+@available(iOS 17, *)
 public struct HomeView: View {
-    let store: StoreOf<HomeFeature>
+    var store: StoreOf<HomeFeature>
 
     static let mapHeight: CGFloat = 300
-
+    
     public var body: some View {
         ZStack(alignment: .top) {
-            WithPerceptionTracking {
-                ScrollView {
-                    HomeMapView()
-                        .frame(minHeight: Self.mapHeight)
-                    HomeConnectionCardView(
-                        item: store.mostRecent ?? .defaultFastest,
-                        vpnConnectionStatus: store.vpnConnectionStatus,
-                        sendAction: { _ = store.send($0) }
-                    )
-                    .padding(.horizontal, .themeSpacing16)
-                    RecentsSectionView(
-                        items: store.state.remainingConnections,
-                        sendAction: { _ = store.send($0) }
-                    )
-                }
-                .background(Color(.background))
-                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                        action: \.connectionStatusViewAction))
-                .allowsHitTesting(false)
+            ScrollView {
+                HomeMapView()
+                    .frame(minHeight: Self.mapHeight)
+                HomeConnectionCardView(
+                    item: store.mostRecent ?? .defaultFastest,
+                    vpnConnectionStatus: store.vpnConnectionStatus,
+                    sendAction: { _ = store.send($0) }
+                )
+                .padding(.horizontal, .themeSpacing16)
+                RecentsSectionView(
+                    items: store.state.remainingConnections,
+                    sendAction: { _ = store.send($0) }
+                )
             }
+            .background(Color(.background))
+            ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                    action: \.connectionStatus))
+            .allowsHitTesting(false)
         }
         .task {
             store.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
@@ -86,6 +85,7 @@ internal extension GeometryProxy {
 }
 
 #if DEBUG
+@available(iOS 17, *)
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView(store: .init(initialState: HomeFeature.previewState, reducer: { HomeFeature() }))

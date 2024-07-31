@@ -30,6 +30,7 @@ import ProtonCoreUIFoundations
 
 import CasePaths
 
+@available(iOS 17, *)
 @Reducer
 public struct HomeFeature {
     /// - Note: might want this as a property of all Reducer types
@@ -51,7 +52,7 @@ public struct HomeFeature {
         }
 
         public init() {
-            let connectionState = ConnectionStatusFeature.State(protectionState: .unprotected)
+            let connectionState = ConnectionStatusFeature.State()
             self.init(connections: [],
                       connectionStatus: connectionState,
                       vpnConnectionStatus: .disconnected)
@@ -67,6 +68,7 @@ public struct HomeFeature {
         }
     }
 
+    @CasePathable
     public enum Action: Equatable {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
@@ -79,7 +81,7 @@ public struct HomeFeature {
         /// Remove a connection.
         case remove(ConnectionSpec)
 
-        case connectionStatusViewAction(ConnectionStatusFeature.Action)
+        case connectionStatus(ConnectionStatusFeature.Action)
 
         /// Show details screen with info about current connection
         case showConnectionDetails
@@ -164,7 +166,7 @@ public struct HomeFeature {
                     try? await disconnectVPN()
                 }
 
-            case .connectionStatusViewAction:
+            case .connectionStatus:
                 return .none
 
             case .watchConnectionStatus:
@@ -195,7 +197,7 @@ public struct HomeFeature {
                 return .none
             }
         }
-        Scope(state: \.connectionStatus, action: /Action.connectionStatusViewAction) {
+        Scope(state: \.connectionStatus, action: \.connectionStatus) {
             ConnectionStatusFeature()
         }
     }
@@ -214,13 +216,14 @@ extension RecentConnection {
 }
 
 #if DEBUG
+@available(iOS 17, *)
 extension HomeFeature {
     public static let previewState: State = .init(connections: [.pinnedFastest,
                                                                 .previousFreeConnection,
                                                                 .connectionSecureCore,
                                                                 .connectionRegion,
                                                                 .connectionSecureCoreFastest],
-                                                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                                                  connectionStatus: .init(),
                                                   vpnConnectionStatus: .disconnected)
 }
 #endif

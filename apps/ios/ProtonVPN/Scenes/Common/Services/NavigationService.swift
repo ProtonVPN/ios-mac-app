@@ -236,7 +236,7 @@ final class NavigationService {
 
         let isRedesign = FeatureFlagsRepository.shared.isRedesigniOSEnabled
 
-        if isRedesign {
+        if #available(iOS 17, *), isRedesign {
             let home = HomeFeatureCreator.homeViewController()
             tabViewControllers.append(home)
         }

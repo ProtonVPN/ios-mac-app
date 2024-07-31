@@ -27,6 +27,7 @@ import ComposableArchitecture
 import NEHelper
 import VPNAppCore
 
+@available(iOS 17, *)
 enum HomeFeatureCreator {
     static func homeViewController() -> UIHostingController<HomeView> {
         let homeStore = StoreOf<HomeFeature>(initialState: .init()) {

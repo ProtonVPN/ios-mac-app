@@ -34,12 +34,12 @@ extension VPNConnectionStatus {
     func protectionState(country: String, ip: String) -> ProtectionState {
         switch self {
         case .disconnected:
-            return .unprotected // todo: get real values
+            return .unprotected
         case .connected(let spec, _):
             if case .secureCore = spec.location {
                 return .protectedSecureCore(netShield: .random)
             }
-            return .protected(netShield: .random) // todo:
+            return .protected(netShield: .random)
         case .connecting, .loadingConnectionInfo:
             return .protecting(country: country, ip: ip)
         case .disconnecting:

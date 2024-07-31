@@ -31,3 +31,9 @@ public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
         appStorage("userIP")
     }
 }
+
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ProtectionState>> {
+    static var protectionState: Self {
+        PersistenceKeyDefault(.inMemory("protectionState"), .unprotected)
+    }
+}

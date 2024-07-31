@@ -18,7 +18,7 @@ let package = Package(
         .library(name: "ConnectionTestSupport", targets: ["ConnectionFoundationsTestSupport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.10.2")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.12.1")),
         .package(path: "../../../external/protoncore"), // GoLibs
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),

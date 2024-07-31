@@ -96,7 +96,7 @@ public class NetShieldModel: Equatable, ObservableObject {
 }
 
 public extension NetShieldModel {
-    static var random: NetShieldModel {
+    static var random: NetShieldModel { // TODO: make only available in DEBUG for previews
         let trackers = Int.random(in: 0...1000)
         let ads = Int.random(in: 0...1000000000)
         let data = Int.random(in: 0...100000000000000)

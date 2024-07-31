@@ -27,16 +27,16 @@ public struct ConnectionStatusFeature {
 
     @ObservableState
     public struct State: Equatable {
-        public var protectionState: ProtectionState
-
+        @Shared(.protectionState) public var protectionState: ProtectionState
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userIP) public var userIP: String?
 
-        public init(protectionState: ProtectionState) {
-            self.protectionState = protectionState
+        public init() {
+            
         }
     }
 
+    @CasePathable
     public enum Action: Equatable {
         case maskLocationTick
 
@@ -50,7 +50,7 @@ public struct ConnectionStatusFeature {
 
     public init() { }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
 

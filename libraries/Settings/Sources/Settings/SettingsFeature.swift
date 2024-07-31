@@ -82,7 +82,7 @@ public struct SettingsFeature: Reducer {
         // case about // MacOS only
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
         Scope(state: \.netShield, action: /Action.netShield) { NetShieldSettingsFeature() }
         Scope(state: \.killSwitch, action: /Action.killSwitch) { KillSwitchSettingsFeature() }
         Scope(state: \.protocol, action: /Action.protocol) { ProtocolSettingsFeature() }

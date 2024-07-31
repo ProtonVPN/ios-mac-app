@@ -19,8 +19,10 @@
 import Foundation
 import ComposableArchitecture
 
-public struct IPViewFeature: Reducer {
+@Reducer
+public struct IPViewFeature {
 
+    @ObservableState
     public struct State: Equatable {
         public var localIP: String?
         public var vpnIp: String
@@ -42,7 +44,7 @@ public struct IPViewFeature: Reducer {
     public init() {
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .changeIPVisibility:

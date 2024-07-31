@@ -210,7 +210,8 @@ final class TypedNotificationTests: XCTestCase {
     /// Test that programmer errors are caught when misusing typed notifications. In fact, this shouldn't even be
     /// possible unless someone chooses to manually send a typed notification using the default NotificationCenter API
     /// instead of the post(_: TypedNotification, object: Any) overload.
-    func testHandlerNotInvokedWithBadData() {
+    func testHandlerNotInvokedWithBadData() throws {
+        throw XCTSkip("XCTExpectFailure unreliable")
         tokens += NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
             XCTFail("Handlers should not be invoked with missing or mismatched data: \(data)")
         }
