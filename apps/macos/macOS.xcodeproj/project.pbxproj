@@ -84,6 +84,7 @@
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
 		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
+		772792C42C590E30008A769A /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772792C32C590E30008A769A /* NetworkUtils.swift */; };
 		7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747E3022C512EDF00A750E1 /* String+Extensions.swift */; };
 		77656B892C46AA4300E730AA /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77656B862C46AA2F00E730AA /* ConnectionTests.swift */; };
 		777B45FE2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777B45FD2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift */; };
@@ -608,6 +609,7 @@
 		66FEF8782B7A680F00452A8D /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewController.swift; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-macOS-UI-Connections.xctestplan"; sourceTree = "<group>"; };
+		772792C32C590E30008A769A /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		7747E3022C512EDF00A750E1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		77656B862C46AA2F00E730AA /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		777B45FD2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+waitForNonExistence.swift"; sourceTree = "<group>"; };
@@ -1205,6 +1207,7 @@
 			isa = PBXGroup;
 			children = (
 				7795C70F2C57865900F8AB7A /* ConnectionProtocol.swift */,
+				772792C32C590E30008A769A /* NetworkUtils.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -3101,6 +3104,7 @@
 				E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */,
 				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
 				D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */,
+				772792C42C590E30008A769A /* NetworkUtils.swift in Sources */,
 				B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */,
 				D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */,
 				7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */,
