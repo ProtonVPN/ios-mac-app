@@ -16,15 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Combine
-
+import ConcurrencyExtras
 import Dependencies
 
 import Domain
 
 // This struct is still WIP
 public enum VPNConnectionStatus: Equatable {
-
     case disconnected
     
     case connected(ConnectionSpec, VPNConnectionActual?)
@@ -91,19 +89,19 @@ extension VPNConnectionActual {
 // MARK: - Watch for changes
 
 public extension DependencyValues {
-    var vpnConnectionStatusPublisher: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> {
+    var vpnConnectionStatusPublisher: () -> AsyncStream<VPNConnectionStatus> {
         get { self[VPNConnectionStatusPublisherKey.self] }
         set { self[VPNConnectionStatusPublisherKey.self] = newValue }
     }
 }
 
 public enum VPNConnectionStatusPublisherKey: DependencyKey {
-    public static let liveValue: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> = {
+    public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = {
 #if !targetEnvironment(simulator)
         // Without `#if targetEnvironment(simulator)` SwiftUI previews crash
         assert(false, "Override this dependency!")
 #endif
         // Actual implementation sits in the app, to reduce the scope of thing this library depends on
-        return Empty<VPNConnectionStatus, Never>().eraseToAnyPublisher()
+        return AsyncStream<VPNConnectionStatus>.finished
     }
 }

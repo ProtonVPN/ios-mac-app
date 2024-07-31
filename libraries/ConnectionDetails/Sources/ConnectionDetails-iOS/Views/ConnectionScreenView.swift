@@ -140,9 +140,16 @@ public struct ConnectionScreenFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .watchConnectionStatus:
-                @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
-                return .publisher { vpnConnectionStatusPublisher().receive(on: UIScheduler.shared).map(Action.newConnectionStatus) }
-                    .cancellable(id: CancelId.watchConnectionStatus)
+                return .run { @MainActor send in
+                    let stream = Dependency(\.vpnConnectionStatusPublisher)
+                        .wrappedValue()
+                        .map { Action.newConnectionStatus($0) }
+
+                    for await value in stream {
+                        send(value)
+                    }
+                }
+                .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let connectionStatus):
                 switch connectionStatus {

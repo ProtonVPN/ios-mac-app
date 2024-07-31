@@ -15,22 +15,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Combine
 
-import ComposableArchitecture
 import Dependencies
+import ComposableArchitecture
+import ConcurrencyExtras
 
 import Domain
 import VPNAppCore
 import PMLogger
 
-private var appStateManager: AppStateManager! = Container.sharedContainer.makeAppStateManager()
+private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
 extension VPNConnectionStatusPublisherKey {
-
-    public static let watchVPNConnectionStatusChanges: @Sendable () -> AnyPublisher<VPNConnectionStatus, Never> = {
+    public static let watchVPNConnectionStatusChanges: () -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default
-            .publisher(for: .AppStateManager.displayStateChange)
+            .notifications(named: .AppStateManager.displayStateChange)
             .map {
                 let appStageManager = Container.sharedContainer.makeAppStateManager()
 
@@ -40,7 +39,7 @@ extension VPNConnectionStatusPublisherKey {
 
                 return ($0.object as! AppDisplayState).vpnConnectionStatus(appStageManager.activeConnection(), intent: propertyManager.lastConnectionIntent)
             }
-            .eraseToAnyPublisher()
+            .eraseToStream()
     }
 
 }

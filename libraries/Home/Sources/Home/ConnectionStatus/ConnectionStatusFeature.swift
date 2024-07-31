@@ -66,9 +66,16 @@ public struct ConnectionStatusFeature {
                 }.cancellable(id: MaskLocation.task, cancelInFlight: true)
 
             case .watchConnectionStatus:
-                @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
-                return .publisher { vpnConnectionStatusPublisher().receive(on: UIScheduler.shared).map(Action.newConnectionStatus) }
-                    .cancellable(id: CancelId.watchConnectionStatus)
+                return .run { @MainActor send in
+                    let stream = Dependency(\.vpnConnectionStatusPublisher)
+                        .wrappedValue()
+                        .map { Action.newConnectionStatus($0) }
+
+                    for await value in stream {
+                        send(value)
+                    }
+                }
+                .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let status):
                 let code = state.userCountry
