@@ -226,7 +226,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             throw error
         }
         try await refreshVpnAuthCertificate()
-        await successfulConsecutiveSessionRefreshes.increment()
     }
 
     @MainActor
@@ -353,7 +352,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        await successfulConsecutiveSessionRefreshes.increment()
         try await planService.updateServicePlans()
     }
     // swiftlint:enable function_body_length

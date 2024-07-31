@@ -44,13 +44,15 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var loggedIn = false
     public var successfulConsecutiveSessionRefreshes = CounterActor()
 
+    /// When true, and the user is on a free tier, requests to v1/logicals should only request free logicals
     public var shouldRefreshServersAccordingToUserTier: Bool {
         get async {
             // Every n times, fully refresh the server list, including the paid ones.
             // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
             // startup we always do a full refresh.
             let n = 10
-            return (await successfulConsecutiveSessionRefreshes.value + 1) % n == 0
+            let shouldPerformFullRefresh = (await successfulConsecutiveSessionRefreshes.value % n) == 0
+            return !shouldPerformFullRefresh
         }
     }
 

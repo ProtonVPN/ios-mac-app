@@ -213,8 +213,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             await successfulConsecutiveSessionRefreshes.reset()
             throw error
         }
-
-        await successfulConsecutiveSessionRefreshes.increment()
     }
 
     /// Ignore errors unless one of the following is true:
