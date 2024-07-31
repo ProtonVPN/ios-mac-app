@@ -24,7 +24,7 @@ class MainMeasurements: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
     private let lokiClient = LokiApiClient()
     private let timer = TestsTimer()
-    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    private lazy var credentials = getCredentials(from: "credentials")
     
     private let workflow = "main_measurements"
     private var sli: String? = nil

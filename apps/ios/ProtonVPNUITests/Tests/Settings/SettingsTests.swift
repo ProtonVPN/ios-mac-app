@@ -12,7 +12,7 @@ class SettingsTests: ProtonVPNUITests {
     
     private let settingsRobot = SettingsRobot()
     
-    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    private lazy var credentials = getCredentials(from: "credentials")
     
     override func setUp() {
         super.setUp()

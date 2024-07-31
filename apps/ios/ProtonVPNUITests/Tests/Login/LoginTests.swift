@@ -14,8 +14,7 @@ class LoginTests: ProtonVPNUITests {
 
     private let loginRobot = LoginRobot()
     
-    private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
-
+    private lazy var twopassusercredentials = getCredentials(from: "twopassusercredentials")
 
     override func setUp() {
         super.setUp()
@@ -48,7 +47,7 @@ class LoginTests: ProtonVPNUITests {
 
     func testLoginAsSubuserWithNoConnectionsAssigned() {
 
-        let subusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "subusercredentials", withExtension: "plist")!)
+        let subusercredentials = getCredentials(from: "subusercredentials")
 
         loginRobot
             .enterCredentials(subusercredentials[0])
@@ -69,7 +68,7 @@ class LoginTests: ProtonVPNUITests {
     }
 
     func testLoginAsTwoFa() {
-        let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
+        let twofausercredentials = getCredentials(from: "twofausercredentials")
 
         loginRobot
             .enterCredentials(twofausercredentials[0])
@@ -84,7 +83,7 @@ class LoginTests: ProtonVPNUITests {
 
     func testLoginWithTwoPassAnd2FAUser() {
 
-        let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
+        let twopasstwofausercredentials = getCredentials(from: "twopasstwofausercredentials")
 
         loginRobot
             .enterCredentials(twopasstwofausercredentials[0])
