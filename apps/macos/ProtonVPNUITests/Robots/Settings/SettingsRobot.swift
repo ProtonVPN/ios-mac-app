@@ -94,6 +94,12 @@ class SettingsRobot {
     func selectProtocol(_ connectionProtocol: ConnectionProtocol) -> SettingsRobot {
         app.popUpButtons[Localizable.protocol].popUpButtons.element.click()
         app.menuItems[connectionProtocol.rawValue].click()
+
+        if case .IKEv2 = connectionProtocol {
+            let continueIkeButton = app.buttons[Localizable.ikeDeprecationAlertContinueButtonTitle]
+            continueIkeButton.waitForExistence(timeout: 5)
+            continueIkeButton.click()
+        }
         return SettingsRobot()
     }
     

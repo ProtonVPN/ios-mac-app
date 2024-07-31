@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 enum ConnectionProtocol: String {
-    case WireGuard = "WireGuard"
+    case WireGuardUDP = "WireGuard"
     case WireGuardTCP = "WireGuard (TCP)"
     case Smart = "Smart"
     case Stealth = "Stealth"
+    case IKEv2 = "IKEv2"
 }

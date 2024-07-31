@@ -121,7 +121,8 @@ class MainRobot {
             
             // verify correct connected protocol appears
             let actualProtocol = app.staticTexts["protocolLabel"].value as! String
-            if expectedProtocol == ConnectionProtocol.Smart {
+            
+            if case .Smart = expectedProtocol {
                 XCTAssertTrue(!actualProtocol.isEmpty, "Connection protocol for Smart protocol should not be empty")
             } else {
                 XCTAssertEqual(expectedProtocol.rawValue, actualProtocol, "Invalid protocol shown, expected: \(expectedProtocol), actual: \(actualProtocol)")
