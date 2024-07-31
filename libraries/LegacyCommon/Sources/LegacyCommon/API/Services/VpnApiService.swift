@@ -95,6 +95,7 @@ public class VpnApiService {
                 countryCode: asyncLocation?.country,
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
             ),
+            streamingServices: try? virtualServices(),
             vpnCredentials: asyncCredentials,
             location: asyncLocation,
             clientConfig: clientConfig,

@@ -305,6 +305,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 @Dependency(\.serverChangeStorage) var storage
                 storage.config = clientConfig.serverChangeConfig
             }
+            if let streamingServices = properties.streamingResponse {
+                propertiesManager.streamingServices = streamingServices.streamingServices
+                propertiesManager.streamingResourcesUrl = streamingServices.resourceBaseURL
+            }
             if propertiesManager.featureFlags.pollNotificationAPI {
                 announcementRefresher.tryRefreshing()
             }
