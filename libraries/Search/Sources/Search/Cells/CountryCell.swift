@@ -38,6 +38,8 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet private weak var flagIcon: UIImageView!
+    @IBOutlet private weak var flagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var flagIconWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var countryName: UILabel!
 
     @IBOutlet private weak var p2pIV: UIImageView!
@@ -79,6 +81,12 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
             [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
+            flagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
+            flagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
+            flagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
+            flagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
+            flagIcon.layer.masksToBounds = viewModel.isRedesign
+
             entrySeparator.isHidden = !viewModel.isSecureCoreCountry
             flagsStackView.spacing = viewModel.isSecureCoreCountry ? 8 : 16
 

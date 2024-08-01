@@ -30,6 +30,7 @@ public protocol CountryViewModel: AnyObject, ConnectViewModel {
     var isSecureCoreCountry: Bool { get }
     var showCountryConnectButton: Bool { get }
     var showFeatureIcons: Bool { get }
+    var isRedesign: Bool { get }
 
     func getServers() -> [ServerTier: [ServerViewModel]]
     func getCities() -> [CityViewModel]

@@ -53,6 +53,9 @@ final class CityItemViewModel: CityViewModel {
 }
 
 final class CountryItemViewModel: CountryViewModel {
+    
+    var isRedesign: Bool = false
+    
     var showCountryConnectButton: Bool = false
 
     var showFeatureIcons: Bool = false

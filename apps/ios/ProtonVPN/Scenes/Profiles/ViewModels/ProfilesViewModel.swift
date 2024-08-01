@@ -115,7 +115,8 @@ class ProfilesViewModel {
                                        connectionStatusService: connectionStatusService,
                                        netShieldPropertyProvider: netShieldPropertyProvider,
                                        natTypePropertyProvider: natTypePropertyProvider,
-                                       safeModePropertyProvider: safeModePropertyProvider)
+                                       safeModePropertyProvider: safeModePropertyProvider
+        )
     }
     
     func cellModel(for index: Int) -> ProfileItemViewModel? {

@@ -102,6 +102,8 @@
                 <outlet property="countryName" destination="kug-mZ-k4l" id="sW0-ol-34X"/>
                 <outlet property="entrySeparator" destination="GQT-CR-jkT" id="iHP-51-iuM"/>
                 <outlet property="flagIcon" destination="SuA-Jj-bfX" id="RyR-GC-8Dh"/>
+                <outlet property="flagIconHeightConstraint" destination="pDf-Yf-715" id="kVz-CB-IBZ"/>
+                <outlet property="flagIconWidthConstraint" destination="F0t-PA-Kc1" id="hdf-ps-iCt"/>
                 <outlet property="flagsStackView" destination="lS1-aJ-zqn" id="YeP-T5-d4k"/>
                 <outlet property="p2pIV" destination="BOu-g7-Mzx" id="Mkk-Bp-ERJ"/>
                 <outlet property="rightChevron" destination="GXa-Lp-aZB" id="ZNI-Sl-C4I"/>

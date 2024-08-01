@@ -24,6 +24,7 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
+  internal static let fastest = ImageAsset(name: "Fastest")
   internal static let closeNavBar = ImageAsset(name: "close-nav-bar")
   internal static let connect = ImageAsset(name: "connect")
   internal static let locked = ImageAsset(name: "locked")
