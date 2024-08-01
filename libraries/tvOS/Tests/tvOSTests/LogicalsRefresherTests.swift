@@ -85,7 +85,7 @@ final class LogicalsRefresherTests: XCTestCase {
         try await withDependencies {
             $0.serverRepository = repository
             $0.date = .constant(.distantPast)
-            $0.logicalsClient = .Value(fetchLogicals: { _ in
+            $0.logicalsClient = .Value(fetchLogicals: { _, _ in
                 [.mock]
             })
             $0.userLocationService = .testValue

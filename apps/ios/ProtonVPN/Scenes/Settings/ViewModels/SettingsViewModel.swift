@@ -118,7 +118,9 @@ final class SettingsViewModel {
         if let connectionSection = connectionSection {
             sections.append(connectionSection)
         }
-        sections.append(extensionsSection)
+        if #unavailable(iOS 18) {
+            sections.append(extensionsSection)
+        }
         if LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) {
             sections.append(usageStatisticsSection)
         }
