@@ -500,7 +500,6 @@ extension NavigationService: ConnectionStatusService {
     }
     
     func presentStatusViewController() {
-        
         if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
             switchTab(index: 0) // Switch to Home tab which included new connection status view.
         } else {
