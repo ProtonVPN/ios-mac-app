@@ -196,6 +196,9 @@ final class NavigationService {
     }
     
     func switchTab(index: Int) {
+        guard index >= 0 && index < self.tabBarController?.viewControllers?.count ?? 0 else {
+            return
+        }
         self.tabBarController?.selectedIndex = index
     }
 
@@ -499,7 +502,7 @@ extension NavigationService: ConnectionStatusService {
     func presentStatusViewController() {
         
         if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
-            switchTab(index: 0)
+            switchTab(index: 0) // Switch to Home tab which included new connection status view.
         } else {
             guard let viewController = makeStatusViewController() else {
                 return
