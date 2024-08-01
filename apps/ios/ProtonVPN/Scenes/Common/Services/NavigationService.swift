@@ -194,6 +194,10 @@ final class NavigationService {
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
     }
+    
+    func switchTab(index: Int) {
+        self.tabBarController?.selectedIndex = index
+    }
 
     private func presentMainInterface() {
         setupTabs()
@@ -493,10 +497,15 @@ extension NavigationService: ConnectionStatusService {
     }
     
     func presentStatusViewController() {
-        guard let viewController = makeStatusViewController() else {
-            return
+        
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            switchTab(index: 0)
+        } else {
+            guard let viewController = makeStatusViewController() else {
+                return
+            }
+            self.windowService.addToStack(viewController, checkForDuplicates: true)
         }
-        self.windowService.addToStack(viewController, checkForDuplicates: true)
     }    
 }
 
