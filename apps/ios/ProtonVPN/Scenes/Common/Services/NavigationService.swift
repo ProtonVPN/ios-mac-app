@@ -194,6 +194,13 @@ final class NavigationService {
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
     }
+    
+    func switchTab(index: Int) {
+        guard index >= 0 && index < self.tabBarController?.viewControllers?.count ?? 0 else {
+            return
+        }
+        self.tabBarController?.selectedIndex = index
+    }
 
     private func presentMainInterface() {
         setupTabs()
@@ -493,10 +500,14 @@ extension NavigationService: ConnectionStatusService {
     }
     
     func presentStatusViewController() {
-        guard let viewController = makeStatusViewController() else {
-            return
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            switchTab(index: 0) // Switch to Home tab which included new connection status view.
+        } else {
+            guard let viewController = makeStatusViewController() else {
+                return
+            }
+            self.windowService.addToStack(viewController, checkForDuplicates: true)
         }
-        self.windowService.addToStack(viewController, checkForDuplicates: true)
     }    
 }
 
