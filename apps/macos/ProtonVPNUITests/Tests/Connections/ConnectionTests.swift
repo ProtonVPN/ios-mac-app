@@ -71,7 +71,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         mainRobot
             .quickConnectToAServer()
-            .verify.checkVPNConnected(with: ConnectionProtocol.Smart)
+            .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
         
         sleep(2)
         
@@ -80,15 +80,33 @@ class ConnectionTests: ProtonVPNUITests {
         mainRobot
             .disconnect()
             .verify
-            .checkVPNDisconnected()
+            .checkConnectionCardIsDisconnected()
         
         try await checkIpAddressChanged(previousIpAddress: protectedIpAddress)
+    }
+    
+    @MainActor
+    func testConnectAndCancel() async throws {
+        let unprotectedIpAddress = try await NetworkUtils.getIpAddress()
+        
+        mainRobot
+            .verify.checkConnectionCardIsDisconnected()
+            .quickConnectToAServer()
+            .cancelConnecting()
+            .verify.checkConnectionCardIsDisconnected()
+        
+        try await checkIpAddressUnchanged(previousIpAddress: unprotectedIpAddress)
     }
     
     private func checkIpAddressChanged(previousIpAddress: String) async throws -> String {
         let currentIpAddress = try await NetworkUtils.getIpAddress()
         XCTAssertTrue(currentIpAddress != previousIpAddress, "IP address is not changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
         return currentIpAddress
+    }
+    
+    private func checkIpAddressUnchanged(previousIpAddress: String) async throws {
+        let currentIpAddress = try await NetworkUtils.getIpAddress()
+        XCTAssertEqual(currentIpAddress, previousIpAddress, "IP address has been changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
     }
     
     @MainActor
@@ -115,6 +133,6 @@ class ConnectionTests: ProtonVPNUITests {
         }
         
         mainRobot
-            .verify.checkVPNConnected(with: connectionProtocol)
+            .verify.checkConnectionCardIsConnected(with: connectionProtocol)
     }
 }
