@@ -149,6 +149,10 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             closeAndOpenTheApp()
         }
     }
+    
+    func getCredentials(from resource: String) -> [Credentials] {
+        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+    }
 
     private func closeAndOpenTheApp() {
         button("OK").tap()

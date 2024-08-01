@@ -27,8 +27,8 @@ class ConnectionTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
-        logoutIfNeeded()
-        loginAsPlusUser()
+        //        logoutIfNeeded()
+        //        loginAsPlusUser()
     }
     
     override func tearDown() {
@@ -64,9 +64,35 @@ class ConnectionTests: ProtonVPNUITests {
     func testConnectViaIKEv2Protocol() {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.IKEv2)
     }
-
+    
     @MainActor
-    func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
+    func testConnectAndDisconnect() async throws {
+        let unprotectedIpAddress = try await NetworkUtils.getIpAddress()
+        
+        mainRobot
+            .quickConnectToAServer()
+            .verify.checkVPNConnected(with: ConnectionProtocol.Smart)
+        
+        sleep(2)
+        
+        let protectedIpAddress = try await checkIpAddressChanged(previousIpAddress: unprotectedIpAddress)
+        
+        mainRobot
+            .disconnect()
+            .verify
+            .checkVPNDisconnected()
+        
+        try await checkIpAddressChanged(previousIpAddress: protectedIpAddress)
+    }
+    
+    private func checkIpAddressChanged(previousIpAddress: String) async throws -> String {
+        let currentIpAddress = try await NetworkUtils.getIpAddress()
+        XCTAssertTrue(currentIpAddress != previousIpAddress, "IP address is not changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
+        return currentIpAddress
+    }
+    
+    @MainActor
+    private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
         
         mainRobot
             .openAppSettings()

@@ -18,7 +18,7 @@ class ConnectionTests: ProtonVPNUITests {
     private let serverListRobot = ServerListRobot()
     private let settingsRobot = SettingsRobot()
     
-    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    private lazy var credentials = getCredentials(from: "credentials")
     
     enum CredentialsKey: Int {
         case freeUser = 0

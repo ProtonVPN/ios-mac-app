@@ -65,7 +65,7 @@ final class HomeLoadingFeatureTests: XCTestCase {
                 shouldRefreshLogicals: { true })
             $0.date = .constant(.distantFuture) // logicalsRefresher
             $0.continuousClock = clock
-            $0.logicalsClient = LogicalsClient(fetchLogicals: { _ in
+            $0.logicalsClient = LogicalsClient(fetchLogicals: { _, _ in
                 throw ""
             })
         }

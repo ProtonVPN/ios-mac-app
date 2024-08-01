@@ -23,7 +23,7 @@ class PlanTests: ProtonVPNUITests {
 
     private let loginRobot = LoginRobot()
 
-    private let credentialsBF22 = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials_bf22", withExtension: "plist")!)
+    private lazy var credentialsBF22 = getCredentials(from: "credentials_bf22")
     
     enum BFCredentialsKey: Int {
         case plusUser = 0
