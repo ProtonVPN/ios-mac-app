@@ -226,7 +226,7 @@
 		E50859E92B4D679600673EF1 /* OfferBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50859E72B4D679600673EF1 /* OfferBannerView.xib */; };
 		E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
-		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
+		E51122DC27D0B6780088FCAC /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+Extensions.swift */; };
 		E5316EE32ADE8EC800380430 /* NSView+ClipToBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
@@ -757,7 +757,7 @@
 		E50859E72B4D679600673EF1 /* OfferBannerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfferBannerView.xib; sourceTree = "<group>"; };
 		E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
 		E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
-		E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+forceClick.swift"; sourceTree = "<group>"; };
+		E51122DB27D0B6780088FCAC /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
 		E524A0F82A60015A003DB5D8 /* LoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFeature.swift; sourceTree = "<group>"; };
 		E524A0FA2A60119D003DB5D8 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1195,7 +1195,7 @@
 		777B45FC2C4FFACA00273416 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */,
+				E51122DB27D0B6780088FCAC /* XCUIElement+Extensions.swift */,
 				D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */,
 				777B45FD2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift */,
 				7747E3022C512EDF00A750E1 /* String+Extensions.swift */,
@@ -3101,7 +3101,7 @@
 				B22F3304278DC76C00DBB8CA /* MainRobot.swift in Sources */,
 				B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */,
 				777B45FE2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift in Sources */,
-				E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */,
+				E51122DC27D0B6780088FCAC /* XCUIElement+Extensions.swift in Sources */,
 				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
 				D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */,
 				772792C42C590E30008A769A /* NetworkUtils.swift in Sources */,

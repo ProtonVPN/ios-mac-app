@@ -84,6 +84,24 @@ class MainRobot {
         return app.staticTexts[Localizable.connectionTimedOut].exists
     }
     
+    func searchForCountry(country: String) -> MainRobot {
+        let countrySearchField = app.textFields["SearchTextField"]
+        countrySearchField.click()
+        countrySearchField.typeText(country)
+        return MainRobot()
+    }
+    
+    func connectToCountry(country: String) -> MainRobot {
+        let cell = app.cells[country]
+        // hovering over the cell with country in order to make "Connect" button visible
+        // using dx: 0.7 as Connect button placed at the right part of the cell
+        cell.forceHover(dx: 0.7, dy: 0.5)
+        // Clicking cell with country by coordinates hoping that Connect button is there
+        // using dx: 0.7 as Connect button placed at the right part of the cell
+        cell.forceClick(dx: 0.7, dy: 0.5)
+        return MainRobot()
+    }
+    
     let verify = Verify()
     
     class Verify {
@@ -109,7 +127,8 @@ class MainRobot {
         }
         
         @discardableResult
-        func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol) -> MainRobot {
+        func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol,
+                                            to connectedCountry: String? = nil) -> MainRobot {
             // verify Disconnect button appears
             XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "'\(Localizable.disconnect)' button not found.")
             
@@ -127,7 +146,7 @@ class MainRobot {
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
             
             // verify header label contain country code
-            validateHeaderLabel()
+            validateHeaderLabel(value: connectedCountry)
             
             return MainRobot()
         }
@@ -143,6 +162,16 @@ class MainRobot {
             // verify IP adddress label is displayed and not empty
             let actualIPAddress = app.staticTexts["ipLabel"].value as! String
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
+            return MainRobot()
+        }
+        
+        func checkCountryFound(country: String) -> MainRobot {
+            let countryListTable = app.tables["ServerListTable"]
+            XCTAssertTrue(countryListTable.waitForExistence(timeout: 2), "Countries list table does not appear")
+            XCTAssertEqual(countryListTable.tableRows.count, 2, "Countries list table has incorrect number of rows")
+            
+            let countryCell = countryListTable.cells[country]
+            XCTAssertTrue(countryCell.exists, "\(country) cell is not visible at the countries list table")
             return MainRobot()
         }
         
@@ -166,8 +195,8 @@ class MainRobot {
             
             if let expectedValue = value {
                 // validate headerLabel has exact value
-                XCTAssertEqual(actualHeaderLabelValue, expectedValue,
-                               "headerLabel textfield has incorrect label. Expected: \(expectedValue), actual: \(actualHeaderLabelValue)")
+                XCTAssertTrue(actualHeaderLabelValue.contains(expectedValue),
+                               "headerLabel textfield does not contain expected value: \(expectedValue), actual value: \(actualHeaderLabelValue)")
             } else {
                 // validate headerLabel is not empty
                 XCTAssertTrue(!actualHeaderLabelValue.isEmpty, "headerLabel textfield shold not be empty")
