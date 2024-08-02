@@ -126,9 +126,6 @@ class ProtonVPNUITests: XCTestCase {
             .loginUser(credentials: credentials)
         
         waitForLoaderDisappear()
-        mainRobot
-            .verify
-            .checkVPNDisconnected()
     }
     
     func verifyLoggedInUser(withCredentials credentials: Credentials) {
@@ -188,7 +185,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     // to remove created profiles
-    func clearAppData()  -> Bool {
+    func clearAppData() -> Bool {
         let clearAppDataButton = app.menuBars.menuItems["Clear Application Data"]
         let deleteButton = app.buttons["Delete"]
         guard clearAppDataButton.exists, clearAppDataButton.isEnabled else {

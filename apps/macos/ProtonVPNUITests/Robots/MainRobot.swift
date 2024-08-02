@@ -109,13 +109,7 @@ class MainRobot {
         }
         
         @discardableResult
-        func checkVPNConnected(with expectedProtocol: ConnectionProtocol) -> MainRobot {
-            
-            // verify one of the elements appear - successfullyConnectedTitle or disconnect button
-            let isConnectedTitleExists = app.staticTexts[successfullyConnectedTitle].waitForExistence(timeout: 10)
-            let isDisconnectButtonExists = app.buttons[Localizable.disconnect].waitForExistence(timeout: 10)
-            XCTAssert(isConnectedTitleExists || isDisconnectButtonExists, "Either '\(successfullyConnectedTitle)' or '\(Localizable.disconnect)' must exist.")
-            
+        func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol) -> MainRobot {
             // verify Disconnect button appears
             XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "'\(Localizable.disconnect)' button not found.")
             
@@ -132,12 +126,24 @@ class MainRobot {
             let actualIPAddress = app.staticTexts["ipLabel"].value as! String
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
             
+            // verify header label contain country code
+            validateHeaderLabel()
+            
             return MainRobot()
         }
         
         @discardableResult
-        func checkVPNDisconnected() {
+        func checkConnectionCardIsDisconnected() -> MainRobot {
+            // verify "Quick Connect" button is visible
             XCTAssert(app.buttons[Localizable.quickConnect].waitForExistence(timeout: 5), "'\(Localizable.quickConnect)' button not found.")
+            
+            // verify "You are not connected" label if visible
+            validateHeaderLabel(value: Localizable.youAreNotConnected)
+            
+            // verify IP adddress label is displayed and not empty
+            let actualIPAddress = app.staticTexts["ipLabel"].value as! String
+            XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
+            return MainRobot()
         }
         
         // MARK: private methods
@@ -150,6 +156,22 @@ class MainRobot {
             
             let ipAddress = String(string.dropFirst(prefix.count))
             return ipAddress.isValidIPv4Address
+        }
+        
+        private func validateHeaderLabel(value: String? = nil) {
+            // validate "headerLabel" exist
+            XCTAssert(app.staticTexts["headerLabel"].waitForExistence(timeout: 5),
+                      "headerLabel textfield was not found.")
+            let actualHeaderLabelValue = app.staticTexts["headerLabel"].value as! String
+            
+            if let expectedValue = value {
+                // validate headerLabel has exact value
+                XCTAssertEqual(actualHeaderLabelValue, expectedValue,
+                               "headerLabel textfield has incorrect label. Expected: \(expectedValue), actual: \(actualHeaderLabelValue)")
+            } else {
+                // validate headerLabel is not empty
+                XCTAssertTrue(!actualHeaderLabelValue.isEmpty, "headerLabel textfield shold not be empty")
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ final class HeaderViewController: NSViewController {
     private enum AccessibilityIdentifiers {
         static let ipLabel: String = "ipLabel"
         static let protocolLabel: String = "protocolLabel"
+        static let headerLabel: String = "headerLabel"
     }
 
     @IBOutlet private weak var backgroundView: NSView!
@@ -104,6 +105,7 @@ final class HeaderViewController: NSViewController {
         setupFlagView()
         
         headerLabel.attributedStringValue = viewModel.headerLabel
+        headerLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.headerLabel)
         ipLabel.attributedStringValue = viewModel.ipLabel
         ipLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.ipLabel)
         
