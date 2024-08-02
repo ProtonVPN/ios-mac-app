@@ -21,6 +21,7 @@ import Foundation
 import Domain
 import VPNAppCore
 
+@available(iOS 17, *)
 extension HomeFeature.State {
     public var mostRecent: RecentConnection? {
         connections.first

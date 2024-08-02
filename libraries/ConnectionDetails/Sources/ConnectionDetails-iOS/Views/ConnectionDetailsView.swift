@@ -51,7 +51,7 @@ public struct ConnectionDetailsFeature: Reducer {
     public init() {
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
         EmptyReducer()
     }
 }

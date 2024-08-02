@@ -25,6 +25,7 @@ import Home
 import Strings
 import Theme
 import Ergonomics
+import VPNAppCore
 
 public struct HomeTabView: View {
     public init() {}
@@ -33,40 +34,36 @@ public struct HomeTabView: View {
     }
 }
 
+@available(iOS 17, *)
 public struct HomeView: View {
-    let store: StoreOf<HomeFeature>
+    var store: StoreOf<HomeFeature>
 
     static let mapHeight: CGFloat = 300
-
+    
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
-            let item = viewStore.state.mostRecent ?? .defaultFastest
-            ZStack(alignment: .top) {
-                ScrollView {
-                    HomeMapView()
-                        .frame(minHeight: Self.mapHeight)
-                    HomeConnectionCardView(
-                        item: item,
-                        vpnConnectionStatus: viewStore.vpnConnectionStatus,
-                        sendAction: { _ = viewStore.send($0) }
-                    )
-                    .padding(.horizontal, .themeSpacing16)
-                    RecentsSectionView(
-                        items: viewStore.state.remainingConnections,
-                        sendAction: { _ = viewStore.send($0) }
-                    )
-                }
-                .background(Color(.background))
-                
-                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                        action: { .connectionStatusViewAction($0) }))
-                .allowsHitTesting(false)
+        ZStack(alignment: .top) {
+            ScrollView {
+                HomeMapView()
+                    .frame(minHeight: Self.mapHeight)
+                HomeConnectionCardView(
+                    item: store.mostRecent ?? .defaultFastest,
+                    vpnConnectionStatus: store.vpnConnectionStatus,
+                    sendAction: { _ = store.send($0) }
+                )
+                .padding(.horizontal, .themeSpacing16)
+                RecentsSectionView(
+                    items: store.state.remainingConnections,
+                    sendAction: { _ = store.send($0) }
+                )
             }
-
-            .task {
-                viewStore.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
-                await viewStore.send(.watchConnectionStatus).finish()
-            }
+            .background(Color(.background))
+            ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                    action: \.connectionStatus))
+            .allowsHitTesting(false)
+        }
+        .task {
+            store.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
+            store.send(.watchConnectionStatus)
         }
     }
 
@@ -88,9 +85,10 @@ internal extension GeometryProxy {
 }
 
 #if DEBUG
+@available(iOS 17, *)
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(store: .init(initialState: .preview, reducer: { HomeFeature() }))
+        HomeView(store: .init(initialState: HomeFeature.previewState, reducer: { HomeFeature() }))
     }
 }
 #endif

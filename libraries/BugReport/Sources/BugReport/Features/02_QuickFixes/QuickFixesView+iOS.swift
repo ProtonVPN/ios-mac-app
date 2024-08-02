@@ -104,8 +104,10 @@ public struct QuickFixesView: View {
                         NavigationLink(
                             item: $store.contactFormState,
                             onNavigate: { active in
-                                if active {
-                                    store.send(.next)
+                                if active { 
+                                    Task {
+                                        await store.send(.next)
+                                    }
                                 }
                             },
                             destination: { _ in

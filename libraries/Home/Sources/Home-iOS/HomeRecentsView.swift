@@ -29,6 +29,7 @@ import VPNAppCore
 import SharedViews
 import ProtonCoreUIFoundations
 
+@available(iOS 17, *)
 public struct RecentsSectionView: View {
     let items: [RecentConnection]
     let sendAction: HomeFeature.ActionSender
@@ -47,6 +48,7 @@ public struct RecentsSectionView: View {
     }
 }
 
+@available(iOS 17, *)
 struct RecentRowItemView: View {
     @ScaledMetric var iconSize: CGFloat = 16
 
@@ -214,6 +216,7 @@ extension DragGesture.Value {
     }
 }
 
+@available(iOS 17, *)
 extension HomeFeature.Action {
     var text: Text {
         let words: String
@@ -286,9 +289,10 @@ extension HomeFeature.Action {
 }
 
 #if DEBUG
-struct Recents_Previews: PreviewProvider {
-    static var previews: some View {
-        let store: StoreOf<HomeFeature> = .init(initialState:
+#Preview {
+    guard #available(iOS 17, *) else { return EmptyView() }
+
+    let store: StoreOf<HomeFeature> = .init(initialState:
             .init(connections: [
                 RecentConnection(
                     pinned: true,
@@ -321,19 +325,16 @@ struct Recents_Previews: PreviewProvider {
                     connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
                 ),
             ],
-                  connectionStatus: .init(protectionState: .protected(netShield: .random)), vpnConnectionStatus: .disconnected),
-                                                reducer: { HomeFeature() }
+                  connectionStatus: .init(),
+                  vpnConnectionStatus: .disconnected),
+                                            reducer: { HomeFeature() }
+    )
+    return ScrollView {
+        RecentsSectionView(
+            items: store.remainingConnections,
+            sendAction: { _ = store.send($0) }
         )
-        WithViewStore(store, observe: { $0 }) { store in
-            ScrollView {
-                RecentsSectionView(
-                    items: store.remainingConnections,
-                    sendAction: { _ = store.send($0) }
-                )
-            }
-            .background(Color(.background, .normal))
-        }
-
     }
+    .background(Color(.background, .normal))
 }
 #endif

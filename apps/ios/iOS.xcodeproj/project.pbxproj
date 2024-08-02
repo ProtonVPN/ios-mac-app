@@ -325,6 +325,7 @@
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
+		E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E5BBFED02B333AD700FA9CF8 /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
@@ -786,6 +787,7 @@
 		E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagsRepository+Redesign.swift"; sourceTree = "<group>"; };
 		E59C7A922923B1650034E56F /* ServersInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersInformationViewController.swift; sourceTree = "<group>"; };
 		E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ServersInformationViewController.storyboard; sourceTree = "<group>"; };
+		E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCreator.swift; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		E5BE14932BBE99A00093F30F /* OneClickPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPayment.swift; sourceTree = "<group>"; };
 		E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuarkCommands+Async.swift"; sourceTree = "<group>"; };
@@ -1846,6 +1848,7 @@
 				060D071525D34599002B98B8 /* AppSessionManager.swift */,
 				D5F5689A23263C7D00795953 /* IosAlertService.swift */,
 				79C5598520AB181000E6D3F6 /* NavigationService.swift */,
+				E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */,
 				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
 				79C559A320B1BD1600E6D3F6 /* WindowService.swift */,
 				F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */,
@@ -2844,6 +2847,7 @@
 				79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */,
 				E13EDF6E21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift in Sources */,
 				D5110851246150DF0018872A /* Date+Formatters.swift in Sources */,
+				E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */,
 				E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */,
 				E1D21AB321831DA2000C389B /* AnnotationViewModel.swift in Sources */,
 				ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */,
@@ -4110,7 +4114,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = exactVersion;
-				version = 1.10.2;
+				version = 1.12.1;
 			};
 		};
 		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -4134,7 +4138,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
 			requirement = {
 				kind = exactVersion;
-				version = 1.3.0;
+				version = 1.5.4;
 			};
 		};
 		E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {

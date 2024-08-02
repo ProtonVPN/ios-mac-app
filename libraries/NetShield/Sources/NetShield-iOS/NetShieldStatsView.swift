@@ -24,6 +24,8 @@ public struct NetShieldStatsView: View {
 
     public var viewModel: NetShieldModel
 
+    static let maxWidth: CGFloat = 440
+
     public var body: some View {
         HStack(spacing: 0) {
             StatsView(model: viewModel.ads)
@@ -31,7 +33,9 @@ public struct NetShieldStatsView: View {
             StatsView(model: viewModel.data)
         }
         .padding(8)
+        .frame(maxWidth: Self.maxWidth)
     }
+
     public init(viewModel: NetShieldModel) {
         self.viewModel = viewModel
     }

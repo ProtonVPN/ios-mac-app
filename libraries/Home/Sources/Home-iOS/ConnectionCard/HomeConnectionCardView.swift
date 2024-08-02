@@ -30,7 +30,9 @@ import VPNAppCore
 import SharedViews
 import ProtonCoreUIFoundations
 
+@available(iOS 17, *)
 struct HomeConnectionCardView: View {
+    static let maxWidth: CGFloat = 736
     @Dependency(\.locale) private var locale
 
     let model = ConnectionCardModel()
@@ -50,13 +52,13 @@ struct HomeConnectionCardView: View {
                 .themeFont(.caption())
                 .styled()
             Spacer()
-            Text(Localizable.actionHelp)
-                .themeFont(.caption(emphasised: true))
-                .styled(.weak)
-            IconProvider.questionCircle
-                .resizable()
-                .styled(.weak)
-                .frame(.square(16))
+//            Text(Localizable.actionHelp)
+//                .themeFont(.caption(emphasised: true))
+//                .styled(.weak)
+//            IconProvider.questionCircle
+//                .resizable()
+//                .styled(.weak)
+//                .frame(.square(16)) // TODO: add in redesign phase 2
         }
         .padding(.bottom, .themeSpacing8)
         .padding(.top, .themeSpacing24)
@@ -126,6 +128,7 @@ struct HomeConnectionCardView: View {
             header
             card
         }
+        .frame(maxWidth: Self.maxWidth)
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {
@@ -146,29 +149,26 @@ extension VPNConnectionStatus {
     }
 }
 
-struct ConnectionCard_Previews: PreviewProvider {
-    static var previews: some View {
-        let store: StoreOf<HomeFeature> = .init(initialState:
-            .init(connections: [
-                RecentConnection(
-                    pinned: false,
-                    underMaintenance: false,
-                    connectionDate: .now,
-                    connection: .init(location: .fastest, features: [])
-                )
-            ],
-                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                  vpnConnectionStatus: .disconnected),
-                                                reducer: { HomeFeature() }
+#Preview {
+    guard #available(iOS 17, *) else { return EmptyView() }
+
+    let store: StoreOf<HomeFeature> =
+        .init(initialState:
+                .init(connections: [
+                    RecentConnection(pinned: false,
+                                     underMaintenance: false,
+                                     connectionDate: .now,
+                                     connection: .init(location: .fastest,
+                                                       features: []))
+                ],
+                      connectionStatus: .init(),
+                      vpnConnectionStatus: .disconnected),
+              reducer: { HomeFeature() }
         )
-        WithViewStore(store, observe: { $0 }) { store in
-            List {
-                HomeConnectionCardView(
-                    item: store.state.connections.first!,
-                    vpnConnectionStatus: store.state.vpnConnectionStatus,
-                    sendAction: { _ = store.send($0) }
-                )
-            }
-        }
-    }
+
+    return HomeConnectionCardView(
+        item: store.state.connections.first!,
+        vpnConnectionStatus: store.state.vpnConnectionStatus,
+        sendAction: { _ = store.send($0) }
+    )
 }

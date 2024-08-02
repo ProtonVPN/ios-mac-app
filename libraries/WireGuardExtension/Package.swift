@@ -24,7 +24,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "WireGuardKit", path: "../../external/wireguard-apple"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.2.2")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.3.6")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(path: "../Shared/ExtensionIPC"),
         .package(path: "../Shared/Connection"),

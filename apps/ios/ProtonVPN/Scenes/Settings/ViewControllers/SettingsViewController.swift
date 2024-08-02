@@ -64,8 +64,12 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        setupConnectionBar()
-        
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            connectionBarContainerView.removeFromSuperview()
+        } else {
+            setupConnectionBar()
+        }
+
         NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
     

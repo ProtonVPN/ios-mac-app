@@ -20,16 +20,23 @@ import ComposableArchitecture
 
 import Domain
 import VPNAppCore
+import Localization
 
-public struct ConnectionStatusFeature: Reducer {
+@Reducer
+public struct ConnectionStatusFeature {
+
+    @ObservableState
     public struct State: Equatable {
-        public var protectionState: ProtectionState
+        @Shared(.protectionState) public var protectionState: ProtectionState
+        @SharedReader(.userCountry) public var userCountry: String?
+        @SharedReader(.userIP) public var userIP: String?
 
-        public init(protectionState: ProtectionState) {
-            self.protectionState = protectionState
+        public init() {
+            
         }
     }
 
+    @CasePathable
     public enum Action: Equatable {
         case maskLocationTick
 
@@ -37,9 +44,13 @@ public struct ConnectionStatusFeature: Reducer {
         case newConnectionStatus(VPNConnectionStatus)
     }
 
+    private enum CancelId {
+        case watchConnectionStatus
+    }
+
     public init() { }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
 
@@ -55,21 +66,22 @@ public struct ConnectionStatusFeature: Reducer {
                 }.cancellable(id: MaskLocation.task, cancelInFlight: true)
 
             case .watchConnectionStatus:
-                return .run { send in
-                    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
-                    
-                    if #available(macOS 12.0, *) {
-//                        for await vpnStatus in vpnConnectionStatusPublisher().values {
-//                            await send(.newConnectionStatus(vpnStatus), animation: .default)
-//                        }
-                    } else {
-                        assertionFailure("Use target at least macOS 12.0")
+                return .run { @MainActor send in
+                    let stream = Dependency(\.vpnConnectionStatusPublisher)
+                        .wrappedValue()
+                        .map { Action.newConnectionStatus($0) }
+
+                    for await value in stream {
+                        send(value)
                     }
                 }
+                .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let status):
-                state.protectionState = status.protectionState
-                guard case .protecting = status.protectionState else {
+                let code = state.userCountry
+                let displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")
+                state.protectionState = status.protectionState(country: displayCountry ?? "", ip: state.userIP ?? "")
+                guard case .protecting = state.protectionState else {
                     return .cancel(id: MaskLocation.task)
                 }
                 return .send(.maskLocationTick)

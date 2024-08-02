@@ -30,10 +30,13 @@ import ProtonCoreUIFoundations
 
 import CasePaths
 
-public struct HomeFeature: Reducer {
+@available(iOS 17, *)
+@Reducer
+public struct HomeFeature {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> Void
 
+    @ObservableState
     public struct State: Equatable {
         static let maxConnections = 8
 
@@ -49,7 +52,7 @@ public struct HomeFeature: Reducer {
         }
 
         public init() {
-            let connectionState = ConnectionStatusFeature.State(protectionState: .unprotected(country: "", ip: ""))
+            let connectionState = ConnectionStatusFeature.State()
             self.init(connections: [],
                       connectionStatus: connectionState,
                       vpnConnectionStatus: .disconnected)
@@ -65,6 +68,7 @@ public struct HomeFeature: Reducer {
         }
     }
 
+    @CasePathable
     public enum Action: Equatable {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
@@ -77,7 +81,7 @@ public struct HomeFeature: Reducer {
         /// Remove a connection.
         case remove(ConnectionSpec)
 
-        case connectionStatusViewAction(ConnectionStatusFeature.Action)
+        case connectionStatus(ConnectionStatusFeature.Action)
 
         /// Show details screen with info about current connection
         case showConnectionDetails
@@ -93,11 +97,12 @@ public struct HomeFeature: Reducer {
         case loadConnections
     }
 
-    enum HomeCancellable {
-        case connect
+
+    private enum CancelId {
+        case watchConnectionStatus
     }
 
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case let .connect(spec):
@@ -118,7 +123,10 @@ public struct HomeFeature: Reducer {
                 state.connections.insert(recent, at: 0)
                 state.trimConnections()
 
-                return .none // Actual connection is handled in the app
+                return .run { send in
+                    @Dependency(\.connectToVPN) var connectToVPN
+                    try? await connectToVPN(spec)
+                }
 
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
@@ -152,24 +160,26 @@ public struct HomeFeature: Reducer {
                 return .none
 
             case .disconnect:
-                state.connectionStatus.protectionState = .unprotected(country: "Poland", ip: "192.168.1.0")
-                return .cancel(id: HomeCancellable.connect)
+                state.connectionStatus.protectionState = .unprotected
+                return .run { send in
+                    @Dependency(\.disconnectVPN) var disconnectVPN
+                    try? await disconnectVPN()
+                }
 
-            case .connectionStatusViewAction:
+            case .connectionStatus:
                 return .none
 
             case .watchConnectionStatus:
-                return .run { send in
-                    @Dependency(\.vpnConnectionStatusPublisher) var vpnConnectionStatusPublisher
+                return .run { @MainActor send in
+                    let stream = Dependency(\.vpnConnectionStatusPublisher)
+                        .wrappedValue()
+                        .map { Action.newConnectionStatus($0) }
 
-                    if #available(macOS 12.0, *) {
-//                        for await vpnStatus in vpnConnectionStatusPublisher().values {
-//                            await send(.newConnectionStatus(vpnStatus), animation: .default)
-//                        }
-                    } else {
-                        assertionFailure("Use target at least macOS 12.0")
+                    for await value in stream {
+                        send(value)
                     }
                 }
+                .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let connectionStatus):
                 state.vpnConnectionStatus = connectionStatus
@@ -187,7 +197,7 @@ public struct HomeFeature: Reducer {
                 return .none
             }
         }
-        Scope(state: \.connectionStatus, action: /Action.connectionStatusViewAction) {
+        Scope(state: \.connectionStatus, action: \.connectionStatus) {
             ConnectionStatusFeature()
         }
     }
@@ -206,14 +216,14 @@ extension RecentConnection {
 }
 
 #if DEBUG
-extension HomeFeature.State {
-    public static let preview: Self = .init(connections: [.pinnedFastest,
-                                                          .previousFreeConnection,
-                                                          .connectionSecureCore,
-                                                          .connectionRegion,
-                                                          .connectionSecureCoreFastest],
-                                            connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                                            vpnConnectionStatus: .disconnected)
+@available(iOS 17, *)
+extension HomeFeature {
+    public static let previewState: State = .init(connections: [.pinnedFastest,
+                                                                .previousFreeConnection,
+                                                                .connectionSecureCore,
+                                                                .connectionRegion,
+                                                                .connectionSecureCoreFastest],
+                                                  connectionStatus: .init(),
+                                                  vpnConnectionStatus: .disconnected)
 }
-
 #endif
