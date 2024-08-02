@@ -22,7 +22,6 @@
 
 import Foundation
 import Dependencies
-import Ergonomics
 import ProtonCoreDoh
 
 public class DoHVPN: DoH, ServerConfig {
