@@ -18,6 +18,7 @@
 
 import Foundation
 import Dependencies
+import Ergonomics
 import ExtensionIPC
 import ConnectionFoundations
 
@@ -70,7 +71,7 @@ extension CertificateRefreshClient {
 
             guard case .ok = response else {
                 // Unlike during certificate refresh, we don't expect any non-ok responses
-                throw "Unexpected ipc result: \(response)"
+                throw "Unexpected ipc result: \(response)" as GenericError
             }
         }
     )

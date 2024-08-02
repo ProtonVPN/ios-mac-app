@@ -18,6 +18,7 @@
 
 import Foundation
 import Dependencies
+import struct Ergonomics.GenericError
 import XCTest
 @testable import LegacyCommon
 
@@ -26,7 +27,7 @@ extension DataManager {
         let data = LockIsolated(data)
         return DataManager(
             load: { _ in
-                guard let value = data.value else { throw "No data specified" }
+                guard let value = data.value else { throw "No data specified" as GenericError }
                 return value
             },
             save: { newData, _ in data.setValue(newData) }

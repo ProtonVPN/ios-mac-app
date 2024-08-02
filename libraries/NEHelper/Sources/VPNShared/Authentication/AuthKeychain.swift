@@ -135,7 +135,7 @@ extension AuthKeychain: AuthKeychainHandle {
         let data: Data
         do {
             guard let keychainData = try keychain.getData(key) else {
-                throw "No data in the keychain"
+                throw "No data in the keychain" as GenericError
             }
             data = keychainData
         } catch let error {

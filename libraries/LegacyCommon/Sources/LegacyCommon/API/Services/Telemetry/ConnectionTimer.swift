@@ -43,23 +43,23 @@ class ConnectionTimer: TelemetryTimer {
 
     var connectionDuration: TimeInterval {
         get throws {
-            guard let startedConnectionDate else { throw "Missing startedConnectionDate" }
-            guard let stoppedConnectionDate else { throw "Missing stoppedConnectionDate" }
+            guard let startedConnectionDate else { throw "Missing startedConnectionDate" as GenericError }
+            guard let stoppedConnectionDate else { throw "Missing stoppedConnectionDate" as GenericError }
             return stoppedConnectionDate.timeIntervalSince(startedConnectionDate)
         }
     }
 
     var timeToConnect: TimeInterval {
         get throws {
-            guard let startedConnectingDate else { throw "Missing startedConnectingDate" }
-            guard let startedConnectionDate else { throw "Missing startedConnectionDate" }
+            guard let startedConnectingDate else { throw "Missing startedConnectingDate" as GenericError }
+            guard let startedConnectionDate else { throw "Missing startedConnectionDate" as GenericError }
             return startedConnectionDate.timeIntervalSince(startedConnectingDate)
         }
     }
 
     var timeConnecting: TimeInterval {
         get throws {
-            guard let startedConnectingDate else { throw "Missing startedConnectingDate" }
+            guard let startedConnectingDate else { throw "Missing startedConnectingDate" as GenericError }
             return Date().timeIntervalSince(startedConnectingDate)
         }
     }

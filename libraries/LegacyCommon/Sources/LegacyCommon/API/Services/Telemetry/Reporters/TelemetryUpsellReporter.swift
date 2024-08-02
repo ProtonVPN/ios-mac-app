@@ -61,7 +61,7 @@ class TelemetryUpsellReporter {
         #endif
 
         guard let modalSource else {
-            throw "unable to determine modal source, ignoring event"
+            throw "unable to determine modal source, ignoring event" as GenericError
         }
 
         previousModalSource = modalSource
@@ -70,7 +70,7 @@ class TelemetryUpsellReporter {
         }
 
         guard let accountCreationDate = propertiesManager.userAccountCreationDate else {
-            throw "user account creation date is nil, ignoring event: \(modalSource)"
+            throw "user account creation date is nil, ignoring event: \(modalSource)" as GenericError
         }
 
         let cached = try? vpnKeychain.fetchCached()

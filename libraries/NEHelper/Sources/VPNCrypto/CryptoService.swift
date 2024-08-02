@@ -72,7 +72,7 @@ public class CryptoService {
             throw error
         }
 
-        throw "Could not sign data \(data) with key \(key.rawValue) using algorithm \(algorithm.rawValue)"
+        throw "Could not sign data provided data using algorithm \(algorithm.rawValue)" as GenericError
     }
 
     public func verify(
@@ -168,7 +168,7 @@ public extension CryptoService.Key {
                 throw error
             }
 
-            throw "Couldn't decode key data"
+            throw "Couldn't decode key data" as GenericError
         }
     }
 
@@ -198,7 +198,7 @@ public extension CryptoService.Key {
             }
 
             let base64 = data.base64EncodedString()
-            throw "Could not convert key. keyType: \(keyType) keyClass: \(keyClass) keySize: \(keySize) data: \(base64)"
+            throw "Could not convert key. keyType: \(keyType) keyClass: \(keyClass) keySize: \(keySize) data: \(base64)" as GenericError
         }
 
         self.init(rawValue: key)
@@ -215,7 +215,7 @@ public extension CryptoService.Key {
             throw error
         }
 
-        throw "Couldn't create key with attrs \(attrs)"
+        throw "Couldn't create key with attrs \(attrs)" as GenericError
     }
 }
 

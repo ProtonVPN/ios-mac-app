@@ -19,6 +19,7 @@
 import LocalFeatureFlags
 import Foundation
 import CommonNetworking
+import Ergonomics
 
 class TelemetryEventScheduler {
     public typealias Factory = NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory
@@ -53,7 +54,7 @@ class TelemetryEventScheduler {
         if telemetryUsageData {
             try await sendEvent(event)
         } else {
-            throw "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled"
+            throw "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled" as GenericError
         }
     }
 
@@ -98,7 +99,7 @@ class TelemetryEventScheduler {
             bufferedEvent = .init(try encoder.encode(event), id: UUID())
             try await buffer.save(event: bufferedEvent)
         } catch {
-            throw "Failed scheduling telemetry event: \(event), error: \(error)"
+            throw "Failed scheduling telemetry event: \(event), error: \(error)" as GenericError
         }
         log.debug("Telemetry event scheduled:\n\(String(data: bufferedEvent.data, encoding: .utf8)!)")
     }

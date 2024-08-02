@@ -19,6 +19,7 @@
 import UIKit
 
 import Domain
+import Ergonomics
 import Modals
 import Modals_iOS
 import LegacyCommon
@@ -43,10 +44,10 @@ final class OneClickPayment {
 
     init(alertService: CoreAlertService, planService: PlanService, payments: Payments) throws {
         guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment) else {
-            throw "OneClickAIAP FF disabled!"
+            throw "OneClickAIAP FF disabled!" as GenericError
         }
         guard case .right(let plansDataSource) = payments.planService else {
-            throw "DynamicPlan FF disabled!"
+            throw "DynamicPlan FF disabled!" as GenericError
         }
         self.plansDataSource = plansDataSource
         self.alertService = alertService
@@ -65,7 +66,7 @@ final class OneClickPayment {
     func plansClient(validationHandler: (() -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
         let client = PlansClient(
             retrievePlans: { [weak self] in
-                guard let self else { throw "Presenting screen was dismissed" }
+                guard let self else { throw "Presenting screen was dismissed" as GenericError }
                 return try await self.planOptions(with: plansDataSource)
             },
             validate: { @MainActor [weak self] in
@@ -131,7 +132,7 @@ final class OneClickPayment {
         let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
             plan.name == "vpn2022"
         }.first // it's only going to be one with this plan name
-        guard let vpn2022 else { throw "Default plan not found" }
+        guard let vpn2022 else { throw "Default plan not found" as GenericError }
         inAppPurchasePlans = vpn2022.instances
             .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
             .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in

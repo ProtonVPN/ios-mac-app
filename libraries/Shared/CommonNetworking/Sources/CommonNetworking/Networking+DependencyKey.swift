@@ -19,6 +19,7 @@
 import Foundation
 
 import Dependencies
+import Ergonomics
 import XCTestDynamicOverlay
 
 import ProtonCoreServices
@@ -127,18 +128,18 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
 struct VPNNetworkingMock: VPNNetworking {
 
     func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
-        throw ""
+        throw "" as GenericError
     }
 
     var userTier: Int {
         get async throws {
-            throw ""
+            throw "" as GenericError
         }
     }
 
     var userDisplayName: String? {
         get async throws {
-            throw ""
+            throw "" as GenericError
         }
     }
 
@@ -147,7 +148,7 @@ struct VPNNetworkingMock: VPNNetworking {
     }
 
     func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {
-        throw ""
+        throw "" as GenericError
     }
 
     var sessionCookie: HTTPCookie? {

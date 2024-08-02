@@ -22,6 +22,7 @@
 
 import AppKit
 import Foundation
+import Ergonomics
 import LegacyCommon
 import ProtonCoreLogin
 import ProtonCoreNetworking
@@ -214,7 +215,7 @@ final class LoginViewModel {
                     case (let request?, _):
                         ssoChallengeReceived?(request)
                     case (_, let error?):
-                        handleError(error: error)
+                        handleError(error: GenericError(message: error))
                     default:
                         break
                     }

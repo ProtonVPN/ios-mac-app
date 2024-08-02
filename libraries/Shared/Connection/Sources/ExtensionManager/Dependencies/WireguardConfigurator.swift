@@ -27,6 +27,7 @@ import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
 import struct ConnectionFoundations.WireguardConfig
 import struct ConnectionFoundations.StoredWireguardConfig
+import enum ConnectionFoundations.TunnelKeychainImplementationError
 
 public struct ConnectionConfiguration {
 
@@ -103,8 +104,10 @@ extension ManagerConfigurator {
             protocolConfiguration.passwordReference = passwordReference
 
             return protocolConfiguration
+        } catch TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain {
+            throw WireguardConfiguratorError.keychainImplementationError(.invalidDataFormatRetrievedFromKeychain)
         } catch {
-            throw WireguardConfiguratorError.storageError(error)
+            throw WireguardConfiguratorError.keychainError(error)
         }
     }
 
@@ -131,5 +134,6 @@ extension ManagerConfigurator {
 enum WireguardConfiguratorError: Error {
     case entryUnavailableForTransport(WireGuardTransport)
     case configurationEncodingError(Error)
-    case storageError(Error)
+    case keychainImplementationError(TunnelKeychainImplementationError)
+    case keychainError(Error)
 }

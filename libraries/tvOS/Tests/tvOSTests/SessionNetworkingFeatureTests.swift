@@ -18,6 +18,7 @@
 
 import XCTest
 import ComposableArchitecture
+import struct Ergonomics.GenericError
 import XCTestDynamicOverlay
 @testable import tvOS
 @testable import CommonNetworking
@@ -34,7 +35,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         }
         await store.send(.delegate(.displayName(nil)))
         await store.send(.delegate(.tier(0)))
-        await store.send(.forkedSessionAuthenticated(.failure("")))
+        await store.send(.forkedSessionAuthenticated(.failure("" as GenericError)))
     }
 
     @MainActor
@@ -42,8 +43,8 @@ final class SessionNetworkingFeatureTests: XCTestCase {
         let store = TestStore(initialState: SessionNetworkingFeature.State.unauthenticated(nil)) {
             SessionNetworkingFeature()
         }
-        await store.send(.sessionFetched(.failure(""))) {
-            $0 = .unauthenticated(.network(internalError: ""))
+        await store.send(.sessionFetched(.failure("" as GenericError))) {
+            $0 = .unauthenticated(.network(internalError: "" as GenericError))
         }
     }
 
@@ -72,7 +73,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0 = .acquiringSession
         }
         await store.receive(\.sessionFetched.failure) {
-            $0 = .unauthenticated(.network(internalError: ""))
+            $0 = .unauthenticated(.network(internalError: "" as GenericError))
         }
     }
 
@@ -94,7 +95,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
             $0 = .acquiringSession
         }
         await store.receive(\.sessionFetched.failure) {
-            $0 = .unauthenticated(.network(internalError: ""))
+            $0 = .unauthenticated(.network(internalError: "" as GenericError))
         }
     }
 

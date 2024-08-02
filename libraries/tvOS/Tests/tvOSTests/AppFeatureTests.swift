@@ -18,6 +18,7 @@
 
 import XCTest
 import ComposableArchitecture
+import struct Ergonomics.GenericError
 @testable import tvOS
 @testable import CommonNetworking
 
@@ -103,7 +104,7 @@ private extension AppFeatureTests {
             $0.networking = .acquiringSession
         }
         await store.receive(\.networking) { // session fetched failure
-            $0.networking = .unauthenticated(.network(internalError: ""))
+            $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
         }
 
         return task
