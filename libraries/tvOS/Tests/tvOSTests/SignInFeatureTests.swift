@@ -18,6 +18,7 @@
 
 import XCTest
 import ComposableArchitecture
+import struct Ergonomics.GenericError
 import XCTestDynamicOverlay
 @testable import tvOS
 
@@ -36,7 +37,7 @@ final class SignInFeatureTests: XCTestCase {
         let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {
             SignInFeature()
         }
-        await store.send(.authenticationFinished(.failure("")))
+        await store.send(.authenticationFinished(.failure("" as GenericError)))
     }
 
     @MainActor
@@ -102,8 +103,8 @@ final class SignInFeatureTests: XCTestCase {
             SignInFeature()
         } withDependencies: {
             $0[NetworkClient.self] = .init(
-                fetchSignInCode: { throw "error" },
-                forkedSession: { _ in throw "error" }
+                fetchSignInCode: { throw "error" as GenericError },
+                forkedSession: { _ in throw "error" as GenericError }
             )
         }
 

@@ -23,6 +23,7 @@ import ComposableArchitecture
 import SwiftUI
 @testable import Connection
 import Domain
+import struct Ergonomics.GenericError
 @testable import ExtensionManager
 @testable import LocalAgent
 import PersistenceTestSupport
@@ -52,7 +53,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         } withDependencies: {
             $0.userLocationService = UserLocationServiceMock()
             $0.serverRepository = .empty()
-            $0.logicalsRefresher = .init(refreshLogicals: { throw "" },
+            $0.logicalsRefresher = .init(refreshLogicals: { throw "" as GenericError },
                                          shouldRefreshLogicals: { true })
             $0.tunnelManager = MockTunnelManager()
             $0.localAgent = LocalAgentMock(state: .disconnected)

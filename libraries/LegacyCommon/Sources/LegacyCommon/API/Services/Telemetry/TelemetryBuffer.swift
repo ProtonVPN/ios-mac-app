@@ -18,6 +18,7 @@
 
 import Foundation
 import Dependencies
+import Ergonomics
 
 actor TelemetryBuffer {
     struct Constants {
@@ -113,7 +114,7 @@ actor TelemetryBuffer {
             let data = try encoder.encode(events)
             try dataManager.save(data, fileUrl)
         } catch {
-            throw "Couldn't write Telemetry events to storage: \(error)"
+            throw "Couldn't write Telemetry events to storage: \(error)" as GenericError
         }
     }
 

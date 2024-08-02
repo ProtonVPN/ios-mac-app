@@ -19,6 +19,7 @@
 import Foundation
 
 import Dependencies
+import Ergonomics
 
 package struct TunnelKeychain: DependencyKey {
     private var storeWireguardConfig: (Data) throws -> Data
@@ -71,6 +72,19 @@ enum KeychainEnvironment {
     static let secKeyVerifySignature = SecKeyVerifySignature
 }
 
+public enum TunnelKeychainImplementationError: LocalizedError {
+    /// The data retrieved from keychain isn't valid.
+    case invalidDataFormatRetrievedFromKeychain
+
+    // TODO: Localize this
+    public var errorDescription: String? {
+        switch self {
+        case .invalidDataFormatRetrievedFromKeychain:
+            return "Data retrieved from the Keychain isn't in the expected format."
+        }
+    }
+}
+
 struct TunnelKeychainImplementation {
     private enum StorageKey {
         static let wireguardSettings = "ProtonVPN_wg_settings"
@@ -85,7 +99,7 @@ struct TunnelKeychainImplementation {
     // Password is set and retrieved without using the library because NEVPNProtocol requires it to be
     // a "persistent keychain reference to a keychain item containing the password component of the
     // tunneling protocol authentication credential".
-    public func getPasswordReference(forKey key: String) throws -> Data {
+    func getPasswordReference(forKey key: String) throws -> Data {
         var query = formBaseQuery(forKey: key)
         query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
         query[kSecReturnPersistentRef as AnyHashable] = kCFBooleanTrue
@@ -99,7 +113,7 @@ struct TunnelKeychainImplementation {
         if let item = secItem as? Data {
             return item
         } else {
-            throw "TODO: localized error"
+            throw TunnelKeychainImplementationError.invalidDataFormatRetrievedFromKeychain
         }
     }
 

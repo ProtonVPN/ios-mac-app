@@ -16,6 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+public struct GenericError: Error {
+    public let message: String
 
-extension String: Error {}
+    public init(message: String) {
+        self.message = message
+    }
+}
+
+extension GenericError: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self = GenericError(message: value)
+    }
+}
+
+extension GenericError: ExpressibleByStringInterpolation {}

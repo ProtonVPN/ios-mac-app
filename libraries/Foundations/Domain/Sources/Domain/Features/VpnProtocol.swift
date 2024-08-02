@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import Ergonomics
 
 public enum OpenVpnTransport: String, Codable, CaseIterable, Sendable {
     case tcp = "tcp"
@@ -71,7 +71,7 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
             let transportProtocol = (try? container.decode(WireGuardTransport.self, forKey: .transportProtocol)) ?? .udp
             self = .wireGuard(transportProtocol)
         default:
-            throw "CodingError.unknownValue"
+            throw "CodingError.unknownValue" as GenericError
         }
     }
 

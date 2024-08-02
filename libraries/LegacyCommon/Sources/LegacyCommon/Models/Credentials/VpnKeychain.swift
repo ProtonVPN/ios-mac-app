@@ -102,7 +102,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         let data: Data
         do {
             guard let keychainData = try appKeychain.getData(StorageKey.vpnCredentials) else {
-                throw "No VpnCredentials data in the keychain"
+                throw "No VpnCredentials data in the keychain" as GenericError
             }
             data = keychainData
         } catch let error {
@@ -367,7 +367,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     #if os(iOS)
     public func fetchWidgetPublicKey() throws -> CryptoService.Key {
         guard let data = try appKeychain.getData(StorageKey.widgetPublicKey) else {
-            throw "Keychain error: widget public key not found"
+            throw "Keychain error: widget public key not found" as GenericError
         }
 
         return try CryptoService.Key(

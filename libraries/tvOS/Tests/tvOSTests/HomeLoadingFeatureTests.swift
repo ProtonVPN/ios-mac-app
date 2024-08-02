@@ -19,6 +19,7 @@
 import XCTest
 import ComposableArchitecture
 @testable import CommonNetworking
+import struct Ergonomics.GenericError
 @testable import tvOS
 import tvOSTestSupport
 
@@ -44,7 +45,7 @@ final class HomeLoadingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.continuousClock = clock
         }
-        await store.send(.finishedLoading(.failure(""))) {
+        await store.send(.finishedLoading(.failure("" as GenericError))) {
             $0 = .loadingFailed
         }
         await clock.advance(by: HomeLoadingFeature.tryAgainPeriod)
@@ -61,12 +62,12 @@ final class HomeLoadingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
             $0.logicalsRefresher = LogicalsRefresher(
-                refreshLogicals: { throw "" },
+                refreshLogicals: { throw "" as GenericError },
                 shouldRefreshLogicals: { true })
             $0.date = .constant(.distantFuture) // logicalsRefresher
             $0.continuousClock = clock
             $0.logicalsClient = LogicalsClient(fetchLogicals: { _, _ in
-                throw ""
+                throw "" as GenericError
             })
         }
         await store.send(.loadingViewOnAppear)

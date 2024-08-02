@@ -146,7 +146,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     }
 
     public func fetchWidgetPublicKey() throws -> CryptoService.Key {
-        throw "Key not found"
+        throw "Key not found" as GenericError
     }
 }
 #endif
