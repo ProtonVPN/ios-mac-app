@@ -75,13 +75,13 @@ class SettingsRobot {
     
     func closeSettings() -> MainRobot {
         let preferencesWindow = app.windows["Preferences"]
-        preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
+        preferencesWindow.typeKey("w", modifierFlags: [.command])
         return MainRobot()
     }
     
-    func selectAutoConnect(_ autoConnect: String) -> SettingsRobot {
+    func selectAutoConnect(_ autoConnect: AutoConnectOptions) -> SettingsRobot {
         app.popUpButtons[Localizable.autoConnect].popUpButtons.element.click()
-        app.menuItems[autoConnect].click()
+        app.menuItems["￼  \(autoConnect.rawValue)"].click()
         return SettingsRobot()
     }
     
@@ -193,6 +193,12 @@ class SettingsRobot {
         func checkProtocolSelected(_ expectedProtocol: ConnectionProtocol) -> SettingsRobot {
             XCTAssert(app.popUpButtons[Localizable.protocol].waitForExistence(timeout: 5))
             XCTAssertEqual(app.popUpButtons[Localizable.protocol].value as! String, expectedProtocol.rawValue)
+            return SettingsRobot()
+        }
+        
+        func checkAutoConnectSelected(_ expectedAutoConnectOption: AutoConnectOptions) -> SettingsRobot {
+            XCTAssert(app.popUpButtons[Localizable.autoConnect].waitForExistence(timeout: 5))
+            XCTAssertEqual(app.popUpButtons[Localizable.autoConnect].value as! String, "￼  \(expectedAutoConnectOption.rawValue)")
             return SettingsRobot()
         }
     }

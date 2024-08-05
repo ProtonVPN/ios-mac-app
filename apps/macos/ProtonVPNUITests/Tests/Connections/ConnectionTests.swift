@@ -109,9 +109,8 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.checkCountryFound(country: country)
             .connectToServer(server: country)
         
-        waitForConnected(with: ConnectionProtocol.Smart)
-        
         mainRobot
+            .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
     
@@ -128,9 +127,8 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.checkServerExist(server: city)
             .connectToServer(server: city)
         
-        waitForConnected(with: ConnectionProtocol.Smart)
-        
         mainRobot
+            .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
     
@@ -147,12 +145,11 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.checkServerExist(server: server)
             .connectToServer(server: server)
         
-        waitForConnected(with: ConnectionProtocol.Smart)
-        
         mainRobot
+            .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-    
+
     @MainActor
     private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
         
@@ -165,10 +162,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.checkProtocolSelected(connectionProtocol)
             .closeSettings()
             .quickConnectToAServer()
-        
-        waitForConnected(with: connectionProtocol)
-        
-        mainRobot
+            .waitForConnected(with: connectionProtocol)
             .verify.checkConnectionCardIsConnected(with: connectionProtocol)
     }
     
@@ -181,19 +175,5 @@ class ConnectionTests: ProtonVPNUITests {
     private func checkIpAddressUnchanged(previousIpAddress: String) async throws {
         let currentIpAddress = try await NetworkUtils.getIpAddress()
         XCTAssertEqual(currentIpAddress, previousIpAddress, "IP address has been changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
-    }
-    
-    private func waitForConnected(with connectionProtocol: ConnectionProtocol) {
-        let connectingTimeout = 5
-        guard mainRobot.waitForInitializingConnectionScreenDisappear(connectingTimeout) else {
-            XCTFail("VPN is not connected using \(connectionProtocol) in \(connectingTimeout) seconds")
-            return
-        }
-        
-        _ = mainRobot.waitForSuccessfullyConnectedScreenDisappear(connectingTimeout)
-        
-        if mainRobot.isConnectionTimedOut() {
-            XCTFail("Connection timeout while connecting to \(connectionProtocol) protocol")
-        }
     }
 }

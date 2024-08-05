@@ -97,7 +97,6 @@ class ProfileTests: ProtonVPNUITests {
         
         let name = StringUtils().randomAlphanumericString(length: 8)
         let country = "￼  Austria"
-        let autoConnectDisabled = "￼  Disabled"
         let qcFastest = "￼  Fastest"
 
         logoutIfNeeded()
@@ -116,7 +115,7 @@ class ProfileTests: ProtonVPNUITests {
             .verify.checkConnectionTabIsOpen()
             .selectQuickConnect(qcFastest)
             .verify.checkProfileIsCreated("￼  " + name)
-            .selectAutoConnect(autoConnectDisabled)
+            .selectAutoConnect(AutoConnectOptions.Disabled)
             .verify.checkProfileIsCreated("￼  " + name)
     }
 

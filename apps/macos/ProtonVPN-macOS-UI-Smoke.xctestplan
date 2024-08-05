@@ -19,6 +19,7 @@
   "testTargets" : [
     {
       "skippedTests" : [
+        "AutoConnectTests",
         "ConnectionTests",
         "LoginTests\/testLoginAsTwoFa()",
         "LoginTests\/testLoginWithCorrectCredentials()",
