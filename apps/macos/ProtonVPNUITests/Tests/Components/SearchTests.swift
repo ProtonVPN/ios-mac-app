@@ -20,7 +20,7 @@ import XCTest
 
 class SearchTests: ProtonVPNUITests {
     
-    private let searchRobot = SearchRobot()
+    private let countriesSelectionRobot = CountriesSectionRobot()
     
     override func setUp() {
         super.setUp()
@@ -32,10 +32,10 @@ class SearchTests: ProtonVPNUITests {
         let countryName = "Japan"
         let otherCountryName = "Netherlands"
 
-        searchRobot
-            .typeCountry(countryName)
-            .verify.checkCountryExists(countryName)
+        countriesSelectionRobot
+            .searchForServer(serverName: countryName)
+            .verify.checkServerFound(server: countryName)
             .clearSearch()
-            .verify.checkAnotherCountryExists(otherCountryName)
+            .verify.checkCountryExists(otherCountryName)
     }
 }
