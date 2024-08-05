@@ -21,6 +21,9 @@ import UIKit
 @testable import Search
 
 final class ServerViewModelMock: ServerViewModel {
+    
+    var isRedesign: Bool = false
+    
     var isPartnerServer: Bool
 
     var textColor: UIColor

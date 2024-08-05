@@ -26,6 +26,7 @@ import AlamofireImage
 import Dependencies
 
 import ProtonCoreUIFoundations
+import ProtonCoreFeatureFlags
 
 import Domain
 import Strings
@@ -203,6 +204,10 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 // MARK: - Search
 
 extension ServerItemViewModel: ServerViewModel {
+    var isRedesign: Bool {
+        FeatureFlagsRepository.shared.isRedesigniOSEnabled
+    }
+    
 
     var connectButtonColor: UIColor {
         if isUsersTierTooLow {
