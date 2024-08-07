@@ -27,8 +27,8 @@ class ConnectionTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
-        //        logoutIfNeeded()
-        //        loginAsPlusUser()
+        logoutIfNeeded()
+        loginAsPlusUser()
     }
     
     override func tearDown() {
@@ -98,15 +98,20 @@ class ConnectionTests: ProtonVPNUITests {
         try await checkIpAddressUnchanged(previousIpAddress: unprotectedIpAddress)
     }
     
-    private func checkIpAddressChanged(previousIpAddress: String) async throws -> String {
-        let currentIpAddress = try await NetworkUtils.getIpAddress()
-        XCTAssertTrue(currentIpAddress != previousIpAddress, "IP address is not changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
-        return currentIpAddress
-    }
-    
-    private func checkIpAddressUnchanged(previousIpAddress: String) async throws {
-        let currentIpAddress = try await NetworkUtils.getIpAddress()
-        XCTAssertEqual(currentIpAddress, previousIpAddress, "IP address has been changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
+    @MainActor
+    func testConnectToSpecificCountry() {
+        
+        let country = "Australia"
+        
+        mainRobot
+            .searchForCountry(country: country)
+            .verify.checkCountryFound(country: country)
+            .connectToCountry(country: country)
+        
+        waitForConnected(with: ConnectionProtocol.Smart)
+        
+        mainRobot
+            .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
     
     @MainActor
@@ -122,6 +127,24 @@ class ConnectionTests: ProtonVPNUITests {
             .closeSettings()
             .quickConnectToAServer()
         
+        waitForConnected(with: connectionProtocol)
+        
+        mainRobot
+            .verify.checkConnectionCardIsConnected(with: connectionProtocol)
+    }
+    
+    private func checkIpAddressChanged(previousIpAddress: String) async throws -> String {
+        let currentIpAddress = try await NetworkUtils.getIpAddress()
+        XCTAssertTrue(currentIpAddress != previousIpAddress, "IP address is not changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
+        return currentIpAddress
+    }
+    
+    private func checkIpAddressUnchanged(previousIpAddress: String) async throws {
+        let currentIpAddress = try await NetworkUtils.getIpAddress()
+        XCTAssertEqual(currentIpAddress, previousIpAddress, "IP address has been changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
+    }
+    
+    private func waitForConnected(with connectionProtocol: ConnectionProtocol) {
         let connectingTimeout = 30
         guard mainRobot.waitForConnectingFinish(connectingTimeout) else {
             XCTFail("VPN is not connected using \(connectionProtocol) in \(connectingTimeout) seconds")
@@ -131,8 +154,5 @@ class ConnectionTests: ProtonVPNUITests {
         if mainRobot.isConnectionTimedOut() {
             XCTFail("Connection timeout while connecting to \(connectionProtocol) protocol")
         }
-        
-        mainRobot
-            .verify.checkConnectionCardIsConnected(with: connectionProtocol)
     }
 }

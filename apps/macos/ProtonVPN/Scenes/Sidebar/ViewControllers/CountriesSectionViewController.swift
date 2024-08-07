@@ -259,6 +259,7 @@ final class CountriesSectionViewController: NSViewController {
         serverListTableView.selectionHighlightStyle = .none
         serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
         serverListTableView.backgroundColor = .color(.background, .weak)
+        serverListTableView.setAccessibilityIdentifier("ServerListTable")
         Cell.allCases.forEach { serverListTableView.register($0.nib, forIdentifier: $0.identifier) }
 
         serverListScrollView.backgroundColor = .color(.background, .weak)
