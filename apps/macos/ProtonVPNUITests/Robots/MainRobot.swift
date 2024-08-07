@@ -58,7 +58,7 @@ class MainRobot {
     }
     
     func disconnect() -> MainRobot {
-        app.buttons[disconnectButton].forceClick()
+        app.buttons[disconnectButton].firstMatch.forceClick()
         return MainRobot()
     }
     
@@ -67,8 +67,12 @@ class MainRobot {
         return LoginRobot()
     }
     
-    func waitForConnectingFinish(_ timeout: Int) -> Bool {
+    func waitForInitializingConnectionScreenDisappear(_ timeout: Int) -> Bool {
         return app.staticTexts[initializingConnectionTitle].waitForNonExistence(timeout: TimeInterval(timeout))
+    }
+    
+    func waitForSuccessfullyConnectedScreenDisappear(_ timeout: Int) -> Bool {
+        return app.staticTexts[successfullyConnectedTitle].waitForNonExistence(timeout: TimeInterval(timeout))
     }
     
     func isConnecting() -> Bool {
@@ -82,24 +86,6 @@ class MainRobot {
     
     func isConnectionTimedOut() -> Bool {
         return app.staticTexts[Localizable.connectionTimedOut].exists
-    }
-    
-    func searchForCountry(country: String) -> MainRobot {
-        let countrySearchField = app.textFields["SearchTextField"]
-        countrySearchField.click()
-        countrySearchField.typeText(country)
-        return MainRobot()
-    }
-    
-    func connectToCountry(country: String) -> MainRobot {
-        let cell = app.cells[country]
-        // hovering over the cell with country in order to make "Connect" button visible
-        // using dx: 0.7 as Connect button placed at the right part of the cell
-        cell.forceHover(dx: 0.7, dy: 0.5)
-        // Clicking cell with country by coordinates hoping that Connect button is there
-        // using dx: 0.7 as Connect button placed at the right part of the cell
-        cell.forceClick(dx: 0.7, dy: 0.5)
-        return MainRobot()
     }
     
     let verify = Verify()
@@ -162,16 +148,6 @@ class MainRobot {
             // verify IP adddress label is displayed and not empty
             let actualIPAddress = app.staticTexts["ipLabel"].value as! String
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
-            return MainRobot()
-        }
-        
-        func checkCountryFound(country: String) -> MainRobot {
-            let countryListTable = app.tables["ServerListTable"]
-            XCTAssertTrue(countryListTable.waitForExistence(timeout: 2), "Countries list table does not appear")
-            XCTAssertEqual(countryListTable.tableRows.count, 2, "Countries list table has incorrect number of rows")
-            
-            let countryCell = countryListTable.cells[country]
-            XCTAssertTrue(countryCell.exists, "\(country) cell is not visible at the countries list table")
             return MainRobot()
         }
         

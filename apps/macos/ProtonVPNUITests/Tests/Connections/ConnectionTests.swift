@@ -24,6 +24,7 @@ class ConnectionTests: ProtonVPNUITests {
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     private let loginRobot = LoginRobot()
+    private let countriesSelectionRobot = CountriesSectionRobot()
     
     override func setUp() {
         super.setUp()
@@ -103,10 +104,48 @@ class ConnectionTests: ProtonVPNUITests {
         
         let country = "Australia"
         
-        mainRobot
-            .searchForCountry(country: country)
+        countriesSelectionRobot
+            .searchForServer(serverName: country)
             .verify.checkCountryFound(country: country)
-            .connectToCountry(country: country)
+            .connectToServer(server: country)
+        
+        waitForConnected(with: ConnectionProtocol.Smart)
+        
+        mainRobot
+            .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
+    }
+    
+    @MainActor
+    func testConnectToSpecificCity() {
+        
+        let country = "Australia"
+        let city = "Melbourne"
+        
+        countriesSelectionRobot
+            .searchForServer(serverName: city)
+            .verify.checkCountryFound(country: country)
+            .expandCountry(country: country)
+            .verify.checkCityFound(city: city)
+            .connectToServer(server: city)
+        
+        waitForConnected(with: ConnectionProtocol.Smart)
+        
+        mainRobot
+            .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
+    }
+    
+    @MainActor
+    func testConnectToSpecificServer() {
+        
+        let country = "Australia"
+        let server = "AU#211"
+        
+        countriesSelectionRobot
+            .searchForServer(serverName: server)
+            .verify.checkCountryFound(country: country)
+            .expandCountry(country: country)
+            .verify.checkServerFound(server: server)
+            .connectToServer(server: server)
         
         waitForConnected(with: ConnectionProtocol.Smart)
         
@@ -145,11 +184,13 @@ class ConnectionTests: ProtonVPNUITests {
     }
     
     private func waitForConnected(with connectionProtocol: ConnectionProtocol) {
-        let connectingTimeout = 30
-        guard mainRobot.waitForConnectingFinish(connectingTimeout) else {
+        let connectingTimeout = 5
+        guard mainRobot.waitForInitializingConnectionScreenDisappear(connectingTimeout) else {
             XCTFail("VPN is not connected using \(connectionProtocol) in \(connectingTimeout) seconds")
             return
         }
+        
+        _ = mainRobot.waitForSuccessfullyConnectedScreenDisappear(connectingTimeout)
         
         if mainRobot.isConnectionTimedOut() {
             XCTFail("Connection timeout while connecting to \(connectionProtocol) protocol")

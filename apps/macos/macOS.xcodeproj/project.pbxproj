@@ -113,7 +113,7 @@
 		B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3314278ECB1100DBB8CA /* SettingsTests.swift */; };
 		B270C2CA27BBA9DD00EC7B53 /* QuickSettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2C927BBA9DD00EC7B53 /* QuickSettingsRobot.swift */; };
 		B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2CB27BBAC7900EC7B53 /* QuickSettingsTests.swift */; };
-		B270C2D927BE984400EC7B53 /* SearchRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2D727BE953100EC7B53 /* SearchRobot.swift */; };
+		B270C2D927BE984400EC7B53 /* CountriesSectionRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2D727BE953100EC7B53 /* CountriesSectionRobot.swift */; };
 		B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2D527BE952400EC7B53 /* SearchTests.swift */; };
 		B2AA47D027CE6FE40021E632 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AA47CF27CE6FE40021E632 /* MapTests.swift */; };
 		B2AA47D227CE6FF80021E632 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AA47D127CE6FF80021E632 /* MapRobot.swift */; };
@@ -640,7 +640,7 @@
 		B270C2C927BBA9DD00EC7B53 /* QuickSettingsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsRobot.swift; sourceTree = "<group>"; };
 		B270C2CB27BBAC7900EC7B53 /* QuickSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuickSettingsTests.swift; path = ../../../../macos/ProtonVPNUITests/Tests/Settings/QuickSettingsTests.swift; sourceTree = "<group>"; };
 		B270C2D527BE952400EC7B53 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
-		B270C2D727BE953100EC7B53 /* SearchRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRobot.swift; sourceTree = "<group>"; };
+		B270C2D727BE953100EC7B53 /* CountriesSectionRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionRobot.swift; sourceTree = "<group>"; };
 		B2AA47CF27CE6FE40021E632 /* MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTests.swift; path = ../../../../macos/ProtonVPNUITests/Tests/Components/MapTests.swift; sourceTree = "<group>"; };
 		B2AA47D127CE6FF80021E632 /* MapRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapRobot.swift; path = ../../../../macos/ProtonVPNUITests/Robots/Components/MapRobot.swift; sourceTree = "<group>"; };
 		B2C6CF75298D3EFD0039BC90 /* TwoFaRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFaRobot.swift; sourceTree = "<group>"; };
@@ -1312,7 +1312,7 @@
 		B270C2D327BE94AC00EC7B53 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				B270C2D727BE953100EC7B53 /* SearchRobot.swift */,
+				B270C2D727BE953100EC7B53 /* CountriesSectionRobot.swift */,
 				B2AA47D127CE6FF80021E632 /* MapRobot.swift */,
 			);
 			path = Components;
@@ -3108,7 +3108,7 @@
 				B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */,
 				D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */,
 				7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */,
-				B270C2D927BE984400EC7B53 /* SearchRobot.swift in Sources */,
+				B270C2D927BE984400EC7B53 /* CountriesSectionRobot.swift in Sources */,
 				B22F3307278DC83500DBB8CA /* CreateProfileRobot.swift in Sources */,
 				B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */,
 				7795C7102C57865900F8AB7A /* ConnectionProtocol.swift in Sources */,
