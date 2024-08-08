@@ -125,7 +125,7 @@ class ConnectionTests: ProtonVPNUITests {
             .searchForServer(serverName: city)
             .verify.checkCountryFound(country: country)
             .expandCountry(country: country)
-            .verify.checkCityFound(city: city)
+            .verify.checkServerExist(server: city)
             .connectToServer(server: city)
         
         waitForConnected(with: ConnectionProtocol.Smart)
@@ -144,7 +144,7 @@ class ConnectionTests: ProtonVPNUITests {
             .searchForServer(serverName: server)
             .verify.checkCountryFound(country: country)
             .expandCountry(country: country)
-            .verify.checkServerFound(server: server)
+            .verify.checkServerExist(server: server)
             .connectToServer(server: server)
         
         waitForConnected(with: ConnectionProtocol.Smart)

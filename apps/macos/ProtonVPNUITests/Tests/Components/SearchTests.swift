@@ -34,7 +34,7 @@ class SearchTests: ProtonVPNUITests {
 
         countriesSelectionRobot
             .searchForServer(serverName: countryName)
-            .verify.checkServerFound(server: countryName)
+            .verify.checkServerExist(server: countryName)
             .clearSearch()
             .verify.checkCountryExists(otherCountryName)
     }
