@@ -20,7 +20,7 @@ import XCTest
 
 fileprivate let searchTextField = "SearchTextField"
 fileprivate let clearSearchButton = "ClearSearchButton"
-fileprivate let serverListTable = app.tables["ServerListTable"]
+fileprivate let serverListTableId = "ServerListTable"
 
 class CountriesSectionRobot {
     
@@ -44,37 +44,41 @@ class CountriesSectionRobot {
     }
     
     func connectToServer(server: String) -> CountriesSectionRobot {
-        let serverCell = serverListTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", server)).firstMatch
-        // hovering over the cell with country in order to make "Connect" button visible
-        // using dx: 0.7 as Connect button placed at the right part of the cell
-        serverCell.forceHover(dx: 0.7, dy: 0.5)
-        
-        let connectButton = serverCell.buttons["Connect"].firstMatch
-        if connectButton.exists {
-            connectButton.click()
-        }
-        else {
-            // Clicking cell with country by coordinates hoping that Connect button is there
+        let serverCell = app.tables[serverListTableId].cells.containing(NSPredicate(format: "label CONTAINS[c] %@", server)).firstMatch
+        if serverCell.waitForExistence(timeout: 1) {
+            // hovering over the cell with country in order to make "Connect" button visible
             // using dx: 0.7 as Connect button placed at the right part of the cell
-            serverCell.forceClick(dx: 0.7, dy: 0.5)
+            serverCell.forceHover(dx: 0.7, dy: 0.5)
+            
+            let connectButton = serverCell.buttons["Connect"].firstMatch
+            if connectButton.exists {
+                connectButton.click()
+            } else {
+                // Clicking cell with country by coordinates hoping that Connect button is there
+                // using dx: 0.7 as Connect button placed at the right part of the cell
+                serverCell.forceClick(dx: 0.7, dy: 0.5)
+            }
+        } else {
+            XCTFail("Server '\(server)' was not found")
         }
         return CountriesSectionRobot()
     }
     
     let verify = Verify()
-
+    
     class Verify {
         
         @discardableResult
         func checkCountryExists(_ name: String) -> CountriesSectionRobot {
-            XCTAssertTrue(serverListTable.cells[name].exists)
+            XCTAssertTrue(app.tables[serverListTableId].cells[name].exists)
             return CountriesSectionRobot()
         }
         
         @discardableResult
         func checkCountryFound(country: String) -> CountriesSectionRobot {
+            let serverListTable = app.tables[serverListTableId]
             XCTAssertTrue(serverListTable.waitForExistence(timeout: 2), "Countries list table does not appear")
-            XCTAssertEqual(serverListTable.tableRows.count, 2, "Countries list table has incorrect number of rows")
+            XCTAssertEqual(serverListTable.tableRows.count, 2, "Country \(country) was not found")
             
             let countryCell = serverListTable.cells[country]
             XCTAssertTrue(countryCell.exists, "\(country) cell is not visible at the countries list table")
@@ -82,16 +86,10 @@ class CountriesSectionRobot {
         }
         
         @discardableResult
-        func checkCityFound(city: String) -> CountriesSectionRobot {
-            let cityCells = serverListTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", city))
-            XCTAssertTrue(cityCells.count > 0, "No city \(city) found at the list of servers")
-            return CountriesSectionRobot()
-        }
-        
-        @discardableResult
-        func checkServerFound(server: String) -> CountriesSectionRobot {
-            let serverCells = serverListTable.cells.containing(NSPredicate(format: "label CONTAINS[c] %@", server))
-            XCTAssertEqual(serverCells.count, 1, "No server \(server) found at the list of servers")
+        func checkServerExist(server: String) -> CountriesSectionRobot {
+            let serverListTable = app.tables[serverListTableId]
+            let predicate = NSPredicate(format: "label CONTAINS[c] '\(server)'")
+            XCTAssertTrue(serverListTable.cells.matching(predicate).firstMatch.exists)
             return CountriesSectionRobot()
         }
     }
