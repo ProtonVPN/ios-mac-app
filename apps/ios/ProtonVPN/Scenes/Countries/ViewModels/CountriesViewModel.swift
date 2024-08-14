@@ -385,7 +385,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             natTypePropertyProvider: natTypePropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
             isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled,
-            userTier: userTier
+            extraMargin: userTier != .freeTier
         ))
         
         // 'fastest' is visible for old design free users, also in the redesign, visible for all tiers.
