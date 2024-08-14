@@ -41,7 +41,7 @@ class DefaultProfileTableViewCell: UITableViewCell {
                 leftImageView.alpha = viewModel.alphaOfMainElements
                 leftImageView.image = viewModel.image
                 stateChanged()
-                connectButtonTrailingConstraint.constant = viewModel.isRedesign ? 32 : 0
+                connectButtonTrailingConstraint.constant = viewModel.connectButtonMargin
             }
         }
     }

@@ -81,7 +81,8 @@ class DefaultProfileViewModel {
         }
     }
     
-    let isRedesign: Bool
+    fileprivate let isRedesign: Bool
+    fileprivate let userTier: Int
 
     var isConnected: Bool {
         if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
@@ -139,7 +140,11 @@ class DefaultProfileViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false) {
+    var connectButtonMargin: CGFloat {
+        return userTier == .freeTier ? 0 : 32
+    }
+    
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false, userTier: Int = .freeTier) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -150,6 +155,7 @@ class DefaultProfileViewModel {
         self.safeModePropertyProvider = safeModePropertyProvider
         self.defaultAccessTier = .paidTier
         self.isRedesign = isRedesign
+        self.userTier = userTier
         startObserving()
     }
     
