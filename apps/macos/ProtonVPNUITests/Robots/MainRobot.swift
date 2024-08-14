@@ -28,6 +28,9 @@ fileprivate let menuItemProfiles = Localizable.overview
 fileprivate let statusTitle = Localizable.youAreNotConnected
 fileprivate let initializingConnectionTitle = Localizable.initializingConnection
 fileprivate let successfullyConnectedTitle = Localizable.successfullyConnected
+fileprivate let headerLabelField = "headerLabel"
+fileprivate let ipLabelField = "ipLabel"
+fileprivate let protocolLabelField = "protocolLabel"
 
 class MainRobot {
     
@@ -79,6 +82,22 @@ class MainRobot {
         return app.staticTexts[initializingConnectionTitle].exists
     }
     
+    func waitForConnected(with connectionProtocol: ConnectionProtocol) -> MainRobot {
+        let connectingTimeout = 5
+        guard waitForInitializingConnectionScreenDisappear(connectingTimeout) else {
+            XCTFail("VPN is not connected using \(connectionProtocol) in \(connectingTimeout) seconds")
+            return MainRobot()
+        }
+
+        _ = waitForSuccessfullyConnectedScreenDisappear(connectingTimeout)
+
+        if isConnectionTimedOut() {
+            XCTFail("Connection timeout while connecting to \(connectionProtocol) protocol")
+        }
+
+        return MainRobot()
+    }
+
     func cancelConnecting() -> MainRobot {
         app.buttons[Localizable.cancel].click()
         return MainRobot()
@@ -88,6 +107,22 @@ class MainRobot {
         return app.staticTexts[Localizable.connectionTimedOut].exists
     }
     
+    func getHeaderLabelValue() -> String {
+        return app.staticTexts[headerLabelField].value as? String ?? ""
+    }
+    
+    func getConnectedCountry() -> String {
+        return getHeaderLabelValue().trimServerCode
+    }
+    
+    func getIPLabelValue() -> String {
+        return app.staticTexts[ipLabelField].value as? String ?? ""
+    }
+    
+    func getProtocolLabelValue() -> String {
+        return app.staticTexts[protocolLabelField].value as? String ?? ""
+    }
+
     let verify = Verify()
     
     class Verify {
@@ -116,10 +151,10 @@ class MainRobot {
         func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol,
                                             to connectedCountry: String? = nil) -> MainRobot {
             // verify Disconnect button appears
-            XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "'\(Localizable.disconnect)' button not found.")
+            XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "Connection card is not connected. '\(Localizable.disconnect)' button not found.")
             
             // verify correct connected protocol appears
-            let actualProtocol = app.staticTexts["protocolLabel"].value as! String
+            let actualProtocol = MainRobot().getProtocolLabelValue()
             
             if case .Smart = expectedProtocol {
                 XCTAssertTrue(!actualProtocol.isEmpty, "Connection protocol for Smart protocol should not be empty")
@@ -128,7 +163,7 @@ class MainRobot {
             }
             
             // verify IP Address label appears
-            let actualIPAddress = app.staticTexts["ipLabel"].value as! String
+            let actualIPAddress = MainRobot().getIPLabelValue()
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
             
             // verify header label contain country code
@@ -146,11 +181,11 @@ class MainRobot {
             validateHeaderLabel(value: Localizable.youAreNotConnected)
             
             // verify IP adddress label is displayed and not empty
-            let actualIPAddress = app.staticTexts["ipLabel"].value as! String
+            let actualIPAddress = MainRobot().getIPLabelValue()
             XCTAssertTrue(validateIPAddress(from: actualIPAddress), "IP label \(actualIPAddress) does not contain valid IP address")
             return MainRobot()
         }
-        
+
         // MARK: private methods
         
         private func validateIPAddress(from string: String) -> Bool {
@@ -165,9 +200,9 @@ class MainRobot {
         
         private func validateHeaderLabel(value: String? = nil) {
             // validate "headerLabel" exist
-            XCTAssert(app.staticTexts["headerLabel"].waitForExistence(timeout: 5),
+            XCTAssert(app.staticTexts[headerLabelField].waitForExistence(timeout: 5),
                       "headerLabel textfield was not found.")
-            let actualHeaderLabelValue = app.staticTexts["headerLabel"].value as! String
+            let actualHeaderLabelValue = MainRobot().getHeaderLabelValue()
             
             if let expectedValue = value {
                 // validate headerLabel has exact value

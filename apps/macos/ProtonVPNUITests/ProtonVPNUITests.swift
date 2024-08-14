@@ -112,11 +112,11 @@ class ProtonVPNUITests: XCTestCase {
          login(withCredentials: twopassusercredentials[0])
      }
     
-    func waitForLoaderDisappear() {
+    func waitForLoaderDisappear(_ loadingTimeout: Int = 10) {
         let loadingScreen = app.staticTexts[Localizable.loadingScreenSlogan]
         _ = loadingScreen.waitForExistence(timeout: 2)
-        if !loadingScreen.waitForNonExistence(timeout: 10) {
-            XCTFail("Loading screen does not disappear after 10 seconds")
+        if !loadingScreen.waitForNonExistence(timeout: TimeInterval(loadingTimeout)) {
+            XCTFail("Loading screen does not disappear after \(loadingTimeout) seconds")
         }
     }
 
@@ -147,6 +147,7 @@ class ProtonVPNUITests: XCTestCase {
                 XCTFail("Failed to log out. Login screen does not appear")
             }
         }
+        
         _ = mainRobot
             .logOut()
 
@@ -233,5 +234,11 @@ class ProtonVPNUITests: XCTestCase {
                 return
             }
         }
+    }
+    
+    func relaunchApp() {
+        app.terminate()
+        app.launch()
+        waitForLoaderDisappear()
     }
 }

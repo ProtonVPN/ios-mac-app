@@ -34,4 +34,22 @@ extension String {
         // Return true if a match is found
         return match != nil
     }
+    
+    var trimServerCode: String {
+        // Regular expression pattern to match the server code at the end of the string
+        let pattern = "\\b[A-Z]{2}(?:-[A-Z]{2})?#\\d+$"
+        
+        do {
+            let regex = try NSRegularExpression(pattern: pattern, options: [])
+            let range = NSRange(location: 0, length: self.count)
+            
+            // Replace the matched pattern with an empty string
+            let trimmedString = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "")
+            
+            // Trim any trailing whitespace that might be left
+            return trimmedString.trimmingCharacters(in: .whitespacesAndNewlines)
+        } catch let error {
+            return self
+        }
+    }
 }
