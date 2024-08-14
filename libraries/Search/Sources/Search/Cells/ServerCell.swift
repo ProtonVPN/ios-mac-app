@@ -76,6 +76,11 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     @IBOutlet private weak var exitFlagIcon: UIImageView!
     @IBOutlet private weak var entryFlagIcon: UIImageView!
 
+    @IBOutlet weak var exitFlagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var exitFlagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var entryFlagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var entryFlagIconWidthConstraint: NSLayoutConstraint!
+
     // MARK: Properties
 
     public weak var delegate: ServerCellDelegate?
@@ -118,7 +123,18 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             }
 
             entryFlagIcon.image = viewModel.entryCountryFlag
+            entryFlagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
+            entryFlagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
+            entryFlagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
+            entryFlagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
+            entryFlagIcon.layer.masksToBounds = viewModel.isRedesign
+            
             exitFlagIcon.image = viewModel.countryFlag
+            exitFlagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
+            exitFlagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
+            exitFlagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
+            exitFlagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
+            exitFlagIcon.layer.masksToBounds = viewModel.isRedesign
 
             DispatchQueue.main.async { [weak self] in
                 self?.stateChanged()

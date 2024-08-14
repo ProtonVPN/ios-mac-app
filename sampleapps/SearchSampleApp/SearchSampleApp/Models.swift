@@ -114,6 +114,9 @@ final class CountryItemViewModel: CountryViewModel {
 }
 
 final class ServerItemViewModel: ServerViewModel {
+
+    var isRedesign: Bool = false
+    
     var isPartnerServer: Bool = false
 
     var isTorAvailable: Bool = false

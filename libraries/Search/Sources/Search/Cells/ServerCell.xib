@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -154,7 +154,11 @@
                 <outlet property="connectButton" destination="2Vk-vj-5zc" id="5ft-kl-oIo"/>
                 <outlet property="countryNameLabel" destination="cCK-ld-bJa" id="Pqv-RA-Hfj"/>
                 <outlet property="entryFlagIcon" destination="kwf-l7-NBG" id="d4C-Nx-wAv"/>
+                <outlet property="entryFlagIconHeightConstraint" destination="pgk-6U-RKF" id="brc-Rd-xCW"/>
+                <outlet property="entryFlagIconWidthConstraint" destination="bkQ-rt-9nb" id="Pz1-we-myH"/>
                 <outlet property="exitFlagIcon" destination="dqc-qE-lDa" id="nsa-a1-whg"/>
+                <outlet property="exitFlagIconHeightConstraint" destination="gbM-Ey-5gF" id="nbg-nZ-0dE"/>
+                <outlet property="exitFlagIconWidthConstraint" destination="g0l-NE-9Lg" id="Vbi-Io-epk"/>
                 <outlet property="featuresStackView" destination="qUd-gM-Kds" id="r59-wZ-Vkm"/>
                 <outlet property="loadColorView" destination="0Cy-HH-d7d" id="sb9-ei-61f"/>
                 <outlet property="loadContainingView" destination="Rif-yk-4lY" id="GjG-ZP-rph"/>
