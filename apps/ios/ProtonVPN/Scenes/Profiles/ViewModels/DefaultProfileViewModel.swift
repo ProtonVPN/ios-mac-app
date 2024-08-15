@@ -55,7 +55,6 @@ class DefaultProfileViewModel {
     fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
     fileprivate let natTypePropertyProvider: NATTypePropertyProvider
     fileprivate let safeModePropertyProvider: SafeModePropertyProvider
-    fileprivate let isRedesign: Bool
     
     private let defaultAccessTier: Int
 
@@ -82,6 +81,9 @@ class DefaultProfileViewModel {
         }
     }
     
+    fileprivate let isRedesign: Bool
+    fileprivate let extraMargin: Bool
+
     var isConnected: Bool {
         if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
@@ -138,7 +140,11 @@ class DefaultProfileViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false) {
+    var connectButtonMargin: CGFloat {
+        return extraMargin ? 32 : 0
+    }
+    
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false, extraMargin: Bool = false) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -149,6 +155,7 @@ class DefaultProfileViewModel {
         self.safeModePropertyProvider = safeModePropertyProvider
         self.defaultAccessTier = .paidTier
         self.isRedesign = isRedesign
+        self.extraMargin = extraMargin
         startObserving()
     }
     

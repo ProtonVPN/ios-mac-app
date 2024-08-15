@@ -71,6 +71,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="connectButton" destination="9HC-9S-eDc" id="mvv-Pv-sNq"/>
+                <outlet property="connectButtonTrailingConstraint" destination="eb6-RP-Ibx" id="Fs4-at-wAv"/>
                 <outlet property="label" destination="hNP-3c-ioR" id="bv4-R6-Y7I"/>
                 <outlet property="leftImageView" destination="mIb-TT-hAE" id="Wlx-kM-lKn"/>
             </connections>
