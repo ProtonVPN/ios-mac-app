@@ -186,6 +186,16 @@ class MainRobot {
             return MainRobot()
         }
 
+        @discardableResult
+        func checkIfLocalNetworkingReachable(to defaultGatewayAddress: String) throws -> MainRobot {
+            let success = try NetworkUtils.isIpAddressAccessible(ipAddress: defaultGatewayAddress)
+            if !success {
+                XCTFail("Local letwork is not accessbile by ip addess: \(defaultGatewayAddress)")
+            }
+
+            return MainRobot()
+        }
+
         // MARK: private methods
         
         private func validateIPAddress(from string: String) -> Bool {
