@@ -69,7 +69,7 @@ public enum NetworkUtils {
         
         let (data, response) = try await URLSession.shared.data(from: url)
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse, [200, 201].contains(httpResponse.statusCode) else {
             throw NetworkUtilsError.invalidResponse
         }
         
