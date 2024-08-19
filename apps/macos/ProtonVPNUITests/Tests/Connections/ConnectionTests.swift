@@ -149,7 +149,18 @@ class ConnectionTests: ProtonVPNUITests {
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-
+    
+    @MainActor
+    func testLocalNetworkIsReachableWhileConnected() throws {
+        let defaultGatewayAddress = try NetworkUtils.getDefaultGatewayAddress()
+        
+        try mainRobot
+            .quickConnectToAServer()
+            .waitForConnected(with: ConnectionProtocol.Smart)
+            .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
+            .verify.checkIfLocalNetworkingReachable(to: defaultGatewayAddress)
+    }
+    
     @MainActor
     private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
         
