@@ -165,18 +165,6 @@ class ProtonVPNUITests: XCTestCase {
         }
     }
     
-    func logInIfNeeded() {
-        if loginRobot.isLoginScreenVisible() {
-            loginRobot
-                .loginUser(credentials: credentials[2])
-            
-            waitForLoaderDisappear()
-            
-            dismissDialogs()
-            dismissPopups()
-        }
-    }
-    
     // to remove created profiles
     func clearAppData() -> Bool {
         let clearAppDataButton = app.menuBars.menuItems["Clear Application Data"]

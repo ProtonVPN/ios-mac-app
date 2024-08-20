@@ -107,7 +107,8 @@ class ConnectionTests: ProtonVPNUITests {
         
         countriesSelectionRobot
             .searchForServer(serverName: country)
-            .verify.checkCountryFound(country: country)
+            .verify.checkAmountOfLocationsFound(expectedAmount: 1)
+            .verify.checkCountryExists(country)
             .connectToServer(server: country)
         
         mainRobot
@@ -123,9 +124,10 @@ class ConnectionTests: ProtonVPNUITests {
         
         countriesSelectionRobot
             .searchForServer(serverName: city)
-            .verify.checkCountryFound(country: country)
+            .verify.checkAmountOfLocationsFound(expectedAmount: 1)
+            .verify.checkCountryExists(country)
             .expandCountry(country: country)
-            .verify.checkServerExist(server: city)
+            .verify.checkServerListContain(label: city)
             .connectToServer(server: city)
         
         mainRobot
@@ -141,9 +143,10 @@ class ConnectionTests: ProtonVPNUITests {
         
         countriesSelectionRobot
             .searchForServer(serverName: server)
-            .verify.checkCountryFound(country: country)
+            .verify.checkAmountOfLocationsFound(expectedAmount: 1)
+            .verify.checkCountryExists(country)
             .expandCountry(country: country)
-            .verify.checkServerExist(server: server)
+            .verify.checkServerListContain(label: server)
             .connectToServer(server: server)
         
         mainRobot

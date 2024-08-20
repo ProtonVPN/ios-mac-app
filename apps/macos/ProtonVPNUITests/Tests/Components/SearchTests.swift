@@ -17,25 +17,45 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+import Modals
 
 class SearchTests: ProtonVPNUITests {
     
     private let countriesSelectionRobot = CountriesSectionRobot()
+    private let countryToSearchFor = "Japan"
+    private let comparisonCountryName = "Netherlands"
     
     override func setUp() {
         super.setUp()
-        logInIfNeeded()
+        logoutIfNeeded()
     }
     
     func testSearchCountry() {
+        loginAsPlusUser()
         
-        let countryName = "Japan"
-        let otherCountryName = "Netherlands"
-
         countriesSelectionRobot
-            .searchForServer(serverName: countryName)
-            .verify.checkServerExist(server: countryName)
+            .searchForServer(serverName: countryToSearchFor)
+            .verify.checkAmountOfLocationsFound(expectedAmount: 1)
+            .verify.checkServerListContain(label: countryToSearchFor)
             .clearSearch()
-            .verify.checkCountryExists(otherCountryName)
+            .verify.checkCountryExists(comparisonCountryName)
+    }
+    
+    func testSearchFreeUser() {
+        loginAsFreeUser()
+        
+        countriesSelectionRobot
+            .verify.checkUpgradeBannerVisible()
+            .clickUpgradeBanner()
+            .verify.checkModalAppear(type: ModalType.allCountries(numberOfServers: 1, numberOfCountries: 1))
+            .closeModal()
+        
+        countriesSelectionRobot
+            .searchForServer(serverName: countryToSearchFor)
+            .verify.checkAmountOfLocationsFound(expectedAmount: 1)
+            .verify.checkServerListContain(label: countryToSearchFor)
+            .verify.checkServerListContain(label: "Update required")
+            .clearSearch()
+            .verify.checkServerListContain(label: comparisonCountryName)
     }
 }

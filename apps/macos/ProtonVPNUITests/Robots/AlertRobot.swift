@@ -61,8 +61,8 @@ class AlertRobot {
             func checkAlertAppear() -> LogoutWarningAlert {
                 let container = LogoutWarningAlert().alertContainer
                 
-                XCTAssertTrue(container.waitForExistence(timeout: 5))
-
+                XCTAssertTrue(container.waitForExistence(timeout: WaitTimeout.normal))
+                
                 let dialogMessage: String = container.textViews.firstMatch.value as? String ?? ""
                 XCTAssert(dialogMessage.contains(Localizable.logOutWarningLong), "Alert message does not contain expected text '\(Localizable.quitWarning)'. Actual message: \(dialogMessage)")
                 
