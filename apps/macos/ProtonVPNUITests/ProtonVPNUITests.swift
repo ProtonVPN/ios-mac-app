@@ -25,101 +25,102 @@ import PMLogger
 import Strings
 
 class ProtonVPNUITests: XCTestCase {
-
+    
     let app = XCUIApplication()
     var testCaseStart = Date()
-
+    
     lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
-
+    
     override func setUp() {
         super.setUp()
         testCaseStart = Date()
-
+        
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
+        
         app.launchArguments += ["-BlockOneTimeAnnouncement", "YES"]
         app.launchArguments += ["-BlockUpdatePrompt", "YES"]
         app.launchArguments += [LogFileManagerImplementation.logDirLaunchArgument,
                                 logFileUrl.absoluteString]
-
+        
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         app.launch()
-
+        
         window = XCUIApplication().windows["Proton VPN"]
         waitForLoaderDisappear()
         
     }
-
+    
     override open func tearDownWithError() throws {
         try super.tearDownWithError()
-
+        
         if FileManager.default.fileExists(atPath: logFileUrl.absoluteString) {
             let pmLogAttachment = XCTAttachment(contentsOfFile: logFileUrl)
             pmLogAttachment.lifetime = .deleteOnSuccess
             add(pmLogAttachment)
         }
-
+        
         let group = DispatchGroup()
         group.enter()
-
+        
         guard #available(macOS 12, *) else { return }
-
+        
         let osLogContent = OSLogContent(scope: .system, since: testCaseStart)
         osLogContent.loadContent { [weak self] logContent in
             defer { group.leave() }
-
+            
             guard let data = logContent.data(using: .utf8) as? NSData,
                   let compressed = try? data.compressed(using: .lz4) else {
                 return
             }
-
+            
             let osLogAttachment = XCTAttachment(data: compressed as Data)
             osLogAttachment.lifetime = .deleteOnSuccess
             osLogAttachment.name = "os_log_\(self?.name ?? "(nil)").txt.lz4"
             self?.add(osLogAttachment)
         }
-
+        
         group.wait()
     }
-
+    
     // MARK: - Helper methods
     
     private let loginRobot = LoginRobot()
     private let mainRobot = MainRobot()
+    private let alertRobot = AlertRobot()
     
     lazy var credentials = self.getCredentials(fromResource: "credentials")
     lazy var twopassusercredentials = self.getCredentials(fromResource: "twopassusercredentials")
     
-
+    
     func getCredentials(fromResource resource: String) -> [Credentials] {
         return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
-
+    
     func loginAsFreeUser() {
         login(withCredentials: credentials[0])
     }
-      
+    
     func loginAsBasicUser() {
         login(withCredentials: credentials[1])
     }
-      
+    
     func loginAsPlusUser() {
         login(withCredentials: credentials[2])
     }
     
     func loginAsTwoPassUser() {
-         login(withCredentials: twopassusercredentials[0])
-     }
+        login(withCredentials: twopassusercredentials[0])
+    }
     
-    func waitForLoaderDisappear(_ loadingTimeout: Int = 10) {
+    func waitForLoaderDisappear(_ loadingTimeout:TimeInterval = WaitTimeout.long) {
         let loadingScreen = app.staticTexts[Localizable.loadingScreenSlogan]
-        _ = loadingScreen.waitForExistence(timeout: 2)
-        if !loadingScreen.waitForNonExistence(timeout: TimeInterval(loadingTimeout)) {
+        _ = loadingScreen.waitForExistence(timeout: WaitTimeout.normal)
+        if !loadingScreen.waitForNonExistence(timeout: loadingTimeout) {
             XCTFail("Loading screen does not disappear after \(loadingTimeout) seconds")
         }
     }
-
+    
     func login(withCredentials credentials: Credentials) {
         
         loginRobot
@@ -143,43 +144,34 @@ class ProtonVPNUITests: XCTestCase {
     
     func logoutIfNeeded() {
         defer {
-            if !app.buttons[Localizable.logIn].waitForExistence(timeout: 5) {
+            if !loginRobot.isLoginScreenVisible() {
                 XCTFail("Failed to log out. Login screen does not appear")
             }
         }
         
-        _ = mainRobot
-            .logOut()
-
-        // give the main window time to load and show OpenVPN alert if needed
-        sleep(2)
-
-        dismissPopups()
-        dismissDialogs()
-    }
-
-    func tryLoggingOut() -> Bool {
-        let logoutButton = app.menuBars.menuItems["Sign out"]
-        guard logoutButton.exists, logoutButton.isEnabled else {
-            return false
+        if !loginRobot.isLoginScreenVisible() {
+            _ = mainRobot
+                .logOut()
+            
+            if alertRobot.logoutWarningAlert.isVisible() {
+                alertRobot.logoutWarningAlert.clickContinue()
+            }
+            
+            // give the main window time to load and show OpenVPN alert if needed
+            sleep(2)
+            
+            dismissPopups()
+            dismissDialogs()
         }
-        logoutButton.click()
-        return true
     }
     
     func logInIfNeeded() {
-        let buttonQuickConnect = app.buttons["Quick Connect"]
-        if buttonQuickConnect.waitForExistence(timeout: 4) {
-            return
-        } else {
+        if loginRobot.isLoginScreenVisible() {
             loginRobot
                 .loginUser(credentials: credentials[2])
             
             waitForLoaderDisappear()
-                         
-            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
-            waitForExpectations(timeout: 10, handler: nil)
-                 
+            
             dismissDialogs()
             dismissPopups()
         }
@@ -195,15 +187,6 @@ class ProtonVPNUITests: XCTestCase {
         clearAppDataButton.click()
         deleteButton.click()
         return true
-    }
-    
-    func waitForElementToAppear(_ element: XCUIElement) -> Bool {
-        let predicate = NSPredicate(format: "exists == true")
-        let expectation = XCTNSPredicateExpectation(predicate: predicate,
-                                                    object: element)
-
-        let result = XCTWaiter().wait(for: [expectation], timeout: 5)
-        return result == .completed
     }
     
     func dismissPopups() {
@@ -227,7 +210,7 @@ class ProtonVPNUITests: XCTestCase {
         for dialog in dialogs {
             if app.dialogs[dialog].exists {
                 app.dialogs[dialog].firstMatch.buttons["_XCUI:CloseWindow"].click()
-
+                
                 // repeat in case another alert is queued
                 sleep(1)
                 dismissDialogs()

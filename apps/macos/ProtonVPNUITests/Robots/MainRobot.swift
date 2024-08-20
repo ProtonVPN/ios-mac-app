@@ -43,7 +43,7 @@ class MainRobot {
     func closeProfilesOverview() -> MainRobot {
         let preferencesWindow = app.windows[Localizable.profilesOverview]
         preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
-        return MainRobot()
+        return self
     }
     
     func openAppSettings() -> SettingsRobot {
@@ -53,16 +53,16 @@ class MainRobot {
     
     func quickConnectToAServer() -> MainRobot {
         app.buttons[qcButton].forceClick()
-        return MainRobot()
+        return self
     }
     
     func isConnected() -> Bool {
-        return app.buttons[disconnectButton].waitForExistence(timeout: 5)
+        return app.buttons[disconnectButton].waitForExistence(timeout: WaitTimeout.short)
     }
     
     func disconnect() -> MainRobot {
         app.buttons[disconnectButton].firstMatch.forceClick()
-        return MainRobot()
+        return self
     }
     
     func logOut() -> LoginRobot {
@@ -95,12 +95,12 @@ class MainRobot {
             XCTFail("Connection timeout while connecting to \(connectionProtocol) protocol")
         }
 
-        return MainRobot()
+        return self
     }
 
     func cancelConnecting() -> MainRobot {
         app.buttons[Localizable.cancel].click()
-        return MainRobot()
+        return self
     }
     
     func isConnectionTimedOut() -> Bool {
@@ -128,22 +128,22 @@ class MainRobot {
     class Verify {
         
         @discardableResult
-        func checkSettingsModalIsClosed() -> SettingsRobot {
+        func checkSettingsModalIsClosed() -> MainRobot {
             XCTAssertFalse(app.buttons[preferencesTitle].exists)
             XCTAssertTrue(app.buttons[qcButton].exists)
-            return SettingsRobot()
+            return MainRobot()
         }
         
         @discardableResult
-        func checkUserIsLoggedIn() -> SettingsRobot {
-            XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: 10))
-            XCTAssert(app.buttons[qcButton].waitForExistence(timeout: 10))
-            return SettingsRobot()
+        func checkUserIsLoggedIn() -> MainRobot {
+            XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: WaitTimeout.short))
+            XCTAssert(app.buttons[qcButton].waitForExistence(timeout: WaitTimeout.short))
+            return MainRobot()
         }
         
         @discardableResult
         func checkVPNConnecting() -> MainRobot {
-            XCTAssert(app.staticTexts[initializingConnectionTitle].waitForExistence(timeout: 10), "\(initializingConnectionTitle) element not found.")
+            XCTAssert(app.staticTexts[initializingConnectionTitle].waitForExistence(timeout: WaitTimeout.normal), "\(initializingConnectionTitle) element not found.")
             return MainRobot()
         }
         
@@ -151,7 +151,7 @@ class MainRobot {
         func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol,
                                             to connectedCountry: String? = nil) -> MainRobot {
             // verify Disconnect button appears
-            XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: 10), "Connection card is not connected. '\(Localizable.disconnect)' button not found.")
+            XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: WaitTimeout.normal), "Connection card is not connected. '\(Localizable.disconnect)' button not found.")
             
             // verify correct connected protocol appears
             let actualProtocol = MainRobot().getProtocolLabelValue()
@@ -175,7 +175,7 @@ class MainRobot {
         @discardableResult
         func checkConnectionCardIsDisconnected() -> MainRobot {
             // verify "Quick Connect" button is visible
-            XCTAssert(app.buttons[Localizable.quickConnect].waitForExistence(timeout: 5), "'\(Localizable.quickConnect)' button not found.")
+            XCTAssert(app.buttons[Localizable.quickConnect].waitForExistence(timeout: WaitTimeout.short), "'\(Localizable.quickConnect)' button not found.")
             
             // verify "You are not connected" label if visible
             validateHeaderLabel(value: Localizable.youAreNotConnected)
@@ -210,7 +210,7 @@ class MainRobot {
         
         private func validateHeaderLabel(value: String? = nil) {
             // validate "headerLabel" exist
-            XCTAssert(app.staticTexts[headerLabelField].waitForExistence(timeout: 5),
+            XCTAssert(app.staticTexts[headerLabelField].waitForExistence(timeout: WaitTimeout.short),
                       "headerLabel textfield was not found.")
             let actualHeaderLabelValue = MainRobot().getHeaderLabelValue()
             

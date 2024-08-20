@@ -87,6 +87,8 @@
 		772792C42C590E30008A769A /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772792C32C590E30008A769A /* NetworkUtils.swift */; };
 		7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747E3022C512EDF00A750E1 /* String+Extensions.swift */; };
 		77656B892C46AA4300E730AA /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77656B862C46AA2F00E730AA /* ConnectionTests.swift */; };
+		776AE8D02C73463300596D48 /* AlertRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE8CF2C73463300596D48 /* AlertRobot.swift */; };
+		776AE8D22C73552400596D48 /* WaitTimeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE8D12C73552400596D48 /* WaitTimeout.swift */; };
 		777B45FE2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777B45FD2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift */; };
 		77951E362C6357D100B6E381 /* AutoConnectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77951E352C6357D100B6E381 /* AutoConnectTests.swift */; };
 		77951E382C6357E000B6E381 /* AutoConnectOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77951E372C6357E000B6E381 /* AutoConnectOptions.swift */; };
@@ -614,6 +616,8 @@
 		772792C32C590E30008A769A /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		7747E3022C512EDF00A750E1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		77656B862C46AA2F00E730AA /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
+		776AE8CF2C73463300596D48 /* AlertRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertRobot.swift; sourceTree = "<group>"; };
+		776AE8D12C73552400596D48 /* WaitTimeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitTimeout.swift; sourceTree = "<group>"; };
 		777B45FD2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+waitForNonExistence.swift"; sourceTree = "<group>"; };
 		77951E352C6357D100B6E381 /* AutoConnectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoConnectTests.swift; sourceTree = "<group>"; };
 		77951E372C6357E000B6E381 /* AutoConnectOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoConnectOptions.swift; sourceTree = "<group>"; };
@@ -1214,6 +1218,7 @@
 				77951E372C6357E000B6E381 /* AutoConnectOptions.swift */,
 				7795C70F2C57865900F8AB7A /* ConnectionProtocol.swift */,
 				772792C32C590E30008A769A /* NetworkUtils.swift */,
+				776AE8D12C73552400596D48 /* WaitTimeout.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -1246,6 +1251,7 @@
 				B22F330C278DCF3900DBB8CA /* Login */,
 				B22F3305278DC79E00DBB8CA /* Profiles */,
 				B22F3303278DC76C00DBB8CA /* MainRobot.swift */,
+				776AE8CF2C73463300596D48 /* AlertRobot.swift */,
 			);
 			path = Robots;
 			sourceTree = "<group>";
@@ -3108,10 +3114,12 @@
 				B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */,
 				77951E362C6357D100B6E381 /* AutoConnectTests.swift in Sources */,
 				777B45FE2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift in Sources */,
+				776AE8D02C73463300596D48 /* AlertRobot.swift in Sources */,
 				77951E382C6357E000B6E381 /* AutoConnectOptions.swift in Sources */,
 				E51122DC27D0B6780088FCAC /* XCUIElement+Extensions.swift in Sources */,
 				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
 				D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */,
+				776AE8D22C73552400596D48 /* WaitTimeout.swift in Sources */,
 				772792C42C590E30008A769A /* NetworkUtils.swift in Sources */,
 				B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */,
 				D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */,
