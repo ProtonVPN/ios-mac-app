@@ -25,7 +25,8 @@ class ConnectionTests: ProtonVPNUITests {
     private let settingsRobot = SettingsRobot()
     private let loginRobot = LoginRobot()
     private let countriesSelectionRobot = CountriesSectionRobot()
-    
+    private let alertRobot = AlertRobot()
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
@@ -149,18 +150,50 @@ class ConnectionTests: ProtonVPNUITests {
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-    
+
     @MainActor
     func testLocalNetworkIsReachableWhileConnected() throws {
         let defaultGatewayAddress = try NetworkUtils.getDefaultGatewayAddress()
-        
+
         try mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
             .verify.checkIfLocalNetworkingReachable(to: defaultGatewayAddress)
     }
-    
+
+    @MainActor
+    func testLogoutWhileConnectedContinue() {
+
+        mainRobot
+            .quickConnectToAServer()
+            .waitForConnected(with: ConnectionProtocol.Smart)
+            .logOut()
+
+        alertRobot
+            .verify.checkLogoutWarningAlertAppear()
+            .logoutWarningAlert.clickContinue()
+
+        loginRobot
+            .verify.checkLoginScreenIsShown()
+    }
+
+    @MainActor
+    func testLogoutWhileConnectedCancel() {
+
+        mainRobot
+            .quickConnectToAServer()
+            .waitForConnected(with: ConnectionProtocol.Smart)
+            .logOut()
+
+        alertRobot
+            .verify.checkLogoutWarningAlertAppear()
+            .logoutWarningAlert.clickCancel()
+
+        mainRobot
+            .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
+    }
+
     @MainActor
     private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
         

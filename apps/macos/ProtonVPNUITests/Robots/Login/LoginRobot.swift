@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import Strings
 
 fileprivate let fieldUsername = "UsernameTextField"
 fileprivate let fieldPassword = "PasswordTextField"
@@ -76,7 +77,12 @@ class LoginRobot {
     @discardableResult
     func clickLoginAgain() -> LoginRobot {
         app.buttons[loginAgainButton].click()
-        return LoginRobot()
+        return self
+    }
+    
+    func isLoginScreenVisible() -> Bool {
+        return app.textFields[fieldUsername].waitForExistence(timeout: WaitTimeout.short) &&
+        app.secureTextFields[fieldPassword].waitForExistence(timeout: WaitTimeout.short)
     }
     
     private func typeUsername(_ username: String) -> LoginRobot {
@@ -115,6 +121,14 @@ class LoginRobot {
     class Verify {
         
         @discardableResult
+        func checkLoginScreenIsShown() -> LoginRobot {
+            XCTAssertTrue(app.buttons[Localizable.createAccount].waitForExistence(timeout: WaitTimeout.short))
+            XCTAssertTrue(app.textFields[fieldUsername].waitForExistence(timeout: WaitTimeout.short))
+            XCTAssertTrue(app.secureTextFields[fieldPassword].waitForExistence(timeout: WaitTimeout.short))
+            return LoginRobot()
+        }
+        
+        @discardableResult
         func checkLoginButtonIsNotEnabled() -> LoginRobot {
             XCTAssertFalse(app.buttons[loginButton].isEnabled)
             return LoginRobot()
@@ -128,12 +142,12 @@ class LoginRobot {
         
         @discardableResult
         func checkErrorMessageIsShown(message: String ) -> LoginRobot {
-            XCTAssert(app.staticTexts[message].waitForExistence(timeout: 5))
+            XCTAssert(app.staticTexts[message].waitForExistence(timeout: WaitTimeout.normal))
             return LoginRobot()
         }
         
         @discardableResult
-        func checkModalIsShown(timeout: TimeInterval = 5) -> LoginRobot {
+        func checkModalIsShown(timeout: TimeInterval = WaitTimeout.normal) -> LoginRobot {
             XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: timeout))
             XCTAssert(app.staticTexts[modalSubtitle].waitForExistence(timeout: timeout))
             XCTAssert(app.buttons[loginAgainButton].isEnabled)
