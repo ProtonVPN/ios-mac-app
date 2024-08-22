@@ -25,6 +25,7 @@ struct WelcomeFeature {
         case signIn(SignInFeature)
         case welcomeInfo(WelcomeInfoFeature)
         case codeExpired(CodeExpiredFeature)
+        case upsell(UpsellFeature)
     }
 
     @ObservableState
@@ -68,7 +69,7 @@ struct WelcomeFeature {
             case .userTierUpdated(let tier):
                 guard let tier else { return .none }
                 if tier == 0 {
-                    state.destination = .welcomeInfo(.freeUpsellAlternative)
+                    state.destination = .upsell(.loading)
                 } else if tier > 0 {
                     /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
                     /// the welcome page will be shown, not the sign in page

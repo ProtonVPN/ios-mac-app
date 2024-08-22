@@ -129,18 +129,10 @@ struct SessionNetworkingFeature: Reducer {
                     await alertService.feed(error)
                 }
             case .userTierRetrieved(let tier, let session):
-                // TODO: This is an additional step before logging user in, when we'll start to support free users, we can remove this code
-                if tier > 0 {
                     state = .authenticated(session)
                     networking.setSession(session)
                     unauthKeychain.clear()
                     return .send(.delegate(.tier(tier)))
-                } else {
-                    return .merge(
-                        .send(.delegate(.tier(tier))),
-                        .send(.startLogout) // tier detected to be free, log the user out
-                    )
-                }
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }

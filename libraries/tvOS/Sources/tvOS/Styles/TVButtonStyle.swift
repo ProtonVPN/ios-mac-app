@@ -34,3 +34,20 @@ struct TVButtonStyle: ButtonStyle {
             .hoverEffect(.highlight)
     }
 }
+
+struct UpsellButtonStyle: ButtonStyle {
+
+    @Environment(\.isFocused) var isFocused
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.body)
+            .bold()
+            .padding(.horizontal, .themeSpacing32)
+            .frame(width: 700, height: 138)
+            .background(isFocused ? Color(.background, .selected) : Color(.background))
+            .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
+            .cornerRadius(.themeRadius16)
+            .hoverEffect(.highlight)
+    }
+}

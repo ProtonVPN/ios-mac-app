@@ -4,37 +4,14 @@
     "" : {
 
     },
-    "%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@"
-          }
-        }
-      }
+    " /month" : {
+
     },
-    "%lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld"
-          }
-        }
-      }
+    " /year" : {
+
+    },
+    "%@/month" : {
+
     },
     "Agree and Sign in" : {
 
@@ -2783,6 +2760,9 @@
         }
       }
     },
+    "Includes premium VPN protection for your mobile and desktop (connect up to 10 devices at once)" : {
+
+    },
     "Loading countries" : {
       "comment" : "Informative text when the app is downloading the country list.",
       "localizations" : {
@@ -4562,6 +4542,9 @@
         }
       }
     },
+    "Sign out?" : {
+
+    },
     "Signing out..." : {
       "comment" : "Title of the progress view when user starts signing out",
       "extractionState" : "manual",
@@ -5113,6 +5096,9 @@
         }
       }
     },
+    "To unlock lightning-fast streaming with servers in 100+ countries, subscribe to VPN Plus." : {
+
+    },
     "Unprotected" : {
       "comment" : "State of the VPN connection visible on the home page",
       "extractionState" : "manual",
@@ -5250,6 +5236,12 @@
           }
         }
       }
+    },
+    "Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus" : {
+
+    },
+    "Upgrade your privacy" : {
+
     },
     "Using another device, go to" : {
       "comment" : "1st step of the login process",
@@ -5648,6 +5640,9 @@
           }
         }
       }
+    },
+    "Watch your favorite movies and TV shows on any major streaming platform" : {
+
     },
     "When asked for your verification code, enter" : {
       "comment" : "3rd step of the login process. We append an 8 character code to the end of this string.",
