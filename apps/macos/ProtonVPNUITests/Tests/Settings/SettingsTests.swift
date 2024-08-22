@@ -25,12 +25,13 @@ class SettingsTests: ProtonVPNUITests {
     private let settingsRobot = SettingsRobot()
     
     override func setUp() {
-         super.setUp()
-     }
+        super.setUp()
+        logoutIfNeeded()
+        loginAsPlusUser()
+    }
     
     func testNavigateThroughSettings() {
         
-        logInIfNeeded()
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()

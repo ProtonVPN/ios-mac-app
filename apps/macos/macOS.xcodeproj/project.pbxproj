@@ -85,6 +85,7 @@
 		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		772792C42C590E30008A769A /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772792C32C590E30008A769A /* NetworkUtils.swift */; };
+		7733E1D82C74D88200E28B8D /* ModalsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7733E1D62C74D70000E28B8D /* ModalsRobot.swift */; };
 		7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747E3022C512EDF00A750E1 /* String+Extensions.swift */; };
 		77656B892C46AA4300E730AA /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77656B862C46AA2F00E730AA /* ConnectionTests.swift */; };
 		776AE8D02C73463300596D48 /* AlertRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776AE8CF2C73463300596D48 /* AlertRobot.swift */; };
@@ -614,6 +615,7 @@
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-macOS-UI-Connections.xctestplan"; sourceTree = "<group>"; };
 		772792C32C590E30008A769A /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
+		7733E1D62C74D70000E28B8D /* ModalsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsRobot.swift; sourceTree = "<group>"; };
 		7747E3022C512EDF00A750E1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		77656B862C46AA2F00E730AA /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		776AE8CF2C73463300596D48 /* AlertRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertRobot.swift; sourceTree = "<group>"; };
@@ -1192,6 +1194,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7733E1D52C74D62300E28B8D /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				7733E1D62C74D70000E28B8D /* ModalsRobot.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
 		77656B872C46AA2F00E730AA /* Connections */ = {
 			isa = PBXGroup;
 			children = (
@@ -1249,6 +1259,7 @@
 				B270C2D327BE94AC00EC7B53 /* Components */,
 				B22F330D278E0F6A00DBB8CA /* Settings */,
 				B22F330C278DCF3900DBB8CA /* Login */,
+				7733E1D52C74D62300E28B8D /* Modals */,
 				B22F3305278DC79E00DBB8CA /* Profiles */,
 				B22F3303278DC76C00DBB8CA /* MainRobot.swift */,
 				776AE8CF2C73463300596D48 /* AlertRobot.swift */,
@@ -3126,6 +3137,7 @@
 				7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */,
 				B270C2D927BE984400EC7B53 /* CountriesSectionRobot.swift in Sources */,
 				B22F3307278DC83500DBB8CA /* CreateProfileRobot.swift in Sources */,
+				7733E1D82C74D88200E28B8D /* ModalsRobot.swift in Sources */,
 				B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */,
 				7795C7102C57865900F8AB7A /* ConnectionProtocol.swift in Sources */,
 				B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */,

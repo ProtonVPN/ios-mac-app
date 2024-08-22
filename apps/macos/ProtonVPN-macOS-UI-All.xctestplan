@@ -21,8 +21,8 @@
       "skippedTests" : [
         "AutoConnectTests",
         "ConnectionTests",
-        "MapTests",
-        "SearchTests"
+        "ConnectionTestsDifferentUsers",
+        "MapTests"
       ],
       "target" : {
         "containerPath" : "container:macOS.xcodeproj",

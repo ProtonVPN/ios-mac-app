@@ -21,6 +21,7 @@
       "skippedTests" : [
         "AutoConnectTests",
         "ConnectionTests",
+        "ConnectionTestsDifferentUsers",
         "LoginTests\/testLoginAsTwoFa()",
         "LoginTests\/testLoginWithCorrectCredentials()",
         "LoginTests\/testLoginWithTwoPassUser()",

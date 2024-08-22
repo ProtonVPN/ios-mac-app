@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+import Strings
 
 fileprivate let searchTextField = "SearchTextField"
 fileprivate let clearSearchButton = "ClearSearchButton"
@@ -27,12 +28,12 @@ class CountriesSectionRobot {
     func searchForServer(serverName: String) -> CountriesSectionRobot {
         app.textFields[searchTextField].click()
         app.textFields[searchTextField].typeText(serverName)
-        return CountriesSectionRobot()
+        return self
     }
     
     func clearSearch() -> CountriesSectionRobot {
         app.buttons[clearSearchButton].click()
-        return CountriesSectionRobot()
+        return self
     }
     
     func expandCountry(country: String) -> CountriesSectionRobot {
@@ -40,7 +41,7 @@ class CountriesSectionRobot {
         let cell = app.cells[country]
         // expanding country by clicking on country row
         cell.forceClick()
-        return CountriesSectionRobot()
+        return self
     }
     
     func connectToServer(server: String) -> CountriesSectionRobot {
@@ -61,7 +62,12 @@ class CountriesSectionRobot {
         } else {
             XCTFail("Server '\(server)' was not found")
         }
-        return CountriesSectionRobot()
+        return self
+    }
+    
+    func clickUpgradeBanner() -> ModalsRobot {
+        app.tables[serverListTableId].cells[Localizable.freeConnectionsModalBanner].forceClick()
+        return ModalsRobot()
     }
     
     let verify = Verify()
@@ -70,27 +76,67 @@ class CountriesSectionRobot {
         
         @discardableResult
         func checkCountryExists(_ name: String) -> CountriesSectionRobot {
-            XCTAssertTrue(app.tables[serverListTableId].cells[name].exists)
+            XCTAssertTrue(app.tables[serverListTableId].cells[name].exists, "'\(name)' country does not exist at the servers list table")
             return CountriesSectionRobot()
         }
         
         @discardableResult
-        func checkCountryFound(country: String) -> CountriesSectionRobot {
+        func checkAmountOfLocationsFound(expectedAmount: Int) -> CountriesSectionRobot {
             let serverListTable = app.tables[serverListTableId]
-            XCTAssertTrue(serverListTable.waitForExistence(timeout: 2), "Countries list table does not appear")
-            XCTAssertEqual(serverListTable.tableRows.count, 2, "Country \(country) was not found")
+            let predicate = NSPredicate(format: "value CONTAINS[c] %@ OR value CONTAINS[c] %@", "All locations", "Plus locations")
             
-            let countryCell = serverListTable.cells[country]
-            XCTAssertTrue(countryCell.exists, "\(country) cell is not visible at the countries list table")
+            let locationsCounterCells = serverListTable.staticTexts.matching(predicate).firstMatch
+            
+            let value = locationsCounterCells.value as? String ?? ""
+            let serversFound:Int = extractServerCount(from: value)
+            
+            XCTAssertEqual(serversFound, expectedAmount, "Invalid amount of servers found. Expected: \(expectedAmount), Actual: \(serversFound)")
+            
             return CountriesSectionRobot()
         }
         
         @discardableResult
-        func checkServerExist(server: String) -> CountriesSectionRobot {
+        func checkServerListContain(label: String) -> CountriesSectionRobot {
             let serverListTable = app.tables[serverListTableId]
-            let predicate = NSPredicate(format: "label CONTAINS[c] '\(server)'")
+            let predicate = NSPredicate(format: "label CONTAINS[c] '\(label)'")
             XCTAssertTrue(serverListTable.cells.matching(predicate).firstMatch.exists)
             return CountriesSectionRobot()
+        }
+        
+        @discardableResult
+        func checkUpgradeBannerVisible() -> CountriesSectionRobot {
+            let banner = app.tables[serverListTableId].cells[Localizable.freeConnectionsModalBanner]
+            XCTAssertTrue(banner.waitForExistence(timeout: WaitTimeout.short), "freeConnectionsModalBanner is not visible")
+            return CountriesSectionRobot()
+        }
+        
+        
+        // MARK: Private functions
+        
+        /// Extracts the amount of servers from a string formatted as "All locations (X)"
+        /// where X is the number of servers inside the brackets.
+        /// - Parameter string: The string from which the server count will be extracted.
+        /// - Returns: The number of servers as an `Int` if the extraction is successful, otherwise `0`.
+        private func extractServerCount(from string: String) -> Int {
+            // Use a regular expression to match the pattern with a number inside brackets
+            let pattern = "\\((\\d+)\\)"
+            
+            // Attempt to create a regular expression object
+            guard let regex = try? NSRegularExpression(pattern: pattern) else {
+                return 0
+            }
+            
+            // Search for matches in the string
+            let matches = regex.matches(in: string, range: NSRange(string.startIndex..., in: string))
+            
+            // Extract the first match, which is the number in brackets
+            if let match = matches.first, let range = Range(match.range(at: 1), in: string) {
+                // Convert the substring to an Int and return it
+                return Int(string[range]) ?? 0
+            }
+            
+            // Return 0 if no match was found
+            return 0
         }
     }
 }

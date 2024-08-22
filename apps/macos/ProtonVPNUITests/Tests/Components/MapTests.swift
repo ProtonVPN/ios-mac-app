@@ -25,7 +25,8 @@ class MapTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
-        logInIfNeeded()
+        logoutIfNeeded()
+        loginAsPlusUser()
     }
     
     func testOpenAndHideMap() {
