@@ -77,14 +77,14 @@ class ConnectionTests: ProtonVPNUITests {
         
         sleep(2)
         
-        let protectedIpAddress = try await checkIpAddressChanged(previousIpAddress: unprotectedIpAddress)
+        let protectedIpAddress = try await mainRobot.verify.checkIpAddressChanged(previousIpAddress: unprotectedIpAddress)
         
         mainRobot
             .disconnect()
             .verify
             .checkConnectionCardIsDisconnected()
         
-        try await checkIpAddressChanged(previousIpAddress: protectedIpAddress)
+        try await mainRobot.verify.checkIpAddressChanged(previousIpAddress: protectedIpAddress)
     }
     
     @MainActor
@@ -97,7 +97,7 @@ class ConnectionTests: ProtonVPNUITests {
             .cancelConnecting()
             .verify.checkConnectionCardIsDisconnected()
         
-        try await checkIpAddressUnchanged(previousIpAddress: unprotectedIpAddress)
+        try await mainRobot.verify.checkIpAddressUnchanged(previousIpAddress: unprotectedIpAddress)
     }
     
     @MainActor
@@ -211,16 +211,5 @@ class ConnectionTests: ProtonVPNUITests {
             .quickConnectToAServer()
             .waitForConnected(with: connectionProtocol)
             .verify.checkConnectionCardIsConnected(with: connectionProtocol)
-    }
-    
-    private func checkIpAddressChanged(previousIpAddress: String) async throws -> String {
-        let currentIpAddress = try await NetworkUtils.getIpAddress()
-        XCTAssertTrue(currentIpAddress != previousIpAddress, "IP address is not changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
-        return currentIpAddress
-    }
-    
-    private func checkIpAddressUnchanged(previousIpAddress: String) async throws {
-        let currentIpAddress = try await NetworkUtils.getIpAddress()
-        XCTAssertEqual(currentIpAddress, previousIpAddress, "IP address has been changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
     }
 }

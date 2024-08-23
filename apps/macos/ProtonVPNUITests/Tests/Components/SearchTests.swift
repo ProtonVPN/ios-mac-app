@@ -47,7 +47,7 @@ class SearchTests: ProtonVPNUITests {
         countriesSelectionRobot
             .verify.checkUpgradeBannerVisible()
             .clickUpgradeBanner()
-            .verify.checkModalAppear(type: ModalType.allCountries(numberOfServers: 1, numberOfCountries: 1))
+            .verify.checkModalAppear(type: ModalType.allCountries)
             .closeModal()
         
         countriesSelectionRobot
