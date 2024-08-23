@@ -31,9 +31,9 @@ class MapTests: ProtonVPNUITests {
     
     func testOpenAndHideMap() {
         mapRobot
-            .showMapClick()
+            .clickShowMap()
             .verify.checkMapIsOpen()
-            .hideMapClick()
+            .clickHideMap()
             .verify.checkMapIsHidden()
     }
 }
