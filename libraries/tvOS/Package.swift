@@ -17,7 +17,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.12.1"),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.16.0"),
         .package(path: "../../external/protoncore"),
-        .package(path: "../../external/PaymentsNG"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),
@@ -33,11 +32,11 @@ let package = Package(
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
-                .product(name: "PaymentsNG", package: "PaymentsNG"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
+                .core(module: "Payments"),
                 .core(module: "UIFoundations"),
                 .core(module: "Services")
             ],

@@ -18,71 +18,75 @@
 
 import Foundation
 import Dependencies
-import PaymentsNG
-import struct StoreKit.Product
-import struct StoreKit.Transaction
+import StoreKit
+import ProtonCorePayments
+import struct Ergonomics.GenericError
 
-enum PaymentsEnvironment: DependencyKey {
-    static let liveValue: EnvURLType = .custom(envUrl: "vpn-api.proton.me")
+struct PlanIAPTuple: Identifiable, Equatable {
+    let planOption: PlanOption
+    let iap: InAppPurchasePlan
+    var id: UUID { planOption.id }
+}
+
+enum PaymentsError: Error {
+    case unfinishedPurchaseInQueue
+    case planNotFound
 }
 
 struct PaymentsClient: Sendable, DependencyKey {
 
-    var setHeaders: @Sendable ([APIHeader: String]) async -> Void
-    var getOptions: @Sendable () async throws -> [Product]
-    var attemptPurchase: @Sendable (Product) async throws -> Void
+    var startObserving: @Sendable () async throws -> Void
+    var getOptions: @Sendable () async throws -> [PlanIAPTuple]
+    var attemptPurchase: @Sendable (PlanIAPTuple) async -> PurchaseResult
 
     static var liveValue: PaymentsClient = {
-        let environment = Dependency(\.paymentsEnvironment).wrappedValue
-        let credentials = Dependency(\.authKeychain).wrappedValue.fetch()! // TODO: Let's handle this more gracefully if possible
-
-        let remoteManager = RemoteManager(requestHTTPHeader: [
-            .appVersion: "appletv-vpn@1.0.0-dev", // TODO: use real dependency
-            .sessionId: credentials.sessionId,
-            .authorization: credentials.accessToken,
-            .accept: "application/vnd.protonmail.v1+json",
-            .contentType: "application/json"
-        ])
-
-        let storeKitWrapper = StoreKitWrapper(environment: environment, remoteManager: remoteManager)
-
-        let outsideTransactions = Task {
-            // Iterate through any transactions that don't come from a direct call to `purchase()`.
-            // Skipping this results in a runtime warning from StoreKit.
-            // Could it lead to the StoreKit purchase not being recognised by ChargeBee -> VPN backend?
-            for await verificationResult in Transaction.updates {
-                guard case .verified(let transaction) = verificationResult else {
-                    log.error("Unverified transaction")
-                    return
-                }
-
-                log.info("Processing outside transaction: \(transaction)")
-                // Is this something PaymentsNG should handle?
-                // storeKitWrapper.processTransaction(transaction)
-            }
-        }
+        let payments = Dependency(\.paymentsService).wrappedValue
+        let delegate = StoreKitDelegate()
 
         return .init(
-            setHeaders: { headers in
-                // TODO: Update headers
-                // `RemoteManager` uses headers passed to it on initialisation.
-                // If the user changes, or the access token expires, we will run into problems until the headers are updated
-                // At the moment, at the time of initialization of PaymentsClient, we will pass the correct headers.
-                // But if the user logs out, and back in, it will try to reuse the previous user's session ID and access token.
+            startObserving: {
+                // Process subscription renewal transactions and missed transactions
+                // (user purchased IAP subscription, but app failed to notify Proton backend)
+                await payments.startObservingPaymentQueue(delegate: delegate)
+                try await payments.updateServiceIAPAvailability()
             },
             getOptions: {
-                let plansRequest = RequestType.availablePlans(currency: nil, vendor: "apple", state: nil, timeStamp: nil)
-                let plansRequestURL = try PaymentsAPIs(envURL: environment).url(for: plansRequest)
-                let plansResponse: AvailablePlans = try await remoteManager.getFromURL(plansRequestURL.url)
-
-                let plans = plansResponse.plans.filter { $0.name == "vpn2022" }
-                let instances = plans.flatMap { $0.instances }
-                let ids = instances.compactMap { $0.vendors.apple?.productID }
-
-                return await storeKitWrapper.getStoreProducts(ids)
+                let plansDataSource = try payments.plansDataSource
+                try await plansDataSource.fetchAvailablePlans()
+                let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
+                    plan.name == "vpn2022"
+                }.first // it's only going to be one with this plan name
+                guard let vpn2022 else {
+                    // If the plan is missing, we could even be a paid user shown this flow by mistake
+                    throw PaymentsError.planNotFound
+                }
+                return vpn2022.instances
+                    .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
+                    .compactMap { iAP -> PlanIAPTuple? in
+                        guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
+                              let period = iAP.period,
+                              let duration = PlanDuration(components: .init(month: Int(period)))
+                        else { return nil }
+                        let planOption = PlanOption(
+                            id: UUID(),
+                            duration: duration,
+                            price: .init(
+                                amount: priceLabel.value.doubleValue,
+                                currency: iAP.currency ?? "",
+                                locale: priceLabel.locale
+                            )
+                        )
+                        return PlanIAPTuple(planOption: planOption, iap: iAP)
+                    }
             },
             attemptPurchase: { product in
-                try await storeKitWrapper.purchase(product, planName: product.displayName, planCycle: 1)
+                if payments.storeKitManager.hasUnfinishedPurchase() {
+                    log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
+                    return .purchaseError(error: PaymentsError.unfinishedPurchaseInQueue, processingPlan: nil)
+                }
+                return await withCheckedContinuation {
+                    payments.purchaseManager.buyPlan(plan: product.iap, finishCallback: $0.resume(returning:))
+                }
             }
         )
     }()
@@ -90,13 +94,35 @@ struct PaymentsClient: Sendable, DependencyKey {
 }
 
 extension DependencyValues {
-    var paymentsEnvironment: EnvURLType {
-        get { self[PaymentsEnvironment.self] }
-        set { self[PaymentsEnvironment.self] = newValue }
-    }
 
     var paymentsClient: PaymentsClient {
         get { self[PaymentsClient.self] }
         set { self[PaymentsClient.self] = newValue }
+    }
+}
+
+final class StoreKitDelegate: StoreKitManagerDelegate {
+    let tokenStorage: PaymentTokenStorage? = TransientTokenStorage()
+    let isUnlocked: Bool = true
+    var isSignedIn: Bool { Dependency(\.authKeychain).wrappedValue.username != nil }
+    var activeUsername: String? { Dependency(\.authKeychain).wrappedValue.username }
+    var userId: String? { Dependency(\.authKeychain).wrappedValue.userId }
+}
+
+final class TransientTokenStorage: PaymentTokenStorage {
+    var token: PaymentToken?
+
+    init() { }
+
+    func add(_ token: PaymentToken) {
+        self.token = token
+    }
+
+    func get() -> PaymentToken? {
+        token
+    }
+
+    func clear() {
+        token = nil
     }
 }

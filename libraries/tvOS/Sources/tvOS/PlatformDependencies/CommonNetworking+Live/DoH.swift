@@ -39,8 +39,8 @@ extension DoHVPN {
             apiHost: apiHost,
             verifyHost: humanVerificationV3Host,
             alternativeRouting: alternativeRouting,
-            customHost: customHost,
-            atlasSecret: atlasSecret,
+            customHost: "https://salam.proton.black/api", // TODO: revert to customHost after finishing developing
+            atlasSecret: your-token-here, // TODO: rever to atlasSecret
             isConnected: false, // we can refactor this to be more TCA friendly in the future
             isAppStateNotificationConnected: { _ in false }
         )

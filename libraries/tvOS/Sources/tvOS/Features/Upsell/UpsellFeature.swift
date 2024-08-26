@@ -19,25 +19,27 @@
 import Foundation
 import ComposableArchitecture
 import Dependencies
-import StoreKit
+import enum ProtonCorePayments.PurchaseResult
 
 @Reducer
 struct UpsellFeature {
     @Dependency(\.paymentsClient) var client
+    @Dependency(\.alertService) var alertService
 
     public typealias ActionSender = (Action) -> Void
 
     enum Action {
         case loadProducts
-        case finishedLoadingProducts(Result<[Product], Error>)
-        case attemptPurchase(Product)
+        case finishedLoadingProducts(Result<[PlanIAPTuple], Error>)
+        case attemptPurchase(PlanIAPTuple)
+        case finishedPurchasing(PurchaseResult)
         case onExit
     }
 
     @ObservableState
     enum State: Equatable {
         case loading
-        case loaded([Product])
+        case loaded([PlanIAPTuple])
     }
 
     var body: some Reducer<State, Action> {
@@ -45,26 +47,61 @@ struct UpsellFeature {
             switch action {
             case .loadProducts:
                 return .run { send in
-                    await send(.finishedLoadingProducts(Result { try await client.getOptions() }))
+                    await send(.finishedLoadingProducts(Result {
+                        try await client.startObserving()
+                        return try await client.getOptions()
+                    }))
                 }
 
             case .finishedLoadingProducts(.success(let products)):
-                let sortedProducts = products.sorted(by: {
-                    guard let lhsUnit = $0.subscription?.subscriptionPeriod.unit,
-                          let rhsUnit = $1.subscription?.subscriptionPeriod.unit else { return false }
-                     return lhsUnit > rhsUnit // sort by unit, for example, .year is before .month.
-                })
-                state = .loaded(sortedProducts)
+//                let sortedProducts = products.sorted(by: {
+//                    guard let lhsUnit = $0.subscription?.subscriptionPeriod.unit,
+//                          let rhsUnit = $1.subscription?.subscriptionPeriod.unit else { return false }
+//                     return lhsUnit > rhsUnit // sort by unit, for example, .year is before .month.
+//                })
+//                state = .loaded(sortedProducts)
+                state = .loaded(products)
                 return .none
 
             case .finishedLoadingProducts(.failure(let error)):
+                log.error("Failed to load products with error: \(error)")
                 return .none
 
             case .attemptPurchase(let product):
                 return .run { send in
-                    try await client.attemptPurchase(product)
+                    await send(.finishedPurchasing(await client.attemptPurchase(product)))
                 }
-                
+
+            case .finishedPurchasing(.purchasedPlan(let plan)):
+                log.debug("Purchased plan: \(plan.protonName)", category: .iap)
+                // TODO: reload properties
+                return .send(.onExit)
+
+            case .finishedPurchasing(.purchaseCancelled):
+                log.debug("Purchase cancelled")
+                // TODO: undo loading state?
+                return .none
+
+            case .finishedPurchasing(.planPurchaseProcessingInProgress(let plan)):
+                log.debug("Purchasing \(plan.protonName)", category: .iap)
+                return .none
+
+            case .finishedPurchasing(.purchaseError(let error, _)):
+                log.error("Purchase failed: \(error)")
+                return .run { _ in await alertService.feed(error) }
+
+            case .finishedPurchasing(.apiMightBeBlocked(let message, let originalError, _)):
+                log.error("Purchase failed: \(message)")
+                return .run { _ in await alertService.feed(originalError) }
+
+            case .finishedPurchasing(.renewalNotification):
+                log.debug("Notification of automatic renewal arrived", category: .iap)
+                return .none
+
+            case .finishedPurchasing(.toppedUpCredits):
+                log.assertionFailure("Unsupported result: \(PurchaseResult.toppedUpCredits)")
+                return .none
+
             case .onExit:
                 return .none
             }

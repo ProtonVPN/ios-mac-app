@@ -21,7 +21,7 @@ import struct StoreKit.Product
 
 struct PurchaseOptionsView: View {
     
-    let products: [Product]
+    let products: [PlanIAPTuple]
 
     let sendAction: UpsellFeature.ActionSender
 
@@ -31,7 +31,8 @@ struct PurchaseOptionsView: View {
                 Button {
                     sendAction(.attemptPurchase(product))
                 } label: {
-                    buttonContent(product: product)
+//                    buttonContent(product: product)
+                    Text("\(product)")
                 }
                 .buttonStyle(UpsellButtonStyle())
             }

@@ -29,15 +29,6 @@
         }
       },
       {
-        "package": "CollectionConcurrencyKit",
-        "repositoryURL": "https://github.com/JohnSundell/CollectionConcurrencyKit.git",
-        "state": {
-          "branch": null,
-          "revision": "b4f23e24b5a1bff301efc5e70871083ca029ff95",
-          "version": "0.2.0"
-        }
-      },
-      {
         "package": "combine-schedulers",
         "repositoryURL": "https://github.com/pointfreeco/combine-schedulers",
         "state": {
@@ -170,15 +161,6 @@
           "branch": null,
           "revision": "c9a692ba837f4832ec7ce6378c071cb91cb55f92",
           "version": "8.29.0"
-        }
-      },
-      {
-        "package": "SourceKitten",
-        "repositoryURL": "https://github.com/jpsim/SourceKitten.git",
-        "state": {
-          "branch": null,
-          "revision": "fd4df99170f5e9d7cf9aa8312aa8506e0e7a44e7",
-          "version": "0.35.0"
         }
       },
       {
@@ -344,15 +326,6 @@
         }
       },
       {
-        "package": "SwiftLint",
-        "repositoryURL": "https://github.com/realm/SwiftLint",
-        "state": {
-          "branch": null,
-          "revision": "b515723b16eba33f15c4677ee65f3fef2ce8c255",
-          "version": "0.55.1"
-        }
-      },
-      {
         "package": "SwiftOTP",
         "repositoryURL": "https://github.com/lachlanbell/SwiftOTP.git",
         "state": {
@@ -380,24 +353,6 @@
         }
       },
       {
-        "package": "SwiftyTextTable",
-        "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
-        "state": {
-          "branch": null,
-          "revision": "c6df6cf533d120716bff38f8ff9885e1ce2a4ac3",
-          "version": "0.9.0"
-        }
-      },
-      {
-        "package": "SWXMLHash",
-        "repositoryURL": "https://github.com/drmohundro/SWXMLHash.git",
-        "state": {
-          "branch": null,
-          "revision": "a853604c9e9a83ad9954c7e3d2a565273982471f",
-          "version": "7.0.2"
-        }
-      },
-      {
         "package": "TrustKit",
         "repositoryURL": "https://github.com/ProtonMail/TrustKit",
         "state": {
@@ -422,15 +377,6 @@
           "branch": null,
           "revision": "357ca1e5dd31f613a1d43320870ebc219386a495",
           "version": "1.2.2"
-        }
-      },
-      {
-        "package": "Yams",
-        "repositoryURL": "https://github.com/jpsim/Yams.git",
-        "state": {
-          "branch": null,
-          "revision": "3036ba9d69cf1fd04d433527bc339dc0dc75433d",
-          "version": "5.1.3"
         }
       }
     ]

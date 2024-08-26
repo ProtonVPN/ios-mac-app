@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import CommonNetworking
+import ProtonCoreFeatureFlags
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
@@ -94,6 +95,7 @@ struct AppFeature {
         Reduce { state, action in
             switch action {
             case .onAppearTask:
+                setFeatureFlagOverrides()
                 var effects: [Effect<AppFeature.Action>] = [
                     .run { send in
                         for await alert in await alertService.alerts() {
@@ -192,5 +194,9 @@ struct AppFeature {
         }
     } message: {
         TextState("Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus")
+    }
+
+    private func setFeatureFlagOverrides() {
+        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
     }
 }

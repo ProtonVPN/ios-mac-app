@@ -1,13 +1,10 @@
 [submodule "external/protoncore"]
 	path = external/protoncore
 	url = ../../shared/protoncore
-	tag = 25.3.3
+	branch = cj/fix/payments-tvos-support
 [submodule "external/apple-fusion"]
 	path = external/apple-fusion
 	url = ../../../tpe/apple-fusion
 [submodule "external/wireguard-apple"]
 	path = external/wireguard-apple
 	url = https://github.com/ProtonVPN/wireguard-apple.git
-[submodule "PaymentsNG"]
-	path = external/PaymentsNG
-	url = git@gitlab.protontech.ch:Payments/PaymentsNG.git
