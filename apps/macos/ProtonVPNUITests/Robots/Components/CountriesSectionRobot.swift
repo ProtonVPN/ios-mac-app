@@ -88,7 +88,7 @@ class CountriesSectionRobot {
             let locationsCounterCells = serverListTable.staticTexts.matching(predicate).firstMatch
             
             let value = locationsCounterCells.value as? String ?? ""
-            let serversFound:Int = extractServerCount(from: value)
+            let serversFound: Int = extractServerCount(from: value)
             
             XCTAssertEqual(serversFound, expectedAmount, "Invalid amount of servers found. Expected: \(expectedAmount), Actual: \(serversFound)")
             
@@ -110,6 +110,12 @@ class CountriesSectionRobot {
             return CountriesSectionRobot()
         }
         
+        @discardableResult
+        func checkWrongCountryBannerVisible() -> CountriesSectionRobot {
+            let banner = app.tables[serverListTableId].cells[Localizable.wrongCountryBannerText]
+            XCTAssertTrue(banner.waitForExistence(timeout: WaitTimeout.short), "wrongCountryBannerText is not visible")
+            return CountriesSectionRobot()
+        }
         
         // MARK: Private functions
         

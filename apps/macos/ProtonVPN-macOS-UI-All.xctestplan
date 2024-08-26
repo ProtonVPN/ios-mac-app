@@ -22,6 +22,7 @@
         "AutoConnectTests",
         "ConnectionTests",
         "ConnectionTestsDifferentUsers",
+        "ConnectionTestsFreeUser",
         "MapTests"
       ],
       "target" : {

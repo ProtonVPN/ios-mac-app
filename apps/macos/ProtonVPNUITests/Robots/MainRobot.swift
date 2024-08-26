@@ -122,6 +122,21 @@ class MainRobot {
     func getProtocolLabelValue() -> String {
         return app.staticTexts[protocolLabelField].value as? String ?? ""
     }
+    
+    func isAbleToChangeServer() -> Bool {
+        return app.buttons[Localizable.changeServer].exists
+    }
+    
+    func clickChangeServer() -> MainRobot {
+        let changeServerButton = app.buttons[Localizable.changeServer]
+        if changeServerButton.exists {
+            changeServerButton.forceClick()
+        } else {
+            let changeServerLabel = app.staticTexts[Localizable.changeServer]
+            changeServerLabel.forceClick()
+        }
+        return self
+    }
 
     let verify = Verify()
     
@@ -149,7 +164,8 @@ class MainRobot {
         
         @discardableResult
         func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol,
-                                            to connectedCountry: String? = nil) -> MainRobot {
+                                            to connectedCountry: String? = nil,
+                                            userType: UserType? = nil) -> MainRobot {
             // verify Disconnect button appears
             XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: WaitTimeout.normal), "Connection card is not connected. '\(Localizable.disconnect)' button not found.")
             
@@ -169,6 +185,23 @@ class MainRobot {
             // verify header label contain country code
             validateHeaderLabel(value: connectedCountry)
             
+            if case .Free = userType {
+                let predicate = NSPredicate(format: "value CONTAINS[c] %@", Localizable.changeServer)
+                let changeServerButton = app.buttons[Localizable.changeServer]
+                let changeServerTextField = app.staticTexts.matching(predicate).firstMatch
+                
+                
+                XCTAssertTrue(changeServerButton.exists || changeServerTextField.exists, "'\(Localizable.changeServer)' button is not visible when it shoudl be")
+                // verify header label contain "FREE" text
+                validateHeaderLabel(value: "FREE")
+            }
+            
+            return MainRobot()
+        }
+        
+        func checkConnectedServerContain(label: String) -> MainRobot {
+            // verify header label contain label
+            validateHeaderLabel(value: label)
             return MainRobot()
         }
         
@@ -194,6 +227,25 @@ class MainRobot {
             }
 
             return MainRobot()
+        }
+        
+        func checkConnectedServerChanged(connectedServer: String) -> MainRobot {
+            let actualConnectedServer = MainRobot().getConnectedCountry()
+            
+            XCTAssertNotEqual(connectedServer, actualConnectedServer, "Connected server is not changed")
+            
+            return MainRobot()
+        }
+        
+        func checkIpAddressChanged(previousIpAddress: String) async throws -> String {
+            let currentIpAddress = try await NetworkUtils.getIpAddress()
+            XCTAssertTrue(currentIpAddress != previousIpAddress, "IP address is not changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
+            return currentIpAddress
+        }
+        
+        func checkIpAddressUnchanged(previousIpAddress: String) async throws {
+            let currentIpAddress = try await NetworkUtils.getIpAddress()
+            XCTAssertEqual(currentIpAddress, previousIpAddress, "IP address has been changed. Previous ip address: \(previousIpAddress), current IP address: \(currentIpAddress)")
         }
 
         // MARK: private methods
