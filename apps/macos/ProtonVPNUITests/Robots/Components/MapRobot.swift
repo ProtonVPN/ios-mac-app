@@ -26,16 +26,16 @@ fileprivate let connectImage = "ConnectImage"
 
 class MapRobot {
     
-    func showMapClick() -> MapRobot {
+    func clickShowMap() -> MapRobot {
         if app.buttons[hideMapButton].isHittable {
             return self
         }
-        XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: WaitTimeout.normal))
         app.buttons[showMapButton].click()
         return self
     }
     
-    func hideMapClick() -> MapRobot {
+    func clickHideMap() -> MapRobot {
         app.buttons[hideMapButton].click()
         return self
     }
@@ -46,16 +46,16 @@ class MapRobot {
 
         @discardableResult
         func checkMapIsOpen() -> MapRobot {
-            XCTAssertTrue(app.buttons[hideMapButton].exists)
-            XCTAssertTrue(app.staticTexts[statusDisconnected].waitForExistence(timeout: 2))
+            XCTAssertTrue(app.buttons[hideMapButton].waitForExistence(timeout: WaitTimeout.short))
+            XCTAssertTrue(app.staticTexts[statusDisconnected].waitForExistence(timeout: WaitTimeout.short))
             XCTAssertTrue(app.images[connectImage].exists)
             return MapRobot()
         }
         
         @discardableResult
         func checkMapIsHidden() -> MapRobot {
-            XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: 2))
-            XCTAssertFalse(app.staticTexts[statusDisconnected].waitForExistence(timeout: 2))
+            XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: WaitTimeout.short))
+            XCTAssertFalse(app.staticTexts[statusDisconnected].waitForExistence(timeout: WaitTimeout.short))
             XCTAssertFalse(app.images[connectImage].exists)
             return MapRobot()
         }

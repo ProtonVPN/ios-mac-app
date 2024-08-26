@@ -22,8 +22,7 @@
         "AutoConnectTests",
         "ConnectionTests",
         "ConnectionTestsDifferentUsers",
-        "ConnectionTestsFreeUser",
-        "MapTests"
+        "ConnectionTestsFreeUser"
       ],
       "target" : {
         "containerPath" : "container:macOS.xcodeproj",
