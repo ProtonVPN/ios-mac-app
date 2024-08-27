@@ -27,17 +27,6 @@ public struct ConnectionCardModel {
 
     }
 
-    public func headerText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
-        switch vpnConnectionStatus {
-        case .disconnected, .disconnecting:
-            return Localizable.connectionCardLastConnectedTo
-        case .connected:
-            return Localizable.connectionCardSafelyBrowsingFrom
-        case .connecting, .loadingConnectionInfo:
-            return Localizable.connectionCardConnectingTo
-        }
-    }
-
     public func accessibilityText(for vpnConnectionStatus: VPNConnectionStatus,
                            countryName: String) -> String {
         switch vpnConnectionStatus {

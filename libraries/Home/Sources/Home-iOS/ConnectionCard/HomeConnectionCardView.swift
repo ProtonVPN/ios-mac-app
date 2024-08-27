@@ -41,53 +41,42 @@ struct HomeConnectionCardView: View {
     var vpnConnectionStatus: VPNConnectionStatus
     let sendAction: HomeFeature.ActionSender
 
-    var accessibilityText: String {
+    init(item: RecentConnection,
+         vpnConnectionStatus: VPNConnectionStatus,
+         sendAction: @escaping HomeFeature.ActionSender = { _ in }) {
+        self.item = item
+        self.vpnConnectionStatus = vpnConnectionStatus
+        self.sendAction = sendAction
+    }
+
+    private var accessibilityText: String {
         let countryName = item.connection.location.text(locale: locale)
         return model.accessibilityText(for: vpnConnectionStatus, countryName: countryName)
     }
 
-    var header: some View {
-        HStack {
-            Text(model.headerText(for: vpnConnectionStatus))
-                .themeFont(.caption())
-                .styled()
-            Spacer()
-//            Text(Localizable.actionHelp)
-//                .themeFont(.caption(emphasised: true))
-//                .styled(.weak)
-//            IconProvider.questionCircle
-//                .resizable()
-//                .styled(.weak)
-//                .frame(.square(16)) // TODO: add in redesign phase 2
-        }
+    private var header: some View {
+        HomeConnectionCardTitleView(connectionStatus: vpnConnectionStatus,
+                                    isFreeUser: false, // TODO: [redesign] add info about free user
+                                    hasRecents: false, // TODO: [redesign] add info about recents
+                                    changingServer: false) // TODO: [redesign] add info about changing server
         .padding(.bottom, .themeSpacing8)
         .padding(.top, .themeSpacing24)
-    }
-
-    var vpnConnectionActual: VPNConnectionActual? {
-        switch vpnConnectionStatus {
-        case .disconnected:
-            return nil
-        case .connected(_, let vpnConnectionActual),
-             .connecting(_, let vpnConnectionActual),
-             .loadingConnectionInfo(_, let vpnConnectionActual),
-             .disconnecting(_, let vpnConnectionActual):
-            return vpnConnectionActual
-        }
     }
 
     var card: some View {
         VStack {
             HStack {
-                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: vpnConnectionActual, withDivider: false)
+                ConnectionFlagInfoView(intent: item.connection,
+                                       vpnConnectionActual: vpnConnectionStatus.actual,
+                                       withDivider: false)
                 Spacer()
 
                 if vpnConnectionStatus.connectionStatusAvailable {
-                    Button(action: {
+                    Button() {
                         sendAction(.showConnectionDetails)
-                    }, label: {
-                        IconProvider.chevronUp
-                    })
+                    } label: {
+                        IconProvider.chevronRight
+                    }
                     .foregroundColor(Color(.icon, .weak))
                 }
             }
@@ -110,12 +99,8 @@ struct HomeConnectionCardView: View {
                 }
             } label: {
                 Text(model.buttonText(for: vpnConnectionStatus))
-                    .frame(maxWidth: .infinity, minHeight: 48)
-                    .foregroundColor(Color(.text, .primary))
-                    .background(Color(.background, .interactive))
-                    .cornerRadius(.themeRadius8)
             }
-            .padding([.horizontal, .bottom])
+            .buttonStyle(ConnectButtonStyle(isDisconnected: vpnConnectionStatus == .disconnected))
         }
         .background(Color(.background, .weak))
         .themeBorder(color: Color(.border, .strong),
@@ -137,38 +122,88 @@ struct HomeConnectionCardView: View {
     }
 }
 
-extension VPNConnectionStatus {
-    fileprivate var connectionStatusAvailable: Bool {
-        switch self {
-        case .disconnected, .connecting, .loadingConnectionInfo, .disconnecting:
-            return false
-
-        case .connected:
-            return true
-        }
+fileprivate extension VPNConnectionStatus {
+    var connectionStatusAvailable: Bool {
+        guard case .connected = self else { return false }
+        return true
     }
 }
 
-#Preview {
-    guard #available(iOS 17, *) else { return EmptyView() }
+@available(iOS 17, *)
+#Preview("Standard", traits: .fixedLayout(width: 740, height: 1100)) {
+    HStack(spacing: .themeSpacing24) {
+        cardSet(status: .disconnected)
+        cardSet(status: .connected(.mock(), .mock()))
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
 
-    let store: StoreOf<HomeFeature> =
-        .init(initialState:
-                .init(connections: [
-                    RecentConnection(pinned: false,
-                                     underMaintenance: false,
-                                     connectionDate: .now,
-                                     connection: .init(location: .fastest,
-                                                       features: []))
-                ],
-                      connectionStatus: .init(),
-                      vpnConnectionStatus: .disconnected),
-              reducer: { HomeFeature() }
-        )
+@available(iOS 17, *)
+#Preview("Secure Core", traits: .fixedLayout(width: 740, height: 700)) {
+    HStack(spacing: .themeSpacing24) {
+        secureCoreCardSet(status: .disconnected)
+        secureCoreCardSet(status: .connected(.mock(), .mock()))
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
 
-    return HomeConnectionCardView(
-        item: store.state.connections.first!,
-        vpnConnectionStatus: store.state.vpnConnectionStatus,
-        sendAction: { _ = store.send($0) }
-    )
+@available(iOS 17, *)
+#Preview("Connection Features", traits: .fixedLayout(width: 740, height: 900)) {
+    HStack(spacing: .themeSpacing24) {
+        featuresCardSet(status: .disconnected)
+        featuresCardSet(status: .connected(.mock(), .mock().withAllFeatures()))
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+}
+
+@available(iOS 17, *)
+fileprivate func featuresCardSet(status: VPNConnectionStatus) -> some View {
+    VStack {
+        HomeConnectionCardView(item: .defaultFastest.withAllFeatures(),
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionRegion.withAllFeatures(),
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionCity.withAllFeatures(),
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionCity.withServer(server: 12).withAllFeatures(),
+                               vpnConnectionStatus: status)
+    }
+}
+
+@available(iOS 17, *)
+fileprivate func secureCoreCardSet(status: VPNConnectionStatus) -> some View {
+    VStack {
+        HomeConnectionCardView(item: .connectionSecureCoreFastest,
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionSecureCoreFastestHop,
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionSecureCore,
+                               vpnConnectionStatus: status)
+    }
+}
+
+@available(iOS 17, *)
+fileprivate func cardSet(status: VPNConnectionStatus) -> some View {
+    VStack {
+        HomeConnectionCardView(item: .defaultFastest,
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionRegion,
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionCity,
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .connectionCity.withServer(server: 30),
+                               vpnConnectionStatus: status)
+        HomeConnectionCardView(item: .previousFreeConnection,
+                               vpnConnectionStatus: status)
+    }
+}
+
+extension ConnectionSpec {
+    static func mock() -> Self {
+        .init(location: .fastest,
+              features: [])
+    }
 }

@@ -40,7 +40,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
     public enum Location: Equatable, Hashable, Codable {
         case fastest
         case region(code: String)
-        case exact(Server, number: Int, subregion: String?, regionCode: String)
+        case exact(Server, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
     }
 
@@ -80,5 +80,16 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
     /// Default intent that is set before user asks for any
     public init() {
         self.init(location: .exact(.free, number: 1, subregion: nil, regionCode: "PL"), features: [])
+    }
+}
+
+public extension ConnectionSpec.Location {
+    func withServer(number: Int) -> Self {
+        switch self {
+        case let .exact(server, _, subregion, regionCode):
+            return .exact(server, number: number, subregion: subregion, regionCode: regionCode)
+        default:
+            return self
+        }
     }
 }
