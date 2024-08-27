@@ -20,7 +20,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9"),
-        .package(url: "https://github.com/groue/GRDB.swift", exact: "6.23.0"),
+        .package(url: "https://github.com/groue/GRDB.swift", exact: "6.29.2"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
     ],
     targets: [
