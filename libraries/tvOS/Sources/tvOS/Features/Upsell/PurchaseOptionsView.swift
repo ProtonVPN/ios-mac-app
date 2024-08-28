@@ -45,9 +45,6 @@ struct PurchaseOptionsView: View {
         if let subscription = product.subscription {
             HStack(spacing: .themeSpacing16) {
                 headlineText("\(subscription.subscriptionPeriod)")
-                if subscription.subscriptionPeriod.unit == .year {
-                    badge(discount: 35)
-                }
                 Spacer()
                 if subscription.subscriptionPeriod.unit == .year {
                     VStack {
@@ -92,7 +89,7 @@ struct PurchaseOptionsView: View {
             .foregroundStyle(Color(.text, .inverted))
             .background(Color(.icon, .vpnGreen))
             .cornerRadius(.themeRadius8)
-            .hidden() // TODO: Actually calculate the discount and unhide the badge
+            .hidden()
     }
 
     // MARK: Legacy ProtonCorePayments
@@ -105,9 +102,6 @@ struct PurchaseOptionsView: View {
         let pricePerMonthString = PriceFormatter.formatPlanPrice(price: planOption.pricePerMonth, locale: planPrice.locale)
         HStack(spacing: .themeSpacing16) {
             headlineText(subscriptionPeriod(for: planOption))
-            if planDuration == .oneYear || planDuration == .twelveMonths {
-                badge(discount: 35)
-            }
             Spacer()
             if planDuration == .oneYear || planDuration == .twelveMonths {
                 VStack {

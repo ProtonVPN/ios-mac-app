@@ -23,21 +23,22 @@ import ComposableArchitecture
 import struct StoreKit.Product
 
 struct UpsellView: View {
+    private static let columnWidth: CGFloat = 780
 
     var store: StoreOf<UpsellFeature>
 
     var body: some View {
         HStack(alignment: .center) {
             UpsellCoaxingView()
-                .frame(width: 780)
+                .frame(width: Self.columnWidth)
             switch store.state {
-            case .loading:
+            case .loaded(let products, false):
+                PurchaseOptionsView(products: products, sendAction: { _ = store.send($0) })
+                    .frame(width: Self.columnWidth)
+
+            default:
                 ProgressView()
-                    .frame(width: 780)
-            case .loaded(let products):
-                PurchaseOptionsView(products: products,
-                                    sendAction: { _ = store.send($0) })
-                    .frame(width: 780)
+                    .frame(width: Self.columnWidth)
             }
         }
         .onExitCommand {
