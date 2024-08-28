@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
+import Modals // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import struct StoreKit.Product
 
 struct PurchaseOptionsView: View {
@@ -31,8 +33,7 @@ struct PurchaseOptionsView: View {
                 Button {
                     sendAction(.attemptPurchase(product))
                 } label: {
-//                    buttonContent(product: product)
-                    Text("\(product)")
+                    buttonContent(planOption: product.planOption)
                 }
                 .buttonStyle(UpsellButtonStyle())
             }
@@ -93,5 +94,82 @@ struct PurchaseOptionsView: View {
             .cornerRadius(.themeRadius8)
             .hidden() // TODO: Actually calculate the discount and unhide the badge
     }
+
+    // MARK: Legacy ProtonCorePayments
+
+    @ViewBuilder
+    private func buttonContent(planOption: PlanOption) -> some View {
+        let planDuration = planOption.duration
+        let planPrice = planOption.price
+        let planPriceString = PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale)
+        let pricePerMonthString = PriceFormatter.formatPlanPrice(price: planOption.pricePerMonth, locale: planPrice.locale)
+        HStack(spacing: .themeSpacing16) {
+            headlineText(subscriptionPeriod(for: planOption))
+            if planDuration == .oneYear || planDuration == .twelveMonths {
+                badge(discount: 35)
+            }
+            Spacer()
+            if planDuration == .oneYear || planDuration == .twelveMonths {
+                VStack {
+                    headlineText(planPriceString)
+                    + bodyText(" /year")
+                    bodyText("\(pricePerMonthString) /month")
+                }
+            } else if planDuration == .oneMonth {
+                headlineText(planPriceString)
+                + bodyText(" /month")
+            } else {
+                headlineText(planPriceString)
+            }
+        }
+    }
+
+    private static let dateComponentsFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        return formatter
+    }()
+
+    private func subscriptionPeriod(for planOption: PlanOption) -> String {
+        Self.dateComponentsFormatter.string(from: planOption.duration.components)
+            ?? planOption.duration.components.fallbackDuration
+    }
 }
 
+enum PriceFormatter {
+    private static var formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        return formatter
+    }()
+
+    static func formatPlanPrice(price: Double, locale: Locale) -> String {
+        formatter.locale = locale
+        return formatter.string(from: NSNumber(value: price)) ?? ""
+    }
+}
+
+private extension DateComponents {
+    var isMoreThanOneMonth: Bool {
+        amountOfMonths > 1
+    }
+
+    // This property is a fallback in case where DateComponentsFormatter returns `nil`
+    // Not ideal but should do the job
+    var fallbackDuration: String {
+        var duration: String = ""
+        if let year, year != 0 {
+            duration += Localizable.planDurationYear(year)
+        }
+        if let month, month != 0 {
+            if !duration.isEmpty {
+                duration += ", "
+            }
+            duration += Localizable.planDurationMonth(month)
+        }
+        if duration.isEmpty {
+            assertionFailure("This components receiver is invalid")
+        }
+        return duration
+    }
+}

@@ -22,6 +22,7 @@ public struct PlanDuration: Hashable {
     public static let oneMonth: Self = .init(components: .init(month: 1))!
     public static let threeMonths: Self = .init(components: .init(month: 3))!
     public static let oneYear: Self = .init(components: .init(year: 1))!
+    public static let twelveMonths: Self = .init(components: .init(month: 12))! // surprisingly, not equal to oneYear
     public static let twoYears: Self = .init(components: .init(year: 2))!
 
     public let components: DateComponents
@@ -37,6 +38,10 @@ public struct PlanDuration: Hashable {
 extension PlanDuration: CustomStringConvertible {
     public var description: String {
         return components.description
+    }
+
+    public var months: Int {
+        return components.amountOfMonths
     }
 }
 
@@ -57,12 +62,14 @@ public struct PlanOption: Hashable {
 
     public let duration: PlanDuration
     public let price: PlanPrice
+    public let id: UUID
 
     public var pricePerMonth: Double {
         price.amount / Double(duration.components.amountOfMonths)
     }
 
-    public init(duration: PlanDuration, price: PlanPrice) {
+    public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice) {
+        self.id = id
         self.duration = duration
         self.price = price
     }

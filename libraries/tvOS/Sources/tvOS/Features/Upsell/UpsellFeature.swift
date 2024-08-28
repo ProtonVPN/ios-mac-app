@@ -54,13 +54,8 @@ struct UpsellFeature {
                 }
 
             case .finishedLoadingProducts(.success(let products)):
-//                let sortedProducts = products.sorted(by: {
-//                    guard let lhsUnit = $0.subscription?.subscriptionPeriod.unit,
-//                          let rhsUnit = $1.subscription?.subscriptionPeriod.unit else { return false }
-//                     return lhsUnit > rhsUnit // sort by unit, for example, .year is before .month.
-//                })
-//                state = .loaded(sortedProducts)
-                state = .loaded(products)
+                let sortedProducts = products.sorted(by: { $0.planOption.duration.months > $1.planOption.duration.months })
+                state = .loaded(sortedProducts)
                 return .none
 
             case .finishedLoadingProducts(.failure(let error)):
