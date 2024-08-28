@@ -39,12 +39,15 @@ struct UpsellButtonStyle: ButtonStyle {
 
     @Environment(\.isFocused) var isFocused
 
+    private static let width: CGFloat = 700
+    private static let height: CGFloat = 138
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.body)
             .bold()
             .padding(.horizontal, .themeSpacing32)
-            .frame(width: 700, height: 138)
+            .frame(width: Self.width, height: Self.height)
             .background(isFocused ? Color(.background, .selected) : Color(.background))
             .foregroundStyle(isFocused ? Color(.text, .inverted) : Color(.text))
             .cornerRadius(.themeRadius16)
