@@ -1,4 +1,4 @@
 realm/SwiftLint@0.52.2
 twittemb/XcodeCoverageConverter@0.2.2
 a7ex/xcresultparser@1.5.0
-git@gitlab.protontech.ch:apple/shared/git-lhc.git@29d8f6a4fee0453b99895ea68a7ff85b180fd70f
+git@gitlab.protontech.ch:apple/shared/git-lhc.git@0.8.0-alpha.10
