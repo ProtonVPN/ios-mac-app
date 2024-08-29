@@ -289,9 +289,8 @@ extension HomeFeature.Action {
 }
 
 #if DEBUG
+@available(iOS 17, *)
 #Preview {
-    guard #available(iOS 17, *) else { return EmptyView() }
-
     let store: StoreOf<HomeFeature> = .init(initialState:
             .init(connections: [
                 RecentConnection(
@@ -325,8 +324,7 @@ extension HomeFeature.Action {
                     connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
                 ),
             ],
-                  connectionStatus: .init(),
-                  vpnConnectionStatus: .disconnected),
+                  connectionStatus: .init()),
                                             reducer: { HomeFeature() }
     )
     return ScrollView {

@@ -32,6 +32,5 @@ struct ConnectButtonStyle: ButtonStyle {
                         ? Color(.background, .interactive)
                         : Color(.background, [.interactive, .weak]))
             .cornerRadius(.themeRadius8)
-            .padding([.horizontal, .bottom])
     }
 }

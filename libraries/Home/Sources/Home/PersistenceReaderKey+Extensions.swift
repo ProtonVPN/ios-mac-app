@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Foundation
 import Domain
+import VPNAppCore
 
 public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
     static var userCountry: Self {
@@ -32,8 +33,26 @@ public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
     }
 }
 
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<AppStorageKey<Int>> {
+    static var userTier: Self {
+        PersistenceKeyDefault(.appStorage("userTier"), 0)
+    }
+}
+
 public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ProtectionState>> {
     static var protectionState: Self {
         PersistenceKeyDefault(.inMemory("protectionState"), .unprotected)
+    }
+}
+
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<VPNConnectionStatus>> {
+    static var vpnConnectionStatus: Self {
+        PersistenceKeyDefault(.inMemory("vpnConnectionStatus"), .disconnected)
+    }
+}
+
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ConnectionSpec>> {
+    static var defaultConnection: Self {
+        PersistenceKeyDefault(.inMemory("defaultConnection"), .init(location: .fastest, features: []))
     }
 }

@@ -57,35 +57,11 @@ public extension RecentConnection {
             connectionDate: Date(),
             connection: .init(
                 location: .region(code: "UA"),
-                features: []
+                features: [.tor]
             )
         )
     }
-    static var connectionCity: RecentConnection {
-        .init(
-            pinned: false,
-            underMaintenance: false,
-            connectionDate: Date(),
-            connection: .init(
-                location: .exact(.paid, number: nil, subregion: "Zurich", regionCode: "CH"),
-                features: []
-            )
-        )
-    }
-    func withServer(server: Int) -> Self {
-        .init(pinned: pinned,
-              underMaintenance: underMaintenance,
-              connectionDate: connectionDate,
-              connection: .init(location: connection.location.withServer(number: server),
-                                features: connection.features))
-    }
-    func withAllFeatures() -> Self {
-        .init(pinned: pinned,
-              underMaintenance: underMaintenance,
-              connectionDate: connectionDate,
-              connection: .init(location: connection.location,
-                                features: [.p2p, .tor]))
-    }
+
     static var pinnedFastest: RecentConnection {
         .init(
             pinned: true,
@@ -135,24 +111,13 @@ public extension RecentConnection {
             )
         )
     }
-    static var connectionSecureCoreFastestHop: RecentConnection {
-        .init(
-            pinned: false,
-            underMaintenance: false,
-            connectionDate: Date().addingTimeInterval(-6 * 60 * 60.0),
-            connection: .init(
-                location: .secureCore(.fastestHop(to: "AR")),
-                features: []
-            )
-        )
-    }
     static var connectionSecureCoreFastest: RecentConnection {
         .init(
             pinned: false,
             underMaintenance: false,
             connectionDate: Date().addingTimeInterval(-6 * 60 * 60.0),
             connection: .init(
-                location: .secureCore(.fastest),
+                location: .secureCore(.fastestHop(to: "AR")),
                 features: []
             )
         )

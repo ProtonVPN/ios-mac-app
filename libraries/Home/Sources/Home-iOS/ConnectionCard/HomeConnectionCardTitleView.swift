@@ -112,11 +112,11 @@ struct HomeConnectionCardTitleView: View {
                                         isFreeUser: false,
                                         hasRecents: true,
                                         changingServer: false)
-            HomeConnectionCardTitleView(connectionStatus: .connecting(.mock(), nil),
+            HomeConnectionCardTitleView(connectionStatus: .connecting(.defaultFastest, nil),
                                         isFreeUser: false,
                                         hasRecents: false,
                                         changingServer: false)
-            HomeConnectionCardTitleView(connectionStatus: .connected(.mock(), nil),
+            HomeConnectionCardTitleView(connectionStatus: .connected(.defaultFastest, nil),
                                         isFreeUser: false,
                                         hasRecents: false,
                                         changingServer: false)
@@ -124,7 +124,7 @@ struct HomeConnectionCardTitleView: View {
                                         isFreeUser: true,
                                         hasRecents: false,
                                         changingServer: false)
-            HomeConnectionCardTitleView(connectionStatus: .connecting(.mock(), nil),
+            HomeConnectionCardTitleView(connectionStatus: .connecting(.defaultFastest, nil),
                                         isFreeUser: false,
                                         hasRecents: false,
                                         changingServer: true)

@@ -42,20 +42,15 @@ public struct HomeFeature {
 
         public var connections: [RecentConnection]
 
+        public var connectionCard: HomeConnectionCardFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
-        public var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
-        public init(connections: [RecentConnection], connectionStatus: ConnectionStatusFeature.State, vpnConnectionStatus: VPNConnectionStatus) {
+        public init(connections: [RecentConnection] = [],
+                    connectionStatus: ConnectionStatusFeature.State = .init()) {
             self.connections = connections
             self.connectionStatus = connectionStatus
-            self.vpnConnectionStatus = vpnConnectionStatus
-        }
-
-        public init() {
-            let connectionState = ConnectionStatusFeature.State()
-            self.init(connections: [],
-                      connectionStatus: connectionState,
-                      vpnConnectionStatus: .disconnected)
+            self.connectionCard = .init()
         }
 
         mutating func trimConnections() {
@@ -82,6 +77,7 @@ public struct HomeFeature {
         case remove(ConnectionSpec)
 
         case connectionStatus(ConnectionStatusFeature.Action)
+        case connectionCard(HomeConnectionCardFeature.Action)
 
         /// Show details screen with info about current connection
         case showConnectionDetails
@@ -195,7 +191,22 @@ public struct HomeFeature {
                     state.connections = connections
                 }
                 return .none
+            case .connectionCard(let action):
+                switch action {
+                case .connect(let spec):
+                    return .send(.connect(spec))
+                case .disconnect:
+                    return .send(.disconnect)
+                case .tapAction:
+                    return .send(.showConnectionDetails)
+                case .changeServerButtonTapped:
+                    // TODO: [redesign] show upsell modal or reconnect to a different server
+                    return .none
+                }
             }
+        }
+        Scope(state: \.connectionCard, action: \.connectionCard) {
+            HomeConnectionCardFeature()
         }
         Scope(state: \.connectionStatus, action: \.connectionStatus) {
             ConnectionStatusFeature()
@@ -223,7 +234,6 @@ extension HomeFeature {
                                                                 .connectionSecureCore,
                                                                 .connectionRegion,
                                                                 .connectionSecureCoreFastest],
-                                                  connectionStatus: .init(),
-                                                  vpnConnectionStatus: .disconnected)
+                                                  connectionStatus: .init())
 }
 #endif
