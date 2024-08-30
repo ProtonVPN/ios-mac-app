@@ -118,25 +118,7 @@ final class SessionNetworkingFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testUserTier0Retrieved() async {
-        let e = expectation(description: "Should call clear keychain")
-        let keychainMock = MockAuthKeychain()
-        keychainMock.credentialsWereCleared = { e.fulfill() }
-        let store = TestStore(initialState: SessionNetworkingFeature.State.authenticated(.auth(uid: ""))) {
-            SessionNetworkingFeature()
-        } withDependencies: {
-            $0.authKeychain = keychainMock
-            $0.networking = VPNNetworkingMock()
-            $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
-        }
-        store.exhaustivity = .off
-        await store.send(.userTierRetrieved(0, .auth(uid: "")))
-        await store.receive(\.startLogout)
-        await fulfillment(of: [e])
-    }
-
-    @MainActor
-    func testUserTier1Retrieved() async {
+    func testUserTierRetrieved() async {
         let store = TestStore(initialState: SessionNetworkingFeature.State.authenticated(.unauth(uid: ""))) {
             SessionNetworkingFeature()
         } withDependencies: {

@@ -33,6 +33,7 @@ struct UpsellFeature {
 
     public typealias ActionSender = (Action) -> Void
 
+    @CasePathable
     enum Action {
         case loadProducts
         case finishedLoadingProducts(Result<[PlanIAPTuple], Error>)
@@ -74,7 +75,10 @@ struct UpsellFeature {
 
             case .finishedLoadingProducts(.failure(let error)):
                 log.error("Failed to load products with error: \(error)")
-                return .none
+                return .run { send in
+                    await alertService.feed(error)
+                    await send(.onExit)
+                }
 
             case .attemptPurchase(let option):
                 setPurchaseInProgress(true, state: &state)

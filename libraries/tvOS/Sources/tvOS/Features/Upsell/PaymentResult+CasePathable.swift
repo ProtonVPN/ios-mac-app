@@ -17,3 +17,80 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import CasePaths
+import ProtonCorePayments
+
+extension PurchaseResult: CasePathable {
+    public static let allCasePaths: AllCasePaths = AllCasePaths()
+
+    //    case purchasedPlan(accountPlan: InAppPurchasePlan)
+    //    case toppedUpCredits
+    //    case planPurchaseProcessingInProgress(processingPlan: InAppPurchasePlan)
+    //    case purchaseError(error: Error, processingPlan: InAppPurchasePlan? = nil)
+    //    case apiMightBeBlocked(message: String, originalError: Error, processingPlan: InAppPurchasePlan? = nil)
+    //    case purchaseCancelled
+    //    case renewalNotification
+
+    public struct AllCasePaths {
+        public var purchasedPlan: AnyCasePath<PurchaseResult, InAppPurchasePlan> {
+            AnyCasePath(
+                embed: { PurchaseResult.purchasedPlan(accountPlan: $0) },
+                extract: {
+                    if case .purchasedPlan(let plan) = $0 { return plan }
+                    return nil
+                }
+            )
+        }
+
+        public var toppedUpCredits: AnyCasePath<PurchaseResult, Void> {
+            AnyCasePath(
+                embed: { PurchaseResult.toppedUpCredits },
+                extract: { guard case .toppedUpCredits = $0 else { return nil } }
+            )
+        }
+
+        public var planPurchaseProcessingInProgress: AnyCasePath<PurchaseResult, InAppPurchasePlan> {
+            AnyCasePath(
+                embed: { PurchaseResult.planPurchaseProcessingInProgress(processingPlan: $0) },
+                extract: {
+                    if case .planPurchaseProcessingInProgress(let plan) = $0 { return plan }
+                    return nil
+                }
+            )
+        }
+
+        public var purchaseError: AnyCasePath<PurchaseResult, (Error, InAppPurchasePlan?)> {
+            AnyCasePath(
+                embed: { PurchaseResult.purchaseError(error: $0.0, processingPlan: $0.1) },
+                extract: {
+                    if case .purchaseError(let error, let plan) = $0 { return (error, plan) }
+                    return nil
+                }
+            )
+        }
+
+        public var apiMightBeBlocked: AnyCasePath<PurchaseResult, (String, Error, InAppPurchasePlan?)> {
+            AnyCasePath(
+                embed: { PurchaseResult.apiMightBeBlocked(message: $0.0, originalError: $0.1, processingPlan: $0.2) },
+                extract: {
+                    if case .apiMightBeBlocked(let message, let error, let plan) = $0 { return (message, error, plan) }
+                    return nil
+                }
+            )
+        }
+
+        public var purchaseCancelled: AnyCasePath<PurchaseResult, Void> {
+            AnyCasePath(
+                embed: { PurchaseResult.purchaseCancelled },
+                extract: { guard case .purchaseCancelled = $0 else { return nil } }
+            )
+        }
+
+        public var renewalNotification: AnyCasePath<PurchaseResult, Void> {
+            AnyCasePath(
+                embed: { PurchaseResult.renewalNotification },
+                extract: { guard case .renewalNotification = $0 else { return nil } }
+            )
+        }
+    }
+}

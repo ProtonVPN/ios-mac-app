@@ -60,5 +60,5 @@ extension NEVPNStatus: CasePathable {
         }
     }
 
-    public static var allCasePaths: AllCasePaths { AllCasePaths() }
+    public static let allCasePaths: AllCasePaths = AllCasePaths()
 }
