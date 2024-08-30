@@ -48,6 +48,8 @@ class SettingsFeatureSnapshotTests: XCTestCase {
 
         @Shared(.userDisplayName) var userDisplayName: String?
         userDisplayName = "test user"
+        @Shared(.userTier) var userTier: Int?
+        userTier = 2
 
         let appView = NavigationStack {
             AppView(store: store)

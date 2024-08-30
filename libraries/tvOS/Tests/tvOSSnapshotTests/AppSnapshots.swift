@@ -27,10 +27,38 @@ class AppFeatureSnapshotTests: XCTestCase {
 
     func testLightApp() {
         app(trait: .light)
+        upsell(trait: .light)
     }
 
     func testDarkApp() {
         app(trait: .dark)
+        upsell(trait: .dark)
+    }
+
+    func upsell(trait: UIUserInterfaceStyle) {
+        let store = Store(initialState: AppFeature.State(networking: .authenticated(.auth(uid: "")))) {
+            AppFeature()
+        } withDependencies: {
+            $0.networking = VPNNetworkingMock()
+            $0.continuousClock = TestClock()
+            $0.paymentsClient = .init(startObserving: { },
+                                      getOptions: { [ ] },
+                                      attemptPurchase: { _ in .purchaseCancelled } )
+        }
+        
+        let appView = AppView(store: store)
+            .frame(.rect(width: 1920, height: 1080))
+
+        store.send(.welcome(.userTierUpdated(0)))
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "7 Upsell Loading " + trait.name)
+
+        store.send(.upsell(.finishedLoadingProducts(.success(
+            [
+                PlanIAPTuple(planOption: .init(duration: .oneMonth, price: .init(amount: 2, currency: "USD",locale: .init(identifier: "en_US"))), iap: .freePlan),
+                PlanIAPTuple(planOption: .init(duration: .oneYear, price: .init(amount: 12, currency: "USD",locale: .init(identifier: "en_US"))), iap: .freePlan)
+            ]
+        ))))
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "8 Upsell Loaded " + trait.name)
     }
 
     func app(trait: UIUserInterfaceStyle) {
@@ -39,6 +67,9 @@ class AppFeatureSnapshotTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.continuousClock = TestClock()
+            $0.paymentsClient = .init(startObserving: { },
+                                      getOptions: { [ ] },
+                                      attemptPurchase: { _ in .purchaseCancelled } )
         }
 
         let appView = AppView(store: store)
@@ -53,9 +84,8 @@ class AppFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 SignInWithCode " + trait.name)
         store.send(.welcome(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))))
         assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "5 CodeExpired " + trait.name)
-        store.send(.welcome(.userTierUpdated(0)))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "6 Upsell " + trait.name)
+
         store.send(.networking(.startAcquiringSession))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "7 AcquiringSession " + trait.name)
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "6 AcquiringSession " + trait.name)
     }
 }
