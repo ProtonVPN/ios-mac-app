@@ -42,7 +42,7 @@ struct UpsellFeature {
         case pollTierUpdate(remainingAttempts: Int)
         case finishedPollingTierUpdate(PollResult)
         case onExit
-        case upsold // success delegate action
+        case upsold(tier: Int) // success delegate action
     }
 
     struct PollResult {
@@ -135,7 +135,9 @@ struct UpsellFeature {
             case .finishedPollingTierUpdate(let result):
                 if case .success(let tier) = result.tierResult, tier > 0 {
                     log.info("Upsell complete. Tier: \(tier)")
-                    return .send(.upsold)
+                    return .send(.upsold(tier: tier))
+                } else if case .failure(let error) = result.tierResult {
+                    log.error("Failed to fetch tier information with error: \(error)")
                 }
                 return .run { send in
                     try await clock.sleep(for: .seconds(2))

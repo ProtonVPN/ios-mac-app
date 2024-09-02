@@ -169,10 +169,10 @@ struct AppFeature {
                 state.alert = Self.signOutAlert
                 return .none
 
-            case .upsell(.upsold):
-                // We already have a session at this point
-                // This will hit the keychain, then fetch our new user tier post-subscription
-                return .send(.networking(.startAcquiringSession))
+            case .upsell(.upsold(let tier)):
+                // We already have a session at this point. Updating tier will dimiss the upsell flow
+                state.userTier = tier
+                return .none
 
             case .upsell:
                 return .none

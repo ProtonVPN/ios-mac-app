@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Dependencies
 
 @Reducer
 struct WelcomeFeature {
@@ -46,6 +47,8 @@ struct WelcomeFeature {
         case userTier
     }
 
+    @Dependency(\.alertService) var alertService
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -58,6 +61,12 @@ struct WelcomeFeature {
             case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
                 state.destination = .codeExpired(.init())
                 return .none
+            case .destination(.presented(.signIn(.codeFetchingFinished(.failure(let error))))):
+                // Since we don't retry fetching the sign-in code, let's pop back to the welcome screen
+                return .run { send in
+                    await send(.destination(.dismiss))
+                    await alertService.feed(error)
+                }
             case .destination(.presented(.codeExpired(.generateNewCode))):
                 state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none

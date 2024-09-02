@@ -36,20 +36,15 @@ class AppFeatureSnapshotTests: XCTestCase {
     }
 
     func upsell(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: AppFeature.State(networking: .authenticated(.auth(uid: "")))) {
-            AppFeature()
-        } withDependencies: {
-            $0.networking = VPNNetworkingMock()
-            $0.continuousClock = TestClock()
-            $0.paymentsClient = .init(startObserving: { },
-                                      getOptions: { [ ] },
-                                      attemptPurchase: { _ in .purchaseCancelled } )
-        }
-        
+        let store = Store(initialState: AppFeature.State(
+            userTier: .init(0),
+            welcome: .init(destination: .upsell(.loading)),
+            networking: .authenticated(.auth(uid: "")))
+        ) { AppFeature() }
+
         let appView = AppView(store: store)
             .frame(.rect(width: 1920, height: 1080))
 
-        store.send(.welcome(.userTierUpdated(0)))
         assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "7 Upsell Loading " + trait.name)
 
         store.send(.upsell(.finishedLoadingProducts(.success(

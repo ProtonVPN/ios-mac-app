@@ -93,6 +93,26 @@ final class AppFeatureTests: XCTestCase {
 
         await task.cancel()
     }
+
+    @MainActor func testUpsellDismissedWhenUpsellFlowCompleted() async {
+        let state = AppFeature.State(
+            welcome: .init(destination: .upsell(.loaded(planOptions: [], purchaseInProgress: true))),
+            networking: .authenticated(.auth(uid: "userid"))
+        )
+
+        let store = TestStore(initialState: state) {
+            AppFeature()
+        }
+
+        await store.send(.welcome(.onAppear))
+        await store.send(.upsell(.upsold(tier: 2))) {
+            $0.userTier = 2
+        }
+
+        await store.receive(\.welcome.userTierUpdated) {
+            $0.welcome.destination = nil
+        }
+    }
 }
 
 private extension AppFeatureTests {

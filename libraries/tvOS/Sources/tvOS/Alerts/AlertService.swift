@@ -50,13 +50,19 @@ extension AlertService {
         return AlertService {
             return stream
         } feed: { error in
+
             let alert: Alert
             if let alertConvertibleError = error as? AlertConvertibleError {
                 alert = alertConvertibleError.alert
             } else if let localizedError = error as? LocalizedError {
                 alert = Alert(localizedError: localizedError)
             } else {
+#if DEBUG
+                // In DEBUG, show alert specifics even if the error is not explicitly alert convertible/localizable
+                alert = Alert(title: "Error (DEBUG)", message: "\(error)")
+#else
                 alert = Alert()
+#endif
             }
             if let currentAlert = subject.value, alert == currentAlert {
                 log.warning("An error of this type has already been received, feeding anyway...")

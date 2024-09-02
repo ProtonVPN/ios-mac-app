@@ -90,12 +90,16 @@ struct SessionNetworkingFeature: Reducer {
                     ? .unauth(uid: credentials.sessionID)
                     : .auth(uid: credentials.sessionID)
                 state = .authenticated(session)
+                guard case .auth = session else {
+                    log.debug("Not retrieving user tier for unauth session...", category: .api)
+                    return .none
+                }
                 return .run { send in
                     // we have a session, now get the user tier
                     let userTier = try await networking.userTier
                     await send(.userTierRetrieved(userTier, session))
                 } catch: { error, send in
-                    log.debug("Couldn't retrieve user tier after user already logged in in the previous session, ignoring", category: .api)
+                    log.debug("Failed to retrieve user tier with error: \(error)", category: .api)
                 }
 
             case .sessionFetched(.success(.sessionUnavailableAndNotFetched)):
