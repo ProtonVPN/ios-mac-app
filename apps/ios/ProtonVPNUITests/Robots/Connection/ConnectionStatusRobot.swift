@@ -66,8 +66,9 @@ class ConnectionStatusRobot: CoreElements {
         }
         
         @discardableResult
-        func connectedToASCServer(_ name: String) -> ConnectionStatusRobot {
-            staticText(statusConnected + name).waitUntilExists(time: 30).checkExists()
+        func connectedToASecureCoreServer(_ secureCoreServerName: String) -> ConnectionStatusRobot {
+            let predicate = NSPredicate(format: "label CONTAINS[cd] %@ AND label CONTAINS[cd] %@ AND label CONTAINS[cd] %@", ">>", secureCoreServerName, statusConnected)
+            staticText(predicate).waitUntilExists(time: 30).checkExists()
             button(tabQCActive).waitUntilExists().checkExists()
             return ConnectionStatusRobot()
         }
@@ -98,8 +99,12 @@ class ConnectionStatusRobot: CoreElements {
         }
         
         @discardableResult
-        func protocolNameIsCorrect(_ protocolname: String) -> ConnectionStatusRobot {
-            staticText(protocolname).waitUntilExists(time: 30).checkExists()
+        func protocolNameIsCorrect(_ expectedProtocol: ConnectionProtocol) -> ConnectionStatusRobot {
+            if case .Smart = expectedProtocol {
+                staticText("Protocol").checkExists()
+            } else {
+                staticText(expectedProtocol.rawValue).waitUntilExists(time: 30).checkExists()
+            }
             return ConnectionStatusRobot()
         }
         

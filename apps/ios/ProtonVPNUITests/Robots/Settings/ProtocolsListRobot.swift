@@ -19,7 +19,7 @@ class ProtocolsListRobot: CoreElements {
         cell(stealthButton).tap()
         return ProtocolsListRobot()
     }
-
+    
     func smartProtocolOn() -> ProtocolsListRobot {
         cell(smartButton).tap()
         return ProtocolsListRobot()
@@ -33,8 +33,8 @@ class ProtocolsListRobot: CoreElements {
     
     /// Choose protocol from the protocol list
     /// - Precondition: Default protocol is Smart
-    func protocolOn(_ protocolVia: String) -> ProtocolsListRobot {
-         cell(protocolVia).tap()
-         return ProtocolsListRobot()
-     }
+    func chooseProtocol(_ connectionProtocol: ConnectionProtocol) -> ProtocolsListRobot {
+        cell(connectionProtocol.rawValue).tap()
+        return ProtocolsListRobot()
+    }
 }

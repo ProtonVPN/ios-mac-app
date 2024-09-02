@@ -131,6 +131,7 @@ final class CountriesViewController: UIViewController {
     private func setupNavigationBar() {
         let infoButton = UIBarButtonItem(image: IconProvider.infoCircle, style: .plain, target: self, action: #selector(displayServicesInfo))
         let searchButton = UIBarButtonItem(image: IconProvider.magnifier, style: .plain, target: self, action: #selector(showSearch))
+        searchButton.accessibilityIdentifier = "countrySearchButton"
         navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
     

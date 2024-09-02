@@ -12,11 +12,12 @@ fileprivate let tabProfiles = "Profiles"
 fileprivate let tabSettings = "Settings"
 fileprivate let tabCountries = "Countries"
 fileprivate let tabMap = "Map"
-fileprivate let tabQCInactive = "quick connect inactive button"
-fileprivate let tabQCActive = "quick connect active button"
+fileprivate let quickConnectButton = "quick connect inactive button"
+fileprivate let quickDisconnectButton = "quick connect active button"
 fileprivate let secureCore = "Use Secure Core"
 fileprivate let statusNotConnected = "Not Connected"
-fileprivate let upgradeSubscriptionTitle = "Upgrade"
+fileprivate let upgradeSubscriptionTitle = "Want to connect to a specific country?"
+fileprivate let upgradeSubscriptionButton = "Get VPN Plus"
 fileprivate let buttonOk = "OK"
 fileprivate let buttonCancel = "Cancel"
 fileprivate let buttonAccount = "Account"
@@ -58,7 +59,7 @@ class MainRobot: CoreElements {
     }
     
     func quickConnectViaQCButton() -> ConnectionStatusRobot {
-        button(tabQCInactive).tap()
+        button(quickConnectButton).tap()
         return ConnectionStatusRobot()
     }
     
@@ -69,7 +70,7 @@ class MainRobot: CoreElements {
     
     @discardableResult
     func quickDisconnectViaQCButton() -> ConnectionStatusRobot {
-        button(tabQCActive).tap()
+        button(quickDisconnectButton).tap()
         return ConnectionStatusRobot()
     }
     
@@ -83,11 +84,6 @@ class MainRobot: CoreElements {
     public func showLogin() -> LoginRobot {
         button(showLoginButtonLabelText).waitUntilExists().tap()
         return LoginRobot()
-    }
-    
-    func clickUpgrade() -> MainRobot {
-        button(upgradeSubscriptionTitle).tap()
-        return MainRobot()
     }
     
     // Temporary solution. This modal will be removed soon
@@ -105,13 +101,13 @@ class MainRobot: CoreElements {
     
         @discardableResult
         func qcButtonConnected() -> MainRobot {
-            button(tabQCActive).waitUntilExists().checkExists()
+            button(quickDisconnectButton).waitUntilExists().checkExists()
             return MainRobot()
         }
     
         @discardableResult
         func qcButtonDisconnected() -> MainRobot {
-            button(tabQCInactive).waitUntilExists().checkExists()
+            button(quickConnectButton).waitUntilExists().checkExists()
             return MainRobot()
         }
     
@@ -128,8 +124,9 @@ class MainRobot: CoreElements {
         }
     
         @discardableResult
-        func upgradeSubscriptionIsOpenFreeUser() -> MainRobot {
+        func upgradeSubscriptionScreenOpened() -> MainRobot {
             staticText(upgradeSubscriptionTitle).checkExists()
+            button(upgradeSubscriptionButton).checkExists()
             return MainRobot()
         }
         

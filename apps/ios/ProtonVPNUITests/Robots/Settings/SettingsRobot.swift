@@ -30,7 +30,7 @@ class SettingsRobot: CoreElements {
     
     /// - Precondition: Protocol submenu of Settings menu
     func goToProtocolsList() -> ProtocolsListRobot {
-        cell(protocolButton).tap()
+        cell(protocolButton).firstMatch().tap()
         return ProtocolsListRobot()
     }
     
@@ -50,17 +50,27 @@ class SettingsRobot: CoreElements {
         staticText(netshield).tap()
         return SettingsRobot()
     }
+    
+    private func tapContinueIfExist() -> SettingsRobot {
+        if button(continueButton).waitUntilExists(time: 0.5).exists() {
+            button(continueButton).tap()
+        }
+        return self
+    }
+
 
     @discardableResult
     func turnModerateNatOn() -> SettingsRobot {
-        swittch(moderateNatSwitch).tap()
+        if let intValue = (swittch(moderateNatSwitch).value() as? String).flatMap({ Int($0) }), intValue == 0 {
+            swittch(moderateNatSwitch).tap()
+        }
         return SettingsRobot()
     }
     
     @discardableResult
     func turnKillSwitchOn() -> SettingsRobot {
         return killSwitchOn()
-            .killSwitchContinue()
+            .tapContinueIfExist()
     }
     
     func turnLanConnectionOn() -> SettingsRobot {
@@ -69,8 +79,7 @@ class SettingsRobot: CoreElements {
     }
     
     func logOut() -> SettingsRobot {
-        return clickLogOut()
-            .logOutContinue()
+        return clickLogOut().tapContinueIfExist()
     }
     
     func cancelLogOut() -> ConnectionStatusRobot {
@@ -83,11 +92,6 @@ class SettingsRobot: CoreElements {
         swittch(killSwitchButton)
             .swipeUpUntilVisible()
             .tap()
-        return self
-    }
-    
-    private func killSwitchContinue() -> SettingsRobot {
-        button(continueButton).tap()
         return self
     }
     
@@ -104,11 +108,6 @@ class SettingsRobot: CoreElements {
     
     private func clickLogOut() -> SettingsRobot {
         button(logOutButton).tap()
-        return self
-    }
-    
-    private func logOutContinue() -> SettingsRobot {
-        button(continueButton).tap()
         return self
     }
     
