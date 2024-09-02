@@ -86,6 +86,8 @@
 		66E34BB827AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB727AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib */; };
 		66E34BBA27AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
+		774F4D8E2C7F51E900A3646D /* ProtonCoreTestingToolkitPerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 774F4D8D2C7F51E900A3646D /* ProtonCoreTestingToolkitPerformance */; };
+		77DB65872C8719A60028E4F7 /* MeasurementConfig+setProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB65862C8719A60028E4F7 /* MeasurementConfig+setProduct.swift */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
 		7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */; };
 		7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4620E58292008A4FCB /* PrefillInformation.swift */; };
@@ -560,6 +562,8 @@
 		66E34BB527ABEC45002FC827 /* SettingsAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsAccountViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/SettingsAccountViewController.swift; sourceTree = "<group>"; };
 		66E34BB727AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ButtonWithLoadingTableViewCell.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/ButtonWithLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonWithLoadingTableViewCell.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/ButtonWithLoadingTableViewCell.swift; sourceTree = "<group>"; };
+		77B47BDF2C85E4940065DA9B /* ProtonVPN-IOS-Connection.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-IOS-Connection.xctestplan"; sourceTree = "<group>"; };
+		77DB65862C8719A60028E4F7 /* MeasurementConfig+setProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeasurementConfig+setProduct.swift"; sourceTree = "<group>"; };
 		77E9637CD83510D2FCE5F039 /* SubuserAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubuserAlertViewController.swift; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.swift"; sourceTree = "<group>"; };
 		7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileViewController.swift; sourceTree = "<group>"; };
 		7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModel.swift; sourceTree = "<group>"; };
@@ -929,6 +933,7 @@
 				AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */,
 				E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */,
 				E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */,
+				774F4D8E2C7F51E900A3646D /* ProtonCoreTestingToolkitPerformance in Frameworks */,
 				E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */,
 				E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */,
 				1F297A2E2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore in Frameworks */,
@@ -1033,6 +1038,14 @@
 				8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		77DB65852C8719840028E4F7 /* SLI */ = {
+			isa = PBXGroup;
+			children = (
+				77DB65862C8719A60028E4F7 /* MeasurementConfig+setProduct.swift */,
+			);
+			path = SLI;
 			sourceTree = "<group>";
 		};
 		791C54EF214A759900C6F337 /* ViewControllers */ = {
@@ -1350,6 +1363,7 @@
 		B2BCF0AA28B760B70041A635 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				77DB65852C8719840028E4F7 /* SLI */,
 				B29CD6AE2654109600978637 /* StringUtils.swift */,
 				D5AAA12A229D28E400EA839A /* Credentials.swift */,
 				B2BCF09828B546200041A635 /* Generate2FACode.swift */,
@@ -1369,6 +1383,7 @@
 				B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */,
 				FA46A20B2B271A6100929229 /* ProtonVPN-iOS-UI-Subscription.xctestplan */,
 				80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-IOS-SLI-All.xctestplan */,
+				77B47BDF2C85E4940065DA9B /* ProtonVPN-IOS-Connection.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
@@ -2326,6 +2341,7 @@
 				E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */,
 				AD70D75D2B63238400B39ABA /* PMLogger */,
 				1F297A2D2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore */,
+				774F4D8D2C7F51E900A3646D /* ProtonCoreTestingToolkitPerformance */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
@@ -2996,6 +3012,7 @@
 				F377836A26E644BC00392958 /* SettingsTests.swift in Sources */,
 				B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */,
 				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
+				77DB65872C8719A60028E4F7 /* MeasurementConfig+setProduct.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
 				57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */,
 				B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */,
@@ -4241,6 +4258,10 @@
 		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreAccountRecovery;
+		};
+		774F4D8D2C7F51E900A3646D /* ProtonCoreTestingToolkitPerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTestingToolkitPerformance;
 		};
 		8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
