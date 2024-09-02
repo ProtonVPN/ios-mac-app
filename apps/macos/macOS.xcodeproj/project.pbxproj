@@ -2897,7 +2897,6 @@
 			packageReferences = (
 				E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */,
 				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */,
 				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
 				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
@@ -4486,14 +4485,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.1;
-			};
-		};
-		E5A4AD222A3B369E00CC91D7 /* XCRemoteSwiftPackageReference "swiftui-navigation.git" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
 			};
 		};
 		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
