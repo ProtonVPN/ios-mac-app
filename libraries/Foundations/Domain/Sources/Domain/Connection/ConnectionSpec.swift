@@ -122,7 +122,7 @@ public extension ConnectionSpec {
     static var specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
 
-    public func withAllFeatures() -> Self {
+    func withAllFeatures() -> Self {
         .init(location: location, features: [.p2p, .tor])
     }
 }

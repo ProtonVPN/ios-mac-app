@@ -19,7 +19,7 @@
 import SwiftUI
 
 import ComposableArchitecture
-import SwiftUINavigation
+import SwiftNavigation
 
 import Localization
 import Settings
@@ -246,13 +246,13 @@ public struct SettingsView: View {
         view destination: @escaping () -> some View
     ) -> some View {
         return WithViewStore(store, observe: { $0.destination }) { viewStore in
-            NavigationLink(
-                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
-                case: `case`,
-                onNavigate: { _ in },
-                destination: { _ in destination() },
-                label: { EmptyView() }
-            )
+//            NavigationLink(
+//                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+//                case: `case`,
+//                onNavigate: { _ in },
+//                destination: { _ in destination() },
+//                label: { EmptyView() }
+//            ) // TODO: [redesign, settings] Migrate to new TCA
         }
     }
 

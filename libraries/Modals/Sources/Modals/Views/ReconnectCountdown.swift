@@ -28,7 +28,7 @@ public struct ReconnectCountdown: View {
     /// The time when the timer should finish.
     let dateFinished: Date
     /// The total duration of the timer (to know how much of the progress ring to draw).
-    let timeInterval: TimeInterval
+    let totalDuration: TimeInterval
 
     var timeSince: TimeInterval {
         dateFinished.timeIntervalSince(currentTime)
@@ -60,7 +60,7 @@ public struct ReconnectCountdown: View {
     }
 
     var ratioWaited: Double {
-        (displayTimeRemaining) / timeInterval
+        (displayTimeRemaining) / totalDuration
     }
 
     var ratioWaitedInDegrees: Double {
@@ -110,6 +110,11 @@ public struct ReconnectCountdown: View {
             .animation(.linear(duration: 0.1).delay(Self.timerQuantum * 2), value: timeSince)
             .foregroundColor(Color(.text))
         }
+    }
+    
+    public init(dateFinished: Date, totalDuration: TimeInterval) {
+        self.dateFinished = dateFinished
+        self.totalDuration = totalDuration
     }
 
     public var body: some View {
@@ -196,15 +201,10 @@ fileprivate extension StrokeStyle {
     static let countdown: Self = .init(lineWidth: 10, lineCap: .square, lineJoin: .miter)
 }
 
-struct RotationTimer_Previews: PreviewProvider {
-    static let duration: TimeInterval = 5
-    static let date = Date()
-
-    static var previews: some View {
-        ReconnectCountdown(
-            dateFinished: date.addingTimeInterval(duration),
-            timeInterval: duration
-        )
-        .frame(width: 86, height: 86)
-    }
+@available(iOS 17, *)
+#Preview(traits: .sizeThatFitsLayout) {
+    ReconnectCountdown(dateFinished: Date().addingTimeInterval(15),
+                       totalDuration: 50)
+    .frame(width: 86, height: 86)
+    .padding()
 }

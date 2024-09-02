@@ -34,7 +34,7 @@ public enum ModalType {
     case vpnAccelerator
     case customization
     case profiles
-    case cantSkip(before: Date, duration: TimeInterval, longSkip: Bool)
+    case cantSkip(before: Date, totalDuration: TimeInterval, longSkip: Bool)
     case subscription
 
     public func modalModel(legacy: Bool = false) -> ModalModel {
@@ -252,10 +252,10 @@ public enum ModalType {
                     .resizable(resizingMode: .stretch)
                     .frame(width: 48, height: 48)
             }
-        case let .cantSkip(beforeDate, timeInterval, _):
+        case let .cantSkip(beforeDate, totalDuration, _):
             ReconnectCountdown(
                 dateFinished: beforeDate,
-                timeInterval: timeInterval
+                totalDuration: totalDuration
             )
         case .welcomePlus:
             Asset.welcomePlus.swiftUIImage

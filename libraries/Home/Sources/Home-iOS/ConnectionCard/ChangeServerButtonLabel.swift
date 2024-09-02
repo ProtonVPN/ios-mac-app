@@ -20,6 +20,7 @@ import SwiftUI
 import ProtonCoreUIFoundations
 import ComposableArchitecture
 import Home
+import Strings
 
 @available(iOS 16.0, *)
 struct ChangeServerButtonLabel: View {
@@ -40,7 +41,7 @@ struct ChangeServerButtonLabel: View {
         } label: {
             HStack {
                 Spacer()
-                Text("Change server")
+                Text(Localizable.changeServer)
                 Spacer()
                 if changeServerAllowedDate > currentDate {
                     HStack(spacing: .themeSpacing8) {

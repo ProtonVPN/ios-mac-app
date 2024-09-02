@@ -186,8 +186,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "c8ed701b513cf5177118a175d85fbbbcd707ab41",
-          "version": "1.3.0"
+          "revision": "41982a3656a71c768319979febd796c6fd111d5c",
+          "version": "1.5.0"
         }
       },
       {
@@ -213,8 +213,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-clocks",
         "state": {
           "branch": null,
-          "revision": "3581e280bf0d90c3fb9236fb23e75a5d8c46b533",
-          "version": "1.0.4"
+          "revision": "b9b24b69e2adda099a1fa381cda1eeec272d5b53",
+          "version": "1.0.5"
         }
       },
       {
@@ -222,8 +222,8 @@
         "repositoryURL": "https://github.com/apple/swift-collections",
         "state": {
           "branch": null,
-          "revision": "ee97538f5b81ae89698fd95938896dec5217b148",
-          "version": "1.1.1"
+          "revision": "9bf03ff58ce34478e66aaee630e491823326fd06",
+          "version": "1.1.3"
         }
       },
       {
@@ -231,8 +231,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-composable-architecture",
         "state": {
           "branch": null,
-          "revision": "b35827a61c1420e40ff8e7c584b5042144d20195",
-          "version": "1.12.1"
+          "revision": "0d8980f5bcc5fe6941f1788758667ff2b8c10f03",
+          "version": "1.14.0"
         }
       },
       {
@@ -249,8 +249,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-custom-dump",
         "state": {
           "branch": null,
-          "revision": "aec6a73f5c1dc1f1be4f61888094b95cf995d973",
-          "version": "1.3.2"
+          "revision": "82645ec760917961cfa08c9c0c7104a57a0fa4b1",
+          "version": "1.3.3"
         }
       },
       {
@@ -258,8 +258,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-dependencies.git",
         "state": {
           "branch": null,
-          "revision": "4b521568a7fd257e83ce9a8d77f9865c1d01a7ca",
-          "version": "1.3.6"
+          "revision": "3ef38bb702a1a2f39c7e19fc0578403b8ee52b17",
+          "version": "1.3.9"
         }
       },
       {
@@ -281,6 +281,15 @@
         }
       },
       {
+        "package": "swift-navigation",
+        "repositoryURL": "https://github.com/pointfreeco/swift-navigation",
+        "state": {
+          "branch": null,
+          "revision": "e834b3760731160d7d448509ee6a1408c8582a6b",
+          "version": "2.2.0"
+        }
+      },
+      {
         "package": "Overture",
         "repositoryURL": "https://github.com/pointfreeco/swift-overture",
         "state": {
@@ -294,8 +303,8 @@
         "repositoryURL": "https://github.com/pointfreeco/swift-perception",
         "state": {
           "branch": null,
-          "revision": "1552c8f722ac256cc0b8daaf1a7073217d4fcdfb",
-          "version": "1.3.4"
+          "revision": "bc67aa8e461351c97282c2419153757a446ae1c9",
+          "version": "1.3.5"
         }
       },
       {
@@ -312,8 +321,8 @@
         "repositoryURL": "https://github.com/swiftlang/swift-syntax",
         "state": {
           "branch": null,
-          "revision": "303e5c5c36d6a558407d364878df131c3546fad8",
-          "version": "510.0.2"
+          "revision": "2bc86522d115234d1f588efe2bcb4ce4be8f8b82",
+          "version": "510.0.3"
         }
       },
       {
@@ -332,15 +341,6 @@
           "branch": null,
           "revision": "93d4942c90dd498580988ffb9971e2ddf91d5a28",
           "version": "2.0.3"
-        }
-      },
-      {
-        "package": "swiftui-navigation",
-        "repositoryURL": "https://github.com/pointfreeco/swiftui-navigation.git",
-        "state": {
-          "branch": null,
-          "revision": "fc91d591ebba1f90d65028ccb65c861e5979e898",
-          "version": "1.5.4"
         }
       },
       {
@@ -366,8 +366,8 @@
         "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
         "state": {
           "branch": null,
-          "revision": "a1422d4749ccf7f32b1d14a9ec19ec9a0b0fd337",
-          "version": "0.9.9"
+          "revision": "7b1732802ffe30e6a67754bda6c7819e5cb0eb70",
+          "version": "0.9.11"
         }
       },
       {

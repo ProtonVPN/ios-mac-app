@@ -244,7 +244,7 @@ extension IosAlertService: CoreAlertService {
                 alert: cooldownUpsell,
                 modalType: .cantSkip(
                     before: cooldownUpsell.until,
-                    duration: cooldownUpsell.duration,
+                    totalDuration: cooldownUpsell.duration,
                     longSkip: cooldownUpsell.longSkip
                 )
             )

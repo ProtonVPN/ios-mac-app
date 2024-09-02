@@ -36,6 +36,11 @@ public struct HomeFeature {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> Void
 
+    @Reducer(state: .equatable)
+    public enum Destination {
+        case changeServer(ChangeServerFeature)
+    }
+
     @ObservableState
     public struct State: Equatable {
         static let maxConnections = 8
@@ -45,6 +50,8 @@ public struct HomeFeature {
         public var connectionCard: HomeConnectionCardFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+
+        @Presents public var destination: Destination.State?
 
         public init(connections: [RecentConnection] = [],
                     connectionStatus: ConnectionStatusFeature.State = .init()) {
@@ -64,7 +71,7 @@ public struct HomeFeature {
     }
 
     @CasePathable
-    public enum Action: Equatable {
+    public enum Action {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
@@ -91,6 +98,8 @@ public struct HomeFeature {
         case helpButtonPressed
 
         case loadConnections
+
+        case destination(PresentationAction<Destination.Action>)
     }
 
 
@@ -99,6 +108,12 @@ public struct HomeFeature {
     }
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.connectionCard, action: \.connectionCard) {
+            HomeConnectionCardFeature()
+        }
+        Scope(state: \.connectionStatus, action: \.connectionStatus) {
+            ConnectionStatusFeature()
+        }
         Reduce { state, action in
             switch action {
             case let .connect(spec):
@@ -201,16 +216,14 @@ public struct HomeFeature {
                     return .send(.showConnectionDetails)
                 case .changeServerButtonTapped:
                     // TODO: [redesign] show upsell modal or reconnect to a different server
+                    state.destination = .changeServer(.init())
                     return .none
                 }
+            case .destination:
+                return .none
             }
         }
-        Scope(state: \.connectionCard, action: \.connectionCard) {
-            HomeConnectionCardFeature()
-        }
-        Scope(state: \.connectionStatus, action: \.connectionStatus) {
-            ConnectionStatusFeature()
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 
     public init() {}

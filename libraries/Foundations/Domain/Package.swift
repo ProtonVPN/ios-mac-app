@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Strings"),
         .package(path: "../Ergonomics"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.3.6")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.3.9")),
         .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [

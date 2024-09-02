@@ -32,7 +32,7 @@ let package = Package(
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "1.3.6"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", exact: "1.2.2"),
     ],
     targets: [

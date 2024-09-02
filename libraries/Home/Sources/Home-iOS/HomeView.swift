@@ -26,10 +26,11 @@ import Strings
 import Theme
 import Ergonomics
 import VPNAppCore
+import Modals
 
 @available(iOS 17, *)
 public struct HomeView: View {
-    var store: StoreOf<HomeFeature>
+    @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
     static let mapHeight: CGFloat = 300
     
@@ -53,6 +54,13 @@ public struct HomeView: View {
         .task {
             store.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
             store.send(.watchConnectionStatus)
+        }
+        .sheet(item: $store.scope(state: \.destination?.changeServer,
+                                  action: \.destination.changeServer)) { store in
+            SkipChangeServerModal(dateFinished: Date().addingTimeInterval(5),
+                                  totalDuration: 30)
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
     }
 
