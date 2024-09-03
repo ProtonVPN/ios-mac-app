@@ -23,6 +23,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../Core/NEHelper"),
+        .package(path: "../Modals"),
     ],
     targets: [
         .target(
@@ -32,10 +33,12 @@ let package = Package(
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
+                "Modals",
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
+                .core(module: "Payments"),
                 .core(module: "UIFoundations"),
                 .core(module: "Services")
             ],

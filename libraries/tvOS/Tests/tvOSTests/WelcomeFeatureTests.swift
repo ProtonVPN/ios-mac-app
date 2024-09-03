@@ -78,22 +78,6 @@ final class WelcomeFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testUserTierUpdatedToPaid() async {
-        let store = TestStore(initialState: WelcomeFeature.State()) {
-            WelcomeFeature()
-        }
-        @Shared(.userTier) var userTier: Int?
-
-        await store.send(.onAppear)
-
-        userTier = 0
-
-        await store.receive(\.userTierUpdated) {
-            $0.destination = .welcomeInfo(.freeUpsellAlternative)
-        }
-    }
-
-    @MainActor
     func testUserTierUpdatedToNil() async {
         let store = TestStore(initialState: WelcomeFeature.State()) {
             WelcomeFeature()

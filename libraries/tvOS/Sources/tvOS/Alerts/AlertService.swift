@@ -19,6 +19,7 @@
 import enum Connection.ConnectionError
 
 import Combine
+import Foundation
 import ComposableArchitecture
 import Dependencies
 import protocol Foundation.LocalizedError
@@ -50,13 +51,19 @@ extension AlertService {
         return AlertService {
             return stream
         } feed: { error in
+
             let alert: Alert
             if let alertConvertibleError = error as? AlertConvertibleError {
                 alert = alertConvertibleError.alert
             } else if let localizedError = error as? LocalizedError {
                 alert = Alert(localizedError: localizedError)
+            } else if type(of: error) is NSError.Type {
+                // Until we integrate BugReport, show specific error information to users
+                // even if the error is not explicitly convertible/localizable by us
+                alert = Alert(title: "Error", message: (error as NSError).localizedDescription)
             } else {
-                alert = Alert()
+                // and even if it's not localizable at all
+                alert = Alert(title: "Error", message: "\(error)")
             }
             if let currentAlert = subject.value, alert == currentAlert {
                 log.warning("An error of this type has already been received, feeding anyway...")

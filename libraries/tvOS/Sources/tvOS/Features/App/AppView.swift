@@ -47,17 +47,31 @@ public struct AppView: View {
     private var viewBody: some View {
         switch store.networking {
         case .unauthenticated, .acquiringSession:
-            ProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(.background, .strong))
+            progressView
         case .authenticated(.auth):
-            MainView(store: store.scope(state: \.main, action: \.main))
-                .background(Color(.background, .strong))
-                .onAppear {
-                    store.send(.main(.onAppear))
+            if let tier = store.userTier {
+                if tier > 0 {
+                    MainView(store: store.scope(state: \.main, action: \.main))
+                        .background(Color(.background, .strong))
+                        .onAppear {
+                            store.send(.main(.onAppear))
+                        }
+                } else {
+                    UpsellView(store: store.scope(state: \.upsell, action: \.upsell))
+                        .background(Image(.backgroundStage))
+                        .task { store.send(.upsell(.loadProducts))}
                 }
+            } else {
+                progressView
+            }
         case .authenticated(.unauth):
             WelcomeView(store: store.scope(state: \.welcome, action: \.welcome))
         }
+    }
+
+    private var progressView: some View {
+        ProgressView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.background, .strong))
     }
 }

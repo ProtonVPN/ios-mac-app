@@ -31,6 +31,7 @@ public protocol VPNNetworking {
     var userTier: Int { get async throws }
     var userDisplayName: String? { get async throws }
     var sessionCookie: HTTPCookie? { get }
+    var apiService: APIService { get } // APIService required by Payments
 
     func acquireSessionIfNeeded() async throws -> SessionAcquiringResult
     func setSession(_ session: Session)
@@ -51,6 +52,10 @@ public struct CoreNetworkingWrapper: VPNNetworking {
             .first(where: { $0.name == CommonNetworking.Constants.sessionIDCookieName })
     }
     
+    public var apiService: APIService {
+        wrapped.apiService
+    }
+
     public func acquireSessionIfNeeded() async throws -> SessionAcquiringResult {
         try await withCheckedThrowingContinuation { continuation in
             wrapped.apiService.acquireSessionIfNeeded(completion: continuation.resume(with:))
@@ -153,5 +158,9 @@ struct VPNNetworkingMock: VPNNetworking {
 
     var sessionCookie: HTTPCookie? {
         nil
+    }
+
+    var apiService: APIService {
+        fatalError("Not implemented")
     }
 }

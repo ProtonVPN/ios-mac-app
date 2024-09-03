@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import CommonNetworking
+import ProtonCoreFeatureFlags
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
@@ -49,6 +50,7 @@ struct AppFeature {
         @Shared(.userTier) var userTier: Int?
         var main = MainFeature.State()
         var welcome = WelcomeFeature.State()
+        var upsell = UpsellFeature.State.loading
 
         @Presents var alert: AlertState<Action.Alert>?
 
@@ -60,6 +62,7 @@ struct AppFeature {
     enum Action {
         case main(MainFeature.Action)
         case welcome(WelcomeFeature.Action)
+        case upsell(UpsellFeature.Action)
 
         case onAppearTask
 
@@ -72,7 +75,7 @@ struct AppFeature {
 
         @CasePathable
         enum Alert {
-            case errorMessage
+            case signOut
         }
     }
 
@@ -86,9 +89,13 @@ struct AppFeature {
         Scope(state: \.main, action: \.main) {
             MainFeature()
         }
+        Scope(state: \.upsell, action: \.upsell) {
+            UpsellFeature()
+        }
         Reduce { state, action in
             switch action {
             case .onAppearTask:
+                setFeatureFlagOverrides()
                 var effects: [Effect<AppFeature.Action>] = [
                     .run { send in
                         for await alert in await alertService.alerts() {
@@ -146,7 +153,28 @@ struct AppFeature {
             case .incomingAlert(let alert):
                 state.alert = alert.alertState(from: Action.Alert.self)
                 return .none
-            case .alert:
+
+            case .alert(let action):
+                switch action {
+                case .presented(let action):
+                    switch action {
+                    case .signOut:
+                        return .send(.signOut)
+                    }
+                case .dismiss:
+                    return .none
+                }
+
+            case .upsell(.onExit):
+                state.alert = Self.signOutAlert
+                return .none
+
+            case .upsell(.upsold(let tier)):
+                // We already have a session at this point. Updating tier will dimiss the upsell flow
+                state.userTier = tier
+                return .none
+
+            case .upsell:
                 return .none
 
             case .signOut:
@@ -158,5 +186,22 @@ struct AppFeature {
             }
         }
         .ifLet(\.$alert, action: \.alert)
+    }
+
+    static let signOutAlert = AlertState<Action.Alert> {
+        TextState("Sign out?")
+    } actions: {
+        ButtonState(role: .destructive, action: .send(.signOut)) {
+            TextState("Sign out")
+        }
+        ButtonState(role: .cancel) {
+            TextState("Cancel")
+        }
+    } message: {
+        TextState("Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus")
+    }
+
+    private func setFeatureFlagOverrides() {
+        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
     }
 }

@@ -82,8 +82,9 @@ struct SignInFeature {
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
 
-            case .codeFetchingFinished(.failure):
-                // handle non-retryable error
+            case .codeFetchingFinished(.failure(let error)):
+                // Parent feature should pop this view and show an error alert.
+                log.error("Failed to fetch sign-in code \(error)")
                 return .none
 
             case .authenticationFinished(.success(.authenticated(let response))):

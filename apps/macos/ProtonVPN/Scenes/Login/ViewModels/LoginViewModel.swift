@@ -127,7 +127,7 @@ final class LoginViewModel {
         loginService.login(
             username: username,
             password: password,
-            intent: FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO, reloadValue: true) ? .proton : .auto,
+            intent: .proton,
             challenge: nil
         ) { [weak self] result in
             self?.handleLoginResult(result: result)

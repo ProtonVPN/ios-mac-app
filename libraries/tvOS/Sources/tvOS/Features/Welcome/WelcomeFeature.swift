@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Dependencies
 
 @Reducer
 struct WelcomeFeature {
@@ -25,6 +26,7 @@ struct WelcomeFeature {
         case signIn(SignInFeature)
         case welcomeInfo(WelcomeInfoFeature)
         case codeExpired(CodeExpiredFeature)
+        case upsell(UpsellFeature)
     }
 
     @ObservableState
@@ -45,6 +47,8 @@ struct WelcomeFeature {
         case userTier
     }
 
+    @Dependency(\.alertService) var alertService
+
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -57,6 +61,12 @@ struct WelcomeFeature {
             case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
                 state.destination = .codeExpired(.init())
                 return .none
+            case .destination(.presented(.signIn(.codeFetchingFinished(.failure(let error))))):
+                // Since we don't retry fetching the sign-in code, let's pop back to the welcome screen
+                return .run { send in
+                    await send(.destination(.dismiss))
+                    await alertService.feed(error)
+                }
             case .destination(.presented(.codeExpired(.generateNewCode))):
                 state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none
@@ -68,7 +78,7 @@ struct WelcomeFeature {
             case .userTierUpdated(let tier):
                 guard let tier else { return .none }
                 if tier == 0 {
-                    state.destination = .welcomeInfo(.freeUpsellAlternative)
+                    state.destination = .upsell(.loading)
                 } else if tier > 0 {
                     /// Right after logging in, we should reset the state of the welcome page, so that when the user logs out,
                     /// the welcome page will be shown, not the sign in page

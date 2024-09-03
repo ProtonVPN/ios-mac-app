@@ -38,6 +38,10 @@ extension PlanDuration: CustomStringConvertible {
     public var description: String {
         return components.description
     }
+
+    public var months: Int {
+        return components.amountOfMonths
+    }
 }
 
 public struct PlanPrice: Hashable {
@@ -57,12 +61,14 @@ public struct PlanOption: Hashable {
 
     public let duration: PlanDuration
     public let price: PlanPrice
+    public let id: UUID
 
     public var pricePerMonth: Double {
         price.amount / Double(duration.components.amountOfMonths)
     }
 
-    public init(duration: PlanDuration, price: PlanPrice) {
+    public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice) {
+        self.id = id
         self.duration = duration
         self.price = price
     }

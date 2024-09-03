@@ -90,12 +90,16 @@ struct SessionNetworkingFeature: Reducer {
                     ? .unauth(uid: credentials.sessionID)
                     : .auth(uid: credentials.sessionID)
                 state = .authenticated(session)
+                guard case .auth = session else {
+                    log.debug("Not retrieving user tier for unauth session...", category: .api)
+                    return .none
+                }
                 return .run { send in
                     // we have a session, now get the user tier
                     let userTier = try await networking.userTier
                     await send(.userTierRetrieved(userTier, session))
                 } catch: { error, send in
-                    log.debug("Couldn't retrieve user tier after user already logged in in the previous session, ignoring", category: .api)
+                    log.debug("Failed to retrieve user tier with error: \(error)", category: .api)
                 }
 
             case .sessionFetched(.success(.sessionUnavailableAndNotFetched)):
@@ -129,18 +133,10 @@ struct SessionNetworkingFeature: Reducer {
                     await alertService.feed(error)
                 }
             case .userTierRetrieved(let tier, let session):
-                // TODO: This is an additional step before logging user in, when we'll start to support free users, we can remove this code
-                if tier > 0 {
                     state = .authenticated(session)
                     networking.setSession(session)
                     unauthKeychain.clear()
                     return .send(.delegate(.tier(tier)))
-                } else {
-                    return .merge(
-                        .send(.delegate(.tier(tier))),
-                        .send(.startLogout) // tier detected to be free, log the user out
-                    )
-                }
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }
