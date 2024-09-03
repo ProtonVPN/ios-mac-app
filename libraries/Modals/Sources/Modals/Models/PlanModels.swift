@@ -22,7 +22,6 @@ public struct PlanDuration: Hashable {
     public static let oneMonth: Self = .init(components: .init(month: 1))!
     public static let threeMonths: Self = .init(components: .init(month: 3))!
     public static let oneYear: Self = .init(components: .init(year: 1))!
-    public static let twelveMonths: Self = .init(components: .init(month: 12))! // surprisingly, not equal to oneYear
     public static let twoYears: Self = .init(components: .init(year: 2))!
 
     public let components: DateComponents

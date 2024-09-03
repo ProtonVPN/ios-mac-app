@@ -39,10 +39,10 @@ extension DependencyValues {
     var paymentsService: Payments {
         get { self[PaymentsFactory.self] }
         set { self[PaymentsFactory.self] = newValue }
-      }
+    }
 }
 
-class PlansCache: ServicePlanDataStorage {
+final class PlansCache: ServicePlanDataStorage {
     var servicePlansDetails: [Plan]?
     var defaultPlanDetails: Plan?
     var currentSubscription: Subscription?
@@ -64,7 +64,6 @@ extension Payments {
 
 extension InAppPurchasePlan {
     func priceLabel(from storeKitManager: StoreKitManagerProtocol) -> (value: NSDecimalNumber, locale: Locale)? {
-        guard let storeKitProductId else { return nil }
-        return storeKitManager.priceLabelForProduct(storeKitProductId: storeKitProductId)
+        storeKitProductId.flatMap { storeKitManager.priceLabelForProduct(storeKitProductId: $0) }
     }
 }

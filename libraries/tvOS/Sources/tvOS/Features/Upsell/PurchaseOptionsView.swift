@@ -103,7 +103,7 @@ struct PurchaseOptionsView: View {
         HStack(spacing: .themeSpacing16) {
             headlineText(subscriptionPeriod(for: planOption))
             Spacer()
-            if planDuration == .oneYear || planDuration == .twelveMonths {
+            if planDuration.months == 12 {
                 VStack {
                     headlineText(planPriceString)
                     + bodyText(" /year")
@@ -131,7 +131,7 @@ struct PurchaseOptionsView: View {
 }
 
 enum PriceFormatter {
-    private static var formatter: NumberFormatter = {
+    private static let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         return formatter

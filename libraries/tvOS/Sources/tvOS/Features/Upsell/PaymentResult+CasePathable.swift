@@ -23,14 +23,6 @@ import ProtonCorePayments
 extension PurchaseResult: CasePathable {
     public static let allCasePaths: AllCasePaths = AllCasePaths()
 
-    //    case purchasedPlan(accountPlan: InAppPurchasePlan)
-    //    case toppedUpCredits
-    //    case planPurchaseProcessingInProgress(processingPlan: InAppPurchasePlan)
-    //    case purchaseError(error: Error, processingPlan: InAppPurchasePlan? = nil)
-    //    case apiMightBeBlocked(message: String, originalError: Error, processingPlan: InAppPurchasePlan? = nil)
-    //    case purchaseCancelled
-    //    case renewalNotification
-
     public struct AllCasePaths {
         public var purchasedPlan: AnyCasePath<PurchaseResult, InAppPurchasePlan> {
             AnyCasePath(

@@ -111,7 +111,7 @@ final class StoreKitDelegate: StoreKitManagerDelegate {
 }
 
 final class TransientTokenStorage: PaymentTokenStorage {
-    var token: PaymentToken?
+    private var token: PaymentToken?
 
     init() { }
 
