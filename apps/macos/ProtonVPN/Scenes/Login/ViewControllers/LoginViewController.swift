@@ -135,10 +135,6 @@ final class LoginViewController: NSViewController {
         return secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
     }
 
-    private var isSSOEnabled: Bool {
-        FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.externalSSO, reloadValue: true)
-    }
-
     // MARK: - Public functions
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -257,17 +253,12 @@ final class LoginViewController: NSViewController {
         loginButton.target = self
         loginButton.action = #selector(loginButtonAction)
         
-        if isSSOEnabled {
-            signInWithSSO.isHidden = false
-            loginButtonToSSOButtonVerticalOffset.isActive = true
-            signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
-            signInWithSSO.target = self
-            signInWithSSO.action = #selector(signInWithSSOButtonAction)
-        } else {
-            loginButtonToSSOButtonVerticalOffset.isActive = false
-            signInWithSSO.isHidden = true
-        }
-        
+        signInWithSSO.isHidden = false
+        loginButtonToSSOButtonVerticalOffset.isActive = true
+        signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
+        signInWithSSO.target = self
+        signInWithSSO.action = #selector(signInWithSSOButtonAction)
+
         createAccountButton.title = Localizable.createAccount
         createAccountButton.target = self
         createAccountButton.action = #selector(createAccountButtonAction)
@@ -303,10 +294,6 @@ final class LoginViewController: NSViewController {
         case .protonSignin:
             viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
         case .ssoSignin:
-            guard isSSOEnabled else {
-                log.assertionFailure("This action should never be called if sso signin is not enabled")
-                return
-            }
             viewModel.logInWithSSO(username: usernameTextField.stringValue)
         }
     }
@@ -383,10 +370,6 @@ final class LoginViewController: NSViewController {
     }
     
     @objc private func signInWithSSOButtonAction() {
-        guard isSSOEnabled else {
-            log.assertionFailure("This action should never be called if sso signin is not enabled")
-            return
-        }
         switch signInVariant {
         case .protonSignin:
             signInVariant = .ssoSignin
