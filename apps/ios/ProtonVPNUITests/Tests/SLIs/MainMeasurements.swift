@@ -18,18 +18,31 @@
 
 import Foundation
 import fusion
-import ProtonCoreTestingToolkitUITestsLogin
+import ProtonCoreLog
+import ProtonCoreTestingToolkitUITestsCore
+import ProtonCoreTestingToolkitPerformance
+import XCTest
 
 class MainMeasurements: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
-    private let lokiClient = LokiApiClient()
-    private let timer = TestsTimer()
+    private let countryListRobot = CountryListRobot()
+    private let connectionStatusRobot = ConnectionStatusRobot()
     private lazy var credentials = getCredentials(from: "credentials")
     
     private let workflow = "main_measurements"
-    private var sli: String? = nil
-    private var metrics: Codable? = nil
-    private let lokiID = UUID().uuidString
+    private var measurementContext = MeasurementContext(MeasurementConfig.self)
+    
+    override class func setUp() {
+        super.setUp()
+        
+        let lokiEndpoint = ObfuscatedConstants.lokiDomain + "loki/api/v1/push"
+        
+        MeasurementConfig
+            .setBundle(Bundle(identifier: Bundle.main.bundleIdentifier!)!)
+            .setProduct("VPN")
+            .setLokiEndpoint(lokiEndpoint)
+            .setEnvironment("prod")
+    }
     
     override func setUp() {
         super.setUp()
@@ -38,26 +51,74 @@ class MainMeasurements: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-
-    func testLoginPerformance() {
-        sli = "login"
+    
+    func testLoginSLI() {
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        
+        measurementProfile
+            .addMeasurement(DurationMeasurement())
+            .setServiceLevelIndicator("login")
         
         loginRobot
             .enterCredentials(credentials[2])
-        timer.StartTimer()
-        loginRobot
             .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-        timer.EndTimer()
         
-        metrics = LoginMetrics(duration: timer.GetElapsedTime(), status: "passed")
+        measurementProfile.measure {
+            mainRobot
+                .verify.connectionStatusNotConnected()
+        }
     }
     
-    override func tearDown() {
-        if testRun!.failureCount != 0 {
-            metrics = FailureMetrics(status: "failed")
+    func testConnectionSLI() {
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        
+        measurementProfile
+            .addMeasurement(DurationMeasurement())
+            .setServiceLevelIndicator("quick_connect")
+        
+        loginRobot
+            .enterCredentials(credentials[2])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
+            .quickConnectViaQCButton()
+        
+        measurementProfile.measure {
+            connectionStatusRobot
+                .verify.connectionStatusConnected(robot: MainRobot.self)
         }
-        lokiClient.pushMetrics(id: lokiID, workflow: workflow, sli: sli!, metrics: metrics!)
-        super.tearDown()
+        
+        mainRobot
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
+    }
+    
+    func testConnectionToSpecificServer() {
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        
+        measurementProfile
+            .addMeasurement(DurationMeasurement())
+            .setServiceLevelIndicator("specific_server_connect")
+        
+        let countryName = "Australia"
+        let back = "Countries"
+        
+        loginRobot
+            .enterCredentials(credentials[2])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
+        
+        mainRobot
+            .goToCountriesTab()
+            .connectToAServer()
+        
+        measurementProfile.measure {
+            connectionStatusRobot
+                .verify.connectedToAServer(countryName)
+        }
+        
+        mainRobot
+            .backToPreviousTab(robot: CountryListRobot.self, back)
+            .disconnectViaCountry()
+            .verify.connectionStatusNotConnected()
     }
 }
