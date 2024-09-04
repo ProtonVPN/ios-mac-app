@@ -1975,6 +1975,8 @@ public enum Localizable {
   public static var upsellSpecificLocationChangeServerButtonTitle: String { return Localizable.tr("Localizable", "upsell_specific_location_change_server_button_title", fallback: "Change server") }
   /// Displayed when the user clicks "Connect to Random Server" after they've just clicked it.
   public static var upsellSpecificLocationSubtitle: String { return Localizable.tr("Localizable", "upsell_specific_location_subtitle", fallback: "Get unlimited changes with VPN Plus") }
+  /// Displayed when the user clicks "Change server" after they've just changed it.
+  public static var upsellSpecificLocationSubtitle2: String { return Localizable.tr("Localizable", "upsell_specific_location_subtitle2", fallback: "With Proton Free, you can change servers a few times per hour. Get unlimited server changes with VPN Plus.") }
   /// Displayed when the user clicks "Connect to Random Server" too many times in a given time interval.
   public static var upsellSpecificLocationTitle: String { return Localizable.tr("Localizable", "upsell_specific_location_title", fallback: "You've reached the maximum number of Free server changes for now.") }
   /// Feature of VPN Accelerator upsell modal

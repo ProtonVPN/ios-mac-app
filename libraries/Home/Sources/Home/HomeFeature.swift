@@ -36,6 +36,8 @@ public struct HomeFeature {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> Void
 
+    @Dependency(\.serverChangeAuthorizer) var authorizer
+
     @Reducer(state: .equatable)
     public enum Destination {
         case changeServer(ChangeServerFeature)
@@ -75,6 +77,7 @@ public struct HomeFeature {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
+        case changeServer
         case disconnect
         /// Pin a recent connection to the top of the list, and remove it from the recent connections.
         case pin(ConnectionSpec)
@@ -101,7 +104,6 @@ public struct HomeFeature {
 
         case destination(PresentationAction<Destination.Action>)
     }
-
 
     private enum CancelId {
         case watchConnectionStatus
@@ -137,7 +139,14 @@ public struct HomeFeature {
                 return .run { send in
                     @Dependency(\.connectToVPN) var connectToVPN
                     try? await connectToVPN(spec)
+                    authorizer.registerServerChange(connectedAt: .now) // TODO: [redesign] is this a good place to do it?
                 }
+            case .changeServer:
+                // TODO: [redesign] Do an actual server change
+                return .concatenate([
+                    .send(.disconnect),
+                    .send(.connect(.defaultFastest))
+                ])
 
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
@@ -206,7 +215,7 @@ public struct HomeFeature {
                     state.connections = connections
                 }
                 return .none
-            case .connectionCard(let action):
+            case .connectionCard(.delegate(let action)):
                 switch action {
                 case .connect(let spec):
                     return .send(.connect(spec))
@@ -215,12 +224,28 @@ public struct HomeFeature {
                 case .tapAction:
                     return .send(.showConnectionDetails)
                 case .changeServerButtonTapped:
-                    // TODO: [redesign] show upsell modal or reconnect to a different server
-                    state.destination = .changeServer(.init())
+                    let availability = authorizer.serverChangeAvailability()
+                    if case .available = availability {
+                        return .send(.changeServer)
+                    }
+                    state.destination = .changeServer(.init(serverChangeAvailability: availability))
                     return .none
                 }
-            case .destination:
+            case .connectionCard:
                 return .none
+            case .destination(let action):
+                switch action {
+                case .presented(.changeServer(.buttonTapped)):
+                    if authorizer.serverChangeAvailability() == .available {
+                        state.destination = nil
+                        return .send(.changeServer)
+                    } else {
+                        // TODO: [redesign] Show upsell
+                        return .none
+                    }
+                default:
+                    return .none
+                }
             }
         }
         .ifLet(\.$destination, action: \.destination)

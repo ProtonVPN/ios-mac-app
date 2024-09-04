@@ -26,6 +26,7 @@ import Settings_iOS
 import ComposableArchitecture
 import NEHelper
 import VPNAppCore
+import LegacyCommon
 
 @available(iOS 17, *)
 enum HomeFeatureCreator {
@@ -36,9 +37,11 @@ enum HomeFeatureCreator {
 #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
+                .dependency(\.serverChangeAuthorizer, SimulatorHelper.serverChangeAuthorizer)
 #else
                 .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
                 .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
+                .dependency(\.serverChangeAuthorizer, ServerChangeAuthorizerKey.liveValue)
 #endif
         }
 

@@ -95,19 +95,6 @@ extension VPNConnectionActual {
             city: city
         )
     }
-    public func withAllFeatures() -> Self {
-        VPNConnectionActual(
-            serverModelId: serverModelId,
-            serverIPId: serverIPId,
-            vpnProtocol: vpnProtocol,
-            natType: natType,
-            safeMode: safeMode,
-            feature: [.p2p, .tor],
-            serverName: serverName,
-            country: country,
-            city: city
-        )
-    }
 }
 
 // MARK: - Watch for changes

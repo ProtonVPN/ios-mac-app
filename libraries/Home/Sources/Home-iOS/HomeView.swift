@@ -57,10 +57,9 @@ public struct HomeView: View {
         }
         .sheet(item: $store.scope(state: \.destination?.changeServer,
                                   action: \.destination.changeServer)) { store in
-            SkipChangeServerModal(dateFinished: Date().addingTimeInterval(5),
-                                  totalDuration: 30)
-            .presentationDetents([.medium])
-            .presentationDragIndicator(.visible)
+            ChangeServerModal(store: store)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
         }
     }
 

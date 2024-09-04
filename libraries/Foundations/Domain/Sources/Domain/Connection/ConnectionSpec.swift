@@ -95,32 +95,31 @@ public extension ConnectionSpec.Location {
 }
 
 public extension ConnectionSpec.Location {
-    static var specificCity = Self.exact(.paid,
+    static let specificCity = Self.exact(.paid,
                                          number: nil,
                                          subregion: "Szczebrzeszyn",
                                          regionCode: "PL")
 
-    static var specificCityServer = Self.exact(.paid,
+    static let specificCityServer = Self.exact(.paid,
                                                number: 456,
                                                subregion: "Szczebrzeszyn",
                                                regionCode: "PL")
 
-    static var specificCountryServer = Self.exact(.free,
+    static let specificCountryServer = Self.exact(.free,
                                                   number: 123,
                                                   subregion: nil,
                                                   regionCode: "PL")
 }
 
 public extension ConnectionSpec {
-    static var defaultFastest = ConnectionSpec(location: .fastest, features: [])
-    static var secureCoreFastest = ConnectionSpec(location: .secureCore(.fastest), features: [])
-    static var secureCoreCountry = ConnectionSpec(location: .secureCore(.fastestHop(to: "US")), features: [])
-    static var secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
-    static var specificCountry = ConnectionSpec(location: .region(code: "CH"), features: [])
-    static var specificCity = ConnectionSpec(location: .specificCity, features: [])
-    static var specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
-    static var specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
-
+    static let defaultFastest = ConnectionSpec(location: .fastest, features: [])
+    static let secureCoreFastest = ConnectionSpec(location: .secureCore(.fastest), features: [])
+    static let secureCoreCountry = ConnectionSpec(location: .secureCore(.fastestHop(to: "US")), features: [])
+    static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
+    static let specificCountry = ConnectionSpec(location: .region(code: "CH"), features: [])
+    static let specificCity = ConnectionSpec(location: .specificCity, features: [])
+    static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
+    static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
     func withAllFeatures() -> Self {
         .init(location: location, features: [.p2p, .tor])

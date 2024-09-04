@@ -37,6 +37,7 @@ import NetShield_iOS
 import Theme
 import VPNShared
 import LegacyCommon
+import VPNAppCore
 
 private let connectionDurationRefreshInterval: TimeInterval = 1.0
 

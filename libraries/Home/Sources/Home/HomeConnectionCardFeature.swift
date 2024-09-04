@@ -31,7 +31,8 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.defaultConnection) public var defaultConnection: ConnectionSpec
-        public var changeServerAllowedDate: Date = Date.now + 10
+        public var showChangeServerButton: Bool = false
+        public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
 
         public init() { }
 
@@ -49,10 +50,20 @@ public struct HomeConnectionCardFeature {
     }
 
     public enum Action: Equatable {
-        case connect(ConnectionSpec)
-        case disconnect
-        case tapAction
-        case changeServerButtonTapped
+        @CasePathable
+        public enum Delegate: Equatable {
+            case connect(ConnectionSpec)
+            case disconnect
+            case tapAction
+            case changeServerButtonTapped
+        }
+        case delegate(Delegate)
+        case watchConnectionStatus
+        case newConnectionStatus(VPNConnectionStatus)
+    }
+
+    private enum CancelId {
+        case watchConnectionStatus
     }
 
     public init() { }
@@ -60,13 +71,25 @@ public struct HomeConnectionCardFeature {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .connect:
+            case .delegate:
                 return .none
-            case .disconnect:
-                return .none
-            case .tapAction:
-                return .none
-            case .changeServerButtonTapped:
+            case .watchConnectionStatus:
+                return .run { @MainActor send in
+                    let stream = Dependency(\.vpnConnectionStatusPublisher)
+                        .wrappedValue()
+                        .map { Action.newConnectionStatus($0) }
+
+                    for await value in stream {
+                        send(value)
+                    }
+                }
+                .cancellable(id: CancelId.watchConnectionStatus)
+            case .newConnectionStatus(let connectionStatus):
+                state.showChangeServerButton = connectionStatus != .disconnected
+                
+                @Dependency(\.serverChangeAuthorizer) var authorizer
+                state.serverChangeAvailability = authorizer.serverChangeAvailability()
+
                 return .none
             }
         }

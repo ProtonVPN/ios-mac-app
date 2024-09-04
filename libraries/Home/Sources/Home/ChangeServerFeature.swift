@@ -17,23 +17,42 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import VPNAppCore
+import Foundation
 
 @Reducer
 public struct ChangeServerFeature {
+
     @ObservableState
     public struct State: Equatable {
-        var some: Int = 0
+        public var dateFinished: Date
+        public var totalDuration: TimeInterval
+
+        public init(serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability) {
+            switch serverChangeAvailability {
+            case .available:
+                self.dateFinished = .distantPast
+                self.totalDuration = 0
+            case let .unavailable(until, duration, _):
+                self.dateFinished = until
+                self.totalDuration = duration
+            }
+        }
     }
 
     @CasePathable
     public enum Action {
-        case one
+        case buttonTapped
     }
+
+    public init() { }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
-            return .none
+            switch action {
+            case .buttonTapped:
+                return .none
+            }
         }
-//        EmptyReducer()
     }
 }

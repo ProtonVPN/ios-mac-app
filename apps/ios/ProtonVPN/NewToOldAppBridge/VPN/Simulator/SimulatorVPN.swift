@@ -102,6 +102,14 @@ class SimulatorHelper {
         })
     }
 
+    public static var serverChangeAuthorizer: ServerChangeAuthorizer = {
+        // Basic implementation for simulator support, change it according to your needs.
+        ServerChangeAuthorizer {
+            .unavailable(until: .now + 5, duration: 5, exhaustedSkips: false)
+        } registerServerChangeAtDate: { date in
+
+        }
+    }()
 }
 
 // MARK: - VPNConnectionStatus -> AppDisplayState

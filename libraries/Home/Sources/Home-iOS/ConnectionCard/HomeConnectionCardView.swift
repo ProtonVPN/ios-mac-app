@@ -57,7 +57,7 @@ struct HomeConnectionCardView: View {
     var chevron: some View {
         if store.vpnConnectionStatus.connectionStatusAvailable {
             Button() {
-                store.send(.tapAction)
+                store.send(.delegate(.tapAction))
             } label: {
                 IconProvider.chevronRight
                     .foregroundColor(Color(.icon, .weak))
@@ -70,13 +70,13 @@ struct HomeConnectionCardView: View {
             withAnimation(.easeInOut) {
                 switch store.vpnConnectionStatus {
                 case .disconnected:
-                    store.send(.connect(store.presentedSpec))
+                    store.send(.delegate(.connect(store.presentedSpec)))
                 case .connected:
-                    store.send(.disconnect)
+                    store.send(.delegate(.disconnect))
                 case .connecting:
-                    store.send(.disconnect)
+                    store.send(.delegate(.disconnect))
                 case .loadingConnectionInfo:
-                    store.send(.disconnect)
+                    store.send(.delegate(.disconnect))
                 case .disconnecting:
                     break
                 }
@@ -89,9 +89,15 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     var changeServerButton: some View {
-        if store.userTier == 0, store.vpnConnectionStatus != .disconnected {
-            ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                    changeServerAllowedDate: store.changeServerAllowedDate)
+        if store.showChangeServerButton {
+            switch store.serverChangeAvailability ?? .available {
+            case .available:
+                ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
+                                        changeServerAllowedDate: .distantPast)
+            case let .unavailable(until, _, _):
+                ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
+                                        changeServerAllowedDate: until)
+            }
         }
     }
 
@@ -128,7 +134,10 @@ struct HomeConnectionCardView: View {
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {
-            store.send(.connect(store.presentedSpec))
+            store.send(.delegate(.connect(store.presentedSpec)))
+        }
+        .task {
+            store.send(.watchConnectionStatus)
         }
     }
 }
@@ -139,6 +148,8 @@ fileprivate extension VPNConnectionStatus {
         return true
     }
 }
+
+#if targetEnvironment(simulator)
 
 @available(iOS 17, *)
 #Preview("Free users", traits: .fixedLayout(width: 740, height: 700)) {
@@ -222,3 +233,4 @@ extension StoreOf<HomeConnectionCardFeature> {
         }
     }
 }
+#endif

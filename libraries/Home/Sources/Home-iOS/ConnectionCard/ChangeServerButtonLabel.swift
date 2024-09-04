@@ -25,49 +25,47 @@ import Strings
 @available(iOS 16.0, *)
 struct ChangeServerButtonLabel: View {
     let sendAction: HomeConnectionCardFeature.ActionSender
-    var changeServerAllowedDate: Date
-    @State private var currentDate = Date.now
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let changeServerAllowedDate: Date
 
-    var timeLeft: String {
-        let timeInterval = changeServerAllowedDate.timeIntervalSince(currentDate)
-        let duration = Duration(secondsComponent: Int64(timeInterval), attosecondsComponent: 0)
-        return duration.formatted()
-    }
+    @Dependency(\.date) var date
 
     var body: some View {
-        Button {
-            sendAction(.changeServerButtonTapped)
-        } label: {
-            HStack {
-                Spacer()
-                Text(Localizable.changeServer)
-                Spacer()
-                if changeServerAllowedDate > currentDate {
-                    HStack(spacing: .themeSpacing8) {
-                        IconProvider.hourglass
-                        Text(timeLeft)
+        TimelineView(.periodic(from: .now, by: 1)) { timeline in
+            Button {
+                sendAction(.delegate(.changeServerButtonTapped))
+            } label: {
+                HStack {
+                    Spacer()
+                    Text(Localizable.changeServer)
+                    Spacer()
+                    if changeServerAllowedDate > date.now {
+                        HStack(spacing: .themeSpacing8) {
+                            IconProvider.hourglass
+                            Text(changeServerAllowedDate
+                                .timeIntervalSinceNow
+                                .asColonSeparatedString(maxUnit: .hour, minUnit: .minute))
+                            Spacer()
+                                .frame(width: .themeSpacing24)
+                        }
+                        .foregroundColor(Color(.text))
                     }
-                    .foregroundColor(Color(.text))
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .padding(.horizontal, .themeSpacing24)
-        }
-        .buttonStyle(ChangeServerButtonStyle(isActive: changeServerAllowedDate < currentDate))
-        .onReceive(timer) { input in
-            currentDate = input
+            .buttonStyle(ChangeServerButtonStyle(isActive: changeServerAllowedDate < date.now))
         }
     }
 }
 
 struct ChangeServerButtonStyle: ButtonStyle {
 
-    var isActive: Bool
+    let isActive: Bool
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.body1(.semibold))
             .frame(maxWidth: .infinity, minHeight: 48)
+            .background(Color(.background, .weak)) // we need to give it a background in order for the button to be tappable on the whole view...
             .foregroundColor(isActive
                         ? Color(.text, .primary)
                         : Color(.text, .hint))

@@ -18,23 +18,10 @@
 
 import Foundation
 import Dependencies
+import VPNAppCore
 
-public struct ServerChangeAuthorizer {
-    public var serverChangeAvailability: () -> ServerChangeAvailability
-    private var registerServerChangeAtDate: (Date) -> Void
-
-    public func registerServerChange(connectedAt connectionDate: Date) {
-        registerServerChangeAtDate(connectionDate)
-    }
-
-    public enum ServerChangeAvailability: Equatable {
-        case available
-        case unavailable(until: Date, duration: TimeInterval, exhaustedSkips: Bool)
-    }
-}
-
-extension ServerChangeAuthorizer: DependencyKey {
-    public static var liveValue: Self = {
+public enum ServerChangeAuthorizerKey: DependencyKey {
+    public static var liveValue: ServerChangeAuthorizer = {
         let authorizer = ServerChangeAuthorizerImplementation()
         return ServerChangeAuthorizer(
             serverChangeAvailability: authorizer.serverChangeAvailability,
@@ -45,13 +32,6 @@ extension ServerChangeAuthorizer: DependencyKey {
     #if DEBUG
     public static let testValue: ServerChangeAuthorizer = liveValue
     #endif
-}
-
-extension DependencyValues {
-    public var serverChangeAuthorizer: ServerChangeAuthorizer {
-      get { self[ServerChangeAuthorizer.self] }
-      set { self[ServerChangeAuthorizer.self] = newValue }
-    }
 }
 
 public enum ServerChangeViewState {
