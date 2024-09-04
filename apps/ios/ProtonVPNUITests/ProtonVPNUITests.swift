@@ -87,7 +87,6 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     private static func disableAutoFillPasswords() {
-        #if targetEnvironment(simulator)
         guard #available(iOS 16.0, *), isAutoFillPasswordsEnabled else {
             return
         }
@@ -120,7 +119,6 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             autofillSwitch.tap()
         }
         isAutoFillPasswordsEnabled = false
-        #endif
     }
     
     private static func navigateToPasswordOptions(settingsApp: XCUIApplication) {
