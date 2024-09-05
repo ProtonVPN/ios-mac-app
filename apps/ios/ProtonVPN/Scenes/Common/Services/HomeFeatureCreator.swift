@@ -41,7 +41,6 @@ enum HomeFeatureCreator {
 #else
                 .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
                 .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
-                .dependency(\.serverChangeAuthorizer, ServerChangeAuthorizerKey.liveValue)
 #endif
         }
 

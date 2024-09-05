@@ -20,7 +20,7 @@ import Foundation
 import Dependencies
 import VPNAppCore
 
-public enum ServerChangeAuthorizerKey: DependencyKey {
+extension ServerChangeAuthorizer: DependencyKey {
     public static var liveValue: ServerChangeAuthorizer = {
         let authorizer = ServerChangeAuthorizerImplementation()
         return ServerChangeAuthorizer(
@@ -28,10 +28,6 @@ public enum ServerChangeAuthorizerKey: DependencyKey {
             registerServerChangeAtDate: authorizer.registerServerChange
         )
     }()
-
-    #if DEBUG
-    public static let testValue: ServerChangeAuthorizer = liveValue
-    #endif
 }
 
 public enum ServerChangeViewState {

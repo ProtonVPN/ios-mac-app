@@ -45,16 +45,10 @@ extension DependencyValues {
     }
 }
 
-extension ServerChangeAuthorizer: DependencyKey {
-    public static var liveValue: Self = {
-        return ServerChangeAuthorizer {
-            .unavailable(until: .distantFuture, duration: .infinity, exhaustedSkips: true)
-        } registerServerChangeAtDate: { date in
+extension ServerChangeAuthorizer: TestDependencyKey {
+    public static let testValue = ServerChangeAuthorizer {
+        .unavailable(until: .distantFuture, duration: .infinity, exhaustedSkips: true)
+    } registerServerChangeAtDate: { date in
 
-        }
-    }()
-
-    #if DEBUG
-    public static let testValue: ServerChangeAuthorizer = liveValue
-    #endif
+    }
 }
