@@ -74,7 +74,6 @@
 		4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7922A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo */; };
 		4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
-		4CD1F79E2A72E57F00E8AB01 /* LegacyCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
 		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
@@ -86,6 +85,8 @@
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7706CAFC2C9C39840055CD32 /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = 7706CAFB2C9C39840055CD32 /* fusion */; };
 		7706CAFE2C9C6CC30055CD32 /* UIElement+MacOSExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7706CAFD2C9C6CC30055CD32 /* UIElement+MacOSExtension.swift */; };
+		7714FF9F2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */; };
+		7714FFA12C9062B300D29EF4 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FFA02C9062B300D29EF4 /* Strings */; };
 		772792C42C590E30008A769A /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772792C32C590E30008A769A /* NetworkUtils.swift */; };
 		7733E1D82C74D88200E28B8D /* ModalsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7733E1D62C74D70000E28B8D /* ModalsRobot.swift */; };
 		7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747E3022C512EDF00A750E1 /* String+Extensions.swift */; };
@@ -1017,10 +1018,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD1F79E2A72E57F00E8AB01 /* LegacyCommon in Frameworks */,
+				7714FF9F2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore in Frameworks */,
+				7714FFA12C9062B300D29EF4 /* Strings in Frameworks */,
 				4C9754F72A60173C0035A61B /* SwiftOTP in Frameworks */,
 				7706CAFC2C9C39840055CD32 /* fusion in Frameworks */,
 				4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */,
+				7714FF9D2C90629B00D29EF4 /* fusion in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2659,8 +2662,9 @@
 			packageProductDependencies = (
 				4C74D32A2A0B9D7F004F8528 /* PMLogger */,
 				4C9754F62A60173C0035A61B /* SwiftOTP */,
-				4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */,
-				7706CAFB2C9C39840055CD32 /* fusion */,
+				7714FF9C2C90629B00D29EF4 /* fusion */,
+				7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */,
+				7714FFA02C9062B300D29EF4 /* Strings */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */;
@@ -4579,9 +4583,17 @@
 			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
-		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
+		7714FF9C2C90629B00D29EF4 /* fusion */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = LegacyCommon;
+			productName = fusion;
+		};
+		7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreTestingToolkitUITestsCore;
+		};
+		7714FFA02C9062B300D29EF4 /* Strings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Strings;
 		};
 		7706CAFB2C9C39840055CD32 /* fusion */ = {
 			isa = XCSwiftPackageProductDependency;
