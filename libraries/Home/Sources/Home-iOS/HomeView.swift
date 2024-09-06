@@ -26,17 +26,11 @@ import Strings
 import Theme
 import Ergonomics
 import VPNAppCore
-
-public struct HomeTabView: View {
-    public init() {}
-    public var body: some View {
-        Text("home")
-    }
-}
+import Modals
 
 @available(iOS 17, *)
 public struct HomeView: View {
-    var store: StoreOf<HomeFeature>
+    @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
     static let mapHeight: CGFloat = 300
     
@@ -45,15 +39,11 @@ public struct HomeView: View {
             ScrollView {
                 HomeMapView()
                     .frame(minHeight: Self.mapHeight)
-                HomeConnectionCardView(
-                    item: store.mostRecent ?? .defaultFastest,
-                    vpnConnectionStatus: store.vpnConnectionStatus,
-                    sendAction: { _ = store.send($0) }
-                )
+                HomeConnectionCardView(store: store.scope(state: \.connectionCard,
+                                                          action: \.connectionCard))
                 .padding(.horizontal, .themeSpacing16)
-                RecentsSectionView(
-                    items: store.state.remainingConnections,
-                    sendAction: { _ = store.send($0) }
+                RecentsSectionView(items: store.state.remainingConnections,
+                                   sendAction: { _ = store.send($0) }
                 )
             }
             .background(Color(.background))
@@ -65,16 +55,16 @@ public struct HomeView: View {
             store.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
             store.send(.watchConnectionStatus)
         }
+        .sheet(item: $store.scope(state: \.destination?.changeServer,
+                                  action: \.destination.changeServer)) { store in
+            ChangeServerModal(store: store)
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+        }
     }
 
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
-    }
-
-    public init() {
-        self.store = .init(initialState: .init()) {
-            HomeFeature()
-        }
     }
 }
 
@@ -86,9 +76,7 @@ internal extension GeometryProxy {
 
 #if DEBUG
 @available(iOS 17, *)
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(store: .init(initialState: HomeFeature.previewState, reducer: { HomeFeature() }))
-    }
+#Preview {
+    HomeView(store: .init(initialState: HomeFeature.previewState, reducer: { HomeFeature() }))
 }
 #endif

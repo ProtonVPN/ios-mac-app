@@ -127,7 +127,7 @@ public struct ConnectionInfoBuilder {
 #if canImport(Cocoa)
         .font(.body())
 #elseif canImport(UIKit)
-        .font(.caption())
+        .font(.body2(emphasised: false))
 #endif
     }
 

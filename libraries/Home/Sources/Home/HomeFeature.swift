@@ -36,26 +36,30 @@ public struct HomeFeature {
     /// - Note: might want this as a property of all Reducer types
     public typealias ActionSender = (Action) -> Void
 
+    @Dependency(\.serverChangeAuthorizer) var authorizer
+
+    @Reducer(state: .equatable)
+    public enum Destination {
+        case changeServer(ChangeServerFeature)
+    }
+
     @ObservableState
     public struct State: Equatable {
         static let maxConnections = 8
 
         public var connections: [RecentConnection]
 
+        public var connectionCard: HomeConnectionCardFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
-        public var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
-        public init(connections: [RecentConnection], connectionStatus: ConnectionStatusFeature.State, vpnConnectionStatus: VPNConnectionStatus) {
+        @Presents public var destination: Destination.State?
+
+        public init(connections: [RecentConnection] = [],
+                    connectionStatus: ConnectionStatusFeature.State = .init()) {
             self.connections = connections
             self.connectionStatus = connectionStatus
-            self.vpnConnectionStatus = vpnConnectionStatus
-        }
-
-        public init() {
-            let connectionState = ConnectionStatusFeature.State()
-            self.init(connections: [],
-                      connectionStatus: connectionState,
-                      vpnConnectionStatus: .disconnected)
+            self.connectionCard = .init()
         }
 
         mutating func trimConnections() {
@@ -69,10 +73,11 @@ public struct HomeFeature {
     }
 
     @CasePathable
-    public enum Action: Equatable {
+    public enum Action {
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
+        case changeServer
         case disconnect
         /// Pin a recent connection to the top of the list, and remove it from the recent connections.
         case pin(ConnectionSpec)
@@ -82,6 +87,7 @@ public struct HomeFeature {
         case remove(ConnectionSpec)
 
         case connectionStatus(ConnectionStatusFeature.Action)
+        case connectionCard(HomeConnectionCardFeature.Action)
 
         /// Show details screen with info about current connection
         case showConnectionDetails
@@ -95,14 +101,21 @@ public struct HomeFeature {
         case helpButtonPressed
 
         case loadConnections
-    }
 
+        case destination(PresentationAction<Destination.Action>)
+    }
 
     private enum CancelId {
         case watchConnectionStatus
     }
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.connectionCard, action: \.connectionCard) {
+            HomeConnectionCardFeature()
+        }
+        Scope(state: \.connectionStatus, action: \.connectionStatus) {
+            ConnectionStatusFeature()
+        }
         Reduce { state, action in
             switch action {
             case let .connect(spec):
@@ -126,7 +139,14 @@ public struct HomeFeature {
                 return .run { send in
                     @Dependency(\.connectToVPN) var connectToVPN
                     try? await connectToVPN(spec)
+                    authorizer.registerServerChange(connectedAt: .now) // TODO: [redesign] is this a good place to do it?
                 }
+            case .changeServer:
+                // TODO: [redesign] Do an actual server change
+                return .concatenate([
+                    .send(.disconnect),
+                    .send(.connect(.defaultFastest))
+                ])
 
             case let .pin(spec):
                 guard let index = state.connections.firstIndex(where: {
@@ -195,11 +215,40 @@ public struct HomeFeature {
                     state.connections = connections
                 }
                 return .none
+            case .connectionCard(.delegate(let action)):
+                switch action {
+                case .connect(let spec):
+                    return .send(.connect(spec))
+                case .disconnect:
+                    return .send(.disconnect)
+                case .tapAction:
+                    return .send(.showConnectionDetails)
+                case .changeServerButtonTapped:
+                    let availability = authorizer.serverChangeAvailability()
+                    if case .available = availability {
+                        return .send(.changeServer)
+                    }
+                    state.destination = .changeServer(.init(serverChangeAvailability: availability))
+                    return .none
+                }
+            case .connectionCard:
+                return .none
+            case .destination(let action):
+                switch action {
+                case .presented(.changeServer(.buttonTapped)):
+                    if authorizer.serverChangeAvailability() == .available {
+                        state.destination = nil
+                        return .send(.changeServer)
+                    } else {
+                        // TODO: [redesign] Show upsell
+                        return .none
+                    }
+                default:
+                    return .none
+                }
             }
         }
-        Scope(state: \.connectionStatus, action: \.connectionStatus) {
-            ConnectionStatusFeature()
-        }
+        .ifLet(\.$destination, action: \.destination)
     }
 
     public init() {}
@@ -223,7 +272,6 @@ extension HomeFeature {
                                                                 .connectionSecureCore,
                                                                 .connectionRegion,
                                                                 .connectionSecureCoreFastest],
-                                                  connectionStatus: .init(),
-                                                  vpnConnectionStatus: .disconnected)
+                                                  connectionStatus: .init())
 }
 #endif

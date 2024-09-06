@@ -18,6 +18,7 @@
 
 import Foundation
 import Dependencies
+import VPNAppCore
 
 public struct ServerChangeAuthorizerImplementation {
     func serverChangeAvailability() -> ServerChangeAuthorizer.ServerChangeAvailability {

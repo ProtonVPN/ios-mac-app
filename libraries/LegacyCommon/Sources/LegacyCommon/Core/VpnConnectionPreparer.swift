@@ -110,8 +110,8 @@ class VpnConnectionPreparer {
             return
         }
 
-        DispatchQueue.main.async { [weak self] in
-            self?.appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+        DispatchQueue.main.async { // removed [weak self], self was deallocated too early
+            self.appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
         }
     }
 

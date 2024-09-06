@@ -33,6 +33,17 @@ public enum VPNConnectionStatus: Equatable {
 
     case disconnecting(ConnectionSpec, VPNConnectionActual?)
 
+    public var actual: VPNConnectionActual? {
+        switch self {
+        case .disconnected:
+            return nil
+        case .connected(_, let vpnConnectionActual),
+                .connecting(_, let vpnConnectionActual),
+                .loadingConnectionInfo(_, let vpnConnectionActual),
+                .disconnecting(_, let vpnConnectionActual):
+            return vpnConnectionActual
+        }
+    }
 }
 
 public struct VPNConnectionActual: Equatable {
@@ -67,7 +78,7 @@ extension VPNConnectionActual {
                             vpnProtocol: VpnProtocol = .wireGuard(.tcp),
                             natType: NATType = .moderateNAT,
                             safeMode: Bool? = nil,
-                            feature: ServerFeature = .zero,
+                            feature: ServerFeature = [],
                             serverName: String = "SRV#12",
                             country: String = "CH",
                             city: String? = "Bern"

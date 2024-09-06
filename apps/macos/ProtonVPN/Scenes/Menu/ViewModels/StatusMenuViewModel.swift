@@ -28,6 +28,7 @@ import Domain
 import Ergonomics
 import Strings
 import Theme
+import VPNAppCore
 
 import Persistence
 

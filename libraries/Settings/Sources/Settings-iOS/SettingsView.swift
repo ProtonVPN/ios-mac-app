@@ -19,7 +19,7 @@
 import SwiftUI
 
 import ComposableArchitecture
-import SwiftUINavigation
+import SwiftNavigation
 
 import Localization
 import Settings
@@ -247,8 +247,9 @@ public struct SettingsView: View {
     ) -> some View {
         return WithViewStore(store, observe: { $0.destination }) { viewStore in
             NavigationLink(
-                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
-                case: `case`,
+//                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+//                case: `case`,
+                item: viewStore.binding(get: { $0 }, send: .dismissDestination),
                 onNavigate: { _ in },
                 destination: { _ in destination() },
                 label: { EmptyView() }

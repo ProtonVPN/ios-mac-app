@@ -246,7 +246,7 @@ extension MacAlertService: CoreAlertService {
         case let alert as ConnectionCooldownAlert:
             show(
                 alert: alert,
-                modalType: .cantSkip(before: alert.until, duration: alert.duration, longSkip: alert.longSkip)
+                modalType: .cantSkip(before: alert.until, totalDuration: alert.duration, longSkip: alert.longSkip)
             )
 
         case let alert as FreeConnectionsAlert:

@@ -61,6 +61,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var pinnedFastest: RecentConnection {
         .init(
             pinned: true,

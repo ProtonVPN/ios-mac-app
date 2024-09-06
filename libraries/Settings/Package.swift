@@ -16,9 +16,9 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Localization"),
         .package(path: "../NEHelper"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.12.1"),
-        .package(url: "https://github.com/pointfreeco/swiftui-navigation", .upToNextMajor(from: "1.1.0")),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", exact: "1.3.6")
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.14.0"),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.2.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9")
     ],
     targets: [
         .target(
@@ -29,7 +29,7 @@ let package = Package(
                 "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SwiftUINavigation", package: "swiftui-navigation"),
+                .product(name: "SwiftNavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),

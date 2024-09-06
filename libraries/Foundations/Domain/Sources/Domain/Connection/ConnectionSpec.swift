@@ -40,7 +40,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
     public enum Location: Equatable, Hashable, Codable {
         case fastest
         case region(code: String)
-        case exact(Server, number: Int, subregion: String?, regionCode: String)
+        case exact(Server, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
     }
 
@@ -80,5 +80,48 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
     /// Default intent that is set before user asks for any
     public init() {
         self.init(location: .exact(.free, number: 1, subregion: nil, regionCode: "PL"), features: [])
+    }
+}
+
+public extension ConnectionSpec.Location {
+    func withServer(number: Int) -> Self {
+        switch self {
+        case let .exact(server, _, subregion, regionCode):
+            return .exact(server, number: number, subregion: subregion, regionCode: regionCode)
+        default:
+            return self
+        }
+    }
+}
+
+public extension ConnectionSpec.Location {
+    static let specificCity = Self.exact(.paid,
+                                         number: nil,
+                                         subregion: "Szczebrzeszyn",
+                                         regionCode: "PL")
+
+    static let specificCityServer = Self.exact(.paid,
+                                               number: 456,
+                                               subregion: "Szczebrzeszyn",
+                                               regionCode: "PL")
+
+    static let specificCountryServer = Self.exact(.free,
+                                                  number: 123,
+                                                  subregion: nil,
+                                                  regionCode: "PL")
+}
+
+public extension ConnectionSpec {
+    static let defaultFastest = ConnectionSpec(location: .fastest, features: [])
+    static let secureCoreFastest = ConnectionSpec(location: .secureCore(.fastest), features: [])
+    static let secureCoreCountry = ConnectionSpec(location: .secureCore(.fastestHop(to: "US")), features: [])
+    static let secureCoreCountryHop = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CA")), features: [])
+    static let specificCountry = ConnectionSpec(location: .region(code: "CH"), features: [])
+    static let specificCity = ConnectionSpec(location: .specificCity, features: [])
+    static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
+    static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
+
+    func withAllFeatures() -> Self {
+        .init(location: location, features: [.p2p, .tor])
     }
 }

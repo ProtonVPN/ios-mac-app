@@ -21,7 +21,7 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.12.1"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.14.0"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../SharedViews"),
@@ -31,6 +31,7 @@ let package = Package(
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),
+        .package(path: "../Features/Modals"),
     ],
     targets: [
         .target(
@@ -43,6 +44,7 @@ let package = Package(
                 "Persistence",
                 "SharedViews",
                 "NetShield",
+                "Modals",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),

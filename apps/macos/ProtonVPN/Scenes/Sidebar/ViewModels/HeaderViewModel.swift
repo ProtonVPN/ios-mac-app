@@ -27,6 +27,7 @@ import LegacyCommon
 import VPNShared
 import Theme
 import Strings
+import VPNAppCore
 
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)

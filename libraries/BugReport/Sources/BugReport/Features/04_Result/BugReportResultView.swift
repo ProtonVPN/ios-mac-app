@@ -19,7 +19,7 @@
 import Foundation
 import ComposableArchitecture
 import SwiftUI
-import SwiftUINavigation
+import SwiftNavigation
 
 import Strings
 

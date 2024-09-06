@@ -80,8 +80,8 @@ extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
-        // safety measure to not accidentally switch on the redesign before it's ready
-        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, false)
+//        Safety measure to not accidentally switch on the redesign before it's ready
+//        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)
 
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()

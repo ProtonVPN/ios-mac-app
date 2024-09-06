@@ -139,6 +139,7 @@ struct ConnectionFlagView_Previews: PreviewProvider {
         }
         .padding()
         .previewLayout(.sizeThatFits)
+        .preferredColorScheme(.dark)
         .previewDisplayName("single")
 
         VStack(alignment: .leading, spacing: spacing) {
@@ -163,11 +164,11 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             )
             sideBySide(
                 intent: ConnectionSpec(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"), features: []),
-                actual: .mock(serverName: "FREE#1")
+                actual: .mock(serverName: "FREE #1")
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: nil, regionCode: "US"), features: [.p2p, .tor]),
-                actual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor))
+                intent: ConnectionSpec(location: .exact(.paid, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
+                actual: .mock(feature: [.p2p, .tor])
             )
             sideBySide(
                 intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: "AR", regionCode: "US"), features: []),
@@ -183,6 +184,7 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             )
         }
         .previewLayout(.fixed(width: 700, height: 800))
+        .preferredColorScheme(.dark)
         .previewDisplayName("sideBySide")
     }
 }
@@ -211,7 +213,7 @@ public extension ConnectionSpec.Location {
         switch self {
         case .fastest,
                 .secureCore(.fastest):
-            return "Fastest"
+            return "Fastest country"
         case .region(let code),
                 .exact(_, _, _, let code),
                 .secureCore(.fastestHop(let code)),
@@ -225,13 +227,18 @@ public extension ConnectionSpec.Location {
         case .fastest, .region, .secureCore(.fastest), .secureCore(.fastestHop):
             return nil
         case let .exact(server, number, subregion, _):
+            var text = ""
             if server == .free {
-                return "FREE#\(number)"
+                text = "FREE"
             } else if let subregion {
-                return "\(subregion) #\(number)"
+                text = subregion
             } else {
                 return nil
             }
+            if let number {
+                text += " #\(number)"
+            }
+            return text
         case .secureCore(.hop(_, let via)):
             return "via \(regionName(locale: locale, code: via))"
         }
