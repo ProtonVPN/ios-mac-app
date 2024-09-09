@@ -28,7 +28,8 @@ let package = Package(
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-            ]
+            ],
+            resources: [.process("Resources")]
         ),
         .target(name: "DomainTestSupport", dependencies: ["Domain"]),
         .testTarget(

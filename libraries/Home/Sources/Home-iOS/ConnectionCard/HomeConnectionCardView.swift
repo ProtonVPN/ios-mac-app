@@ -89,14 +89,16 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     var changeServerButton: some View {
-        if store.showChangeServerButton {
-            switch store.serverChangeAvailability ?? .available {
-            case .available:
-                ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                        changeServerAllowedDate: .distantPast)
-            case let .unavailable(until, _, _):
-                ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                        changeServerAllowedDate: until)
+        WithPerceptionTracking {
+            if store.showChangeServerButton {
+                switch store.serverChangeAvailability ?? .available {
+                case .available:
+                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
+                                            changeServerAllowedDate: .distantPast)
+                case let .unavailable(until, _, _):
+                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
+                                            changeServerAllowedDate: until)
+                }
             }
         }
     }

@@ -182,6 +182,15 @@
         }
       },
       {
+        "package": "SVGView",
+        "repositoryURL": "https://github.com/exyte/SVGView.git",
+        "state": {
+          "branch": null,
+          "revision": "6465962facdd25cb96eaebc35603afa2f15d2c0d",
+          "version": "1.0.6"
+        }
+      },
+      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {

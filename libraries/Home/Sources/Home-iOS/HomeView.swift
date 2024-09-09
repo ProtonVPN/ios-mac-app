@@ -33,33 +33,46 @@ public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
     static let mapHeight: CGFloat = 300
-    
+
     public var body: some View {
-        ZStack(alignment: .top) {
-            ScrollView {
-                HomeMapView()
-                    .frame(minHeight: Self.mapHeight)
-                HomeConnectionCardView(store: store.scope(state: \.connectionCard,
-                                                          action: \.connectionCard))
-                .padding(.horizontal, .themeSpacing16)
-                RecentsSectionView(items: store.state.remainingConnections,
-                                   sendAction: { _ = store.send($0) }
-                )
+        GeometryReader { proxy in
+            ZStack(alignment: .top) {
+                VStack {
+                    HomeMapView(store: store.scope(state: \.map, action: \.map),
+                                availableHeight: Self.mapHeight,
+                                availableWidth: proxy.size.width)
+                        .frame(width: proxy.size.width, height: Self.mapHeight)
+                    Color(.background)
+                        .frame(width: proxy.size.width, height: proxy.size.height - Self.mapHeight)
+                }
+                ScrollView {
+                    Spacer().frame(height: Self.mapHeight)
+                    HomeConnectionCardView(store: store.scope(state: \.connectionCard,
+                                                              action: \.connectionCard))
+                    .padding(.horizontal, .themeSpacing16)
+                    .background(Color(.background))
+                    RecentsSectionView(items: store.state.remainingConnections,
+                                       sendAction: { _ = store.send($0) }
+                    )
+
+                    .background(Color(.background))
+                }
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
+                                                        action: \.connectionStatus))
+                .allowsHitTesting(false)
             }
-            .background(Color(.background))
-            ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                    action: \.connectionStatus))
-            .allowsHitTesting(false)
         }
         .task {
-            store.send(.loadConnections) // todo: it's late to load the connections because at this point the view is already visible
-            store.send(.watchConnectionStatus)
+            store.send(.loadConnections) // TODO: [redesign] it's late to load the connections because at this point the view is already visible
+            store.send(.sharedProperties(.listen))
         }
         .sheet(item: $store.scope(state: \.destination?.changeServer,
                                   action: \.destination.changeServer)) { store in
-            ChangeServerModal(store: store)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
+            WithPerceptionTracking {
+                ChangeServerModal(store: store)
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
+            }
         }
     }
 

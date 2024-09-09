@@ -22,9 +22,9 @@
 import CoreLocation
 import Foundation
 
-extension CLLocationCoordinate2D {
+public extension CLLocationCoordinate2D {
     
-    public static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
+    static func == (lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
         let epsilon: CLLocationDegrees = 0.00001
         return fabs(lhs.latitude - rhs.latitude) < epsilon && fabs(lhs.longitude - rhs.longitude) < epsilon
     }

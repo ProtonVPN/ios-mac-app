@@ -21,6 +21,7 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
+        .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.13.1")),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
@@ -49,10 +50,11 @@ let package = Package(
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SVGView", package: "SVGView"),
             ],
             exclude: ["swiftgen.yml"],
             resources: [
-                .process("Resources/Assets.xcassets")
+                .process("Resources/BlankMap-World.svg")
             ]
         ),
         .target(

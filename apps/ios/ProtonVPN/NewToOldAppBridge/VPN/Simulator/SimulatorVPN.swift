@@ -144,7 +144,8 @@ extension ConnectionSpec {
             feature: .zero,
             serverName: "Server#123",
             country: "Country",
-            city: "City"
+            city: "City",
+            coordinates: .mockPoland()
         )
     }
 }

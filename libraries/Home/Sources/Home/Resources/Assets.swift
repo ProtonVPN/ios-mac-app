@@ -25,7 +25,6 @@ public enum HomeAsset {
   public static let cz = ImageAsset(name: "CZ")
   public static let fastest = ImageAsset(name: "Fastest")
   public static let us = ImageAsset(name: "US")
-  public static let mainMap = ImageAsset(name: "main-map")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

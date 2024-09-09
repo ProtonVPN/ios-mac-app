@@ -74,19 +74,18 @@ public struct HomeConnectionCardFeature {
             case .delegate:
                 return .none
             case .watchConnectionStatus:
-                return .run { @MainActor send in
-                    let stream = Dependency(\.vpnConnectionStatusPublisher)
-                        .wrappedValue()
-                        .map { Action.newConnectionStatus($0) }
-
-                    for await value in stream {
-                        send(value)
-                    }
+                return .publisher {
+                    state
+                        .$vpnConnectionStatus
+                        .publisher
+                        .receive(on: UIScheduler.shared)
+                        .map(Action.newConnectionStatus)
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
+
             case .newConnectionStatus(let connectionStatus):
                 state.showChangeServerButton = connectionStatus != .disconnected
-                
+
                 @Dependency(\.serverChangeAuthorizer) var authorizer
                 state.serverChangeAvailability = authorizer.serverChangeAvailability()
 
