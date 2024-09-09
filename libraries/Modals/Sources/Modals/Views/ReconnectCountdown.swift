@@ -201,7 +201,7 @@ fileprivate extension StrokeStyle {
     static let countdown: Self = .init(lineWidth: 10, lineCap: .square, lineJoin: .miter)
 }
 
-@available(iOS 17, macOS 14.0, *)
+@available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview(traits: .sizeThatFitsLayout) {
     ReconnectCountdown(dateFinished: Date().addingTimeInterval(15),
                        totalDuration: 50)
