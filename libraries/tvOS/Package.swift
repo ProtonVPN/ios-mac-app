@@ -35,7 +35,6 @@ let package = Package(
                 "Persistence",
                 "Modals",
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
-                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),

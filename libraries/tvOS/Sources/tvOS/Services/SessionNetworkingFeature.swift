@@ -27,7 +27,6 @@ import ProtonCoreServices
 
 import CommonNetworking
 import VPNShared
-import VPNAppCore
 
 /// Platform independent reducer without UI, responsible for session management.
 /// This reducer is meant to be composed with main app features, at the top level of the app. Children of the top level
