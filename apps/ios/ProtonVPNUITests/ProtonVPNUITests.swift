@@ -33,6 +33,7 @@ import XCTest
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     let mainRobot = MainRobot()
+    let settingsRobot = SettingsRobot()
 
     private static var isAutoFillPasswordsEnabled = true
     lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
@@ -70,9 +71,8 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         }
 
         tabBarsQuery.buttons["Settings"].tap()
-        let logoutButton = app.buttons["Sign out"]
         app.swipeUp() // For iphone SE small screen
-        logoutButton.tap()
+        settingsRobot.logOut()
     }
 
     override open func tearDownWithError() throws {
@@ -87,6 +87,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     private static func disableAutoFillPasswords() {
+        #if targetEnvironment(simulator)
         guard #available(iOS 16.0, *), isAutoFillPasswordsEnabled else {
             return
         }
@@ -119,6 +120,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             autofillSwitch.tap()
         }
         isAutoFillPasswordsEnabled = false
+        #endif
     }
     
     private static func navigateToPasswordOptions(settingsApp: XCUIApplication) {
@@ -135,14 +137,16 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         if staticText(url).exists() {
             openLoginScreen()
         } else {
-            textField("customEnvironmentTextField").waitUntilExists(time:1).tap().clearText().typeText(url)
+            textField("customEnvironmentTextField")
+                .waitUntilExists(time: 1).tap().clearText().typeText(url)
             button("Change and kill the app").tap()
             closeAndOpenTheApp()
         }
     }
 
     func setupProdEnvironment() {
-        if staticText("https://vpn-api.proton.me").waitUntilExists(time:1).exists() {
+        if staticText("https://vpn-api.proton.me")
+            .waitUntilExists(time: 1).exists() {
             openLoginScreen()
         } else {
             button("Reset to production and kill the app").tap()

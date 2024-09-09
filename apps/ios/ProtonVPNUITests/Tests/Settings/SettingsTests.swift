@@ -10,8 +10,6 @@ import Foundation
 
 class SettingsTests: ProtonVPNUITests {
     
-    private let settingsRobot = SettingsRobot()
-    
     private lazy var credentials = getCredentials(from: "credentials")
     
     override func setUp() {
