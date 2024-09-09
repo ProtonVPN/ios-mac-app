@@ -80,6 +80,24 @@ public enum NetworkUtils {
         return ipAddress
     }
     
+    // Generic function to get JSON from any URL
+    public static func getJSON<T: Decodable>(from urlString: String, as type: T.Type) async throws -> T {
+        guard let url = URL(string: urlString) else {
+            throw NetworkUtilsError.invalidURL
+        }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkUtilsError.invalidResponse
+        }
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw NetworkUtilsError.outputParsingFailed
+        }
+    }
+    
     // MARK: - Gateway
     
     /// Function is used to fetch and return the default gateway address of the system.

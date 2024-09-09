@@ -32,6 +32,12 @@ fileprivate let assignConnectionButton = "Enable VPN connections"
 class LoginRobot: CoreElements {
     
     @discardableResult
+    func enterCredentials(credentials: Credentials) -> LoginRobot {
+        return typeUsername(credentials.username)
+            .typePassword(password: credentials.password)
+    }
+
+    @discardableResult
     func loginUser(credentials: Credentials) -> LoginRobot {
         return typeUsername(credentials.username)
             .typePassword(password: credentials.password)
@@ -81,10 +87,17 @@ class LoginRobot: CoreElements {
         return self
     }
     
+    @discardableResult
     func isLoginScreenVisible() -> Bool {
         return textField(fieldUsername).waitUntilExists(time: 0.5).exists() && secureTextField(fieldPassword).waitUntilExists(time: 0.5).exists()
     }
     
+    @discardableResult
+    func signIn() -> LoginRobot {
+        button(loginButton).tap()
+        return self
+    }
+
     private func typeUsername(_ username: String) -> LoginRobot {
         textField(fieldUsername).tap().clearText().typeText(username)
         return self
@@ -104,11 +117,6 @@ class LoginRobot: CoreElements {
     private func typeOnlyUsername(username: String) -> LoginRobot {
         textField(fieldUsername).tap().clearText().typeText(username)
         secureTextField(fieldPassword).tap().clearText().typeText("")
-        return self
-    }
-    
-    private func signIn() -> LoginRobot {
-        button(loginButton).tap()
         return self
     }
     

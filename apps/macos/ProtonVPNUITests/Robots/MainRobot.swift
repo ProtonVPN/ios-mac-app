@@ -169,11 +169,18 @@ class MainRobot: CoreElements {
         }
         
         @discardableResult
+        func checkDisconnectButtonAppears() -> MainRobot {
+            // leaving only 1 assertion as it used in performance tests. Adding additional assertion will  increase test time execution increasing performance test results, which will give not accurate execution time
+            button(Localizable.disconnect).waitUntilExists(time: WaitTimeout.normal).checkExists()
+            return MainRobot()
+        }
+
+        @discardableResult
         func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol,
                                             to connectedCountry: String? = nil,
                                             userType: UserType? = nil) -> MainRobot {
             // verify Disconnect button appears
-            button(Localizable.disconnect).waitUntilExists(time: WaitTimeout.normal).checkExists()
+            checkDisconnectButtonAppears()
             
             // verify correct connected protocol appears
             let actualProtocol = MainRobot().getProtocolLabelValue()
@@ -210,6 +217,14 @@ class MainRobot: CoreElements {
             return MainRobot()
         }
         
+        @discardableResult
+        func userLoggedIn() -> MainRobot {
+            // verify "Quick Connect" button is visible
+            // leaving only 1 assertion as it used in performance tests. Adding additional assertion will  increase test time execution increasing performance test results, which will give not accurate execution time
+            button(Localizable.quickConnect).waitUntilExists(time: WaitTimeout.long).checkExists()
+            return MainRobot()
+        }
+
         @discardableResult
         func checkConnectionCardIsDisconnected() -> MainRobot {
             // verify "Quick Connect" button is visible

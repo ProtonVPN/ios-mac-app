@@ -23,7 +23,7 @@ class AutoConnectTests: ProtonVPNUITests {
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     private let loginRobot = LoginRobot()
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
