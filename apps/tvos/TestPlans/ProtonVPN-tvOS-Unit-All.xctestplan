@@ -9,7 +9,6 @@
     }
   ],
   "defaultOptions" : {
-    "testTimeoutsEnabled" : true,
     "codeCoverage" : {
       "targets" : [
         {
@@ -24,6 +23,8 @@
         }
       ]
     },
+    "language" : "en",
+    "region" : "US",
     "targetForVariableExpansion" : {
       "containerPath" : "container:..\/tvos\/tvOS.xcodeproj",
       "identifier" : "4C54B0162BC027FD00315A3B",
@@ -34,9 +35,51 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
+        "identifier" : "CertificateAuthenticationTests",
+        "name" : "CertificateAuthenticationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
+        "identifier" : "ConnectionTests",
+        "name" : "ConnectionTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
+        "identifier" : "ExtensionManagerTests",
+        "name" : "ExtensionManagerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Connection",
+        "identifier" : "LocalAgentTests",
+        "name" : "LocalAgentTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Modals",
+        "identifier" : "ModalsTests",
+        "name" : "ModalsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/tvOS",
+        "identifier" : "tvOSSnapshotTests",
+        "name" : "tvOSSnapshotTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/tvOS",
+        "identifier" : "tvOSTests",
+        "name" : "tvOSTests"
       }
     }
   ],

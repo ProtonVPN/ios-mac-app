@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 import Connection
 import ConnectionFoundations
+import Ergonomics
 
 final class ConnectionStateTests: XCTestCase {
 
@@ -27,10 +28,10 @@ final class ConnectionStateTests: XCTestCase {
         let state = ConnectionState(
             tunnelState: .disconnected(nil),
             certAuthState: .idle,
-            localAgentState: .disconnected(.failedToEstablishConnection(""))
+            localAgentState: .disconnected(.failedToEstablishConnection("" as GenericError))
         )
 
-        XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection(""))))
+        XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection("" as GenericError))))
     }
 
     func testTunnelConnectingResolvesToConnecting() async {

@@ -22,6 +22,7 @@ import XCTest
 
 import ComposableArchitecture
 
+import Ergonomics
 import Domain
 import DomainTestSupport
 import struct ConnectionFoundations.LogicalServerInfo
@@ -132,7 +133,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await store.send(.startObservingStateChanges)
         await store.receive(\.tunnelStatusChanged.invalid)
 
-        let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied"
+        let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied" as GenericError
         mockManager.tunnelStartErrorToThrow = permissionDenied
 
         await store.send(.connect(intent)) {
