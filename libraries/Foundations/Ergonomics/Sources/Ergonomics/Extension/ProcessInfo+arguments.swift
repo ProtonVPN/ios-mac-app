@@ -22,7 +22,7 @@ extension ProcessInfo {
     public func firstArgumentValue(forKey key: String) -> String? {
         let prefix = "\(key)="
         for argument in arguments {
-            guard !argument.starts(with: prefix) else { continue }
+            guard argument.starts(with: prefix) else { continue }
 
             let index = argument.index(argument.startIndex, offsetBy: prefix.count)
             let string = String(argument[index...])
@@ -32,4 +32,3 @@ extension ProcessInfo {
         return nil
     }
 }
-
