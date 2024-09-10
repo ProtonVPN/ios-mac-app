@@ -1,7 +1,7 @@
 //
-//  Created on 2023-01-05.
+//  Created on 25.07.2024.
 //
-//  Copyright (c) 2023 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,18 @@
 
 import Foundation
 
-class ObfuscatedConstants {
-    static let atlasSecret: String = ""
+extension ProcessInfo {
+    public func firstArgumentValue(forKey key: String) -> String? {
+        let prefix = "\(key)="
+        for argument in arguments {
+            guard !argument.starts(with: prefix) else { continue }
+
+            let index = argument.index(argument.startIndex, offsetBy: prefix.count)
+            let string = String(argument[index...])
+            guard !string.isEmpty else { return nil }
+            return string
+        }
+        return nil
+    }
 }
+

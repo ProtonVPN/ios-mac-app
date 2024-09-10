@@ -19,7 +19,11 @@
 import SwiftUI
 import Dependencies
 import ProtonCoreLog
+import VPNAppCore
+import VPNShared
+import Domain
 import CommonNetworking
+import ProtonCoreFeatureFlags
 
 import tvOS
 
@@ -41,5 +45,17 @@ extension ProtonVPNApp {
         } else {
             PMLog.setEnvironment(environment: "production")
         }
+
+        SentryHelper.setupSentry(
+            dsn: ObfuscatedConstants.sentryDsntvOS,
+            isEnabled: {
+                FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentry)
+            },
+            getUserId: {
+                @Dependency(\.authKeychain) var authKeychain
+
+                return authKeychain.userId
+            }
+        )
     }
 }

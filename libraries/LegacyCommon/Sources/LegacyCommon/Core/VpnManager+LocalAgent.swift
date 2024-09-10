@@ -29,6 +29,7 @@ import Ergonomics
 import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared
+import VPNAppCore
 
 import NetShield
 

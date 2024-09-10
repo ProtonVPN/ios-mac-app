@@ -9,6 +9,14 @@
     }
   ],
   "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+      },
+      {
+        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
+      }
+    ],
     "targetForVariableExpansion" : {
       "containerPath" : "container:macOS.xcodeproj",
       "identifier" : "EED534801EEC112000013607",

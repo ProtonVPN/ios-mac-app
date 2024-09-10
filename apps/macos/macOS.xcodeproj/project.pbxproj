@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -250,7 +250,7 @@
 		E5867D7F2C4E7D55009FB802 /* NetShield-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7E2C4E7D55009FB802 /* NetShield-macOS */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
-		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
@@ -1162,6 +1162,17 @@
 			name = vpncore;
 			sourceTree = "<group>";
 		};
+		4CCD3DCA2B72412B0002DA4A /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */,
+				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
+				B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */,
+				7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */,
+			);
+			path = TestPlans;
+			sourceTree = "<group>";
+		};
 		4CD1F7832A72BE5B00E8AB01 /* LegacyCommon */ = {
 			isa = PBXGroup;
 			children = (
@@ -1357,17 +1368,6 @@
 				B2AA47CF27CE6FE40021E632 /* MapTests.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		B2E466D42980550B0026ED26 /* TestPlans */ = {
-			isa = PBXGroup;
-			children = (
-				B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */,
-				B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */,
-				B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */,
-				7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */,
-			);
-			name = TestPlans;
 			sourceTree = "<group>";
 		};
 		D5204E6B22A138AB00FFAB99 /* Other classes */ = {
@@ -1720,8 +1720,8 @@
 				EED534831EEC112000013607 /* ProtonVPN */,
 				EEB404C81F77F639006CF513 /* ProtonVPNStarter */,
 				E93D023026A1C8960098520D /* ProtonVPN WireGuard */,
+				4CCD3DCA2B72412B0002DA4A /* TestPlans */,
 				E928092D26B42714008C9F2C /* ExtensionsIPC */,
-				B2E466D42980550B0026ED26 /* TestPlans */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
 				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
@@ -2674,8 +2674,6 @@
 				E15B755320FA83CB0022C406 /* PBXTargetDependency */,
 			);
 			name = ProtonVPNmacOSTests;
-			packageProductDependencies = (
-			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -2741,7 +2739,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EED534901EEC112000013607 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac" */;
 			buildPhases = (
-				E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */,
 				EED5347D1EEC112000013607 /* Sources */,
 				EED5347E1EEC112000013607 /* Frameworks */,
 				EED5347F1EEC112000013607 /* Resources */,
@@ -2900,12 +2897,12 @@
 			packageReferences = (
 				E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
-				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
-				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */,
+				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */,
+				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
+				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
 				4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
-				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
+				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */,
+				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */,
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
@@ -3078,27 +3075,6 @@
 			shellPath = /bin/sh;
 			shellScript = "#LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# By default, use the configured code signing identity for the project/target\n#IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n#if [ \"$IDENTITY\" == \"\" ]\n#then\n# If a code signing identity is not specified, use ad hoc signing\n#IDENTITY=\"-\"\n#fi\n#codesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A/Resources/AutoUpdate.app\"\n#codesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"\n";
 		};
-		E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Obfuscated Constants";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${PROJECT_DIR}/ProtonVPN/ObfuscatedConstants.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
-			showEnvVarsInLog = 0;
-		};
 		E148AE5521C2628A007AB65A /* Sentry dSYM upload */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3189,7 +3165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C00F0D2A15FC6E0030076F /* (null) in Sources */,
+				E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */,
 				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
 				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
 			);
@@ -3695,12 +3671,12 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DSTAGING";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Application Developer ID PP";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "TLS_PIN_DISABLE DEBUG FREQUENT_AUTH_CERT_REFRESH";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE FREQUENT_AUTH_CERT_REFRESH STAGING";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -3945,7 +3921,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -3964,7 +3940,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3983,7 +3959,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
-				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin";
+				PATH = "${PATH}:/Users/proton/.goenv/versions/1.18.3/bin:/opt/homebrew/opt/go/bin:/opt/homebrew/bin:/opt/homebrew/opt/go@$(GO_VERSION)/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Staging;
@@ -4346,7 +4322,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
-				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
 				PROVISIONING_PROFILE = "";
@@ -4470,7 +4446,7 @@
 				minimumVersion = 0.0.0;
 			};
 		};
-		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
+		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -4486,7 +4462,7 @@
 				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
 			};
 		};
-		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
+		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -4495,7 +4471,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {
+		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/almazrafi/DictionaryCoder.git";
 			requirement = {
@@ -4503,7 +4479,7 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4511,7 +4487,7 @@
 				minimumVersion = 1.2.1;
 			};
 		};
-		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */ = {
+		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -4540,7 +4516,7 @@
 		};
 		4C25999B2A7AA29800A31895 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
 			productName = Dependencies;
 		};
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
@@ -4554,7 +4530,7 @@
 		};
 		4C7D40762A60298C00ACDBED /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
+			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */;
 			productName = Reachability;
 		};
 		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
@@ -4564,7 +4540,7 @@
 		};
 		4C9754F62A60173C0035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */;
+			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
 			productName = SwiftOTP;
 		};
 		4CD1F7862A72BEDA00E8AB01 /* BugReport */ = {
@@ -4589,7 +4565,7 @@
 		};
 		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
+			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */;
 			productName = DictionaryCoder;
 		};
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
@@ -4651,7 +4627,7 @@
 		};
 		E5E48D022A4C3D7100B09111 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */;
+			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */;
 			productName = Logging;
 		};
 		E93533DA29CAEE2C005E3A59 /* Sparkle */ = {

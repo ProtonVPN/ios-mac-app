@@ -23,6 +23,7 @@ import Dependencies
 import VPNShared
 import LegacyCommon
 import Persistence
+import Ergonomics
 
 // MARK: Live implementations of app dependencies
 
@@ -42,11 +43,11 @@ extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
-#if DEBUG || STAGING
-        let customHost = propertiesManager.apiEndpoint
-#else
+        #if DEBUG || STAGING
+        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
+        #else
         let customHost: String? = nil
-#endif
+        #endif
 
         let doh = DoHVPN(
             alternativeRouting: propertiesManager.alternativeRouting,
@@ -62,11 +63,11 @@ extension DoHConfigurationKey: DependencyKey {
 
 extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?) {
-#if !RELEASE
-        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
-#else
+        #if DEBUG || STAGING
+        let atlasSecret = Bundle.atlasSecret
+        #else
         let atlasSecret: String? = nil
-#endif
+        #endif
 
         self.init(
             apiHost: ObfuscatedConstants.apiHost,
@@ -74,7 +75,8 @@ extension DoHVPN {
             alternativeRouting: alternativeRouting,
             customHost: customHost,
             atlasSecret: atlasSecret,
-            isConnected: false, // Will get updated once AppStateManager is initialized
+            // Will get updated once AppStateManager is initialized
+            isConnected: false,
             isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
         )
     }

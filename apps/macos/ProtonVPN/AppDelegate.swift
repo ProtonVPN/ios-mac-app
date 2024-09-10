@@ -39,6 +39,7 @@ import ProtonCorePushNotifications
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
 // Local dependencies
+import VPNAppCore
 import Domain
 import LegacyCommon
 import Logging

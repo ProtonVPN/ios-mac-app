@@ -31,6 +31,7 @@ import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared
 import ProtonCoreFeatureFlags
+import VPNAppCore
 
 import NetShield
 

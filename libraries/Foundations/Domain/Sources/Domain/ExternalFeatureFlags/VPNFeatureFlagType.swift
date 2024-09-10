@@ -61,4 +61,7 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
     case timestampedLogicals = "TimestampedLogicals"
+
+    /// Use the new sparkle URL that's hosted on Ceph instead of in the downloads repository.
+    case newSparkleURL = "NewSparkleURL"
 }

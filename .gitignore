@@ -5,12 +5,11 @@
 *.DS_Store
 .AppleDouble
 .LSOverride
-fastlane/report.xml
-fastlane/test_output
+/fastlane
 DerivedData
-fastlane/README.md
-.last_build_nr
 swiftlint.xml
+.swiftpm
+.ruby-version
 
 # Directory created by gitlab-runner
 builds
@@ -24,15 +23,14 @@ codequality_report.json-e
 
 apps/ios/ProtonVPNUITests/credentials_bf22.plist
 
-# CI for linting and releases
-.gitlab/ci-env
-
 build/
-DerivedData_Temporary/
+.DerivedData
 output_directory/
+
 fastlane/coverage.json
 fastlane/ios/metadata
 fastlane/ios/screenshots
+output/
 
 # Obfuscated constants
 **/ObfuscatedConstants.swift

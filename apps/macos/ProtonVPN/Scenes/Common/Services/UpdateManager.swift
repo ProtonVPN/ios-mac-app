@@ -52,7 +52,15 @@ class UpdateManager: NSObject {
     public var currentBuild: String? {
         return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
-    
+
+    public var channel: String? {
+        if UpdateFileSelectorImplementation.newUpdateFile && propertiesManager.earlyAccess {
+            return "beta"
+        }
+
+        return nil // default channel
+    }
+
     public var currentVersionReleaseDate: Date? {
         guard let item = currentAppCastItem, let dateString = item.dateString else {
             return nil
@@ -123,7 +131,8 @@ class UpdateManager: NSObject {
     
     private var newestAppCastItem: SUAppcastItem? {
         appcast?.items.first {
-            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK
+            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK &&
+                $0.channel == channel
         }
     }
     
@@ -134,7 +143,8 @@ class UpdateManager: NSObject {
 extension UpdateManager: SPUUpdaterDelegate {
     func bestValidUpdate(in appcast: SUAppcast, for updater: SPUUpdater) -> SUAppcastItem? {
         appcast.items.first {
-            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK
+            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK &&
+                $0.channel == channel
         }
     }
     
@@ -164,7 +174,6 @@ extension UpdateManager: SPUUpdaterDelegate {
 }
 
 extension UpdateManager: UpdateChecker {
-    
     func isUpdateAvailable(_ callback: (Bool) -> Void) {
         guard let item = newestAppCastItem, let currentBuild = currentBuild else {
             callback(false)
@@ -173,5 +182,4 @@ extension UpdateManager: UpdateChecker {
         // Using `SUStandardVersionComparator` from Sparkle lib here, so result will be exactly the same as during the update process.
         callback(SUStandardVersionComparator().compareVersion(currentBuild, toVersion: item.versionString) == .orderedAscending)
     }
-    
 }

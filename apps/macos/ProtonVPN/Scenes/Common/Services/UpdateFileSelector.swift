@@ -21,7 +21,9 @@
 //
 
 import Foundation
+import Domain
 import LegacyCommon
+import ProtonCoreFeatureFlags
 
 protocol UpdateFileSelector {
     var updateFileUrl: String { get }
@@ -31,7 +33,10 @@ protocol UpdateFileSelectorFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector
 }
 
-public class UpdateFileSelectorImplementation: UpdateFileSelector {
+public final class UpdateFileSelectorImplementation: UpdateFileSelector {
+    public static var newUpdateFile: Bool {
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.newSparkleURL)
+    }
 
     public typealias Factory = PropertiesManagerFactory
     private let factory: Factory
@@ -45,6 +50,9 @@ public class UpdateFileSelectorImplementation: UpdateFileSelector {
     }
     
     var updateFileUrl: String {
+        if Self.newUpdateFile {
+            return "https://proton.me/download/macos/updates/v\(updateFileVersion)/sparkle.xml"
+        }
         if propertiesManager.earlyAccess {
             return "https://protonvpn.com/download/macos-early-access-update\(updateFileVersion).xml"
         }
@@ -52,6 +60,10 @@ public class UpdateFileSelectorImplementation: UpdateFileSelector {
     }
     
     private var updateFileVersion: String {
+        if Self.newUpdateFile {
+            return "4"
+        }
+
         if let force = forceNECapableOS {
             return force ? "3" : "2"
         }

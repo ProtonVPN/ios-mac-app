@@ -13,11 +13,16 @@
     }
   ],
   "defaultOptions" : {
-    "environmentVariableEntries" : [
+    "commandLineArgumentEntries" : [
       {
-        "key" : "DYNAMIC_DOMAIN",
-        "value" : "$(DYNAMIC_DOMAIN)"
+        "argument" : "ATLAS_SECRET_PLACEHOLDER"
+      },
+      {
+        "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
+    ],
+    "environmentVariableEntries" : [
+
     ],
     "targetForVariableExpansion" : {
       "containerPath" : "container:iOS.xcodeproj",

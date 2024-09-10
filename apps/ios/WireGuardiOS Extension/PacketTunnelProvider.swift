@@ -19,6 +19,7 @@ import LocalFeatureFlags
 import Timer
 import VPNShared
 import NEHelper
+import Ergonomics
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
@@ -77,18 +78,24 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         }
         self.setDataTaskFactory(sendThroughTunnel: true)
 
-        let apiService = ExtensionAPIService(timerFactory: timerFactory,
-                                             keychain: authKeychain,
-                                             appInfo: appInfo,
-                                             atlasSecret: ObfuscatedConstants.atlasSecret)
+        let apiService = ExtensionAPIService(
+            timerFactory: timerFactory,
+            keychain: authKeychain,
+            appInfo: appInfo,
+            atlasSecret: Bundle.atlasSecret ?? ""
+        )
 
-        certificateRefreshManager = ExtensionCertificateRefreshManager(apiService: apiService,
-                                                                       timerFactory: timerFactory,
-                                                                       vpnAuthenticationStorage: vpnAuthenticationStorage,
-                                                                       keychain: authKeychain)
+        certificateRefreshManager = ExtensionCertificateRefreshManager(
+            apiService: apiService,
+            timerFactory: timerFactory,
+            vpnAuthenticationStorage: vpnAuthenticationStorage,
+            keychain: authKeychain
+        )
 
-        serverStatusRefreshManager = ServerStatusRefreshManager(apiService: apiService,
-                                                                timerFactory: timerFactory)
+        serverStatusRefreshManager = ServerStatusRefreshManager(
+            apiService: apiService,
+            timerFactory: timerFactory
+        )
 
         apiService.delegate = self
         serverStatusRefreshManager.delegate = self

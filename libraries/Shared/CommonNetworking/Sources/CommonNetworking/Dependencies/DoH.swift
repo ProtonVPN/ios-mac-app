@@ -30,13 +30,11 @@ public class DoHVPN: DoH, ServerConfig {
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
-        #if !DEBUG
-        if !Bundle.isTestflightBeta {
-            return liveURL
-        }
-        #endif
-
+        #if DEBUG // Note: set for both Staging and Debug
         return customHost ?? liveURL
+        #else
+        return liveURL
+        #endif
     }
     public var captchaHost: String {
         return defaultHost

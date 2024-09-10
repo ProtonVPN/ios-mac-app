@@ -26,6 +26,7 @@ import LegacyCommon
 import CommonNetworking
 import BugReport
 import NetworkExtension
+import Ergonomics
 
 final class DependencyContainer: Container {
     // Singletons

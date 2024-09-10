@@ -1,0 +1,44 @@
+{
+  "configurations" : [
+    {
+      "id" : "C001FC88-ABD3-4928-8C1A-39950A195E17",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true,
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+          "identifier" : "ConnectionDetails",
+          "name" : "ConnectionDetails"
+        },
+        {
+          "containerPath" : "container:..\/..\/libraries\/tvOS",
+          "identifier" : "tvOS",
+          "name" : "tvOS"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:..\/tvos\/tvOS.xcodeproj",
+      "identifier" : "4C54B0162BC027FD00315A3B",
+      "name" : "ProtonVPN-tvOS"
+    },
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+        "identifier" : "ConnectionDetailsTests",
+        "name" : "ConnectionDetailsTests"
+      }
+    }
+  ],
+  "version" : 1
+}
