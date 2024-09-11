@@ -20,6 +20,9 @@ import ComposableArchitecture
 import CommonNetworking
 import ProtonCoreFeatureFlags
 
+import ProtonCoreLog
+import PMLogger
+
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
 /// function independently in completely separate modules.
@@ -43,6 +46,7 @@ import ProtonCoreFeatureFlags
 @Reducer
 struct AppFeature {
     @Dependency(\.alertService) var alertService
+    @Dependency(\.paymentsClient) var paymentsClient
 
     @ObservableState
     struct State: Equatable {
@@ -96,7 +100,14 @@ struct AppFeature {
             switch action {
             case .onAppearTask:
                 setFeatureFlagOverrides()
+                setupCoreLogging()
+
                 var effects: [Effect<AppFeature.Action>] = [
+                    .run { send in
+                        for await event in try await paymentsClient.startObserving() {
+                            await send(.upsell(.event(event)))
+                        }
+                    },
                     .run { send in
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
@@ -203,5 +214,33 @@ struct AppFeature {
 
     private func setFeatureFlagOverrides() {
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
+    }
+
+    private func setupCoreLogging() {
+        @Dependency(\.dohConfiguration) var doh
+        if doh.defaultHost.contains("black") {
+            PMLog.setEnvironment(environment: "black")
+        } else {
+            PMLog.setEnvironment(environment: "production")
+        }
+
+        ProtonCoreLog.PMLog.callback = { (message, level) in
+            switch level {
+            case .debug, .trace:
+                log.debug("\(message)", category: .core)
+
+            case .info:
+                log.info("\(message)", category: .core)
+
+            case .warn:
+                log.warning("\(message)", category: .core)
+
+            case .error:
+                log.error("\(message)", category: .core)
+
+            case .fatal:
+                log.assertionFailure("\(message)", category: .core)
+            }
+        }
     }
 }

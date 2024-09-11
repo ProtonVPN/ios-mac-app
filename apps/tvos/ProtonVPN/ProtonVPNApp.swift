@@ -18,6 +18,7 @@
 
 import SwiftUI
 import Dependencies
+import PMLogger
 import ProtonCoreLog
 import VPNAppCore
 import VPNShared
@@ -39,13 +40,6 @@ struct ProtonVPNApp: App {
 
 extension ProtonVPNApp {
     private func startup() {
-        @Dependency(\.dohConfiguration) var doh
-        if doh.defaultHost.contains("black") {
-            PMLog.setEnvironment(environment: "black")
-        } else {
-            PMLog.setEnvironment(environment: "production")
-        }
-
         SentryHelper.setupSentry(
             dsn: ObfuscatedConstants.sentryDsntvOS,
             isEnabled: {
