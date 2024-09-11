@@ -144,6 +144,10 @@
             argument = "enforceUnauthSessionStrictVerificationOnBackend"
             isEnabled = "NO">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "DYNAMIC_DOMAIN=proton.black/api"
+            isEnabled = "NO">
+         </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
          <EnvironmentVariable
