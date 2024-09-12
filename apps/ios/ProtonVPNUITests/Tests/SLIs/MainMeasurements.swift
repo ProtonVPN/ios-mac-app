@@ -18,18 +18,31 @@
 
 import Foundation
 import fusion
-import ProtonCoreTestingToolkitUITestsLogin
+import ProtonCoreLog
+import ProtonCoreTestingToolkitUITestsCore
+import ProtonCoreTestingToolkitPerformance
+import XCTest
 
 class MainMeasurements: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
-    private let lokiClient = LokiApiClient()
-    private let timer = TestsTimer()
+    private let countryListRobot = CountryListRobot()
+    private let connectionStatusRobot = ConnectionStatusRobot()
     private lazy var credentials = getCredentials(from: "credentials")
     
     private let workflow = "main_measurements"
-    private var sli: String? = nil
-    private var metrics: Codable? = nil
-    private let lokiID = UUID().uuidString
+    private lazy var measurementContext = MeasurementContext(MeasurementConfig.self)
+    
+    override class func setUp() {
+        super.setUp()
+        
+        let lokiEndpoint = ObfuscatedConstants.lokiDomain + "loki/api/v1/push"
+        
+        MeasurementConfig
+            .setBundle(Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!)
+            .setProduct("VPN")
+            .setLokiEndpoint(lokiEndpoint)
+            .setEnvironment("prod")
+    }
     
     override func setUp() {
         super.setUp()
@@ -38,26 +51,73 @@ class MainMeasurements: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
+    
+    func testLoginSLI() {
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
 
-    func testLoginPerformance() {
-        sli = "login"
-        
+        measurementProfile
+            .addMeasurement(DurationMeasurement())
+            .setServiceLevelIndicator("login")
+
         loginRobot
             .enterCredentials(credentials[2])
-        timer.StartTimer()
+            .signIn(robot: MainRobot.self)
+
+        measurementProfile.measure {
+            mainRobot
+                .verify.connectionStatusNotConnected()
+        }
+    }
+
+    func testConnectionSLI() {
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+
+        measurementProfile
+            .addMeasurement(DurationMeasurement())
+            .setServiceLevelIndicator("quick_connect")
+
         loginRobot
+            .enterCredentials(credentials[2])
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
-        timer.EndTimer()
-        
-        metrics = LoginMetrics(duration: timer.GetElapsedTime(), status: "passed")
-    }
-    
-    override func tearDown() {
-        if testRun!.failureCount != 0 {
-            metrics = FailureMetrics(status: "failed")
+            .quickConnectViaQCButton()
+
+        measurementProfile.measure {
+            connectionStatusRobot
+                .verify.connectionStatusConnected(robot: MainRobot.self)
         }
-        lokiClient.pushMetrics(id: lokiID, workflow: workflow, sli: sli!, metrics: metrics!)
-        super.tearDown()
+
+        mainRobot
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
+    }
+
+    func testConnectionToSpecificServer() {
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+
+        measurementProfile
+            .addMeasurement(DurationMeasurement())
+            .setServiceLevelIndicator("specific_server_connect")
+
+        let countryName = "Australia"
+        let back = "Countries"
+
+        loginRobot
+            .enterCredentials(credentials[2])
+            .signIn(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
+
+        mainRobot
+            .goToCountriesTab()
+            .searchForServer(serverName: countryName)
+            .hitPowerButton(server: countryName)
+
+        measurementProfile.measure {
+            connectionStatusRobot
+                .verify.connectedToAServer(countryName)
+        }
+
+        mainRobot
+            .quickDisconnectViaQCButton()
     }
 }
