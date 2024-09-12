@@ -86,7 +86,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "DYNAMIC_DOMAIN=payments.proton.black/api"
+            argument = "DYNAMIC_DOMAIN=proton.black/api"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
