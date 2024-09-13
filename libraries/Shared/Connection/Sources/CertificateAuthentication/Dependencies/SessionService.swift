@@ -34,7 +34,7 @@ public struct SessionService: TestDependencyKey {
     public static let testValue: SessionService = {
         return SessionService(
             selector: unimplemented(),
-            sessionCookie: unimplemented()
+            sessionCookie: unimplemented(placeholder: nil)
         )
     }()
 }

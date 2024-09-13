@@ -33,13 +33,20 @@ public protocol AuthKeychainHandle {
     /// a lot of trips to the keychain.
     func saveToCache(_ credentials: AuthCredentials?)
     func fetch(forContext: AppContext?) -> AuthCredentials?
+    func fetch(forContext: AppContext?) throws -> AuthCredentials
     func store(_ credentials: AuthCredentials, forContext: AppContext?) throws
     func clear()
 }
 
 public extension AuthKeychainHandle {
     func fetch() -> AuthCredentials? {
-        let credentials = fetch(forContext: nil)
+        let credentials: AuthCredentials? = fetch(forContext: nil)
+        saveToCache(credentials)
+        return credentials
+    }
+
+    func fetch() throws -> AuthCredentials {
+        let credentials: AuthCredentials = try fetch(forContext: nil)
         saveToCache(credentials)
         return credentials
     }
@@ -126,21 +133,25 @@ extension AuthKeychain: AuthKeychainHandle {
     }
 
     public func fetch(forContext context: AppContext?) -> AuthCredentials? {
-        NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
-        var key = defaultStorageKey
-        if let context = context, let contextKey = storageKey(forContext: context) {
-            key = contextKey
-        }
-
-        let data: Data
         do {
-            guard let keychainData = try keychain.getData(key) else {
-                throw "No data in the keychain" as GenericError
+            // Explicitly state type as AuthCredentials to resolve ambiguity between throwing and non throwing functions
+            let credentials: AuthCredentials = try fetch(forContext: context)
+            return credentials
+        } catch {
+            if let keychainError = error as? KeychainError, case .credentialsMissing(let key) = keychainError {
+                log.debug("Credentials missing from auth keychain", metadata: ["storageKey": "\(key)"])
+                return nil
             }
-            data = keychainData
-        } catch let error {
-            log.error("Keychain (auth) read error", category: .keychain, metadata: ["error": "\(error)"])
+            log.error("Failed to fetch auth credentials", category: .keychain, metadata: ["error": "\(error)"])
             return nil
+        }
+    }
+
+    public func fetch(forContext context: AppContext?) throws -> AuthCredentials {
+        NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
+        let key: String = context.flatMap { storageKey(forContext: $0) } ?? defaultStorageKey
+        guard let data = try keychain.getData(key) else {
+            throw KeychainError.credentialsMissing(key)
         }
 
         do {
@@ -153,21 +164,19 @@ extension AuthKeychain: AuthKeychainHandle {
                 /// we won't start a crash cycle from which the user can't recover.
                 try? keychain.remove(key)
                 log.info("Removed AuthKeychain storage for \(key) key before attempting to unarchive with NSKeyedUnarchiver", category: .keychain)
-                if let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [AuthCredentials.self,
-                                                                                             NSString.self,
-                                                                                             NSData.self],
-                                                                                 from: data),
-                   let authCredentials = unarchivedObject as? AuthCredentials {
+                let rootClasses = [AuthCredentials.self, NSString.self, NSData.self]
+                let unarchivedObject = try NSKeyedUnarchiver.unarchivedObject(ofClasses: rootClasses, from: data)
+                guard let authCredentials = unarchivedObject as? AuthCredentials else {
+                    throw KeychainError.migration(.invalidObjectType(type(of: unarchivedObject)))
+                }
                     try? store(authCredentials, forContext: context) // store in JSON
                     log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
                     return authCredentials
-                }
-            } catch let error {
-                log.error("Keychain (auth) read error", category: .keychain, metadata: ["error": "\(error)"])
+
+            } catch let unarchivingError {
+                throw KeychainError.migration(.unarchivingFailure(unarchivingError))
             }
         }
-
-        return nil
     }
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
@@ -210,5 +219,15 @@ extension AuthKeychain: AuthKeychainHandle {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)
         }
+    }
+}
+
+public enum KeychainError: Error {
+    case credentialsMissing(String)
+    case migration(LegacyMigrationError)
+
+    public enum LegacyMigrationError: Error {
+        case invalidObjectType(Any.Type)
+        case unarchivingFailure(Error)
     }
 }

@@ -33,7 +33,7 @@ public struct ServerIdentifier: TestDependencyKey {
         self.fullServerInfo = fullServerInfo
     }
 
-    public static let testValue = ServerIdentifier(fullServerInfo: unimplemented())
+    public static let testValue = ServerIdentifier(fullServerInfo: unimplemented(placeholder: nil))
 }
 
 extension DependencyValues {
