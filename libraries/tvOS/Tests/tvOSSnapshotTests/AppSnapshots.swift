@@ -62,7 +62,7 @@ class AppFeatureSnapshotTests: XCTestCase {
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.continuousClock = TestClock()
-            $0.paymentsClient = .init(startObserving: { },
+            $0.paymentsClient = .init(startObserving: unimplemented(),
                                       getOptions: { [ ] },
                                       attemptPurchase: { _ in .purchaseCancelled } )
         }

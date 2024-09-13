@@ -21,6 +21,7 @@ import XCTest
 import ComposableArchitecture
 import Ergonomics
 @testable import tvOS
+@testable import CommonNetworking
 
 final class UpsellFeatureTests: XCTestCase {
 
@@ -36,7 +37,7 @@ final class UpsellFeatureTests: XCTestCase {
             UpsellFeature()
         } withDependencies: {
             $0.paymentsClient = .init(
-                startObserving: { },
+                startObserving: unimplemented(),
                 getOptions: { throw error },
                 attemptPurchase: { _ in unimplemented(placeholder: .purchaseCancelled) }
             )
@@ -53,7 +54,7 @@ final class UpsellFeatureTests: XCTestCase {
             UpsellFeature()
         } withDependencies: {
             $0.paymentsClient = .init(
-                startObserving: { },
+                startObserving: unimplemented(),
                 getOptions: { [self.monthlyPlan] },
                 attemptPurchase: { _ in .purchaseCancelled }
             )
@@ -78,7 +79,7 @@ final class UpsellFeatureTests: XCTestCase {
             UpsellFeature()
         } withDependencies: {
             $0.paymentsClient = .init(
-                startObserving: { },
+                startObserving: unimplemented(),
                 getOptions: { [self.monthlyPlan] },
                 attemptPurchase: { _ in .purchaseError(error: error, processingPlan: nil) }
             )
@@ -94,5 +95,33 @@ final class UpsellFeatureTests: XCTestCase {
         await store.receive(\.finishedPurchasing.purchaseError) {
             $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
         }
+    }
+
+    @MainActor
+    func testRespondsToBackgroundTransaction() async {
+        let error = GenericError("Payment Failed")
+        let clock = TestClock()
+        let initialState = UpsellFeature.State.loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+        let networking = VPNNetworkingMock(userTierResult: .success(2))
+
+
+        let store = TestStore(initialState: initialState) {
+            UpsellFeature()
+        } withDependencies: {
+            $0.paymentsClient = .init(
+                startObserving: unimplemented(),
+                getOptions: { [self.monthlyPlan] },
+                attemptPurchase: { _ in .purchaseError(error: error, processingPlan: nil) }
+            )
+            $0.continuousClock = clock
+            $0.networking = networking
+        }
+
+        await store.send(.event(.finished(.resolvingIAPToSubscription))) {
+            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: true)
+        }
+        await store.receive(\.pollTierUpdate)
+        await store.receive(\.finishedPollingTierUpdate)
+        await store.receive(\.upsold)
     }
 }

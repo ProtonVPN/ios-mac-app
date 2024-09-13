@@ -19,7 +19,9 @@
 import Foundation
 import ComposableArchitecture
 import Dependencies
+import Ergonomics
 import Modals // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import enum ProtonCorePayments.ProcessCompletionResult
 import enum ProtonCorePayments.PurchaseResult
 
 @Reducer
@@ -37,6 +39,7 @@ struct UpsellFeature {
     enum Action {
         case loadProducts
         case finishedLoadingProducts(Result<[PlanIAPTuple], Error>)
+        case event(ProcessCompletionResult)
         case attemptPurchase(PlanIAPTuple)
         case finishedPurchasing(PurchaseResult)
         case pollTierUpdate(remainingAttempts: Int)
@@ -61,10 +64,7 @@ struct UpsellFeature {
             switch action {
             case .loadProducts:
                 return .run { send in
-                    await send(.finishedLoadingProducts(Result {
-                        try await client.startObserving()
-                        return try await client.getOptions()
-                    }))
+                    await send(.finishedLoadingProducts(Result { try await client.getOptions() }))
                 }
 
             case .finishedLoadingProducts(.success(let planOptions)):
@@ -78,6 +78,28 @@ struct UpsellFeature {
                 return .run { send in
                     await alertService.feed(error)
                     await send(.onExit)
+                }
+
+            case .event(let result):
+                log.info("Finished processing payment with result: \(result)")
+
+                // Purchase results processed here are not user initiated,
+                // so we cannot assert the current loading state
+
+                switch result.upsellResult {
+                case .success(true):
+                    // Let's block the user from purchasing while we check that the tier has updated
+                    setPurchaseInProgress(true, state: &state, shouldAssertLoading: false)
+                    return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
+
+                case .success(false):
+                    // Subscription renewals, and other events that don't warrant user tier reload
+                    setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
+                    return .none
+
+                case .failure(let error):
+                    setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
+                    return .run { _ in await alertService.feed(error) }
                 }
 
             case .attemptPurchase(let option):
@@ -154,12 +176,42 @@ struct UpsellFeature {
     }
 
     /// After we've loaded products, this function toggles the `purchaseInProgress` flag with some extra assertions
-    private func setPurchaseInProgress(_ purchaseInProgress: Bool, state: inout State) {
+    private func setPurchaseInProgress(_ purchaseInProgress: Bool, state: inout State, shouldAssertLoading: Bool = true) {
         guard case .loaded(let planOptions, let currentPurchaseInProgress) = state else {
             assertionFailure("Cannot toggle purchase in progress while still loading")
             return
         }
-        assert(currentPurchaseInProgress != purchaseInProgress)
+        if shouldAssertLoading {
+            assert(currentPurchaseInProgress != purchaseInProgress)
+        }
         state = .loaded(planOptions: planOptions, purchaseInProgress: purchaseInProgress)
+    }
+}
+
+extension ProcessCompletionResult {
+    /// Returns .success(true) if the purchase result warrants refreshing user account information.
+    var upsellResult: Result<Bool, Error> {
+        switch self {
+        case .finished(.autoRenewal), .finished(.cancelled):
+            return .success(false)
+
+        case .finished(.withoutObtainingToken),
+                .finished(.withoutExchangingToken),
+                .finished(.resolvingIAPToSubscription),
+                .finished(.withPurchaseAlreadyProcessed):
+            return .success(true)
+
+        case .errored(let error):
+            return .failure(error)
+
+        case .erroredWithUnspecifiedError(let error):
+            return .failure(error)
+
+        case .finished(.withoutIAP),
+                .finished(.resolvingIAPToCredits),
+                .finished(.resolvingIAPToCreditsCausedByError):
+            log.assertionFailure("Unexpected IAP purchase result: \(self)")
+            return .failure("Unexpected IAP purchase result: \(self)" as GenericError)
+        }
     }
 }

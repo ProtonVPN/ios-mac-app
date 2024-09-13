@@ -67,3 +67,11 @@ extension InAppPurchasePlan {
         storeKitProductId.flatMap { storeKitManager.priceLabelForProduct(storeKitProductId: $0) }
     }
 }
+
+extension StoreKitManagerProtocol {
+    func retryProcessingAllPendingTransactions() async {
+        await withCheckedContinuation {
+            retryProcessingAllPendingTransactions(finishHandler: $0.resume)
+        }
+    }
+}

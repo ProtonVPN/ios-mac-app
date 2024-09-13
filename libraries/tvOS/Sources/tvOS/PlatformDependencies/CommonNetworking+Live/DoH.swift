@@ -30,8 +30,10 @@ extension DoHVPN {
         let apiHost: String = ObfuscatedConstants.apiHost
         let humanVerificationV3Host = ObfuscatedConstants.humanVerificationV3Host
 #if DEBUG
-        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
+        let customHost = Bundle.dynamicDomain
+        let atlasSecret: String? = Bundle.atlasSecret
 #else
+        let customHost: String? = nil
         let atlasSecret: String? = nil
 #endif
 

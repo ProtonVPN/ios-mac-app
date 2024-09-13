@@ -131,6 +131,11 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
 }
 
 struct VPNNetworkingMock: VPNNetworking {
+    var userTierResult: Result<Int, Error>
+
+    init(userTierResult: Result<Int, Error> = .failure("" as GenericError)) {
+        self.userTierResult = userTierResult
+    }
 
     func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
         throw "" as GenericError
@@ -138,7 +143,7 @@ struct VPNNetworkingMock: VPNNetworking {
 
     var userTier: Int {
         get async throws {
-            throw "" as GenericError
+            try userTierResult.get()
         }
     }
 

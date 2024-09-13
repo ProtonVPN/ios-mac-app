@@ -34,22 +34,33 @@ enum PaymentsError: Error {
     case planNotFound
 }
 
+extension ProcessCompletionResult: @unchecked Sendable { }
+
 struct PaymentsClient: Sendable, DependencyKey {
+    let startObserving: @Sendable () async throws -> AsyncStream<ProcessCompletionResult>
+    let getOptions: @Sendable () async throws -> [PlanIAPTuple]
+    let attemptPurchase: @Sendable (PlanIAPTuple) async -> PurchaseResult
 
-    var startObserving: @Sendable () async throws -> Void
-    var getOptions: @Sendable () async throws -> [PlanIAPTuple]
-    var attemptPurchase: @Sendable (PlanIAPTuple) async -> PurchaseResult
-
-    static var liveValue: PaymentsClient = {
+    static let liveValue: PaymentsClient = {
         let payments = Dependency(\.paymentsService).wrappedValue
         let delegate = StoreKitDelegate()
 
         return .init(
             startObserving: {
+                try await payments.updateServiceIAPAvailability()
                 // Process subscription renewal transactions and missed transactions
                 // (user purchased IAP subscription, but app failed to notify Proton backend)
                 await payments.startObservingPaymentQueue(delegate: delegate)
-                try await payments.updateServiceIAPAvailability()
+
+                // Receive events about subscriptions processed in the background
+                return AsyncStream { continuation in
+                    payments.storeKitManager.refreshHandler = { event in
+                        continuation.yield(event)
+                    }
+                    continuation.onTermination = { @Sendable _ in
+                        payments.storeKitManager.refreshHandler = { _ in }
+                    }
+                }
             },
             getOptions: {
                 let plansDataSource = try payments.plansDataSource
@@ -81,16 +92,21 @@ struct PaymentsClient: Sendable, DependencyKey {
                     }
             },
             attemptPurchase: { product in
-                if payments.storeKitManager.hasUnfinishedPurchase() {
-                    log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
-                    return .purchaseError(error: PaymentsError.unfinishedPurchaseInQueue, processingPlan: nil)
-                }
+                // If a purchase is already in progress, `buyPlan` returns `.planPurchaseProcessingInProgress`
+                // and carries on processing said purchase. The final result is received through the `AsyncStream`
+                // subscribed to through `startObserving`.
                 return await withCheckedContinuation {
                     payments.purchaseManager.buyPlan(plan: product.iap, finishCallback: $0.resume(returning:))
                 }
             }
         )
     }()
+
+    static let testValue: PaymentsClient = .init(
+        startObserving: { .init(unfolding: { nil })},
+        getOptions: unimplemented(),
+        attemptPurchase: unimplemented(placeholder: .purchaseCancelled)
+    )
 
 }
 
