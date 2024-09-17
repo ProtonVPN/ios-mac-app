@@ -252,6 +252,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as FreeConnectionsAlert:
             show(alert)
 
+        case let alert as ForceUpgradeAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
