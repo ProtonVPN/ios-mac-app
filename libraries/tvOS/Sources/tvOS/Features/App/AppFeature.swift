@@ -104,7 +104,7 @@ struct AppFeature {
 
                 var effects: [Effect<AppFeature.Action>] = [
                     .run { send in
-                        for await event in try await paymentsClient.startObserving() {
+                        for await event in await paymentsClient.startObserving() {
                             await send(.upsell(.event(event)))
                         }
                     },
@@ -179,6 +179,9 @@ struct AppFeature {
             case .upsell(.onExit):
                 state.alert = Self.signOutAlert
                 return .none
+
+            case .upsell(.finishedLoadingProducts(.failure)):
+                return .send(.signOut)
 
             case .upsell(.upsold(let tier)):
                 // We already have a session at this point. Updating tier will dimiss the upsell flow

@@ -31,7 +31,7 @@ final class UpsellFeatureTests: XCTestCase {
     )
 
     @MainActor
-    func testFailingToLoadPlansShowsErrorAndExits() async {
+    func testFailingToLoadPlansShowsError() async {
         let error = GenericError("No products")
         let store = TestStore(initialState: UpsellFeature.State.loading) {
             UpsellFeature()
@@ -45,7 +45,7 @@ final class UpsellFeatureTests: XCTestCase {
 
         await store.send(\.loadProducts)
         await store.receive(\.finishedLoadingProducts.failure)
-        await store.receive(\.onExit)
+        // Parent feature should handle this action and sign out.
     }
 
     @MainActor
