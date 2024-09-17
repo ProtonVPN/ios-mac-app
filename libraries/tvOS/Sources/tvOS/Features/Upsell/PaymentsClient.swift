@@ -29,15 +29,36 @@ struct PlanIAPTuple: Identifiable, Equatable {
     var id: UUID { planOption.id }
 }
 
-enum PaymentsError: Error {
-    case unfinishedPurchaseInQueue
-    case planNotFound
+enum PaymentsError: Error, CustomStringConvertible {
+    case planNotFound(String)
+    case iapDisabled
+
+    var code: Int? {
+        switch self {
+        case .iapDisabled:
+            return nil
+
+        case .planNotFound:
+            return -1
+        }
+    }
+
+    var codeSuffix: String? {
+        code.map { "(\($0))"}
+    }
+
+    /// Default error description, suffixed with the code if it has one, to ease error identification.
+    var description: String {
+        return ["In-App Purchases are temporarily not available.", codeSuffix]
+            .compactMap { $0 }
+            .joined(separator: " ")
+    }
 }
 
 extension ProcessCompletionResult: @unchecked Sendable { }
 
 struct PaymentsClient: Sendable, DependencyKey {
-    let startObserving: @Sendable () async throws -> AsyncStream<ProcessCompletionResult>
+    let startObserving: @Sendable () async -> AsyncStream<ProcessCompletionResult>
     let getOptions: @Sendable () async throws -> [PlanIAPTuple]
     let attemptPurchase: @Sendable (PlanIAPTuple) async -> PurchaseResult
 
@@ -47,7 +68,6 @@ struct PaymentsClient: Sendable, DependencyKey {
 
         return .init(
             startObserving: {
-                try await payments.updateServiceIAPAvailability()
                 // Process subscription renewal transactions and missed transactions
                 // (user purchased IAP subscription, but app failed to notify Proton backend)
                 await payments.startObservingPaymentQueue(delegate: delegate)
@@ -63,14 +83,25 @@ struct PaymentsClient: Sendable, DependencyKey {
                 }
             },
             getOptions: {
+                // IAP availability depends on currently logged in user account.
+                // Let's update it in case a different user is logged in than at app launch time.
+                try await payments.updateServiceIAPAvailability()
+                guard try payments.plansDataSource.isIAPAvailable else {
+                    throw PaymentsError.iapDisabled
+                }
+
+                // Plans might already have been fetched recently, but let's fetch them anyway in case we are now
+                // logged into a different account.
                 let plansDataSource = try payments.plansDataSource
                 try await plansDataSource.fetchAvailablePlans()
+
+                let planName = "vpn2022"
                 let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
-                    plan.name == "vpn2022"
+                    plan.name == planName
                 }.first // it's only going to be one with this plan name
                 guard let vpn2022 else {
                     // If the plan is missing, we could even be a paid user shown this flow by mistake
-                    throw PaymentsError.planNotFound
+                    throw PaymentsError.planNotFound(planName)
                 }
                 return vpn2022.instances
                     .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
