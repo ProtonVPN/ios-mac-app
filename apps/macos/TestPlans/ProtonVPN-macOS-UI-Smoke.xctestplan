@@ -17,6 +17,7 @@
         "argument" : "DYNAMIC_DOMAIN_PLACEHOLDER"
       }
     ],
+    "diagnosticCollectionPolicy" : "Always",
     "targetForVariableExpansion" : {
       "containerPath" : "container:macOS.xcodeproj",
       "identifier" : "EED534801EEC112000013607",
