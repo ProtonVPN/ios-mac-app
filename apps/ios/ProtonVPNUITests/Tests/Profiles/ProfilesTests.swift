@@ -59,11 +59,11 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
-            .setProfileDetails(profileName + " ", countryName) // Only CI issue: the last letter is deleted
+            .setProfileDetails(profileName, countryName)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
             .addNewProfile()
-            .setProfileWithSameName(profileName + " ", countryName) // Only CI issue: the last letter is deleted
+            .setProfileWithSameName(profileName, countryName)
             .saveProfile(robot: CreateProfileRobot.self)
             .verify.profileWithSameName()
     }
@@ -79,7 +79,7 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
-            .setProfileDetails(profileName + " ", countryName) // Only CI issue: the last letter is deleted
+            .setProfileDetails(profileName, countryName)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
             .editProfile(profileName)
