@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -250,7 +250,7 @@
 		E5867D7F2C4E7D55009FB802 /* NetShield-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7E2C4E7D55009FB802 /* NetShield-macOS */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
-		E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
@@ -2897,12 +2897,12 @@
 			packageReferences = (
 				E93533D929CAEE2C005E3A59 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				4C1C07A92A39C937009DE875 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */,
-				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
-				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
+				E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */,
+				E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */,
 				4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */,
-				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */,
+				4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
+				4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
@@ -3165,7 +3165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C00F0D2A15FC6E0030076F /* BuildFile in Sources */,
+				E5C00F0D2A15FC6E0030076F /* (null) in Sources */,
 				E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */,
 				E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */,
 			);
@@ -3589,6 +3589,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -4132,6 +4133,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -4195,6 +4197,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -4220,6 +4223,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_CODE_COVERAGE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXCLUDED_ARCHS = "";
@@ -4446,7 +4450,7 @@
 				minimumVersion = 0.0.0;
 			};
 		};
-		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+		4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -4462,7 +4466,7 @@
 				revision = d107d7cc825f38ae2d6dc7c54af71d58145c3506;
 			};
 		};
-		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
+		4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -4471,7 +4475,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */ = {
+		4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/almazrafi/DictionaryCoder.git";
 			requirement = {
@@ -4479,7 +4483,7 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
+		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4487,7 +4491,7 @@
 				minimumVersion = 1.2.1;
 			};
 		};
-		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
+		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -4516,7 +4520,7 @@
 		};
 		4C25999B2A7AA29800A31895 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
+			package = E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
 		};
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
@@ -4530,7 +4534,7 @@
 		};
 		4C7D40762A60298C00ACDBED /* Reachability */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */;
+			package = 4C7D40752A60298C00ACDBED /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
 		};
 		4C8571DB2A7CEC5B0057FED6 /* TrustKit */ = {
@@ -4540,7 +4544,7 @@
 		};
 		4C9754F62A60173C0035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
+			package = 4C9754F52A60173C0035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
 		};
 		4CD1F7862A72BEDA00E8AB01 /* BugReport */ = {
@@ -4565,7 +4569,7 @@
 		};
 		4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */;
+			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
 		4CD1F79D2A72E57F00E8AB01 /* LegacyCommon */ = {
@@ -4627,7 +4631,7 @@
 		};
 		E5E48D022A4C3D7100B09111 /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log.git" */;
+			package = E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
 		};
 		E93533DA29CAEE2C005E3A59 /* Sparkle */ = {
