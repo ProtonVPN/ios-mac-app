@@ -20,6 +20,8 @@ import Foundation
 import Strings
 import XCTest
 
+let app = XCUIApplication()
+
 class AlertRobot {
     
     let logoutWarningAlert = LogoutWarningAlert()

@@ -18,45 +18,45 @@
 
 import Foundation
 import XCTest
+import fusion
 
 fileprivate let showMapButton = "Show map"
 fileprivate let hideMapButton = "Hide map"
 fileprivate let statusDisconnected = "ConnectionStatus"
 fileprivate let connectImage = "ConnectImage"
 
-class MapRobot {
+class MapRobot: CoreElements {
     
     func clickShowMap() -> MapRobot {
-        if app.buttons[hideMapButton].isHittable {
+        if button(hideMapButton).waitUntilExists(time: 1).hittable() {
             return self
         }
-        XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: WaitTimeout.normal))
-        app.buttons[showMapButton].click()
+        button(showMapButton).tap()
         return self
     }
     
     func clickHideMap() -> MapRobot {
-        app.buttons[hideMapButton].click()
+        button(hideMapButton).tap()
         return self
     }
     
     let verify = Verify()
     
-    class Verify {
+    class Verify: CoreElements {
 
         @discardableResult
         func checkMapIsOpen() -> MapRobot {
-            XCTAssertTrue(app.buttons[hideMapButton].waitForExistence(timeout: WaitTimeout.short))
-            XCTAssertTrue(app.staticTexts[statusDisconnected].waitForExistence(timeout: WaitTimeout.short))
-            XCTAssertTrue(app.images[connectImage].exists)
+            button(hideMapButton).waitUntilExists(time: WaitTimeout.short).checkExists()
+            staticText(statusDisconnected).waitUntilExists(time: WaitTimeout.short).checkExists()
+            image(connectImage).checkExists()
             return MapRobot()
         }
         
         @discardableResult
         func checkMapIsHidden() -> MapRobot {
-            XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: WaitTimeout.short))
-            XCTAssertFalse(app.staticTexts[statusDisconnected].waitForExistence(timeout: WaitTimeout.short))
-            XCTAssertFalse(app.images[connectImage].exists)
+            button(showMapButton).waitUntilExists(time: WaitTimeout.short).checkExists()
+            staticText(statusDisconnected).checkDoesNotExist()
+            image(connectImage).checkDoesNotExist()
             return MapRobot()
         }
     }

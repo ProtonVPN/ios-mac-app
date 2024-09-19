@@ -30,19 +30,19 @@ class ProfileTests: ProtonVPNUITests {
     
     func testCreateEmptyProfile() {
         
-        let name = StringUtils().randomAlphanumericString(length: 8)
-        let country = "￼  Austria"
+        let profileName = StringUtils().randomAlphanumericString(length: 8)
+        let country = "Austria"
 
         logoutIfNeeded()
         loginAsPlusUser()
         mainRobot
-            .openProfiles()
+            .openProfilesOverview()
             .verify.checkProfileOverViewIsOpen()
             .createProfile()
-            .verify.checkButtonExists()
+            .verify.checkCreateProfileViewIsOpened()
             .saveProfile()
             .verify.checkErrorMessageEmptyProfileExists()
-            .enterProfileName(name)
+            .enterProfileName(profileName)
             .saveProfile()
             .verify.checkErrorMessageSelectServerAndCountry()
             .enterProfileCountry(country)
@@ -56,15 +56,15 @@ class ProfileTests: ProtonVPNUITests {
     
     func testCancelProfile() {
         
-        let country = "￼  Austria"
+        let country = "Austria"
 
         logoutIfNeeded()
         loginAsPlusUser()
         mainRobot
-            .openProfiles()
+            .openProfilesOverview()
             .verify.checkProfileOverViewIsOpen()
             .createProfile()
-            .verify.checkButtonExists()
+            .verify.checkCreateProfileViewIsOpened()
             .enterProfileCountry(country)
             .cancelProfile()
             .verify.checkModalIsOpen()
@@ -75,19 +75,19 @@ class ProfileTests: ProtonVPNUITests {
     func testCreateProfileWithTheSameName() {
         
         let name = StringUtils().randomAlphanumericString(length: 8)
-        let country = "￼  Austria"
+        let country = "Austria"
 
         logoutIfNeeded()
         loginAsPlusUser()
         mainRobot
-            .openProfiles()
+            .openProfilesOverview()
             .verify.checkProfileOverViewIsOpen()
             .createProfile()
-            .verify.checkButtonExists()
+            .verify.checkCreateProfileViewIsOpened()
             .setProfileDetails(name, country)
             .saveProfileSuccessfully()
             .createProfile()
-            .verify.checkButtonExists()
+            .verify.checkCreateProfileViewIsOpened()
             .setProfileDetails(name, country)
             .saveProfile()
             .verify.checkErrorMessageSameNameExists()
@@ -96,16 +96,16 @@ class ProfileTests: ProtonVPNUITests {
     func testNewProfileAppearsInTheSettings() {
         
         let name = StringUtils().randomAlphanumericString(length: 8)
-        let country = "￼  Austria"
-        let qcFastest = "￼  Fastest"
+        let country = "Austria"
+        let qcFastest = "Fastest"
 
         logoutIfNeeded()
         loginAsPlusUser()
         mainRobot
-            .openProfiles()
+            .openProfilesOverview()
             .verify.checkProfileOverViewIsOpen()
             .createProfile()
-            .verify.checkButtonExists()
+            .verify.checkCreateProfileViewIsOpened()
             .setProfileDetails(name, country)
             .saveProfileSuccessfully()
         mainRobot

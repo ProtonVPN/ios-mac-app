@@ -21,7 +21,7 @@ import XCTest
 
 class MapTests: ProtonVPNUITests {
     
-    private let mapRobot = MapRobot()
+    private lazy var mapRobot = MapRobot()
     
     override func setUp() {
         super.setUp()

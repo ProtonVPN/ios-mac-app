@@ -18,6 +18,8 @@
 
 import Foundation
 import XCTest
+import fusion
+import Strings
 
 fileprivate let createProfileTitleId = "Profiles Overview"
 fileprivate let createProfileButton = "Create Profile"
@@ -26,20 +28,20 @@ fileprivate let randomButton = "Random"
 fileprivate let editButton = "Edit"
 fileprivate let deleteButton = "Delete"
 
-class ManageProfilesRobot {
+class ManageProfilesRobot: CoreElements {
     
     func createProfile() -> CreateProfileRobot {
-        app.buttons[createProfileButton].firstMatch.click()
+        button(createProfileButton).firstMatch().tap()
         return CreateProfileRobot()
     }
     
     func editProfile() -> CreateProfileRobot {
-        app.buttons[editButton].click()
+        button(editButton).firstMatch().tap()
         return CreateProfileRobot()
     }
     
     func deleteProfile() -> ManageProfilesRobot {
-        app.buttons[deleteButton].click()
+        button(deleteButton).firstMatch().tap()
         return ManageProfilesRobot()
     }
     
@@ -49,13 +51,14 @@ class ManageProfilesRobot {
         
         @discardableResult
         func checkProfileOverViewIsOpen() -> ManageProfilesRobot {
-            XCTAssertTrue(app.staticTexts[createProfileTitleId].exists)
+            windows(Localizable.profilesOverview).checkExists()
+            cell(Localizable.fastest).checkExists()
             return ManageProfilesRobot()
         }
         
         @discardableResult
         func checkProfileIsCreated(_ name: String) -> ManageProfilesRobot {
-            XCTAssert(app.tableRows.cells[name].waitForExistence(timeout: 2))
+            cell(name).waitUntilExists(time: 2).checkExists()
             return ManageProfilesRobot()
         }
     }
