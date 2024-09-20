@@ -29,14 +29,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:TestPlans/ProtonVPN-tvOS-UI-All.xctestplan"
-            default = "YES">
+            reference = "container:TestPlans/ProtonVPN-tvOS-UI-All.xctestplan">
          </TestPlanReference>
          <TestPlanReference
             reference = "container:TestPlans/ProtonVPN-tvOS-UI-Smoke.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:TestPlans/ProtonVPN-tvOS-Unit-All.xctestplan">
+            reference = "container:TestPlans/ProtonVPN-tvOS-Unit-All.xctestplan"
+            default = "YES">
          </TestPlanReference>
       </TestPlans>
       <Testables>
