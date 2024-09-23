@@ -160,7 +160,7 @@ final class CountriesSectionViewController: NSViewController {
 
         updateStats(stats: presenter.netShieldStats)
         if presenter.netShieldPropertyProvider.netShieldType != .level2 {
-            updateStats(stats: .init(trackers: 0, ads: 0, data: 0, enabled: false))
+            updateStats(stats: .zero(enabled: false))
         }
     }
 
@@ -182,7 +182,7 @@ final class CountriesSectionViewController: NSViewController {
                                                                          object: nil) { [weak self] level in
             DispatchQueue.main.async {
                 if (level.object as? NetShieldType) != .level2 {
-                    self?.updateStats(stats: .init(trackers: 0, ads: 0, data: 0, enabled: false))
+                    self?.updateStats(stats: .zero(enabled: false))
                 }
             }
         })

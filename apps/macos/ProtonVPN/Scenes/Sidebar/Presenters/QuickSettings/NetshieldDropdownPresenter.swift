@@ -44,8 +44,8 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
-    public private (set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
-    var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
+    public private(set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
+    var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
     
     override var title: String! {
@@ -87,7 +87,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     var netShieldViewModel: NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
-        netShieldStats.enabled = isActive
+        netShieldStats = netShieldStats.copy(enabled: isActive)
         return netShieldStats
     }
     

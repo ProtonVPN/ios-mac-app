@@ -44,7 +44,7 @@ class NetShieldStatsItemView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 13)
     }
 
-    func setup(with model: NetShieldModel.Stat) {
+    func setup(with model: StatModel) {
         valueLabel.text = model.value
         titleLabel.text = model.title.replacingOccurrences(of: " ", with: "\n")
 

@@ -22,13 +22,13 @@ import Theme
 
 public struct NetShieldStatsView: View {
 
-    @ObservedObject public var viewModel = NetShieldModel(trackers: 0, ads: 0, data: 0, enabled: false)
+    @ObservedObject public var viewModel = NetShieldModel.zero(enabled: false)
 
     public var body: some View {
         HStack(spacing: 0) {
-            StatsView(model: $viewModel.ads)
-            StatsView(model: $viewModel.trackers)
-            StatsView(model: $viewModel.data)
+            StatsView(model: viewModel.ads)
+            StatsView(model: viewModel.trackers)
+            StatsView(model: viewModel.data)
         }
         .padding(8)
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
@@ -45,7 +45,7 @@ struct StatsView: View {
     var statsViewHeight: CGFloat = 56
     var statsViewWidth: CGFloat = 80
 
-    @Binding var model: NetShieldModel.Stat
+    var model: StatModel
 
     public var body: some View {
         VStack(alignment: .center) {

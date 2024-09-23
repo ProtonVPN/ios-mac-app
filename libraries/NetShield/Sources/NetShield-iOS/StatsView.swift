@@ -24,7 +24,7 @@ struct StatsView: View {
 
     var statsViewHeight: CGFloat = 64
 
-    let model: NetShieldModel.Stat
+    let model: StatModel
 
     public var body: some View {
         VStack(alignment: .center) {
@@ -77,8 +77,8 @@ struct StatsView_Previews: PreviewProvider {
     }
 }
 
-private extension NetShieldModel.Stat {
-    static var random: NetShieldModel.Stat {
+private extension StatModel {
+    static var random: StatModel {
         .init(value: "\(Int.random(in: 1...1000))",
               title: "Trackers\nstopped",
               help: "",

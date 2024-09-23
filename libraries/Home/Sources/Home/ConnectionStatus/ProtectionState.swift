@@ -18,6 +18,7 @@
 
 import Foundation
 
+import Dependencies
 import Domain
 import Strings
 import VPNAppCore
@@ -32,6 +33,7 @@ public enum ProtectionState: Equatable {
 
 extension VPNConnectionStatus {
     func protectionState(country: String, ip: String) -> ProtectionState {
+        // @Dependency(\.netShieldStatsProvider) var statsProvider
         switch self {
         case .disconnected:
             return .unprotected

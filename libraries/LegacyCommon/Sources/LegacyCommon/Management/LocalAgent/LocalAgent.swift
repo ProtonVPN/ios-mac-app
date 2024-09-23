@@ -217,7 +217,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     func disconnect() {
         agent?.close()
-        netShieldStatsChanged(to: .init(trackers: 0, ads: 0, data: 0, enabled: false))
+        netShieldStatsChanged(to: .zero(enabled: false))
     }
 
     func requestStatus(withStats shouldRequestStats: Bool) {
@@ -300,9 +300,9 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         guard isNetShieldStatsEnabled else { return }
 
         let stats: NetShieldModel = .init(
-            trackers: statistics.netShield.trackersBlocked ?? 0,
-            ads: statistics.netShield.adsBlocked ?? 0,
-            data: statistics.netShield.bytesSaved,
+            trackersCount: statistics.netShield.trackersBlocked ?? 0,
+            adsCount: statistics.netShield.adsBlocked ?? 0,
+            dataSaved: UInt64(statistics.netShield.bytesSaved),
             enabled: true)
 
         netShieldStatsChanged(to: stats)

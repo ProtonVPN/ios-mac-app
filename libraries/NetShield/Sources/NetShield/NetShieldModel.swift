@@ -19,13 +19,50 @@
 import Foundation
 import Strings
 
-public class NetShieldModel: Equatable, ObservableObject {
+public final class NetShieldModel: Sendable, Equatable, ObservableObject {
+    public let trackersCount: Int
+    public let adsCount: Int
+    public let dataSaved: UInt64
+    public let enabled: Bool
+
     public static func == (lhs: NetShieldModel, rhs: NetShieldModel) -> Bool {
         lhs.ads == rhs.ads &&
         lhs.trackers == rhs.trackers &&
         lhs.data == rhs.data &&
         lhs.enabled == rhs.enabled
     }
+
+    public init(trackersCount: Int, adsCount: Int, dataSaved: UInt64, enabled: Bool) {
+        self.trackersCount = trackersCount
+        self.adsCount = adsCount
+        self.dataSaved = dataSaved
+        self.enabled = enabled
+    }
+
+    public static func zero(enabled: Bool) -> NetShieldModel {
+        .init(trackersCount: 0, adsCount: 0, dataSaved: 0, enabled: false)
+    }
+
+    public func copy(enabled: Bool) -> NetShieldModel {
+        .init(trackersCount: trackersCount, adsCount: adsCount, dataSaved: dataSaved, enabled: enabled)
+    }
+}
+
+public struct StatModel: Equatable {
+    public let value: String
+    public let title: String
+    public let help: String
+    public var isEnabled: Bool
+
+    public init(value: String, title: String, help: String, isEnabled: Bool) {
+        self.value = value
+        self.title = title
+        self.help = help
+        self.isEnabled = isEnabled
+    }
+}
+
+extension NetShieldModel {
 
     private static let formatter = NetShieldStatsNumberFormatter()
     private static let byteCountFormatter = {
@@ -34,64 +71,31 @@ public class NetShieldModel: Equatable, ObservableObject {
         return formatter
     }()
 
-    public var trackers: Stat
-    public var ads: Stat
-    public var data: Stat
-
-    public var trackersCount: Int
-    public var adsCount: Int
-
-    public init(trackers: Stat, ads: Stat, data: Stat, trackersCount: Int, adsCount: Int) {
-        self.trackers = trackers
-        self.ads = ads
-        self.data = data
-        self.trackersCount = trackersCount
-        self.adsCount = adsCount
+    public var trackers: StatModel {
+        StatModel(
+            value: Self.formatter.string(from: trackersCount),
+            title: Localizable.netshieldStatsTrackersStopped(trackersCount),
+            help: Localizable.netshieldStatsHintTrackers,
+            isEnabled: enabled
+        )
     }
 
-    public convenience init(trackers: Int, ads: Int, data: Int, enabled: Bool) {
-        let adsStat = Stat(value: Self.formatter.string(from: ads),
-                           title: Localizable.netshieldStatsAdsBlocked(ads),
-                           help: Localizable.netshieldStatsHintAds,
-                           isEnabled: enabled)
-        let trackersStat = Stat(value: Self.formatter.string(from: trackers),
-                                title: Localizable.netshieldStatsTrackersStopped(trackers),
-                                help: Localizable.netshieldStatsHintTrackers,
-                                isEnabled: enabled)
-        let dataStat = Stat(value: Self.byteCountFormatter.string(fromByteCount: Int64(data)),
-                            title: Localizable.netshieldStatsDataSaved,
-                            help: Localizable.netshieldStatsHintData,
-                            isEnabled: enabled)
-
-        self.init(trackers: trackersStat,
-                  ads: adsStat,
-                  data: dataStat,
-                  trackersCount: trackers,
-                  adsCount: ads)
+    public var ads: StatModel {
+        StatModel(
+            value: Self.formatter.string(from: adsCount),
+            title: Localizable.netshieldStatsAdsBlocked(adsCount),
+            help: Localizable.netshieldStatsHintAds,
+            isEnabled: enabled
+        )
     }
 
-    public var enabled: Bool {
-        set {
-            trackers.isEnabled = newValue
-            ads.isEnabled = newValue
-            data.isEnabled = newValue
-        } get {
-            ads.isEnabled
-        }
-    }
-
-    public struct Stat: Equatable {
-        public let value: String
-        public let title: String
-        public let help: String
-        public var isEnabled: Bool
-
-        public init(value: String, title: String, help: String, isEnabled: Bool) {
-            self.value = value
-            self.title = title
-            self.help = help
-            self.isEnabled = isEnabled
-        }
+    public var data: StatModel {
+        StatModel(
+            value: Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved)),
+            title: Localizable.netshieldStatsDataSaved,
+            help: Localizable.netshieldStatsHintData,
+            isEnabled: enabled
+        )
     }
 }
 
@@ -99,7 +103,7 @@ public extension NetShieldModel {
     static var random: NetShieldModel { // TODO: make only available in DEBUG for previews
         let trackers = Int.random(in: 0...1000)
         let ads = Int.random(in: 0...1000000000)
-        let data = Int.random(in: 0...100000000000000)
-        return NetShieldModel(trackers: trackers, ads: ads, data: data, enabled: true)
+        let data = UInt64.random(in: 0...100000000000000)
+        return NetShieldModel(trackersCount: trackers, adsCount: ads, dataSaved: data, enabled: true)
     }
 }
