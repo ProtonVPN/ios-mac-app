@@ -31,6 +31,7 @@ import GoLibs
 import Domain
 import Ergonomics
 import LocalFeatureFlags
+import NetShield
 import Timer
 import VPNShared
 
@@ -62,11 +63,6 @@ protocol LocalAgent {
     func update(safeMode: Bool)
     func unjail()
     func requestStatus(withStats shouldRequestStats: Bool)
-}
-
-public struct NetShieldStatsNotification: TypedNotification {
-    public static var name = Notification.Name("ch.protonvpn.localagent.netshieldstats")
-    public var data: NetShieldModel
 }
 
 public protocol LocalAgentConnectionWrapper {
@@ -149,6 +145,7 @@ final class LocalAgentImplementation: LocalAgent {
     private let client: LocalAgentNativeClientImplementation
     private let reachability: Reachability?
 
+    private var lastReceivedStats: NetShieldModel?
     private var previousState: LocalAgentState?
     private var statusTimer: BackgroundTimer?
     private var notificationTokens = [NotificationToken]()
@@ -305,6 +302,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
             dataSaved: UInt64(statistics.netShield.bytesSaved),
             enabled: true)
 
+        lastReceivedStats = stats
         netShieldStatsChanged(to: stats)
     }
 
@@ -360,6 +358,10 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // it is up to the app to compare them and decide what to do
 
         if let vpnFeatures = features.vpnFeatures {
+            if vpnFeatures.netshield != .level2 {
+                let disabledStats = lastReceivedStats?.copy(enabled: false) ?? .zero(enabled: false)
+                netShieldStatsChanged(to: disabledStats)
+            }
             delegate?.didReceiveFeatures(vpnFeatures)
         }
         
