@@ -18,17 +18,51 @@
 
 import Foundation
 import Dependencies
+import Ergonomics
 import NetShield
 
 public struct NetShieldStatsProvider: TestDependencyKey {
-    var stats: @Sendable () -> NetShieldModel
+    public var getStats: @Sendable () async -> NetShieldModel
+    public var statsStream: @Sendable () -> AsyncStream<NetShieldModel>
 
-    public static let testValue = NetShieldStatsProvider(stats: { .init(trackersCount: 34, adsCount: 75, dataSaved: 2945, enabled: true)})
+    public static let testValue = NetShieldStatsProvider(
+        getStats: { .init(trackersCount: 34, adsCount: 75, dataSaved: 2945, enabled: true) },
+        statsStream: { .finished }
+    )
+
 }
 
 extension DependencyValues {
     public var netShieldStatsProvider: NetShieldStatsProvider {
         get { self[NetShieldStatsProvider.self] }
         set { self[NetShieldStatsProvider.self] = newValue }
+    }
+}
+
+extension NetShieldStatsProvider: DependencyKey {
+
+    public static let liveValue: NetShieldStatsProvider = {
+        let actor = NetShieldStatsProviderImplementation()
+
+        return NetShieldStatsProvider(
+            getStats: { actor.stats },
+            statsStream: { NotificationCenter.default.notifications(NetShieldStatsNotification.self) }
+        )
+    }()
+}
+
+actor NetShieldStatsProviderImplementation {
+    public var stats: NetShieldModel = .zero(enabled: false)
+
+    public init() {
+        Task {
+            await startObserving()
+        }
+    }
+
+    func startObserving() async {
+        for await value in NotificationCenter.default.notifications(NetShieldStatsNotification.self) {
+            self.stats = value
+        }
     }
 }
