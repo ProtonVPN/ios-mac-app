@@ -22,6 +22,7 @@ let package = Package(
 
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
+        .package(path: "../NetShield"),
         .package(path: "../Foundations/LocalFeatureFlags"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
@@ -68,6 +69,7 @@ let package = Package(
             name: "VPNAppCore",
             dependencies: [
                 "Domain",
+                "NetShield",
                 "VPNShared",
                 "VPNCrypto",
                 "Strings",

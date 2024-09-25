@@ -155,6 +155,7 @@ extension NotificationCenter {
         }
     }
 
+    @available(macOS 12, *)
     public func notifications<N, T>(
         _ notificationType: N.Type
     ) -> AsyncStream<T> where N: TypedNotification<T> {

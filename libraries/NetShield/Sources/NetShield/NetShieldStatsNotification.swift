@@ -20,8 +20,8 @@ import Foundation
 import Ergonomics
 
 public struct NetShieldStatsNotification: TypedNotification {
-    public static var name = Notification.Name("ch.protonvpn.localagent.netshieldstats")
-    public var data: NetShieldModel
+    public static let name = Notification.Name("ch.protonvpn.localagent.netshieldstats")
+    public let data: NetShieldModel
 
     public init(data: NetShieldModel) {
         self.data = data
