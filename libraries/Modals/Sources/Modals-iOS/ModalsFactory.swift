@@ -9,9 +9,6 @@ public final class ModalsFactory {
 
     // MARK: Properties
 
-    private lazy var upsellStoryboard: UIStoryboard = {
-        UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
-    }()
     private lazy var discourageStoryboard: UIStoryboard = {
         UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
     }()
@@ -24,12 +21,6 @@ public final class ModalsFactory {
 
     public func whatsNewViewController() -> UIViewController {
         WhatsNewView().hostingController()
-    }
-
-    public func upsellViewController(modalType: ModalType) -> UpsellViewController {
-        let upsell = self.upsellStoryboard.instantiate(controllerType: UpsellViewController.self)
-        upsell.modalType = modalType
-        return upsell
     }
 
     public func upsellViewController(

@@ -327,31 +327,33 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
-        let viewController: UIViewController
-        do {
-            let oneClickPayment = try OneClickPayment(alertService: self, planService: planService, payments: planService.payments)
-            oneClickPayment.completionHandler = { [weak self] in
-                self?.windowService.dismissModal(nil)
-            }
-            viewController = modalsFactory.upsellViewController(
-                modalType: modalType,
-                client: oneClickPayment.plansClient(
-                    validationHandler: {
-                        NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: alert.modalSource)
-                    },
-                    notNowHandler: { [weak self] in
-                        self?.windowService.dismissModal(nil)
-                    }
-                )
-            )
-            viewController.modalPresentationStyle = .overFullScreen
-            self.oneClickPayment = oneClickPayment
-        } catch {
-            let upsellViewController = modalsFactory.upsellViewController(modalType: modalType)
-            upsellViewController.delegate = self
-            upsellAlerts[upsellViewController.id] = alert
-            viewController = upsellViewController
+        guard let oneClickPayment = OneClickPayment(
+            alertService: self,
+            planService: planService,
+            payments: planService.payments
+        ) else {
+            // Can be disabled if `DynamicPlan` FF set to false, but this doesn't happen in practice (default is true).
+            return
         }
+
+        oneClickPayment.completionHandler = { [weak self] in
+            self?.windowService.dismissModal(nil)
+        }
+
+        let viewController = modalsFactory.upsellViewController(
+            modalType: modalType,
+            client: oneClickPayment.plansClient(
+                validationHandler: {
+                    NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: alert.modalSource)
+                },
+                notNowHandler: { [weak self] in
+                    self?.windowService.dismissModal(nil)
+                }
+            )
+        )
+        viewController.modalPresentationStyle = .overFullScreen
+        self.oneClickPayment = oneClickPayment
+
         windowService.present(modal: viewController)
         NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: alert.modalSource)
     }
@@ -454,42 +456,6 @@ extension IosAlertService: CoreAlertService {
 
         let upsellViewController = modalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)
         windowService.present(modal: upsellViewController)
-    }
-}
-
-extension IosAlertService: UpsellViewControllerDelegate {
-    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
-        return true
-    }
-
-    func userDidRequestPlus(upsell: UpsellViewController?) {
-        // Hold onto alert reference before its removed from `upsellAlerts` on disappear
-        var modalSource: UpsellEvent.ModalSource?
-        if let upsell, let alert = upsellAlerts[upsell.id] {
-            modalSource = alert.modalSource
-            NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: modalSource)
-        }
-
-        windowService.dismissModal { [weak self] in
-            self?.planService.presentPlanSelection(modalSource: modalSource)
-        }
-    }
-
-    func userDidDismissUpsell(upsell: UpsellViewController?) {
-        windowService.dismissModal { }
-    }
-
-    func userDidTapNext(upsell: UpsellViewController) {
-        let alert = upsellAlerts[upsell.id] // Hold onto alert reference before its removed from `upsellAlerts` on disappear
-        windowService.dismissModal { [alert] in
-            alert?.continueAction()
-        }
-    }
-
-    func upsellDidDisappear(upsell: UpsellViewController?) {
-        if let id = upsell?.id {
-            upsellAlerts.removeValue(forKey: id)
-        }
     }
 }
 

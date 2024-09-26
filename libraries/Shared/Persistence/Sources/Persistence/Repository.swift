@@ -19,6 +19,7 @@
 import Foundation
 
 import Dependencies
+import XCTestDynamicOverlay
 
 import Domain
 

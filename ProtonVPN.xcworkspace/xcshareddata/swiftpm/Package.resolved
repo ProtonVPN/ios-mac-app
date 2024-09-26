@@ -159,8 +159,8 @@
         "repositoryURL": "https://github.com/getsentry/sentry-cocoa",
         "state": {
           "branch": null,
-          "revision": "c9a692ba837f4832ec7ce6378c071cb91cb55f92",
-          "version": "8.29.0"
+          "revision": "5575af93efb776414f243e93d6af9f6258dc539a",
+          "version": "8.36.0"
         }
       },
       {
@@ -366,8 +366,8 @@
         "repositoryURL": "https://github.com/nalexn/ViewInspector.git",
         "state": {
           "branch": null,
-          "revision": "7b1732802ffe30e6a67754bda6c7819e5cb0eb70",
-          "version": "0.9.11"
+          "revision": "5acfa0a3c095ac9ad050abe51c60d1831e8321da",
+          "version": "0.10.0"
         }
       },
       {
