@@ -42,12 +42,10 @@ final class OneClickPayment {
 
     private var plansClientValue: PlansClient?
 
-    init(alertService: CoreAlertService, planService: PlanService, payments: Payments) throws {
-        guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.oneClickPayment) else {
-            throw "OneClickAIAP FF disabled!" as GenericError
-        }
+    init?(alertService: CoreAlertService, planService: PlanService, payments: Payments) {
         guard case .right(let plansDataSource) = payments.planService else {
-            throw "DynamicPlan FF disabled!" as GenericError
+            log.error("DynamicPlan FF disabled!")
+            return nil
         }
         self.plansDataSource = plansDataSource
         self.alertService = alertService

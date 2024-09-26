@@ -77,22 +77,25 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     func welcomeToProtonPrimaryAction() {
-        let viewController: UIViewController
-        do {
-            let oneClickPayment = try OneClickPayment(alertService: alertService, planService: planService, payments: planService.payments)
-            oneClickPayment.completionHandler = { [weak self] in
-                self?.onboardingCoordinatorDidFinish()
-            }
-            viewController = oneClickPayment.oneClickIAPViewController(dismissAction: {
-                self.windowService.dismissModal {
-                    self.onboardingCoordinatorDidFinish()
-                }
-            })
-            self.oneClickPayment = oneClickPayment
-        } catch {
-            log.debug("One click payment disabled: \(error)")
-            viewController = allCountriesUpsellViewController()
+        guard let oneClickPayment = OneClickPayment(
+            alertService: alertService,
+            planService: planService,
+            payments: planService.payments
+        ) else {
+            // Can be disabled if `DynamicPlan` FF set to false, but this doesn't happen in practice (default is true).
+            return
         }
+
+        oneClickPayment.completionHandler = { [weak self] in
+            self?.onboardingCoordinatorDidFinish()
+        }
+
+        let viewController = oneClickPayment.oneClickIAPViewController(dismissAction: {
+            self.windowService.dismissModal {
+                self.onboardingCoordinatorDidFinish()
+            }
+        })
+        self.oneClickPayment = oneClickPayment
         windowService.addToStack(viewController, checkForDuplicates: false)
     }
 

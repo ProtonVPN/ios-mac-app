@@ -44,9 +44,6 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// evict the previous session UID and associate the key with the current one.
     case certificateRefreshForceRenew = "CertificateRefreshForceRenew"
 
-    /// Enable and disable the 1-click upsell
-    case oneClickPayment = "OneClickAIAP"
-
     /// Don't default to IKEv2 during VPN configuration when no VPN provider is available
     case noDefaultToIke = "AppleVPNNoDefaultToIKE"
 

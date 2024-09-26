@@ -30,9 +30,6 @@ public extension ProtonCoreFeatureFlags.FeatureFlag {
     static var certificateRefreshForceRenew: Self {
         VPNFeatureFlagType.certificateRefreshForceRenew.featureFlag
     }
-    static var oneClickPayment: Self {
-        VPNFeatureFlagType.oneClickPayment.featureFlag
-    }
     static var noDefaultToIke: Self {
         VPNFeatureFlagType.noDefaultToIke.featureFlag
     }

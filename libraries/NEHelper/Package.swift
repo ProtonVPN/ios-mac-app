@@ -34,7 +34,7 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", exact: "1.2.2"),
-        .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.29.0"),
+        .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.36.0"),
     ],
     targets: [
         .target(

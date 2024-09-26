@@ -2518,18 +2518,18 @@
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
 				4CB776CB2A1F5E61004CA127 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log.git" */,
-				E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
+				4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */,
+				E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				ADBA84DD2A58A1A0001EF3F5 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
-				4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */,
+				4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */,
 				4C9754F82A6018040035A61B /* XCRemoteSwiftPackageReference "GSMessages" */,
 				4C7D404C2A60244C00ACDBED /* XCRemoteSwiftPackageReference "Alamofire" */,
 				4C7D40542A60250300ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				4C7D405A2A6027C400ACDBED /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				4C7D40622A60282D00ACDBED /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
-				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */,
-				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */,
+				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
+				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */,
 			);
@@ -4032,7 +4032,7 @@
 				version = 9.1.0;
 			};
 		};
-		4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+		4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
@@ -4045,10 +4045,10 @@
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
 			requirement = {
 				kind = exactVersion;
-				version = 8.29.0;
+				version = 8.36.0;
 			};
 		};
-		4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */ = {
+		4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lachlanbell/SwiftOTP.git";
 			requirement = {
@@ -4073,7 +4073,7 @@
 				version = 1.13.1;
 			};
 		};
-		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log.git" */ = {
+		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
 			requirement = {
@@ -4097,7 +4097,7 @@
 				version = 1.5.4;
 			};
 		};
-		E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
+		E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4105,7 +4105,7 @@
 				minimumVersion = 1.3.9;
 			};
 		};
-		E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */ = {
+		E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/almazrafi/DictionaryCoder.git";
 			requirement = {
@@ -4138,7 +4138,7 @@
 		};
 		4C4E98342AC1C07E00B7B285 /* DictionaryCoder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder.git" */;
+			package = E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
 		4C7D404D2A60244C00ACDBED /* Alamofire */ = {
@@ -4182,7 +4182,7 @@
 		};
 		4C9754F32A6017260035A61B /* SwiftOTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP.git" */;
+			package = 4C9754F22A6017260035A61B /* XCRemoteSwiftPackageReference "SwiftOTP" */;
 			productName = SwiftOTP;
 		};
 		4C9754F92A6018040035A61B /* GSMessages */ = {
@@ -4240,7 +4240,7 @@
 		};
 		ADE98F212B6306CA00601881 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
+			package = E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
 		};
 		ADE98F252B6306D800601881 /* PMLogger */ = {
