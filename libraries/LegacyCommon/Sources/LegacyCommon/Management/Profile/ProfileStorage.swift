@@ -30,8 +30,15 @@ public protocol ProfileStorageFactory {
 // TODO: This would be a good use case for non-user defaults storage
 //  - Profiles can get pretty big because they encode servers (big especially when they are SC servers)
 //  - Once we move to something like Core Data for servers, we could model a relationship between profiles and servers?
-public class ProfileStorage {
-    private static let storageVersion = 1
+public final class ProfileStorage {
+    enum StorageVersion: Int, CaseIterable {
+        case v1 = 1
+        case v2 = 2
+
+        static let current: StorageVersion = .v2
+    }
+
+    private static let storageVersion = StorageVersion.v2
     private static let versionKey     = "profileCacheVersion"
     
     public static let contentChanged = Notification.Name("ProfileStorageContentChanged")
@@ -53,34 +60,46 @@ public class ProfileStorage {
     
     func fetch() -> [Profile] {
         @Dependency(\.defaultsProvider) var provider
-        guard let storageKey = storageKey() else {
-            return []
-        }
-        
-        let version = provider.getDefaults().integer(forKey: Self.versionKey)
-        var profiles = [Profile]()
-        if version == Self.storageVersion {
-            profiles = fetchFromMemory(storageKey: storageKey)
-        }
-        
-        if systemProfilesPresent(in: profiles) {
-            profiles = removeSystemProfiles(in: profiles)
-            store(profiles)
+
+        var profiles: [Profile] = []
+
+        for versionCheck in StorageVersion.allCases {
+            guard let storageKey = storageKey(for: versionCheck) else {
+                return []
+            }
+
+            let version = provider.getDefaults().integer(forKey: Self.versionKey)
+            if version == versionCheck.rawValue {
+                profiles.append(contentsOf: fetchFromMemory(storageKey: storageKey))
+            }
+
+            if systemProfilesPresent(in: profiles) {
+                profiles = removeSystemProfiles(in: profiles)
+                store(profiles)
+            }
         }
         
         return profiles
     }
     
-    func store(_ profiles: [Profile]) {
-        guard let storageKey = storageKey() else { return }
+    func store(_ profiles: [Profile], storageVersion: StorageVersion = .current) {
+        guard let storageKey = storageKey(for: storageVersion) else {
+            log.error("Unable to store profiles without a storage key.", category: .persistence)
+            return
+        }
         storeInMemory(profiles, storageKey: storageKey)
         DispatchQueue.main.async { NotificationCenter.default.post(name: Self.contentChanged, object: profiles) }
     }
     
     // MARK: - Private functions
-    private func storageKey() -> String? {
-        guard let username = authKeychain.username else { return nil }
-        return "profiles_" + username
+
+    private func storageKey(for version: StorageVersion) -> String? {
+        switch version {
+        case .v1:
+            return authKeychain.username.map { "profiles_" + $0 }
+        case .v2:
+            return authKeychain.userId.map { "profiles_" + $0 }
+        }
     }
     
     private func fetchFromMemory(storageKey: String) -> [Profile] {
@@ -109,7 +128,7 @@ public class ProfileStorage {
     
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
         @Dependency(\.defaultsProvider) var provider
-        provider.getDefaults().set(Self.storageVersion, forKey: Self.versionKey)
+        provider.getDefaults().set(Self.storageVersion.rawValue, forKey: Self.versionKey)
         let archivedData = try? encoder.encode(profiles)
         provider.getDefaults().set(archivedData, forKey: storageKey)
     }

@@ -42,7 +42,7 @@ final class SettingsAccountViewModel {
                         AuthKeychainHandleFactory &
                         NavigationServiceFactory
 
-    private var factory: Factory
+    private let factory: Factory
     
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()

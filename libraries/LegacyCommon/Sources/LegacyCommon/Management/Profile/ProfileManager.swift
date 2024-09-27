@@ -45,7 +45,7 @@ public protocol ProfileManagerFactory {
     func makeProfileManager() -> ProfileManager
 }
 
-public class ProfileManager {
+public final class ProfileManager {
     @Dependency(\.authKeychain) var authKeychain
 
     public let contentChanged = Notification.Name("ProfileManagerContentChanged")

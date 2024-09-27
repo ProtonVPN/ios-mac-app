@@ -71,7 +71,7 @@ extension DependencyValues {
     }
 }
 
-public class AuthKeychain {
+public final class AuthKeychain {
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
 
     private struct StorageKey {
