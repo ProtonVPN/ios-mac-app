@@ -32,7 +32,6 @@ import ProtonCoreUIFoundations
 
 @available(iOS 17, *)
 struct HomeConnectionCardView: View {
-    static let maxWidth: CGFloat = 736
     @Dependency(\.locale) private var locale
 
     var store: StoreOf<HomeConnectionCardFeature>
@@ -132,7 +131,6 @@ struct HomeConnectionCardView: View {
             header
             card
         }
-        .frame(maxWidth: Self.maxWidth)
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {

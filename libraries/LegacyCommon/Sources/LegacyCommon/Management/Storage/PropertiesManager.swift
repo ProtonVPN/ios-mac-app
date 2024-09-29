@@ -39,7 +39,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     static var activeConnectionChangedNotification: Notification.Name { get }
     static var hasConnectedNotification: Notification.Name { get }
-    static var userIpNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
     static var vpnProtocolNotification: Notification.Name { get }
     static var killSwitchNotification: Notification.Name { get }
@@ -251,7 +250,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public static let activeConnectionChangedNotification = Notification.Name("ActiveConnectionChangedNotification")
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
-    public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
     public static let announcementsNotification = Notification.Name("Announcements")
     public static let earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
@@ -389,7 +387,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     /// Distinguishes if kill switch should be disabled
     @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
 
-    @Property(.userLocation, notifyChangesWith: PropertiesManager.userIpNotification)
+    @Property(.userLocation, notifyChangesWith: .userIpNotification)
     public var userLocation: UserLocation?
 
     @BoolProperty(.userDataDisclaimerAgreed) public var userDataDisclaimerAgreed: Bool

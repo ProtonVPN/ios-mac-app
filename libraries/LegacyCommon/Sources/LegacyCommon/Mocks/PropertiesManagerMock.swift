@@ -39,7 +39,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")
     public static var killSwitchNotification: Notification.Name = Notification.Name("killSwitch")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("hasConnected")
-    public static var userIpNotification: Notification.Name = Notification.Name("userIp")
+
     public static var earlyAccessNotification: Notification.Name = Notification.Name("earlyAccess")
     public static var vpnProtocolNotification: Notification.Name = Notification.Name("vpnProtocol")
     public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("excludeLocalNetworks")
@@ -99,7 +99,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var intentionallyDisconnected: Bool = false
     public var userLocation: UserLocation? {
         didSet {
-            NotificationCenter.default.post(name: Self.userIpNotification, object: userLocation)
+            NotificationCenter.default.post(name: .userIpNotification, object: userLocation)
         }
     }
     public var userDataDisclaimerAgreed: Bool = false

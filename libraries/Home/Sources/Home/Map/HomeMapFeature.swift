@@ -21,6 +21,7 @@ import Foundation
 import Domain
 import VPNAppCore
 import SwiftUI
+import CoreLocation
 
 @available(iOS 17.0, *)
 @Reducer
@@ -40,10 +41,11 @@ public struct HomeMapFeature {
 
     public enum MapState: Equatable {
         case connectedCountry(String)
-        case connectedCoordinates(Coordinates, String?)
+        case connectedCoordinates(CLLocationCoordinate2D, String?)
         case connectingCountry(String)
-        case connectingCoordinates(Coordinates, String?)
+        case connectingCoordinates(CLLocationCoordinate2D, String?)
         case disconnected
+
         fileprivate var pinMode: MapPin.Mode {
             switch self {
             case .connectedCountry, .connectedCoordinates:
@@ -54,6 +56,7 @@ public struct HomeMapFeature {
                 return .disconnected
             }
         }
+
         var code: String? {
             switch self {
             case .connectedCountry(let code):
@@ -68,7 +71,8 @@ public struct HomeMapFeature {
                 return nil
             }
         }
-        var coordinates: Coordinates? {
+        
+        var coordinates: CLLocationCoordinate2D? {
             switch self {
             case .connectedCountry(let code):
                 return CountriesCoordinates.countryCenterCoordinates(code.uppercased())
@@ -90,7 +94,7 @@ public struct HomeMapFeature {
         case onAppear
     }
 
-    enum CancelId {
+    private enum CancelId {
         case connectionState
     }
 
@@ -115,7 +119,7 @@ public struct HomeMapFeature {
                     mapState = .disconnected
                 case .connected(let spec, let actual):
                     if let actual {
-                        mapState = .connectedCoordinates(.init(coordinate: actual.coordinates), actual.country)
+                        mapState = .connectedCoordinates(actual.coordinates, actual.country)
                     } else if let code = spec.countryCode {
                         mapState = .connectedCountry(code)
                     } else {
@@ -123,7 +127,7 @@ public struct HomeMapFeature {
                     }
                 case .connecting(let spec, let actual), .loadingConnectionInfo(let spec, let actual):
                     if let actual {
-                        mapState = .connectingCoordinates(.init(coordinate: actual.coordinates), actual.country)
+                        mapState = .connectingCoordinates(actual.coordinates, actual.country)
                     } else if let code = spec.countryCode {
                         mapState = .connectingCountry(code)
                     } else {

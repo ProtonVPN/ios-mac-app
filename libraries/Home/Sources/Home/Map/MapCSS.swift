@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 enum MapCSS {
-    static var css: String =
+    static let css: String =
     /*
      * Below are Cascading Style Sheet (CSS) definitions in use in this file,
      * which allow easily changing how countries are displayed.

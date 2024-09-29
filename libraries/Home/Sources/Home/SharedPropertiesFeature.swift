@@ -45,9 +45,9 @@ public struct SharedPropertiesFeature {
 
     }
 
-    let userLocationPublisher: Effect<Action> = .publisher {
+    let userLocationEffect: Effect<Action> = .publisher {
         NotificationCenter.default
-            .publisher(for: Notification.Name("UserIp"))
+            .publisher(for: .userIpNotification)
             .map {
                 $0.object as? Domain.UserLocation
             }
@@ -55,7 +55,7 @@ public struct SharedPropertiesFeature {
             .map(Action.userLocationChange)
     }
 
-    let connectionStatusPublisher: Effect<Action> = .run { @MainActor send in
+    let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
         let stream = Dependency(\.vpnConnectionStatusPublisher)
             .wrappedValue()
             .map { Action.newConnectionStatus($0) }
@@ -71,8 +71,8 @@ public struct SharedPropertiesFeature {
             switch action {
             case .listen:
                 return .merge(
-                    userLocationPublisher,
-                    connectionStatusPublisher
+                    userLocationEffect,
+                    connectionStatusEffect
                 )
 
             case .userLocationChange(let location):

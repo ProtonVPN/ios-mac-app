@@ -21,7 +21,7 @@ import CoreLocation
 
 /// Implemented according to the definition from https://en.wikipedia.org/wiki/Natural_Earth_projection
 public enum NaturalEarthProjection {
-    private static func rad(_ value: Double) -> Double {
+    private static func rad(fromDegrees value: Double) -> Double {
         Measurement(value: value, unit: UnitAngle.degrees).converted(to: .radians).value
     }
 
@@ -44,11 +44,11 @@ public enum NaturalEarthProjection {
     }
 
     private static func x(lat: Double, long: Double) -> Double {
-        lPolynomial(lat: rad(lat), long: rad(long))
+        lPolynomial(lat: rad(fromDegrees: lat), long: rad(fromDegrees: long))
     }
 
     private static func y(lat: Double) -> Double {
-        dPolynomial(lat: rad(lat))
+        dPolynomial(lat: rad(fromDegrees: lat))
     }
 
     private static let rangeX = abs(-2.73539) + 2.73539

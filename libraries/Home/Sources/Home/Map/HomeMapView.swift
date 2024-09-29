@@ -27,9 +27,6 @@ import CoreLocation
 public struct HomeMapView: View {
     @State var map = SVGView.naturalEarthMap
 
-    static let originalWidth: CGFloat = 2754
-    static let originalHeight: CGFloat = 1398
-
     let availableHeight: CGFloat
     let availableWidth: CGFloat
 
@@ -45,31 +42,31 @@ public struct HomeMapView: View {
         ZStack {
             map
             MapPin(mode: store.pinMode)
-                .scaleEffect(1 / mapScale(), anchor: .center)
-                .offset(connectionOffset())
+                .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
+                .offset(pinOffset())
         }
-        .frame(width: Self.originalWidth, height: Self.originalHeight)
-        .scaleEffect(mapScale(), anchor: .center)
-        .offset(offset())
+        .frame(width: map.svg?.bounds().width,
+               height: map.svg?.bounds().height)
+        .scaleEffect(mapScale())
+        .offset(mapOffset())
         .onAppear {
             store.send(.onAppear)
         }
     }
 
-    func connectionOffset() -> CGSize {
+    private func pinOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let coordinates = store.mapState.coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
+              let coordinates = store.mapState.coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()),
+              let mapBounds = map.svg?.bounds().size else {
             return .zero
         }
         let location = CLLocationCoordinate2D(latitude: coordinates.latitude,
                                               longitude: coordinates.longitude - 10) // -10 to account for the shifted map
-        let projection = NaturalEarthProjection.projection(from: location,
-                                                           in: .init(width: Self.originalWidth,
-                                                                     height: Self.originalHeight))
+        let projection = NaturalEarthProjection.projection(from: location, in: mapBounds)
         return .init(width: projection.x, height: -projection.y)
     }
 
-    func offset() -> CGSize {
+    private func mapOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
               let node = map.node(code: code),
               let mapBounds = map.svg?.bounds() else {
@@ -81,14 +78,21 @@ public struct HomeMapView: View {
                      height: (mapBounds.midY - node.bounds().midY) * scale)
     }
 
-    func mapScale() -> CGFloat {
+    private func mapScale() -> CGFloat {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
               let node = map.node(code: code) else {
-            return availableWidth / Self.originalWidth // show the whole map
+            return wholeMapScale()
         }
         let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the padding
         let scaleY = (availableHeight - 40) / node.bounds().height
 
-        return min(scaleX, scaleY) // TODO: [redesign] Consider also the available space when choosing which scale to use
+        return min(scaleX, scaleY)
+    }
+
+    private func wholeMapScale() -> CGFloat {
+        guard let mapBounds = map.svg?.bounds() else { return 1 }
+        let scaleX = availableWidth / mapBounds.width
+        let scaleY = availableHeight / mapBounds.height
+        return min(scaleX, scaleY)
     }
 }

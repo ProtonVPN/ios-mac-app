@@ -19,53 +19,39 @@
 import Foundation
 import CoreLocation
 
-public struct Coordinates: Equatable, Hashable {
-    public let latitude: Double
-    public let longitude: Double
-
-    init(latitude: Double, longitude: Double) {
-        self.latitude = latitude
-        self.longitude = longitude
-    }
-
-    public init(coordinate: CLLocationCoordinate2D) {
-        self.latitude = coordinate.latitude
-        self.longitude = coordinate.longitude
-    }
-}
-
-public extension CLLocationCoordinate2D {
-    init(_ coordinates: Coordinates) {
-        self.init(latitude: coordinates.latitude, longitude: coordinates.longitude)
-    }
-}
-
 public enum CountriesCoordinates {
 
-    private static var centerCoordinates: [String: [Double]] = {
-        let boundingBoxesURL = Bundle.module.url(forResource: "CountryCenterCoordinates", withExtension: "json")!
+    static let countryCenterCoordinatesFile = "CountryCenterCoordinates"
+    static let countryBoundingBoxesFile = "CountryBoundingBoxes"
+
+    static let centerCoordinates: [String: [Double]] = {
+        let boundingBoxesURL = Bundle.module.url(forResource: countryCenterCoordinatesFile, withExtension: "json")!
         let data = try! Data(contentsOf: boundingBoxesURL)
         return try! JSONDecoder().decode([String: [Double]].self, from: data)
     }()
 
-    public static func countryCenterCoordinates(_ country: String) -> Coordinates? {
-        centerCoordinates[country].map { doubles in
-            Coordinates(latitude: doubles[0], longitude: doubles[1])
+    public static func countryCenterCoordinates(_ country: String) -> CLLocationCoordinate2D? {
+        guard let doubles = centerCoordinates[country],
+              doubles.count == 2 else {
+            return nil
         }
+        return CLLocationCoordinate2D(latitude: doubles[0], longitude: doubles[1])
     }
 
-    private static var boxes: [String: [Double]] = {
-        let boundingBoxesURL = Bundle.module.url(forResource: "CountryBoundingBoxes", withExtension: "json")!
+    static let boxes: [String: [Double]] = {
+        let boundingBoxesURL = Bundle.module.url(forResource: countryBoundingBoxesFile, withExtension: "json")!
         let data = try! Data(contentsOf: boundingBoxesURL)
         return try! JSONDecoder().decode([String: [Double]].self, from: data)
     }()
 
-    public static func countryBoundingBoxCoordinates(_ country: String) -> [Coordinates] {
-        boxes[country].map { doubles in
-            [
-                Coordinates(latitude: doubles[1], longitude: doubles[0]),
-                Coordinates(latitude: doubles[3], longitude: doubles[2])
-            ]
-        } ?? []
+    public static func countryBoundingBoxCoordinates(_ country: String) -> [CLLocationCoordinate2D]? {
+        guard let doubles = boxes[country],
+              doubles.count == 4 else {
+            return nil
+        }
+        return [
+            CLLocationCoordinate2D(latitude: doubles[1], longitude: doubles[0]),
+            CLLocationCoordinate2D(latitude: doubles[3], longitude: doubles[2])
+        ]
     }
 }

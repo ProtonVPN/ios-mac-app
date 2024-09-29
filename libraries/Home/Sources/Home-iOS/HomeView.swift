@@ -32,34 +32,50 @@ import Modals
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
-    static let mapHeight: CGFloat = 300
+    static let maxWidth: CGFloat = 736
+    static let mapHeight: CGFloat = 414
+    static let bottomGradientHeight: CGFloat = 100
+
+    public init(store: StoreOf<HomeFeature>) {
+        self.store = store
+    }
 
     public var body: some View {
         GeometryReader { proxy in
             ZStack(alignment: .top) {
-                VStack {
-                    HomeMapView(store: store.scope(state: \.map, action: \.map),
-                                availableHeight: Self.mapHeight,
-                                availableWidth: proxy.size.width)
-                        .frame(width: proxy.size.width, height: Self.mapHeight)
-                    Color(.background)
-                        .frame(width: proxy.size.width, height: proxy.size.height - Self.mapHeight)
-                }
-                ScrollView {
-                    Spacer().frame(height: Self.mapHeight)
-                    HomeConnectionCardView(store: store.scope(state: \.connectionCard,
-                                                              action: \.connectionCard))
-                    .padding(.horizontal, .themeSpacing16)
-                    .background(Color(.background))
-                    RecentsSectionView(items: store.state.remainingConnections,
-                                       sendAction: { _ = store.send($0) }
-                    )
-
-                    .background(Color(.background))
-                }
+                HomeMapView(store: store.scope(state: \.map, action: \.map),
+                            availableHeight: Self.mapHeight,
+                            availableWidth: proxy.size.width)
+                .frame(width: proxy.size.width, height: Self.mapHeight)
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: \.connectionStatus))
                 .allowsHitTesting(false)
+
+                ScrollView {
+                    Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
+                    VStack {
+                        LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
+                                       startPoint: .top,
+                                       endPoint: .bottom)
+                        .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
+
+                        HomeConnectionCardView(store: store.scope(state: \.connectionCard,
+                                                                  action: \.connectionCard))
+                        .padding(.horizontal, .themeSpacing16)
+                        .frame(width: min(proxy.size.width, Self.maxWidth))
+
+                        RecentsSectionView(items: store.state.remainingConnections,
+                                           sendAction: { _ = store.send($0) }
+                        )
+                        .padding(.horizontal, .themeSpacing16)
+                        .frame(width: min(proxy.size.width, Self.maxWidth))
+
+                        Color(.background) // needed to take all the available horizontal space for the background
+                    }
+                    .offset(y: -Self.bottomGradientHeight)
+                    .background(Color(.background))
+                }
+                .frame(width: proxy.size.width)
             }
         }
         .task {
@@ -74,10 +90,6 @@ public struct HomeView: View {
                     .presentationDragIndicator(.visible)
             }
         }
-    }
-
-    public init(store: StoreOf<HomeFeature>) {
-        self.store = store
     }
 }
 
