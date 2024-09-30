@@ -19,6 +19,7 @@
 import Foundation
 
 import XCTestDynamicOverlay
+import ConcurrencyExtras
 
 /// Automatically handles transferring a payload using `NotificationCenter`.
 ///
@@ -142,22 +143,39 @@ extension NotificationCenter {
     /// of this extension is the ergonomics/conciseness of the API, when compared to the verbosity of the default
     /// NotificationCenter APIs
     public func addObserver<Notification, T>(
-        for _: Notification.Type,
+        for notificationType: Notification.Type,
         queue: OperationQueue? = nil,
         object: Any?,
         handler: @escaping (T) -> Void
     ) -> NotificationToken where Notification: TypedNotification<T> {
         return addObserver(for: Notification.name, queue: queue, object: object) { notification in
-            guard let data = notification.userInfo?[Notification.dataKey] else {
-                XCTFail("Expected object of type \(T.self) stored under key: \(Notification.dataKey), got nil")
-                return
+            if let data: T = Notification.data(from: notification) {
+                handler(data)
             }
-            guard let data = data as? T else {
-                XCTFail("Expected object of type \(T.self) stored under key: \(Notification.dataKey), got \(String(describing: data))")
-                return
-            }
-
-            handler(data)
         }
+    }
+
+    @available(macOS 12, *)
+    public func notifications<N, T>(
+        _ notificationType: N.Type
+    ) -> AsyncStream<T> where N: TypedNotification<T> {
+        notifications(named: N.name)
+            .compactMap { N.data(from: $0) }
+            .eraseToStream()
+    }
+
+}
+
+extension TypedNotification {
+    static func data<T>(from notification: Notification) -> T? {
+        guard let data = notification.userInfo?[Self.dataKey] else {
+            XCTFail("Expected object of type \(T.self) stored under key: \(Self.dataKey), got nil")
+            return nil
+        }
+        guard let data = data as? T else {
+            XCTFail("Expected object of type \(T.self) stored under key: \(Self.dataKey), got \(String(describing: data))")
+            return nil
+        }
+        return data
     }
 }

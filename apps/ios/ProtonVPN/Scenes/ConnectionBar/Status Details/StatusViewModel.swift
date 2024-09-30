@@ -102,7 +102,7 @@ class StatusViewModel {
     }
 
     private var timer: Timer?
-    private var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
+    private var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
     private var serverChangeCellIndexPath: IndexPath?
@@ -558,7 +558,7 @@ class StatusViewModel {
     private var netShieldViewModel: NetShieldModel {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
-        netShieldStats.enabled = isActive
+        netShieldStats = netShieldStats.copy(enabled: isActive)
         return netShieldStats
     }
 

@@ -19,6 +19,7 @@
 import ComposableArchitecture
 
 import Domain
+import NetShield
 import VPNAppCore
 import Localization
 
@@ -42,6 +43,8 @@ public struct ConnectionStatusFeature {
 
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)
+        case newProtectionState(ProtectionState)
+        case newNetShieldStats(NetShieldModel)
     }
 
     private enum CancelId {
@@ -53,10 +56,13 @@ public struct ConnectionStatusFeature {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-
             case .maskLocationTick:
                 if case let .protecting(country, ip) = state.protectionState {
                     if let masked = partiallyMaskedLocation(country: country, ip: ip) {
+                        if masked == state.protectionState {
+                            // fully masked already
+                            return .cancel(id: MaskLocation.task)
+                        }
                         state.protectionState = masked
                     }
                 }
@@ -66,25 +72,46 @@ public struct ConnectionStatusFeature {
                 }.cancellable(id: MaskLocation.task, cancelInFlight: true)
 
             case .watchConnectionStatus:
-                return .run { @MainActor send in
-                    let stream = Dependency(\.vpnConnectionStatusPublisher)
-                        .wrappedValue()
-                        .map { Action.newConnectionStatus($0) }
+                return .merge([
+                    .run { @MainActor send in
+                        let stream = Dependency(\.vpnConnectionStatusPublisher)
+                            .wrappedValue()
+                            .map { Action.newConnectionStatus($0) }
 
-                    for await value in stream {
-                        send(value)
-                    }
-                }
-                .cancellable(id: CancelId.watchConnectionStatus)
+                        for await value in stream {
+                            send(value)
+                        }
+                    }.cancellable(id: CancelId.watchConnectionStatus),
+                    .run { @MainActor send in
+                        @Dependency(\.netShieldStatsProvider) var provider
+                        send(.newNetShieldStats(await provider.getStats()))
+                        for await stats in provider.statsStream() {
+                            send(.newNetShieldStats(stats))
+                        }
+                    }.cancellable(id: CancelId.watchConnectionStatus)
+                ])
 
             case .newConnectionStatus(let status):
                 let code = state.userCountry
                 let displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")
-                state.protectionState = status.protectionState(country: displayCountry ?? "", ip: state.userIP ?? "")
-                guard case .protecting = state.protectionState else {
+                let userIP = state.userIP
+                return .run { send in
+                    // Determine protection state and fetch NetShield stats
+                    let protectionState = await status.protectionState(country: displayCountry ?? "", ip: userIP ?? "")
+                    await send(.newProtectionState(protectionState))
+                }
+
+            case .newProtectionState(let protectionState):
+                state.protectionState = protectionState
+                if case .protecting = protectionState {
+                    return .send(.maskLocationTick)
+                } else {
                     return .cancel(id: MaskLocation.task)
                 }
-                return .send(.maskLocationTick)
+
+            case .newNetShieldStats(let netShieldModel):
+                state.protectionState = state.protectionState.copy(withNetShield: netShieldModel)
+                return .none
             }
         }
     }

@@ -29,7 +29,7 @@ import NetShield
 
 public class VpnManagerMock: VpnManagerProtocol {
 
-    public var netShieldStats: NetShieldModel = .init(trackers: 0, ads: 0, data: 0, enabled: false)
+    public var netShieldStats: NetShieldModel = .zero(enabled: false)
 
     private let serverDescriptor = ServerDescriptor(username: "", address: "")
     private var onDemand: Bool = false

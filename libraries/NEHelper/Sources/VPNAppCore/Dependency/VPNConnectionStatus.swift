@@ -18,6 +18,7 @@
 
 import ConcurrencyExtras
 import Dependencies
+import NetShield
 
 import Domain
 
