@@ -109,6 +109,7 @@ class ProfileTests: ProtonVPNUITests {
             .setProfileDetails(name, country)
             .saveProfileSuccessfully()
         mainRobot
+            .closeProfilesOverview()
             .openAppSettings()
             .verify.checkSettingsIsOpen()
             .connectionTabClick()

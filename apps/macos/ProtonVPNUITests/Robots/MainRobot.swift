@@ -53,39 +53,39 @@ class MainRobot: CoreElements {
     }
     
     func openAppSettings() -> SettingsRobot {
-        window.typeKey(",", modifierFlags: [.command]) // Settings…
+        windows().typeKey(",", [.command])
         return SettingsRobot()
     }
     
     func quickConnectToAServer() -> MainRobot {
-        app.buttons[qcButton].forceClick()
+        button(qcButton).tapInCenter()
         return self
     }
     
     func isConnected() -> Bool {
-        return app.buttons[disconnectButton].waitForExistence(timeout: WaitTimeout.short)
+        return button(disconnectButton).waitUntilExists(time: 1).exists()
     }
     
     func disconnect() -> MainRobot {
-        app.buttons[disconnectButton].firstMatch.forceClick()
+        button(disconnectButton).firstMatch().tapInCenter()
         return self
     }
     
     func logOut() -> LoginRobot {
-        window.typeKey("w", modifierFlags: [.shift, .command])
+        windows().typeKey("w", [.shift, .command])
         return LoginRobot()
     }
     
     func waitForInitializingConnectionScreenDisappear(_ timeout: Int) -> Bool {
-        return app.staticTexts[initializingConnectionTitle].waitForNonExistence(timeout: TimeInterval(timeout))
+        return !staticText(initializingConnectionTitle).waitUntilGone(time: TimeInterval(timeout)).exists()
     }
     
     func waitForSuccessfullyConnectedScreenDisappear(_ timeout: Int) -> Bool {
-        return app.staticTexts[successfullyConnectedTitle].waitForNonExistence(timeout: TimeInterval(timeout))
+        return !staticText(successfullyConnectedTitle).waitUntilGone(time: TimeInterval(timeout)).exists()
     }
     
     func isConnecting() -> Bool {
-        return app.staticTexts[initializingConnectionTitle].exists
+        return staticText(initializingConnectionTitle).waitUntilExists(time: 1).exists()
     }
     
     func waitForConnected(with connectionProtocol: ConnectionProtocol) -> MainRobot {
@@ -105,16 +105,16 @@ class MainRobot: CoreElements {
     }
 
     func cancelConnecting() -> MainRobot {
-        app.buttons[Localizable.cancel].click()
+        button(Localizable.cancel).tap()
         return self
     }
     
     func isConnectionTimedOut() -> Bool {
-        return app.staticTexts[Localizable.connectionTimedOut].exists
+        return staticText(Localizable.connectionTimedOut).waitUntilGone(time: 1).exists()
     }
     
     func getHeaderLabelValue() -> String {
-        return app.staticTexts[headerLabelField].value as? String ?? ""
+        return staticText(headerLabelField).value() as? String ?? ""
     }
     
     func getConnectedCountry() -> String {
@@ -122,24 +122,24 @@ class MainRobot: CoreElements {
     }
     
     func getIPLabelValue() -> String {
-        return app.staticTexts[ipLabelField].value as? String ?? ""
+        return staticText(ipLabelField).value() as? String ?? ""
     }
     
     func getProtocolLabelValue() -> String {
-        return app.staticTexts[protocolLabelField].value as? String ?? ""
+        return staticText(protocolLabelField).value() as? String ?? ""
     }
     
     func isAbleToChangeServer() -> Bool {
-        return app.buttons[Localizable.changeServer].exists
+        return button(Localizable.changeServer).exists()
     }
     
     func clickChangeServer() -> MainRobot {
-        let changeServerButton = app.buttons[Localizable.changeServer]
-        if changeServerButton.exists {
-            changeServerButton.forceClick()
+        let changeServerButton = button(Localizable.changeServer)
+        if changeServerButton.exists() {
+            changeServerButton.forceTap()
         } else {
-            let changeServerLabel = app.staticTexts[Localizable.changeServer]
-            changeServerLabel.forceClick()
+            let changeServerLabel = staticText(Localizable.changeServer)
+            changeServerLabel.forceTap()
         }
         return self
     }
@@ -150,21 +150,21 @@ class MainRobot: CoreElements {
         
         @discardableResult
         func checkSettingsModalIsClosed() -> MainRobot {
-            XCTAssertFalse(app.buttons[preferencesTitle].exists)
-            XCTAssertTrue(app.buttons[qcButton].exists)
+            windows(preferencesTitle).checkDoesNotExist()
+            button(qcButton).checkExists()
             return MainRobot()
         }
         
         @discardableResult
         func checkUserIsLoggedIn() -> MainRobot {
-            XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: WaitTimeout.normal))
-            XCTAssert(app.buttons[qcButton].waitForExistence(timeout: WaitTimeout.short))
+            staticText(statusTitle).waitUntilExists(time: WaitTimeout.normal).checkExists()
+            button(qcButton).waitUntilExists(time: WaitTimeout.short).checkExists()
             return MainRobot()
         }
         
         @discardableResult
         func checkVPNConnecting() -> MainRobot {
-            XCTAssert(app.staticTexts[initializingConnectionTitle].waitForExistence(timeout: WaitTimeout.normal), "\(initializingConnectionTitle) element not found.")
+            staticText(initializingConnectionTitle).waitUntilExists(time: WaitTimeout.normal).checkExists()
             return MainRobot()
         }
         
@@ -173,7 +173,7 @@ class MainRobot: CoreElements {
                                             to connectedCountry: String? = nil,
                                             userType: UserType? = nil) -> MainRobot {
             // verify Disconnect button appears
-            XCTAssert(app.buttons[Localizable.disconnect].waitForExistence(timeout: WaitTimeout.normal), "Connection card is not connected. '\(Localizable.disconnect)' button not found.")
+            button(Localizable.disconnect).waitUntilExists(time: WaitTimeout.normal).checkExists()
             
             // verify correct connected protocol appears
             let actualProtocol = MainRobot().getProtocolLabelValue()
@@ -193,11 +193,10 @@ class MainRobot: CoreElements {
             
             if case .Free = userType {
                 let predicate = NSPredicate(format: "value CONTAINS[c] %@", Localizable.changeServer)
-                let changeServerButton = app.buttons[Localizable.changeServer]
-                let changeServerTextField = app.staticTexts.matching(predicate).firstMatch
+                let changeServerButton = button(Localizable.changeServer)
+                let changeServerTextField = staticText(predicate).firstMatch()
                 
-                
-                XCTAssertTrue(changeServerButton.exists || changeServerTextField.exists, "'\(Localizable.changeServer)' button is not visible when it shoudl be")
+                XCTAssertTrue(changeServerButton.exists() || changeServerTextField.exists(), "'\(Localizable.changeServer)' button is not visible when it shoudl be")
                 // verify header label contain "FREE" text
                 validateHeaderLabel(value: "FREE")
             }
@@ -214,7 +213,7 @@ class MainRobot: CoreElements {
         @discardableResult
         func checkConnectionCardIsDisconnected() -> MainRobot {
             // verify "Quick Connect" button is visible
-            XCTAssert(app.buttons[Localizable.quickConnect].waitForExistence(timeout: WaitTimeout.short), "'\(Localizable.quickConnect)' button not found.")
+            button(Localizable.quickConnect).waitUntilExists(time: WaitTimeout.short).checkExists()
             
             // verify "You are not connected" label if visible
             validateHeaderLabel(value: Localizable.youAreNotConnected)
@@ -268,8 +267,7 @@ class MainRobot: CoreElements {
         
         private func validateHeaderLabel(value: String? = nil) {
             // validate "headerLabel" exist
-            XCTAssert(app.staticTexts[headerLabelField].waitForExistence(timeout: WaitTimeout.short),
-                      "headerLabel textfield was not found.")
+            staticText(headerLabelField).waitUntilExists(time: WaitTimeout.short).checkExists()
             let actualHeaderLabelValue = MainRobot().getHeaderLabelValue()
             
             if let expectedValue = value {
