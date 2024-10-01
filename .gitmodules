@@ -5,6 +5,7 @@
 [submodule "external/apple-fusion"]
 	path = external/apple-fusion
 	url = ../../../tpe/apple-fusion
+	tag = 2.1.2
 [submodule "external/wireguard-apple"]
 	path = external/wireguard-apple
 	url = https://github.com/ProtonVPN/wireguard-apple.git
