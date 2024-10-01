@@ -37,6 +37,13 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
     var credentials: [AppContext: AuthCredentials] = [:]
 
+    public func fetch(forContext context: AppContext?) throws -> AuthCredentials {
+        guard let credentials = fetch(forContext: context) else {
+            throw KeychainError.credentialsMissing("test-authkeychain-storage-key")
+        }
+        return credentials
+    }
+
     public func fetch(forContext context: AppContext?) -> AuthCredentials? {
         let context = context ?? defaultContext
         return credentials[context]

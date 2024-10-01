@@ -32,16 +32,9 @@ public struct CredentialsProvider {
 }
 
 extension CredentialsProvider: DependencyKey {
-    public static var liveValue: CredentialsProvider {
-        return CredentialsProvider(getCredentials: {
-            do {
-                return try VpnKeychain.instance.fetchCached()
-            } catch {
-                log.warning("Failed to retrieve credentials: \(error)", category: .keychain)
-                return nil
-            }
-        })
-    }
+    public static let liveValue: CredentialsProvider = CredentialsProvider(
+        getCredentials: VpnKeychain.instance.fetchCached
+    )
 
     #if DEBUG
     public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))

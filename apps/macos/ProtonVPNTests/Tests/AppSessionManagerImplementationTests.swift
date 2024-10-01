@@ -500,6 +500,12 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         self.credentials = credentials
     }
     func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
+    func fetch(forContext: AppContext?) throws -> AuthCredentials {
+        guard let credentials else {
+            throw KeychainError.credentialsMissing("test-auth-keychain-storage-key")
+        }
+        return credentials
+    }
     func clear() { }
 }
 
