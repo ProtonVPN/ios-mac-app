@@ -98,6 +98,9 @@ class LoginTests: ProtonVPNUITests {
         twoFaRobot
             .verify.twoFaAuthenticationIsShown()
             .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+        
+        waitForLoaderDisappear()
+        
         mainRobot
             .verify.checkUserIsLoggedIn()
     }

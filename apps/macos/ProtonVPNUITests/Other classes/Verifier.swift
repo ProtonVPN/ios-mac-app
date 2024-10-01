@@ -18,13 +18,12 @@
 
 import Foundation
 import XCTest
+import fusion
 
-protocol Verifier { }
-
-extension Verifier {
+class Verifier: CoreElements {
     @discardableResult
     func isShowingUpsellModal(ofType modalType: UpsellModalType) -> Self {
-        XCTAssertTrue(app.staticTexts[modalType.identifyingString].exists)
+        staticText(modalType.identifyingString).checkExists()
         return self
     }
 }

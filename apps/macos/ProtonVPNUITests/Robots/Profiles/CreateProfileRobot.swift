@@ -18,8 +18,7 @@
 
 import Foundation
 import XCTest
-
-let app = XCUIApplication()
+import fusion
 
 fileprivate let createProfileTitleId = "Profiles Overview"
 fileprivate let createProfileTab = "CreateNewProfileButton"
@@ -48,7 +47,7 @@ fileprivate let errorMessage = "ErrorMessage"
 fileprivate let cancelProfileModalTitle = "Create Profile"
 fileprivate let cancelProfileDescription = "By continuing, current selection will be lost. Do you want to continue?"
 
-class CreateProfileRobot {
+class CreateProfileRobot: CoreElements {
     
     func setProfileDetails(_ name: String, _ countryname: String) -> CreateProfileRobot {
         return profileName(name)
@@ -77,137 +76,137 @@ class CreateProfileRobot {
     }
         
     func saveProfile() -> CreateProfileRobot {
-        app.buttons[saveButton].click()
+        button(saveButton).tap()
         return CreateProfileRobot()
     }
         
     func saveProfileSuccessfully() -> ManageProfilesRobot {
-        app.buttons[saveButton].click()
+        button(saveButton).tap()
         return ManageProfilesRobot()
     }
         
     func cancelProfile() -> CreateProfileRobot {
-        app.buttons[cancelButton].click()
+        button(cancelButton).tap()
         return CreateProfileRobot()
     }
         
     func cancelProfileModal() -> CreateProfileRobot {
-        app.buttons[cancelButton].firstMatch.click()
+        button(cancelButton).firstMatch().tap()
         return CreateProfileRobot()
     }
         
     func continueProfileModal() -> ManageProfilesRobot {
-        app.buttons[continueButton].click()
+        button(continueButton).firstMatch().tap()
         return ManageProfilesRobot()
     }
 
     private func selectFeature() -> CreateProfileRobot {
-        app.popUpButtons[featureStandard].click()
+        button(featureStandard).firstMatch().tap()
         return CreateProfileRobot()
     }
         
     private func chooseFeature() -> CreateProfileRobot {
-        app.menuItems[featureTor].click()
+        button(featureTor).tap()
         return CreateProfileRobot()
     }
         
     private func profileName(_ name: String) -> CreateProfileRobot {
-        app.textFields[profileNameTextField].click()
-        app.textFields[profileNameTextField].typeText(name)
+        textField(profileNameTextField).tap()
+        textField(profileNameTextField).typeText(name)
         return self
     }
         
     private func deleteName() -> CreateProfileRobot {
-        app.textFields[profileNameTextField].clearAndEnterText(text: "")
+        textField(profileNameTextField).clearText().typeText("")
         return self
     }
         
     private func selectCountry() -> CreateProfileRobot {
-        app.popUpButtons[countryField].click()
+        popUpButton(countryField).tap()
         return self
     }
         
     private func chooseCountry(_ countryname: String) -> CreateProfileRobot {
-        app.menuItems[countryname].click()
+        menuItem("￼  \(countryname)").tap()
         return self
     }
         
     private func selectServer() -> CreateProfileRobot {
-        app.popUpButtons[serverField].click()
+        popUpButton(serverField).tap()
         return self
     }
         
     private func chooseServer() -> CreateProfileRobot {
-        app.menuItems["￼  Fastest"].click()
+        menuItem("￼  Fastest").tap()
         return self
     }
         
     private func selectProtocol(_ oldProtocol: String) -> CreateProfileRobot {
-        app.popUpButtons[oldProtocol].click()
+        popUpButton(oldProtocol).tap()
         return self
     }
     
     private func chooseProtocol(_ newProtocol: String) -> CreateProfileRobot {
-        app.popUpButtons[newProtocol].click()
+        popUpButton(newProtocol).tap()
         return self
     }
         
     private func saveProfileClick() -> CreateProfileRobot {
-        app.buttons[saveButton].click()
+        button(saveButton).tap()
         return self
     }
         
     let verify = Verify()
 
-    class Verify {
+    class Verify: CoreElements {
             
         @discardableResult
-        func checkButtonExists() -> CreateProfileRobot {
-            XCTAssertTrue(app.buttons[cancelButton].exists)
-            XCTAssertTrue(app.buttons[saveButton].exists)
+        func checkCreateProfileViewIsOpened() -> CreateProfileRobot {
+            button(cancelButton).checkExists()
+            button(saveButton).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkErrorMessageEmptyProfileExists() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[errorMessageEmptyProfile].waitForExistence(timeout: 1))
+            staticText(errorMessageEmptyProfile).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkErrorMessageSameNameExists() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[errorMessageSameName].waitForExistence(timeout: 1))
+            staticText(errorMessageSameName).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkErrorMessageEnterName() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[errorMessageEnterName].waitForExistence(timeout: 1))
+            staticText(errorMessageEnterName).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkErrorMessageSelectServerAndCountry() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[errorMessageSelectServerAndCountry].waitForExistence(timeout: 1))
+            staticText(errorMessageSelectServerAndCountry).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkErrorMessageSelectCountry() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[errorMessageSelectCountry].waitForExistence(timeout: 1))
+            staticText(errorMessageSelectCountry).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkErrorMessageSelectServer() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[errorMessageSelectServer].waitForExistence(timeout: 1))
+            staticText(errorMessageSelectServer).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
             
         @discardableResult
         func checkModalIsOpen() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[cancelProfileModalTitle].waitForExistence(timeout: 1))
-            XCTAssert(app.staticTexts[cancelProfileDescription].waitForExistence(timeout: 1))
+            staticText(cancelProfileModalTitle).waitUntilExists(time: 1).checkExists()
+            staticText(cancelProfileDescription).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
     }

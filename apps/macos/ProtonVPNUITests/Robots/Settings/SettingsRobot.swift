@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import Strings
+import fusion
 
 var window: XCUIElement!
 
@@ -36,138 +37,138 @@ fileprivate let modalUpgradeButton = "ModalUpgradeButton"
 fileprivate let upsellModalTitle = "TitleLabel"
 fileprivate let modalDescription = "DescriptionLabel"
 
-class SettingsRobot {
+class SettingsRobot: CoreElements {
     
     func generalTabClick() -> SettingsRobot {
-        app.tabGroups[generalTab].click()
+        tabGroup(generalTab).tap()
         return SettingsRobot()
     }
     
     @discardableResult
     func connectionTabClick() -> SettingsRobot {
-        app.tabGroups[connectionTab].click()
+        tabGroup(connectionTab).tap()
         return SettingsRobot()
     }
     
     @discardableResult
     func advancedTabClick() -> SettingsRobot {
-        app.tabGroups[advancedTab].click()
+        tabGroup(advancedTab).tap()
         return SettingsRobot()
     }
     
     @discardableResult
     func accountTabClick() -> SettingsRobot {
-        app.tabGroups[accountTab].click()
+        tabGroup(accountTab).tap()
         return SettingsRobot()
     }
     
     @discardableResult
     func notNowClick() -> SettingsRobot {
-        app.buttons[notNowButton].click()
+        button(notNowButton).tap()
         return SettingsRobot()
     }
     
     @discardableResult
     func continueClick() -> SettingsRobot {
-        app.buttons[continueButton].click()
+        button(continueButton).tap()
         return SettingsRobot()
     }
     
     func closeSettings() -> MainRobot {
-        let preferencesWindow = app.windows["Preferences"]
-        preferencesWindow.typeKey("w", modifierFlags: [.command])
+        windows(Localizable.preferences).typeKey("w", [.command])
         return MainRobot()
     }
     
     func selectAutoConnect(_ autoConnect: AutoConnectOptions) -> SettingsRobot {
-        app.popUpButtons[Localizable.autoConnect].popUpButtons.element.click()
-        app.menuItems["￼  \(autoConnect.rawValue)"].click()
+        popUpButton(Localizable.autoConnect).onChild(popUpButton().firstMatch()).tap()
+        let predicate = NSPredicate(format: "title CONTAINS[c] %@", autoConnect.rawValue)
+        menuItem(predicate).tap()
         return SettingsRobot()
     }
     
     func selectQuickConnect(_ qc: String) -> SettingsRobot {
-        app.popUpButtons[Localizable.quickConnect].popUpButtons.element.click()
-        app.menuItems[qc].click()
+        popUpButton(Localizable.quickConnect).onChild(popUpButton().firstMatch()).tap()
+        let predicate = NSPredicate(format: "title CONTAINS[c] %@", qc)
+        menuItem(predicate).tap()
         return SettingsRobot()
     }
     
     func selectProtocol(_ connectionProtocol: ConnectionProtocol) -> SettingsRobot {
-        app.popUpButtons[Localizable.protocol].popUpButtons.element.click()
-        app.menuItems[connectionProtocol.rawValue].click()
+        popUpButton(Localizable.protocol).onChild(popUpButton().firstMatch()).tap()
+        menuItem(connectionProtocol.rawValue).tap()
 
         if case .IKEv2 = connectionProtocol {
-            let continueIkeButton = app.buttons[Localizable.ikeDeprecationAlertContinueButtonTitle]
-            continueIkeButton.waitForExistence(timeout: 5)
-            continueIkeButton.click()
+            button(Localizable.ikeDeprecationAlertContinueButtonTitle)
+                .waitUntilExists(time: WaitTimeout.normal).tap()
         }
         return SettingsRobot()
     }
     
     func selectProfile(_ name: String) -> SettingsRobot {
-        app.popUpButtons[Localizable.quickConnect].popUpButtons.element.click()
-        app.menuItems[name].click()
+        popUpButton(Localizable.quickConnect).onChild(popUpButton().firstMatch()).tap()
+        menuItem(name).tap()
         return SettingsRobot()
     }
     
     let verify = Verify()
     
-    class Verify {
+    class Verify: CoreElements {
                     
         @discardableResult
         func checkSettingsIsOpen() -> SettingsRobot {
-            XCTAssertTrue(app.staticTexts[preferencesTitleId].exists)
+            staticText(preferencesTitleId).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkProfileIsCreated(_ profileName: String) -> SettingsRobot {
-            app.popUpButtons[Localizable.quickConnect].popUpButtons.element.click()
-            XCTAssertTrue(app.menuItems[profileName].exists, "\(profileName) profile does not exist at the \(Localizable.quickConnect) Preferences dropdown")
+            popUpButton(Localizable.quickConnect).onChild(popUpButton().firstMatch()).tap()
+            menuItem(profileName).checkExists()
             // close Quick Connect dropdown
-            app.popUpButtons[Localizable.quickConnect].click()
+            popUpButton(Localizable.quickConnect).tap()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkGeneralTabIsOpen() -> SettingsRobot {
-            XCTAssertTrue(app.staticTexts["Start on Boot"].exists)
+            staticText(Localizable.startOnBoot).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkConnectionTabIsOpen() -> SettingsRobot {
-            XCTAssertTrue(app.staticTexts["Auto Connect"].exists)
+            staticText(Localizable.autoConnect).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkAdvancedTabIsOpen() -> SettingsRobot {
-            XCTAssertTrue(app.staticTexts["Allow alternative routing"].exists)
+            staticText(Localizable.troubleshootItemAltTitle).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkAccountTabIsOpen() -> SettingsRobot {
-            XCTAssertTrue(app.staticTexts["Username"].exists)
+            staticText(Localizable.username).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkAccountTabUserName(username: String) -> SettingsRobot {
-            XCTAssert(app.staticTexts[username].exists)
+            staticText(username).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkAccountTabPlan(planName: String) -> SettingsRobot {
-            XCTAssert(app.staticTexts[planName].exists)
+            staticText(planName).checkExists()
             return SettingsRobot()
         }
         
         @discardableResult
         func checkModalIsOpen() -> SettingsRobot {
-            XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: 5))
-            XCTAssert(app.staticTexts[modalDescription].waitForExistence(timeout: 5))
+            staticText(modalTitle).waitUntilExists(time: WaitTimeout.normal).checkExists()
+            staticText(modalDescription).waitUntilExists(time: WaitTimeout.normal).checkExists()
             return SettingsRobot()
         }
         
@@ -183,22 +184,26 @@ class SettingsRobot {
         
         @discardableResult
         func checkUpsellModalIsOpen() -> QuickSettingsRobot {
-            XCTAssertTrue(app.staticTexts[upsellModalTitle].exists)
-            XCTAssertTrue(app.staticTexts[modalDescription].exists)
-            XCTAssertTrue(app.buttons[modalUpgradeButton].isEnabled)
+            staticText(upsellModalTitle).checkExists()
+            staticText(modalDescription).checkExists()
+            button(modalUpgradeButton).checkEnabled()
             return QuickSettingsRobot()
         }
         
         @discardableResult
         func checkProtocolSelected(_ expectedProtocol: ConnectionProtocol) -> SettingsRobot {
-            XCTAssert(app.popUpButtons[Localizable.protocol].waitForExistence(timeout: 5))
-            XCTAssertEqual(app.popUpButtons[Localizable.protocol].value as! String, expectedProtocol.rawValue)
+            popUpButton(Localizable.protocol)
+                .waitUntilExists(time: WaitTimeout.normal)
+                .checkExists()
+                .checkHasValue(expectedProtocol.rawValue)
             return SettingsRobot()
         }
         
         func checkAutoConnectSelected(_ expectedAutoConnectOption: AutoConnectOptions) -> SettingsRobot {
-            XCTAssert(app.popUpButtons[Localizable.autoConnect].waitForExistence(timeout: 5))
-            XCTAssertEqual(app.popUpButtons[Localizable.autoConnect].value as! String, "￼  \(expectedAutoConnectOption.rawValue)")
+            popUpButton(Localizable.protocol)
+                .waitUntilExists(time: WaitTimeout.normal)
+                .checkExists()
+                .checkHasValue(expectedAutoConnectOption.rawValue)
             return SettingsRobot()
         }
     }

@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import fusion
 
 fileprivate let profilesButton = "Profiles"
 fileprivate let fastestButton = "Fastest"
@@ -25,33 +26,33 @@ fileprivate let randomButton = "Random"
 fileprivate let createProfileButton = "Create Profile"
 fileprivate let manageProfileButton = "Manage Profiles"
 
-class ProfileRobot {
+class ProfileRobot: CoreElements {
     
     @discardableResult
     func createProfile() -> CreateProfileRobot {
-        app.buttons[createProfileButton].click()
+        button(createProfileButton).tap()
         return CreateProfileRobot()
     }
      
     func manageProfiles() -> ManageProfilesRobot {
-        app.buttons[manageProfileButton].click()
+        button(manageProfileButton).tap()
         return ManageProfilesRobot()
     }
      
     let verify = Verify()
 
-    class Verify {
+    class Verify: CoreElements {
          
         @discardableResult
         func checkDefaultProfilesExist() -> ProfileRobot {
-            XCTAssert(app.tableRows.cells[fastestButton].waitForExistence(timeout: 3))
-            XCTAssert(app.tableRows.cells[randomButton].waitForExistence(timeout: 3))
+            table().onChild(cell(fastestButton)).waitUntilExists().checkExists()
+            table().onChild(cell(randomButton)).waitUntilExists().checkExists()
             return ProfileRobot()
         }
          
         func checkButtonsExist() -> ProfileRobot {
-            XCTAssertTrue(app.buttons[profilesButton].waitForExistence(timeout: 5))
-            XCTAssertTrue(app.buttons[profilesButton].isEnabled)
+            button(profilesButton).waitUntilExists(time: 5).checkExists()
+            button(profilesButton).checkEnabled()
             return ProfileRobot()
         }
     }

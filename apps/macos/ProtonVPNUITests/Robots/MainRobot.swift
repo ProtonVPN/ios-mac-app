@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import Strings
+import fusion
 
 fileprivate let qcButton = Localizable.quickConnect
 fileprivate let disconnectButton = Localizable.disconnect
@@ -32,17 +33,22 @@ fileprivate let headerLabelField = "headerLabel"
 fileprivate let ipLabelField = "ipLabel"
 fileprivate let protocolLabelField = "protocolLabel"
 
-class MainRobot {
+class MainRobot: CoreElements {
     
     func openProfiles() -> ManageProfilesRobot {
-        app.tabGroups[Localizable.profiles].forceClick()
-        app.buttons[Localizable.createProfile].click()
+        tabGroup(Localizable.profiles).forceTap()
+        button(Localizable.createProfile).tap()
+        return ManageProfilesRobot()
+    }
+    
+    func openProfilesOverview() -> ManageProfilesRobot {
+        openProfiles()
+        tabGroup(Localizable.overview).tap()
         return ManageProfilesRobot()
     }
     
     func closeProfilesOverview() -> MainRobot {
-        let preferencesWindow = app.windows[Localizable.profilesOverview]
-        preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
+        windows(Localizable.profilesOverview).onChild(button(XCUIIdentifierCloseWindow)).tap()
         return self
     }
     
@@ -140,7 +146,7 @@ class MainRobot {
 
     let verify = Verify()
     
-    class Verify {
+    class Verify: CoreElements {
         
         @discardableResult
         func checkSettingsModalIsClosed() -> MainRobot {
@@ -151,7 +157,7 @@ class MainRobot {
         
         @discardableResult
         func checkUserIsLoggedIn() -> MainRobot {
-            XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: WaitTimeout.short))
+            XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: WaitTimeout.normal))
             XCTAssert(app.buttons[qcButton].waitForExistence(timeout: WaitTimeout.short))
             return MainRobot()
         }
