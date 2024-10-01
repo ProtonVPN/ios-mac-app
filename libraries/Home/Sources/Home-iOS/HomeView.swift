@@ -43,7 +43,7 @@ public struct HomeView: View {
     }
 
     public var body: some View {
-        GeometryReader { proxy in
+        GeometryReader { proxy in WithPerceptionTracking {
             ZStack(alignment: .top) {
                 HomeMapView(store: store.scope(state: \.map, action: \.map),
                             availableHeight: Self.mapHeight,
@@ -79,7 +79,7 @@ public struct HomeView: View {
                 }
                 .frame(width: proxy.size.width)
             }
-        }
+        } }
         .task {
             store.send(.loadConnections) // TODO: [redesign] it's late to load the connections because at this point the view is already visible
             store.send(.sharedProperties(.listen))

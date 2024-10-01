@@ -56,6 +56,9 @@ public struct SharedPropertiesFeature {
     }
 
     let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
+        let initialConnectionStatus = await Dependency(\.vpnConnectionStatus).wrappedValue()
+        send(.newConnectionStatus(initialConnectionStatus))
+
         let stream = Dependency(\.vpnConnectionStatusPublisher)
             .wrappedValue()
             .map { Action.newConnectionStatus($0) }
