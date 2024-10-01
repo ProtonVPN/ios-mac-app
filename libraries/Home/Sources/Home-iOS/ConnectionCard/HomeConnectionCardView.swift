@@ -32,7 +32,6 @@ import ProtonCoreUIFoundations
 
 @available(iOS 17, *)
 struct HomeConnectionCardView: View {
-    static let maxWidth: CGFloat = 736
     @Dependency(\.locale) private var locale
 
     var store: StoreOf<HomeConnectionCardFeature>
@@ -89,14 +88,16 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     var changeServerButton: some View {
-        if store.showChangeServerButton {
-            switch store.serverChangeAvailability ?? .available {
-            case .available:
-                ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                        changeServerAllowedDate: .distantPast)
-            case let .unavailable(until, _, _):
-                ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                        changeServerAllowedDate: until)
+        WithPerceptionTracking {
+            if store.showChangeServerButton {
+                switch store.serverChangeAvailability ?? .available {
+                case .available:
+                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
+                                            changeServerAllowedDate: .distantPast)
+                case let .unavailable(until, _, _):
+                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
+                                            changeServerAllowedDate: until)
+                }
             }
         }
     }
@@ -130,7 +131,6 @@ struct HomeConnectionCardView: View {
             header
             card
         }
-        .frame(maxWidth: Self.maxWidth)
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {

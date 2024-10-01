@@ -312,7 +312,8 @@ struct ConnectionScreenView_Previews: PreviewProvider {
                             feature: .p2p,
                             serverName: "SER#123",
                             country: "US",
-                            city: "City"
+                            city: "City",
+                            coordinates: .mockPoland()
                         )
                     ),
                     reducer: { ConnectionScreenFeature() }

@@ -49,8 +49,10 @@ public struct HomeFeature {
 
         public var connections: [RecentConnection]
 
+        public var map: HomeMapFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
+        public var sharedProperties: SharedPropertiesFeature.State
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
@@ -60,6 +62,8 @@ public struct HomeFeature {
             self.connections = connections
             self.connectionStatus = connectionStatus
             self.connectionCard = .init()
+            self.sharedProperties = .init()
+            self.map = .init()
         }
 
         mutating func trimConnections() {
@@ -86,16 +90,13 @@ public struct HomeFeature {
         /// Remove a connection.
         case remove(ConnectionSpec)
 
+        case map(HomeMapFeature.Action)
         case connectionStatus(ConnectionStatusFeature.Action)
         case connectionCard(HomeConnectionCardFeature.Action)
+        case sharedProperties(SharedPropertiesFeature.Action)
 
         /// Show details screen with info about current connection
         case showConnectionDetails
-
-        /// Watch for changes of VPN connection
-        case watchConnectionStatus
-        /// Process new VPN connection state
-        case newConnectionStatus(VPNConnectionStatus)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -110,6 +111,12 @@ public struct HomeFeature {
     }
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.sharedProperties, action: \.sharedProperties) {
+            SharedPropertiesFeature()
+        }
+        Scope(state: \.map, action: \.map) {
+            HomeMapFeature()
+        }
         Scope(state: \.connectionCard, action: \.connectionCard) {
             HomeConnectionCardFeature()
         }
@@ -118,6 +125,8 @@ public struct HomeFeature {
         }
         Reduce { state, action in
             switch action {
+            case .sharedProperties:
+                return .none
             case let .connect(spec):
                 var pinned = false
 
@@ -188,23 +197,6 @@ public struct HomeFeature {
 
             case .connectionStatus:
                 return .none
-
-            case .watchConnectionStatus:
-                return .run { @MainActor send in
-                    let stream = Dependency(\.vpnConnectionStatusPublisher)
-                        .wrappedValue()
-                        .map { Action.newConnectionStatus($0) }
-
-                    for await value in stream {
-                        send(value)
-                    }
-                }
-                .cancellable(id: CancelId.watchConnectionStatus)
-
-            case .newConnectionStatus(let connectionStatus):
-                state.vpnConnectionStatus = connectionStatus
-                return .none
-                
             case .showConnectionDetails:
                 return .none // Will be handled up the tree of reducers
             case .helpButtonPressed:
@@ -246,6 +238,8 @@ public struct HomeFeature {
                 default:
                     return .none
                 }
+            case .map:
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)

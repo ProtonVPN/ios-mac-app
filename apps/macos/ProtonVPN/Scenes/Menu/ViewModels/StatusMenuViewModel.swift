@@ -299,7 +299,7 @@ final class StatusMenuViewModel {
     private func startObserving() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                               name: type(of: propertiesManager).userIpNotification, object: nil)
+                                               name: .userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
                                                name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),

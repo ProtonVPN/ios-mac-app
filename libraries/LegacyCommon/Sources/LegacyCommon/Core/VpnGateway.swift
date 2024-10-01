@@ -348,18 +348,24 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: ConnectionDimensions.VPNTrigger = .country) {
+        propertiesManager.lastConnectionIntent = .init(location: .region(code: countryCode), features: [])
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
         
         connect(with: connectionRequest)
     }
 
     public func connectTo(country countryCode: String, city: String) {
+        propertiesManager.lastConnectionIntent = .init(location: .region(code: countryCode), features: [])
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .city)
 
         connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
+        propertiesManager.lastConnectionIntent = .init(location: .exact(.paid,
+                                                                        number: nil,
+                                                                        subregion: server.city,
+                                                                        regionCode: server.countryCode), features: [])
         let countryType = CountryConnectionRequestType.server(server)
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .server)
         

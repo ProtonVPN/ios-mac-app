@@ -19,8 +19,10 @@
 import ConcurrencyExtras
 import Dependencies
 import NetShield
+import CoreLocation
 
 import Domain
+import Ergonomics
 
 // This struct is still WIP
 public enum VPNConnectionStatus: Equatable {
@@ -57,8 +59,9 @@ public struct VPNConnectionActual: Equatable {
     public let serverName: String
     public let country: String
     public let city: String?
+    public let coordinates: CLLocationCoordinate2D
 
-    public init(serverModelId: String, serverIPId: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?) {
+    public init(serverModelId: String, serverIPId: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?, coordinates: CLLocationCoordinate2D) {
         self.serverModelId = serverModelId
         self.serverIPId = serverIPId
         self.vpnProtocol = vpnProtocol
@@ -68,6 +71,7 @@ public struct VPNConnectionActual: Equatable {
         self.serverName = serverName
         self.country = country
         self.city = city
+        self.coordinates = coordinates
     }
 }
 
@@ -93,7 +97,8 @@ extension VPNConnectionActual {
             feature: feature,
             serverName: serverName,
             country: country,
-            city: city
+            city: city,
+            coordinates: .mockPoland()
         )
     }
 }
@@ -115,5 +120,11 @@ public enum VPNConnectionStatusPublisherKey: DependencyKey {
 #endif
         // Actual implementation sits in the app, to reduce the scope of thing this library depends on
         return AsyncStream<VPNConnectionStatus>.finished
+    }
+}
+
+extension CLLocationCoordinate2D {
+    public static func mockPoland() -> Self {
+        .init(latitude: 52.229675, longitude: 21.012231)
     }
 }

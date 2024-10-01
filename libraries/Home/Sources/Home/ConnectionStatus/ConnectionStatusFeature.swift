@@ -31,6 +31,7 @@ public struct ConnectionStatusFeature {
         @Shared(.protectionState) public var protectionState: ProtectionState
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userIP) public var userIP: String?
+        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
         public init() {
             
@@ -73,14 +74,12 @@ public struct ConnectionStatusFeature {
 
             case .watchConnectionStatus:
                 return .merge([
-                    .run { @MainActor send in
-                        let stream = Dependency(\.vpnConnectionStatusPublisher)
-                            .wrappedValue()
-                            .map { Action.newConnectionStatus($0) }
-
-                        for await value in stream {
-                            send(value)
-                        }
+                    .publisher {
+                        state
+                            .$vpnConnectionStatus
+                            .publisher
+                            .receive(on: UIScheduler.shared)
+                            .map(Action.newConnectionStatus)
                     }.cancellable(id: CancelId.watchConnectionStatus),
                     .run { @MainActor send in
                         @Dependency(\.netShieldStatsProvider) var provider
