@@ -20,6 +20,7 @@ import ConcurrencyExtras
 import Dependencies
 import NetShield
 import CoreLocation
+import ComposableArchitecture
 
 import Domain
 import Ergonomics
@@ -47,11 +48,29 @@ public enum VPNConnectionStatus: Equatable {
             return vpnConnectionActual
         }
     }
+
+    public var spec: ConnectionSpec? {
+        switch self {
+        case .disconnected:
+            return nil
+        case .connected(let spec, _),
+                .connecting(let spec, _),
+                .loadingConnectionInfo(let spec, _),
+                .disconnecting(let spec, _):
+            return spec
+        }
+    }
+}
+
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<VPNConnectionStatus>> {
+    static var vpnConnectionStatus: Self {
+        PersistenceKeyDefault(.inMemory("vpnConnectionStatus"), .disconnected)
+    }
 }
 
 public struct VPNConnectionActual: Equatable {
     public let serverModelId: String
-    public let serverIPId: String
+    public let serverExitIP: String
     public let vpnProtocol: VpnProtocol
     public let natType: NATType
     public let safeMode: Bool?
@@ -61,9 +80,9 @@ public struct VPNConnectionActual: Equatable {
     public let city: String?
     public let coordinates: CLLocationCoordinate2D
 
-    public init(serverModelId: String, serverIPId: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?, coordinates: CLLocationCoordinate2D) {
+    public init(serverModelId: String, serverExitIP: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?, coordinates: CLLocationCoordinate2D) {
         self.serverModelId = serverModelId
-        self.serverIPId = serverIPId
+        self.serverExitIP = serverExitIP
         self.vpnProtocol = vpnProtocol
         self.natType = natType
         self.safeMode = safeMode
@@ -79,7 +98,7 @@ public struct VPNConnectionActual: Equatable {
 
 extension VPNConnectionActual {
     public static func mock(serverModelId: String = "server-model-id-1",
-                            serverIPId: String = "188.12.32.12",
+                            serverExitIP: String = "188.12.32.12",
                             vpnProtocol: VpnProtocol = .wireGuard(.tcp),
                             natType: NATType = .moderateNAT,
                             safeMode: Bool? = nil,
@@ -90,7 +109,7 @@ extension VPNConnectionActual {
     ) -> VPNConnectionActual {
         VPNConnectionActual(
             serverModelId: serverModelId,
-            serverIPId: serverIPId,
+            serverExitIP: serverExitIP,
             vpnProtocol: vpnProtocol,
             natType: natType,
             safeMode: safeMode,

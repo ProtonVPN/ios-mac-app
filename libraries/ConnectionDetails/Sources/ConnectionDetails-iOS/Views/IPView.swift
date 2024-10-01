@@ -36,18 +36,18 @@ public struct IPView: View {
     }
 
     public var body: some View {
-        HStack {
-            WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
+            HStack {
                 VStack {
                     HStack(spacing: buttonSpacing) {
                         Text(Localizable.connectionDetailsIpviewIpMy)
                             .foregroundColor(Color(.text, .weak))
-
-                        if viewStore.buttonIsVisible {
+                        
+                        if store.buttonIsVisible {
                             Button(action: {
-                                viewStore.send(.changeIPVisibility)
+                                store.send(.changeIPVisibility)
                             }, label: {
-                                (viewStore.localIpHidden
+                                (store.localIpHidden
                                  ? IconProvider.eye
                                  : IconProvider.eyeSlash)
                                 .resizable().frame(width: buttonSize, height: buttonSize)
@@ -56,44 +56,40 @@ public struct IPView: View {
                         }
                     }
                     .frame(minHeight: minTopHeight)
-
-                    Text(viewStore.localIpHidden ? "***************" : (viewStore.localIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
+                    
+                    Text(store.localIpHidden ? "***.***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
                         .foregroundColor(Color(.text, .normal))
                 }
                 .frame(maxWidth: .infinity) // Makes both sides equal width
-
-            })
-
-            IconProvider.arrowRight
-                .foregroundColor(Color(.text, .weak))
-
-            VStack {
-                Text(Localizable.connectionDetailsIpviewIpVpn)
+                
+                IconProvider.arrowRight
                     .foregroundColor(Color(.text, .weak))
-                    .frame(minHeight: minTopHeight)
-
-                WithViewStore(self.store, observe: { $0.vpnIp }, content: { viewStore in
-                    Text(viewStore.state)
+                
+                VStack {
+                    Text(Localizable.connectionDetailsIpviewIpVpn)
+                        .foregroundColor(Color(.text, .weak))
+                        .frame(minHeight: minTopHeight)
+                    
+                    Text(store.vpnIp)
                         .foregroundColor(Color(.text, .normal))
-                })
+                }
+                .frame(maxWidth: .infinity) // Makes both sides equal width
             }
-            .frame(maxWidth: .infinity) // Makes both sides equal width
+            .padding([.top, .bottom], .themeSpacing12)
+            .padding([.leading, .trailing], .themeSpacing16)
+            .frame(maxWidth: .infinity)
+            .background(RoundedRectangle(cornerRadius: .themeRadius12)
+                .fill(Color(.background, [.normal])))
         }
-        .padding([.top, .bottom], .themeSpacing12)
-        .padding([.leading, .trailing], .themeSpacing16)
-        .frame(maxWidth: .infinity)
-        .background(RoundedRectangle(cornerRadius: .themeRadius12)
-            .fill(Color(.background, [.normal])))
-
     }
 }
 
 // MARK: - Previews
 
-struct IPView_Previews: PreviewProvider {
-    static var previews: some View {
-        IPView(store: .init(initialState: .init(localIP: "127.0.0.1", vpnIp: "102.107.197.6"),
-                            reducer: { IPViewFeature() }))
+#Preview {
+    @Shared(.userIP) var userIP: String?
+    userIP = "127.0.0.1"
+
+    return IPView(store: .init(initialState: .init(), reducer: { IPViewFeature() }))
         .colorScheme(.dark)
-    }
 }

@@ -23,178 +23,18 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 
 import Domain
-import Localization
 import Strings
-import Theme
 import ConnectionDetails
 import Persistence
 import SharedViews
 import VPNAppCore
-import VPNShared
-
-public struct ConnectionScreenFeature: Reducer {
-
-    public struct State: Equatable {
-        public var ipViewState: IPViewFeature.State
-        public var connectionSpec: ConnectionSpec
-        public var vpnConnectionActual: VPNConnectionActual?
-        public var vpnServer: VPNServer?
-
-        public init(ipViewState: IPViewFeature.State, connectionSpec: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?) {
-            self.ipViewState = ipViewState
-            self.connectionSpec = connectionSpec
-            self.vpnConnectionActual = vpnConnectionActual
-        }
-
-        var connectionDetailsState: ConnectionDetailsFeature.State {
-            // Info about current server from ServerStorage
-            if let vpnServer {
-                return ConnectionDetailsFeature.State(
-                    connectedSince: Date(timeIntervalSinceNow: -180), // todo:
-                    country: "\(LocalizationUtility().countryName(forCode: vpnServer.logical.exitCountryCode) ?? vpnServer.logical.exitCountryCode)",
-                    city: "\(vpnServer.logical.translatedCity ?? "-")",
-                    server: vpnServer.logical.name,
-                    serverLoad: vpnServer.logical.load,
-                    protocolName: "\(vpnConnectionActual?.vpnProtocol.description ?? "")"
-                )
-            }
-
-            guard let vpnConnectionActual else {
-                return ConnectionDetailsFeature.State(
-                    connectedSince: Date(),
-                    country: "-",
-                    city: "-",
-                    server: "-",
-                    serverLoad: 0,
-                    protocolName: "-"
-                )
-            }
-
-            // Info about current connection in case server info was not received from ServerStorage yet
-            return ConnectionDetailsFeature.State(
-                connectedSince: Date(timeIntervalSinceNow: -180), // todo:
-                country: LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country) ?? vpnConnectionActual.country,
-                city: vpnConnectionActual.city ?? "",
-                server: vpnConnectionActual.serverName,
-                serverLoad: 0,
-                protocolName: vpnConnectionActual.vpnProtocol.description
-            )
-        }
-
-        var isSecureCore: Bool {
-            guard let vpnConnectionActual else {
-                return false
-            }
-            return vpnConnectionActual.feature.contains(.secureCore)
-        }
-
-        var connectionFeatures: [ConnectionSpec.Feature] {
-            guard let vpnConnectionActual else {
-                return []
-            }
-            var features = [ConnectionSpec.Feature]()
-
-            let table: [(ServerFeature, ConnectionSpec.Feature)] = [
-                (ServerFeature.tor, ConnectionSpec.Feature.tor),
-                (ServerFeature.p2p, ConnectionSpec.Feature.p2p),
-                (ServerFeature.streaming, ConnectionSpec.Feature.streaming),
-            ]
-            for feature in table {
-                if vpnConnectionActual.feature.contains(feature.0) {
-                    features.append(feature.1)
-                }
-            }
-
-            if vpnServer?.logical.isVirtual == true {
-                features.append(.smart)
-            }
-
-            return features
-        }
-
-    }
-
-    public enum Action: Equatable {
-        case close
-        case ipViewAction(IPViewFeature.Action)
-        case connectionDetailsAction(ConnectionDetailsFeature.Action)
-
-        /// Watch for changes of VPN connection
-        case watchConnectionStatus
-        /// Process new VPN connection state
-        case newConnectionStatus(VPNConnectionStatus)
-        /// Watch changes in the connected server
-        case watchServerChanges(String?)
-        /// Fill in new server info
-        case newServer(VPNServer)
-    }
-
-    private enum CancelId {
-        case watchConnectionStatus
-    }
-
-    public init() {
-    }
-
-    public var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .watchConnectionStatus:
-                return .run { @MainActor send in
-                    let stream = Dependency(\.vpnConnectionStatusPublisher)
-                        .wrappedValue()
-                        .map { Action.newConnectionStatus($0) }
-
-                    for await value in stream {
-                        send(value)
-                    }
-                }
-                .cancellable(id: CancelId.watchConnectionStatus)
-
-            case .newConnectionStatus(let connectionStatus):
-                switch connectionStatus {
-                case .connected(let intent, let actual), .connecting(let intent, let actual), .loadingConnectionInfo(let intent, let actual), .disconnecting(let intent, let actual):
-                    state.connectionSpec = intent
-                    state.vpnConnectionActual = actual
-
-                    if let actual {
-                        return .send(.watchServerChanges(actual.serverModelId))
-                    }
-
-                case .disconnected:
-                    break // todo: close this view?
-                }
-                return .none
-
-            case .watchServerChanges(let serverId):
-                guard let serverId else {
-                    return .none // todo: cancel previous task
-                }
-                return .run { send in
-                    @Dependency(\.serverRepository) var repository
-                    let vpnServer = repository.getFirstServer(
-                        filteredBy: [.logicalID(serverId)],
-                        orderedBy: .fastest
-                    )
-                    await send(.newServer(vpnServer!), animation: .default)
-                }
-
-            case .newServer(let vpnServer):
-                state.vpnServer = vpnServer
-                return .none
-
-            default:
-                return .none
-            }
-        }
-    }
-}
 
 public struct ConnectionScreenView: View {
 
     let store: StoreOf<ConnectionScreenFeature>
 
     @ScaledMetric var closeButtonSize: CGFloat = 24
+    @Environment(\.dismiss) var dismiss
 
     public init(store: StoreOf<ConnectionScreenFeature>) {
         self.store = store
@@ -202,42 +42,40 @@ public struct ConnectionScreenView: View {
 
     public var body: some View {
         VStack(alignment: .leading) {
-            WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                HStack(alignment: .top) {
-                    ConnectionFlagInfoView(intent: viewStore.connectionSpec, vpnConnectionActual: viewStore.vpnConnectionActual, withDivider: false)
-
-                    Spacer()
-
-                    Button(action: {
-                        viewStore.send(.close)
-                    }, label: {
-                        IconProvider.cross
-                            .resizable().frame(width: closeButtonSize, height: closeButtonSize)
-                            .foregroundColor(Color(.icon, .weak))
-                    })
-                    .padding([.leading], .themeRadius16)
-                    .padding([.trailing], .themeRadius8)
+            HStack(alignment: .top) {
+                if let spec = store.vpnConnectionStatus.spec {
+                    ConnectionFlagInfoView(intent: spec,
+                                           vpnConnectionActual: store.vpnConnectionStatus.actual,
+                                           withDivider: false)
                 }
-                .padding(.themeSpacing16)
+                Spacer()
 
-                .task { await viewStore.send(.watchConnectionStatus).finish() }
-                .task { await viewStore.send(.watchServerChanges(viewStore.vpnConnectionActual?.serverModelId)).finish() }
-            })
+                Button(action: {
+                    dismiss()
+                }, label: {
+                    IconProvider
+                        .cross
+                        .resizable()
+                        .frame(width: closeButtonSize, height: closeButtonSize)
+                        .foregroundColor(Color(.icon, .weak))
+                })
+                .padding([.leading], .themeRadius16)
+                .padding([.trailing], .themeRadius8)
+            }
+            .padding(.themeSpacing16)
+
+            .task {
+                store.send(.watchConnectionStatus)
+            }
 
             ScrollView(.vertical) {
-                WithViewStore(self.store, observe: { $0 }, content: { viewStore in
-                    VStack(alignment: .leading) {
-                        IPView(store: self.store.scope(
-                            state: \.ipViewState,
-                            action: ConnectionScreenFeature.Action.ipViewAction)
-                        )
-
-                        ConnectionDetailsView(store: self.store.scope(
-                            state: \.connectionDetailsState,
-                            action: ConnectionScreenFeature.Action.connectionDetailsAction)
-                        )
-
-                        if !viewStore.connectionFeatures.isEmpty || viewStore.isSecureCore {
+                VStack(alignment: .leading) {
+                    WithPerceptionTracking {
+                        IPView(store: store.scope(state: \.ipViewState,
+                                                  action: \.ipViewAction))
+                        ConnectionDetailsView(store: store.scope(state: \.connectionDetailsState,
+                                                                 action: \.connectionDetailsAction))
+                        if !store.connectionFeatures.isEmpty || store.isSecureCore {
 
                             Text(Localizable.connectionDetailsFeaturesTitle)
                                 .font(.themeFont(.body2()))
@@ -245,29 +83,28 @@ public struct ConnectionScreenView: View {
                                 .padding(.top, .themeSpacing24)
                                 .padding(.bottom, .themeSpacing8)
 
-                            if viewStore.isSecureCore {
+                            if store.isSecureCore {
                                 Button(action: {
-                                    // todo: action
+                                    // TODO: action
                                 }, label: {
                                     FeatureInfoView(secureCore: true)
                                 })
                                 .padding(.bottom, .themeRadius8)
                             }
 
-                            ForEach(viewStore.connectionFeatures, content: { feature in
+                            ForEach(store.connectionFeatures, content: { feature in
                                 Button(action: {
-                                    // todo: action
+                                    // TODO: action
                                 }, label: {
                                     FeatureInfoView(for: feature)
                                 })
                             })
                             .padding(.bottom, .themeRadius8)
-
                         }
-
                     }
-                    .padding([.leading, .trailing], .themeSpacing16)
-                })
+
+                }
+                .padding([.leading, .trailing], .themeSpacing16)
             }
         }
         .padding(.top, .themeSpacing16)
@@ -275,51 +112,28 @@ public struct ConnectionScreenView: View {
     }
 }
 
-extension VpnProtocol {
-    public var description: String {
-        switch self {
-        case .ike:
-            return "IKEv2"
-        case .openVpn(let transport):
-            return "OpenVPN (\(transport.rawValue.uppercased()))"
-        case .wireGuard(let transport):
-            return "WireGuard (\(transport.rawValue.uppercased()))"
-        }
-    }
-}
-
 // MARK: - Previews
 
-struct ConnectionScreenView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ConnectionScreenView(
-                store: Store(
-                    initialState: ConnectionScreenFeature.State(
-                        ipViewState: IPViewFeature.State(
-                            localIP: "127.0.0.1",
-                            vpnIp: "102.107.197.6"
-                        ),
-                        connectionSpec: ConnectionSpec(
-                            location: .secureCore(.hop(to: "US", via: "CH")),
-                            features: []),
-                        vpnConnectionActual: VPNConnectionActual(
-                            serverModelId: "server-id",
-                            serverIPId: "server-ip-id",
-                            vpnProtocol: .wireGuard(.udp),
-                            natType: .moderateNAT,
-                            safeMode: false,
-                            feature: .p2p,
-                            serverName: "SER#123",
-                            country: "US",
-                            city: "City",
-                            coordinates: .mockPoland()
-                        )
-                    ),
-                    reducer: { ConnectionScreenFeature() }
-                )
-            )
-        }
+#Preview {
+    let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
+    let actual = VPNConnectionActual(serverModelId: "server-id",
+                                     serverExitIP: "102.107.197.6",
+                                     vpnProtocol: .wireGuard(.udp),
+                                     natType: .moderateNAT,
+                                     safeMode: false,
+                                     feature: .p2p,
+                                     serverName: "SER#123",
+                                     country: "US",
+                                     city: "City",
+                                     coordinates: .mockPoland())
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+    vpnConnectionStatus = .connected(spec, actual)
+
+    @Shared(.userIP) var userIP: String?
+    userIP = "127.0.0.1"
+    let store: StoreOf<ConnectionScreenFeature> = .init(initialState: .init(vpnConnectionStatus: vpnConnectionStatus)!,
+                                                        reducer: { ConnectionScreenFeature() })
+    return ConnectionScreenView(store: store)
         .background(Color(.background, .strong))
-    }
+        .preferredColorScheme(.dark)
 }

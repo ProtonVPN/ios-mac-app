@@ -74,7 +74,7 @@ extension ConnectionConfiguration {
     var vpnConnectionActual: VPNConnectionActual {
         return VPNConnectionActual(
             serverModelId: self.server.id,
-            serverIPId: self.serverIp.id,
+            serverExitIP: self.serverIp.exitIp,
             vpnProtocol: self.vpnProtocol,
             natType: self.natType,
             safeMode: self.safeMode,

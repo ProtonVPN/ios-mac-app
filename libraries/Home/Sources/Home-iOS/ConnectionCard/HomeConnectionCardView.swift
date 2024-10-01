@@ -55,12 +55,8 @@ struct HomeConnectionCardView: View {
     @ViewBuilder
     var chevron: some View {
         if store.vpnConnectionStatus.connectionStatusAvailable {
-            Button() {
-                store.send(.delegate(.tapAction))
-            } label: {
-                IconProvider.chevronRight
-                    .foregroundColor(Color(.icon, .weak))
-            }
+            IconProvider.chevronRight
+                .foregroundColor(Color(.icon, .weak))
         }
     }
 
@@ -129,7 +125,11 @@ struct HomeConnectionCardView: View {
     public var body: some View {
         VStack(spacing: .themeSpacing8) {
             header
-            card
+            Button {
+                store.send(.delegate(.tapAction))
+            } label: {
+                card
+            }
         }
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)

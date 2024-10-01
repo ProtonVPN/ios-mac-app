@@ -33,6 +33,7 @@ let package = Package(
         .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Features/Modals"),
+        .package(path: "../Features/ConnectionDetails"),
     ],
     targets: [
         .target(
@@ -46,6 +47,7 @@ let package = Package(
                 "SharedViews",
                 "NetShield",
                 "Modals",
+                .product(name: "ConnectionDetails", package: "ConnectionDetails"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
@@ -62,6 +64,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 .product(name: "NetShield-iOS", package: "NetShield"),
+                .product(name: "ConnectionDetails-iOS", package: "ConnectionDetails"),
             ],
             resources: []
         ),

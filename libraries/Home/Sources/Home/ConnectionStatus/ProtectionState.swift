@@ -23,6 +23,7 @@ import Domain
 import Strings
 import VPNAppCore
 import NetShield
+import ComposableArchitecture
 
 public enum ProtectionState: Equatable {
     case protected(netShield: NetShieldModel)
@@ -60,5 +61,11 @@ extension VPNConnectionStatus {
         case .disconnecting:
             return .unprotected
         }
+    }
+}
+
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ProtectionState>> {
+    static var protectionState: Self {
+        PersistenceKeyDefault(.inMemory("protectionState"), .unprotected)
     }
 }

@@ -27,6 +27,8 @@ import Theme
 import Ergonomics
 import VPNAppCore
 import Modals
+import ConnectionDetails
+import ConnectionDetails_iOS
 
 @available(iOS 17, *)
 public struct HomeView: View {
@@ -81,6 +83,12 @@ public struct HomeView: View {
         .task {
             store.send(.loadConnections) // TODO: [redesign] it's late to load the connections because at this point the view is already visible
             store.send(.sharedProperties(.listen))
+        }
+        .sheet(item: $store.scope(state: \.destination?.connectionDetails,
+                                  action: \.destination.connectionDetails)) { store in
+            ConnectionScreenView(store: store)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
         .sheet(item: $store.scope(state: \.destination?.changeServer,
                                   action: \.destination.changeServer)) { store in

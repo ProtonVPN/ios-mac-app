@@ -9,115 +9,6 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : {
-      "targets" : [
-        {
-          "containerPath" : "container:iOS.xcodeproj",
-          "identifier" : "791DE5D8208DDA3000A29EA5",
-          "name" : "ProtonVPN"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Ergonomics",
-          "identifier" : "Ergonomics",
-          "name" : "Ergonomics"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
-          "identifier" : "ConnectionDetails",
-          "name" : "ConnectionDetails"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Home",
-          "identifier" : "Home",
-          "name" : "Home"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Home",
-          "identifier" : "Home-iOS",
-          "name" : "Home-iOS"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
-          "identifier" : "LegacyCommon",
-          "name" : "LegacyCommon"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/LocalFeatureFlags",
-          "identifier" : "LocalFeatureFlags",
-          "name" : "LocalFeatureFlags"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Modals",
-          "identifier" : "Modals",
-          "name" : "Modals"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Modals",
-          "identifier" : "Modals-iOS",
-          "name" : "Modals-iOS"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/NEHelper",
-          "identifier" : "NEHelper",
-          "name" : "NEHelper"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/NEHelper",
-          "identifier" : "VPNAppCore",
-          "name" : "VPNAppCore"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/NEHelper",
-          "identifier" : "VPNCrypto",
-          "name" : "VPNCrypto"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/NEHelper",
-          "identifier" : "VPNShared",
-          "name" : "VPNShared"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Onboarding",
-          "identifier" : "Onboarding",
-          "name" : "Onboarding"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/PMLogger",
-          "identifier" : "PMLogger",
-          "name" : "PMLogger"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Review",
-          "identifier" : "Review",
-          "name" : "Review"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Search",
-          "identifier" : "Search",
-          "name" : "Search"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/SharedViews",
-          "identifier" : "SharedViews",
-          "name" : "SharedViews"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Theme",
-          "identifier" : "Theme",
-          "name" : "Theme"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/Timer",
-          "identifier" : "Timer",
-          "name" : "Timer"
-        },
-        {
-          "containerPath" : "container:..\/..\/libraries\/BugReport",
-          "identifier" : "BugReport",
-          "name" : "BugReport"
-        }
-      ]
-    },
     "language" : "en",
     "region" : "US",
     "targetForVariableExpansion" : {
@@ -260,6 +151,13 @@
         "containerPath" : "container:..\/..\/libraries\/NetShield",
         "identifier" : "NetShieldTests",
         "name" : "NetShieldTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Home",
+        "identifier" : "HomeTests",
+        "name" : "HomeTests"
       }
     }
   ],

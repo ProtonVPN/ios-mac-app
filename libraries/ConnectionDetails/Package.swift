@@ -43,6 +43,8 @@ let package = Package(
                 "Localization",
                 "Persistence",
                 "Strings",
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
@@ -52,6 +54,7 @@ let package = Package(
             dependencies: [
                 "ConnectionDetails",
                 "SharedViews",
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
