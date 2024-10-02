@@ -22,7 +22,18 @@ import XCTest
 extension UIElement {
     
     @discardableResult
-    public func tapInCenter() -> UIElement {
-        return tapOnCoordinate(withOffset: CGVector(dx: 0.5, dy: 0.5))
+    public func tapInCenter(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
+        return tapOnCoordinate(withOffset: CGVector(dx: dx, dy: dy))
+    }
+    
+    /// Forcibly hovers the element if its not hittable.
+    ///
+    /// - Parameters:
+    ///   - dx: The x-coordinate normalized offset. Default value is 0.5.
+    ///   - dy: The y-coordinate normalized offset. Default value is 0.5.
+    @discardableResult
+    public func forceHover(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
+        uiElement()!.forceHover(dx: dx, dy: dy)
+        return self
     }
 }

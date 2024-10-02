@@ -83,12 +83,13 @@
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
 		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
-		7706CAFC2C9C39840055CD32 /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = 7706CAFB2C9C39840055CD32 /* fusion */; };
 		7706CAFE2C9C6CC30055CD32 /* UIElement+MacOSExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7706CAFD2C9C6CC30055CD32 /* UIElement+MacOSExtension.swift */; };
 		7714FF9F2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */; };
 		7714FFA12C9062B300D29EF4 /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FFA02C9062B300D29EF4 /* Strings */; };
 		772792C42C590E30008A769A /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772792C32C590E30008A769A /* NetworkUtils.swift */; };
 		7733E1D82C74D88200E28B8D /* ModalsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7733E1D62C74D70000E28B8D /* ModalsRobot.swift */; };
+		774573A22CB01B77002068CC /* UIElement+Verifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774573A12CB01B77002068CC /* UIElement+Verifications.swift */; };
+		774573A62CB3E273002068CC /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = 774573A52CB3E273002068CC /* fusion */; };
 		7747E3032C512EDF00A750E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7747E3022C512EDF00A750E1 /* String+Extensions.swift */; };
 		7764BECB2C774D6F000C7DF0 /* ConnectionTestsFreeUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764BECA2C774D6F000C7DF0 /* ConnectionTestsFreeUser.swift */; };
 		7764BECD2C775EB8000C7DF0 /* UserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7764BECC2C775EB8000C7DF0 /* UserType.swift */; };
@@ -252,7 +253,6 @@
 		E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7C2C4E7D55009FB802 /* NetShield */; };
 		E5867D7F2C4E7D55009FB802 /* NetShield-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7E2C4E7D55009FB802 /* NetShield-macOS */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
-		E59B79FD2CAFDC4D00CE3515 /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FF9C2C90629B00D29EF4 /* fusion */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
@@ -624,6 +624,7 @@
 		7707F8EA2C5107D400668B11 /* ProtonVPN-macOS-UI-Connections.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-macOS-UI-Connections.xctestplan"; sourceTree = "<group>"; };
 		772792C32C590E30008A769A /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
 		7733E1D62C74D70000E28B8D /* ModalsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsRobot.swift; sourceTree = "<group>"; };
+		774573A12CB01B77002068CC /* UIElement+Verifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIElement+Verifications.swift"; sourceTree = "<group>"; };
 		7747E3022C512EDF00A750E1 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		7764BECA2C774D6F000C7DF0 /* ConnectionTestsFreeUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestsFreeUser.swift; sourceTree = "<group>"; };
 		7764BECC2C775EB8000C7DF0 /* UserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserType.swift; sourceTree = "<group>"; };
@@ -1019,11 +1020,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E59B79FD2CAFDC4D00CE3515 /* fusion in Frameworks */,
+				774573A62CB3E273002068CC /* fusion in Frameworks */,
 				7714FF9F2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore in Frameworks */,
 				7714FFA12C9062B300D29EF4 /* Strings in Frameworks */,
 				4C9754F72A60173C0035A61B /* SwiftOTP in Frameworks */,
-				7706CAFC2C9C39840055CD32 /* fusion in Frameworks */,
 				4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1245,6 +1245,7 @@
 				777B45FD2C4FFB2900273416 /* XCUIElement+waitForNonExistence.swift */,
 				7747E3022C512EDF00A750E1 /* String+Extensions.swift */,
 				7706CAFD2C9C6CC30055CD32 /* UIElement+MacOSExtension.swift */,
+				774573A12CB01B77002068CC /* UIElement+Verifications.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2663,9 +2664,9 @@
 			packageProductDependencies = (
 				4C74D32A2A0B9D7F004F8528 /* PMLogger */,
 				4C9754F62A60173C0035A61B /* SwiftOTP */,
-				7714FF9C2C90629B00D29EF4 /* fusion */,
 				7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */,
 				7714FFA02C9062B300D29EF4 /* Strings */,
+				774573A52CB3E273002068CC /* fusion */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */;
@@ -3138,6 +3139,7 @@
 				B22F3307278DC83500DBB8CA /* CreateProfileRobot.swift in Sources */,
 				7733E1D82C74D88200E28B8D /* ModalsRobot.swift in Sources */,
 				B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */,
+				774573A22CB01B77002068CC /* UIElement+Verifications.swift in Sources */,
 				7795C7102C57865900F8AB7A /* ConnectionProtocol.swift in Sources */,
 				B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */,
 				B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */,
@@ -4584,14 +4586,6 @@
 			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
-		7706CAFB2C9C39840055CD32 /* fusion */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = fusion;
-		};
-		7714FF9C2C90629B00D29EF4 /* fusion */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = fusion;
-		};
 		7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreTestingToolkitUITestsCore;
@@ -4599,6 +4593,10 @@
 		7714FFA02C9062B300D29EF4 /* Strings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Strings;
+		};
+		774573A52CB3E273002068CC /* fusion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = fusion;
 		};
 		AD9F194F2B55D6770034F329 /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;

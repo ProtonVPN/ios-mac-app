@@ -127,7 +127,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
             .verify.checkCountryExists(country)
             .expandCountry(country: country)
-            .verify.checkServerListContain(label: city)
+            .verify.checkServerListContain(server: city)
             .connectToServer(server: city)
         
         mainRobot
@@ -146,7 +146,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
             .verify.checkCountryExists(country)
             .expandCountry(country: country)
-            .verify.checkServerListContain(label: server)
+            .verify.checkServerListContain(server: server)
             .connectToServer(server: server)
         
         mainRobot

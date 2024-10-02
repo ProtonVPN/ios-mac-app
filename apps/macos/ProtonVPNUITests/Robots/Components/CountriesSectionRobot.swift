@@ -18,47 +18,37 @@
 
 import XCTest
 import Strings
+import fusion
 
 fileprivate let searchTextField = "SearchTextField"
 fileprivate let clearSearchButton = "ClearSearchButton"
 fileprivate let serverListTableId = "ServerListTable"
 
-class CountriesSectionRobot {
+class CountriesSectionRobot: CoreElements {
     
     func searchForServer(serverName: String) -> CountriesSectionRobot {
-        app.textFields[searchTextField].click()
-        app.textFields[searchTextField].typeText(serverName)
+        textField(searchTextField).tap().typeText(serverName)
         return self
     }
     
     func clearSearch() -> CountriesSectionRobot {
-        app.buttons[clearSearchButton].click()
+        button(clearSearchButton).tap()
         return self
     }
     
     func expandCountry(country: String) -> CountriesSectionRobot {
-        // getting country cell
-        let cell = app.cells[country]
         // expanding country by clicking on country row
-        cell.forceClick()
+        cell(country).tapInCenter()
         return self
     }
     
     func connectToServer(server: String) -> CountriesSectionRobot {
-        let serverCell = app.tables[serverListTableId].cells.containing(NSPredicate(format: "label CONTAINS[c] %@", server)).firstMatch
-        if serverCell.waitForExistence(timeout: 1) {
+        let serverCell = cell(NSPredicate(format: "label CONTAINS[c] %@", server)).firstMatch()
+        
+        if serverCell.exists() {
             // hovering over the cell with country in order to make "Connect" button visible
             // using dx: 0.7 as Connect button placed at the right part of the cell
-            serverCell.forceHover(dx: 0.7, dy: 0.5)
-            
-            let connectButton = serverCell.buttons["Connect"].firstMatch
-            if connectButton.exists {
-                connectButton.click()
-            } else {
-                // Clicking cell with country by coordinates hoping that Connect button is there
-                // using dx: 0.7 as Connect button placed at the right part of the cell
-                serverCell.forceClick(dx: 0.7, dy: 0.5)
-            }
+            serverCell.forceHover(dx: 0.7).tapInCenter(dx: 0.8)
         } else {
             XCTFail("Server '\(server)' was not found")
         }
@@ -66,28 +56,25 @@ class CountriesSectionRobot {
     }
     
     func clickUpgradeBanner() -> ModalsRobot {
-        app.tables[serverListTableId].cells[Localizable.freeConnectionsModalBanner].forceClick()
+        cell(Localizable.freeConnectionsModalBanner).waitUntilExists(time: 1).tapInCenter()
         return ModalsRobot()
     }
     
     let verify = Verify()
     
-    class Verify {
+    class Verify: CoreElements {
         
         @discardableResult
         func checkCountryExists(_ name: String) -> CountriesSectionRobot {
-            XCTAssertTrue(app.tables[serverListTableId].cells[name].exists, "'\(name)' country does not exist at the servers list table")
+            cell(name).checkExists(message: "'\(name)' country does not exist at the servers list table")
             return CountriesSectionRobot()
         }
         
         @discardableResult
         func checkAmountOfLocationsFound(expectedAmount: Int) -> CountriesSectionRobot {
-            let serverListTable = app.tables[serverListTableId]
-            let predicate = NSPredicate(format: "value CONTAINS[c] %@ OR value CONTAINS[c] %@", "All locations", "Plus locations")
+            let locationsCounterCells = staticText(NSPredicate(format: "value CONTAINS[c] %@ OR value CONTAINS[c] %@", "All locations", "Plus locations")).firstMatch()
             
-            let locationsCounterCells = serverListTable.staticTexts.matching(predicate).firstMatch
-            
-            let value = locationsCounterCells.value as? String ?? ""
+            let value = locationsCounterCells.value() as? String ?? ""
             let serversFound: Int = extractServerCount(from: value)
             
             XCTAssertEqual(serversFound, expectedAmount, "Invalid amount of servers found. Expected: \(expectedAmount), Actual: \(serversFound)")
@@ -96,24 +83,20 @@ class CountriesSectionRobot {
         }
         
         @discardableResult
-        func checkServerListContain(label: String) -> CountriesSectionRobot {
-            let serverListTable = app.tables[serverListTableId]
-            let predicate = NSPredicate(format: "label CONTAINS[c] '\(label)'")
-            XCTAssertTrue(serverListTable.cells.matching(predicate).firstMatch.exists)
+        func checkServerListContain(server: String) -> CountriesSectionRobot {
+            cell(NSPredicate(format: "label CONTAINS[c] '\(server)'")).checkExists(message: "Server list does not contain \(server)")
             return CountriesSectionRobot()
         }
         
         @discardableResult
         func checkUpgradeBannerVisible() -> CountriesSectionRobot {
-            let banner = app.tables[serverListTableId].cells[Localizable.freeConnectionsModalBanner]
-            XCTAssertTrue(banner.waitForExistence(timeout: WaitTimeout.short), "freeConnectionsModalBanner is not visible")
+            cell(Localizable.freeConnectionsModalBanner).waitUntilExists(time: WaitTimeout.short).checkExists(message: "freeConnectionsModalBanner is not visible")
             return CountriesSectionRobot()
         }
         
         @discardableResult
         func checkWrongCountryBannerVisible() -> CountriesSectionRobot {
-            let banner = app.tables[serverListTableId].cells[Localizable.wrongCountryBannerText]
-            XCTAssertTrue(banner.waitForExistence(timeout: WaitTimeout.short), "wrongCountryBannerText is not visible")
+            cell(Localizable.wrongCountryBannerText).waitUntilExists(time: WaitTimeout.short).checkExists()
             return CountriesSectionRobot()
         }
         

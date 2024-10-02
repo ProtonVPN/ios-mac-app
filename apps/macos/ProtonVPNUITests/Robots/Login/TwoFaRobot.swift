@@ -18,28 +18,28 @@
 
 import Foundation
 import XCTest
+import fusion
 
 fileprivate let twoFaAuthentication = "Two-factor authentication"
 fileprivate let twoFaAuthenticationTextField = "twoFactorTextField"
 fileprivate let authButton = "Authenticate"
 
-class TwoFaRobot {
+class TwoFaRobot: CoreElements {
     
     @discardableResult
     func fillTwoFACode(code: String) -> MainRobot {
-       app.textFields[twoFaAuthenticationTextField].click()
-       app.textFields[twoFaAuthenticationTextField].typeText(code)
-       app.buttons[authButton].click()
-       return MainRobot()
+        textField(twoFaAuthenticationTextField).tap().typeText(code)
+        button(authButton).tap()
+        return MainRobot()
     }
     
     let verify = Verify()
-
-    class Verify {
+    
+    class Verify: CoreElements {
         
         @discardableResult
         func twoFaAuthenticationIsShown() -> TwoFaRobot {
-            XCTAssert(app.staticTexts[twoFaAuthentication].waitForExistence(timeout: 10))
+            staticText(twoFaAuthentication).checkExists()
             return TwoFaRobot()
         }
     }
