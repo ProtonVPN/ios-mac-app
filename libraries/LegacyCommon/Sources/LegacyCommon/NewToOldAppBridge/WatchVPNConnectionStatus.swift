@@ -59,18 +59,15 @@ extension VPNConnectionStatusPublisherKey: DependencyKey {
 }
 
 extension VPNConnectionStatusKey: DependencyKey {
-    public static let liveValue: @Sendable () async -> VPNConnectionStatus = {
+    public static var liveValue: @Sendable () async -> VPNConnectionStatus = {
         let appStateManager = Container.sharedContainer.makeAppStateManager()
         let propertyManager = Container.sharedContainer.makePropertiesManager()
-        let vpnManager = await Container.sharedContainer.makeVpnManager()
 
-        return {
-            appStateManager.displayState.vpnConnectionStatus(
-                appStateManager.activeConnection(),
-                intent: propertyManager.lastConnectionIntent,
-                connectedDate: await vpnManager.connectedDate()
-            )
-        }
+        return appStateManager.displayState.vpnConnectionStatus(
+            appStateManager.activeConnection(),
+            intent: propertyManager.lastConnectionIntent,
+            connectedDate: await Container.sharedContainer.makeVpnManager().connectedDate()
+        )
     }
 }
 
