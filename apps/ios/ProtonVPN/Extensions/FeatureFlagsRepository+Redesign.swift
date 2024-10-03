@@ -21,7 +21,7 @@ import Domain
 
 extension FeatureFlagsRepository {
     var isRedesigniOSEnabled: Bool {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS), #available(iOS 16, *) {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS), #available(iOS 17, *) {
             return true
         }
         return false

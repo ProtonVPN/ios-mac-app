@@ -52,6 +52,13 @@ public struct HomeMapView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .onChange(of: store.mapState.code) {
+            map = SVGView.naturalEarthMap
+            guard let code = store.mapState.code ?? store.userCountry else { return }
+            map.node(code: code.lowercased()).map {
+                map.highlight(node: $0)
+            }
+        }
     }
 
     private func pinOffset() -> CGSize {
@@ -86,7 +93,7 @@ public struct HomeMapView: View {
         let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the padding
         let scaleY = (availableHeight - 40) / node.bounds().height
 
-        return min(scaleX, scaleY)
+        return min(min(scaleX, scaleY), 4) // max scale, useful for small countries
     }
 
     private func wholeMapScale() -> CGFloat {
