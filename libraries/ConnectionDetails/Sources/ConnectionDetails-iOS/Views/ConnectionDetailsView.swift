@@ -38,9 +38,10 @@ struct ConnectionDetailsView: View {
 
                 VStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Group { // Groups are needed here because VStack can have max 10 child views
-                            Row(title: Localizable.connectionDetailsConnectedFor, 
-                                value: store.connectedSince.timeIntervalSinceNow.sessionLengthText)
+                        let connectedSince = store.connectedSince
+                        TimelineView(PeriodicTimelineSchedule(from: .now, by: 1)) { _ in
+                            Row(title: Localizable.connectionDetailsConnectedFor,
+                                value: connectedSince.timeIntervalSinceNow.sessionLengthText)
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
@@ -64,9 +65,9 @@ struct ConnectionDetailsView: View {
                         }
                     }
                     .background(RoundedRectangle(cornerRadius: .themeRadius12)
-                        .fill(Color(.background, [.normal])))
+                        .fill(Color(.background, .normal)))
                 }
-                .padding([.top, .bottom], .themeSpacing8)
+                .padding(.vertical, .themeSpacing8)
             }
         }
     }
@@ -100,16 +101,11 @@ struct ConnectionDetailsView: View {
         }
         
         var body: some View {
-            //            let layout = standardTypeSize // todo: this only works on ios 16 :(
-            //                ? AnyLayout(HStackLayout())
-            //                : AnyLayout(VStackLayout(alignment: .leading))
-            //            layout { }
-            
             AnyView(rowView) // Without AnyView next lines won't compile
                 .accessibilityLabel(title) // todo: test how this works
                 .accessibilityLabel(value)
-                .padding([.top, .bottom], .themeSpacing12)
-                .padding([.leading, .trailing], .themeSpacing16)
+                .padding(.vertical, .themeSpacing12)
+                .padding(.horizontal, .themeSpacing16)
         }
         
         @ViewBuilder

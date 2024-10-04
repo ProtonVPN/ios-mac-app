@@ -57,7 +57,7 @@ public struct IPView: View {
                     }
                     .frame(minHeight: minTopHeight)
                     
-                    Text(store.localIpHidden ? "***.***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
+                    Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
                         .foregroundColor(Color(.text, .normal))
                 }
                 .frame(maxWidth: .infinity) // Makes both sides equal width
@@ -70,16 +70,16 @@ public struct IPView: View {
                         .foregroundColor(Color(.text, .weak))
                         .frame(minHeight: minTopHeight)
                     
-                    Text(store.vpnIp)
+                    Text(store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable)
                         .foregroundColor(Color(.text, .normal))
                 }
                 .frame(maxWidth: .infinity) // Makes both sides equal width
             }
-            .padding([.top, .bottom], .themeSpacing12)
-            .padding([.leading, .trailing], .themeSpacing16)
+            .padding(.vertical, .themeSpacing12)
+            .padding(.horizontal, .themeSpacing16)
             .frame(maxWidth: .infinity)
             .background(RoundedRectangle(cornerRadius: .themeRadius12)
-                .fill(Color(.background, [.normal])))
+                .fill(Color(.background, .normal)))
         }
     }
 }

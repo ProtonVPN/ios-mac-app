@@ -38,8 +38,12 @@ extension VPNConnectionStatusPublisherKey {
                 // todo: when VPN connection will be refactored, please try saving lastConnectionIntent
                 // inside NETunnelProviderProtocol.providerConfiguration for WG and OpenVPN.
                 let propertyManager = Container.sharedContainer.makePropertiesManager()
+                let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
 
-                return ($0.object as! AppDisplayState).vpnConnectionStatus(appStageManager.activeConnection(), intent: propertyManager.lastConnectionIntent)
+                return ($0.object as! AppDisplayState)
+                    .vpnConnectionStatus(appStageManager.activeConnection(),
+                                         intent: propertyManager.lastConnectionIntent,
+                                         connectedDate: connectedDate)
             }
             .eraseToStream()
     }
@@ -50,19 +54,19 @@ extension VPNConnectionStatusPublisherKey {
 
 extension AppDisplayState {
 
-    func vpnConnectionStatus(_ connectionConfiguration: ConnectionConfiguration?, intent: ConnectionSpec) -> VPNConnectionStatus {
+    func vpnConnectionStatus(_ connectionConfiguration: ConnectionConfiguration?, intent: ConnectionSpec, connectedDate: Date?) -> VPNConnectionStatus {
         switch self {
         case .connected:
-            return .connected(intent, connectionConfiguration?.vpnConnectionActual)
+            return .connected(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
 
         case .connecting:
-            return .connecting(intent, connectionConfiguration?.vpnConnectionActual)
+            return .connecting(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
 
         case .loadingConnectionInfo:
-            return .loadingConnectionInfo(intent, connectionConfiguration?.vpnConnectionActual)
+            return .loadingConnectionInfo(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
 
         case .disconnecting:
-            return .disconnecting(intent, connectionConfiguration?.vpnConnectionActual)
+            return .disconnecting(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
 
         case .disconnected:
             return .disconnected
@@ -71,8 +75,9 @@ extension AppDisplayState {
 }
 
 extension ConnectionConfiguration {
-    var vpnConnectionActual: VPNConnectionActual {
+    func vpnConnectionActual(connectedDate: Date?) -> VPNConnectionActual {
         return VPNConnectionActual(
+            connectedDate: connectedDate,
             serverModelId: self.server.id,
             serverExitIP: self.serverIp.exitIp,
             vpnProtocol: self.vpnProtocol,

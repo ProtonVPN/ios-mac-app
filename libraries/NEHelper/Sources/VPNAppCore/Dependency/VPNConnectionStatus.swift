@@ -69,6 +69,7 @@ public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemo
 }
 
 public struct VPNConnectionActual: Equatable {
+    public let connectedDate: Date?
     public let serverModelId: String
     public let serverExitIP: String
     public let vpnProtocol: VpnProtocol
@@ -80,7 +81,8 @@ public struct VPNConnectionActual: Equatable {
     public let city: String?
     public let coordinates: CLLocationCoordinate2D
 
-    public init(serverModelId: String, serverExitIP: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?, coordinates: CLLocationCoordinate2D) {
+    public init(connectedDate: Date?, serverModelId: String, serverExitIP: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?, coordinates: CLLocationCoordinate2D) {
+        self.connectedDate = connectedDate
         self.serverModelId = serverModelId
         self.serverExitIP = serverExitIP
         self.vpnProtocol = vpnProtocol
@@ -108,6 +110,7 @@ extension VPNConnectionActual {
                             city: String? = "Bern"
     ) -> VPNConnectionActual {
         VPNConnectionActual(
+            connectedDate: Date(),
             serverModelId: serverModelId,
             serverExitIP: serverExitIP,
             vpnProtocol: vpnProtocol,

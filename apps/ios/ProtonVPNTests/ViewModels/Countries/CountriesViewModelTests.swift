@@ -26,6 +26,7 @@ import Persistence
 import LegacyCommon
 import Search
 @testable import ProtonVPN
+import XCTestDynamicOverlay
 
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!

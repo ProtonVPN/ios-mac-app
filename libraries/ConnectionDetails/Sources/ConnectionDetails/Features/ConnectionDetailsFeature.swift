@@ -45,31 +45,14 @@ public struct ConnectionDetailsFeature {
             self.localIpHidden = localIpHidden
         }
 
-        public init(actual: VPNConnectionActual, vpnServer: VPNServer?) {
-            self = Self.computeConnectionDetailsState(actual: actual, vpnServer: vpnServer)
-        }
-
-        private static func computeConnectionDetailsState(actual: VPNConnectionActual, vpnServer: VPNServer?) -> ConnectionDetailsFeature.State {
-
-            // Info about current server from ServerStorage
-            if let vpnServer {
-                let country = LocalizationUtility().countryName(forCode: vpnServer.logical.exitCountryCode) ?? vpnServer.logical.exitCountryCode
-                return .init(connectedSince: Date(timeIntervalSinceNow: -180), // TODO: [redesign]
-                             country: country,
-                             city: vpnServer.logical.translatedCity ?? "-",
-                             server: vpnServer.logical.name,
-                             serverLoad: vpnServer.logical.load,
-                             protocolName: actual.vpnProtocol.description
-                )
-            }
-
-            // Info about current connection in case server info was not received from ServerStorage yet
-            return .init(connectedSince: Date(timeIntervalSinceNow: -180), // TODO: [redesign]
-                         country: LocalizationUtility.default.countryName(forCode: actual.country) ?? actual.country,
-                         city: actual.city ?? "",
-                         server: actual.serverName,
-                         serverLoad: 0,
-                         protocolName: actual.vpnProtocol.description
+        public init(actual: VPNConnectionActual, vpnServer: VPNServer) {
+            let country = LocalizationUtility.default.countryName(forCode: vpnServer.logical.exitCountryCode) ?? vpnServer.logical.exitCountryCode
+            self = .init(connectedSince: actual.connectedDate ?? .now,
+                         country: country,
+                         city: vpnServer.logical.translatedCity ?? "-",
+                         server: vpnServer.logical.name,
+                         serverLoad: vpnServer.logical.load,
+                         protocolName: actual.vpnProtocol.localizedDescription
             )
         }
     }
@@ -85,3 +68,4 @@ public struct ConnectionDetailsFeature {
         EmptyReducer()
     }
 }
+

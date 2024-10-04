@@ -64,10 +64,6 @@ public struct ConnectionScreenView: View {
             }
             .padding(.themeSpacing16)
 
-            .task {
-                store.send(.watchConnectionStatus)
-            }
-
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     WithPerceptionTracking {
@@ -82,29 +78,22 @@ public struct ConnectionScreenView: View {
                                 .foregroundColor(Color(.text, .weak))
                                 .padding(.top, .themeSpacing24)
                                 .padding(.bottom, .themeSpacing8)
-
+                            
                             if store.isSecureCore {
-                                Button(action: {
-                                    // TODO: action
-                                }, label: {
-                                    FeatureInfoView(secureCore: true)
-                                })
-                                .padding(.bottom, .themeRadius8)
+                                FeatureInfoView(secureCore: true)
+                                    .padding(.bottom, .themeRadius8)
                             }
 
                             ForEach(store.connectionFeatures, content: { feature in
-                                Button(action: {
-                                    // TODO: action
-                                }, label: {
-                                    FeatureInfoView(for: feature)
-                                })
+                                FeatureInfoView(for: feature)
+
                             })
                             .padding(.bottom, .themeRadius8)
                         }
                     }
 
                 }
-                .padding([.leading, .trailing], .themeSpacing16)
+                .padding(.horizontal, .themeSpacing16)
             }
         }
         .padding(.top, .themeSpacing16)
@@ -116,7 +105,8 @@ public struct ConnectionScreenView: View {
 
 #Preview {
     let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
-    let actual = VPNConnectionActual(serverModelId: "server-id",
+    let actual = VPNConnectionActual(connectedDate: .now,
+                                     serverModelId: "server-id",
                                      serverExitIP: "102.107.197.6",
                                      vpnProtocol: .wireGuard(.udp),
                                      natType: .moderateNAT,
@@ -131,7 +121,7 @@ public struct ConnectionScreenView: View {
 
     @Shared(.userIP) var userIP: String?
     userIP = "127.0.0.1"
-    let store: StoreOf<ConnectionScreenFeature> = .init(initialState: .init(vpnConnectionStatus: vpnConnectionStatus)!,
+    let store: StoreOf<ConnectionScreenFeature> = .init(initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState()!,
                                                         reducer: { ConnectionScreenFeature() })
     return ConnectionScreenView(store: store)
         .background(Color(.background, .strong))

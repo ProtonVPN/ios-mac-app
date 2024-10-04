@@ -35,6 +35,7 @@ let package = Package(
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.13.1")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
     ],
     targets: [
         .target(
@@ -47,17 +48,20 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
             name: "ConnectionDetails-iOS",
             dependencies: [
                 "ConnectionDetails",
+                "Persistence",
                 "SharedViews",
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
             ],
             resources: []
         ),

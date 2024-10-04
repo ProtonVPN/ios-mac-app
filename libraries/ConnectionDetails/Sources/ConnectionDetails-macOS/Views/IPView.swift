@@ -55,7 +55,7 @@ public struct IPView: View {
 
                 }
 
-                Text(store.localIpHidden ? "***.***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
+                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
                     .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
@@ -66,15 +66,12 @@ public struct IPView: View {
             VStack(spacing: verticalSpacing) {
                 Text(Localizable.connectionDetailsIpviewIpVpn)
                     .foregroundColor(Color(.text, .weak))
-
-//                Text(store.state) ??
-//                    .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width
         }
         .font(.body)
-        .padding([.top, .bottom], .themeSpacing8)
-        .padding([.leading, .trailing], .themeSpacing16)
+        .padding(.vertical, .themeSpacing8)
+        .padding(.horizontal, .themeSpacing16)
         .frame(maxWidth: .infinity)
         .overlay(
             RoundedRectangle(cornerRadius: .themeRadius8)

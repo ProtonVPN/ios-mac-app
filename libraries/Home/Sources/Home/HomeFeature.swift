@@ -214,7 +214,7 @@ public struct HomeFeature {
                 case .disconnect:
                     return .send(.disconnect)
                 case .tapAction:
-                    if let connectionState = ConnectionScreenFeature.State(vpnConnectionStatus: state.vpnConnectionStatus) {
+                    if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(connectionState)
                     }
                     return .none

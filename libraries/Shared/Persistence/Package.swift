@@ -39,11 +39,18 @@ let package = Package(
         ),
         .target(
             name: "PersistenceTestSupport",
-            dependencies: ["Persistence"]
+            dependencies: [
+                "Persistence",
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+            ]
         ),
         .testTarget(
             name: "PersistenceTests",
-            dependencies: ["Persistence", "PersistenceTestSupport"],
+            dependencies: [
+                "Persistence",
+                "PersistenceTestSupport",
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+            ],
             resources: [.process("Resources")]
         ),
     ]
