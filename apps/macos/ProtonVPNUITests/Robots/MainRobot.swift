@@ -72,7 +72,7 @@ class MainRobot: CoreElements {
     }
     
     func logOut() -> LoginRobot {
-        windows().typeKey("w", [.shift, .command])
+        windows("Proton VPN").typeKey("w", [.shift, .command])
         return LoginRobot()
     }
     

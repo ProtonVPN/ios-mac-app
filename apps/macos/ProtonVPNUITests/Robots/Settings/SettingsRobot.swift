@@ -200,10 +200,10 @@ class SettingsRobot: CoreElements {
         }
         
         func checkAutoConnectSelected(_ expectedAutoConnectOption: AutoConnectOptions) -> SettingsRobot {
-            popUpButton(Localizable.protocol)
+            popUpButton(Localizable.autoConnect)
                 .waitUntilExists(time: WaitTimeout.normal)
                 .checkExists()
-                .checkHasValue(expectedAutoConnectOption.rawValue)
+                .checkContainsValue(expectedAutoConnectOption.rawValue)
             return SettingsRobot()
         }
     }

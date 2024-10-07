@@ -19,16 +19,17 @@
 import Foundation
 import Strings
 import XCTest
+import fusion
 
 let app = XCUIApplication()
 
-class AlertRobot {
+class AlertRobot: CoreElements {
     
     let logoutWarningAlert = LogoutWarningAlert()
 
     let verify = Verify()
     
-    class Verify {
+    class Verify: CoreElements {
         
         @discardableResult
         func checkLogoutWarningAlertAppear() -> AlertRobot {
@@ -37,36 +38,33 @@ class AlertRobot {
         }
     }
     
-    class LogoutWarningAlert {
-        let alertContainer = app.dialogs[Localizable.vpnConnectionActive]
+    class LogoutWarningAlert: CoreElements {
+        private lazy var alertContainer = dialog(Localizable.vpnConnectionActive)
         
         func clickContinue() -> LogoutWarningAlert {
-            alertContainer.buttons[Localizable.continue].click()
-            
+            button(Localizable.continue).tap()
             return self
         }
         
         func clickCancel() -> LogoutWarningAlert {
-            alertContainer.buttons[Localizable.cancel].click()
+            alertContainer.onChild(button(Localizable.cancel)).tap()
             
             return self
         }
         
         func isVisible() -> Bool {
-            return alertContainer.waitForExistence(timeout: WaitTimeout.short)
+            return alertContainer.waitUntilExists(time: 0.5).exists()
         }
         
         let verify = Verify()
         
-        class Verify {
+        class Verify: CoreElements {
             
             func checkAlertAppear() -> LogoutWarningAlert {
                 let container = LogoutWarningAlert().alertContainer
                 
-                XCTAssertTrue(container.waitForExistence(timeout: WaitTimeout.normal))
-                
-                let dialogMessage: String = container.textViews.firstMatch.value as? String ?? ""
-                XCTAssert(dialogMessage.contains(Localizable.logOutWarningLong), "Alert message does not contain expected text '\(Localizable.quitWarning)'. Actual message: \(dialogMessage)")
+                container.waitUntilExists(time: WaitTimeout.normal).checkExists()
+                container.onChild(staticText(Localizable.logOutWarningLong)).checkExists()
                 
                 return LogoutWarningAlert()
             }

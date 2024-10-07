@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import Strings
+import fusion
 
 fileprivate let fieldUsername = "UsernameTextField"
 fileprivate let fieldPassword = "PasswordTextField"
@@ -28,7 +29,7 @@ fileprivate let modalSubtitle = "description1Label"
 fileprivate let loginAgainButton = "Sign in again"
 fileprivate let assignConnectionButton = "Enable VPN connections"
 
-class LoginRobot {
+class LoginRobot: CoreElements {
     
     @discardableResult
     func loginUser(credentials: Credentials) -> LoginRobot {
@@ -76,81 +77,76 @@ class LoginRobot {
         
     @discardableResult
     func clickLoginAgain() -> LoginRobot {
-        app.buttons[loginAgainButton].click()
+        button(loginAgainButton).tap()
         return self
     }
     
     func isLoginScreenVisible() -> Bool {
-        return app.textFields[fieldUsername].waitForExistence(timeout: WaitTimeout.short) &&
-        app.secureTextFields[fieldPassword].waitForExistence(timeout: WaitTimeout.short)
+        return textField(fieldUsername).waitUntilExists(time: 0.5).exists() && secureTextField(fieldPassword).waitUntilExists(time: 0.5).exists()
     }
     
     private func typeUsername(_ username: String) -> LoginRobot {
-        app.textFields[fieldUsername].click()
-        app.textFields[fieldUsername].clearAndEnterText(text: username)
+        textField(fieldUsername).tap().clearText().typeText(username)
         return self
     }
     
     private func typePassword(password: String) -> LoginRobot {
-        app.secureTextFields[fieldPassword].click()
-        app.secureTextFields[fieldPassword].clearAndEnterText(text: password)
+        secureTextField(fieldPassword).tap().clearText().typeText(password)
         return self
     }
     
     private func typeOnlyPassword(password: String) -> LoginRobot {
-        app.textFields[fieldUsername].clearAndEnterText(text: "")
-        app.secureTextFields[fieldPassword].click()
-        app.secureTextFields[fieldPassword].clearAndEnterText(text: password)
+        textField(fieldUsername).tap().clearText().typeText("")
+        secureTextField(fieldPassword).tap().clearText().typeText(password)
         return self
     }
     
     private func typeOnlyUsername(username: String) -> LoginRobot {
-        app.textFields[fieldUsername].clearAndEnterText(text: username)
-        app.secureTextFields[fieldPassword].click()
-        app.secureTextFields[fieldPassword].clearAndEnterText(text: "")
+        textField(fieldUsername).tap().clearText().typeText(username)
+        secureTextField(fieldPassword).tap().clearText().typeText("")
         return self
     }
     
     private func signIn() -> LoginRobot {
-        app.buttons[loginButton].click()
+        button(loginButton).tap()
         return self
     }
     
     let verify = Verify()
 
-    class Verify {
+    class Verify: CoreElements {
         
         @discardableResult
         func checkLoginScreenIsShown() -> LoginRobot {
-            XCTAssertTrue(app.buttons[Localizable.createAccount].waitForExistence(timeout: WaitTimeout.short))
-            XCTAssertTrue(app.textFields[fieldUsername].waitForExistence(timeout: WaitTimeout.short))
-            XCTAssertTrue(app.secureTextFields[fieldPassword].waitForExistence(timeout: WaitTimeout.short))
+            button(Localizable.createAccount).checkExists()
+            textField(fieldUsername).checkExists()
+            secureTextField(fieldPassword).checkExists()
             return LoginRobot()
         }
         
         @discardableResult
         func checkLoginButtonIsNotEnabled() -> LoginRobot {
-            XCTAssertFalse(app.buttons[loginButton].isEnabled)
+            button(loginButton).checkDisabled()
             return LoginRobot()
         }
         
         @discardableResult
         func checkLoginButtonIsEnabled() -> LoginRobot {
-            XCTAssert(app.buttons[loginButton].isEnabled)
+            button(loginButton).checkEnabled()
             return LoginRobot()
         }
         
         @discardableResult
         func checkErrorMessageIsShown(message: String ) -> LoginRobot {
-            XCTAssert(app.staticTexts[message].waitForExistence(timeout: WaitTimeout.normal))
+            staticText(message).checkExists()
             return LoginRobot()
         }
         
         @discardableResult
         func checkModalIsShown(timeout: TimeInterval = WaitTimeout.normal) -> LoginRobot {
-            XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: timeout))
-            XCTAssert(app.staticTexts[modalSubtitle].waitForExistence(timeout: timeout))
-            XCTAssert(app.buttons[loginAgainButton].isEnabled)
+            staticText(modalTitle).waitUntilExists(time: timeout).checkExists()
+            staticText(modalSubtitle).waitUntilExists(time: timeout).checkExists()
+            button(loginAgainButton).checkEnabled()
             return LoginRobot()
         }
     }

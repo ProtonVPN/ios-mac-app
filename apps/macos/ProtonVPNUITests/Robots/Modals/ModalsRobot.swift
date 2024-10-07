@@ -20,14 +20,15 @@ import Foundation
 import Strings
 import XCTest
 import Modals
+import fusion
 
-class ModalsRobot {
+class ModalsRobot: CoreElements {
     
     let accessAllCountriesBanner = AllCountriesModal()
     let cantSkipBanner = CantSkipBanner()
     
     func closeModal() -> ModalsRobot {
-        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].click()
+        dialog().firstMatch().onChild(button("_XCUI:CloseWindow")).tap()
         return self
     }
     
@@ -52,22 +53,15 @@ class ModalsRobot {
         
         let verify = Verify()
         
-        class Verify {
+        class Verify: CoreElements {
             
             func checkModalAppear() -> ModalsRobot {
-                let container = app.dialogs["Untitled"]
+                let container = dialog("Untitled")
+                container.checkExists()
+                container.onChild(staticText( Localizable.modalsNewUpsellAllCountriesTitle)).checkExists(message: "Banner title does not contain expected text '\(Localizable.modalsNewUpsellAllCountriesTitle)'")
+                container.onChild(staticText(NSPredicate(format: "title CONTAINS[c] %@", "VPN Plus"))).checkExists(message: "Banner description does not contain expected text 'VPN Plus'")
                 
-                XCTAssertTrue(container.waitForExistence(timeout: WaitTimeout.normal))
-                
-                let bannerTitle: String = container.staticTexts["TitleLabel"].firstMatch.value as? String ?? ""
-                
-                XCTAssertEqual(bannerTitle, Localizable.modalsNewUpsellAllCountriesTitle, "Banner title does not contain expected text '\(Localizable.modalsNewUpsellAllCountriesTitle)'. Actual message: \(bannerTitle)")
-                
-                let bannerDescription: String = container.staticTexts["DescriptionLabel"].firstMatch.value as? String ?? ""
-                
-                XCTAssertTrue(bannerDescription.contains("VPN Plus"), "Banner description does not contain expected text 'VPN Plus'. Actual message: \(bannerDescription)")
-                
-                XCTAssertTrue(container.buttons["ModalUpgradeButton"].waitForExistence(timeout: WaitTimeout.short), "ModalUpgradeButton does not appear at the AccessAllCountriesBanner")
+                container.onChild(button("ModalUpgradeButton")).checkExists(message: "ModalUpgradeButton does not appear at the AccessAllCountriesBanner")
                 
                 return ModalsRobot()
             }
@@ -77,18 +71,17 @@ class ModalsRobot {
     class CantSkipBanner {
         let verify = Verify()
         
-        class Verify {
+        class Verify: CoreElements {
             
             func checkModalAppear() -> ModalsRobot {
-                let container = app.dialogs["Untitled"]
+                let container = dialog("Untitled")
+                container.checkExists()
                 
-                XCTAssertTrue(container.waitForExistence(timeout: WaitTimeout.normal))
-                
-                let bannerDescription: String = container.staticTexts["DescriptionLabel"].firstMatch.value as? String ?? ""
+                let bannerDescription: String = container.onChild(staticText("DescriptionLabel")).value() as? String ?? ""
                 
                 XCTAssertTrue(bannerDescription.contains(Localizable.upsellSpecificLocationSubtitle), "Banner description does not contain expected text '\(Localizable.upsellSpecificLocationSubtitle)'. Actual message: \(bannerDescription)")
                 
-                XCTAssertTrue(container.buttons["Upgrade"].waitForExistence(timeout: WaitTimeout.short), "Upgrade button does not appear at the AccessAllCountriesBanner")
+                container.onChild(button("Upgrade")).checkExists(message: "Upgrade button does not appear at the AccessAllCountriesBanner")
                 
                 return ModalsRobot()
             }

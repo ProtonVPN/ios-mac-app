@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import fusion
 
 fileprivate let secureCoreButton = "SecureCoreButton"
 fileprivate let netShieldButton = "NetShieldButton"
@@ -34,75 +35,75 @@ fileprivate let modalUpgradeButton = "ModalUpgradeButton"
 fileprivate let modalTitle = "TitleLabel"
 fileprivate let modalDescription = "DescriptionLabel"
 
-class QuickSettingsRobot {
+class QuickSettingsRobot: CoreElements {
     
     func secureCoreDropdown() -> QuickSettingsRobot {
-        app.buttons[secureCoreButton].coordinatesClick() // For unknown reason forceClick()->click() clicks under the button and not on it
+        button(secureCoreButton).tapInCenter()
         return QuickSettingsRobot()
     }
     
     func netShieldDropdown() -> QuickSettingsRobot {
-        app.buttons[netShieldButton].coordinatesClick() // For unknown reason forceClick()->click() clicks under the button and not on it
+        button(netShieldButton).tapInCenter()
         return QuickSettingsRobot()
     }
     
     func killSwitchDropdown() -> QuickSettingsRobot {
-        app.buttons[killSwitchButton].coordinatesClick() // For unknown reason forceClick()->click() clicks under the button and not on it
+        button(killSwitchButton).tapInCenter()
         return QuickSettingsRobot()
     }
     
     func continueEnable() -> QuickSettingsRobot {
-        app.buttons[continueButton].forceClick()
+        button(continueButton).forceTap()
         return QuickSettingsRobot()
     }
     
     func enableNotNow() -> QuickSettingsRobot {
-        app.buttons[notNowButton].forceClick()
+        button(notNowButton).forceTap()
         return QuickSettingsRobot()
     }
     
     func upgradeFeature() -> QuickSettingsRobot {
-        app.buttons[upgradeButton].forceClick()
+        button(upgradeButton).forceTap()
         return QuickSettingsRobot()
     }
     
     func closeUpsellModal() -> QuickSettingsRobot {
-        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].click()
+        dialog().firstMatch().onChild(button("_XCUI:CloseWindow")).tap()
         return QuickSettingsRobot()
     }
     
     let verify = Verify()
     
-    class Verify {
+    class Verify: CoreElements {
         
         @discardableResult
         func checkDropdownIsOpen() -> QuickSettingsRobot {
-            XCTAssertTrue(app.staticTexts[qsTitle].exists)
-            XCTAssertTrue(app.staticTexts[qsDescription].exists)
-            XCTAssertTrue(app.buttons[learnMoreButton].exists)
-            XCTAssertTrue(app.staticTexts[qsNote].exists)
+            staticText(qsTitle).checkExists()
+            staticText(qsDescription).checkExists()
+            button(learnMoreButton).checkExists()
+            staticText(qsNote).checkExists()
             return QuickSettingsRobot()
         }
         
         @discardableResult
         func checkUpgradeRequired() -> QuickSettingsRobot {
-            XCTAssertTrue(app.buttons[upgradeButton].exists)
+            button(upgradeButton).checkExists()
             return QuickSettingsRobot()
         }
         
         @discardableResult
         func checkModalIsOpen() -> QuickSettingsRobot {
-            XCTAssertTrue(app.staticTexts["By activating Kill Switch, you won't be able to access devices on your local network. "].exists)
-            XCTAssertTrue(app.buttons[notNowButton].exists)
-            XCTAssertTrue(app.buttons[continueButton].exists)
+            staticText("By activating Kill Switch, you won't be able to access devices on your local network. ").checkExists()
+            button(notNowButton).checkExists()
+            button(continueButton).checkExists()
             return QuickSettingsRobot()
         }
         
         @discardableResult
         func checkUpsellModalIsOpen() -> QuickSettingsRobot {
-            XCTAssertTrue(app.staticTexts[modalTitle].exists)
-            XCTAssertTrue(app.staticTexts[modalDescription].exists)
-            XCTAssertTrue(app.buttons[modalUpgradeButton].isEnabled)
+            staticText(modalTitle).checkExists()
+            staticText(modalDescription).checkExists()
+            button(modalUpgradeButton).checkEnabled()
             return QuickSettingsRobot()
         }
     }

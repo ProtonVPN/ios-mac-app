@@ -36,7 +36,7 @@ class SearchTests: ProtonVPNUITests {
         countriesSelectionRobot
             .searchForServer(serverName: countryToSearchFor)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
-            .verify.checkServerListContain(label: countryToSearchFor)
+            .verify.checkServerListContain(server: countryToSearchFor)
             .clearSearch()
             .verify.checkCountryExists(comparisonCountryName)
     }
@@ -53,9 +53,9 @@ class SearchTests: ProtonVPNUITests {
         countriesSelectionRobot
             .searchForServer(serverName: countryToSearchFor)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
-            .verify.checkServerListContain(label: countryToSearchFor)
-            .verify.checkServerListContain(label: "Update required")
+            .verify.checkServerListContain(server: countryToSearchFor)
+            .verify.checkServerListContain(server: "Update required")
             .clearSearch()
-            .verify.checkServerListContain(label: comparisonCountryName)
+            .verify.checkServerListContain(server: comparisonCountryName)
     }
 }
