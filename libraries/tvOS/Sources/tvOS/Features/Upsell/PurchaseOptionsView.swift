@@ -33,7 +33,7 @@ struct PurchaseOptionsView: View {
                 Button {
                     sendAction(.attemptPurchase(product))
                 } label: {
-                    buttonContent(planOption: product.planOption)
+                    buttonContent(product: product)
                 }
                 .buttonStyle(UpsellButtonStyle())
             }
@@ -95,13 +95,21 @@ struct PurchaseOptionsView: View {
     // MARK: Legacy ProtonCorePayments
 
     @ViewBuilder
-    private func buttonContent(planOption: PlanOption) -> some View {
+    private func buttonContent(product: PlanIAPTuple) -> some View {
+        let planOption = product.planOption
         let planDuration = planOption.duration
         let planPrice = planOption.price
         let planPriceString = PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale)
         let pricePerMonthString = PriceFormatter.formatPlanPrice(price: planOption.pricePerMonth, locale: planPrice.locale)
         HStack(spacing: .themeSpacing16) {
-            headlineText(subscriptionPeriod(for: planOption))
+            VStack {
+                // > Apps offering auto-renewable subscriptions must include:
+                // > Title of auto-renewing subscription, which may be the same as the in-app purchase product name
+                // Plan title is hardcoded for now - we already reference VPN Plus in the coaxing view, and filter
+                // plans based on the identifier `vpn2022`.
+                headlineText("VPN Plus")
+                bodyText(subscriptionPeriod(for: planOption))
+            }
             Spacer()
             if planDuration.months == 12 {
                 VStack {
