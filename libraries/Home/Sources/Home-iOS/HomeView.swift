@@ -29,6 +29,7 @@ import VPNAppCore
 import Modals
 import ConnectionDetails
 import ConnectionDetails_iOS
+import SharedViews
 
 @available(iOS 17, *)
 public struct HomeView: View {
@@ -43,7 +44,7 @@ public struct HomeView: View {
     }
 
     public var body: some View {
-        GeometryReader { proxy in
+        #PerceptibleGeometryReader { proxy in
             ZStack(alignment: .top) {
                 HomeMapView(store: store.scope(state: \.map, action: \.map),
                             availableHeight: Self.mapHeight,

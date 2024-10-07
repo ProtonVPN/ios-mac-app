@@ -134,15 +134,8 @@ public extension DependencyValues {
     }
 }
 
-public enum VPNConnectionStatusPublisherKey: DependencyKey {
-    public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = {
-#if !targetEnvironment(simulator)
-        // Without `#if targetEnvironment(simulator)` SwiftUI previews crash
-        assert(false, "Override this dependency!")
-#endif
-        // Actual implementation sits in the app, to reduce the scope of thing this library depends on
-        return AsyncStream<VPNConnectionStatus>.finished
-    }
+public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
+    public static let testValue: () -> AsyncStream<VPNConnectionStatus> = { .finished }
 }
 
 extension CLLocationCoordinate2D {

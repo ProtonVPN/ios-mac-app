@@ -26,14 +26,14 @@ import PMLogger
 
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
-extension VPNConnectionStatusPublisherKey {
+extension VPNConnectionStatusPublisherKey: DependencyKey {
 
     @available(macOS 12, *)
-    public static let watchVPNConnectionStatusChanges: () -> AsyncStream<VPNConnectionStatus> = {
+    public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default
             .notifications(named: .AppStateManager.displayStateChange)
             .map {
-                let appStageManager = Container.sharedContainer.makeAppStateManager()
+                let appStateManager = Container.sharedContainer.makeAppStateManager()
 
                 // todo: when VPN connection will be refactored, please try saving lastConnectionIntent
                 // inside NETunnelProviderProtocol.providerConfiguration for WG and OpenVPN.
@@ -41,13 +41,34 @@ extension VPNConnectionStatusPublisherKey {
                 let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
 
                 return ($0.object as! AppDisplayState)
-                    .vpnConnectionStatus(appStageManager.activeConnection(),
+                    .vpnConnectionStatus(appStateManager.activeConnection(),
                                          intent: propertyManager.lastConnectionIntent,
                                          connectedDate: connectedDate)
             }
             .eraseToStream()
     }
 
+    public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = {
+        if #available(macOS 12, *) {
+            return displayStateStream()
+        } else {
+            return .finished
+        }
+    }
+
+}
+
+extension VPNConnectionStatusKey: DependencyKey {
+    public static var liveValue: @Sendable () async -> VPNConnectionStatus = {
+        let appStateManager = Container.sharedContainer.makeAppStateManager()
+        let propertyManager = Container.sharedContainer.makePropertiesManager()
+
+        return appStateManager.displayState.vpnConnectionStatus(
+            appStateManager.activeConnection(),
+            intent: propertyManager.lastConnectionIntent,
+            connectedDate: await Container.sharedContainer.makeVpnManager().connectedDate()
+        )
+    }
 }
 
 // MARK: - AppDisplayState -> VPNConnectionStatus

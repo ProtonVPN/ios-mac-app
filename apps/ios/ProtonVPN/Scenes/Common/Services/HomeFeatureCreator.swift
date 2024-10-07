@@ -33,7 +33,6 @@ enum HomeFeatureCreator {
     static func homeViewController() -> UIHostingController<HomeView> {
         let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
             HomeFeature()
-                .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
 #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
