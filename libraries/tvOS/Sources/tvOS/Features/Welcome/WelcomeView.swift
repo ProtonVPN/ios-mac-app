@@ -28,23 +28,35 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: .themeSpacing64) {
+                // Double height spacer pushes logo down far enough that it doesn't clash with the background
+                Spacer()
                 Spacer()
                 Image(.vpnWordmarkNoBg)
                 titleView
                 buttonsView
                 Spacer()
                 availableView
+                informationButtons
             }
             .background(Image(.backgroundBrand))
-            .navigationDestination(item: $store.scope(state: \.destination?.signIn,
-                                                      action: \.destination.signIn)) {
-                SignInView(store: $0)
-            }
+            .navigationDestination(item: $store.scope(state: \.destination?.signIn, action: \.destination.signIn)) { SignInView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.welcomeInfo, action: \.destination.welcomeInfo)) { WelcomeInfoView(store: $0) }
             .navigationDestination(item: $store.scope(state: \.destination?.codeExpired, action: \.destination.codeExpired)) { CodeExpiredView(store: $0) }
+            .navigationDestination(item: $store.scope(state: \.destination?.drillDown, action: \.destination.drillDown)) { SettingsDrillDownView(store: $0) }
         }
         .onAppear {
             store.send(.onAppear)
+        }
+    }
+
+    var informationButtons: some View {
+        HStack(spacing: .themeSpacing48) {
+            WelcomeButtonView(title: "Privacy Policy", action: {
+                store.send(.showPrivacyPolicy)
+            })
+            WelcomeButtonView(title: "Terms of Service", action: {
+                store.send(.showTermsOfService)
+            })
         }
     }
 

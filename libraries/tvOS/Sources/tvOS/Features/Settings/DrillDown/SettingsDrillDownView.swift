@@ -25,7 +25,25 @@ struct SettingsDrillDownView: View {
     var store: StoreOf<SettingsDrillDownFeature>
 
     var body: some View {
-        let model = store.state.model()
+        viewBody
+            .frame(width: Self.maximumContentWidth)
+            .onExitCommand { store.send(.onExitCommand) }
+    }
+    
+    @ViewBuilder var viewBody: some View {
+        switch store.state {
+        case .eula:
+            EULAView()
+        case .dynamic(let destination):
+            DynamicDrillDownView(model: destination.model)
+        }
+    }
+}
+
+struct DynamicDrillDownView: View {
+    let model: DynamicDrillDownModel
+    
+    var body: some View {
         HStack(spacing: .themeSpacing120) {
             VStack(alignment: .leading, spacing: .themeSpacing24) {
                 Text(model.title)
@@ -45,11 +63,6 @@ struct SettingsDrillDownView: View {
                 Spacer()
                     .frame(width: QRCodeView.size)
             }
-        }
-        .frame(width: Self.maximumContentWidth)
-        .focusable()
-        .onExitCommand {
-            store.send(.onExitCommand)
         }
     }
 }

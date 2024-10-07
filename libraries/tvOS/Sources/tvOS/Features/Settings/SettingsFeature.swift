@@ -53,6 +53,7 @@ struct SettingsFeature {
         }
 
         enum DrillDown {
+            case eula
             case contactUs
             case supportCenter
             case privacyPolicy
@@ -84,12 +85,14 @@ struct SettingsFeature {
                 return .none
             case .showDrillDown(let type):
                 switch type {
+                case .eula:
+                    state.destination = .settingsDrillDown(.eula)
                 case .contactUs:
-                    state.destination = .settingsDrillDown(.contactUs)
+                    state.destination = .settingsDrillDown(.dynamic(.contactUs))
                 case .supportCenter:
-                    state.destination = .settingsDrillDown(.supportCenter)
+                    state.destination = .settingsDrillDown(.dynamic(.supportCenter))
                 case .privacyPolicy:
-                    state.destination = .settingsDrillDown(.privacyPolicy)
+                    state.destination = .settingsDrillDown(.dynamic(.privacyPolicy))
                 }
                 state.mainBackground = .settingsDrillDown
                 return .none

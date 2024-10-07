@@ -27,6 +27,7 @@ struct WelcomeFeature {
         case welcomeInfo(WelcomeInfoFeature)
         case codeExpired(CodeExpiredFeature)
         case upsell(UpsellFeature)
+        case drillDown(SettingsDrillDownFeature)
     }
 
     @ObservableState
@@ -39,6 +40,8 @@ struct WelcomeFeature {
         case destination(PresentationAction<Destination.Action>)
         case showSignIn
         case showCreateAccount
+        case showPrivacyPolicy
+        case showTermsOfService
         case userTierUpdated(Int?)
         case onAppear
     }
@@ -57,6 +60,12 @@ struct WelcomeFeature {
                 return .none
             case .showCreateAccount:
                 state.destination = .welcomeInfo(.createAccount)
+                return .none
+            case .showPrivacyPolicy:
+                state.destination = .drillDown(.dynamic(.privacyPolicy))
+                return .none
+            case .showTermsOfService:
+                state.destination = .drillDown(.eula)
                 return .none
             case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
                 state.destination = .codeExpired(.init())

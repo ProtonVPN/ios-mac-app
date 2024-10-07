@@ -24,28 +24,28 @@ final class SettingsDrillDownFeatureTests: XCTestCase {
 
     @MainActor
     func testContactUs() async {
-        let store = TestStore(initialState: SettingsDrillDownFeature.State.contactUs) {
+        let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.contactUs)) {
             SettingsDrillDownFeature()
         }
-        let model = store.state.model()
+        let model = store.state.dynamic?.model
         XCTAssertNotNil(model)
     }
 
     @MainActor
     func testSupportCenter() async {
-        let store = TestStore(initialState: SettingsDrillDownFeature.State.supportCenter) {
+        let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.supportCenter)) {
             SettingsDrillDownFeature()
         }
-        let model = store.state.model()
+        let model = store.state.dynamic?.model
         XCTAssertNotNil(model)
     }
 
     @MainActor
     func testPrivacyPolicy() async {
-        let store = TestStore(initialState: SettingsDrillDownFeature.State.privacyPolicy) {
+        let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.privacyPolicy)) {
             SettingsDrillDownFeature()
         }
-        let model = store.state.model()
+        let model = store.state.dynamic?.model
         XCTAssertNotNil(model)
     }
 }

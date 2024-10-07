@@ -3194,6 +3194,9 @@
         }
       }
     },
+    "Privacy Policy" : {
+
+    },
     "Protected" : {
       "comment" : "State of the VPN connection visible on the home page",
       "extractionState" : "manual",
@@ -4820,6 +4823,12 @@
           }
         }
       }
+    },
+    "Terms of service" : {
+
+    },
+    "Terms of Service" : {
+
     },
     "There was a problem.\nPlease check your network connection" : {
       "comment" : "Informative text when the app failed to download the country list.",
