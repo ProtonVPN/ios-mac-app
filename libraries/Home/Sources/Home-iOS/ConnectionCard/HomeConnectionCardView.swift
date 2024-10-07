@@ -65,7 +65,7 @@ struct HomeConnectionCardView: View {
             withAnimation(.easeInOut) {
                 switch store.vpnConnectionStatus {
                 case .disconnected:
-                    store.send(.delegate(.connect(store.presentedSpec)))
+                    store.send(.delegate(.connect))
                 case .connected:
                     store.send(.delegate(.disconnect))
                 case .connecting:
@@ -134,7 +134,7 @@ struct HomeConnectionCardView: View {
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {
-            store.send(.delegate(.connect(store.presentedSpec)))
+            store.send(.delegate(.connect))
         }
         .task {
             store.send(.watchConnectionStatus)

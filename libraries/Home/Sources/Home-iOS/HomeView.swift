@@ -67,9 +67,8 @@ public struct HomeView: View {
                         .padding(.horizontal, .themeSpacing16)
                         .frame(width: min(proxy.size.width, Self.maxWidth))
 
-                        RecentsSectionView(items: store.state.remainingConnections,
-                                           sendAction: { _ = store.send($0) }
-                        )
+                        RecentsSectionView(store: store.scope(state: \.recents,
+                                                              action: \.recents))
                         .padding(.horizontal, .themeSpacing16)
                         .frame(width: min(proxy.size.width, Self.maxWidth))
 
@@ -82,7 +81,6 @@ public struct HomeView: View {
             }
         }
         .task {
-            store.send(.loadConnections) // TODO: [redesign] it's late to load the connections because at this point the view is already visible
             store.send(.sharedProperties(.listen))
         }
         .sheet(item: $store.scope(state: \.destination?.connectionDetails,
@@ -111,6 +109,6 @@ internal extension GeometryProxy {
 #if DEBUG
 @available(iOS 17, *)
 #Preview {
-    HomeView(store: .init(initialState: HomeFeature.previewState, reducer: { HomeFeature() }))
+    HomeView(store: .init(initialState: HomeFeature.State(), reducer: { HomeFeature() }))
 }
 #endif
