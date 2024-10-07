@@ -252,6 +252,7 @@
 		E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7C2C4E7D55009FB802 /* NetShield */; };
 		E5867D7F2C4E7D55009FB802 /* NetShield-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7E2C4E7D55009FB802 /* NetShield-macOS */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
+		E59B79FD2CAFDC4D00CE3515 /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = 7714FF9C2C90629B00D29EF4 /* fusion */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
@@ -1018,12 +1019,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59B79FD2CAFDC4D00CE3515 /* fusion in Frameworks */,
 				7714FF9F2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore in Frameworks */,
 				7714FFA12C9062B300D29EF4 /* Strings in Frameworks */,
 				4C9754F72A60173C0035A61B /* SwiftOTP in Frameworks */,
 				7706CAFC2C9C39840055CD32 /* fusion in Frameworks */,
 				4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */,
-				7714FF9D2C90629B00D29EF4 /* fusion in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4583,6 +4584,10 @@
 			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
 		};
+		7706CAFB2C9C39840055CD32 /* fusion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = fusion;
+		};
 		7714FF9C2C90629B00D29EF4 /* fusion */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = fusion;
@@ -4594,10 +4599,6 @@
 		7714FFA02C9062B300D29EF4 /* Strings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Strings;
-		};
-		7706CAFB2C9C39840055CD32 /* fusion */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = fusion;
 		};
 		AD9F194F2B55D6770034F329 /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;

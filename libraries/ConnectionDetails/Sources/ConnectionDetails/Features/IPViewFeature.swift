@@ -18,23 +18,25 @@
 
 import Foundation
 import ComposableArchitecture
+import VPNAppCore
+import Strings
 
 @Reducer
 public struct IPViewFeature {
 
     @ObservableState
     public struct State: Equatable {
-        public var localIP: String?
-        public var vpnIp: String
+        public var vpnIp: String? {
+            vpnConnectionStatus.actual?.serverExitIP
+        }
         public var localIpHidden = false
 
-        public init(localIP: String?, vpnIp: String, localIpHidden: Bool = false) {
-            self.localIP = localIP
-            self.vpnIp = vpnIp
-            self.localIpHidden = localIpHidden
-        }
+        @SharedReader(.userIP) public var userIP: String?
+        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
-        public var buttonIsVisible: Bool { localIP != nil }
+        public init() { }
+
+        public var buttonIsVisible: Bool { userIP != nil }
     }
 
     public enum Action: Equatable {

@@ -67,7 +67,7 @@ struct FeatureInfoView: View {
         .frame(maxWidth: .infinity)
         .padding(.themeSpacing16)
         .background(RoundedRectangle(cornerRadius: .themeRadius12)
-            .fill(Color(.background, [.normal])))
+            .fill(Color(.background, .normal)))
     }
 }
 

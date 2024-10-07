@@ -136,8 +136,9 @@ extension VPNConnectionStatus {
 extension ConnectionSpec {
     var actualConnection: VPNConnectionActual {
         VPNConnectionActual(
+            connectedDate: .now,
             serverModelId: "1",
-            serverIPId: "2",
+            serverExitIP: "1.2.3.4",
             vpnProtocol: .ike,
             natType: .moderateNAT,
             safeMode: nil,

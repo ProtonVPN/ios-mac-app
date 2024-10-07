@@ -34,7 +34,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9"),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", exact: "1.2.2"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", exact: "1.4.2"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.13.1")),
         .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.36.0"),
     ],
     targets: [
@@ -75,9 +76,11 @@ let package = Package(
                 "Strings",
                 "Localization",
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
                 .product(name: "Sentry", package: "sentry-cocoa"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(

@@ -27,6 +27,7 @@ import Theme
 import VPNShared
 import VPNAppCore
 import ProtonCoreUIFoundations
+import ConnectionDetails
 
 import CasePaths
 
@@ -41,6 +42,7 @@ public struct HomeFeature {
     @Reducer(state: .equatable)
     public enum Destination {
         case changeServer(ChangeServerFeature)
+        case connectionDetails(ConnectionScreenFeature)
     }
 
     @ObservableState
@@ -53,7 +55,7 @@ public struct HomeFeature {
         public var connectionCard: HomeConnectionCardFeature.State
         public var connectionStatus: ConnectionStatusFeature.State
         public var sharedProperties: SharedPropertiesFeature.State
-        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents public var destination: Destination.State?
 
@@ -94,9 +96,7 @@ public struct HomeFeature {
         case connectionStatus(ConnectionStatusFeature.Action)
         case connectionCard(HomeConnectionCardFeature.Action)
         case sharedProperties(SharedPropertiesFeature.Action)
-
-        /// Show details screen with info about current connection
-        case showConnectionDetails
+        case connectionDetails(ConnectionScreenFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -197,7 +197,7 @@ public struct HomeFeature {
 
             case .connectionStatus:
                 return .none
-            case .showConnectionDetails:
+            case .connectionDetails:
                 return .none // Will be handled up the tree of reducers
             case .helpButtonPressed:
                 return .none
@@ -214,7 +214,10 @@ public struct HomeFeature {
                 case .disconnect:
                     return .send(.disconnect)
                 case .tapAction:
-                    return .send(.showConnectionDetails)
+                    if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
+                        state.destination = .connectionDetails(connectionState)
+                    }
+                    return .none
                 case .changeServerButtonTapped:
                     let availability = authorizer.serverChangeAvailability()
                     if case .available = availability {

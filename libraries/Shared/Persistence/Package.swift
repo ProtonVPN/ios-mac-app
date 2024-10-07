@@ -21,7 +21,7 @@ let package = Package(
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
         .package(url: "https://github.com/pointfreeco/swift-dependencies", exact: "1.3.9"),
         .package(url: "https://github.com/groue/GRDB.swift", exact: "6.23.0"),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.2.2")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
     ],
     targets: [
         .target(
@@ -39,11 +39,18 @@ let package = Package(
         ),
         .target(
             name: "PersistenceTestSupport",
-            dependencies: ["Persistence"]
+            dependencies: [
+                "Persistence",
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+            ]
         ),
         .testTarget(
             name: "PersistenceTests",
-            dependencies: ["Persistence", "PersistenceTestSupport"],
+            dependencies: [
+                "Persistence",
+                "PersistenceTestSupport",
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+            ],
             resources: [.process("Resources")]
         ),
     ]

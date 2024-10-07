@@ -22,45 +22,13 @@ import ComposableArchitecture
 import Strings
 import ConnectionDetails
 import ProtonCoreUIFoundations
-
-public struct ConnectionDetailsFeature: Reducer {
-
-    public struct State: Equatable {
-        public var connectedSince: Date
-        public var country: String
-        public var city: String
-        public var server: String
-        public var serverLoad: Int
-        public var protocolName: String
-        public var localIpHidden = false
-
-        public init(connectedSince: Date, country: String, city: String, server: String, serverLoad: Int, protocolName: String, localIpHidden: Bool = false) {
-            self.connectedSince = connectedSince
-            self.country = country
-            self.city = city
-            self.server = server
-            self.serverLoad = serverLoad
-            self.protocolName = protocolName
-            self.localIpHidden = localIpHidden
-        }
-    }
-
-    public enum Action: Equatable {
-    }
-
-    public init() {
-    }
-
-    public var body: some Reducer<State, Action> {
-        EmptyReducer()
-    }
-}
+import Domain
 
 struct ConnectionDetailsView: View {
     let store: StoreOf<ConnectionDetailsFeature>
-
+    
     var body: some View {
-        WithViewStore(self.store, observe: { $0 }, content: { viewStore in
+        WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
                 Text(Localizable.connectionDetailsTitle)
                     .font(.themeFont(.body2()))
@@ -70,80 +38,76 @@ struct ConnectionDetailsView: View {
 
                 VStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Group { // Groups are needed here because VStack can have max 10 child views
-                            Row(title: Localizable.connectionDetailsConnectedFor, value: viewStore.connectedSince.timeIntervalSinceNow.sessionLengthText)
+                        let connectedSince = store.connectedSince
+                        TimelineView(PeriodicTimelineSchedule(from: .now, by: 1)) { _ in
+                            Row(title: Localizable.connectionDetailsConnectedFor,
+                                value: connectedSince.timeIntervalSinceNow.sessionLengthText)
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
-                            Row(title: Localizable.connectionDetailsCountry, value: viewStore.country)
+                            Row(title: Localizable.connectionDetailsCountry, value: store.country)
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
-                            Row(title: Localizable.connectionDetailsCity, value: viewStore.city)
+                            Row(title: Localizable.connectionDetailsCity, value: store.city)
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
-                            Row(title: Localizable.connectionDetailsServer, value: viewStore.server)
+                            Row(title: Localizable.connectionDetailsServer, value: store.server)
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
-                            Row(title: Localizable.connectionDetailsServerLoad, value: "\(viewStore.serverLoad)%", titleType: .info, contentType: .percentage(viewStore.serverLoad))
+                            Row(title: Localizable.connectionDetailsServerLoad, value: "\(store.serverLoad)%", titleType: .info, contentType: .percentage(store.serverLoad))
                         }
                         Group {
                             Divider().padding([.leading], .themeSpacing8)
-                            Row(title: Localizable.connectionDetailsProtocol, value: viewStore.protocolName, titleType: .info)
+                            Row(title: Localizable.connectionDetailsProtocol, value: store.protocolName, titleType: .info)
                         }
                     }
                     .background(RoundedRectangle(cornerRadius: .themeRadius12)
-                        .fill(Color(.background, [.normal])))
+                        .fill(Color(.background, .normal)))
                 }
-                .padding([.top, .bottom], .themeSpacing8)
-
+                .padding(.vertical, .themeSpacing8)
             }
-        })
+        }
     }
-
+    
     struct Row: View {
         let title: String
         let value: String
         let titleType: TitleType
         let contentType: ContentType
-
+        
         @Environment(\.dynamicTypeSize) var dynamicTypeSize
         @ScaledMetric var infoIconSize: CGFloat = 16
         @ScaledMetric var infoIconSpacing: CGFloat = .themeSpacing4
         private var standardTypeSize: Bool { dynamicTypeSize <= .xxxLarge }
-
+        
         enum TitleType {
             case simple
             case info
         }
-
+        
         enum ContentType {
             case text
             case percentage(Int)
         }
-
+        
         init(title: String, value: String, titleType: TitleType = .simple, contentType: ContentType = .text) {
             self.title = title
             self.value = value
             self.titleType = titleType
             self.contentType = contentType
         }
-
+        
         var body: some View {
-//            let layout = standardTypeSize // todo: this only works on ios 16 :(
-//                ? AnyLayout(HStackLayout())
-//                : AnyLayout(VStackLayout(alignment: .leading))
-//            layout { }
-
             AnyView(rowView) // Without AnyView next lines won't compile
                 .accessibilityLabel(title) // todo: test how this works
                 .accessibilityLabel(value)
-                .padding([.top, .bottom], .themeSpacing12)
-                .padding([.leading, .trailing], .themeSpacing16)
+                .padding(.vertical, .themeSpacing12)
+                .padding(.horizontal, .themeSpacing16)
         }
-
+        
         @ViewBuilder
         var rowView: any View {
             if standardTypeSize {
@@ -159,48 +123,44 @@ struct ConnectionDetailsView: View {
                 }
             }
         }
-
+        
         var titleView: some View {
             HStack(spacing: infoIconSpacing) {
                 Text(title)
                     .themeFont(.body1())
-
+                
                 if case titleType = TitleType.info {
                     IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
             }.foregroundColor(Color(.text, .weak))
         }
-
+        
         var valueView: some View {
             HStack(spacing: .themeSpacing8) {
                 if case let ContentType.percentage(percent) = contentType {
                     SmallProgressView(percentage: percent)
                 }
-
+                
                 Text(value)
                     .themeFont(.body1())
-
+                
             }
             .foregroundColor(Color(.text, .normal))
         }
-
     }
-
 }
-
 // MARK: - Previews
 
 struct ConnectionDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetailsView(
-            store: Store(initialState: ConnectionDetailsFeature.State(
-                connectedSince: Date.init(timeIntervalSinceNow: -12345),
-                country: "Lithuania",
-                city: "Siauliai",
-                server: "LT#5",
-                serverLoad: 23,
-                protocolName: "WireGuard"),
-                         reducer: { ConnectionDetailsFeature() }))
+        ConnectionDetailsView(store: Store(initialState: .init(connectedSince: Date.init(timeIntervalSinceNow: -12345),
+                                                               country: "Lithuania",
+                                                               city: "Siauliai",
+                                                               server: "LT#5",
+                                                               serverLoad: 23,
+                                                               protocolName: "WireGuard"),
+                                           reducer: { ConnectionDetailsFeature() }))
         .previewLayout(.sizeThatFits)
+        .preferredColorScheme(.dark)
     }
 }

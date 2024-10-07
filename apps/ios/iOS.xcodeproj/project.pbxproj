@@ -325,6 +325,8 @@
 		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
 		E5867D812C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
+		E59B7A002CAFE36200CE3515 /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */; };
+		E59B7A022CAFE38700CE3515 /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
@@ -887,6 +889,7 @@
 				ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
+				E59B7A002CAFE36200CE3515 /* XCTestDynamicOverlay in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
 				4C8C314C2A73BA1F006AD628 /* ConnectionDetails in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
@@ -904,6 +907,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59B7A022CAFE38700CE3515 /* XCTestDynamicOverlay in Frameworks */,
 				AD51BE502B908075002E40FD /* Persistence in Frameworks */,
 				AD51BE4C2B908075002E40FD /* Domain in Frameworks */,
 				ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */,
@@ -2262,6 +2266,7 @@
 				8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */,
 				8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */,
 				8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */,
+				E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2291,6 +2296,7 @@
 				AD51BE4D2B908075002E40FD /* Ergonomics */,
 				AD51BE4F2B908075002E40FD /* Persistence */,
 				AD51BE512B9085C3002E40FD /* Strings */,
+				E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -2532,6 +2538,7 @@
 				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */,
+				E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -4097,6 +4104,14 @@
 				version = 1.5.4;
 			};
 		};
+		E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/xctest-dynamic-overlay.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.2;
+			};
+		};
 		E5A4AD2A2A3C48B400CC91D7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
@@ -4295,6 +4310,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
+		};
+		E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
+			productName = XCTestDynamicOverlay;
+		};
+		E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
+			productName = XCTestDynamicOverlay;
 		};
 		F348C9D527D8E54200622584 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
