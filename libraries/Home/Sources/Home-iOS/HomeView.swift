@@ -69,8 +69,8 @@ public struct HomeView: View {
 
                         RecentsSectionView(store: store.scope(state: \.recents,
                                                               action: \.recents))
-                        .padding(.horizontal, .themeSpacing16)
-                        .frame(width: min(proxy.size.width, Self.maxWidth))
+//                        .padding(.horizontal, .themeSpacing16)
+//                        .frame(width: min(proxy.size.width, Self.maxWidth))
 
                         Color(.background) // needed to take all the available horizontal space for the background
                     }

@@ -24,6 +24,7 @@ import Domain
 import Strings
 import Theme
 import VPNAppCore
+import ProtonCoreUIFoundations
 
 public struct ConnectionFlagInfoView: View {
 
@@ -60,18 +61,19 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-            HStack(spacing: 0) {
-                flag
-                Spacer()
-                    .frame(width: 12)
-                ZStack(alignment: .leading) {
+        HStack(spacing: 0) {
+            flag
+            Spacer()
+                .frame(width: 12)
+            ZStack(alignment: .leading) {
+                HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                            Text(connectionInfoBuilder.textHeader)
-                                .styled()
+                        Text(connectionInfoBuilder.textHeader)
+                            .styled()
 #if canImport(Cocoa)
-                                .themeFont(.body(emphasised: true))
+                            .themeFont(.body(emphasised: true))
 #elseif canImport(UIKit)
-                                .themeFont(.body1(.semibold))
+                            .themeFont(.body1(.semibold))
 #endif
 
                         if connectionInfoBuilder.hasTextFeatures {
@@ -81,18 +83,26 @@ public struct ConnectionFlagInfoView: View {
                                 .foregroundColor(.init(.border))
                         }
                     }
-                    if withDivider {
-                        VStack {
-                            Spacer()
-                            Divider()
-                        }
+                    Spacer()
+                    Button {
+
+                    } label: {
+                        IconProvider.threeDotsHorizontal
+                            .foregroundStyle(Color(.icon))
                     }
                 }
-                Spacer(minLength: 0)
+                if withDivider {
+                    VStack() {
+                        Spacer()
+                        Divider()
+                    }
+                }
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: withDivider ? 64 : 42)
+//            Spacer(minLength: 0)
         }
+        .frame(maxWidth: .infinity)
+        .frame(height: withDivider ? 64 : 42)
+    }
 }
 
 struct ConnectionFlagView_Previews: PreviewProvider {
