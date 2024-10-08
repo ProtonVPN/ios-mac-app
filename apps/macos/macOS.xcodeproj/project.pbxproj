@@ -512,16 +512,6 @@
 			name = "Embed System Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D5FD4C21264C1E6E001F26CE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E17DE11E21FF387D008CCC13 /* Copy Network Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -530,16 +520,6 @@
 			files = (
 			);
 			name = "Copy Network Helper";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E94EFFF52653D2010024DBFB /* Copy Sparkle XPC */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			name = "Copy Sparkle XPC";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EE8CA7AE1F06F8BB00BA829F /* Copy Starter */ = {
@@ -2742,12 +2722,8 @@
 				EED5347D1EEC112000013607 /* Sources */,
 				EED5347E1EEC112000013607 /* Frameworks */,
 				EED5347F1EEC112000013607 /* Resources */,
-				D5FD4C21264C1E6E001F26CE /* Embed Frameworks */,
-				E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */,
-				E94EFFF52653D2010024DBFB /* Copy Sparkle XPC */,
 				EE8CA7AE1F06F8BB00BA829F /* Copy Starter */,
 				E17DE11E21FF387D008CCC13 /* Copy Network Helper */,
-				E148AE5521C2628A007AB65A /* Sentry dSYM upload */,
 				D5479534228D9BDB00639216 /* Run SwiftLint Script */,
 				42EF09E7257A713F00E2EDCA /* Embed System Extensions */,
 			);
@@ -3056,42 +3032,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "SWIFTLINT=${SWIFTLINT:-$(command -v swiftlint)}\n\nif [ -x \"$SWIFTLINT\" ]; then\n\"$SWIFTLINT\" --config ../../.swiftlint.yml\nelse\necho \"Swiftlint not found, skipping...\"\nfi\n";
-		};
-		E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Sign Sparkle Apps";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#LOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# By default, use the configured code signing identity for the project/target\n#IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n#if [ \"$IDENTITY\" == \"\" ]\n#then\n# If a code signing identity is not specified, use ad hoc signing\n#IDENTITY=\"-\"\n#fi\n#codesign --verbose --force --deep -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A/Resources/AutoUpdate.app\"\n#codesign --verbose --force -o runtime --sign \"$IDENTITY\" \"$LOCATION/Sparkle.framework/Versions/A\"\n";
-		};
-		E148AE5521C2628A007AB65A /* Sentry dSYM upload */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Sentry dSYM upload";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\necho \"sentry-cli: dSYM upload starting\"\nif which sentry-cli >/dev/null; then\nexport SENTRY_URL='https://sentry.protontech.ch/'\nexport SENTRY_ORG='sentry'\nexport SENTRY_PROJECT='macos-vpn-prod'\n# Add auth token to your env vars:\n# export SENTRY_AUTH_TOKEN=YOU_AUTH_TOKEN\nERROR=$(sentry-cli upload-dsym 2>&1 >/dev/null)\necho \"sentry-cli: dSYM upload complete\"\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
