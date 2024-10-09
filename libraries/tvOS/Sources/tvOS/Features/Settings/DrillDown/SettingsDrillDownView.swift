@@ -36,6 +36,7 @@ struct SettingsDrillDownView: View {
             EULAView()
         case .dynamic(let destination):
             DynamicDrillDownView(model: destination.model)
+                .focusable()
         }
     }
 }
