@@ -40,7 +40,7 @@ function lock() {
         break
     done
 
-    [ "$ENQUEUED" == "true" ] || echo "Couldn't acquire lock, giving up." && exit 0
+    [ "$ENQUEUED" == "true" ] || (echo "Couldn't acquire lock, giving up." && exit 0)
 
     # Reset the retry counter.
     RETRIES=5
