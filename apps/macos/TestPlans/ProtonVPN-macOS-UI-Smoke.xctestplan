@@ -35,6 +35,7 @@
         "LoginTests\/testLoginAsTwoFa()",
         "LoginTests\/testLoginWithCorrectCredentials()",
         "LoginTests\/testLoginWithTwoPassUser()",
+        "MacOSMainMeasurementsTests",
         "MapTests",
         "ProfileTests",
         "ProfileTests\/testCancelProfile()",

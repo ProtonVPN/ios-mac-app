@@ -42,6 +42,12 @@ class CountriesSectionRobot: CoreElements {
         return self
     }
     
+    func expandCountry() -> CountriesSectionRobot {
+        // tap on first row at servers list table
+        table(serverListTableId).onChild(tableRow().byIndex(1)).tapInCenter()
+        return self
+    }
+    
     func connectToServer(server: String) -> CountriesSectionRobot {
         let serverCell = cell(NSPredicate(format: "label CONTAINS[c] %@", server)).firstMatch()
         

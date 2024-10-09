@@ -22,6 +22,8 @@ import Network
 
 public enum NetworkUtils {
     
+    private static let jsonDecoder = JSONDecoder()
+    
     // MARK: - NetworkUtilsError
     
     private enum NetworkUtilsError: Error, LocalizedError {
@@ -78,6 +80,24 @@ public enum NetworkUtils {
         }
         
         return ipAddress
+    }
+    
+    // Generic function to get JSON from any URL
+    public static func getJSON<T: Decodable>(from urlString: String, as type: T.Type) async throws -> T {
+        guard let url = URL(string: urlString) else {
+            throw NetworkUtilsError.invalidURL
+        }
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkUtilsError.invalidResponse
+        }
+        
+        do {
+            return try jsonDecoder.decode(T.self, from: data)
+        } catch {
+            throw NetworkUtilsError.outputParsingFailed
+        }
     }
     
     // MARK: - Gateway

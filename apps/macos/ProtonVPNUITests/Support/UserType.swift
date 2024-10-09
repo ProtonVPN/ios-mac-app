@@ -18,7 +18,25 @@
 
 import Foundation
 
-enum UserType: String {
-    case Paid
+enum UserType {
     case Free
+    case Basic
+    case Plus
+    
+    var credentials: Credentials {
+        let allCredentials = getCredentials(fromResource: "credentials")
+        switch self {
+        case .Free:
+            return allCredentials[0]
+        case .Basic:
+            return allCredentials[1]
+        case .Plus:
+            return allCredentials[2]
+        }
+    }
+    
+    // Sample function to get credentials from a resource
+    func getCredentials(fromResource resource: String) -> [Credentials] {
+        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+    }
 }

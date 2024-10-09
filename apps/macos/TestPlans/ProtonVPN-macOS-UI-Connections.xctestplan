@@ -10,13 +10,13 @@
   ],
   "defaultOptions" : {
     "language" : "en",
-    "testRepetitionMode" : "retryOnFailure",
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
       "skippedTests" : [
         "LoginTests",
+        "MacOSMainMeasurementsTests",
         "MapTests",
         "ProfileTests",
         "ProtonVPNUITests",
