@@ -37,6 +37,9 @@ struct SettingsView: View {
                 SettingsCellView(title: "Privacy policy", icon: IconProvider.fileEmpty) {
                     store.send(.showDrillDown(.privacyPolicy))
                 }
+                SettingsCellView(title: "Terms of service", icon: IconProvider.fileEmpty) {
+                    store.send(.showDrillDown(.eula))
+                }
                 SettingsCellView(title: "Sign out", icon: IconProvider.arrowOutFromRectangle) {
                     store.send(.signOutSelected)
                 }

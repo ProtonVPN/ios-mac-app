@@ -65,12 +65,26 @@ final class SettingsFeatureTests: XCTestCase {
     }
 
     @MainActor
+    func testEULASelected() async {
+        let store = TestStore(initialState: SettingsFeature.State()) {
+            SettingsFeature()
+        }
+        await store.send(.showDrillDown(.eula)) {
+            $0.destination = .settingsDrillDown(.eula)
+            $0.mainBackground = .settingsDrillDown
+        }
+        await store.send(.destination(.dismiss)) {
+            $0.destination = nil
+        }
+    }
+
+    @MainActor
     func testContactUsSelected() async {
         let store = TestStore(initialState: SettingsFeature.State()) {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.contactUs)) {
-            $0.destination = .settingsDrillDown(.contactUs)
+            $0.destination = .settingsDrillDown(.dynamic(.contactUs))
             $0.mainBackground = .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {
@@ -84,7 +98,7 @@ final class SettingsFeatureTests: XCTestCase {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.supportCenter)) {
-            $0.destination = .settingsDrillDown(.supportCenter)
+            $0.destination = .settingsDrillDown(.dynamic(.supportCenter))
             $0.mainBackground = .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {
@@ -98,7 +112,7 @@ final class SettingsFeatureTests: XCTestCase {
             SettingsFeature()
         }
         await store.send(.showDrillDown(.privacyPolicy)) {
-            $0.destination = .settingsDrillDown(.privacyPolicy)
+            $0.destination = .settingsDrillDown(.dynamic(.privacyPolicy))
             $0.mainBackground = .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {

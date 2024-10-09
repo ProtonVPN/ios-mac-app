@@ -22,49 +22,10 @@ import SwiftUI
 @Reducer
 struct SettingsDrillDownFeature {
     @ObservableState
+    @CasePathable
     enum State: Equatable {
-        case supportCenter
-        case contactUs
-        case privacyPolicy
-
-        func model() -> Model {
-            switch self {
-            case .supportCenter:
-                return .supportCenter()
-            case .contactUs:
-                return .contactUs()
-            case .privacyPolicy:
-                return .privacyPolicy()
-            }
-        }
-    }
-
-    struct Model {
-        let title: LocalizedStringKey
-        let description: LocalizedStringKey
-        let url: String?
-        let displayURL: String
-
-        static func contactUs() -> Self {
-            return .init(title: "Contact us",
-                         description: "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.",
-                         url: nil, // "https://protonvpn.com/support-form?platform=appletv",
-                         displayURL: "") //" protonvpn.com/support-form")
-        }
-
-        static func supportCenter() -> Self {
-            return .init(title: "Support Center",
-                         description: "Need help setting up or using Proton VPN?\n\nVisit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.\n\nJust scan the QR code or go to",
-                         url: "https://protonvpn.com/support/",
-                         displayURL: " protonvpn.com/support")
-        }
-
-        static func privacyPolicy() -> Self {
-            return .init(title: "Privacy policy",
-                         description: "To read our privacy policy, scan the QR code or go to",
-                         url: "https://protonvpn.com/privacy-policy",
-                         displayURL: " protonvpn.com/privacy-policy")
-        }
+        case eula
+        case dynamic(DynamicDrillDownDestination)
     }
 
     enum Action {
@@ -83,4 +44,49 @@ struct SettingsDrillDownFeature {
             }
         }
     }
+}
+
+enum DynamicDrillDownDestination: Equatable {
+    case supportCenter
+    case contactUs
+    case privacyPolicy
+
+    var model: DynamicDrillDownModel {
+        switch self {
+        case .supportCenter:
+            return .supportCenter
+        case .contactUs:
+            return .contactUs
+        case .privacyPolicy:
+            return .privacyPolicy
+        }
+    }
+}
+
+struct DynamicDrillDownModel {
+    let title: LocalizedStringKey
+    let description: LocalizedStringKey
+    let url: String?
+    let displayURL: String
+
+    static let contactUs = Self(
+        title: "Contact us",
+        description: "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.",
+        url: nil, // "https://protonvpn.com/support-form?platform=appletv",
+        displayURL: ""
+    ) //" protonvpn.com/support-form")
+
+    static let supportCenter = Self(
+        title: "Support Center",
+        description: "Need help setting up or using Proton VPN?\n\nVisit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.\n\nJust scan the QR code or go to",
+        url: "https://protonvpn.com/support/",
+        displayURL: " protonvpn.com/support"
+    )
+
+    static let privacyPolicy = Self(
+        title: "Privacy policy",
+        description: "To read our privacy policy, scan the QR code or go to",
+        url: "https://proton.me/legal/privacy",
+        displayURL: " proton.me/legal/privacy"
+    )
 }

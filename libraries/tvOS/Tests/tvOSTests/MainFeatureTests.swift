@@ -50,7 +50,7 @@ final class MainFeatureTests: XCTestCase {
             MainFeature()
         }
         await store.send(.settings(.showDrillDown(.contactUs))) {
-            $0.settings.destination = .settingsDrillDown(.contactUs)
+            $0.settings.destination = .settingsDrillDown(.dynamic(.contactUs))
             $0.mainBackground = .settingsDrillDown
         }
     }

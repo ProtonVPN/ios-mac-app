@@ -64,5 +64,7 @@ class SettingsFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "3 SupportCenter " + trait.name)
         store.send(.main(.settings(.showDrillDown(.privacyPolicy))))
         assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 PrivacyPolicy " + trait.name)
+        store.send(.main(.settings(.showDrillDown(.eula))))
+        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "5 EULA " + trait.name)
     }
 }
