@@ -46,10 +46,13 @@ function lock() {
     RETRIES=5
     # Make backoff times longer for re-checking lock acquisition, since the deploy operation can take some time.
     BACKOFF=30
-    while ! git notes --ref "$LOCKREF" show | head -n 1 | grep "$TRAILER" ; do
+    while [ $RETRIES -gt 0 ] && ! git notes --ref "$LOCKREF" show | head -n 1 | grep "$TRAILER" ; do
+        RETRIES=$((RETRIES-1))
         echo "Another operation is in progress, waiting $BACKOFF seconds and trying again..."
         sleep $BACKOFF
         BACKOFF=$((BACKOFF*2))
+
+        git fetch origin "+$LOCKREF:$LOCKREF" > /dev/null || true
         continue
     done
 }
