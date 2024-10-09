@@ -21,7 +21,7 @@ import XCTest
 fileprivate let vpnLogicals = "https://api.protonvpn.ch/vpn/logicals"
 
 /// A utility class for managing and retrieving VPN server information.
-public class ServersListUtils {
+public enum ServersListUtils {
     
     /// An enumeration of errors that can occur in `ServersListUtils`.
     private enum ServersListUtils: Error, LocalizedError {

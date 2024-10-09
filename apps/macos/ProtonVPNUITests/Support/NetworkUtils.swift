@@ -22,6 +22,8 @@ import Network
 
 public enum NetworkUtils {
     
+    private static let jsonDecoder = JSONDecoder()
+    
     // MARK: - NetworkUtilsError
     
     private enum NetworkUtilsError: Error, LocalizedError {
@@ -92,7 +94,7 @@ public enum NetworkUtils {
         }
         
         do {
-            return try JSONDecoder().decode(T.self, from: data)
+            return try jsonDecoder.decode(T.self, from: data)
         } catch {
             throw NetworkUtilsError.outputParsingFailed
         }
