@@ -140,20 +140,7 @@ public enum NetworkUtils {
                 using: .tcp
             )
             
-            connection.stateUpdateHandler = { state in
-                switch state {
-                case .ready:
-                    // Connection succeeded
-                    connection.cancel() // Close the connection
-                    continuation.resume(returning: true)
-                    
-                case .failed(_):
-                    // Connection failed
-                    connection.cancel() // Close the connection
-                    continuation.resume(returning: false)
-                    
-                default:
-                    break
+            connection.stateUpdateHandler = { [weak connection] state in
                 }
             }
             
