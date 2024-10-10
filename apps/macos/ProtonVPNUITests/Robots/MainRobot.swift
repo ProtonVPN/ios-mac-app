@@ -240,8 +240,8 @@ class MainRobot: CoreElements {
         }
 
         @discardableResult
-        func checkIfLocalNetworkingReachable(to defaultGatewayAddress: String) throws -> MainRobot {
-            let success = try NetworkUtils.isIpAddressAccessible(ipAddress: defaultGatewayAddress)
+        func checkIfLocalNetworkingReachable(to defaultGatewayAddress: String) async throws -> MainRobot {
+            let success = try await NetworkUtils.isIpAddressAccessible(ipAddress: defaultGatewayAddress)
             if !success {
                 XCTFail("Local letwork is not accessbile by ip addess: \(defaultGatewayAddress)")
             }

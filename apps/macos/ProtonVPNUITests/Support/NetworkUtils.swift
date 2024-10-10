@@ -36,7 +36,7 @@ public enum NetworkUtils {
         case gatewayNotFound
         case connectionFailed
         
-        public var errorDescription: String {
+        public var errorDescription: String? {
             switch self {
             case .invalidURL:
                 return "The URL provided is invalid."
@@ -58,28 +58,15 @@ public enum NetworkUtils {
         }
     }
     
+    // MARK: - Constants
+    
+    private static let ipifyJsonEndpoint = "https://api64.ipify.org/?format=json"
+    
     // MARK: - Networking
     
-    public static func getIpAddress(endpoint: String = "https://api.ipify.org/") async throws -> String {
-        return try await fetchIpAddress(endpoint: endpoint)
-    }
-    
-    private static func fetchIpAddress(endpoint: String) async throws -> String {
-        guard let url = URL(string: endpoint) else {
-            throw NetworkUtilsError.invalidURL
-        }
-        
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse, [200, 201].contains(httpResponse.statusCode) else {
-            throw NetworkUtilsError.invalidResponse
-        }
-        
-        guard let ipAddress = String(data: data, encoding: .utf8) else {
-            throw NetworkUtilsError.invalidResponse
-        }
-        
-        return ipAddress
+    public static func getIpAddress() async throws -> String {
+        let ipfyResponse: IpifyResponse = try await getJSON(from: ipifyJsonEndpoint, as: IpifyResponse.self)
+        return ipfyResponse.ip
     }
     
     // Generic function to get JSON from any URL
@@ -107,15 +94,19 @@ public enum NetworkUtils {
     public static func getDefaultGatewayAddress() throws -> String {
         let output = try runShellCommand("/usr/sbin/netstat", arguments: ["-nr"])
         
+        let defaultGateway = try parseGateway(from: output)
+        guard defaultGateway.isValidIPv4Address else {
+            throw NetworkUtilsError.gatewayNotFound
+        }
+        return defaultGateway
+    }
+    
+    private static func parseGateway(from output: String) throws -> String {
         let lines = output.split(separator: "\n")
         for line in lines {
             let components = line.split(separator: " ", omittingEmptySubsequences: true)
             if components.count >= 2, components[0] == "default" {
-                let defaultGateway = components[1].description
-                if !defaultGateway.isValidIPv4Address {
-                    throw NetworkUtilsError.gatewayNotFound
-                }
-                return String(defaultGateway)
+                return String(components[1])
             }
         }
         
@@ -127,63 +118,46 @@ public enum NetworkUtils {
     /// Function is used to check whether the given IP address is accessible or not.
     /// - Parameter ipAddress: A String representing the IP address to check.
     /// - Returns: A Boolean which is true if the IP address is accessible and false otherwise.
-    public static func isIpAddressAccessible(ipAddress: String) throws -> Bool {
-        if !ipAddress.isValidIPv4Address {
+    public static func isIpAddressAccessible(ipAddress: String) async throws -> Bool {
+        guard ipAddress.isValidIPv4Address else {
             throw NetworkUtilsError.invalidURL
         }
-        return try checkTCPConnection(to: ipAddress, port: 80)
+        return try await isEndpointReachable(host: ipAddress, port: 80)
     }
     
     // MARK: - Helper Functions
     
-    /// Function checks the TCP connection to the given IP address at the given port.
+    /// Checks if a given endpoint (IP/Hostname) is reachable on the specified port.
     /// - Parameters:
-    ///     - ipAddress: A String representing the IP address to check.
-    ///     - port: A UInt16 representing the port to check connection for.
-    /// - Returns: A Boolean which is true if the connection to given IP address and port is successful.
-    private static func checkTCPConnection(to ipAddress: String, port: UInt16) throws -> Bool {
-        print("Executing method: checkTCPConnection for ip address \(ipAddress):\(port)")
-        
-        // Semaphore to wait for the connection result
-        let semaphore = DispatchSemaphore(value: 0)
-        
-        // Variable to store the connection result
-        var connectionSuccessful = false
-        
-        // Create a network connection to the specified IP address and port
-        let connection = NWConnection(
-            host: NWEndpoint.Host(ipAddress),
-            port: NWEndpoint.Port(rawValue: port)!,
-            using: .tcp)
-        
-        // Handle the state updates for the connection
-        connection.stateUpdateHandler = { newState in
-            switch newState {
-            case .ready:
-                // Connection was successful
-                connectionSuccessful = true
-                // Cancel the connection as we've achieved our goal
-                connection.cancel()
-                // Signal the semaphore to stop waiting
-                semaphore.signal()
-            case .failed(_), .cancelled:
-                // Connection failed or was cancelled
-                semaphore.signal()
-            default:
-                break
+    ///   - host: The hostname or IP address of the endpoint.
+    ///   - port: The port to check for connectivity.
+    /// - Returns: A Boolean indicating whether the endpoint is reachable on the specified port.
+    private static func isEndpointReachable(host: String, port: UInt16) async throws -> Bool {
+        return try await withCheckedThrowingContinuation { continuation in
+            let connection = NWConnection(
+                host: NWEndpoint.Host(host),
+                port: NWEndpoint.Port(rawValue: port)!,
+                using: .tcp
+            )
+            
+            connection.stateUpdateHandler = { state in
+                switch state {
+                case .ready:
+                    // Connection succeeded
+                    connection.cancel() // Close the connection
+                    continuation.resume(returning: true)
+                    
+                case .failed(_):
+                    // Connection failed
+                    connection.cancel() // Close the connection
+                    continuation.resume(returning: false)
+                    
+                default:
+                    break
+                }
             }
-        }
-        
-        // Start the connection process
-        connection.start(queue: .global())
-        // Wait for the connection attempt to complete
-        semaphore.wait()
-        
-        // Return the result of the connection attempt
-        if connectionSuccessful {
-            return true
-        } else {
-            throw NetworkUtilsError.connectionFailed
+            
+            connection.start(queue: .global())
         }
     }
     
@@ -193,9 +167,6 @@ public enum NetworkUtils {
     ///     - arguments: An array of Strings representing the arguments.
     /// - Returns: A string representing the output of the executed command.
     private static func runShellCommand(_ launchPath: String, arguments: [String]) throws -> String {
-        let command = "\(launchPath) \(arguments.joined(separator: " "))"
-        print("Executing command: \(command)")
-        
         let task = Process()
         task.launchPath = launchPath
         task.arguments = arguments
@@ -203,18 +174,14 @@ public enum NetworkUtils {
         let pipe = Pipe()
         task.standardOutput = pipe
         
-        do {
-            try task.run()
-            task.waitUntilExit()
-            
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            guard let output = String(data: data, encoding: .utf8) else {
-                throw NetworkUtilsError.outputParsingFailed
-            }
-            
-            return output
-        } catch {
-            throw NetworkUtilsError.commandFailed
+        try task.run()
+        task.waitUntilExit()
+        
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        guard let output = String(data: data, encoding: .utf8) else {
+            throw NetworkUtilsError.outputParsingFailed
         }
+        
+        return output
     }
 }

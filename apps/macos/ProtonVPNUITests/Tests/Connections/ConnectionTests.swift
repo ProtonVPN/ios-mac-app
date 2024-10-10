@@ -26,7 +26,7 @@ class ConnectionTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
     private let countriesSelectionRobot = CountriesSectionRobot()
     private let alertRobot = AlertRobot()
-
+    
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
@@ -101,9 +101,9 @@ class ConnectionTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testConnectToSpecificCountry() {
+    func testConnectToSpecificCountry() async throws {
         
-        let country = "Australia"
+        let country = try await ServersListUtils.getRandomCountryName()
         
         countriesSelectionRobot
             .searchForServer(serverName: country)
@@ -117,10 +117,9 @@ class ConnectionTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testConnectToSpecificCity() {
+    func testConnectToSpecificCity() async throws {
         
-        let country = "Australia"
-        let city = "Melbourne"
+        let (country, city, _) = try await ServersListUtils.getRandomServerInfo()
         
         countriesSelectionRobot
             .searchForServer(serverName: city)
@@ -136,10 +135,9 @@ class ConnectionTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testConnectToSpecificServer() {
+    func testConnectToSpecificServer() async throws {
         
-        let country = "Australia"
-        let server = "AU#211"
+        let (country, _, server) = try await ServersListUtils.getRandomServerInfo()
         
         countriesSelectionRobot
             .searchForServer(serverName: server)
@@ -153,50 +151,50 @@ class ConnectionTests: ProtonVPNUITests {
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-
+    
     @MainActor
-    func testLocalNetworkIsReachableWhileConnected() throws {
+    func testLocalNetworkIsReachableWhileConnected() async throws {
         let defaultGatewayAddress = try NetworkUtils.getDefaultGatewayAddress()
-
-        try mainRobot
+        
+        try await mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
             .verify.checkIfLocalNetworkingReachable(to: defaultGatewayAddress)
     }
-
+    
     @MainActor
     func testLogoutWhileConnectedContinue() {
-
+        
         mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .logOut()
-
+        
         alertRobot
             .verify.checkLogoutWarningAlertAppear()
             .logoutWarningAlert.clickContinue()
-
+        
         loginRobot
             .verify.checkLoginScreenIsShown()
     }
-
+    
     @MainActor
     func testLogoutWhileConnectedCancel() {
-
+        
         mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .logOut()
-
+        
         alertRobot
             .verify.checkLogoutWarningAlertAppear()
             .logoutWarningAlert.clickCancel()
-
+        
         mainRobot
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
     }
-
+    
     @MainActor
     private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
         
