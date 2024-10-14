@@ -102,7 +102,7 @@ struct PurchaseOptionsView: View {
         let planPriceString = PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale)
         let pricePerMonthString = PriceFormatter.formatPlanPrice(price: planOption.pricePerMonth, locale: planPrice.locale)
         HStack(spacing: .themeSpacing16) {
-            VStack {
+            VStack(alignment: .leading) {
                 // > Apps offering auto-renewable subscriptions must include:
                 // > Title of auto-renewing subscription, which may be the same as the in-app purchase product name
                 // Plan title is hardcoded for now - we already reference VPN Plus in the coaxing view, and filter
@@ -111,17 +111,17 @@ struct PurchaseOptionsView: View {
                 bodyText(subscriptionPeriod(for: planOption))
             }
             Spacer()
-            if planDuration.months == 12 {
-                VStack {
+            VStack(alignment: .trailing) {
+                if planDuration.months == 12 {
                     headlineText(planPriceString)
                     + bodyText(" /year")
                     bodyText("\(pricePerMonthString) /month")
+                } else if planDuration == .oneMonth {
+                    headlineText(planPriceString)
+                    + bodyText(" /month")
+                } else {
+                    headlineText(planPriceString)
                 }
-            } else if planDuration == .oneMonth {
-                headlineText(planPriceString)
-                + bodyText(" /month")
-            } else {
-                headlineText(planPriceString)
             }
         }
     }
