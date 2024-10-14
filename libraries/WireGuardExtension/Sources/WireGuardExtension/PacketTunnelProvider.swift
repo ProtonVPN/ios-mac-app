@@ -35,6 +35,16 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
 
+    private static var atlasSecret: String {
+        #if DEBUG
+        @Dependency(\.storage) var storage
+        let secret = storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
+        return secret
+        #else
+        return ""
+        #endif
+    }
+
     public override init() {
         AppContext.default = .wireGuardExtension
         self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
@@ -43,13 +53,12 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         self.timerFactory = TimerFactoryImplementation()
 
         let keychainHandle = AuthKeychain.default
-        let atlasSecret = Bundle.main.infoDictionary?["ProtonVPNAtlasSecret"] as? String ?? ""
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
             keychain: keychainHandle,
             appInfo: self.appInfo,
-            atlasSecret: atlasSecret
+            atlasSecret: Self.atlasSecret
         )
 
         self.certificateRefreshManager = ExtensionCertificateRefreshManager(

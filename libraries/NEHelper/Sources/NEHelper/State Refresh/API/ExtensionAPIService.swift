@@ -143,7 +143,8 @@ public final class ExtensionAPIService {
 
     private var apiUrl: String {
         #if DEBUG
-        if storage.contains(apiEndpointStorageKey), let url = storage.getValue(forKey: apiEndpointStorageKey) as? String {
+        let storageKey = StorageKeys.apiEndpoint
+        if storage.contains(storageKey), let url = storage.getValue(forKey: storageKey) as? String {
             log.debug("Using API: \(url) ", category: .api)
             return url
         }
@@ -160,7 +161,6 @@ public final class ExtensionAPIService {
 
     public weak var delegate: ExtensionAPIServiceDelegate?
 
-    private let apiEndpointStorageKey = "ApiEndpoint"
     private let timerFactory: TimerFactory
     private let keychain: AuthKeychainHandle
     private let appInfo: AppInfo
