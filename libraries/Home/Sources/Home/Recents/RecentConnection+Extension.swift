@@ -29,9 +29,27 @@ extension Array<RecentConnection> {
         try? storage.set(self, forKey: Self.storageKey)
     }
 
+#if targetEnvironment(simulator)
+    static var simSeedRecents: [RecentConnection] {
+        [.connectionRegion,
+         .connectionRegionPinned,
+         .connectionSecureCore,
+         .connectionSecureCoreFastest,
+         .defaultFastest,
+         .pinnedConnection,
+         .previousConnection,
+         .previousFreeConnection]
+    }
+#endif
+
     static func readFromStorage() -> [RecentConnection] {
         @Dependency(\.storage) var storage
         var recents = (try? storage.get([RecentConnection].self, forKey: storageKey)) ?? []
+#if targetEnvironment(simulator)
+        if recents.isEmpty {
+            recents = simSeedRecents
+        }
+#endif
         recents.trimAndSortList()
         return recents
     }

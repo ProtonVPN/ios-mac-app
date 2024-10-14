@@ -25,7 +25,7 @@ import ConnectionDetails
 @available(iOS 17, *)
 @Reducer
 public struct HomeFeature {
-    @Dependency(\.serverChangeAuthorizer) var authorizer
+    @Dependency(\.serverChangeAuthorizer) private var authorizer
 
     @Reducer(state: .equatable)
     public enum Destination {
@@ -44,7 +44,8 @@ public struct HomeFeature {
 
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
-        @Presents public var destination: Destination.State?
+        @Presents
+        public var destination: Destination.State?
 
         public init() {
             self.connectionStatus = .init()
@@ -152,7 +153,7 @@ public struct HomeFeature {
             case .destination(let action):
                 switch action {
                 case .presented(.changeServer(.buttonTapped)):
-                    if authorizer.serverChangeAvailability() == .available {
+                    if case .available = authorizer.serverChangeAvailability() {
                         state.destination = nil
                         return .send(.changeServer)
                     } else {

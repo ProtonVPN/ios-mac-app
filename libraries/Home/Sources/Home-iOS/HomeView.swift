@@ -35,9 +35,9 @@ import SharedViews
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
-    static let maxWidth: CGFloat = 736
-    static let mapHeight: CGFloat = 414
-    static let bottomGradientHeight: CGFloat = 100
+    private static let maxWidth: CGFloat = 736
+    private static let mapHeight: CGFloat = 414
+    private static let bottomGradientHeight: CGFloat = 100
 
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
@@ -54,7 +54,7 @@ public struct HomeView: View {
                                                         action: \.connectionStatus))
                 .allowsHitTesting(false)
 
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
                     VStack {
                         LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
@@ -62,15 +62,12 @@ public struct HomeView: View {
                                        endPoint: .bottom)
                         .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
 
-                        HomeConnectionCardView(store: store.scope(state: \.connectionCard,
-                                                                  action: \.connectionCard))
-                        .padding(.horizontal, .themeSpacing16)
-                        .frame(width: min(proxy.size.width, Self.maxWidth))
+                        HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
+                            .padding(.horizontal, .themeSpacing16)
+                            .frame(width: min(proxy.size.width, Self.maxWidth))
 
-                        RecentsSectionView(store: store.scope(state: \.recents,
-                                                              action: \.recents))
-//                        .padding(.horizontal, .themeSpacing16)
-//                        .frame(width: min(proxy.size.width, Self.maxWidth))
+                        RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
+                        .frame(width: min(proxy.size.width, Self.maxWidth))
 
                         Color(.background) // needed to take all the available horizontal space for the background
                     }
@@ -107,8 +104,12 @@ internal extension GeometryProxy {
 }
 
 #if DEBUG
+import Domain
+
 @available(iOS 17, *)
 #Preview {
-    HomeView(store: .init(initialState: HomeFeature.State(), reducer: { HomeFeature() }))
+    var homeFeatureState: HomeFeature.State = .init()
+    homeFeatureState.recents.recents = RecentConnection.sampleData
+    return HomeView(store: .init(initialState: homeFeatureState, reducer: { HomeFeature() }))
 }
 #endif

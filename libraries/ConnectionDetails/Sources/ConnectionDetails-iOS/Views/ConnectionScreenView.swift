@@ -45,8 +45,10 @@ public struct ConnectionScreenView: View {
             HStack(alignment: .top) {
                 if let spec = store.vpnConnectionStatus.spec {
                     ConnectionFlagInfoView(intent: spec,
+                                           isPinned: false,
                                            vpnConnectionActual: store.vpnConnectionStatus.actual,
-                                           withDivider: false)
+                                           withDivider: false,
+                                           images: .coreImages)
                 }
                 Spacer()
 

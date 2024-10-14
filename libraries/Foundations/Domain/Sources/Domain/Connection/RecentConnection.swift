@@ -54,3 +54,42 @@ extension RecentConnection: Identifiable {
 
 extension RecentConnection: Codable {
 }
+
+#if DEBUG
+extension RecentConnection {
+    public static var sampleData: [RecentConnection] {
+        return [
+            RecentConnection(
+                pinned: true,
+                underMaintenance: false,
+                connectionDate: Date(),
+                connection: .init(location: .fastest, features: [])
+            ),
+            RecentConnection(
+                pinned: true,
+                underMaintenance: false,
+                connectionDate: Date(),
+                connection: .init(location: .region(code: "CH"), features: [])
+            ),
+            RecentConnection(
+                pinned: false,
+                underMaintenance: false,
+                connectionDate: Date(),
+                connection: .init(location: .region(code: "US"), features: [])
+            ),
+            RecentConnection(
+                pinned: false,
+                underMaintenance: false,
+                connectionDate: Date(),
+                connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
+            ),
+            RecentConnection(
+                pinned: false,
+                underMaintenance: false,
+                connectionDate: Date(),
+                connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
+            )
+        ]
+    }
+}
+#endif

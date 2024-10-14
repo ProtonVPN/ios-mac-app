@@ -26,37 +26,48 @@ import ProtonCoreUIFoundations
 
 @available(iOS 17, *)
 struct RecentRowItemView: View {
-    @ScaledMetric var iconSize: CGFloat = 16
-
-    @Dependency(\.locale) private var locale
-
-//    static let offScreenSwipeDistance: CGFloat = 1000
     static let buttonPadding: CGFloat = .themeSpacing16
     static let itemCellHeight: CGFloat = .themeSpacing64
 
     let item: RecentConnection
     let sendAction: RecentsFeature.ActionSender
 
-//    @State var swipeOffset: CGFloat = 0
-    @State var viewSize: CGSize = .zero
-    @State var buttonLabelSize: CGSize = .zero
+    @ScaledMetric
+    private var iconSize: CGFloat = 16
 
-    private var row: some View {
+    @Dependency(\.locale)
+    private var locale
+
+    private var trailingIcon: some View {
+        item.icon
+            .resizable()
+            .foregroundColor(.init(.icon, .weak))
+            .frame(.square(iconSize))
+            .padding(.trailing, .themeSpacing12)
+    }
+
+    private var content: some View {
         HStack(alignment: .center, spacing: 0) {
-            item.icon
-                .resizable()
-                .foregroundColor(.init(.icon, .weak))
-                .frame(.square(iconSize))
-                .padding(.leading, .themeSpacing16)
-                .padding(.trailing, .themeSpacing12)
-            ConnectionFlagInfoView(intent: item.connection, withDivider: true)
+            trailingIcon
+            ConnectionFlagInfoView(intent: item.connection,
+                                   underMaintenance: item.underMaintenance, 
+                                   isPinned: item.pinned,
+                                   withDivider: true,
+                                   images: .coreImages) { action in
+                switch action {
+                case .pin:
+                    sendAction(.pin(item.connection))
+                case .unpin:
+                    sendAction(.unpin(item.connection))
+                case .remove:
+                    sendAction(.remove(item.connection))
+                }
+            }
         }
+        .padding(.horizontal, .themeSpacing16)
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
-        .saveSize(in: $viewSize)
         .background(Color(.background))
         .cornerRadius(.themeRadius12)
-//        .offset(x: swipeOffset)
-//        .gesture(DragGesture().onChanged(swipeChanged).onEnded(swipeEnded))
         .onTapGesture {
             withAnimation(.easeInOut) {
                 _ = sendAction(.delegate(.connect(item.connection)))
@@ -64,30 +75,9 @@ struct RecentRowItemView: View {
         }
     }
 
-//    private var swipeAction: RecentsFeature.Action? {
-//        if swipeOffset == 0 { // (no swipe)
-//            return nil
-//        } else if swipeOffset < 0 { // (swipe left)
-//            return .remove(item.connection)
-//        } else { // swipeOffset > 0 (swipe right)
-//            return item.pinned ?
-//                .unpin(item.connection) :
-//                .pin(item.connection)
-//        }
-//    }
-
-//    private var underlyingButton: any View {
-//        guard let swipeAction else {
-//            return Color(.background, .transparent)
-//        }
-//
-//        return button(action: swipeAction)
-//    }
-
     public var body: some View {
         ZStack(alignment: .bottom) {
-//            AnyView(underlyingButton)
-            row
+            content
         }
         .accessibilityElement()
         .accessibilityLabel(item.connection.location.accessibilityText(locale: locale))
@@ -106,73 +96,17 @@ struct RecentRowItemView: View {
             _ = sendAction(action)
         }
     }
-
-    @ViewBuilder
-    private func button(action: RecentsFeature.Action) -> some View {
-        Button(role: action.role) {
-            withAnimation(.easeOut) {
-                _ = sendAction(action)
-            }
-        } label: {
-            HStack {
-                if action.role == .destructive {
-                    Spacer()
-                }
-
-                AnyView(action.label)
-                    .saveSize(in: $buttonLabelSize)
-
-                if action.role == nil {
-                    Spacer()
-                }
-            }
-            .frame(maxHeight: .infinity)
-        }
-        .padding(.horizontal, Self.buttonPadding)
-        .background(action.color)
-    }
-//
-//    func swipeChanged(_ value: DragGesture.Value) {
-//        guard abs(value.translation.width) > 1 &&
-//            abs(value.translation.height) < 10 else {
-//            return
-//        }
-//
-//        swipeOffset = value.translation.width * (locale.isRTLLanguage ? -1 : 1)
-//    }
-//
-//    func swipeEnded(_ value: DragGesture.Value) {
-//        let sign: CGFloat = {
-//            var shouldFlip = value.translation.width < 0
-//            locale.isRTLLanguage ? shouldFlip.toggle() : ()
-//            return shouldFlip ? -1 : 1
-//        }()
-//        withAnimation(.easeOut) {
-//            guard value.reached(.performAction, accordingTo: viewSize) else {
-//                guard value.reached(.exposeButton, accordingTo: viewSize) else {
-//                    swipeOffset = 0
-//                    return
-//                }
-//
-//                let buttonWidth = buttonLabelSize.width + (Self.buttonPadding * 2)
-//                swipeOffset = sign * buttonWidth
-//                return
-//            }
-//
-//            swipeOffset = sign * Self.offScreenSwipeDistance
-//            if let swipeAction {
-//                _ = sendAction(swipeAction)
-//            }
-//        }
-//    }
 }
 
 extension RecentConnection {
-    public var icon: Image {
-        if pinned {
-            return IconProvider.pinFilled
-        } else {
-            return IconProvider.clockRotateLeft
-        }
+    var icon: Image {
+        return pinned ? IconProvider.pinFilled : IconProvider.clockRotateLeft
     }
 }
+
+#if DEBUG
+@available(iOS 17, *)
+#Preview {
+    RecentRowItemView(item: .sampleData.randomElement()!, sendAction: { _ in () })
+}
+#endif

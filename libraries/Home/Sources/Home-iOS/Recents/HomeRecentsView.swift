@@ -34,14 +34,14 @@ public struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(Localizable.homeRecentsRecentSection)
-                .themeFont(.caption())
-                .styled(.weak)
-                .padding([.top, .leading, .trailing], .themeSpacing16)
-                .padding(.bottom, .themeSpacing8)
-            WithPerceptionTracking {
-                ForEach(store.connections) { item in
+        WithPerceptionTracking {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(Localizable.homeRecentsRecentSection)
+                    .themeFont(.caption())
+                    .styled(.weak)
+                    .padding([.top, .leading, .trailing], .themeSpacing16)
+                    .padding(.bottom, .themeSpacing8)
+                ForEach(store.recents) { item in
                     RecentRowItemView(item: item, sendAction: { _ = store.send($0) })
                 }
             }
@@ -132,68 +132,35 @@ extension RecentsFeature.Action {
         }
     }
 
-    var label: any View {
-        guard let icon else {
-            return text
-        }
-
-        return Label {
+    @ViewBuilder
+    var label: some View {
+        if let icon {
+            Label {
+                text
+            } icon: {
+                icon
+                    .resizable()
+                    .styled(.inverted)
+                    .frame(width: 16, height: 16) // todo: this doesn't change size with dynamic type
+            }
+            .labelStyle(VerticalLabelStyle())
+        } else {
             text
-        } icon: {
-            icon
-                .resizable()
-                .styled(.inverted)
-                .frame(width: 16, height: 16) // todo: this doesn't change size with dynamic type
         }
-        .labelStyle(VerticalLabelStyle())
     }
 }
 
-//#if DEBUG
-//@available(iOS 17, *)
-//#Preview {
-//    let store: StoreOf<RecentsFeature> = .init(initialState:
-//            .init(connections: [
-//                RecentConnection(
-//                    pinned: true,
-//                    underMaintenance: false,
-//                    connectionDate: .now,
-//                    connection: .init(location: .fastest, features: [])
-//                ),
-//                RecentConnection(
-//                    pinned: true,
-//                    underMaintenance: false,
-//                    connectionDate: .now,
-//                    connection: .init(location: .region(code: "CH"), features: [])
-//                ),
-//                RecentConnection(
-//                    pinned: false,
-//                    underMaintenance: false,
-//                    connectionDate: .now,
-//                    connection: .init(location: .region(code: "US"), features: [])
-//                ),
-//                RecentConnection(
-//                    pinned: false,
-//                    underMaintenance: false,
-//                    connectionDate: .now,
-//                    connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
-//                ),
-//                RecentConnection(
-//                    pinned: false,
-//                    underMaintenance: false,
-//                    connectionDate: .now,
-//                    connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
-//                ),
-//            ],
-//                  connectionStatus: .init()),
-//                                            reducer: { RecentsFeature() }
-//    )
-//    return ScrollView {
-//        RecentsSectionView(
-//            items: store.remainingConnections,
-//            sendAction: { _ = store.send($0) }
-//        )
-//    }
-//    .background(Color(.background, .normal))
-//}
-//#endif
+#if DEBUG
+@available(iOS 17, *)
+#Preview {
+    let sampleData = RecentConnection.sampleData.map { var copy = $0; copy.underMaintenance = Bool.random(); return copy }
+    let store: StoreOf<RecentsFeature> = .init(
+        initialState: .init(recents: sampleData),
+        reducer: RecentsFeature.init
+    )
+    return ScrollView {
+        RecentsSectionView(store: store)
+    }
+    .background(Color(.background, .normal))
+}
+#endif

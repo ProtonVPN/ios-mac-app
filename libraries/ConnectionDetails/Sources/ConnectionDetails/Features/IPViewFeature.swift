@@ -29,7 +29,7 @@ public struct IPViewFeature {
         public var vpnIp: String? {
             vpnConnectionStatus.actual?.serverExitIP
         }
-        public var localIpHidden = false
+        public var localIpHidden = true
 
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus

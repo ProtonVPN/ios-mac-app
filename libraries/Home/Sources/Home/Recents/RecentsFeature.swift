@@ -23,36 +23,37 @@ import VPNAppCore
 
 @Reducer
 public struct RecentsFeature {
-
     public typealias ActionSender = (Action) -> Void
 
     @ObservableState
     public struct State: Equatable {
-        static let maxConnections = 8
+        static let maxConnections: Int = 8
 
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.vpnConnectionStatus)
+        public var vpnConnectionStatus: VPNConnectionStatus
 
-        public var connections: [RecentConnection] = .readFromStorage()
+        public package(set) var recents: [RecentConnection] = .readFromStorage()
 
-        public init() { }
+        public init(recents: [RecentConnection]) {
+            self.recents = recents
+        }
+
+        public init() {}
     }
 
     @CasePathable
     public enum Action {
         case connectionEstablished(ConnectionSpec)
-        /// Pin a recent connection to the top of the list, and remove it from the recent connections.
         case pin(ConnectionSpec)
-        /// Remove a connection from the pins, and add it to the top of the recent connections.
         case unpin(ConnectionSpec)
-        /// Remove a connection.
         case remove(ConnectionSpec)
-
-        case delegate(Delegate)
 
         @CasePathable
         public enum Delegate: Equatable {
             case connect(ConnectionSpec)
         }
+
+        case delegate(Delegate)
 
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)
@@ -61,6 +62,8 @@ public struct RecentsFeature {
     private enum CancelId {
         case watchConnectionStatus
     }
+
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -82,9 +85,9 @@ public struct RecentsFeature {
 
             case .connectionEstablished(let spec):
                 var pinned = false
-                if let index = state.connections.index(for: spec) {
-                    pinned = state.connections[index].pinned
-                    state.connections.remove(at: index)
+                if let index = state.recents.index(for: spec) {
+                    pinned = state.recents[index].pinned
+                    state.recents.remove(at: index)
                 }
                 let recent = RecentConnection(
                     pinned: pinned,
@@ -92,34 +95,32 @@ public struct RecentsFeature {
                     connectionDate: Date(),
                     connection: spec
                 )
-                state.connections.insert(recent, at: 0)
-                state.connections.trimAndSortList()
+                state.recents.insert(recent, at: 0)
+                state.recents.trimAndSortList()
                 return .none
             case let .pin(spec):
-                guard let index = state.connections.index(for: spec) else {
-//                    state.connections.trimAndSortList()
+                guard let index = state.recents.index(for: spec) else {
                     return .none
                 }
 
-                state.connections[index].pinned = true
-                state.connections.trimAndSortList()
+                state.recents[index].pinned = true
+                state.recents.trimAndSortList()
                 return .none
 
             case let .unpin(spec):
-                guard let index = state.connections.index(for: spec) else {
-//                    state.connections.trimAndSortList()
+                guard let index = state.recents.index(for: spec) else {
                     return .none
                 }
 
-                state.connections[index].pinned = false
-                state.connections.trimAndSortList()
+                state.recents[index].pinned = false
+                state.recents.trimAndSortList()
                 return .none
 
             case let .remove(spec):
-                state.connections.removeAll {
+                state.recents.removeAll {
                     $0.connection == spec
                 }
-                state.connections.trimAndSortList()
+                state.recents.trimAndSortList()
                 return .none
             case .delegate:
                 return .none

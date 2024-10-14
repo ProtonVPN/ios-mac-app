@@ -51,7 +51,7 @@ public struct HomeConnectionCardFeature {
     public enum Action: Equatable {
         @CasePathable
         public enum Delegate: Equatable {
-            case connect/*(ConnectionSpec)*/
+            case connect
             case disconnect
             case tapAction
             case changeServerButtonTapped
