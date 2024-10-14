@@ -69,12 +69,6 @@
       }
     },
     {
-      "skippedTests" : [
-        "AppFeatureSnapshotTests\/testDarkApp()",
-        "AppFeatureSnapshotTests\/testLightApp()",
-        "SettingsFeatureSnapshotTests\/testDarkSettings()",
-        "SettingsFeatureSnapshotTests\/testLightSettings()"
-      ],
       "target" : {
         "containerPath" : "container:..\/..\/libraries\/tvOS",
         "identifier" : "tvOSSnapshotTests",
