@@ -18,10 +18,13 @@
 
 import ComposableArchitecture
 import CommonNetworking
+import Ergonomics
+import Foundation
 import ProtonCoreFeatureFlags
 
 import ProtonCoreLog
 import PMLogger
+import enum VPNShared.StorageKeys
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
@@ -99,6 +102,7 @@ struct AppFeature {
         Reduce { state, action in
             switch action {
             case .onAppearTask:
+                prepareEnvironment()
                 setFeatureFlagOverrides()
                 setupCoreLogging()
 
@@ -245,5 +249,17 @@ struct AppFeature {
                 log.assertionFailure("\(message)", category: .core)
             }
         }
+    }
+
+    /// In DEBUG builds, persists the atlas secret and custom environment to shared defaults.
+    /// In RELEASE builds, sets these to the empty string.
+    private func prepareEnvironment() {
+        @Dependency(\.storage) var storage
+
+        let atlasSecret = Bundle.atlasSecret ?? ""
+        let dynamicDomain = Bundle.dynamicDomain ?? ""
+
+        storage.setValue(atlasSecret, forKey: StorageKeys.atlasSecret)
+        storage.setValue(dynamicDomain, forKey: StorageKeys.apiEndpoint)
     }
 }
