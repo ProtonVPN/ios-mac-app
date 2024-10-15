@@ -24,19 +24,17 @@ import ComposableArchitecture
 
 struct WelcomeView: View {
     @Bindable var store: StoreOf<WelcomeFeature>
+    @Namespace private var welcomeButtonNamespace
 
     var body: some View {
         NavigationStack {
             VStack(spacing: .themeSpacing64) {
-                // Double height spacer pushes logo down far enough that it doesn't clash with the background
-                Spacer()
                 Spacer()
                 Image(.vpnWordmarkNoBg)
                 titleView
                 buttonsView
                 Spacer()
                 availableView
-                informationButtons
             }
             .background(Image(.backgroundBrand))
             .navigationDestination(item: $store.scope(state: \.destination?.signIn, action: \.destination.signIn)) { SignInView(store: $0) }
@@ -46,17 +44,6 @@ struct WelcomeView: View {
         }
         .onAppear {
             store.send(.onAppear)
-        }
-    }
-
-    var informationButtons: some View {
-        HStack(spacing: .themeSpacing48) {
-            WelcomeButtonView(title: "Privacy Policy", action: {
-                store.send(.showPrivacyPolicy)
-            })
-            WelcomeButtonView(title: "Terms of Service", action: {
-                store.send(.showTermsOfService)
-            })
         }
     }
 
@@ -92,13 +79,19 @@ struct WelcomeView: View {
     }()
 
     var buttonsView: some View {
-        HStack(spacing: .themeSpacing32) {
-            WelcomeButtonView(title: "Agree and Sign in", action: {
-                store.send(.showSignIn)
+        HStack(spacing: .themeSpacing48) {
+            WelcomeButtonView(title: "Privacy Policy", action: {
+                store.send(.showPrivacyPolicy)
             })
+            WelcomeButtonView(title: "Terms of Service", action: {
+                store.send(.showTermsOfService)
+            })
+            WelcomeButtonView(title: "Agree and continue", action: {
+                store.send(.showSignIn)
+            }).prefersDefaultFocus(in: welcomeButtonNamespace)
 //            WelcomeButtonView(title: "Create account", action: {
 //                store.send(.showCreateAccount)
 //            })
-        }
+        }.focusScope(welcomeButtonNamespace)
     }
 }
