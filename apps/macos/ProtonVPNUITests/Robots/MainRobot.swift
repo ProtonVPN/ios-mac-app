@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 import Strings
 import fusion
+import UITestsHelpers
 
 fileprivate let qcButton = Localizable.quickConnect
 fileprivate let disconnectButton = Localizable.disconnect

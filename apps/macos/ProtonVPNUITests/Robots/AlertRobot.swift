@@ -20,6 +20,7 @@ import Foundation
 import Strings
 import XCTest
 import fusion
+import UITestsHelpers
 
 let app = XCUIApplication()
 

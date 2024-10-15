@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 import Strings
 import fusion
+import UITestsHelpers
 
 var window: XCUIElement!
 

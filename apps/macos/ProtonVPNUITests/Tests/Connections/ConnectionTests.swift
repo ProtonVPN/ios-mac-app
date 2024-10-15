@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import UITestsHelpers
 
 class ConnectionTests: ProtonVPNUITests {
     

@@ -18,9 +18,9 @@
 
 import Foundation
 
-struct StringUtils {
+public enum StringUtils {
 
-    func randomAlphanumericString(length: Int) -> String {
+    public static func randomAlphanumericString(length: Int) -> String {
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let allowedCharsCount = UInt32(allowedChars.count)
         var randomString = ""

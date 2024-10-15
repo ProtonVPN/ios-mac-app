@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import fusion
+import UITestsHelpers
 
 fileprivate let showMapButton = "Show map"
 fileprivate let hideMapButton = "Hide map"

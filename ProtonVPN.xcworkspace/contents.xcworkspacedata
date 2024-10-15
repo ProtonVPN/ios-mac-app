@@ -21,6 +21,9 @@
          location = "container:"
          name = "Foundations">
          <FileRef
+            location = "group:libraries/Foundations/UITestsHelpers">
+         </FileRef>
+         <FileRef
             location = "group:libraries/Foundations/Domain">
          </FileRef>
          <FileRef

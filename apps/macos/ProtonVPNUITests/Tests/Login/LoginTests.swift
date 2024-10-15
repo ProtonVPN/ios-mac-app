@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import UITestsHelpers
 
 class LoginTests: ProtonVPNUITests {
 
@@ -97,7 +98,7 @@ class LoginTests: ProtonVPNUITests {
             .loginUser(credentials: twofausercredentials[0])
         twoFaRobot
             .verify.twoFaAuthenticationIsShown()
-            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+            .fillTwoFACode(code: await GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
         
         waitForLoaderDisappear()
         
@@ -114,7 +115,7 @@ class LoginTests: ProtonVPNUITests {
             .loginUser(credentials: twopasstwofausercredentials[0])
         twoFaRobot
             .verify.twoFaAuthenticationIsShown()
-            .fillTwoFACode(code: await generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+            .fillTwoFACode(code: await GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
         
         waitForLoaderDisappear()
         

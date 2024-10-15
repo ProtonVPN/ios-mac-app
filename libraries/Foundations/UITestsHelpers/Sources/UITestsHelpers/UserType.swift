@@ -18,12 +18,12 @@
 
 import Foundation
 
-enum UserType {
+public enum UserType {
     case Free
     case Basic
     case Plus
     
-    var credentials: Credentials {
+    public var credentials: Credentials {
         let allCredentials = getCredentials(fromResource: "credentials")
         switch self {
         case .Free:

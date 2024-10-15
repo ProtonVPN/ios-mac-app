@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 import Strings
 import fusion
+import UITestsHelpers
 
 fileprivate let fieldUsername = "UsernameTextField"
 fileprivate let fieldPassword = "PasswordTextField"
