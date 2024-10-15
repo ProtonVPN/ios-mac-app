@@ -37,7 +37,8 @@ public class UserLocationService {
     @MainActor
     private func refresh() async throws {
         @Dependency(\.locationClient) var client
-        self.userLocation = try await client.fetchLocation()
+        let newLocation = try await client.fetchLocation()
+        $userLocation.withLock { $0 = newLocation }
     }
 }
 
