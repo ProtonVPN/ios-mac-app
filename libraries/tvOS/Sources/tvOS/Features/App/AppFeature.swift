@@ -252,14 +252,11 @@ struct AppFeature {
     }
 
     /// In DEBUG builds, persists the atlas secret and custom environment to shared defaults.
-    /// In RELEASE builds, sets these to the empty string.
+    /// In RELEASE builds, these are always nil.
     private func prepareEnvironment() {
         @Dependency(\.storage) var storage
 
-        let atlasSecret = Bundle.atlasSecret ?? ""
-        let dynamicDomain = Bundle.dynamicDomain ?? ""
-
-        storage.setValue(atlasSecret, forKey: StorageKeys.atlasSecret)
-        storage.setValue(dynamicDomain, forKey: StorageKeys.apiEndpoint)
+        storage.setValue(Bundle.atlasSecret, forKey: StorageKeys.atlasSecret)
+        storage.setValue(Bundle.dynamicDomain, forKey: StorageKeys.apiEndpoint)
     }
 }
