@@ -42,4 +42,10 @@ rm -f "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)" || tr
 mkdir -p "$MACROS_ALLOWLIST_INSTALL_DIR" || true
 cp "$MACROS_ALLOWLIST_PATH" "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)"
 
+# Check if 'mint bootstrap' is already running
+while pgrep -f "mint bootstrap" > /dev/null; do
+    echo "Another instance of 'mint bootstrap' is running. Waiting..."
+    sleep 5
+done
+
 mint bootstrap --link --overwrite=y
