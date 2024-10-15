@@ -86,7 +86,7 @@ struct WelcomeView: View {
             WelcomeButtonView(title: "Terms of Service", action: {
                 store.send(.showTermsOfService)
             })
-            WelcomeButtonView(title: "Agree and Sign in", action: {
+            WelcomeButtonView(title: "Agree and continue", action: {
                 store.send(.showSignIn)
             }).prefersDefaultFocus(in: welcomeButtonNamespace)
 //            WelcomeButtonView(title: "Create account", action: {
