@@ -57,7 +57,7 @@ public struct LogicalsRefresherProvider {
         repository.upsert(servers: logicalsResponse)
 
         let now = Dependency(\.date).wrappedValue.now
-        lastLogicalsRefresh = now.timeIntervalSince1970
+        await $lastLogicalsRefresh.withLock { $0 = now.timeIntervalSince1970 }
     }
 
     public func shouldRefreshLogicals() -> Bool {
