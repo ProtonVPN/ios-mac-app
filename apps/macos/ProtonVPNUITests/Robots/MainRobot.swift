@@ -37,7 +37,7 @@ fileprivate let protocolLabelField = "protocolLabel"
 class MainRobot: CoreElements {
     
     func openProfiles() -> ManageProfilesRobot {
-        tabGroup(Localizable.profiles).forceTap()
+        tabGroup(Localizable.profiles).tapInCenter()
         button(Localizable.createProfile).tap()
         return ManageProfilesRobot()
     }

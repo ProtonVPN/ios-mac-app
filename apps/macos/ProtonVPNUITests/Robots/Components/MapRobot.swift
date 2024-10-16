@@ -37,7 +37,7 @@ class MapRobot: CoreElements {
     }
     
     func clickHideMap() -> MapRobot {
-        button(hideMapButton).forceTap()
+        button(hideMapButton).tapInCenter()
         return self
     }
     
