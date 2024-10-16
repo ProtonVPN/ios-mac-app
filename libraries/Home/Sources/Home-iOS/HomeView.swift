@@ -43,6 +43,8 @@ public struct HomeView: View {
         self.store = store
     }
 
+    @Namespace var topID
+
     public var body: some View {
         #PerceptibleGeometryReader { proxy in
             ZStack(alignment: .top) {
@@ -53,28 +55,35 @@ public struct HomeView: View {
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: \.connectionStatus))
                 .allowsHitTesting(false)
+                ScrollViewReader { scrollViewProxy in
+                    ScrollView(showsIndicators: false) {
+                        Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
+                            .id(topID)
+                        VStack {
+                            LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
+                                           startPoint: .top,
+                                           endPoint: .bottom)
+                            .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
 
-                ScrollView(showsIndicators: false) {
-                    Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
-                    VStack {
-                        LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
-                                       startPoint: .top,
-                                       endPoint: .bottom)
-                        .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
+                            HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
+                                .padding(.horizontal, .themeSpacing16)
+                                .frame(width: min(proxy.size.width, Self.maxWidth))
 
-                        HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
-                            .padding(.horizontal, .themeSpacing16)
-                            .frame(width: min(proxy.size.width, Self.maxWidth))
+                            RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
+                                .frame(width: min(proxy.size.width, Self.maxWidth))
 
-                        RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
-                        .frame(width: min(proxy.size.width, Self.maxWidth))
-
-                        Color(.background) // needed to take all the available horizontal space for the background
+                            Color(.background) // needed to take all the available horizontal space for the background
+                        }
+                        .offset(y: -Self.bottomGradientHeight)
+                        .background(Color(.background))
                     }
-                    .offset(y: -Self.bottomGradientHeight)
-                    .background(Color(.background))
+                    .frame(width: proxy.size.width)
+                    .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
+                        if case .connecting = vpnConnectionStatus {
+                            scrollViewProxy.scrollTo(topID)
+                        }
+                    }
                 }
-                .frame(width: proxy.size.width)
             }
         }
         .task {

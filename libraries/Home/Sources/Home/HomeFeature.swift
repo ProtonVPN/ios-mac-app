@@ -42,7 +42,8 @@ public struct HomeFeature {
         public var connectionStatus: ConnectionStatusFeature.State
         public var sharedProperties: SharedPropertiesFeature.State
 
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.vpnConnectionStatus)
+        public var vpnConnectionStatus: VPNConnectionStatus
 
         @Presents
         public var destination: Destination.State?
@@ -126,7 +127,7 @@ public struct HomeFeature {
             case .connectionStatus:
                 return .none
             case .connectionDetails:
-                return .none // Will be handled up the tree of reducers
+                return .none
             case .helpButtonPressed:
                 return .none
             case .connectionCard(.delegate(let action)):

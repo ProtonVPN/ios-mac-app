@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 /// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable, Codable {
@@ -176,7 +177,7 @@ public extension ConnectionSpec.Location {
             }
             return text
         case .secureCore(.hop(_, let via)):
-            return "via \(regionName(locale: locale, code: via))"
+            return Localizable.viaCountry(regionName(locale: locale, code: via))
         }
     }
 }

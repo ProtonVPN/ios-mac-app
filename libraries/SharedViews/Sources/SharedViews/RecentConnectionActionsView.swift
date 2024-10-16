@@ -80,12 +80,12 @@ struct RecentConnectionActionsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            #if os(iOS)
+#if os(iOS)
             if UIDevice.current.userInterfaceIdiom == .phone {
                 Color(.background)
                     .frame(height: 20)
             }
-            #endif
+#endif
             List {
                 flagInfoView
                 button(model: isPinned ? unpinModel : pinModel)

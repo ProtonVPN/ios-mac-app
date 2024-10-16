@@ -53,8 +53,8 @@ public struct ConnectionInfoBuilder {
                     return LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country)
                 case .fastestHop:
                     return nil
-                case .hop:
-                    return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country) ?? "")
+                case .hop(_, let via):
+                    return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: via) ?? "")
                 }
             }
         }
