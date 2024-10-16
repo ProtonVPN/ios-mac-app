@@ -2289,7 +2289,7 @@
 "welcome_to_proton_banner_title" = "Certified no-logs VPN";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
+"welcome_to_proton_banner_subtitle" = "We’ll never log your internet activity or share your information with third parties.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Upgrade your privacy";

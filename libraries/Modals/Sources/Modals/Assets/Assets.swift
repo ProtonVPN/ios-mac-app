@@ -33,6 +33,7 @@ public enum Asset {
   public static let welcomeUnlimited = ImageAsset(name: "WelcomeUnlimited")
   public static let bannerIcon = ImageAsset(name: "bannerIcon")
   public static let customisation = ImageAsset(name: "customisation")
+  public static let getStarted = ImageAsset(name: "getStarted")
   public static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
   public static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   public static let netshield = ImageAsset(name: "netshield")

@@ -43,6 +43,13 @@ public extension Image {
 #endif
 
 public enum Feature: Hashable, Identifiable {
+    public enum ToggleID: Hashable, Identifiable {
+        public var id: Self { self }
+
+        case statistics
+        case crashes
+    }
+
     public var id: Self { self }
 
     case streaming
@@ -73,13 +80,14 @@ public enum Feature: Hashable, Identifiable {
     case welcomeAdvancedFeatures
     case welcomeDevices(Int)
     case banner
+    case toggle(id: ToggleID, title: String, subtitle: String, state: Bool)
 }
 
 extension Feature: Equatable { }
 
 extension Feature {
     // swiftlint:disable:next cyclomatic_complexity
-    public func title() -> String {
+    public func title() -> String? {
         switch self {
         case .streaming:
             return Localizable.modalsUpsellAllCountriesFeatureStreaming
@@ -136,7 +144,9 @@ extension Feature {
         case .welcomeDevices(let devices):
             return Localizable.welcomeScreenFeatureDevices(devices)
         case .banner:
-            return ""
+            return nil
+        case .toggle:
+            return nil
         }
     }
 
@@ -157,7 +167,7 @@ extension Feature {
         }
     }
 
-    public var image: Image {
+    public var image: Image? {
         switch self {
         case .streaming:
             return IconProvider.play
@@ -215,6 +225,8 @@ extension Feature {
             return IconProvider.locks
         case .banner:
             return IconProvider.play
+        case .toggle:
+            return nil
         }
     }
 }

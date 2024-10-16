@@ -26,6 +26,8 @@ import Modals_iOS
 import Dependencies
 import Persistence
 
+import ProtonCoreFeatureFlags
+
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
 }
@@ -71,12 +73,34 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
-            self.welcomeToProtonPrimaryAction()
+        modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
+            if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+                let getStartedVC = self.welcomeGetStartedViewController()
+                self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
+            } else {
+                self.postOnboardingAction()
+            }
         })
     }
 
-    func welcomeToProtonPrimaryAction() {
+    private func welcomeGetStartedViewController() -> UIViewController {
+        assert(FeatureFlagsRepository.shared.isRedesigniOSEnabled)
+
+        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) {
+            self.postOnboardingAction()
+        } onFeatureUpdate: { feature in
+            switch feature {
+            case .toggle(.statistics, _, _, let state):
+                break // TODO: Handle Statistics toggle
+            case .toggle(.crashes, _, _, let state):
+                break // TODO: Handle Anonymous Crashes toggle
+            default:
+                assertionFailure("Onboarding interactive feature not handled")
+            }
+        }
+    }
+
+    func postOnboardingAction() {
         guard let oneClickPayment = OneClickPayment(
             alertService: alertService,
             planService: planService,

@@ -21,19 +21,42 @@ import Theme
 
 struct UpsellBackgroundView<Content>: View where Content: View {
     let showGradient: Bool
+    let contentShouldIgnoreSafeAreas: (regions: SafeAreaRegions, edges: Edge.Set)?
     @ViewBuilder let content: Content
 
+    init(
+        showGradient: Bool,
+        contentShouldIgnoreSafeAreas: (regions: SafeAreaRegions, edges: Edge.Set)? = nil,
+        content: () -> Content
+    ) {
+        self.showGradient = showGradient
+        self.contentShouldIgnoreSafeAreas = contentShouldIgnoreSafeAreas
+        self.content = content()
+    }
+
     var body: some View {
-        ZStack(alignment: .top) {
-            if showGradient {
-                VStack(spacing: 0) {
-                    gradient
-                    Spacer()
-                }
-                .ignoresSafeArea()
+        if let (regions, edges) = contentShouldIgnoreSafeAreas {
+            ZStack(alignment: .top) {
+                containerContent
             }
-            content
+            .ignoresSafeArea(regions, edges: edges)
+        } else {
+            ZStack(alignment: .top) {
+                containerContent
+            }
         }
+    }
+
+    @ViewBuilder
+    private var containerContent: some View {
+        if showGradient {
+            VStack(spacing: 0) {
+                gradient
+                Spacer()
+            }
+            .ignoresSafeArea()
+        }
+        content
     }
 
     var gradient: some View {

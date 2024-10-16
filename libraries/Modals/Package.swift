@@ -44,12 +44,16 @@ let package = Package(
         .target(
             name: "Modals-iOS",
             dependencies: ["Modals", "Theme", "Ergonomics", "SharedViews"],
-            resources: [.process("Resources")]
+            resources: [
+                .process("Resources")
+            ]
         ),
         .target(
             name: "Modals-macOS",
             dependencies: ["Modals", "Theme", "Ergonomics", "SharedViews"],
-            resources: [.process("Resources")]
+            resources: [
+                .process("Resources")
+            ]
         ),
         .testTarget(
             name: "ModalsTests",

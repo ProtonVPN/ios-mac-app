@@ -29,19 +29,23 @@ struct BannerView: View {
     var body: some View {
         Link(destination: urlNoLogsAudit) {
             HStack(alignment: .top, spacing: .themeSpacing12) {
-                Asset.bannerIcon.swiftUIImage
+                Asset.bannerIcon.swiftUIImage.tint(.white)
+
                 VStack(alignment: .leading, spacing: .themeSpacing4) {
                     HStack(spacing: 0) {
                         Text(Localizable.welcomeToProtonBannerTitle)
                             .foregroundColor(Color(.text))
                             .themeFont(.body2(emphasised: true))
+
                         Spacer(minLength: .themeSpacing8)
+
                         IconProvider.arrowOutSquare.swiftUIImage
                             .resizable()
                             .renderingMode(.template)
                             .frame(.square(16))
                             .foregroundColor(Color(.icon, .weak))
                     }
+
                     Text(Localizable.welcomeToProtonBannerSubtitle)
                         .foregroundColor(Color(.text, .weak))
                         .themeFont(.caption(emphasised: false))

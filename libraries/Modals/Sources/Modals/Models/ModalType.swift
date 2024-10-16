@@ -28,7 +28,8 @@ public enum ModalType {
     case welcomePlus(numberOfServers: Int, numberOfDevices: Int, numberOfCountries: Int)
     case welcomeUnlimited
     case welcomeFallback
-    case welcomeToProton
+    case onboardingWelcome
+    case onboardingGetStarted
     case safeMode
     case moderateNAT
     case vpnAccelerator
@@ -47,23 +48,142 @@ public enum ModalType {
             shouldAddGradient: shouldAddGradient()
         )
     }
+}
 
-    private func primaryButtonTitle() -> String {
+public extension ModalType {
+    @ViewBuilder
+    func artImage() -> some View {
+        switch self {
+        case .netShield:
+            Asset.netshield.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .secureCore:
+            Asset.secureCore.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .allCountries:
+            Asset.plusCountries.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .safeMode:
+            Asset.safeMode.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .moderateNAT:
+            Asset.moderateNAT.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .vpnAccelerator:
+            Asset.speed.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .customization:
+            Asset.customisation.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .profiles:
+            Asset.profiles.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case let .country(country, _, _):
+            ZStack {
+                Asset.flatIllustration.swiftUIImage
+                country.swiftUIImage
+                    .resizable(resizingMode: .stretch)
+                    .frame(width: 48, height: 48)
+            }
+        case let .cantSkip(beforeDate, totalDuration, _):
+            ReconnectCountdown(
+                dateFinished: beforeDate,
+                totalDuration: totalDuration
+            )
+        case .welcomePlus:
+            Asset.welcomePlus.swiftUIImage
+        case .welcomeUnlimited:
+            Asset.welcomeUnlimited.swiftUIImage
+        case .welcomeFallback:
+            Asset.welcomeFallback.swiftUIImage
+        case .onboardingWelcome:
+            Asset.welcome.swiftUIImage
+        case .onboardingGetStarted:
+            Asset.getStarted.swiftUIImage
+        case .subscription:
+            Asset.welcomePlus.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+
+    var showUpgradeButton: Bool {
+        switch self {
+        case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
+            return false
+        case let .cantSkip(until, _, _):
+            return Date().timeIntervalSince(until) < 0
+        default:
+            return true
+        }
+    }
+
+    var changeDate: Date? {
+        switch self {
+        case let .cantSkip(until, _, _):
+            return until
+        default:
+            return nil
+        }
+    }
+
+    var hasNewUpsellScreen: Bool {
+        switch self {
+        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription:
+            return true
+        case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
+            return false
+        }
+    }
+
+    var shouldVerticallyCenterContent: Bool {
+        switch self {
+        case .onboardingWelcome, .onboardingGetStarted:
+            return false
+        default:
+            return true
+        }
+    }
+
+    var multipleStepsModal: (stepCount: Int, totalStepCount: Int)? {
+        switch self {
+        case .onboardingWelcome:
+            return (1, 2)
+        case .onboardingGetStarted:
+            return (2, 2)
+        default:
+            return nil
+        }
+    }
+}
+
+private extension ModalType {
+    func primaryButtonTitle() -> String {
         switch self {
         case .netShield:
             return Localizable.modalsUpsellNetShieldTitle
-        case .welcomeToProton, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
+        case .onboardingWelcome:
+            return Localizable.continue
+        case .onboardingGetStarted, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
             return Localizable.modalsCommonGetStarted
         default:
             return Localizable.upgrade
         }
     }
 
-    private func secondaryButtonTitle() -> String? {
+    func secondaryButtonTitle() -> String? {
         return Localizable.notNow
     }
 
-    private func title(legacy: Bool) -> String {
+    func title(legacy: Bool) -> String {
         switch self {
         case .netShield:
             return legacy ? Localizable.modalsUpsellNetShieldTitle : Localizable.modalsNewUpsellNetshieldTitle
@@ -96,14 +216,16 @@ public enum ModalType {
             return Localizable.welcomeUpgradeTitleUnlimited
         case .welcomeFallback:
             return Localizable.welcomeUpgradeTitleFallback
-        case .welcomeToProton:
+        case .onboardingWelcome:
             return Localizable.welcomeToProtonTitle
+        case .onboardingGetStarted:
+            return Localizable.settingsTitleCensorship
         case .subscription:
             return Localizable.upsellPlansListTitle
         }
     }
 
-    private func subtitle(legacy: Bool) -> ModalModel.Subtitle? {
+    func subtitle(legacy: Bool) -> ModalModel.Subtitle? {
         switch self {
         case .netShield:
             return .init(
@@ -159,14 +281,16 @@ public enum ModalType {
 #endif
         case .welcomeFallback:
             return .init(text: Localizable.welcomeUpgradeSubtitleFallback)
-        case .welcomeToProton:
+        case .onboardingWelcome:
             return .init(text: Localizable.welcomeToProtonSubtitle)
+        case .onboardingGetStarted:
+            return nil
         case .subscription:
             return .init(text: Localizable.upsellPlansListSubtitle)
         }
     }
 
-    private func features() -> [Feature] {
+    func features() -> [Feature] {
         switch self {
         case .netShield:
             return [.blockAds, .protectFromMalware, .highSpeedNetshield]
@@ -203,108 +327,32 @@ public enum ModalType {
             return []
         case .welcomeFallback:
             return []
-        case .welcomeToProton:
+        case .onboardingWelcome:
             return [.banner]
+        case .onboardingGetStarted:
+            return [
+                .toggle(
+                    id: .statistics,
+                    title: "Share anonymous usage statistics",
+                    subtitle: "Usage data helps us overcome VPN blocks and improve app performance.",
+                    state: true
+                ),
+                .toggle(
+                    id: .crashes,
+                    title: "Share anonymous crash reports",
+                    subtitle: "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.",
+                    state: true
+                )
+            ]
         case .subscription:
             return []
         }
     }
 
-    @ViewBuilder
-    public func artImage() -> some View {
-        switch self {
-        case .netShield:
-            Asset.netshield.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .secureCore:
-            Asset.secureCore.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .allCountries:
-            Asset.plusCountries.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .safeMode:
-            Asset.safeMode.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .moderateNAT:
-            Asset.moderateNAT.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .vpnAccelerator:
-            Asset.speed.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .customization:
-            Asset.customisation.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case .profiles:
-            Asset.profiles.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        case let .country(country, _, _):
-            ZStack {
-                Asset.flatIllustration.swiftUIImage
-                country.swiftUIImage
-                    .resizable(resizingMode: .stretch)
-                    .frame(width: 48, height: 48)
-            }
-        case let .cantSkip(beforeDate, totalDuration, _):
-            ReconnectCountdown(
-                dateFinished: beforeDate,
-                totalDuration: totalDuration
-            )
-        case .welcomePlus:
-            Asset.welcomePlus.swiftUIImage
-        case .welcomeUnlimited:
-            Asset.welcomeUnlimited.swiftUIImage
-        case .welcomeFallback:
-            Asset.welcomeFallback.swiftUIImage
-        case .welcomeToProton:
-            Asset.welcome.swiftUIImage
-        case .subscription:
-            Asset.welcomePlus.swiftUIImage
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        }
-    }
-
-    public var showUpgradeButton: Bool {
-        switch self {
-        case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
-            return false
-        case let .cantSkip(until, _, _):
-            return Date().timeIntervalSince(until) < 0
-        default:
-            return true
-        }
-    }
-
-    public var changeDate: Date? {
-        switch self {
-        case let .cantSkip(until, _, _):
-            return until
-        default:
-            return nil
-        }
-    }
-
-    private func shouldAddGradient() -> Bool {
+    func shouldAddGradient() -> Bool {
         switch self {
         default:
             return true
-        }
-    }
-
-    public var hasNewUpsellScreen: Bool {
-        switch self {
-        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription:
-            return true
-        case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .safeMode, .cantSkip:
-            return false
         }
     }
 }

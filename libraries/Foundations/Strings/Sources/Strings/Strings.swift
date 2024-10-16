@@ -2006,7 +2006,7 @@ public enum Localizable {
     return Localizable.tr("Localizable", "welcome_screen_feature_servers_countries", p1, p2, fallback: "Plural format key: \"%#@num_servers@ in %#@num_countries@\"")
   }
   /// Welcome to Proton screen shown during onboarding. Banner subtitle label.
-  public static var welcomeToProtonBannerSubtitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_subtitle", fallback: "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.") }
+  public static var welcomeToProtonBannerSubtitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_subtitle", fallback: "We’ll never log your internet activity or share your information with third parties.") }
   /// Welcome to Proton screen shown during onboarding. Banner title label.
   public static var welcomeToProtonBannerTitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_title", fallback: "Certified no-logs VPN") }
   /// Welcome to Proton screen shown during onboarding. Subtitle label.

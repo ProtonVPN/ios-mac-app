@@ -30,23 +30,39 @@ struct ModalView: View {
 
     private let primaryAction: (() -> Void)?
     private let dismissAction: (() -> Void)?
+    private let onFeatureUpdate: ((Feature) -> Void)?
 
-    init(modalType: ModalType, primaryAction: (() -> Void)? = nil, dismissAction: (() -> Void)? = nil) {
+    init(
+        modalType: ModalType,
+        primaryAction: (() -> Void)? = nil,
+        dismissAction: (() -> Void)? = nil,
+        onFeatureUpdate: ((Feature) -> Void)? = nil
+    ) {
         self.modalType = modalType
         self.modalModel = modalType.modalModel()
         self.primaryAction = primaryAction
         self.dismissAction = dismissAction
+        self.onFeatureUpdate = onFeatureUpdate
     }
 
     var body: some View {
-        UpsellBackgroundView(showGradient: modalModel.shouldAddGradient) {
+        let shouldIgnoreSafeAreas = !modalType.shouldVerticallyCenterContent
+        UpsellBackgroundView(
+            showGradient: modalModel.shouldAddGradient,
+            contentShouldIgnoreSafeAreas: shouldIgnoreSafeAreas ? (.all, [.top, .horizontal]) : nil
+        ) {
             VStack(spacing: .themeSpacing16) {
-                ModalBodyView(modalType: modalType)
-                ModalButtonsView(modalModel: modalModel,
-                                 primaryAction: primaryAction,
-                                 dismissAction: dismissAction)
+                ModalBodyView(modalType: modalType, onFeatureUpdate: onFeatureUpdate)
+                ModalButtonsView(
+                    modalModel: modalModel,
+                    primaryAction: primaryAction,
+                    dismissAction: dismissAction
+                )
+                .padding(.horizontal, .themeSpacing16)
+                // Padding above could be applied to whole VStack container, but for some content
+                // such as onboardings ModalType, we want to display a gradient and we want it to
+                // expand and ignore safe areas so we have to apply paddings conditionnally
             }
-            .padding(.horizontal, .themeSpacing16)
             .padding(.bottom, .themeRadius16)
             .frame(maxWidth: Self.maxContentWidth)
         }
@@ -63,9 +79,12 @@ struct ModalView: View {
     ))
 }
 
+#Preview("Onboarding Get Started") {
+    ModalView(modalType: .onboardingGetStarted, onFeatureUpdate: { _ in ()  })
+}
+
 #Preview("Welcome unlimited") {
     ModalView(modalType: .welcomeUnlimited)
-        .previewDisplayName("Welcome unlimited")
 }
 #else
 struct ModalView_Previews: PreviewProvider {
