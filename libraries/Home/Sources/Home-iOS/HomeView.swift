@@ -106,19 +106,13 @@ public struct HomeView: View {
     }
 }
 
-internal extension GeometryProxy {
-    var scrollOffset: CGFloat {
-        frame(in: .global).minY
-    }
-}
-
 #if DEBUG
 import Domain
 
 @available(iOS 17, *)
 #Preview {
     var homeFeatureState: HomeFeature.State = .init()
-    homeFeatureState.recents.recents = RecentConnection.sampleData
+    homeFeatureState.recents.recents = RecentsStorage(array: RecentConnection.sampleData)
     return HomeView(store: .init(initialState: homeFeatureState, reducer: { HomeFeature() }))
 }
 #endif

@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct RecentConnection: Equatable {
+public struct RecentConnection: Equatable, Hashable {
     public var pinned: Bool
     public var underMaintenance: Bool
     public let connectionDate: Date

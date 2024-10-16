@@ -41,7 +41,7 @@ public struct RecentsSectionView: View {
                     .styled(.weak)
                     .padding([.top, .leading, .trailing], .themeSpacing16)
                     .padding(.bottom, .themeSpacing8)
-                ForEach(store.recents) { item in
+                ForEach(store.recents.array) { item in
                     RecentRowItemView(item: item, sendAction: { _ = store.send($0) })
                 }
             }
@@ -155,7 +155,7 @@ extension RecentsFeature.Action {
 #Preview {
     let sampleData = RecentConnection.sampleData.map { var copy = $0; copy.underMaintenance = Bool.random(); return copy }
     let store: StoreOf<RecentsFeature> = .init(
-        initialState: .init(recents: sampleData),
+        initialState: .init(recents: RecentsStorage(array: sampleData)),
         reducer: RecentsFeature.init
     )
     return ScrollView {

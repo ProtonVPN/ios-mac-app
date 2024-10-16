@@ -224,7 +224,7 @@ fileprivate extension ConnectionSpec {
 
         case .exact(_, let number, let subregion, let regionCode):
             if let number {
-                return .country(regionCode, .fastest) // TODO: Actually pass in the server number
+                return .country(regionCode, .fastest) // TODO: [redesign] Actually pass in the server number
             } else if let subregion {
                 return .city(country: regionCode, city: subregion)
             } else {
@@ -238,7 +238,7 @@ fileprivate extension ConnectionSpec {
             case .fastestHop(to: let to):
                 return .country(to, .fastest)
             case .hop(let to, _):
-                return .country(to, .fastest) // TODO: Actually pass in the via server
+                return .country(to, .fastest) // TODO: [redesign] Actually pass in the via server
             }
         }
     }

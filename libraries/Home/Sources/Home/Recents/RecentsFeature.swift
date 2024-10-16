@@ -20,6 +20,7 @@ import Domain
 import ComposableArchitecture
 import Foundation
 import VPNAppCore
+import VPNShared
 
 @Reducer
 public struct RecentsFeature {
@@ -27,18 +28,20 @@ public struct RecentsFeature {
 
     @ObservableState
     public struct State: Equatable {
-        static let maxConnections: Int = 8
-
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
-        public package(set) var recents: [RecentConnection] = .readFromStorage()
+        public package(set) var recents: RecentsStorage
 
-        public init(recents: [RecentConnection]) {
+        public init(recents: RecentsStorage) {
             self.recents = recents
         }
 
-        public init() {}
+        public init() {
+            @Dependency(\.authKeychain) var authKeychain
+            let userID = authKeychain.userId
+            self.recents = .init(userID: userID ?? "")
+        }
     }
 
     @CasePathable
@@ -47,16 +50,15 @@ public struct RecentsFeature {
         case pin(ConnectionSpec)
         case unpin(ConnectionSpec)
         case remove(ConnectionSpec)
+        case watchConnectionStatus
+        case newConnectionStatus(VPNConnectionStatus)
+
+        case delegate(Delegate)
 
         @CasePathable
         public enum Delegate: Equatable {
             case connect(ConnectionSpec)
         }
-
-        case delegate(Delegate)
-
-        case watchConnectionStatus
-        case newConnectionStatus(VPNConnectionStatus)
     }
 
     private enum CancelId {
@@ -84,44 +86,21 @@ public struct RecentsFeature {
                 return .send(.connectionEstablished(spec))
 
             case .connectionEstablished(let spec):
-                var pinned = false
-                if let index = state.recents.index(for: spec) {
-                    pinned = state.recents[index].pinned
-                    state.recents.remove(at: index)
-                }
-                let recent = RecentConnection(
-                    pinned: pinned,
-                    underMaintenance: false,
-                    connectionDate: Date(),
-                    connection: spec
-                )
-                state.recents.insert(recent, at: 0)
-                state.recents.trimAndSortList()
+                state.recents.updateList(with: spec)
                 return .none
-            case let .pin(spec):
-                guard let index = state.recents.index(for: spec) else {
-                    return .none
-                }
 
-                state.recents[index].pinned = true
-                state.recents.trimAndSortList()
+            case let .pin(spec):
+                state.recents.pin(spec: spec)
                 return .none
 
             case let .unpin(spec):
-                guard let index = state.recents.index(for: spec) else {
-                    return .none
-                }
-
-                state.recents[index].pinned = false
-                state.recents.trimAndSortList()
+                state.recents.unpin(spec: spec)
                 return .none
 
             case let .remove(spec):
-                state.recents.removeAll {
-                    $0.connection == spec
-                }
-                state.recents.trimAndSortList()
+                state.recents.remove(spec: spec)
                 return .none
+
             case .delegate:
                 return .none
             }
