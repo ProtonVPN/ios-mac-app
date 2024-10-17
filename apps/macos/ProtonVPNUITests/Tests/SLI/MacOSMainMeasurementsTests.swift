@@ -18,6 +18,7 @@
 
 import Foundation
 import ProtonCoreTestingToolkitPerformance
+import UITestsHelpers
 
 class MacOSMainMeasurementsTests: ProtonVPNUITests {
     

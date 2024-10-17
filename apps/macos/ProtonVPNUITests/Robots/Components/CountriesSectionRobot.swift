@@ -19,6 +19,7 @@
 import XCTest
 import Strings
 import fusion
+import UITestsHelpers
 
 fileprivate let searchTextField = "SearchTextField"
 fileprivate let clearSearchButton = "ClearSearchButton"

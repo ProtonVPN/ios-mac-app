@@ -24,6 +24,7 @@ import XCTest
 import ProtonCoreTestingToolkitUITestsCore
 import Strings
 import PMLogger
+import UITestsHelpers
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
     

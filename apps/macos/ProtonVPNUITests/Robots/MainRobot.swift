@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 import Strings
 import fusion
+import UITestsHelpers
 
 fileprivate let qcButton = Localizable.quickConnect
 fileprivate let disconnectButton = Localizable.disconnect
@@ -36,7 +37,7 @@ fileprivate let protocolLabelField = "protocolLabel"
 class MainRobot: CoreElements {
     
     func openProfiles() -> ManageProfilesRobot {
-        tabGroup(Localizable.profiles).forceTap()
+        tabGroup(Localizable.profiles).tapInCenter()
         button(Localizable.createProfile).tap()
         return ManageProfilesRobot()
     }

@@ -22,12 +22,12 @@
 
 import Foundation
 
-struct Credentials: Decodable {
-    let username: String
-    let password: String
-    let plan: String
+public struct Credentials: Decodable {
+    public let username: String
+    public let password: String
+    public let plan: String
     
-    static func loadFrom(plistUrl: URL) -> [Credentials] {
+    public static func loadFrom(plistUrl: URL) -> [Credentials] {
         let data = try! Data(contentsOf: plistUrl)
         let decoder = PropertyListDecoder()
         return try! decoder.decode([Credentials].self, from: data)

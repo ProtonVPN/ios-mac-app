@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import UITestsHelpers
 
 class ProfileTests: ProtonVPNUITests {
     
@@ -30,7 +31,7 @@ class ProfileTests: ProtonVPNUITests {
     
     func testCreateEmptyProfile() {
         
-        let profileName = StringUtils().randomAlphanumericString(length: 8)
+        let profileName = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
 
         logoutIfNeeded()
@@ -74,7 +75,7 @@ class ProfileTests: ProtonVPNUITests {
     
     func testCreateProfileWithTheSameName() {
         
-        let name = StringUtils().randomAlphanumericString(length: 8)
+        let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
 
         logoutIfNeeded()
@@ -95,7 +96,7 @@ class ProfileTests: ProtonVPNUITests {
     
     func testNewProfileAppearsInTheSettings() {
         
-        let name = StringUtils().randomAlphanumericString(length: 8)
+        let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
         let qcFastest = "Fastest"
 

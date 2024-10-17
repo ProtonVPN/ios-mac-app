@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import Modals
+import UITestsHelpers
 
 class ConnectionTestsFreeUser: ProtonVPNUITests {
     

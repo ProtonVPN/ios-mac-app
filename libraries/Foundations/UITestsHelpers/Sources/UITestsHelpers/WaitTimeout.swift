@@ -18,8 +18,8 @@
 
 import Foundation
 
-struct WaitTimeout {
-    static let short: TimeInterval = 2.0
-    static let normal: TimeInterval = 5.0
-    static let long: TimeInterval = 10.0
+public struct WaitTimeout {
+    public static let short: TimeInterval = 2.0
+    public static let normal: TimeInterval = 5.0
+    public static let long: TimeInterval = 10.0
 }

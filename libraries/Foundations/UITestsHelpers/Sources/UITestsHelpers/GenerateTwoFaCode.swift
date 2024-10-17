@@ -19,19 +19,22 @@
 import Foundation
 import SwiftOTP
 
-public func generateCodeFor2FAUser(_ key: String) async -> String {
-    let expiryInterval: TimeInterval = 5
-    let totp = TOTP(secret: base32DecodeToData(key)!)
+public enum GenerateTwoFaCode {
+    
+    public static func generateCodeFor2FAUser(_ key: String) async -> String {
+        let expiryInterval: TimeInterval = 5
+        let totp = TOTP(secret: base32DecodeToData(key)!)
 
-    guard let res = totp?.generate(time: Date()) else {
-        return ""
+        guard let res = totp?.generate(time: Date()) else {
+            return ""
+        }
+
+        // If the 2fa code is expiring in the next 5 seconds, wait for it to roll over and return the new value.
+        if let futureRes = totp?.generate(time: Date().addingTimeInterval(expiryInterval)), futureRes != res {
+            try? await Task.sleep(nanoseconds: UInt64(expiryInterval * 1_000_000_000))
+            return futureRes
+        }
+
+        return res
     }
-
-    // If the 2fa code is expiring in the next 5 seconds, wait for it to roll over and return the new value.
-    if let futureRes = totp?.generate(time: Date().addingTimeInterval(expiryInterval)), futureRes != res {
-        try? await Task.sleep(nanoseconds: UInt64(expiryInterval * 1_000_000_000))
-        return futureRes
-    }
-
-    return res
 }

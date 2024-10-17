@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import fusion
+import UITestsHelpers
 
 fileprivate let showMapButton = "Show map"
 fileprivate let hideMapButton = "Hide map"
@@ -36,7 +37,7 @@ class MapRobot: CoreElements {
     }
     
     func clickHideMap() -> MapRobot {
-        button(hideMapButton).forceTap()
+        button(hideMapButton).tapInCenter()
         return self
     }
     
