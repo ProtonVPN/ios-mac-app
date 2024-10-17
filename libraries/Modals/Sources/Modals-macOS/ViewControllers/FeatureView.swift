@@ -68,9 +68,8 @@ final class FeatureView: NSView {
             }
 
             iconImageView.image = feature.image
-            titleLabel.attributedStringValue = feature.title().attributedString(size: 16,
-                                                                                color: textColor,
-                                                                                boldStrings: feature.boldTitleElements())
+            titleLabel.attributedStringValue = (feature.title() ?? "")
+                .attributedString(size: 16, color: textColor, boldStrings: feature.boldTitleElements())
         }
     }
 }
