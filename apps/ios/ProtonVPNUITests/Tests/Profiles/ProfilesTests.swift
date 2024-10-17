@@ -25,9 +25,10 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.loginScreenIsShown()
     }
     
-    func testCreateAndDeleteProfile() {
+    @MainActor
+    func testCreateAndDeleteProfile() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        let countryName = "Netherlands"
+        let randomCountry = try await ServersListUtils.getRandomCountry()
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
@@ -35,16 +36,17 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
-            .setProfileDetails(profileName + " ", countryName) // Only CI issue: the last letter is deleted
+            .setProfileDetails(profileName, randomCountry.name)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
-            .deleteProfile(profileName, countryName)
-            .verify.profileIsDeleted(profileName, countryName)
+            .deleteProfile(profileName, randomCountry.name)
+            .verify.profileIsDeleted(profileName, randomCountry.name)
     }
     
-    func testCreateProfileWithTheSameName() {
+    @MainActor
+    func testCreateProfileWithTheSameName() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        let countryName = "Netherlands"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
         
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
@@ -61,10 +63,11 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.profileWithSameName()
     }
     
-    func testEditProfile() {
+    @MainActor
+    func testEditProfile() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        let countryName = "Belgium"
-        let newCountryName = "Australia"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
+        let (newCountryName, _) = try await ServersListUtils.getRandomCountry()
         
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
@@ -80,11 +83,13 @@ class ProfilesTests: ProtonVPNUITests {
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsEdited()
     }
-
-    func testMakeDefaultAndSecureCoreProfilePlusUser() {
+    
+    @MainActor
+    func testMakeDefaultAndSecureCoreProfilePlusUser() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        let countryName = "Netherlands"
-        let serverVia = "Iceland"
+        
+        let randomSecureCoreCountry = try await ServersListUtils.getRandomCountry(secureCore: true)
+        let serverVia = try await ServersListUtils.getEntryCountries(for: randomSecureCoreCountry.code).first ?? ""
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
@@ -92,14 +97,14 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
             .addNewProfile()
-            .makeDefaultProfileWithSecureCore(profileName, countryName, serverVia)
+            .makeDefaultProfileWithSecureCore(profileName, randomSecureCoreCountry.name, serverVia)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
     }
-
+    
+    @MainActor
     func testFreeUserCannotCreateProfile() {
-        let profileName = StringUtils.randomAlphanumericString(length: 10)
-
+        
         loginRobot
             .enterCredentials(UserType.Free.credentials)
             .signIn(robot: MainRobot.self)
@@ -109,6 +114,7 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.isShowingUpsellModal(ofType: .profiles)
     }
     
+    @MainActor
     func testRecommendedProfiles() {
         
         loginRobot

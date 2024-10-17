@@ -27,6 +27,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.loginScreenIsShown()
     }
     
+    @MainActor
     func testConnectAndDisconnectViaQCButtonFreeUser() {
         
         loginRobot
@@ -40,9 +41,10 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.disconnectedFromAServer()
     }
     
-    func testConnectAndDisconnectViaCountry() {
+    @MainActor
+    func testConnectAndDisconnectViaCountry() async throws {
         
-        let countryName = "Australia"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
         let back = "Countries"
         
         loginRobot
@@ -68,9 +70,10 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectAndDisconnectViaServer() {
+    @MainActor
+    func testConnectAndDisconnectViaServer() async throws {
         
-        let countryName = "Australia"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
@@ -88,6 +91,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
+    @MainActor
     func testConnectAndDisconnectViaMap() {
         let map = "Map"
         
@@ -105,10 +109,11 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectAndDisconnectViaProfile() {
+    @MainActor
+    func testConnectAndDisconnectViaProfile() async throws {
         
         let profileName = StringUtils.randomAlphanumericString()
-        let countryName = "Argentina"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
         let back = "Profiles"
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
@@ -122,11 +127,13 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.profileIsCreated()
             .connectToAProfile(profileName)
             .verify.connectedToAServer(countryName)
-            .backToPreviousTab(robot: ProfileRobot.self, back)
-            .disconnectFromAProfile()
+            .backToPreviousTab(robot: ConnectionStatusRobot.self, back)
+            .verify.connectionStatusConnected(robot: ProfileRobot.self)
+            .disconnectFromAProfile(profileName)
             .verify.connectionStatusNotConnected()
     }
     
+    @MainActor
     func testConnectAndDisconnectViaFastestAndRandomProfile() {
         
         let back = "Profiles"
@@ -150,12 +157,13 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.qcButtonDisconnected()
     }
     
-    func testConnectionWithDefaultAndSecureCoreProfile() {
+    @MainActor
+    func testConnectionWithDefaultAndSecureCoreProfile() async throws {
         
         let profileName = StringUtils.randomAlphanumericString()
-        let countryName = "Ukraine"
-        let serverVia = "Switzerland"
-        let status = "Switzerland >> Ukraine"
+        let randomSecureCoreCountry = try await ServersListUtils.getRandomCountry(secureCore: true)
+        let serverVia: String = try await ServersListUtils.getEntryCountries(for: randomSecureCoreCountry.code).first ?? ""
+        let status = "\(serverVia) >> \(randomSecureCoreCountry.name)"
     
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
@@ -164,7 +172,7 @@ class ConnectionTests: ProtonVPNUITests {
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .makeDefaultProfileWithSecureCore(profileName, countryName, serverVia)
+            .makeDefaultProfileWithSecureCore(profileName, randomSecureCoreCountry.name, serverVia)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
         mainRobot
@@ -174,9 +182,10 @@ class ConnectionTests: ProtonVPNUITests {
             .quickDisconnectViaQCButton()
         }
     
-    func testConnectToAPlusServerWithFreeUser() {
+    @MainActor
+    func testConnectToAPlusServerWithFreeUser() async throws {
 
-        let countryName = "Austria"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
         
         loginRobot
             .enterCredentials(UserType.Free.credentials)
@@ -188,9 +197,10 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.upgradeSubscriptionScreenOpened()
     }
     
-    func testLogoutWhileConnectedToVPNServer() {
+    @MainActor
+    func testLogoutWhileConnectedToVPNServer() async throws {
         
-        let countryName = "Netherlands"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
 
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
@@ -209,6 +219,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.logOutSuccessfully()
     }
     
+    @MainActor
     func testCancelLogoutWhileConnectedToVpn() {
             
         loginRobot
@@ -216,8 +227,7 @@ class ConnectionTests: ProtonVPNUITests {
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
-            .goToCountriesTab()
-            .connectToFirstCountryFromList()
+            .quickConnectViaQCButton()
             .verify.connectionStatusConnected(robot: MainRobot.self)
             .goToSettingsTab()
             .cancelLogOut()
@@ -225,6 +235,7 @@ class ConnectionTests: ProtonVPNUITests {
             .disconnectFromAServer()
     }
 
+    @MainActor
     func testConnectionViaSecureCore() {
         
         let protocolName = ConnectionProtocol.WireGuardUDP
@@ -256,6 +267,7 @@ class ConnectionTests: ProtonVPNUITests {
             .secureCoreOFf()
     }
     
+    @MainActor
     func testConnectionWithAllSettingsOn() {
         
         let protocolName = ConnectionProtocol.Smart
@@ -287,7 +299,8 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectionViaAllProtocolsWithKsOn() { // swiftlint:disable:this function_body_length
+    @MainActor
+    func testConnectionViaAllProtocolsWithKsOn() {
         
         let back = "Settings"
         
@@ -346,9 +359,9 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.disconnectedFromAServer()
     }
     
-    func testReconnectionViaWithKsOn() {
-        
-        let countryToReconnectName = "Japan"
+    @MainActor
+    func testReconnectionViaWithKsOn() async throws {
+        let (countryToReconnectName, _) = try await ServersListUtils.getRandomCountry()
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)

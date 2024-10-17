@@ -92,14 +92,14 @@ class MainMeasurements: ProtonVPNUITests {
             .verify.disconnectedFromAServer()
     }
 
-    func testConnectionToSpecificServer() {
+    func testConnectionToSpecificServer() async throws {
         let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
             .setServiceLevelIndicator("specific_server_connect")
 
-        let countryName = "Australia"
+        let (countryName, _) = try await ServersListUtils.getRandomCountry()
         let back = "Countries"
 
         loginRobot

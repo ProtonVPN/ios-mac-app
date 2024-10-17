@@ -7,15 +7,14 @@
 //
 
 import fusion
+import UITestsHelpers
+import Foundation
 
 fileprivate let profileSameName = "Profile with same name already exists"
 fileprivate let nameField = "Enter Profile Name"
 fileprivate let countryField = "Select Country"
 fileprivate let countryButton = "Country"
 fileprivate let serverField = "Select Server"
-fileprivate let fastestServer = "  Fastest"
-fileprivate let protocolUDP = "OpenVPN (UDP)"
-fileprivate let protocolWG = "WireGuard"
 fileprivate let saveProfileButton = "Save"
 fileprivate let tabBars = "Profiles"
 fileprivate let secureCoreToggle = "Secure Core"
@@ -30,9 +29,10 @@ class CreateProfileRobot: CoreElements {
     let verify = Verify()
     
     func setProfileDetails(_ name: String, _ countryname: String) -> CreateProfileRobot {
+        textField(nameField).checkExists(message: "Profile creation view is not opened")
         return enterProfileName(name)
             .selectCountry()
-            .chooseCountry(" " + " " + countryname)
+            .chooseCountry(countryname)
             .selectServer()
             .chooseServer()
             .chooseProtocol()
@@ -41,26 +41,26 @@ class CreateProfileRobot: CoreElements {
     func setProfileWithSameName(_ name: String, _ countryname: String) -> CreateProfileRobot {
         return enterProfileName(name)
             .selectCountry()
-            .chooseCountry(" " + " " + countryname)
+            .chooseCountry(countryname)
             .selectServer()
             .chooseServer()
     }
     
     func editProfileDetails(_ newname: String, _ countryname: String, _ newcountryname: String) -> CreateProfileRobot {
         return editProfileName(newname)
-            .editCountry("  " + countryname)
-            .chooseCountry(" " + " " + newcountryname)
+            .editCountry(countryname)
+            .chooseCountry(newcountryname)
             .selectServer()
             .chooseServer()
     }
     
-    func makeDefaultProfileWithSecureCore(_ name: String, _ newcountryname: String, _ server: String) -> CreateProfileRobot {
-        return enterProfileName(name)
+    func makeDefaultProfileWithSecureCore(_ profileName: String, _ countryName: String, _ serverName: String) -> CreateProfileRobot {
+        return enterProfileName(profileName)
             .secureCoreON()
             .selectCountry()
-            .chooseCountry(" " + " " + newcountryname)
+            .chooseCountry(countryName)
             .selectServer()
-            .chooseServerVia(server)
+            .chooseServerVia(serverName)
             .chooseProtocol()
             .defaultProfileON()
     }
@@ -102,12 +102,12 @@ class CreateProfileRobot: CoreElements {
     }
     
     private func editCountry(_ country: String) -> CreateProfileRobot {
-        staticText(country).tap()
+        staticText(NSPredicate(format: "label CONTAINS[c] %@", country)).tap()
         return self
     }
     
     private func chooseCountry(_ countryname: String) -> CreateProfileRobot {
-        staticText(countryname).tap()
+        staticText(NSPredicate(format: "label CONTAINS[c] %@", countryname)).checkExists(message: "Country \(countryname) not found").tap()
         return self
     }
     
@@ -121,8 +121,9 @@ class CreateProfileRobot: CoreElements {
         return self
     }
     
-    private func chooseServerVia(_ server: String) -> CreateProfileRobot {
-        staticText("via    " + server).tap()
+    private func chooseServerVia(_ serverName: String) -> CreateProfileRobot {
+        let predicate = NSPredicate(format: "label CONTAINS[c] %@", serverName)
+        staticText(predicate).checkExists(message: "Server \(serverName) not found").tap()
         return self
     }
     
@@ -138,7 +139,7 @@ class CreateProfileRobot: CoreElements {
     
     private func chooseProtocol() -> CreateProfileRobot {
         cell(protocolCell).byIndex(1).tap()
-        staticText(protocolWG).tap()
+        staticText(ConnectionProtocol.WireGuardUDP.rawValue).tap()
         return self
     }
     

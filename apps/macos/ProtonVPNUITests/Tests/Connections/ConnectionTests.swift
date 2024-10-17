@@ -104,7 +104,7 @@ class ConnectionTests: ProtonVPNUITests {
     @MainActor
     func testConnectToSpecificCountry() async throws {
         
-        let country = try await ServersListUtils.getRandomCountryName()
+        let (country, _) = try await ServersListUtils.getRandomCountry()
         
         countriesSelectionRobot
             .searchForServer(serverName: country)
