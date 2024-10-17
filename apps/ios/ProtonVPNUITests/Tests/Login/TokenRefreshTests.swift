@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
+import fusion
 
 class TokenRefreshTests: ProtonVPNUITests {
 
@@ -34,7 +35,7 @@ class TokenRefreshTests: ProtonVPNUITests {
     }
 
     func testLogInExpireSessionAndRefreshTokenGetUserRefreshTokenFailure() throws {
-        let user = User(name: StringUtils().randomAlphanumericString(length: 10), password: "123")
+        let user = User(name: StringUtils.randomAlphanumericString(length: 10), password: "123")
         try quarkCommands.userCreate(user: user)
 
         loginRobot
@@ -53,7 +54,7 @@ class TokenRefreshTests: ProtonVPNUITests {
     }
 
     func testLogInExpireSessionGetUserRefreshTokenSuccess() throws {
-        let user = User(name: StringUtils().randomAlphanumericString(length: 10), password: "123")
+        let user = User(name: StringUtils.randomAlphanumericString(length: 10), password: "123")
         try quarkCommands.userCreate(user: user)
 
         loginRobot

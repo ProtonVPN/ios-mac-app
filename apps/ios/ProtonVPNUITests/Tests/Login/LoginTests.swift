@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 import ProtonCoreTestingToolkitUITestsLogin
+import UITestsHelpers
 
 class LoginTests: ProtonVPNUITests {
 
@@ -23,7 +24,8 @@ class LoginTests: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-
+    
+    @MainActor
     func testLoginWithIncorrectCredentials() {
 
         let username = twopassusercredentials[0].username
@@ -35,6 +37,7 @@ class LoginTests: ProtonVPNUITests {
             .verify.incorrectCredentialsErrorDialog()
     }
     
+    @MainActor
     func testLoginWithSpecialChars() {
         let username = "ąčęėįš"
         let password = "ąčęėįš"
@@ -44,7 +47,8 @@ class LoginTests: ProtonVPNUITests {
             .signIn(robot: LoginRobot.self)
             .verify.specialCharErrorDialog()
     }
-
+    
+    @MainActor
     func testLoginAsSubuserWithNoConnectionsAssigned() {
 
         let subusercredentials = getCredentials(from: "subusercredentials")
@@ -55,7 +59,8 @@ class LoginTests: ProtonVPNUITests {
             .verify.assignVPNConnectionErrorIsShown()
             .verify.loginScreenIsShown()
     }
-
+    
+    @MainActor
     func testLoginWithTwoPassUser() {
         
         loginRobot
@@ -66,29 +71,31 @@ class LoginTests: ProtonVPNUITests {
         loginRobot
             .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }
-
-    func testLoginAsTwoFa() {
+    
+    @MainActor
+    func testLoginAsTwoFa() async {
         let twofausercredentials = getCredentials(from: "twofausercredentials")
 
-        loginRobot
+        await loginRobot
             .enterCredentials(twofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
-            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+            .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
             .confirm2FA(robot: MainRobot.self)
             .dismissWhatsNewModal()
             .goToSettingsTab()
         loginRobot
             .verify.correctUserIsLogedIn(twofausercredentials[0])
     }
-
-    func testLoginWithTwoPassAnd2FAUser() {
+    
+    @MainActor
+    func testLoginWithTwoPassAnd2FAUser() async {
 
         let twopasstwofausercredentials = getCredentials(from: "twopasstwofausercredentials")
 
-        loginRobot
+        await loginRobot
             .enterCredentials(twopasstwofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
-            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+            .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: MainRobot.self)
             .dismissWhatsNewModal()
             .goToSettingsTab()

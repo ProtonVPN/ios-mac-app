@@ -23,15 +23,6 @@ class PlanTests: ProtonVPNUITests {
 
     private let loginRobot = LoginRobot()
 
-    private lazy var credentialsBF22 = getCredentials(from: "credentials_bf22")
-    
-    enum BFCredentialsKey: Int {
-        case plusUser = 0
-        case cycle15User = 1
-        case cycle30User = 2
-        case freeUser = 3
-    }
-
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
@@ -44,7 +35,7 @@ class PlanTests: ProtonVPNUITests {
     func testShowCurrentPlanForVPNPlusUser() {
 
         loginRobot
-            .enterCredentials(credentialsBF22[BFCredentialsKey.plusUser])
+            .enterCredentials(BF22Users.plusUser.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
@@ -61,7 +52,7 @@ class PlanTests: ProtonVPNUITests {
     func testShowCurrentPlanForVPNPlus15MUser() {
 
         loginRobot
-            .enterCredentials(credentialsBF22[BFCredentialsKey.cycle15User])
+            .enterCredentials(BF22Users.cycle15User.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
@@ -76,7 +67,7 @@ class PlanTests: ProtonVPNUITests {
     func testShowCurrentPlanForVPNPlus30MUser() {
 
         loginRobot
-            .enterCredentials(credentialsBF22[BFCredentialsKey.cycle30User])
+            .enterCredentials(BF22Users.cycle30User.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
@@ -92,7 +83,7 @@ class PlanTests: ProtonVPNUITests {
     func testShowUpdatePlansForCurrentFreePlan() {
         
         loginRobot
-            .enterCredentials(credentialsBF22[BFCredentialsKey.freeUser])
+            .enterCredentials(BF22Users.freeUser.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()

@@ -22,12 +22,12 @@ import ProtonCoreLog
 import ProtonCoreTestingToolkitUITestsCore
 import ProtonCoreTestingToolkitPerformance
 import XCTest
+import UITestsHelpers
 
 class MainMeasurements: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
     private let countryListRobot = CountryListRobot()
     private let connectionStatusRobot = ConnectionStatusRobot()
-    private lazy var credentials = getCredentials(from: "credentials")
     
     private let workflow = "main_measurements"
     private lazy var measurementContext = MeasurementContext(MeasurementConfig.self)
@@ -60,7 +60,7 @@ class MainMeasurements: ProtonVPNUITests {
             .setServiceLevelIndicator("login")
 
         loginRobot
-            .enterCredentials(credentials[2])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
 
         measurementProfile.measure {
@@ -77,7 +77,7 @@ class MainMeasurements: ProtonVPNUITests {
             .setServiceLevelIndicator("quick_connect")
 
         loginRobot
-            .enterCredentials(credentials[2])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .quickConnectViaQCButton()
@@ -103,7 +103,7 @@ class MainMeasurements: ProtonVPNUITests {
         let back = "Countries"
 
         loginRobot
-            .enterCredentials(credentials[2])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
 

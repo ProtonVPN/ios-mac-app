@@ -88,7 +88,6 @@ class ConnectionTestsFreeUser: ProtonVPNUITests {
                 .verify.checkModalAppear(type: ModalType.cantSkip)
                 .closeModal()
         }
-        
     }
 }
 

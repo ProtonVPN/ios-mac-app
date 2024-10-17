@@ -87,32 +87,6 @@ public enum NetworkUtils {
         }
     }
     
-    // MARK: - Gateway
-    
-    /// Function is used to fetch and return the default gateway address of the system.
-    /// - Returns: A String representing the default gateway address.
-    public static func getDefaultGatewayAddress() throws -> String {
-        let output = try runShellCommand("/usr/sbin/netstat", arguments: ["-nr"])
-        
-        let defaultGateway = try parseGateway(from: output)
-        guard defaultGateway.isValidIPv4Address else {
-            throw NetworkUtilsError.gatewayNotFound
-        }
-        return defaultGateway
-    }
-    
-    private static func parseGateway(from output: String) throws -> String {
-        let lines = output.split(separator: "\n")
-        for line in lines {
-            let components = line.split(separator: " ", omittingEmptySubsequences: true)
-            if components.count >= 2, components[0] == "default" {
-                return String(components[1])
-            }
-        }
-        
-        throw NetworkUtilsError.gatewayNotFound
-    }
-    
     // MARK: - Check Gateway Accessibility
     
     /// Function is used to check whether the given IP address is accessible or not.
@@ -161,6 +135,33 @@ public enum NetworkUtils {
         }
     }
     
+#if os(macOS)
+    // MARK: - Gateway
+    
+    /// Function is used to fetch and return the default gateway address of the system.
+    /// - Returns: A String representing the default gateway address.
+    public static func getDefaultGatewayAddress() throws -> String {
+        let output = try runShellCommand("/usr/sbin/netstat", arguments: ["-nr"])
+        
+        let defaultGateway = try parseGateway(from: output)
+        guard defaultGateway.isValidIPv4Address else {
+            throw NetworkUtilsError.gatewayNotFound
+        }
+        return defaultGateway
+    }
+    
+    private static func parseGateway(from output: String) throws -> String {
+        let lines = output.split(separator: "\n")
+        for line in lines {
+            let components = line.split(separator: " ", omittingEmptySubsequences: true)
+            if components.count >= 2, components[0] == "default" {
+                return String(components[1])
+            }
+        }
+        
+        throw NetworkUtilsError.gatewayNotFound
+    }
+    
     /// Function is used to run shell command with given launchPath and arguments.
     /// - Parameters:
     ///     - launchPath: A String representing the path to launch.
@@ -184,6 +185,7 @@ public enum NetworkUtils {
         
         return output
     }
+#endif
 }
 
 extension String {

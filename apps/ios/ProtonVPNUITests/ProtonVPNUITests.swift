@@ -29,6 +29,7 @@ import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUnitTestsCore
 import ProtonCoreTestingToolkitUITestsCore
 import XCTest
+import UITestsHelpers
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
 

@@ -34,7 +34,7 @@ class FreeRescopeTests: ProtonVPNUITests {
     }
     
     func testProfileCreationUnavailableForFreeUser() throws {
-        let user = User(name: StringUtils().randomAlphanumericString(length: 10), password: "12l3")
+        let user = User(name: StringUtils.randomAlphanumericString(length: 10), password: "12l3")
         let quarkUser = try quarkCommands.userCreate(user: user)
         try quarkCommands.enableSubscription(id: quarkUser!.decryptedUserId, plan: "vpnplus")
 

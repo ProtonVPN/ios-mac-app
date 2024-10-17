@@ -31,9 +31,9 @@ final class InternalAndExternalSignUpTests: ProtonVPNUITests {
     }
 
     func testSignUpWithInternalAccountWorks() {
-        let randomUsername = StringUtils().randomAlphanumericString(length: 8)
-        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
-        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let randomUsername = StringUtils.randomAlphanumericString(length: 8)
+        let randomEmail = "\(StringUtils.randomEmailString())@proton.uitests"
+        let randomPassword = StringUtils.randomAlphanumericString(length: 8)
 
         SignupExternalAccountsCapability()
             .signUpWithInternalAccount(
@@ -51,8 +51,8 @@ final class InternalAndExternalSignUpTests: ProtonVPNUITests {
     }
 
     func testSignUpWithExternalAccountWorks() {
-        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@mailui.co"
-        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8))@mailui.co"
+        let randomPassword = StringUtils.randomAlphanumericString(length: 8)
 
         SignupExternalAccountsCapability()
             .signUpWithExternalAccount(

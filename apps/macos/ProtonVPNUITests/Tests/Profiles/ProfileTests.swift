@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import UITestsHelpers
+import fusion
 
 class ProfileTests: ProtonVPNUITests {
     

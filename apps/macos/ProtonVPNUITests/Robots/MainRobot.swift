@@ -137,10 +137,10 @@ class MainRobot: CoreElements {
     func clickChangeServer() -> MainRobot {
         let changeServerButton = button(Localizable.changeServer)
         if changeServerButton.exists() {
-            changeServerButton.forceTap()
+            changeServerButton.tapInCenter()
         } else {
             let changeServerLabel = staticText(Localizable.changeServer)
-            changeServerLabel.forceTap()
+            changeServerLabel.tapInCenter()
         }
         return self
     }
