@@ -49,7 +49,7 @@ final class SubscriptionTests: ProtonVPNUITests {
     }
 
     private func createUserVerifySubscription(plan: PaymentsPlan) throws {
-        let user = User(name: StringUtils().randomAlphanumericString(length: 10), password: "12l3")
+        let user = User(name: StringUtils.randomAlphanumericString(length: 10), password: "12l3")
         try quarkCommands.userCreate(user: user)
 
         _ = LoginRobot()

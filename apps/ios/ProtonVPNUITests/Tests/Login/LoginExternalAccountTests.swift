@@ -33,8 +33,8 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
     }
 
     func testSignInWithInternalAccountWorks() throws {
-        let randomUsername = StringUtils().randomAlphanumericString(length: 8)
-        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let randomUsername = StringUtils.randomAlphanumericString(length: 8)
+        let randomPassword = StringUtils.randomAlphanumericString(length: 8)
         let user = User(name: randomUsername, password: randomPassword)
 
         try quarkCommands.userCreate(user: user)
@@ -54,9 +54,9 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
 
     func testSignInWithExternalAccountWorks() throws {
 
-        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@gmail.com"
-        let randomName = "\(StringUtils().randomAlphanumericString(length: 8))"
-        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8))@gmail.com"
+        let randomName = "\(StringUtils.randomAlphanumericString(length: 8))"
+        let randomPassword = StringUtils.randomAlphanumericString(length: 8)
         let user = User(email: randomEmail, name: randomName, password: randomPassword, isExternal: true)
 
         try quarkCommands.userCreate(user: user)
@@ -75,8 +75,8 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
     }
 
     func testSignInWithUsernameAccountWorks() throws {
-        let randomUsername = StringUtils().randomAlphanumericString(length: 8)
-        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+        let randomUsername = StringUtils.randomAlphanumericString(length: 8)
+        let randomPassword = StringUtils.randomAlphanumericString(length: 8)
         let user = User(name: randomUsername, password: randomPassword)
 
         try quarkCommands.userCreate(user: user, createAddress: CreateAddress.noKey)

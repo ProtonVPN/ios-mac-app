@@ -7,10 +7,9 @@
 //
 
 import Foundation
+import UITestsHelpers
 
 class SettingsTests: ProtonVPNUITests {
-    
-    private lazy var credentials = getCredentials(from: "credentials")
     
     override func setUp() {
         super.setUp()
@@ -18,7 +17,7 @@ class SettingsTests: ProtonVPNUITests {
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
-            .enterCredentials(credentials[1])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
     }

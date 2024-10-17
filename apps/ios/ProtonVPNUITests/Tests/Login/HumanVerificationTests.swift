@@ -21,6 +21,7 @@ import XCTest
 import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreHumanVerification
 import ProtonCoreQuarkCommands
+import fusion
 
 class HumanVerificationTests: ProtonVPNUITests {
 
@@ -36,7 +37,7 @@ class HumanVerificationTests: ProtonVPNUITests {
     
     func testLoginWithHumanVerification() throws {
         
-        let user = User(name: StringUtils().randomAlphanumericString(length: 5), password: "123")
+        let user = User(name: StringUtils.randomAlphanumericString(length: 5), password: "123")
         try quarkCommands.userCreate(user: user)
         
         try quarkCommands.systemEnvVariableAsJson(variable: "FINGERPRINT_DEV", value: "true")

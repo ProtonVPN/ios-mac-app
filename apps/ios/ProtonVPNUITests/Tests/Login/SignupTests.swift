@@ -22,9 +22,9 @@ class SignupTests: ProtonVPNUITests {
 
     /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
     func testSignupNewExternalAccountUpgrade() throws  {
-        let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
+        let email = StringUtils.randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
-        let password = StringUtils().randomAlphanumericString(length: 8)
+        let password = StringUtils.randomAlphanumericString(length: 8)
 
         SignupExternalAccountsCapability()
             .signUpWithExternalAccount(
@@ -46,9 +46,9 @@ class SignupTests: ProtonVPNUITests {
     }
 
     func testSignupExistingExternalAccount() throws {
-        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@gmail.com"
-        let randomName = "\(StringUtils().randomAlphanumericString(length: 8))"
-        let password = StringUtils().randomAlphanumericString(length: 8)
+        let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8))@gmail.com"
+        let randomName = "\(StringUtils.randomAlphanumericString(length: 8))"
+        let password = StringUtils.randomAlphanumericString(length: 8)
         let code = "666666"
         let user = User(email: randomEmail, name: randomName, password: password, isExternal: true)
 

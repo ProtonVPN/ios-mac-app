@@ -8,6 +8,7 @@
 
 import fusion
 import ProtonCoreQuarkCommands
+import UITestsHelpers
 
 fileprivate let titleId = "LoginViewController.titleLabel"
 fileprivate let subtitleId = "LoginViewController.subtitleLabel"

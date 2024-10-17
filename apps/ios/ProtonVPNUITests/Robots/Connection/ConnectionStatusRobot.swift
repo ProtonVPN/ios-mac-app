@@ -8,6 +8,7 @@
 
 import fusion
 import XCTest
+import UITestsHelpers
 
 fileprivate let headerTitle = "Status"
 fileprivate let statusNotConnected = "Not Connected"

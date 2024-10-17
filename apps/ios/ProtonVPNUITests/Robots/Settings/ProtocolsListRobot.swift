@@ -8,6 +8,7 @@
 
 import fusion
 import XCTest
+import UITestsHelpers
 
 fileprivate let smartButton = "Smart"
 fileprivate let settingsButton = "Settings back btn"

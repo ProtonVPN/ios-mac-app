@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import UITestsHelpers
 
 class AutoConnectTests: ProtonVPNUITests {
     private let mainRobot = MainRobot()

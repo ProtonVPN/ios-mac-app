@@ -9,6 +9,7 @@
 import Foundation
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
+import UITestsHelpers
 
 class ConnectionTests: ProtonVPNUITests {
     
@@ -17,14 +18,6 @@ class ConnectionTests: ProtonVPNUITests {
     private let countryListRobot = CountryListRobot()
     private let countrySearchRobot = CountrySearchRobot()
     private let serverListRobot = ServerListRobot()
-    
-    private lazy var credentials = getCredentials(from: "credentials")
-    
-    enum CredentialsKey: Int {
-        case freeUser = 0
-        case basicUser = 1
-        case plusUser = 2
-    }
     
     override func setUp() {
         super.setUp()
@@ -37,7 +30,7 @@ class ConnectionTests: ProtonVPNUITests {
     func testConnectAndDisconnectViaQCButtonFreeUser() {
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.freeUser])
+            .enterCredentials(UserType.Free.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -53,7 +46,7 @@ class ConnectionTests: ProtonVPNUITests {
         let back = "Countries"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         
@@ -80,7 +73,7 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Australia"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -99,7 +92,7 @@ class ConnectionTests: ProtonVPNUITests {
         let map = "Map"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         
@@ -114,11 +107,11 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testConnectAndDisconnectViaProfile() {
         
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString()
         let countryName = "Argentina"
         let back = "Profiles"
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -139,7 +132,7 @@ class ConnectionTests: ProtonVPNUITests {
         let back = "Profiles"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -159,13 +152,13 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testConnectionWithDefaultAndSecureCoreProfile() {
         
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString()
         let countryName = "Ukraine"
         let serverVia = "Switzerland"
         let status = "Switzerland >> Ukraine"
     
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -186,7 +179,7 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Austria"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.freeUser])
+            .enterCredentials(UserType.Free.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -200,7 +193,7 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Netherlands"
 
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -219,7 +212,7 @@ class ConnectionTests: ProtonVPNUITests {
     func testCancelLogoutWhileConnectedToVpn() {
             
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -238,7 +231,7 @@ class ConnectionTests: ProtonVPNUITests {
         let back = "Countries"
 
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -269,7 +262,7 @@ class ConnectionTests: ProtonVPNUITests {
         let netshield = "Block malware, ads, & trackers"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
@@ -299,7 +292,7 @@ class ConnectionTests: ProtonVPNUITests {
         let back = "Settings"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         
@@ -358,7 +351,7 @@ class ConnectionTests: ProtonVPNUITests {
         let countryToReconnectName = "Japan"
 
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot

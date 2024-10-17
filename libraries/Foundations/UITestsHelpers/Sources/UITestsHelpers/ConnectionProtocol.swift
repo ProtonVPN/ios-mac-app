@@ -1,10 +1,7 @@
 //
-//  Credentials.swift
-//  ProtonVPN - Created on 01.07.19.
+//  Created on 29/7/24.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,24 +15,13 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
-import Foundation
-
-struct Credentials: Decodable {
-    let username: String
-    let password: String
-    let plan: String
-    
-    static func loadFrom(plistUrl: URL) -> [Credentials] {
-        let data = try! Data(contentsOf: plistUrl)
-        let decoder = PropertyListDecoder()
-        return try! decoder.decode([Credentials].self, from: data)
-    }
-}
-
-extension Array<Credentials> {
-    subscript<K: RawRepresentable<Int>>(_ key: K) -> Element {
-        self[key.rawValue]
-    }
+public enum ConnectionProtocol: String {
+    case WireGuardUDP = "WireGuard"
+    case WireGuardTCP = "WireGuard (TCP)"
+    case Smart = "Smart"
+    case Stealth = "Stealth"
+#if os(macOS)
+    case IKEv2 = "IKEv2"
+#endif
 }

@@ -9,20 +9,13 @@
 import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
+import UITestsHelpers
 
 class ProfilesTests: ProtonVPNUITests {
     
     private let loginRobot = LoginRobot()
     private let profileRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
-    
-    private lazy var credentials = getCredentials(from: "credentials")
-    
-    enum CredentialsKey: Int {
-        case freeUser = 0
-        case basicUser = 1
-        case plusUser = 2
-    }
     
     override func setUp() {
         super.setUp()
@@ -33,11 +26,11 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testCreateAndDeleteProfile() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
@@ -50,11 +43,11 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testCreateProfileWithTheSameName() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.plusUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
@@ -69,12 +62,12 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testEditProfile() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString(length: 10)
         let countryName = "Belgium"
         let newCountryName = "Australia"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
@@ -89,12 +82,12 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     func testMakeDefaultAndSecureCoreProfilePlusUser() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         let serverVia = "Iceland"
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
@@ -105,10 +98,10 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     func testFreeUserCannotCreateProfile() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils.randomAlphanumericString(length: 10)
 
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.freeUser])
+            .enterCredentials(UserType.Free.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
@@ -119,7 +112,7 @@ class ProfilesTests: ProtonVPNUITests {
     func testRecommendedProfiles() {
         
         loginRobot
-            .enterCredentials(credentials[CredentialsKey.basicUser])
+            .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
