@@ -179,7 +179,14 @@ extension CreateOrEditProfileViewModel {
     }
 
     // MARK: - Icon
-    
+
+    private func embededImageIcon(image: UIImage?, baselineOffset: CGFloat? = nil, size: CGSize = CGSize(width: 18, height: 18)) -> NSAttributedString {
+        if let image = image {
+            return NSAttributedString.imageAttachment(image: image, baselineOffset: baselineOffset, size: size)
+        }
+        return NSAttributedString(string: "")
+    }
+
     private func embededCountryFlag(countryCode: String) -> NSAttributedString {
         let image = UIImage.flag(countryCode: countryCode)
         if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
@@ -192,13 +199,6 @@ extension CreateOrEditProfileViewModel {
         } else {
             return embededImageIcon(image: image)
         }
-    }
-
-    private func embededImageIcon(image: UIImage?, baselineOffset: CGFloat? = nil, size: CGSize = CGSize(width: 18, height: 18)) -> NSAttributedString {
-        if let image = image {
-            return NSAttributedString.imageAttachment(image: image, baselineOffset: baselineOffset, size: size)
-        }
-        return NSAttributedString(string: "")
     }
 
     private func roundedCroppedImage(image: UIImage?, targetSize: CGSize, cornerRadius: CGFloat) -> UIImage? {
