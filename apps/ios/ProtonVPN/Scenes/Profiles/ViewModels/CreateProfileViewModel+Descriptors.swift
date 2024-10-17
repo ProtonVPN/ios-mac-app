@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import UIKit
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
 import Domain
@@ -44,7 +45,7 @@ extension CreateOrEditProfileViewModel {
 
         switch group.kind {
         case .country(let countryCode):
-            imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: countryCode))
+            imageAttributedString = embededCountryFlag(countryCode: countryCode)
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case .gateway(let name):
             imageAttributedString = embededImageIcon(image: IconProvider.servers)
@@ -111,7 +112,7 @@ extension CreateOrEditProfileViewModel {
                 .foregroundColor: UIColor.normalTextColor()
             ]
         )
-        let entryCountryFlag = embededImageIcon(image: UIImage.flag(countryCode: entryCountryCode))
+        let entryCountryFlag = embededCountryFlag(countryCode: entryCountryCode)
         let entryCountry = NSMutableAttributedString(
             string: "  " + entryCountry,
             attributes: [
@@ -124,7 +125,7 @@ extension CreateOrEditProfileViewModel {
     }
 
     private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
-        let countryFlag = embededImageIcon(image: UIImage.flag(countryCode: countryCode))
+        let countryFlag = embededCountryFlag(countryCode: countryCode)
         let serverString = "  " + serverName
         let serverDescriptor: NSAttributedString
         if serverTier <= userTier {
@@ -179,10 +180,41 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Icon
     
-    private func embededImageIcon(image: UIImage?) -> NSAttributedString {
+    private func embededCountryFlag(countryCode: String) -> NSAttributedString {
+        let image = UIImage.flag(countryCode: countryCode)
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            let size = CGSize(width: 18, height: 12)
+            return embededImageIcon(
+                image: roundedCroppedImage(image: image, targetSize: size, cornerRadius: 2.4), // The corner radius value is proportionally aligned with the flags in the country list.
+                baselineOffset: 3,
+                size: size
+            )
+        } else {
+            return embededImageIcon(image: image)
+        }
+    }
+
+    private func embededImageIcon(image: UIImage?, baselineOffset: CGFloat? = nil, size: CGSize = CGSize(width: 18, height: 18)) -> NSAttributedString {
         if let image = image {
-            return NSAttributedString.imageAttachment(image: image, size: CGSize(width: 18, height: 18))
+            return NSAttributedString.imageAttachment(image: image, baselineOffset: baselineOffset, size: size)
         }
         return NSAttributedString(string: "")
+    }
+
+    private func roundedCroppedImage(image: UIImage?, targetSize: CGSize, cornerRadius: CGFloat) -> UIImage? {
+        guard let image = image else {
+            return nil
+        }
+
+        let aspectFillScale = max(targetSize.width / image.size.width, targetSize.height / image.size.height)
+        let scaledSize = CGSize(width: image.size.width * aspectFillScale, height: image.size.height * aspectFillScale)
+        let origin = CGPoint(x: (targetSize.width - scaledSize.width) / 2, y: (targetSize.height - scaledSize.height) / 2)
+
+        return UIGraphicsImageRenderer(size: targetSize).image { _ in
+            if cornerRadius > 0 {
+                UIBezierPath(roundedRect: CGRect(origin: .zero, size: targetSize), cornerRadius: cornerRadius).addClip()
+            }
+            image.draw(in: CGRect(origin: origin, size: scaledSize))
+        }
     }
 }
