@@ -52,7 +52,7 @@ struct StackNavigationView<RootContent>: View where RootContent: View {
                         IconProvider.chevronLeft
                             .resizable()
                             .foregroundColor(Color(.text))
-                            .frame(width: 16, height: 16)
+                            .frame(.square(.themeSpacing16))
                     })
                     .buttonStyle(PlainButtonStyle())
                 }

@@ -86,7 +86,7 @@ public struct SideBarView: View {
                     IconProvider.sidePanelLeft
                         .resizable()
                         .foregroundColor(Color(.text, .weak))
-                        .frame(width: 16, height: 16)
+                        .frame(.square(.themeSpacing16))
                 })
             }
         }

@@ -111,7 +111,7 @@ public struct HomeFeature {
                     await send(.recents(.connectionEstablished(spec)))
                 }
             case .changeServer:
-                // TODO: [redesign] Do an actual server change
+                // TODO: [redesign, VPNAPPL-2351] Do an actual server change
                 return .concatenate([
                     .send(.disconnect),
                     .send(.connect(.defaultFastest))

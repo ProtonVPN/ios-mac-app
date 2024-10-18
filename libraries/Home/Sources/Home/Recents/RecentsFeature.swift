@@ -31,16 +31,11 @@ public struct RecentsFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
-        public package(set) var recents: RecentsStorage
-
-        public init(recents: RecentsStorage) {
-            self.recents = recents
-        }
+        public package(set) var recents: [RecentConnection]
 
         public init() {
-            @Dependency(\.authKeychain) var authKeychain
-            let userID = authKeychain.userId
-            self.recents = .init(userID: userID ?? "")
+            @Dependency(\.recentsStorage) var recentsStorage
+            recents = recentsStorage.elements()
         }
     }
 
@@ -65,6 +60,8 @@ public struct RecentsFeature {
         case watchConnectionStatus
     }
 
+    @Dependency(\.recentsStorage) var recentsStorage
+
     public init() {}
 
     public var body: some Reducer<State, Action> {
@@ -86,19 +83,23 @@ public struct RecentsFeature {
                 return .send(.connectionEstablished(spec))
 
             case .connectionEstablished(let spec):
-                state.recents.updateList(with: spec)
+                recentsStorage.updateList(spec)
+                state.recents = recentsStorage.elements()
                 return .none
 
             case let .pin(spec):
-                state.recents.pin(spec: spec)
+                recentsStorage.pin(spec)
+                state.recents = recentsStorage.elements()
                 return .none
 
             case let .unpin(spec):
-                state.recents.unpin(spec: spec)
+                recentsStorage.unpin(spec)
+                state.recents = recentsStorage.elements()
                 return .none
 
             case let .remove(spec):
-                state.recents.remove(spec: spec)
+                recentsStorage.remove(spec)
+                state.recents = recentsStorage.elements()
                 return .none
 
             case .delegate:

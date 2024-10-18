@@ -112,7 +112,6 @@ struct PlanOptionsListView: View {
     }
 }
 
-#if swift(>=5.9)
 #Preview("Classic") {
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
@@ -140,33 +139,3 @@ struct PlanOptionsListView: View {
     let viewModel = PlanOptionsListViewModel(client: client)
     return PlanOptionsListView(viewModel: viewModel)
 }
-#else
-struct PlanOptionsListView_Provider: PreviewProvider {
-    static let scheduler: AnySchedulerOf<DispatchQueue> = .main
-    static let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    ]
-    static let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
-    static let loadingClient: PlansClient = .init(
-        retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-            return plans
-        },
-        validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
-        })
-    static let viewModel = PlanOptionsListViewModel(client: client)
-    static let loadingViewModel = PlanOptionsListViewModel(client: loadingClient)
-
-    static var previews: some View {
-        PlanOptionsListView(viewModel: viewModel)
-            .previewDisplayName("Classic")
-        PlanOptionsListView(viewModel: loadingViewModel)
-            .previewDisplayName("Loading")
-        PlanOptionsListView(viewModel: viewModel)
-            .previewDisplayName("iPad")
-            .previewDevice(PreviewDevice(rawValue: "iPad Pro (11-inch)"))
-    }
-}
-#endif

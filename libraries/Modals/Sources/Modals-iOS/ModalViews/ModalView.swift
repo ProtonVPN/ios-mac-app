@@ -70,7 +70,6 @@ struct ModalView: View {
     }
 }
 
-#if swift(>=5.9)
 #Preview("Welcome plus") {
     ModalView(modalType: .welcomePlus(
         numberOfServers: 1800,
@@ -90,17 +89,3 @@ struct ModalView: View {
 #Preview("Welcome unlimited") {
     ModalView(modalType: .welcomeUnlimited)
 }
-#else
-struct ModalView_Previews: PreviewProvider {
-    static var previews: some View {
-        ModalView(modalType: .welcomePlus(
-            numberOfServers: 1800,
-            numberOfDevices: 10,
-            numberOfCountries: 68
-        )).previewDisplayName("Welcome plus")
-
-        ModalView(modalType: .welcomeUnlimited)
-            .previewDisplayName("Welcome unlimited")
-    }
-}
-#endif
