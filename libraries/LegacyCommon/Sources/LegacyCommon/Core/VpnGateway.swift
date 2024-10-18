@@ -424,11 +424,15 @@ public class VpnGateway: VpnGatewayProtocol {
             )
             return
         }
+        // If server type of the request is unspecified, we must update the server type
+        // according to whether SecureCore is toggled on or not
+        let serverType = request.serverType == .unspecified ? serverTypeToggle : request.serverType
+        let requestWithUpdatedServerType = request.withChanged(serverType: serverType)
 
         propertiesManager.lastConnectionIntent = ConnectionSpec(connectionRequest: request)
 
         @Dependency(\.connectionAuthorizer) var authorizer
-        switch authorizer.authorize(request: request) {
+        switch authorizer.authorize(request: requestWithUpdatedServerType) {
         case .failure(.specificCountryUnavailable(let countryCode)):
             alertService?.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
             log.info("User is not authorized to connect to specific countries (\(countryCode))")
@@ -439,8 +443,8 @@ public class VpnGateway: VpnGatewayProtocol {
                 until: date,
                 duration: duration,
                 longSkip: longSkip,
-                reconnectClosure: { [weak self, request] in
-                    self?.connect(with: request)
+                reconnectClosure: { [weak self, requestWithUpdatedServerType] in
+                    self?.connect(with: requestWithUpdatedServerType)
                 }
             ))
             return
@@ -463,9 +467,7 @@ public class VpnGateway: VpnGatewayProtocol {
         do {
             let currentUserTier = try self.userTier() // accessing from the keychain for each server is very expensive
             
-            let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
-            
-            let selector = VpnServerSelector(serverType: type,
+            let selector = VpnServerSelector(serverType: connectionRequest.serverType,
                                              userTier: currentUserTier,
                                              connectionProtocol: connectionRequest.connectionProtocol,
                                              smartProtocolConfig: propertiesManager.smartProtocolConfig,

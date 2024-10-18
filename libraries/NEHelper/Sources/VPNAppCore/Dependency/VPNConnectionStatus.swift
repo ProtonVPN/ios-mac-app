@@ -78,10 +78,24 @@ public struct VPNConnectionActual: Equatable {
     public let feature: ServerFeature
     public let serverName: String
     public let country: String
+    public let entryCountry: String?
     public let city: String?
     public let coordinates: CLLocationCoordinate2D
 
-    public init(connectedDate: Date?, serverModelId: String, serverExitIP: String, vpnProtocol: VpnProtocol, natType: NATType, safeMode: Bool?, feature: ServerFeature, serverName: String, country: String, city: String?, coordinates: CLLocationCoordinate2D) {
+    public init(
+        connectedDate: Date?,
+        serverModelId: String,
+        serverExitIP: String,
+        vpnProtocol: VpnProtocol,
+        natType: NATType,
+        safeMode: Bool?,
+        feature: ServerFeature,
+        serverName: String,
+        country: String,
+        entryCountry: String?,
+        city: String?,
+        coordinates: CLLocationCoordinate2D
+    ) {
         self.connectedDate = connectedDate
         self.serverModelId = serverModelId
         self.serverExitIP = serverExitIP
@@ -91,6 +105,7 @@ public struct VPNConnectionActual: Equatable {
         self.feature = feature
         self.serverName = serverName
         self.country = country
+        self.entryCountry = entryCountry
         self.city = city
         self.coordinates = coordinates
     }
@@ -107,6 +122,7 @@ extension VPNConnectionActual {
                             feature: ServerFeature = [],
                             serverName: String = "SRV#12",
                             country: String = "CH",
+                            entryCountry: String? = nil,
                             city: String? = "Bern"
     ) -> VPNConnectionActual {
         VPNConnectionActual(
@@ -119,6 +135,7 @@ extension VPNConnectionActual {
             feature: feature,
             serverName: serverName,
             country: country,
+            entryCountry: entryCountry,
             city: city,
             coordinates: .mockPoland()
         )

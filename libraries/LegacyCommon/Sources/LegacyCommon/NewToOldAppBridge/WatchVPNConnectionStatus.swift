@@ -107,6 +107,7 @@ extension ConnectionConfiguration {
             feature: self.server.feature,
             serverName: self.server.name,
             country: self.server.exitCountryCode,
+            entryCountry: self.server.entryCountryCode,
             city: self.server.city,
             coordinates: .init(latitude: self.server.location.lat,
                                longitude: self.server.location.long)

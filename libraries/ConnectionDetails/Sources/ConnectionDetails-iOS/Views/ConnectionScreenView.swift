@@ -116,6 +116,7 @@ public struct ConnectionScreenView: View {
                                      feature: .p2p,
                                      serverName: "SER#123",
                                      country: "US",
+                                     entryCountry: nil,
                                      city: "City",
                                      coordinates: .mockPoland())
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
