@@ -45,10 +45,10 @@ extension CreateOrEditProfileViewModel {
 
         switch group.kind {
         case .country(let countryCode):
-            imageAttributedString = embededCountryFlag(countryCode: countryCode)
+            imageAttributedString = embeddedCountryFlag(countryCode: countryCode)
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
         case .gateway(let name):
-            imageAttributedString = embededImageIcon(image: IconProvider.servers)
+            imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
             countryString = "  " + name
         }
 
@@ -112,7 +112,7 @@ extension CreateOrEditProfileViewModel {
                 .foregroundColor: UIColor.normalTextColor()
             ]
         )
-        let entryCountryFlag = embededCountryFlag(countryCode: entryCountryCode)
+        let entryCountryFlag = embeddedCountryFlag(countryCode: entryCountryCode)
         let entryCountry = NSMutableAttributedString(
             string: "  " + entryCountry,
             attributes: [
@@ -125,7 +125,7 @@ extension CreateOrEditProfileViewModel {
     }
 
     private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
-        let countryFlag = embededCountryFlag(countryCode: countryCode)
+        let countryFlag = embeddedCountryFlag(countryCode: countryCode)
         let serverString = "  " + serverName
         let serverDescriptor: NSAttributedString
         if serverTier <= userTier {
@@ -180,24 +180,24 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Icon
 
-    private func embededImageIcon(image: UIImage?, baselineOffset: CGFloat? = nil, size: CGSize = CGSize(width: 18, height: 18)) -> NSAttributedString {
+    private func embeddedImageIcon(image: UIImage?, baselineOffset: CGFloat? = nil, size: CGSize = CGSize(width: 18, height: 18)) -> NSAttributedString {
         if let image = image {
             return NSAttributedString.imageAttachment(image: image, baselineOffset: baselineOffset, size: size)
         }
         return NSAttributedString(string: "")
     }
 
-    private func embededCountryFlag(countryCode: String) -> NSAttributedString {
+    private func embeddedCountryFlag(countryCode: String) -> NSAttributedString {
         let image = UIImage.flag(countryCode: countryCode)
         if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
             let size = CGSize(width: 18, height: 12)
-            return embededImageIcon(
+            return embeddedImageIcon(
                 image: roundedCroppedImage(image: image, targetSize: size, cornerRadius: 2.4), // The corner radius value is proportionally aligned with the flags in the country list.
                 baselineOffset: 3,
                 size: size
             )
         } else {
-            return embededImageIcon(image: image)
+            return embeddedImageIcon(image: image)
         }
     }
 
