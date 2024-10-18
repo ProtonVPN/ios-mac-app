@@ -105,7 +105,7 @@ extension Domain.Logical {
             feature: staticInfo.feature,
             city: staticInfo.city,
             hostCountry: staticInfo.hostCountry,
-            translatedCity: staticInfo.translatedCity,
+            translatedCity: staticInfo.translatedCity ?? staticInfo.city,
             latitude: staticInfo.latitude,
             longitude: staticInfo.longitude,
             gatewayName: staticInfo.gatewayName

@@ -392,6 +392,13 @@ class CountryItemViewModel {
 // MARK: - Search
 
 extension CountryItemViewModel: CountryViewModel {
+    var isGateway: Bool {
+        if case .gateway = serversGroup.kind {
+            return true
+        }
+        return false
+    }
+    
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
         let convertTier = { (tier: Int) -> ServerTier in

@@ -25,12 +25,12 @@ import CoreLocation
 
 @available(iOS 17.0, *)
 public struct HomeMapView: View {
-    @State var map = SVGView.naturalEarthMap
+    @State private var map = SVGView.naturalEarthMap
 
-    let availableHeight: CGFloat
-    let availableWidth: CGFloat
+    private let availableHeight: CGFloat
+    private let availableWidth: CGFloat
 
-    var store: StoreOf<HomeMapFeature>
+    private var store: StoreOf<HomeMapFeature>
 
     public init(store: StoreOf<HomeMapFeature>, availableHeight: CGFloat, availableWidth: CGFloat) {
         self.store = store
@@ -38,7 +38,7 @@ public struct HomeMapView: View {
         self.availableWidth = availableWidth
     }
 
-    var shouldShowPin: Bool {
+    private var shouldShowPin: Bool {
         if case .connected = store.vpnConnectionStatus { // we're connected to a known country {
             return true
         }
