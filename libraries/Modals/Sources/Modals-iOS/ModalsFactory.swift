@@ -42,9 +42,15 @@ public final class ModalsFactory {
     public func modalViewController(
         modalType: ModalType,
         primaryAction: (() -> Void)? = nil,
-        dismissAction: (() -> Void)? = nil
+        dismissAction: (() -> Void)? = nil,
+        onFeatureUpdate: ((Feature) -> Void)? = nil
     ) -> UIViewController {
-        ModalView(modalType: modalType, primaryAction: primaryAction, dismissAction: dismissAction).hostingController()
+        ModalView(
+            modalType: modalType,
+            primaryAction: primaryAction,
+            dismissAction: dismissAction,
+            onFeatureUpdate: onFeatureUpdate
+        ).hostingController()
     }
 
     public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> UIViewController {

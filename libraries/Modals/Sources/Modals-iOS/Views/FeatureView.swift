@@ -41,9 +41,19 @@ final class FeatureView: UIView {
             }
             iconImageView.image = feature.image
 
-            titleLabel.attributedText = feature.title().attributedString(size: 15,
-                                                                         color: textColor,
-                                                                         boldStrings: feature.boldTitleElements())
+            titleLabel.attributedText = feature.title().flatMap {
+                $0.attributedString(
+                    size: AppTheme.FontSize.customFeatureViewFontSize,
+                    color: textColor,
+                    boldStrings: feature.boldTitleElements()
+                )
+            }
         }
+    }
+}
+
+private extension AppTheme.FontSize {
+    static var customFeatureViewFontSize: CGFloat {
+        return 15.0
     }
 }

@@ -38,11 +38,12 @@ struct ModalFeaturesView: View {
 
                 HStack(spacing: .themeSpacing8) {
                     let green = feature == .moneyGuarantee
-                    feature.image.swiftUIImage
-                        .foregroundColor(Color(.icon, green ? .success : [.interactive, .active]))
-                    if let title = try? AttributedString(markdown: feature.title()) {
-                        Text(title)
-                            .foregroundColor(Color(.text, green ? .success : []))
+
+                    if let image = feature.image?.swiftUIImage {
+                        image.foregroundColor(Color(.icon, green ? .success : [.interactive, .active]))
+                    }
+                    if let title = feature.title(), let attrTitle = try? AttributedString(markdown: title) {
+                        Text(attrTitle).foregroundColor(Color(.text, green ? .success : []))
                     }
                 }
             }

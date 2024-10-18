@@ -26,6 +26,8 @@ import Modals_iOS
 import Dependencies
 import Persistence
 
+import ProtonCoreFeatureFlags
+
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
 }
@@ -71,12 +73,36 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
-            self.welcomeToProtonPrimaryAction()
-        })
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            return modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
+                let getStartedVC = self.onboardingGetStartedViewController()
+                self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
+            })
+        } else {
+            return modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
+                self.postOnboardingAction()
+            })
+        }
     }
 
-    func welcomeToProtonPrimaryAction() {
+    private func onboardingGetStartedViewController() -> UIViewController {
+        assert(FeatureFlagsRepository.shared.isRedesigniOSEnabled)
+
+        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) {
+            self.postOnboardingAction()
+        } onFeatureUpdate: { feature in
+            switch feature {
+            case .toggle(.statistics, _, _, let state):
+                break // TODO: VPNAPPL-2407 + !1742
+            case .toggle(.crashes, _, _, let state):
+                break // TODO: VPNAPPL-2407 + !1742
+            default:
+                assertionFailure("Onboarding interactive feature not handled")
+            }
+        }
+    }
+
+    func postOnboardingAction() {
         guard let oneClickPayment = OneClickPayment(
             alertService: alertService,
             planService: planService,

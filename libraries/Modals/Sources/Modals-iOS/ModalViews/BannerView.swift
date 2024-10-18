@@ -23,26 +23,31 @@ import ProtonCoreUIFoundations
 import Modals
 
 struct BannerView: View {
+    let useAlternateWording: Bool
 
     private let urlNoLogsAudit = URL(string: "https://protonvpn.com/blog/no-logs-audit/")!
 
     var body: some View {
         Link(destination: urlNoLogsAudit) {
             HStack(alignment: .top, spacing: .themeSpacing12) {
-                Asset.bannerIcon.swiftUIImage
+                Asset.bannerIcon.swiftUIImage.tint(.white)
+
                 VStack(alignment: .leading, spacing: .themeSpacing4) {
                     HStack(spacing: 0) {
                         Text(Localizable.welcomeToProtonBannerTitle)
                             .foregroundColor(Color(.text))
                             .themeFont(.body2(emphasised: true))
+
                         Spacer(minLength: .themeSpacing8)
+
                         IconProvider.arrowOutSquare.swiftUIImage
                             .resizable()
                             .renderingMode(.template)
                             .frame(.square(16))
                             .foregroundColor(Color(.icon, .weak))
                     }
-                    Text(Localizable.welcomeToProtonBannerSubtitle)
+
+                    Text(bannerTextContent)
                         .foregroundColor(Color(.text, .weak))
                         .themeFont(.caption(emphasised: false))
                         .multilineTextAlignment(.leading)
@@ -53,11 +58,19 @@ struct BannerView: View {
         .background(Color(.background, .weak))
         .clipRectangle(cornerRadius: .radius12)
     }
+
+    private var bannerTextContent: String {
+        if useAlternateWording {
+            return Localizable.welcomeToProtonBannerSubtitleRedesign
+        } else {
+            return Localizable.welcomeToProtonBannerSubtitle
+        }
+    }
 }
 
 struct BannerView_Previews: PreviewProvider {
     static var previews: some View {
-        BannerView()
+        BannerView(useAlternateWording: false)
             .previewDisplayName("BannerView")
     }
 }

@@ -1833,6 +1833,14 @@ public enum Localizable {
   public static var onboardingFooter: String { return Localizable.tr("Localizable", "onboarding_footer", fallback: "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.") }
   /// Learn more
   public static var onboardingFooterLearnMore: String { return Localizable.tr("Localizable", "onboarding_footer_learn_more", fallback: "Learn more") }
+  /// Onboarding Get Started screen. Crashes Toggle subtitle.
+  public static var onboardingGetStartedCrashesToggleSubtitle: String { return Localizable.tr("Localizable", "onboarding_get_started_crashes_toggle_subtitle", fallback: "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.") }
+  /// Onboarding Get Started screen. Crashes Toggle title.
+  public static var onboardingGetStartedCrashesToggleTitle: String { return Localizable.tr("Localizable", "onboarding_get_started_crashes_toggle_title", fallback: "Share anonymous crash reports") }
+  /// Onboarding Get Started screen. Statistics Toggle subtitle.
+  public static var onboardingGetStartedStatisticsToggleSubtitle: String { return Localizable.tr("Localizable", "onboarding_get_started_statistics_toggle_subtitle", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
+  /// Onboarding Get Started screen. Statistics Toggle title.
+  public static var onboardingGetStartedStatisticsToggleTitle: String { return Localizable.tr("Localizable", "onboarding_get_started_statistics_toggle_title", fallback: "Share anonymous usage statistics") }
   /// Usage data helps us overcome VPN blocks and improve app performance.
   public static var onboardingUsageStatsDescription: String { return Localizable.tr("Localizable", "onboarding_usage_stats_description", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
   /// Share anonymous usage statistics
@@ -2007,6 +2015,8 @@ public enum Localizable {
   }
   /// Welcome to Proton screen shown during onboarding. Banner subtitle label.
   public static var welcomeToProtonBannerSubtitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_subtitle", fallback: "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.") }
+  /// Welcome to Proton screen shown during onboarding. Banner subtitle label.
+  public static var welcomeToProtonBannerSubtitleRedesign: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_subtitle_redesign", fallback: "We’ll never log your internet activity or share your information with third parties.") }
   /// Welcome to Proton screen shown during onboarding. Banner title label.
   public static var welcomeToProtonBannerTitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_title", fallback: "Certified no-logs VPN") }
   /// Welcome to Proton screen shown during onboarding. Subtitle label.

@@ -142,13 +142,7 @@ final class ViewController: UITableViewController {
                     self.dismiss(animated: true)
                 })
             default:
-                if legacyModal {
-                    let modalVC = modalsFactory.upsellViewController(modalType: type)
-                    modalVC.delegate = self
-                    viewController = modalVC
-                } else {
-                    viewController = modalsFactory.upsellViewController(modalType: type, client: plansClient())
-                }
+                viewController = modalsFactory.upsellViewController(modalType: type, client: plansClient())
             }
         case (3, 0):
             viewController = modalsFactory.discourageSecureCoreViewController(
@@ -193,28 +187,6 @@ final class ViewController: UITableViewController {
                                                              dismissAction: { self.presentedViewController?.dismiss(animated: true) })
 
         (presentedViewController as? UINavigationController)?.pushViewController(allCountries, animated: true)
-    }
-}
-
-extension ViewController: UpsellViewControllerDelegate {
-    func userDidTapNext(upsell: UpsellViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
-        true
-    }
-
-    func userDidRequestPlus(upsell: UpsellViewController?) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func userDidDismissUpsell(upsell: UpsellViewController?) {
-        dismiss(animated: true, completion: nil)
-    }
-
-    func upsellDidDisappear(upsell: UpsellViewController?) {
-
     }
 }
 
