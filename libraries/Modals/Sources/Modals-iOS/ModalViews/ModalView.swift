@@ -80,7 +80,11 @@ struct ModalView: View {
 }
 
 #Preview("Onboarding Get Started") {
-    ModalView(modalType: .onboardingGetStarted, onFeatureUpdate: { _ in ()  })
+    ModalView(
+        modalType: .onboardingGetStarted,
+        primaryAction: { () },
+        onFeatureUpdate: { _ in () }
+    )
 }
 
 #Preview("Welcome unlimited") {

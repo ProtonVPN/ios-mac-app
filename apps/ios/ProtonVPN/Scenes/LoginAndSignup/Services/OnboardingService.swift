@@ -91,9 +91,9 @@ extension OnboardingModuleService: OnboardingService {
         } onFeatureUpdate: { feature in
             switch feature {
             case .toggle(.statistics, _, _, let state):
-                break // TODO: Handle Statistics toggle
+                break // TODO: VPNAPPL-2407
             case .toggle(.crashes, _, _, let state):
-                break // TODO: Handle Anonymous Crashes toggle
+                break // TODO: VPNAPPL-2407
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }

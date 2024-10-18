@@ -59,83 +59,97 @@ struct ModalBodyView: View {
     @ViewBuilder
     private var content: some View {
         VStack(spacing: 0) {
-            ZStack {
-                if let imagePadding {
-                    modalType.artImage().padding(imagePadding)
-                } else {
-                    modalType.artImage()
-                }
-
-                if !modalType.shouldVerticallyCenterContent {
-                    LinearGradient(
-                        colors: [
-                            Theme.Asset.onboardingGradientTop.swiftUIColor,
-                            Theme.Asset.onboardingGradientBottom.swiftUIColor
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                }
-            }
-            .ignoresSafeArea(edges: [.top, .horizontal])
+            headerView
 
             Group {
-                if let (stepCount, totalStepCount) = modalType.multipleStepsModal {
-                    VStack(spacing: .themeSpacing8) {
-                        ProgressView(value: Double(stepCount) / Double(totalStepCount))
-                            .progressViewStyle(.linear)
-                            .tint(Asset.onboardingTint.swiftUIColor)
-                            .padding(.top, .themeSpacing8)
-
-                        Text("Step \(stepCount) of \(totalStepCount)")
-                            .foregroundColor(Color(.text, .weak))
-                            .themeFont(.caption(emphasised: false))
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom, .themeSpacing8)
-                    }
-                    .padding(.vertical, .themeSpacing24)
-                }
-
-                VStack(spacing: .themeSpacing8) {
-                    Text(modalModel.title)
-                        .themeFont(.headline)
-                        .multilineTextAlignment(.center)
-                    if let subtitle = modalModel.subtitle?.attributedString {
-                        Text(subtitle)
-                            .themeFont(.body1(.regular))
-                            .foregroundColor(subtitleContentColor)
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity)
-                    }
-                }
-                .padding(.horizontal, .themeSpacing16)
+                mainContent
 
                 Spacer().frame(height: .themeSpacing24)
 
                 if displayBodyFeatures {
-                    let features = modalModel.features
-                    if displaySpecificFeatures(features) {
-                        VStack(alignment: .leading, spacing: .zero) {
-                            ForEach(features) { feature in
-                                if case .banner = feature {
-                                    BannerView()
-                                } else if case let .toggle(id, title, subtitle, initialState) = feature {
-                                    ToggleFeatureView(title: title, subtitle: subtitle, initialState: initialState) { newValue in
-                                        onFeatureUpdate?(.toggle(id: id, title: title, subtitle: subtitle, state: newValue))
-                                    }
-                                }
-                            }
-                        }
-                    } else if !features.isEmpty {
-                        ModalFeaturesView(features: features)
-                    }
+                    featuresContentView
                 }
             }
             .padding(.horizontal, .themeSpacing16)
         }
     }
 
-    private func displaySpecificFeatures(_ features: some Collection<Feature>) -> Bool {
+    private var headerView: some View {
+        ZStack {
+            if let imagePadding {
+                modalType.artImage().padding(imagePadding)
+            } else {
+                modalType.artImage()
+            }
+
+            if !modalType.shouldVerticallyCenterContent {
+                LinearGradient(
+                    colors: [
+                        Theme.Asset.onboardingGradientTop.swiftUIColor,
+                        Theme.Asset.onboardingGradientBottom.swiftUIColor
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            }
+        }
+        .ignoresSafeArea(edges: [.top, .horizontal])
+    }
+
+    @ViewBuilder
+    private var mainContent: some View {
+        if let (stepCount, totalStepCount) = modalType.multipleStepsModal {
+            VStack(spacing: .themeSpacing8) {
+                ProgressView(value: Double(stepCount) / Double(totalStepCount))
+                    .progressViewStyle(.linear)
+                    .tint(Asset.onboardingTint.swiftUIColor)
+                    .padding(.top, .themeSpacing8)
+
+                Text("Step \(stepCount) of \(totalStepCount)")
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.caption(emphasised: false))
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, .themeSpacing8)
+            }
+            .padding(.vertical, .themeSpacing24)
+        }
+
+        VStack(spacing: .themeSpacing8) {
+            Text(modalModel.title)
+                .themeFont(.headline)
+                .multilineTextAlignment(.center)
+            if let subtitle = modalModel.subtitle?.attributedString {
+                Text(subtitle)
+                    .themeFont(.body1(.regular))
+                    .foregroundColor(subtitleContentColor)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .padding(.horizontal, .themeSpacing16)
+    }
+
+    @ViewBuilder
+    private var featuresContentView: some View {
+        let features = modalModel.features
+        if shouldDisplaySpecificFeatures(features) {
+            VStack(alignment: .leading, spacing: .zero) {
+                ForEach(features) { feature in
+                    if case .banner = feature {
+                        BannerView()
+                    } else if case let .toggle(id, title, subtitle, initialState) = feature {
+                        ToggleFeatureView(title: title, subtitle: subtitle, initialState: initialState) { newValue in
+                            onFeatureUpdate?(.toggle(id: id, title: title, subtitle: subtitle, state: newValue))
+                        }
+                    }
+                }
+            }
+        } else if !features.isEmpty {
+            ModalFeaturesView(features: features)
+        }
+    }
+
+    private func shouldDisplaySpecificFeatures(_ features: some Collection<Feature>) -> Bool {
         return features.contains { feature in
             switch feature {
             case .banner: return true
