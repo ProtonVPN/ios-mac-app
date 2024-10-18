@@ -60,7 +60,7 @@ struct ModalView: View {
                 )
                 .padding(.horizontal, .themeSpacing16)
                 // Padding above could be applied to whole VStack container, but for some content
-                // such as onboardings ModalType, we want to display a gradient and we want it to
+                // such as new onboardings ModalType, we want to display a gradient and we want it to
                 // expand and ignore safe areas so we have to apply paddings conditionnally
             }
             .padding(.bottom, .themeRadius16)

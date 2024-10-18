@@ -136,7 +136,7 @@ struct ModalBodyView: View {
             VStack(alignment: .leading, spacing: .zero) {
                 ForEach(features) { feature in
                     if case .banner = feature {
-                        BannerView()
+                        BannerView(useAlternateWording: shouldBannerUseAlternateWording)
                     } else if case let .toggle(id, title, subtitle, initialState) = feature {
                         ToggleFeatureView(title: title, subtitle: subtitle, initialState: initialState) { newValue in
                             onFeatureUpdate?(.toggle(id: id, title: title, subtitle: subtitle, state: newValue))
@@ -159,6 +159,15 @@ struct ModalBodyView: View {
             default:
                 return false
             }
+        }
+    }
+
+    private var shouldBannerUseAlternateWording: Bool {
+        switch modalType {
+        case .onboardingWelcome:
+            return true
+        default:
+            return false
         }
     }
 

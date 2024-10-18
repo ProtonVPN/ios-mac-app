@@ -23,6 +23,7 @@ import ProtonCoreUIFoundations
 import Modals
 
 struct BannerView: View {
+    let useAlternateWording: Bool
 
     private let urlNoLogsAudit = URL(string: "https://protonvpn.com/blog/no-logs-audit/")!
 
@@ -46,7 +47,7 @@ struct BannerView: View {
                             .foregroundColor(Color(.icon, .weak))
                     }
 
-                    Text(Localizable.welcomeToProtonBannerSubtitle)
+                    Text(bannerTextContent)
                         .foregroundColor(Color(.text, .weak))
                         .themeFont(.caption(emphasised: false))
                         .multilineTextAlignment(.leading)
@@ -57,11 +58,19 @@ struct BannerView: View {
         .background(Color(.background, .weak))
         .clipRectangle(cornerRadius: .radius12)
     }
+
+    private var bannerTextContent: String {
+        if useAlternateWording {
+            return Localizable.welcomeToProtonBannerSubtitleRedesign
+        } else {
+            return Localizable.welcomeToProtonBannerSubtitle
+        }
+    }
 }
 
 struct BannerView_Previews: PreviewProvider {
     static var previews: some View {
-        BannerView()
+        BannerView(useAlternateWording: false)
             .previewDisplayName("BannerView")
     }
 }

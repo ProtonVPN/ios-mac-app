@@ -73,17 +73,19 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
-            if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
-                let getStartedVC = self.welcomeGetStartedViewController()
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            return modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
+                let getStartedVC = self.onboardingGetStartedViewController()
                 self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
-            } else {
+            })
+        } else {
+            return modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
                 self.postOnboardingAction()
-            }
-        })
+            })
+        }
     }
 
-    private func welcomeGetStartedViewController() -> UIViewController {
+    private func onboardingGetStartedViewController() -> UIViewController {
         assert(FeatureFlagsRepository.shared.isRedesigniOSEnabled)
 
         return modalsFactory.modalViewController(modalType: .onboardingGetStarted) {
@@ -91,9 +93,9 @@ extension OnboardingModuleService: OnboardingService {
         } onFeatureUpdate: { feature in
             switch feature {
             case .toggle(.statistics, _, _, let state):
-                break // TODO: VPNAPPL-2407 (+ https://gitlab.protontech.ch/apple/vpn/protonvpn/-/merge_requests/1742)
+                break // TODO: VPNAPPL-2407 + !1742
             case .toggle(.crashes, _, _, let state):
-                break // TODO: VPNAPPL-2407 (+ https://gitlab.protontech.ch/apple/vpn/protonvpn/-/merge_requests/1742)
+                break // TODO: VPNAPPL-2407 + !1742
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }
