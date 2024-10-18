@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if os(iOS)
+// For now, iOS only but it needs just a few tweaks to be macOS compatible so keeping it here.
 import SwiftUI
 import Theme
 
@@ -70,3 +72,4 @@ public struct ToggleFeatureView: View {
         onToggleUpdate: { _ in () }
     )
 }
+#endif
