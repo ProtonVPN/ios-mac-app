@@ -91,9 +91,9 @@ extension OnboardingModuleService: OnboardingService {
         } onFeatureUpdate: { feature in
             switch feature {
             case .toggle(.statistics, _, _, let state):
-                break // TODO: VPNAPPL-2407
+                break // TODO: VPNAPPL-2407 (+ https://gitlab.protontech.ch/apple/vpn/protonvpn/-/merge_requests/1742)
             case .toggle(.crashes, _, _, let state):
-                break // TODO: VPNAPPL-2407
+                break // TODO: VPNAPPL-2407 (+ https://gitlab.protontech.ch/apple/vpn/protonvpn/-/merge_requests/1742)
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }

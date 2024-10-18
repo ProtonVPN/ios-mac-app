@@ -40,12 +40,10 @@ struct ModalFeaturesView: View {
                     let green = feature == .moneyGuarantee
 
                     if let image = feature.image?.swiftUIImage {
-                        image
-                            .foregroundColor(Color(.icon, green ? .success : [.interactive, .active]))
+                        image.foregroundColor(Color(.icon, green ? .success : [.interactive, .active]))
                     }
                     if let title = feature.title(), let attrTitle = try? AttributedString(markdown: title) {
-                        Text(attrTitle)
-                            .foregroundColor(Color(.text, green ? .success : []))
+                        Text(attrTitle).foregroundColor(Color(.text, green ? .success : []))
                     }
                 }
             }

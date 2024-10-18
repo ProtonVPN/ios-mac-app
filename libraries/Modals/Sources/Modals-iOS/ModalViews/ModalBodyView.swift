@@ -152,9 +152,12 @@ struct ModalBodyView: View {
     private func shouldDisplaySpecificFeatures(_ features: some Collection<Feature>) -> Bool {
         return features.contains { feature in
             switch feature {
-            case .banner: return true
-            case .toggle: return true
-            default:      return false
+            case .banner:
+                return true
+            case .toggle:
+                return true
+            default:
+                return false
             }
         }
     }
