@@ -51,7 +51,7 @@ import VPNAppCore
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-class AppDelegate: UIResponder {
+final class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
 
     @Dependency(\.defaultsProvider) var defaultsProvider

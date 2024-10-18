@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -21,6 +21,7 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-collections.git", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.13.1")),
         .package(path: "../../external/protoncore"),
@@ -53,6 +54,7 @@ let package = Package(
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SVGView", package: "SVGView"),
+                .product(name: "Collections", package: "swift-collections"),
             ],
             exclude: ["swiftgen.yml"],
             resources: [
@@ -78,7 +80,11 @@ let package = Package(
         ),
         .testTarget(
             name: "HomeTests",
-            dependencies: ["Home", "Theme"]
+            dependencies: [
+                "Home",
+                "Theme",
+                .product(name: "OrderedCollections", package: "swift-collections"),
+            ]
         )
     ]
 )

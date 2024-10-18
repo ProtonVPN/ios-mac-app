@@ -37,9 +37,3 @@ public extension PersistenceReaderKey where Self == PersistenceKeyDefault<AppSto
         PersistenceKeyDefault(.appStorage("userTier"), 0)
     }
 }
-
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ConnectionSpec>> {
-    static var defaultConnection: Self {
-        PersistenceKeyDefault(.inMemory("defaultConnection"), .init(location: .fastest, features: []))
-    }
-}

@@ -35,13 +35,15 @@ import SharedViews
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
-    static let maxWidth: CGFloat = 736
-    static let mapHeight: CGFloat = 414
-    static let bottomGradientHeight: CGFloat = 100
+    private static let maxWidth: CGFloat = 736
+    private static let mapHeight: CGFloat = 414
+    private static let bottomGradientHeight: CGFloat = 100
 
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
     }
+
+    @Namespace var topID
 
     public var body: some View {
         #PerceptibleGeometryReader { proxy in
@@ -53,36 +55,38 @@ public struct HomeView: View {
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: \.connectionStatus))
                 .allowsHitTesting(false)
+                ScrollViewReader { scrollViewProxy in
+                    ScrollView(showsIndicators: false) {
+                        Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
+                            .id(topID)
+                        VStack {
+                            LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
+                                           startPoint: .top,
+                                           endPoint: .bottom)
+                            .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
 
-                ScrollView {
-                    Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
-                    VStack {
-                        LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
-                                       startPoint: .top,
-                                       endPoint: .bottom)
-                        .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
+                            HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
+                                .padding(.horizontal, .themeSpacing16)
+                                .frame(width: min(proxy.size.width, Self.maxWidth))
 
-                        HomeConnectionCardView(store: store.scope(state: \.connectionCard,
-                                                                  action: \.connectionCard))
-                        .padding(.horizontal, .themeSpacing16)
-                        .frame(width: min(proxy.size.width, Self.maxWidth))
+                            RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
+                                .frame(width: min(proxy.size.width, Self.maxWidth))
 
-                        RecentsSectionView(items: store.state.remainingConnections,
-                                           sendAction: { _ = store.send($0) }
-                        )
-                        .padding(.horizontal, .themeSpacing16)
-                        .frame(width: min(proxy.size.width, Self.maxWidth))
-
-                        Color(.background) // needed to take all the available horizontal space for the background
+                            Color(.background) // needed to take all the available horizontal space for the background
+                        }
+                        .offset(y: -Self.bottomGradientHeight)
+                        .background(Color(.background))
                     }
-                    .offset(y: -Self.bottomGradientHeight)
-                    .background(Color(.background))
+                    .frame(width: proxy.size.width)
+                    .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
+                        if case .connecting = vpnConnectionStatus {
+                            scrollViewProxy.scrollTo(topID)
+                        }
+                    }
                 }
-                .frame(width: proxy.size.width)
             }
         }
         .task {
-            store.send(.loadConnections) // TODO: [redesign] it's late to load the connections because at this point the view is already visible
             store.send(.sharedProperties(.listen))
         }
         .sheet(item: $store.scope(state: \.destination?.connectionDetails,
@@ -102,15 +106,13 @@ public struct HomeView: View {
     }
 }
 
-internal extension GeometryProxy {
-    var scrollOffset: CGFloat {
-        frame(in: .global).minY
-    }
-}
-
 #if DEBUG
+import Domain
+
 @available(iOS 17, *)
 #Preview {
-    HomeView(store: .init(initialState: HomeFeature.previewState, reducer: { HomeFeature() }))
+    var homeFeatureState: HomeFeature.State = .init()
+    homeFeatureState.recents.recents = RecentsStorage(array: RecentConnection.sampleData)
+    return HomeView(store: .init(initialState: homeFeatureState, reducer: { HomeFeature() }))
 }
 #endif

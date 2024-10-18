@@ -34,7 +34,7 @@ import ProtonCoreUIFoundations
 struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale
 
-    var store: StoreOf<HomeConnectionCardFeature>
+    let store: StoreOf<HomeConnectionCardFeature>
 
     let model = ConnectionCardModel()
 
@@ -53,19 +53,19 @@ struct HomeConnectionCardView: View {
     }
 
     @ViewBuilder
-    var chevron: some View {
+    private var chevron: some View {
         if store.vpnConnectionStatus.connectionStatusAvailable {
             IconProvider.chevronRight
                 .foregroundColor(Color(.icon, .weak))
         }
     }
 
-    var button: some View {
+    private var button: some View {
         Button {
             withAnimation(.easeInOut) {
                 switch store.vpnConnectionStatus {
                 case .disconnected:
-                    store.send(.delegate(.connect(store.presentedSpec)))
+                    store.send(.delegate(.connect))
                 case .connected:
                     store.send(.delegate(.disconnect))
                 case .connecting:
@@ -83,7 +83,7 @@ struct HomeConnectionCardView: View {
     }
 
     @ViewBuilder
-    var changeServerButton: some View {
+    private var changeServerButton: some View {
         WithPerceptionTracking {
             if store.showChangeServerButton {
                 switch store.serverChangeAvailability ?? .available {
@@ -98,13 +98,20 @@ struct HomeConnectionCardView: View {
         }
     }
 
-    var card: some View {
+    private var card: some View {
         VStack(spacing: 0) {
             HStack {
-                ConnectionFlagInfoView(intent: store.presentedSpec,
-                                       vpnConnectionActual: store.vpnConnectionStatus.actual,
-                                       withDivider: false)
+                ConnectionFlagInfoView(
+                    intent: store.presentedSpec,
+                    underMaintenance: false,
+                    isPinned: false,
+                    vpnConnectionActual: store.vpnConnectionStatus.actual,
+                    withDivider: false,
+                    images: .coreImages
+                )
+
                 Spacer()
+
                 chevron
             }
             .padding(.themeSpacing16)
@@ -134,7 +141,7 @@ struct HomeConnectionCardView: View {
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {
-            store.send(.delegate(.connect(store.presentedSpec)))
+            store.send(.delegate(.connect))
         }
         .task {
             store.send(.watchConnectionStatus)
@@ -211,7 +218,6 @@ extension HomeConnectionCardFeature.State {
         var state = HomeConnectionCardFeature.State()
         state.$userTier = .constant(userTier)
         state.$vpnConnectionStatus = .constant(status)
-        state.$defaultConnection = .constant(defaultConnection)
         return state
     }
 }

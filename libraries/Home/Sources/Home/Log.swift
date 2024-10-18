@@ -1,7 +1,7 @@
 //
-//  Created on 09/06/2023.
+//  Created on 04/06/2024.
 //
-//  Copyright (c) 2023 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,20 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Logging
+import PMLogger
 
-import Domain
-import VPNAppCore
-
-@available(iOS 17, *)
-extension HomeFeature.State {
-    public var mostRecent: RecentConnection? {
-        connections.first
-    }
-
-    public var remainingConnections: [RecentConnection] {
-        guard connections.count > 1 else {
-            return []
-        }
-        return Array(connections.dropFirst())
-    }
-}
+/// Logger shared across all targets in this module.
+/// Requires importing via `import let Home.log` or a blanket import `import ConnectionFoundations`
+/// before it can be used outside this target.
+package let log = Logging.Logger(label: "ProtonVPN.Home.logger")

@@ -44,6 +44,7 @@ public struct HomeMapView: View {
             MapPin(mode: store.pinMode)
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(pinOffset())
+                .opacity((store.userCountry != nil || store.vpnConnectionStatus != .disconnected) ? 1 : 0)
         }
         .frame(width: map.svg?.bounds().width,
                height: map.svg?.bounds().height)

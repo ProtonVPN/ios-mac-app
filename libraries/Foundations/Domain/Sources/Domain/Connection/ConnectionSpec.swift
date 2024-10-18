@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 /// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable, Codable {
@@ -79,7 +80,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
 
     /// Default intent that is set before user asks for any
     public init() {
-        self.init(location: .exact(.free, number: 1, subregion: nil, regionCode: "PL"), features: [])
+        self.init(location: .fastest, features: [])
     }
 }
 

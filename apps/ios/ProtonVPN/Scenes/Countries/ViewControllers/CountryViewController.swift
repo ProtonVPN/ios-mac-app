@@ -23,6 +23,7 @@
 import UIKit
 import Search
 import ProtonCoreUIFoundations
+import ProtonCoreFeatureFlags
 
 final class CountryViewController: UIViewController {
 
@@ -36,7 +37,11 @@ final class CountryViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        setupConnectionBar()
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            connectionBarContainerView.removeFromSuperview()
+        } else {
+            setupConnectionBar()
+        }
         setupTableView()
     }
     

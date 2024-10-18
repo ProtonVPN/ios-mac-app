@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 
 @available(iOS 17.0, *)
 public struct MapPin: View {

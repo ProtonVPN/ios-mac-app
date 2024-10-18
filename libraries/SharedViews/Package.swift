@@ -18,7 +18,6 @@ let package = Package(
     ],
     dependencies: [
         // Local
-        .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NEHelper"),
@@ -34,7 +33,6 @@ let package = Package(
             name: "SharedViews",
             dependencies: [
                 "SharedViewsMacros",
-                .core(module: "Utilities"),
                 "Theme",
                 "Ergonomics",
                 "Strings",
@@ -52,9 +50,3 @@ let package = Package(
         ),
     ]
 )
-
-extension PackageDescription.Target.Dependency {
-    static func core(module: String) -> Self {
-        .product(name: "ProtonCore\(module)", package: "protoncore")
-    }
-}

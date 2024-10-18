@@ -44,6 +44,7 @@ let package = Package(
                 "Localization",
                 "Persistence",
                 "Strings",
+                "SharedViews",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),

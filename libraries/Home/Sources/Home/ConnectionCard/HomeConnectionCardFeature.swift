@@ -30,7 +30,6 @@ public struct HomeConnectionCardFeature {
     public struct State: Equatable {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
-        @SharedReader(.defaultConnection) public var defaultConnection: ConnectionSpec
         public var showChangeServerButton: Bool = false
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
 
@@ -39,7 +38,7 @@ public struct HomeConnectionCardFeature {
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
             case .disconnected:
-                return defaultConnection
+                return .init(location: .fastest, features: [])
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
                     .loadingConnectionInfo(let connectionSpec, _),
@@ -52,7 +51,7 @@ public struct HomeConnectionCardFeature {
     public enum Action: Equatable {
         @CasePathable
         public enum Delegate: Equatable {
-            case connect(ConnectionSpec)
+            case connect
             case disconnect
             case tapAction
             case changeServerButtonTapped
