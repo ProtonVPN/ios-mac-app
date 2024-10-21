@@ -4364,7 +4364,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = exactVersion;
-				version = 1.13.1;
+				version = 1.15.1;
 			};
 		};
 		4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
@@ -4414,7 +4414,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.1;
+				minimumVersion = 1.4.1;
 			};
 		};
 		E5CF494F2A3C603200ACE1CB /* XCRemoteSwiftPackageReference "swift-log" */ = {

@@ -20,6 +20,7 @@ import Combine
 import SwiftUI
 
 import ComposableArchitecture
+import Dependencies
 
 import Home
 import Strings
@@ -106,13 +107,12 @@ public struct HomeView: View {
     }
 }
 
-#if DEBUG
-import Domain
-
-@available(iOS 17, *)
-#Preview {
-    var homeFeatureState: HomeFeature.State = .init()
-    homeFeatureState.recents.recents = RecentsStorage(array: RecentConnection.sampleData)
-    return HomeView(store: .init(initialState: homeFeatureState, reducer: { HomeFeature() }))
+#if DEBUG && compiler(>=6)
+@available(iOS 18, *)
+#Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
+    HomeView(store: .init(initialState: .init(), reducer: {
+        HomeFeature()
+    }))
 }
+
 #endif

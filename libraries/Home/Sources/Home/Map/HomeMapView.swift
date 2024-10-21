@@ -38,13 +38,20 @@ public struct HomeMapView: View {
         self.availableWidth = availableWidth
     }
 
+    var shouldShowPin: Bool {
+        if case .connected = store.vpnConnectionStatus { // we're connected to a known country {
+            return true
+        }
+        return store.userCountry != nil // or we know the user country
+    }
+
     public var body: some View {
         ZStack {
             map
             MapPin(mode: store.pinMode)
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(pinOffset())
-                .opacity((store.userCountry != nil || store.vpnConnectionStatus != .disconnected) ? 1 : 0)
+                .opacity(shouldShowPin ? 1 : 0)
         }
         .frame(width: map.svg?.bounds().width,
                height: map.svg?.bounds().height)

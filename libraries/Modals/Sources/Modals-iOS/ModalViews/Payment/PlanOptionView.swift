@@ -204,7 +204,6 @@ extension PlanDuration {
     }
 }
 
-#if swift(>=5.9)
 #Preview("Unselected") {
     let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
@@ -244,26 +243,3 @@ extension PlanDuration {
 #Preview("Badge") {
     PlanDiscountBadgeView(discount: 50)
 }
-#else
-struct PlanOptionView_Provider: PreviewProvider {
-    static let planOption1 = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    static let planOption2 = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
-    static let annoyingPlan = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6))!,
-        price: .init(amount: 85, currency: "CHF")
-    )
-
-    static var previews: some View {
-        PlanOptionView(planOption: planOption1, isLoading: false, isSelected: false)
-            .previewDisplayName("Unselected")
-        PlanOptionView(planOption: planOption2, isLoading: false, isSelected: true, discount: 35)
-            .previewDisplayName("Selected")
-        PlanOptionView(planOption: planOption2, isLoading: true, isSelected: false)
-            .previewDisplayName("Loading")
-        PlanOptionView(planOption: annoyingPlan, isLoading: false, isSelected: false, discount: 35)
-            .previewDisplayName("Annoying Duration")
-        PlanDiscountBadgeView(discount: 50)
-            .previewDisplayName("Badge")
-    }
-}
-#endif

@@ -26,7 +26,7 @@ struct ProfileButtonView: View {
     var body: some View {
         IconProvider.userCircle
             .resizable()
-            .frame(width: 16, height: 16)
+            .frame(.square(.themeSpacing16))
             .tint(Color(.text))
             .padding(.themeSpacing24)
     }

@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.13.1")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.15.1")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", from: "2.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-perception", from: "1.3.4"),
     ],

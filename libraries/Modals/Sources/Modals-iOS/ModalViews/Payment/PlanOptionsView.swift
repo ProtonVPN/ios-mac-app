@@ -112,7 +112,6 @@ struct PlanOptionsView: View {
     }
 }
 
-#if swift(>=5.9)
 import CombineSchedulers
 
 #Preview("Classic") {
@@ -154,39 +153,3 @@ import CombineSchedulers
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
-#else
-struct PlansOptionsListView_Previews: PreviewProvider {
-    static let scheduler: AnySchedulerOf<DispatchQueue> = .main
-    static let classicPlans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    ]
-    static let classicClient: PlansClient = .init(retrievePlans: { classicPlans }, validate: { _ in
-        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
-    })
-    static let loadingClient: PlansClient = .init(
-        retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-            return classicPlans
-        },
-        validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
-        })
-    static let currenciesPlans: [PlanOption] = [
-        .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
-        .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    ]
-    static let currenciesClient: PlansClient = .init(retrievePlans: { currenciesPlans }, validate: { _ in () })
-
-    static var previews: some View {
-        PlanOptionsView(modalType: .subscription, viewModel: .init(client: classicClient))
-            .previewDisplayName("Classic")
-        PlanOptionsView(modalType: .subscription, viewModel: .init(client: loadingClient))
-            .previewDisplayName("Loading")
-        PlanOptionsView(modalType: .subscription, viewModel: .init(client: currenciesClient))
-            .previewDisplayName("Currencies")
-    }
-}
-#endif

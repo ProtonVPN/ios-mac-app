@@ -20,6 +20,7 @@ import Foundation
 import SwiftUI
 
 import ComposableArchitecture
+import Dependencies
 
 import Domain
 import Home
@@ -41,7 +42,7 @@ public struct RecentsSectionView: View {
                     .styled(.weak)
                     .padding([.top, .leading, .trailing], .themeSpacing16)
                     .padding(.bottom, .themeSpacing8)
-                ForEach(store.recents.array) { item in
+                ForEach(store.recents) { item in
                     RecentRowItemView(item: item, sendAction: { _ = store.send($0) })
                 }
             }
@@ -141,7 +142,7 @@ extension RecentsFeature.Action {
                 icon
                     .resizable()
                     .styled(.inverted)
-                    .frame(width: 16, height: 16) // todo: this doesn't change size with dynamic type
+                    .frame(.square(.themeSpacing16)) // this doesn't change size with dynamic type
             }
             .labelStyle(VerticalLabelStyle())
         } else {
@@ -150,12 +151,11 @@ extension RecentsFeature.Action {
     }
 }
 
-#if DEBUG
-@available(iOS 17, *)
-#Preview {
-    let sampleData = RecentConnection.sampleData.map { var copy = $0; copy.underMaintenance = Bool.random(); return copy }
+#if DEBUG && compiler(>=6)
+@available(iOS 18, *)
+#Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
     let store: StoreOf<RecentsFeature> = .init(
-        initialState: .init(recents: RecentsStorage(array: sampleData)),
+        initialState: .init(),
         reducer: RecentsFeature.init
     )
     return ScrollView {
