@@ -55,7 +55,6 @@ extension RecentConnection: Identifiable {
 extension RecentConnection: Codable {
 }
 
-#if DEBUG
 extension RecentConnection {
     public static var sampleData: [RecentConnection] {
         return [
@@ -92,4 +91,3 @@ extension RecentConnection {
         ]
     }
 }
-#endif
