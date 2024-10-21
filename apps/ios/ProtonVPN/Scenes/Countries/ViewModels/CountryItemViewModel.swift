@@ -418,7 +418,7 @@ extension CountryItemViewModel: CountryViewModel {
         case .country(let countryCode):
             return UIImage.flag(countryCode: countryCode)
         case .gateway:
-            return IconProvider.servers
+            return Theme.Asset.gatewayFlag.image
         }
     }
 
