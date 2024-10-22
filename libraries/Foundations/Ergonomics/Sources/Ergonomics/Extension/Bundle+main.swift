@@ -14,7 +14,7 @@ extension Bundle {
         #if DEBUG
         let key = "DYNAMIC_DOMAIN"
         let value = ProcessInfo.processInfo.firstArgumentValue(forKey: key) ?? Bundle.main.infoDictionary?[key] as? String
-        return value.map { "https://\($0)" }
+        return value.map { "https://\($0)/api" }
         #else
         return nil
         #endif
