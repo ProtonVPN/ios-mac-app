@@ -124,21 +124,6 @@ extension OnboardingModuleService: OnboardingService {
         self.oneClickPayment = oneClickPayment
         windowService.addToStack(viewController, checkForDuplicates: false)
     }
-
-    private func allCountriesUpsellViewController() -> UIViewController {
-        @Dependency(\.serverRepository) var repository
-        let allCountriesUpsell: ModalType = .allCountries(
-            numberOfServers: repository.roundedServerCount,
-            numberOfCountries: repository.countryCount()
-        )
-        return modalsFactory.modalViewController(modalType: allCountriesUpsell) {
-            self.planService.createPlusPlanUI {
-                self.onboardingCoordinatorDidFinish()
-            }
-        } dismissAction: {
-            self.onboardingCoordinatorDidFinish()
-        }
-    }
 }
 
 extension OnboardingModuleService {

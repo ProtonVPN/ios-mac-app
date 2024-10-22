@@ -18,6 +18,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Dependencies
 import Domain
 import VPNAppCore
 import ConnectionDetails
@@ -157,13 +158,16 @@ public struct HomeFeature {
             case .destination(let action):
                 switch action {
                 case .presented(.changeServer(.buttonTapped)):
+                    state.destination = nil
                     if case .available = authorizer.serverChangeAvailability() {
-                        state.destination = nil
                         return .send(.changeServer)
-                    } else {
-                        // TODO: [redesign] Show upsell
-                        return .none
                     }
+                    return .run { send in
+                        try sleep(1) // give some time for the current presented view to disappear
+                        @Dependency(\.pushAlert) var pushAlert
+                        pushAlert()
+                    }
+
                 default:
                     return .none
                 }

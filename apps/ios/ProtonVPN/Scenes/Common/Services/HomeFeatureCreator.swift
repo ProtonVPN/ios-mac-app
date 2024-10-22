@@ -38,6 +38,7 @@ enum HomeFeatureCreator {
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
                 .dependency(\.serverChangeAuthorizer, SimulatorHelper.serverChangeAuthorizer)
 #else
+                .dependency(\.pushAlert, PushAlertKey.pushAlert)
                 .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
                 .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
 #endif

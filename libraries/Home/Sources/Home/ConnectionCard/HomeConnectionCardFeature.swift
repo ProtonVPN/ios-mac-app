@@ -84,7 +84,7 @@ public struct HomeConnectionCardFeature {
 
             case .newConnectionStatus(let connectionStatus):
                 if case .connected = connectionStatus {
-                    state.showChangeServerButton = state.userTier == 0 // TODO: move the user tier extension to a shared package
+                    state.showChangeServerButton = state.userTier == 0
                 } else {
                     state.showChangeServerButton = false
                 }
