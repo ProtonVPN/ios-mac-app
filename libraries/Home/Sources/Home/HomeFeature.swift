@@ -45,15 +45,18 @@ public struct HomeFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
+        @Shared(.userTier) public var userTier: Int
+
         @Presents
         public var destination: Destination.State?
 
-        public init() {
+        public init(userTier: Int) {
             self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
             self.map = .init()
+            self.userTier = userTier
         }
     }
 

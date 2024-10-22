@@ -110,7 +110,7 @@ public struct HomeView: View {
 #if DEBUG && compiler(>=6)
 @available(iOS 18, *)
 #Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    HomeView(store: .init(initialState: .init(), reducer: {
+    HomeView(store: .init(initialState: .init(userTier: 2), reducer: {
         HomeFeature()
     }))
 }

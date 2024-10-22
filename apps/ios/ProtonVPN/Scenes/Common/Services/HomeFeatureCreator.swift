@@ -30,8 +30,8 @@ import LegacyCommon
 
 @available(iOS 17, *)
 enum HomeFeatureCreator {
-    static func homeViewController() -> UIHostingController<HomeView> {
-        let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
+    static func homeViewController(userTier: Int) -> UIHostingController<HomeView> {
+        let homeStore = StoreOf<HomeFeature>(initialState: .init(userTier: userTier)) {
             HomeFeature()
 #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
