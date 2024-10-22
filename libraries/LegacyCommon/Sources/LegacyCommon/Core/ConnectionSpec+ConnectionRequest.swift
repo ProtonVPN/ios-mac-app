@@ -26,7 +26,11 @@ extension ConnectionSpec {
         var features: Set<ConnectionSpec.Feature> = []
         switch connectionRequest.connectionType {
         case .fastest:
-            location = .fastest
+            if connectionRequest.serverType == .secureCore {
+                location = .secureCore(.fastest)
+            } else {
+                location = .fastest
+            }
         case .random:
             Self.assertRandomRequestValidity(connectionRequest)
             location = .fastest
