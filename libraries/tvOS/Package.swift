@@ -15,7 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.15.1"),
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.16.0"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.17.5"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),

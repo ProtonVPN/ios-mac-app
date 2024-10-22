@@ -21,7 +21,7 @@ import Domain
 import OrderedCollections
 import Dependencies
 
-public class RecentsStorageImplementation {
+public final class RecentsStorageImplementation {
     private let userID: String
     public internal(set) var collection: OrderedSet<RecentConnection>
 

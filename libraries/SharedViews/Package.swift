@@ -26,7 +26,7 @@ let package = Package(
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
         .package(url: "https://github.com/pointfreeco/swift-perception", from: "1.3.5"),
-        .package(url: "https://github.com/apple/swift-syntax", from: "509.0.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
     ],
     targets: [
         .target(

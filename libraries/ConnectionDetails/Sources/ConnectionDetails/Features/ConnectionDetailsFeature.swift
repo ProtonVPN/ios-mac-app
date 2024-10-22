@@ -49,7 +49,7 @@ public struct ConnectionDetailsFeature {
             let country = LocalizationUtility.default.countryName(forCode: vpnServer.logical.exitCountryCode) ?? vpnServer.logical.exitCountryCode
             self = .init(connectedSince: actual.connectedDate ?? .now,
                          country: country,
-                         city: vpnServer.logical.translatedCity ?? "-",
+                         city: vpnServer.logical.city ?? "-",
                          server: vpnServer.logical.name,
                          serverLoad: vpnServer.logical.load,
                          protocolName: actual.vpnProtocol.localizedDescription

@@ -31,6 +31,7 @@ public protocol CountryViewModel: AnyObject, ConnectViewModel {
     var showCountryConnectButton: Bool { get }
     var showFeatureIcons: Bool { get }
     var isRedesign: Bool { get }
+    var isGateway: Bool { get }
 
     func getServers() -> [ServerTier: [ServerViewModel]]
     func getCities() -> [CityViewModel]
