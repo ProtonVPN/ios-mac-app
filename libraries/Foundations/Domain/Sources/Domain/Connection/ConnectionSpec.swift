@@ -52,7 +52,6 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
         case streaming
         case p2p
         case tor
-        case partner(name: String)
 
         // todo: Localized strings
         public var description: String {
@@ -65,8 +64,6 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
                 return "P2P"
             case .tor:
                 return "TOR"
-            case .partner(let name):
-                return name
             }
         }
     }

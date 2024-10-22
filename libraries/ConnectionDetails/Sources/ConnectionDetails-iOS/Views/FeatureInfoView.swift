@@ -93,11 +93,6 @@ extension FeatureInfoView {
             icon = IconProvider.arrowRightArrowLeft
             title = Localizable.connectionDetailsFeatureTitleStreaming
             text = Localizable.connectionDetailsFeatureDescriptionStreaming
-
-        case .partner:
-            icon = IconProvider.questionCircle
-            title = "No such screen"
-            text = "No such screen"
         }
     }
 
