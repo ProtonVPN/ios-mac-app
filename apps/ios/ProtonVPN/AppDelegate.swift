@@ -59,6 +59,7 @@ final class AppDelegate: UIResponder {
 
     private let container = DependencyContainer.shared
     private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
+    private lazy var appSessionManager: AppSessionManager = container.makeAppSessionManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = container.makeVpnKeychain()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
@@ -78,7 +79,14 @@ final class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        
+        #if DEBUG
+        // Force log out if running UI tests
+        if ProcessInfo.processInfo.arguments.contains("UITests") {
+            appSessionManager.logOut(force: false, reason: "UI tests")
+        }
+        #endif
+        
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 //        Safety measure to not accidentally switch on the redesign before it's ready
 //        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)
@@ -210,7 +218,7 @@ extension AppDelegate: UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
-
+        
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {

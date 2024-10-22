@@ -66,7 +66,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     func logoutIfNeeded() {
         let tabBarsQuery = app.tabBars
-        _ = tabBarsQuery.element.waitForExistence(timeout: 8) // tests would reach this point when the tabbar is not yet available
+        _ = tabBarsQuery.element.waitForExistence(timeout: WaitTimeout.short) // tests would reach this point when the tabbar is not yet available
         guard !tabBarsQuery.allElementsBoundByIndex.isEmpty else {
             return
         }
