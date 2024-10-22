@@ -39,7 +39,6 @@ public struct HomeView: View {
     private static let maxWidth: CGFloat = 736
     private static let mapHeight: CGFloat = 414
     private static let bottomGradientHeight: CGFloat = 100
-    private static let bottomBackgroundExtendPadding: CGFloat = 10000
 
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
@@ -77,7 +76,7 @@ public struct HomeView: View {
                             Color(.background) // needed to take all the available horizontal space for the background
                         }
                         .offset(y: -Self.bottomGradientHeight)
-                        .background(Color(.background).padding(.bottom, -Self.bottomBackgroundExtendPadding))
+                        .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends background color way below scrollView Content.
                     }
                     .frame(width: proxy.size.width)
                     .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
