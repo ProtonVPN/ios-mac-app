@@ -96,7 +96,7 @@ public struct ConnectionRequest: Identifiable {
     }
 
     public func withChanged(serverType: ServerType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        return ConnectionRequest(serverType: serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {

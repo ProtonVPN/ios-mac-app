@@ -28,13 +28,9 @@ import Ergonomics
 // This struct is still WIP
 public enum VPNConnectionStatus: Equatable {
     case disconnected
-    
     case connected(ConnectionSpec, VPNConnectionActual?)
-
     case connecting(ConnectionSpec, VPNConnectionActual?)
-
     case loadingConnectionInfo(ConnectionSpec, VPNConnectionActual?)
-
     case disconnecting(ConnectionSpec, VPNConnectionActual?)
 
     public var actual: VPNConnectionActual? {
@@ -70,75 +66,23 @@ public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemo
 
 public struct VPNConnectionActual: Equatable {
     public let connectedDate: Date?
-    public let serverModelId: String
-    public let serverExitIP: String
     public let vpnProtocol: VpnProtocol
     public let natType: NATType
     public let safeMode: Bool?
-    public let feature: ServerFeature
-    public let serverName: String
-    public let country: String
-    public let entryCountry: String?
-    public let city: String?
-    public let coordinates: CLLocationCoordinate2D
+    public let server: Server
 
     public init(
         connectedDate: Date?,
-        serverModelId: String,
-        serverExitIP: String,
         vpnProtocol: VpnProtocol,
         natType: NATType,
         safeMode: Bool?,
-        feature: ServerFeature,
-        serverName: String,
-        country: String,
-        entryCountry: String?,
-        city: String?,
-        coordinates: CLLocationCoordinate2D
+        server: Server
     ) {
         self.connectedDate = connectedDate
-        self.serverModelId = serverModelId
-        self.serverExitIP = serverExitIP
         self.vpnProtocol = vpnProtocol
         self.natType = natType
         self.safeMode = safeMode
-        self.feature = feature
-        self.serverName = serverName
-        self.country = country
-        self.entryCountry = entryCountry
-        self.city = city
-        self.coordinates = coordinates
-    }
-}
-
-// MARK: - Mock for previews
-
-extension VPNConnectionActual {
-    public static func mock(serverModelId: String = "server-model-id-1",
-                            serverExitIP: String = "188.12.32.12",
-                            vpnProtocol: VpnProtocol = .wireGuard(.tcp),
-                            natType: NATType = .moderateNAT,
-                            safeMode: Bool? = nil,
-                            feature: ServerFeature = [],
-                            serverName: String = "SRV#12",
-                            country: String = "CH",
-                            entryCountry: String? = nil,
-                            city: String? = "Bern"
-    ) -> VPNConnectionActual {
-        VPNConnectionActual(
-            connectedDate: Date(),
-            serverModelId: serverModelId,
-            serverExitIP: serverExitIP,
-            vpnProtocol: vpnProtocol,
-            natType: natType,
-            safeMode: safeMode,
-            feature: feature,
-            serverName: serverName,
-            country: country,
-            entryCountry: entryCountry,
-            city: city,
-            coordinates: .mockPoland()
-        )
+        self.server = server
     }
 }
 
@@ -160,3 +104,61 @@ extension CLLocationCoordinate2D {
         .init(latitude: 52.229675, longitude: 21.012231)
     }
 }
+
+// MARK: - Mock for previews
+
+#if DEBUG
+extension VPNConnectionActual {
+    public static func mock(
+        connectedDate: Date = Date(),
+        serverModelId: String = "server-model-id-1",
+        serverExitIP: String = "188.12.32.12",
+        vpnProtocol: VpnProtocol = .wireGuard(.tcp),
+        natType: NATType = .moderateNAT,
+        safeMode: Bool? = nil,
+        feature: ServerFeature = [],
+        serverName: String = "SRV#12",
+        country: String = "CH",
+        entryCountry: String? = nil,
+        city: String? = "Bern",
+        coordinates: CLLocationCoordinate2D = .mockPoland()
+    ) -> VPNConnectionActual {
+        VPNConnectionActual(
+            connectedDate: connectedDate,
+            vpnProtocol: vpnProtocol,
+            natType: natType,
+            safeMode: safeMode,
+            server: Server(
+                logical: Logical(
+                    id: serverModelId,
+                    name: serverName,
+                    domain: "",
+                    load: 50,
+                    entryCountryCode: entryCountry ?? country,
+                    exitCountryCode: country,
+                    tier: 2,
+                    score: 1,
+                    status: 1,
+                    feature: .zero,
+                    city: city,
+                    hostCountry: nil,
+                    translatedCity: city,
+                    latitude: coordinates.latitude,
+                    longitude: coordinates.longitude,
+                    gatewayName: nil
+                ),
+                endpoint: ServerEndpoint(
+                    id: "server-endpoint-id-1",
+                    entryIp: nil,
+                    exitIp: serverExitIP,
+                    domain: "",
+                    status: 1,
+                    label: nil,
+                    x25519PublicKey: nil,
+                    protocolEntries: nil
+                )
+            )
+        )
+    }
+}
+#endif

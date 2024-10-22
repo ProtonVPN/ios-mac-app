@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import struct CoreLocation.CLLocationCoordinate2D
 
 public struct Logical: Codable, Equatable, Sendable {
     public let id: String
@@ -92,5 +93,20 @@ public struct Logical: Codable, Equatable, Sendable {
 
     public var isUnderMaintenance: Bool {
         return status == 0
+    }
+
+    public var coordinates: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+
+    public func supports(connectionSpecFeature: ConnectionSpec.Feature) -> Bool {
+        if let serverFeature = ServerFeature(connectionSpecFeature: connectionSpecFeature) {
+            return feature.contains(serverFeature)
+        } else if connectionSpecFeature == .smart {
+            return isVirtual
+        } else {
+            assertionFailure("Unhandled feature")
+            return false
+        }
     }
 }

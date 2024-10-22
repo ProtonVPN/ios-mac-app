@@ -67,40 +67,13 @@ public struct ConnectionScreenFeature {
 }
 
 public extension VPNConnectionActual {
-    func connectionScreenFeatureState() -> ConnectionScreenFeature.State? {
-        guard let vpnServer = server() else {
-            return nil
-        }
-        return ConnectionScreenFeature.State(ipViewState: .init(),
-                                             connectionDetailsState: .init(actual: self, vpnServer: vpnServer),
-                                             isSecureCore: feature.contains(.secureCore),
-                                             connectionFeatures: features(vpnServer: vpnServer))
-    }
-
-    private func server() -> VPNServer? {
-        @Dependency(\.serverRepository) var repository
-        return repository.getFirstServer(filteredBy: [.logicalID(serverModelId)],
-                                                      orderedBy: .fastest)
-    }
-
-    private func features(vpnServer: VPNServer?) -> [ConnectionSpec.Feature] {
-        var features = [ConnectionSpec.Feature]()
-
-        let table: [(ServerFeature, ConnectionSpec.Feature)] = [
-            (ServerFeature.tor, ConnectionSpec.Feature.tor),
-            (ServerFeature.p2p, ConnectionSpec.Feature.p2p),
-            (ServerFeature.streaming, ConnectionSpec.Feature.streaming),
-        ]
-        for feature in table {
-            if self.feature.contains(feature.0) {
-                features.append(feature.1)
-            }
-        }
-
-        if vpnServer?.logical.isVirtual == true {
-            features.append(.smart)
-        }
-
-        return features
+    func connectionScreenFeatureState() -> ConnectionScreenFeature.State {
+        let features = ConnectionSpec.Feature.allCases.filter { server.supports(feature: $0) }
+        return ConnectionScreenFeature.State(
+            ipViewState: .init(),
+            connectionDetailsState: .init(actual: self),
+            isSecureCore: server.logical.feature.contains(.secureCore),
+            connectionFeatures: features
+        )
     }
 }

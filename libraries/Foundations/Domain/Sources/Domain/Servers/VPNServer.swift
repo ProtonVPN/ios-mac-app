@@ -38,6 +38,10 @@ public struct VPNServer: Codable, Equatable, Identifiable, Sendable {
     public var supportedProtocols: ProtocolSupport {
         return endpoints.reduce(.zero) { $0.union($1.supportedProtocols) }
     }
+
+    public func supports(feature: ConnectionSpec.Feature) -> Bool {
+        logical.supports(connectionSpecFeature: feature)
+    }
 }
 
 /// A pairing of a logical and a single server, used to reduce ambiguity when choosing what server to connect to
@@ -48,5 +52,9 @@ public struct Server: Equatable, Sendable {
     public init(logical: Logical, endpoint: ServerEndpoint) {
         self.logical = logical
         self.endpoint = endpoint
+    }
+
+    public func supports(feature: ConnectionSpec.Feature) -> Bool {
+        logical.supports(connectionSpecFeature: feature)
     }
 }

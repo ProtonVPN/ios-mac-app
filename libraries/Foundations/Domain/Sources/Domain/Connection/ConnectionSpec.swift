@@ -45,10 +45,10 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
         case secureCore(SecureCoreSpec)
     }
 
-    public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable, Codable {
+    public enum Feature: Equatable, Hashable, CaseIterable, CustomStringConvertible, Identifiable, Codable {
         public var id: Self { self } // Identifiable
 
-        case smart
+        case smart // smart routing
         case streaming
         case p2p
         case tor

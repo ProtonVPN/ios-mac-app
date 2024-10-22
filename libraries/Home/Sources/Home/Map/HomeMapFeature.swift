@@ -119,7 +119,7 @@ public struct HomeMapFeature {
                     mapState = .disconnected
                 case .connected(let spec, let actual):
                     if let actual {
-                        mapState = .connectedCoordinates(actual.coordinates, actual.country)
+                        mapState = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                     } else if let code = spec.countryCode {
                         mapState = .connectedCountry(code)
                     } else {
@@ -127,7 +127,7 @@ public struct HomeMapFeature {
                     }
                 case .connecting(let spec, let actual), .loadingConnectionInfo(let spec, let actual):
                     if let actual {
-                        mapState = .connectingCoordinates(actual.coordinates, actual.country)
+                        mapState = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                     } else if let code = spec.countryCode {
                         mapState = .connectingCountry(code)
                     } else {

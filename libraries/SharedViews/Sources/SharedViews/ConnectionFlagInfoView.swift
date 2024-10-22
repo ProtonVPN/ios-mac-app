@@ -55,8 +55,7 @@ public struct ConnectionFlagInfoView: View {
     ) {
         self.intent = intent
         self.underMaintenance = underMaintenance
-        self.connectionInfoBuilder = .init(intent: intent, 
-                                           vpnConnectionActual: vpnConnectionActual)
+        self.connectionInfoBuilder = .init(intent: intent, vpnConnectionActual: vpnConnectionActual)
         self.withDivider = withDivider
         self.detailAction = detailAction
         self.isPinned = isPinned

@@ -105,28 +105,35 @@ public struct ConnectionScreenView: View {
 
 // MARK: - Previews
 
+#if DEBUG
 #Preview {
     let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
-    let actual = VPNConnectionActual(connectedDate: .now,
-                                     serverModelId: "server-id",
-                                     serverExitIP: "102.107.197.6",
-                                     vpnProtocol: .wireGuard(.udp),
-                                     natType: .moderateNAT,
-                                     safeMode: false,
-                                     feature: .p2p,
-                                     serverName: "SER#123",
-                                     country: "US",
-                                     entryCountry: nil,
-                                     city: "City",
-                                     coordinates: .mockPoland())
+    let actual = VPNConnectionActual.mock(
+        connectedDate: .now,
+        serverModelId: "server-id",
+        serverExitIP: "102.107.197.6",
+        vpnProtocol: .wireGuard(.udp),
+        natType: .moderateNAT,
+        safeMode: false,
+        feature: .p2p,
+        serverName: "SER#123",
+        country: "US",
+        entryCountry: nil,
+        city: "City",
+        coordinates: .mockPoland()
+    )
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
     vpnConnectionStatus = .connected(spec, actual)
 
     @Shared(.userIP) var userIP: String?
     userIP = "127.0.0.1"
-    let store: StoreOf<ConnectionScreenFeature> = .init(initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState()!,
-                                                        reducer: { ConnectionScreenFeature() })
+
+    let store: StoreOf<ConnectionScreenFeature> = .init(
+        initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState(),
+        reducer: { ConnectionScreenFeature() }
+    )
     return ConnectionScreenView(store: store)
         .background(Color(.background, .strong))
         .preferredColorScheme(.dark)
 }
+#endif
