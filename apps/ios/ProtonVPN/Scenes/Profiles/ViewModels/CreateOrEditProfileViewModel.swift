@@ -31,6 +31,8 @@ import LegacyCommon
 import Persistence
 import Dependencies
 
+import ProtonCoreFeatureFlags
+
 class CreateOrEditProfileViewModel: NSObject {
     
     private let username: String?
@@ -124,9 +126,11 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(countryCell)
         cells.append(serverCell)
         cells.append(protocolCell)
-        cells.append(quickConnectCell)
-        cells.append(footerCell)
-                
+        if (!FeatureFlagsRepository.shared.isRedesigniOSEnabled) {
+            cells.append(quickConnectCell)
+            cells.append(footerCell)
+        }
+
         return [TableViewSection(title: Localizable.selectProfileColor, cells: cells)]
     }
     
