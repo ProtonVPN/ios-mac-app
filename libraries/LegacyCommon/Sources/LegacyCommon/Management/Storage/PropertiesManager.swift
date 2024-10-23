@@ -217,7 +217,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case discourageSecureCore = "DiscourageSecureCore"
 
         // Show what's new modal
-        case showWhatsNewModal = "ShowWhatsNewModal"
+        case showWhatsNewModal = "ShowWhatsNewModal_Redesign_Phase_1"
 
         // Kill Switch
         case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences

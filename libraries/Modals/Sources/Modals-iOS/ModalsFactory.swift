@@ -19,8 +19,8 @@ public final class ModalsFactory {
         UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
     }()
 
-    public func whatsNewViewController() -> UIViewController {
-        WhatsNewView().hostingController()
+    public func whatsNewViewController(variant: WhatsNewView.PlanVariant) -> UIViewController {
+        WhatsNewView(variant: variant).hostingController()
     }
 
     public func upsellViewController(

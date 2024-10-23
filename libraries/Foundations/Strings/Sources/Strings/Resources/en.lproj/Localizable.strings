@@ -2228,17 +2228,26 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "What’s new";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "New Free countries";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Take a look";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "There are now Free servers in Poland and Romania.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "New look, same protection";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Changes to server selection";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Introducing Recents";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Gateways have moved";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Get unlimited changes with VPN Plus";

@@ -1719,12 +1719,8 @@ public enum Localizable {
   public static var modalsDiscourageSecureCoreSubtitle: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_subtitle", fallback: "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.") }
   /// Title of the Secure Core discouragement screen
   public static var modalsDiscourageSecureCoreTitle: String { return Localizable.tr("Localizable", "modals_discourage_secure_core_title", fallback: "A note about speed...") }
-  /// Title of the first section of the "What's new" screen
-  public static var modalsFreeCountries: String { return Localizable.tr("Localizable", "modals_free_countries", fallback: "New Free countries") }
   /// Upgrade plan button title
   public static var modalsGetPlus: String { return Localizable.tr("Localizable", "modals_get_plus", fallback: "Upgrade") }
-  /// Description of the first section of the "What's new" screen
-  public static var modalsNewServers: String { return Localizable.tr("Localizable", "modals_new_servers", fallback: "There are now Free servers in Poland and Romania.") }
   /// Plural format key: "Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus."
   public static func modalsNewUpsellAllCountriesSubtitle(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle", p1, p2, fallback: "Plural format key: \"Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus.\"")
@@ -1759,10 +1755,6 @@ public enum Localizable {
   public static var modalsNewUpsellVpnAcceleratorSubtitle: String { return Localizable.tr("Localizable", "modals_new_upsell_vpn_accelerator_subtitle", fallback: "Unlock faster, less crowded servers with speeds of up to 10 Gbps.") }
   /// Title of the VPN Accelerator screen
   public static var modalsNewUpsellVpnAcceleratorTitle: String { return Localizable.tr("Localizable", "modals_new_upsell_vpn_accelerator_title", fallback: "Browse at even higher speeds") }
-  /// Description of the second section of the "What's new" screen
-  public static var modalsServerCrowding: String { return Localizable.tr("Localizable", "modals_server_crowding", fallback: "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.") }
-  /// Title of the second section of the "What's new" screen
-  public static var modalsServerSelection: String { return Localizable.tr("Localizable", "modals_server_selection", fallback: "Changes to server selection") }
   /// Feature of the All Countries upsell screen
   public static var modalsUpsellAllCountriesFeatureHighSpeed: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_highSpeed", fallback: "Browse at the highest speeds (10 Gbps)") }
   /// Plural format key: "%#@VARIABLE@"
@@ -1813,6 +1805,20 @@ public enum Localizable {
   public static var modalsUpsellStayFree: String { return Localizable.tr("Localizable", "modals_upsell_stay_free", fallback: "Not now") }
   /// Title of the "What's new" screen
   public static var modalsWhatsNew: String { return Localizable.tr("Localizable", "modals_whats_new", fallback: "What’s new") }
+  /// Button Title of the "What's new" screen
+  public static var modalsWhatsNewButtonTitle: String { return Localizable.tr("Localizable", "modals_whats_new_button_title", fallback: "Take a look") }
+  /// Subtitle of gateways related content of the "What's new" screen
+  public static var modalsWhatsNewGatewaysSubtitle: String { return Localizable.tr("Localizable", "modals_whats_new_gateways_subtitle", fallback: "You can now access your organization’s dedicated servers from the main navigation.") }
+  /// Title of gateways related content of the "What's new" screen
+  public static var modalsWhatsNewGatewaysTitle: String { return Localizable.tr("Localizable", "modals_whats_new_gateways_title", fallback: "Gateways have moved") }
+  /// Subtitle of recents related content of the "What's new" screen
+  public static var modalsWhatsNewRecentsSubtitle: String { return Localizable.tr("Localizable", "modals_whats_new_recents_subtitle", fallback: "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.") }
+  /// Title of recents related content of the "What's new" screen
+  public static var modalsWhatsNewRecentsTitle: String { return Localizable.tr("Localizable", "modals_whats_new_recents_title", fallback: "Introducing Recents") }
+  /// Subtitle of redesign related content of the "What's new" screen
+  public static var modalsWhatsNewRedesignSubtitle: String { return Localizable.tr("Localizable", "modals_whats_new_redesign_subtitle", fallback: "We refreshed our designs and moved some things around to make the app easier to use.") }
+  /// Title of redesign related content of the "What's new" screen
+  public static var modalsWhatsNewRedesignTitle: String { return Localizable.tr("Localizable", "modals_whats_new_redesign_title", fallback: "New look, same protection") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked
   public static var netshieldStatsHintAds: String { return Localizable.tr("Localizable", "netshield_stats_hint_ads", fallback: "Advertisement websites use cookies and trackers to target you.") }
   /// The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved

@@ -31,6 +31,8 @@ public enum Asset {
   public static let welcomeFallback = ImageAsset(name: "WelcomeFallback")
   public static let welcomePlus = ImageAsset(name: "WelcomePlus")
   public static let welcomeUnlimited = ImageAsset(name: "WelcomeUnlimited")
+  public static let whatsNewBusiness = ImageAsset(name: "WhatsNewBusiness")
+  public static let whatsNewFreePlus = ImageAsset(name: "WhatsNewFreePlus")
   public static let bannerIcon = ImageAsset(name: "bannerIcon")
   public static let customisation = ImageAsset(name: "customisation")
   public static let getStarted = ImageAsset(name: "getStarted")
