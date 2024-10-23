@@ -76,7 +76,7 @@ public struct HomeView: View {
                             Color(.background) // needed to take all the available horizontal space for the background
                         }
                         .offset(y: -Self.bottomGradientHeight)
-                        .background(Color(.background))
+                        .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
                     }
                     .frame(width: proxy.size.width)
                     .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
