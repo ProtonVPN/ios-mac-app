@@ -206,7 +206,18 @@ final class NavigationService {
         }
         propertiesManager.showWhatsNewModal = false
 
-        tabBarController?.present(ModalsFactory().whatsNewViewController(), animated: true)
+        let variant: WhatsNewView.PlanVariant
+        switch CredentialsProvider.liveValue.tier {
+        case .freeTier:
+            variant = .free
+        case .paidTier:
+            variant = .plus
+        default:
+            log.info("User has not explicitly a paid account, but defaulting to paid PlanVariant", category: .app)
+            variant = .plus
+        }
+
+        tabBarController?.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {

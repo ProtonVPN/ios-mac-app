@@ -17,61 +17,109 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+
+import Modals
 import SharedViews
 import Strings
-import Theme
 
-struct WhatsNewView: View {
+@MainActor
+public struct WhatsNewView: View {
+    public enum PlanVariant {
+        case free
+        case plus
+        case business
+    }
 
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
+    let variant: PlanVariant
+
+    public var body: some View {
         VStack(spacing: .themeSpacing24) {
-            Spacer()
-            Asset.welcomeToProtonVpn.swiftUIImage
+            imageAssetView
+                .resizable()
+                .scaledToFit()
+                .padding(.bottom, .themeSpacing16)
 
             Text(Localizable.modalsWhatsNew)
                 .themeFont(.headline)
-            VStack(alignment: .leading, spacing: .themeSpacing4) {
-                HStack {
-                    Text(Localizable.modalsFreeCountries)
-                        .themeFont(.body1(.bold))
-                    Spacer(minLength: 0)
-                }
-                HStack {
-                    Text(Localizable.modalsNewServers)
-                        .themeFont(.body2())
-                        .foregroundColor(Color(.text, .weak))
-                    Spacer(minLength: 0)
-                }
-            }
-            VStack(alignment: .leading, spacing: .themeSpacing4) {
-                HStack {
-                    Text(Localizable.modalsServerSelection)
-                        .themeFont(.body1(.bold))
-                    Spacer(minLength: 0)
-                }
-                HStack {
-                    Text(Localizable.modalsServerCrowding)
-                        .themeFont(.body2())
-                        .foregroundColor(Color(.text, .weak))
-                    Spacer(minLength: 0)
-                }
-            }
+
+            textContentView
+
             Spacer()
+
             Button {
                 dismiss()
             } label: {
-                Text(Localizable.gotIt)
+                Text(Localizable.modalsWhatsNewButtonTitle)
             }
             .buttonStyle(PrimaryButtonStyle())
+            .padding(.top, .themeSpacing12)
         }
         .padding(.horizontal, .themeSpacing16)
+        .padding(.top, .themeSpacing16)
+        .padding(.bottom, .themeSpacing12)
+    }
+
+    private var imageAssetView: SwiftUI.Image {
+        switch variant {
+        case .free, .plus:
+            return Asset.whatsNewFreePlus.swiftUIImage
+        case .business:
+            return Asset.whatsNewBusiness.swiftUIImage
+        }
+    }
+
+    private var freePlanTextContentView: some View {
+        VStack(alignment: .leading, spacing: .themeSpacing2) {
+            Text(Localizable.modalsWhatsNewRedesignTitle)
+                .themeFont(.body1(.bold))
+
+            Text(Localizable.modalsWhatsNewRedesignSubtitle)
+                .themeFont(.body2(emphasised: false))
+                .foregroundColor(Color(.text, .weak))
+        }
+    }
+
+    private var recentsTextContentView: some View {
+        VStack(alignment: .leading, spacing: .themeSpacing2) {
+            Text(Localizable.modalsWhatsNewRecentsTitle)
+                .themeFont(.body1(.bold))
+
+            Text(Localizable.modalsWhatsNewRecentsSubtitle)
+                .themeFont(.body2(emphasised: false))
+                .foregroundColor(Color(.text, .weak))
+        }
+    }
+
+    private var gatewaysTextContentView: some View {
+        VStack(alignment: .leading, spacing: .themeSpacing2) {
+            Text(Localizable.modalsWhatsNewGatewaysTitle)
+                .themeFont(.body1(.bold))
+
+            Text(Localizable.modalsWhatsNewGatewaysSubtitle)
+                .themeFont(.body2(emphasised: false))
+                .foregroundColor(Color(.text, .weak))
+        }
+    }
+
+    @ViewBuilder
+    private var textContentView: some View {
+        switch variant {
+        case .free:
+            freePlanTextContentView
+        case .plus:
+            freePlanTextContentView
+            recentsTextContentView
+        case .business:
+            recentsTextContentView
+            gatewaysTextContentView
+        }
     }
 }
 
 struct WhatsNewView_Previews: PreviewProvider {
     static var previews: some View {
-        WhatsNewView()
+        WhatsNewView(variant: .plus)
     }
 }

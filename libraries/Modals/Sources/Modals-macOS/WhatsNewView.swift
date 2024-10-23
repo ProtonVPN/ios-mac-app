@@ -47,6 +47,8 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
     }
 }
 
+// This view exceptionally contains string literals because it is not used anywhere,
+// and may be redesigned soon.
 struct WhatsNewView: View {
 
     public var dismiss: () -> Void = { }
@@ -59,12 +61,12 @@ struct WhatsNewView: View {
                 .themeFont(.title1(emphasised: true))
             VStack(alignment: .leading, spacing: .themeSpacing4) {
                 HStack {
-                    Text(Localizable.modalsFreeCountries)
+                    Text("New Free countries")
                         .themeFont(.headline(emphasised: true))
                     Spacer(minLength: 0)
                 }
                 HStack {
-                    Text(Localizable.modalsNewServers)
+                    Text("There are now Free servers in Poland and Romania.")
                         .themeFont(.body())
                         .foregroundColor(Color(.text, .weak))
                     Spacer(minLength: 0)
@@ -72,12 +74,14 @@ struct WhatsNewView: View {
             }
             VStack(alignment: .leading, spacing: .themeSpacing4) {
                 HStack {
-                    Text(Localizable.modalsServerSelection)
+                    Text("Changes to server selection")
                         .themeFont(.headline(emphasised: true))
                     Spacer(minLength: 0)
                 }
                 HStack {
-                    Text(Localizable.modalsServerCrowding)
+                    Text("""
+                    To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.
+                    """)
                         .themeFont(.body())
                         .fixedSize(horizontal: false, vertical: true) // allow multiline
                         .foregroundColor(Color(.text, .weak))

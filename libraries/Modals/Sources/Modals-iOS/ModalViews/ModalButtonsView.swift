@@ -23,8 +23,8 @@ import SharedViews
 struct ModalButtonsView: View {
     let modalModel: ModalModel
 
-    var primaryAction: (() -> Void)?
-    var dismissAction: (() -> Void)?
+    let primaryAction: (() -> Void)?
+    let dismissAction: (() -> Void)?
 
     var body: some View {
         VStack {
