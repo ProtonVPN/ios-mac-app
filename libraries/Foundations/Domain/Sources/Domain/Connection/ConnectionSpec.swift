@@ -45,14 +45,13 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
         case secureCore(SecureCoreSpec)
     }
 
-    public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable, Codable {
+    public enum Feature: Equatable, Hashable, CaseIterable, CustomStringConvertible, Identifiable, Codable {
         public var id: Self { self } // Identifiable
 
-        case smart
+        case smart // smart routing
         case streaming
         case p2p
         case tor
-        case partner(name: String)
 
         // todo: Localized strings
         public var description: String {
@@ -65,8 +64,6 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
                 return "P2P"
             case .tor:
                 return "TOR"
-            case .partner(let name):
-                return name
             }
         }
     }
@@ -122,7 +119,11 @@ public extension ConnectionSpec {
     static let specificCityServer = ConnectionSpec(location: .specificCityServer, features: [])
     static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
+    func with(location: ConnectionSpec.Location) -> Self {
+        .init(location: location, features: self.features)
+    }
+
     func withAllFeatures() -> Self {
-        .init(location: location, features: [.p2p, .tor])
+        .init(location: self.location, features: [.p2p, .tor])
     }
 }

@@ -39,52 +39,42 @@ public struct ConnectionInfoBuilder {
     }
 
     public var textSubHeader: String? {
-        if let vpnConnectionActual {
-            switch location {
+        guard let server = vpnConnectionActual?.server else {
+            return location.subtext(locale: locale)
+        }
+        switch location {
+        case .fastest:
+            return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
+        case .region:
+            return nil
+        case .exact:
+            return server.logical.name
+        case .secureCore(let secureCoreSpec):
+            switch secureCoreSpec {
             case .fastest:
-                return LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country)
-            case .region:
+                return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
+            case .fastestHop:
                 return nil
-            case .exact:
-                return vpnConnectionActual.serverName
-            case .secureCore(let secureCoreSpec):
-                switch secureCoreSpec {
-                case .fastest:
-                    return LocalizationUtility.default.countryName(forCode: vpnConnectionActual.country)
-                case .fastestHop:
-                    return nil
-                case .hop(_, let via):
-                    return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: via) ?? "")
-                }
+            case .hop(_, let via):
+                return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: via) ?? "")
             }
         }
-        return location.subtext(locale: locale)
     }
 
     /// In case of not an actual connection, show feature only if present in both intent and actual connection.
     /// In case of intent, check only if feature was intended.
+    private func shouldShow(feature: ConnectionSpec.Feature) -> Bool {
+        guard intent.features.contains(feature) else { return false }
+        guard let currentlyConnectedServer = vpnConnectionActual?.server else { return true }
+        return currentlyConnectedServer.supports(feature: feature)
+    }
+
     private var showFeatureP2P: Bool {
-        if intent.features.contains(.p2p) {
-            if let vpnConnectionActual {
-                return vpnConnectionActual.feature.contains(ServerFeature.p2p)
-            } else {
-                return true
-            }
-        }
-        return false
+        shouldShow(feature: .p2p)
     }
 
-    /// In case of not an actual connection, show feature only if present in both intent and actual connection.
-    /// In case of intent, check only if feature was intended.
     private var showFeatureTor: Bool {
-        if intent.features.contains(.tor) {
-            if let vpnConnectionActual {
-                return vpnConnectionActual.feature.contains(ServerFeature.tor)
-            } else {
-                return true
-            }
-        }
-        return false
+        shouldShow(feature: .tor)
     }
 
     /// Bullet is shown between any sub-header text and feature view

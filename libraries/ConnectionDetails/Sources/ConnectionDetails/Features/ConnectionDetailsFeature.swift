@@ -45,13 +45,14 @@ public struct ConnectionDetailsFeature {
             self.localIpHidden = localIpHidden
         }
 
-        public init(actual: VPNConnectionActual, vpnServer: VPNServer) {
-            let country = LocalizationUtility.default.countryName(forCode: vpnServer.logical.exitCountryCode) ?? vpnServer.logical.exitCountryCode
+        public init(actual: VPNConnectionActual) {
+            let countryCode = actual.server.logical.exitCountryCode
+            let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? countryCode
             self = .init(connectedSince: actual.connectedDate ?? .now,
                          country: country,
-                         city: vpnServer.logical.city ?? "-",
-                         server: vpnServer.logical.name,
-                         serverLoad: vpnServer.logical.load,
+                         city: actual.server.logical.city ?? "-",
+                         server: actual.server.logical.name,
+                         serverLoad: actual.server.logical.load,
                          protocolName: actual.vpnProtocol.localizedDescription
             )
         }

@@ -36,6 +36,20 @@ public struct ServerFeature: OptionSet, Codable, Sendable {
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
+
+    public init?(connectionSpecFeature: ConnectionSpec.Feature) {
+        switch connectionSpecFeature {
+        case .p2p:
+            self = .p2p
+        case .streaming:
+            self = .streaming
+        case .tor:
+            self = .tor
+        case .smart:
+            // This is not encoded in `ServerFeature`, and instead must be inferred from `Logical` instead.
+            return nil
+        }
+    }
 }
 
 extension ServerFeature: CustomStringConvertible {

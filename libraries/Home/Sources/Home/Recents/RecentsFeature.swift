@@ -78,8 +78,11 @@ public struct RecentsFeature {
                 .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let connectionStatus):
-                guard case .connected = connectionStatus,
-                      let spec = connectionStatus.spec else { return .none }
+                guard case .connected = connectionStatus else { return .none }
+                guard let spec = connectionStatus.spec else {
+                    log.info("Unable to generate spec for connection status: \(connectionStatus)")
+                    return .none
+                }
                 return .send(.connectionEstablished(spec))
 
             case .connectionEstablished(let spec):

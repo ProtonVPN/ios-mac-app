@@ -97,19 +97,19 @@ extension AppDisplayState {
 
 extension ConnectionConfiguration {
     func vpnConnectionActual(connectedDate: Date?) -> VPNConnectionActual {
+        // Reduce ambiguity by returning only the single server ip/endpoint we are connected to,
+        // even if this logical has multiple endpoints.
+        let serverWithOnlyActiveEndpoint = Server(
+            logical: VPNServer(legacyModel: server).logical,
+            endpoint: ServerEndpoint(legacyModel: serverIp)
+        )
+
         return VPNConnectionActual(
             connectedDate: connectedDate,
-            serverModelId: self.server.id,
-            serverExitIP: self.serverIp.exitIp,
             vpnProtocol: self.vpnProtocol,
             natType: self.natType,
             safeMode: self.safeMode,
-            feature: self.server.feature,
-            serverName: self.server.name,
-            country: self.server.exitCountryCode,
-            city: self.server.city,
-            coordinates: .init(latitude: self.server.location.lat,
-                               longitude: self.server.location.long)
+            server: serverWithOnlyActiveEndpoint
         )
     }
 }

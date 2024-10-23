@@ -27,7 +27,7 @@ public struct IPViewFeature {
     @ObservableState
     public struct State: Equatable {
         public var vpnIp: String? {
-            vpnConnectionStatus.actual?.serverExitIP
+            vpnConnectionStatus.actual?.server.endpoint.exitIp
         }
         public var localIpHidden = true
 

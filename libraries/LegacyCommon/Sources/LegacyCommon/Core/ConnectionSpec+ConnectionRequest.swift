@@ -18,22 +18,32 @@
 
 import Domain
 
+import ProtonCoreFeatureFlags
+
 extension ConnectionSpec {
     init(connectionRequest: ConnectionRequest) {
         let location: ConnectionSpec.Location
         var features: Set<ConnectionSpec.Feature> = []
         switch connectionRequest.connectionType {
         case .fastest:
-            location = .fastest
+            if connectionRequest.serverType == .secureCore {
+                location = .secureCore(.fastest)
+            } else {
+                location = .fastest
+            }
         case .random:
-            // We no longer allow for a random connection since the redesign
+            Self.assertRandomRequestValidity(connectionRequest)
             location = .fastest
         case .country(let country, let type):
             switch type {
             case .fastest:
-                location = .region(code: country)
+                if connectionRequest.serverType == .secureCore {
+                    location = .secureCore(.fastestHop(to: country))
+                } else {
+                    location = .region(code: country)
+                }
             case .random:
-                // We no longer allow for a random connection since the redesign
+                Self.assertRandomRequestValidity(connectionRequest)
                 location = .region(code: country)
             case .server(let serverModel):
                 if serverModel.feature.contains(.streaming) {
@@ -55,5 +65,11 @@ extension ConnectionSpec {
             location = .exact(.paid, number: nil, subregion: city, regionCode: country)
         }
         self = .init(location: location, features: features)
+    }
+
+    private static func assertRandomRequestValidity(_ connectionRequest: ConnectionRequest) {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
+            log.assertionFailure("Random connections are not supported post-redesign")
+        }
     }
 }

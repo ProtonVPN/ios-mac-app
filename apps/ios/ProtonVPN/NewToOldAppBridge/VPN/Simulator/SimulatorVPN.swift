@@ -134,21 +134,7 @@ extension VPNConnectionStatus {
 // MARK: - VPNConnectionActual -> ConnectionSpec
 
 extension ConnectionSpec {
-    var actualConnection: VPNConnectionActual {
-        VPNConnectionActual(
-            connectedDate: .now,
-            serverModelId: "1",
-            serverExitIP: "1.2.3.4",
-            vpnProtocol: .ike,
-            natType: .moderateNAT,
-            safeMode: nil,
-            feature: .zero,
-            serverName: "Server#123",
-            country: "Country",
-            city: "City",
-            coordinates: .mockPoland()
-        )
-    }
+    var actualConnection: VPNConnectionActual { .mock() }
 }
 
 #endif
