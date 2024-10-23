@@ -1,5 +1,5 @@
 //
-//  Created on 22/10/2024.
+//  Created on 23/10/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -19,19 +19,16 @@
 import Dependencies
 
 extension DependencyValues {
-    public var pushAlert: () -> Void {
+    public var pushAlert: @Sendable (SystemAlert) -> Void {
         get { self[PushAlertKey.self] }
         set { self[PushAlertKey.self] = newValue }
     }
 }
 
-public enum PushAlertKey: DependencyKey {
-    public static let liveValue: () -> Void = {
+public enum PushAlertKey { }
 
-        log.assertionFailure("Use real implementation from VPNCore")
-    }
-
-    public static let testValue: () -> Void = {
+extension PushAlertKey: TestDependencyKey {
+    public static let testValue: @Sendable (SystemAlert) -> Void = { alert in
 
     }
 }

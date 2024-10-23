@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import Strings
+import VPNAppCore
 
 class ExpandablePopupViewModel: NSObject {
     

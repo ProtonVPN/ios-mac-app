@@ -37,6 +37,7 @@ import protocol VPNAppCore.UnauthKeychainHandleFactory
 import protocol VPNAppCore.UnauthKeychainHandle
 import VPNShared
 import LegacyCommon
+import VPNAppCore
 
 enum SessionStatus {
     
@@ -485,7 +486,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 // MARK: - Plan change
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) async {
+    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async {
         guard authKeychain.username != nil else {
             return
         }

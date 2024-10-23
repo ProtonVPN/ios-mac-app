@@ -22,25 +22,7 @@
 import Foundation
 import Strings
 
-public extension Int {
-    var isPaidTier: Bool {
-        !isFreeTier
-    }
-    var isFreeTier: Bool {
-        self == Int.freeTier
-    }
-    static var freeTier: Int = .freeTier
-    static var paidTier: Int = CoreAppConstants.VpnTiers.plus // 1 was historically used for basic plans, which no longer exist
-    static var internalTier: Int = CoreAppConstants.VpnTiers.internal // Dev-only
-}
-
 public class CoreAppConstants {
-        
-    fileprivate struct VpnTiers {
-        static let free = 0
-        static let plus = 2 // also visionary
-        static let `internal` = 3
-    }
 
     public static let maxDeviceCount: Int = 10
 

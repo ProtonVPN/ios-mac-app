@@ -22,6 +22,7 @@ import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
+import VPNAppCore
 
 public class FreeConnectionsAlert: SystemAlert {
 

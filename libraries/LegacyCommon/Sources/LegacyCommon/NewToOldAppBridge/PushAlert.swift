@@ -18,16 +18,10 @@
 
 import Foundation
 import Dependencies
+import VPNAppCore
 
-extension DependencyValues {
-    public var pushAlert: @Sendable (SystemAlert) -> Void {
-    get { self[PushAlertKey.self] }
-    set { self[PushAlertKey.self] = newValue }
-  }
-}
-
-private enum PushAlertKey: DependencyKey {
-    static let liveValue: @Sendable (SystemAlert) -> Void = { alert in
+extension PushAlertKey: DependencyKey {
+    public static let liveValue: @Sendable (SystemAlert) -> Void = { alert in
         let alertService = Container.sharedContainer.makeCoreAlertService()
         alertService.push(alert: alert)
     }

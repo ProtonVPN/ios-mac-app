@@ -36,6 +36,7 @@ import Strings
 import CommonNetworking
 import VPNShared
 import LegacyCommon
+import VPNAppCore
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &

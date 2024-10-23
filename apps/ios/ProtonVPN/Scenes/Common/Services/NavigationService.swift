@@ -30,6 +30,8 @@ import Dependencies
 import Modals_iOS
 import enum Domain.VPNFeatureFlagType
 import CommonNetworking
+import ComposableArchitecture
+import VPNAppCore
 
 import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery
@@ -249,7 +251,9 @@ final class NavigationService {
 
         if #available(iOS 17, *), isRedesign {
             @Dependency(\.credentialsProvider) var credentials
-            let home = HomeFeatureCreator.homeViewController(userTier: credentials.tier)
+            @Shared(.userTier) var userTier
+            userTier = credentials.tier
+            let home = HomeFeatureCreator.homeViewController()
             tabViewControllers.append(home)
         }
 

@@ -31,6 +31,7 @@ import Modals
 import ConnectionDetails
 import ConnectionDetails_iOS
 import SharedViews
+import Domain
 
 @available(iOS 17, *)
 public struct HomeView: View {
@@ -110,7 +111,7 @@ public struct HomeView: View {
 #if DEBUG && compiler(>=6)
 @available(iOS 18, *)
 #Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    HomeView(store: .init(initialState: .init(userTier: 2), reducer: {
+    HomeView(store: .init(initialState: .init(), reducer: {
         HomeFeature()
     }))
 }

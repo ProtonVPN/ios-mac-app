@@ -46,18 +46,15 @@ public struct HomeFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
-        @Shared(.userTier) public var userTier: Int
-
         @Presents
         public var destination: Destination.State?
 
-        public init(userTier: Int) {
+        public init() {
             self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
             self.map = .init()
-            self.userTier = userTier
         }
     }
 
@@ -163,9 +160,10 @@ public struct HomeFeature {
                         return .send(.changeServer)
                     }
                     return .run { send in
-                        try sleep(1) // give some time for the current presented view to disappear
+                        @Dependency(\.continuousClock) var clock
+                        try await clock.sleep(for: .seconds(1)) // give some time for the current presented view to disappear
                         @Dependency(\.pushAlert) var pushAlert
-                        pushAlert()
+                        pushAlert(AllCountriesUpsellAlert())
                     }
 
                 default:

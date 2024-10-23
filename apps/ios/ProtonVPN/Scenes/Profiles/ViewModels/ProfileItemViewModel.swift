@@ -29,6 +29,7 @@ import Localization
 import Strings
 import Theme
 import Persistence
+import VPNAppCore
 
 final class ProfileItemViewModel {
     @Dependency(\.profileAuthorizer) var authorizer

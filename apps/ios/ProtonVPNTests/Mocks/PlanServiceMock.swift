@@ -25,6 +25,7 @@ import LegacyCommon
 import Modals
 import Modals_iOS
 import ProtonCorePayments
+import VPNAppCore
 
 @testable import ProtonVPN
 
@@ -52,7 +53,7 @@ class PlanServiceMock: PlanService {
 
     }
     
-    func presentPlanSelection(modalSource: LegacyCommon.UpsellEvent.ModalSource?) {
+    func presentPlanSelection(modalSource: UpsellModalSource?) {
         callbackPresentPlanSelection?()
     }
     

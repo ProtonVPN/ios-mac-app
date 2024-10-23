@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNAppCore
 
 public struct UpsellEvent: TelemetryEvent, Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
@@ -44,26 +45,6 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         return Values()
     }
 
-    public enum ModalSource: String, Encodable {
-        case secureCore = "secure_core"
-        case netShield = "netshield"
-        case countries
-        case p2p
-        case streaming
-        case portForwarding = "port_forwarding"
-        case profiles
-        case vpnAccelerator = "vpn_accelerator"
-        case splitTunneling = "split_tunneling"
-        case customDns = "custom_dns"
-        case allowLan = "allow_lan"
-        case moderateNat = "moderate_nat"
-        case safeMode = "safe_mode"
-        case changeServer = "change_server"
-        case promoOffer = "promo_offer"
-        case downgrade
-        case maxConnections = "max_connections"
-    }
-
     public struct Dimensions: Encodable {
         public enum CodingKeys: String, CodingKey {
             case modalSource = "modal_source"
@@ -75,7 +56,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             case reference = "reference"
         }
 
-        public let modalSource: ModalSource
+        public let modalSource: UpsellModalSource
         public let userPlan: String
         public let vpnStatus: VPNStatus
         public let userCountry: String
@@ -135,3 +116,27 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
     }
 }
 
+extension UpsellModalSource: Encodable {
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .secureCore: try container.encode("secureCore")
+        case .netShield: try container.encode("netShield")
+        case .countries: try container.encode("countries")
+        case .p2p: try container.encode("p2p")
+        case .streaming: try container.encode("streaming")
+        case .portForwarding: try container.encode("port_forwarding")
+        case .profiles: try container.encode("profiles")
+        case .vpnAccelerator: try container.encode("vpn_accelerator")
+        case .splitTunneling: try container.encode("split_tunneling")
+        case .customDns: try container.encode("custom-dns")
+        case .allowLan: try container.encode("allow_lan")
+        case .moderateNat: try container.encode("moderate-nat")
+        case .safeMode: try container.encode("safe_mode")
+        case .changeServer: try container.encode("change_server")
+        case .promoOffer: try container.encode("promo_offer")
+        case .downgrade: try container.encode("downgrade")
+        case .maxConnections: try container.encode("max_connections")
+        }
+    }
+}

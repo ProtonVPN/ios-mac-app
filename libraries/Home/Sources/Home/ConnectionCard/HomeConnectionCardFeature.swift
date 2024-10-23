@@ -84,7 +84,7 @@ public struct HomeConnectionCardFeature {
 
             case .newConnectionStatus(let connectionStatus):
                 if case .connected = connectionStatus {
-                    state.showChangeServerButton = state.userTier == 0
+                    state.showChangeServerButton = state.userTier.isFreeTier
                 } else {
                     state.showChangeServerButton = false
                 }

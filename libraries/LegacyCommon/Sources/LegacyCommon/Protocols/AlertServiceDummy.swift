@@ -21,6 +21,7 @@
 
 import Foundation
 import Ergonomics
+import VPNAppCore
 
 public class CoreAlertServiceDummy: CoreAlertService {
     

@@ -29,16 +29,15 @@ import VPNAppCore
 import LegacyCommon
 
 @available(iOS 17, *)
-enum HomeFeatureCreator {
-    static func homeViewController(userTier: Int) -> UIHostingController<HomeView> {
-        let homeStore = StoreOf<HomeFeature>(initialState: .init(userTier: userTier)) {
+enum HomeFeatureCreator {   
+    static func homeViewController() -> UIHostingController<HomeView> {
+        let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
             HomeFeature()
 #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
                 .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
                 .dependency(\.serverChangeAuthorizer, SimulatorHelper.serverChangeAuthorizer)
 #else
-                .dependency(\.pushAlert, PushAlertKey.pushAlert)
                 .dependency(\.connectToVPN, ConnectToVPNKey.bridgedConnect)
                 .dependency(\.disconnectVPN, DisconnectVPNKey.bridgedDisconnect)
 #endif

@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import AppKit
+import VPNAppCore
 
 protocol UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService

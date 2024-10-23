@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.15.1")),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
+        .package(path: "../Foundations/Domain"),
         .package(path: "../SharedViews"),
         .package(path: "../NetShield"),
         .package(path: "../Core/NEHelper"),
@@ -41,6 +42,7 @@ let package = Package(
             name: "Home",
             dependencies: [
                 "Theme",
+                "Domain",
                 "Strings",
                 "Ergonomics",
                 "Connection",

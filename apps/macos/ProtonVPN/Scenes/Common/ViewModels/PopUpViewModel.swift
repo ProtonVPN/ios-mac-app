@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import AppKit
 import Strings
+import VPNAppCore
 
 class PopUpViewModel: NSObject {
     

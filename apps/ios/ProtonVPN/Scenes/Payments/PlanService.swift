@@ -30,6 +30,7 @@ import VPNShared
 import Modals_iOS
 import Modals
 import CommonNetworking
+import VPNAppCore
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService
@@ -37,7 +38,7 @@ protocol PlanServiceFactory {
 
 protocol PlanServiceDelegate: AnyObject {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellEvent.ModalSource?, newPlanName: String?) async
+    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async
 }
 
 protocol PlanService {
@@ -46,7 +47,7 @@ protocol PlanService {
     var delegate: PlanServiceDelegate? { get set }
     var payments: Payments { get }
 
-    func presentPlanSelection(modalSource: UpsellEvent.ModalSource?)
+    func presentPlanSelection(modalSource: UpsellModalSource?)
     func presentSubscriptionManagement()
     func updateServicePlans() async throws
     func createPlusPlanUI(completion: @escaping () -> Void)
@@ -112,7 +113,7 @@ final class CorePlanService: PlanService {
         try await payments.updateServiceIAPAvailability()
     }
 
-    func presentPlanSelection(modalSource: UpsellEvent.ModalSource?) {
+    func presentPlanSelection(modalSource: UpsellModalSource?) {
         guard userCachedStatus.paymentsBackendStatusAcceptsIAP else {
             alertService.push(alert: UpgradeUnavailableAlert())
             return
@@ -171,7 +172,7 @@ final class CorePlanService: PlanService {
                           customization: .init(inAppTheme: { .dark }))
     }
 
-    private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellEvent.ModalSource?) {
+    private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellModalSource?) {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)

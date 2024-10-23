@@ -24,6 +24,7 @@ import Localization
 import ProtonCoreUIFoundations
 import Strings
 import Theme
+import VPNAppCore
 
 final class CityItemViewModel: CityViewModel {
 
