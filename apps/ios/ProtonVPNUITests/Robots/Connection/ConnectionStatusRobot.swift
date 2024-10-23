@@ -61,7 +61,7 @@ class ConnectionStatusRobot: CoreElements {
         
         @discardableResult
         func connectedToAServer(_ name: String) -> MainRobot {
-            staticText(statusConnected + name).waitUntilExists(time: 35).checkExists()
+            staticText(NSPredicate(format: "label CONTAINS[cd] %@", "Connected to \(name)")).waitUntilExists(time: 30).checkExists()
             button(tabQCActive).waitUntilExists().checkExists()
             return MainRobot()
         }

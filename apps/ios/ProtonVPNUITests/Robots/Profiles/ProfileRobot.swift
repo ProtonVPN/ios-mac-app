@@ -7,6 +7,7 @@
 //
 
 import fusion
+import Foundation
 
 fileprivate let editButton = "Edit"
 fileprivate let doneButton = "Done"
@@ -37,13 +38,15 @@ class ProfileRobot: CoreElements {
         return CreateProfileRobot()
     }
     
-    func connectToAProfile(_ name: String) -> ConnectionStatusRobot {
-        button(buttonConnect).byIndex(2).tap()
+    func connectToAProfile(_ profileName: String) -> ConnectionStatusRobot {
+        staticText(NSPredicate(format: "label CONTAINS[c] %@", profileName))
+            .checkExists(message: "\(profileName) profile not found").tap()
         return ConnectionStatusRobot()
     }
     
-    func disconnectFromAProfile() -> MainRobot {
-        button(buttonDisconnect).byIndex(2).tap()
+    func disconnectFromAProfile(_ profileName: String) -> MainRobot {
+        staticText(NSPredicate(format: "label CONTAINS[c] %@", profileName))
+            .checkExists(message: "\(profileName) profile not found").tap()
         return MainRobot()
     }
     
@@ -79,7 +82,8 @@ class ProfileRobot: CoreElements {
             deleteButtonText = "Remove"
         }
         button(editButton).tap()
-        button(deleteButtonText+" " + countryname + "    Fastest, " + name).tap()
+        let deleteButtonPredicate = NSPredicate(format: "label CONTAINS[c] %@", name)
+        button(deleteButtonPredicate).checkExists().tap()
         button(deleteButton).tap()
         return self
     }
