@@ -21,6 +21,8 @@ import UIKit
 import Search
 
 final class CityViewModelMock: CityViewModel {
+    var isRedesign: Bool = false
+
     var textColor: UIColor
 
     var cityName: String

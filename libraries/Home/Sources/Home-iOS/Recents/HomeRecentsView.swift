@@ -37,11 +37,15 @@ public struct RecentsSectionView: View {
     public var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                Text(Localizable.homeRecentsRecentSection)
-                    .themeFont(.caption())
-                    .styled(.weak)
-                    .padding([.top, .leading, .trailing], .themeSpacing16)
-                    .padding(.bottom, .themeSpacing8)
+                HStack(spacing: 0) {
+                    Text(Localizable.homeRecentsRecentSection)
+                        .themeFont(.caption())
+                        .styled(.weak)
+                        .padding([.top, .horizontal], .themeSpacing16)
+                        .padding(.bottom, .themeSpacing8)
+                    Spacer()
+                }
+                .opacity(store.recents.isEmpty ? 0 : 1)
                 ForEach(store.recents) { item in
                     RecentRowItemView(item: item, sendAction: { _ = store.send($0) })
                 }
@@ -153,7 +157,18 @@ extension RecentsFeature.Action {
 
 #if DEBUG && compiler(>=6)
 @available(iOS 18, *)
-#Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
+#Preview("Recents", traits: .dependencies { $0.recentsStorage = .previewValue }) {
+    let store: StoreOf<RecentsFeature> = .init(
+        initialState: .init(),
+        reducer: RecentsFeature.init
+    )
+    return ScrollView {
+        RecentsSectionView(store: store)
+    }
+    .background(Color(.background, .normal))
+}
+@available(iOS 18, *)
+#Preview("No recents", traits: .dependencies { $0.recentsStorage = .withElements(array: []) }) {
     let store: StoreOf<RecentsFeature> = .init(
         initialState: .init(),
         reducer: RecentsFeature.init

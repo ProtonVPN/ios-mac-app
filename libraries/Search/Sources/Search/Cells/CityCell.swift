@@ -33,6 +33,8 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
     @IBOutlet private weak var countryLabel: UILabel!
     @IBOutlet private weak var cityLabel: UILabel!
     @IBOutlet private weak var flagImageView: UIImageView!
+    @IBOutlet private weak var flagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var flagIconWidthConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 
@@ -47,6 +49,11 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
             guard var viewModel = viewModel as? CityViewModel else {
                 return
             }
+            flagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
+            flagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
+            flagImageView.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
+            flagImageView.layer.masksToBounds = viewModel.isRedesign
+            flagImageView.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
             flagImageView.image = viewModel.countryFlag
             setupCityAndCountryName()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }

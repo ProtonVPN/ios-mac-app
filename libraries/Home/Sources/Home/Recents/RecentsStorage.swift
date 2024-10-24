@@ -21,11 +21,11 @@ import Dependencies
 import OrderedCollections
 
 public struct RecentsStorage {
-    var updateList: (ConnectionSpec) -> Void
-    var pin: (ConnectionSpec) -> Void
-    var unpin: (ConnectionSpec) -> Void
-    var remove: (ConnectionSpec) -> Void
-    var elements: () -> [RecentConnection]
+    var updateList: (ConnectionSpec) -> Void = { _ in unimplemented() }
+    var pin: (ConnectionSpec) -> Void = { _ in unimplemented() }
+    var unpin: (ConnectionSpec) -> Void = { _ in unimplemented() }
+    var remove: (ConnectionSpec) -> Void = { _ in unimplemented() }
+    var elements: () -> [RecentConnection] = { unimplemented(placeholder: []) }
 }
 
 extension RecentsStorage: DependencyKey {
@@ -62,6 +62,7 @@ extension RecentsStorage: TestDependencyKey {
     } elements: {
         RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
     }
+    public static func withElements(array: [RecentConnection]) -> RecentsStorage { RecentsStorage(elements: { array }) }
 
     public static let previewValue = RecentsStorage { spec in
 

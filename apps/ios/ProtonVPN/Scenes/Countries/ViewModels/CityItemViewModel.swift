@@ -32,6 +32,7 @@ final class CityItemViewModel: CityViewModel {
     private var vpnGateway: VpnGatewayProtocol
     private let connectionStatusService: ConnectionStatusService
 
+    let isRedesign: Bool
     let cityName: String
 
     let translatedCityName: String?
@@ -97,7 +98,7 @@ final class CityItemViewModel: CityViewModel {
     private let servers: [ServerItemViewModel]
     private let countryCode: String
 
-    init(cityName: String, translatedCityName: String?, countryCode: String, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol, connectionStatusService: ConnectionStatusService) {
+    init(cityName: String, translatedCityName: String?, countryCode: String, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol, connectionStatusService: ConnectionStatusService, isRedesign: Bool) {
         self.cityName = cityName
         self.translatedCityName = translatedCityName
         self.countryCode = countryCode
@@ -105,6 +106,7 @@ final class CityItemViewModel: CityViewModel {
         self.alertService = alertService
         self.vpnGateway = vpnGateway
         self.connectionStatusService = connectionStatusService
+        self.isRedesign = isRedesign
 
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: VpnGateway.connectionChanged, object: nil)
     }

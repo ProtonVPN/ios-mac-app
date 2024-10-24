@@ -47,14 +47,16 @@ struct FeatureInfoView: View {
                         .foregroundColor(Color(.text, .normal))
 
                     Spacer()
+                    Group {
+                        Text(Localizable.connectionDetailsInfoButton)
+                            .font(.themeFont(.caption(emphasised: true)))
+                            .foregroundColor(Color(.text, .weak))
 
-                    Text(Localizable.connectionDetailsInfoButton)
-                        .font(.themeFont(.caption(emphasised: true)))
-                        .foregroundColor(Color(.text, .weak))
-
-                    IconProvider.infoCircle
-                        .resizable().frame(width: infoIconSize, height: infoIconSize)
-                        .foregroundColor(Color(.text, .weak))
+                        IconProvider.infoCircle
+                            .resizable().frame(width: infoIconSize, height: infoIconSize)
+                            .foregroundColor(Color(.text, .weak))
+                    }
+                        .opacity(0) // remove until we decide to add more info screen
                 }
 
                 Text(text)
