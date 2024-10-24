@@ -19,6 +19,7 @@
 import Foundation
 import Ergonomics
 import CommonNetworking
+import VPNAppCore
 
 class TelemetryUpsellReporter {
 
@@ -31,7 +32,7 @@ class TelemetryUpsellReporter {
 
     /// The last modal that drove an upsell event.
     @ExpiringValue(timeout: .minutes(10))
-    var previousModalSource: UpsellEvent.ModalSource?
+    var previousModalSource: UpsellModalSource?
     /// The last notification interaction's offer reference name, if defined, that drove an upsell event.
     @ExpiringValue(timeout: .minutes(10))
     var previousOfferReference: String?
@@ -44,11 +45,11 @@ class TelemetryUpsellReporter {
     }
 
     func upsellEvent(_ event: UpsellEvent.Event,
-                     modalSource _modalSource: UpsellEvent.ModalSource?,
+                     modalSource _modalSource: UpsellModalSource?,
                      newPlanName: String?,
                      offerReference: String?,
                      vpnStatus: UpsellEvent.VPNStatus) async throws {
-        let modalSource: UpsellEvent.ModalSource?
+        let modalSource: UpsellModalSource?
         #if os(macOS)
         // macOS payments happen through the web, so on success collapse it with the previous value if it's missing.
         if event == .success {

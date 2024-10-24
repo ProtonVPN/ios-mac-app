@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Ergonomics
+import VPNAppCore
 
 class UpsellPrimaryActionButton: HoverDetectionButton {
 

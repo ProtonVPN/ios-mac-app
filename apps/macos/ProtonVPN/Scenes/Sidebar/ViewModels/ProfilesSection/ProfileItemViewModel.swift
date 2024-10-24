@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Modals_macOS
 import Strings
+import VPNAppCore
 
 class ProfileItemViewModel: AbstractProfileViewModel {
     

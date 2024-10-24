@@ -34,6 +34,7 @@ import Modals
 import Search
 import LegacyCommon
 import ProtonCoreFeatureFlags
+import VPNAppCore
 
 typealias Row = RowViewModel
 

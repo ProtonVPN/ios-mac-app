@@ -31,6 +31,7 @@ import Modals
 import ConnectionDetails
 import ConnectionDetails_iOS
 import SharedViews
+import Domain
 
 @available(iOS 17, *)
 public struct HomeView: View {

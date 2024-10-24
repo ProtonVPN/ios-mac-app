@@ -21,16 +21,9 @@
 
 import Foundation
 import Strings
-import Network
 import Dependencies
 import Persistence
-
-public enum PrimaryActionType {
-    case confirmative
-    case destructive
-    case secondary
-    case cancel
-}
+import VPNAppCore
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService
@@ -60,26 +53,6 @@ extension UIAlertService {
 public enum NotificationStyleAlertType {
     case error
     case success
-}
-
-public struct AlertAction {
-    public let title: String
-    public let style: PrimaryActionType
-    public let handler: (() -> Void)?
-    
-    public init(title: String, style: PrimaryActionType, handler: (() -> Void)?) {
-        self.title = title
-        self.style = style
-        self.handler = handler
-    }
-}
-
-public protocol SystemAlert: AnyObject {
-    var title: String? { get set }
-    var message: String? { get set }
-    var actions: [AlertAction] { get set }
-    var isError: Bool { get }
-    var dismiss: (() -> Void)? { get set }
 }
 
 public struct ReconnectInfo {
@@ -798,24 +771,6 @@ public class DiscourageSecureCoreAlert: SystemAlert {
     public init() { }
 }
 
-public class UpsellAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError = false
-    public var dismiss: (() -> Void)?
-    public var modalSource: UpsellEvent.ModalSource? {
-        log.assertionFailure("Not implemented")
-
-        return nil
-    }
-
-    public func continueAction() { }
-
-    public init() { }
-
-}
-
 public class WelcomeScreenAlert: UpsellAlert {
     /// This enum is used to narrow down the possible types of this alert. Theoretically we could just allow to use the `ModalType`
     /// but we don't want to use this alert (for now) for anything else than welcome alerts.
@@ -830,7 +785,7 @@ public class WelcomeScreenAlert: UpsellAlert {
         self.plan = plan
     }
 
-    public override var modalSource: UpsellEvent.ModalSource? {
+    public override var modalSource: UpsellModalSource? {
         return nil
     }
 }
@@ -854,19 +809,19 @@ public extension WelcomeScreenAlert.Plan {
 }
 
 public class ProfilesUpsellAlert: UpsellAlert {
-    override public var modalSource: UpsellEvent.ModalSource { .profiles }
+    public override var modalSource: UpsellModalSource { .profiles }
 }
 
 public class VPNAcceleratorUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .vpnAccelerator }
+    public override var modalSource: UpsellModalSource? { .vpnAccelerator }
 }
 
 public class CustomizationUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .allowLan }
+    public override var modalSource: UpsellModalSource? { .allowLan }
 }
 
 public class CountryUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .countries }
+    public override var modalSource: UpsellModalSource? { .countries }
 
     public let countryFlag: Image
 
@@ -875,24 +830,20 @@ public class CountryUpsellAlert: UpsellAlert {
     }
 }
 
-public class AllCountriesUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .countries }
-}
-
 public class NetShieldUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .netShield }
+    public override var modalSource: UpsellModalSource? { .netShield }
 }
 
 public class SecureCoreUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .secureCore }
+    public override var modalSource: UpsellModalSource? { .secureCore }
 }
 
 public class SafeModeUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .safeMode }
+    public override var modalSource: UpsellModalSource? { .safeMode }
 }
 
 public class ModerateNATUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .moderateNat }
+    public override var modalSource: UpsellModalSource? { .moderateNat }
 }
 
 public class SubuserWithoutConnectionsAlert: SystemAlert {
@@ -1019,7 +970,7 @@ public class ConnectingWithBadLANAlert: SystemAlert {
 }
 
 public class ConnectionCooldownAlert: UpsellAlert {
-    public override var modalSource: UpsellEvent.ModalSource? { .changeServer }
+    public override var modalSource: UpsellModalSource? { .changeServer }
 
     public let until: Date
     public let duration: TimeInterval

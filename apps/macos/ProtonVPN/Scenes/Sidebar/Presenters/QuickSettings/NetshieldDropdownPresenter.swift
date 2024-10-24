@@ -33,6 +33,7 @@ import NetShield_macOS
 import Modals_macOS
 import LegacyCommon
 import VPNShared
+import VPNAppCore
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     

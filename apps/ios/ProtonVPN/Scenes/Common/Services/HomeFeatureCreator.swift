@@ -29,7 +29,7 @@ import VPNAppCore
 import LegacyCommon
 
 @available(iOS 17, *)
-enum HomeFeatureCreator {
+enum HomeFeatureCreator {   
     static func homeViewController() -> UIHostingController<HomeView> {
         let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
             HomeFeature()

@@ -105,7 +105,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(CheckmarkTableViewCell.nib, forCellReuseIdentifier: CheckmarkTableViewCell.identifier)
         tableView.register(ColorPickerTableViewCell.nib, forCellReuseIdentifier: ColorPickerTableViewCell.identifier)
         tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
-        tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)

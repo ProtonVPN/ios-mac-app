@@ -30,6 +30,7 @@ import ProtonCoreUIFoundations
 import Strings
 import Dependencies
 import Persistence
+import VPNAppCore
 
 final class IosAlertService {
         

@@ -83,7 +83,11 @@ public struct HomeConnectionCardFeature {
                 .cancellable(id: CancelId.watchConnectionStatus)
 
             case .newConnectionStatus(let connectionStatus):
-                state.showChangeServerButton = connectionStatus != .disconnected
+                if case .connected = connectionStatus {
+                    state.showChangeServerButton = state.userTier.isFreeTier
+                } else {
+                    state.showChangeServerButton = false
+                }
 
                 @Dependency(\.serverChangeAuthorizer) var authorizer
                 state.serverChangeAvailability = authorizer.serverChangeAvailability()

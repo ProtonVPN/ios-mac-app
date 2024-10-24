@@ -19,6 +19,7 @@
 import UIKit
 import LegacyCommon
 import Strings
+import ProtonCoreFeatureFlags
 
 final class SettingsAccountViewController: UIViewController {
     
@@ -65,22 +66,28 @@ final class SettingsAccountViewController: UIViewController {
         
         view.addSubview(tableView)
         tableView.centerXInSuperview()
-        
-        view.addSubview(connectionBarContainerView)
-        connectionBarContainerView.centerXInSuperview()
-        
+        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            view.addSubview(connectionBarContainerView)
+            connectionBarContainerView.centerXInSuperview()
+
+            NSLayoutConstraint.activate([
+                tableView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -UIConstants.connectionBarHeight),
+
+                connectionBarContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
+                connectionBarContainerView.topAnchor.constraint(equalTo: view.topAnchor),
+                connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight)
+            ])
+
+            connectionBar.embed(in: self, with: connectionBarContainerView)
+        } else {
+            NSLayoutConstraint.activate([tableView.heightAnchor.constraint(equalTo: view.heightAnchor)])
+        }
+
         NSLayoutConstraint.activate([
             tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            tableView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -UIConstants.connectionBarHeight),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            connectionBarContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            connectionBarContainerView.topAnchor.constraint(equalTo: view.topAnchor),
-            connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight)
         ])
-        
-        connectionBar.embed(in: self, with: connectionBarContainerView)
-        
+
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }

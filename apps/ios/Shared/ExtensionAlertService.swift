@@ -22,6 +22,7 @@
 
 import Foundation
 import LegacyCommon
+import VPNAppCore
 
 protocol ExtensionAlertServiceDelegate: AnyObject {
     func actionErrorReceived()

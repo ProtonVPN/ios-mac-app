@@ -23,6 +23,7 @@ import Reachability
 import Ergonomics
 import VPNShared
 import CommonNetworking
+import VPNAppCore
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService
@@ -36,7 +37,7 @@ public protocol TelemetryService: AnyObject {
     func onboardingEvent(_ event: OnboardingEvent.Event) async throws
     func upsellEvent(
         _ event: UpsellEvent.Event,
-        modalSource: UpsellEvent.ModalSource?,
+        modalSource: UpsellModalSource?,
         newPlanName: String?,
         offerReference: String?
     ) async throws
@@ -49,7 +50,7 @@ public protocol TelemetryService: AnyObject {
 extension TelemetryService {
     func upsellEvent(
         _ event: UpsellEvent.Event,
-        modalSource: UpsellEvent.ModalSource?,
+        modalSource: UpsellModalSource?,
         newPlanName: String?
     ) async throws {
         try await upsellEvent(event, modalSource: modalSource, newPlanName: newPlanName, offerReference: nil)
@@ -104,7 +105,7 @@ public class TelemetryServiceImplementation: TelemetryService {
 
     public func upsellEvent(
         _ event: UpsellEvent.Event,
-        modalSource _modalSource: UpsellEvent.ModalSource?,
+        modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
         offerReference: String? = nil
     ) async throws {

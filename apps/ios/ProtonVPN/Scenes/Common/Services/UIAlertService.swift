@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 import LegacyCommon
+import VPNAppCore
 
 class IosUiAlertService: UIAlertService {
     

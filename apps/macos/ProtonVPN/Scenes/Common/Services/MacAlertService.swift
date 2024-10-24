@@ -30,6 +30,7 @@ import Modals_macOS
 import VPNShared
 import Theme
 import Strings
+import VPNAppCore
 
 final class MacAlertService {
     @Dependency(\.serverRepository) var serverRepository

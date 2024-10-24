@@ -25,6 +25,7 @@ import LegacyCommon
 import AppKit
 import Theme
 import Strings
+import VPNAppCore
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     

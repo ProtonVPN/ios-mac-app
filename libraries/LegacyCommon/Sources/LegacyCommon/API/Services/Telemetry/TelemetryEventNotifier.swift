@@ -19,6 +19,7 @@
 import Foundation
 import Combine
 import Reachability
+import VPNAppCore
 
 public extension Notification.Name {
     /// A user initiated a change to the VPN configuration.
@@ -39,7 +40,7 @@ public extension Notification.Name {
 }
 
 public class TelemetryEventNotifier {
-    typealias ModalSource = UpsellEvent.ModalSource
+    typealias ModalSource = UpsellModalSource
 
     weak var telemetryService: TelemetryService?
 
@@ -69,13 +70,13 @@ public class TelemetryEventNotifier {
 
         NotificationCenter.default
             .publisher(for: .upsellAlertWasDisplayed)
-            .compactMap { $0.object as? UpsellEvent.ModalSource }
+            .compactMap { $0.object as? UpsellModalSource }
             .sink(receiveValue: upsellDisplayed)
             .store(in: &cancellables)
 
         NotificationCenter.default
             .publisher(for: .userEngagedWithUpsellAlert)
-            .compactMap { $0.object as? UpsellEvent.ModalSource }
+            .compactMap { $0.object as? UpsellModalSource }
             .sink(receiveValue: upsellEngaged)
             .store(in: &cancellables)
 
