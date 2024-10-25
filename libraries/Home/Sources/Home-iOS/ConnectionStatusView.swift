@@ -33,6 +33,8 @@ import Localization
 public struct ConnectionStatusView: View {
     @SwiftUI.Bindable var store: StoreOf<ConnectionStatusFeature>
 
+    private static let headerHeight: CGFloat = 58
+
     func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .protected, .protectedSecureCore:
@@ -115,13 +117,15 @@ public struct ConnectionStatusView: View {
                            endPoint: .bottom)
             .ignoresSafeArea()
             VStack(spacing: 0) {
-                titleView(protectionState: store.protectionState)
-                    .frame(height: 58)
-                if let title = title(protectionState: store.protectionState) {
-                    Text(title)
-                        .font(.themeFont(.body1(.semibold)))
-                    Spacer()
-                        .frame(height: 8)
+                if !store.stickToTop {
+                    titleView(protectionState: store.protectionState)
+                        .frame(height: Self.headerHeight)
+                    if let title = title(protectionState: store.protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.semibold)))
+                        Spacer()
+                            .frame(height: 8)
+                    }
                 }
                 ZStack {
                     if let locationText = locationText(protectionState: store.protectionState) {
@@ -140,7 +144,23 @@ public struct ConnectionStatusView: View {
                 .padding(.horizontal, .themeSpacing16)
             }
         }
-        .frame(height: 200)
+        .frame(height: 200 - (store.stickToTop ? Self.headerHeight : 0))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    titleView(protectionState: store.protectionState)
+
+                    if let title = title(protectionState: store.protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.semibold)))
+                    }
+                }
+                .frame(height: Self.headerHeight)
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+        }
+        .toolbar(store.stickToTop ? .visible : .hidden, for: .navigationBar)
         .task { await store.send(.watchConnectionStatus).finish() }
     }
 }
