@@ -25,6 +25,7 @@ import UIKit
 import Dependencies
 
 import ProtonCoreUIFoundations
+import ProtonCoreFeatureFlags
 
 import Domain
 import Ergonomics
@@ -278,7 +279,8 @@ class CountryItemViewModel {
                 servers: $0.value,
                 alertService: self.alertService,
                 vpnGateway: self.vpnGateway,
-                connectionStatusService: self.connectionStatusService
+                connectionStatusService: self.connectionStatusService,
+                isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled
             )
         }.sorted(by: { $0.cityName < $1.cityName })
     }()
