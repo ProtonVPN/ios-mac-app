@@ -18,6 +18,15 @@
 
 import Foundation
 import SVGView
+import SwiftUI
+
+struct MapRenderView: View {
+    let focusedCountryCode: String?
+
+    var body: some View {
+        SVGView.naturalEarthMap(focusedOn: focusedCountryCode)
+    }
+}
 
 extension SVGView {
     private static func xmlMap() -> XMLElement {
@@ -33,8 +42,20 @@ extension SVGView {
         return xml
     }
 
-    static var naturalEarthMap: Self {
-        SVGView(xml: Self.xmlMap())
+    static let naturalEarthMap = SVGView(xml: Self.xmlMap())
+
+    static func naturalEarthMap(focusedOn focusedCountryCode: String?) -> Self {
+        guard let focusedCountryCode else {
+            return naturalEarthMap
+        }
+
+        let map = SVGView.naturalEarthMap // copy
+
+        map.node(code: focusedCountryCode.lowercased()).map {
+            map.highlight(node: $0)
+        }
+
+        return map
     }
 }
 

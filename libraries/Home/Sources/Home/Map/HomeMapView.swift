@@ -25,8 +25,10 @@ import CoreLocation
 
 @available(iOS 17.0, *)
 public struct HomeMapView: View {
+    @State private var renderedMapImage: Image?
     @State private var map = SVGView.naturalEarthMap
 
+    private let mapBounds = SVGView.naturalEarthMap.svg?.bounds()
     private let availableHeight: CGFloat
     private let availableWidth: CGFloat
 
@@ -47,7 +49,7 @@ public struct HomeMapView: View {
 
     public var body: some View {
         ZStack {
-            map
+            renderedMapImage
             MapPin(mode: store.pinMode)
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(pinOffset())
@@ -58,15 +60,26 @@ public struct HomeMapView: View {
         .scaleEffect(mapScale())
         .offset(mapOffset())
         .onAppear {
+            renderMap(focusedCountryCode: store.mapState.code)
             store.send(.onAppear)
         }
         .onChange(of: store.mapState.code) {
-            map = SVGView.naturalEarthMap
-            guard let code = store.mapState.code ?? store.userCountry else { return }
-            map.node(code: code.lowercased()).map {
-                map.highlight(node: $0)
-            }
+            renderMap(focusedCountryCode: $0)
         }
+    }
+
+    @MainActor
+    private func renderMap(focusedCountryCode: String?) {
+        let scale = mapScale()
+        log.info("Rendering map (focused on: \(optional: focusedCountryCode) @\(scale)x)")
+        let renderer = ImageRenderer(content: MapRenderView(focusedCountryCode: focusedCountryCode))
+        renderer.scale = scale
+
+        guard let uiImage = renderer.uiImage else {
+            log.error("Failed to render map")
+            return
+        }
+        renderedMapImage = Image(uiImage: uiImage)
     }
 
     private func pinOffset() -> CGSize {
