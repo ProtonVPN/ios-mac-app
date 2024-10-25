@@ -146,6 +146,7 @@ public struct ConnectionFlagInfoView: View {
     }
 }
 
+#if DEBUG
 struct ConnectionFlagView_Previews: PreviewProvider {
 
     static let cellHeight = 40.0
@@ -270,3 +271,4 @@ struct ConnectionFlagView_Previews: PreviewProvider {
         .previewDisplayName("sideBySide")
     }
 }
+#endif
