@@ -24,23 +24,27 @@ import Home
 import VPNAppCore
 import Strings
 
+@available(iOS 16.0, *)
 struct ChangeServerModal: View {
     var store: StoreOf<ChangeServerFeature>
 
     @Dependency(\.date) var date
 
+    @State private var sheetHeight: CGFloat = .zero
+
     var body: some View {
+        let dateFinished = store.dateFinished
+        let totalDuration = store.totalDuration
         /// TimelineView only works when I specify all 3 dates below,
         /// though we really only need one, the `dateFinished`
-        TimelineView(.explicit([.now, store.dateFinished, store.dateFinished + 1])) { timeline in
+        TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { timeline in
             VStack(spacing: .themeSpacing12) {
-
-                ReconnectCountdown(dateFinished: store.dateFinished,
-                                   totalDuration: store.totalDuration)
+                ReconnectCountdown(dateFinished: dateFinished,
+                                   totalDuration: totalDuration)
                 .padding(.top, .themeSpacing48)
                 .padding(.bottom, .themeSpacing16)
 
-                if store.dateFinished > date.now {
+                if dateFinished > date.now {
                     Group {
                         Text(Localizable.upsellSpecificLocationTitle)
                             .themeFont(.body2(emphasised: true))
@@ -49,19 +53,34 @@ struct ChangeServerModal: View {
                             .themeFont(.body3(emphasised: false))
                             .foregroundStyle(Color(.text, .weak))
                     }
+                    .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                 }
-                Spacer(minLength: 0)
-                if store.dateFinished > date.now {
-                    upgradeButton
-                } else {
-                    changeServerButton
+                Group {
+                    if dateFinished > date.now {
+                        upgradeButton
+                    } else {
+                        changeServerButton
+                    }
+                }
+                .padding(.vertical, .themeSpacing8)
+            }
+        }
+        .padding(.horizontal, .themeSpacing16)
+        .overlay {
+            GeometryReader { geometry in
+                WithPerceptionTracking {
+                    Color.clear.preference(key: InnerHeightPreferenceKey.self,
+                                           value: geometry.size.height)
                 }
             }
         }
-        .padding(.vertical, .themeSpacing8)
-        .padding(.horizontal, .themeSpacing16)
+        .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
+            sheetHeight = newHeight
+        }
+        .presentationDetents([.height(sheetHeight)])
+        .presentationDragIndicator(.visible)
     }
 
     @ViewBuilder
@@ -94,6 +113,7 @@ struct ChangeServerModal: View {
     return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
         ChangeServerFeature()
     })
+    .frame(width: 375)
 }
 
 @available(iOS 17, *)
@@ -101,4 +121,5 @@ struct ChangeServerModal: View {
     ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: .available)) {
         ChangeServerFeature()
     })
+    .frame(width: 375)
 }

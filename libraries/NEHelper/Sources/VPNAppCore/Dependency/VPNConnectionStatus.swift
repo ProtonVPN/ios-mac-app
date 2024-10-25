@@ -107,7 +107,6 @@ extension CLLocationCoordinate2D {
 
 // MARK: - Mock for previews
 
-#if DEBUG
 extension VPNConnectionActual {
     public static func mock(
         connectedDate: Date = Date(),
@@ -161,4 +160,3 @@ extension VPNConnectionActual {
         )
     }
 }
-#endif

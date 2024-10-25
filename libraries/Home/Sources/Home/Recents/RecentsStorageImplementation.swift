@@ -20,9 +20,10 @@ import Foundation
 import Domain
 import OrderedCollections
 import Dependencies
+import VPNAppCore
+import Ergonomics
 
 public final class RecentsStorageImplementation {
-    private let userID: String
     public internal(set) var collection: OrderedSet<RecentConnection>
 
     private static let storageKeyPrefix = "RecentConnections"
@@ -30,14 +31,16 @@ public final class RecentsStorageImplementation {
     @Dependency(\.storage) var storage
 
     public init(array: [RecentConnection]) {
-        self.userID = ""
         self.collection = OrderedSet(array)
         self.collection.sanitize()
     }
 
-    public init(userID: String) {
-        self.userID = userID
-        self.collection = Self.readFromStorage(userID)
+    public init() {
+        self.collection = Self.readFromStorage()
+    }
+
+    public func initializeStorage() {
+        self.collection = Self.readFromStorage()
     }
 
     func elements() -> [RecentConnection] {
@@ -50,6 +53,10 @@ public final class RecentsStorageImplementation {
 
     func saveToStorage() {
         do {
+            @Dependency(\.authKeychain) var authKeychain
+            guard let userID = authKeychain.userId else {
+                throw GenericError(message: "Couldn't retrieve UserID")
+            }
             try storage.set(collection, forKey: Self.storageKey(userID))
         } catch {
             log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
@@ -57,8 +64,12 @@ public final class RecentsStorageImplementation {
         }
     }
 
-    static func readFromStorage(_ userID: String) -> OrderedSet<RecentConnection> {
+    static func readFromStorage() -> OrderedSet<RecentConnection> {
         do {
+            @Dependency(\.authKeychain) var authKeychain
+            guard let userID = authKeychain.userId else {
+                throw GenericError(message: "Couldn't retrieve UserID")
+            }
             @Dependency(\.storage) var storage
             return try storage.get(OrderedSet<RecentConnection>.self, forKey: storageKey(userID)) ?? []
         } catch {

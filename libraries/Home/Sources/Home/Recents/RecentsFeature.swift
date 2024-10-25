@@ -35,6 +35,7 @@ public struct RecentsFeature {
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
+            recentsStorage.initializeStorage()
             recents = recentsStorage.elements()
         }
     }
