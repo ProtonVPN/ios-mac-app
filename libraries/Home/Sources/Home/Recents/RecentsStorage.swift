@@ -23,9 +23,9 @@ import OrderedCollections
 public struct RecentsStorage {
     var initializeStorage: () -> Void = { unimplemented() }
     var updateList: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var pin: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var unpin: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var remove: (ConnectionSpec) -> Void = { _ in unimplemented() }
+    var pin: (RecentConnection) -> Void = { _ in unimplemented() }
+    var unpin: (RecentConnection) -> Void = { _ in unimplemented() }
+    var remove: (RecentConnection) -> Void = { _ in unimplemented() }
     var elements: () -> [RecentConnection] = { unimplemented(placeholder: []) }
 }
 
@@ -35,9 +35,9 @@ extension RecentsStorage: DependencyKey {
         return RecentsStorage(
             initializeStorage: storage.initializeStorage,
             updateList: storage.updateList(with:),
-            pin: storage.pin(spec:),
-            unpin: storage.unpin(spec:),
-            remove: storage.remove(spec:),
+            pin: storage.pin(recent:),
+            unpin: storage.unpin(recent:),
+            remove: storage.remove(recent:),
             elements: storage.elements
         )
     }()
@@ -52,7 +52,7 @@ extension DependencyValues {
 
 extension RecentsStorage: TestDependencyKey {
     public static let testValue = RecentsStorage {
-        
+
     } updateList: { _ in
 
     } pin: { _ in
@@ -64,7 +64,10 @@ extension RecentsStorage: TestDependencyKey {
     } elements: {
         RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
     }
-    public static func withElements(array: [RecentConnection]) -> RecentsStorage { RecentsStorage(elements: { array }) }
+
+    public static func withElements(array: [RecentConnection]) -> RecentsStorage {
+        RecentsStorage(elements: { array })
+    }
 
     public static let previewValue = RecentsStorage {
 
@@ -79,5 +82,4 @@ extension RecentsStorage: TestDependencyKey {
     } elements: {
         RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
     }
-
 }

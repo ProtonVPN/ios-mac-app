@@ -43,9 +43,9 @@ public struct RecentsFeature {
     @CasePathable
     public enum Action {
         case connectionEstablished(ConnectionSpec)
-        case pin(ConnectionSpec)
-        case unpin(ConnectionSpec)
-        case remove(ConnectionSpec)
+        case pin(RecentConnection)
+        case unpin(RecentConnection)
+        case remove(RecentConnection)
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)
 
@@ -91,18 +91,18 @@ public struct RecentsFeature {
                 state.recents = recentsStorage.elements()
                 return .none
 
-            case let .pin(spec):
-                recentsStorage.pin(spec)
+            case let .pin(recent):
+                recentsStorage.pin(recent)
                 state.recents = recentsStorage.elements()
                 return .none
 
-            case let .unpin(spec):
-                recentsStorage.unpin(spec)
+            case let .unpin(recent):
+                recentsStorage.unpin(recent)
                 state.recents = recentsStorage.elements()
                 return .none
 
-            case let .remove(spec):
-                recentsStorage.remove(spec)
+            case let .remove(recent):
+                recentsStorage.remove(recent)
                 state.recents = recentsStorage.elements()
                 return .none
 

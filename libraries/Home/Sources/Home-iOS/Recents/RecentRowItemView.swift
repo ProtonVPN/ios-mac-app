@@ -56,11 +56,11 @@ struct RecentRowItemView: View {
                                    images: .coreImages) { action in
                 switch action {
                 case .pin:
-                    sendAction(.pin(item.connection))
+                    sendAction(.pin(item))
                 case .unpin:
-                    sendAction(.unpin(item.connection))
+                    sendAction(.unpin(item))
                 case .remove:
-                    sendAction(.remove(item.connection))
+                    sendAction(.remove(item))
                 }
             }
         }
@@ -85,14 +85,14 @@ struct RecentRowItemView: View {
             _ = sendAction(.delegate(.connect(item.connection)))
         }
         .accessibilityAction(named: Localizable.actionRemove) {
-            _ = sendAction(.remove(item.connection))
+            _ = sendAction(.remove(item))
         }
         .accessibilityAction(
             named: item.pinned ?
                 Localizable.actionHomeUnpin : Localizable.actionHomePin
         ) {
             let action: RecentsFeature.Action = item.pinned ?
-                .unpin(item.connection) : .pin(item.connection)
+                .unpin(item) : .pin(item)
             _ = sendAction(action)
         }
     }

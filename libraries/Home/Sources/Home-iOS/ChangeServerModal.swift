@@ -33,47 +33,47 @@ struct ChangeServerModal: View {
     @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
-        let dateFinished = store.dateFinished
-        let totalDuration = store.totalDuration
-        /// TimelineView only works when I specify all 3 dates below,
-        /// though we really only need one, the `dateFinished`
-        TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { timeline in
-            VStack(spacing: .themeSpacing12) {
-                ReconnectCountdown(dateFinished: dateFinished,
-                                   totalDuration: totalDuration)
-                .padding(.top, .themeSpacing48)
-                .padding(.bottom, .themeSpacing16)
+        WithPerceptionTracking {
+            let dateFinished = store.dateFinished
+            let totalDuration = store.totalDuration
+            /// TimelineView only works when I specify all 3 dates below,
+            /// though we really only need one, the `dateFinished`
+            TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { timeline in
+                VStack(spacing: .themeSpacing12) {
+                    ReconnectCountdown(dateFinished: dateFinished,
+                                       totalDuration: totalDuration)
+                    .padding(.top, .themeSpacing48)
+                    .padding(.bottom, .themeSpacing16)
 
-                if dateFinished > date.now {
-                    Group {
-                        Text(Localizable.upsellSpecificLocationTitle)
-                            .themeFont(.body2(emphasised: true))
-                            .foregroundStyle(Color(.text))
-                        Text(Localizable.upsellSpecificLocationSubtitle2)
-                            .themeFont(.body3(emphasised: false))
-                            .foregroundStyle(Color(.text, .weak))
-                    }
-                    .fixedSize(horizontal: false, vertical: true)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                }
-                Group {
                     if dateFinished > date.now {
-                        upgradeButton
-                    } else {
-                        changeServerButton
+                        Group {
+                            Text(Localizable.upsellSpecificLocationTitle)
+                                .themeFont(.body2(emphasised: true))
+                                .foregroundStyle(Color(.text))
+                            Text(Localizable.upsellSpecificLocationSubtitle2)
+                                .themeFont(.body3(emphasised: false))
+                                .foregroundStyle(Color(.text, .weak))
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                     }
+                    Group {
+                        if dateFinished > date.now {
+                            upgradeButton
+                        } else {
+                            changeServerButton
+                        }
+                    }
+                    .padding(.vertical, .themeSpacing8)
                 }
-                .padding(.vertical, .themeSpacing8)
             }
         }
         .padding(.horizontal, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                WithPerceptionTracking {
-                    Color.clear.preference(key: InnerHeightPreferenceKey.self,
-                                           value: geometry.size.height)
-                }
+                Color.clear.preference(key: InnerHeightPreferenceKey.self,
+                                       value: geometry.size.height)
             }
         }
         .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in

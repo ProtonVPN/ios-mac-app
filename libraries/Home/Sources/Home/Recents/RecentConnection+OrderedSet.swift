@@ -73,26 +73,19 @@ extension OrderedSet<RecentConnection> {
         sanitize()
     }
 
-    mutating func unpin(spec: ConnectionSpec) {
-        updatePin(spec: spec, shouldPin: false)
+    mutating func unpin(recent: RecentConnection) {
+        updatePin(recent: recent, shouldPin: false)
     }
 
-    mutating func pin(spec: ConnectionSpec) {
-        updatePin(spec: spec, shouldPin: true)
+    mutating func pin(recent: RecentConnection) {
+        updatePin(recent: recent, shouldPin: true)
     }
 
-    private mutating func updatePin(spec: ConnectionSpec, shouldPin: Bool) {
-        guard let index = index(for: spec) else {
-            return
-        }
-        var recent = self[index]
+    private mutating func updatePin(recent: RecentConnection, shouldPin: Bool) {
+        var recent = recent
         remove(recent)
         recent.pinned = shouldPin
         insert(recent, at: 0)
         sanitize()
-    }
-
-    mutating func remove(spec: ConnectionSpec) {
-        removeAll { $0.connection == spec }
     }
 }

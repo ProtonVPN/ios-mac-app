@@ -29,6 +29,7 @@ public final class RecentsStorageImplementation {
     private static let storageKeyPrefix = "RecentConnections"
 
     @Dependency(\.storage) var storage
+    @Dependency(\.authKeychain) var authKeychain
 
     public init(array: [RecentConnection]) {
         self.collection = OrderedSet(array)
@@ -51,9 +52,8 @@ public final class RecentsStorageImplementation {
         Self.storageKeyPrefix + userID
     }
 
-    func saveToStorage() {
+    private func saveToStorage() {
         do {
-            @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {
                 throw GenericError(message: "Couldn't retrieve UserID")
             }
@@ -64,7 +64,7 @@ public final class RecentsStorageImplementation {
         }
     }
 
-    static func readFromStorage() -> OrderedSet<RecentConnection> {
+    private static func readFromStorage() -> OrderedSet<RecentConnection> {
         do {
             @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {
@@ -83,18 +83,18 @@ public final class RecentsStorageImplementation {
         saveToStorage()
     }
 
-    public func pin(spec: ConnectionSpec) {
-        collection.pin(spec: spec)
+    public func pin(recent: RecentConnection) {
+        collection.pin(recent: recent)
         saveToStorage()
     }
 
-    public func unpin(spec: ConnectionSpec) {
-        collection.unpin(spec: spec)
+    public func unpin(recent: RecentConnection) {
+        collection.unpin(recent: recent)
         saveToStorage()
     }
 
-    public func remove(spec: ConnectionSpec) {
-        collection.remove(spec: spec)
+    public func remove(recent: RecentConnection) {
+        collection.remove(recent)
         saveToStorage()
     }
 }
