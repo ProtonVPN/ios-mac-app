@@ -148,7 +148,7 @@ final class NavigationService {
 
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
 
-    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
+    lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     private lazy var connectionBarViewController = { 
         return makeConnectionBarViewController()

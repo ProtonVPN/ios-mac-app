@@ -141,6 +141,9 @@ struct ModalBodyView: View {
                         ToggleFeatureView(title: title, subtitle: subtitle, initialState: initialState) { newValue in
                             onFeatureUpdate?(.toggle(id: id, title: title, subtitle: subtitle, state: newValue))
                         }
+                        .onAppear {
+                            onFeatureUpdate?(feature) // initial call
+                        }
                     }
                 }
             }
@@ -194,6 +197,6 @@ private extension ModalModel.Subtitle {
 struct ModalBody_Previews: PreviewProvider {
     static var previews: some View {
         ModalBodyView(modalType: .onboardingGetStarted)
-                .previewDisplayName("ModalBody")
+            .previewDisplayName("ModalBody")
     }
 }
