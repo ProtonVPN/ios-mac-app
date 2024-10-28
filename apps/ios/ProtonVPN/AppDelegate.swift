@@ -65,6 +65,7 @@ final class AppDelegate: UIResponder {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var planService: PlanService = container.makePlanService()
+    private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
     private lazy var pushNotificationService = container.makePushNotificationService()
 
     override init() {
@@ -254,7 +255,7 @@ extension AppDelegate: UIApplicationDelegate {
     }
 
     private func isTelemetryAllowed() -> Bool {
-        container.makeTelemetrySettings().telemetryCrashReports
+        return telemetrySettings.telemetryCrashReports
     }
 }
 
@@ -339,6 +340,19 @@ fileprivate extension AppDelegate {
 }
 
 extension AppDelegate {
+    // Typically set the environment only if telemetry is allowed
+    private func setLogEnvironment() {
+        guard PMLog.externalLog == nil else {
+            return // No need to run it multiple times if we have already set it
+        }
+        @Dependency(\.dohConfiguration) var doh
+        if doh.defaultHost.contains("black") {
+            PMLog.setEnvironment(environment: "black")
+        } else {
+            PMLog.setEnvironment(environment: "production")
+        }
+    }
+
     private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         injectDefaultCryptoImplementation()
 
@@ -346,17 +360,19 @@ extension AppDelegate {
         // This means that if user changes her mind, reporting will be really re-enabled only
         // after the app restarts.
         if isTelemetryAllowed() {
-            @Dependency(\.dohConfiguration) var doh
-            if doh.defaultHost.contains("black") {
-                PMLog.setEnvironment(environment: "black")
-            } else {
-                PMLog.setEnvironment(environment: "production")
-            }
+            setLogEnvironment()
         }
         // If user disables telemetry in the settings, this will prevent sending error logs
         // to accounts sentry.
         PMLog.isExternalLogEnabled = {
-            self.isTelemetryAllowed()
+            let isTelemetryAllowed = self.isTelemetryAllowed()
+            // Definitely not ideal (to do stuff in what should be a simple getter) but we have cases where telemetry is
+            // disabled, but *then* enabled after an API refresh!
+            // So if ever it is set to ON, and we haven't set the environment, do it if necessary
+            if isTelemetryAllowed {
+                self.setLogEnvironment()
+            }
+            return isTelemetryAllowed
         }
 
         ProtonCoreLog.PMLog.callback = { (message, level) in
