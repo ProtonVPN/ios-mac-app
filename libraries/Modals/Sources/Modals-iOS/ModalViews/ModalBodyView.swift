@@ -76,12 +76,6 @@ struct ModalBodyView: View {
 
     private var headerView: some View {
         ZStack {
-            if let imagePadding {
-                modalType.artImage().padding(imagePadding)
-            } else {
-                modalType.artImage()
-            }
-
             if !modalType.shouldVerticallyCenterContent {
                 LinearGradient(
                     colors: [
@@ -91,6 +85,12 @@ struct ModalBodyView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
+            }
+
+            if let imagePadding {
+                modalType.artImage().padding(imagePadding)
+            } else {
+                modalType.artImage()
             }
         }
         .ignoresSafeArea(edges: [.top, .horizontal])
