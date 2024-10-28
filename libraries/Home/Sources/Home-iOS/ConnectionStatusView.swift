@@ -34,6 +34,8 @@ public struct ConnectionStatusView: View {
     @SwiftUI.Bindable var store: StoreOf<ConnectionStatusFeature>
 
     private static let headerHeight: CGFloat = 58
+    private static let viewHeight: CGFloat = 200
+    private static let headerPaddingHeight: CGFloat = 13
 
     func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
@@ -111,57 +113,61 @@ public struct ConnectionStatusView: View {
     }
     
     public var body: some View {
-        ZStack(alignment: .top) {
-            LinearGradient(colors: [gradientColor(protectionState: store.protectionState).opacity(0.5), .clear],
-                           startPoint: .top,
-                           endPoint: .bottom)
-            .ignoresSafeArea()
-            VStack(spacing: 0) {
-                if !store.stickToTop {
-                    titleView(protectionState: store.protectionState)
-                        .frame(height: Self.headerHeight)
-                    if let title = title(protectionState: store.protectionState) {
-                        Text(title)
-                            .font(.themeFont(.body1(.semibold)))
-                        Spacer()
-                            .frame(height: 8)
+        WithPerceptionTracking {
+            ZStack(alignment: .top) {
+                LinearGradient(colors: [gradientColor(protectionState: store.protectionState).opacity(0.5), .clear],
+                               startPoint: .top,
+                               endPoint: .bottom)
+                .ignoresSafeArea()
+                VStack(spacing: 0) {
+                    if !store.stickToTop {
+                        titleView(protectionState: store.protectionState)
+                            .frame(height: Self.headerHeight)
+                        if let title = title(protectionState: store.protectionState) {
+                            Text(title)
+                                .font(.themeFont(.body1(.semibold)))
+                            Spacer()
+                                .frame(height: 8)
+                        }
                     }
-                }
-                ZStack {
-                    if let locationText = locationText(protectionState: store.protectionState) {
-                        locationText
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                    } else if case .protected(let netShield) = store.protectionState {
-                        NetShieldStatsView(viewModel: netShield)
-                    } else if case .protectedSecureCore(let netShield) = store.protectionState {
-                        NetShieldStatsView(viewModel: netShield)
+                    ZStack {
+                        if let locationText = locationText(protectionState: store.protectionState) {
+                            locationText
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                        } else if case .protected(let netShield) = store.protectionState {
+                            NetShieldStatsView(viewModel: netShield)
+                        } else if case .protectedSecureCore(let netShield) = store.protectionState {
+                            NetShieldStatsView(viewModel: netShield)
+                        }
                     }
+                    .background(.translucentLight,
+                                in: RoundedRectangle(cornerRadius: .themeRadius8,
+                                                     style: .continuous))
+                    .padding(.horizontal, .themeSpacing16)
                 }
-                .background(.translucentLight,
-                            in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                 style: .continuous))
-                .padding(.horizontal, .themeSpacing16)
             }
-        }
-        .frame(height: 200 - (store.stickToTop ? Self.headerHeight : 0))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                HStack {
-                    titleView(protectionState: store.protectionState)
+            .frame(height: 200)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack(spacing: .themeSpacing8) {
+                        titleView(protectionState: store.protectionState)
 
-                    if let title = title(protectionState: store.protectionState) {
-                        Text(title)
-                            .font(.themeFont(.body1(.semibold)))
+                        if let title = title(protectionState: store.protectionState) {
+                            Text(title)
+                                .font(.themeFont(.body1(.semibold)))
+                        }
                     }
+                    .frame(height: Self.headerHeight)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .frame(height: Self.headerHeight)
-                .frame(maxWidth: .infinity, alignment: .center)
+
             }
+
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(store.stickToTop ? .visible : .hidden, for: .navigationBar)
+            .task { await store.send(.watchConnectionStatus).finish() }
         }
-        .toolbar(store.stickToTop ? .visible : .hidden, for: .navigationBar)
-        .task { await store.send(.watchConnectionStatus).finish() }
     }
 }
 

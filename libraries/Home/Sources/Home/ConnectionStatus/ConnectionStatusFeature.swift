@@ -18,6 +18,8 @@
 
 import ComposableArchitecture
 
+import SwiftUI
+
 import Domain
 import NetShield
 import VPNAppCore
@@ -116,7 +118,9 @@ public struct ConnectionStatusFeature {
                 return .none
 
             case .stickToTop(let stickToTop):
-                state.stickToTop = stickToTop
+                withAnimation(.easeInOut(duration: 0.05)) {
+                    state.stickToTop = stickToTop
+                }
                 return .none
             }
         }

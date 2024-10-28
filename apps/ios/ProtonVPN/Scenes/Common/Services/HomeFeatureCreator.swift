@@ -47,6 +47,7 @@ enum HomeFeatureCreator {
         // Embed a UINavigationController to prevent layout and sizing issues that arise when using NavigationStack directly within a UIHostingController.
         let navigationController = UINavigationController(rootViewController: hostingController)
         navigationController.additionalSafeAreaInsets = .zero
+        navigationController.navigationBar.isTranslucent = true
 
         return navigationController
     }

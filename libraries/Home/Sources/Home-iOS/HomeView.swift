@@ -61,6 +61,7 @@ public struct HomeView: View {
                     ScrollView(showsIndicators: false) {
                         Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
                             .id(topID)
+                            .background(trackScrollPosition())
                         VStack {
                             LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
                                            startPoint: .top,
@@ -103,6 +104,42 @@ public struct HomeView: View {
                 ChangeServerModal(store: store)
             }
         }
+    }
+
+    private func trackScrollPosition() -> some View {
+        WithPerceptionTracking {
+            GeometryReader { inner in
+                Color.clear
+                    .preference(
+                        key: ConnectionStatusStickToTopPreferenceKey.self,
+                        value: shouldConnectionStatusStickToTop(for: inner.frame(in: .global).origin.y)
+                    )
+            }
+            .onPreferenceChange(ConnectionStatusStickToTopPreferenceKey.self) { isStickingToTop in
+                guard let isStickingToTop = isStickingToTop else { return }
+                store.send(.connectionStatus(.stickToTop(isStickingToTop)))
+            }
+        }
+    }
+
+    private func shouldConnectionStatusStickToTop(for scrollOffset: CGFloat) -> Bool? {
+        let hideThreshold = -(Self.mapHeight + Self.bottomGradientHeight)/2 - 12
+        let showThreshold = -(Self.mapHeight - Self.bottomGradientHeight)
+
+        if scrollOffset > hideThreshold {
+            return false
+        } else if scrollOffset < showThreshold {
+            return true
+        }
+        return nil
+    }
+}
+
+private struct ConnectionStatusStickToTopPreferenceKey: PreferenceKey {
+    static var defaultValue: Bool?
+
+    static func reduce(value: inout Bool?, nextValue: () -> Bool?) {
+        value = nextValue()
     }
 }
 
