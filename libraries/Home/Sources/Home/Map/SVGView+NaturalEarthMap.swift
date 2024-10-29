@@ -30,7 +30,7 @@ struct MapRenderView: View {
     }
 }
 
-extension SVGView {
+@MainActor extension SVGView {
     typealias CountryCodeSVGTuple = (highlightedCountryCode: String?, svg: SVGNode)
 
     private static let xmlMap: XMLElement = {
@@ -50,17 +50,13 @@ extension SVGView {
     private static func makeSVG() -> SVGNode {
         log.info("Parsing map SVG...")
         guard let node = SVGParser.parse(xml: xmlMap) else {
-            log.error("Failed to parse map svg from xml")
-            return SVGNode()
+            fatalError("Failed to parse map svg from xml")
         }
         return node
     }
 
     private static func getCachedMapViewOrCreateEmptyMap() -> CountryCodeSVGTuple {
-        if let cachedMapTuple {
-            return cachedMapTuple
-        }
-        return (nil, makeSVG())
+        return cachedMapTuple ?? (nil, makeSVG())
     }
 
     /// `SVGNodes` are reference types, and it's not trivial to add support for creating deep copies.
@@ -73,12 +69,12 @@ extension SVGView {
         let previousMapTuple = getCachedMapViewOrCreateEmptyMap()
 
         if previousMapTuple.highlightedCountryCode == countryCode {
-            log.info("Returning cached map view for code: \(lowercaseCountryCode)")
+            log.debug("Returning cached map view for code: \(lowercaseCountryCode)")
             return SVGView(svg: previousMapTuple.svg)
         }
 
         if let previousCountryCode = previousMapTuple.highlightedCountryCode {
-            log.info("Removing highlight from previous country: \(previousCountryCode)")
+            log.debug("Removing highlight from previous country: \(previousCountryCode)")
             let previousNode = previousMapTuple.svg.node(code: previousCountryCode)
             previousNode?.fill(highlighted: false)
         }
@@ -87,22 +83,22 @@ extension SVGView {
             log.error("Failed to find new node to highlight")
             return idleMapView
         }
-        log.info("Highlighting new country: \(lowercaseCountryCode)")
+        log.debug("Highlighting new country: \(lowercaseCountryCode)")
         newNode.fill(highlighted: true)
 
         cachedMapTuple = (highlightedCountryCode: lowercaseCountryCode, previousMapTuple.svg)
         return SVGView(svg: previousMapTuple.svg)
     }
 
+    private static let idleMapSVG = makeSVG()
+
     /// Optimization: cache the disconnected map view in memory
-    static let idleMapView: SVGView = SVGView(svg: makeSVG())
+    static let idleMapView: SVGView = SVGView(svg: idleMapSVG)
 
     /// Optimization: cache last map so we don't have to re-render the map when switching tabs
     private static var cachedMapTuple: CountryCodeSVGTuple?
 
-    func node(code: String) -> SVGNode? {
-        svg?.node(code: code)
-    }
+    static let mapBounds: CGRect = idleMapSVG.bounds()
 }
 
 extension SVGNode {
@@ -124,5 +120,11 @@ extension SVGNode {
                 (node as? SVGPath)?.fill = fillColor
             }
         }
+    }
+}
+
+extension SVGView {
+    func node(code: String) -> SVGNode? {
+        svg?.node(code: code)
     }
 }
