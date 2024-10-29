@@ -101,8 +101,6 @@ public struct HomeView: View {
                                   action: \.destination.changeServer)) { store in
             WithPerceptionTracking {
                 ChangeServerModal(store: store)
-                    .presentationDetents([.medium])
-                    .presentationDragIndicator(.visible)
             }
         }
     }

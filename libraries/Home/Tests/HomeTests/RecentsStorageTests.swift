@@ -29,7 +29,7 @@ final class RecentsStorageTests: XCTestCase {
         let specificCity = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 1, connection: .specificCity)
         let specificCountry = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date(), connection: .specificCountry)
         let recents = RecentsStorageImplementation(array: [specificCity, defaultFastest, specificCountry])
-        recents.pin(spec: .defaultFastest)
+        recents.pin(recent: defaultFastest)
         defaultFastest.pinned = true
         XCTAssertEqual(recents.collection, [defaultFastest, specificCity, specificCountry])
     }
@@ -39,7 +39,7 @@ final class RecentsStorageTests: XCTestCase {
         let specificCity = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 2, connection: .specificCity)
         let specificCountry = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 1, connection: .specificCountry)
         let recents = RecentsStorageImplementation(array: [defaultFastest, specificCity, specificCountry])
-        recents.unpin(spec: .defaultFastest)
+        recents.unpin(recent: defaultFastest)
         defaultFastest.pinned = false
         XCTAssertEqual(recents.collection, [specificCity, specificCountry, defaultFastest])
     }
@@ -49,7 +49,7 @@ final class RecentsStorageTests: XCTestCase {
         let specificCity = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 2, connection: .specificCity)
         let specificCountry = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 1, connection: .specificCountry)
         let recents = RecentsStorageImplementation(array: [defaultFastest, specificCity, specificCountry])
-        recents.remove(spec: .defaultFastest)
+        recents.remove(recent: defaultFastest)
         XCTAssertEqual(recents.collection, [specificCity, specificCountry])
     }
 
@@ -81,14 +81,17 @@ final class RecentsStorageTests: XCTestCase {
             XCTAssertEqual(recents.collection, [two, one])
 
             let threeSpec = ConnectionSpec(location: .region(code: "3"), features: [])
-            let three = RecentConnection(pinned: true,
+            var three = RecentConnection(pinned: false,
                                          underMaintenance: false,
                                          connectionDate: now,
                                          connection: threeSpec)
             recents.updateList(with: threeSpec)
-            recents.pin(spec: threeSpec)
+            recents.pin(recent: three)
+            three.pinned = true
 
-            XCTAssertEqual(recents.collection, [three, two, one])
+            XCTAssertEqual(recents.collection[0], three)
+            XCTAssertEqual(recents.collection[1], two)
+            XCTAssertEqual(recents.collection[2], one)
         }
     }
 

@@ -65,7 +65,7 @@ struct ChangeServerButtonStyle: ButtonStyle {
         configuration.label
             .font(.body1(.semibold))
             .frame(maxWidth: .infinity, minHeight: 48)
-            .background(Color(.background, .weak)) // we need to give it a background in order for the button to be tappable on the whole view...
+            .background(Color(.background, .weak).opacity(0.001)) // we need to give it a background in order for the button to be tappable on the whole view...
             .foregroundColor(isActive
                         ? Color(.text, .primary)
                         : Color(.text, .hint))

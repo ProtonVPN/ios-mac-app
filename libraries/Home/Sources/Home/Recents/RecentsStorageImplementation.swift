@@ -20,24 +20,28 @@ import Foundation
 import Domain
 import OrderedCollections
 import Dependencies
+import VPNAppCore
+import Ergonomics
 
 public final class RecentsStorageImplementation {
-    private let userID: String
     public internal(set) var collection: OrderedSet<RecentConnection>
 
     private static let storageKeyPrefix = "RecentConnections"
 
     @Dependency(\.storage) var storage
+    @Dependency(\.authKeychain) var authKeychain
 
     public init(array: [RecentConnection]) {
-        self.userID = ""
         self.collection = OrderedSet(array)
         self.collection.sanitize()
     }
 
-    public init(userID: String) {
-        self.userID = userID
-        self.collection = Self.readFromStorage(userID)
+    public init() {
+        self.collection = Self.readFromStorage()
+    }
+
+    public func initializeStorage() {
+        self.collection = Self.readFromStorage()
     }
 
     func elements() -> [RecentConnection] {
@@ -48,8 +52,11 @@ public final class RecentsStorageImplementation {
         Self.storageKeyPrefix + userID
     }
 
-    func saveToStorage() {
+    private func saveToStorage() {
         do {
+            guard let userID = authKeychain.userId else {
+                throw GenericError(message: "Couldn't retrieve UserID")
+            }
             try storage.set(collection, forKey: Self.storageKey(userID))
         } catch {
             log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
@@ -57,8 +64,12 @@ public final class RecentsStorageImplementation {
         }
     }
 
-    static func readFromStorage(_ userID: String) -> OrderedSet<RecentConnection> {
+    private static func readFromStorage() -> OrderedSet<RecentConnection> {
         do {
+            @Dependency(\.authKeychain) var authKeychain
+            guard let userID = authKeychain.userId else {
+                throw GenericError(message: "Couldn't retrieve UserID")
+            }
             @Dependency(\.storage) var storage
             return try storage.get(OrderedSet<RecentConnection>.self, forKey: storageKey(userID)) ?? []
         } catch {
@@ -72,18 +83,18 @@ public final class RecentsStorageImplementation {
         saveToStorage()
     }
 
-    public func pin(spec: ConnectionSpec) {
-        collection.pin(spec: spec)
+    public func pin(recent: RecentConnection) {
+        collection.pin(recent: recent)
         saveToStorage()
     }
 
-    public func unpin(spec: ConnectionSpec) {
-        collection.unpin(spec: spec)
+    public func unpin(recent: RecentConnection) {
+        collection.unpin(recent: recent)
         saveToStorage()
     }
 
-    public func remove(spec: ConnectionSpec) {
-        collection.remove(spec: spec)
+    public func remove(recent: RecentConnection) {
+        collection.remove(recent)
         saveToStorage()
     }
 }

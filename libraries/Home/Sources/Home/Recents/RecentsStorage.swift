@@ -21,23 +21,23 @@ import Dependencies
 import OrderedCollections
 
 public struct RecentsStorage {
+    var initializeStorage: () -> Void = { unimplemented() }
     var updateList: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var pin: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var unpin: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var remove: (ConnectionSpec) -> Void = { _ in unimplemented() }
+    var pin: (RecentConnection) -> Void = { _ in unimplemented() }
+    var unpin: (RecentConnection) -> Void = { _ in unimplemented() }
+    var remove: (RecentConnection) -> Void = { _ in unimplemented() }
     var elements: () -> [RecentConnection] = { unimplemented(placeholder: []) }
 }
 
 extension RecentsStorage: DependencyKey {
     public static var liveValue: RecentsStorage = {
-        @Dependency(\.authKeychain) var authKeychain
-        let userID = authKeychain.userId ?? ""
-        let storage = RecentsStorageImplementation(userID: userID)
+        let storage = RecentsStorageImplementation()
         return RecentsStorage(
+            initializeStorage: storage.initializeStorage,
             updateList: storage.updateList(with:),
-            pin: storage.pin(spec:),
-            unpin: storage.unpin(spec:),
-            remove: storage.remove(spec:),
+            pin: storage.pin(recent:),
+            unpin: storage.unpin(recent:),
+            remove: storage.remove(recent:),
             elements: storage.elements
         )
     }()
@@ -51,29 +51,35 @@ extension DependencyValues {
 }
 
 extension RecentsStorage: TestDependencyKey {
-    public static let testValue = RecentsStorage { spec in
+    public static let testValue = RecentsStorage {
 
-    } pin: { spec in
+    } updateList: { _ in
 
-    } unpin: { spec in
+    } pin: { _ in
 
-    } remove: { spec in
+    } unpin: { _ in
 
-    } elements: {
-        RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
-    }
-    public static func withElements(array: [RecentConnection]) -> RecentsStorage { RecentsStorage(elements: { array }) }
-
-    public static let previewValue = RecentsStorage { spec in
-
-    } pin: { spec in
-
-    } unpin: { spec in
-
-    } remove: { spec in
+    } remove: { _ in
 
     } elements: {
         RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
     }
 
+    public static func withElements(array: [RecentConnection]) -> RecentsStorage {
+        RecentsStorage(elements: { array })
+    }
+
+    public static let previewValue = RecentsStorage {
+
+    } updateList: { _ in
+
+    } pin: { _ in
+
+    } unpin: { _ in
+
+    } remove: { _ in
+
+    } elements: {
+        RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
+    }
 }
