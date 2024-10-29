@@ -48,4 +48,4 @@ while pgrep -f "mint bootstrap" > /dev/null; do
     sleep 5
 done
 
-mint bootstrap --link --overwrite=y
+mint bootstrap -v --link --overwrite=y
