@@ -51,7 +51,7 @@ public final class UpdateFileSelectorImplementation: UpdateFileSelector {
     
     var updateFileUrl: String {
         if Self.newUpdateFile {
-            return "https://proton.me/download/macos/updates/v\(updateFileVersion)/sparkle.xml"
+            return "https://protonvpn.com/download/macos/updates/v\(updateFileVersion)/sparkle.xml"
         }
         if propertiesManager.earlyAccess {
             return "https://protonvpn.com/download/macos-early-access-update\(updateFileVersion).xml"

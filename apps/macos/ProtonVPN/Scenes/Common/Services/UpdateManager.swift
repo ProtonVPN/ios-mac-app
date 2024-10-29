@@ -24,6 +24,7 @@ import Foundation
 import Sparkle
 import LegacyCommon
 import Cocoa
+import Version
 
 protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager
@@ -54,7 +55,7 @@ class UpdateManager: NSObject {
     }
 
     public var channel: String? {
-        if UpdateFileSelectorImplementation.newUpdateFile && propertiesManager.earlyAccess {
+        if propertiesManager.earlyAccess {
             return "beta"
         }
 
@@ -72,7 +73,13 @@ class UpdateManager: NSObject {
         guard let items = appcast?.items else {
             return nil
         }
-        return items.map { ($0 as SUAppcastItem).itemDescription ?? "" }
+
+        return items.compactMap {
+            let item = $0 as SUAppcastItem
+            guard item.channel == nil || item.channel == channel else { return nil }
+
+            return item.itemDescription ?? ""
+        }
     }
     
     public init(_ factory: Factory) {
@@ -132,7 +139,7 @@ class UpdateManager: NSObject {
     private var newestAppCastItem: SUAppcastItem? {
         appcast?.items.first {
             $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK &&
-                $0.channel == channel
+            ($0.channel == nil || $0.channel == channel)
         }
     }
     
@@ -141,13 +148,10 @@ class UpdateManager: NSObject {
 }
 
 extension UpdateManager: SPUUpdaterDelegate {
-    func bestValidUpdate(in appcast: SUAppcast, for updater: SPUUpdater) -> SUAppcastItem? {
-        appcast.items.first {
-            $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK &&
-                $0.channel == channel
-        }
+    func versionComparator(for updater: SPUUpdater) -> (any SUVersionComparison)? {
+        return CustomVersionComparator.shared
     }
-    
+
     func updaterWillRelaunchApplication(_ updater: SPUUpdater) {
         if let sessionManager = appSessionManager, sessionManager.loggedIn {
             propertiesManager.rememberLoginAfterUpdate = true
@@ -171,6 +175,11 @@ extension UpdateManager: SPUUpdaterDelegate {
         }
         return true
     }
+
+    func allowedChannels(for updater: SPUUpdater) -> Set<String> {
+        guard let channel else { return [] }
+        return [channel]
+    }
 }
 
 extension UpdateManager: UpdateChecker {
@@ -179,7 +188,64 @@ extension UpdateManager: UpdateChecker {
             callback(false)
             return
         }
-        // Using `SUStandardVersionComparator` from Sparkle lib here, so result will be exactly the same as during the update process.
-        callback(SUStandardVersionComparator().compareVersion(currentBuild, toVersion: item.versionString) == .orderedAscending)
+
+        callback(CustomVersionComparator.shared.compareVersion(currentBuild, toVersion: item.versionString) == .orderedAscending)
+    }
+}
+
+/// Compare two versions in a custom fashion.
+///
+/// Old build numbers used to look like simple timestamps, like `2403121548`, which was simply the time the app was
+/// built. New build numbers include a pipeline identifier on the front, plus a date timestamp that corresponds to
+/// the timestamp of the commit on `HEAD` when the app was built. We need to hit Sparkle on the head hard enough so
+/// that it thinks that the `123456.2403121548` version is actually *greater* than a build number like `2402121213`.
+/// This has to stay here forever as a defense-in-depth measure against downgrade attacks. Computing is fun!
+final class CustomVersionComparator: SUVersionComparison {
+    static let shared = CustomVersionComparator()
+    static let standard = SUStandardVersionComparator()
+
+    enum ContainsPipeline: String {
+        case yes = "PipelineId"
+        case no = "NoPipelineId"
+
+        init?(_ version: Version) {
+            guard let id = version.buildMetadataIdentifiers.first else { return nil }
+            guard let value = Self(rawValue: id) else { return nil }
+            self = value
+        }
+    }
+
+    func convertToSemVer(_ buildNumber: String) -> Version? {
+        let components = buildNumber.split(separator: ".")
+        if components.count == 1, let buildNumberInt = Int(components[0]) {
+            return .init(buildNumberInt, 0, 0, build: [ContainsPipeline.no.rawValue])
+        } else if components.count == 2,
+                  let pipelineId = Int(components[0]),
+                  let buildNumberInt = Int(components[1]) {
+            return .init(pipelineId, buildNumberInt, 0, build: [ContainsPipeline.yes.rawValue])
+        } else {
+            guard let version = Version(buildNumber) else { return nil }
+            // If we don't recognize this build number, strip out any build metadata identifiers to avoid potential
+            // attackers from injecting their own and affecting the "ContainsPipeline" logic below.
+            return Version(version.major, version.minor, version.patch, pre: version.prereleaseIdentifiers)
+        }
+    }
+
+    func compareVersion(_ versionA: String, toVersion versionB: String) -> ComparisonResult {
+        guard let parsedVersionA = convertToSemVer(versionA),
+              let parsedVersionB = convertToSemVer(versionB) else {
+            return Self.standard.compareVersion(versionA, toVersion: versionB)
+        }
+
+        switch (ContainsPipeline(parsedVersionA), ContainsPipeline(parsedVersionB)) {
+        case (.yes, .no):
+            return parsedVersionA.minor < parsedVersionB.major ? .orderedAscending : .orderedDescending
+        case (.no, .yes):
+            return parsedVersionA.major < parsedVersionB.minor ? .orderedAscending : .orderedDescending
+        default:
+            break
+        }
+
+        return Self.standard.compareVersion(versionA, toVersion: versionB)
     }
 }
