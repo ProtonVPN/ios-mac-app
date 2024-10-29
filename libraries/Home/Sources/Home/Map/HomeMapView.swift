@@ -26,9 +26,9 @@ import CoreLocation
 @available(iOS 17.0, *)
 public struct HomeMapView: View {
     @State private var renderedMapImage: Image?
-    @State private var map = SVGView.naturalEarthMap
+    @State private var map = SVGView.idleMapView
 
-    private let mapBounds = SVGView.naturalEarthMap.svg?.bounds()
+    private let mapBounds = SVGView.idleMapView.svg?.bounds()
     private let availableHeight: CGFloat
     private let availableWidth: CGFloat
 
@@ -72,7 +72,7 @@ public struct HomeMapView: View {
     private func renderMap(focusedCountryCode: String?) {
         let scale = mapScale()
         log.info("Rendering map (focused on: \(optional: focusedCountryCode) @\(scale)x)")
-        let renderer = ImageRenderer(content: MapRenderView(focusedCountryCode: focusedCountryCode))
+        let renderer = ImageRenderer(content: MapRenderView(highlightedCountryCode: focusedCountryCode))
         renderer.scale = scale
 
         guard let uiImage = renderer.uiImage else {
