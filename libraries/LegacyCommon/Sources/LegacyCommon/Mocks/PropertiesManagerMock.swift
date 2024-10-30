@@ -48,6 +48,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static let featureFlagsNotification: Notification.Name = Notification.Name("featureFlags")
     public static var announcementsNotification: Notification.Name = Notification.Name("announcements")
 
+    public static let telemetryUsageDataNotification: Notification.Name = Notification.Name("telemetryUsageData")
+
+    public static let telemetryCrashReportsNotification: Notification.Name = Notification.Name("telemetryCrashReports")
+
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
     var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
@@ -193,8 +197,12 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     public func getTelemetryUsageData() -> Bool { return false }
     public func getTelemetryCrashReports() -> Bool { return true }
-    public func setTelemetryUsageData(enabled: Bool) { }
-    public func setTelemetryCrashReports(enabled: Bool) { }
+    public func setTelemetryUsageData(enabled: Bool) {
+        NotificationCenter.default.post(name: Self.telemetryUsageDataNotification, object: enabled)
+    }
+    public func setTelemetryCrashReports(enabled: Bool) {
+        NotificationCenter.default.post(name: Self.telemetryCrashReportsNotification, object: enabled)
+    }
 
     private var customBools: [String: Bool] = [:]
     private var defaultCustomBoolValue = false

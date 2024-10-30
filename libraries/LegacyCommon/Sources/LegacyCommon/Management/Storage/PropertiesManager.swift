@@ -45,6 +45,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
     static var smartProtocolNotification: Notification.Name { get }
     static var featureFlagsNotification: Notification.Name { get }
     static var announcementsNotification: Notification.Name { get }
+    static var telemetryUsageDataNotification: Notification.Name { get }
+    static var telemetryCrashReportsNotification: Notification.Name { get }
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
@@ -170,7 +172,7 @@ extension PropertiesManagerProtocol {
     }
 }
 
-public class PropertiesManager: PropertiesManagerProtocol {
+public final class PropertiesManager: PropertiesManagerProtocol {
     internal enum Keys: String, CaseIterable {
         case isSubsequentLaunch = "isSubsequentLaunch"
         case autoConnect = "AutoConnect"
@@ -261,6 +263,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
 
+    public static let telemetryUsageDataNotification = Notification.Name("TelemetryUsageDataChanged")
+    public static let telemetryCrashReportsNotification = Notification.Name("TelemetryCrashReportsChanged")
+
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
     public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
@@ -316,6 +321,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             }
         }
         storage.setUserValue(String(enabled), forKey: Keys.telemetryUsageData.rawValue)
+        NotificationCenter.default.post(name: Self.telemetryUsageDataNotification, object: enabled)
     }
     
     public func getTelemetryCrashReports() -> Bool {
@@ -338,6 +344,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public func setTelemetryCrashReports(enabled: Bool) {
         storage.setUserValue(String(enabled), forKey: Keys.telemetryCrashReports.rawValue)
+        NotificationCenter.default.post(name: Self.telemetryCrashReportsNotification, object: enabled)
     }
 
     public var isOnboardingInProgress: Bool = false
