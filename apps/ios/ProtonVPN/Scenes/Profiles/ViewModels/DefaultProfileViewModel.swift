@@ -26,6 +26,9 @@ import ProtonCoreUIFoundations
 import LegacyCommon
 import Strings
 import Theme
+import Domain
+
+import ProtonCoreFeatureFlags
 
 /// Special case of `DefaultProfileViewModel`, used for free users, that have profiles disabled
 /// but have this special `Fastest` connection type in countries list.
@@ -85,15 +88,39 @@ class DefaultProfileViewModel {
     fileprivate let extraMargin: Bool
 
     var isConnected: Bool {
-        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+        guard vpnGateway.connection == .connected else { return false }
+
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            return propertiesManager.lastConnectionIntent == ConnectionSpec(
+                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                             withDefaultNATType: natTypePropertyProvider.natType,
+                                                             withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                             trigger: .profile)
+            )
+        } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                                        withDefaultNATType: natTypePropertyProvider.natType,
+                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                                        trigger: .profile)
         }
         return false
     }
     
     fileprivate var isConnecting: Bool {
-        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+        guard vpnGateway.connection == .connecting else { return false }
+
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            return propertiesManager.lastConnectionIntent == ConnectionSpec(
+                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                             withDefaultNATType: natTypePropertyProvider.natType,
+                                                             withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                             trigger: .profile)
+            )
+        } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                                        withDefaultNATType: natTypePropertyProvider.natType,
+                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                                        trigger: .profile)
         }
         return false
     }

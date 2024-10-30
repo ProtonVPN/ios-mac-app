@@ -30,6 +30,9 @@ import Strings
 import Theme
 import Persistence
 import VPNAppCore
+import Domain
+
+import ProtonCoreFeatureFlags
 
 final class ProfileItemViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
@@ -41,21 +44,46 @@ final class ProfileItemViewModel {
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    
+    private let propertiesManager: PropertiesManagerProtocol
+
     private let userTier: Int
     private let lowestServerTier: Int
     private let underMaintenance: Bool
 
     var isConnected: Bool {
-        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+        guard vpnGateway.connection == .connected else { return false }
+
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            return propertiesManager.lastConnectionIntent == ConnectionSpec(
+                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                             withDefaultNATType: natTypePropertyProvider.natType,
+                                                             withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                             trigger: .profile)
+            )
+        } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                                        withDefaultNATType: natTypePropertyProvider.natType,
+                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                                        trigger: .profile)
         }
         return false
     }
     
     private var isConnecting: Bool {
-        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+        guard vpnGateway.connection == .connecting else { return false }
+
+        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            return propertiesManager.lastConnectionIntent == ConnectionSpec(
+                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                             withDefaultNATType: natTypePropertyProvider.natType,
+                                                             withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                             trigger: .profile)
+            )
+        } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                                                        withDefaultNATType: natTypePropertyProvider.natType,
+                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                                                        trigger: .profile)
         }
         return false
     }
@@ -112,7 +140,7 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
 
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, propertiesManager: PropertiesManagerProtocol) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -122,6 +150,7 @@ final class ProfileItemViewModel {
         self.safeModePropertyProvider = safeModePropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService
+        self.propertiesManager = propertiesManager
 
         switch profile.serverOffering {
         case .custom(let serverWrapper):
