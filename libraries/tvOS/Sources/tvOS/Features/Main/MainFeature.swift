@@ -27,6 +27,9 @@ import Domain
 
 @Reducer
 struct MainFeature {
+    @Dependency(\.serverRepository) var repository
+    @Dependency(\.alertService) var alertService
+
     enum Tab {
         case home
         case settings
@@ -56,6 +59,7 @@ struct MainFeature {
         case updateUserLocation
 
         case connection(ConnectionFeature.Action)
+        case connectDisconnectingIfNecessary(String)
 
         case errorOccurred(Error)
         
@@ -115,8 +119,8 @@ struct MainFeature {
                     if let server, server.logical.exitCountryCode == item.code { // and the selected server is the same as the connecting/connected one
                         return .send(.connection(.disconnect(.userIntent))) // just disconnect
                     } else { // and the selected server is different
-                        guard let intent = serverConnectionIntent(code: item.code) else { return .none }
-                        return .send(.connection(.disconnect(.reconnection(intent)))) // start reconnection, which will first cancel/disconnect current connection
+                        // start reconnection, which will first cancel/disconnect current connection
+                        return .send(.connectDisconnectingIfNecessary(item.code))
                     }
                 }
                 // these two below are separate because the server is optional in one and non-optional in the other case
@@ -127,8 +131,7 @@ struct MainFeature {
                 if case let .connecting(server) = state.connectionState {
                     return effect(server)
                 }
-                guard let intent = serverConnectionIntent(code: item.code) else { return .none }
-                return .send(.connection(.connect(intent)))
+                return .send(.connectDisconnectingIfNecessary(item.code))
 
             case .homeLoading(.loaded(.protectionStatus(.delegate(let action)))):
                 switch action {
@@ -137,18 +140,25 @@ struct MainFeature {
                 case .userClickedCancel:
                     return .send(.connection(.disconnect(.userIntent)))
                 case .userClickedConnect:
-                    guard let intent = serverConnectionIntent(code: "Fastest") else {
-                        return .send(.errorOccurred(ConnectionError.serverMissing))
-                    }
-                    // quick connect
-                    if case .connected = state.connectionState {
-                        return .send(.connection(.disconnect(.reconnection(intent))))
-                    }
-                    return .send(.connection(.connect(intent)))
+                    return .send(.connectDisconnectingIfNecessary("Fastest"))
                 }
 
             case .homeLoading:
                 return .none
+
+            case .connectDisconnectingIfNecessary(let code):
+                let isConnected = if case .connected = state.connectionState { true } else { false }
+                return .run { send in
+                    let intent = try serverConnectionIntent(code: code)
+                    if isConnected {
+                        return await send(.connection(.disconnect(.reconnection(intent))))
+                    } else {
+                        return await send(.connection(.connect(intent)))
+                    }
+                } catch: { error, _ in
+                    await alertService.feed(error)
+                }
+
             case .connection(.disconnect(.connectionFailure(let error))):
                 return .merge(
                     .send(.errorOccurred(error)),
@@ -171,7 +181,6 @@ struct MainFeature {
                 return .none
             case .errorOccurred(let error):
                 return .run { send in
-                    @Dependency(\.alertService) var alertService
                     await alertService.feed(error)
                     await send(.connection(.clearErrors))
                 }
@@ -179,15 +188,30 @@ struct MainFeature {
         }
     }
 
-    func serverConnectionIntent(code: String) -> ServerConnectionIntent? {
-        @Dependency(\.serverRepository) var repository
-        let filters = code == "Fastest" ?  [] : [VPNServerFilter.kind(.country(code: code))]
-        guard let server = repository.getFirstServer(filteredBy: filters, orderedBy: .fastest),
-              let endpoint = server.endpoints.first else {
-            return nil
-        }
-        let connectServer = Server(logical: server.logical, endpoint: endpoint)
+    func serverConnectionIntent(code: String) throws -> ServerConnectionIntent {
+        let locationFilters = code == "Fastest" ? [] : [VPNServerFilter.kind(.country(code: code))]
 
-        return .init(server: connectServer, transport: .udp, features: .defaultTVFeatures)
+        let fastestStreamingServer = repository.getFirstServer(
+            filteredBy: locationFilters + [.features(.standard), .isNotUnderMaintenance],
+            orderedBy: .fastest
+        )
+
+        guard let fastestStreamingServer else {
+            log.error("No streaming servers match connection intent", metadata: ["code": "\(code)"])
+            throw ServerResolutionError.noActiveServers(code)
+        }
+
+        guard let endpoint = fastestStreamingServer.endpoints.randomElement() else {
+            log.error("Server has no endpoints", metadata: ["server": "\(fastestStreamingServer)"])
+            throw ServerResolutionError.serverHasNoEndpoints
+        }
+
+        let server = Server(logical: fastestStreamingServer.logical, endpoint: endpoint)
+        return .init(server: server, transport: .udp, features: .defaultTVFeatures)
     }
+}
+
+enum ServerResolutionError: Error {
+    case noActiveServers(String)
+    case serverHasNoEndpoints
 }
