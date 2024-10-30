@@ -21,7 +21,7 @@ import Domain
 import ProtonCoreFeatureFlags
 
 extension ConnectionSpec {
-    init(connectionRequest: ConnectionRequest) {
+    public init(connectionRequest: ConnectionRequest) {
         let location: ConnectionSpec.Location
         var features: Set<ConnectionSpec.Feature> = []
         switch connectionRequest.connectionType {
@@ -64,7 +64,7 @@ extension ConnectionSpec {
         case .city(let country, let city):
             location = .exact(.paid, number: nil, subregion: city, regionCode: country)
         }
-        self = .init(location: location, features: features)
+        self = .init(location: location, features: features, profileId: connectionRequest.profileId)
     }
 
     private static func assertRandomRequestValidity(_ connectionRequest: ConnectionRequest) {

@@ -24,6 +24,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
 
     public let location: Location
     public let features: Set<Feature>
+    public let profileId: String?
 
     // MARK: -
 
@@ -70,9 +71,10 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
 
     // MARK: - Initialisers
 
-    public init(location: Location, features: Set<Feature>) {
+    public init(location: Location, features: Set<Feature>, profileId: String? = nil) {
         self.location = location
         self.features = features
+        self.profileId = profileId
     }
 
     /// Default intent that is set before user asks for any

@@ -25,6 +25,8 @@ import Dependencies
 import LegacyCommon
 import Strings
 
+import ProtonCoreFeatureFlags
+
 class ProfilesViewModel {
     typealias Factory = ProfileService
 
@@ -100,7 +102,7 @@ class ProfilesViewModel {
     func cellCount(for section: Int) -> Int {
         switch section {
         case 0:
-            return 2 // fastest and random
+            return FeatureFlagsRepository.shared.isRedesigniOSEnabled ? 1 : 2 //  redesign: fastest (temporary), old design: fastest and random.
         default:
             return profileManager?.customProfiles.count ?? 0
         }
@@ -129,7 +131,8 @@ class ProfilesViewModel {
                                         natTypePropertyProvider: natTypePropertyProvider,
                                         safeModePropertyProvider: safeModePropertyProvider,
                                         connectionStatusService: connectionStatusService,
-                                        planService: planService)
+                                        planService: planService,
+                                        propertiesManager: propertiesManager)
         }
         return nil
     }
