@@ -92,10 +92,14 @@ class DefaultProfileViewModel {
 
         if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
             return propertiesManager.lastConnectionIntent == ConnectionSpec(
-                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+                connectionRequest: profile.connectionRequest(
+                    withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile
+                )
             )
         } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest{
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+            return activeConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile
+            )
         }
         return false
     }
@@ -105,10 +109,14 @@ class DefaultProfileViewModel {
 
         if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
             return propertiesManager.lastConnectionIntent == ConnectionSpec(
-                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+                connectionRequest: profile.connectionRequest(
+                    withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile
+                )
             )
         } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile)
+            return activeConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: .profile
+            )
         }
         return false
     }
