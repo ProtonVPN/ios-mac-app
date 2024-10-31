@@ -260,4 +260,10 @@ extension MockFactory: AppSessionRefresherFactory {
         container.appSessionRefresher
     }
 }
+
+extension MockFactory: UpdateCheckerFactory {
+    func makeUpdateChecker() -> any UpdateChecker {
+        UpdateCheckerMock()
+    }
+}
 #endif

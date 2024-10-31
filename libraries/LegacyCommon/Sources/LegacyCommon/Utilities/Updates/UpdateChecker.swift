@@ -26,7 +26,10 @@ public protocol UpdateCheckerFactory {
 public protocol UpdateChecker {
 
     /// Check if current app can be updated.
-    func isUpdateAvailable(_ callback: @escaping (Bool) -> Void)
+    func isUpdateAvailable() async -> Bool
+
+    /// Check if the latest app supports the current running OS version.
+    func minimumVersionRequiredByNextUpdate() async -> OperatingSystemVersion
 
     /// Start updating app.
     func startUpdate()

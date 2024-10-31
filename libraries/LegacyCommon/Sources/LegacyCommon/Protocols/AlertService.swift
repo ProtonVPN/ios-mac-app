@@ -24,6 +24,7 @@ import Strings
 import Dependencies
 import Persistence
 import VPNAppCore
+import Ergonomics
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService
@@ -75,7 +76,7 @@ public struct ReconnectInfo {
     }
 }
 
-public class PaymentAlert: SystemAlert {
+public final class PaymentAlert: SystemAlert {
     public var title: String? = nil
     public var message: String?
     public var actions = [AlertAction]()
@@ -108,7 +109,7 @@ extension SystemAlert {
     }
 }
 
-public class AccountDeletionErrorAlert: SystemAlert {
+public final class AccountDeletionErrorAlert: SystemAlert {
     public var title: String? = Localizable.accountDeletionError
     public var message: String?
     public var actions = [AlertAction]()
@@ -120,7 +121,7 @@ public class AccountDeletionErrorAlert: SystemAlert {
     }
 }
 
-public class AccountDeletionWarningAlert: SystemAlert {
+public final class AccountDeletionWarningAlert: SystemAlert {
     
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.accountDeletionConnectionWarning
@@ -135,7 +136,7 @@ public class AccountDeletionWarningAlert: SystemAlert {
 }
 
 /// App should update to be able to use API
-public class AppUpdateRequiredAlert: SystemAlert {
+public final class AppUpdateRequiredAlert: SystemAlert {
     public var title: String? = Localizable.updateRequired
     public var message: String? = Localizable.updateRequiredNoLongerSupported
     public var actions = [AlertAction]()
@@ -147,7 +148,7 @@ public class AppUpdateRequiredAlert: SystemAlert {
     }
 }
 
-public class CannotAccessVpnCredentialsAlert: SystemAlert {
+public final class CannotAccessVpnCredentialsAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -157,7 +158,7 @@ public class CannotAccessVpnCredentialsAlert: SystemAlert {
     public init() { }
 }
 
-public class P2pBlockedAlert: SystemAlert {
+public final class P2pBlockedAlert: SystemAlert {
     public var title: String? = Localizable.p2pDetectedPopupTitle
     public var message: String? = Localizable.p2pDetectedPopupBody
     public var actions = [AlertAction]()
@@ -165,7 +166,7 @@ public class P2pBlockedAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 }
 
-public class P2pForwardedAlert: SystemAlert {
+public final class P2pForwardedAlert: SystemAlert {
     public var title: String? = Localizable.p2pForwardedPopupTitle
     public var message: String? = Localizable.p2pForwardedPopupBody
     public var actions = [AlertAction]()
@@ -173,7 +174,7 @@ public class P2pForwardedAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 }
 
-public class RefreshTokenExpiredAlert: SystemAlert {
+public final class RefreshTokenExpiredAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -183,7 +184,7 @@ public class RefreshTokenExpiredAlert: SystemAlert {
     public init() { }
 }
 
-public class UpgradeUnavailableAlert: SystemAlert {
+public final class UpgradeUnavailableAlert: SystemAlert {
     public var title: String? = Localizable.upgradeUnavailableTitle
     public var message: String? = Localizable.upgradeUnavailableBody
     public var actions = [AlertAction]()
@@ -199,7 +200,7 @@ public class UpgradeUnavailableAlert: SystemAlert {
     }
 }
 
-public class DelinquentUserAlert: SystemAlert {
+public final class DelinquentUserAlert: SystemAlert {
     public var title: String? = Localizable.delinquentUserTitle
     public var message: String? = Localizable.delinquentUserDescription
     public var actions = [AlertAction]()
@@ -209,7 +210,7 @@ public class DelinquentUserAlert: SystemAlert {
     public init() { }
 }
 
-public class VpnStuckAlert: SystemAlert {
+public final class VpnStuckAlert: SystemAlert {
     public var title: String? = Localizable.vpnStuckDisconnectingTitle
     public var message: String? = Localizable.vpnStuckDisconnectingBody
     public var actions = [AlertAction]()
@@ -219,7 +220,7 @@ public class VpnStuckAlert: SystemAlert {
     public init() {}
 }
 
-public class VpnNetworkUnreachableAlert: SystemAlert {
+public final class VpnNetworkUnreachableAlert: SystemAlert {
     public var title: String? = Localizable.notConnectedToTheInternet
     public var message: String?
     public var actions = [AlertAction]()
@@ -227,7 +228,7 @@ public class VpnNetworkUnreachableAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 }
 
-public class MaintenanceAlert: SystemAlert {
+public final class MaintenanceAlert: SystemAlert {
     public var title: String? = Localizable.allServersInProfileUnderMaintenance
     public var message: String?
     public var actions = [AlertAction]()
@@ -266,7 +267,7 @@ public class MaintenanceAlert: SystemAlert {
     }
 }
 
-public class SecureCoreToggleDisconnectAlert: SystemAlert {
+public final class SecureCoreToggleDisconnectAlert: SystemAlert {
     public var title: String? = Localizable.warning
     public var message: String? = Localizable.viewToggleWillCauseDisconnect
     public var actions = [AlertAction]()
@@ -282,7 +283,7 @@ public class SecureCoreToggleDisconnectAlert: SystemAlert {
     }    
 }
 
-public class ChangeProtocolDisconnectAlert: SystemAlert {
+public final class ChangeProtocolDisconnectAlert: SystemAlert {
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.changeProtocolDisconnectWarning
     public var actions = [AlertAction]()
@@ -298,7 +299,7 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     }
 }
 
-public class ProtocolNotAvailableForServerAlert: SystemAlert {
+public final class ProtocolNotAvailableForServerAlert: SystemAlert {
     public var title: String? = Localizable.vpnProtocolNotSupportedTitle
     public var message: String? = Localizable.vpnProtocolNotSupportedText
     public var actions = [AlertAction]()
@@ -348,7 +349,7 @@ public final class LocationNotAvailableAlert: SystemAlert {
     }
 }
 
-public class ProtocolDeprecatedAlert: SystemAlert {
+public final class ProtocolDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.alertProtocolDeprecatedTitle
     public let linkText: String = Localizable.alertProtocolDeprecatedLinkText
 
@@ -392,7 +393,7 @@ public class ProtocolDeprecatedAlert: SystemAlert {
     }
 }
 
-public class ReconnectOnSettingsChangeAlert: SystemAlert {
+public final class ReconnectOnSettingsChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User was changing settings, but cancelled reconnecting."
     }
@@ -413,7 +414,7 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     }
 }
 
-public class ReconnectOnActionAlert: SystemAlert {
+public final class ReconnectOnActionAlert: SystemAlert {
     public var title: String?
     public var message: String? = Localizable.actionRequiresReconnect
     public var actions = [AlertAction]()
@@ -430,7 +431,7 @@ public class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
-public class TurnOnKillSwitchAlert: SystemAlert {
+public final class TurnOnKillSwitchAlert: SystemAlert {
     public var title: String? = Localizable.turnKsOnTitle
     public var message: String? = Localizable.turnKsOnDescription
     public var actions = [AlertAction]()
@@ -446,7 +447,7 @@ public class TurnOnKillSwitchAlert: SystemAlert {
     }
 }
 
-public class AllowLANConnectionsAlert: SystemAlert {
+public final class AllowLANConnectionsAlert: SystemAlert {
     public var title: String? = Localizable.allowLanTitle
     public var message: String? = Localizable.allowLanDescription
     public var actions = [AlertAction]()
@@ -465,7 +466,7 @@ public class AllowLANConnectionsAlert: SystemAlert {
     }
 }
 
-public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
+public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User selected smart protocol, but cancelled reconnecting."
     }
@@ -499,14 +500,14 @@ public class LogoutWarningAlert: SystemAlert {
     }
 }
 
-public class LogoutWarningLongAlert: LogoutWarningAlert {
+public final class LogoutWarningLongAlert: LogoutWarningAlert {
     override public init(confirmHandler: @escaping () -> Void) {
         super.init(confirmHandler: confirmHandler)
         message = Localizable.logOutWarningLong
     }
 }
 
-public class BugReportSentAlert: SystemAlert {
+public final class BugReportSentAlert: SystemAlert {
     public var title: String? = ""
     public var message: String? = Localizable.reportSuccess
     public var actions = [AlertAction]()
@@ -518,7 +519,7 @@ public class BugReportSentAlert: SystemAlert {
     }
 }
 
-public class ReportBugAlert: SystemAlert {
+public final class ReportBugAlert: SystemAlert {
     public var title: String? = Localizable.errorUnknownTitle
     public var message: String?
     public var actions = [AlertAction]()
@@ -528,7 +529,7 @@ public class ReportBugAlert: SystemAlert {
     public init() {}
 }
 
-public class MITMAlert: SystemAlert {
+public final class MITMAlert: SystemAlert {
     public enum MessageType {
         case api
         case vpn
@@ -550,7 +551,7 @@ public class MITMAlert: SystemAlert {
     }
 }
 
-public class UnreachableNetworkAlert: SystemAlert {
+public final class UnreachableNetworkAlert: SystemAlert {
     public var title: String? = Localizable.warning
     public var message: String? = Localizable.neUnableToConnectToHost
     public var actions = [AlertAction]()
@@ -564,7 +565,7 @@ public class UnreachableNetworkAlert: SystemAlert {
     }
 }
 
-public class ConnectionTroubleshootingAlert: SystemAlert {
+public final class ConnectionTroubleshootingAlert: SystemAlert {
     public var title: String? = Localizable.errorUnknownTitle
     public var message: String?
     public var actions = [AlertAction]()
@@ -574,7 +575,7 @@ public class ConnectionTroubleshootingAlert: SystemAlert {
     public init() {}
 }
 
-public class VpnServerOnMaintenanceAlert: SystemAlert {
+public final class VpnServerOnMaintenanceAlert: SystemAlert {
     public var title: String? = Localizable.maintenanceOnServerDetectedTitle
     public var message: String? = Localizable.maintenanceOnServerDetectedDescription
     public var actions = [AlertAction]()
@@ -584,7 +585,7 @@ public class VpnServerOnMaintenanceAlert: SystemAlert {
     public init() { }
 }
 
-public class ReconnectOnNetshieldChangeAlert: SystemAlert {
+public final class ReconnectOnNetshieldChangeAlert: SystemAlert {
     public var title: String? = Localizable.reconnectionRequired
     public var message: String? = Localizable.netshieldAlertReconnectDescriptionOn
     public var actions = [AlertAction]()
@@ -598,7 +599,7 @@ public class ReconnectOnNetshieldChangeAlert: SystemAlert {
     }
 }
 
-public class NetShieldRequiresUpgradeAlert: SystemAlert {
+public final class NetShieldRequiresUpgradeAlert: SystemAlert {
     public var title: String? = Localizable.upgradeRequired
     public var message: String? = Localizable.netshieldAlertUpgradeDescription + "\n\n" + Localizable.getPlusForFeature
     public var actions = [AlertAction]()
@@ -611,7 +612,7 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
     }
 }
 
-public class SysexEnabledAlert: SystemAlert {
+public final class SysexEnabledAlert: SystemAlert {
     public var title: String? = Localizable.sysexEnabledTitle
     public var message: String? = Localizable.sysexEnabledDescription
     public var actions = [AlertAction]()
@@ -621,7 +622,7 @@ public class SysexEnabledAlert: SystemAlert {
     public init() { }
 }
 
-public class SysexInstallingErrorAlert: SystemAlert {
+public final class SysexInstallingErrorAlert: SystemAlert {
     public var title: String? = Localizable.sysexCannotEnable
     public var message: String? = Localizable.sysexErrorDescription
     public var actions = [AlertAction]()
@@ -633,7 +634,7 @@ public class SysexInstallingErrorAlert: SystemAlert {
     }
 }
 
-public class SystemExtensionTourAlert: SystemAlert {
+public final class SystemExtensionTourAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -646,7 +647,7 @@ public class SystemExtensionTourAlert: SystemAlert {
     }
 }
 
-public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
+public final class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
     public var title: String? = Localizable.vpnauthCertfailTitle
     public var message: String? = Localizable.vpnauthCertfailDescription
     public var actions = [AlertAction]()
@@ -656,7 +657,7 @@ public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
     public init() { }
 }
 
-public class MaxSessionsAlert: UserAccountUpdateAlert {
+public final class MaxSessionsAlert: UserAccountUpdateAlert {
     public var reconnectInfo: ReconnectInfo?
     public var displayFeatures: Bool = false
     public var title: String? = Localizable.maximumDeviceTitle
@@ -680,7 +681,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     }
 }
 
-public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
+public final class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     public var imageName: String?
     public var displayFeatures: Bool = true
     public var title: String? = Localizable.subscriptionExpiredTitle
@@ -700,7 +701,7 @@ public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     }
 }
 
-public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
+public final class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     public var imageName: String?
     public var displayFeatures: Bool = false
     public var reconnectInfo: ReconnectInfo?
@@ -720,7 +721,7 @@ public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     }
 }
 
-public class VpnServerErrorAlert: SystemAlert {
+public final class VpnServerErrorAlert: SystemAlert {
     public var title: String? = Localizable.localAgentServerErrorTitle
     public var message: String? = Localizable.localAgentServerErrorMessage
     public var actions = [AlertAction]()
@@ -730,7 +731,7 @@ public class VpnServerErrorAlert: SystemAlert {
     public init() { }
 }
 
-public class VpnServerSubscriptionErrorAlert: SystemAlert {
+public final class VpnServerSubscriptionErrorAlert: SystemAlert {
     public var title: String? = Localizable.localAgentPolicyViolationErrorTitle
     public var message: String? = Localizable.localAgentPolicyViolationErrorMessage
     public var actions = [AlertAction]()
@@ -740,7 +741,7 @@ public class VpnServerSubscriptionErrorAlert: SystemAlert {
     public init() { }
 }
 
-public class AnnouncementOfferAlert: SystemAlert {
+public final class AnnouncementOfferAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -756,7 +757,7 @@ public class AnnouncementOfferAlert: SystemAlert {
     }
 }
 
-public class DiscourageSecureCoreAlert: SystemAlert {
+public final class DiscourageSecureCoreAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions: [AlertAction] = []
@@ -771,7 +772,7 @@ public class DiscourageSecureCoreAlert: SystemAlert {
     public init() { }
 }
 
-public class WelcomeScreenAlert: UpsellAlert {
+public final class WelcomeScreenAlert: UpsellAlert {
     /// This enum is used to narrow down the possible types of this alert. Theoretically we could just allow to use the `ModalType`
     /// but we don't want to use this alert (for now) for anything else than welcome alerts.
     public enum Plan {
@@ -808,19 +809,19 @@ public extension WelcomeScreenAlert.Plan {
     }
 }
 
-public class ProfilesUpsellAlert: UpsellAlert {
+public final class ProfilesUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource { .profiles }
 }
 
-public class VPNAcceleratorUpsellAlert: UpsellAlert {
+public final class VPNAcceleratorUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .vpnAccelerator }
 }
 
-public class CustomizationUpsellAlert: UpsellAlert {
+public final class CustomizationUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .allowLan }
 }
 
-public class CountryUpsellAlert: UpsellAlert {
+public final class CountryUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .countries }
 
     public let countryFlag: Image
@@ -830,23 +831,23 @@ public class CountryUpsellAlert: UpsellAlert {
     }
 }
 
-public class NetShieldUpsellAlert: UpsellAlert {
+public final class NetShieldUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .netShield }
 }
 
-public class SecureCoreUpsellAlert: UpsellAlert {
+public final class SecureCoreUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .secureCore }
 }
 
-public class SafeModeUpsellAlert: UpsellAlert {
+public final class SafeModeUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .safeMode }
 }
 
-public class ModerateNATUpsellAlert: UpsellAlert {
+public final class ModerateNATUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .moderateNat }
 }
 
-public class SubuserWithoutConnectionsAlert: SystemAlert {
+public final class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -860,7 +861,7 @@ public class SubuserWithoutConnectionsAlert: SystemAlert {
     }
 }
 
-public class TooManyCertificateRequestsAlert: SystemAlert {
+public final class TooManyCertificateRequestsAlert: SystemAlert {
     public var title: String? = Localizable.vpnauthTooManyCertsTitle
     public var message: String?
     public var actions = [AlertAction]()
@@ -888,7 +889,7 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
     }
 }
 
-public class NEKSOnT2Alert: SystemAlert {
+public final class NEKSOnT2Alert: SystemAlert {
     public static let t2kbUrlString = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
 
     public var title: String? = Localizable.neksT2Title
@@ -907,7 +908,7 @@ public class NEKSOnT2Alert: SystemAlert {
     }
 }
 
-public class ProtonUnreachableAlert: SystemAlert {
+public final class ProtonUnreachableAlert: SystemAlert {
     public var title: String?
     public var message: String? = Localizable.protonWebsiteUnreachable
     public var actions = [AlertAction]()
@@ -918,7 +919,7 @@ public class ProtonUnreachableAlert: SystemAlert {
     }
 }
 
-public class LocalAgentSystemErrorAlert: SystemAlert {
+public final class LocalAgentSystemErrorAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -943,7 +944,7 @@ public class LocalAgentSystemErrorAlert: SystemAlert {
     }
 }
 
-public class ConnectingWithBadLANAlert: SystemAlert {
+public final class ConnectingWithBadLANAlert: SystemAlert {
     public var title: String? = Localizable.badInterfaceIpRangeAlertTitle
     public var message: String?
 
@@ -969,7 +970,7 @@ public class ConnectingWithBadLANAlert: SystemAlert {
     }
 }
 
-public class ConnectionCooldownAlert: UpsellAlert {
+public final class ConnectionCooldownAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .changeServer }
 
     public let until: Date
@@ -997,5 +998,35 @@ public class ConnectionCooldownAlert: UpsellAlert {
     override public func continueAction() {
         actions.first(where: { $0.style == .confirmative })?
             .handler?()
+    }
+}
+
+public final class UpgradeOperatingSystemAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions: [AlertAction]
+    public var isError = false
+    public var dismiss: (() -> Void)?
+
+    init(minimumOSVersionRequired version: OperatingSystemVersion) {
+        let platform: String
+
+        #if os(iOS)
+        platform = "iOS"
+        #elseif os(macOS)
+        platform = "macOS"
+        #elseif os(tvOS)
+        platform = "tvOS"
+        #elseif os(visionOS)
+        platform = "visionOS"
+        #else
+        platform = "Unrecognized"
+        #endif
+
+        self.title = Localizable.operatingSystemOutOfDateAlertTitle
+        self.message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
+        self.actions = [
+            .init(title: Localizable.gotIt, style: .confirmative, handler: nil)
+        ]
     }
 }

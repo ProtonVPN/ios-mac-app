@@ -21,10 +21,8 @@ import ProtonCoreAPIClient
 import BugReport
 import VPNShared
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 import UIKit
-#elseif os(macOS)
-
 #endif
 
 public protocol DynamicBugReportManagerFactory {
@@ -67,16 +65,27 @@ public class DynamicBugReportManager {
         LogContentProviderFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(api: factory.makeReportsApiService(),
-                  storage: factory.makeDynamicBugReportStorage(),
-                  alertService: factory.makeCoreAlertService(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  updateChecker: factory.makeUpdateChecker(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  logContentProvider: factory.makeLogContentProvider())
+        self.init(
+            api: factory.makeReportsApiService(),
+            storage: factory.makeDynamicBugReportStorage(),
+            alertService: factory.makeCoreAlertService(),
+            propertiesManager: factory.makePropertiesManager(),
+            updateChecker: factory.makeUpdateChecker(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            logContentProvider: factory.makeLogContentProvider()
+        )
     }
     
-    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, updateChecker: UpdateChecker, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
+    public init(
+        api: ReportsApiService,
+        storage: DynamicBugReportStorage,
+        alertService: CoreAlertService,
+        propertiesManager: PropertiesManagerProtocol,
+        updateChecker: UpdateChecker,
+        vpnKeychain: VpnKeychainProtocol,
+        logContentProvider: LogContentProvider,
+        logSources: [LogSource] = LogSource.allCases
+    ) {
         self.api = api
         self.storage = storage
         self.alertService = alertService
@@ -132,6 +141,9 @@ public class DynamicBugReportManager {
         #if os(iOS)
         let os = "iOS"
         let osVersion = UIDevice.current.systemVersion
+        #elseif os(tvOS)
+        let os = "tvOS"
+        let osVersion = UIDevice.current.systemVersion
         #elseif os(macOS)
         let os = "MacOS"
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
@@ -140,18 +152,20 @@ public class DynamicBugReportManager {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
 
-        let report = ReportBug(os: os,
-                               osVersion: osVersion,
-                               client: "App",
-                               clientVersion: "\(appVersion) (\(appBuild))",
-                               clientType: 2,
-                               title: "Report from \(os) app",
-                               description: data.text,
-                               username: data.username,
-                               email: data.email,
-                               country: propertiesManager.userLocation?.country ?? "",
-                               ISP: propertiesManager.userLocation?.isp ?? "",
-                               plan: (try? vpnKeychain.fetchCached().planTitle) ?? "")
+        let report = ReportBug(
+            os: os,
+            osVersion: osVersion,
+            client: "App",
+            clientVersion: "\(appVersion) (\(appBuild))",
+            clientType: 2,
+            title: "Report from \(os) app",
+            description: data.text,
+            username: data.username,
+            email: data.email,
+            country: propertiesManager.userLocation?.country ?? "",
+            ISP: propertiesManager.userLocation?.isp ?? "",
+            plan: (try? vpnKeychain.fetchCached().planTitle) ?? ""
+        )
 
         return report
     }
@@ -207,9 +221,9 @@ extension DynamicBugReportManager: BugReportDelegate {
     }
     
     public func checkUpdateAvailability() {
-        self.updateChecker.isUpdateAvailable { available in
+        Task.detached {
+            let available = await self.updateChecker.isUpdateAvailable()
             self.updateAvailabilityChanged?(available)
         }
     }
-
 }

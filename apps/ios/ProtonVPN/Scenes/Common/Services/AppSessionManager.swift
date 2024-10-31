@@ -87,7 +87,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         ReviewFactory &
                         AuthKeychainHandleFactory &
                         UnauthKeychainHandleFactory &
-                        CoreApiServiceFactory
+                        CoreApiServiceFactory &
+                        UpdateCheckerFactory
 
     private let factory: Factory
 
@@ -150,8 +151,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         } catch {
             throw ProtonVpnError.keychainWriteFailed
         }
+
         do {
             try await retrievePropertiesAndLogIn()
+            checkIfOSIsSupportedInNextUpdateAndAlertIfNeeded()
         } catch {
             log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
             throw error

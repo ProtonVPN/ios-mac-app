@@ -61,12 +61,18 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var propertiesManager: PropertiesManagerProtocol
     public var alertService: CoreAlertService
     public var coreApiService: CoreApiService
+    private let updateChecker: UpdateChecker
 
     private var notificationCenter: NotificationCenter = .default
 
     private var observation: NotificationToken?
 
-    public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory & CoreApiServiceFactory
+    public typealias Factory = VpnApiServiceFactory &
+        VpnKeychainFactory &
+        PropertiesManagerFactory &
+        CoreAlertServiceFactory &
+        CoreApiServiceFactory &
+        UpdateCheckerFactory
 
     public init(factory: Factory) {
         vpnApiService = factory.makeVpnApiService()
@@ -74,6 +80,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         propertiesManager = factory.makePropertiesManager()
         alertService = factory.makeCoreAlertService()
         coreApiService = factory.makeCoreApiService()
+        updateChecker = factory.makeUpdateChecker()
 
         observation = notificationCenter.addObserver(
             for: type(of: vpnKeychain).vpnPlanChanged,
@@ -151,6 +158,27 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             } catch {
                 log.error("RefreshStreamingInfo error", category: .app, metadata: ["error": "\(error)"])
             }
+        }
+    }
+
+    public func checkIfOSIsSupportedInNextUpdateAndAlertIfNeeded() {
+        Task.detached {
+            let processInfo = ProcessInfo.processInfo
+            let osVersionString = processInfo.operatingSystemVersionString
+
+            let minimumOSVersion = await self.updateChecker.minimumVersionRequiredByNextUpdate()
+
+            if processInfo.isOperatingSystemAtLeast(minimumOSVersion) {
+                return
+            }
+
+            // We only want to alert once per OS update.
+            guard self.propertiesManager.didShowDeprecationWarningForOSVersion != osVersionString else {
+                return
+            }
+
+            self.propertiesManager.didShowDeprecationWarningForOSVersion = osVersionString
+            self.alertService.push(alert: UpgradeOperatingSystemAlert(minimumOSVersionRequired: minimumOSVersion))
         }
     }
 

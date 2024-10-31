@@ -73,7 +73,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         AppCertificateRefreshManagerFactory &
                         SystemExtensionManagerFactory &
                         AuthKeychainHandleFactory &
-                        UnauthKeychainHandleFactory
+                        UnauthKeychainHandleFactory &
+                        UpdateCheckerFactory
     private let factory: Factory
 
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -141,6 +142,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func finishLogin() async throws {
         try await retrieveProperties()
         try await refreshVpnAuthCertificate()
+        checkIfOSIsSupportedInNextUpdateAndAlertIfNeeded()
 
         if sessionStatus == .notEstablished {
             sessionStatus = .established

@@ -184,9 +184,12 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             NotificationCenter.default.post(name: Self.earlyAccessNotification, object: earlyAccess)
         }
     }
+
     public var connectionProtocol: ConnectionProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
+
+    public var didShowDeprecationWarningForOSVersion: String?
 
     public func getTelemetryUsageData() -> Bool { return false }
     public func getTelemetryCrashReports() -> Bool { return true }
@@ -195,7 +198,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     private var customBools: [String: Bool] = [:]
     private var defaultCustomBoolValue = false
-    
+
     public func getValue(forKey key: String) -> Bool {
         return customBools[key] ?? defaultCustomBoolValue
     }
