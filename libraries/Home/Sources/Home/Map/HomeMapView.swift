@@ -25,8 +25,9 @@ import CoreLocation
 
 @available(iOS 17.0, *)
 public struct HomeMapView: View {
-    @State private var map = SVGView.naturalEarthMap
+    @State private var renderedMapImage: Image?
 
+    private let mapBounds: CGRect
     private let availableHeight: CGFloat
     private let availableWidth: CGFloat
 
@@ -36,6 +37,7 @@ public struct HomeMapView: View {
         self.store = store
         self.availableHeight = availableHeight
         self.availableWidth = availableWidth
+        self.mapBounds = SVGView.mapBounds
     }
 
     private var shouldShowPin: Bool {
@@ -47,44 +49,52 @@ public struct HomeMapView: View {
 
     public var body: some View {
         ZStack {
-            map
+            renderedMapImage
             MapPin(mode: store.pinMode)
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(pinOffset())
                 .opacity(shouldShowPin ? 1 : 0)
         }
-        .frame(width: map.svg?.bounds().width,
-               height: map.svg?.bounds().height)
+        .frame(width: mapBounds.width,  height: mapBounds.height)
         .scaleEffect(mapScale())
         .offset(mapOffset())
         .onAppear {
+            renderMap(focusedCountryCode: store.mapState.code)
             store.send(.onAppear)
         }
         .onChange(of: store.mapState.code) {
-            map = SVGView.naturalEarthMap
-            guard let code = store.mapState.code ?? store.userCountry else { return }
-            map.node(code: code.lowercased()).map {
-                map.highlight(node: $0)
-            }
+            renderMap(focusedCountryCode: $0)
         }
+    }
+
+    @MainActor
+    private func renderMap(focusedCountryCode: String?) {
+        let scale = mapScale()
+        log.info("Rendering map (focused on: \(optional: focusedCountryCode) @\(scale)x)")
+        let renderer = ImageRenderer(content: MapRenderView(highlightedCountryCode: focusedCountryCode))
+        renderer.scale = scale
+
+        guard let uiImage = renderer.uiImage else {
+            log.error("Failed to render map")
+            return
+        }
+        renderedMapImage = Image(uiImage: uiImage)
     }
 
     private func pinOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let coordinates = store.mapState.coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()),
-              let mapBounds = map.svg?.bounds().size else {
+              let coordinates = store.mapState.coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
             return .zero
         }
         let location = CLLocationCoordinate2D(latitude: coordinates.latitude,
                                               longitude: coordinates.longitude - 10) // -10 to account for the shifted map
-        let projection = NaturalEarthProjection.projection(from: location, in: mapBounds)
+        let projection = NaturalEarthProjection.projection(from: location, in: mapBounds.size)
         return .init(width: projection.x, height: -projection.y)
     }
 
     private func mapOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let node = map.node(code: code),
-              let mapBounds = map.svg?.bounds() else {
+              let node = SVGView.idleMapView.node(code: code) else {
             return .zero
         }
 
@@ -95,7 +105,7 @@ public struct HomeMapView: View {
 
     private func mapScale() -> CGFloat {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let node = map.node(code: code) else {
+              let node = SVGView.idleMapView.node(code: code) else {
             return wholeMapScale()
         }
         let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the padding
@@ -105,7 +115,6 @@ public struct HomeMapView: View {
     }
 
     private func wholeMapScale() -> CGFloat {
-        guard let mapBounds = map.svg?.bounds() else { return 1 }
         let scaleX = availableWidth / mapBounds.width
         let scaleY = availableHeight / mapBounds.height
         return min(scaleX, scaleY)
