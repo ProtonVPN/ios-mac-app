@@ -55,6 +55,37 @@ function fetch_data() {
          -d "$REQUEST_DATA")
 }
 
+function update_commit_attribute() {
+    local commit_hash=$1
+    local task_id=$2
+    local attribute=$3
+    local value=$4
+
+    if [ -z "$value" ] || [ "$value" == "null" ]; then
+        return 0
+    fi
+
+    # We're told to update a commit attribute with a value, but first check if the value has been set for any other
+    # commit with the same Jira-Id trailer. If it has, then we want to update that commit instead.
+    local entry
+    local old_value
+    IFS=$'\n'
+    for entry in $(grep "$task_id" <<<"$ISSUE_HASHES"); do
+        local this_commit_hash=$(cut <<<"$entry" -d " " -f 1)
+        old_value=$(mint run -s git-lhc attr get --train $LHC_TRAIN "$attribute" "$this_commit_hash" || true)
+
+        if [ -n "$old_value" ]; then
+            commit_hash="$this_commit_hash"
+            break
+        fi
+    done
+
+    if [ "$old_value" != "$value" ]; then
+        echo "Adding $attribute attribute..."
+        mint run -s git-lhc attr add --train $LHC_TRAIN --force "$attribute=$value" "$commit_hash"
+    fi
+}
+
 UPDATED_ISSUES=""
 function update_commit() {
     local commit_hash=$(cut <<<"$1" -d " " -f 1)
@@ -73,30 +104,15 @@ function update_commit() {
 
     UPDATED_ISSUES+="$task_id"$'\n'
 
-    if [ -n "$notes" ] && [ "$notes" != "null" ]; then
-        local old_release_notes
-        old_release_notes=$(mint run -s git-lhc attr get --train $LHC_TRAIN Release-Notes $commit_hash || true)
-
-        if [ "$old_release_notes" != "$notes" ]; then
-            echo "Adding Release-Notes attribute..."
-            mint run -s git-lhc attr add --train $LHC_TRAIN --force "Release-Notes=$notes" $commit_hash
-        fi
-    fi
-
-    if [ -n "$points" ] && [ "$points" != "null" ]; then
-        local old_story_points
-        old_story_points=$(mint run -s git-lhc attr get --train $LHC_TRAIN Story-Points $commit_hash || true)
-
-        if [ "$old_story_points" != "$points" ]; then
-            echo "Adding Story-Points attribute..."
-            mint run -s git-lhc attr add --train $LHC_TRAIN --force "Story-Points=$points" $commit_hash
-        fi
-    fi
+    update_commit_attribute "$commit_hash" "$task_id" "Release-Notes" "$notes"
+    update_commit_attribute "$commit_hash" "$task_id" "Story-Points" "$points"
 }
 
 function update_commits() {
     echo "Updating commits..."
     IFS=$'\n'
+
+    # Iterate over all of the hashes in the commit range, finding matching commits from the issue hashes list.
     for logentry in $(git log "$COMMIT_RANGE" --format="%H"); do
         local entries
         if ! entries=$(grep "$logentry" <<<"$ISSUE_HASHES"); then
@@ -201,9 +217,11 @@ function update_active_sprint() {
     local sprint_timestamp sprint_started_hash
     sprint_timestamp=$(sed 's/\.[0-9][0-9]*Z$//g' <<<"$sprint_start" | xargs date -jf "%Y-%m-%dT%H:%M:%S" +%s)
 
+    # This range is different because we want to look at all of the commits, not just the ones in the merge request.
+    SPRINT_COMMIT_RANGE="HEAD~${GIT_DEPTH:-50}..HEAD"
     IFS=$'\n'
     # Go through the commits by timestamp, and mark the closest one to where the sprint started.
-    for entry in $(git log "$COMMIT_RANGE" --format="%H %ct"); do
+    for entry in $(git log "$SPRINT_COMMIT_RANGE" --format="%H %ct"); do
         local commit_timestamp=$(cut -d " " -f 2 <<<"$entry")
         [ "$sprint_timestamp" -lt "$commit_timestamp" ] || break
 
@@ -241,7 +259,7 @@ function update_release() {
 }
 
 if [ "$#" -eq 0 ]; then
-    ISSUE_HASHES=$(git log $COMMIT_RANGE --format="%H %(trailers:key=$JIRA_TRAILER,valueonly)" | grep "$JIRA_PROJECT" | head -n 1)
+    ISSUE_HASHES=$(git log "$COMMIT_RANGE" --format="%H %(trailers:key=$JIRA_TRAILER,valueonly)" | grep "$JIRA_PROJECT")
 else
     for arg in "$@"; do
         [ -f "$arg" ] || (echo "No such file $arg. Aborting." && exit 1)
