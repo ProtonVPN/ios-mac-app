@@ -153,7 +153,7 @@ public struct ConnectionStatusView: View {
                     HStack(spacing: .themeSpacing8) {
                         titleView(protectionState: store.protectionState)
 
-                        if let title = title(protectionState: store.protectionState) {
+                        if store.protectionState != .unprotected, let title = title(protectionState: store.protectionState) {
                             Text(title)
                                 .font(.themeFont(.body1(.semibold)))
                         }

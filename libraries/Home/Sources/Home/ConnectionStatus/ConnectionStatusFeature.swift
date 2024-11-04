@@ -118,6 +118,8 @@ public struct ConnectionStatusFeature {
                 return .none
 
             case .stickToTop(let stickToTop):
+                guard state.stickToTop != stickToTop else { return .none }
+
                 withAnimation(.easeInOut(duration: 0.05)) {
                     state.stickToTop = stickToTop
                 }

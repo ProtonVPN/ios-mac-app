@@ -41,6 +41,10 @@ public struct HomeView: View {
     private static let mapHeight: CGFloat = 414
     private static let bottomGradientHeight: CGFloat = 100
 
+    // Sticky ProtectionStatus functionality on scroll.
+    @State var lastScrollOffset: CGFloat = .zero
+    private static let protectionStatusStickToTopThreshold = -(Self.mapHeight - Self.bottomGradientHeight)
+
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
     }
@@ -111,34 +115,28 @@ public struct HomeView: View {
             GeometryReader { inner in
                 Color.clear
                     .preference(
-                        key: ConnectionStatusStickToTopPreferenceKey.self,
-                        value: shouldConnectionStatusStickToTop(for: inner.frame(in: .global).origin.y)
+                        key: ScrollOffsetPreferenceKey.self,
+                        value: inner.frame(in: .global).origin.y
                     )
             }
-            .onPreferenceChange(ConnectionStatusStickToTopPreferenceKey.self) { isStickingToTop in
-                guard let isStickingToTop else { return }
-                store.send(.connectionStatus(.stickToTop(isStickingToTop)))
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
+                if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
+                    if scrollOffset > Self.protectionStatusStickToTopThreshold {
+                        store.send(.connectionStatus(.stickToTop(false)))
+                    } else {
+                        store.send(.connectionStatus(.stickToTop(true)))
+                    }
+                }
+                lastScrollOffset = scrollOffset
             }
         }
-    }
-
-    private func shouldConnectionStatusStickToTop(for scrollOffset: CGFloat) -> Bool? {
-        let hideThreshold = -(Self.mapHeight + Self.bottomGradientHeight)/2 - 12
-        let showThreshold = -(Self.mapHeight - Self.bottomGradientHeight)
-
-        if scrollOffset > hideThreshold {
-            return false
-        } else if scrollOffset < showThreshold {
-            return true
-        }
-        return nil
     }
 }
 
-private struct ConnectionStatusStickToTopPreferenceKey: PreferenceKey {
-    static var defaultValue: Bool?
+private struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
 
-    static func reduce(value: inout Bool?, nextValue: () -> Bool?) {
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
 }
