@@ -121,11 +121,7 @@ public struct HomeView: View {
             }
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
                 if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
-                    if scrollOffset > Self.protectionStatusStickToTopThreshold {
-                        store.send(.connectionStatus(.stickToTop(false)))
-                    } else {
-                        store.send(.connectionStatus(.stickToTop(true)))
-                    }
+                    store.send(.connectionStatus(.stickToTop(scrollOffset < Self.protectionStatusStickToTopThreshold)))
                 }
                 lastScrollOffset = scrollOffset
             }
