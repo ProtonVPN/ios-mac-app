@@ -7,26 +7,24 @@
 //
 
 import fusion
+import Strings
+import UITestsHelpers
 
-fileprivate let tabProfiles = "Profiles"
-fileprivate let tabSettings = "Settings"
-fileprivate let tabCountries = "Countries"
-fileprivate let tabMap = "Map"
-fileprivate let quickConnectButton = "quick connect inactive button"
-fileprivate let quickDisconnectButton = "quick connect active button"
-fileprivate let secureCore = "Use Secure Core"
-fileprivate let statusNotConnected = "Not Connected"
-fileprivate let upgradeSubscriptionTitle = "Want to connect to a specific country?"
-fileprivate let upgradeSubscriptionButton = "Get VPN Plus"
-fileprivate let buttonOk = "OK"
-fileprivate let buttonCancel = "Cancel"
-fileprivate let buttonAccount = "Account"
-fileprivate let environmentText = "https://vpn-api.proton.me"
-fileprivate let useAndContinueButton = "Use and continue"
-fileprivate let resetToProductionButton = "Reset to production and kill the app"
-fileprivate let showLoginButtonLabelText = "Sign in"
-fileprivate let showSignupButtonLabelText = "Create an account"
-fileprivate let upselModal = "TitleLabel"
+fileprivate let tabProfiles = Localizable.profiles
+fileprivate let tabSettings = Localizable.settings
+fileprivate let tabCountries = Localizable.countries
+fileprivate let tabMap = Localizable.map
+fileprivate let quickConnectButtonId = "quick connect inactive button"
+fileprivate let quickDisconnectButtonId = "quick connect active button"
+fileprivate let statusNotConnected = Localizable.notConnected
+fileprivate let upgradeSubscriptionTitle = Localizable.modalsNewUpsellCountryTitle
+fileprivate let upgradeSubscriptionButton = Localizable.upsellPlansListValidateButton
+fileprivate let buttonOk = Localizable.ok
+fileprivate let buttonCancel = Localizable.cancel
+fileprivate let buttonAccount = Localizable.account
+fileprivate let showLoginButtonLabelText = Localizable.logIn
+fileprivate let showSignupButtonLabelText = Localizable.createAccount
+fileprivate let upselModalId = "TitleLabel"
 
 // MainRobot class contains actions for main app view.
 
@@ -59,7 +57,7 @@ class MainRobot: CoreElements {
     }
     
     func quickConnectViaQCButton() -> ConnectionStatusRobot {
-        button(quickConnectButton).tap()
+        button(quickConnectButtonId).tap()
         return ConnectionStatusRobot()
     }
     
@@ -70,7 +68,7 @@ class MainRobot: CoreElements {
     
     @discardableResult
     func quickDisconnectViaQCButton() -> ConnectionStatusRobot {
-        button(quickDisconnectButton).tap()
+        button(quickDisconnectButtonId).tap()
         return ConnectionStatusRobot()
     }
     
@@ -85,29 +83,18 @@ class MainRobot: CoreElements {
         button(showLoginButtonLabelText).waitUntilExists().tap()
         return LoginRobot()
     }
-    
-    // Temporary solution. This modal will be removed soon
-    func dismissWhatsNewModal() -> MainRobot {
-        let buttonText = "Got it!"
-        if button(buttonText).waitUntilExists(time: 30).exists() {
-            button(buttonText).tap()
-        } else {
-            button(tabSettings).tap()
-        }
-        return MainRobot()
-    }
-    
+
     class Verify: CoreElements {
     
         @discardableResult
         func qcButtonConnected() -> MainRobot {
-            button(quickDisconnectButton).waitUntilExists().checkExists()
+            button(quickDisconnectButtonId).waitUntilExists().checkExists()
             return MainRobot()
         }
     
         @discardableResult
         func qcButtonDisconnected() -> MainRobot {
-            button(quickConnectButton).waitUntilExists().checkExists()
+            button(quickConnectButtonId).waitUntilExists().checkExists()
             return MainRobot()
         }
     
@@ -132,7 +119,7 @@ class MainRobot: CoreElements {
         
         @discardableResult
         func upsellModalIsOpen() -> MainRobot {
-            staticText(upselModal).checkExists()
+            staticText(upselModalId).checkExists()
             return MainRobot()
         }
     }

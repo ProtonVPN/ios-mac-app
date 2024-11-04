@@ -73,15 +73,18 @@ class SettingsRobot: CoreElements {
             .tapContinueIfExist()
     }
     
+    @discardableResult
     func turnLanConnectionOn() -> SettingsRobot {
         return lanConnectionOn()
             .lanConnectionContinue()
     }
     
+    @discardableResult
     func logOut() -> SettingsRobot {
         return clickLogOut().tapContinueIfExist()
     }
     
+    @discardableResult
     func cancelLogOut() -> ConnectionStatusRobot {
         return clickLogOut()
             .logOutCancel()

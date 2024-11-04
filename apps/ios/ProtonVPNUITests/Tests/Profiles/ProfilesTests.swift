@@ -30,15 +30,12 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         let randomCountry = try await ServersListUtils.getRandomCountry()
         
-        loginRobot
-            .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToProfilesTab()
-            .addNewProfile()
-            .setProfileDetails(profileName, randomCountry.name)
+        loginAndOpenProfiles(as: UserType.Basic.credentials)
+            .tapAddNewProfile()
+            .verify.isOnProfilesEditScreen()
+            .setProfileDetails(profile: profileName, country: randomCountry.name)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
+            .verify.profileIsCreated(profile: profileName)
             .deleteProfile(profileName, randomCountry.name)
             .verify.profileIsDeleted(profileName, randomCountry.name)
     }
@@ -48,17 +45,14 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
         
-        loginRobot
-            .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToProfilesTab()
-            .addNewProfile()
-            .setProfileDetails(profileName, countryName)
+        loginAndOpenProfiles(as: UserType.Plus.credentials)
+            .tapAddNewProfile()
+            .verify.isOnProfilesEditScreen()
+            .setProfileDetails(profile: profileName, country: countryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
-            .addNewProfile()
-            .setProfileWithSameName(profileName, countryName)
+            .verify.profileIsCreated(profile: profileName)
+            .tapAddNewProfile()
+            .setProfileDetails(profile: profileName, country: countryName)
             .saveProfile(robot: CreateProfileRobot.self)
             .verify.profileWithSameName()
     }
@@ -66,62 +60,57 @@ class ProfilesTests: ProtonVPNUITests {
     @MainActor
     func testEditProfile() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
+        let newProfileName = StringUtils.randomAlphanumericString(length: 10)
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
         let (newCountryName, _) = try await ServersListUtils.getRandomCountry()
         
-        loginRobot
-            .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToProfilesTab()
-            .addNewProfile()
-            .setProfileDetails(profileName, countryName)
+        loginAndOpenProfiles(as: UserType.Plus.credentials)
+            .tapAddNewProfile()
+            .verify.isOnProfilesEditScreen()
+            .setProfileDetails(profile: profileName, country: countryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
+            .verify.profileIsCreated(profile: profileName)
             .editProfile(profileName)
-            .editProfileDetails(profileName, countryName, newCountryName)
+            .setProfileDetails(profile: newProfileName, country: newCountryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsEdited()
+            .verify.profileIsEdited(profile: newProfileName)
     }
     
     @MainActor
-    func testMakeDefaultAndSecureCoreProfilePlusUser() async throws {
+    func testMakeSecureCoreProfilePlusUser() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         
         let randomSecureCoreCountry = try await ServersListUtils.getRandomCountry(secureCore: true)
         let serverVia = try await ServersListUtils.getEntryCountries(for: randomSecureCoreCountry.code).first ?? ""
         
-        loginRobot
-            .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToProfilesTab()
-            .addNewProfile()
-            .makeDefaultProfileWithSecureCore(profileName, randomSecureCoreCountry.name, serverVia)
+        loginAndOpenProfiles(as: UserType.Basic.credentials)
+            .tapAddNewProfile()
+            .verify.isOnProfilesEditScreen()
+            .setProfileDetails(profile: profileName, country: randomSecureCoreCountry.name, server: serverVia, secureCoreState: true)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
+            .verify.profileIsCreated(profile: profileName)
     }
     
     @MainActor
     func testFreeUserCannotCreateProfile() {
         
-        loginRobot
-            .enterCredentials(UserType.Free.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToProfilesTab()
-            .addNewProfile()
+        loginAndOpenProfiles(as: UserType.Free.credentials)
+            .tapAddNewProfile()
             .verify.isShowingUpsellModal(ofType: .profiles)
     }
     
     @MainActor
     func testRecommendedProfiles() {
-        
-        loginRobot
-            .enterCredentials(UserType.Basic.credentials)
+        loginAndOpenProfiles(as: UserType.Free.credentials)
+            .verify.recommendedProfilesAreVisible()
+    }
+
+    private func loginAndOpenProfiles(as credentials: Credentials) -> ProfileRobot {
+        return loginRobot
+            .enterCredentials(credentials)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToProfilesTab()
-            .verify.recommendedProfilesAreVisible()
+            .verify.isOnProfilesScreen()
     }
 }
