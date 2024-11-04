@@ -123,6 +123,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var lastConnectionIntent: ConnectionSpec { get set }
 
+    var didShowDeprecationWarningForOSVersion: String? { get set }
+
     #if os(macOS)
     var forceExtensionUpgrade: Bool { get set }
     var connectedServerNameDoNotUse: String? { get set }
@@ -246,6 +248,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case forceExtensionUpgrade = "ForceExtensionUpgrade"
         case connectedServerNameDoNotUse = "ConnectedServerNameDoNotUse"
         #endif
+
+        case didShowDeprecationWarningForOSVersion = "DidShowDeprecationWarningForOSVersion"
     }
 
     public static let activeConnectionChangedNotification = Notification.Name("ActiveConnectionChangedNotification")
@@ -466,7 +470,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @InitializedProperty(.userRole) public var userRole: UserRole
 
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
-    
+
+    @StringProperty(.didShowDeprecationWarningForOSVersion) public var didShowDeprecationWarningForOSVersion: String?
+
     @Dependency(\.storage) var storage
 
     let defaults: UserDefaults

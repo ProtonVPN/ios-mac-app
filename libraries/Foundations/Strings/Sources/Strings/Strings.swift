@@ -878,6 +878,12 @@ public enum Localizable {
   public static var openVpnLogs: String { return Localizable.tr("Localizable", "_open_vpn_logs", fallback: "OpenVPN Logs") }
   /// OpenVPN
   public static var openvpn: String { return Localizable.tr("Localizable", "_openvpn", fallback: "OpenVPN") }
+  /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
+  public static func operatingSystemOutOfDateAlertDescription(_ p1: Any, _ p2: Any) -> String {
+    return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "The newest version of Proton VPN is only available on %@ %@ or later. Update your software to continue receiving updates.")
+  }
+  /// User's OS version is no longer actively supported by Proton VPN (alert title)
+  public static var operatingSystemOutOfDateAlertTitle: String { return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_title", fallback: "Update your software") }
   /// MacOS menu item; MacOS Profiles tab title;
   public static var overview: String { return Localizable.tr("Localizable", "_overview", fallback: "Overview") }
   /// MacOS profile form: feature selection value; iOS: country.server description in countries list;

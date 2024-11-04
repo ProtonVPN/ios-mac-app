@@ -2478,3 +2478,9 @@
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
 "_location_not_available_for_profile_text" = "The server you selected for '%@' is currently unavailable. Select a different server or try again later.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Update your software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";

@@ -138,11 +138,17 @@ class UpdateManager: NSObject {
     
     private var newestAppCastItem: SUAppcastItem? {
         appcast?.items.first {
+            $0.channel == nil || $0.channel == channel
+        }
+    }
+
+    private var newestAppCastItemThatSupportsThisOS: SUAppcastItem? {
+        appcast?.items.first {
             $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK &&
             ($0.channel == nil || $0.channel == channel)
         }
     }
-    
+
     private let suDateFormatter: DateFormatter = DateFormatter()
     
 }
@@ -183,14 +189,44 @@ extension UpdateManager: SPUUpdaterDelegate {
 }
 
 extension UpdateManager: UpdateChecker {
-    func isUpdateAvailable(_ callback: (Bool) -> Void) {
-        guard let item = newestAppCastItem, let currentBuild = currentBuild else {
-            callback(false)
-            return
+    enum UpdateCheckError: String, Error, CustomStringConvertible {
+        case notReady = "No appcast item has appeared yet."
+        case invalidMinimumSystemVersion = "Invalid or unrecognized minimum system version."
+        case missingMinimumSystemVersion = "No minimum system version specified in update item."
+
+        var description: String { rawValue }
+    }
+
+    func isUpdateAvailable() async -> Bool {
+        guard let item = newestAppCastItemThatSupportsThisOS,
+              let currentBuild = currentBuild else {
+            return false
         }
 
-        callback(CustomVersionComparator.shared.compareVersion(currentBuild, toVersion: item.versionString) == .orderedAscending)
+        return CustomVersionComparator.shared.compareVersion(currentBuild, toVersion: item.versionString) == .orderedAscending
     }
+
+    /// Check if the latest app supports the current running OS version.
+    func minimumVersionRequiredByNextUpdate() async -> OperatingSystemVersion {
+        do {
+            guard let item = newestAppCastItem else { throw UpdateCheckError.notReady }
+
+            // If no minimum system version is specified, assume we're included.
+            guard let minimumOSVersionString = item.minimumSystemVersion else {
+                throw UpdateCheckError.missingMinimumSystemVersion
+            }
+
+            guard let minimumOSVersion = OperatingSystemVersion(osVersionString: minimumOSVersionString) else {
+                throw UpdateCheckError.invalidMinimumSystemVersion
+            }
+
+            return minimumOSVersion
+        } catch {
+            log.error("Couldn't check minimum version required by next update", metadata: ["error": "\(error)"])
+            return ProcessInfo.processInfo.operatingSystemVersion
+        }
+    }
+
 }
 
 /// Compare two versions in a custom fashion.
