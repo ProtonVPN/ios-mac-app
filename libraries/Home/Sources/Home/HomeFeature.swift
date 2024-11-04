@@ -107,15 +107,16 @@ public struct HomeFeature {
                 return .run { send in
                     @Dependency(\.connectToVPN) var connectToVPN
                     try? await connectToVPN(spec)
-
-                    authorizer.registerServerChange(connectedAt: .now) // TODO: [redesign] is this a good place to do it?
                     await send(.recents(.connectionEstablished(spec)))
                 }
             case .changeServer:
                 // TODO: [redesign, VPNAPPL-2351] Do an actual server change
                 return .concatenate([
                     .send(.disconnect),
-                    .send(.connect(.defaultFastest))
+                    .send(.connect(.defaultFastest)),
+                    .run { _ in
+                        authorizer.registerServerChange(connectedAt: .now)
+                    }
                 ])
 
             case .disconnect:

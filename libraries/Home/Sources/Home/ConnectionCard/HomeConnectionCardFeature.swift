@@ -30,10 +30,18 @@ public struct HomeConnectionCardFeature {
     public struct State: Equatable {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
-        public var showChangeServerButton: Bool = false
+        public var showChangeServerButton: Bool {
+            if case .connected = vpnConnectionStatus {
+                return userTier.isFreeTier
+            }
+            return false
+        }
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
 
-        public init() { }
+        public init() {
+            @Dependency(\.serverChangeAuthorizer) var authorizer
+            serverChangeAvailability = authorizer.serverChangeAvailability()
+        }
 
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
@@ -82,13 +90,7 @@ public struct HomeConnectionCardFeature {
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
 
-            case .newConnectionStatus(let connectionStatus):
-                if case .connected = connectionStatus {
-                    state.showChangeServerButton = state.userTier.isFreeTier
-                } else {
-                    state.showChangeServerButton = false
-                }
-
+            case .newConnectionStatus:
                 @Dependency(\.serverChangeAuthorizer) var authorizer
                 state.serverChangeAvailability = authorizer.serverChangeAvailability()
 

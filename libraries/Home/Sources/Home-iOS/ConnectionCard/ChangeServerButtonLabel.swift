@@ -37,20 +37,25 @@ struct ChangeServerButtonLabel: View {
                 HStack {
                     Spacer()
                     Text(Localizable.changeServer)
+                        .font(.body1(.semibold))
                     Spacer()
                     if changeServerAllowedDate > date.now {
                         HStack(spacing: .themeSpacing8) {
-                            IconProvider.hourglass
+                            IconProvider
+                                .hourglass
+                                .resizable()
+                                .frame(.square(.themeSpacing16))
                             Text(changeServerAllowedDate
                                 .timeIntervalSinceNow
                                 .asColonSeparatedString(maxUnit: .hour, minUnit: .minute))
+                                .font(.body2(emphasised: false))
                             Spacer()
                                 .frame(width: .themeSpacing24)
                         }
                         .foregroundColor(Color(.text))
                     }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity)
             }
             .buttonStyle(ChangeServerButtonStyle(isActive: changeServerAllowedDate < date.now))
         }
@@ -63,7 +68,6 @@ struct ChangeServerButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.body1(.semibold))
             .frame(maxWidth: .infinity, minHeight: 48)
             .background(Color(.background, .weak).opacity(0.001)) // we need to give it a background in order for the button to be tappable on the whole view...
             .foregroundColor(isActive
@@ -73,4 +77,17 @@ struct ChangeServerButtonStyle: ButtonStyle {
                          lineWidth: 1,
                          cornerRadius: .radius8)
     }
+}
+
+@available(iOS 17, *)
+#Preview("Change Server Button Label", traits: .sizeThatFitsLayout) {
+    VStack {
+        ChangeServerButtonLabel(sendAction: { _ in },
+                                changeServerAllowedDate: Date().addingTimeInterval(60 * 60))
+        ChangeServerButtonLabel(sendAction: { _ in },
+                                changeServerAllowedDate: Date().addingTimeInterval(-1))
+    }
+    .padding()
+    .preferredColorScheme(.dark)
+    .background(Color(.background, .weak))
 }

@@ -157,14 +157,43 @@ fileprivate extension VPNConnectionStatus {
 }
 
 #if targetEnvironment(simulator)
-
-@available(iOS 17, *)
-#Preview("Free users", traits: .fixedLayout(width: 740, height: 700)) {
-    VStack(spacing: .themeSpacing24) {
-        cardPair(spec: .defaultFastest, userTier: 0)
-    }
+#if compiler(>=6)
+@available(iOS 18, *)
+#Preview("Change Server Available",
+         traits: .sizeThatFitsLayout,
+                 .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
+    @Shared(.userTier) var userTier
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+    userTier = 0
+    vpnConnectionStatus = .connected(.secureCoreCountryHop, nil)
+    return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
+            HomeConnectionCardFeature()
+        }))
     .padding()
     .preferredColorScheme(.dark)
+}
+
+@available(iOS 18, *)
+#Preview("Change Server Unavailable",
+         traits: .sizeThatFitsLayout,
+                 .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
+    @Shared(.userTier) var userTier
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+    userTier = 0
+    vpnConnectionStatus = .connected(.secureCoreCountryHop, nil)
+    return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
+            HomeConnectionCardFeature()
+        }))
+    .padding()
+    .preferredColorScheme(.dark)
+}
+#endif
+
+@available(iOS 17, *)
+#Preview("Free users", traits: .fixedLayout(width: 840, height: 300)) {
+    cardPair(spec: .defaultFastest, userTier: 0)
+        .padding()
+        .preferredColorScheme(.dark)
 }
 
 @available(iOS 17, *)
