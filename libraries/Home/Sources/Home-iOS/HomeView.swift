@@ -116,7 +116,7 @@ public struct HomeView: View {
                     )
             }
             .onPreferenceChange(ConnectionStatusStickToTopPreferenceKey.self) { isStickingToTop in
-                guard let isStickingToTop = isStickingToTop else { return }
+                guard let isStickingToTop else { return }
                 store.send(.connectionStatus(.stickToTop(isStickingToTop)))
             }
         }
