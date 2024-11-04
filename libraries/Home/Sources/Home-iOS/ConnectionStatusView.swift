@@ -163,7 +163,6 @@ public struct ConnectionStatusView: View {
                 }
 
             }
-
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(store.stickToTop ? .visible : .hidden, for: .navigationBar)
             .task { await store.send(.watchConnectionStatus).finish() }
