@@ -26,7 +26,7 @@ import PMLogger
 
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
-extension VPNConnectionStatusPublisherKey: DependencyKey {
+extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
 
     @available(macOS 12, *)
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {

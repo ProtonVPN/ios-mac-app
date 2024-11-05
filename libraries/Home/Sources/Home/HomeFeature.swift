@@ -27,6 +27,9 @@ import ConnectionDetails
 @Reducer
 public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
+    @Dependency(\.connectToVPN) private var connectToVPN
+    @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.date) private var date
 
     @Reducer(state: .equatable)
     public enum Destination {
@@ -105,24 +108,25 @@ public struct HomeFeature {
                 return .none
             case let .connect(spec):
                 return .run { send in
-                    @Dependency(\.connectToVPN) var connectToVPN
                     try? await connectToVPN(spec)
                     await send(.recents(.connectionEstablished(spec)))
                 }
             case .changeServer:
-                // TODO: [redesign, VPNAPPL-2351] Do an actual server change
+                let randomConnectionSpec = ConnectionSpec(location: .random, features: .init())
                 return .concatenate([
                     .send(.disconnect),
-                    .send(.connect(.defaultFastest)),
+                    .send(.connect(randomConnectionSpec)),
                     .run { _ in
-                        authorizer.registerServerChange(connectedAt: .now)
+                        // The connection destination is visible at this point.
+                        // Register server change now to prevent gaining unlimited attempts by
+                        // repeatedly cancelling until a specific server is chosen.
+                        authorizer.registerServerChange(connectedAt: date.now)
                     }
                 ])
 
             case .disconnect:
                 state.connectionStatus.protectionState = .unprotected
                 return .run { send in
-                    @Dependency(\.disconnectVPN) var disconnectVPN
                     try? await disconnectVPN()
                 }
 

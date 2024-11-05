@@ -41,6 +41,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
 
     public enum Location: Equatable, Hashable, Codable {
         case fastest
+        case random
         case region(code: String)
         case exact(Server, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)

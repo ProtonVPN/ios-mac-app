@@ -148,6 +148,8 @@ public struct HomeMapFeature {
 extension ConnectionSpec {
     var countryCode: String? {
         switch location {
+        case .random:
+            break
         case .fastest:
             break
         case .region(code: let code):

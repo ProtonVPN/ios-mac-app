@@ -43,7 +43,7 @@ public struct ConnectionInfoBuilder {
             return location.subtext(locale: locale)
         }
         switch location {
-        case .fastest:
+        case .fastest, .random:
             return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
         case .region:
             return nil

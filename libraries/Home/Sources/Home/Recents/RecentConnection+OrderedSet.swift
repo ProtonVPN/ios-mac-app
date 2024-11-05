@@ -19,6 +19,7 @@
 import OrderedCollections
 import Domain
 import Dependencies
+import VPNAppCore
 
 extension OrderedSet<RecentConnection> {
 

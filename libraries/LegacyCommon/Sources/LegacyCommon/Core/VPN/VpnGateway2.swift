@@ -219,6 +219,9 @@ fileprivate extension ConnectionSpec {
         case .fastest:
             return .fastest
 
+        case .random:
+            return .random
+
         case .region(let code):
             return .country(code, .fastest)
 
