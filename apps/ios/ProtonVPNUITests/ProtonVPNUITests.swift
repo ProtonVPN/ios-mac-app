@@ -89,48 +89,51 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     private static func disableAutoFillPasswords() {
         #if targetEnvironment(simulator)
-        guard #available(iOS 16.0, *), isAutoFillPasswordsEnabled else {
+        guard #available(iOS 17.3, *), isAutoFillPasswordsEnabled else {
             return
         }
 
         let settingsApp = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
-        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
 
-        settingsApp.launch()
+        launchSettingsApp(settingsApp: settingsApp)
+
         defer {
             settingsApp.terminate()
         }
-        settingsApp.tables.staticTexts["PASSWORDS"].tap()
         
-        if #available(iOS 17.1, *) {
-            navigateToPasswordOptions(settingsApp: settingsApp)
-        } else {
-            let passcodeInput = springboard.secureTextFields["Passcode field"]
-            passcodeInput.tap()
-            passcodeInput.typeText("1\r")
-            navigateToPasswordOptions(settingsApp: settingsApp)
-        }
-        
-        var settingsText = "AutoFill Passwords"
-        if #available(iOS 17.0, *) {
-            settingsText = "AutoFill Passwords and Passkeys"
-        }
-        let autofillSwitch = settingsApp.switches[settingsText]
-        
-        if (autofillSwitch.value as? String) == "1" {
-            autofillSwitch.tap()
-        }
+        navigateToAutoFillSettings(settingsApp: settingsApp)
+        toggleAutoFillSwitchIfNeeded(settingsApp: settingsApp)
+
         isAutoFillPasswordsEnabled = false
         #endif
     }
     
-    private static func navigateToPasswordOptions(settingsApp: XCUIApplication) {
-        let cell = settingsApp.tables.cells["PasswordOptionsCell"]
-        _ = cell.waitForExistence(timeout: 1)
-        guard cell.exists else {
-            return
+    private static func launchSettingsApp(settingsApp: XCUIApplication) {
+        settingsApp.launch()
+    }
+
+    private static func navigateToAutoFillSettings(settingsApp: XCUIApplication) {
+        if #available(iOS 18.0, *) {
+            settingsApp.buttons["com.apple.settings.general"].tap()
+            settingsApp.tables.staticTexts["AutoFill & Passwords"].tap()
+        } else {
+            settingsApp.tables.staticTexts["PASSWORDS"].tap()
+            let passwordOptionsCell = settingsApp.tables.cells["PasswordOptionsCell"]
+            _ = passwordOptionsCell.waitForExistence(timeout: 1)
+            guard passwordOptionsCell.exists else {
+                return
+            }
+            passwordOptionsCell.buttons["chevron"].tap()
         }
-        cell.buttons["chevron"].tap()
+    }
+
+    private static func toggleAutoFillSwitchIfNeeded(settingsApp: XCUIApplication) {
+        let autofillSwitch = settingsApp.switches["AutoFill Passwords and Passkeys"]
+        let autofillSwitchValue = autofillSwitch.value as? String
+
+        if autofillSwitchValue == "1" {
+            autofillSwitch.switches.firstMatch.tap()
+        }
     }
     
     func setupAtlasEnvironment() {
