@@ -26,7 +26,7 @@ import PMLogger
 
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
-extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
+extension VPNConnectionStatusPublisherKey: DependencyKey {
 
     @available(macOS 12, *)
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
@@ -35,13 +35,12 @@ extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
             .map {
                 let appStateManager = Container.sharedContainer.makeAppStateManager()
 
-                // todo: when VPN connection will be refactored, please try saving lastConnectionIntent
-                // inside NETunnelProviderProtocol.providerConfiguration for WG and OpenVPN.
                 let propertyManager = Container.sharedContainer.makePropertiesManager()
                 let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
 
                 return ($0.object as! AppDisplayState)
                     .vpnConnectionStatus(appStateManager.activeConnection(),
+                                         lastPreparedServer: propertyManager.lastPreparedServer,
                                          intent: propertyManager.lastConnectionIntent,
                                          connectedDate: connectedDate)
             }
@@ -65,6 +64,7 @@ extension VPNConnectionStatusKey: DependencyKey {
 
         return appStateManager.displayState.vpnConnectionStatus(
             appStateManager.activeConnection(),
+            lastPreparedServer: propertyManager.lastPreparedServer,
             intent: propertyManager.lastConnectionIntent,
             connectedDate: await Container.sharedContainer.makeVpnManager().connectedDate()
         )
@@ -75,19 +75,31 @@ extension VPNConnectionStatusKey: DependencyKey {
 
 extension AppDisplayState {
 
-    func vpnConnectionStatus(_ connectionConfiguration: ConnectionConfiguration?, intent: ConnectionSpec, connectedDate: Date?) -> VPNConnectionStatus {
+    func vpnConnectionStatus(
+        _ connectionConfiguration: ConnectionConfiguration?,
+        lastPreparedServer: ServerModel?,
+        intent: ConnectionSpec,
+        connectedDate: Date?
+    ) -> VPNConnectionStatus {
+        let resolvedConnection = connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate)
         switch self {
         case .connected:
-            return .connected(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
+            return .connected(intent, resolvedConnection)
 
         case .connecting:
-            return .connecting(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
+            // `AppStateManager` posts a notification before `connectionConfiguration` is updated with the target server.
+            // Changing this would require complex changes to legacy connection logic, so let's grab the target server
+            // from properties manager instead.
+            if let lastPreparedServer {
+                return .connecting(intent, resolvedConnection?.overriding(server: lastPreparedServer))
+            }
+            return .connecting(intent, resolvedConnection)
 
         case .loadingConnectionInfo:
-            return .loadingConnectionInfo(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
+            return .loadingConnectionInfo(intent, resolvedConnection)
 
         case .disconnecting:
-            return .disconnecting(intent, connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate))
+            return .disconnecting(intent, resolvedConnection)
 
         case .disconnected:
             return .disconnected
@@ -110,6 +122,25 @@ extension ConnectionConfiguration {
             natType: self.natType,
             safeMode: self.safeMode,
             server: serverWithOnlyActiveEndpoint
+        )
+    }
+}
+
+extension VPNConnectionActual {
+    public func overriding(server: ServerModel) -> VPNConnectionActual {
+        let server = VPNServer(legacyModel: server)
+
+        guard let endpoint = server.endpoints.randomElement() else {
+            log.error("Server has no endpoints")
+            return self
+        }
+
+        return VPNConnectionActual(
+            connectedDate: self.connectedDate,
+            vpnProtocol: self.vpnProtocol,
+            natType: self.natType,
+            safeMode: self.safeMode,
+            server: Server(logical: server.logical, endpoint: endpoint)
         )
     }
 }

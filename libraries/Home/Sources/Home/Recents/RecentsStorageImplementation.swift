@@ -80,7 +80,7 @@ public final class RecentsStorageImplementation {
 
     public func updateList(with spec: ConnectionSpec) {
         guard spec.shouldManifestRecentsEntry else {
-            log.debug("Spec should not be added to recents", metadata: ["spec": "\(spec)"])
+            log.debug("Ignoring entry to recents list for spec", metadata: ["spec": "\(spec)"])
             return
         }
         collection.updateList(with: spec)

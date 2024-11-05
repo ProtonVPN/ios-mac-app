@@ -21,7 +21,7 @@ import ComposableArchitecture
 import Domain
 import VPNAppCore
 
-extension ConnectToVPNKey: @retroactive DependencyKey {
+extension ConnectToVPNKey: DependencyKey {
     public static let liveValue = legacyConnect
 
     /// Bridges new connection dependency with the legacy connection layer

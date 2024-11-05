@@ -86,6 +86,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let server = try selectServer(intent: intent, connectionProtocol: connectionProtocol)
 
+        propertiesManager.lastPreparedServer = server
+
         DispatchQueue.main.async {
             self.appStateManager.prepareToConnect()
             connectionPreparer.determineServerParametersAndConnect(
