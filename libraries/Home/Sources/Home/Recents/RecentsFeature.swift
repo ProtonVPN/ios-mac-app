@@ -112,3 +112,10 @@ public struct RecentsFeature {
         }
     }
 }
+
+extension ConnectionSpec {
+    public var shouldManifestRecentsEntry: Bool {
+        // We don't want the change server action to add a `Random` item into recents
+        location != .random
+    }
+}
