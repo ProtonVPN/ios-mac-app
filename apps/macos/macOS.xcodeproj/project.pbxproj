@@ -50,7 +50,6 @@
 		4C25999C2A7AA29800A31895 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4C25999B2A7AA29800A31895 /* Dependencies */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
 		4C660DB42CCA810300780D42 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 4C660DB32CCA810300780D42 /* Version */; };
-		4C660DB72CCBB28D00780D42 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4C660DB62CCBB28D00780D42 /* Sparkle */; };
 		4C74D32B2A0B9D7F004F8528 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 4C74D32A2A0B9D7F004F8528 /* PMLogger */; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
@@ -76,6 +75,7 @@
 		4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7942A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4CD1F7962A72DF2700E8AB01 /* DictionaryCoder */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
+		4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEBB4082CDA68DE00AB5556 /* Sparkle */; };
 		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
 		54A3F867B897C7D92CDF75C9 /* SubuserMacAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD48FBC3A054F5D91A15F1E /* SubuserMacAlertViewController.swift */; };
@@ -1062,7 +1062,7 @@
 				E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
 				4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
-				4C660DB72CCBB28D00780D42 /* Sparkle in Frameworks */,
+				4CEBB4092CDA68DE00AB5556 /* Sparkle in Frameworks */,
 				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
 				E5E48D032A4C3D7100B09111 /* Logging in Frameworks */,
 				4CD1F7952A72DE0400E8AB01 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
@@ -2759,7 +2759,7 @@
 				E5867D7C2C4E7D55009FB802 /* NetShield */,
 				E5867D7E2C4E7D55009FB802 /* NetShield-macOS */,
 				4C660DB32CCA810300780D42 /* Version */,
-				4C660DB62CCBB28D00780D42 /* Sparkle */,
+				4CEBB4082CDA68DE00AB5556 /* Sparkle */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -2883,7 +2883,7 @@
 				4C2599922A7AA25800A31895 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 				4C660DB22CCA810300780D42 /* XCRemoteSwiftPackageReference "Version" */,
-				4C660DB52CCBB28D00780D42 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -4388,14 +4388,6 @@
 				minimumVersion = 2.1.0;
 			};
 		};
-		4C660DB52CCBB28D00780D42 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/protonjohn/Sparkle";
-			requirement = {
-				kind = exactVersion;
-				version = 2.4.3;
-			};
-		};
 		4C7D40572A60251700ACDBED /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -4427,6 +4419,14 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 1.1.0;
+			};
+		};
+		4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.2;
 			};
 		};
 		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
@@ -4465,11 +4465,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C660DB22CCA810300780D42 /* XCRemoteSwiftPackageReference "Version" */;
 			productName = Version;
-		};
-		4C660DB62CCBB28D00780D42 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4C660DB52CCBB28D00780D42 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		4C74D32A2A0B9D7F004F8528 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4514,6 +4509,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CD1F78C2A72D93700E8AB01 /* XCRemoteSwiftPackageReference "DictionaryCoder" */;
 			productName = DictionaryCoder;
+		};
+		4CEBB4082CDA68DE00AB5556 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		7714FF9E2C9062AE00D29EF4 /* ProtonCoreTestingToolkitUITestsCore */ = {
 			isa = XCSwiftPackageProductDependency;
