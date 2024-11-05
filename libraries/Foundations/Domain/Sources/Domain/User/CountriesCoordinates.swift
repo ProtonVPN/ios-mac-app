@@ -23,6 +23,13 @@ public enum CountriesCoordinates {
 
     static let countryCenterCoordinatesFile = "CountryCenterCoordinates"
     static let countryBoundingBoxesFile = "CountryBoundingBoxes"
+    static let countriesWithDisputedTerritoriesFile = "CountriesWithDisputedTerritories"
+
+    public static let disputedCountries: [String: [String]] = {
+        let boundingBoxesURL = Bundle.module.url(forResource: countriesWithDisputedTerritoriesFile, withExtension: "json")!
+        let data = try! Data(contentsOf: boundingBoxesURL)
+        return try! JSONDecoder().decode([String: [String]].self, from: data)
+    }()
 
     static let centerCoordinates: [String: [Double]] = {
         let boundingBoxesURL = Bundle.module.url(forResource: countryCenterCoordinatesFile, withExtension: "json")!

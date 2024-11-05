@@ -19,6 +19,7 @@
 import Foundation
 import SVGView
 import SwiftUI
+import Domain
 
 /// Optimization: render the map to an image to avoid expensive re-rendering of the `SVGView`
 /// whenever it is occluded by the pin animation or recents/protection status bottom sheet
@@ -68,26 +69,46 @@ struct MapRenderView: View {
 
         let previousMapTuple = getCachedMapViewOrCreateEmptyMap()
 
-        if previousMapTuple.highlightedCountryCode == countryCode {
+        // If we're highlighting the same country, return cached svg
+        if previousMapTuple.highlightedCountryCode == lowercaseCountryCode {
             log.debug("Returning cached map view for code: \(lowercaseCountryCode)")
             return SVGView(svg: previousMapTuple.svg)
         }
 
+        let currentSVG: SVGNode
+
         if let previousCountryCode = previousMapTuple.highlightedCountryCode {
-            log.debug("Removing highlight from previous country: \(previousCountryCode)")
-            let previousNode = previousMapTuple.svg.node(code: previousCountryCode)
-            previousNode?.fill(highlighted: false)
+            // if we removed borders last time, start off with a plain svg
+            if CountriesCoordinates.disputedCountries[previousCountryCode] != nil {
+                currentSVG = makeSVG()
+                log.debug("previous country \(previousCountryCode), using new map")
+            } else {
+                currentSVG = previousMapTuple.svg
+                // Take the previous node and de-highlight it
+                let previousNode = currentSVG.node(code: previousCountryCode)
+                log.debug("Removing highlight from previous country: \(previousCountryCode)")
+                previousNode?.fill(highlighted: false)
+            }
+        } else {
+            currentSVG = idleMapSVG
+            log.debug("no previous country, using new map")
         }
 
-        guard let newNode = previousMapTuple.svg.node(code: lowercaseCountryCode) else {
+        guard let newNode = currentSVG.node(code: lowercaseCountryCode) else {
             log.error("Failed to find new node to highlight")
             return idleMapView
         }
-        log.debug("Highlighting new country: \(lowercaseCountryCode)")
-        newNode.fill(highlighted: true)
+        if let codes = CountriesCoordinates.disputedCountries[lowercaseCountryCode] {
+            log.debug("Hiding new country borders: \(lowercaseCountryCode)")
+            newNode.hideBorders()
+            codes.forEach { currentSVG.node(code: $0)?.hideBorders() }
+        } else {
+            log.debug("Highlighting new country: \(lowercaseCountryCode)")
+            newNode.fill(highlighted: true)
+        }
 
-        cachedMapTuple = (highlightedCountryCode: lowercaseCountryCode, previousMapTuple.svg)
-        return SVGView(svg: previousMapTuple.svg)
+        cachedMapTuple = (highlightedCountryCode: lowercaseCountryCode, currentSVG)
+        return SVGView(svg: currentSVG)
     }
 
     private static let idleMapSVG = makeSVG()
@@ -118,6 +139,17 @@ extension SVGNode {
         } else {
             for node in (self as? SVGGroup)?.contents ?? [] {
                 (node as? SVGPath)?.fill = fillColor
+            }
+        }
+    }
+
+    func hideBorders() {
+        let stroke = SVGStroke(fill: Self.countryColor, width: 0.5)
+        if let path = self as? SVGPath {
+            path.stroke = stroke
+        } else {
+            for node in (self as? SVGGroup)?.contents ?? [] {
+                (node as? SVGPath)?.stroke = stroke
             }
         }
     }
