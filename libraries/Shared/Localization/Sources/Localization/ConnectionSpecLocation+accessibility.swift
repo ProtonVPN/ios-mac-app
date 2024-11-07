@@ -37,6 +37,16 @@ public extension ConnectionSpec.Location {
         }
     }
 
+    // When nil, we should use the information about the server we connected to to form the header
+    func headerText(locale: Locale) -> String? {
+        switch self {
+        case .random:
+            return nil
+        default:
+            return text(locale: locale)
+        }
+    }
+
     func text(locale: Locale) -> String {
         switch self {
         case .fastest,
