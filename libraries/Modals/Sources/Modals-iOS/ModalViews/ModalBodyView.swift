@@ -76,12 +76,6 @@ struct ModalBodyView: View {
 
     private var headerView: some View {
         ZStack {
-            if let imagePadding {
-                modalType.artImage().padding(imagePadding)
-            } else {
-                modalType.artImage()
-            }
-
             if !modalType.shouldVerticallyCenterContent {
                 LinearGradient(
                     colors: [
@@ -91,6 +85,12 @@ struct ModalBodyView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
+            }
+
+            if let imagePadding {
+                modalType.artImage().padding(imagePadding)
+            } else {
+                modalType.artImage()
             }
         }
         .ignoresSafeArea(edges: [.top, .horizontal])
@@ -140,6 +140,9 @@ struct ModalBodyView: View {
                     } else if case let .toggle(id, title, subtitle, initialState) = feature {
                         ToggleFeatureView(title: title, subtitle: subtitle, initialState: initialState) { newValue in
                             onFeatureUpdate?(.toggle(id: id, title: title, subtitle: subtitle, state: newValue))
+                        }
+                        .onAppear {
+                            onFeatureUpdate?(feature) // initial call
                         }
                     }
                 }
@@ -194,6 +197,6 @@ private extension ModalModel.Subtitle {
 struct ModalBody_Previews: PreviewProvider {
     static var previews: some View {
         ModalBodyView(modalType: .onboardingGetStarted)
-                .previewDisplayName("ModalBody")
+            .previewDisplayName("ModalBody")
     }
 }

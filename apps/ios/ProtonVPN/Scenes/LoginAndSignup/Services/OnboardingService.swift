@@ -33,6 +33,7 @@ protocol OnboardingServiceFactory: AnyObject {
 }
 
 protocol OnboardingServiceDelegate: AnyObject {
+    var telemetrySettings: TelemetrySettings { get }
     func onboardingServiceDidFinish()
 }
 
@@ -93,9 +94,9 @@ extension OnboardingModuleService: OnboardingService {
         } onFeatureUpdate: { feature in
             switch feature {
             case .toggle(.statistics, _, _, let state):
-                break // TODO: VPNAPPL-2407 + !1742
+                self.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
             case .toggle(.crashes, _, _, let state):
-                break // TODO: VPNAPPL-2407 + !1742
+                self.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }
