@@ -67,11 +67,14 @@ public struct ServerChangeAuthorizerImplementation {
 
         let recentlyUpsold = recentConnections.contains(where: \.upsellNext)
 
-        storage.push(item: .init(
+        let serverChangeItem = ServerChangeStorage.ConnectionStackItem(
             intent: .random,
             date: connectionDate,
             upsellNext: recentConnections.count >= (config.changeServerAttemptLimit - 1) &&
             !recentlyUpsold
-        ))
+        )
+
+        log.debug("Registering server change", metadata: ["item": "\(serverChangeItem)"])
+        storage.push(item: serverChangeItem)
     }
 }

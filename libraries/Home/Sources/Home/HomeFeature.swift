@@ -112,16 +112,14 @@ public struct HomeFeature {
                     await send(.recents(.connectionEstablished(spec)))
                 }
             case .changeServer:
+                guard case .available = authorizer.serverChangeAvailability() else {
+                    log.error("User is not authorized for server change, action should have been unavailable")
+                    return .none
+                }
                 let randomConnectionSpec = ConnectionSpec(location: .random, features: .init())
                 return .concatenate([
                     .send(.disconnect),
                     .send(.connect(randomConnectionSpec)),
-                    .run { _ in
-                        // The connection destination is visible at this point.
-                        // Register server change now to prevent gaining unlimited attempts by
-                        // repeatedly cancelling until a specific server is chosen.
-                        authorizer.registerServerChange(connectedAt: date.now)
-                    }
                 ])
 
             case .disconnect:
