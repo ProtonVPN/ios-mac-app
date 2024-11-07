@@ -25,6 +25,7 @@ import ProtonCoreTestingToolkitUITestsCore
 import Strings
 import PMLogger
 import UITestsHelpers
+import Ergonomics
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
     
@@ -49,7 +50,15 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-AppleLocale en_US",
             LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString
         ]
-        
+
+        if let dynamicDomain = Bundle.dynamicDomain {
+            launchArguments.append("DYNAMIC_DOMAIN=\(dynamicDomain)")
+        }
+
+        if let atlasSecret = Bundle.atlasSecret {
+            launchArguments.append("ATLAS_SECRET=\(atlasSecret)")
+        }
+
         beforeSetUp(bundleIdentifier: "ch.protonmail.vpn.ProtonVPNUITests", launchArguments: launchArguments)
         super.setUp()
         

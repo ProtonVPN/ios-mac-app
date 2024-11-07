@@ -30,6 +30,7 @@ import ProtonCoreTestingToolkitUnitTestsCore
 import ProtonCoreTestingToolkitUITestsCore
 import XCTest
 import UITestsHelpers
+import Ergonomics
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
@@ -46,7 +47,6 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     override func setUp() {
-
         launchArguments = [
             "UITests",
             "-BlockOneTimeAnnouncement", "YES",
@@ -54,8 +54,17 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-AppleLanguages", "(en)",
             "-AppleLocale en_US",
             "enforceUnauthSessionStrictVerificationOnBackend",
-            LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString
+            LogFileManagerImplementation.logDirLaunchArgument,
+            logFileUrl.absoluteString
         ]
+
+        if let dynamicDomain = Bundle.dynamicDomain {
+            launchArguments.append("DYNAMIC_DOMAIN=\(dynamicDomain)")
+        }
+
+        if let atlasSecret = Bundle.atlasSecret {
+            launchArguments.append("ATLAS_SECRET=\(atlasSecret)")
+        }
 
         beforeSetUp(bundleIdentifier: "ch.protonmail.vpn.ProtonVPNUITests", launchArguments: launchArguments)
         super.setUp()
@@ -185,7 +194,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     lazy var quarkCommands = Quark().baseUrl(doh)
 
     var doh: DoH {
-        if let customDomain = dynamicDomain, !customDomain.isEmpty {
+        if let customDomain = dynamicDomain ?? Bundle.dynamicDomain, !customDomain.isEmpty {
             return CustomServerConfigDoH(
                 signupDomain: customDomain,
                 captchaHost: "https://api.\(customDomain)",

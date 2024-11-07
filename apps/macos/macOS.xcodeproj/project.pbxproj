@@ -62,6 +62,7 @@
 		4C8641C527D2620C00EEFB1D /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C8C31692A73CF50006AD628 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C31682A73CF50006AD628 /* WireguardConfig.swift */; };
+		4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F57A2CDCDD4D006BFD77 /* Ergonomics */; };
 		4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */; };
 		4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
@@ -991,6 +992,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */,
 				774573A62CB3E273002068CC /* fusion in Frameworks */,
 				77DA78742CB7F83800E12F5C /* Localization in Frameworks */,
 				776F21392CBFD7920066E36B /* UITestsHelpers in Frameworks */,
@@ -2637,6 +2639,7 @@
 				77B1B6172CB5ACC5002D76B0 /* ProtonCoreTestingToolkitPerformance */,
 				77DA78732CB7F83800E12F5C /* Localization */,
 				776F21382CBFD7920066E36B /* UITestsHelpers */,
+				4C93F57A2CDCDD4D006BFD77 /* Ergonomics */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */;
@@ -4484,6 +4487,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */;
 			productName = TrustKit;
+		};
+		4C93F57A2CDCDD4D006BFD77 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
 		};
 		4CD1F7862A72BEDA00E8AB01 /* BugReport */ = {
 			isa = XCSwiftPackageProductDependency;
