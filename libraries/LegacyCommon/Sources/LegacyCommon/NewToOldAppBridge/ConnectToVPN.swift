@@ -21,8 +21,11 @@ import ComposableArchitecture
 import Domain
 import VPNAppCore
 
-extension ConnectToVPNKey {
-    public static let bridgedConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
+extension ConnectToVPNKey: DependencyKey {
+    public static let liveValue = legacyConnect
+
+    /// Bridges new connection dependency with the legacy connection layer
+    public static let legacyConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
 

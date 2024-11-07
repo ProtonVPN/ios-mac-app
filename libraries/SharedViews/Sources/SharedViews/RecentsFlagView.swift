@@ -34,6 +34,8 @@ public struct FlagView: View {
 
     public var body: some View {
         switch location {
+        case .random:
+            SimpleFlagView(regionCode: "Random", flagSize: flagSize)
         case .fastest:
             SimpleFlagView(regionCode: "Fastest", flagSize: flagSize)
         case .region(let regionCode), .exact(_, _, _, let regionCode):
@@ -66,13 +68,27 @@ extension SecureCoreFlagView {
 struct SecureCoreFlagView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 8) {
+            standardFlags
+            secureCoreFlags
+        }
+        .previewLayout(.sizeThatFits)
+    }
+
+    static var standardFlags: some View {
+        HStack(spacing: 8) {
             FlagView(location: .fastest, flagSize: .defaultSize)
+            FlagView(location: .random, flagSize: .defaultSize)
             FlagView(location: .region(code: "PL"), flagSize: .defaultSize)
+        }
+        .padding(8)
+    }
+
+    static var secureCoreFlags: some View {
+        HStack(spacing: 8) {
             FlagView(location: .secureCore(.fastest), flagSize: .defaultSize)
             FlagView(location: .secureCore(.fastestHop(to: "CZ")), flagSize: .defaultSize)
             FlagView(location: .secureCore(.hop(to: "GB", via: "LT")), flagSize: .defaultSize)
         }
         .padding(8)
-            .previewLayout(.sizeThatFits)
     }
 }

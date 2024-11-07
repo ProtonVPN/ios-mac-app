@@ -86,6 +86,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let server = try selectServer(intent: intent, connectionProtocol: connectionProtocol)
 
+        propertiesManager.lastPreparedServer = server
+
         DispatchQueue.main.async {
             self.appStateManager.prepareToConnect()
             connectionPreparer.determineServerParametersAndConnect(
@@ -218,6 +220,9 @@ fileprivate extension ConnectionSpec {
         switch self.location {
         case .fastest:
             return .fastest
+
+        case .random:
+            return .random
 
         case .region(let code):
             return .country(code, .fastest)

@@ -28,9 +28,6 @@ extension DependencyValues {
   }
 }
 
-public enum DisconnectVPNKey: DependencyKey {
-    public static let liveValue: @Sendable () async throws -> Void = {
-        // After Accounts SPM migration, real implementation should live here
-        log.assertionFailure("Use real implementation from VPNCore")
-    }
+public enum DisconnectVPNKey: TestDependencyKey {
+    public static let testValue: @Sendable () async throws -> Void = { }
 }

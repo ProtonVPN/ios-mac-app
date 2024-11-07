@@ -20,8 +20,11 @@ import Foundation
 import ComposableArchitecture
 import VPNAppCore
 
-extension DisconnectVPNKey {
-    public static let bridgedDisconnect: @Sendable () async throws -> Void = {
+extension DisconnectVPNKey: DependencyKey {
+    public static let liveValue = legacyDisconnect
+
+    /// Bridges new disconnection dependency with the legacy connection layer
+    public static let legacyDisconnect: @Sendable () async throws -> Void = {
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateDisconnect()
 
@@ -30,6 +33,5 @@ extension DisconnectVPNKey {
 
         // todo: old VpnGateway was reloading server info after disconnect. New one does not.
         // Decide where to put this functionality and implement it!
-
     }
 }
