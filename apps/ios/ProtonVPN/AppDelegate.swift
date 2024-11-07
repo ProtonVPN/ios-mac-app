@@ -87,6 +87,9 @@ extension AppDelegate: UIApplicationDelegate {
         }
         #endif
         
+        // Clear out any overrides that may have been present in previous builds
+        FeatureFlagsRepository.shared.resetOverrides()
+
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 //        Safety measure to not accidentally switch on the redesign before it's ready
 //        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)

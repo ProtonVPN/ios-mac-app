@@ -86,6 +86,10 @@ extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.appearance = .init(named: .darkAqua)
         injectDefaultCryptoImplementation()
+
+        // Clear out any overrides that may have been present in previous builds
+        FeatureFlagsRepository.shared.resetOverrides()
+
         setupCoreIntegration()
         setupLogsForApp()
 

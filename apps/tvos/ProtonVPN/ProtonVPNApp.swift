@@ -40,6 +40,9 @@ struct ProtonVPNApp: App {
 
 extension ProtonVPNApp {
     private func startup() {
+        // Clear out any overrides that may have been present in previous builds
+        FeatureFlagsRepository.shared.resetOverrides()
+
         SentryHelper.setupSentry(
             dsn: ObfuscatedConstants.sentryDsntvOS,
             isEnabled: {
