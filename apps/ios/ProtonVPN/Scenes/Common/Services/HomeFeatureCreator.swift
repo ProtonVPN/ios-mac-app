@@ -29,8 +29,8 @@ import VPNAppCore
 import LegacyCommon
 
 @available(iOS 17, *)
-enum HomeFeatureCreator {   
-    static func homeViewController() -> UIHostingController<HomeView> {
+enum HomeFeatureCreator {
+    static func homeViewController() -> UINavigationController {
         let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
             HomeFeature()
 #if targetEnvironment(simulator)
@@ -44,6 +44,11 @@ enum HomeFeatureCreator {
         hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab,
                                                     image: IconProvider.houseFilled,
                                                     tag: 0)
-        return hostingController
+        // Embed a UINavigationController to prevent layout and sizing issues that arise when using NavigationStack directly within a UIHostingController.
+        let navigationController = UINavigationController(rootViewController: hostingController)
+        navigationController.additionalSafeAreaInsets = .zero
+        navigationController.navigationBar.isTranslucent = true
+
+        return navigationController
     }
 }

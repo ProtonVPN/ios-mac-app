@@ -41,6 +41,10 @@ public struct HomeView: View {
     private static let mapHeight: CGFloat = 414
     private static let bottomGradientHeight: CGFloat = 100
 
+    // Sticky ProtectionStatus functionality on scroll.
+    @State var lastScrollOffset: CGFloat = .zero
+    private static let protectionStatusStickToTopThreshold = -(Self.mapHeight - Self.bottomGradientHeight)
+
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
     }
@@ -61,6 +65,7 @@ public struct HomeView: View {
                     ScrollView(showsIndicators: false) {
                         Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
                             .id(topID)
+                            .background(trackScrollPosition())
                         VStack {
                             LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
                                            startPoint: .top,
@@ -103,6 +108,32 @@ public struct HomeView: View {
                 ChangeServerModal(store: store)
             }
         }
+    }
+
+    private func trackScrollPosition() -> some View {
+        WithPerceptionTracking {
+            GeometryReader { inner in
+                Color.clear
+                    .preference(
+                        key: ScrollOffsetPreferenceKey.self,
+                        value: inner.frame(in: .global).origin.y
+                    )
+            }
+            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
+                if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
+                    store.send(.connectionStatus(.stickToTop(scrollOffset < Self.protectionStatusStickToTopThreshold)))
+                }
+                lastScrollOffset = scrollOffset
+            }
+        }
+    }
+}
+
+private struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
     }
 }
 

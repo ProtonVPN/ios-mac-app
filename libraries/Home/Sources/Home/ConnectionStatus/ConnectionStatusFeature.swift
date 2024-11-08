@@ -18,6 +18,8 @@
 
 import ComposableArchitecture
 
+import SwiftUI
+
 import Domain
 import NetShield
 import VPNAppCore
@@ -33,6 +35,8 @@ public struct ConnectionStatusFeature {
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
+        public var stickToTop: Bool = false
+
         public init() {
             
         }
@@ -46,6 +50,7 @@ public struct ConnectionStatusFeature {
         case newConnectionStatus(VPNConnectionStatus)
         case newProtectionState(ProtectionState)
         case newNetShieldStats(NetShieldModel)
+        case stickToTop(Bool)
     }
 
     private enum CancelId {
@@ -110,6 +115,11 @@ public struct ConnectionStatusFeature {
 
             case .newNetShieldStats(let netShieldModel):
                 state.protectionState = state.protectionState.copy(withNetShield: netShieldModel)
+                return .none
+
+            case .stickToTop(let stickToTop):
+                guard state.stickToTop != stickToTop else { return .none }
+                state.stickToTop = stickToTop
                 return .none
             }
         }
