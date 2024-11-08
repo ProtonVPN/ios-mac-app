@@ -44,8 +44,8 @@ public final class RecentsStorageImplementation {
         self.collection = Self.readFromStorage()
     }
 
-    func elements() -> [RecentConnection] {
-        collection.elements
+    func elements() -> OrderedSet<RecentConnection> {
+        collection
     }
 
     static func storageKey(_ userID: String) -> String {

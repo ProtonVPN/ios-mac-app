@@ -138,8 +138,8 @@ public struct HomeFeature {
                 return .none
             case .connectionCard(.delegate(let action)):
                 switch action {
-                case .connect:
-                    return .send(.connect(.init()))
+                case .connect(let spec):
+                    return .send(.connect(spec))
                 case .disconnect:
                     return .send(.disconnect)
                 case .tapAction:

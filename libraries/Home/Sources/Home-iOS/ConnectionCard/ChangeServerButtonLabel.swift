@@ -71,7 +71,7 @@ struct ChangeServerButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 48)
             .background(Color(.background, .weak).opacity(0.001)) // we need to give it a background in order for the button to be tappable on the whole view...
             .foregroundColor(isActive
-                        ? Color(.text, .primary)
+                        ? Color(.text)
                         : Color(.text, .hint))
             .themeBorder(color: Color(.border, .strong),
                          lineWidth: 1,

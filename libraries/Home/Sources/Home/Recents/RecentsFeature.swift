@@ -21,6 +21,7 @@ import ComposableArchitecture
 import Foundation
 import VPNAppCore
 import VPNShared
+import OrderedCollections
 
 @Reducer
 public struct RecentsFeature {
@@ -31,7 +32,7 @@ public struct RecentsFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
-        public package(set) var recents: [RecentConnection]
+        public package(set) var recents: OrderedSet<RecentConnection>
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage

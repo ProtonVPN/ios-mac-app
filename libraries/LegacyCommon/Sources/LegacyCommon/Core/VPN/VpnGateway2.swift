@@ -229,7 +229,12 @@ fileprivate extension ConnectionSpec {
 
         case .exact(_, let number, let subregion, let regionCode):
             if let number {
-                return .country(regionCode, .fastest) // TODO: [redesign] Actually pass in the server number
+                @Dependency(\.serverRepository) var serverRepository
+                let filter = "\(regionCode)#\(number)"
+                if let server = serverRepository.getFirstServer(filteredBy: [.matches(filter)], orderedBy: .none) {
+                    return .country(regionCode, .server(.init(server: server)))
+                }
+                return .country(regionCode, .fastest)
             } else if let subregion {
                 return .city(country: regionCode, city: subregion)
             } else {
@@ -242,8 +247,12 @@ fileprivate extension ConnectionSpec {
                 return .fastest
             case .fastestHop(to: let to):
                 return .country(to, .fastest)
-            case .hop(let to, _):
-                return .country(to, .fastest) // TODO: [redesign] Actually pass in the via server
+            case .hop(let to, let via):
+                @Dependency(\.serverRepository) var serverRepository
+                if let server = serverRepository.getFirstServer(filteredBy: [.entryCountryCode(via), .exitCountryCode(to)], orderedBy: .none) {
+                    return .country(to, .server(.init(server: server)))
+                }
+                return .country(to, .fastest)
             }
         }
     }

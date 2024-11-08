@@ -20,6 +20,7 @@ import ComposableArchitecture
 import VPNAppCore
 import Domain
 import Foundation
+import Dependencies
 
 @Reducer
 public struct HomeConnectionCardFeature {
@@ -46,6 +47,10 @@ public struct HomeConnectionCardFeature {
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
             case .disconnected:
+                @Dependency(\.recentsStorage) var recentsStorage
+                if let spec = recentsStorage.elements().mostRecent?.connection {
+                    return spec
+                }
                 return .init(location: .fastest, features: [])
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
@@ -59,7 +64,7 @@ public struct HomeConnectionCardFeature {
     public enum Action: Equatable {
         @CasePathable
         public enum Delegate: Equatable {
-            case connect
+            case connect(ConnectionSpec)
             case disconnect
             case tapAction
             case changeServerButtonTapped
