@@ -102,7 +102,7 @@ class ProfilesViewModel {
     func cellCount(for section: Int) -> Int {
         switch section {
         case 0:
-            return FeatureFlagsRepository.shared.isRedesigniOSEnabled ? 1 : 2 //  redesign: fastest (temporary), old design: fastest and random.
+            return 2
         default:
             return profileManager?.customProfiles.count ?? 0
         }

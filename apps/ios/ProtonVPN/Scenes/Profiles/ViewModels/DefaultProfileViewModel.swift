@@ -90,7 +90,7 @@ class DefaultProfileViewModel {
     var isConnected: Bool {
         guard vpnGateway.connection == .connected else { return false }
 
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if isRedesign {
             return propertiesManager.lastConnectionIntent == ConnectionSpec(
                 connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                                                              withDefaultNATType: natTypePropertyProvider.natType,
@@ -109,7 +109,7 @@ class DefaultProfileViewModel {
     fileprivate var isConnecting: Bool {
         guard vpnGateway.connection == .connecting else { return false }
 
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if isRedesign {
             return propertiesManager.lastConnectionIntent == ConnectionSpec(
                 connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                                                              withDefaultNATType: natTypePropertyProvider.natType,

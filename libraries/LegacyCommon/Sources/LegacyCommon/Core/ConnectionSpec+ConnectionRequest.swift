@@ -32,8 +32,7 @@ extension ConnectionSpec {
                 location = .fastest
             }
         case .random:
-            Self.assertRandomRequestValidity(connectionRequest)
-            location = .fastest
+            location = .random
         case .country(let country, let type):
             switch type {
             case .fastest:
@@ -43,7 +42,6 @@ extension ConnectionSpec {
                     location = .region(code: country)
                 }
             case .random:
-                Self.assertRandomRequestValidity(connectionRequest)
                 location = .region(code: country)
             case .server(let serverModel):
                 if serverModel.feature.contains(.streaming) {
@@ -65,11 +63,5 @@ extension ConnectionSpec {
             location = .exact(.paid, number: nil, subregion: city, regionCode: country)
         }
         self = .init(location: location, features: features, profileId: connectionRequest.profileId)
-    }
-
-    private static func assertRandomRequestValidity(_ connectionRequest: ConnectionRequest) {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) {
-            log.assertionFailure("Random connections are not supported post-redesign")
-        }
     }
 }
