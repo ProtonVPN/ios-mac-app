@@ -3,11 +3,12 @@
 # This is an interactive script for creating tags with git-lhc according to the release notes defined in the commit
 # attributes. It prompts the user for the release notes and then creates a new release according to the options.
 #
-# Usage: release.sh <train> <channel> <reference>
+# Usage: release.sh <train> <channel> <reference> [forced-version]
 
 TRAIN=$1
 CHANNEL=$2
 REFERENCE=$3
+FORCED_VERSION=$4
 
 EDITOR=${EDITOR:-$(which nano)}
 RELEASE_NOTES_TEMPLATE=release-notes.md
@@ -35,7 +36,7 @@ function make_release_notes() {
 }
 
 function make_release() {
-    mint run -s git-lhc new --channel "$CHANNEL" --train "$TRAIN" --release-notes "${OUTPUT_DIRECTORY}/${RELEASE_NOTES_TEMPLATE}" --push
+    mint run -s git-lhc new --channel "$CHANNEL" --train "$TRAIN" --release-notes "${OUTPUT_DIRECTORY}/${RELEASE_NOTES_TEMPLATE}" --push $FORCED_VERSION
 }
 
 function cleanup() {
@@ -49,11 +50,12 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 if [ -z "$TRAIN" ] || [ -z "$CHANNEL" ] || [ -z "$REFERENCE" ]; then
-    echo "Usage: $0 <train> <channel> <reference>"
+    echo "Usage: $0 <train> <channel> <reference> [forced-version]"
     echo ""
     echo "train: one of the supported trains for this repo."
     echo "channel: one of alpha, beta, or production."
     echo "reference: any reference or git commit hash."
+    echo "forced-version (optional): an overriding version to set for the release."
 fi
 
 fetch
