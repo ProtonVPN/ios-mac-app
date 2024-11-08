@@ -36,6 +36,7 @@ struct ChangeServerModal: View {
         WithPerceptionTracking {
             let dateFinished = store.dateFinished
             let totalDuration = store.totalDuration
+            let shortSkip = totalDuration <= 90
             /// TimelineView only works when I specify all 3 dates below,
             /// though we really only need one, the `dateFinished`
             TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { timeline in
@@ -47,9 +48,11 @@ struct ChangeServerModal: View {
 
                     if dateFinished > date.now {
                         Group {
-                            Text(Localizable.upsellSpecificLocationTitle)
-                                .themeFont(.body2(emphasised: true))
-                                .foregroundStyle(Color(.text))
+                            if !shortSkip {
+                                Text(Localizable.upsellSpecificLocationTitle)
+                                    .themeFont(.body2(emphasised: true))
+                                    .foregroundStyle(Color(.text))
+                            }
                             Text(Localizable.upsellSpecificLocationSubtitle2)
                                 .themeFont(.body3(emphasised: false))
                                 .foregroundStyle(Color(.text, .weak))
@@ -105,10 +108,22 @@ struct ChangeServerModal: View {
 }
 
 @available(iOS 17, *)
-#Preview("In Progress", traits: .sizeThatFitsLayout) {
+#Preview("In Progress Short", traits: .sizeThatFitsLayout) {
     let availability: ServerChangeAuthorizer.ServerChangeAvailability
     availability = .unavailable(until: .now + 15,
                                 duration: 15,
+                                exhaustedSkips: false)
+    return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
+        ChangeServerFeature()
+    })
+    .frame(width: 375)
+}
+
+@available(iOS 17, *)
+#Preview("In Progress Long", traits: .sizeThatFitsLayout) {
+    let availability: ServerChangeAuthorizer.ServerChangeAvailability
+    availability = .unavailable(until: .now + 95,
+                                duration: 95,
                                 exhaustedSkips: false)
     return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
         ChangeServerFeature()
