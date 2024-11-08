@@ -59,11 +59,11 @@ public struct HomeMapView: View {
         .scaleEffect(mapScale())
         .offset(mapOffset())
         .onAppear {
-            renderMap(focusedCountryCode: store.mapState.code)
+            renderMap(focusedCountryCode: store.mapState.code ?? store.userCountry)
             store.send(.onAppear)
         }
         .onChange(of: store.mapState.code) {
-            renderMap(focusedCountryCode: $0)
+            renderMap(focusedCountryCode: $0 ?? store.userCountry)
         }
     }
 
