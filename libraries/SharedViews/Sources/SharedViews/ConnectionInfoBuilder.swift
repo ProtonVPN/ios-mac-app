@@ -46,7 +46,7 @@ public struct ConnectionInfoBuilder {
         case .fastest:
             return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
         case .random:
-            return nil
+            return server.logical.name
         case .region:
             return nil
         case .exact:
