@@ -20,13 +20,17 @@ import OrderedCollections
 import Domain
 import Dependencies
 import VPNAppCore
+import Foundation
 
 extension OrderedSet<RecentConnection> {
 
     private static let maxConnections = 8
 
     func index(for spec: ConnectionSpec) -> Self.Index? {
-        firstIndex(where: { $0.connection == spec })
+        firstIndex { recent in
+            recent.connection.location == spec.location
+            && recent.connection.features == spec.features
+        }
     }
 
     mutating func sanitize() {
@@ -46,7 +50,9 @@ extension OrderedSet<RecentConnection> {
     }
 
     public var mostRecent: RecentConnection? {
-        first
+        sorted(using: [
+            KeyPathComparator(\.connectionDate, order: .reverse)
+        ]).first
     }
 
     public var connectionsList: [RecentConnection] {

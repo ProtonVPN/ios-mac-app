@@ -26,7 +26,7 @@ public struct RecentsStorage {
     var pin: (RecentConnection) -> Void = { _ in unimplemented() }
     var unpin: (RecentConnection) -> Void = { _ in unimplemented() }
     var remove: (RecentConnection) -> Void = { _ in unimplemented() }
-    var elements: () -> [RecentConnection] = { unimplemented(placeholder: []) }
+    public var elements: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
 }
 
 extension RecentsStorage: DependencyKey {
@@ -66,7 +66,7 @@ extension RecentsStorage: TestDependencyKey {
     }
 
     public static func withElements(array: [RecentConnection]) -> RecentsStorage {
-        RecentsStorage(elements: { array })
+        RecentsStorage(elements: { .init(array) })
     }
 
     public static let previewValue = RecentsStorage {

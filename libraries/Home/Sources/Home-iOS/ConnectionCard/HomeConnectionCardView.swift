@@ -45,9 +45,7 @@ struct HomeConnectionCardView: View {
 
     private var header: some View {
         HomeConnectionCardTitleView(connectionStatus: store.vpnConnectionStatus,
-                                    isFreeUser: false, // TODO: [redesign] add info about free user
-                                    hasRecents: false, // TODO: [redesign] add info about recents
-                                    changingServer: false) // TODO: [redesign] add info about changing server
+                                    isFreeUser: store.userTier.isFreeTier)
         .padding(.bottom, .themeSpacing8)
         .padding(.top, .themeSpacing24)
     }
@@ -65,7 +63,7 @@ struct HomeConnectionCardView: View {
             withAnimation(.easeInOut) {
                 switch store.vpnConnectionStatus {
                 case .disconnected:
-                    store.send(.delegate(.connect))
+                    store.send(.delegate(.connect(store.presentedSpec)))
                 case .connected:
                     store.send(.delegate(.disconnect))
                 case .connecting:
@@ -141,7 +139,7 @@ struct HomeConnectionCardView: View {
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
         .accessibilityAction(named: Text(Localizable.actionConnect)) {
-            store.send(.delegate(.connect))
+            store.send(.delegate(.connect(store.presentedSpec)))
         }
         .task {
             store.send(.watchConnectionStatus)

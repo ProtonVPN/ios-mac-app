@@ -19,17 +19,13 @@
 import SwiftUI
 import Strings
 import VPNAppCore
+import Dependencies
 
 struct HomeConnectionCardTitleView: View {
     enum State {
         case connected
-        case connecting(Connecting)
+        case connecting
         case disconnected(Disconnected)
-
-        enum Connecting {
-            case changingServer
-            case connectingTo
-        }
 
         enum Disconnected {
             case noRecents
@@ -41,19 +37,14 @@ struct HomeConnectionCardTitleView: View {
             switch self {
             case .connected:
                 return Localizable.connectionCardSafelyBrowsingFrom
-            case .connecting(let connecting):
-                switch connecting {
-                case .changingServer:
-                    return "Changing server..."
-                case .connectingTo:
-                    return Localizable.connectionCardConnectingTo
-                }
+            case .connecting:
+                return Localizable.connectionCardConnectingTo
             case .disconnected(let disconnected):
                 switch disconnected {
                 case .noRecents:
                     return Localizable.recommended
                 case .freeUser:
-                    return "Free connections"
+                    return Localizable.connectionsFree
                 case .lastConnectedTo:
                     return Localizable.connectionCardLastConnectedTo
                 }
@@ -63,12 +54,13 @@ struct HomeConnectionCardTitleView: View {
 
     let state: State
 
-    init(connectionStatus: VPNConnectionStatus, isFreeUser: Bool, hasRecents: Bool, changingServer: Bool) {
+    init(connectionStatus: VPNConnectionStatus, isFreeUser: Bool) {
+        @Dependency(\.recentsStorage) var recentsStorage
         switch connectionStatus {
         case .disconnected, .disconnecting:
             if isFreeUser {
                 state = .disconnected(.freeUser)
-            } else if hasRecents {
+            } else if !recentsStorage.elements().isEmpty {
                 state = .disconnected(.lastConnectedTo)
             } else {
                 state = .disconnected(.noRecents)
@@ -76,11 +68,7 @@ struct HomeConnectionCardTitleView: View {
         case .connected:
             state = .connected
         case .connecting, .loadingConnectionInfo:
-            if changingServer {
-                state = .connecting(.changingServer)
-            } else {
-                state = .connecting(.connectingTo)
-            }
+            state = .connecting
         }
     }
 
@@ -105,28 +93,16 @@ struct HomeConnectionCardTitleView: View {
 #Preview(traits: .sizeThatFitsLayout) {
         VStack {
             HomeConnectionCardTitleView(connectionStatus: .disconnected,
-                                        isFreeUser: false,
-                                        hasRecents: false,
-                                        changingServer: false)
+                                        isFreeUser: false)
             HomeConnectionCardTitleView(connectionStatus: .disconnected,
-                                        isFreeUser: false,
-                                        hasRecents: true,
-                                        changingServer: false)
+                                        isFreeUser: false)
             HomeConnectionCardTitleView(connectionStatus: .connecting(.defaultFastest, nil),
-                                        isFreeUser: false,
-                                        hasRecents: false,
-                                        changingServer: false)
+                                        isFreeUser: false)
             HomeConnectionCardTitleView(connectionStatus: .connected(.defaultFastest, nil),
-                                        isFreeUser: false,
-                                        hasRecents: false,
-                                        changingServer: false)
+                                        isFreeUser: false)
             HomeConnectionCardTitleView(connectionStatus: .disconnected,
-                                        isFreeUser: true,
-                                        hasRecents: false,
-                                        changingServer: false)
+                                        isFreeUser: true)
             HomeConnectionCardTitleView(connectionStatus: .connecting(.defaultFastest, nil),
-                                        isFreeUser: false,
-                                        hasRecents: false,
-                                        changingServer: true)
+                                        isFreeUser: false)
         }
 }
