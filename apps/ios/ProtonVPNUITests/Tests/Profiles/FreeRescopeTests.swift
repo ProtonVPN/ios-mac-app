@@ -44,7 +44,7 @@ class FreeRescopeTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
-            .addNewProfile()
+            .tapAddNewProfile()
             .verify.isShowingUpsellModal(ofType: .profiles)
     }
 }

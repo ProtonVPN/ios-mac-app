@@ -33,6 +33,18 @@ extension UIElement {
     }
     
     @discardableResult
+    public func checkDoesNotExist(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
+        shouldWaitForExistance = false
+        XCTAssertFalse(
+            uiElement()!.exists,
+            message(),
+            file: file,
+            line: line
+        )
+        return self
+    }
+
+    @discardableResult
     public func checkContainsValue(_ value: String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
         guard let stringValue = uiElement()!.value as? String else {
             XCTFail("Element doesn't have text value.")

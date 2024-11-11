@@ -8,25 +8,25 @@
 
 import fusion
 import Foundation
+import Strings
 
-fileprivate let editButton = "Edit"
-fileprivate let doneButton = "Done"
+fileprivate let editButton = Localizable.edit
+fileprivate let doneButton = Localizable.done
 fileprivate let addButton = "Add"
-fileprivate let deleteButton = "Delete"
-fileprivate let newProfileSuccessMessage = "New Profile saved"
-fileprivate let editProfileSuccessMessage = "Profile updated"
-fileprivate let buttonConnect = "ic power off"
-fileprivate let buttonDisconnect = "ic power off"
-fileprivate let fastestProfile = "Fastest"
-fileprivate let randomProfile = "Random"
+fileprivate let deleteButton = Localizable.delete
+fileprivate let newProfileSuccessMessage = Localizable.profileCreatedSuccessfully
+fileprivate let editProfileSuccessMessage = Localizable.profileEditedSuccessfully
+fileprivate let fastestProfile = Localizable.fastest
+fileprivate let randomProfile = Localizable.random
+fileprivate let myProfiles = Localizable.myProfiles
 
 class ProfileRobot: CoreElements {
     
     let verify = Verify()
     
-    @discardableResult
-    func addNewProfile() -> CreateProfileRobot {
-        return addNew()
+    func tapAddNewProfile() -> CreateProfileRobot {
+        button(addButton).tap()
+        return CreateProfileRobot()
     }
     
     func deleteProfile(_ name: String, _ countryname: String) -> ProfileRobot {
@@ -44,10 +44,10 @@ class ProfileRobot: CoreElements {
         return ConnectionStatusRobot()
     }
     
-    func disconnectFromAProfile(_ profileName: String) -> MainRobot {
+    func disconnectFromAProfile(_ profileName: String) -> ConnectionStatusRobot {
         staticText(NSPredicate(format: "label CONTAINS[c] %@", profileName))
             .checkExists(message: "\(profileName) profile not found").tap()
-        return MainRobot()
+        return ConnectionStatusRobot()
     }
     
     func connectToAFastestServer() -> MainRobot {
@@ -69,11 +69,6 @@ class ProfileRobot: CoreElements {
         staticText(randomProfile).tap()
         return MainRobot()
     }
-    
-    private func addNew() -> CreateProfileRobot {
-        button(addButton).tap()
-        return CreateProfileRobot()
-    }
         
     private func delete(_ name: String, _ countryname: String) -> ProfileRobot {
         
@@ -91,25 +86,32 @@ class ProfileRobot: CoreElements {
     @discardableResult
     private func edit(_ name: String) -> ProfileRobot {
         button(editButton).tap()
-        staticText(name).tap()
+        staticText(name).waitUntilExists().tap()
         return self
     }
     
     class Verify: CoreElements {
         
+        func isOnProfilesScreen() -> ProfileRobot {
+            staticText(myProfiles).checkExists(message: "Profiles screen is not visible")
+            return ProfileRobot()
+        }
+
         func profileIsDeleted(_ name: String, _ countryname: String) {
             button("Delete " + countryname + "    Fastest, " + name).checkDoesNotExist()
         }
         
         @discardableResult
-        func profileIsCreated() -> ProfileRobot {
+        func profileIsCreated(profile: String) -> ProfileRobot {
             staticText(newProfileSuccessMessage).checkExists()
+            checkProfileExists(profile)
             return ProfileRobot()
         }
         
         @discardableResult
-        func profileIsEdited() -> ProfileRobot {
+        func profileIsEdited(profile: String) -> ProfileRobot {
             staticText(editProfileSuccessMessage).checkExists()
+            checkProfileExists(profile)
             return ProfileRobot()
         }
         
@@ -118,6 +120,12 @@ class ProfileRobot: CoreElements {
             staticText(fastestProfile).checkExists()
             staticText(randomProfile).checkExists()
             return ProfileRobot()
+        }
+
+        @discardableResult
+        private func checkProfileExists(_ name: String) -> UIElement {
+            return staticText(NSPredicate(format: "label CONTAINS[c] %@", name))
+                .checkExists(message: "\(name) profile not found")
         }
     }
 }

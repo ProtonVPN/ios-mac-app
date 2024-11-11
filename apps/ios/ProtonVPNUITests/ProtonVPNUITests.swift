@@ -46,7 +46,8 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     override func setUp() {
-       launchArguments = [
+
+        launchArguments = [
             "UITests",
             "-BlockOneTimeAnnouncement", "YES",
             "-BlockUpdatePrompt", "YES",
@@ -54,15 +55,20 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-AppleLocale en_US",
             "enforceUnauthSessionStrictVerificationOnBackend",
             LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString
-       ]
+        ]
 
         beforeSetUp(bundleIdentifier: "ch.protonmail.vpn.ProtonVPNUITests", launchArguments: launchArguments)
         super.setUp()
         PMLog.info("UI TEST runs on: " + doh.getAccountHost())
 
         logoutIfNeeded()
-    }
 
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let identifiers = ["Allow","Not Now"]
+        addUIMonitor(elementQueryToTap: springboard.buttons, identifiers: identifiers)
+
+        continueAfterFailure = false
+    }
 
     func logoutIfNeeded() {
         let tabBarsQuery = app.tabBars
@@ -100,14 +106,14 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         defer {
             settingsApp.terminate()
         }
-        
+
         navigateToAutoFillSettings(settingsApp: settingsApp)
         toggleAutoFillSwitchIfNeeded(settingsApp: settingsApp)
 
         isAutoFillPasswordsEnabled = false
         #endif
     }
-    
+
     private static func launchSettingsApp(settingsApp: XCUIApplication) {
         settingsApp.launch()
     }
@@ -115,6 +121,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     private static func navigateToAutoFillSettings(settingsApp: XCUIApplication) {
         if #available(iOS 18.0, *) {
             settingsApp.buttons["com.apple.settings.general"].tap()
+            settingsApp.tables.staticTexts["AutoFill & Passwords"].waitForExistence(timeout: 2)
             settingsApp.tables.staticTexts["AutoFill & Passwords"].tap()
         } else {
             settingsApp.tables.staticTexts["PASSWORDS"].tap()
@@ -129,16 +136,19 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     private static func toggleAutoFillSwitchIfNeeded(settingsApp: XCUIApplication) {
         let autofillSwitch = settingsApp.switches["AutoFill Passwords and Passkeys"]
-        let autofillSwitchValue = autofillSwitch.value as? String
 
-        if autofillSwitchValue == "1" {
+        guard autofillSwitch.exists else {
+            return
+        }
+
+        if (autofillSwitch.value as? String) == "1" {
             autofillSwitch.switches.firstMatch.tap()
         }
     }
-    
+
     func setupAtlasEnvironment() {
         let url = doh.getCurrentlyUsedHostUrl()
-        if staticText(url).exists() {
+        if staticText(url).waitUntilExists(time: 1).exists() {
             openLoginScreen()
         } else {
             textField("customEnvironmentTextField")
@@ -157,7 +167,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             closeAndOpenTheApp()
         }
     }
-    
+
     func getCredentials(from resource: String) -> [Credentials] {
         return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
@@ -183,7 +193,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
                 accountHost: "https://account.\(customDomain)",
                 defaultHost: "https://\(customDomain)",
                 apiHost: ObfuscatedConstants.blackApiHost,
-                defaultPath: ObfuscatedConstants.blackDefaultPath, 
+                defaultPath: ObfuscatedConstants.blackDefaultPath,
                 apnEnvironment: .development
             )
         } else {
@@ -199,5 +209,4 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             )
         }
     }
-
 }

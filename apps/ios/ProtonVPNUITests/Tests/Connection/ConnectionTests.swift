@@ -32,7 +32,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Free.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .quickConnectViaQCButton()
@@ -49,7 +49,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         
         mainRobot
@@ -66,7 +66,7 @@ class ConnectionTests: ProtonVPNUITests {
             .clearSearch()
         
         mainRobot
-            .backToPreviousTab(robot: MainRobot.self, back)
+            .backToPreviousTab(robot: ConnectionStatusRobot.self, back)
             .verify.connectionStatusNotConnected()
     }
     
@@ -77,7 +77,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
@@ -97,7 +97,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         
         mainRobot
@@ -117,14 +117,14 @@ class ConnectionTests: ProtonVPNUITests {
         let back = "Profiles"
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
-            .addNewProfile()
-            .setProfileDetails(profileName, countryName)
+            .tapAddNewProfile()
+            .setProfileDetails(profile: profileName, country: countryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
+            .verify.profileIsCreated(profile: profileName)
             .connectToAProfile(profileName)
             .verify.connectedToAServer(countryName)
             .backToPreviousTab(robot: ConnectionStatusRobot.self, back)
@@ -140,7 +140,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
@@ -167,14 +167,14 @@ class ConnectionTests: ProtonVPNUITests {
     
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToProfilesTab()
-            .addNewProfile()
-            .makeDefaultProfileWithSecureCore(profileName, randomSecureCoreCountry.name, serverVia)
+            .tapAddNewProfile()
+            .setProfileDetails(profile: profileName, country: randomSecureCoreCountry.name, server: serverVia, secureCoreState: true)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.profileIsCreated()
+            .verify.profileIsCreated(profile: profileName)
         mainRobot
             .quickConnectViaQCButton()
             .verify.connectedToASecureCoreServer(status)
@@ -189,7 +189,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Free.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
@@ -204,7 +204,7 @@ class ConnectionTests: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToCountriesTab()
@@ -224,7 +224,7 @@ class ConnectionTests: ProtonVPNUITests {
             
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .quickConnectViaQCButton()
@@ -243,7 +243,7 @@ class ConnectionTests: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
@@ -275,7 +275,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
@@ -306,7 +306,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         
         // WireGuard - UDP
@@ -365,7 +365,7 @@ class ConnectionTests: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         mainRobot
             .goToSettingsTab()
