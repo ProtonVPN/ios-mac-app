@@ -99,10 +99,11 @@ public struct HomeView: View {
                             scrollViewProxy.scrollTo(topID)
                         }
                     }
+                    .onAppear {
+                        viewHeight = proxy.size.height
+                    }
                 }
             }
-            .preference(key: ViewHeightPreferenceKey.self, value: proxy.size.height)
-            .onPreferenceChange(ViewHeightPreferenceKey.self) { self.viewHeight = $0 }
         }
         .task {
             store.send(.sharedProperties(.listen))
