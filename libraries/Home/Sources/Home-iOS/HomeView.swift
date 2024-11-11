@@ -38,12 +38,20 @@ public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
     private static let maxWidth: CGFloat = 736
-    private static let mapHeight: CGFloat = 414
     private static let bottomGradientHeight: CGFloat = 100
 
     // Sticky ProtectionStatus functionality on scroll.
-    @State var lastScrollOffset: CGFloat = .zero
-    private static let protectionStatusStickToTopThreshold = -(Self.mapHeight - Self.bottomGradientHeight)
+    @State private var lastScrollOffset: CGFloat = .zero
+    private var protectionStatusStickToTopThreshold: CGFloat {
+        -(mapHeight - Self.bottomGradientHeight)
+    }
+
+    // Dynamic connection view position based on view height.
+    @State private var viewHeight: CGFloat = .zero
+    @State private var connectionViewHeight: CGFloat = .zero
+    private var mapHeight: CGFloat {
+        viewHeight - (connectionViewHeight + .themeSpacing24)
+    }
 
     public init(store: StoreOf<HomeFeature>) {
         self.store = store
@@ -55,15 +63,15 @@ public struct HomeView: View {
         #PerceptibleGeometryReader { proxy in
             ZStack(alignment: .top) {
                 HomeMapView(store: store.scope(state: \.map, action: \.map),
-                            availableHeight: Self.mapHeight,
+                            availableHeight: mapHeight,
                             availableWidth: proxy.size.width)
-                .frame(width: proxy.size.width, height: Self.mapHeight)
+                .frame(width: proxy.size.width, height: mapHeight)
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus,
                                                         action: \.connectionStatus))
                 .allowsHitTesting(false)
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {
-                        Spacer().frame(height: Self.mapHeight) // Leave transparent space for the map
+                        Spacer().frame(height: mapHeight) // Leave transparent space for the map
                             .id(topID)
                             .background(trackScrollPosition())
                         VStack {
@@ -75,6 +83,7 @@ public struct HomeView: View {
                             HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
                                 .padding(.horizontal, .themeSpacing16)
                                 .frame(width: min(proxy.size.width, Self.maxWidth))
+                                .background(trackConnectionViewHeight())
 
                             RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
                                 .frame(width: min(proxy.size.width, Self.maxWidth))
@@ -92,6 +101,8 @@ public struct HomeView: View {
                     }
                 }
             }
+            .preference(key: ViewHeightPreferenceKey.self, value: proxy.size.height)
+            .onPreferenceChange(ViewHeightPreferenceKey.self) { self.viewHeight = $0 }
         }
         .task {
             store.send(.sharedProperties(.listen))
@@ -110,6 +121,8 @@ public struct HomeView: View {
         }
     }
 
+    // MARK: - Private view helpers
+
     private func trackScrollPosition() -> some View {
         WithPerceptionTracking {
             GeometryReader { inner in
@@ -121,15 +134,38 @@ public struct HomeView: View {
             }
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
                 if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
-                    store.send(.connectionStatus(.stickToTop(scrollOffset < Self.protectionStatusStickToTopThreshold)))
+                    store.send(.connectionStatus(.stickToTop(scrollOffset < protectionStatusStickToTopThreshold)))
                 }
                 lastScrollOffset = scrollOffset
+            }
+        }
+    }
+
+    private func trackConnectionViewHeight() -> some View {
+        WithPerceptionTracking {
+            GeometryReader { inner in
+                Color.clear
+                    .preference(
+                        key: ViewHeightPreferenceKey.self,
+                        value: inner.size.height
+                    )
+            }
+            .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
+                self.connectionViewHeight = viewHeight
             }
         }
     }
 }
 
 private struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
+
+private struct ViewHeightPreferenceKey: PreferenceKey {
     static var defaultValue: CGFloat = .zero
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
