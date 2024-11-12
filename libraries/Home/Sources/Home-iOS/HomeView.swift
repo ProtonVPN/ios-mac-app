@@ -130,35 +130,30 @@ public struct HomeView: View {
     // MARK: - Private view helpers
 
     private func trackScrollPosition() -> some View {
-        WithPerceptionTracking {
-            GeometryReader { inner in
-                Color.clear
-                    .preference(
-                        key: ScrollOffsetPreferenceKey.self,
-                        value: inner.frame(in: .global).origin.y
-                    )
+        GeometryReader { inner in
+            Color.clear
+                .preference(
+                    key: ScrollOffsetPreferenceKey.self,
+                    value: inner.frame(in: .global).origin.y
+                )
+        }
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
+            if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
+                store.send(.connectionStatus(.stickToTop(scrollOffset < protectionStatusStickToTopThreshold)))
             }
-            .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
-                if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
-                    store.send(.connectionStatus(.stickToTop(scrollOffset < protectionStatusStickToTopThreshold)))
-                }
-                lastScrollOffset = scrollOffset
-            }
+            lastScrollOffset = scrollOffset
         }
     }
 
     private func trackConnectionViewHeight() -> some View {
-        WithPerceptionTracking {
-            GeometryReader { inner in
-                Color.clear
-                    .preference(
-                        key: ViewHeightPreferenceKey.self,
-                        value: inner.size.height
-                    )
-            }
-            .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
-                self.connectionViewHeight = viewHeight
-            }
+        GeometryReader { inner in
+            Color.clear
+                .preference(
+                    key: ViewHeightPreferenceKey.self,
+                    value: inner.size.height
+            )        }
+        .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
+            self.connectionViewHeight = viewHeight
         }
     }
 }
