@@ -88,7 +88,7 @@ final class LoginViewModel {
             switch result {
             case .success:
                 NSApp.setActivationPolicy(.accessory)
-                self.silentlyCheckForUpdates()
+                self.checkForUpdatesInBackground()
                 // Don't switch to smart protocol or show sysex tour if we are launching minimised
                 self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
             case let .failure(error):
@@ -107,7 +107,7 @@ final class LoginViewModel {
         appSessionManager.attemptSilentLogIn { result in
             switch result {
             case .success:
-                self.silentlyCheckForUpdates()
+                self.checkForUpdatesInBackground()
                 // Don't switch to smart protocol or show sysex tour if we are logging in automatically
                 self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
             case let .failure(error):
@@ -203,7 +203,7 @@ final class LoginViewModel {
                 ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .successful))
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.getCredential), success: {
                     // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
-                    self.silentlyCheckForUpdates()
+                    self.checkForUpdatesInBackground()
                     // On manual login, show sysex tour if needed and/or switch to smart protocol if possible
                     self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: true, shouldStartTour: true)
                 }, failure: { [weak self] error in
@@ -313,8 +313,8 @@ final class LoginViewModel {
         }
     }
     
-    private func silentlyCheckForUpdates() {
-        updateManager.checkForUpdates(appSessionManager, silently: true)
+    private func checkForUpdatesInBackground() {
+        updateManager.checkForUpdates(appSessionManager, userInitiated: true)
     }
     
     func keychainHelpAction() {

@@ -132,8 +132,10 @@ extension AppDelegate: NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary
-            self.checkSysexAndAdjustGlobalProtocol()
+            // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
+            if (try? self.container.makeVpnKeychain().fetchCached()) != nil {
+                self.checkSysexAndAdjustGlobalProtocol()
+            }
 
             if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
                 Task { @MainActor in

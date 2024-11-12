@@ -30,7 +30,8 @@ protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager
 }
 
-class UpdateManager: NSObject {
+final class UpdateManager: NSObject {
+    private static let updateChillInterval: TimeInterval = .hours(1)
     
     public typealias Factory = UpdateFileSelectorFactory & PropertiesManagerFactory
     private let factory: Factory
@@ -45,6 +46,15 @@ class UpdateManager: NSObject {
     
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
+    
+    private var lastUpdateDismissal: Date?
+    private var chillOut: Bool {
+        if let lastUpdateDismissal, Date().timeIntervalSince(lastUpdateDismissal) < Self.updateChillInterval {
+            return true
+        }
+        
+        return false
+    }
 
     public var currentVersion: String? {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
@@ -98,12 +108,14 @@ class UpdateManager: NSObject {
     }
     
     private func turnOnEarlyAccess(_ earlyAccess: Bool) {
+        lastUpdateDismissal = nil
+        
         if earlyAccess {
-            checkForUpdates(nil, silently: false)
+            checkForUpdates(nil, userInitiated: true)
         }
     }
     
-    func checkForUpdates(_ appSessionManager: AppSessionManager?, silently: Bool) {
+    func checkForUpdates(_ appSessionManager: AppSessionManager?, userInitiated: Bool) {
         self.appSessionManager = appSessionManager
         
         propertiesManager.rememberLoginAfterUpdate = false
@@ -116,7 +128,12 @@ class UpdateManager: NSObject {
             }
         }
         
-        silently ? updater?.updater.checkForUpdatesInBackground() : updater?.checkForUpdates(self)
+        guard userInitiated else {
+            updater?.updater.checkForUpdatesInBackground()
+            return
+        }
+        
+        updater?.checkForUpdates(self)
     }
     
     func startUpdate() {
@@ -169,6 +186,30 @@ extension UpdateManager: SPUUpdaterDelegate {
         stateUpdated?()
     }
     
+    func updater(_ updater: SPUUpdater, userDidMake choice: SPUUserUpdateChoice, forUpdate updateItem: SUAppcastItem, state: SPUUserUpdateState) {
+        switch choice {
+        case .dismiss, .skip:
+            lastUpdateDismissal = Date()
+        case .install:
+            break
+        @unknown default:
+            break
+        }
+    }
+    
+    func updater(_ updater: SPUUpdater, mayPerform updateCheck: SPUUpdateCheck) throws {
+        switch updateCheck {
+        case .updatesInBackground:
+            guard !chillOut else {
+                throw UpdateCheckError.userAlreadyDismissedUpdate
+            }
+        case .updates, .updateInformation:
+            break
+        @unknown default:
+            break
+        }
+    }
+    
     func feedURLString(for updater: SPUUpdater) -> String? {
         let url = updateFileSelector.updateFileUrl
         log.info("FeedURL is \(url)", category: .appUpdate)
@@ -193,6 +234,7 @@ extension UpdateManager: UpdateChecker {
         case notReady = "No appcast item has appeared yet."
         case invalidMinimumSystemVersion = "Invalid or unrecognized minimum system version."
         case missingMinimumSystemVersion = "No minimum system version specified in update item."
+        case userAlreadyDismissedUpdate = "User previously dismissed an update within the cooldown interval."
 
         var description: String { rawValue }
     }
