@@ -50,7 +50,7 @@ public struct HomeView: View {
     @State private var viewHeight: CGFloat = .zero
     @State private var connectionViewHeight: CGFloat = .zero
     private var mapHeight: CGFloat {
-        viewHeight - (connectionViewHeight + .themeSpacing24)
+        max(0, viewHeight - (connectionViewHeight + .themeSpacing24))
     }
 
     public init(store: StoreOf<HomeFeature>) {
