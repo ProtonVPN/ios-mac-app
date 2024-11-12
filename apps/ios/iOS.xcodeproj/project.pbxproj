@@ -44,6 +44,7 @@
 		4C8C31522A73BA24006AD628 /* Settings-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31512A73BA24006AD628 /* Settings-iOS */; };
 		4C8C31542A73BA36006AD628 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31532A73BA36006AD628 /* ProtonCoreLoginUI */; };
 		4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
+		4C93F5792CDCD9B8006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F5782CDCD9B8006BFD77 /* Ergonomics */; };
 		4C9754FA2A6018040035A61B /* GSMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F92A6018040035A61B /* GSMessages */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
 		4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */; };
@@ -928,6 +929,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C93F5792CDCD9B8006BFD77 /* Ergonomics in Frameworks */,
 				AD70D75E2B63238400B39ABA /* PMLogger in Frameworks */,
 				E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */,
 				77E01AC92CC10AB40013F3D7 /* UITestsHelpers in Frameworks */,
@@ -2339,6 +2341,7 @@
 				1F297A2D2B63B1E100BC487D /* ProtonCoreTestingToolkitUITestsCore */,
 				77E12E612C89B76E000803B1 /* ProtonCoreTestingToolkitPerformance */,
 				77E01AC82CC10AB40013F3D7 /* UITestsHelpers */,
+				4C93F5782CDCD9B8006BFD77 /* Ergonomics */,
 			);
 			productName = ProtonVPNUITests;
 			productReference = D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */;
@@ -4172,6 +4175,10 @@
 		4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreCryptoVPNPatchedGoImplementation;
+		};
+		4C93F5782CDCD9B8006BFD77 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
 		};
 		4C9754F92A6018040035A61B /* GSMessages */ = {
 			isa = XCSwiftPackageProductDependency;
