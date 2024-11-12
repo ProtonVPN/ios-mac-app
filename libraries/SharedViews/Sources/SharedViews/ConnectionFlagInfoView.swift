@@ -134,7 +134,7 @@ public struct ConnectionFlagInfoView: View {
                 Spacer()
                     .frame(width: 20, height: 12)
             }
-            FlagView(location: intent.location, flagSize: .defaultSize)
+            FlagView(location: connectionInfoBuilder.resolvedLocation, flagSize: .defaultSize)
             if connectionInfoBuilder.hasTextFeatures {
                 Spacer()
             }

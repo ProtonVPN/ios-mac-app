@@ -43,8 +43,10 @@ public struct ConnectionInfoBuilder {
             return location.subtext(locale: locale)
         }
         switch location {
-        case .fastest, .random:
+        case .fastest:
             return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
+        case .random:
+            return server.logical.name
         case .region:
             return nil
         case .exact:
@@ -122,6 +124,23 @@ public struct ConnectionInfoBuilder {
     }
 
     public var textHeader: String {
-        return location.text(locale: locale)
+        if let locationHeaderText = location.headerText(locale: locale) {
+            return locationHeaderText
+        } else if let vpnConnectionActual {
+            let countryCode = vpnConnectionActual.server.logical.exitCountryCode
+            return locale.localizedString(forRegionCode: countryCode) ?? countryCode
+        } else {
+            return location.text(locale: locale)
+        }
+    }
+
+    public var resolvedLocation: ConnectionSpec.Location {
+        guard case .random = location else {
+            return location
+        }
+        guard let vpnConnectionActual else {
+            return location
+        }
+        return ConnectionSpec.Location.region(code: vpnConnectionActual.server.logical.exitCountryCode)
     }
 }
