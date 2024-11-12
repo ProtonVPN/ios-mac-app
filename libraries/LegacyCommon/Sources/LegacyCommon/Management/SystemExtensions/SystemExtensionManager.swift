@@ -61,7 +61,7 @@ public enum SystemExtensionInstallationFailure: Error {
 
 public class SystemExtensionManager: NSObject {
     public static let allExtensionsInstalled = Notification.Name("SystemExtensionsAllInstalled")
-    public static let userCancelledTour = Notification.Name("UserCancelledSystemExtensionTour")
+    public static let userCancelledTour = Notification.Name("SystemExtensionTourUserCancelled")
 
     static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 

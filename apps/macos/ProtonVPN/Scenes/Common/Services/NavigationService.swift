@@ -50,7 +50,6 @@ class NavigationService {
         & NavigationServiceFactory
         & UpdateManagerFactory
         & ProfileManagerFactory
-        & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
@@ -76,6 +75,7 @@ class NavigationService {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     
     var appHasPresented = false
     var isSystemLoggingOff = false
@@ -207,7 +207,7 @@ extension NavigationService {
     }
     
     func checkForUpdates() {
-        updateManager.checkForUpdates(appSessionManager, silently: false)
+        updateManager.checkForUpdates(appSessionManager, userInitiated: true)
     }
     
     func openLogsFolder(filename: String? = nil) {
@@ -270,11 +270,12 @@ extension NavigationService {
 // MARK: - AppDelegate extension
 
 extension NavigationService {
-    
     func handleApplicationReopen(hasVisibleWindows: Bool) -> Bool {
         appHasPresented = true
 
-        windowService.closeActiveWindows()
+        // Don't ever dismiss the system extension tour, Sparkle will use this function when presenting the alert,
+        // and we wouldn't want random update prompts to dismiss the tour unnecessarily
+        windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
         openRequiredWindow()
         
         return false

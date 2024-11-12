@@ -644,6 +644,7 @@ public final class SystemExtensionTourAlert: SystemAlert {
     
     public init(cancelHandler: @escaping() -> Void) {
         self.cancelHandler = cancelHandler
+        self.dismiss = cancelHandler
     }
 }
 
