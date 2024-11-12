@@ -102,6 +102,11 @@ public struct HomeView: View {
                     .onAppear {
                         viewHeight = proxy.size.height
                     }
+                    .onChange(of: proxy.size.height) {
+                        guard viewHeight == .zero else { return } // We skip size changes that occur due to header visibility.
+                        viewHeight = proxy.size.height
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in viewHeight = .zero } // By setting viewHeight to zero on rotation, we enable the code above to update the height to the correct value after rotation.
                 }
             }
         }
