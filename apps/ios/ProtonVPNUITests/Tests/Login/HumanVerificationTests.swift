@@ -45,8 +45,11 @@ class HumanVerificationTests: ProtonVPNUITests {
         
         loginRobot
             .enterCredentials(user)
-            .signIn(robot: LoginRobot.self)
+            .signIn(robot: HumanVerificationRobot.self)
+            .verify.captchaScreenIsShown()
             .verifyCaptcha()
+            .verify.captchaScreenIsNotShown()
+        
         mainRobot
             .verify.connectionStatusNotConnected()
         
