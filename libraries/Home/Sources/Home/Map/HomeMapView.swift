@@ -25,7 +25,7 @@ import CoreLocation
 
 @available(iOS 17.0, *)
 public struct HomeMapView: View {
-    @State private var renderedMapImage: Image?
+    @State private var map: MapRenderView?
 
     private let mapBounds: CGRect
     private let availableHeight: CGFloat
@@ -49,7 +49,7 @@ public struct HomeMapView: View {
 
     public var body: some View {
         ZStack {
-            renderedMapImage
+            map
             MapPin(mode: store.pinMode)
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(pinOffset())
@@ -59,26 +59,18 @@ public struct HomeMapView: View {
         .scaleEffect(mapScale())
         .offset(mapOffset())
         .onAppear {
-            renderMap(focusedCountryCode: store.mapState.code)
+            renderMap(focusedCountryCode: store.mapState.code ?? store.userCountry)
             store.send(.onAppear)
         }
         .onChange(of: store.mapState.code) {
-            renderMap(focusedCountryCode: $0)
+            renderMap(focusedCountryCode: $0 ?? store.userCountry)
         }
     }
 
     @MainActor
     private func renderMap(focusedCountryCode: String?) {
-        let scale = mapScale()
-        log.info("Rendering map (focused on: \(optional: focusedCountryCode) @\(scale)x)")
-        let renderer = ImageRenderer(content: MapRenderView(highlightedCountryCode: focusedCountryCode))
-        renderer.scale = scale
-
-        guard let uiImage = renderer.uiImage else {
-            log.error("Failed to render map")
-            return
-        }
-        renderedMapImage = Image(uiImage: uiImage)
+        log.info("Rendering map (focused on: \(optional: focusedCountryCode)")
+        map = MapRenderView(highlightedCountryCode: focusedCountryCode)
     }
 
     private func pinOffset() -> CGSize {
