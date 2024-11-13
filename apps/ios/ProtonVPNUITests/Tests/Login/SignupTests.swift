@@ -10,6 +10,8 @@ import fusion
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsLogin
 
+fileprivate let verificationCode = "666666"
+
 class SignupTests: ProtonVPNUITests {
 
     override func setUp() {
@@ -21,45 +23,80 @@ class SignupTests: ProtonVPNUITests {
     }
 
     /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
-    func testSignupNewExternalAccountUpgrade() throws  {
-        let email = StringUtils.randomAlphanumericString(length: 7) + "@mail.com"
-        let code = "666666"
-        let password = StringUtils.randomAlphanumericString(length: 8)
+    func testSignUpWithExternalAccount() throws  {
+        let randomData = getRandomData(emailPostfix: "mail.com")
+        let randomEmail = randomData.email
+        let randomPassword = randomData.password
 
         SignupExternalAccountsCapability()
             .signUpWithExternalAccount(
                 signupRobot: ProtonCoreTestingToolkitUITestsLogin.SignupRobot(),
-                userEmail: email,
-                password: password,
-                verificationCode: code,
+                userEmail: randomEmail,
+                password: randomPassword,
+                verificationCode: verificationCode,
                 retRobot: CreatingAccountRobot.self
             )
-            .verify.creatingAccountScreenIsShown()
-            .verify.summaryScreenIsShown()
-            .getStart()
-            .upgradePlan()
-            .verifyStaticText("Get Plus")
-            .sleepFor(3)
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "for 1 year")
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
+
+        verifyOnboardingScreen(for: randomEmail)
     }
 
-    func testSignupExistingExternalAccount() throws {
-        let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8))@gmail.com"
-        let randomName = "\(StringUtils.randomAlphanumericString(length: 8))"
-        let password = StringUtils.randomAlphanumericString(length: 8)
-        let code = "666666"
-        let user = User(email: randomEmail, name: randomName, password: password, isExternal: true)
+    func testSignUpWithInternalAccount() {
+        let randomData = getRandomData(emailPostfix: "proton.uitests")
+        let randomEmail = randomData.email
+        let randomUsername = randomData.userName
+        let randomPassword = randomData.password
 
-        try quarkCommands.userCreate(user: user)
+        SignupExternalAccountsCapability()
+            .signUpWithInternalAccount(
+                signupRobot: ProtonCoreTestingToolkitUITestsLogin.SignupRobot().otherAccountButtonTap(),
+                username: randomUsername,
+                password: randomPassword,
+                userEmail: randomEmail,
+                verificationCode: verificationCode,
+                retRobot: CreatingAccountRobot.self)
+
+        verifyOnboardingScreen(for: randomUsername)
+    }
+
+    func testSignUpWithExistingExternalAccount() throws {
+        let randomData = getRandomData(emailPostfix: "mail.com")
+        let randomEmail = randomData.email
+        let randomName = randomData.userName
+        let randomPassword = randomData.password
+
+        let existingUser = User(email: randomEmail, name: randomName, password: randomPassword, isExternal: true)
+
+        try quarkCommands.userCreate(user: existingUser)
 
         ProtonCoreTestingToolkitUITestsLogin.SignupRobot()
             .insertExternalEmail(name: randomEmail)
             .nextButtonTapToOwnershipHV()
-            .fillInTextField(code)
+            .fillInTextField(verificationCode)
             .tapOnVerifyCodeButton(to: LoginRobot.self)
             .verify.emailAddressAlreadyExists()
             .verify.loginScreenIsShown()
+    }
+
+    private func verifyOnboardingScreen(for userEmail: String) {
+        CreatingAccountRobot()
+            .verify.creatingAccountScreenIsShown()
+            .verify.onboardingScreenIsShown()
+            .tapUpgradePlan()
+            .verify.subscriptionModalIsShown()
+            .verify.verifyPlanOptions(planDuration: "1 month", planAmount: "$11.99")
+            .verify.verifyPlanOptions(planDuration: "12 months", planAmount: "$79.99")
+            .closeModal(robot: MainRobot.self)
+            .verify.connectionStatusNotConnected()
+            .goToSettingsTab()
+            .verify.userIsCreated(userEmail, "Proton VPN Free")
+    }
+
+    private func getRandomData(emailPostfix: String) -> (email: String, userName: String, password: String) {
+        // Generate random data using StringUtils.randomAlphanumericString
+        let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8).lowercased())@\(emailPostfix)"
+        let randomName = StringUtils.randomAlphanumericString(length: 8)
+        let randomPassword = StringUtils.randomAlphanumericString(length: 8)
+
+        return (email: randomEmail, userName: randomName, password: randomPassword)
     }
 }

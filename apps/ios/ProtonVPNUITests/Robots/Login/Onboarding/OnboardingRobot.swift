@@ -17,34 +17,64 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
+import Strings
+import Foundation
 
-fileprivate let upgradeButton = "Upgrade"
-fileprivate let getStartedButton = "Get started"
-fileprivate let closeButton = "Close"
+fileprivate let upgradeButton = Localizable.upgrade
+fileprivate let getStartedButton = Localizable.modalsCommonGetStarted
+fileprivate let closeButton = Localizable.close
+fileprivate let continueButton = Localizable.continue
+fileprivate let welcomeTitle = Localizable.welcomeToProtonTitle
+fileprivate let welcomeSubtitle = Localizable.welcomeToProtonSubtitle
+fileprivate let welcomeRedesignedImageId = "welcome"
+fileprivate let getStartedImageId = "getStarted"
+fileprivate let welcomeBannerTitle = Localizable.welcomeToProtonBannerTitle
+fileprivate let settingsTitleCensorship = Localizable.settingsTitleCensorship
 
 class OnboardingRobot: CoreElements {
     
     @discardableResult
-    func getStart() -> OnboardingRobot {
+    func tapGetStarted() -> SubscriptionModalRobot {
         button(getStartedButton).tap()
-        return OnboardingRobot()
+        return SubscriptionModalRobot()
+    }
+    
+    @discardableResult
+    func tapContinueButton() -> OnboardingRobot {
+        button(continueButton).tap()
+        return self
     }
     
     @discardableResult
     func skipUpgrade() -> OnboardingRobot {
         button(closeButton).tap()
-        return OnboardingRobot()
+        return self
     }
     
     @discardableResult
-    func upgradePlan() -> SubscriptionsRobot {
+    func tapUpgradePlan() -> SubscriptionModalRobot {
         button(upgradeButton).tap()
-        return SubscriptionsRobot()
+        return SubscriptionModalRobot()
     }
     
+    @discardableResult
     func startUsingApp() -> MainRobot {
-        getStart()
+        button(upgradeButton).tap()
         skipUpgrade()
         return MainRobot()
+    }
+    
+    public let verify = Verify()
+    
+    class Verify: CoreElements {
+        
+        @discardableResult
+        func onboardingScreenIsShown(time: TimeInterval = 120) -> OnboardingRobot {
+            staticText(welcomeTitle).waitUntilExists(time: time).checkExists()
+            staticText(welcomeSubtitle).checkExists()
+            image(welcomeRedesignedImageId).checkExists()
+            button(upgradeButton).checkExists()
+            return OnboardingRobot()
+        }
     }
 }

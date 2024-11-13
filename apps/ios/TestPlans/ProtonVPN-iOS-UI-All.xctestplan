@@ -39,16 +39,9 @@
     {
       "skippedTests" : [
         "ConnectionTests",
-        "FreeRescopeTests\/testProfileCreationUnavailableForFreeUser()",
+        "FreeRescopeTests",
         "MainMeasurements",
         "PlanTests",
-        "PlanTests\/testShowCurrentPlanForVPNPlus15MUser()",
-        "PlanTests\/testShowCurrentPlanForVPNPlus30MUser()",
-        "PlanTests\/testShowCurrentPlanForVPNPlusUser()",
-        "PlanTests\/testShowUpdatePlansForCurrentFreePlan()",
-        "SignupTests\/testSignupExistingInternalAccount()",
-        "SignupTests\/testSignupNewExternalAccountUpgrade()",
-        "SignupTests\/testSignupNewInternalAccountUpgradePlans()",
         "SubscriptionTests"
       ],
       "target" : {

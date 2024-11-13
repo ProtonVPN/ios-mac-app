@@ -30,12 +30,12 @@ class CreatingAccountRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func creatingAccountScreenIsShown() -> SummarySignupRobot {
+        func creatingAccountScreenIsShown() -> OnboardingRobot {
             staticText(titleId).waitUntilExists(time: 110).checkExists()
-            staticText(subtitle).waitUntilExists(time: 110).checkExists()
-            staticText(creatingAccount).waitUntilExists(time: 110).checkExists()
-            staticText(configuringAccess).waitUntilExists(time: 110).checkExists()
-            return SummarySignupRobot()
+            staticText(subtitle).checkExists()
+            staticText(creatingAccount).checkExists()
+            staticText(configuringAccess).checkExists()
+            return OnboardingRobot()
         }
     }
 }

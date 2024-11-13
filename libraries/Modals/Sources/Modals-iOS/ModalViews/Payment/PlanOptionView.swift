@@ -51,6 +51,12 @@ struct PlanOptionView: View {
 }
 
 private struct PlanOptionLoadedView: View {
+
+    private enum AccessibilityIdentifier {
+        static let planOptionDuration: String = "plan_option_duration"
+        static let planOptionAmount: String = "plan_option_amount"
+    }
+
     private static let dateComponentsFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
@@ -70,6 +76,7 @@ private struct PlanOptionLoadedView: View {
             let planDurationString = Self.dateComponentsFormatter.string(from: planDuration.components) ?? planDuration.components.fallbackDuration
             Text(planDurationString)
                 .themeFont(.body1(.regular))
+                .accessibilityIdentifier(AccessibilityIdentifier.planOptionDuration)
 
             if let discount {
                 PlanDiscountBadgeView(discount: discount)
@@ -81,6 +88,7 @@ private struct PlanOptionLoadedView: View {
                 HStack(alignment: .bottom, spacing: .zero) {
                     Text(PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale))
                         .themeFont(.body1(.bold))
+                        .accessibilityIdentifier(AccessibilityIdentifier.planOptionAmount)
                     Text(planDuration.periodDescription)
                         .themeFont(.body3())
                         .foregroundColor(Color(.text, .weak))
