@@ -65,9 +65,6 @@ public struct HomeMapView: View {
         .onChange(of: store.mapState.code) {
             renderMap(focusedCountryCode: $0 ?? store.userCountry)
         }
-        .onChange(of: availableHeight) {
-            renderMap(focusedCountryCode: store.mapState.code)
-        }
     }
 
     @MainActor
