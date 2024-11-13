@@ -182,7 +182,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     private func closeAndOpenTheApp() {
-        button("OK").tap()
+        button("Kill").tap()
         device().foregroundApp(.launch)
         button("Use and continue").tap()
     }

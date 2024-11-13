@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-21.
+//  Created on 7/11/24.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,20 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import Foundation
+import Strings
 
-fileprivate let summaryTitle = "Welcome to Proton VPN"
+fileprivate let closeButton = Localizable.close
 
-class SummarySignupRobot: CoreElements {
+class ModalRobot: CoreElements {
     
-    public let verify = Verify()
-    
-    class Verify: CoreElements {
-        
-        @discardableResult
-        func summaryScreenIsShown(time: TimeInterval = 120) -> OnboardingRobot {
-            staticText(summaryTitle).waitUntilExists(time: time).checkExists()
-            return OnboardingRobot()
-        }
+    @discardableResult
+    func closeModal<T: CoreElements>(robot _: T.Type) -> T {
+        button(closeButton).tap()
+        return T()
     }
 }

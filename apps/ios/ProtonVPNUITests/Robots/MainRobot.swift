@@ -23,7 +23,7 @@ fileprivate let buttonOk = Localizable.ok
 fileprivate let buttonCancel = Localizable.cancel
 fileprivate let buttonAccount = Localizable.account
 fileprivate let showLoginButtonLabelText = Localizable.logIn
-fileprivate let showSignupButtonLabelText = Localizable.createAccount
+fileprivate let showSignupButtonLabelText = "Create an account"
 fileprivate let upselModalId = "TitleLabel"
 
 // MainRobot class contains actions for main app view.

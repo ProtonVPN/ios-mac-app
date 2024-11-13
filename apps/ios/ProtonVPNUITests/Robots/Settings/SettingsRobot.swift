@@ -8,6 +8,7 @@
 
 import fusion
 import XCTest
+import UITestsHelpers
 
 fileprivate let headerTitle = "Settings"
 fileprivate let reportBugButton = "Report Bug"
@@ -160,9 +161,13 @@ class SettingsRobot: CoreElements {
         }
         
         @discardableResult
-        func userIsCreated(_ name: String, _ plan: String) -> SettingsRobot {
-            staticText(name).checkExists()
-            staticText(plan).checkExists()
+        func userIsCreated(_ userName: String, _ userPlan: String) -> SettingsRobot {
+            staticText(userName)
+                .waitUntilExists(time: WaitTimeout.short)
+                .checkExists(message: "Username '\(userName)' is not visible")
+            staticText(userPlan)
+                .waitUntilExists(time: WaitTimeout.short)
+                .checkExists(message: "User plan '\(userPlan)' is not visible")
             return SettingsRobot()
         }
     }
