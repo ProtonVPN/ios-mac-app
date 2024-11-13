@@ -20,6 +20,7 @@ import SwiftUI
 
 import Dependencies
 
+import Ergonomics
 import Domain
 import Strings
 import Localization
@@ -28,14 +29,16 @@ import VPNAppCore
 
 public struct ConnectionInfoBuilder {
 
+    let withServerNumber: Bool
     public let intent: ConnectionSpec
     public let vpnConnectionActual: VPNConnectionActual?
     public var location: ConnectionSpec.Location { intent.location }
     @Dependency(\.locale) private var locale
 
-    public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?) {
+    public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?, withServerNumber: Bool) {
         self.intent = intent
         self.vpnConnectionActual = vpnConnectionActual
+        self.withServerNumber = withServerNumber
     }
 
     public var textSubHeader: String? {
@@ -44,8 +47,15 @@ public struct ConnectionInfoBuilder {
         }
         switch location {
         case .fastest:
-            return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
+            let countryName = LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode) ?? server.logical.exitCountryCode
+            if withServerNumber, let number = server.logical.serverNameComponents.sequence {
+                return countryName + " #\(number)"
+            }
+            return countryName
         case .random:
+            if withServerNumber, let sequence = server.logical.serverNameComponents.sequence {
+                return "#\(sequence)"
+            }
             return server.logical.name
         case .region:
             return nil

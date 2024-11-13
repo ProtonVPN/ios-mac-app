@@ -80,17 +80,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }()
 
     /// The server name, split into the name prefix and sequence number (if it exists).
-    public lazy var splitName: (serverName: String, sequenceNumber: Int?) = {
-        let nameArray = name.split(separator: "#")
-        guard nameArray.count == 2 else {
-            return (name, nil)
-        }
-        let serverName = String(nameArray[0])
-        // some of the server sequence numbers might have the trailing "-TOR" - we strip it
-        guard let numberString = nameArray[1].split(separator: "-").first, let number = Int(String(numberString)) else {
-            return (serverName, 0)
-        }
-        return (serverName, number)
+    public lazy var serverNameComponents: ServerNameComponents = {
+        .init(name: name)
     }()
     
     public var isSecureCore: Bool {
@@ -390,13 +381,13 @@ public class ServerModel: NSObject, NSCoding, Codable {
             return false
         }
 
-        let (lhsSplitName, rhsSplitName) = (lhs.splitName, rhs.splitName)
-        guard let lhsSeqNum = lhsSplitName.sequenceNumber, let rhsSeqNum = rhsSplitName.sequenceNumber else {
+        let (lhsSplitName, rhsSplitName) = (lhs.serverNameComponents, rhs.serverNameComponents)
+        guard let lhsSeqNum = lhsSplitName.sequence, let rhsSeqNum = rhsSplitName.sequence else {
             // if server names don't have the sequence numbers, it's enough to compare the names
             return lhs.name < rhs.name
         }
-        guard lhsSplitName.serverName == rhsSplitName.serverName else {
-            return lhsSplitName.serverName < rhsSplitName.serverName
+        guard lhsSplitName.name == rhsSplitName.name else {
+            return lhsSplitName.name < rhsSplitName.name
         }
         return lhsSeqNum < rhsSeqNum
     }

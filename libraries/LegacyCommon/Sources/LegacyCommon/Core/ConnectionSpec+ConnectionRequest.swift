@@ -56,7 +56,7 @@ extension ConnectionSpec {
                 if serverModel.feature.contains(.secureCore) {
                     location = .secureCore(.hop(to: serverModel.exitCountryCode, via: serverModel.entryCountryCode))
                 } else {
-                    location = .exact(.paid, number: serverModel.splitName.sequenceNumber, subregion: serverModel.city, regionCode: country)
+                    location = .exact(.paid, number: serverModel.serverNameComponents.sequence, subregion: serverModel.city, regionCode: country)
                 }
             }
         case .city(let country, let city):

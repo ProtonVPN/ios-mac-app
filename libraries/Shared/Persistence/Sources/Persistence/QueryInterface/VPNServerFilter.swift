@@ -115,7 +115,7 @@ public enum VPNServerOrder {
     /// Server score ascending
     case fastest
 
-    /// See `Logical.namePrefix` and `Logical.sequenceNumber` obtained from `VPNServer.splitName`
+    /// See `ServerNameComponents` obtained from `VPNServer.serverNameComponents`
     case nameAscending
 }
 
