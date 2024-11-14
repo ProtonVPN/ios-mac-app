@@ -39,9 +39,7 @@
     {
       "skippedTests" : [
         "ConnectionTests",
-        "FreeRescopeTests",
         "MainMeasurements",
-        "PlanTests",
         "SubscriptionTests"
       ],
       "target" : {

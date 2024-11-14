@@ -48,8 +48,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
             )
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
-        loginRobot
-            .verify.correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
+            .verify.correctUserIsLoggedIn(randomUsername, "Proton VPN Free")
     }
 
     func testSignInWithExternalAccountWorks() throws {
@@ -70,7 +69,6 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
             )
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
-        loginRobot
             .verify.correctUserIsLogedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
     }
 
@@ -90,7 +88,6 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
             )
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
-        loginRobot
             .verify.correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
 }

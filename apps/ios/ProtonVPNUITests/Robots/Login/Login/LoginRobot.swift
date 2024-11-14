@@ -107,12 +107,5 @@ class LoginRobot: CoreElements {
             button(loginButton).waitUntilExists().checkExists().tap()
             return LoginRobot()
         }
-        
-        @discardableResult
-        func correctUserIsLogedIn(_ name: Credentials) -> LoginRobot {
-            staticText(name.username).checkExists()
-            staticText(name.plan).checkExists()
-            return LoginRobot()
-        }
     }
 }

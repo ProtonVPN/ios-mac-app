@@ -18,10 +18,39 @@
 
 import XCTest
 import fusion
+import UITestsHelpers
 
 class PlanTests: ProtonVPNUITests {
 
     private let loginRobot = LoginRobot()
+
+    private struct Plan {
+        let name: String
+        let duration: String
+        let price: String
+        let user: Credentials
+    }
+
+    private let vpnPlusPlan = Plan(
+        name: "VPN Plus",
+        duration: "1 year",
+        price: "71,88",
+        user: BF22Users.plusUser.credentials
+    )
+
+    private let vpnPlus15MonthPlan = Plan(
+        name: "VPN Plus",
+        duration: "15 months",
+        price: "149,85",
+        user: BF22Users.cycle15User.credentials
+    )
+
+    private let vpnPlus30MonthPlan = Plan(
+        name: "VPN Plus",
+        duration: "30 months",
+        price: "299,70",
+        user: BF22Users.cycle30User.credentials
+    )
 
     override func setUp() {
         super.setUp()
@@ -33,70 +62,51 @@ class PlanTests: ProtonVPNUITests {
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 1 year and costs $99.99
     func testShowCurrentPlanForVPNPlusUser() {
-
-        loginRobot
-            .enterCredentials(BF22Users.plusUser.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToSettingsTab()
-            .goToAccountDetail()
-            .goToManageSubscription()
-            .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("1 year")
-            .checkPriceIs("59.99")
+        testShowCurrentPlan(vpnPlusPlan)
     }
 
     // Black Friday 2022 plans, will renew at same price and cycle, so we want to keep tests for them
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 15 months and costs $149.85
     func testShowCurrentPlanForVPNPlus15MUser() {
-
-        loginRobot
-            .enterCredentials(BF22Users.cycle15User.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToSettingsTab()
-            .goToAccountDetail()
-            .goToManageSubscription()
-            .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("15 months")
-            .checkPriceIs("149.85")
+        testShowCurrentPlan(vpnPlus15MonthPlan)
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 30 months and costs $299.70
     func testShowCurrentPlanForVPNPlus30MUser() {
-
-        loginRobot
-            .enterCredentials(BF22Users.cycle30User.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-            .goToSettingsTab()
-            .goToAccountDetail()
-            .goToManageSubscription()
-            .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("30 months")
-            .checkPriceIs("299.70")
+        testShowCurrentPlan(vpnPlus30MonthPlan)
     }
 
     // This test temporary disabled
     /// Test showing standard plans for upgrade but not Black Friday 2022 plans
     func testShowUpdatePlansForCurrentFreePlan() {
         
-        loginRobot
-            .enterCredentials(BF22Users.freeUser.credentials)
+        loginAndGoToAccountDetails(BF22Users.freeUser.credentials)
+            .goToUpgradeSubscription()
+            .verify.upgradeSubscriptionScreenShown()
+            .verify.numberOfPlansToPurchaseIs(number: 2)
+            .verify.verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", text: "Proton Unlimited")
+            .verify.verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", text: "for 1 year")
+            .verify.verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", text: "$149,99")
+            .verify.verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", text: "VPN Plus")
+            .verify.verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", text: "for 1 year")
+            .verify.verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", text: "$99,99")
+    }
+
+    private func loginAndGoToAccountDetails(_ user: Credentials) -> AccountRobot {
+        return loginRobot
+            .enterCredentials(user)
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
             .goToAccountDetail()
-            .goToUpgradeSubscription()
-            .verifyStaticText("Upgrade your plan")
-            .verifyNumberOfPlansToPurchase(number: 2)
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
-            .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "Proton Unlimited")
-            .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "for 1 year")
-            .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "$149.99")
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "for 1 year")
-            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
+    }
+
+    private func testShowCurrentPlan(_ plan: Plan) {
+        loginAndGoToAccountDetails(plan.user)
+            .goToManageSubscription()
+            .verify.checkPlanNameIs(plan.name)
+            .verify.checkDurationIs(plan.duration)
+            .verify.checkPriceIs(plan.price)
     }
 }

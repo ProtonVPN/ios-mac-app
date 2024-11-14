@@ -19,12 +19,12 @@
 import Foundation
 import fusion
 import ProtonCoreTestingToolkitUITestsPaymentsUI
+import Strings
 
-fileprivate let manageSubscriptionButton = "Manage Subscription"
-fileprivate let upgradeSubscriptionButton = "Upgrade Subscription"
-fileprivate let deleteAccountButton = "Delete account"
+fileprivate let manageSubscriptionButton = Localizable.manageSubscription
+fileprivate let upgradeSubscriptionButton = Localizable.upgradeSubscription
 fileprivate let deleteAccountText = "Delete account"
-fileprivate let deleteButton = "Delete"
+fileprivate let deleteButton = Localizable.delete
 fileprivate let selectedEnvHeader = "Selected environment"
 
 class AccountRobot: CoreElements {
@@ -42,7 +42,7 @@ class AccountRobot: CoreElements {
     }
     
     func deleteAccount() -> AccountRobot {
-        button(deleteAccountButton).tap()
+        button(deleteAccountText).tap()
         return AccountRobot()
     }
 

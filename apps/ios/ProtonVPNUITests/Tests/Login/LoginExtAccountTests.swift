@@ -22,6 +22,8 @@ class LoginExtAccountTests: ProtonVPNUITests {
         mainRobot
             .showLogin()
             .verify.loginScreenIsShown()
+        // waiting for LoginExternalAccountNotSupportedSetup stub started
+        sleep(2)
     }
 
     // Sign-in with external account on old iOS version

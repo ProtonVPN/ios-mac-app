@@ -68,7 +68,6 @@ class LoginTests: ProtonVPNUITests {
             .signIn(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
-        loginRobot
             .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }
     
@@ -83,7 +82,6 @@ class LoginTests: ProtonVPNUITests {
             .confirm2FA(robot: TwoFaRobot.self)
             .waitFor2FaDisappear(robot: MainRobot.self)
             .goToSettingsTab()
-        loginRobot
             .verify.correctUserIsLogedIn(twofausercredentials[0])
     }
     
@@ -99,7 +97,6 @@ class LoginTests: ProtonVPNUITests {
             .confirm2FA(robot: TwoFaRobot.self)
             .waitFor2FaDisappear(robot: MainRobot.self)
             .goToSettingsTab()
-        loginRobot
             .verify.correctUserIsLogedIn(twopasstwofausercredentials[0])
     }
 }
