@@ -9,20 +9,17 @@
 import fusion
 import XCTest
 import UITestsHelpers
+import Strings
 
-fileprivate let headerTitle = "Settings"
-fileprivate let reportBugButton = "Report Bug"
-fileprivate let protocolButton = "Protocol"
-fileprivate let netshieldButton = "NetShield"
-fileprivate let killSwitchButton = "Kill switch"
-fileprivate let killSwitchAlert = "Turn kill switch on?"
-fileprivate let allowLanConnectionsButton = "Allow LAN connections"
-fileprivate let allowLanConnectionsAlert = "Allow LAN connections"
-fileprivate let moderateNatSwitch = "Moderate NAT"
-fileprivate let continueButton = "Continue"
-fileprivate let logOutButton = "Sign out"
-fileprivate let cancelButton = "Cancel"
-fileprivate let vpnConnectionActiveAlert = "VPN Connection Active"
+fileprivate let headerTitle = Localizable.settingsTitle
+fileprivate let protocolButton = Localizable.protocol
+fileprivate let netshieldButton = Localizable.netshieldTitle
+fileprivate let killSwitchButton = Localizable.killSwitch
+fileprivate let allowLanConnectionsButton = Localizable.allowLanTitle
+fileprivate let moderateNatSwitch = Localizable.moderateNatTitle
+fileprivate let continueButton = Localizable.continue
+fileprivate let logOutButton = Localizable.logOut
+fileprivate let cancelButton = Localizable.cancel
 fileprivate let firstAppScreen = "Selected environment"
 
 class SettingsRobot: CoreElements {
@@ -30,28 +27,33 @@ class SettingsRobot: CoreElements {
     let verify = Verify()
     
     /// - Precondition: Protocol submenu of Settings menu
+    @discardableResult
     func goToProtocolsList() -> ProtocolsListRobot {
         cell(protocolButton).firstMatch().tap()
         return ProtocolsListRobot()
     }
     
     /// - Precondition: Netshield submenu of Settings menu
+    @discardableResult
     func goToNetshieldList() -> SettingsRobot {
         cell(netshieldButton).tap()
         return SettingsRobot()
     }
 
+    @discardableResult
     func goToAccountDetail() -> AccountRobot {
         cell("Account Details cell").tap()
         return AccountRobot()
     }
 
+    @discardableResult
     func selectNetshield(_ netshield: String) -> SettingsRobot {
         cell(netshieldButton).tap()
         staticText(netshield).tap()
         return SettingsRobot()
     }
-    
+
+    @discardableResult
     private func tapContinueIfExist() -> SettingsRobot {
         if button(continueButton).waitUntilExists(time: 0.5).exists() {
             button(continueButton).tap()
@@ -92,6 +94,7 @@ class SettingsRobot: CoreElements {
     }
     
     /// - Precondition: Kill Switch is off
+    @discardableResult
     private func killSwitchOn() -> SettingsRobot {
         swittch(killSwitchButton)
             .swipeUpUntilVisible()
@@ -100,21 +103,25 @@ class SettingsRobot: CoreElements {
     }
     
     /// - Precondition: Lan Connection is off
+    @discardableResult
     private func lanConnectionOn() -> SettingsRobot {
         swittch(allowLanConnectionsButton).tap()
         return self
     }
     
+    @discardableResult
     private func lanConnectionContinue() -> SettingsRobot {
         button(continueButton).tap()
         return self
     }
     
+    @discardableResult
     private func clickLogOut() -> SettingsRobot {
         button(logOutButton).tap()
         return self
     }
     
+    @discardableResult
     private func logOutCancel() -> ConnectionStatusRobot {
         button(cancelButton).tap()
         return ConnectionStatusRobot()
@@ -161,7 +168,7 @@ class SettingsRobot: CoreElements {
         }
         
         @discardableResult
-        func userIsCreated(_ userName: String, _ userPlan: String) -> SettingsRobot {
+        func correctUserIsLoggedIn(_ userName: String, _ userPlan: String) -> SettingsRobot {
             staticText(userName)
                 .waitUntilExists(time: WaitTimeout.short)
                 .checkExists(message: "Username '\(userName)' is not visible")
@@ -169,6 +176,11 @@ class SettingsRobot: CoreElements {
                 .waitUntilExists(time: WaitTimeout.short)
                 .checkExists(message: "User plan '\(userPlan)' is not visible")
             return SettingsRobot()
+        }
+
+        @discardableResult
+        func correctUserIsLogedIn(_ user: Credentials) -> SettingsRobot {
+            return correctUserIsLoggedIn(user.username, user.plan)
         }
     }
 }

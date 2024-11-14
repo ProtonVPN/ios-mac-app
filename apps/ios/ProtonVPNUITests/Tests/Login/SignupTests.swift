@@ -88,7 +88,7 @@ class SignupTests: ProtonVPNUITests {
             .closeModal(robot: MainRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
-            .verify.userIsCreated(userEmail, "Proton VPN Free")
+            .verify.correctUserIsLoggedIn(userEmail, "Proton VPN Free")
     }
 
     private func getRandomData(emailPostfix: String) -> (email: String, userName: String, password: String) {

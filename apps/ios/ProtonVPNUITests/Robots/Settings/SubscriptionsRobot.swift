@@ -20,53 +20,55 @@ import Foundation
 import fusion
 import XCTest
 
+fileprivate let upgradeSubscriptionTitle = "Upgrade your plan"
+
 class SubscriptionsRobot: CoreElements {
 
-    @discardableResult
-    func checkDurationIs(_ length: String) -> Self {
-        staticText().containsLabel(length).waitUntilExists().checkExists()
-        return self
-    }
+    let verify = Verify()
 
-    @discardableResult
-    func checkPriceIs(_ price: String) -> Self {
-        staticText().containsLabel(price).waitUntilExists().checkExists()
+    class Verify: CoreElements {
 
-        return self
-    }
+        @discardableResult
+        public func verifyTableCellStaticText(cellName: String, text: String) -> SubscriptionsRobot {
+            let planCell = table("PaymentsUIViewController.tableView").onChild(cell(cellName))
+            planCell.checkExists(message: "Plan cell \(cellName) is not visible")
+            planCell.onChild(staticText(text)).checkExists(message: "Plan cell \(cellName) does not contain text \(text)")
+            return SubscriptionsRobot()
+        }
 
-    @discardableResult
-    func checkPlanNameIs(_ name: String) -> Self {
-        staticText(name).waitUntilExists().checkExists()
+        @discardableResult
+        func upgradeSubscriptionScreenShown() -> SubscriptionsRobot {
+            staticText(upgradeSubscriptionTitle).checkExists(message: "\(upgradeSubscriptionTitle) screen not shown")
+            return SubscriptionsRobot()
+        }
 
-        return self
-    }
-    
-    @discardableResult
-    func verifyStaticText(_ name: String) -> Self {
-        staticText(name).waitUntilExists().checkExists()
-        return self
-    }
-    
-    @discardableResult
-    public func verifyNumberOfPlansToPurchase(number: Int) -> Self {
-        table("PaymentsUIViewController.tableView").waitUntilExists(time: 15).checkExists()
-        let count = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.count
-        XCTAssertEqual(count, number)
-        return self
-    }
-    
-    @discardableResult
-    public func sleepFor(_ duration: UInt32) -> Self {
-        sleep(duration)
-        return self
-    }
+        @discardableResult
+        public func numberOfPlansToPurchaseIs(number: Int) -> SubscriptionsRobot {
+            table("PaymentsUIViewController.tableView").waitUntilExists(time: 15).checkExists()
+            // -1 because 1st cell is drop down
+            let count = XCUIApplication().tables.matching(
+                identifier: "PaymentsUIViewController.tableView"
+            ).cells.count - 1
+            XCTAssertEqual(count, number)
+            return SubscriptionsRobot()
+        }
 
-    @discardableResult
-    public func verifyTableCellStaticText(cellName: String, name: String) -> Self {
-        table("PaymentsUIViewController.tableView").waitUntilExists(time: 15).checkExists()
-        let staticTexts = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.matching(identifier: cellName).staticTexts
-        XCTAssertTrue(staticTexts[name].exists)
-        return self
+        @discardableResult
+        func checkDurationIs(_ length: String) -> SubscriptionsRobot {
+            staticText().containsLabel(length).waitUntilExists().checkExists()
+            return SubscriptionsRobot()
+        }
+
+        @discardableResult
+        func checkPriceIs(_ price: String) -> SubscriptionsRobot {
+            staticText().containsLabel(price).waitUntilExists().checkExists()
+            return SubscriptionsRobot()
+        }
+
+        @discardableResult
+        func checkPlanNameIs(_ name: String) -> SubscriptionsRobot {
+            staticText(name).waitUntilExists().checkExists()
+            return SubscriptionsRobot()
+        }
     }
 }
