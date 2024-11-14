@@ -49,13 +49,16 @@ public struct ConnectionFlagInfoView: View {
         underMaintenance: Bool = false,
         isPinned: Bool,
         vpnConnectionActual: VPNConnectionActual? = nil,
+        withServerNumber: Bool = false,
         withDivider: Bool,
         images: RecentsImages = .init(),
         detailAction: ((Action) -> Void)? = nil
     ) {
         self.intent = intent
         self.underMaintenance = underMaintenance
-        self.connectionInfoBuilder = .init(intent: intent, vpnConnectionActual: vpnConnectionActual)
+        self.connectionInfoBuilder = .init(intent: intent,
+                                           vpnConnectionActual: vpnConnectionActual,
+                                           withServerNumber: withServerNumber)
         self.withDivider = withDivider
         self.detailAction = detailAction
         self.isPinned = isPinned
