@@ -165,11 +165,11 @@
       },
       {
         "package": "Sparkle",
-        "repositoryURL": "https://github.com/protonjohn/Sparkle",
+        "repositoryURL": "https://github.com/sparkle-project/Sparkle",
         "state": {
           "branch": null,
-          "revision": "fc3b382c01e38778b462ff9ff3aba070df99f2e8",
-          "version": "2.4.3"
+          "revision": "0ef1ee0220239b3776f433314515fd849025673f",
+          "version": "2.6.4"
         }
       },
       {

@@ -17,6 +17,7 @@ fileprivate let tabMap = Localizable.map
 fileprivate let quickConnectButtonId = "quick connect inactive button"
 fileprivate let quickDisconnectButtonId = "quick connect active button"
 fileprivate let statusNotConnected = Localizable.notConnected
+fileprivate let connectionStatusUnprotected = Localizable.connectionStatusUnprotected
 fileprivate let upgradeSubscriptionTitle = Localizable.modalsNewUpsellCountryTitle
 fileprivate let upgradeSubscriptionButton = Localizable.upsellPlansListValidateButton
 fileprivate let buttonOk = Localizable.ok
@@ -100,7 +101,9 @@ class MainRobot: CoreElements {
     
         @discardableResult
         func connectionStatusNotConnected() -> MainRobot {
-            staticText(statusNotConnected).waitUntilExists(time: 21).checkExists()
+            staticText(connectionStatusUnprotected)
+                .waitUntilExists(time: 30)
+                .checkExists(message: "Failed to check that connection status is not connected. '\(connectionStatusUnprotected)' label is not visible.")
             return MainRobot()
         }
     
