@@ -109,4 +109,8 @@ public struct Logical: Codable, Equatable, Sendable {
             return false
         }
     }
+
+    public var serverNameComponents: ServerNameComponents {
+        .init(name: name)
+    }
 }
