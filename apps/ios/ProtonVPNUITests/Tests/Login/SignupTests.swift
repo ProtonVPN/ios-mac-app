@@ -80,8 +80,10 @@ class SignupTests: ProtonVPNUITests {
     private func verifyOnboardingScreen(for userEmail: String) {
         CreatingAccountRobot()
             .verify.creatingAccountScreenIsShown()
-            .verify.onboardingScreenIsShown()
-            .tapUpgradePlan()
+            .verify.onboardingScreenStep1IsShown()
+            .tapContinueButton()
+            .verify.onboardingScreenStep2IsShown()
+            .tapGetStarted()
             .verify.subscriptionModalIsShown()
             .verify.verifyPlanOptions(planDuration: "1 month", planAmount: "$11.99")
             .verify.verifyPlanOptions(planDuration: "12 months", planAmount: "$79.99")

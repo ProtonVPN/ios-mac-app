@@ -43,7 +43,7 @@ class CreateProfileRobot: CoreElements {
     @discardableResult
     private func enterProfileName(_ name: String) -> CreateProfileRobot {
         textField(profileNameField).waitUntilExists(time: WaitTimeout.short)
-            .doubleTap()
+            .tap()
             .clearText()
             .typeText(name)
         return self

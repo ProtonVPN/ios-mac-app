@@ -26,7 +26,7 @@ fileprivate let closeButton = Localizable.close
 fileprivate let continueButton = Localizable.continue
 fileprivate let welcomeTitle = Localizable.welcomeToProtonTitle
 fileprivate let welcomeSubtitle = Localizable.welcomeToProtonSubtitle
-fileprivate let welcomeRedesignedImageId = "welcome"
+fileprivate let welcomeRedesignedImageId = "welcomeRedesigned"
 fileprivate let getStartedImageId = "getStarted"
 fileprivate let welcomeBannerTitle = Localizable.welcomeToProtonBannerTitle
 fileprivate let settingsTitleCensorship = Localizable.settingsTitleCensorship
@@ -69,11 +69,20 @@ class OnboardingRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func onboardingScreenIsShown(time: TimeInterval = 120) -> OnboardingRobot {
+        func onboardingScreenStep1IsShown(time: TimeInterval = 120) -> OnboardingRobot {
             staticText(welcomeTitle).waitUntilExists(time: time).checkExists()
             staticText(welcomeSubtitle).checkExists()
             image(welcomeRedesignedImageId).checkExists()
-            button(upgradeButton).checkExists()
+            button(continueButton).checkExists()
+            return OnboardingRobot()
+        }
+
+        @discardableResult
+        func onboardingScreenStep2IsShown(time: TimeInterval = 120) -> OnboardingRobot {
+            staticText(settingsTitleCensorship).waitUntilExists(time: time).checkExists()
+            staticText(Localizable.onboardingUsageStatsTitle).checkExists()
+            staticText(Localizable.onboardingCrashReportsDescription).checkExists()
+            button(getStartedButton).checkExists()
             return OnboardingRobot()
         }
     }
