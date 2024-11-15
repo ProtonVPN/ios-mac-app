@@ -79,20 +79,20 @@ final class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+
         #if DEBUG
         // Force log out if running UI tests
         if ProcessInfo.processInfo.arguments.contains("UITests") {
             appSessionManager.logOut(force: false, reason: "UI tests")
         }
         #endif
-        
+
         // Clear out any overrides that may have been present in previous builds
         FeatureFlagsRepository.shared.resetOverrides()
 
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
-//        Safety measure to not accidentally switch on the redesign before it's ready
-//        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)
+//      Safety measure to not accidentally switch on the redesign before it's ready
+//      FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)
 
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()
@@ -121,7 +121,7 @@ extension AppDelegate: UIApplicationDelegate {
 //                }
 //            )
 //        }
-        
+
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
             Task { @MainActor in
@@ -133,39 +133,39 @@ extension AppDelegate: UIApplicationDelegate {
                 self.navigationService.launched()
             }
         }
-        
+
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
-                
+
         _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
         container.applicationDidFinishLaunching()
         return true
     }
-        
+
     private func setupDebugHelpers() {
         #if FREQUENT_AUTH_CERT_REFRESH
         CertificateConstants.certificateDuration = "30 minutes"
         #endif
     }
-    
+
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateManager.refreshState()
     }
-    
+
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         // Handle Siri intents
         let prefix = "com.protonmail.vpn."
         guard userActivity.activityType.hasPrefix(prefix) else {
             return false
         }
-        
+
         let action = String(userActivity.activityType.dropFirst(prefix.count))
 
         // We know the action is verified because the user activity has our prefix.
         let verified = true
         return handleAction(action, verified: verified)
     }
-    
+
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
               let host = components.host else {
@@ -217,11 +217,11 @@ extension AppDelegate: UIApplicationDelegate {
         log.info("applicationDidEnterBackground", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
-    
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
-        
+
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
@@ -232,7 +232,7 @@ extension AppDelegate: UIApplicationDelegate {
             container.makeReview().activated()
         }
     }
-    
+
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         pushNotificationService.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
@@ -253,17 +253,17 @@ extension AppDelegate: UIApplicationDelegate {
 }
 
 fileprivate extension AppDelegate {
-    
+
     // MARK: - Private
 
     func handleAction(_ action: String, verified: Bool = false) -> Bool {
         switch action {
-            
+
         case URLConstants.deepLinkLoginAction:
             DispatchQueue.main.async { [weak self] in
-                self?.navigationService.presentWelcome(initialError: nil)                
+                self?.navigationService.presentWelcome(initialError: nil)
             }
-            
+
         case URLConstants.deepLinkConnectAction:
             // Action may only come from a trusted source
             guard verified else { return false }
@@ -272,7 +272,7 @@ fileprivate extension AppDelegate {
             navigationService.vpnGateway.quickConnect(trigger: .widget)
             NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
             navigationService.presentStatusViewController()
-            
+
         case URLConstants.deepLinkDisconnectAction:
             // Action may only come from a trusted source
             guard verified else { return false }
@@ -305,10 +305,10 @@ fileprivate extension AppDelegate {
             log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])
             return false
         }
-        
+
         return true
     }
-    
+
     @objc func stateDidUpdate() {
         switch appStateManager.state {
         case .connected:
@@ -394,7 +394,7 @@ extension AppDelegate {
                     self?.navigationService.presentAccountRecoveryViewController()
                     return .success(())
                 }
-                
+
                 NotificationType.allAccountRecoveryTypes.forEach {
                     pushNotificationService.registerHandler(vpnHandler, forType: $0)
                 }

@@ -86,7 +86,7 @@ class ProfileRobot: CoreElements {
     @discardableResult
     private func edit(_ name: String) -> ProfileRobot {
         button(editButton).tap()
-        staticText(name).waitUntilExists().tap()
+        staticText().containsLabel(name).tap()
         return self
     }
     

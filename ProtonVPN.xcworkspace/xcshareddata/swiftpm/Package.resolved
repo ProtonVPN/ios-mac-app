@@ -183,7 +183,7 @@
       },
       {
         "package": "SVGView",
-        "repositoryURL": "https://github.com/exyte/SVGView.git",
+        "repositoryURL": "https://github.com/exyte/SVGView",
         "state": {
           "branch": null,
           "revision": "6465962facdd25cb96eaebc35603afa2f15d2c0d",
@@ -228,7 +228,7 @@
       },
       {
         "package": "swift-collections",
-        "repositoryURL": "https://github.com/apple/swift-collections",
+        "repositoryURL": "https://github.com/apple/swift-collections.git",
         "state": {
           "branch": null,
           "revision": "671108c96644956dddcd89dd59c203dcdb36cec7",
@@ -390,7 +390,7 @@
       },
       {
         "package": "xctest-dynamic-overlay",
-        "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay",
+        "repositoryURL": "https://github.com/pointfreeco/xctest-dynamic-overlay.git",
         "state": {
           "branch": null,
           "revision": "770f990d3e4eececb57ac04a6076e22f8c97daeb",

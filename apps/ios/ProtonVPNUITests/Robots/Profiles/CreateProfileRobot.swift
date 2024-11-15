@@ -65,7 +65,10 @@ class CreateProfileRobot: CoreElements {
     private func chooseCountry(_ countryname: String) -> CreateProfileRobot {
         tapCountryField()
         staticText(countriesLabel).waitUntilExists().checkExists()
-        staticText(NSPredicate(format: "label ENDSWITH[c] %@", countryname)).checkExists(message: "Country \(countryname) not found").tap()
+        staticText()
+            .containsLabel(countryname)
+            .checkExists(message: "Country \(countryname) not found")
+            .tap()
         return self
     }
 

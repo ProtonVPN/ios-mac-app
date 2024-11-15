@@ -60,7 +60,7 @@ struct HomeConnectionCardView: View {
 
     private var button: some View {
         Button {
-            withAnimation(.easeInOut) {
+            withAnimation(.linear) {
                 switch store.vpnConnectionStatus {
                 case .disconnected:
                     store.send(.delegate(.connect(store.presentedSpec)))
