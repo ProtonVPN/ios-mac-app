@@ -34,18 +34,21 @@ extension OrderedSet<RecentConnection> {
     }
 
     mutating func sanitize() {
+        sort { lhs, rhs in
+            if lhs.pinnedDate != nil && rhs.pinnedDate == nil {
+                return true
+            }
+            if lhs.pinnedDate == nil  && rhs.pinnedDate != nil {
+                return false
+            }
+            if let lhsPinned = lhs.pinnedDate, let rhsPinned = rhs.pinnedDate {
+                return lhsPinned < rhsPinned // last pinned item should appear at the bottom of the pinned item list
+            }
+            return lhs.connectionDate > rhs.connectionDate
+        }
         while count > Self.maxConnections,
               let index = lastIndex(where: \.notPinned) {
             remove(at: index)
-        }
-        sort { lhs, rhs in
-            if lhs.pinned && !rhs.pinned {
-                return true
-            }
-            if !lhs.pinned && rhs.pinned {
-                return false
-            }
-            return lhs.connectionDate > rhs.connectionDate
         }
     }
 
@@ -70,7 +73,7 @@ extension OrderedSet<RecentConnection> {
         @Dependency(\.date) var date
 
         let recent = RecentConnection(
-            pinned: oldRecent?.pinned ?? false,
+            pinnedDate: oldRecent?.pinnedDate,
             underMaintenance: oldRecent?.underMaintenance ?? false,
             connectionDate: date(),
             connection: spec
@@ -91,7 +94,7 @@ extension OrderedSet<RecentConnection> {
     private mutating func updatePin(recent: RecentConnection, shouldPin: Bool) {
         var recent = recent
         remove(recent)
-        recent.pinned = shouldPin
+        recent.pinnedDate = shouldPin ? Date() : nil
         insert(recent, at: 0)
         sanitize()
     }

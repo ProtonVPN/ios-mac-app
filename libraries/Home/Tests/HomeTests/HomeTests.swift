@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
 import Domain
-
 import Home
-
 import VPNShared
 
 // Todo: Snapshot testing for both macOS and iOS, for the Home view
@@ -27,7 +27,7 @@ import VPNShared
 
 extension RecentConnection {
     static let pinnedActiveExactCHRegular: Self = .init(
-        pinned: true,
+        pinnedDate: Date(),
         underMaintenance: false,
         connectionDate: .now,
         connection: .init(
@@ -42,7 +42,7 @@ extension RecentConnection {
     )
 
     static let recentActiveExactSEStreaming: Self = .init(
-        pinned: false,
+        pinnedDate: nil,
         underMaintenance: false,
         connectionDate: .now,
         connection: .init(
@@ -57,7 +57,7 @@ extension RecentConnection {
     )
 
     static let recentRegionUSP2P: Self = .init(
-        pinned: false,
+        pinnedDate: nil,
         underMaintenance: false,
         connectionDate: .now,
         connection: .init(

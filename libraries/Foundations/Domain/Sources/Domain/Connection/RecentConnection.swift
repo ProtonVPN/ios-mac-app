@@ -19,14 +19,16 @@
 import Foundation
 
 public struct RecentConnection: Equatable, Hashable {
-    public var pinned: Bool
+    public var pinnedDate: Date?
     public var underMaintenance: Bool
     public let connectionDate: Date
 
+    public var pinned: Bool { pinnedDate != nil }
+
     public let connection: ConnectionSpec
 
-    public init(pinned: Bool, underMaintenance: Bool, connectionDate: Date, connection: ConnectionSpec) {
-        self.pinned = pinned
+    public init(pinnedDate: Date?, underMaintenance: Bool, connectionDate: Date, connection: ConnectionSpec) {
+        self.pinnedDate = pinnedDate
         self.underMaintenance = underMaintenance
         self.connectionDate = connectionDate
         self.connection = connection
@@ -34,7 +36,7 @@ public struct RecentConnection: Equatable, Hashable {
 
     public static var defaultFastest: Self {
         .init(
-            pinned: false,
+            pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date(),
             connection: .init(location: .fastest, features: [])
@@ -42,7 +44,7 @@ public struct RecentConnection: Equatable, Hashable {
     }
 
     public var notPinned: Bool {
-        !pinned
+        pinnedDate == nil
     }
 }
 
@@ -59,31 +61,31 @@ extension RecentConnection {
     public static var sampleData: [RecentConnection] {
         return [
             RecentConnection(
-                pinned: true,
+                pinnedDate: Date(),
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .fastest, features: [])
             ),
             RecentConnection(
-                pinned: true,
+                pinnedDate: Date(),
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .region(code: "CH"), features: [])
             ),
             RecentConnection(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .region(code: "US"), features: [])
             ),
             RecentConnection(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
             ),
             RecentConnection(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])

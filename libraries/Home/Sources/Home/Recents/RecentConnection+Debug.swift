@@ -25,7 +25,7 @@ import VPNAppCore
 public extension RecentConnection {
     static var pinnedConnection: RecentConnection {
         .init(
-            pinned: true,
+            pinnedDate: Date(),
             underMaintenance: false,
             connectionDate: Date(),
             connection: .init(
@@ -41,7 +41,7 @@ public extension RecentConnection {
     }
     static var previousConnection: RecentConnection {
         .init(
-            pinned: false,
+            pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date().addingTimeInterval(-5 * 60.0),
             connection: .init(
@@ -52,7 +52,7 @@ public extension RecentConnection {
     }
     static var connectionRegion: RecentConnection {
         .init(
-            pinned: false,
+            pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date(),
             connection: .init(
@@ -64,7 +64,7 @@ public extension RecentConnection {
 
     static var pinnedFastest: RecentConnection {
         .init(
-            pinned: true,
+            pinnedDate: Date(),
             underMaintenance: false,
             connectionDate: Date(),
             connection: .init(
@@ -75,7 +75,7 @@ public extension RecentConnection {
     }
     static var previousFreeConnection: RecentConnection {
         .init(
-            pinned: false,
+            pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date().addingTimeInterval(-2 * 60.0),
             connection: .init(
@@ -91,7 +91,7 @@ public extension RecentConnection {
     }
     static var connectionSecureCore: RecentConnection {
         .init(
-            pinned: true,
+            pinnedDate: Date(),
             underMaintenance: true,
             connectionDate: Date().addingTimeInterval(-6 * 60.0),
             connection: .init(
@@ -102,7 +102,7 @@ public extension RecentConnection {
     }
     static var connectionRegionPinned: RecentConnection {
         .init(
-            pinned: true,
+            pinnedDate: Date(),
             underMaintenance: true,
             connectionDate: Date().addingTimeInterval(-8 * 60.0),
             connection: .init(
@@ -113,7 +113,7 @@ public extension RecentConnection {
     }
     static var connectionSecureCoreFastest: RecentConnection {
         .init(
-            pinned: false,
+            pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date().addingTimeInterval(-6 * 60 * 60.0),
             connection: .init(
