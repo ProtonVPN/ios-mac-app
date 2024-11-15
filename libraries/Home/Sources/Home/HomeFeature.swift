@@ -48,6 +48,8 @@ public struct HomeFeature {
 
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.userTier)
+        public var userTier: Int
 
         @Presents
         public var destination: Destination.State?
