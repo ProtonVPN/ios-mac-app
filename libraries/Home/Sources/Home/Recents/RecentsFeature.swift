@@ -37,7 +37,7 @@ public struct RecentsFeature {
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
             recentsStorage.initializeStorage()
-            recents = recentsStorage.elements()
+            recents = recentsStorage.elements(nil)
         }
     }
 
@@ -89,22 +89,22 @@ public struct RecentsFeature {
 
             case .connectionEstablished(let spec):
                 recentsStorage.updateList(spec)
-                state.recents = recentsStorage.elements()
+                state.recents = recentsStorage.elements(spec)
                 return .none
 
             case let .pin(recent):
                 recentsStorage.pin(recent)
-                state.recents = recentsStorage.elements()
+                state.recents = recentsStorage.elements(recent.connection)
                 return .none
 
             case let .unpin(recent):
                 recentsStorage.unpin(recent)
-                state.recents = recentsStorage.elements()
+                state.recents = recentsStorage.elements(recent.connection)
                 return .none
 
             case let .remove(recent):
                 recentsStorage.remove(recent)
-                state.recents = recentsStorage.elements()
+                state.recents = recentsStorage.elements(recent.connection)
                 return .none
 
             case .delegate:

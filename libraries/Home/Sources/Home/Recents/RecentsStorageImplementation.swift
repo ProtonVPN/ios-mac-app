@@ -44,8 +44,16 @@ public final class RecentsStorageImplementation {
         self.collection = Self.readFromStorage()
     }
 
-    func elements() -> OrderedSet<RecentConnection> {
-        collection
+    func elements(without spec: ConnectionSpec?) -> OrderedSet<RecentConnection> {
+        let recent = collection.first { recent in
+            recent.connection == spec
+        }
+        guard let recent else { return collection }
+        if recent.pinned {
+            return collection
+        } else {
+            return collection.subtracting([recent])
+        }
     }
 
     static func storageKey(_ userID: String) -> String {

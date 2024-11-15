@@ -48,7 +48,7 @@ public struct HomeConnectionCardFeature {
             switch vpnConnectionStatus {
             case .disconnected:
                 @Dependency(\.recentsStorage) var recentsStorage
-                if let spec = recentsStorage.elements().mostRecent?.connection {
+                if let spec = recentsStorage.elements(nil).mostRecent?.connection {
                     return spec
                 }
                 return .init(location: .fastest, features: [])

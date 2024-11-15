@@ -60,7 +60,7 @@ struct HomeConnectionCardTitleView: View {
         case .disconnected, .disconnecting:
             if isFreeUser {
                 state = .disconnected(.freeUser)
-            } else if !recentsStorage.elements().isEmpty {
+            } else if !recentsStorage.elements(nil).isEmpty {
                 state = .disconnected(.lastConnectedTo)
             } else {
                 state = .disconnected(.noRecents)

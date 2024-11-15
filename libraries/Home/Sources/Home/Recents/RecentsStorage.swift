@@ -26,7 +26,7 @@ public struct RecentsStorage {
     var pin: (RecentConnection) -> Void = { _ in unimplemented() }
     var unpin: (RecentConnection) -> Void = { _ in unimplemented() }
     var remove: (RecentConnection) -> Void = { _ in unimplemented() }
-    public var elements: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
+    public var elements: (_ without: ConnectionSpec?) -> OrderedSet<RecentConnection> = { _ in unimplemented(placeholder: []) }
 }
 
 extension RecentsStorage: DependencyKey {
@@ -38,7 +38,7 @@ extension RecentsStorage: DependencyKey {
             pin: storage.pin(recent:),
             unpin: storage.unpin(recent:),
             remove: storage.remove(recent:),
-            elements: storage.elements
+            elements: storage.elements(without:)
         )
     }()
 }
@@ -61,12 +61,12 @@ extension RecentsStorage: TestDependencyKey {
 
     } remove: { _ in
 
-    } elements: {
-        RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
+    } elements: { recent in
+        RecentsStorageImplementation(array: RecentConnection.sampleData).elements(without: recent)
     }
 
     public static func withElements(array: [RecentConnection]) -> RecentsStorage {
-        RecentsStorage(elements: { .init(array) })
+        RecentsStorage(elements: { _ in .init(array) })
     }
 
     public static let previewValue = RecentsStorage {
@@ -79,7 +79,7 @@ extension RecentsStorage: TestDependencyKey {
 
     } remove: { _ in
 
-    } elements: {
-        RecentsStorageImplementation(array: RecentConnection.sampleData).elements()
+    } elements: { recent in
+        RecentsStorageImplementation(array: RecentConnection.sampleData).elements(without: recent)
     }
 }
