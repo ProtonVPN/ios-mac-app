@@ -106,6 +106,7 @@ struct HomeConnectionCardView: View {
                     vpnConnectionActual: store.vpnConnectionStatus.actual,
                     withServerNumber: store.userTier.isFreeTier,
                     withDivider: false,
+                    isConnected: false,
                     images: .coreImages
                 )
 

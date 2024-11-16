@@ -58,6 +58,7 @@ struct RecentConnectionActionsView: View {
             isPinned: false,
             vpnConnectionActual: nil,
             withDivider: false,
+            isConnected: false,
             images: images,
             detailAction: nil
         )
