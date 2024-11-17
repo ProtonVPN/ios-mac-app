@@ -21,21 +21,10 @@
   },
   "testTargets" : [
     {
-      "skippedTests" : [
-        "ConnectionTests",
-        "FreeRescopeTests",
-        "HumanVerificationTests",
-        "InternalAndExternalSignUpTests",
-        "LoginExtAccountTests",
-        "LoginExternalAccountTests",
-        "LoginTests",
-        "PlanTests",
-        "ProfilesTests",
-        "ProtonVPNUITests",
-        "SettingsTests",
-        "SignupTests",
-        "SubscriptionTests",
-        "TokenRefreshTests"
+      "selectedTests" : [
+        "MainMeasurements\/testConnectionSLI()",
+        "MainMeasurements\/testConnectionToSpecificServer()",
+        "MainMeasurements\/testLoginSLI()"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",

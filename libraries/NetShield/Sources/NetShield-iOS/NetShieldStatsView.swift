@@ -22,6 +22,10 @@ import Theme
 
 public struct NetShieldStatsView: View {
 
+    private enum AccessibilityIdentifiers {
+        static let netShieldStatsViewId: String = "net_shield_stats"
+    }
+
     public var viewModel: NetShieldModel
 
     static let maxWidth: CGFloat = 440
@@ -35,6 +39,7 @@ public struct NetShieldStatsView: View {
         .padding(.vertical, .themeSpacing12)
         .padding(.horizontal, .themeSpacing8)
         .frame(maxWidth: Self.maxWidth)
+        .accessibilityIdentifier(AccessibilityIdentifiers.netShieldStatsViewId)
     }
 
     public init(viewModel: NetShieldModel) {

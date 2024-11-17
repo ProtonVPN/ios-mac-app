@@ -20,16 +20,16 @@ fileprivate let fastestProfile = Localizable.fastest
 fileprivate let randomProfile = Localizable.random
 fileprivate let myProfiles = Localizable.myProfiles
 
-class ProfileRobot: CoreElements {
+class ProfileRobot: ConnectionBaseRobot {
     
     let verify = Verify()
-
+    
     @discardableResult
     func tapAddNewProfile() -> CreateProfileRobot {
         button(addButton).tap()
         return CreateProfileRobot()
     }
-
+    
     @discardableResult
     func deleteProfile(_ profileName: String, _ countryname: String) -> ProfileRobot {
         button(editButton).tap()
@@ -41,20 +41,21 @@ class ProfileRobot: CoreElements {
         button(deleteButton).tap()
         return self
     }
-
+    
     @discardableResult
     func editProfile(_ profileName: String) -> CreateProfileRobot {
         edit(profileName)
         return CreateProfileRobot()
     }
-
+    
     @discardableResult
     func connectToAProfile(_ profileName: String) -> ConnectionStatusRobot {
         staticText().containsLabel(profileName)
             .checkExists(message: "\(profileName) profile not found").forceTap()
+        allowVpnPermission()
         return ConnectionStatusRobot()
     }
-
+    
     @discardableResult
     func disconnectFromAProfile(_ profileName: String) -> ConnectionStatusRobot {
         staticText()
@@ -62,25 +63,27 @@ class ProfileRobot: CoreElements {
             .checkExists(message: "\(profileName) profile not found").tap()
         return ConnectionStatusRobot()
     }
-
+    
     @discardableResult
-    func connectToAFastestServer() -> HomeRobot {
+    func connectToAFastestServer() -> ConnectionStatusRobot {
         staticText(fastestProfile).tap()
-        return HomeRobot()
+        allowVpnPermission()
+        return ConnectionStatusRobot()
     }
-
+    
     @discardableResult
     func disconnectFromAFastestServer() -> HomeRobot {
         staticText(fastestProfile).tap()
         return HomeRobot()
     }
-
+    
     @discardableResult
-    func connectToARandomServer() -> HomeRobot {
+    func connectToARandomServer() -> ConnectionStatusRobot {
         staticText(randomProfile).tap()
-        return HomeRobot()
+        allowVpnPermission()
+        return ConnectionStatusRobot()
     }
-
+    
     @discardableResult
     func disconnectFromARandomServer() -> HomeRobot {
         staticText(randomProfile).tap()
@@ -95,13 +98,13 @@ class ProfileRobot: CoreElements {
     }
     
     class Verify: CoreElements {
-
+        
         @discardableResult
         func isOnProfilesScreen() -> ProfileRobot {
             staticText(myProfiles).checkExists(message: "Profiles screen is not visible")
             return ProfileRobot()
         }
-
+        
         func profileIsDeleted(_ profileName: String) {
             button()
                 .containsLabel(profileName)
@@ -129,7 +132,7 @@ class ProfileRobot: CoreElements {
             staticText(randomProfile).checkExists()
             return ProfileRobot()
         }
-
+        
         @discardableResult
         private func checkProfileExists(_ profileName: String) -> UIElement {
             return staticText()

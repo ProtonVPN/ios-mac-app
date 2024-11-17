@@ -79,7 +79,15 @@ class LoginRobot: CoreElements {
             textField(loginTextFieldId).tap()
             return LoginRobot()
         }
-        
+
+        @discardableResult
+        func loginScreenIsNotShown() -> LoginRobot {
+            staticText(titleId)
+                .waitUntilGone(time: 30)
+                .checkDoesNotExist(message: "Login screen is still visible in 30 seconds")
+            return LoginRobot()
+        }
+
         @discardableResult
         func incorrectCredentialsErrorDialog() -> LoginRobot {
             textView(invalidCredentialText).waitUntilExists().checkExists()

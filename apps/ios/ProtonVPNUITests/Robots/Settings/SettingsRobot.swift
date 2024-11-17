@@ -75,7 +75,18 @@ class SettingsRobot: CoreElements {
         return killSwitchOn()
             .tapContinueIfExist()
     }
-    
+
+    @discardableResult
+    func toggleKillSwitch(state: Bool) -> SettingsRobot {
+        let currentState = (swittch(killSwitchButton)
+            .swipeUpUntilVisible().value() as? String) == "1"
+        if currentState != state {
+            swittch(killSwitchButton).tap()
+            tapContinueIfExist()
+        }
+        return self
+    }
+
     @discardableResult
     func turnLanConnectionOn() -> SettingsRobot {
         return lanConnectionOn()
@@ -88,7 +99,7 @@ class SettingsRobot: CoreElements {
     }
     
     @discardableResult
-    func cancelLogOut() -> ConnectionStatusRobot {
+    func cancelLogOut() -> HomeRobot {
         return clickLogOut()
             .logOutCancel()
     }
@@ -117,14 +128,14 @@ class SettingsRobot: CoreElements {
     
     @discardableResult
     private func clickLogOut() -> SettingsRobot {
-        button(logOutButton).tap()
+        button(logOutButton).swipeUpUntilVisible().tap()
         return self
     }
     
     @discardableResult
-    private func logOutCancel() -> ConnectionStatusRobot {
+    private func logOutCancel() -> HomeRobot {
         button(cancelButton).tap()
-        return ConnectionStatusRobot()
+        return HomeRobot()
     }
     
     class Verify: CoreElements {

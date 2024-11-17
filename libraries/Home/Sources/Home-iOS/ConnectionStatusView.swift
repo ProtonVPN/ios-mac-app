@@ -38,6 +38,10 @@ public struct ConnectionStatusView: View {
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
 
+    private enum AccessibilityIdentifiers {
+        static let locationText: String = "location_text"
+    }
+
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .protected, .protectedSecureCore:
@@ -140,6 +144,7 @@ public struct ConnectionStatusView: View {
                             locationText
                                 .padding(.horizontal, .themeSpacing8)
                                 .padding(.vertical, .themeSpacing4)
+                                .accessibilityIdentifier(AccessibilityIdentifiers.locationText)
                         } else if case .protected(let netShield) = protectionState {
                             NetShieldStatsView(viewModel: netShield)
                         } else if case .protectedSecureCore(let netShield) = protectionState {

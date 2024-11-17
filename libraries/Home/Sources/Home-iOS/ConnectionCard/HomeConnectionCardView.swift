@@ -38,6 +38,12 @@ struct HomeConnectionCardView: View {
 
     let model = ConnectionCardModel()
 
+    private enum AccessibilityIdentifiers {
+        static let buttonConnect: String = "connect_button"
+        static let buttonDisconnect: String = "disconnect_button"
+        static let connectionInfoHeader: String = "connection_info_header"
+    }
+
     private var accessibilityText: String {
         let countryName = store.presentedSpec.location.text(locale: locale)
         return model.accessibilityText(for: store.vpnConnectionStatus, countryName: countryName)
@@ -79,6 +85,7 @@ struct HomeConnectionCardView: View {
             Text(model.buttonText(for: store.vpnConnectionStatus))
         }
         .buttonStyle(ConnectButtonStyle(isDisconnected: store.vpnConnectionStatus == .disconnected))
+        .accessibilityIdentifier(store.vpnConnectionStatus == .disconnected ? AccessibilityIdentifiers.buttonConnect : AccessibilityIdentifiers.buttonDisconnect)
     }
 
     @ViewBuilder
@@ -117,6 +124,7 @@ struct HomeConnectionCardView: View {
 
                 chevron
             }
+            .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfoHeader)
             .padding(.themeSpacing16)
         }
         .disabled(!store.vpnConnectionStatus.connectionStatusAvailable)
