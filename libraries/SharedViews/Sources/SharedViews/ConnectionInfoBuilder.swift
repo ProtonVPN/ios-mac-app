@@ -123,7 +123,6 @@ public struct ConnectionInfoBuilder {
                : Text("")
               )
         )
-        .frame(maxWidth: .infinity, alignment: .leading)
         .fixedSize(horizontal: false, vertical: true)
         .foregroundColor(Color(.text, .weak))
 #if canImport(Cocoa)

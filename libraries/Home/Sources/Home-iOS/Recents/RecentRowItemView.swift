@@ -26,10 +26,11 @@ import ProtonCoreUIFoundations
 
 @available(iOS 17, *)
 struct RecentRowItemView: View {
-    static let buttonPadding: CGFloat = .themeSpacing16
     static let itemCellHeight: CGFloat = .themeSpacing64
 
     let item: RecentConnection
+    let isConnected: Bool
+    let isLastItem: Bool
     let sendAction: RecentsFeature.ActionSender
 
     @ScaledMetric
@@ -52,7 +53,8 @@ struct RecentRowItemView: View {
             ConnectionFlagInfoView(intent: item.connection,
                                    underMaintenance: item.underMaintenance, 
                                    isPinned: item.pinned,
-                                   withDivider: true,
+                                   withDivider: !isLastItem,
+                                   isConnected: isConnected,
                                    images: .coreImages) { action in
                 switch action {
                 case .pin:
@@ -67,7 +69,6 @@ struct RecentRowItemView: View {
         .padding(.horizontal, .themeSpacing16)
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
         .background(Color(.background))
-        .cornerRadius(.themeRadius12)
         .onTapGesture {
             withAnimation(.easeInOut) {
                 _ = sendAction(.delegate(.connect(item.connection)))
@@ -106,7 +107,17 @@ extension RecentConnection {
 
 #if DEBUG
 @available(iOS 17, *)
-#Preview {
-    RecentRowItemView(item: .sampleData.randomElement()!, sendAction: { _ in () })
+#Preview(traits: .sizeThatFitsLayout) {
+    let last = RecentConnection.sampleData.last!
+    return VStack(spacing: 0) {
+        ForEach(RecentConnection.sampleData) { item in
+            RecentRowItemView(item: item,
+                              isConnected: .random(),
+                              isLastItem: item == last,
+                              sendAction: { _ in () })
+        }
+    }
+    .padding()
+    .preferredColorScheme(.dark)
 }
 #endif
