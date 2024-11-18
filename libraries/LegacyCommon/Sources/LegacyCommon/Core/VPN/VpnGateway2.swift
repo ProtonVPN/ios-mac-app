@@ -245,6 +245,8 @@ fileprivate extension ConnectionSpec {
             switch secureCoreSpecs {
             case .fastest:
                 return .fastest
+            case .random:
+                return .random
             case .fastestHop(to: let to):
                 return .country(to, .fastest)
             case .hop(let to, let via):

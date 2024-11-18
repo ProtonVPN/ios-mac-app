@@ -34,6 +34,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
     }
 
     public enum SecureCoreSpec: Equatable, Hashable, Codable {
+        case random
         case fastest
         case fastestHop(to: String)
         case hop(to: String, via: String)

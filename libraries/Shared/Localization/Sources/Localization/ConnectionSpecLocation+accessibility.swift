@@ -49,11 +49,10 @@ public extension ConnectionSpec.Location {
 
     func text(locale: Locale) -> String {
         switch self {
-        case .fastest,
-                .secureCore(.fastest):
+        case .fastest, .secureCore(.fastest):
             return "Fastest country"
 
-        case .random:
+        case .random, .secureCore(.random):
             return "Random server"
 
         case .region(let code),
@@ -66,7 +65,7 @@ public extension ConnectionSpec.Location {
 
     func subtext(locale: Locale) -> String? {
         switch self {
-        case .fastest, .random, .region, .secureCore(.fastest), .secureCore(.fastestHop):
+        case .fastest, .random, .region, .secureCore(.fastest), .secureCore(.random), .secureCore(.fastestHop):
             return nil
         case let .exact(server, number, subregion, _):
             var text = ""

@@ -158,7 +158,7 @@ extension ConnectionSpec {
             return regionCode
         case .secureCore(let spec):
             switch spec {
-            case .fastest:
+            case .fastest, .random:
                 break
             case .fastestHop(let to):
                 return to
