@@ -139,6 +139,7 @@ final class NavigationService {
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
     private lazy var sessionService = factory.makeSessionService()
+    private lazy var announcementManager = factory.makeAnnouncementManager()
 
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService()
@@ -276,6 +277,10 @@ final class NavigationService {
         tabBarController.setViewControllers(tabViewControllers, animated: false)
         tabBarController.setupView()
         
+        if isRedesign, announcementManager.hasUnreadAnnouncements {
+            tabBarController.selectedIndex = 1
+        }
+
         windowService.show(viewController: tabBarController)
     }
     
