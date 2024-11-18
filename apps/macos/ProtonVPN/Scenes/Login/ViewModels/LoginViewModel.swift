@@ -314,7 +314,7 @@ final class LoginViewModel {
     }
     
     private func checkForUpdatesInBackground() {
-        updateManager.checkForUpdates(appSessionManager, userInitiated: true)
+        updateManager.checkForUpdates(appSessionManager, userInitiated: false)
     }
     
     func keychainHelpAction() {
