@@ -58,7 +58,7 @@ struct HomeConnectionCardView: View {
         }
     }
 
-    private var button: some View {
+    private var connectionButton: some View {
         Button {
             withAnimation(.linear) {
                 switch store.vpnConnectionStatus {
@@ -96,8 +96,10 @@ struct HomeConnectionCardView: View {
         }
     }
 
-    private var card: some View {
-        VStack(spacing: 0) {
+    private var connectionDetail: some View {
+        Button {
+            store.send(.delegate(.tapAction))
+        } label: {
             HStack {
                 ConnectionFlagInfoView(
                     intent: store.presentedSpec,
@@ -114,8 +116,15 @@ struct HomeConnectionCardView: View {
                 chevron
             }
             .padding(.themeSpacing16)
+        }
+        .disabled(!store.vpnConnectionStatus.connectionStatusAvailable)
+    }
 
-            button
+    private var card: some View {
+        VStack(spacing: 0) {
+            connectionDetail
+
+            connectionButton
                 .padding(.horizontal, .themeSpacing16)
                 .padding(.bottom, .themeSpacing16)
             changeServerButton
@@ -131,11 +140,7 @@ struct HomeConnectionCardView: View {
     public var body: some View {
         VStack(spacing: .themeSpacing8) {
             header
-            Button {
-                store.send(.delegate(.tapAction))
-            } label: {
-                card
-            }
+            card
         }
         .accessibilityElement()
         .accessibilityLabel(accessibilityText)
