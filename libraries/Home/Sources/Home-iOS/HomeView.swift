@@ -62,13 +62,16 @@ public struct HomeView: View {
     public var body: some View {
         #PerceptibleGeometryReader { proxy in
             ZStack(alignment: .top) {
-                HomeMapView(store: store.scope(state: \.map, action: \.map),
-                            availableHeight: mapHeight,
-                            availableWidth: proxy.size.width)
+                HomeMapView(
+                    store: store.scope(state: \.map, action: \.map),
+                    availableHeight: mapHeight,
+                    availableWidth: proxy.size.width
+                )
                 .frame(width: proxy.size.width, height: mapHeight)
-                ConnectionStatusView(store: store.scope(state: \.connectionStatus,
-                                                        action: \.connectionStatus))
-                .allowsHitTesting(false)
+
+                ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: \.connectionStatus))
+                    .allowsHitTesting(false)
+
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {
                         Spacer().frame(height: mapHeight) // Leave transparent space for the map
@@ -113,14 +116,12 @@ public struct HomeView: View {
         .task {
             store.send(.sharedProperties(.listen))
         }
-        .sheet(item: $store.scope(state: \.destination?.connectionDetails,
-                                  action: \.destination.connectionDetails)) { store in
+        .sheet(item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)) { store in
             ConnectionScreenView(store: store)
                 .presentationDetents([.large])
                 .presentationDragIndicator(.visible)
         }
-        .sheet(item: $store.scope(state: \.destination?.changeServer,
-                                  action: \.destination.changeServer)) { store in
+        .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)) { store in
             WithPerceptionTracking {
                 ChangeServerModal(store: store)
             }

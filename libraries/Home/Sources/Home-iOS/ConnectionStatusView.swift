@@ -30,6 +30,7 @@ import Dependencies
 import Localization
 
 @available(iOS 17, *)
+@MainActor
 public struct ConnectionStatusView: View {
     @SwiftUI.Bindable var store: StoreOf<ConnectionStatusFeature>
 
@@ -37,7 +38,7 @@ public struct ConnectionStatusView: View {
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
 
-    func title(protectionState: ProtectionState) -> String? {
+    private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .protected, .protectedSecureCore:
             return nil
@@ -48,7 +49,7 @@ public struct ConnectionStatusView: View {
         }
     }
 
-    func locationText(protectionState: ProtectionState) -> Text? {
+    private func locationText(protectionState: ProtectionState) -> Text? {
         let displayCountry: String?
         let displayIP: String?
         switch protectionState {
@@ -73,7 +74,7 @@ public struct ConnectionStatusView: View {
             .foregroundColor(Color(.text, .weak))
     }
 
-    func gradientColor(protectionState: ProtectionState) -> Color {
+    private func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
         case .protected, .protectedSecureCore:
             return Color(.background, .success)
@@ -86,20 +87,20 @@ public struct ConnectionStatusView: View {
 
     private var protectedText: Text {
         Text(Localizable.connectionStatusProtected)
-            .font(.themeFont(.body1(.semibold)))
-            .foregroundColor(Color(.background, .success))
+            .font(.themeFont(.body1(.bold)))
+            .foregroundColor(Asset.vpnGreen.swiftUIColor)
     }
 
-    func titleView(protectionState: ProtectionState) -> some View {
+    private func titleView(protectionState: ProtectionState) -> some View {
         HStack(alignment: .bottom) {
             switch protectionState {
             case .protected:
                 IconProvider.lockFilled
-                    .foregroundColor(Color(.background, .success))
+                    .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
             case .protectedSecureCore:
                 IconProvider.locksFilled
-                    .foregroundColor(Color(.background, .success))
+                    .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
             case .protecting:
                 ProgressView()
@@ -111,39 +112,45 @@ public struct ConnectionStatusView: View {
             }
         }
     }
-    
+
     public var body: some View {
         WithPerceptionTracking {
+            let protectionState = store.protectionState
+
             ZStack(alignment: .top) {
-                LinearGradient(colors: [gradientColor(protectionState: store.protectionState).opacity(0.5), .clear],
-                               startPoint: .top,
-                               endPoint: .bottom)
-                .ignoresSafeArea()
+                LinearGradient(
+                    colors: [gradientColor(protectionState: protectionState).opacity(0.5), .clear],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ).ignoresSafeArea()
+
                 VStack(spacing: 0) {
                     if !store.stickToTop {
-                        titleView(protectionState: store.protectionState)
+                        titleView(protectionState: protectionState)
                             .frame(height: Self.headerHeight)
-                        if let title = title(protectionState: store.protectionState) {
+                        if let title = title(protectionState: protectionState) {
                             Text(title)
-                                .font(.themeFont(.body1(.semibold)))
+                                .font(.themeFont(.body1(.bold)))
                             Spacer()
                                 .frame(height: 8)
                         }
                     }
                     ZStack {
-                        if let locationText = locationText(protectionState: store.protectionState) {
+                        if let locationText = locationText(protectionState: protectionState) {
                             locationText
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
-                        } else if case .protected(let netShield) = store.protectionState {
+                                .task {
+                                    print("--- LocationText =", locationText)
+                                }
+                        } else if case .protected(let netShield) = protectionState {
                             NetShieldStatsView(viewModel: netShield)
-                        } else if case .protectedSecureCore(let netShield) = store.protectionState {
+                        } else if case .protectedSecureCore(let netShield) = protectionState {
+                            Rectangle()
                             NetShieldStatsView(viewModel: netShield)
                         }
                     }
-                    .background(.translucentLight,
-                                in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                     style: .continuous))
+                    .background(.translucentLight, in: RoundedRectangle(cornerRadius: .themeRadius8, style: .continuous))
                     .padding(.horizontal, .themeSpacing16)
                 }
             }
@@ -151,9 +158,9 @@ public struct ConnectionStatusView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: .themeSpacing8) {
-                        titleView(protectionState: store.protectionState)
+                        titleView(protectionState: protectionState)
 
-                        if store.protectionState != .unprotected, let title = title(protectionState: store.protectionState) {
+                        if protectionState != .unprotected, let title = title(protectionState: protectionState) {
                             Text(title)
                                 .font(.themeFont(.body1(.semibold)))
                         }
