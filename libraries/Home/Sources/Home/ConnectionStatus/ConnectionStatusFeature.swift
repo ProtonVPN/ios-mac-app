@@ -30,16 +30,16 @@ public struct ConnectionStatusFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.protectionState) public var protectionState: ProtectionState
+        @Shared(.protectionState) public internal(set) var protectionState: ProtectionState
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
-        public var stickToTop: Bool = false
+        var startingProtectionState: ProtectionState = .unprotected
 
-        public init() {
-            
-        }
+        public internal(set) var stickToTop: Bool = false
+
+        public init() {}
     }
 
     @CasePathable
@@ -53,8 +53,14 @@ public struct ConnectionStatusFeature {
         case stickToTop(Bool)
     }
 
-    private enum CancelId {
+    private enum MaskLocation {
+        case task
+    }
+
+    private enum IDs {
         case watchConnectionStatus
+        case maskLocation
+        case protectionState
     }
 
     public init() { }
@@ -65,17 +71,19 @@ public struct ConnectionStatusFeature {
             case .maskLocationTick:
                 if case let .protecting(country, ip) = state.protectionState {
                     if let masked = partiallyMaskedLocation(country: country, ip: ip) {
-                        if masked == state.protectionState {
-                            // fully masked already
-                            return .cancel(id: MaskLocation.task)
+                        if masked == state.protectionState { // fully masked already
+                            return .cancel(id: IDs.maskLocation)
                         }
                         state.protectionState = masked
                     }
+                    return .run { action in
+                        try await Task.sleep(nanoseconds: 50_000_000)
+                        await action(.maskLocationTick)
+                    }
+                    .cancellable(id: IDs.maskLocation, cancelInFlight: true)
+                } else {
+                    return .cancel(id: IDs.maskLocation)
                 }
-                return .run { action in
-                    try await Task.sleep(nanoseconds: 50_000_000)
-                    await action(.maskLocationTick)
-                }.cancellable(id: MaskLocation.task, cancelInFlight: true)
 
             case .watchConnectionStatus:
                 return .merge([
@@ -85,32 +93,45 @@ public struct ConnectionStatusFeature {
                             .publisher
                             .receive(on: UIScheduler.shared)
                             .map(Action.newConnectionStatus)
-                    }.cancellable(id: CancelId.watchConnectionStatus),
+                    },
                     .run { @MainActor send in
                         @Dependency(\.netShieldStatsProvider) var provider
                         send(.newNetShieldStats(await provider.getStats()))
                         for await stats in provider.statsStream() {
                             send(.newNetShieldStats(stats))
                         }
-                    }.cancellable(id: CancelId.watchConnectionStatus)
-                ])
+                    }
+                ]).cancellable(id: IDs.watchConnectionStatus)
 
             case .newConnectionStatus(let status):
                 let code = state.userCountry
-                let displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")
-                let userIP = state.userIP
+                let displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
+                let userIP = state.userIP ?? ""
                 return .run { send in
                     // Determine protection state and fetch NetShield stats
-                    let protectionState = await status.protectionState(country: displayCountry ?? "", ip: userIP ?? "")
+                    let protectionState = await status.protectionState(country: displayCountry, ip: userIP)
                     await send(.newProtectionState(protectionState))
                 }
+                .debounce(id: IDs.protectionState, for: .milliseconds(50), scheduler: UIScheduler.shared)
 
             case .newProtectionState(let protectionState):
-                state.protectionState = protectionState
+                // let's check that we're not already masking location twice with same data
+                // THIS is a workaround... proper solution should make sure we're no receiving twice the same action
+                // with same data ?!
+                // we can debounce the action handling though but debounce delay cause unreactive UI...
                 if case .protecting = protectionState {
+                    // if it's a fresh new protection state...
+                    if case .unprotected = state.startingProtectionState {
+                        state.startingProtectionState = protectionState // let's store it
+                    } else if protectionState == state.startingProtectionState {
+                        return .none // however do nothing if we got the same protection state
+                    }
+                    state.protectionState = protectionState // store the new state
                     return .send(.maskLocationTick)
                 } else {
-                    return .cancel(id: MaskLocation.task)
+                    state.protectionState = protectionState // store the new state
+                    state.startingProtectionState = .unprotected // reset startingProtectionState
+                    return .cancel(id: IDs.maskLocation)
                 }
 
             case .newNetShieldStats(let netShieldModel):
@@ -125,13 +146,9 @@ public struct ConnectionStatusFeature {
         }
     }
 
-    enum MaskLocation {
-        case task
-    }
-
     func partiallyMaskedLocation(country: String, ip: String) -> ProtectionState? {
         let replacedCountry = country.partiallyMasked()
-        let replacedIP = ip.partiallyMasked()
+        let replacedIP = ip.partiallyMasked(onlyAlphanumerics: true)
         if let replacedIP, let replacedCountry {
             if Bool.random() {
                 return .protecting(country: replacedCountry, ip: ip)
