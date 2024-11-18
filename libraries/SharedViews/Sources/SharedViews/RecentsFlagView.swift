@@ -53,6 +53,10 @@ extension SecureCoreFlagView {
             self = SecureCoreFlagView(regionCode: "Fastest",
                                       viaRegionCode: nil,
                                       flagSize: flagSize)
+        case .random:
+            self = SecureCoreFlagView(regionCode: "Random",
+                                      viaRegionCode: nil,
+                                      flagSize: flagSize)
         case .fastestHop(to: let regionCode):
             self = SecureCoreFlagView(regionCode: regionCode,
                                       viaRegionCode: nil,

@@ -429,7 +429,7 @@ public class VpnGateway: VpnGatewayProtocol {
         let serverType = request.serverType == .unspecified ? serverTypeToggle : request.serverType
         let requestWithUpdatedServerType = request.withChanged(serverType: serverType)
 
-        propertiesManager.lastConnectionIntent = ConnectionSpec(connectionRequest: request)
+        propertiesManager.lastConnectionIntent = ConnectionSpec(connectionRequest: requestWithUpdatedServerType)
 
         @Dependency(\.connectionAuthorizer) var authorizer
         switch authorizer.authorize(request: requestWithUpdatedServerType) {
@@ -453,13 +453,13 @@ public class VpnGateway: VpnGatewayProtocol {
         }
         
         gatherParametersAndConnect(
-            requestId: request.id,
+            requestId: requestWithUpdatedServerType.id,
             with: `protocol`,
-            server: selectServer(connectionRequest: request),
-            netShieldType: request.netShieldType,
+            server: selectServer(connectionRequest: requestWithUpdatedServerType),
+            netShieldType: requestWithUpdatedServerType.netShieldType,
             natType: natType,
             safeMode: safeMode,
-            intent: request.connectionType
+            intent: requestWithUpdatedServerType.connectionType
         )
     }
     

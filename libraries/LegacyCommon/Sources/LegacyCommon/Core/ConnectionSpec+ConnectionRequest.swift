@@ -26,13 +26,9 @@ extension ConnectionSpec {
         var features: Set<ConnectionSpec.Feature> = []
         switch connectionRequest.connectionType {
         case .fastest:
-            if connectionRequest.serverType == .secureCore {
-                location = .secureCore(.fastest)
-            } else {
-                location = .fastest
-            }
+            location = connectionRequest.serverType == .secureCore ? .secureCore(.fastest) : .fastest
         case .random:
-            location = .random
+            location = connectionRequest.serverType == .secureCore ? .secureCore(.random) : .random
         case .country(let country, let type):
             switch type {
             case .fastest:
@@ -56,7 +52,12 @@ extension ConnectionSpec {
                 if serverModel.feature.contains(.secureCore) {
                     location = .secureCore(.hop(to: serverModel.exitCountryCode, via: serverModel.entryCountryCode))
                 } else {
-                    location = .exact(.paid, number: serverModel.serverNameComponents.sequence, subregion: serverModel.city, regionCode: country)
+                    location = .exact(
+                        .paid,
+                        number: serverModel.serverNameComponents.sequence,
+                        subregion: serverModel.city,
+                        regionCode: country
+                    )
                 }
             }
         case .city(let country, let city):
