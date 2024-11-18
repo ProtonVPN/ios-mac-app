@@ -45,9 +45,9 @@ public struct RecentsSectionView: View {
                         .padding(.bottom, .themeSpacing8)
                     Spacer()
                 }
-                .opacity(store.recents.isEmpty ? 0 : 1)
-                let last = store.recents.last
-                ForEach(store.recents) { item in
+                .opacity(store.recents.connectionsList.isEmpty ? 0 : 1)
+                let last = store.recents.connectionsList.last
+                ForEach(store.recents.connectionsList) { item in
                     RecentRowItemView(item: item,
                                       isConnected: store.vpnConnectionStatus.spec == item.connection,
                                       isLastItem: item == last,

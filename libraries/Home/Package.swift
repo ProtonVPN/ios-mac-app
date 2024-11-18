@@ -21,7 +21,8 @@ let package = Package(
             targets: ["Home-iOS"])
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-collections.git", .upToNextMajor(from: "1.1.4")),
+        .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
+        .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.15.1")),
         .package(path: "../../external/protoncore"),
@@ -57,6 +58,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "Collections", package: "swift-collections"),
+                .product(name: "Algorithms", package: "swift-algorithms"),
             ],
             exclude: ["swiftgen.yml"],
             resources: [

@@ -20,61 +20,15 @@ import SwiftUI
 import Strings
 import VPNAppCore
 import Dependencies
+import ComposableArchitecture
 
 struct HomeConnectionCardTitleView: View {
-    enum State {
-        case connected
-        case connecting
-        case disconnected(Disconnected)
 
-        enum Disconnected {
-            case noRecents
-            case freeUser
-            case lastConnectedTo
-        }
-
-        var title: String {
-            switch self {
-            case .connected:
-                return Localizable.connectionCardSafelyBrowsingFrom
-            case .connecting:
-                return Localizable.connectionCardConnectingTo
-            case .disconnected(let disconnected):
-                switch disconnected {
-                case .noRecents:
-                    return Localizable.recommended
-                case .freeUser:
-                    return Localizable.connectionsFree
-                case .lastConnectedTo:
-                    return Localizable.connectionCardLastConnectedTo
-                }
-            }
-        }
-    }
-
-    let state: State
-
-    init(connectionStatus: VPNConnectionStatus, isFreeUser: Bool) {
-        @Dependency(\.recentsStorage) var recentsStorage
-        switch connectionStatus {
-        case .disconnected, .disconnecting:
-            if isFreeUser {
-                state = .disconnected(.freeUser)
-            } else if !recentsStorage.elements(nil).isEmpty {
-                state = .disconnected(.lastConnectedTo)
-            } else {
-                state = .disconnected(.noRecents)
-            }
-        case .connected:
-            state = .connected
-        case .connecting, .loadingConnectionInfo:
-            state = .connecting
-        }
-    }
+    let store: StoreOf<HomeConnectionCardTitleFeature>
 
     public var body: some View {
         HStack {
-            Text(state.title)
+            Text(store.title)
                 .themeFont(.body3(emphasised: false))
                 .foregroundColor(Color(.text))
             Spacer()
@@ -87,22 +41,4 @@ struct HomeConnectionCardTitleView: View {
 //                .frame(.square(16)) // TODO: [redesign, phase 2]
         }
     }
-}
-
-@available(iOS 17, *)
-#Preview(traits: .sizeThatFitsLayout) {
-        VStack {
-            HomeConnectionCardTitleView(connectionStatus: .disconnected,
-                                        isFreeUser: false)
-            HomeConnectionCardTitleView(connectionStatus: .disconnected,
-                                        isFreeUser: false)
-            HomeConnectionCardTitleView(connectionStatus: .connecting(.defaultFastest, nil),
-                                        isFreeUser: false)
-            HomeConnectionCardTitleView(connectionStatus: .connected(.defaultFastest, nil),
-                                        isFreeUser: false)
-            HomeConnectionCardTitleView(connectionStatus: .disconnected,
-                                        isFreeUser: true)
-            HomeConnectionCardTitleView(connectionStatus: .connecting(.defaultFastest, nil),
-                                        isFreeUser: false)
-        }
 }

@@ -21,6 +21,7 @@ import VPNAppCore
 import Domain
 import Foundation
 import Dependencies
+import OrderedCollections
 
 @Reducer
 public struct HomeConnectionCardFeature {
@@ -31,6 +32,7 @@ public struct HomeConnectionCardFeature {
     public struct State: Equatable {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
                 return userTier.isFreeTier
@@ -48,7 +50,7 @@ public struct HomeConnectionCardFeature {
             switch vpnConnectionStatus {
             case .disconnected:
                 @Dependency(\.recentsStorage) var recentsStorage
-                if let spec = recentsStorage.elements(nil).mostRecent?.connection {
+                if let spec = recentsStorage.readFromStorage().mostRecent?.connection {
                     return spec
                 }
                 return .init(location: .fastest, features: [])

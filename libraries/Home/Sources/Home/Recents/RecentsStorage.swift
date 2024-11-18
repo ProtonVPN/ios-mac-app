@@ -21,24 +21,15 @@ import Dependencies
 import OrderedCollections
 
 public struct RecentsStorage {
-    var initializeStorage: () -> Void = { unimplemented() }
-    var updateList: (ConnectionSpec) -> Void = { _ in unimplemented() }
-    var pin: (RecentConnection) -> Void = { _ in unimplemented() }
-    var unpin: (RecentConnection) -> Void = { _ in unimplemented() }
-    var remove: (RecentConnection) -> Void = { _ in unimplemented() }
-    public var elements: (_ without: ConnectionSpec?) -> OrderedSet<RecentConnection> = { _ in unimplemented(placeholder: []) }
+    var readFromStorage: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
+    var saveToStorage: (OrderedSet<RecentConnection>) -> Void = { _ in unimplemented() }
 }
 
 extension RecentsStorage: DependencyKey {
     public static var liveValue: RecentsStorage = {
-        let storage = RecentsStorageImplementation()
         return RecentsStorage(
-            initializeStorage: storage.initializeStorage,
-            updateList: storage.updateList(with:),
-            pin: storage.pin(recent:),
-            unpin: storage.unpin(recent:),
-            remove: storage.remove(recent:),
-            elements: storage.elements(without:)
+            readFromStorage: RecentsStorageImplementation.readFromStorage,
+            saveToStorage: RecentsStorageImplementation.saveToStorage
         )
     }()
 }
@@ -52,34 +43,22 @@ extension DependencyValues {
 
 extension RecentsStorage: TestDependencyKey {
     public static let testValue = RecentsStorage {
+        []
+    } saveToStorage: { _ in
 
-    } updateList: { _ in
-
-    } pin: { _ in
-
-    } unpin: { _ in
-
-    } remove: { _ in
-
-    } elements: { recent in
-        RecentsStorageImplementation(array: RecentConnection.sampleData).elements(without: recent)
     }
 
     public static func withElements(array: [RecentConnection]) -> RecentsStorage {
-        RecentsStorage(elements: { _ in .init(array) })
+        RecentsStorage {
+            OrderedSet(array)
+        } saveToStorage: { _ in
+            
+        }
     }
 
     public static let previewValue = RecentsStorage {
+        OrderedSet(RecentConnection.sampleData)
+    } saveToStorage: { _ in
 
-    } updateList: { _ in
-
-    } pin: { _ in
-
-    } unpin: { _ in
-
-    } remove: { _ in
-
-    } elements: { recent in
-        RecentsStorageImplementation(array: RecentConnection.sampleData).elements(without: recent)
     }
 }

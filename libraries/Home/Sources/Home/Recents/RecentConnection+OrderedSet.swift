@@ -21,6 +21,7 @@ import Domain
 import Dependencies
 import VPNAppCore
 import Foundation
+import Algorithms
 
 extension OrderedSet<RecentConnection> {
 
@@ -33,23 +34,21 @@ extension OrderedSet<RecentConnection> {
         }
     }
 
-    mutating func sanitize() {
-        sort { lhs, rhs in
-            if lhs.pinnedDate != nil && rhs.pinnedDate == nil {
-                return true
+    func sanitized() -> OrderedSet<RecentConnection> {
+        var sorted = chunked { $0.pinned }
+            .sorted(by: { lhs, _ in lhs.0 })
+            .flatMap {
+                if $0.0 { // pinned
+                    $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
+                } else { // unpinned
+                    $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
+                }
             }
-            if lhs.pinnedDate == nil  && rhs.pinnedDate != nil {
-                return false
-            }
-            if let lhsPinned = lhs.pinnedDate, let rhsPinned = rhs.pinnedDate {
-                return lhsPinned < rhsPinned // last pinned item should appear at the bottom of the pinned item list
-            }
-            return lhs.connectionDate > rhs.connectionDate
+        while sorted.count > Self.maxConnections,
+              let index = sorted.lastIndex(where: \.notPinned) {
+            sorted.remove(at: index)
         }
-        while count > Self.maxConnections,
-              let index = lastIndex(where: \.notPinned) {
-            remove(at: index)
-        }
+        return OrderedSet(sorted)
     }
 
     public var mostRecent: RecentConnection? {
@@ -58,11 +57,13 @@ extension OrderedSet<RecentConnection> {
         ]).first
     }
 
-    public var connectionsList: [RecentConnection] {
-        guard count > 1 else {
-            return []
+    /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
+    /// We only remove it from the list if the item is not pinned.
+    public var connectionsList: Self {
+        guard let mostRecent, mostRecent.notPinned else {
+            return self
         }
-        return Array(dropFirst())
+        return subtracting([mostRecent])
     }
 
     mutating func updateList(with spec: ConnectionSpec) {
@@ -80,7 +81,7 @@ extension OrderedSet<RecentConnection> {
         )
 
         insert(recent, at: 0)
-        sanitize()
+        self = sanitized()
     }
 
     mutating func unpin(recent: RecentConnection) {
@@ -94,8 +95,13 @@ extension OrderedSet<RecentConnection> {
     private mutating func updatePin(recent: RecentConnection, shouldPin: Bool) {
         var recent = recent
         remove(recent)
-        recent.pinnedDate = shouldPin ? Date() : nil
-        insert(recent, at: 0)
-        sanitize()
+        @Dependency(\.date) var date
+        recent.pinnedDate = shouldPin ? date() : nil
+        if shouldPin, let index = lastIndex(where: { $0.pinned }) { // insert it exactly where it should be
+            insert(recent, at: index)
+        } else {
+            append(recent)
+        }
+        self = sanitized()
     }
 }
