@@ -22,16 +22,23 @@ ISSUE_HASHES=""
 MILESTONE_ID=""
 ISSUES_JSON=""
 SPRINT_NAME=""
+TOTAL_STORY_POINTS="0"
 
 # Different API locations on GitLab.
 PROJECT_API_URL="$CI_SERVER_URL/api/v4/projects/$CI_PROJECT_ID"
 MILESTONES_API_URL="$PROJECT_API_URL/milestones"
 MERGE_REQUEST_API_URL="$PROJECT_API_URL/merge_requests/$CI_MERGE_REQUEST_IID"
 
-# If CI_MERGE_REQUEST_DIFF_BASE_SHA is set, then use it.
-# Otherwise, if GIT_DEPTH is set, go back $GIT_DEPTH commits.
-# Otherwise, go back 50 commits.
-COMMIT_RANGE="${CI_MERGE_REQUEST_DIFF_BASE_SHA:-HEAD~${GIT_DEPTH:-50}}..HEAD"
+# Adjust the commit range according to the CI context, if it is set.
+if [ "$CI_COMMIT_REF_NAME" == "$CI_DEFAULT_BRANCH" ] || [ -n "$CI_COMMIT_TAG" ]; then
+    # If GIT_DEPTH is set, go back $GIT_DEPTH commits.
+    # Otherwise, go back 50 commits.
+    COMMIT_RANGE="HEAD~${GIT_DEPTH:-50}..HEAD"
+else
+    # If CI_MERGE_REQUEST_DIFF_BASE_SHA is set, then use it.
+    # Otherwise, go back 1 commit. If HEAD is a merge commit, this will include all commits merged by that commit.
+    COMMIT_RANGE="${CI_MERGE_REQUEST_DIFF_BASE_SHA:-HEAD^}..HEAD"
+fi
 
 # Jira only lets us bulk-fetch 100 issues at a time.
 BULK_ISSUE_LIMIT=100
@@ -104,6 +111,11 @@ function update_commit() {
 
     UPDATED_ISSUES+="$task_id"$'\n'
 
+    if [ -n "$points" ] && [ "$points" != "null" ]; then
+        # Normally we could do this natively in Bash, but $points is a floating point value, and Bash doesn't like that.
+        TOTAL_STORY_POINTS=$(echo "$TOTAL_STORY_POINTS + $points" | bc)
+    fi
+
     update_commit_attribute "$commit_hash" "$task_id" "Release-Notes" "$notes"
     update_commit_attribute "$commit_hash" "$task_id" "Story-Points" "$points"
 }
@@ -161,6 +173,31 @@ function update_merge_request() {
         done
 
         [ -z "$label_name" ] || quick_actions+="/label ~$label_name\\r\\n"
+    fi
+
+    # populate the story point estimate from Jira into GitLab's estimate system.
+    if (( $(echo "$TOTAL_STORY_POINTS > 0" | bc -l) )); then
+        local existing_story_seconds existing_story_hours story_hours
+        # Story points represent the total number of days a task will take. Multiply by 8 to get hours, because
+        # sometimes we might use "0.5" to mean half a day.
+        story_hours=$(echo "$TOTAL_STORY_POINTS * 8" | bc | xargs printf "%.0f")
+
+        # Gitlab stores the value in seconds, so we have to first see if it's populated, then translate it, compare
+        # the two, and only update if we see that there's been a change.
+        existing_story_seconds=$(
+            curl -s -X GET \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $PIPELINE_ACCESS_TOKEN" \
+                "$MERGE_REQUEST_API_URL/time_stats" | jq -r ".time_estimate"
+        )
+
+        if [ -n "$existing_story_seconds" ] && [ "$existing_story_seconds" != "null" ]; then
+            existing_story_hours=$(
+                echo "$existing_story_seconds / 60 / 60" | bc | xargs printf "%.0f"
+            )
+
+            [ "$existing_story_hours" == "$story_hours" ] || quick_actions+="/estimate ${story_hours}h\\r\\n"
+        fi
     fi
 
     if [ -z "$quick_actions" ]; then
