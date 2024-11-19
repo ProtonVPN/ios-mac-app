@@ -30,7 +30,7 @@ class HumanVerificationTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -50,7 +50,7 @@ class HumanVerificationTests: ProtonVPNUITests {
             .verifyCaptcha()
             .verify.captchaScreenIsNotShown()
         
-        mainRobot
+        homeRobot
             .verify.connectionStatusNotConnected()
         
         try quarkCommands.systemEnvVariableAsJson(variable: "FINGERPRINT_RESPONSE", value: FingerprintResponse.ok.rawValue)

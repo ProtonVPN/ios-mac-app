@@ -27,7 +27,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -44,7 +44,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
                 userName: randomUsername,
                 password: randomPassword,
                 loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
-                retRobot: MainRobot.self
+                retRobot: HomeRobot.self
             )
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
@@ -65,7 +65,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
                 userName: randomEmail,
                 password: randomPassword,
                 loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
-                retRobot: MainRobot.self
+                retRobot: HomeRobot.self
             )
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
@@ -84,7 +84,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
                 userName: randomUsername,
                 password: randomPassword,
                 loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
-                retRobot: MainRobot.self
+                retRobot: HomeRobot.self
             )
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()

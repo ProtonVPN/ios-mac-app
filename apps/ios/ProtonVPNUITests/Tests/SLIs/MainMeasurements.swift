@@ -47,7 +47,7 @@ class MainMeasurements: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -61,10 +61,10 @@ class MainMeasurements: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: HomeRobot.self)
 
         measurementProfile.measure {
-            mainRobot
+            homeRobot
                 .verify.connectionStatusNotConnected()
         }
     }
@@ -78,16 +78,16 @@ class MainMeasurements: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: HomeRobot.self)
             .verify.connectionStatusNotConnected()
             .quickConnectViaQCButton()
 
         measurementProfile.measure {
             connectionStatusRobot
-                .verify.connectionStatusConnected(robot: MainRobot.self)
+                .verify.connectionStatusConnected(robot: HomeRobot.self)
         }
 
-        mainRobot
+        homeRobot
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
     }
@@ -104,10 +104,10 @@ class MainMeasurements: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: HomeRobot.self)
             .verify.connectionStatusNotConnected()
 
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .searchForServer(serverName: countryName)
             .hitPowerButton(server: countryName)
@@ -117,7 +117,7 @@ class MainMeasurements: ProtonVPNUITests {
                 .verify.connectedToAServer(countryName)
         }
 
-        mainRobot
+        homeRobot
             .quickDisconnectViaQCButton()
     }
 }

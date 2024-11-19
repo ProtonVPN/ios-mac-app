@@ -28,7 +28,7 @@ class FreeRescopeTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -40,9 +40,9 @@ class FreeRescopeTests: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(user)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: HomeRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToProfilesTab()
             .tapAddNewProfile()
             .verify.isShowingUpsellModal(ofType: .profiles)

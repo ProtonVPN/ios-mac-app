@@ -32,10 +32,10 @@ class ConnectionStatusRobot: CoreElements {
     class Verify: CoreElements {
 
         @discardableResult
-        func connectedToAServer(_ name: String) -> MainRobot {
+        func connectedToAServer(_ name: String) -> HomeRobot {
             staticText(NSPredicate(format: "label CONTAINS[cd] %@", "Connected to \(name)")).waitUntilExists(time: 30).checkExists()
             button(tabQCActive).waitUntilExists().checkExists()
-            return MainRobot()
+            return HomeRobot()
         }
         
         @discardableResult
@@ -47,10 +47,10 @@ class ConnectionStatusRobot: CoreElements {
         }
         
         @discardableResult
-        func disconnectedFromAServer() -> MainRobot {
+        func disconnectedFromAServer() -> HomeRobot {
             staticText(statusNotConnected).waitUntilExists().checkExists()
             button(tabQCInactive).waitUntilExists().checkExists()
-            return MainRobot()
+            return HomeRobot()
         }
         
         @discardableResult

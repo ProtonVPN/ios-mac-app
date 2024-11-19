@@ -17,7 +17,7 @@ class SignupTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showSignup()
             .verify.signupScreenIsShown()
     }
@@ -87,7 +87,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.subscriptionModalIsShown()
             .verify.verifyPlanOptions(planDuration: "1 month", planAmount: "$11.99")
             .verify.verifyPlanOptions(planDuration: "12 months", planAmount: "$79.99")
-            .closeModal(robot: MainRobot.self)
+            .closeModal(robot: HomeRobot.self)
             .verify.connectionStatusNotConnected()
             .goToSettingsTab()
             .verify.correctUserIsLoggedIn(userEmail, "Proton VPN Free")

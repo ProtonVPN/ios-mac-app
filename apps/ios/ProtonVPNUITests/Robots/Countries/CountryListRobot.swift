@@ -38,9 +38,9 @@ class CountryListRobot: CoreElements {
     }
 
     @discardableResult
-    func connectToAPlusCountry(_ name: String) -> MainRobot {
+    func connectToAPlusCountry(_ name: String) -> HomeRobot {
         button(upgradeButtonId).byIndex(1).tap()
-        return MainRobot()
+        return HomeRobot()
     }
 
     @discardableResult

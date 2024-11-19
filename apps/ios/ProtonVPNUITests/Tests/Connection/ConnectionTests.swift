@@ -22,7 +22,7 @@ class ConnectionTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -34,9 +34,9 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Free.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
     }
@@ -52,7 +52,7 @@ class ConnectionTests: ProtonVPNUITests {
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
         
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .searchForServer(serverName: countryName)
             .verify.serverFound(server: countryName)
@@ -65,7 +65,7 @@ class ConnectionTests: ProtonVPNUITests {
             .hitPowerButton(server: countryName)
             .clearSearch()
         
-        mainRobot
+        homeRobot
             .backToPreviousTab(robot: ConnectionStatusRobot.self, back)
             .verify.connectionStatusNotConnected()
     }
@@ -79,7 +79,7 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .openServerList(countryName)
             .verify.serverListIsOpened(countryName)
@@ -101,7 +101,7 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToProfilesTab()
             .tapAddNewProfile()
             .setProfileDetails(profile: profileName, country: countryName)
@@ -124,7 +124,7 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToProfilesTab()
             .connectToAFastestServer()
             .verify.qcButtonConnected()
@@ -151,16 +151,16 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToProfilesTab()
             .tapAddNewProfile()
             .setProfileDetails(profile: profileName, country: randomSecureCoreCountry.name, server: serverVia, secureCoreState: true)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated(profile: profileName)
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
             .verify.connectedToASecureCoreServer(status)
-        mainRobot
+        homeRobot
             .quickDisconnectViaQCButton()
         }
     
@@ -173,7 +173,7 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Free.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .connectToAPlusCountry(countryName)
             .verify.upgradeSubscriptionScreenOpened()
@@ -188,7 +188,7 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .searchForServer(serverName: countryName)
             .verify.serverFound(server: countryName)
@@ -208,9 +208,9 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .goToSettingsTab()
             .cancelLogOut()
             .verify.connectionStatusConnected(robot: ConnectionStatusRobot.self)
@@ -227,12 +227,12 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .goToProtocolsList()
             .chooseProtocol(protocolName)
             .returnToSettings()
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .secureCoreOn()
         
@@ -244,7 +244,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.protocolNameIsCorrect(protocolName)
             .disconnectFromAServer()
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .backToPreviousTab(robot: CountryListRobot.self, back)
             .secureCoreOFf()
     }
@@ -259,7 +259,7 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .goToProtocolsList()
             .chooseProtocol(protocolName)
@@ -267,7 +267,7 @@ class ConnectionTests: ProtonVPNUITests {
             .selectNetshield(netshield)
             .turnKillSwitchOn()
             .turnModerateNatOn()
-        mainRobot
+        homeRobot
             .goToCountriesTab()
             .secureCoreOn()
         
@@ -292,16 +292,16 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
         
         // WireGuard - UDP
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .goToProtocolsList()
             .chooseProtocol(ConnectionProtocol.WireGuardUDP)
             .returnToSettings()
             .turnKillSwitchOn()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
             .verify.protocolNameIsCorrect(ConnectionProtocol.WireGuardUDP)
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
 
@@ -310,10 +310,10 @@ class ConnectionTests: ProtonVPNUITests {
             .goToProtocolsList()
             .chooseProtocol(ConnectionProtocol.WireGuardTCP)
             .returnToSettings()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
             .verify.protocolNameIsCorrect(ConnectionProtocol.WireGuardTCP)
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
         
@@ -322,10 +322,10 @@ class ConnectionTests: ProtonVPNUITests {
             .goToProtocolsList()
             .chooseProtocol(ConnectionProtocol.Stealth)
             .returnToSettings()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
             .verify.protocolNameIsCorrect(ConnectionProtocol.Stealth)
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
         
@@ -334,9 +334,9 @@ class ConnectionTests: ProtonVPNUITests {
             .goToProtocolsList()
             .chooseProtocol(ConnectionProtocol.Smart)
             .returnToSettings()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
     }
@@ -349,12 +349,12 @@ class ConnectionTests: ProtonVPNUITests {
             .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .turnKillSwitchOn()
-        mainRobot
+        homeRobot
             .quickConnectViaQCButton()
-            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .verify.connectionStatusConnected(robot: HomeRobot.self)
             .goToCountriesTab()
             .openServerList(countryToReconnectName)
             .verify.serverListIsOpened(countryToReconnectName)

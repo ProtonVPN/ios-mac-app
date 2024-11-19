@@ -81,10 +81,12 @@ extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         #if DEBUG
+        #if targetEnvironment(simulator)
         // Force log out if running UI tests
         if ProcessInfo.processInfo.arguments.contains("UITests") {
             appSessionManager.logOut(force: false, reason: "UI tests")
         }
+        #endif
         #endif
 
         // Clear out any overrides that may have been present in previous builds
