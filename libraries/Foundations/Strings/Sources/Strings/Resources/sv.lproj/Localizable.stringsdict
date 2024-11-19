@@ -106,7 +106,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ säkra servrar</string>
+        <string>%d+ säker server</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>

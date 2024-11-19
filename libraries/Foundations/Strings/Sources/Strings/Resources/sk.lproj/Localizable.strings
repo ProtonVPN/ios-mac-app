@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Táto verzia Proton VPN už nie je podporovaná, ak chcete aplikáciu používať aj naďalej, aktualizujte ju.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Kontaktovať podporu";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Aktualizovať";
 
 "_invalid_refresh_token_please_login" = "Od vášho posledného použitia aplikácie Proton VPN ubehol už nejaký čas. Prihláste sa znova.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Čo je nové";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nové Bezplatné krajiny";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Pozrite sa";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Bezplatné servery sú dostupné už aj v Poľsku a Rumunsku.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Nový vzhľad, tá istá ochrana";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Zmeny vo výbere serverov";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Vylepšili sme náš dizajn a presunuli niektoré veci, aby sa aplikácia ľahšie používala.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Aby sme zabránili preplneniu serverov a zabezpečili všetkým prístup k rýchlemu a bezpečnému prehliadaniu, odstránili sme manuálny výber krajiny a výrazne sme vylepšili automatický výber servera.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Predstavujeme posledné novinky";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Teraz je ešte jednoduchšie znova sa pripojiť k obľúbeným serverom. Zobrazte najnovšie pripojenia na domovskej obrazovke alebo ich pripnite pre rýchly prístup.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Brány boli presunuté";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "K vyhradeným serverom vašej organizácie môžete teraz pristupovať z hlavného menu.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Získajte neobmedzené zmeny s VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "V službe Proton Free môžete meniť servery niekoľkokrát za hodinu. So službou VPN Plus môžete meniť servery neobmedzene.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Momentálne ste dosiahli maximálny počet bezplatných zmien servera.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Vaše aktivity v sieti VPN sú chránené švajčiarskymi zákonmi o ochrane osobných údajov. Nikdy vás nebudeme sledovať online ani zdieľať vaše informácie s tretími stranami.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Nikdy nebudeme zaznamenávať vašu aktivitu na internete ani zdieľať vaše informácie s tretími stranami.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Zdieľať anonymné štatistiky o používaní";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Údaje o používaní nám pomáhajú obchádzať blokovanie VPN a vylepšovať výkon aplikácie.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Zdieľajte anonymné hlásenia o zlyhaní";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Navýšte svoje súkromie";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Zapnúť Smart protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Server je nedostupný";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Tento server bol odstránený. Skúste sa pripojiť k inému serveru.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Pripojenie zlyhalo";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Server, ktorý ste vybrali pre '%@', je momentálne nedostupný. Vyberte iný server alebo to skúste neskôr.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Aktualizujte váš softvér";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "K dispozícii je nová verzia Proton VPN. Ak chcete získať aktualizáciu, musíte najprv aktualizovať svoje zariadenie na %@ %@ alebo novšiu verziu.";

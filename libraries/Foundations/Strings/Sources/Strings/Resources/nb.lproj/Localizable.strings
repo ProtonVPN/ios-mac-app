@@ -138,7 +138,7 @@
 "_change_settings" = "Endre innstillinger";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Få Proton VPN Plus for å låse opp denne og andre funksjoner.";
+"_get_plus_for_feature" = "Skaff deg Proton VPN Plus for å låse opp denne og andre funksjoner.";
 
 /* Display more information */
 "_more_info" = "Lær mer";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Denne versjonen av Proton VPN er ikke lenger støttet, vennligst oppdater appen for å fortsette å bruke den.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Kontakt brukerstøtte";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Oppdater";
 
 "_invalid_refresh_token_please_login" = "Det er en stund siden du sist brukte Proton VPN-appen. Vennligst logg på igjen.";
@@ -1013,7 +1013,7 @@
 "_turn_ks_on_description" = "Ved å aktivere nødstopp, vil du ikke være i stand til å få tilgang til enheter på ditt lokale nettverk.\n\nFortsett?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
-"_get_plan" = "Få %@-plan";
+"_get_plan" = "Skaff deg %@-plan";
 
 /* Account plan description */
 "_free_countries" = "3 land";
@@ -1352,7 +1352,7 @@
 
 "_quick_settings_killSwitch_note" = "Hvis du ikke kan koble til enheter på det lokale nettverket, kan du prøve å deaktivere nødstopp.";
 
-"_quick_settings_get_plus" = "Få Plus";
+"_quick_settings_get_plus" = "Skaff deg Plus";
 
 "_applying_settings_" = "Anvender innstillinger";
 
@@ -1526,16 +1526,16 @@
 
 "_locations_plus" = "Plus-plasseringer";
 
-"_locations_gateways" = "Mellomtjenere";
+"_locations_gateways" = "Porttjenere";
 
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Gratis forbindelser";
 
 /* Gateways info modals title (both iOS and macOS) */
-"_gateways_modal_title" = "Hva er en gateway (mellomtjener)?";
+"_gateways_modal_title" = "Hva er en gateway (porttjener)?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "En VPN-mellomtjener er en sikker tilkobling som gir kontrollert tilgang til bedriftens data og tjenester gjennom dedikerte tjenere.";
+"_gateways_modal_text" = "En VPN-porttjener er en sikker tilkobling som gir kontrollert tilgang til bedriftens data og tjenester gjennom dedikerte tjenere.";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Hva er nytt";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nye gratis land";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Ta en titt";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Det finnes nå gratis tjenere i Polen og Romania.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Nytt utseende, samme beskyttelse";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Endringer til valg av tjener";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Vi oppfrisket designene våre og flyttet rundt på noen ting for å gjøre appen enklere å bruke.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "For å forhindre trengsel på tjenerne og sikre at alle har tilgang til rask og sikker surfing, fjernet vi manuelt valg av land og gjorde store forbedringer i automatisk tjenervalg.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Vi presenterer nylige";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Det er nå enda enklere å koble til favoritt-tjenerne dine igjen. Vis de siste tilkoblingene dine på startskjermen, eller fest dem for rask tilgang.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Porttjenere har flyttet";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Du kan nå få tilgang til organisasjonens dedikerte tjenere fra hovednavigasjonen.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
-"upsell_specific_location_subtitle" = "Få ubegrensede bytter med VPN Plus";
+"upsell_specific_location_subtitle" = "Skaff deg ubegrensede bytter med VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Med Proton Free kan du bytte tjenere noen ganger i timen. Få ubegrensede tjenerendringer med VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Du har nådd maksimalt antall gratis tjenerbytter for nå.";
@@ -2102,17 +2114,32 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "VPN-aktiviteten din er beskyttet av sveitsiske personvernlover. Vi vil aldri spore deg på nettet eller dele informasjonen din med tredjeparter.";
 
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Vi logger aldri internettaktiviteten eller deler informasjonen din med tredjeparter.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Del anonym bruksstatistikk";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Bruksdata hjelper oss med å overvinne VPN-blokkeringer og forbedre appytelsen.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Del anonyme programkrasjrapporter";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Krasjrapporter hjelper oss med å rette feil, oppdage brannmurer og unngå VPN-blokkeringer.";
+
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Oppgrader personvernet";
 
 /* Subtitle of paid plans list. */
-"upsell_plans_list_subtitle" = "Få avanserte personvernfunksjoner og høyere hastighet med VPN Plus.";
+"upsell_plans_list_subtitle" = "Skaff deg avanserte personvernfunksjoner og høyere hastighet med VPN Plus.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
 "upsell_plans_list_section_header" = "Velg din plan";
 
 /* Main Button of paid plans list allowing user to start payments process. */
-"upsell_plans_list_validate_button" = "Få VPN Plus";
+"upsell_plans_list_validate_button" = "Skaff deg VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /måned";
@@ -2142,10 +2169,10 @@
 "free_connections_modal_description" = "Proton Free kobler deg automatisk til den raskeste tilgjengelige tjeneren. Dette vil normalt være den nærmeste tjeneren til din plassering.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
-"free_connections_modal_banner" = "Få verdensomspennende dekning med VPN Plus";
+"free_connections_modal_banner" = "Skaff deg verdensomspennende dekning med VPN Plus";
 
 /* Text on upsell banner in country list */
-"_free_banner_text" = "Få verdensomspennende dekning med VPN Plus";
+"_free_banner_text" = "Skaff deg verdensomspennende dekning med VPN Plus";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
 "_wrong_country_banner_title" = "Ikke det landet du ønsket?";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Aktiver Smart protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Tjeneren er utilgjengelig";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Denne tjeneren er fjernet. Prøv å koble til en annen tjener.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Tilkobling mislyktes";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Tjeneren du har valgt for «%@», er foreløpig utilgjengelig. Velg en annen tjener, eller prøv på nytt senere.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Oppdater programvaren din";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "En ny versjon av Proton VPN er tilgjengelig. For å få oppdateringen må du først oppdatere enheten til %@ %@ eller senere.";

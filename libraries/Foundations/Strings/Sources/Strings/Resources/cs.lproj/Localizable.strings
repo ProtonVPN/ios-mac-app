@@ -711,7 +711,7 @@
 "_error_decode" = "Selhání při dešifrování archivovaných dat ve třídě: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Ověřování emailů dočasně vypnuté";
+"_error_email_verification_disabled" = "Ověřování e-mailů dočasně vypnuté";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton nedokázal komunikovat s vaším zařízením. Prosím zkuste to později.";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Tato verze Proton VPN již není podporována, aktualizujte aplikaci pro pokračování.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Kontaktovat podporu";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Aktualizovat";
 
 "_invalid_refresh_token_please_login" = "Dlouho jste aplikaci Proton VPN nepoužívali. Prosím přihlaste se znovu.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Co je nového";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nové Free země";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Podívejte se";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Free servery jsou nyní i v Polsku a Rumunsku.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Nový vzhled, stejná ochrana";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Změny ve výběru serverů";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Vylepšili jsme vzhled a uspořádali některé prvky tak, aby se aplikace snáze používala.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Pro předcházení zahlcování serverů a zajištění přístupu k rychlému a bezpečnému prohlížení pro všechny jsme odstranili manuální výběr zemí a provedli zásadní zlepšení automatického výběru serverů.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Představujeme Nedávné";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Připojení k oblíbeným serverům je nyní ještě snazší. Na domovské obrazovce si můžete zobrazit nedávná připojení nebo si je připnout pro rychlý přístup.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Brány byly přesunuty";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "K dedikovaným serverům vaší organizace můžete nyní přistupovat z hlavního menu..";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Získejte neomezený počet změn s VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "S Proton Free můžete měnit servery několikrát za hodinu. S VPN Plus můžete měnit servery neomezeně.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "V této chvíli jste dosáhli maximálního počtu změn bezplatných serverů.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Vaše aktivity v síti VPN jsou chráněny švýcarskými zákony o ochraně osobních údajů. Nikdy vás nebudeme sledovat online ani sdílet vaše informace s třetími stranami.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Nikdy nebudeme logovat vaši internetovou aktivitu nebo sdílet vaše informace s třetími stranami.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Sdílejte anonymní statistiky o používání";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Údaje o používání nám pomáhají obcházet blokování VPN a vylepšovat výkon aplikace.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Sdílejte anonymní hlášení o pádech";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Hlášení o pádech nám pomáhají opravovat chyby, rozpoznat firewally a předcházet blokování VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Navyšte své soukromí";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Zapnout Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Server je nedostupný";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Tento server byl odebrán. Zkuste se připojit k jinému serveru.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Připojení selhalo";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Server, který jste vybrali pro '%@' je momentálně nedostupný. Vyberte si jiný server a nebo zkuste akci opakovat později.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Aktualizujte software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Je dostupná nová verze Proton VPN. Před získáním aktualizace musíte nejprve aktualizovat svoje zařízení na %@ %@ nebo novější.";

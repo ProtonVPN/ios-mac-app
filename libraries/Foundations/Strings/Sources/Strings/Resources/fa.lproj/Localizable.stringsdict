@@ -257,8 +257,8 @@
         <string>Ad
 blocked</string>
         <key>other</key>
-        <string>Ads
-blocked</string>
+        <string>تبلیغات
+مسدود شدند</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -275,8 +275,8 @@ blocked</string>
         <string>Tracker
 stopped</string>
         <key>other</key>
-        <string>Trackers
-stopped</string>
+        <string>ردیاب‌های
+متوقف شدند</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

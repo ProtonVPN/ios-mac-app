@@ -147,7 +147,7 @@
 "_less_info" = "Vähemmän tietoja";
 
 /* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Ota yhteyttä asiakaspalveluun";
+"_contact_our_support" = "Ota yhteyttä tukeen";
 
 "_turn_on" = "Ota käyttöön";
 
@@ -458,7 +458,7 @@
 "_data_disclaimer_user_details" = "Käyttäjätunnus, sähköpostiosoite";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_device_details" = "Laitteesi malli ja käyttöjärjestelmäversio";
+"_data_disclaimer_device_details" = "Laitteesi malli ja käyttöjärjestelmän versio";
 
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Hyväksy ja jatka";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Nykyistä Proton VPN -versiota ei enää tueta ja se on päivitettävä käytön jatkamiseksi.";
 
-/* Secondary button title in the App update required alert  */
-"_update_required_support" = "Ota yhteyttä asiakaspalveluun";
+/* Secondary button title in the App update required alert */
+"_update_required_support" = "Ota yhteyttä tukeen";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Päivitä";
 
 "_invalid_refresh_token_please_login" = "Edellisestä Proton VPN:n käyttökerrastasi on vierähtänyt tovi. Kirjaudu uudelleen.";
@@ -932,7 +932,7 @@
 "_dns_leak_protection_tooltip" = "Estä DNS-kyselyiden vuotaminen ulkopuolisille. Aina päällä.";
 
 /* iOS Settings: table section cell */
-"_security_keys" = "Todennuslaitteet";
+"_security_keys" = "Suojausavaimet";
 
 /* iOS Settings: table section header */
 "_security_options" = "Suojausasetukset";
@@ -1118,7 +1118,7 @@
 "_free_trial_about_to_expire_title" = "Ilmainen kokeilusi on päättymässä!";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Päivitä %@ -tilaukseen ja nauti seuraavista ominaisuuksista edelleen:";
+"_free_trial_about_to_expire_description" = "Päivitä %@ -tilaukseen ja jatka seuraavista ominaisuuksista nauttimista:";
 
 "_5_connections_description" = "Yhdistä jopa 5 laitetta\nsamanaikaisesti";
 
@@ -1407,10 +1407,10 @@
 "_sysex_description_2" = "Mukautetut protokollat mahdollistavat nopeammat ja turvallisemmat yhteydet, ja sinun on otettava ne käyttöön, jotta voit muodostaa yhteyden useimpiin Proton VPN -palvelimiin.";
 
 /* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_3" = "Jatka napsauttamalla **Avaa järjestelmäasetukset** ja noudata sitten tämän näytön videoohjeita.";
+"_sysex_description_3" = "Jatka klikkaamalla **Avaa järjestelmäasetukset** ja noudata sitten tämän ruudun video-ohjeita.";
 
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "Jatka napsauttamalla **Avaa suojausasetukset** ja seuraa sitten tämän näytön ohjeita.";
+"_sysex_description_4" = "Jatka klikkaamalla **Avaa suojausasetukset** ja seuraa sitten tämän ruudun ohjeita.";
 
 /* Title of the system extension wizard in mac */
 "_sysex_set_up_proton_vpn" = "Määritä Proton VPN";
@@ -1571,7 +1571,7 @@
 
 "_force_upgrade_title" = "Sovelluspäivitys tarvitaan";
 
-"_force_upgrade_message" = "Käyttämääsi Proton VPN -sovelluksen versiota ei enää tueta. Päivitä viimeisimpään versioon.";
+"_force_upgrade_message" = "Käyttämääsi Proton VPN -sovelluksen versiota ei enää tueta. Päivitä uusimpaan versioon.";
 
 "login_fetch_vpn_data" = "VPN-yhteyttäsi määritetään";
 
@@ -1818,7 +1818,7 @@
 "modals_upsell_features_subtitle" = "Päivittämällä Plus-tilaukseen";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Onko sinulla vaativia tai ammatillisia tietoteknisiä tarpeita, jotka tarvitsevat epätyypillisiä portteja?\n\nPäivitä VPN Plus-tilaukseen käyttääksesi tätä ja muita premium-ominaisuuksia.";
+"modals_upsell_features_safe_mode_subtitle" = "Onko sinulla vaativia tai ammatillisia tietoteknisiä tarpeita, jotka tarvitsevat epätyypillisiä portteja?\n\nPäivitä VPN Plussaan käyttääksesi tätä ja muita premium-ominaisuuksia.";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Salli tietoliikenne epätyypillisiin portteihin";
@@ -1878,7 +1878,7 @@
 "modals_new_upsell_vpn_accelerator_subtitle" = "Avaa nopeampia ja ruuhkattomampia palvelimia, joiden nopeudet ovat jopa 10 Gbps.";
 
 /* Subtitle of the Customization scren */
-"modals_new_upsell_customization_subtitle" = "Käytä lähiverkkosi (LAN) laitteita VPN Plus -tilauksella.";
+"modals_new_upsell_customization_subtitle" = "Käytä lähiverkkosi (LAN) laitteita VPN Plussalla.";
 
 /* Subtitle of Moderate NAT upsell screens */
 "modals_new_upsell_moderate_nat_subtitle" = "Paranna suorituskyä verkkopeleille ja videopuheluille tyypin 2 NAT:lla.";
@@ -1911,10 +1911,10 @@
 "modals_new_upsell_country_title" = "Haluatko yhdistää tiettyyn maahan?";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Avaa maavalinta VPN Plus -tilauksella.";
+"modals_new_upsell_country_subtitle" = "Avaa maavalinta VPN Plussalla.";
 
 /* Subtitle of Profiles upsell screen */
-"modals_new_upsell_profiles_subtitle" = "Avaa profiilit VPN Plus -tilauksella.";
+"modals_new_upsell_profiles_subtitle" = "Avaa profiilit VPN Plussalla.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Huomautus nopeudesta...";
@@ -1995,7 +1995,7 @@
 "upsell_profiles_title" = "Pääset nopeasti käsiksi usein käyttämiisi yhteyksiin";
 
 /* Subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle" = "Avaa profiilit VPN Plus -tilauksella";
+"upsell_profiles_subtitle" = "Avaa profiilit VPN Plussalla";
 
 /* First bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_1" = "profiileja";
@@ -2034,7 +2034,7 @@
 "upsell_country_feature_title" = "Haluatko valita tietyn maan?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Avaa maavalinta VPN Plus -tilauksella";
+"upsell_country_feature_subtitle" = "Avaa maavalinta VPN Plussalla";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "maavalinta";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Mitä uutta";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Uusia ilmaisia maita";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Tutustu";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Puolassa ja Romaniassa on nyt ilmaispalvelimia.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Uusi ilme, sama suojaus";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Palvelinvalinnan muutoksia";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Päivitimme ulkoasuamme ja siirtelimme joitain asioita, jotta sovelluksen käyttäminen olisi helpompaa.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Poistimme manuaalisen maavalinnan ja teimme automaattiseen palvelinvalintaan merkittäviä parannuksia palvelimien ruuhkautumisen estämiseksi ja nopean ja turvallisen selauksen varmistamiseksi kaikille.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Esittelyssä edelliset";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Suosikkipalvelimiisi uudelleenyhdistäminen on nyt entistäkin helpompaa. Voit nähdä viimeisimmät yhteytesi aloitusnäytössä tai kiinnittää ne pikakäyttöä varten.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Yhdyskäytävät ovat siirtyneet";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Voit nyt käyttää organisaatiosi omia palvelimia päänavigoinnista.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
-"upsell_specific_location_subtitle" = "Hanki rajattomasti vaihtoja VPN Plus -tilauksella";
+"upsell_specific_location_subtitle" = "Hanki rajattomasti vaihtoja VPN Plussalla";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Proton Freellä voit vaihtaa palvelinta muutaman kerran tunnissa. Saat rajattomasti palvelinvaihtoja VPN Plussalla.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Olet saavuttanut tällä erää käytettävissä olevan palvelinvaihdosten enimmäismäärän.";
@@ -2067,10 +2079,10 @@
 "welcome_upgrade_advanced_features" = "Edistyneet suojausominaisuudet";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_title_plus" = "Tervetuloa VPN Plus -tilaukseen";
+"welcome_upgrade_title_plus" = "Tervetluoa VPN Plussaan";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Tervetuloa Proton Unlimited -tilaukseen";
+"welcome_upgrade_title_unlimited" = "Tervetuloa Proton Unlimitediin";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Onnittelut!";
@@ -2102,11 +2114,26 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "VPN-käyttösi on Sveitsin tietosuojalainsäädännön suojaama. Emme koskaan seuraa sinua verkossa tai jaa tietojasi ulkopuolisille tahoille.";
 
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Emme koskaan säilytä tietoja Internet-toiminnastasi tai jaa niitä kolmansille osapuolille.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Jaa anonyymejä käyttötilastoja";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Käyttötilastot auttavat meitä kiertämään VPN-estoja ja parantamaan sovelluksen suorituskykyä.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Jaa anonyymejä virheraportteja";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Virheraportit auttavat meitä korjaaman vikoja, havaitsemaan palomuureja ja kiertämään VPN-estoja.";
+
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Paranna yksityisyyttäsi";
 
 /* Subtitle of paid plans list. */
-"upsell_plans_list_subtitle" = "Hanki edistyneitä yksityisyytäsi tehostavia ominaisuuksia ja korkeampi nopeus VPN Plus -tilauksella.";
+"upsell_plans_list_subtitle" = "Hanki edistyneitä yksityisyytäsi tehostavia ominaisuuksia ja korkeampi nopeus VPN Plussalla.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
 "upsell_plans_list_section_header" = "Valitse tilauksesi";
@@ -2121,7 +2148,7 @@
 "upsell_plans_list_option_amountPerYear" = " /vuosi";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
-"_available_with_vpn_business_tooltip" = "Sisältyy VPN Business -tilaukseen.";
+"_available_with_vpn_business_tooltip" = "Sisältyy VPN Businessiin.";
 
 "onboarding_usage_stats_title" = "Jaa anonyymejä käyttötilastoja";
 
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Ota Smart Protocol käyttöön";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Palvelin ei ole käytettävissä";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Tämä palvelin on poistettu. Kokeile yhdistää toiseen palvelimeen.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Yhteys epäonnistui";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Valitsemasi palvelin '%@' ei ole tällä hetkellä käytettävissä. Valitse toinen palvelin tai kokeile myöhemmin uudelleen.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Päivitä ohjelmistosi";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Uusi Proton VPN -versio on saatavilla. Asentaaksesi päivityksen, sinun on ensin päivitettävä laitteesi vähintään %@ versioon %@.";

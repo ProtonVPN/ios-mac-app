@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Эта версия Proton VPN больше не поддерживается, пожалуйста, обновите приложение, чтобы продолжить его использование.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Связаться с поддержкой";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Обновить";
 
 "_invalid_refresh_token_please_login" = "Прошло много времени с тех пор, как вы в последний раз использовали приложение Proton VPN. Пожалуйста, войдите в систему заново.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Что нового";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Новые страны с бесплатными серверами";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Посмотреть";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Теперь бесплатные серверы доступны в Польше и Румынии.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Новый вид, защита прежняя";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Изменения в выборе сервера";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Мы обновили дизайн и переместили некоторые элементы, чтобы сделать приложение более удобным в использовании.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Для предотвращения перегрузки серверов и обеспечения быстрой и безопасной работы в интернете для каждого пользователя, мы отказались от ручного выбора страны и значительно улучшили систему автоматического выбора сервера.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Представляем Недавние";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Теперь переподключаться к любимым серверам стало еще проще. Просматривайте последние подключения на главном экране или закрепите их для быстрого доступа.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Шлюзы перемещены";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Теперь вы можете получить доступ к выделенным серверам вашей организации из главной панели навигации.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Получите неограниченное количество изменений с VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "С Proton Free вы можете менять серверы несколько раз в час. С VPN Plus вы можете менять серверы неограниченное количество раз.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "На данный момент вы достигли максимального количества изменений на сервере Free.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Работа вашей VPN защищена швейцарскими законами о частной жизни. Мы никогда не будем отслеживать вас в сети или передавать вашу информацию третьим лицам.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Мы никогда не будем записывать ваши действия в Интернете или передавать вашу информацию третьим лицам.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Делиться данніми об использовании";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Данные об использовании помогают нам преодолевать блокировки VPN и повышать производительность приложения.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Делиться анонимными отчётами об ошибках";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Отчеты об ошибках помогают нам исправлять ошибки, обнаруживать брандмауэры и избегать блокировки VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Улучшите свою конфиденциальность";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Включить Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Сервер недоступен";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Этот сервер был удален. Попробуйте подключиться к другому серверу.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Сбой подключения";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Выбранный для «%@» сервер сейчас недоступен. Выберите другой сервер или попробуйте позже.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Update your software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";

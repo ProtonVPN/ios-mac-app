@@ -117,7 +117,7 @@
 "_change_protocol_disconnect_warning" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Her yerde güvenli İnternet";
+"_loading_screen_slogan" = "Her yerde güvenli internet";
 
 /* Main mac app menu item */
 "_report_an_issue" = "Sorun bildireceğim...";
@@ -227,7 +227,7 @@
 /* MacOS: button in connecting overlay */
 "_try_again" = "Yeniden dene";
 
-"_try_again_without_killswitch" = "Bağlantı kesiciyi kapatıp yeniden deneyin";
+"_try_again_without_killswitch" = "Bağlantı kesici özelliğini kapatıp yeniden deneyin";
 
 /* Button in some alerts */
 "_retry" = "Yeniden dene";
@@ -285,7 +285,7 @@
 "_switch_side_button_off" = "Kapalı";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Başka bir uygulama bağlantı kesici ile çakışabilir. Bu sorunu çözmek için OpenVPN iletişim kuralına geçin ya da bağlantı kesiciyi kapatarak yeniden deneyin.";
+"_timeout_ks_ike_descritpion" = "Başka bir uygulama bağlantı kesici özelliği ile çakışabilir. Bu sorunu çözmek için OpenVPN iletişim kuralına geçin ya da bağlantı kesici özelliğini kapatarak yeniden deneyin.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "OpenVPN kullanmaya geçerek yeniden deneyin";
@@ -294,7 +294,7 @@
 "free_tier_plan_title" = "Proton VPN Free";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Bağlantı kesici tüm bağlantıları engelliyor";
+"_kill_switch_blocking_connection" = "Bağlantı kesici özelliği tüm bağlantıları engelliyor";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Hep açık VPN bağlantınızı otomatik olarak yeniden kuracak";
@@ -801,19 +801,19 @@
 
 "_update_required_no_longer_supported" = "Bu Proton VPN sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için uygulamayı güncelleyin.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Destek ekibimizle görüşün";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Güncelle";
 
 "_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
 
 "_error_mitm_title" = "Güvenli olmayan bağlantı";
 
-"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli İnternet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
+"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
 
-"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli İnternet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
+"_error_mitm_vpn_description" = "VPN sunucusuna bağlanmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın bu VPN sunucusuna erişmesini engelliyoruz.\nLütfen başka bir sunucu seçin.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "TLS başlatma sorunu";
@@ -855,10 +855,10 @@
 "_delete_application_data_popup_body" = "Tüm Proton VPN verileri silinecek ve uygulama kapanacak. İlerlemek istiyor musunuz?";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Bağlantı kesiciyi kapat";
+"_kill_switch_disable" = "Bağlantı kesici özelliğini kapat";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Bağlantı kesiciyi aç";
+"_kill_switch_enable" = "Bağlantı kesici özelliğini aç";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Ayarlar";
@@ -929,7 +929,7 @@
 "_dns_leak_protection" = "DNS sızıntı koruması";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "DNS sorgularının üçüncü taraflara sızdırılmasını önleyin. Hep açık.";
+"_dns_leak_protection_tooltip" = "DNS sorgularının üçüncü taraflara sızdırılmasını önler. Her zaman açıktır.";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Güvenlik anahtarları";
@@ -969,7 +969,7 @@
 "_wireguard_tls" = "Stealth";
 
 /* MacOS menu item; iOS setting screen item */
-"_view_logs" = "Günlükleri görüntüle";
+"_view_logs" = "Günlüğü görüntüle";
 
 /* iOS logs screen title */
 "_logs" = "Günlük kayıtları";
@@ -1002,15 +1002,15 @@
 
 "_allow_lan_info" = "VPN bağlantısını kullanmadan yerel ağınızdaki yazıcı gibi aygıtlara bağlanmanızı sağlar.";
 
-"_allow_lan_description" = "Yerel ağ erişimine izin vermek için bağlantı kesici kapatılmalıdır.\n\nİlerlemek istiyor musunuz?";
+"_allow_lan_description" = "Yerel ağ erişimine izin vermek için bağlantı kesici özelliği kapatılmalıdır.\n\nİlerlemek istiyor musunuz?";
 
 "_allow_lan_note" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerektiğini unutmayın";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Bağlantı kesici açılsın mı?";
+"_turn_ks_on_title" = "Bağlantı kesici özelliği açılsın mı?";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Bağlantı kesiciyi açtığınızda yerel ağınızdaki aygıtlara erişemeyeceksiniz. \n\nİlerlemek istiyor musunuz?";
+"_turn_ks_on_description" = "Bağlantı kesici özelliğini açtığınızda yerel ağınızdaki aygıtlara erişemeyeceksiniz. \n\nİlerlemek istiyor musunuz?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ tarifesine geçin";
@@ -1241,13 +1241,13 @@
 
 "_troubleshoot_item_alt_title" = "Alternatif yöneltme kullanılabilsin";
 
-"_troubleshoot_item_alt_description" = "Bu ayar, Proton sitelerinin engellenmesi durumunda, uygulamanın Proton ağına ulaşmak için alternatif ağ yöneltmesi kullanmasını sağlar. Bu seçenek, güvenlik duvarlarını veya ağ sorunlarını aşmak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
+"_troubleshoot_item_alt_description" = "Bu seçenek, Proton sitelerinin engellenmesi durumunda, uygulamanın Proton ağına ulaşmak için alternatif ağ yöneltmesi kullanmasını sağlar. Bu seçenek, güvenlik duvarlarını veya ağ sorunlarını aşmak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
 
 "_troubleshoot_item_alt_link1" = "Ayrıntılı bilgi alın";
 
 "_troubleshoot_item_nointernet_title" = "İnternet bağlantısı yok";
 
-"_troubleshoot_item_nointernet_description" = "Lütfen İnternet bağlantınızın çalıştığından emin olun.";
+"_troubleshoot_item_nointernet_description" = "Lütfen internet bağlantınızın çalıştığından emin olun.";
 
 "_troubleshoot_item_isp_title" = "İnternet hizmeti sağlayıcı (ISP) sorunu";
 
@@ -1342,9 +1342,9 @@
 
 "_quick_settings_secureCore_description" = "En hassas verilerinizi gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltin.";
 
-"_quick_settings_netShield_description" = "İnternette reklamlar ve kötü amaçlı yazılımlar olmadan gezinin.";
+"_quick_settings_netShield_description" = "İnternet üzerinde reklamlar ve kötü amaçlı yazılımlar olmadan gezinin.";
 
-"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için İnternet erişimini kapatır.";
+"_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için internet erişimini kapatır.";
 
 "_quick_settings_secureCore_note" = "Secure Core, VPN hızını azaltabilir";
 
@@ -1371,10 +1371,10 @@
 "_upgrade_required_securecore_description" = "Secure Core özelliği Plus tarifesi ile kullanılabilir. Trafiği gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltmek için tarifenizi yükseltin.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Bağlantı kesici IP adresinizi koruyor";
+"_kill_switch_reconnection_header" = "Bağlantı kesici özelliği IP adresinizi koruyor";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda İnternet bağlantınız açılacak.\nVPN ve bağlantı kesici koruması olmadan İnternet kullanmak için, yeniden bağlanmayı iptal edin.";
+"_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici özelliğinin koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "olmadan";
@@ -1425,7 +1425,7 @@
 
 "_sysex_enabled_title" = "Yapılandırma tamamlandı";
 
-"_sysex_enabled_description" = "Yapılandırma tamamlandı. Artık İnternet üzerinde en iyi VPN teknolojilerini kullanarak daha hızlı gezinebilirsiniz.";
+"_sysex_enabled_description" = "Yapılandırma tamamlandı. Artık internet üzerinde en iyi VPN teknolojilerini kullanarak daha hızlı gezinebilirsiniz.";
 
 "_sysex_cannot_enable" = "Sistem eklentisi kullanıma alınamadı";
 
@@ -1578,15 +1578,15 @@
 "login_summary_button" = "Proton VPN kullanmaya başlayın";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Bağlantı kesiciyi kapat";
+"_wgks_ks_off" = "Bağlantı kesici özelliğini kapat";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Bağlantı kesici kararsızlığı uyarısı";
+"_neks_t2_title" = "Bağlantı kesici özelliği kararsızlık uyarısı";
 
 /* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 güvenlik çipi";
 
-"_neks_t2_description" = "Bu aygıt üzerinde bağlantı kesici kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN bağlantı kesici özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
+"_neks_t2_description" = "Bu aygıt üzerinde bağlantı kesici özelliğinin kullanılması sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN bağlantı kesici özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
 
 "_neks_t2_connect" = "Gene de aç";
 
@@ -1734,7 +1734,7 @@
 "_bad_interface_ip_range_alert_title" = "Ağ arayüzü sorunlu";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Yerel ağınız güvenli olmayabilir ('%@' arayüzü '%@' IP adresini ve ön ekini kullanıyor). Verileriniz yerel ağ üzerine şifrelenmemiş olarak gönderilebilir. Kill Switch özelliğini açarsanız bu trafik engellenir ancak yerel çevre birimlerine erişim kesilebilir.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Yerel ağınız güvenli olmayabilir ('%@' arayüzü '%@' IP adresini ve ön ekini kullanıyor). Verileriniz yerel ağ üzerine şifrelenmemiş olarak gönderilebilir. Bağlantı kesici özelliğini açarsanız bu trafik engellenir ancak yerel çevre birimlerine erişim kesilebilir.";
 
 /* Title of the search screen */
 "search_title" = "Arama";
@@ -1920,7 +1920,7 @@
 "modals_discourage_secure_core_title" = "Hız hakkında bir not...";
 
 /* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "Secure Core, en yüksek düzeyde güvenlik ve gizlilik sunar. Ancak İnternet hızınızı düşürebilir. Başarımı yükseltmeye gerek duyuyorsanız, Secure Core özelliğini kapatabilirsiniz.";
+"modals_discourage_secure_core_subtitle" = "Secure Core, en yüksek düzeyde güvenlik ve gizlilik sunar. Ancak internet hızınızı düşürebilir. Başarımı yükseltmeye gerek duyuyorsanız, Secure Core özelliğini kapatabilirsiniz.";
 
 /* Turn off Secure Core discouragement screen */
 "modals_discourage_secure_core_dont_show" = "Bir daha gösterme";
@@ -1932,7 +1932,7 @@
 "new_plans_brand_title" = "Güncellenmiş Proton, birleşik koruma";
 
 /* Subtitle of the New Brand screen */
-"new_plans_brand_subtitle" = "Yenilenmiş Proton böyle görünüyor. \nBirçok hizmet, tek amaç. Gizliliğe odaklanmış bir İnternet fikrine hoş geldiniz.";
+"new_plans_brand_subtitle" = "Yenilenmiş Proton böyle görünüyor. \nBirçok hizmet, tek amaç. Gizliliğe odaklanmış bir internet fikrine hoş geldiniz.";
 
 /* Title of "done" button in New Brand screen */
 "new_plans_brand_got_it" = "Anladım";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Yenilikler";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Yeni Free ülkeleri";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Göz atın";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Artık Polonya ve Romanya'da Free sunucuları var.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Yeni görünüm, aynı koruma";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Sunucu seçimindeki değişiklikler";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Uygulamanın daha kolay kullanılması için tasarımı yeniledik ve bazı şeylerin yerini değiştirdik";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Sunucu kalabalığını önlemek ve herkesin hızlı ve güvenli gezinmeye erişmesini sağlamak için el ile ülke seçimini kaldırdık ve otomatik sunucu seçiminde önemli iyileştirmeler yaptık.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Son kullanılanlar özelliği";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Sık kullandığınız sunuculara yeniden bağlanmak artık daha kolay. Son bağlantılarınızı giriş ekranında görüntüleyin veya hızlı erişmek için sabitleyin.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Ağ geçitleri taşındı";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Artık kuruluşunuzun özel sunucularına ana gezinme ile erişebilirsiniz.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "VPN Plus tarifesi ile sınırsız değişim sayısı edinin";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Proton Free tarifesi ile sunucuları bir saatte birkaç kez değiştirebilirsiniz. Sınırsız sayıda sunucu değişimi yapmak için VPN Plus tarifesine geçin.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Yapabileceğiniz en fazla Free sunucu değişikliği sayısına ulaştınız.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "VPN etkinliğiniz İsviçre gizlilik yasalarıyla korunur. Sizi asla çevrim içi olarak izlemeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "İnternet işlemlerinizi asla kaydetmeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Anonim kullanım istatistikleri paylaşılsın";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Kullanım verileri VPN engellemelerini aşmamıza ve uygulamanın başarımını artırmamıza yardımcı olur.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Anonim çökme bildirimleri paylaşılsın";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Çökme bildirimleri sorunları gidermemize, güvenlik duvarlarını algılamamıza ve VPN engellemelerini aşmamıza yardımcı olur.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Gizlilik düzeyinizi yükseltin";
@@ -2196,7 +2223,7 @@
 "_br_3_logs_description" = "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları gidermesine yardımcı olmaları için kullanacağız.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Hata günlükleri, sorununuzun temeline inmemize yardımcı olur. Bunları göndermezeniz, sorunu tam olarak araştıramayabiliriz.";
+"_br_3_logs_disabled" = "Hata günlüğü, sorununuzun temeline inmemize yardımcı olur. Bunu göndermezeniz, sorunu tam olarak araştıramayabiliriz.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Geri bildiriminiz için teşekkürler";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Smart Protocol kullanılsın";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Sunucu kullanılamıyor";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Bu sunucu kaldırılmış. Başka bir sunucu ile bağlantı kurmayı deneyin.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Bağlantı kurulamadı";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Seçtiğiniz '%@' sunucusu şu anda kullanılamıyor. Başka bir sunucu seçin ya da daha sonra yeniden deneyin.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "İşletim sisteminizi güncelleyin";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Yeni bir Proton VPN sürümü yayınlanmış. Güncellemek için önce aygıtınızı %@ %@ veya üzerindeki bir sürüme güncellemeniz gerekir.";

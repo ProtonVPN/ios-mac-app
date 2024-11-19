@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Ta wersja aplikacji Proton VPN nie jest już wspierana. Zaktualizuj ją, aby nadal z niej korzystać.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Skontaktuj się ze wsparciem technicznym";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Zaktualizuj";
 
 "_invalid_refresh_token_please_login" = "Minęło trochę czasu, odkąd ostatnio używałeś aplikacji Proton VPN. Zaloguj się ponownie.";
@@ -1188,7 +1188,7 @@
 "_report_field_steps" = "Jakie dokładnie kroki wykonałeś?";
 
 /* Mag bug report: textfields placeholder */
-"_report_field_placeholder" = "Rozpocznij pisanie...";
+"_report_field_placeholder" = "Zacznij pisać...";
 
 /* Mag bug report: attach logs checkbox */
 "_report_attachments_checkbox" = "Dołącz logi aplikacji i szczegóły systemu operacyjnego";
@@ -1675,7 +1675,7 @@
 "authenticate" = "Uwierzytelnij";
 
 /* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Metoda logowania jest nieprawidłowa. Skontaktuj się ze wsparciem.";
+"login_unsupported_state" = "Metoda logowania jest nieprawidłowa. Skontaktuj się ze wsparciem technicznym.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Ustawienia %@ nie mogą zostać zmienione. Spróbuj ponownie później lub połącz się z innym serwerem";
@@ -2013,7 +2013,7 @@
 "upsell_profiles_feature_auto_connect" = "Skonfiguruj automatyczne połączenie, aby uzyskać jeszcze szybszy dostęp.";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_any_location" = "Wybierz inną lokalizację";
+"upsell_countries_any_location" = "Wybierz lokalizację";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_even_higher_speed" = "Jeszcze wyższa prędkość VPN";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Co nowego";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nowe kraje planu Free";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Zobacz";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Serwery planu Free są dostępne w Polsce i Rumunii.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Nowy wygląd, ta sama ochrona";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Zmiany w wyborze serwerów";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Odświeżyliśmy interfejs i przenieśliśmy kilka rzeczy, aby ułatwić korzystanie z aplikacji.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Usunęliśmy ręczny wybór kraju, aby uniknąć obciążonych serwerów i zapewnić dostęp do szybkiego oraz bezpiecznego przeglądania Internetu. Ponadto ulepszyliśmy automatyczny wybór serwerów.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Przedstawiamy funkcję Ostatnie";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Ponowne łączenie się z ulubionymi serwerami stało się łatwiejsze. Wyświetlaj ostatnie połączenia na stronie głównej lub przypinaj je, aby mieć do nich szybki dostęp.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Bramy zostały przeniesione";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Dostęp do serwerów dedykowanych organizacji możliwy jest poziomu głównej nawigacji.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Uzyskaj nieograniczoną liczbę zmian serwerów w planie VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "W planie Proton Free możesz zmieniać serwery kilka razy na godzinę. Plan VPN Plus zapewnia nieograniczoną liczbę zmian serwerów.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Osiągnięto maksymalną liczbę darmowych zmian serwerów.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Twoja aktywność VPN jest chroniona przez szwajcarskie prawa ochrony danych osobowych. Nigdy nie będziemy śledzić użytkownika ani udostępniać danych stronom trzecim.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Nigdy nie rejestrujemy aktywności użytkownika w Internecie ani nie udostępniamy informacji stronom trzecim.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Udostępnij anonimowe statystyki użytkowania";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Dane użytkowania pomagają nam ominąć blokady VPN i poprawić wydajność aplikacji.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Udostępnij anonimowe raporty o awariach";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Raporty o awariach pomagają nam naprawić błędy, wykryć zapory sieciowe i ominąć blokady VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Zwiększ swoją prywatność";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Włącz Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Serwer jest niedostępny";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Serwer został usunięty. Połącz się z innym serwerem.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Połączenie nie powiodło się";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Serwer '%@'jest obecnie niedostępny. Wybierz inny serwer lub spróbuj ponownie później.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Zaktualizuj system operacyjny";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Dostępna jest nowa wersja aplikacji Proton VPN. Zaktualizuj system operacyjny do wersji %@ %@ lub nowszej, aby zaktualizować aplikację.";

@@ -288,7 +288,7 @@
 "_timeout_ks_ike_descritpion" = "Aplikasi lain mungkin mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba kembali";
+"_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba lagi";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -723,7 +723,7 @@
 "_ne_request_timed_out" = "Waktu permintaan jaringan habis";
 
 /* Network error */
-"_ne_unable_to_connect_to_host" = "Layanan VPN tidak dapat dijangkau";
+"_ne_unable_to_connect_to_host" = "Layanan tidak dapat dijangkau";
 
 /* Network error */
 "_ne_network_connection_lost" = "Koneksi jaringan hilang";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Versi Proton VPN ini sudah tidak lagi didukung. Silakan perbarui aplikasi untuk dapat melanjutkan.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Hubungi dukungan";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Perbarui";
 
 "_invalid_refresh_token_please_login" = "Anda sudah tidak menggunakan aplikasi Proton VPN selama beberapa waktu. Silakan masuk kembali.";
@@ -1535,7 +1535,7 @@
 "_gateways_modal_title" = "Apa itu gateway?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "Gateway VPN merupakan koneksi aman yang menyediakan akses terkendali ke data dan layanan milik perusahaan Anda melalui server khusus";
+"_gateways_modal_text" = "Gateway VPN merupakan koneksi aman yang menyediakan akses terkendali menuju data dan layanan milik perusahaan Anda melalui server khusus";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -1770,7 +1770,7 @@
 "search_no_results_title" = "Tidak ada hasil yang ditemukan";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Mohon coba kata kunci pencarian yang berbeda";
+"search_no_results_subtitle" = "Silakan coba kata kunci pencarian yang berbeda";
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Baru-baru ini dicari";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Apa yang baru";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Negara Free baru";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Lihat apa yang baru";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Server Free kini tersedia di Polandia dan Romania.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Tampilan baru, perlindungan yang sama";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Perubahan terhadap mekanisme pemilihan server";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Kami telah memperbarui tata letak kami dan memindahkan sebagian fitur agar aplikasi kami lebih mudah untuk digunakan.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Untuk mencegah server yang terlalu berkerumun dan memastikan bahwa semua orang memiliki akses ke internet yang cepat dan aman, kami telah menghapus opsi pemilihan negara secara manual dan melakukan peningkatan terhadap mekanisme pemilihan server otomatis kami.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Memperkenalkan fitur Terkini";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Kini Anda dapat terhubung ulang ke server favorit Anda secara lebih mudah. Anda dapat melihat koneksi terkini Anda di layar beranda, atau menyematkan koneksi tertentu untuk akses yang cepat.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Gateway telah berpindah";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Anda kini dapat mengakses server khusus milik organisasi Anda dari menu navigasi utama";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Ubah server tanpa batas dengan VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Dengan Proton Free, Anda dapat mengubah server beberapa kali per jamnya. Dapatkan perubahan server tanpa batas dengan VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Anda telah mencapai batas jumlah perubahan server Free yang diperkenankan untuk saat ini.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Aktivitas VPN Anda dilindungi oleh undang-undang privasi Swiss. Kami tidak akan pernah melacak Anda secara online atau membagikan informasi pribadi Anda dengan pihak ketiga.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Kami tidak akan pernah mencatat aktivitas internet Anda atau membagikan informasi Anda dengan pihak ketiga.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Bagikan statistik pemakaian anonim";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Statistik pemakaian membantu kami dalam menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Bagikan laporan crash anonim";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Laporan crash membantu kami dalam memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Tingkatkan privasi Anda";
@@ -2196,7 +2223,7 @@
 "_br_3_logs_description" = "Log merupakan berkas yang merekam berbagai tindakan yang memicu terjadinya error. Kami hanya akan menggunakan berkas log Anda untuk membantu para pakar kami dalam memperbaiki bug.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Log error membantu kami dalam menumpaskan masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log error yang ada, kami mungkin tidak akan dapat menganalisa masalah Anda secara menyeluruh.";
+"_br_3_logs_disabled" = "Log error membantu kami dalam menumpas masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log error, kami mungkin tidak akan dapat menganalisa masalah Anda secara menyeluruh.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Terima kasih atas tanggapan Anda";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Aktifkan protokol Smart";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Server tidak tersedia";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Server ini telah dihapus. Cobalah untuk menghubungkan ulang ke server yang berbeda.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Koneksi gagal";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Server yang Anda pilih untuk '%@' saat ini tidak tersedia. Pilih server yang berbeda atau coba lagi nanti.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Perbarui perangkat lunak Anda";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Versi Proton VPN yang baru telah tersedia. Untuk mendapatkan pembaruan, Anda perlu memperbarui perangkat Anda ke %@ %@ atau lebih baru.";

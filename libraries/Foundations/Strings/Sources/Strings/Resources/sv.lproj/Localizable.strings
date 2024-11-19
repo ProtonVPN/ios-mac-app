@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Denna version av Proton VPN stöds inte längre, uppdatera appen för att fortsätta använda den.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Kontakta support";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Uppdatera";
 
 "_invalid_refresh_token_please_login" = "Det har gått ett tag sedan du sist använde Proton VPN-appen. Logga in igen.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Vad som är nytt";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nya gratisländer";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Ta en titt";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Det finns nu gratisservrar i Polen och Rumänien.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Nytt utseende, samma skydd";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Ändringar av serverval";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Vi uppdaterade vår design och flyttade runt några saker för att göra appen enklare att använda.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "För att förhindra serverbelastning och säkerställa att alla har åtkomst till snabb och säker surfning tog vi bort manuellt landsval och gjorde stora förbättringar av automatiskt serverval.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Introducerar senaste";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Det är nu ännu enklare att ansluta till dina favoritservrar igen. Visa dina senaste anslutningar på startskärmen eller fäst dem för snabb åtkomst.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Gateways har flyttats";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Du kan nu komma åt din organisations dedikerade servrar från huvudnavigeringen.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Få obegränsade ändringar med VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Med Proton Free kan du byta server några gånger i timmen. Skaffa obegränsade serverändringar med VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Du har nått det maximala antalet gratis serverändringar för tillfället.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Din VPN-aktivitet skyddas av schweiziska integritetslagar. Vi kommer aldrig att spåra dig online eller dela din information med tredje part.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Vi kommer aldrig att logga din internetaktivitet eller dela din information med tredje part.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Dela anonym användningsstatistik";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Användningsdata hjälper oss att övervinna VPN-blockeringar och förbättra appens prestanda.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Dela anonyma kraschrapporter";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Kraschrapporter hjälper oss att åtgärda fel, upptäcka brandväggar och undvika VPN-blockeringar.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Uppgradera din integritet";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Aktivera Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Server otillgänglig";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Denna server har tagits bort. Prova ansluta till annan server.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Anslutning misslyckades";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Servern du valde för '%@' är för närvarande inte tillgänglig. Välj en annan server eller försök igen senare.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Uppdatera din programvara";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "En ny version av Proton VPN är tillgänglig. För att få uppdateringen måste du först uppdatera din enhet till %@ %@ eller senare.";

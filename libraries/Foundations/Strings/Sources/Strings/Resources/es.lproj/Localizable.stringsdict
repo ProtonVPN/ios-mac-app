@@ -101,7 +101,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d paises</string>
+        <string>%d países</string>
       </dict>
       <key>num_servers</key>
       <dict>

@@ -91,7 +91,7 @@
     <key>modals_new_upsell_all_countries_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Avaa %#@num_servers@ %#@num_countries@ VPN Plus -tilauksella.</string>
+      <string>Avaa %#@num_servers@ %#@num_countries@ VPN Plussalla.</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
