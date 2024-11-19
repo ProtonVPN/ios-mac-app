@@ -37,7 +37,7 @@ class ProfilesTests: ProtonVPNUITests {
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated(profile: profileName)
             .deleteProfile(profileName, randomCountry.name)
-            .verify.profileIsDeleted(profileName, randomCountry.name)
+            .verify.profileIsDeleted(profileName)
     }
     
     @MainActor

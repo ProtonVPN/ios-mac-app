@@ -7,6 +7,7 @@
 //
 
 import fusion
+import Strings
 
 fileprivate let titleId = "SignupViewController.createAccountTitleLabel"
 fileprivate let subtitleId = "SignupViewController.createAccountDescriptionLabel"
@@ -16,7 +17,7 @@ fileprivate let nextButtonId = "SignupViewController.nextButton"
 fileprivate let signInButtonId = "SignupViewController.signinButton"
 fileprivate let protonmailErrorMessage = "Please use a non-Proton Mail email address"
 fileprivate let usernameErrorMessage = "Username already used"
-fileprivate let okButton = "OK"
+fileprivate let okButton = Localizable.ok
 
 class SignupRobot: CoreElements {
     

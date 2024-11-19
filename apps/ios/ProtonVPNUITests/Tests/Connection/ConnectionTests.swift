@@ -82,30 +82,12 @@ class ConnectionTests: ProtonVPNUITests {
         mainRobot
             .goToCountriesTab()
             .openServerList(countryName)
-            .verify.serverListIsOpen(countryName)
+            .verify.serverListIsOpened(countryName)
             .connectToAServerViaServer()
             .verify.connectedToAServer(countryName)
             .backToPreviousTab(robot: ServerListRobot.self, countryName)
-            .verify.serverListIsOpen(countryName)
+            .verify.serverListIsOpened(countryName)
             .disconnectFromAServerViaServer()
-            .verify.connectionStatusNotConnected()
-    }
-    
-    @MainActor
-    func testConnectAndDisconnectViaMap() {
-        let map = "Map"
-        
-        loginRobot
-            .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: ConnectionStatusRobot.self)
-            .verify.connectionStatusNotConnected()
-        
-        mainRobot
-            .goToMapTab()
-            .selectCountryAndConnect()
-            .verify.connectionStatusConnected(robot: MainRobot.self)
-            .backToPreviousTab(robot: MapRobot.self, map)
-            .selectCountryAndDisconnect()
             .verify.connectionStatusNotConnected()
     }
     
@@ -178,7 +160,7 @@ class ConnectionTests: ProtonVPNUITests {
         mainRobot
             .quickConnectViaQCButton()
             .verify.connectedToASecureCoreServer(status)
-            .verify.connectedToAProfile()
+        mainRobot
             .quickDisconnectViaQCButton()
         }
     
@@ -322,7 +304,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusConnected(robot: MainRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
-        
+
         // WireGuard - TCP
             .backToPreviousTab(robot: SettingsRobot.self, back)
             .goToProtocolsList()
@@ -375,7 +357,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusConnected(robot: MainRobot.self)
             .goToCountriesTab()
             .openServerList(countryToReconnectName)
-            .verify.serverListIsOpen(countryToReconnectName)
+            .verify.serverListIsOpened(countryToReconnectName)
             .connectToAServerViaServer()
             .verify.connectedToAServer(countryToReconnectName)
             .quickDisconnectViaQCButton()

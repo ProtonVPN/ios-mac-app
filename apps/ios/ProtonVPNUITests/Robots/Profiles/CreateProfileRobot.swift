@@ -43,7 +43,6 @@ class CreateProfileRobot: CoreElements {
     @discardableResult
     private func enterProfileName(_ name: String) -> CreateProfileRobot {
         textField(profileNameField).waitUntilExists(time: WaitTimeout.short)
-            .tap()
             .clearText()
             .typeText(name)
         return self
@@ -85,7 +84,8 @@ class CreateProfileRobot: CoreElements {
         tapServerField()
         staticText(Localizable.server).checkExists()
         if let serverName = serverName {
-            staticText(NSPredicate(format: "label ENDSWITH[c] %@", serverName))
+            staticText()
+                .containsLabel(serverName)
                 .checkExists(message: "Server \(serverName) not found").tap()
         } else {
             cell().byIndex(0).waitUntilExists(time: WaitTimeout.short).tap()

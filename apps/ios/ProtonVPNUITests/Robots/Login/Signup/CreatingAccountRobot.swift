@@ -17,11 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
+import Strings
 
 fileprivate let titleId = "CompleteViewController.completeTitleLabel"
 fileprivate let subtitle = "CompleteViewController.completeDescriptionLabel"
 fileprivate let creatingAccount = "Creating your account"
-fileprivate let configuringAccess = "Configuring your VPN access"
+fileprivate let configuringAccess = Localizable.loginFetchVpnData
 
 class CreatingAccountRobot: CoreElements {
     

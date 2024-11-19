@@ -18,36 +18,41 @@
 
 import Foundation
 import fusion
+import Strings
 
-fileprivate let countrySearchInput = "Country, City or Server"
-fileprivate let clearSearchButton = "Clear"
+fileprivate let countrySearchInput = Localizable.searchBarPlaceholder
+fileprivate let clearSearchButton = Localizable.searchRecentClear
 fileprivate let buttonConnectDisconnect = "ic power off"
 fileprivate let clearTextButton = "Clear text"
 
 class CountrySearchRobot: CoreElements {
     
     let verify = Verify()
-    
+
+    @discardableResult
     func search(for value: String) -> CountrySearchRobot {
         searchField(countrySearchInput).tap()
         searchField(countrySearchInput).typeText(value)
         return self
     }
-    
+
+    @discardableResult
     func hitPowerButton(server: String) -> CountrySearchRobot {
         cell().firstMatch()
             .onChild(staticText(server))
             .onChild(button(buttonConnectDisconnect)).tap()
         return self
     }
-    
+
+    @discardableResult
     func clearSearch() -> CountrySearchRobot {
         button(clearTextButton).tap()
-        button("Cancel").tap()
+        button(Localizable.cancel).tap()
         return self
     }
     
     class Verify: CoreElements {
+        @discardableResult
         func serverFound(server: String) -> CountrySearchRobot {
             cell().firstMatch().onChild(staticText(server)).waitUntilExists(time: 2).checkExists()
             return CountrySearchRobot()

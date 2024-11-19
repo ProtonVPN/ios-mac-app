@@ -89,6 +89,8 @@
 		770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */; };
 		770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A32CDCBCAC00812C21 /* ModalRobot.swift */; };
 		773B252F2C8860C8001CA9F0 /* CountrySearchRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B252E2C8860C8001CA9F0 /* CountrySearchRobot.swift */; };
+		776B11B32CECA15C0012D2D8 /* XCUIElement+tapAndClearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */; };
+		776B11B52CECA3980012D2D8 /* UIElement+extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776B11B42CECA3910012D2D8 /* UIElement+extenstion.swift */; };
 		77A56C322CC7DE8E004A7F46 /* TwoFaRobot+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A56C312CC7DE88004A7F46 /* TwoFaRobot+extension.swift */; };
 		77CE17222CE4D5BD00090EA0 /* HumanVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CE17212CE4D5BD00090EA0 /* HumanVerificationRobot.swift */; };
 		77E01AC92CC10AB40013F3D7 /* UITestsHelpers in Frameworks */ = {isa = PBXBuildFile; productRef = 77E01AC82CC10AB40013F3D7 /* UITestsHelpers */; };
@@ -397,12 +399,10 @@
 		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
 		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
 		F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */; };
-		F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EB26E6428C006768A8 /* MapRobot.swift */; };
 		F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EC26E6428C006768A8 /* CountryListRobot.swift */; };
 		F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783ED26E6428C006768A8 /* ServerListRobot.swift */; };
 		F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EF26E6428C006768A8 /* ProfileRobot.swift */; };
 		F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F026E6428C006768A8 /* CreateProfileRobot.swift */; };
-		F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */; };
 		F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F326E6428C006768A8 /* SignupRobot.swift */; };
 		F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F426E6428C006768A8 /* LoginRobot.swift */; };
 		F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534C278598E4009E49B4 /* OnboardingService.swift */; };
@@ -567,6 +567,8 @@
 		770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionModalRobot.swift; sourceTree = "<group>"; };
 		770299A32CDCBCAC00812C21 /* ModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalRobot.swift; sourceTree = "<group>"; };
 		773B252E2C8860C8001CA9F0 /* CountrySearchRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySearchRobot.swift; sourceTree = "<group>"; };
+		776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+tapAndClearText.swift"; sourceTree = "<group>"; };
+		776B11B42CECA3910012D2D8 /* UIElement+extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIElement+extenstion.swift"; sourceTree = "<group>"; };
 		77741C932C86070E00F63ED5 /* ProtonVPN-iOS-Connection.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-Connection.xctestplan"; sourceTree = "<group>"; };
 		77A56C312CC7DE88004A7F46 /* TwoFaRobot+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TwoFaRobot+extension.swift"; sourceTree = "<group>"; };
 		77CE17212CE4D5BD00090EA0 /* HumanVerificationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationRobot.swift; sourceTree = "<group>"; };
@@ -849,12 +851,10 @@
 		F3B783E526E6428C006768A8 /* MainRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRobot.swift; sourceTree = "<group>"; };
 		F3B783E726E6428C006768A8 /* SettingsRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
 		F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusRobot.swift; sourceTree = "<group>"; };
-		F3B783EB26E6428C006768A8 /* MapRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapRobot.swift; sourceTree = "<group>"; };
 		F3B783EC26E6428C006768A8 /* CountryListRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListRobot.swift; sourceTree = "<group>"; };
 		F3B783ED26E6428C006768A8 /* ServerListRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerListRobot.swift; sourceTree = "<group>"; };
 		F3B783EF26E6428C006768A8 /* ProfileRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRobot.swift; sourceTree = "<group>"; };
 		F3B783F026E6428C006768A8 /* CreateProfileRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileRobot.swift; sourceTree = "<group>"; };
-		F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeedHelpRobot.swift; sourceTree = "<group>"; };
 		F3B783F326E6428C006768A8 /* SignupRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupRobot.swift; sourceTree = "<group>"; };
 		F3B783F426E6428C006768A8 /* LoginRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
 		F3BC534C278598E4009E49B4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingService.swift; path = ../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Services/OnboardingService.swift; sourceTree = "<group>"; };
@@ -1340,7 +1340,6 @@
 				77CE17212CE4D5BD00090EA0 /* HumanVerificationRobot.swift */,
 				77A56C312CC7DE88004A7F46 /* TwoFaRobot+extension.swift */,
 				F3B783F426E6428C006768A8 /* LoginRobot.swift */,
-				F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1377,6 +1376,8 @@
 		B2BCF0AA28B760B70041A635 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				776B11B42CECA3910012D2D8 /* UIElement+extenstion.swift */,
+				776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */,
 				77E01ACA2CC112BB0013F3D7 /* BF22Users.swift */,
 				E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */,
 				80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */,
@@ -2135,7 +2136,6 @@
 			isa = PBXGroup;
 			children = (
 				F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */,
-				F3B783EB26E6428C006768A8 /* MapRobot.swift */,
 				F3B783ED26E6428C006768A8 /* ServerListRobot.swift */,
 			);
 			path = Connection;
@@ -2967,6 +2967,7 @@
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
 				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
+				776B11B32CECA15C0012D2D8 /* XCUIElement+tapAndClearText.swift in Sources */,
 				80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */,
 				FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */,
 				770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */,
@@ -2980,13 +2981,11 @@
 				80C4A4E42BCFBBFC00DA1A80 /* MetricsCodable.swift in Sources */,
 				80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */,
 				ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */,
-				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
 				770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
 				80C4A4E62BCFBC2D00DA1A80 /* LokiApiClient.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
-				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
 				37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
 				77A56C322CC7DE8E004A7F46 /* TwoFaRobot+extension.swift in Sources */,
@@ -2996,6 +2995,7 @@
 				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
 				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
 				B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */,
+				776B11B52CECA3980012D2D8 /* UIElement+extenstion.swift in Sources */,
 				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
 				E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */,
 				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
