@@ -41,7 +41,7 @@ class TokenRefreshTests: ProtonVPNUITests {
         loginRobot
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
         homeRobot
             .goToSettingsTab()
 
@@ -60,7 +60,7 @@ class TokenRefreshTests: ProtonVPNUITests {
         loginRobot
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
 
         _ = try quarkCommands.userExpireSession(username: user.name, expireRefreshToken: false)
 

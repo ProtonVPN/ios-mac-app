@@ -19,7 +19,7 @@ class SettingsTests: ProtonVPNUITests {
             .verify.loginScreenIsShown()
             .enterCredentials(UserType.Basic.credentials)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
     }
     
     func testKillSwitchAndLANConnectionOnOff() {

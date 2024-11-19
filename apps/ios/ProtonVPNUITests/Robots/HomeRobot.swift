@@ -57,11 +57,13 @@ class HomeRobot: CoreElements {
         return SettingsRobot()
     }
     
+    @discardableResult
     func quickConnectViaQCButton() -> ConnectionStatusRobot {
         button(quickConnectButtonId).tap()
         return ConnectionStatusRobot()
     }
-    
+
+    @discardableResult
     func backToPreviousTab<T: CoreElements>(robot _: T.Type, _ name: String) -> T {
         button(name).byIndex(0).tap()
         return T()
@@ -123,6 +125,14 @@ class HomeRobot: CoreElements {
         @discardableResult
         func upsellModalIsOpen() -> HomeRobot {
             staticText(upselModalId).checkExists()
+            return HomeRobot()
+        }
+
+        @discardableResult
+        func isLoggedIn() -> HomeRobot {
+            button(tabHome)
+                .waitUntilExists(time: 30)
+                .checkExists(message: "Failed to check that user is logged in. Home tab is not visible in 30 seconds")
             return HomeRobot()
         }
     }

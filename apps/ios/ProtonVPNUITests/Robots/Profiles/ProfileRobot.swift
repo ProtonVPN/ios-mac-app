@@ -33,7 +33,11 @@ class ProfileRobot: CoreElements {
     @discardableResult
     func deleteProfile(_ profileName: String, _ countryname: String) -> ProfileRobot {
         button(editButton).tap()
-        button().containsLabel(profileName).checkExists().tap()
+        button()
+            .containsLabel(profileName)
+            .swipeUpUntilVisible()
+            .checkExists()
+            .tap()
         button(deleteButton).tap()
         return self
     }

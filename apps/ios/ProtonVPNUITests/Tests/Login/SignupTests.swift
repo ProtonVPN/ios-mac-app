@@ -88,7 +88,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.verifyPlanOptions(planDuration: "1 month", planAmount: "$11.99")
             .verify.verifyPlanOptions(planDuration: "12 months", planAmount: "$79.99")
             .closeModal(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .verify.correctUserIsLoggedIn(userEmail, "Proton VPN Free")
     }

@@ -46,7 +46,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
                 loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
                 retRobot: HomeRobot.self
             )
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .verify.correctUserIsLoggedIn(randomUsername, "Proton VPN Free")
     }
@@ -67,7 +67,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
                 loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
                 retRobot: HomeRobot.self
             )
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
     }
@@ -86,7 +86,7 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
                 loginRobot: ProtonCoreTestingToolkitUITestsLogin.LoginRobot(),
                 retRobot: HomeRobot.self
             )
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }

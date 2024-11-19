@@ -49,9 +49,8 @@ class HumanVerificationTests: ProtonVPNUITests {
             .verify.captchaScreenIsShown()
             .verifyCaptcha()
             .verify.captchaScreenIsNotShown()
-        
         homeRobot
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
         
         try quarkCommands.systemEnvVariableAsJson(variable: "FINGERPRINT_RESPONSE", value: FingerprintResponse.ok.rawValue)
     }

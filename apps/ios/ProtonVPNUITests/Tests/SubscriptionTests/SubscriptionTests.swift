@@ -55,6 +55,7 @@ final class SubscriptionTests: ProtonVPNUITests {
         _ = LoginRobot()
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .goToAccountDetail()
             .tapSubscription()

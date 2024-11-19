@@ -61,10 +61,10 @@ class MainMeasurements: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: HomeRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
 
         measurementProfile.measure {
-            homeRobot
+            ConnectionStatusRobot()
                 .verify.connectionStatusNotConnected()
         }
     }
@@ -79,7 +79,7 @@ class MainMeasurements: ProtonVPNUITests {
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .quickConnectViaQCButton()
 
         measurementProfile.measure {
@@ -89,7 +89,7 @@ class MainMeasurements: ProtonVPNUITests {
 
         homeRobot
             .quickDisconnectViaQCButton()
-            .verify.disconnectedFromAServer()
+            .verify.connectionStatusNotConnected()
     }
 
     func testConnectionToSpecificServer() async throws {
@@ -100,11 +100,10 @@ class MainMeasurements: ProtonVPNUITests {
             .setServiceLevelIndicator("specific_server_connect")
 
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
-        let back = "Countries"
 
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
-            .signIn(robot: HomeRobot.self)
+            .signIn(robot: ConnectionStatusRobot.self)
             .verify.connectionStatusNotConnected()
 
         homeRobot

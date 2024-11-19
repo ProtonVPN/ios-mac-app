@@ -41,7 +41,7 @@ class FreeRescopeTests: ProtonVPNUITests {
         loginRobot
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
         homeRobot
             .goToProfilesTab()
             .tapAddNewProfile()

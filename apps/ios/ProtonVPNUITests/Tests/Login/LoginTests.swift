@@ -66,7 +66,7 @@ class LoginTests: ProtonVPNUITests {
         loginRobot
             .enterCredentials(twopassusercredentials[0])
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }

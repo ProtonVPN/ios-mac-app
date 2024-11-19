@@ -97,7 +97,7 @@ class PlanTests: ProtonVPNUITests {
         return loginRobot
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .goToAccountDetail()
     }

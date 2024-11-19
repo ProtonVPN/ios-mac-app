@@ -109,7 +109,7 @@ class ProfilesTests: ProtonVPNUITests {
         return loginRobot
             .enterCredentials(credentials)
             .signIn(robot: HomeRobot.self)
-            .verify.connectionStatusNotConnected()
+            .verify.isLoggedIn()
             .goToProfilesTab()
             .verify.isOnProfilesScreen()
     }
