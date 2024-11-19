@@ -28,6 +28,8 @@ import Localization
 @Reducer
 public struct ConnectionStatusFeature {
 
+    private static let timerDurationInMilliseconds: Int = 50
+
     @ObservableState
     public struct State: Equatable {
         @Shared(.protectionState) public internal(set) var protectionState: ProtectionState
@@ -77,7 +79,7 @@ public struct ConnectionStatusFeature {
                         state.protectionState = masked
                     }
                     return .run { action in
-                        try await Task.sleep(nanoseconds: 50_000_000)
+                        try await Task.sleep(nanoseconds: UInt64(Self.timerDurationInMilliseconds) * NSEC_PER_MSEC)
                         await action(.maskLocationTick)
                     }
                     .cancellable(id: IDs.maskLocation, cancelInFlight: true)
@@ -112,7 +114,7 @@ public struct ConnectionStatusFeature {
                     let protectionState = await status.protectionState(country: displayCountry, ip: userIP)
                     await send(.newProtectionState(protectionState))
                 }
-                .debounce(id: IDs.protectionState, for: .milliseconds(50), scheduler: UIScheduler.shared)
+                .debounce(id: IDs.protectionState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: UIScheduler.shared)
 
             case .newProtectionState(let protectionState):
                 // let's check that we're not already masking location twice with same data

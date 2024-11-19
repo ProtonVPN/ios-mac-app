@@ -132,17 +132,14 @@ public struct ConnectionStatusView: View {
                             Text(title)
                                 .font(.themeFont(.body1(.bold)))
                             Spacer()
-                                .frame(height: 8)
+                                .frame(height: .themeSpacing8)
                         }
                     }
                     ZStack {
                         if let locationText = locationText(protectionState: protectionState) {
                             locationText
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .task {
-                                    print("--- LocationText =", locationText)
-                                }
+                                .padding(.horizontal, .themeSpacing8)
+                                .padding(.vertical, .themeSpacing4)
                         } else if case .protected(let netShield) = protectionState {
                             NetShieldStatsView(viewModel: netShield)
                         } else if case .protectedSecureCore(let netShield) = protectionState {
@@ -154,7 +151,7 @@ public struct ConnectionStatusView: View {
                     .padding(.horizontal, .themeSpacing16)
                 }
             }
-            .frame(height: 200)
+            .frame(height: Self.viewHeight)
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: .themeSpacing8) {

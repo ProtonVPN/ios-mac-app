@@ -23,7 +23,7 @@ public extension String {
     /// It's used for the "protecting" animation in the connection status view.
     func partiallyMasked(onlyAlphanumerics: Bool = false) -> String? {
         // pick a random character
-        let predicate: (Character) -> Bool = onlyAlphanumerics ? { !$0.isSymbol } : { $0 != "*" } 
+        let predicate: (Character) -> Bool = onlyAlphanumerics ? { !($0.isSymbol || $0.isPunctuation) } : { $0 != "*" }
         let random = shuffled().first(where: predicate)
         guard let random,
               // Find the range of the first occurrence
