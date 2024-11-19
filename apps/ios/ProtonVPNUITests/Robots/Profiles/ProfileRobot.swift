@@ -23,82 +23,86 @@ fileprivate let myProfiles = Localizable.myProfiles
 class ProfileRobot: CoreElements {
     
     let verify = Verify()
-    
+
+    @discardableResult
     func tapAddNewProfile() -> CreateProfileRobot {
         button(addButton).tap()
         return CreateProfileRobot()
     }
-    
-    func deleteProfile(_ name: String, _ countryname: String) -> ProfileRobot {
-        return delete(name, countryname)
+
+    @discardableResult
+    func deleteProfile(_ profileName: String, _ countryname: String) -> ProfileRobot {
+        button(editButton).tap()
+        button().containsLabel(profileName).checkExists().tap()
+        button(deleteButton).tap()
+        return self
     }
-    
-    func editProfile(_ name: String) -> CreateProfileRobot {
-        edit(name)
+
+    @discardableResult
+    func editProfile(_ profileName: String) -> CreateProfileRobot {
+        edit(profileName)
         return CreateProfileRobot()
     }
-    
+
+    @discardableResult
     func connectToAProfile(_ profileName: String) -> ConnectionStatusRobot {
-        staticText(NSPredicate(format: "label CONTAINS[c] %@", profileName))
-            .checkExists(message: "\(profileName) profile not found").tap()
+        staticText().containsLabel(profileName)
+            .checkExists(message: "\(profileName) profile not found").forceTap()
         return ConnectionStatusRobot()
     }
-    
+
+    @discardableResult
     func disconnectFromAProfile(_ profileName: String) -> ConnectionStatusRobot {
-        staticText(NSPredicate(format: "label CONTAINS[c] %@", profileName))
+        staticText()
+            .containsLabel(profileName)
             .checkExists(message: "\(profileName) profile not found").tap()
         return ConnectionStatusRobot()
     }
-    
+
+    @discardableResult
     func connectToAFastestServer() -> MainRobot {
         staticText(fastestProfile).tap()
         return MainRobot()
     }
-    
+
+    @discardableResult
     func disconnectFromAFastestServer() -> MainRobot {
         staticText(fastestProfile).tap()
         return MainRobot()
     }
-    
+
+    @discardableResult
     func connectToARandomServer() -> MainRobot {
         staticText(randomProfile).tap()
         return MainRobot()
     }
-    
+
+    @discardableResult
     func disconnectFromARandomServer() -> MainRobot {
         staticText(randomProfile).tap()
         return MainRobot()
     }
-        
-    private func delete(_ name: String, _ countryname: String) -> ProfileRobot {
-        
-        var deleteButtonText = "Delete"
-        if #available(iOS 17.0, *) {
-            deleteButtonText = "Remove"
-        }
-        button(editButton).tap()
-        let deleteButtonPredicate = NSPredicate(format: "label CONTAINS[c] %@", name)
-        button(deleteButtonPredicate).checkExists().tap()
-        button(deleteButton).tap()
-        return self
-    }
     
     @discardableResult
-    private func edit(_ name: String) -> ProfileRobot {
+    private func edit(_ profileName: String) -> ProfileRobot {
         button(editButton).tap()
-        staticText().containsLabel(name).tap()
+        staticText().containsLabel(profileName).tap()
         return self
     }
     
     class Verify: CoreElements {
-        
+
+        @discardableResult
         func isOnProfilesScreen() -> ProfileRobot {
             staticText(myProfiles).checkExists(message: "Profiles screen is not visible")
             return ProfileRobot()
         }
 
-        func profileIsDeleted(_ name: String, _ countryname: String) {
-            button("Delete " + countryname + "    Fastest, " + name).checkDoesNotExist()
+        func profileIsDeleted(_ profileName: String) {
+            button()
+                .containsLabel(profileName)
+                .checkDoesNotExist()
+            staticText().containsLabel(profileName).checkDoesNotExist()
         }
         
         @discardableResult
@@ -123,9 +127,10 @@ class ProfileRobot: CoreElements {
         }
 
         @discardableResult
-        private func checkProfileExists(_ name: String) -> UIElement {
-            return staticText(NSPredicate(format: "label CONTAINS[c] %@", name))
-                .checkExists(message: "\(name) profile not found")
+        private func checkProfileExists(_ profileName: String) -> UIElement {
+            return staticText()
+                .containsLabel(profileName)
+                .checkExists(message: "\(profileName) profile not found")
         }
     }
 }

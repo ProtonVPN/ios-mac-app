@@ -9,6 +9,7 @@
 import fusion
 import ProtonCoreQuarkCommands
 import UITestsHelpers
+import Strings
 
 fileprivate let titleId = "LoginViewController.titleLabel"
 fileprivate let subtitleId = "LoginViewController.subtitleLabel"
@@ -21,11 +22,10 @@ fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account pa
 fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
 fileprivate let errorBannerMessage = "Email address already used."
 fileprivate let assignConnectionErrorBannerMessage = "subuserAlertDescription1"
-fileprivate let okButton = "OK"
-fileprivate let assignVPNConnectionButton = "Enable VPN connections"
+fileprivate let okButton = Localizable.ok
 fileprivate let loginButton = "Sign in again"
 fileprivate let invalidUsernameErrorMessage = "Invalid username"
-fileprivate let CaptchaNextButton = "Next"
+fileprivate let captchaNextButton = Localizable.modalsCommonNext
 
 class LoginRobot: CoreElements {
     
@@ -56,7 +56,7 @@ class LoginRobot: CoreElements {
     
     @discardableResult
     func verifyCaptcha() -> LoginRobot {
-        button(CaptchaNextButton).tap()
+        button(captchaNextButton).tap()
         return LoginRobot()
     }
     

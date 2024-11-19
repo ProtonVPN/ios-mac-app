@@ -7,23 +7,27 @@
 //
 
 import fusion
+import UITestsHelpers
 
 fileprivate let buttonConnectDisconnect = "ic power off"
 
 class ServerListRobot: CoreElements {
     
     let verify = Verify()
-    
+
+    @discardableResult
     func connectToAServerViaServer() -> ConnectionStatusRobot {
-        button(buttonConnectDisconnect).byIndex(0).tap()
+        button(buttonConnectDisconnect).byIndex(0).forceTap()
         return ConnectionStatusRobot()
     }
-    
+
+    @discardableResult
     func disconnectFromAServerViaServer() -> MainRobot {
-        button(buttonConnectDisconnect).byIndex(0).tap()
+        button(buttonConnectDisconnect).byIndex(0).forceTap()
         return MainRobot()
     }
-    
+
+    @discardableResult
     func connectToAPlusServer(_ name: String) -> MainRobot {
         staticText(name).tap()
         return MainRobot()
@@ -32,7 +36,7 @@ class ServerListRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func serverListIsOpen(_ name: String) -> ServerListRobot {
+        func serverListIsOpened(_ name: String) -> ServerListRobot {
             staticText(name).waitUntilExists().checkExists()
             return ServerListRobot()
         }

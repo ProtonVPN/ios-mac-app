@@ -7,10 +7,11 @@
 //
 
 import fusion
+import Strings
 
 fileprivate let accountVerificationTitle = "EmailVerificationViewController.emailVerificationTitleLabel"
 fileprivate let accountVerificationTextField = "EmailVerificationViewController.verificationCodeTextField.textField"
-fileprivate let nextButtonId = "Next"
+fileprivate let nextButtonId = Localizable.modalsCommonNext
 
 class AccountVerificationRobot: CoreElements {
 

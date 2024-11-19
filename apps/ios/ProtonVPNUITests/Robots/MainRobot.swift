@@ -13,7 +13,6 @@ import UITestsHelpers
 fileprivate let tabProfiles = Localizable.profiles
 fileprivate let tabSettings = Localizable.settings
 fileprivate let tabCountries = Localizable.countries
-fileprivate let tabMap = Localizable.map
 fileprivate let quickConnectButtonId = "quick connect inactive button"
 fileprivate let quickDisconnectButtonId = "quick connect active button"
 fileprivate let statusNotConnected = Localizable.notConnected
@@ -37,12 +36,6 @@ class MainRobot: CoreElements {
     func goToCountriesTab() -> CountryListRobot {
         button(tabCountries).tap()
         return CountryListRobot()
-    }
-    
-    @discardableResult
-    func goToMapTab() -> MapRobot {
-        button(tabMap).tap()
-        return MapRobot()
     }
     
     @discardableResult
