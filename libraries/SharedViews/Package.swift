@@ -24,6 +24,7 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
 
         // 3rd party
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.15.1"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
         .package(url: "https://github.com/pointfreeco/swift-perception", from: "1.3.5"),
         .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
@@ -37,6 +38,7 @@ let package = Package(
                 "Ergonomics",
                 "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Perception", package: "swift-perception"),
             ]

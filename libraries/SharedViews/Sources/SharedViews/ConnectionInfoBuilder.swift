@@ -18,10 +18,12 @@
 
 import SwiftUI
 
+import ComposableArchitecture
 import Dependencies
 
 import Ergonomics
 import Domain
+import Ergonomics
 import Strings
 import Localization
 import Theme
@@ -34,6 +36,7 @@ public struct ConnectionInfoBuilder {
     public let vpnConnectionActual: VPNConnectionActual?
     public var location: ConnectionSpec.Location { intent.location }
     @Dependency(\.locale) private var locale
+    @SharedReader(.userTier) private var userTier: Int
 
     public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?, withServerNumber: Bool) {
         self.intent = intent
@@ -41,7 +44,7 @@ public struct ConnectionInfoBuilder {
         self.withServerNumber = withServerNumber
     }
 
-    public var textSubHeader: String? {
+    private var subheaderString: String? {
         guard let server = vpnConnectionActual?.server else {
             return location.subtext(locale: locale)
         }
@@ -76,6 +79,18 @@ public struct ConnectionInfoBuilder {
         }
     }
 
+    public var subheaderText: Text? {
+        if let subheaderString {
+            return Text(subheaderString)
+        }
+        if case .fastest = location, userTier.isFreeTier {
+            return Text(Localizable.homeFastestConnectionSelectionDescription)
+                + Text(" \(Asset.freeFlags.swiftUIImage) ")
+                + Text(Localizable.homeFastestConnectionAdditionalCountryCount(2))
+        }
+        return nil
+    }
+
     /// In case of not an actual connection, show feature only if present in both intent and actual connection.
     /// In case of intent, check only if feature was intended.
     private func shouldShow(feature: ConnectionSpec.Feature) -> Bool {
@@ -92,40 +107,32 @@ public struct ConnectionInfoBuilder {
         shouldShow(feature: .tor)
     }
 
-    /// Bullet is shown between any sub-header text and feature view
-    private var showFeatureBullet: Bool {
-        return textSubHeader != nil && (showFeatureP2P || showFeatureTor)
+    var p2pSection: Text? {
+        guard showFeatureP2P else { return nil }
+        return Text(Image(systemName: "arrow.left.arrow.right"))
+            + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
+    }
+
+    var torSection: Text? {
+        guard showFeatureTor else { return nil }
+        return Text(Asset.icsBrandTor.swiftUIImage)
+            + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
     }
 
     var hasTextFeatures: Bool {
-        textSubHeader != nil || showFeatureP2P || showFeatureTor
+        subheaderText != nil || showFeatureP2P || showFeatureTor
+    }
+
+    var subHeader: Text? {
+        [subheaderText, torSection, p2pSection]
+            .compactMap { $0 }
+            .joined(separator: Text(" • "))
     }
 
     @ViewBuilder
     public var textFeatures: some View {
-        // Format looks weird, but it lets us merge several Texts and images
-        // into one, so whole behaves like a text: it can wrap lines, resize
-        // icons inside, etc. For this to work, images have to be either
-        // created with `Image(systemName:)` or be imported as a `Symbol Image`.
-        (
-            Text("") // In case nothing is returned in next lines, we still have at least empty text
-            + (textSubHeader != nil
-               ? Text("\(textSubHeader!)")
-               : Text("")
-              )
-            + (showFeatureP2P
-               ? (showFeatureBullet ? Text(" • ") : Text(""))
-               + Text(Image(systemName: "arrow.left.arrow.right"))
-               + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
-               : Text("")
-              )
-            + (showFeatureTor
-               ? (showFeatureBullet || showFeatureP2P ? Text(" • ") : Text(""))
-               + Text("\(Asset.icsBrandTor.swiftUIImage)")
-               + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
-               : Text("")
-              )
-        )
+        (subHeader ?? Text(""))
+        .frame(maxWidth: .infinity, alignment: .leading)
         .fixedSize(horizontal: false, vertical: true)
         .foregroundColor(Color(.text, .weak))
 #if canImport(Cocoa)

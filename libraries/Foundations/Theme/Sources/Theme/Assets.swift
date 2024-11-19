@@ -536,6 +536,7 @@ public enum Asset {
   public static let zw = ImageAsset(name: "ZW")
   public static let gatewayFlag = ImageAsset(name: "Gateway-flag")
   public static let dismissButton = ImageAsset(name: "Dismiss button")
+  public static let freeFlags = SymbolAsset(name: "free-flags")
   public static let icAlertProAccount = ImageAsset(name: "ic-alert-pro-account")
   public static let icKillswitch = ImageAsset(name: "ic-killswitch")
   public static let icNetshield = ImageAsset(name: "ic-netshield")
