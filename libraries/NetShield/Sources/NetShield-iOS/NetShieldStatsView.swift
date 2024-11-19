@@ -32,7 +32,8 @@ public struct NetShieldStatsView: View {
             StatsView(model: viewModel.trackers)
             StatsView(model: viewModel.data)
         }
-        .padding(8)
+        .padding(.vertical, .themeSpacing12)
+        .padding(.horizontal, .themeSpacing8)
         .frame(maxWidth: Self.maxWidth)
     }
 
