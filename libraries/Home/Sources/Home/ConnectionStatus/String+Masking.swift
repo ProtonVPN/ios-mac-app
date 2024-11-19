@@ -21,9 +21,10 @@ import Foundation
 public extension String {
     /// This method will return the copy of a string with the same length, but with 1 random character changed to an asterisk.
     /// It's used for the "protecting" animation in the connection status view.
-    func partiallyMasked() -> String? {
+    func partiallyMasked(onlyAlphanumerics: Bool = false) -> String? {
         // pick a random character
-        let random = shuffled().first { $0 != "*" }
+        let predicate: (Character) -> Bool = onlyAlphanumerics ? { !($0.isSymbol || $0.isPunctuation) } : { $0 != "*" }
+        let random = shuffled().first(where: predicate)
         guard let random,
               // Find the range of the first occurrence
               let range = range(of: String(random)) else {

@@ -22,7 +22,7 @@
 import Foundation
 import Dependencies
 
-public class LocalizationUtility {
+public final class LocalizationUtility {
     public static let `default` = LocalizationUtility()
 
     /// This needs to be set to public so the unit tests can change it.
