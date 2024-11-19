@@ -35,8 +35,8 @@ extension OrderedSet<RecentConnection> {
     }
 
     func sanitized() -> OrderedSet<RecentConnection> {
-        var sorted = chunked { $0.pinned }
-            .sorted(by: { lhs, _ in lhs.0 })
+        OrderedSet(chunked { $0.pinned }
+            .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
             .flatMap {
                 if $0.0 { // pinned
                     $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
@@ -44,11 +44,8 @@ extension OrderedSet<RecentConnection> {
                     $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
                 }
             }
-        while sorted.count > Self.maxConnections,
-              let index = sorted.lastIndex(where: \.notPinned) {
-            sorted.remove(at: index)
-        }
-        return OrderedSet(sorted)
+            .prefix(Self.maxConnections)
+        )
     }
 
     public var mostRecent: RecentConnection? {
