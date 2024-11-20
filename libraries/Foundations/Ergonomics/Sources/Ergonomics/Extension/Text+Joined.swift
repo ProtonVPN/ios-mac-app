@@ -18,9 +18,19 @@
 
 import SwiftUI
 
-extension Array where Element == Text {
-    public func joined(separator: Text) -> Text? {
+public protocol Joinable {
+    func joined(to other: Self, with separator: Self) -> Self
+}
+
+extension Text: Joinable {
+    public func joined(to other: Self, with separator: Self) -> Self {
+        return self + separator + other
+    }
+}
+
+extension Array where Element: Joinable {
+    public func joined(separator: Self.Element) -> Self.Element? {
         guard let first else { return nil }
-        return dropFirst().reduce(first) { $0 + separator + $1 }
+        return dropFirst().reduce(first) { $0.joined(to: $1, with: separator) }
     }
 }
