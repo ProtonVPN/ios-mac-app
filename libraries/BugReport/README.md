@@ -20,4 +20,4 @@ Everything related to the views (concretely colors) is injected via SwiftUIs env
 
 ## Development
 
-If during development you need SwiftUI previews working, change `Package.swift` file `platforms` iOS value to `.iOS(.v15)` otherwise previews won't work.
+If during development you need SwiftUI previews working, change `Package.swift` file `platforms` iOS value to `.iOS(.v16)` otherwise previews won't work.
