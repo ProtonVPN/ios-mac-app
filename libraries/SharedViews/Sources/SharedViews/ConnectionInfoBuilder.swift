@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
 import ComposableArchitecture
 import Dependencies
 
@@ -79,16 +77,19 @@ public struct ConnectionInfoBuilder {
         }
     }
 
-    public var subheaderText: Text? {
+    public var subheader: ConnectionInfoSubheader {
         if let subheaderString {
-            return Text(subheaderString)
+            let model = TextSubheaderModel(
+                location: subheaderString,
+                showTor: shouldShow(feature: .tor),
+                showP2P: shouldShow(feature: .p2p)
+            )
+            return .textual(model)
+        } else if case .fastest = location, userTier.isFreeTier && vpnConnectionActual == nil {
+            return .freeServerSelectionDisclaimer
+        } else {
+            return .none
         }
-        if case .fastest = location, userTier.isFreeTier {
-            return Text(Localizable.homeFastestConnectionSelectionDescription)
-                + Text(" \(Asset.freeFlags.swiftUIImage) ")
-                + Text(Localizable.homeFastestConnectionAdditionalCountryCount(2))
-        }
-        return nil
     }
 
     /// In case of not an actual connection, show feature only if present in both intent and actual connection.
@@ -105,41 +106,6 @@ public struct ConnectionInfoBuilder {
 
     private var showFeatureTor: Bool {
         shouldShow(feature: .tor)
-    }
-
-    var p2pSection: Text? {
-        guard showFeatureP2P else { return nil }
-        return Text(Image(systemName: "arrow.left.arrow.right"))
-            + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
-    }
-
-    var torSection: Text? {
-        guard showFeatureTor else { return nil }
-        return Text(Asset.icsBrandTor.swiftUIImage)
-            + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
-    }
-
-    var hasTextFeatures: Bool {
-        subheaderText != nil || showFeatureP2P || showFeatureTor
-    }
-
-    var subHeader: Text? {
-        [subheaderText, torSection, p2pSection]
-            .compactMap { $0 }
-            .joined(separator: Text(" • "))
-    }
-
-    @ViewBuilder
-    public var textFeatures: some View {
-        (subHeader ?? Text(""))
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .fixedSize(horizontal: false, vertical: true)
-        .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
-        .font(.body())
-#elseif canImport(UIKit)
-        .font(.body2(emphasised: false))
-#endif
     }
 
     public var textHeader: String {
@@ -162,4 +128,16 @@ public struct ConnectionInfoBuilder {
         }
         return ConnectionSpec.Location.region(code: vpnConnectionActual.server.logical.exitCountryCode)
     }
+}
+
+public enum ConnectionInfoSubheader: Equatable {
+    case textual(TextSubheaderModel)
+    case freeServerSelectionDisclaimer
+    case none
+}
+
+public struct TextSubheaderModel: Equatable {
+    let location: String
+    let showTor: Bool
+    let showP2P: Bool
 }

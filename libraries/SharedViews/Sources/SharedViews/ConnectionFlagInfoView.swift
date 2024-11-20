@@ -89,12 +89,7 @@ public struct ConnectionFlagInfoView: View {
                                 connectedPin
                             }
                         }
-                        if connectionInfoBuilder.hasTextFeatures {
-                            connectionInfoBuilder
-                                .textFeatures
-                                .lineLimit(2)
-                                .foregroundColor(.init(.border))
-                        }
+                        subheader(model: connectionInfoBuilder.subheader)
                     }
 
                     Spacer()
@@ -168,7 +163,7 @@ public struct ConnectionFlagInfoView: View {
                     .frame(width: 20, height: 12)
             }
             FlagView(location: connectionInfoBuilder.resolvedLocation, flagSize: .defaultSize)
-            if connectionInfoBuilder.hasTextFeatures {
+            if connectionInfoBuilder.subheader.shouldShowSpacerInFlagView {
                 Spacer()
             }
             if withDivider {
@@ -176,6 +171,64 @@ public struct ConnectionFlagInfoView: View {
                     .frame(height: 12)
             }
         }
+    }
+
+    private func subheader(model: ConnectionInfoSubheader) -> some View {
+        model.view
+            .lineLimit(2)
+            .foregroundColor(.init(.border))
+    }
+}
+
+extension ConnectionInfoSubheader {
+    package var shouldShowSpacerInFlagView: Bool {
+        self != .none
+    }
+
+    public var view: some View {
+        body
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .foregroundColor(Color(.text, .weak))
+#if canImport(Cocoa)
+            .font(.body())
+#elseif canImport(UIKit)
+            .font(.body2(emphasised: false))
+#endif
+    }
+
+    @ViewBuilder private var body: some View {
+        switch self {
+        case .textual(let model):
+            [Text(model.location)]
+                .appending(torText, if: model.showTor)
+                .appending(p2pText, if: model.showP2P)
+                .joined(separator: Text(" • "))
+
+        case .freeServerSelectionDisclaimer:
+            freeServerSelectionDisclaimerView
+
+        case .none:
+            EmptyView()
+        }
+    }
+
+    private var freeServerSelectionDisclaimerView: some View {
+        return HStack(spacing: .themeSpacing4) {
+            Text(Localizable.homeFastestConnectionSelectionDescription)
+            Asset.freeFlags.swiftUIImage
+            Text(Localizable.homeFastestConnectionAdditionalCountryCount(2))
+        }
+    }
+
+    private var torText: Text {
+        return Text(Asset.icsBrandTor.swiftUIImage)
+            + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
+    }
+
+    private var p2pText: Text {
+        return Text(Image(systemName: "arrow.left.arrow.right"))
+        + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
     }
 }
 
