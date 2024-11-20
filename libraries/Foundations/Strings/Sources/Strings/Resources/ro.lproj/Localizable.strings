@@ -285,7 +285,7 @@
 "_switch_side_button_off" = "Oprit";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu blocarea conexiunii. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați blocarea conexiunii.";
+"_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu întrerupătorul de conexiune. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați întrerupătorul de conexiune.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Reîncercare prin OpenVPN";
@@ -294,7 +294,7 @@
 "free_tier_plan_title" = "Proton VPN Free";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Blocarea conexiunii blochează toate conexiunile";
+"_kill_switch_blocking_connection" = "Întrerupătorul de conexiune blochează toate conexiunile";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "VPN permanent va restabili automat conexiunea";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Această versiune de Proton VPN nu mai este acceptată. Actualizați-o pentru a o mai putea folosi.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Contactați asistența";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Actualizare";
 
 "_invalid_refresh_token_please_login" = "A trecut ceva de când ați utilizat aplicația Proton VPN. Reautentificați-vă.";
@@ -855,10 +855,10 @@
 "_delete_application_data_popup_body" = "Toate datele Proton VPN vor fi șterse, iar aplicația se va închide. Doriți să continuați?";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Dezactivare blocare conexiune";
+"_kill_switch_disable" = "Dezactivare întrerupător de conexiune";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Activare blocare conexiune";
+"_kill_switch_enable" = "Activare întrerupător de conexiune";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferințe";
@@ -887,7 +887,7 @@
 "_manage_subscription_on_web" = "Gestionați-vă abonamentul în panoul general";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Blocare conexiune";
+"_kill_switch" = "Întrerupător de conexiune";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blochează tot traficul din rețea când tunelul VPN este pierdut.";
@@ -1002,15 +1002,15 @@
 
 "_allow_lan_info" = "Permite evitarea traficului prin VPN și conectarea la dispozitive din rețeaua locală, cum ar fi imprimanta.";
 
-"_allow_lan_description" = "Pentru a permite accesul în LAN, setarea „Blocare conexiune” trebuie oprită.\n\nContinuați?";
+"_allow_lan_description" = "Pentru a permite accesul în LAN, setarea întrerupătorul de conexiune trebuie oprit.\n\nContinuați?";
 
 "_allow_lan_note" = "Conexiunea trebuie repornită pentru a se aplica această modificare";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Activați blocarea conexiunii?";
+"_turn_ks_on_title" = "Activați întrerupătorul de conexiune?";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Activând blocarea conexiunii, nu veți putea accesa dispozitivele din rețeaua locală.\n\nContinuați?";
+"_turn_ks_on_description" = "Activând întrerupătorul de conexiune, nu veți putea accesa dispozitivele din rețeaua locală.\n\nContinuați?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Luați planul %@";
@@ -1323,7 +1323,7 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blocare malware, reclame și instrumente de urmărire";
 
-"_netshield_alert_reconnect_description_on" = "Conexiunea va fi repornită pentru a schimba modul NetShield.\nNotă: Dacă unele site-uri nu se încarcă, încercați să dezactivați NetShield.";
+"_netshield_alert_reconnect_description_on" = "Conexiunea va fi repornită pentru a schimba modul NetShield.\nObservație: Dacă unele site-uri nu se încarcă, încercați să dezactivați NetShield.";
 
 "_netshield_alert_reconnect_description_off" = "Conexiunea va fi restabilită pentru a trece în modul NetShield.";
 
@@ -1346,11 +1346,11 @@
 
 "_quick_settings_killSwitch_description" = "Dezactivează accesul la internet când cade conexiunea VPN pentru a preveni divulgarea accidentală a adresei IP.";
 
-"_quick_settings_secureCore_note" = "„Secure Core” are putea reduce viteza prin VPN";
+"_quick_settings_secureCore_note" = "Secure Core ar putea reduce viteza prin VPN.";
 
 "_quick_settings_netShield_note" = "Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.";
 
-"_quick_settings_killSwitch_note" = "Dacă nu vă puteți conecta la dispozitivele din rețeaua locală, încercați să dezactivați blocarea reclamelor.";
+"_quick_settings_killSwitch_note" = "Dacă nu vă puteți conecta la dispozitivele din rețeaua locală, încercați să dezactivați întrerupătorul de conexiune.";
 
 "_quick_settings_get_plus" = "Luați Plus";
 
@@ -1371,16 +1371,16 @@
 "_upgrade_required_securecore_description" = "Serverele Secure Core sunt disponibile în planul Plus. Treceți la alt plan acum pentru a direcționa traficul prin servele noastre sigure aflate în țări care vă respectă intimitatea.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Blocarea conexiunii vă protejează adresa IP";
+"_kill_switch_reconnection_header" = "Întrerupătorul de conexiune vă protejează adresa IP";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Conexiunea la internet se va relua imediat ce Proton VPN se reconectează la server.\nPentru a folosi internetul fără VPN and protecția de blocare a conexiunii, anulați reconectarea la server.";
+"_kill_switch_reconnection" = "Conexiunea la internet se va relua imediat ce Proton VPN se reconectează la server.\nPentru a folosi internetul fără VPN și protecția întrerupătorului de conexiune, anulați reconectarea la server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "fără";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protecție blocare conexiune";
+"_kill_switch_reconnection_bold2" = "Protecție cu întrerupător de conexiune";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Anulare reconectare";
@@ -1496,7 +1496,7 @@
 
 "_streaming_servers_description" = "Conectați-vă la un server Plus din această țară pentru a reda transmisii în flux.";
 
-"_streaming_servers_note" = "Notă: Opriți serviciul de localizare și goliți bufferul aplicației de transmisii în flux pentru a vă asigura că apare conținut actualizat.";
+"_streaming_servers_note" = "Observație: Opriți serviciul de localizare și goliți bufferul aplicației de transmisii în flux pentru a vă asigura că se afișează conținut actualizat.";
 
 "_streaming_servers_extra" = "și mai multe";
 
@@ -1578,15 +1578,15 @@
 "login_summary_button" = "Start utilizare Proton VPN";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Dezactivare blocare conexiune";
+"_wgks_ks_off" = "Dezactivare întrerupător de conexiune";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Avertizare stabilitate blocare conexiune";
+"_neks_t2_title" = "Avertizare stabilitate întrerupător de conexiune";
 
 /* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Cip de securitate T2";
 
-"_neks_t2_description" = "Utilizarea blocării conexiunii este instabilă pe acest dispozitiv.\n\nDispozitivul are un cip de securitate T2, care poate duce la probleme de stabilitate a sistemului dacă funcționalitatea blocării conexiunii din macOS este utilizată de Proton VPN.";
+"_neks_t2_description" = "Utilizarea întrerupătorului de conexiune este instabilă pe acest dispozitiv.\n\nDispozitivul are un cip de securitate T2, care poate duce la probleme de stabilitate a sistemului dacă funcționalitatea întrerupătorului de conexiune din macOS este utilizată de către Proton VPN.";
 
 "_neks_t2_connect" = "Activare așa";
 
@@ -1734,7 +1734,7 @@
 "_bad_interface_ip_range_alert_title" = "Interfață de rețea configurată greșit";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Rețeaua locală ar putea fi nesigură (interfața „%@” are adresa IP și prefixul „%@”). Datele vă pot fi trimise necriptate prin rețeaua locală. Activarea blocării conexiunii va bloca acest trafic. Conexiunile la perifericele locale vor fi întrerupte.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Rețeaua locală ar putea fi nesigură (interfața „%@” are adresa IP și prefixul „%@”). Datele vă pot fi trimise necriptate prin rețeaua locală. Activarea întrerupătorului de conexiune va bloca acest trafic. Conexiunile la perifericele locale vor fi întrerupte.";
 
 /* Title of the search screen */
 "search_title" = "Căutare";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Ce este nou";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Țări noi gratuite";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Aruncați o privire";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Acum există servere gratuite în Polonia și România.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Un aspect nou, aceeași protecție.";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Modificări la selectarea serverului";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Am împrospătat interfața și am mutat unele articole pentru a face aplicația mai ușor de utilizat.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Pentru a preveni aglomerarea serverelor și pentru a ne asigura că toată lumea are acces la navigarea rapidă și sigură, am eliminat selectarea manuală a țării și am adus îmbunătățiri majore selectării automate a serverului.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Vă prezentăm funcția „Recente”";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Acum este și mai ușor să vă reconectați la serverele preferate. Vizualizați cele mai recente conexiuni pe ecranul de pornire sau fixați-le pentru accesare rapidă.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Porțile de acces s-au mutat";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Acum puteți accesa serverele dedicate ale organizației din meniul de navigare principal.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Obțineți modificări nelimitate cu VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Cu Proton Free, puteți schimba serverele de câteva ori pe oră. Obțineți modificări nelimitate de server achiziționând VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Ați atins numărul maxim de schimbări de servere gratuite pentru moment.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Activitatea prin VPN vă este protejată de legile elvețiene privind confidențialitatea. Nu vă vom urmări niciodată online și nu vă vom partaja informațiile cu terțe părți.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Nu vă vom înregistra niciodată activitatea de pe internet și nu vă vom partaja informațiile cu terțe părți.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Partajare anonimă statistici de utilizare";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Datele de utilizare ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Partajare anonimă rapoarte de erori";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Rapoartele de erori ne ajută să reparăm erorile, să detectăm paravanele de protecție și să evităm blocările VPN-ului.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Îmbunătățiți-vă confidențialitatea";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Activare protocol Smart";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Server indisponibil";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Acest server a fost eliminat. Încercați să vă conectați la un alt server.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Conexiunea a eșuat";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Serverul pe care l-ați selectat pentru „%@” este momentan indisponibil. Selectați un alt server sau reîncercați mai târziu.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Actualizați programul";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Este disponibilă o versiune Proton VPN nouă. Pentru a obține actualizarea, trebuie mai întâi să actualizați dispozitivul la versiunea de %@ %@ sau ulterioară.";

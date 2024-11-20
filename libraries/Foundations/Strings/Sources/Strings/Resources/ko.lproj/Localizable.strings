@@ -165,7 +165,7 @@
 "_quick_connect" = "빠른 연결";
 
 /* Title of the change server button */
-"_change_server" = "서버 번경";
+"_change_server" = "서버 변경";
 
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
@@ -741,7 +741,7 @@
 "_delinquent_user_title" = "미지급 청구서";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "귀하의 계정에 현재 연체된 금액이 있습니다. account.protonvpn.com에서 연체된 금액을 지불해주세요.";
+"_delinquent_user_description" = "계정에 현재 연체된 금액이 있습니다. account.protonvpn.com에서 연체된 금액을 지불해주세요.";
 
 /* Generic sign in error */
 "_error_sign_in_again" = "죄송합니다. 문제가 발생했습니다. 다시 로그인해주세요.";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "이 버전의 Proton VPN은 더 이상 지원되지 않습니다. 계속 사용하려면 업데이트하세요.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "문의하기";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "업데이트";
 
 "_invalid_refresh_token_please_login" = "마지막으로 Proton VPN 앱을 사용한 지 오래되었습니다. 다시 로그인해 주세요.";
@@ -1869,7 +1869,7 @@
 "modals_upsell_secure_core_layer" = "VPN 연결에 암호화 계층 추가";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_attacks" = "네트워크 공격으로부터의 보호";
+"modals_upsell_secure_core_attacks" = "네트워크 공격으로부터 보호받으세요";
 
 /* Title of the VPN Accelerator screen */
 "modals_new_upsell_vpn_accelerator_title" = "더욱 빠른 브라우징";
@@ -2042,26 +2042,38 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "새로운 소식";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "새로운 무료 서버 국가";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "둘러보기";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "이제 폴란드와 루마니아의 무료 서버가 개설되었습니다.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "달라 보여도, 똑같은 보호";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "서버 선택 변경 사항";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "앱을 더 쉽게 사용하실 수 있도록 새로 디자인하고 몇 가지 요소를 이동시켰어요.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "서버 혼잡을 방지하고 모든 사용자가 빠르고 안전한 인터넷에 접근할 수 있도록, 수동 국가 선택을 제거하고 자동 서버 선택을 크게 개선했습니다.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "최근 항목 보기를 소개합니다.";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "선호하는 서버로의 연결이 더욱 쉬워졌습니다. 홈 화면에서 가장 최근의 연결을 보거나, 빠른 접속을 위해 고정할 수 있죠.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "게이트웨이가 이동되었어요";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "매인 탐색 창에서 조직의 지정 서버를 바로 접근할 수 있습니다.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "VPN Plus로 무제한 변경 기능 사용";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Proton Free로 시간 당 제한된 횟수로 서버 변경이 가능합니다. 무제한 변경하려면 VPN Plus로 업그레이드하세요.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "현재 무료 서버 최대 변경 횟수에 도달했습니다.";
 
 /* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
-"upsell_specific_location_change_server_button_title" = "서버 번경";
+"upsell_specific_location_change_server_button_title" = "서버 변경";
 
 /* The name of one of the features in the Welcome screen that the user sees after upgrading */
 "welcome_upgrade_advanced_features" = "고급 제어 기능";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "사용자의 VPN 활동은 스위스의 개인정보 보호법대로 보호됩니다. 저희는 당신을 온라인 상에서 추적하거나 정보를 제 3자와 공유하지 않습니다.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "당사는 절대로 고객의 인터넷 활동을 기록하거나 정보를 제3자에게 공유하지 않습니다.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "익명으로 사용 통계 공유하기";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "사용량 정보는 저희가 VPN 차단을 극복하고 앱 성능을 향상시키는데 돕습니다.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "익명으로 충돌 보고서 공유";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "충돌 보고서는 저희가 버그를 고치고, 방화벽을 감지하고 VPN 차단 방지를 피할 수 있도록 돕습니다.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "프라이버시를 업그레이드하세요";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "스마트 프로토콜 활성화";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "서버를 사용할 수 없음";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "해당 서버는 제거되었습니다. 다른 서버에 연결해 보세요.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "연결 실패";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "선택하신 '%@' 서버는 현재 사용할 수 없습니다. 다른 서버를 선택하거나 나중에 다시 시도하세요.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "기기를 업데이트하세요";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Proton VPN의 새 버전을 이용할 수 있습니다. 업데이트하려면 먼저, 기기를 %@%@ 이상으로 업데이트하세요.";

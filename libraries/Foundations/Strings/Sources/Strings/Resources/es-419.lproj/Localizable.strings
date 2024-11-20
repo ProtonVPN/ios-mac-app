@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Esta versión de Proton VPN ya no es compatible, actualice la aplicación para continuar usándola.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Contacte al soporte";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Actualizar";
 
 "_invalid_refresh_token_please_login" = "Ha pasado un tiempo desde la última vez que usó la aplicación Proton VPN. Inicie sesión nuevamente.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Novedades";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nuevos países gratuitos";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Eche un vistazo";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Ahora hay servidores gratuitos en Polonia y Rumania.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Apariencia nueva, misma protección";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Cambios a la selección de servidor";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Hemos actualizado nuestros diseños y movimos algunas cosas para que la aplicación sea fácil de usar.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Para evitar la saturación de servidores y garantizar que todos tengan acceso a una navegación rápida y segura, borramos la selección manual de países e hicimos mejoras importantes en la selección automática de servidores.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Presentamos Conexiones recientes";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Ahora es mucho más fácil restablecer la conexión a sus servidores favoritos. Vea las más conexiones recientes en la pantalla de inicio o fíjelas para un acceso más rápido.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Se movieron las puertas de enlace.";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Ahora puede acceder a los servidores dedicado de su organización desde el menú principal.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Obtenga cambios ilimitados con VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Con Proton Free puede cambiar entre servidores algunas veces por hora. Obtenga cambios de servidores ilimitados con VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Ha alcanzado el número máximo de cambios de servidores gratuitos por ahora.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Su actividad de VPN está protegida por las leyes de privacidad suizas. Nunca le rastrearemos en línea ni compartiremos su información con terceros.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Nunca registraremos su actividad en línea o compartiremos su información con terceros.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Compartir estadísticas de uso anónimo";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Los datos de uso nos ayudan a evitar bloqueos de VPN y mejorar el rendimiento de la aplicación.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Compartir informes de errores anónimos";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Los informes de errores nos ayudan a corregir errores, detectar cortafuegos y evitar bloqueos de VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Mejore su privacidad";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Activar Smart Protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "El servidor no está disponible.";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Este servidor fue eliminado. Intente conectarse a otro servidor.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Error de conexión";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "El servidor seleccionado para «%@» no está disponible por el momento. Seleccione un servidor diferente o intente de nuevo más tarde.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Actualice su software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Hay una versión nueva disponible para Proton VPN. Para obtenerla, primero deberá actualizar su dispositivo a %@ %@ o posterior.";

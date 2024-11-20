@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Proton VPN-ის ეს ვერსია უკვე მხარდაჭერილი აღარაა. იმისათვის, რომ გამოიყენოთ, განაახლეთ ის აპლიკაციების მაღაზიიდან.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "კონტაქტი მხარდაჭერის გუნდთან";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "განახლება";
 
 "_invalid_refresh_token_please_login" = "კარგა ხანია, Proton VPN არ გამოგიყენებიათ. საჭიროა, შეხვიდეთ.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "სიახლეები";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "ახალი უფასო ქვეყნები";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "შეხედვა";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "ახლა უფასო სერვერები პოლონეთში და რუმინეთშიც გვაქვს.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "ახალი გარეგნობა, იგივე დაცვა";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "სერვერის არჩევანის ცვლილება";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "ჩვენ განვაახლეთ დიზაინები და ზოგიერთი საგანი გადავაადგილეთ, რომ აპი უფრო ადვილი მოსახმარი იყოს.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "იმისათვის, რომ თავიდან ავიცილოთ სერვერის გადატვირთვა და დავრწმუნდეთ, რომ სწრაფ და უსაფრთხო ქსელთან ყველას აქვს წვდომა, ჩვენ მოვაცილეთ ქვეყნის ხელით არჩევის პარამეტი და დიდი ნაბიჯი გადავდგით ავტომატური სერვერის არჩევის ალგორითმში.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "წარმოგიდგენთ 'უახლესებს'";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "ახლა თქვენს რჩეულ სერვერებთან თავიდან მიერთება კიდევ უფრო ადვილია. იხილეთ თქვენი უახლესი მიერთებები საწყის ეკრანზე, ან მიამაგრეთ ისინი უფრო სწრაფი წვდომიისთვის.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "კარიბჭეები გადატანილია";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "ახლა გაქვთ წვდომა თქვენი ორგანიზაციის გამოყოფილ სერვერებთან მთავარი ნავიგაციის გვერდიდან.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "მიიღეთ განუსაზღვრელი ცვლილებები VPN Plus-თან ერთად";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Proton Free-ით სერვერის შეცვლა საათში რამდენიმეჯერ შეგიძლიათ. მიიღეთ განუსაზღვრელი სერვერის ცვლილებები VPN Plus-თან ერთად.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "მიაღწიეთ ამ დროისთვის დაშვებული უფასო სერვერების ცვლილების მაქსიმალურ რაოდენობას.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "თქვენი VPN აქტივობა დაცულია შვეიცარიის კონფიდენციალობის კანონებით. ჩვენ არასდროს გტრეკავთ ინტერნეტში ან ვუზიარებთ თქვენს ინფორმაციას მესამე პირებს.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "ჩვენ არასდროს ვინახავთ თქვენს აქტივობას ინტერნეტში და არ ვუზიარებთ ინფორმაციას თქვენ შესახებ მესამე პირებს.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "გამოყენების ანონიმური სტატისტიკის გაზიარება";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "გამოყენების მონაცემები გვეხმარება VPN ბლოკების დაძლევაში და აპლიკაციის მუშაობის გაუმჯობესებაში.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "ავარიის ანგარიშების ანონიმურად გაზიარება";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "ავარიის ანგარიშები გვეხმარება შეცდომების გამოსწორებაში, ფეიერვოლების აღმოჩენაში და VPN ბლოკების თავიდან აცილებაში.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "გააუმჯობესეთ თქვენი კონფიდენციალობა";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Smart Protocol-ის ჩართვა";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "სერვერი ხელმიუწვდომელია";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "ეს სერვერი წაშლილია. სცადეთ, სხვა სერვერს დაუკავშირდეთ.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "შეერთების შეცდომა";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "სერვერი, რომელიც აირჩიეთ '%@'-სთვის, ამჟამად ხელმისაწვდომი არაა. აირჩიეთ სხვა სერვერი, ან მოგვიანებთ სცადეთ.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "განაახლეთ თქვენი პროგრამები";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";

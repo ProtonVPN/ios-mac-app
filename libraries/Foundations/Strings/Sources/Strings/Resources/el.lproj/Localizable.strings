@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Αυτή η έκδοση του Proton VPN δεν υποστηρίζεται πλέον, ενημερώστε την εφαρμογή για να συνεχίσετε να τη χρησιμοποιείτε.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Επικοινωνήστε με την υποστήριξη";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Ενημέρωση";
 
 "_invalid_refresh_token_please_login" = "Πάει καιρός από την τελευταία φορά που χρησιμοποιήσατε την εφαρμογή Proton VPN. Παρακαλούμε εισέλθετε ξανά.";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Τι νέο υπάρχει";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Νέες Δωρεάν χώρες";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Ρίξτε μια ματιά";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Υπάρχουν τώρα Δωρεάν διακομιστές στην Πολωνία και τη Ρουμανία.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Νέα εμφάνιση, ίδια προστασία";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Αλλαγές στην επιλογή διακομιστή";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Ανανεώσαμε τα σχέδιά μας και μετακινήσαμε ορισμένα πράγματα για να κάνουμε την εφαρμογή πιο εύχρηστη.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Για να αποτρέψουμε τον συνωστισμό διακομιστών και να διασφαλίσουμε ότι όλοι έχουν πρόσβαση σε γρήγορη και ασφαλή περιήγηση, καταργήσαμε τη μην αυτόματη επιλογή χώρας και κάναμε σημαντικές βελτιώσεις στην αυτόματη επιλογή διακομιστή.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Παρουσιάζουμε τα Πρόσφατα";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Τώρα είναι ακόμα πιο εύκολο να επανασυνδεθείτε στους αγαπημένους σας διακομιστές. Προβάλετε τις πιο πρόσφατες συνδέσεις σας στην αρχική οθόνη ή καρφιτσώστε τις για γρήγορη πρόσβαση.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Οι πύλες έχουν μετακινηθεί";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Τώρα μπορείτε να αποκτήσετε πρόσβαση στους αποκλειστικούς διακομιστές του οργανισμού σας από την κύρια περιήγηση.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Αποκτήστε απεριόριστες αλλαγές με το VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Με το Proton Free, μπορείτε να αλλάζετε διακομιστές μερικές φορές την ώρα. Αποκτήστε απεριόριστες αλλαγές διακομιστών με το VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Έχετε φτάσει τον μέγιστο αριθμό αλλαγών σε Δωρεάν διακομιστές προς το παρόν.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Η δραστηριότητά σας VPN προστατεύεται από τους ελβετικούς νόμους περί απορρήτου. Δε θα σας παρακολουθούμε ποτέ στο διαδίκτυο ούτε θα μοιραστούμε τις πληροφορίες σας με τρίτους.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Δε θα καταγράψουμε ποτέ τη δραστηριότητά σας στο διαδίκτυο ούτε θα μοιραστούμε τις πληροφορίες σας με τρίτους.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Κοινοποιήστε ανώνυμα στατιστικά χρήσης";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Τα δεδομένα χρήσης μας βοηθούν να ξεπεράσουμε τα μπλοκαρίσματα VPN και να βελτιώσουμε την απόδοση των εφαρμογών.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Κοινοποιήστε ανώνυμες αναφορές σφαλμάτων";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Οι αναφορές σφαλμάτων μάς βοηθούν να διορθώνουμε σφάλματα, να εντοπίζουμε τείχη προστασίας και να αποφεύγουμε τα μπλοκαρίσματα VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Αναβαθμίστε το απόρρητό σας";
@@ -2248,3 +2275,21 @@
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Ενεργοποίηση Smart protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Διακομιστής μη διαθέσιμος";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Αυτός ο διακομιστής έχει καταργηθεί. Δοκιμάστε να συνδεθείτε σε άλλο διακομιστή.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Αποτυχία σύνδεσης";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "Ο διακομιστής που επιλέξατε για το '%@' δεν είναι διαθέσιμος αυτήν τη στιγμή. Επιλέξτε έναν διαφορετικό διακομιστή ή δοκιμάστε ξανά αργότερα.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Ενημερώσετε το λογισμικό σας";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Μια νέα έκδοση του Proton VPN είναι διαθέσιμη. Για να λάβετε την ενημέρωση, θα πρέπει πρώτα να ενημερώσετε τη συσκευή σας σε %@ %@ ή νεότερη έκδοση.";

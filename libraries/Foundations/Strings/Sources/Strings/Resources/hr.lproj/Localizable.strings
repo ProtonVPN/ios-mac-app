@@ -35,9 +35,9 @@
 "_unavailable" = "Nedostupno";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
-"_expand_list_of_servers" = "Expand list of servers";
+"_expand_list_of_servers" = "Proširi popis poslužitelja";
 
-"_collapse_list_of_servers" = "Collapse list of servers";
+"_collapse_list_of_servers" = "Sažmi popis poslužitelja";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Upozorenje";
@@ -55,7 +55,7 @@
 "_upgrade_required" = "Potrebno je ažuriranje";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "On maintenance";
+"_on_maintenance" = "U održavanju";
 
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Nužno je ponovno povezivanje";
@@ -99,16 +99,16 @@
 "_vpn_connection_active" = "VPN veza je aktivna";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
-"_vpn_protocol_not_supported_title" = "VPN Protocol Not Supported";
+"_vpn_protocol_not_supported_title" = "VPN protokol nije podržan";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "The VPN protocol is not available for the connection you have selected. To connect, try changing the protocol or server.";
+"_vpn_protocol_not_supported_text" = "VPN protokol nije dostupan za vezu koju ste odabrali. Za povezivanje pokušajte promijeniti protokol ili poslužitelj.";
 
 /* iOS: button in settings screen */
 "_log_out" = "Odjava";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
+"_log_out_warning" = "Odjava će prekinuti vašu VPN sesiju.";
 
 /* MacOS: Logout alert */
 "_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
@@ -135,7 +135,7 @@
 "_close" = "Zatvori";
 
 /* Changing settings title */
-"_change_settings" = "Change settings";
+"_change_settings" = "Promijeni postavke";
 
 /* Suggest the user to upgrade account for new features */
 "_get_plus_for_feature" = "Nabavite Proton VPN Plus da biste otključali ovu i druge značajke.";
@@ -165,7 +165,7 @@
 "_quick_connect" = "Brzo povezivanje";
 
 /* Title of the change server button */
-"_change_server" = "Change server";
+"_change_server" = "Promjena poslužitelja";
 
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure Core";
@@ -182,7 +182,7 @@
 "_clear_application_data" = "Izbriši podatke aplikacije";
 
 /* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "System Extension Tutorial";
+"_system_extension_tutorial_menu_item" = "Vodič za proširenje sustava";
 
 /* MacOS: connecting overlay */
 "_preparing_connection" = "Provjera dostupnosti poslužitelja";
@@ -210,7 +210,7 @@
 "_connected_to" = "Povezano s";
 
 /* macOS: Text on connection overlay shown after connection timed out */
-"_connection_timed_out" = "Connection timed out";
+"_connection_timed_out" = "Veza je istekla";
 
 /* Text that should be bold in _connection_timed_out string */
 "_connection_timed_out_bold" = "isteklo vrijeme";
@@ -233,7 +233,7 @@
 "_retry" = "Pokušaj ponovno";
 
 /* iOS: section header in countries list */
-"_free_servers" = "Free Servers";
+"_free_servers" = "Besplatni poslužitelji";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Plus poslužitelji";
@@ -272,7 +272,7 @@
 "_technical_details" = "Tehnički podaci";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
+"_open_app_to_log_in" = "Prikaži Proton VPN za prijavu...";
 
 /* Main mac app menu item */
 "_upgrade_to_plus" = "Nadogradite na Plus plan";
@@ -482,7 +482,7 @@
 "_premium_description" = "Premium poslužitelj";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "via %@";
+"_via_country" = "putem %@";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "putem";
@@ -598,7 +598,7 @@
 "_fastest_available_server" = "Najbrži slobodni poslužitelj";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Fastest";
+"_fastest_connection" = "Najbrže";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Nasumično";
@@ -687,7 +687,7 @@
 /* Plan speed */
 "_plan_speed_high" = "Visoka brzina";
 
-"_plan_speed_fastest" = "Fastest speed";
+"_plan_speed_fastest" = "Najveća brzina";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Unutarnja API pogreška";
@@ -735,7 +735,7 @@
 "_ne_couldnt_reach_server" = "Neuspješno dohvaćanje Proton poslužitelja";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Unknown error";
+"_error_unknown_title" = "Nepoznata pogreška";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Neplaćena faktura";
@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Ova verzija Proton VPN-a više nije podržana. Ažurirajte aplikaciju da biste je nastavili koristiti.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Kontaktiraj podršku";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Ažuriraj";
 
 "_invalid_refresh_token_please_login" = "It's been a while since you last used the Proton VPN app. Please log back in.";
@@ -1330,15 +1330,15 @@
 "_netshield_alert_upgrade_description" = "NetShield povećava vašu privatnost blokirajući oglase i uređaje za praćenje.";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Malware & Ads Blocker";
+"_netshield_section_title" = "Blokiranje zlonamjernog softvera i oglasa";
 
 /* Title of the screen with news and offers. */
 "_news_title" = "Vijesti";
 
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
-"_offer_ending_" = "Ending %@";
+"_offer_ending_" = "Završava %@";
 
-"_quick_settings_title" = "Quick Settings";
+"_quick_settings_title" = "Brze postavke";
 
 "_quick_settings_secureCore_description" = "Usmjerite svoje najosjetljivije podatke preko naših najsigurnijih poslužitelja u zemljama koje poštuju privatnost.";
 
@@ -1500,7 +1500,7 @@
 
 "_streaming_servers_extra" = "i još više";
 
-"_feature_free_servers" = "Free servers";
+"_feature_free_servers" = "Besplatni poslužitelji";
 
 "_feature_free_servers_description" = "Security and privacy for everyone. Free servers have no data limits, and we’ll never deliberately slow down your browsing speed.";
 
@@ -1520,16 +1520,16 @@
 
 "_performance_load_high" = "Visoko";
 
-"_locations_all" = "All locations";
+"_locations_all" = "Sve lokacije";
 
-"_locations_free" = "Free locations";
+"_locations_free" = "Free lokacije";
 
 "_locations_plus" = "Plus locations";
 
 "_locations_gateways" = "Pristupnici";
 
 /* Header before the list of connections available for free users (in the country list) */
-"_connections_free" = "Free connections";
+"_connections_free" = "Free veze";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "What's a gateway?";
@@ -1584,11 +1584,11 @@
 "_neks_t2_title" = "Kill switch Stability Warning";
 
 /* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "T2 Security Chip";
+"_neks_t2_hyperlink" = "T2 sigurnosni čip";
 
 "_neks_t2_description" = "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.";
 
-"_neks_t2_connect" = "Enable anyway";
+"_neks_t2_connect" = "Svejedno omogući";
 
 "_subuser_alert_title" = "Thanks for upgrading to Business/Visionary";
 
@@ -1600,7 +1600,7 @@
 
 "_subuser_alert_enable_connections_button" = "Enable VPN connections";
 
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Prijavite se ponovno";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderate NAT";
@@ -1803,7 +1803,7 @@
 "search_results_cities" = "Gradovi";
 
 /* Section header in search */
-"_free_servers" = "Free Servers";
+"_free_servers" = "Besplatni poslužitelji";
 
 /* Section header in search */
 "_plus_servers" = "Plus poslužitelji";
@@ -1947,7 +1947,7 @@
 "modals_common_next" = "Sljedeće";
 
 /* Common button title */
-"modals_common_get_started" = "Get started";
+"modals_common_get_started" = "Započnite";
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
@@ -1989,7 +1989,7 @@
 "upsell_customization_quick_connect" = "Get faster access to your profiles with Quick Connect";
 
 /* Bold part of the feature of Customization upsell modal */
-"upsell_customization_quick_connect_bold" = "Quick Connect";
+"upsell_customization_quick_connect_bold" = "Brzo povezivanje";
 
 /* Title of Profiles upsell modal */
 "upsell_profiles_title" = "Get quick access to your frequent connections";
@@ -1998,7 +1998,7 @@
 "upsell_profiles_subtitle" = "Unlock profiles with VPN Plus";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiles";
+"upsell_profiles_subtitle_bold_1" = "profili";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Što je novo";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "New Free countries";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Take a look";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "There are now Free servers in Poland and Romania.";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "New look, same protection";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Changes to server selection";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Introducing Recents";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Gateways have moved";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Get unlimited changes with VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "With Proton Free, you can change servers a few times per hour. Get unlimited server changes with VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "You've reached the maximum number of Free server changes for now.";
@@ -2102,6 +2114,21 @@
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.";
 
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "We’ll never log your internet activity or share your information with third parties.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Share anonymous usage statistics";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Usage data helps us overcome VPN blocks and improve app performance.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Share anonymous crash reports";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Upgrade your privacy";
 
@@ -2115,10 +2142,10 @@
 "upsell_plans_list_validate_button" = "Get VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /month";
+"upsell_plans_list_option_amountPerMonth" = " /mjesec";
 
 /* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /year";
+"upsell_plans_list_option_amountPerYear" = " /godina";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Available with VPN Business.";
@@ -2214,7 +2241,7 @@
 "_br_failure_button_retry" = "Pokušaj ponovno";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Troubleshoot";
+"_br_failure_button_troubleshoot" = "Rješavanje problema";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Ažuriraj Proton VPN";
@@ -2241,10 +2268,28 @@
 "_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Learn more";
+"_ike_deprecation_alert_message_link_text" = "Više informacija";
 
 /* Button title for 'Continue with IKEv2' */
 "_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "Server unavailable";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "This server has been removed. Try connecting to another server.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Neuspjela veza";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "The server you selected for '%@' is currently unavailable. Select a different server or try again later.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Update your software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";

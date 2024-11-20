@@ -801,10 +801,10 @@
 
 "_update_required_no_longer_supported" = "Deze versie van Proton VPN wordt niet langer ondersteund, update de app om deze te blijven gebruiken.";
 
-/* Secondary button title in the App update required alert  */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Neem contact op met ondersteuning";
 
-/* Primary button title in the App update required alert  */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Bijwerken";
 
 "_invalid_refresh_token_please_login" = "Het is een tijdje geleden sinds u de Proton VPN-app voor het laatst hebt gebruikt. Log alstublieft opnieuw in.";
@@ -932,7 +932,7 @@
 "_dns_leak_protection_tooltip" = "Voorkomt dat er informatie vanuit uw DNS-queries naar derden lekt. Altijd actief.";
 
 /* iOS Settings: table section cell */
-"_security_keys" = "Security Keys";
+"_security_keys" = "Beveiligingssleutels";
 
 /* iOS Settings: table section header */
 "_security_options" = "Beveiligingsopties";
@@ -2042,20 +2042,32 @@
 /* Title of the "What's new" screen */
 "modals_whats_new" = "Nieuw";
 
-/* Title of the first section of the "What's new" screen */
-"modals_free_countries" = "Nieuwe gratis landen";
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Neem een kijkje";
 
-/* Description of the first section of the "What's new" screen */
-"modals_new_servers" = "Er zijn nu Gratis servers in Polen en Roemenië";
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Nieuw uiterlijk, dezelfde beveiliging";
 
-/* Title of the second section of the "What's new" screen */
-"modals_server_selection" = "Veranderingen aan server selectie";
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "We hebben onze ontwerpen vernieuwd en enkele dingen verplaatst om de app gemakkelijker te kunnen gebruiken.";
 
-/* Description of the second section of the "What's new" screen */
-"modals_server_crowding" = "Om drukke servers te voorkomen en ervoor te zorgen dat iedereen toegang heeft tot snel en veilig browsen, hebben we de handmatige landselectie verwijderd en grote verbeteringen aangebracht aan de automatische serverselectie.";
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Recente introducties";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Het is nu nog makkelijker om opnieuw verbinding te maken met uw favoriete servers. Bekijk uw meest recente verbindingen op het startscherm, of pin voor snelle toegang.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Gateways zijn verplaatst";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "U heeft nu toegang tot de specifieke servers van uw organisatie vanuit de hoofdnavigatie.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Krijg ongelimiteerde aanpassingen met VPN Plus";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "Met Proton Free kunt u een paar keer per uur van server wisselen. Krijg onbeperkt serverwijzigingen met VPN Plus.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "U heeft het maximale aantal Gratis server aanpassingen voorlopig bereikt.";
@@ -2101,6 +2113,21 @@
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Uw activiteit via VPN is beschermd door Zwitserse privacy-wetgeving. We zullen u nooit volgen of uw informatie delen met derden.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "We zullen uw internetactiviteit nooit registreren of uw gegevens met derden delen.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Anonieme gebruiksstatistieken delen";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "Gebruiksgegevens helpen ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Anonieme crashrapporten delen";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Crashrapporten helpen ons om bugs op te lossen, firewalls te detecteren en VPN-blokkeringen te vermijden.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Upgrade uw privacy";
@@ -2232,19 +2259,37 @@
 "_change_password" = "Wachtwoord wijzigen";
 
 /* Change password alert message */
-"_password_changed_successfully" = "Password changed successfully";
+"_password_changed_successfully" = "Wachtwoord succesvol gewijzigd";
 
 /* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
-"_ike_deprecation_alert_title" = "Enable IKEv2?";
+"_ike_deprecation_alert_title" = "IKEv2 inschakelen?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
+"_ike_deprecation_alert_message" = "Dit protocol wordt binnenkort verwijderd. Overweeg om te schakelen naar Smart protocol. Meer informatie";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Learn more";
+"_ike_deprecation_alert_message_link_text" = "Lees meer";
 
 /* Button title for 'Continue with IKEv2' */
-"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
+"_ike_deprecation_alert_continue_button_title" = "Doorgaan met IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Schakel Smart-protocol in";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "De server is niet beschikbaar";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Deze server is verwijderd. Probeer verbinding te maken met een andere server.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Verbinding mislukt";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "De server die u hebt geselecteerd voor '%@' is momenteel niet beschikbaar. Selecteer een andere server of probeer het later opnieuw.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Update uw software";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Er is een nieuwe versie van Proton VPN beschikbaar. Om een update te krijgen moet u eerst uw apparaat bijwerken naar %@ %@ of hoger.";
