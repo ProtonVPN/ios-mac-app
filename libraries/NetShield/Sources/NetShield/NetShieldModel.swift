@@ -74,7 +74,7 @@ extension NetShieldModel {
     public var trackers: StatModel {
         StatModel(
             value: Self.formatter.string(from: trackersCount),
-            title: Localizable.netshieldStatsTrackersStopped(trackersCount),
+            title: Localizable.netshieldStatsTrackersStopped(trackersCount).replacingOccurrences(of: "\n", with: " "),
             help: Localizable.netshieldStatsHintTrackers,
             isEnabled: enabled
         )
@@ -83,7 +83,7 @@ extension NetShieldModel {
     public var ads: StatModel {
         StatModel(
             value: Self.formatter.string(from: adsCount),
-            title: Localizable.netshieldStatsAdsBlocked(adsCount),
+            title: Localizable.netshieldStatsAdsBlocked(adsCount).replacingOccurrences(of: "\n", with: " "),
             help: Localizable.netshieldStatsHintAds,
             isEnabled: enabled
         )
@@ -92,7 +92,7 @@ extension NetShieldModel {
     public var data: StatModel {
         StatModel(
             value: Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved)),
-            title: Localizable.netshieldStatsDataSaved,
+            title: Localizable.netshieldStatsDataSaved.replacingOccurrences(of: "\n", with: " "),
             help: Localizable.netshieldStatsHintData,
             isEnabled: enabled
         )
