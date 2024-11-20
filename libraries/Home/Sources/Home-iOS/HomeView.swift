@@ -113,6 +113,7 @@ public struct HomeView: View {
                     .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in viewHeight = .zero } // By setting viewHeight to zero on rotation, we enable the code above to update the height to the correct value after rotation.
                 }
             }
+            .background(Color(.background))
         }
         .task {
             store.send(.sharedProperties(.listen))
