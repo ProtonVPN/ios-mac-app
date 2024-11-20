@@ -396,7 +396,7 @@
 		F377837026E644BC00392958 /* SignupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836926E644BC00392958 /* SignupTests.swift */; };
 		F37EC5B1272FF2AD002A5B8E /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */; };
 		F37F741E27CF877A00F1C621 /* Search+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F741D27CF877A00F1C621 /* Search+Configuration.swift */; };
-		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
+		F3B783F526E6428C006768A8 /* HomeRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* HomeRobot.swift */; };
 		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
 		F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */; };
 		F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EC26E6428C006768A8 /* CountryListRobot.swift */; };
@@ -848,7 +848,7 @@
 		F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TokenStorage.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/TokenStorage.swift; sourceTree = "<group>"; };
 		F37F741D27CF877A00F1C621 /* Search+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Search+Configuration.swift"; path = "../../../../../ios/ProtonVPN/Scenes/Countries/Extensions/Search+Configuration.swift"; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
-		F3B783E526E6428C006768A8 /* MainRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRobot.swift; sourceTree = "<group>"; };
+		F3B783E526E6428C006768A8 /* HomeRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRobot.swift; sourceTree = "<group>"; };
 		F3B783E726E6428C006768A8 /* SettingsRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
 		F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusRobot.swift; sourceTree = "<group>"; };
 		F3B783EC26E6428C006768A8 /* CountryListRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListRobot.swift; sourceTree = "<group>"; };
@@ -2110,7 +2110,7 @@
 			children = (
 				7702999F2CDCB83A00812C21 /* Modals */,
 				773B252D2C8860A2001CA9F0 /* Countries */,
-				F3B783E526E6428C006768A8 /* MainRobot.swift */,
+				F3B783E526E6428C006768A8 /* HomeRobot.swift */,
 				F3B783E626E6428C006768A8 /* Settings */,
 				F3B783E926E6428C006768A8 /* Connection */,
 				F3B783EE26E6428C006768A8 /* Profiles */,
@@ -2960,7 +2960,7 @@
 				F377836A26E644BC00392958 /* SettingsTests.swift in Sources */,
 				B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */,
 				773B252F2C8860C8001CA9F0 /* CountrySearchRobot.swift in Sources */,
-				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
+				F3B783F526E6428C006768A8 /* HomeRobot.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
 				57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */,
 				B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */,

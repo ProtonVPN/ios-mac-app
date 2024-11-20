@@ -45,6 +45,7 @@ class CreateProfileRobot: CoreElements {
         textField(profileNameField).waitUntilExists(time: WaitTimeout.short)
             .clearText()
             .typeText(name)
+            .typeText("\n")
         return self
     }
 

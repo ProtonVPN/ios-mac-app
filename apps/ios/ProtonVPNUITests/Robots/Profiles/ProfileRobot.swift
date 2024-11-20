@@ -33,7 +33,11 @@ class ProfileRobot: CoreElements {
     @discardableResult
     func deleteProfile(_ profileName: String, _ countryname: String) -> ProfileRobot {
         button(editButton).tap()
-        button().containsLabel(profileName).checkExists().tap()
+        button()
+            .containsLabel(profileName)
+            .swipeUpUntilVisible()
+            .checkExists()
+            .tap()
         button(deleteButton).tap()
         return self
     }
@@ -60,27 +64,27 @@ class ProfileRobot: CoreElements {
     }
 
     @discardableResult
-    func connectToAFastestServer() -> MainRobot {
+    func connectToAFastestServer() -> HomeRobot {
         staticText(fastestProfile).tap()
-        return MainRobot()
+        return HomeRobot()
     }
 
     @discardableResult
-    func disconnectFromAFastestServer() -> MainRobot {
+    func disconnectFromAFastestServer() -> HomeRobot {
         staticText(fastestProfile).tap()
-        return MainRobot()
+        return HomeRobot()
     }
 
     @discardableResult
-    func connectToARandomServer() -> MainRobot {
+    func connectToARandomServer() -> HomeRobot {
         staticText(randomProfile).tap()
-        return MainRobot()
+        return HomeRobot()
     }
 
     @discardableResult
-    func disconnectFromARandomServer() -> MainRobot {
+    func disconnectFromARandomServer() -> HomeRobot {
         staticText(randomProfile).tap()
-        return MainRobot()
+        return HomeRobot()
     }
     
     @discardableResult

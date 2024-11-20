@@ -20,7 +20,7 @@ class ProfilesTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -108,8 +108,8 @@ class ProfilesTests: ProtonVPNUITests {
     private func loginAndOpenProfiles(as credentials: Credentials) -> ProfileRobot {
         return loginRobot
             .enterCredentials(credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
             .goToProfilesTab()
             .verify.isOnProfilesScreen()
     }

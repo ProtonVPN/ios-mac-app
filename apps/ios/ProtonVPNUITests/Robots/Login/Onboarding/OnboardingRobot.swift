@@ -58,10 +58,10 @@ class OnboardingRobot: CoreElements {
     }
     
     @discardableResult
-    func startUsingApp() -> MainRobot {
+    func startUsingApp() -> HomeRobot {
         button(upgradeButton).tap()
         skipUpgrade()
-        return MainRobot()
+        return HomeRobot()
     }
     
     public let verify = Verify()

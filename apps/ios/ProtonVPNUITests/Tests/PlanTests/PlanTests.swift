@@ -55,7 +55,7 @@ class PlanTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -96,8 +96,8 @@ class PlanTests: ProtonVPNUITests {
     private func loginAndGoToAccountDetails(_ user: Credentials) -> AccountRobot {
         return loginRobot
             .enterCredentials(user)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .goToAccountDetail()
     }

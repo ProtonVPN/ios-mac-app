@@ -29,7 +29,7 @@ final class SubscriptionTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -54,7 +54,8 @@ final class SubscriptionTests: ProtonVPNUITests {
 
         _ = LoginRobot()
             .enterCredentials(user)
-            .signIn(robot: MainRobot.self)
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
             .goToSettingsTab()
             .goToAccountDetail()
             .tapSubscription()

@@ -19,7 +19,7 @@ class LoginExtAccountTests: ProtonVPNUITests {
         launchEnvironment = ["ExtAccountNotSupportedStub": "true"]
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
         // waiting for LoginExternalAccountNotSupportedSetup stub started

@@ -34,7 +34,7 @@ import Ergonomics
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
-    let mainRobot = MainRobot()
+    let homeRobot = HomeRobot()
     let settingsRobot = SettingsRobot()
 
     private static var isAutoFillPasswordsEnabled = true

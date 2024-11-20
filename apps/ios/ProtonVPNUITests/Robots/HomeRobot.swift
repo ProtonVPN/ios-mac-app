@@ -1,5 +1,5 @@
 //
-//  MainRobot.swift
+//  HomeRobot.swift
 //  ProtonVPNUITests
 //
 //  Created by Egle Predkelyte on 2021-05-28.
@@ -10,9 +10,10 @@ import fusion
 import Strings
 import UITestsHelpers
 
+fileprivate let tabHome = Localizable.home
+fileprivate let tabCountries = Localizable.countries
 fileprivate let tabProfiles = Localizable.profiles
 fileprivate let tabSettings = Localizable.settings
-fileprivate let tabCountries = Localizable.countries
 fileprivate let quickConnectButtonId = "quick connect inactive button"
 fileprivate let quickDisconnectButtonId = "quick connect active button"
 fileprivate let statusNotConnected = Localizable.notConnected
@@ -26,10 +27,10 @@ fileprivate let showLoginButtonLabelText = Localizable.logIn
 fileprivate let showSignupButtonLabelText = "Create an account"
 fileprivate let upselModalId = "TitleLabel"
 
-// MainRobot class contains actions for main app view.
+// HomeRobot class contains actions for Home view.
 
-class MainRobot: CoreElements {
-    
+class HomeRobot: CoreElements {
+
     let verify = Verify()
     
     @discardableResult
@@ -38,6 +39,12 @@ class MainRobot: CoreElements {
         return CountryListRobot()
     }
     
+    @discardableResult
+    func goToHomeTab<T: CoreElements>(robot _: T.Type = ConnectionStatusRobot.self) -> T {
+        button(tabHome).tap()
+        return T()
+    }
+
     @discardableResult
     func goToProfilesTab() -> ProfileRobot {
         button(tabProfiles).tap()
@@ -50,11 +57,13 @@ class MainRobot: CoreElements {
         return SettingsRobot()
     }
     
+    @discardableResult
     func quickConnectViaQCButton() -> ConnectionStatusRobot {
         button(quickConnectButtonId).tap()
         return ConnectionStatusRobot()
     }
-    
+
+    @discardableResult
     func backToPreviousTab<T: CoreElements>(robot _: T.Type, _ name: String) -> T {
         button(name).byIndex(0).tap()
         return T()
@@ -81,42 +90,50 @@ class MainRobot: CoreElements {
     class Verify: CoreElements {
     
         @discardableResult
-        func qcButtonConnected() -> MainRobot {
+        func qcButtonConnected() -> HomeRobot {
             button(quickDisconnectButtonId).waitUntilExists().checkExists()
-            return MainRobot()
+            return HomeRobot()
         }
     
         @discardableResult
-        func qcButtonDisconnected() -> MainRobot {
+        func qcButtonDisconnected() -> HomeRobot {
             button(quickConnectButtonId).waitUntilExists().checkExists()
-            return MainRobot()
+            return HomeRobot()
         }
     
         @discardableResult
-        func connectionStatusNotConnected() -> MainRobot {
+        func connectionStatusNotConnected() -> HomeRobot {
             staticText(connectionStatusUnprotected)
                 .waitUntilExists(time: 30)
                 .checkExists(message: "Failed to check that connection status is not connected. '\(connectionStatusUnprotected)' label is not visible.")
-            return MainRobot()
+            return HomeRobot()
         }
     
         @discardableResult
-        func connectionStatusConnectedTo(_ name: String) -> MainRobot {
+        func connectionStatusConnectedTo(_ name: String) -> HomeRobot {
             staticText(name).waitUntilExists().checkExists()
-            return MainRobot()
+            return HomeRobot()
         }
     
         @discardableResult
-        func upgradeSubscriptionScreenOpened() -> MainRobot {
+        func upgradeSubscriptionScreenOpened() -> HomeRobot {
             staticText(upgradeSubscriptionTitle).checkExists()
             button(upgradeSubscriptionButton).checkExists()
-            return MainRobot()
+            return HomeRobot()
         }
         
         @discardableResult
-        func upsellModalIsOpen() -> MainRobot {
+        func upsellModalIsOpen() -> HomeRobot {
             staticText(upselModalId).checkExists()
-            return MainRobot()
+            return HomeRobot()
+        }
+
+        @discardableResult
+        func isLoggedIn() -> HomeRobot {
+            button(tabHome)
+                .waitUntilExists(time: 30)
+                .checkExists(message: "Failed to check that user is logged in. Home tab is not visible in 30 seconds")
+            return HomeRobot()
         }
     }
 }

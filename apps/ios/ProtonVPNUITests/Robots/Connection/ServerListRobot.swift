@@ -22,15 +22,15 @@ class ServerListRobot: CoreElements {
     }
 
     @discardableResult
-    func disconnectFromAServerViaServer() -> MainRobot {
+    func disconnectFromAServerViaServer() -> HomeRobot {
         button(buttonConnectDisconnect).byIndex(0).forceTap()
-        return MainRobot()
+        return HomeRobot()
     }
 
     @discardableResult
-    func connectToAPlusServer(_ name: String) -> MainRobot {
+    func connectToAPlusServer(_ name: String) -> HomeRobot {
         staticText(name).tap()
-        return MainRobot()
+        return HomeRobot()
     }
     
     class Verify: CoreElements {

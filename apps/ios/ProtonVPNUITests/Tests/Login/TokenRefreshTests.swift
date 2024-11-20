@@ -29,7 +29,7 @@ class TokenRefreshTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -40,9 +40,9 @@ class TokenRefreshTests: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(user)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
-        mainRobot
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
+        homeRobot
             .goToSettingsTab()
 
         _ = try quarkCommands.userExpireSession(username: user.name, expireRefreshToken: true)
@@ -59,12 +59,12 @@ class TokenRefreshTests: ProtonVPNUITests {
 
         loginRobot
             .enterCredentials(user)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
 
         _ = try quarkCommands.userExpireSession(username: user.name, expireRefreshToken: false)
 
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .goToAccountDetail()
             .deleteAccount()

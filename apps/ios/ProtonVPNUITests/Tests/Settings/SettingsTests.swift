@@ -14,17 +14,17 @@ class SettingsTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
-        mainRobot
+        homeRobot
             .showLogin()
             .verify.loginScreenIsShown()
             .enterCredentials(UserType.Basic.credentials)
-            .signIn(robot: MainRobot.self)
-            .verify.connectionStatusNotConnected()
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
     }
     
     func testKillSwitchAndLANConnectionOnOff() {
         
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .turnKillSwitchOn()
             .verify.ksIsEnabled()
@@ -34,7 +34,7 @@ class SettingsTests: ProtonVPNUITests {
     
     func testSmartProtocolOffAndOn() {
         
-        mainRobot
+        homeRobot
             .goToSettingsTab()
             .goToProtocolsList()
             .smartProtocolOn()
