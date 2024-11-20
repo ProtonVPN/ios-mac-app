@@ -82,19 +82,18 @@ extension OrderedSet<RecentConnection> {
     }
 
     mutating func unpin(recent: RecentConnection) {
-        updatePin(recent: recent, shouldPin: false)
+        updatePin(recent: recent, pinnedDate: nil)
     }
 
-    mutating func pin(recent: RecentConnection) {
-        updatePin(recent: recent, shouldPin: true)
+    mutating func pin(recent: RecentConnection, pinnedDate: Date) {
+        updatePin(recent: recent, pinnedDate: pinnedDate)
     }
 
-    private mutating func updatePin(recent: RecentConnection, shouldPin: Bool) {
+    private mutating func updatePin(recent: RecentConnection, pinnedDate: Date?) {
         var recent = recent
         remove(recent)
-        @Dependency(\.date) var date
-        recent.pinnedDate = shouldPin ? date() : nil
-        if shouldPin, let index = lastIndex(where: { $0.pinned }) { // insert it exactly where it should be
+        recent.pinnedDate = pinnedDate
+        if pinnedDate != nil, let index = lastIndex(where: { $0.pinned }) { // insert it exactly where it should be
             insert(recent, at: index)
         } else {
             append(recent)

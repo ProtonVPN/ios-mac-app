@@ -33,7 +33,7 @@ struct HomeConnectionCardTitleFeature {
         @SharedReader(.recents)
         public var recents: OrderedSet<RecentConnection>
 
-        @Shared(.userTier)
+        @SharedReader(.userTier)
         public var userTier: Int
 
         var title: String {

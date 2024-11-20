@@ -64,6 +64,7 @@ public struct RecentsFeature {
     }
 
     @Dependency(\.recentsStorage) var recentsStorage
+    @Dependency(\.date) var date
 
     public init() {}
 
@@ -103,7 +104,7 @@ public struct RecentsFeature {
 
             case let .pin(recent):
                 withAnimation {
-                    state.recents.pin(recent: recent)
+                    state.recents.pin(recent: recent, pinnedDate: date.now)
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
