@@ -143,7 +143,6 @@ public struct ConnectionStatusView: View {
                         } else if case .protected(let netShield) = protectionState {
                             NetShieldStatsView(viewModel: netShield)
                         } else if case .protectedSecureCore(let netShield) = protectionState {
-                            Rectangle()
                             NetShieldStatsView(viewModel: netShield)
                         }
                     }
