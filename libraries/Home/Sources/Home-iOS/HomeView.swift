@@ -87,9 +87,10 @@ public struct HomeView: View {
                                 .padding(.horizontal, .themeSpacing16)
                                 .frame(width: min(proxy.size.width, Self.maxWidth))
                                 .background(trackConnectionViewHeight())
-
-                            RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
-                                .frame(width: min(proxy.size.width, Self.maxWidth))
+                            if !store.userTier.isFreeTier {
+                                RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
+                                    .frame(width: min(proxy.size.width, Self.maxWidth))
+                            }
 
                             Color(.background) // needed to take all the available horizontal space for the background
                         }

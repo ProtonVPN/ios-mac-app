@@ -24,39 +24,19 @@ import VPNAppCore
 import Ergonomics
 
 public final class RecentsStorageImplementation {
-    public internal(set) var collection: OrderedSet<RecentConnection>
-
     private static let storageKeyPrefix = "RecentConnections"
-
-    @Dependency(\.storage) var storage
-    @Dependency(\.authKeychain) var authKeychain
-
-    public init(array: [RecentConnection]) {
-        self.collection = OrderedSet(array)
-        self.collection.sanitize()
-    }
-
-    public init() {
-        self.collection = Self.readFromStorage()
-    }
-
-    public func initializeStorage() {
-        self.collection = Self.readFromStorage()
-    }
-
-    func elements() -> OrderedSet<RecentConnection> {
-        collection
-    }
 
     static func storageKey(_ userID: String) -> String {
         Self.storageKeyPrefix + userID
     }
 
-    private func saveToStorage() {
+    public static func saveToStorage(collection: OrderedSet<RecentConnection>) {
         do {
+            @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {
                 throw GenericError(message: "Couldn't retrieve UserID")
             }
+            @Dependency(\.storage) var storage
             try storage.set(collection, forKey: Self.storageKey(userID))
         } catch {
             log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
@@ -64,7 +44,7 @@ public final class RecentsStorageImplementation {
         }
     }
 
-    private static func readFromStorage() -> OrderedSet<RecentConnection> {
+    public static func readFromStorage() -> OrderedSet<RecentConnection> {
         do {
             @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {
@@ -73,32 +53,9 @@ public final class RecentsStorageImplementation {
             @Dependency(\.storage) var storage
             return try storage.get(OrderedSet<RecentConnection>.self, forKey: storageKey(userID)) ?? []
         } catch {
-            log.error("Failed to decode recent connections with error: \(error.localizedDescription)", category: .persistence)
+            log.error("Failed to decode recent connections with error: \(error.localizedDescription)",
+                      category: .persistence)
             return []
         }
-    }
-
-    public func updateList(with spec: ConnectionSpec) {
-        guard spec.shouldManifestRecentsEntry else {
-            log.debug("Ignoring entry to recents list for spec", metadata: ["spec": "\(spec)"])
-            return
-        }
-        collection.updateList(with: spec)
-        saveToStorage()
-    }
-
-    public func pin(recent: RecentConnection) {
-        collection.pin(recent: recent)
-        saveToStorage()
-    }
-
-    public func unpin(recent: RecentConnection) {
-        collection.unpin(recent: recent)
-        saveToStorage()
-    }
-
-    public func remove(recent: RecentConnection) {
-        collection.remove(recent)
-        saveToStorage()
     }
 }

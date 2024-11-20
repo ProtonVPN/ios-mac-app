@@ -25,41 +25,44 @@ import OrderedCollections
 final class RecentsStorageTests: XCTestCase {
 
     func testPiningASpecMovesTheCorrespondingRecentToTheTopOfTheListsAndMarksItAsPinned() {
-        var defaultFastest = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date(), connection: .defaultFastest)
-        let specificCity = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 1, connection: .specificCity)
-        let specificCountry = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date(), connection: .specificCountry)
-        let recents = RecentsStorageImplementation(array: [specificCity, defaultFastest, specificCountry])
-        recents.pin(recent: defaultFastest)
-        defaultFastest.pinned = true
-        XCTAssertEqual(recents.collection, [defaultFastest, specificCity, specificCountry])
+        let now = Date()
+        var defaultFastest = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now, connection: .defaultFastest)
+        let specificCity = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now + 1, connection: .specificCity)
+        let specificCountry = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now, connection: .specificCountry)
+        var recents: OrderedSet<RecentConnection> = [specificCity, defaultFastest, specificCountry]
+        recents.pin(recent: defaultFastest, pinnedDate: now)
+        defaultFastest.pinnedDate = now
+        XCTAssertEqual(recents, [defaultFastest, specificCity, specificCountry])
     }
 
     func testUnpiningASpecMovesTheCorrespondingRecentBelowThePinnedAndMarksItAsUnpinned() {
-        var defaultFastest = RecentConnection(pinned: true, underMaintenance: false, connectionDate: Date(), connection: .defaultFastest)
-        let specificCity = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 2, connection: .specificCity)
-        let specificCountry = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 1, connection: .specificCountry)
-        let recents = RecentsStorageImplementation(array: [defaultFastest, specificCity, specificCountry])
+        let now = Date()
+        var defaultFastest = RecentConnection(pinnedDate: now, underMaintenance: false, connectionDate: now, connection: .defaultFastest)
+        let specificCity = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now + 2, connection: .specificCity)
+        let specificCountry = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now + 1, connection: .specificCountry)
+        var recents: OrderedSet<RecentConnection> = [defaultFastest, specificCity, specificCountry]
         recents.unpin(recent: defaultFastest)
-        defaultFastest.pinned = false
-        XCTAssertEqual(recents.collection, [specificCity, specificCountry, defaultFastest])
+        defaultFastest.pinnedDate = nil
+        XCTAssertEqual(recents, [specificCity, specificCountry, defaultFastest])
     }
 
     func testRemovingASpecRemovesTheCorrespondingRecent() {
-        let defaultFastest = RecentConnection(pinned: true, underMaintenance: false, connectionDate: Date(), connection: .defaultFastest)
-        let specificCity = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 2, connection: .specificCity)
-        let specificCountry = RecentConnection(pinned: false, underMaintenance: false, connectionDate: Date() + 1, connection: .specificCountry)
-        let recents = RecentsStorageImplementation(array: [defaultFastest, specificCity, specificCountry])
-        recents.remove(recent: defaultFastest)
-        XCTAssertEqual(recents.collection, [specificCity, specificCountry])
+        let now = Date()
+        let defaultFastest = RecentConnection(pinnedDate: now, underMaintenance: false, connectionDate: now, connection: .defaultFastest)
+        let specificCity = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now + 2, connection: .specificCity)
+        let specificCountry = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now + 1, connection: .specificCountry)
+        var recents: OrderedSet<RecentConnection> = [defaultFastest, specificCity, specificCountry]
+        recents.remove(defaultFastest)
+        XCTAssertEqual(recents, [specificCity, specificCountry])
     }
 
     func testInsertingANewRecentIsReflectedInTheCollectionAndItsNotPinned() {
         withDependencies {
             $0.date = .constant(.now)
         } operation: {
-            let recents = RecentsStorageImplementation(array: [])
+            var recents: OrderedSet<RecentConnection> = []
             recents.updateList(with: .defaultFastest)
-            XCTAssertFalse(recents.collection.first!.pinned)
+            XCTAssertFalse(recents.first!.pinned)
         }
     }
 
@@ -68,43 +71,40 @@ final class RecentsStorageTests: XCTestCase {
         withDependencies {
             $0.date = .constant(now)
         } operation: {
-            let one = RecentConnection(pinned: false,
+            let one = RecentConnection(pinnedDate: nil,
                                        underMaintenance: false,
                                        connectionDate: now,
                                        connection: .init(location: .region(code: "1"), features: []))
-            let two = RecentConnection(pinned: true,
+            let two = RecentConnection(pinnedDate: now + 1,
                                        underMaintenance: false,
                                        connectionDate: now,
                                        connection: .init(location: .region(code: "2"), features: []))
-            let recents = RecentsStorageImplementation(array: [one, two])
+            var recents: OrderedSet<RecentConnection> = [one, two]
 
-            XCTAssertEqual(recents.collection, [two, one])
+            XCTAssertEqual(recents.sanitized(), [two, one])
 
             let threeSpec = ConnectionSpec(location: .region(code: "3"), features: [])
-            var three = RecentConnection(pinned: false,
+            var three = RecentConnection(pinnedDate: nil,
                                          underMaintenance: false,
                                          connectionDate: now,
                                          connection: threeSpec)
             recents.updateList(with: threeSpec)
-            recents.pin(recent: three)
-            three.pinned = true
-
-            XCTAssertEqual(recents.collection[0], three)
-            XCTAssertEqual(recents.collection[1], two)
-            XCTAssertEqual(recents.collection[2], one)
+            recents.pin(recent: three, pinnedDate: now)
+            three.pinnedDate = now
+            XCTAssertEqual(recents, [three, two, one])
         }
     }
 
     func testInitializingRecentsListWithMoreThanAllowedNumberOfConnectionsTrimsTheRecentList() {
         let now = Date()
         let array = (0...9).map { element in
-            RecentConnection(pinned: false,
+            RecentConnection(pinnedDate: nil,
                              underMaintenance: false,
                              connectionDate: now,
                              connection: .init(location: .region(code: "\(element)"), features: []))
         }
         XCTAssertEqual(array.count, 10)
-        let recents = RecentsStorageImplementation(array: array)
-        XCTAssertEqual(recents.collection.count, 8)
+        let recents = OrderedSet(array)
+        XCTAssertEqual(recents.sanitized().count, 8)
     }
 }

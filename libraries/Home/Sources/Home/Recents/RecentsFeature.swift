@@ -22,6 +22,7 @@ import Foundation
 import VPNAppCore
 import VPNShared
 import OrderedCollections
+import SwiftUI
 
 @Reducer
 public struct RecentsFeature {
@@ -32,12 +33,12 @@ public struct RecentsFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
-        public package(set) var recents: OrderedSet<RecentConnection>
+        @Shared(.recents)
+        public var recents: OrderedSet<RecentConnection>
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
-            recentsStorage.initializeStorage()
-            recents = recentsStorage.elements()
+            recents = recentsStorage.readFromStorage()
         }
     }
 
@@ -63,6 +64,7 @@ public struct RecentsFeature {
     }
 
     @Dependency(\.recentsStorage) var recentsStorage
+    @Dependency(\.date) var date
 
     public init() {}
 
@@ -74,6 +76,7 @@ public struct RecentsFeature {
                     state
                         .$vpnConnectionStatus
                         .publisher
+                        .removeDuplicates()
                         .receive(on: UIScheduler.shared)
                         .map(Action.newConnectionStatus)
                 }
@@ -88,23 +91,36 @@ public struct RecentsFeature {
                 return .send(.connectionEstablished(spec))
 
             case .connectionEstablished(let spec):
-                recentsStorage.updateList(spec)
-                state.recents = recentsStorage.elements()
+                guard spec.shouldManifestRecentsEntry else {
+                    log.debug("Ignoring entry to recents list for spec", metadata: ["spec": "\(spec)"])
+                    return .none
+                }
+                withAnimation {
+                    state.recents.updateList(with: spec)
+                }
+                recentsStorage.saveToStorage(state.recents)
+
                 return .none
 
             case let .pin(recent):
-                recentsStorage.pin(recent)
-                state.recents = recentsStorage.elements()
+                withAnimation {
+                    state.recents.pin(recent: recent, pinnedDate: date.now)
+                }
+                recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case let .unpin(recent):
-                recentsStorage.unpin(recent)
-                state.recents = recentsStorage.elements()
+                withAnimation {
+                    state.recents.unpin(recent: recent)
+                }
+                recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case let .remove(recent):
-                recentsStorage.remove(recent)
-                state.recents = recentsStorage.elements()
+                withAnimation {
+                    state.recents.remove(recent)
+                }
+                recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case .delegate:

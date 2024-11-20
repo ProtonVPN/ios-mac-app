@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Connection",
     platforms: [
-        .iOS(.v15),
+        .iOS(.v16),
         .macOS(.v12),
         .tvOS(.v17)
     ],

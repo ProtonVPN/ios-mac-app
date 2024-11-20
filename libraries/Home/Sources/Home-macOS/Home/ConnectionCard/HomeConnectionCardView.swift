@@ -179,7 +179,7 @@ private extension HomeFeature.State {
     static var connected: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .chrząszczyrzewoszczyce
@@ -192,7 +192,7 @@ private extension HomeFeature.State {
     static var connecting: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .dibba
@@ -205,7 +205,7 @@ private extension HomeFeature.State {
     static var disconnected: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .fastest
@@ -218,7 +218,7 @@ private extension HomeFeature.State {
     static var loadingConnectionInfo: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .region
@@ -231,7 +231,7 @@ private extension HomeFeature.State {
     static var secureCoreFastest: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .secureCoreFastest
@@ -244,7 +244,7 @@ private extension HomeFeature.State {
     static var secureCoreFastestHop: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .secureCoreFastestHop
@@ -257,7 +257,7 @@ private extension HomeFeature.State {
     static var secureCoreHopToVia: Self {
         .init(connections: [
             .init(
-                pinned: false,
+                pinnedDate: nil,
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .secureCoreHopToVia

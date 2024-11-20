@@ -44,8 +44,9 @@ struct HomeConnectionCardView: View {
     }
 
     private var header: some View {
-        HomeConnectionCardTitleView(connectionStatus: store.vpnConnectionStatus,
-                                    isFreeUser: store.userTier.isFreeTier)
+        HomeConnectionCardTitleView(store: .init(initialState: .init(), reducer: {
+            HomeConnectionCardTitleFeature()
+        }))
         .padding(.bottom, .themeSpacing8)
         .padding(.top, .themeSpacing24)
     }
