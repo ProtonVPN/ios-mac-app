@@ -100,7 +100,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         login(withCredentials: twopassusercredentials[0])
     }
     
-    func waitForLoaderDisappear(_ loadingTimeout: TimeInterval = WaitTimeout.long) {
+    func waitForLoaderDisappear(_ loadingTimeout: TimeInterval = 20) {
         let loadingScreen = app.staticTexts[Localizable.loadingScreenSlogan]
         _ = loadingScreen.waitForExistence(timeout: WaitTimeout.normal)
         if !loadingScreen.waitForNonExistence(timeout: loadingTimeout) {

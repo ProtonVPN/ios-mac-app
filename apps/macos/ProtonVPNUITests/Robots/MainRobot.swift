@@ -157,7 +157,7 @@ class MainRobot: CoreElements {
         }
         
         @discardableResult
-        func checkUserIsLoggedIn() -> MainRobot {
+        func userIsLoggedIn() -> MainRobot {
             staticText(statusTitle).waitUntilExists(time: WaitTimeout.normal).checkExists()
             button(qcButton).waitUntilExists(time: WaitTimeout.short).checkExists()
             return MainRobot()
