@@ -1605,6 +1605,8 @@ public enum Localizable {
   public static func viaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_via_country", String(describing: p1), fallback: "via %@")
   }
+  /// Used for SecureCore connection labels.
+  public static var viaSecureCore: String { return Localizable.tr("Localizable", "_via_secure_core", fallback: "via Secure Core") }
   /// MacOS menu item; iOS setting screen item
   public static var viewLogs: String { return Localizable.tr("Localizable", "_view_logs", fallback: "View Logs") }
   /// Text in warning screen before actions that will disconnect VPN

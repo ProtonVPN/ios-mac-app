@@ -140,17 +140,19 @@ struct HomeConnectionCardView: View {
     }
 
     public var body: some View {
-        VStack(spacing: .themeSpacing8) {
-            header
-            card
-        }
-        .accessibilityElement()
-        .accessibilityLabel(accessibilityText)
-        .accessibilityAction(named: Text(Localizable.actionConnect)) {
-            store.send(.delegate(.connect(store.presentedSpec)))
-        }
-        .task {
-            store.send(.watchConnectionStatus)
+        WithPerceptionTracking {
+            VStack(spacing: .themeSpacing8) {
+                header
+                card
+            }
+            .accessibilityElement()
+            .accessibilityLabel(accessibilityText)
+            .accessibilityAction(named: Text(Localizable.actionConnect)) {
+                store.send(.delegate(.connect(store.presentedSpec)))
+            }
+            .task {
+                store.send(.watchConnectionStatus)
+            }
         }
     }
 }

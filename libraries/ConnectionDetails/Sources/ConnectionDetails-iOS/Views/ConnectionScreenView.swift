@@ -51,6 +51,7 @@ public struct ConnectionScreenView: View {
                                            isConnected: false,
                                            images: .coreImages)
                 }
+
                 Spacer()
 
                 Button(action: {
@@ -70,12 +71,12 @@ public struct ConnectionScreenView: View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     WithPerceptionTracking {
-                        IPView(store: store.scope(state: \.ipViewState,
-                                                  action: \.ipViewAction))
+                        IPView(store: store.scope(state: \.ipViewState, action: \.ipViewAction))
+
                         ConnectionDetailsView(store: store.scope(state: \.connectionDetailsState,
                                                                  action: \.connectionDetailsAction))
-                        if !store.connectionFeatures.isEmpty || store.isSecureCore {
 
+                        if !store.connectionFeatures.isEmpty || store.isSecureCore {
                             Text(Localizable.connectionDetailsFeaturesTitle)
                                 .font(.themeFont(.body2()))
                                 .foregroundColor(Color(.text, .weak))
@@ -87,10 +88,9 @@ public struct ConnectionScreenView: View {
                                     .padding(.bottom, .themeRadius8)
                             }
 
-                            ForEach(store.connectionFeatures, content: { feature in
+                            ForEach(store.connectionFeatures) { feature in
                                 FeatureInfoView(for: feature)
-
-                            })
+                            }
                             .padding(.bottom, .themeRadius8)
                         }
                     }

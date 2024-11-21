@@ -33,17 +33,28 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
+
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
                 return userTier.isFreeTier
             }
             return false
         }
+
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
 
-        public init() {
-            @Dependency(\.serverChangeAuthorizer) var authorizer
-            serverChangeAvailability = authorizer.serverChangeAvailability()
+        // Improve this? With an @SharedReader with an overwrite defaultsStorage like this:
+        // static var secureCoreToggle: Self {
+        //     return withDependencies {
+        //         $0.defaultAppStorage = UserDefaults(suiteName: "group.ch.protonmail.vpn")!
+        //     } operation: {
+        //         return PersistenceKeyDefault(.appStorage("SecureCoreToggle"), false)
+        //     }
+        // }
+        // --> it doesn't seem to update when Toggle is toggled on/off
+        private let secureCoreUserDefaultsStorage = UserDefaults(suiteName: "group.ch.protonmail.vpn")!
+        private var secureCoreToggle: Bool {
+            secureCoreUserDefaultsStorage.bool(forKey: "SecureCoreToggle")
         }
 
         public var presentedSpec: ConnectionSpec {
@@ -53,13 +64,18 @@ public struct HomeConnectionCardFeature {
                 if let spec = recentsStorage.readFromStorage().mostRecent?.connection {
                     return spec
                 }
-                return .init(location: .fastest, features: [])
+                return .init(location: secureCoreToggle ? .secureCore(.fastest) : .fastest, features: [])
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
                     .loadingConnectionInfo(let connectionSpec, _),
                     .disconnecting(let connectionSpec, _):
                 return connectionSpec
             }
+        }
+
+        public init() {
+            @Dependency(\.serverChangeAuthorizer) var authorizer
+            serverChangeAvailability = authorizer.serverChangeAvailability()
         }
     }
 

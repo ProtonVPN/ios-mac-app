@@ -39,77 +39,93 @@ struct ConnectionDetailsView: View {
                 VStack {
                     VStack(alignment: .leading, spacing: 0) {
                         let connectedSince = store.connectedSince
-                        TimelineView(PeriodicTimelineSchedule(from: .now, by: 1)) { _ in
+                        TimelineView(PeriodicTimelineSchedule(from: connectedSince, by: 1)) { _ in
                             Row(title: Localizable.connectionDetailsConnectedFor,
-                                value: connectedSince.timeIntervalSinceNow.sessionLengthText)
+                                contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText))
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
-                            Row(title: Localizable.connectionDetailsCountry, value: store.country)
+                            Row(title: Localizable.connectionDetailsCountry, contentType: .text(store.country))
+                            Divider().padding([.leading], .themeSpacing8)
+                        }
+                        if shouldShowCityRow {
+                            Group {
+                                Row(title: Localizable.connectionDetailsCity, contentType: .text(store.city))
+                                Divider().padding([.leading], .themeSpacing8)
+                            }
+                        }
+                        Group {
+                            Row(title: Localizable.connectionDetailsServer, contentType: .text(store.server))
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
-                            Row(title: Localizable.connectionDetailsCity, value: store.city)
-                            Divider().padding([.leading], .themeSpacing8)
-                        }
-                        Group {
-                            Row(title: Localizable.connectionDetailsServer, value: store.server)
-                            Divider().padding([.leading], .themeSpacing8)
-                        }
-                        Group {
-                            Row(title: Localizable.connectionDetailsServerLoad, value: "\(store.serverLoad)%", titleType: .info, contentType: .percentage(store.serverLoad))
+                            Row(title: Localizable.connectionDetailsServerLoad, contentType: .percentage(store.serverLoad))
                         }
                         Group {
                             Divider().padding([.leading], .themeSpacing8)
-                            Row(title: Localizable.connectionDetailsProtocol, value: store.protocolName, titleType: .info)
+                            Row(title: Localizable.connectionDetailsProtocol, contentType: .text(store.protocolName))
                         }
                     }
-                    .background(RoundedRectangle(cornerRadius: .themeRadius12)
-                        .fill(Color(.background, .normal)))
+                    .background(
+                        RoundedRectangle(cornerRadius: .themeRadius12).fill(Color(.background, .normal))
+                    )
                 }
                 .padding(.vertical, .themeSpacing8)
             }
         }
     }
-    
+
+    private var shouldShowCityRow: Bool {
+        return store.city != "-" && !store.city.isEmpty
+    }
+
+    @MainActor
     struct Row: View {
         let title: String
-        let value: String
-        let titleType: TitleType
-        let contentType: ContentType
-        
+        let accessory: Accessory
+        let content: ContentType
+
         @Environment(\.dynamicTypeSize) var dynamicTypeSize
         @ScaledMetric var infoIconSize: CGFloat = 16
         @ScaledMetric var infoIconSpacing: CGFloat = .themeSpacing4
+
         private var standardTypeSize: Bool { dynamicTypeSize <= .xxxLarge }
         
-        enum TitleType {
-            case simple
+        enum Accessory {
+            case none
             case info
         }
         
         enum ContentType {
-            case text
+            case text(String)
             case percentage(Int)
+
+            var accessibilityValue: String {
+                switch self {
+                case .text(let string):
+                    return string
+                case .percentage(let value):
+                    return String(value) + "%"
+                }
+            }
         }
         
-        init(title: String, value: String, titleType: TitleType = .simple, contentType: ContentType = .text) {
+        init(title: String, contentType: ContentType, accessory: Accessory = .none) {
             self.title = title
-            self.value = value
-            self.titleType = titleType
-            self.contentType = contentType
+            self.accessory = accessory
+            self.content = contentType
         }
         
         var body: some View {
-            AnyView(rowView) // Without AnyView next lines won't compile
+            rowView
                 .accessibilityLabel(title) // todo: test how this works
-                .accessibilityLabel(value)
+                .accessibilityLabel(content.accessibilityValue)
                 .padding(.vertical, .themeSpacing12)
                 .padding(.horizontal, .themeSpacing16)
         }
         
         @ViewBuilder
-        var rowView: any View {
+        private var rowView: some View {
             if standardTypeSize {
                 HStack(alignment: .top) {
                     self.titleView
@@ -124,26 +140,30 @@ struct ConnectionDetailsView: View {
             }
         }
         
-        var titleView: some View {
+        private var titleView: some View {
             HStack(spacing: infoIconSpacing) {
                 Text(title)
                     .themeFont(.body1())
                 
-                if case titleType = TitleType.info {
+                if case .info = accessory {
                     IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
-            }.foregroundColor(Color(.text, .weak))
+            }
+            .foregroundColor(Color(.text, .weak))
         }
         
-        var valueView: some View {
+        private var valueView: some View {
             HStack(spacing: .themeSpacing8) {
-                if case let ContentType.percentage(percent) = contentType {
+                if case let .percentage(percent) = content {
                     SmallProgressView(percentage: percent)
                 }
-                
-                Text(value)
-                    .themeFont(.body1())
-                
+
+                switch content {
+                case .text(let string):
+                    Text(string).themeFont(.body1())
+                case .percentage(let percentage):
+                    Text(percentage, format: .percent).themeFont(.body1())
+                }
             }
             .foregroundColor(Color(.text, .normal))
         }
