@@ -2,19 +2,588 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     " /month" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /месяц"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /měsíc"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /Monat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /μήνας"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /month"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mes"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /kuukausi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mois"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /bulan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mese"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /თვეში"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /월간"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /måned"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /maand"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " / miesiąc"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mês"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/lună"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " в месяц"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mesiac"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mesec"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /månad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /ay"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /місяць"
+          }
+        }
+      }
     },
     " /year" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /год"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /rok"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /Jahr"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /έτος"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /year"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /año"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /año"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /vuosi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /an"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /tahun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /anno"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /წელიწადში"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /연간"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /år"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /jaar"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " / rok"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /ano"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "/an"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " в год"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /rok"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /år"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /yıl"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /рік"
+          }
+        }
+      }
     },
     "%@/month" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/месяц"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/měsíc"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/Monat"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/μήνα"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/month"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mes"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/kuukausi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mois"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/bulan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mese"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/თვეში"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/월간"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/måned"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/maand"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / miesiąc"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mês"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/lună"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@в месяц"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mesiac"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/månad"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/ay"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/місяць"
+          }
+        }
+      }
     },
     "Agree and continue" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пагадзіцца і працягнуць"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Souhlasit a pokračovat"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akzeptieren und fortfahren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποδοχή και συνέχεια"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agree and continue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceptar y continuar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceptar y continuar"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hyväksy ja jatka"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accepter et continuer"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Setujui dan lanjutkan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accetta e continua"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "დათანხმება და გაგრძელება"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동의 후 계속하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Godta og fortsett"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akkoord en doorgaan"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaakceptuj i kontynuuj"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concordar e continuar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceptare și continuare"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Согласиться и продолжить"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Súhlasiť a pokračovať"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Godkänn och fortsätt"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kabul et ve ilerle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Погодитись і продовжити"
+          }
+        }
+      }
     },
     "All countries" : {
       "comment" : "Section title with all countries to connect to",
@@ -104,6 +673,12 @@
             "value" : "Alle land"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle landen"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -132,6 +707,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Všetky krajiny"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vse države"
           }
         },
         "sv" : {
@@ -227,7 +808,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terdapat suatu kesalahan."
+            "value" : "Terjadi kesalahan."
           }
         },
         "it" : {
@@ -410,6 +991,12 @@
             "value" : "Er du sikker på at du vil logge ut av Proton VPN?"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weet u zeker dat u wilt uitloggen op Proton VPN?"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -508,7 +1095,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saatavilla Proton VPN Plus -tilauksella"
+            "value" : "Saatavilla Proton VPN Plussalla"
           }
         },
         "fr" : {
@@ -545,6 +1132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tilgjengelig med Proton VPN Plus"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschikbaar met Proton VPN Plus"
           }
         },
         "pl" : {
@@ -781,6 +1374,12 @@
             "value" : "Připojte se k vysokorychlostním serverům po celém světě a streamujte své oblíbené pořady s ochranou VPN."
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinde dich mit Hochgeschwindigkeitsservern auf der ganzen Welt und streame deine Lieblingssendungen mit VPN-Schutz."
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -814,13 +1413,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Connectez-vous aux serveurs rapides tout autour du globe et streamez vos séries favorites tout en étant protégé avec un VPN."
+            "value" : "Connectez-vous à des serveurs ultrarapides partout dans le monde et regardez vos séries favorites en streaming tout en étant protégé avec un VPN."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terhubunglah ke server berkecepatan tinggi di seluruh dunia dan tonton tayangan favorit Anda dengan perlindungan VPN."
+            "value" : "Hubungkan diri Anda ke berbagai server berkecepatan tinggi di seluruh dunia dan tonton tayangan favorit Anda dengan perlindungan VPN."
           }
         },
         "it" : {
@@ -847,10 +1446,22 @@
             "value" : "Koble til høyhastighetstjenere over hele verden og strøm favorittprogrammene dine med VPN-beskyttelse."
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maak verbinding met snelle servers over de hele wereld en stream uw favoriete programma's met VPN-beveiliging."
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Połącz się z szybkimi serwerami na całym świecie i streamuj ulubione programy z ochroną VPN."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conecte-se a servidores de alta velocidade em todo o mundo e transmita seus programas favoritos com proteção VPN."
           }
         },
         "ro" : {
@@ -936,6 +1547,12 @@
             "value" : "Conectado"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متصل"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -948,6 +1565,12 @@
             "value" : "Connecté"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povezano"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -958,6 +1581,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connesso"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続完了"
           }
         },
         "ka" : {
@@ -976,6 +1605,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tilkoblet"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbonden"
           }
         },
         "pl" : {
@@ -1006,6 +1641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pripojené"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povezano"
           }
         },
         "sv" : {
@@ -1073,6 +1714,12 @@
             "value" : "Conectando"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال اتصال"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1085,6 +1732,12 @@
             "value" : "Connexion en cours"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povezivanje"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1095,6 +1748,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connessione in corso"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続中"
           }
         },
         "ka" : {
@@ -1113,6 +1772,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kobler til"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinding maken"
           }
         },
         "pl" : {
@@ -1143,6 +1808,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pripájanie"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povezovanje"
           }
         },
         "sv" : {
@@ -1379,6 +2050,12 @@
             "value" : "Contáctenos"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تماس با ما"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1391,6 +2068,12 @@
             "value" : "Contactez-nous"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontaktirajte nas"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1401,6 +2084,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contattaci"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お問い合わせ先"
           }
         },
         "ka" : {
@@ -1419,6 +2108,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kontakt oss"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neem contact op"
           }
         },
         "pl" : {
@@ -1449,6 +2144,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kontaktujte nás"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopite v stik z nami"
           }
         },
         "sv" : {
@@ -1517,6 +2218,12 @@
             "value" : "Crear una cuenta"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ساختن حساب"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1529,6 +2236,12 @@
             "value" : "Créer un compte"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stvori račun"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1539,6 +2252,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crea un account"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アカウントを作成する"
           }
         },
         "ka" : {
@@ -1557,6 +2276,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opprett konto"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maak account"
           }
         },
         "pl" : {
@@ -1587,6 +2312,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vytvoriť účet"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ustvarite račun"
           }
         },
         "sv" : {
@@ -1823,6 +2554,12 @@
             "value" : "Desconectar"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قطع ارتباط"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1835,6 +2572,12 @@
             "value" : "Se déconnecter"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odspoji"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1845,6 +2588,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disconnetti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接続解除"
           }
         },
         "ka" : {
@@ -1863,6 +2612,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Koble fra"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinding verbreken"
           }
         },
         "pl" : {
@@ -1893,6 +2648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odpojiť"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekini povezavo"
           }
         },
         "sv" : {
@@ -1961,6 +2722,12 @@
             "value" : "Desconectando"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال قطع اتصال"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1973,6 +2740,12 @@
             "value" : "Déconnexion"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odspajanje"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1983,6 +2756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disconnessione in corso"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切断中"
           }
         },
         "ka" : {
@@ -2001,6 +2780,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kobler fra"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinding verbreken"
           }
         },
         "pl" : {
@@ -2031,6 +2816,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odpájanie"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prekinjanje povezave"
           }
         },
         "sv" : {
@@ -2265,6 +3056,12 @@
             "value" : "Más rápido"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سریع‌ترین"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2277,6 +3074,12 @@
             "value" : "Le plus rapide"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najbrže"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2287,6 +3090,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Più veloce"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最速"
           }
         },
         "ka" : {
@@ -2305,6 +3114,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Raskeste"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snelste"
           }
         },
         "pl" : {
@@ -2335,6 +3150,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Najrýchlejší"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Najhitrejše"
           }
         },
         "sv" : {
@@ -2444,6 +3265,12 @@
             "value" : "Generer ny kode"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genereer nieuwe code"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2495,7 +3322,170 @@
       }
     },
     "Got it" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зразумела"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozumím"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verstanden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το κατάλαβα"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متوجه شدم"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selvä"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "J'ai compris"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shvaćam"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimengerti"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ho capito"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はい"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გავიგე"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알겠습니다"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forstått"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Begrepen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ok"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendi"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am înțeles"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понятно"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozumiem"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Razumem"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Förstått"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anladım"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зрозуміло"
+          }
+        }
+      }
     },
     "Home" : {
       "comment" : "Title of the tab bar item.",
@@ -2542,6 +3532,12 @@
             "value" : "Inicio"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خانه"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2554,6 +3550,12 @@
             "value" : "Accueil"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Početna"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2564,6 +3566,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Home"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホーム"
           }
         },
         "ka" : {
@@ -2582,6 +3590,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hjem"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
           }
         },
         "pl" : {
@@ -2609,6 +3623,12 @@
           }
         },
         "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domov"
+          }
+        },
+        "sl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Domov"
@@ -2650,6 +3670,12 @@
             "value" : "Pokud máte s používáním Proton VPN potíže, náš tým zákaznické podpory vám rád pomůže.\n\nStačí naskenovat QR kód nebo přejít na stránku"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du Probleme bei der Nutzung von Proton VPN hast, hilft dir unser Kundensupport gerne weiter.\n\nScanne einfach den QR-Code oder gehe zu"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2677,13 +3703,13 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jos sinulla on ongelmia Proton VPN:n käytössä, asiakastukitiimimme auttaa mielellään.\n\nSkannaa QR-koodi tai mene"
+            "value" : "Jos sinulla on ongelmia Proton VPN:n käytössä, asiakastukemme auttaa mielellään.\n\nSkannaa QR-koodi tai mene"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Si vous avez des difficultés en utilisant Proton VPN, notre service client sera heureux d'aider.\n\nScannez le QR code, ou allez à"
+            "value" : "Si vous avez des difficultés à utiliser Proton VPN, notre équipe de support client se fera un plaisir de vous aider.\n\nScannez le QR code ou dirigez-vous vers"
           }
         },
         "id" : {
@@ -2716,10 +3742,22 @@
             "value" : "Hvis du har problemer med å bruke Proton VPN, hjelper kundestøtteteamet vårt gjerne.\n\nBare skann QR-koden eller gå til"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indien u problemen ervaart bij het gebruik van Proton VPN, helpt ons klantenservice-team u graag."
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jeśli masz problem z usługą Proton VPN, nasz zespół wsparcia klienta pomoże Ci.\n\nZeskanuj kod QR lub przejdź do"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se estiver tendo problemas para usar o Proton VPN, nossa equipe de suporte ao cliente terá prazer em ajudar.\n\nBasta escanear o código QR ou ir para"
           }
         },
         "ro" : {
@@ -2761,7 +3799,146 @@
       }
     },
     "Includes premium VPN protection for your mobile and desktop (connect up to 10 devices at once)" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уключае прэміяльную абарону VPN для вашай мабільнай прылады і камп'ютара (можа быць падключана да 10 прылад адначасова)"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zahrnuje prémiovou ochranu VPN pro mobilní zařízení a stolní počítače (připojení až 10 zařízení současně)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inklusive Premium-VPN-Schutz für dein Mobiltelefon und deinen Desktop (verbinde bis zu 10 Geräte auf einmal)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Περιλαμβάνει κορυφαία προστασία VPN για το κινητό και τον επιτραπέζιο υπολογιστή σας (συνδέστε έως και 10 συσκευές ταυτόχρονα)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Includes premium VPN protection for your mobile and desktop (connect up to 10 devices at once)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incluye protección VPN prémium para tu dispositivo móvil y de escritorio (conecta hasta 10 dispositivos a la vez)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incluye protección VPN premium para su móvil y escritorio (conecte hasta 10 dispositivos a la vez)"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sisältää premium-VPN-suojauksen mobiililaitteille ja tietokoneille (yhdistä jopa 10 laitetta kerralla)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclut une protection VPN premium pour vos appareils mobiles et de bureau (connectez jusqu'à 10 appareils à la fois)."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meliputi perlindungan VPN premium untuk perangkat seluler dan desktop Anda (hubungkan hingga 10 perangkat dalam satu waktu)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Include protezione VPN premium per dispositivi mobili e desktop (connetti fino a 10 dispositivi contemporaneamente)"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "შეიცავს ფასიან VPN დაცვას თქვენი მობილურისთვის და კომპიუტერისთვის (10 მოწყობილობამდე ერთდროულად)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모바일 및 데스크톱을 위한 프리미엄 VPN 보호 포함(한 번에 최대 10개의 장치 연결)"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inkluderer premium VPN-beskyttelse for mobil og datamaskin (koble til opptil 10 enheter samtidig)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclusief premium VPN-bescherming voor uw mobiele en desktop (maak tot 10 apparaten tegelijk verbinden)"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zawiera ochronę VPN w wersji premium dla urządzeń mobilnych i desktopowych (połączenie do 10 urządzeń jednocześnie)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclui proteção VPN premium para seu celular e computador (conecte até 10 dispositivos ao mesmo tempo)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Include protecție VPN premium pentru dispozitive mobile și desktop (conectare până la 10 dispozitive simultan)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включает платную защиту VPN для мобильных и настольных компьютеров (подключение до 10 устройств одновременно)"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obsahuje prémiovú VPN ochranu pre mobilný a stolný počítač (pripojenie až 10 zariadení naraz)"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inkluderar premium VPN-skydd för din mobil och stationära dator (anslut upp till 10 enheter samtidigt)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mobil ve masaüstünüz için ücretli VPN koruması sunar (aynı anda 10 aygıta kadar bağlanın)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включає преміальний захист VPN для мобільного пристрою і комп'ютера (одночасне під'єднання до 10 пристроїв)"
+          }
+        }
+      }
     },
     "Loading countries" : {
       "comment" : "Informative text when the app is downloading the country list.",
@@ -2850,6 +4027,12 @@
             "value" : "Laster inn land"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Landen worden geladen"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2916,6 +4099,12 @@
             "value" : "Potřebujete pomoc s nastavením nebo používáním Proton VPN?\n\nNavštivte naše online centrum podpory, kde najdete tipy pro řešení problémů, průvodce nastavením a odpovědi na nejčastější dotazy.\n\nStačí naskenovat QR kód nebo přejít na stránku"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benötigst du Hilfe bei der Einrichtung oder Verwendung von Proton VPN?\n\nBesuche unser Online Support Center für Tipps zur Fehlerbehebung, Einrichtungsanleitungen und Antworten auf häufig gestellte Fragen.\n\nScanne einfach den QR-Code oder gehe zu"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2949,7 +4138,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Besoin d'aide pour paramétrer ou utiliser Proton VPN ?\n\nVisitez notre espace en ligne Aide et Support pour des conseils de dépannage, des guides de configuration et des réponses aux questions les plus fréquentes.\n\n Scannez le QR code ou allez à"
+            "value" : "Besoin d'aide pour paramétrer ou utiliser Proton VPN ?\n\nConsultez notre espace en ligne Aide et Support pour des conseils de dépannage, des guides de configuration et des réponses aux questions les plus fréquentes.\n\n Scannez le QR code ou rendez-vous sur"
           }
         },
         "id" : {
@@ -2964,6 +4153,12 @@
             "value" : "Hai bisogno di aiuto per configurare o utilizzare Proton VPN?\n\nVisita il nostro Centro di supporto online per suggerimenti per la risoluzione dei problemi, guide all'installazione e risposte alle domande frequenti.\n\nTi basta scansionare il codice QR o andare su"
           }
         },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN-ის დაყენებაში ან გამოყენებაში დახმარება გჭირდებათ?\n\nეწვიეთ ჩვენ მხარდაჭერის გუნდს პრობლემებს გადასაჭრელი მინიშნებებისთვის, დოკუმენტაციისთვის და პახუსებისთვის ხდკ-ებზე.\n\n\nგადასასვლელად, უბრალოდ, QR კოდი დაასკანერეთ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2974,6 +4169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trenger du hjelp med å sette opp eller bruke Proton VPN?\n\nBesøk vårt nettbaserte støttesenter for feilsøkingstips, oppsettsveiledninger og svar på vanlige spørsmål."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hulp nodig bij het instellen of gebruiken van Proton VPN?\n\nBezoek ons online Helpcentrum voor probleemoplossings-tips, installatiehandleidingen en antwoorden op veelgestelde vragen.\n\nScan simpelweg de QR-code of ga naar"
           }
         },
         "pl" : {
@@ -2997,7 +4198,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нужна помощь в настройке или использовании Proton VPN?\n\nПосетите наш вправочый отлайн-центр, где вы найдете советы по устранению неполадок, руководства по настройке и ответы на часто задаваемые вопросы.\n\nПросто отсканируйте QR-код или перейдите по ссылке"
+            "value" : "Нужна помощь в настройке или использовании Proton VPN?\n\nПосетите наш справочный центр онлайн для получения советов по устранению неполадок, руководств по настройке и ответов на часто задаваемые вопросы.\n\nПросто отсканируйте QR-код или перейдите по ссылке"
           }
         },
         "sk" : {
@@ -3195,7 +4396,170 @@
       }
     },
     "Privacy Policy" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Палітыка прыватнасці"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zásady ochrany osobních údajů"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzerklärung"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πολιτική Απορρήτου"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidad"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de Privacidad"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خط مش سیاست حفظ اطلاعات و حریم خصوصی کاربران"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietosuojakäytäntö"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Politique de confidentialité"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pravila o privatnosti"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebijakan Privasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informativa sulla privacy"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "კონფიდენციალობის პოლიტიკა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "개인정보 취급방침"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personvernerklæring"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacybeleid"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polityka prywatności"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Politica de privacidade"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Politica de confidențialitate"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Политика конфиденциальности"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ochrana osobných údajov"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pravilnik o zasebnosti"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Integritetspolicy"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizlilik ilkesi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Політика приватності"
+          }
+        }
+      }
     },
     "Protected" : {
       "comment" : "State of the VPN connection visible on the home page",
@@ -3243,6 +4607,12 @@
             "value" : "Protegido"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محافظت شده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3267,6 +4637,12 @@
             "value" : "Protetto"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保護されています"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3283,6 +4659,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beskyttet"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschermd"
           }
         },
         "pl" : {
@@ -3313,6 +4695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chránené"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaščiteni"
           }
         },
         "sv" : {
@@ -3349,6 +4737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN pro Apple TV je k dispozici ve všech placených tarifech. Své předplatné si můžete zkontrolovat a spravovat na našich webových stránkách."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN für Apple TV ist für alle kostenpflichtigen Abonnements verfügbar. Du kannst dein Abonnement auf unserer Website überprüfen und verwalten."
           }
         },
         "el" : {
@@ -3417,6 +4811,12 @@
             "value" : "Proton VPN for Apple TV er tilgjengelig på alle betalte planer. Du kan sjekke og administrere abonnementet ditt på nettstedet vårt."
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN voor Apple TV is beschikbaar op alle betaalde abonnementen. U kunt uw abonnement bekijken en beheren op onze website."
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3468,10 +4868,288 @@
       }
     },
     "Proton VPN for Apple TV is not available on free plans" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN для Apple TV недаступны на бясплатных тарыфных планах"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN pro Apple TV není k dispozici v bezplatných tarifech"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN für Apple TV ist in den kostenlosen Abonnements nicht verfügbar."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Proton VPN δεν είναι διαθέσιμο για το Apple TV στα δωρεάν προγράμματα"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN for Apple TV is not available on free plans"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN para Apple TV no está disponible en planes gratuitos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN para Apple TV no está disponible en planes gratuitos"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN Apple TV:lle ei sisälly ilmaistilauksiin"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN pour Apple TV n'est pas disponible avec un abonnement gratuit."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN untuk Apple TV tidak tersedia pada paket gratis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN per Apple TV non è disponibile per i piani gratuiti"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Proton VPN' 'Apple TV'-სთვის ხელმიუწვდომელია უფასო სატარიფო გეგმებისთვის"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple TV용 Proton VPN은 무료 요금제에서 이용할 수 없습니다"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN for Apple TV er ikke tilgjengelig på gratisplaner"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN voor Apple TV is niet beschikbaar op gratis abonnementen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN na Apple TV nie jest dostępny w darmowym planie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Proton VPN para Apple TV não está disponível nos planos gratuitos"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN pentru Apple TV nu este disponibil în abonamentul gratuit"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN для Apple TV недоступен на бесплатных тарифах"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Služba Proton VPN pre Apple TV nie je k dispozícii v bezplatných plánoch"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN för Apple TV är inte tillgängligt på gratispaket"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple TV için Proton VPN Free tarifesi ile kullanılamaz"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN для Apple TV недоступний у безплатних тарифних планах"
+          }
+        }
+      }
     },
     "Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties." : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Палітыка строгай адсутнасці журналаў актыўнасці Proton VPN сертыфікавана знешнім аўдытам. Мы ніколі не сочым за вамі ў інтэрнэце, не запісваем ваш IP-адрас і не абагульваем вашы звесткі са староннімі асобамі."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přísná zásada společnosti Proton VPN o neukládání logů je potvrzena externím auditem. Nikdy vás nebudeme sledovat online, zaznamenávat vaši IP adresu ani sdílet vaše informace s třetími stranami."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die strenge No-Logs-Politik von Proton VPN wird durch ein externes Audit bestätigt. Wir werden dich niemals online verfolgen, deine IP-Adresse protokollieren oder deine Informationen an Dritte weitergeben."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η αυστηρή πολιτική μη καταγραφής του Proton VPN πιστοποιείται από εξωτερικό έλεγχο. Ποτέ δε θα σας εντοπίσουμε στο διαδίκτυο, δε θα καταγράψουμε τη διεύθυνση IP σας ή δε θα μοιραστούμε τις πληροφορίες σας με τρίτους."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La política estricta de no registros de Proton VPN está certificada por una auditoría externa. Nunca te rastrearemos en línea, registraremos tu dirección IP ni compartiremos tu información con terceros."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La política estricta de no registros de Proton VPN está certificada por una auditoría externa. Nunca le rastrearemos en línea, registraremos su dirección IP ni compartiremos su información con terceros."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN:n tiukka ei-lokeja-käytäntö on kolmannen osapuolen vahvistama. Emme koskaan seuraa sinua verkossa, kirjaa IP-osoitettasi tai jaa tietojasi kolmansille osapuolille."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La politique stricte de non-journalisation (no log) de Proton VPN est certifiée par un audit externe. Nous ne suivrons jamais vos activités en ligne, n'enregistrerons jamais votre adresse IP et ne partagerons jamais vos informations avec des tiers."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebijakan tanpa log Proton VPN yang ketat telah tersertifikasi oleh audit eksternal. Kami tidak akan pernah melacak Anda secara online, mencatat alamat IP Anda, atau membagikan informasi Anda dengan pihak ketiga."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La rigorosa politica no-log di Proton VPN è certificata da un audit esterno. Non ti rintracceremo mai online, non registreremo il tuo indirizzo IP e non condivideremo le tue informazioni con terze parti."
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN-ის მკაცრი პოლიტიკა 'ჟურნალის გარეშე' გარე აუდიტის მიერ მოწმდება. ჩვენ არასდროს გადევნებთ თვალყურს ინტერნეტში, არ ვიწერთ თქვენს IP მისამართს და არ ვუზიარებთ თქვენს ინფორმაციას მესამე პირებს."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN의 엄격한 노로그 정책은 외부 감사에 의해 검증되었습니다. 당사는 절대 온라인에서 사용자를 추적하거나, IP 주소를 기록하거나, 정보를 제3자와 공유하지 않을 것입니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPNs strenge ingen-loggføring-praksis er sertifisert av en ekstern revisjon. Vi vil aldri spore deg på nettet, logge IP-adressen din eller dele informasjonen din med tredjeparter."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN's strenge \"no-log\" beleid wordt gecertificeerd door een externe audit. We zullen u nooit online volgen, uw IP-adres bijhouden of uw gegevens delen met derden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polityka braku przechowywania logów Proton VPN została potwierdzona przez zewnętrzny audyt. Nigdy nie będziemy śledzić użytkownika, zapisywać adresów IP ani udostępniać danych stronom trzecim."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rigorosa política de não registro do Proton VPN é certificada por uma auditoria externa. Nunca o rastrearemos on-line, registraremos seu endereço IP ou compartilharemos suas informações com terceiros."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Politica strictă fără înregistrare a Proton VPN este certificată de un audit extern. Nu vă vom urmări niciodată online, nu vă vom înregistra adresa IP și nu vă vom partaja informațiile cu terțe părți."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Строгая политика отсутствия журналов активности Proton VPN подтверждена внешней проверкой. Мы никогда не будем отслеживать вашу активность в интернете, сохранять ваш IP-адрес или передавать вашу информацию третьим лицам."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Striktná politika zákazu protokolovania spoločnosti Proton VPN je potvrdená externým auditom. Nikdy vás nebudeme sledovať online, zaznamenávať vašu IP adresu ani zdieľať vaše informácie s tretími stranami."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN:s strikta policy att inte logga är certifierad av en extern granskning. Vi kommer aldrig att spåra dig online, logga din IP-adress eller dela din information med tredje part."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN sıkı kayıt tutmama ilkesi bir dış denetim tarafından onaylanmıştır. Sizi asla çevrim içi olarak izlemeyeceğiz, IP adresinizi kaydetmeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сувора політика без журналювання Proton VPN сертифікована зовнішнім аудитом. Ми ніколи не стежимо за вашими діями онлайн, не записуємо вашу IP-адресу та не передаємо вашу інформацію третім сторонам."
+          }
+        }
+      }
     },
     "Quick Connect" : {
       "comment" : "Button title",
@@ -3519,6 +5197,12 @@
             "value" : "Conexión rápida"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اتصال سریع"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3531,6 +5215,12 @@
             "value" : "Connexion rapide"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brzo povezivanje"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3541,6 +5231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connessione rapida"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クイック接続"
           }
         },
         "ka" : {
@@ -3559,6 +5255,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hurtigtilkobling"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snel Verbinden"
           }
         },
         "pl" : {
@@ -3589,6 +5291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rýchle pripojenie"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hitro povezovanje"
           }
         },
         "sv" : {
@@ -3657,6 +5365,12 @@
             "value" : "Recomendado"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توصیه شده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3669,6 +5383,12 @@
             "value" : "Recommandé"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preporučeno"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3679,6 +5399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Consigliato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推奨"
           }
         },
         "ka" : {
@@ -3697,6 +5423,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anbefalt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aanbevolen"
           }
         },
         "pl" : {
@@ -3727,6 +5459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odporúčané"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Priporočeno"
           }
         },
         "sv" : {
@@ -3798,7 +5536,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skannaa QR-koodi tai mene\n"
+            "value" : "Skannaa QR-koodi tai avaa\n"
           }
         },
         "fr" : {
@@ -3835,6 +5573,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skann QR-koden eller gå til\n"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan de QR-code of ga naar\n"
           }
         },
         "pl" : {
@@ -4546,7 +6290,158 @@
       }
     },
     "Sign out?" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйсці?"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odhlásit se?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abmelden?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποσύνδεση;"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign out?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cerrar sesión?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cerrar sesión?"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjaudutaanko ulos?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se déconnecter ?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keluar dari akun?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuoi uscire dall'account?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウトしますか？"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გახვალთ?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그아웃 하시겠습니까?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logge av?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uitloggen?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wylogować się?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sair da sessão?"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deconectare?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bыйти?"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odhlásiť?"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se želite izpisati?"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logga ut?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oturum kapatılsın mı?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вийти?"
+          }
+        }
+      }
     },
     "Signing out..." : {
       "comment" : "Title of the progress view when user starts signing out",
@@ -4594,6 +6489,12 @@
             "value" : "Cerrando sesión..."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال خروج..."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4606,6 +6507,12 @@
             "value" : "Déconnexion..."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odjavljivanje..."
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4616,6 +6523,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disconnessione..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウト中..."
           }
         },
         "ka" : {
@@ -4634,6 +6547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Logger av..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uitloggen..."
           }
         },
         "pl" : {
@@ -4664,6 +6583,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odhlasovanie..."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odjavljanje..."
           }
         },
         "sv" : {
@@ -4774,6 +6699,12 @@
             "value" : "Kundesenter"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helpcentrum"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4825,10 +6756,312 @@
       }
     },
     "Terms of service" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умовы абслугоўвання"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podmínky použití"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzungsbedingungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όροι χρήσης"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of service"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos de servicio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos de servicio"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شرایط سرویس"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käyttöehdot"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions d’utilisation du service"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uvjeti korištenja"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketentuan layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termini di servizio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用規約"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მომსახურების პირობები"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서비스 이용약관"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukervilkår"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicevoorwaarden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regulamin"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termos de serviço"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termenii serviciului"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Условия использования"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podmienky používania"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pogoji storitve"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Användarvillkor"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hizmet koşulları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умови надання послуг"
+          }
+        }
+      }
     },
     "Terms of Service" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умовы абслугоўвання"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podmínky použití"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nutzungsbedingungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όροι Παροχής Υπηρεσιών"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of Service"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos de servicio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos de servicio"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käyttöehdot"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions d’utilisation du service"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Persyaratan Layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termini di servizio"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "მომსახურების პირობები"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서비스 이용 약관"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruksvilkår"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servicevoorwaarden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regulamin"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termos de Serviço"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termenii serviciului"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Условия использования"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podmienky používania"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Användarvillkor"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hizmet Koşulları"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Умови надання послуг"
+          }
+        }
+      }
     },
     "There was a problem.\nPlease check your network connection" : {
       "comment" : "Informative text when the app failed to download the country list.",
@@ -4884,7 +7117,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Une erreur s'est produite.\nVérifiez votre connexion réseau"
+            "value" : "Une erreur s'est produite.\nVeuillez vérifier votre connexion réseau."
           }
         },
         "id" : {
@@ -4915,6 +7148,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Et problem oppstod.\nVennligst sjekk internettforbindelsen din"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is een probleem opgetreden.\nControleer uw internetverbinding"
           }
         },
         "pl" : {
@@ -5055,6 +7294,12 @@
             "value" : "For å lese personvernreglene våre, skann QR-koden eller gå til"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voor het lezen van ons privacybeleid scant u de QR-code of gaat u naar"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5106,7 +7351,146 @@
       }
     },
     "To unlock lightning-fast streaming with servers in 100+ countries, subscribe to VPN Plus." : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Падпішыцеся на VPN Plus, каб разблакіраваць звышвысокія хуткасці трансляцый тэлеперадач і фільмаў з серверамі, якія знаходзяцца больш чым у 100 краінах."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chcete-li odemknout bleskurychlé streamování se servery ve více než 100 zemích, přejděte na VPN Plus."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um blitzschnelles Streaming mit Servern in über 100 Ländern freizuschalten, abonniere VPN Plus."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Για να ξεκλειδώσετε αστραπιαία ροή με διακομιστές σε 100+ χώρες, εγγραφείτε στο VPN Plus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To unlock lightning-fast streaming with servers in 100+ countries, subscribe to VPN Plus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suscríbete a VPN Plus y disfruta de streaming rápido con servidores en más de 100 países."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suscríbase a VPN Plus y disfrute de streaming rápido con servidores en más de 100 países."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaa salamannopea suoratoisto 100+ maan palvelimilla hankkimalla VPN Plus."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour bénéficier d'un streaming ultrarapide avec des serveurs dans plus de 100 pays, abonnez-vous à VPN Plus."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Untuk membuka akses ke streaming secepat kilat dengan server di 100+ negara, berlanggananlah ke VPN Plus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per sbloccare uno streaming veloce con server in oltre 100 paesi, iscriviti a VPN Plus."
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ჩქაროსნული სერვერების განსაბლოკად 100+ ქვეყანაში გამოიწერეთ VPN Plus."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100개 이상의 국가에 있는 서버로 번개처럼 빠른 스트리밍을 잠금 해제하려면 VPN Plus를 구독하세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For å låse opp lynrask strømming med tjenere i 100+ land, abonner på VPN Plus."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om bliksemsnel streamen te ontgrendelen met servers in meer dan 100 landen, meld u aan op VPN Plus."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subskrybuj plan VPN Plus, aby odblokować błyskawiczny streaming z serwerami w ponad 100 krajach."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para usufruir de streaming ultrarrápido com servidores em mais de 100 países, assine o VPN Plus."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pentru a debloca vitezele maxime de vizionare în flux cu servere în peste 100 de țări abonați-vă la VPN Plus."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы разблокировать молниеносный просмотр потокового видео с использованием серверов в 100 с лишним странах, подпишитесь на VPN Plus."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ak chcete odomknúť bleskové streamovanie so servermi vo viac ako 100 krajinách, predplaťte si službu VPN Plus."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "För att låsa upp blixtsnabb streaming med servrar i 100+ länder, prenumerera på VPN Plus."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 üzerinde ülkedeki sunucularla yayın akışlarını yıldırım hızında izlemek için VPN Plus tarifesine abone olun."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Щоб розблокувати блискавичну потокову трансляцію з серверами в понад 100 країнах, передплатіть VPN Plus."
+          }
+        }
+      }
     },
     "Unprotected" : {
       "comment" : "State of the VPN connection visible on the home page",
@@ -5154,6 +7538,12 @@
             "value" : "No protegido"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محافظت نشده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5166,6 +7556,12 @@
             "value" : "Sans protection"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nezaštićeno"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5176,6 +7572,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Non protetto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保護されていません"
           }
         },
         "ka" : {
@@ -5194,6 +7596,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ubeskyttet"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onbeschermd"
           }
         },
         "pl" : {
@@ -5226,6 +7634,12 @@
             "value" : "Nechránené"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nezaščiten"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5247,10 +7661,294 @@
       }
     },
     "Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Палепшыце сваю падпіску, каб карыстацца праграмай. Вы таксама можаце ўвайсці з іншым уліковым запісам, калі ў вас ужо ёсць Proton VPN Plus."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chcete-li aplikaci používat, proveďte nyní navýšení tarifu nebo se přihlaste do jiného účtu, který má předplacený tarif Proton VPN Plus"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade jetzt, um die App zu nutzen, oder melde dich mit einem anderen Konto an, wenn du bereits Proton VPN Plus hast."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναβαθμίστε τώρα για να χρησιμοποιήσετε την εφαρμογή ή συνδεθείτε με διαφορετικό λογαριασμό εάν έχετε ήδη Proton VPN Plus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade now to use the app, or sign in with a different account if you already have Proton VPN Plus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualiza ahora para usar la aplicación, o inicia sesión con una cuenta diferente si ya tienes Proton VPN Plus"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualice ahora para usar la aplicación, o inicie sesión con una cuenta diferente si ya tiene Proton VPN Plus."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Päivitä tilauksesi nyt käyttääksesi sovellusta tai kirjaudu sisään eri tilillä, jos sinulla on jo Proton VPN Plus"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Améliorez dès à présent votre abonnement pour utiliser l'application ou connectez-vous à un autre compte si vous disposez déjà Proton VPN Plus."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tingkatkan sekarang juga untuk menggunakan aplikasi ini, atau masuk dengan akun yang berbeda apabila Anda telah memiliki Proton VPN Plus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esegui ora l'upgrade per utilizzare l'app o accedi con un account diverso se disponi già di Proton VPN Plus"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ასიეთ თქვენი სატარიფო გეგმა, რომ გამოიყენოთ აპი, ან შედით სხვა ანგარიშით, თუ უკვე გაქვთ Proton VPN Plus"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱을 사용하려면 지금 업그레이드하거나, 이미 Proton VPN Plus가 있는 경우 다른 계정으로 로그인하세요"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppgrader nå for å bruke appen, eller logg på med en annen konto hvis du allerede har Proton VPN Plus"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade nu om de app te gebruiken, of meld u aan met een ander account als u al Proton VPN Plus heeft"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ulepsz plan, aby używać aplikacji lub zaloguj się za pomocą innego konta, jeśli masz już plan Proton VPN Plus"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faça o upgrade agora para usar o aplicativo ou entre com uma conta diferente se você já tiver o Proton VPN Plus"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Achiziționați acum un plan cu plată pentru a putea folosi aplicația sau conectați-vă cu alt cont dacă aveți deja Proton VPN Plus."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Улучшите сейчас, чтобы пользоваться приложением, или войдите с другим аккаунтом, если у вас уже есть Proton VPN Plus"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgradujte teraz, aby ste mohli používať aplikáciu, alebo sa prihláste pomocou iného účtu, ak už máte Proton VPN Plus"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppgradera nu för att använda appen eller logga in med ett annat konto om du redan har Proton VPN Plus"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulamayı kullanmak için tarifenizi yükseltin veya Proton VPN Plus tarifeniz varsa farklı bir hesapla oturum açın"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перейдіть на вищий тарифний план, щоб використовувати програму, або ввійдіть з іншим обліковим записом, якщо ви вже маєте передплату Proton VPN Plus"
+          }
+        }
+      }
     },
     "Upgrade your privacy" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Палепшыце сваю прыватнасць"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zvyšte své soukromí"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbessere deine Privatsphäre"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναβαθμίστε το απόρρητό σας"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade your privacy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejora tu privacidad"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejore su privacidad"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paranna yksityisyyttäsi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faites passer le respect de votre vie privée au niveau supérieur."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tingkatkan privasi Anda"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Migliora la tua privacy"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "გააუმჯობესეთ თქვენი კონფიდენციალობა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "프라이버시를 업그레이드하세요"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppgrader personvernet"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgrade uw privacy"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zwiększ swoją prywatność"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dê um upgrade na sua privacidade"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Îmbunătățiți-vă confidențialitatea"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повысьте вашу приватность"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upgradujte svoje súkromie"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nadgradite svojo zasebnost"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppgradera din integritet"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizlilik düzeyinizi yükseltin"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вдоскональте свою приватність"
+          }
+        }
+      }
     },
     "Using another device, go to" : {
       "comment" : "1st step of the login process",
@@ -5266,6 +7964,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Při použití jiného zařízení přejděte na"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwende ein anderes Gerät und gehe zu"
           }
         },
         "el" : {
@@ -5307,7 +8011,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Menggunakan perangkat lain, kunjungi"
+            "value" : "Dengan menggunakan perangkat lain, kunjungi"
           }
         },
         "it" : {
@@ -5332,6 +8036,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bruk en annen enhet, gå til"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruik een ander toestel, ga naar"
           }
         },
         "pl" : {
@@ -5433,7 +8143,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Käytätkö Proton Free -tilausta?"
+            "value" : "Käytätkö Proton Freetä?"
           }
         },
         "fr" : {
@@ -5470,6 +8180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bruker du Proton Free?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruikt u Proton Free?"
           }
         },
         "pl" : {
@@ -5523,7 +8239,146 @@
       }
     },
     "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs." : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наведайце наш даведачны цэнтр у інтэрнэце для парад, якія датычыцца выпраўлення непаладак, дапаможнікаў па наладцы і адказаў на частыя пытанні."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navštivte naše online centrum podpory, kde najdete tipy pro řešení problémů, průvodce nastavením a odpovědi na nejčastější dotazy."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In unserem Online-Support-Center findest du Tipps zur Fehlerbehebung, Einrichtungsanleitungen und Antworten auf häufig gestellte Fragen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επισκεφθείτε το διαδικτυακό μας Κέντρο Υποστήριξης για συμβουλές αντιμετώπισης προβλημάτων, οδηγούς εγκατάστασης και απαντήσεις σε συχνές ερωτήσεις."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visita nuestro Centro de Soporte en línea para consejos de solución de problemas, guías de configuración y respuestas a preguntas frecuentes."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visite nuestro Centro de Soporte en línea para consejos de solución de problemas, guías de configuración y respuestas a preguntas frecuentes."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verkkotukikeskuksestamme löydät vianetsintävinkkejä, käyttöönotto-oppaita ja vastauksia usein kysyttyihin kysymyksiin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veuillez consulter notre espace Aide & Support pour obtenir des conseils de dépannage, des guides de configuration, et des réponses aux questions fréquentes."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunjungi Pusat Bantuan online kami untuk memperoleh tips penyelesaian masalah, panduan pengaturan, dan jawaban atas pertanyaan yang umum ditanyakan (FAQ)."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visita il nostro Centro assistenza online per suggerimenti sulla risoluzione dei problemi, guide all'installazione e risposte alle domande frequenti."
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ეწვიეთ ჩვენს ონლაინ მხარდაჭერის ცენტრს პრობლემების მოგვარების მინიშნებებისთვის, მორგების სახელმძღვანელოებისთვის და პასუხებისთვის ხშირად დასმულ კითხვებზე."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "문제 해결 방법, 설정 가이드, 자주 묻는 질문에 대한 답을 확인하려면 온라인 지원 센터를 방문하세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besøk vårt støttesenter på nettet for feilsøkingstips, oppsettsveiledninger og svar på vanlige spørsmål."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bezoek ons online Helpcentrum voor probleemoplossings-tips, installatiehandleidingen en antwoorden op veelgestelde vragen."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odwiedź nasze centrum pomocy dla wskazówek, poradników i odpowiedzi na najczęściej zadawane pytania."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visite nosso Centro de Suporte on-line para obter dicas de solução de problemas, guias de configuração e respostas a perguntas frequentes."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vizitați centrul nostru de asistență online pentru sfaturi de depanare, ghiduri de configurare și răspunsuri la întrebări frecvente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посетите наш справочный центр онлайн для получения советов по устранению неполадок, руководств по настройке и ответов на часто задаваемые вопросы."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navštívte naše online centrum podpory, kde nájdete tipy na riešenie problémov, návody na nastavenie a odpovede na často kladené otázky."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besök vårt supportcenter online för felsökningstips, installationsguider och svar på vanliga frågor."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorun çözme ipuçları, kurulum rehberleri ve sık sorulan soruların yanıtları için çevrim içi destek merkezimize bakabilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відвідайте наш довідковий центр онлайн, щоб дізнатися про поради щодо усунення несправностей, прочитати інструкції з налаштування та знайти відповіді на поширені запитання."
+          }
+        }
+      }
     },
     "Watch without being watched." : {
       "comment" : "Subtitle on the login page",
@@ -5538,6 +8393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sledujte, aniž byste byli sledováni."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaue, ohne beobachtet zu werden."
           }
         },
         "el" : {
@@ -5606,10 +8467,22 @@
             "value" : "Se uten å bli overvåket."
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk zonder bekeken te worden."
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oglądaj bez bycia oglądanym."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assista sem ser espionado"
           }
         },
         "ro" : {
@@ -5651,7 +8524,146 @@
       }
     },
     "Watch your favorite movies and TV shows on any major streaming platform" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глядзіце свае абраныя фільмы і тэлеперадачы на любой асноўнай платформе з трансляцыямі"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sledujte své oblíbené filmy a televizní pořady na všech hlavních streamovacích platformách"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sieh dir deine Lieblingsfilme und -TV-Sendungen auf allen großen Streaming-Plattformen an."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρακολουθήστε τις αγαπημένες σας ταινίες και τηλεοπτικές εκπομπές σε οποιαδήποτε μεγάλη πλατφόρμα ροής"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Watch your favorite movies and TV shows on any major streaming platform"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mira tus películas y programas de TV favoritos en cualquier plataforma de streaming"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mire sus películas y programas de TV favoritos en cualquier plataforma de streaming"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katso suosikkielokuviasi ja -televisio-ohjelmiasi missä tahansa suositussa suoratoistopalvelussa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profitez de vos émissions de télévision et films préférés sur la plupart des plateformes de streaming."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonton berbagai film dan tayangan TV favorit Anda pada platform streaming besar mana pun"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guarda i tuoi film e serie TV preferiti su qualsiasi piattaforma di streaming"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "უყურეთ თქენს საყვარელ ფილმებს და სერიალებს ყველა ძირითად სტრიმინგის პლატფორმაზე"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "주요 스트리밍 플랫폼에서 좋아하는 영화 및 드라마를 시청하세요"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se favorittfilmene og TV-programmene dine på en hvilken som helst større strømmeplattform"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bekijk uw favoriete films en series op elk belangrijk streaming platform"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oglądaj ulubione filmy i programy telewizyjne w dowolnej usłudze streamingowej"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assista a seus filmes e programas de TV favoritos nas principais plataformas de streaming"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vizionați filmele și emisiunile TV favorite pe orice platformă de redare în flux"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смотрите любимые фильмы и телепрограммы на любой ведущей платформе потокового вещания"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pozerajte svoje obľúbené filmy a televízne programy na všetkých hlavných streamovacích platformách"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titta på dina favoritfilmer och TV-program på vilken större plattform för streaming som helst"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sevdiğiniz filmleri ve TV dizilerini herhangi bir büyük yayın akışı platformundan izleyin"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дивіться свої улюблені фільми й телешоу на будь-якій популярній платформі потокової трансляції"
+          }
+        }
+      }
     },
     "When asked for your verification code, enter" : {
       "comment" : "3rd step of the login process. We append an 8 character code to the end of this string.",
@@ -5667,6 +8679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po výzvě k zadání ověřovacího kódu zadejte"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du nach einem Bestätigungscode gefragt wirst, verwende"
           }
         },
         "el" : {
@@ -5735,10 +8753,22 @@
             "value" : "Når du blir bedt om verifiseringskoden, skriver du inn"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wanneer gevraagd wordt om uw verificatiecode, voer in"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wpisz kod weryfikacyjny"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando solicitado a fornecer seu código de verificação, digite"
           }
         },
         "ro" : {
@@ -5793,6 +8823,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po výzvě k zadání ověřovacího kódu zadejte (načítání...)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn du nach einem Bestätigungscode gefragt wirst, verwende (wird abgerufen...)"
           }
         },
         "el" : {
@@ -5861,10 +8897,22 @@
             "value" : "Når du blir bedt om verifiseringskoden, skriv inn (henter...)"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wanneer gevraagd om uw verificatiecode, voer in (ophalen...)"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wpisz kod weryfikacyjny (pobieranie)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando for solicitado seu código de verificação, digite (recuperando...)"
           }
         },
         "ro" : {
@@ -5990,6 +9038,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verifiseringskoden din er utløpt"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uw verificatiecode is verlopen"
           }
         },
         "pl" : {
