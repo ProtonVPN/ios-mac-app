@@ -25,19 +25,21 @@ extension XCUIElement {
      */
     @discardableResult
     func tapAndClearText() -> XCUIElement {
-        guard let stringValue = self.value as? String else {
-            XCTFail("Tried to clear and enter text into a non string value")
-            return self
+        if let stringValue = self.value as? String {
+            //tap at the right corner of the input
+            let lowerRightCorner = self.coordinate(
+                withNormalizedOffset: CGVectorMake(0.9, 0.9)
+            )
+            lowerRightCorner.tap()
+
+            let delete: String = String(
+                repeating: XCUIKeyboardKey.delete.rawValue,
+                count: stringValue.count
+            )
+            self.typeText(delete)
+        } else {
+            self.tap()
         }
-
-        //tap at the right corner of the input
-        let lowerRightCorner = self.coordinate(
-            withNormalizedOffset: CGVectorMake(0.9, 0.9)
-        )
-        lowerRightCorner.tap()
-
-        let delete: String = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
-        self.typeText(delete)
         return self
     }
 }
