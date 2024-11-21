@@ -52,6 +52,7 @@ struct HomeConnectionCardTitleFeature {
                 return Localizable.connectionCardConnectingTo
             }
         }
+
         public init() { }
     }
 }

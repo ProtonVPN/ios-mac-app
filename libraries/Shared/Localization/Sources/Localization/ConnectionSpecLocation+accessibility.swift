@@ -65,11 +65,11 @@ public extension ConnectionSpec.Location {
 
     func subtext(locale: Locale) -> String? {
         switch self {
-        case .fastest, .random, .region, .secureCore(.fastest), .secureCore(.random), .secureCore(.fastestHop):
+        case .fastest, .random, .region, .secureCore(.random):
             return nil
         case let .exact(server, number, subregion, _):
             var text = ""
-            if server == .free {
+            if case .free = server {
                 text = "FREE"
             } else if let subregion {
                 text = subregion
@@ -80,6 +80,8 @@ public extension ConnectionSpec.Location {
                 text += " #\(number)"
             }
             return text
+        case .secureCore(.fastest), .secureCore(.fastestHop):
+            return Localizable.viaSecureCore
         case .secureCore(.hop(_, let via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))
         }

@@ -37,13 +37,13 @@ public struct ConnectionFlagInfoView: View {
     let withDivider: Bool
     let isConnected: Bool
 
-    @State var showDetail = false
-
     let detailAction: ((Action) -> Void)?
     let images: RecentsImages
 
     @ScaledMetric
     private var maintenanceIconSize: CGFloat = 24
+
+    @State private var showDetail = false
 
     public init(
         intent: ConnectionSpec,
@@ -71,13 +71,16 @@ public struct ConnectionFlagInfoView: View {
     public var body: some View {
         HStack(spacing: 0) {
             flag
+
             Spacer()
                 .frame(width: 12)
+
             ZStack(alignment: .leading) {
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack {
                             textHeader
+
                             if isConnected {
                                 connectedPin
                             }

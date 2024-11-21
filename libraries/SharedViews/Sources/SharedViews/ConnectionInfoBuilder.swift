@@ -66,7 +66,10 @@ public struct ConnectionInfoBuilder {
             case .fastest, .random:
                 return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
             case .fastestHop:
-                return nil
+                guard case let .secureCore(entryCode) = server.logical.kind else {
+                    return nil
+                }
+                return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: entryCode) ?? "")
             case .hop(_, let via):
                 return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: via) ?? "")
             }
