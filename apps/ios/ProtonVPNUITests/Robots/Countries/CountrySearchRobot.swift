@@ -25,8 +25,8 @@ fileprivate let clearSearchButton = Localizable.searchRecentClear
 fileprivate let buttonConnectDisconnect = "ic power off"
 fileprivate let clearTextButton = "Clear text"
 
-class CountrySearchRobot: CoreElements {
-    
+class CountrySearchRobot: ConnectionBaseRobot {
+
     let verify = Verify()
 
     @discardableResult
@@ -37,11 +37,12 @@ class CountrySearchRobot: CoreElements {
     }
 
     @discardableResult
-    func hitPowerButton(server: String) -> CountrySearchRobot {
+    func hitPowerButton(server: String) -> ConnectionStatusRobot {
         cell().firstMatch()
             .onChild(staticText(server))
             .onChild(button(buttonConnectDisconnect)).tap()
-        return self
+        allowVpnPermission()
+        return ConnectionStatusRobot()
     }
 
     @discardableResult
@@ -50,7 +51,7 @@ class CountrySearchRobot: CoreElements {
         button(Localizable.cancel).tap()
         return self
     }
-    
+
     class Verify: CoreElements {
         @discardableResult
         func serverFound(server: String) -> CountrySearchRobot {

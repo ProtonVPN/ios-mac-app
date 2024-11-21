@@ -24,11 +24,12 @@ import ProtonCoreTestingToolkitPerformance
 import XCTest
 import UITestsHelpers
 
+@MainActor
 class MainMeasurements: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
     private let countryListRobot = CountryListRobot()
     private let connectionStatusRobot = ConnectionStatusRobot()
-    
+
     private let workflow = "main_measurements"
     private lazy var measurementContext = MeasurementContext(MeasurementConfig.self)
     
@@ -51,7 +52,7 @@ class MainMeasurements: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-    
+
     func testLoginSLI() {
         let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
 
@@ -64,8 +65,8 @@ class MainMeasurements: ProtonVPNUITests {
             .signIn(robot: ConnectionStatusRobot.self)
 
         measurementProfile.measure {
-            ConnectionStatusRobot()
-                .verify.connectionStatusNotConnected()
+            homeRobot
+                .verify.isLoggedIn()
         }
     }
 
@@ -83,8 +84,8 @@ class MainMeasurements: ProtonVPNUITests {
             .quickConnectViaQCButton()
 
         measurementProfile.measure {
-            connectionStatusRobot
-                .verify.connectionStatusConnected(robot: HomeRobot.self)
+            homeRobot
+                .verify.qcButtonConnected()
         }
 
         homeRobot
@@ -112,8 +113,8 @@ class MainMeasurements: ProtonVPNUITests {
             .hitPowerButton(server: countryName)
 
         measurementProfile.measure {
-            connectionStatusRobot
-                .verify.connectedToAServer(countryName)
+            homeRobot
+                .verify.qcButtonConnected()
         }
 
         homeRobot

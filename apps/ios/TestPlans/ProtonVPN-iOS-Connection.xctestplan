@@ -9,27 +9,31 @@
     }
   ],
   "defaultOptions" : {
-    "testRepetitionMode" : "retryOnFailure",
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
-      "skippedTests" : [
-        "FreeRescopeTests",
-        "HumanVerificationTests",
-        "InternalAndExternalSignUpTests",
-        "LoginExtAccountTests",
-        "LoginExternalAccountTests",
-        "LoginTests",
-        "MainMeasurements",
-        "PerformanceTests",
-        "PlanTests",
-        "ProfilesTests",
-        "ProtonVPNUITests",
-        "SettingsTests",
-        "SignupTests",
-        "SubscriptionTests",
-        "TokenRefreshTests"
+      "selectedTests" : [
+        "CountriesConnectionTests\/testConnectAndDisconnectViaCountry()",
+        "CountriesConnectionTests\/testConnectAndDisconnectViaServer()",
+        "CountriesConnectionTests\/testConnectionViaSecureCore()",
+        "CountriesConnectionTests\/testConnectionWithAllSettingsOn()",
+        "CountriesConnectionTests\/testReconnectionViaWithKsOn()",
+        "FreeUserConnectionTests\/testConnectAndDisconnectViaQCButtonFreeUser()",
+        "FreeUserConnectionTests\/testConnectToAPlusServerWithFreeUser()",
+        "ProfileConnectionTests\/testCancelLogoutWhileConnectedToVpn()",
+        "ProfileConnectionTests\/testConnectAndDisconnectViaFastestAndRandomProfile()",
+        "ProfileConnectionTests\/testConnectAndDisconnectViaProfile()",
+        "ProfileConnectionTests\/testConnectionWithDefaultAndSecureCoreProfile()",
+        "ProfileConnectionTests\/testLogoutWhileConnectedToVPNServer()",
+        "ProtocolsConnectionTests\/testConnectViaSmartProtocol()",
+        "ProtocolsConnectionTests\/testConnectViaSmartProtocolKillSwitchON()",
+        "ProtocolsConnectionTests\/testConnectViaStealthProtocol()",
+        "ProtocolsConnectionTests\/testConnectViaStealthProtocolKillSwitchON()",
+        "ProtocolsConnectionTests\/testConnectViaWireGuardTCPProtocol()",
+        "ProtocolsConnectionTests\/testConnectViaWireGuardTCPProtocolKillSwitchON()",
+        "ProtocolsConnectionTests\/testConnectViaWireGuardUDPProtocol()",
+        "ProtocolsConnectionTests\/testConnectViaWireGuardUDPProtocolKillSwitchON()"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",

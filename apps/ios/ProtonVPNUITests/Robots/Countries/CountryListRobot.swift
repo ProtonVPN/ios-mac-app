@@ -9,50 +9,60 @@
 import fusion
 import Strings
 
-fileprivate let secureCoreSwitchId = "secureCoreSwitchId"
+fileprivate let secureCoreSwitchId = "secureCoreSwitch"
 fileprivate let activateSCButton = Localizable.modalsDiscourageSecureCoreActivate
-fileprivate let countrySearchButtonId = "countrySearchButtonId"
+fileprivate let countrySearchButtonId = "countrySearchButton"
 fileprivate let upgradeButtonId = "vpn subscription badge"
 fileprivate let buttonConnectDisconnect = "ic power off"
 
-class CountryListRobot: CoreElements {
+class CountryListRobot: ConnectionBaseRobot {
     
     let verify = Verify()
-
+    
     @discardableResult
     func openServerList(_ name: String) -> ServerListRobot {
         staticText(name).tap()
         return ServerListRobot()
     }
-
+    
     @discardableResult
     func searchForServer(serverName: String) -> CountrySearchRobot {
         button(countrySearchButtonId).tap()
         return CountrySearchRobot().search(for: serverName)
     }
-
+    
     @discardableResult
-    func connectToFirstCountryFromList() -> ConnectionStatusRobot {
+    func connectToCountry(_ countryName: String) -> ConnectionStatusRobot {
+        staticText(countryName).firstMatch().tap()
         button(buttonConnectDisconnect).byIndex(0).tap()
+        allowVpnPermission()
         return ConnectionStatusRobot()
     }
-
+    
     @discardableResult
     func connectToAPlusCountry(_ name: String) -> HomeRobot {
         button(upgradeButtonId).byIndex(1).tap()
+        allowVpnPermission()
         return HomeRobot()
     }
-
+    
     @discardableResult
     func secureCoreOn() -> CountryListRobot {
         swittch(secureCoreSwitchId).tap()
         button(activateSCButton).tap()
         return CountryListRobot()
     }
-
+    
     @discardableResult
-    func getFirstServerFromList() -> String {
-        return cell().firstMatch().onChild(staticText().firstMatch()).label()  ?? ""
+    func getRandomServerFromList() -> String {
+        let serverCount = app.buttons.matching(
+            identifier: buttonConnectDisconnect
+        ).count
+        let randomIndex = Int.random(in: 0..<serverCount)
+        return cell()
+            .byIndex(randomIndex)
+            .onChild(staticText().firstMatch())
+            .label() ?? ""
     }
     
     @discardableResult

@@ -80,15 +80,11 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     func logoutIfNeeded() {
-        let tabBarsQuery = app.tabBars
-        _ = tabBarsQuery.element.waitForExistence(timeout: WaitTimeout.short) // tests would reach this point when the tabbar is not yet available
-        guard !tabBarsQuery.allElementsBoundByIndex.isEmpty else {
-            return
+        if homeRobot.isLoggedIn() {
+            homeRobot
+                .goToSettingsTab()
+                .logOut()
         }
-
-        tabBarsQuery.buttons["Settings"].tap()
-        app.swipeUp() // For iphone SE small screen
-        settingsRobot.logOut()
     }
 
     override open func tearDownWithError() throws {

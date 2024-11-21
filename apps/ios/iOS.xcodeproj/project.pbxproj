@@ -88,7 +88,12 @@
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */; };
 		770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A32CDCBCAC00812C21 /* ModalRobot.swift */; };
+		770AD2DC2CEDEF42000FFB38 /* FreeUserConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD2DB2CEDEF3B000FFB38 /* FreeUserConnectionTests.swift */; };
+		770AD2DE2CEDF024000FFB38 /* CountriesConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD2DD2CEDF01B000FFB38 /* CountriesConnectionTests.swift */; };
+		770AD2E02CEDF8CD000FFB38 /* ConnectionBaseRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD2DF2CEDF8C9000FFB38 /* ConnectionBaseRobot.swift */; };
 		773B252F2C8860C8001CA9F0 /* CountrySearchRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B252E2C8860C8001CA9F0 /* CountrySearchRobot.swift */; };
+		774F43582CED03C0004AA1BE /* ProtocolsConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774F43572CED03BA004AA1BE /* ProtocolsConnectionTests.swift */; };
+		774F435A2CED03D7004AA1BE /* ConnectionTestsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774F43592CED03D1004AA1BE /* ConnectionTestsBase.swift */; };
 		776B11B32CECA15C0012D2D8 /* XCUIElement+tapAndClearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */; };
 		776B11B52CECA3980012D2D8 /* UIElement+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776B11B42CECA3910012D2D8 /* UIElement+extension.swift */; };
 		77A56C322CC7DE8E004A7F46 /* TwoFaRobot+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77A56C312CC7DE88004A7F46 /* TwoFaRobot+extension.swift */; };
@@ -389,7 +394,7 @@
 		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
 		F377836A26E644BC00392958 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377835F26E644BC00392958 /* SettingsTests.swift */; };
-		F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836226E644BC00392958 /* ConnectionTests.swift */; };
+		F377836C26E644BC00392958 /* ProfileConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836226E644BC00392958 /* ProfileConnectionTests.swift */; };
 		F377836D26E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = F377836426E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan */; };
 		F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836626E644BC00392958 /* ProfilesTests.swift */; };
 		F377836F26E644BC00392958 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836826E644BC00392958 /* LoginTests.swift */; };
@@ -566,7 +571,12 @@
 		66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonWithLoadingTableViewCell.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/ButtonWithLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionModalRobot.swift; sourceTree = "<group>"; };
 		770299A32CDCBCAC00812C21 /* ModalRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalRobot.swift; sourceTree = "<group>"; };
+		770AD2DB2CEDEF3B000FFB38 /* FreeUserConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeUserConnectionTests.swift; sourceTree = "<group>"; };
+		770AD2DD2CEDF01B000FFB38 /* CountriesConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesConnectionTests.swift; sourceTree = "<group>"; };
+		770AD2DF2CEDF8C9000FFB38 /* ConnectionBaseRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBaseRobot.swift; sourceTree = "<group>"; };
 		773B252E2C8860C8001CA9F0 /* CountrySearchRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySearchRobot.swift; sourceTree = "<group>"; };
+		774F43572CED03BA004AA1BE /* ProtocolsConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolsConnectionTests.swift; sourceTree = "<group>"; };
+		774F43592CED03D1004AA1BE /* ConnectionTestsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestsBase.swift; sourceTree = "<group>"; };
 		776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+tapAndClearText.swift"; sourceTree = "<group>"; };
 		776B11B42CECA3910012D2D8 /* UIElement+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIElement+extension.swift"; sourceTree = "<group>"; };
 		77741C932C86070E00F63ED5 /* ProtonVPN-iOS-Connection.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-Connection.xctestplan"; sourceTree = "<group>"; };
@@ -840,7 +850,7 @@
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
 		F377835F26E644BC00392958 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
-		F377836226E644BC00392958 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
+		F377836226E644BC00392958 /* ProfileConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileConnectionTests.swift; sourceTree = "<group>"; };
 		F377836426E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ProtonVPN-iOS-UI-Smoke.xctestplan"; sourceTree = "<group>"; };
 		F377836626E644BC00392958 /* ProfilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
 		F377836826E644BC00392958 /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
@@ -2070,7 +2080,11 @@
 		F377836126E644BC00392958 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
-				F377836226E644BC00392958 /* ConnectionTests.swift */,
+				770AD2DD2CEDF01B000FFB38 /* CountriesConnectionTests.swift */,
+				770AD2DB2CEDEF3B000FFB38 /* FreeUserConnectionTests.swift */,
+				774F43592CED03D1004AA1BE /* ConnectionTestsBase.swift */,
+				774F43572CED03BA004AA1BE /* ProtocolsConnectionTests.swift */,
+				F377836226E644BC00392958 /* ProfileConnectionTests.swift */,
 			);
 			path = Connection;
 			sourceTree = "<group>";
@@ -2135,6 +2149,7 @@
 		F3B783E926E6428C006768A8 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
+				770AD2DF2CEDF8C9000FFB38 /* ConnectionBaseRobot.swift */,
 				F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */,
 				F3B783ED26E6428C006768A8 /* ServerListRobot.swift */,
 			);
@@ -2956,12 +2971,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E97A67732772015A002EB33C /* ObfuscatedConstants.swift in Sources */,
+				774F43582CED03C0004AA1BE /* ProtocolsConnectionTests.swift in Sources */,
 				F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */,
 				F377836A26E644BC00392958 /* SettingsTests.swift in Sources */,
 				B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */,
 				773B252F2C8860C8001CA9F0 /* CountrySearchRobot.swift in Sources */,
+				770AD2E02CEDF8CD000FFB38 /* ConnectionBaseRobot.swift in Sources */,
 				F3B783F526E6428C006768A8 /* HomeRobot.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
+				774F435A2CED03D7004AA1BE /* ConnectionTestsBase.swift in Sources */,
 				57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */,
 				B28688CA2AC1C13800C1BA37 /* FreeRescopeTests.swift in Sources */,
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
@@ -2971,6 +2989,7 @@
 				80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */,
 				FA46A2072B270C8000929229 /* SubscriptionTests.swift in Sources */,
 				770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */,
+				770AD2DC2CEDEF42000FFB38 /* FreeUserConnectionTests.swift in Sources */,
 				B29D298B2B989F47000BA715 /* HumanVerificationTests.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
 				B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */,
@@ -2982,6 +3001,7 @@
 				80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */,
 				ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */,
 				770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */,
+				770AD2DE2CEDF024000FFB38 /* CountriesConnectionTests.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
 				80C4A4E62BCFBC2D00DA1A80 /* LokiApiClient.swift in Sources */,
@@ -2996,7 +3016,7 @@
 				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
 				B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */,
 				776B11B52CECA3980012D2D8 /* UIElement+extension.swift in Sources */,
-				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
+				F377836C26E644BC00392958 /* ProfileConnectionTests.swift in Sources */,
 				E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */,
 				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
 				67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */,

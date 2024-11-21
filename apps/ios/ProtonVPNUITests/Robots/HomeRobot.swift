@@ -14,10 +14,8 @@ fileprivate let tabHome = Localizable.home
 fileprivate let tabCountries = Localizable.countries
 fileprivate let tabProfiles = Localizable.profiles
 fileprivate let tabSettings = Localizable.settings
-fileprivate let quickConnectButtonId = "quick connect inactive button"
-fileprivate let quickDisconnectButtonId = "quick connect active button"
-fileprivate let statusNotConnected = Localizable.notConnected
-fileprivate let connectionStatusUnprotected = Localizable.connectionStatusUnprotected
+fileprivate let quickConnectButtonId = "connect_button"
+fileprivate let quickDisconnectButtonId = "disconnect_button"
 fileprivate let upgradeSubscriptionTitle = Localizable.modalsNewUpsellCountryTitle
 fileprivate let upgradeSubscriptionButton = Localizable.upsellPlansListValidateButton
 fileprivate let buttonOk = Localizable.ok
@@ -29,16 +27,16 @@ fileprivate let upselModalId = "TitleLabel"
 
 // HomeRobot class contains actions for Home view.
 
-class HomeRobot: CoreElements {
+class HomeRobot: ConnectionBaseRobot {
 
     let verify = Verify()
-    
+
     @discardableResult
     func goToCountriesTab() -> CountryListRobot {
         button(tabCountries).tap()
         return CountryListRobot()
     }
-    
+
     @discardableResult
     func goToHomeTab<T: CoreElements>(robot _: T.Type = ConnectionStatusRobot.self) -> T {
         button(tabHome).tap()
@@ -53,13 +51,14 @@ class HomeRobot: CoreElements {
 
     @discardableResult
     func goToSettingsTab() -> SettingsRobot {
-        button(tabSettings).waitUntilExists(time: 30).tap()
+        button(tabSettings).tap()
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func quickConnectViaQCButton() -> ConnectionStatusRobot {
-        button(quickConnectButtonId).tap()
+        button(quickConnectButtonId).firstMatch().tap()
+        allowVpnPermission()
         return ConnectionStatusRobot()
     }
 
@@ -68,60 +67,50 @@ class HomeRobot: CoreElements {
         button(name).byIndex(0).tap()
         return T()
     }
-    
+
     @discardableResult
     func quickDisconnectViaQCButton() -> ConnectionStatusRobot {
-        button(quickDisconnectButtonId).tap()
+        button(quickDisconnectButtonId).firstMatch().tap()
         return ConnectionStatusRobot()
     }
-    
+
     @discardableResult
     public func showSignup() -> SignupRobot {
         button(showSignupButtonLabelText).waitUntilExists().tap()
         return SignupRobot()
     }
-    
+
     @discardableResult
     public func showLogin() -> LoginRobot {
         button(showLoginButtonLabelText).waitUntilExists().tap()
         return LoginRobot()
     }
 
+    public func isLoggedIn() -> Bool {
+        return button(tabHome).waitUntilExists(time: 4).exists()
+    }
+
     class Verify: CoreElements {
-    
+
         @discardableResult
         func qcButtonConnected() -> HomeRobot {
             button(quickDisconnectButtonId).waitUntilExists().checkExists()
             return HomeRobot()
         }
-    
+
         @discardableResult
         func qcButtonDisconnected() -> HomeRobot {
             button(quickConnectButtonId).waitUntilExists().checkExists()
             return HomeRobot()
         }
-    
-        @discardableResult
-        func connectionStatusNotConnected() -> HomeRobot {
-            staticText(connectionStatusUnprotected)
-                .waitUntilExists(time: 30)
-                .checkExists(message: "Failed to check that connection status is not connected. '\(connectionStatusUnprotected)' label is not visible.")
-            return HomeRobot()
-        }
-    
-        @discardableResult
-        func connectionStatusConnectedTo(_ name: String) -> HomeRobot {
-            staticText(name).waitUntilExists().checkExists()
-            return HomeRobot()
-        }
-    
+
         @discardableResult
         func upgradeSubscriptionScreenOpened() -> HomeRobot {
             staticText(upgradeSubscriptionTitle).checkExists()
             button(upgradeSubscriptionButton).checkExists()
             return HomeRobot()
         }
-        
+
         @discardableResult
         func upsellModalIsOpen() -> HomeRobot {
             staticText(upselModalId).checkExists()

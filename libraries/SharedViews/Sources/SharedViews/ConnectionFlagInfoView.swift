@@ -30,6 +30,10 @@ public struct ConnectionFlagInfoView: View {
         case remove
     }
 
+    private enum AccessibilityIdentifiers {
+        static let connectionFlagInfo: String = "connection_flag_info_view"
+    }
+
     let intent: ConnectionSpec
     let isPinned: Bool
     let underMaintenance: Bool
@@ -133,6 +137,7 @@ public struct ConnectionFlagInfoView: View {
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
         .frame(height: withDivider ? 64 : 42)
+        .accessibilityIdentifier(AccessibilityIdentifiers.connectionFlagInfo)
     }
 
     var connectedPin: some View {
