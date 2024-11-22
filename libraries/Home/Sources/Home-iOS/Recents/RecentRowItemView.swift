@@ -68,18 +68,17 @@ struct RecentRowItemView: View {
         }
         .padding(.horizontal, .themeSpacing16)
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
-        .background(Color(.background))
-        .onTapGesture {
-            withAnimation(.easeInOut) {
-                _ = sendAction(.delegate(.connect(item.connection)))
-            }
-        }
     }
 
     public var body: some View {
-        ZStack(alignment: .bottom) {
-            content
+        Button {
+            _ = sendAction(.delegate(.connect(item.connection)))
+        } label: {
+            ZStack(alignment: .bottom) {
+                content
+            }
         }
+        .buttonStyle(RecentRowButtonStyle())
         .accessibilityElement()
         .accessibilityLabel(item.connection.location.accessibilityText(locale: locale))
         .accessibilityAction(named: Localizable.actionConnect) {
