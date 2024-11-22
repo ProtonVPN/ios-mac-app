@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NEHelper"),
         .package(path: "../Foundations/Strings"),
+        .package(path: "../Shared/Localization"),
 
         // 3rd party
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.15.1"),
@@ -37,6 +38,7 @@ let package = Package(
                 "Theme",
                 "Ergonomics",
                 "Strings",
+                "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

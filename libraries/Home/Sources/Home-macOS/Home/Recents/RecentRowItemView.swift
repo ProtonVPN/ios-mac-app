@@ -87,8 +87,9 @@ struct RecentRowItemView: View {
                     .compositingGroup() // prevent the subviews from applying opacity, only the `FlagView` container
                     .opacity(isDisabled ? 0.5 : 1)
                 locationView
-                ConnectionInfoBuilder(intent: item.connection, vpnConnectionActual: nil).subheader.view
-                .lineLimit(1)
+                ConnectionInfoSubheader(model:
+                    ConnectionInfoBuilder(intent: item.connection, vpnConnectionActual: nil).subheader
+                ).lineLimit(1)
 
                 if item.underMaintenance {
                     IconProvider.wrench

@@ -28,7 +28,7 @@ extension Text: Joinable {
     }
 }
 
-extension Array where Element: Joinable {
+extension Collection where Element: Joinable {
     public func joined(separator: Self.Element) -> Self.Element? {
         guard let first else { return nil }
         return dropFirst().reduce(first) { $0.joined(to: $1, with: separator) }

@@ -22,19 +22,19 @@ import Ergonomics
 
 final class TextJoiningTests: XCTestCase {
 
-    func testJoiningEmptyArrayReturnsNil() throws {
+    func testJoiningEmptyArrayReturnsNil() {
         let textArrayWithNoElements: [Text] = []
         let joinedText = textArrayWithNoElements.joined(separator: Text("+"))
         XCTAssertEqual(joinedText, nil)
     }
 
-    func testJoiningOneTextReturnsTextUnchanged() throws {
+    func testJoiningOneTextReturnsTextUnchanged() {
         let text = Text("Hello")
         let joinedText = [text].joined(separator: Text("+"))
         XCTAssertEqual(joinedText, text)
     }
 
-    func testJoiningMultipleTextsReturnsTextJoinedBySeparator() throws {
+    func testJoiningMultipleTextsReturnsTextJoinedBySeparator() {
         let strings = ["Hello", "World"]
         let joinedStrings = strings.joined(separator: "+")
 

@@ -77,7 +77,7 @@ public struct ConnectionInfoBuilder {
         }
     }
 
-    public var subheader: ConnectionInfoSubheader {
+    public var subheader: ConnectionInfoSubheaderModel {
         if let subheaderString {
             let model = TextSubheaderModel(
                 location: subheaderString,
@@ -86,7 +86,7 @@ public struct ConnectionInfoBuilder {
             )
             return .textual(model)
         } else if case .fastest = location, userTier.isFreeTier && vpnConnectionActual == nil {
-            return .freeServerSelectionDisclaimer
+            return .freeServerSelectionDisclaimer(additionalFreeCountryCount: Constants.additionalFreeCountryCount)
         } else {
             return .none
         }
@@ -130,9 +130,9 @@ public struct ConnectionInfoBuilder {
     }
 }
 
-public enum ConnectionInfoSubheader: Equatable {
+public enum ConnectionInfoSubheaderModel: Equatable {
     case textual(TextSubheaderModel)
-    case freeServerSelectionDisclaimer
+    case freeServerSelectionDisclaimer(additionalFreeCountryCount: Int)
     case none
 }
 
