@@ -86,7 +86,10 @@ class LoginTests: ProtonVPNUITests {
     }
     
     func testLoginWithTwoPassUser() {
-        loginAsTwoPassUser()
+        login(withCredentials: twopassusercredentials[0])
+
+        mainRobot
+            .verify.userIsLoggedIn()
     }
 
     @MainActor
@@ -103,7 +106,7 @@ class LoginTests: ProtonVPNUITests {
         waitForLoaderDisappear()
         
         mainRobot
-            .verify.checkUserIsLoggedIn()
+            .verify.userIsLoggedIn()
     }
 
     @MainActor
@@ -120,6 +123,6 @@ class LoginTests: ProtonVPNUITests {
         waitForLoaderDisappear()
         
         mainRobot
-            .verify.checkUserIsLoggedIn()
+            .verify.userIsLoggedIn()
     }
 }
