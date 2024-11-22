@@ -227,6 +227,8 @@ public enum Localizable {
   public static var connectionCardActionCancel: String { return Localizable.tr("Localizable", "_connection_card_action_cancel", fallback: "Cancel") }
   /// Connection card in home tab: "Connecting to <country name>" [Redesign_2023]
   public static var connectionCardConnectingTo: String { return Localizable.tr("Localizable", "_connection_card_connecting_to", fallback: "Connecting to...") }
+  /// Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. [Redesign_2023]
+  public static var connectionCardDefaultConnection: String { return Localizable.tr("Localizable", "_connection_card_default_connection", fallback: "Default connection") }
   /// Connection card in home tab: "Last connected to... <country name>" [Redesign_2023]
   public static var connectionCardLastConnectedTo: String { return Localizable.tr("Localizable", "_connection_card_last_connected_to", fallback: "Last connected to") }
   /// Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023]

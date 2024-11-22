@@ -51,9 +51,10 @@ struct HomeConnectionCardView: View {
     }
 
     private var header: some View {
-        HomeConnectionCardTitleView(store: .init(initialState: .init(), reducer: {
-            HomeConnectionCardTitleFeature()
-        }))
+        HomeConnectionCardHeader(
+            model: store.headerModel,
+            actionSender: { store.send($0) }
+        )
         .padding(.bottom, .themeSpacing8)
         .padding(.top, .themeSpacing24)
     }

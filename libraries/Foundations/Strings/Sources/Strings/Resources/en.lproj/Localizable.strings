@@ -1617,6 +1617,9 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
 
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Default connection";
+
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
 "_connection_card_safely_browsing_from" = "Browsing safely from";
 

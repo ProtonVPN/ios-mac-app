@@ -166,6 +166,10 @@ public struct HomeFeature {
                     }
                     state.destination = .changeServer(.init(serverChangeAvailability: availability))
                     return .none
+
+                case .defaultConnectionTapped:
+                    state.connectionCard.bottomSheetExpansionState = true
+                    return .none
                 }
             case .connectionCard:
                 return .none

@@ -25,7 +25,6 @@ import OrderedCollections
 
 @Reducer
 public struct HomeConnectionCardFeature {
-    
     public typealias ActionSender = (Action) -> Void
 
     @ObservableState
@@ -34,11 +33,16 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
 
+        public var bottomSheetExpansionState: Bool = false
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
                 return userTier.isFreeTier
             }
             return false
+        }
+
+        public var headerModel: ConnectionCardHeaderModel {
+            ConnectionCardHeaderModel(connectionStatus: vpnConnectionStatus, userTier: userTier)
         }
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
@@ -86,6 +90,9 @@ public struct HomeConnectionCardFeature {
             case disconnect
             case tapAction
             case changeServerButtonTapped
+
+            // Header
+            case defaultConnectionTapped
         }
         case delegate(Delegate)
         case watchConnectionStatus
@@ -119,6 +126,25 @@ public struct HomeConnectionCardFeature {
 
                 return .none
             }
+        }
+    }
+}
+
+public enum ConnectionCardHeaderModel: Equatable {
+    case disconnected(isPaid: Bool)
+    case connected
+    case connecting
+
+    init(connectionStatus: VPNConnectionStatus, userTier: Int) {
+        switch connectionStatus {
+        case .disconnected, .disconnecting:
+            self = .disconnected(isPaid: userTier.isPaidTier)
+
+        case .connected:
+            self = .connected
+
+        case .connecting, .loadingConnectionInfo:
+            self = .connecting
         }
     }
 }
