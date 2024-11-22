@@ -74,15 +74,16 @@ public struct HomeView: View {
 
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {
-                        Spacer().frame(height: mapHeight) // Leave transparent space for the map
-                            .id(topID)
-                            .background(trackScrollPosition())
-                        VStack {
+                        ZStack(alignment: .bottom) {
+                            Spacer().frame(height: mapHeight) // Leave transparent space for the map
+                                .id(topID)
+                                .background(trackScrollPosition())
                             LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
                                            startPoint: .top,
                                            endPoint: .bottom)
                             .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
-
+                        }
+                        VStack(spacing: 0) {
                             HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
                                 .padding(.horizontal, .themeSpacing16)
                                 .frame(width: min(proxy.size.width, Self.maxWidth))
@@ -93,8 +94,8 @@ public struct HomeView: View {
                             }
 
                             Color(.background) // needed to take all the available horizontal space for the background
+                                .frame(height: 0)
                         }
-                        .offset(y: -Self.bottomGradientHeight)
                         .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
                     }
                     .frame(width: proxy.size.width)
