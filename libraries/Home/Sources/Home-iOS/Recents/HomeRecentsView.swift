@@ -37,15 +37,15 @@ public struct RecentsSectionView: View {
     public var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                HStack(spacing: 0) {
-                    Text(Localizable.homeRecentsRecentSection)
-                        .themeFont(.caption())
-                        .styled(.weak)
-                        .padding([.top, .horizontal], .themeSpacing16)
-                        .padding(.bottom, .themeSpacing8)
-                    Spacer()
+                if !store.recents.connectionsList.isEmpty {
+                    HStack(spacing: 0) {
+                        Text(Localizable.homeRecentsRecentSection)
+                            .themeFont(.caption())
+                            .styled(.weak)
+                            .padding([.top, .horizontal], .themeSpacing12)
+                        Spacer()
+                    }
                 }
-                .opacity(store.recents.connectionsList.isEmpty ? 0 : 1)
                 let last = store.recents.connectionsList.last
                 ForEach(store.recents.connectionsList) { item in
                     RecentRowItemView(item: item,

@@ -50,7 +50,8 @@ public struct HomeView: View {
     @State private var viewHeight: CGFloat = .zero
     @State private var connectionViewHeight: CGFloat = .zero
     private var mapHeight: CGFloat {
-        max(0, viewHeight - (connectionViewHeight + .themeSpacing24))
+        let recentPeek: CGFloat = store.recents.recents.isEmpty ? 0 : .themeSpacing64
+        return max(0, viewHeight - (connectionViewHeight + recentPeek))
     }
 
     public init(store: StoreOf<HomeFeature>) {
@@ -86,6 +87,7 @@ public struct HomeView: View {
                         VStack(spacing: 0) {
                             HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
                                 .padding(.horizontal, .themeSpacing16)
+                                .padding(.bottom, .themeSpacing12)
                                 .frame(width: min(proxy.size.width, Self.maxWidth))
                                 .background(trackConnectionViewHeight())
                             if !store.userTier.isFreeTier {
