@@ -84,6 +84,9 @@ extension AppDisplayState {
         let resolvedConnection = connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate)
         switch self {
         case .connected:
+#if targetEnvironment(simulator)
+            return .connected(intent, VPNConnectionActual.mock())
+#endif
             return .connected(intent, resolvedConnection)
 
         case .connecting:

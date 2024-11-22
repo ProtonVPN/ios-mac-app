@@ -121,7 +121,7 @@ extension VPNConnectionActual {
         country: String = "CH",
         entryCountry: String? = nil,
         city: String? = "Bern",
-        coordinates: CLLocationCoordinate2D = .mockPoland()
+        coordinates: CLLocationCoordinate2D = .init(latitude: 46.948076, longitude: 7.459652)
     ) -> VPNConnectionActual {
         VPNConnectionActual(
             connectedDate: connectedDate,
