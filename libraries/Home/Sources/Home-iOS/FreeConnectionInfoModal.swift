@@ -22,88 +22,73 @@ import Home
 import Strings
 import ProtonCoreUIFoundations
 import SharedViews
+import Localization
 
 @available(iOS 17, *)
 struct FreeConnectionInfoModal: View {
     var store: StoreOf<FreeConnectionInfoFeature>
 
+    @State private var sheetHeight: CGFloat = .zero
+
     var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing12) {
+        VStack(alignment: .leading, spacing: .themeSpacing16) {
             HStack(spacing: .themeSpacing8) {
                 Text(Localizable.freeConnectionsModalTitle)
                     .font(.themeFont(.body1(.semibold)))
                     .foregroundColor(Color(.text))
                 Spacer()
-                IconProvider.cross
+                Button {
+                    store.send(.dismissButtonTapped)
+                } label: {
+                    IconProvider.cross
+                        .foregroundColor(Color(.icon))
+                }
+
             }
-            Text(Localizable.freeConnectionsModalDescription)
+            Text(Localizable.freeConnectionsModalServersDescription(store.countryCodes.count))
                 .font(.themeFont(.body3(emphasised: false)))
                 .foregroundColor(Color(.text))
-            Text(Localizable.freeConnectionsModalSubtitle(store.countries.count))
+            Text(Localizable.freeConnectionsModalSubtitle(store.countryCodes.count))
                 .font(.themeFont(.body2(emphasised: true)))
                 .foregroundColor(Color(.text))
 
             WrappingHStack(horizontalSpacing: .themeSpacing16, verticalSpacing: .themeSpacing16) {
-                ForEach(store.countries, id: \.self) { country in
+                ForEach(store.countryCodes, id: \.self) { countryCode in
                     HStack(spacing: .themeSpacing8) {
-                        IconProvider.flag(forCountryCode: country.code)?
+                        IconProvider.flag(forCountryCode: countryCode)?
                             .resizable()
                             .scaledToFill()
                             .frame(width: 24, height: 16)
                             .cornerRadius(4)
                             .clipped()
-                        Text(country.name)
+                        Text(LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable)
                             .font(.body3(emphasised: false))
                             .foregroundColor(Color(.text))
                     }
                 }
             }
-            .padding(.bottom, .themeSpacing12)
+            .padding(.vertical, .themeSpacing8)
             Button {
-
+                store.send(.upgradeButtonTapped)
             } label: {
                 Text(Localizable.upgrade)
             }.buttonStyle(PrimaryButtonStyle())
         }
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.top, .themeSpacing24)
+        .overlay {
+            GeometryReader { geometry in
+                Color.clear.preference(key: InnerHeightPreferenceKey.self,
+                                       value: geometry.size.height)
+            }
+        }
+        .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
+            sheetHeight = newHeight
+        }
+        .presentationDetents([.height(sheetHeight)])
+        .presentationDragIndicator(.visible)
 
     }
-}
-
-
-@available(iOS 17, *)
-#Preview("Free Connection Info", traits: .sizeThatFitsLayout) {
-    let countries = [
-        FreeConnectionInfoFeature.Country(
-            name: "United States",
-            code: "US"
-        ),
-        FreeConnectionInfoFeature.Country(
-            name: "Japan",
-            code: "JP"
-        ),
-        FreeConnectionInfoFeature.Country(
-            name: "Poland",
-            code: "PL"
-        ),
-        FreeConnectionInfoFeature.Country(
-            name: "Netherlands",
-            code: "NL"
-        ),
-        FreeConnectionInfoFeature.Country(
-            name: "Romania",
-            code: "RO"
-        )
-    ]
-    FreeConnectionInfoModal(
-        store: .init(
-            initialState: .init(
-                countries: countries
-            )
-        ) {
-            FreeConnectionInfoFeature()
-        }
-    )
-    .frame(width: 375)
 }
 
 // MARK: - View Helpers
@@ -156,4 +141,20 @@ fileprivate struct WrappingHStack: Layout {
             lineHeight = max(lineHeight, subviewSize.height)
         }
     }
+}
+
+@available(iOS 17, *)
+#Preview("Free Connection Info", traits: .sizeThatFitsLayout) {
+    let countries = ["US","JP","PL","NL","RO"]
+
+    FreeConnectionInfoModal(
+        store: .init(
+            initialState: .init(
+                countryCodes: countries
+            )
+        ) {
+            FreeConnectionInfoFeature()
+        }
+    )
+    .frame(width: 375)
 }

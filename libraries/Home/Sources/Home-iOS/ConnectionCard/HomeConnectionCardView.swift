@@ -130,7 +130,6 @@ struct HomeConnectionCardView: View {
             .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfoHeader)
             .padding(.themeSpacing16)
         }
-        .disabled(!store.vpnConnectionStatus.connectionStatusAvailable)
     }
 
     private var card: some View {

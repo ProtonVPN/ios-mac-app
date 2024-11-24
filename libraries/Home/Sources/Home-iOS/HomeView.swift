@@ -147,6 +147,13 @@ public struct HomeView: View {
                 ChangeServerModal(store: store)
             }
         }
+        .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo,
+                                  action: \.destination.freeConnectionsInfo))
+            { store in
+            WithPerceptionTracking {
+                FreeConnectionInfoModal(store: store)
+            }
+        }
         .transaction { $0.animation = nil } // disable implicit animations, especially for ConnectionStatusView
     }
 

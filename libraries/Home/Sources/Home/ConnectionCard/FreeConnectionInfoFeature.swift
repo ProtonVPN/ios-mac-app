@@ -22,28 +22,19 @@ import Foundation
 @Reducer
 public struct FreeConnectionInfoFeature {
 
-    public struct Country: Hashable {
-        public var name: String
-        public var code: String
-
-        public init(name: String, code: String) {
-            self.name = name
-            self.code = code
-        }
-    }
-
     @ObservableState
     public struct State: Equatable {
-        public var countries: [Country]
+        public var countryCodes: [String]
 
-        public init(countries: [Country]) {
-            self.countries = countries
+        public init(countryCodes: [String]) {
+            self.countryCodes = countryCodes
         }
     }
 
     @CasePathable
     public enum Action {
         case upgradeButtonTapped
+        case dismissButtonTapped
     }
 
     public init() { }
@@ -52,6 +43,8 @@ public struct FreeConnectionInfoFeature {
         Reduce { state, action in
             switch action {
             case .upgradeButtonTapped:
+                return .none
+            case .dismissButtonTapped:
                 return .none
             }
         }
