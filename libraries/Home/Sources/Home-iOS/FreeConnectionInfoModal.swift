@@ -143,7 +143,7 @@ fileprivate struct WrappingHStack: Layout {
 }
 
 @available(iOS 17, *)
-#Preview("Free Connection Info", traits: .sizeThatFitsLayout) {
+#Preview("Free Connection Info") {
     let countries = ["US","JP","PL","NL","RO"]
 
     FreeConnectionInfoModal(
