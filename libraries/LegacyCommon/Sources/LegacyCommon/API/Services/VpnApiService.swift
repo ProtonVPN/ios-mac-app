@@ -47,7 +47,7 @@ extension Container: VpnApiServiceFactory {
 }
 
 public enum ServerInfoResponse {
-    case notModified(since: String)
+    case notModified(since: String?)
     case modified(at: String?, servers: [ServerModel], freeServersOnly: Bool)
 }
 
@@ -193,7 +193,7 @@ public class VpnApiService {
 
             switch response {
             case .success(.notModified(let lastModified)):
-                log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(lastModified)"])
+                log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(optional: lastModified)"])
                 result = .success(.notModified(since: lastModified))
 
             case .success(.modified(let lastModified, let json)):

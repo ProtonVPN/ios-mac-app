@@ -48,6 +48,6 @@ public enum RequestCondition {
 }
 
 public enum IfModifiedSinceResponse<T> {
-    case notModified(since: String)
+    case notModified(since: String?)
     case modified(at: String?, value: T)
 }
