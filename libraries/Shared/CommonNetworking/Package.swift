@@ -7,7 +7,7 @@ let package = Package(
     name: "CommonNetworking",
     platforms: [
         .iOS(.v16),
-        .macOS(.v11),
+        .macOS(.v12),
         .tvOS(.v17),
     ],
     products: [

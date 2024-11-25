@@ -7,7 +7,7 @@ let package = Package(
     name: "UITestsHelpers",
     platforms: [
         .iOS(.v16),
-        .macOS(.v11)
+        .macOS(.v12)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.

@@ -9,7 +9,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v11)],
+        .macOS(.v12)],
     products: [
         .library(
             name: "SharedViews",

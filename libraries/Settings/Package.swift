@@ -5,7 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "Settings",
-    platforms: [.iOS(.v16), .macOS(.v11)],
+    platforms: [
+        .iOS(.v16),
+        .macOS(.v12)
+    ],
     products: [
         .library(name: "Settings", targets: ["Settings"]),
         .library(name: "Settings-iOS", targets: ["Settings-iOS"]),
