@@ -48,6 +48,8 @@ struct FreeConnectionInfoModal: View {
             Text(Localizable.freeConnectionsModalServersDescription(store.countryCodes.count))
                 .font(.themeFont(.body3(emphasised: false)))
                 .foregroundColor(Color(.text))
+                .fixedSize(horizontal: false, vertical: true)
+                .lineLimit(nil)
             Text(Localizable.freeConnectionsModalSubtitle(store.countryCodes.count))
                 .font(.themeFont(.body2(emphasised: true)))
                 .foregroundColor(Color(.text))
