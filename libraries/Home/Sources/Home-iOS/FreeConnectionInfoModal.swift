@@ -87,7 +87,6 @@ struct FreeConnectionInfoModal: View {
         }
         .presentationDetents([.height(sheetHeight)])
         .presentationDragIndicator(.visible)
-
     }
 }
 
