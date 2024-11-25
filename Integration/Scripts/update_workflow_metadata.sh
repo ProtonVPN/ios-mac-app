@@ -35,9 +35,7 @@ if [ "$CI_COMMIT_REF_NAME" == "$CI_DEFAULT_BRANCH" ] || [ -n "$CI_COMMIT_TAG" ];
     # Otherwise, go back 50 commits.
     COMMIT_RANGE="HEAD~${GIT_DEPTH:-50}..HEAD"
 else
-    # If CI_MERGE_REQUEST_DIFF_BASE_SHA is set, then use it.
-    # Otherwise, go back 1 commit. If HEAD is a merge commit, this will include all commits merged by that commit.
-    COMMIT_RANGE="${CI_MERGE_REQUEST_DIFF_BASE_SHA:-HEAD^}..HEAD"
+    COMMIT_RANGE="HEAD^..HEAD"
 fi
 
 # Jira only lets us bulk-fetch 100 issues at a time.
@@ -283,9 +281,9 @@ function update_release() {
     local jira_webhook_url
 
     case "$channel" in
-        "alpha") jira_webhook_url=$JIRA_NEW_RELEASE_WEBHOOK ;;
-        "beta") jira_webhook_url=$JIRA_SHIP_RELEASE_WEBHOOK ;;
-        *) return 0 ;; # Don't do anything for prod builds, alpha/beta are enough
+        "beta") jira_webhook_url=$JIRA_NEW_RELEASE_WEBHOOK ;;
+        "production") jira_webhook_url=$JIRA_SHIP_RELEASE_WEBHOOK ;;
+        *) return 0 ;; # Don't do anything for alpha builds, beta/prod are enough
     esac
 
     # Send the request. JIRA_WEBHOOK_URL is defined in each Jira automation.
