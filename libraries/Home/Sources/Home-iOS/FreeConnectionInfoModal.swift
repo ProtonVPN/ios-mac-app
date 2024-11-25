@@ -155,5 +155,4 @@ fileprivate struct WrappingHStack: Layout {
             FreeConnectionInfoFeature()
         }
     )
-    .frame(width: 375)
 }
