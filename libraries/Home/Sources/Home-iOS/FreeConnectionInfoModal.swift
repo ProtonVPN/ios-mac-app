@@ -24,7 +24,7 @@ import ProtonCoreUIFoundations
 import SharedViews
 import Localization
 
-@available(iOS 17, *)
+@available(iOS 16, *)
 struct FreeConnectionInfoModal: View {
     var store: StoreOf<FreeConnectionInfoFeature>
 
@@ -92,7 +92,7 @@ struct FreeConnectionInfoModal: View {
 
 // MARK: - View Helpers
 
-@available(iOS 17, *)
+@available(iOS 16, *)
 fileprivate struct WrappingHStack: Layout {
     var horizontalSpacing: CGFloat = 10
     var verticalSpacing: CGFloat = 10
