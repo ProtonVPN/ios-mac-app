@@ -44,7 +44,11 @@ extension Bundle {
             We explore the same idea here.
         */
         #else
-        return Bundle.main.appStoreReceiptURL?.path().contains("sandboxReceipt") == true
+        if #available(macOS 13, *) {
+            return Bundle.main.appStoreReceiptURL?.path().contains("sandboxReceipt") == true
+        } else {
+            return Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt") == true
+        }
         #endif
     }
 }
