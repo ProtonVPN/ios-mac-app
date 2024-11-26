@@ -71,9 +71,7 @@ final class SettingsAccountViewModel {
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
-        if canShowSecurityKeys {
-            sections.append(securityKeysSection)
-        }
+        sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
         
         return sections
@@ -170,10 +168,6 @@ final class SettingsAccountViewModel {
             return false
         }
         return FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.changePassword, reloadValue: true) && propertiesManager.userInfo != nil && propertiesManager.userSettings != nil
-    }
-
-    private var canShowSecurityKeys: Bool {
-        FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.fidoKeys, reloadValue: true)
     }
 
     private var deleteAccountSection: TableViewSection {
