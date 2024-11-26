@@ -47,6 +47,7 @@ public struct HomeView: View {
     }
 
     // Dynamic connection view position based on view height.
+    @State private var shouldUpdateViewHeight: Bool = true
     @State private var viewHeight: CGFloat = .zero
     @State private var connectionViewHeight: CGFloat = .zero
     private var mapHeight: CGFloat {
@@ -110,10 +111,11 @@ public struct HomeView: View {
                         viewHeight = proxy.size.height
                     }
                     .onChange(of: proxy.size.height) {
-                        guard viewHeight == .zero else { return } // We skip size changes that occur due to header visibility.
+                        guard shouldUpdateViewHeight else { return }
                         viewHeight = proxy.size.height
+                        shouldUpdateViewHeight = false
                     }
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in viewHeight = .zero } // By setting viewHeight to zero on rotation, we enable the code above to update the height to the correct value after rotation.
+                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in shouldUpdateViewHeight = true }
                 }
             }
             .background(Color(.background))
