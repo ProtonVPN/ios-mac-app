@@ -71,8 +71,7 @@ let package = Package(
                 "Home",
                 .product(name: "NetShield-iOS", package: "NetShield"),
                 .product(name: "ConnectionDetails-iOS", package: "ConnectionDetails"),
-            ],
-            resources: []
+            ]
         ),
         .target(
             name: "Home-macOS",
