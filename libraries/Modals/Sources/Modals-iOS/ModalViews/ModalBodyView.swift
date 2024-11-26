@@ -59,7 +59,11 @@ struct ModalBodyView: View {
     @ViewBuilder
     private var content: some View {
         VStack(spacing: 0) {
-            headerView
+            if let imagePadding {
+                modalType.artImage().padding(imagePadding)
+            } else {
+                modalType.artImage()
+            }
 
             Group {
                 mainContent
@@ -72,28 +76,6 @@ struct ModalBodyView: View {
             }
             .padding(.horizontal, .themeSpacing16)
         }
-    }
-
-    private var headerView: some View {
-        ZStack {
-            if !modalType.shouldVerticallyCenterContent {
-                LinearGradient(
-                    colors: [
-                        Theme.Asset.onboardingGradientTop.swiftUIColor,
-                        Theme.Asset.onboardingGradientBottom.swiftUIColor
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            }
-
-            if let imagePadding {
-                modalType.artImage().padding(imagePadding)
-            } else {
-                modalType.artImage()
-            }
-        }
-        .ignoresSafeArea(edges: [.top, .horizontal])
     }
 
     @ViewBuilder
