@@ -19,5 +19,9 @@
 import Foundation
 
 public enum Constants {
-    static public let readableContentWidth: CGFloat = 672
+    public static let readableContentWidth: CGFloat = 672
+
+    /// Number of free countries beyond the ones depicted by the flags in the
+    /// "Auto-selected from" disclaimer in the home connection card.
+    public static let additionalFreeCountryCount: Int = 2
 }

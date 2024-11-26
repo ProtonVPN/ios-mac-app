@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-
+import ComposableArchitecture
 import Dependencies
 
 import Ergonomics
 import Domain
+import Ergonomics
 import Strings
 import Localization
 import Theme
@@ -34,6 +34,7 @@ public struct ConnectionInfoBuilder {
     public let vpnConnectionActual: VPNConnectionActual?
     public var location: ConnectionSpec.Location { intent.location }
     @Dependency(\.locale) private var locale
+    @SharedReader(.userTier) private var userTier: Int
 
     public init(intent: ConnectionSpec, vpnConnectionActual: VPNConnectionActual?, withServerNumber: Bool) {
         self.intent = intent
@@ -41,7 +42,7 @@ public struct ConnectionInfoBuilder {
         self.withServerNumber = withServerNumber
     }
 
-    public var textSubHeader: String? {
+    private var subheaderString: String? {
         guard let server = vpnConnectionActual?.server else {
             return location.subtext(locale: locale)
         }
@@ -76,6 +77,21 @@ public struct ConnectionInfoBuilder {
         }
     }
 
+    public var subheader: ConnectionInfoSubheaderModel {
+        if let subheaderString {
+            let model = TextSubheaderModel(
+                location: subheaderString,
+                showTor: shouldShow(feature: .tor),
+                showP2P: shouldShow(feature: .p2p)
+            )
+            return .textual(model)
+        } else if case .fastest = location, userTier.isFreeTier && vpnConnectionActual == nil {
+            return .freeServerSelectionDisclaimer(additionalFreeCountryCount: Constants.additionalFreeCountryCount)
+        } else {
+            return .none
+        }
+    }
+
     /// In case of not an actual connection, show feature only if present in both intent and actual connection.
     /// In case of intent, check only if feature was intended.
     private func shouldShow(feature: ConnectionSpec.Feature) -> Bool {
@@ -90,49 +106,6 @@ public struct ConnectionInfoBuilder {
 
     private var showFeatureTor: Bool {
         shouldShow(feature: .tor)
-    }
-
-    /// Bullet is shown between any sub-header text and feature view
-    private var showFeatureBullet: Bool {
-        return textSubHeader != nil && (showFeatureP2P || showFeatureTor)
-    }
-
-    var hasTextFeatures: Bool {
-        textSubHeader != nil || showFeatureP2P || showFeatureTor
-    }
-
-    @ViewBuilder
-    public var textFeatures: some View {
-        // Format looks weird, but it lets us merge several Texts and images
-        // into one, so whole behaves like a text: it can wrap lines, resize
-        // icons inside, etc. For this to work, images have to be either
-        // created with `Image(systemName:)` or be imported as a `Symbol Image`.
-        (
-            Text("") // In case nothing is returned in next lines, we still have at least empty text
-            + (textSubHeader != nil
-               ? Text("\(textSubHeader!)")
-               : Text("")
-              )
-            + (showFeatureP2P
-               ? (showFeatureBullet ? Text(" • ") : Text(""))
-               + Text(Image(systemName: "arrow.left.arrow.right"))
-               + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
-               : Text("")
-              )
-            + (showFeatureTor
-               ? (showFeatureBullet || showFeatureP2P ? Text(" • ") : Text(""))
-               + Text("\(Asset.icsBrandTor.swiftUIImage)")
-               + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
-               : Text("")
-              )
-        )
-        .fixedSize(horizontal: false, vertical: true)
-        .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
-        .font(.body())
-#elseif canImport(UIKit)
-        .font(.body2(emphasised: false))
-#endif
     }
 
     public var textHeader: String {
@@ -155,4 +128,16 @@ public struct ConnectionInfoBuilder {
         }
         return ConnectionSpec.Location.region(code: vpnConnectionActual.server.logical.exitCountryCode)
     }
+}
+
+public enum ConnectionInfoSubheaderModel: Equatable {
+    case textual(TextSubheaderModel)
+    case freeServerSelectionDisclaimer(additionalFreeCountryCount: Int)
+    case none
+}
+
+public struct TextSubheaderModel: Equatable {
+    let location: String
+    let showTor: Bool
+    let showP2P: Bool
 }

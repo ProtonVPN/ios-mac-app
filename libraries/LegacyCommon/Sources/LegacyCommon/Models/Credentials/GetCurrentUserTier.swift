@@ -19,8 +19,6 @@
 import Foundation
 import Dependencies
 
-// GetCurrentUserTier
-
 extension DependencyValues {
   var getCurrentUserTier: @Sendable () throws -> Int {
     get { self[GetCurrentUserTierKey.self] }

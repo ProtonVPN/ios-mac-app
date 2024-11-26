@@ -21,9 +21,10 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NEHelper"),
-        .package(path: "../Foundations/Strings"),
+        .package(path: "../Shared/Localization"),
 
         // 3rd party
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.15.1"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
         .package(url: "https://github.com/pointfreeco/swift-perception", from: "1.3.5"),
         .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
@@ -35,8 +36,9 @@ let package = Package(
                 "SharedViewsMacros",
                 "Theme",
                 "Ergonomics",
-                "Strings",
+                "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "Perception", package: "swift-perception"),
             ]

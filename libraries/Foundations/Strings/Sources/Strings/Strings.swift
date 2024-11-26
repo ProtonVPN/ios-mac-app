@@ -1695,6 +1695,12 @@ public enum Localizable {
   public static var freeConnectionsModalTitle: String { return Localizable.tr("Localizable", "free_connections_modal_title", fallback: "Free connections") }
   /// Free tier plan title
   public static var freeTierPlanTitle: String { return Localizable.tr("Localizable", "free_tier_plan_title", fallback: "Proton VPN Free") }
+  /// Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023]
+  public static func homeFastestConnectionAdditionalCountryCount(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "home_fastest_connection_additional_country_count", String(describing: p1), fallback: "+%@")
+  }
+  /// Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023]
+  public static var homeFastestConnectionSelectionDescription: String { return Localizable.tr("Localizable", "home_fastest_connection_selection_description", fallback: "Auto-selected from") }
   /// Configuring your VPN access
   public static var loginFetchVpnData: String { return Localizable.tr("Localizable", "login_fetch_vpn_data", fallback: "Configuring your VPN access") }
   /// Start using Proton VPN
