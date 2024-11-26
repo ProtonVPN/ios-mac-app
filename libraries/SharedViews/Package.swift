@@ -21,7 +21,6 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NEHelper"),
-        .package(path: "../Foundations/Strings"),
         .package(path: "../Shared/Localization"),
 
         // 3rd party
@@ -37,7 +36,6 @@ let package = Package(
                 "SharedViewsMacros",
                 "Theme",
                 "Ergonomics",
-                "Strings",
                 "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
