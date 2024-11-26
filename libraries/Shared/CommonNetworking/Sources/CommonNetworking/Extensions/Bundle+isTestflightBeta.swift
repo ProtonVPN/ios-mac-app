@@ -29,7 +29,7 @@ extension Bundle {
         #elseif DEBUG
         return false
 
-        // If we're compiled in STAGING configuration, we're definitely not TestFlight version
+        // If we're compiled in STAGING configuration, we're definitely not a TestFlight beta
         #elseif STAGING
         return false
 
@@ -44,8 +44,7 @@ extension Bundle {
             We explore the same idea here.
         */
         #else
-        return Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
-
+        return Bundle.main.appStoreReceiptURL?.path().contains("sandboxReceipt") == true
         #endif
     }
 }

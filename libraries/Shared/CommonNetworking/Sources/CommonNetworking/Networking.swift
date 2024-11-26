@@ -319,7 +319,12 @@ extension CoreNetworking: APIServiceDelegate {
         // of deprecated functionality, ensuring errors are raised in such cases.
         return appInfo.appVersion + "-dev"
 #else
-        return appInfo.appVersion
+        // Help the backend figure out whether we're distributing through a TestFlight build.
+        if Bundle.isTestflightBeta {
+            return appInfo.appVersion + "-beta"
+        } else {
+            return appInfo.appVersion
+        }
 #endif
     }
 
