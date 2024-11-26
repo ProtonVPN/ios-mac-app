@@ -89,13 +89,40 @@ public struct ConnectionStatusView: View {
         }
     }
 
+    @ViewBuilder
+    private func protectedTitleView(secureCore: Bool) -> some View {
+        HStack(spacing: .themeSpacing4) {
+            Text((secureCore ? HomeAsset.lockDouble : HomeAsset.lockSingle).swiftUIImage)
+            Text(Localizable.connectionStatusProtected)
+        }
+        .font(.themeFont(.body1(.bold)))
+        .foregroundColor(Asset.vpnGreen.swiftUIColor)
+    }
+
+    @ViewBuilder
+    private func titleView(protectionState: ProtectionState) -> some View {
+        switch protectionState {
+        case .protected:
+            protectedTitleView(secureCore: false)
+        case .protectedSecureCore:
+            protectedTitleView(secureCore: true)
+        case .protecting:
+            ProgressView()
+                .controlSize(.regular)
+                .tint(.white)
+        case .unprotected:
+            IconProvider.lockOpenFilled2
+                .styled(.danger)
+        }
+    }
+
     private var protectedText: Text {
         Text(Localizable.connectionStatusProtected)
             .font(.themeFont(.body1(.bold)))
             .foregroundColor(Asset.vpnGreen.swiftUIColor)
     }
 
-    private func titleView(protectionState: ProtectionState) -> some View {
+    private func toolbarView(protectionState: ProtectionState) -> some View {
         HStack(alignment: .bottom) {
             switch protectionState {
             case .protected:
@@ -159,7 +186,7 @@ public struct ConnectionStatusView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: .themeSpacing8) {
-                        titleView(protectionState: protectionState)
+                        toolbarView(protectionState: protectionState)
 
                         if protectionState != .unprotected, let title = title(protectionState: protectionState) {
                             Text(title)
@@ -169,7 +196,6 @@ public struct ConnectionStatusView: View {
                     .frame(height: Self.headerHeight)
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
-
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(store.stickToTop ? .visible : .hidden, for: .navigationBar)

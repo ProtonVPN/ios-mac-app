@@ -24,7 +24,10 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 public enum HomeAsset {
   public static let cz = ImageAsset(name: "CZ")
   public static let fastest = ImageAsset(name: "Fastest")
+  public static let random = ImageAsset(name: "Random")
   public static let us = ImageAsset(name: "US")
+  public static let lockDouble = SymbolAsset(name: "lock.double")
+  public static let lockSingle = SymbolAsset(name: "lock.single")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
@@ -105,6 +108,66 @@ public extension SwiftUI.Image {
   }
 
   init(decorative asset: ImageAsset) {
+    let bundle = BundleToken.bundle
+    self.init(decorative: asset.name, bundle: bundle)
+  }
+}
+#endif
+
+public struct SymbolAsset {
+  public fileprivate(set) var name: String
+
+  #if os(iOS) || os(tvOS) || os(watchOS)
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+  public typealias Configuration = UIImage.SymbolConfiguration
+  public typealias Image = UIImage
+
+  @available(iOS 12.0, tvOS 12.0, watchOS 5.0, *)
+  public var image: Image {
+    let bundle = BundleToken.bundle
+    #if os(iOS) || os(tvOS)
+    let image = Image(named: name, in: bundle, compatibleWith: nil)
+    #elseif os(watchOS)
+    let image = Image(named: name)
+    #endif
+    guard let result = image else {
+      fatalError("Unable to load symbol asset named \(name).")
+    }
+    return result
+  }
+
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+  public func image(with configuration: Configuration) -> Image {
+    let bundle = BundleToken.bundle
+    guard let result = Image(named: name, in: bundle, with: configuration) else {
+      fatalError("Unable to load symbol asset named \(name).")
+    }
+    return result
+  }
+  #endif
+
+  #if canImport(SwiftUI)
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public var swiftUIImage: SwiftUI.Image {
+    SwiftUI.Image(asset: self)
+  }
+  #endif
+}
+
+#if canImport(SwiftUI)
+@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+public extension SwiftUI.Image {
+  init(asset: SymbolAsset) {
+    let bundle = BundleToken.bundle
+    self.init(asset.name, bundle: bundle)
+  }
+
+  init(asset: SymbolAsset, label: Text) {
+    let bundle = BundleToken.bundle
+    self.init(asset.name, bundle: bundle, label: label)
+  }
+
+  init(decorative asset: SymbolAsset) {
     let bundle = BundleToken.bundle
     self.init(decorative: asset.name, bundle: bundle)
   }
