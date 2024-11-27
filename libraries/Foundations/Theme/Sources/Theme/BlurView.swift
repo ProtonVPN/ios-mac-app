@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// This view is left here only for educational/experimenting purpose
-@available(macOS 12.0, *)
 private struct BlurView: View {
     var body: some View {
         ZStack {
@@ -36,7 +35,6 @@ private struct BlurView: View {
     }
 }
 
-@available(macOS 12.0, *)
 private struct MaterialsSetView: View {
     var body: some View {
         HStack {
@@ -52,7 +50,6 @@ private struct MaterialsSetView: View {
     }
 }
 
-@available(macOS 12.0, *)
 private struct MaterialView: View {
     var title: String
     var material: Material
@@ -64,7 +61,6 @@ private struct MaterialView: View {
     }
 }
 
-@available(macOS 12.0, *)
 struct BlurView_Previews: PreviewProvider {
     static var previews: some View {
         BlurView()

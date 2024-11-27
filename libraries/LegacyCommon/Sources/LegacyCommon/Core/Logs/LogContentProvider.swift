@@ -76,11 +76,7 @@ public class MacOSLogContentProvider: LogContentProvider {
             return AppLogContent(folder: folder)
 
         case .osLog:
-            if #available(macOS 12.0, *) {
-                return OSLogContent()
-            } else {
-                return MockLogContent()
-            }
+            return OSLogContent()
 
         case .wireguard:
             return NELogContent(neLogProvider: wireguardProtocolFactory)
@@ -90,9 +86,3 @@ public class MacOSLogContentProvider: LogContentProvider {
 
 }
 #endif
-
-struct MockLogContent: LogContent {
-    func loadContent(callback: @escaping (String) -> Void) {
-        callback("Unavailable for macOS < 12")
-    }
-}

@@ -103,7 +103,6 @@ struct WhatsNewView: View {
     }
 }
 
-@available(macOS 12.0, *)
 struct WhatsNewView_Previews: PreviewProvider {
     static var previews: some View {
         WhatsNewView()
