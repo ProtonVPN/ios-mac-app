@@ -82,6 +82,18 @@ extension RecentConnection {
                 pinnedDate: nil,
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
+                connection: .init(location: .region(code: "PL"), features: [])
+            ),
+            RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: Bool.random(),
+                connectionDate: Date(),
+                connection: .init(location: .region(code: "CZ"), features: [])
+            ),
+            RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: Bool.random(),
+                connectionDate: Date(),
                 connection: .init(location: .secureCore(.fastestHop(to: "AR")), features: [])
             ),
             RecentConnection(

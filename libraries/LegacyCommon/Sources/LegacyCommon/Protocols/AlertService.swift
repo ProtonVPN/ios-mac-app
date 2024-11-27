@@ -832,10 +832,6 @@ public final class CountryUpsellAlert: UpsellAlert {
     }
 }
 
-public final class NetShieldUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellModalSource? { .netShield }
-}
-
 public final class SecureCoreUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .secureCore }
 }

@@ -25,6 +25,7 @@ import Strings
 import VPNShared
 import ProtonCoreUIFoundations
 import NetShield_iOS
+import VPNAppCore
 
 import Dependencies
 import Localization
@@ -32,15 +33,14 @@ import Localization
 @available(iOS 17, *)
 @MainActor
 public struct ConnectionStatusView: View {
+
+    private static let maxContentWidth: CGFloat = 480
+
     @SwiftUI.Bindable var store: StoreOf<ConnectionStatusFeature>
 
     private static let headerHeight: CGFloat = 58
     private static let viewHeight: CGFloat = 200
     private static let headerPaddingHeight: CGFloat = 13
-
-    private enum AccessibilityIdentifiers {
-        static let locationText: String = "location_text"
-    }
 
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
@@ -51,31 +51,6 @@ public struct ConnectionStatusView: View {
         case .protecting:
             return Localizable.connectionStatusProtecting
         }
-    }
-
-    private func locationText(protectionState: ProtectionState) -> Text? {
-        let displayCountry: String?
-        let displayIP: String?
-        switch protectionState {
-        case .protected, .protectedSecureCore:
-            return nil
-        case .unprotected:
-            let code = store.userCountry
-            displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "")
-            displayIP = store.userIP
-        case let .protecting(country, ip):
-            displayCountry = country
-            displayIP = ip
-        }
-        guard let displayIP, let displayCountry else { return nil }
-        return Text(displayCountry)
-            .font(.themeFont(.body2()))
-            .foregroundColor(Color(.text))
-        + Text(" • ")
-            .foregroundColor(Color(.text))
-        + Text(displayIP)
-            .font(.themeFont(.body2()))
-            .foregroundColor(Color(.text, .weak))
     }
 
     private func gradientColor(protectionState: ProtectionState) -> Color {
@@ -166,20 +141,12 @@ public struct ConnectionStatusView: View {
                                 .frame(height: .themeSpacing8)
                         }
                     }
-                    ZStack {
-                        if let locationText = locationText(protectionState: protectionState) {
-                            locationText
-                                .padding(.horizontal, .themeSpacing8)
-                                .padding(.vertical, .themeSpacing4)
-                                .accessibilityIdentifier(AccessibilityIdentifiers.locationText)
-                        } else if case .protected(let netShield) = protectionState {
-                            NetShieldStatsView(viewModel: netShield)
-                        } else if case .protectedSecureCore(let netShield) = protectionState {
-                            NetShieldStatsView(viewModel: netShield)
-                        }
-                    }
-                    .background(.translucentLight, in: RoundedRectangle(cornerRadius: .themeRadius8, style: .continuous))
-                    .padding(.horizontal, .themeSpacing16)
+                    ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
+                        .background(.translucentLight,
+                                    in: RoundedRectangle(cornerRadius: .themeRadius8,
+                                                         style: .continuous))
+                        .frame(maxWidth: Self.maxContentWidth)
+                        .padding(.horizontal, .themeSpacing16)
                 }
             }
             .frame(height: Self.viewHeight)
@@ -204,16 +171,16 @@ public struct ConnectionStatusView: View {
     }
 }
 
-#Preview("protected") {
-    guard #available(iOS 17, *) else { return EmptyView() }
+@available(iOS 17, *)
+#Preview("protected", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .protected(netShield: .random)
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
 }
 
-#Preview("unprotected") {
-    guard #available(iOS 17, *) else { return EmptyView() }
+@available(iOS 17, *)
+#Preview("unprotected", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .unprotected
     @Shared(.userCountry) var userCountry: String? = "PL"
     @Shared(.userIP) var userIP: String? = "123.456.789.0"
@@ -222,8 +189,8 @@ public struct ConnectionStatusView: View {
     })
 }
 
-#Preview("protecting") {
-    guard #available(iOS 17, *) else { return EmptyView() }
+@available(iOS 17, *)
+#Preview("protecting", traits: .sizeThatFitsLayout) {
     @Shared(.protectionState) var protectionState: ProtectionState = .protecting(country: "PL", ip: "123.456.789.0")
     return ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()

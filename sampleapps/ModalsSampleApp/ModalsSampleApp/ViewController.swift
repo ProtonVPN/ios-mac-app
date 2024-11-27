@@ -133,7 +133,7 @@ final class ViewController: UITableViewController {
         let viewController: UIViewController
         switch (indexPath.section, indexPath.row) {
         case (1, _):
-            viewController = modalsFactory.whatsNewViewController()
+            viewController = modalsFactory.whatsNewViewController(variant: .business)
         case (2, _):
             let type = upsells[indexPath.row].type
             switch type {

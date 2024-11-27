@@ -86,3 +86,7 @@ public enum UpsellModalSource {
 public class AllCountriesUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .countries }
 }
+
+public final class NetShieldUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .netShield }
+}

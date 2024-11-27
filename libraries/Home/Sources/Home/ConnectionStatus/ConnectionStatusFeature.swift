@@ -37,6 +37,7 @@ public struct ConnectionStatusFeature {
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
+        public var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
         var startingProtectionState: ProtectionState = .unprotected
 
         public internal(set) var stickToTop: Bool = false
@@ -53,6 +54,8 @@ public struct ConnectionStatusFeature {
         case newProtectionState(ProtectionState)
         case newNetShieldStats(NetShieldModel)
         case stickToTop(Bool)
+
+        case connectionStatusBanner(ConnectionStatusBannerFeature.Action)
     }
 
     private enum MaskLocation {
@@ -68,6 +71,8 @@ public struct ConnectionStatusFeature {
     public init() { }
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner) { ConnectionStatusBannerFeature() }
+
         Reduce { state, action in
             switch action {
             case .maskLocationTick:
@@ -143,6 +148,8 @@ public struct ConnectionStatusFeature {
             case .stickToTop(let stickToTop):
                 guard state.stickToTop != stickToTop else { return .none }
                 state.stickToTop = stickToTop
+                return .none
+            case .connectionStatusBanner:
                 return .none
             }
         }
