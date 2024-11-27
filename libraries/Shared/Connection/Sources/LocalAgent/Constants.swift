@@ -20,7 +20,7 @@ import Foundation
 import func GoLibs.LocalAgentConstants
 import class GoLibs.LocalAgentConsts
 import class GoLibs.LocalAgentStringToValueMap
-import ConnectionFoundations
+import CoreConnection
 
 /// Shared instance containing coding keys
 let localAgentConsts = {

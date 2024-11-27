@@ -25,9 +25,9 @@ import Dependencies
 
 import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
-import struct ConnectionFoundations.WireguardConfig
-import struct ConnectionFoundations.StoredWireguardConfig
-import enum ConnectionFoundations.TunnelKeychainImplementationError
+import struct CoreConnection.WireguardConfig
+import struct CoreConnection.StoredWireguardConfig
+import enum CoreConnection.TunnelKeychainImplementationError
 
 public struct ConnectionConfiguration {
 

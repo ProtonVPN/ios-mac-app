@@ -21,7 +21,7 @@ import Foundation
 import CasePaths
 import Dependencies
 
-import ConnectionFoundations
+import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent

@@ -26,8 +26,8 @@ import DomainTestSupport
 import VPNShared
 import VPNSharedTesting
 
-import ConnectionFoundations
-import ConnectionFoundationsTestSupport
+import CoreConnection
+import CoreConnectionTestSupport
 @testable import ExtensionManager
 @testable import CertificateAuthentication
 @testable import LocalAgent

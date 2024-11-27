@@ -18,7 +18,7 @@
 
 import Foundation
 import Dependencies
-import ConnectionFoundations
+import CoreConnection
 import protocol VPNShared.VpnAuthenticationStorageSync
 
 extension VpnAuthenticationStorageSync {

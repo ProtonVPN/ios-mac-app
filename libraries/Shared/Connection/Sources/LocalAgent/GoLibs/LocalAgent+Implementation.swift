@@ -19,7 +19,7 @@
 import Foundation
 import XCTestDynamicOverlay
 import Dependencies
-import ConnectionFoundations
+import CoreConnection
 
 final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.localAgentConnectionFactory) var connectionFactory

@@ -25,7 +25,7 @@ import ComposableArchitecture
 import Ergonomics
 import Domain
 import DomainTestSupport
-import struct ConnectionFoundations.LogicalServerInfo
+import struct CoreConnection.LogicalServerInfo
 @testable import ExtensionManager
 
 final class ExtensionManagerFeatureTests: XCTestCase {

@@ -24,7 +24,7 @@ import Dependencies
 
 import struct Domain.ServerConnectionIntent
 import struct Domain.ConnectionSpec
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)

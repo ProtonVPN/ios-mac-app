@@ -21,7 +21,7 @@ import NetworkExtension
 import Dependencies
 import protocol ExtensionIPC.ProviderRequest
 import enum ExtensionIPC.ProviderMessageError
-import ConnectionFoundations
+import CoreConnection
 
 @available(iOS 16, *)
 extension TunnelMessageSender: DependencyKey {

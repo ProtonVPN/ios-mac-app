@@ -22,8 +22,8 @@ import enum NetworkExtension.NEVPNStatus
 import Dependencies
 
 import struct Domain.ServerConnectionIntent
-import let ConnectionFoundations.log
-import struct ConnectionFoundations.LogicalServerInfo
+import let CoreConnection.log
+import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
 
 protocol TunnelManager {

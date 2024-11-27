@@ -18,7 +18,7 @@
 
 import Foundation
 import Dependencies
-import struct ConnectionFoundations.LogicalServerInfo
+import struct CoreConnection.LogicalServerInfo
 import struct Domain.Server
 
 /// We need to fetch full server information to determine e.g. what country the extension is connected to.

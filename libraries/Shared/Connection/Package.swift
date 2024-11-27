@@ -14,8 +14,8 @@ let package = Package(
         .library(name: "CertificateAuthentication", targets: ["CertificateAuthentication"]),
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
-        .library(name: "ConnectionFoundations", targets: ["ConnectionFoundations"]),
-        .library(name: "ConnectionTestSupport", targets: ["ConnectionFoundationsTestSupport"]),
+        .library(name: "CoreConnection", targets: ["CoreConnection"]),
+        .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
@@ -29,7 +29,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ConnectionFoundations",
+            name: "CoreConnection",
             dependencies: [
                 "Domain",
                 "Ergonomics",
@@ -42,7 +42,7 @@ let package = Package(
         .target(
             name: "CertificateAuthentication",
             dependencies: [
-                "ConnectionFoundations",
+                "CoreConnection",
                 "ExtensionIPC",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
@@ -51,14 +51,14 @@ let package = Package(
         .target(
             name: "LocalAgent",
             dependencies: [
-                "ConnectionFoundations",
+                "CoreConnection",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
             ]
         ),
         .target(
             name: "ExtensionManager",
             dependencies: [
-                "ConnectionFoundations",
+                "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
             ]
@@ -72,12 +72,12 @@ let package = Package(
                 "LocalAgent",
             ]
         ),
-        .target(name: "ConnectionFoundationsTestSupport", dependencies: ["ConnectionFoundations"]),
+        .target(name: "CoreConnectionTestSupport", dependencies: ["CoreConnection"]),
         .testTarget(
             name: "ConnectionTests",
             dependencies: [
                 "Connection",
-                "ConnectionFoundationsTestSupport",
+                "CoreConnectionTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
@@ -93,7 +93,7 @@ let package = Package(
             name: "CertificateAuthenticationTests",
             dependencies: [
                 "CertificateAuthentication",
-                "ConnectionFoundationsTestSupport",
+                "CoreConnectionTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

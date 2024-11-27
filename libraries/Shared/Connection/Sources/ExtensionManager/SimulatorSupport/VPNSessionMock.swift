@@ -22,8 +22,8 @@ import enum NetworkExtension.NEVPNStatus
 import Dependencies
 import XCTestDynamicOverlay
 import ExtensionIPC
-import let ConnectionFoundations.log
-import struct ConnectionFoundations.LogicalServerInfo
+import let CoreConnection.log
+import struct CoreConnection.LogicalServerInfo
 
 @available(iOS 16, *)
 final class VPNSessionMock: VPNSession {

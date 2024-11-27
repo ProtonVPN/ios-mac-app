@@ -24,7 +24,7 @@ import CasePaths
 import protocol GoLibs.LocalAgentNativeClientProtocol
 
 import Domain
-import ConnectionFoundations
+import CoreConnection
 
 protocol LocalAgent {
     func createEventStream() -> AsyncStream<LocalAgentEvent>

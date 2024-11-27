@@ -25,9 +25,9 @@ import Dependencies
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import struct Domain.ServerConnectionIntent
-import struct ConnectionFoundations.LogicalServerInfo
+import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 @available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {

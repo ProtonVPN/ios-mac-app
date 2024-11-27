@@ -23,8 +23,8 @@
         },
         {
           "containerPath" : "container:",
-          "identifier" : "ConnectionFoundations",
-          "name" : "ConnectionFoundations"
+          "identifier" : "CoreConnection",
+          "name" : "CoreConnection"
         },
         {
           "containerPath" : "container:",

@@ -23,7 +23,7 @@ import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NETunnelProviderSession
 import class NetworkExtension.NEVPNManager
 
-import let ConnectionFoundations.log
+import let CoreConnection.log
 import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 

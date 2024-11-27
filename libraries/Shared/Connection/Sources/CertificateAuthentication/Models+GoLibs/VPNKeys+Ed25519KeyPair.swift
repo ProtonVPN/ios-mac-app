@@ -18,7 +18,7 @@
 
 import Foundation
 import class GoLibs.Ed25519KeyPair
-import ConnectionFoundations
+import CoreConnection
 
 extension PublicKey {
     package init(keyPair: Ed25519KeyPair) throws {

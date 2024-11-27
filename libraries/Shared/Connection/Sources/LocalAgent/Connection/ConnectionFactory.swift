@@ -24,7 +24,7 @@ import protocol GoLibs.LocalAgentNativeClientProtocol
 import func GoLibs.LocalAgentNewAgentConnection
 import func GoLibs.LocalAgentNewFeatures
 
-import ConnectionFoundations
+import CoreConnection
 
 typealias ConnectionCreator = @Sendable (ConnectionConfiguration, VPNAuthenticationData, LocalAgentNativeClientProtocol) throws -> LocalAgentConnection
 

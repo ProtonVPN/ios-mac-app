@@ -26,7 +26,7 @@ import Dependencies
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import struct Domain.ServerConnectionIntent
-import ConnectionFoundations
+import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent

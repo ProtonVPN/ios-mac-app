@@ -42,7 +42,7 @@ let package = Package(
                 "KeychainAccess",
                 "Ergonomics",
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "ConnectionFoundations", package: "Connection"),
+                .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "Dependencies", package: "swift-dependencies")
             ],
             swiftSettings: [

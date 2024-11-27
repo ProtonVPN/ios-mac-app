@@ -25,7 +25,7 @@ import ComposableArchitecture
 @testable import Connection
 @testable import LocalAgent
 @testable import ExtensionManager
-@testable import ConnectionFoundations
+@testable import CoreConnection
 import Domain
 import VPNSharedTesting
 

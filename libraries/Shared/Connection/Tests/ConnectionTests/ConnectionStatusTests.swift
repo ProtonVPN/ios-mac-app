@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 import Connection
-import ConnectionFoundations
+import CoreConnection
 import Ergonomics
 
 final class ConnectionStateTests: XCTestCase {

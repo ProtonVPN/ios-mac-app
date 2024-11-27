@@ -20,7 +20,7 @@ import Foundation
 
 import class NetworkExtension.NETunnelProviderManager
 
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 extension TunnelProviderManagerFactory {
 

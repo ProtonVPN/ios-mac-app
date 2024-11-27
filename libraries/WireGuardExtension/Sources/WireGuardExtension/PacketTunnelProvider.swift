@@ -11,7 +11,7 @@ import VPNShared // vpnAuthenticationStorage Dependency
 import NEHelper
 import Timer
 import Domain
-import ConnectionFoundations
+import CoreConnection
 
 open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     public var dataTaskFactory: DataTaskFactory!

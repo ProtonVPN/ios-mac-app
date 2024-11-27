@@ -21,7 +21,7 @@
 import Foundation
 import Dependencies
 import XCTestDynamicOverlay
-import ConnectionFoundations
+import CoreConnection
 
 @available(iOS 16, *)
 final class LocalAgentMock: LocalAgent {
