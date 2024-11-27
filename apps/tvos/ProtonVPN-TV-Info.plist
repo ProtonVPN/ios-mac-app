@@ -11,7 +11,7 @@
 	<key>AppIdentifierPrefix</key>
 	<string>$(AppIdentifierPrefix)</string>
 	<key>CFBundleAllowMixedLocalizations</key>
-	<false/>
+	<true/>
 	<key>AppStoreID</key>
 	<string>1437005085</string>
 	<key>CFBundleDevelopmentRegion</key>
