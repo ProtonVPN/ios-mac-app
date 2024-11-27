@@ -25,6 +25,7 @@ import SharedViews
 import Localization
 
 @available(iOS 16, *)
+@MainActor
 struct FreeConnectionInfoModal: View {
     var store: StoreOf<FreeConnectionInfoFeature>
 
@@ -145,7 +146,7 @@ fileprivate struct WrappingHStack: Layout {
 }
 
 @available(iOS 17, *)
-#Preview("Free Connection Info") {
+#Preview("Free Connection Info", traits: .sizeThatFitsLayout) {
     let countries = ["US","JP","PL","NL","RO"]
 
     FreeConnectionInfoModal(
