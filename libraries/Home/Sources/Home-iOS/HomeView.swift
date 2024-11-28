@@ -61,6 +61,18 @@ public struct HomeView: View {
 
     @Namespace var topID
 
+    @State private var connectionStatusZIndex = ZIndex.enabledConnectionStatus
+
+    /// The Z order of which elements of the UI are placed. Setting these to the corresponding views
+    /// allows us to enable and disable user interaction. The top of the list is always displayed behind
+    /// all the other views, so `map` will always be behind connection card and status.
+    private enum ZIndex: Double {
+        case map
+        case disabledConnectionStatus
+        case connectionCardAndRecents
+        case enabledConnectionStatus
+    }
+
     public var body: some View {
         #PerceptibleGeometryReader { proxy in
             ZStack(alignment: .top) {
@@ -70,9 +82,10 @@ public struct HomeView: View {
                     availableWidth: proxy.size.width
                 )
                 .frame(width: proxy.size.width, height: mapHeight)
+                .zIndex(ZIndex.map.rawValue)
 
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: \.connectionStatus))
-                    .allowsHitTesting(false)
+                    .zIndex(connectionStatusZIndex.rawValue)
 
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(showsIndicators: false) {
@@ -117,6 +130,7 @@ public struct HomeView: View {
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in shouldUpdateViewHeight = true }
                 }
+                .zIndex(ZIndex.connectionCardAndRecents.rawValue)
             }
             .background(Color(.background))
         }
@@ -151,6 +165,18 @@ public struct HomeView: View {
                 store.send(.connectionStatus(.stickToTop(scrollOffset < protectionStatusStickToTopThreshold)))
             }
             lastScrollOffset = scrollOffset
+            
+            updateConnectionStatusZIndex(scrollOffset)
+        }
+    }
+
+    /// Update the Z-index of the connection status view. This allows us to enable the user interaction of upsell banners and netshields stats.
+    private func updateConnectionStatusZIndex(_ scrollOffset: Double) {
+        let swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight
+        if scrollOffset < -swapThreshold && connectionStatusZIndex == .enabledConnectionStatus {
+            connectionStatusZIndex = ZIndex.disabledConnectionStatus
+        } else if scrollOffset > -swapThreshold && connectionStatusZIndex == .disabledConnectionStatus {
+            connectionStatusZIndex = ZIndex.enabledConnectionStatus
         }
     }
 
@@ -160,7 +186,8 @@ public struct HomeView: View {
                 .preference(
                     key: ViewHeightPreferenceKey.self,
                     value: inner.size.height
-            )        }
+                )
+        }
         .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
             self.connectionViewHeight = viewHeight
         }

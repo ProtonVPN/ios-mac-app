@@ -28,6 +28,8 @@ public enum HomeAsset {
   public static let us = ImageAsset(name: "US")
   public static let lockDouble = SymbolAsset(name: "lock.double")
   public static let lockSingle = SymbolAsset(name: "lock.single")
+  public static let netshieldMobileSmall = ImageAsset(name: "netshield-mobile-small")
+  public static let wrongCountrySmall = ImageAsset(name: "wrong-country-small")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
