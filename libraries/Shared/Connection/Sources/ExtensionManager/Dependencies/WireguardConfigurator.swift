@@ -25,21 +25,16 @@ import Dependencies
 
 import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
-import struct CoreConnection.WireguardConfig
-import struct CoreConnection.StoredWireguardConfig
-import enum CoreConnection.TunnelKeychainImplementationError
+
+import CoreConnection
 
 public struct ConnectionConfiguration {
-
     /// Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
     public let username: String
     public let wireguardConfig: WireguardConfig
-
-
 }
 
 public enum ConnectionConfigurationKey: DependencyKey {
-
     public static var liveValue: ConnectionConfiguration {
         return .init(
             username: "mockman",
@@ -55,12 +50,11 @@ extension DependencyValues {
     }
 }
 
-
 extension ManagerConfigurator {
 
     private static func configuration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
-        // TODO: Provide bundle ID using a Dependency
-        let bundleID: String = "ch.protonmail.vpn.WireGuard-tvOS"
+        @Dependency(\.bundleIDClient) var bundleIDClient
+        let bundleID: String = bundleIDClient.bundleIdentifierForTarget()
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleID
 
