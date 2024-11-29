@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "p2p@3x.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -21,6 +21,8 @@ import Foundation
 public enum Constants {
     public static let readableContentWidth: CGFloat = 672
 
+    public static let maxHomeContentWidth: CGFloat = 736
+
     /// Number of free countries beyond the ones depicted by the flags in the
     /// "Auto-selected from" disclaimer in the home connection card.
     public static let additionalFreeCountryCount: Int = 2

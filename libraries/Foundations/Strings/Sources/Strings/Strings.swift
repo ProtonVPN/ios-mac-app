@@ -540,6 +540,8 @@ public enum Localizable {
   public static var homeRecentsRecentSection: String { return Localizable.tr("Localizable", "_home_recents_recent_section", fallback: "Recents") }
   /// Tooltip text presented on hover over one of the recent connections items. [Redesign_2023]
   public static var homeRecentsServerUnderMaintenance: String { return Localizable.tr("Localizable", "_home_recents_server_under_maintenance", fallback: "Server under maintenance") }
+  /// The section of upsell carousel in the Home tab. [Redesign_2023]
+  public static var homeRecentsUpsellSection: String { return Localizable.tr("Localizable", "_home_recents_upsell_section", fallback: "Discover VPN Plus") }
   /// Home tab in bottom menu [Redesign_2023]
   public static var homeTab: String { return Localizable.tr("Localizable", "_home_tab", fallback: "Home") }
   /// The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023]
@@ -881,6 +883,7 @@ public enum Localizable {
   /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
   public static func operatingSystemOutOfDateAlertDescription(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.")
+    return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.")
   }
   /// User's OS version is no longer actively supported by Proton VPN (alert title)
   public static var operatingSystemOutOfDateAlertTitle: String { return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_title", fallback: "Update your software") }
@@ -1941,6 +1944,42 @@ public enum Localizable {
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }
   /// Placeholder for the Two Factor text field
   public static var twoFactorCode: String { return Localizable.tr("Localizable", "two_factor_code", fallback: "Two-factor code") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselDevicesSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_devices_subtitle", fallback: "Security and privacy on all your devices") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselDevicesTitle: String { return Localizable.tr("Localizable", "upsell_carousel_devices_title", fallback: "Protect 10 devices") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselFasterBrowsingSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_faster_browsing_subtitle", fallback: "Browse at even higher speeds (up to 10 Gbps)") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselFasterBrowsingTitle: String { return Localizable.tr("Localizable", "upsell_carousel_faster_browsing_title", fallback: "Faster browsing") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselMoreSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_more_subtitle", fallback: "Unlock advanced performance and privacy features") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselMoreTitle: String { return Localizable.tr("Localizable", "upsell_carousel_more_title", fallback: "And much more...") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselNetshieldSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_netshield_subtitle", fallback: "Block ads, malware, and trackers") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselNetshieldTitle: String { return Localizable.tr("Localizable", "upsell_carousel_netshield_title", fallback: "NetShield") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselP2pSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_p2p_subtitle", fallback: "Download files through BitTorrent and other file sharing protocols") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselP2pTitle: String { return Localizable.tr("Localizable", "upsell_carousel_p2p_title", fallback: "P2P support") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselSecureCoreSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_secure_core_subtitle", fallback: "Add another layer of encryption to your VPN connection") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselSecureCoreTitle: String { return Localizable.tr("Localizable", "upsell_carousel_secure_core_title", fallback: "Secure Core") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselStreamingSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_streaming_subtitle", fallback: "Watch your favorite movies and TV shows") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselStreamingTitle: String { return Localizable.tr("Localizable", "upsell_carousel_streaming_title", fallback: "Streaming") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselTorSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_tor_subtitle", fallback: "Use the Tor network over your VPN connection for extra privacy") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselTorTitle: String { return Localizable.tr("Localizable", "upsell_carousel_tor_title", fallback: "Tor over VPN") }
+  /// Home upsell carousel card subtitle
+  public static var upsellCarouselWorldwideSubtitle: String { return Localizable.tr("Localizable", "upsell_carousel_worldwide_subtitle", fallback: "1700+ server locations in 63 countries") }
+  /// Home upsell carousel card title
+  public static var upsellCarouselWorldwideTitle: String { return Localizable.tr("Localizable", "upsell_carousel_worldwide_title", fallback: "Worldwide cover") }
   /// Feature of Countries upsell modal
   public static var upsellCountriesAnyLocation: String { return Localizable.tr("Localizable", "upsell_countries_any_location", fallback: "Choose any location") }
   /// Feature of Country upsell modal

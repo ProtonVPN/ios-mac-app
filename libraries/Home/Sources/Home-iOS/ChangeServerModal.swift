@@ -75,11 +75,11 @@ struct ChangeServerModal: View {
         .padding(.horizontal, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: InnerHeightPreferenceKey.self,
+                Color.clear.preference(key: CGFloatPreferenceKey.self,
                                        value: geometry.size.height)
             }
         }
-        .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
+        .onPreferenceChange(CGFloatPreferenceKey.self) { newHeight in
             sheetHeight = newHeight
         }
         .presentationDetents([.height(sheetHeight)])

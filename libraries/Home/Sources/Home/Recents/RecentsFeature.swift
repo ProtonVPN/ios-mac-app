@@ -36,6 +36,9 @@ public struct RecentsFeature {
         @Shared(.recents)
         public var recents: OrderedSet<RecentConnection>
 
+        @SharedReader(.userTier)
+        public var userTier: Int
+
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
             recents = recentsStorage.readFromStorage()
@@ -50,6 +53,7 @@ public struct RecentsFeature {
         case remove(RecentConnection)
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)
+        case upsellTapped
 
         case delegate(Delegate)
 
@@ -65,6 +69,7 @@ public struct RecentsFeature {
 
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.date) var date
+    @Dependency(\.pushAlert) var pushAlert
 
     public init() {}
 
@@ -81,6 +86,10 @@ public struct RecentsFeature {
                         .map(Action.newConnectionStatus)
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
+
+            case .upsellTapped:
+                pushAlert(AllCountriesUpsellAlert())
+                return .none
 
             case .newConnectionStatus(let connectionStatus):
                 guard case .connected = connectionStatus else { return .none }

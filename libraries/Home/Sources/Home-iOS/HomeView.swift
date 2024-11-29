@@ -37,7 +37,6 @@ import Domain
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
-    private static let maxWidth: CGFloat = 736
     private static let bottomGradientHeight: CGFloat = 100
 
     // Sticky ProtectionStatus functionality on scroll.
@@ -102,12 +101,10 @@ public struct HomeView: View {
                             HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
                                 .padding(.horizontal, .themeSpacing16)
                                 .padding(.bottom, .themeSpacing12)
-                                .frame(width: min(proxy.size.width, Self.maxWidth))
+                                .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
                                 .background(trackConnectionViewHeight())
-                            if !store.userTier.isFreeTier {
-                                RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
-                                    .frame(width: min(proxy.size.width, Self.maxWidth))
-                            }
+
+                            RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
 
                             Color(.background) // needed to take all the available horizontal space for the background
                                 .frame(height: 0)

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "streaming-mobile@3x.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

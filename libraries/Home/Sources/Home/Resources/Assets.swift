@@ -26,9 +26,17 @@ public enum HomeAsset {
   public static let fastest = ImageAsset(name: "Fastest")
   public static let random = ImageAsset(name: "Random")
   public static let us = ImageAsset(name: "US")
+  public static let customisationMobileSmall = ImageAsset(name: "customisation-mobile-small")
+  public static let multipleDevicesSmall = ImageAsset(name: "multiple-devices-small")
+  public static let netshieldMobileSmall = ImageAsset(name: "netshield-mobile-small")
+  public static let p2pSmall = ImageAsset(name: "p2p-small")
+  public static let secureCoreSmall = ImageAsset(name: "secure-core-small")
+  public static let speedSmall = ImageAsset(name: "speed-small")
+  public static let streamingMobileSmall = ImageAsset(name: "streaming-mobile-small")
+  public static let torSmall = ImageAsset(name: "tor-small")
+  public static let worldwideCoverageSmall = ImageAsset(name: "worldwide-coverage-small")
   public static let lockDouble = SymbolAsset(name: "lock.double")
   public static let lockSingle = SymbolAsset(name: "lock.single")
-  public static let netshieldMobileSmall = ImageAsset(name: "netshield-mobile-small")
   public static let wrongCountrySmall = ImageAsset(name: "wrong-country-small")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
