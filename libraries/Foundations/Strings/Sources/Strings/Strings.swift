@@ -1687,6 +1687,10 @@ public enum Localizable {
   public static var freeConnectionsModalBanner: String { return Localizable.tr("Localizable", "free_connections_modal_banner", fallback: "Get worldwide coverage with VPN Plus") }
   /// Modal that lists countries in which servers are available to free users: Description
   public static var freeConnectionsModalDescription: String { return Localizable.tr("Localizable", "free_connections_modal_description", fallback: "Proton Free automatically connects you to the fastest available server. This will normally be the closest server to your location.") }
+  /// Modal that lists countries in which servers are available to free users: Description
+  public static func freeConnectionsModalServersDescription(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "free_connections_modal_servers_description", String(describing: p1), fallback: "Proton Free automatically connects you to the fastest available free server from our %@ free countries. This will normally be the closest server to your location.")
+  }
   /// Plural format key: "%#@VARIABLE@"
   public static func freeConnectionsModalSubtitle(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "free_connections_modal_subtitle", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")

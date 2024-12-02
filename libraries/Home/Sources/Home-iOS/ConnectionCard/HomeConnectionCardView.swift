@@ -58,9 +58,12 @@ struct HomeConnectionCardView: View {
     }
 
     @ViewBuilder
-    private var chevron: some View {
+    private var trailingIcon: some View {
         if store.vpnConnectionStatus.connectionStatusAvailable {
             IconProvider.chevronRight
+                .foregroundColor(Color(.icon, .weak))
+        } else if store.userTier.isFreeTier {
+            IconProvider.infoCircle
                 .foregroundColor(Color(.icon, .weak))
         }
     }
@@ -122,12 +125,11 @@ struct HomeConnectionCardView: View {
 
                 Spacer()
 
-                chevron
+                trailingIcon
             }
             .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfoHeader)
             .padding(.themeSpacing16)
         }
-        .disabled(!store.vpnConnectionStatus.connectionStatusAvailable)
     }
 
     private var card: some View {

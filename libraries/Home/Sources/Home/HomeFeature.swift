@@ -29,12 +29,16 @@ public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
     @Dependency(\.connectToVPN) private var connectToVPN
     @Dependency(\.disconnectVPN) private var disconnectVPN
+    @Dependency(\.serverRepository) var serverRepository
     @Dependency(\.date) private var date
+
+    @SharedReader(.userTier) private var userTier: Int
 
     @Reducer(state: .equatable)
     public enum Destination {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
+        case freeConnectionsInfo(FreeConnectionInfoFeature)
     }
 
     @ObservableState
@@ -77,6 +81,7 @@ public struct HomeFeature {
         case connectionCard(HomeConnectionCardFeature.Action)
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
+        case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -145,6 +150,15 @@ public struct HomeFeature {
                 case .tapAction:
                     if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(connectionState)
+                    } else if userTier == .freeTier {
+                        let freeCountries = Array(Set(
+                            serverRepository.getServers(
+                                filteredBy: [.tier(.exact(tier: .freeTier))],
+                                orderedBy: .nameAscending
+                            ).map { $0.logical.exitCountryCode }
+                        ))
+
+                        state.destination = .freeConnectionsInfo(.init(countryCodes: freeCountries))
                     }
                     return .none
                 case .changeServerButtonTapped:
@@ -170,11 +184,20 @@ public struct HomeFeature {
                         @Dependency(\.pushAlert) var pushAlert
                         pushAlert(AllCountriesUpsellAlert())
                     }
-
+                case .presented(.freeConnectionsInfo(.dismissButtonTapped)):
+                    state.destination = nil
+                    return .none
+                case .presented(.freeConnectionsInfo(.upgradeButtonTapped)):
+                    return .run { send in
+                        @Dependency(\.pushAlert) var pushAlert
+                        pushAlert(AllCountriesUpsellAlert())
+                    }
                 default:
                     return .none
                 }
             case .map:
+                return .none
+            case .freeConnectionsInfo(_):
                 return .none
             }
         }
