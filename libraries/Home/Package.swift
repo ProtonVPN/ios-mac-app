@@ -42,10 +42,6 @@ let package = Package(
         .target(
             name: "Home",
             dependencies: [
-                "Theme",
-                "Domain",
-                "Strings",
-                "Ergonomics",
                 "Connection",
                 "Persistence",
                 "SharedViews",
