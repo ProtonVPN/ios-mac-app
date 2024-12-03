@@ -9,6 +9,7 @@
 import fusion
 import Foundation
 import Strings
+import UITestsHelpers
 
 fileprivate let editButton = Localizable.edit
 fileprivate let doneButton = Localizable.done
@@ -31,8 +32,13 @@ class ProfileRobot: ConnectionBaseRobot {
     }
     
     @discardableResult
-    func deleteProfile(_ profileName: String, _ countryname: String) -> ProfileRobot {
-        button(editButton).tap()
+    func deleteProfile(_ profileName: String) -> ProfileRobot {
+        button(editButton).waitForEnabled(time: WaitTimeout.short).tap()
+        if !button(doneButton)
+            .waitUntilExists(time: WaitTimeout.short)
+            .exists() {
+            button(editButton).tap()
+        }
         button()
             .containsLabel(profileName)
             .swipeUpUntilVisible()
@@ -116,6 +122,7 @@ class ProfileRobot: ConnectionBaseRobot {
         func profileIsCreated(profile: String) -> ProfileRobot {
             staticText(newProfileSuccessMessage).checkExists()
             checkProfileExists(profile)
+            staticText(newProfileSuccessMessage).waitUntilGone()
             return ProfileRobot()
         }
         
@@ -123,6 +130,7 @@ class ProfileRobot: ConnectionBaseRobot {
         func profileIsEdited(profile: String) -> ProfileRobot {
             staticText(editProfileSuccessMessage).checkExists()
             checkProfileExists(profile)
+            staticText(editProfileSuccessMessage).waitUntilGone()
             return ProfileRobot()
         }
         

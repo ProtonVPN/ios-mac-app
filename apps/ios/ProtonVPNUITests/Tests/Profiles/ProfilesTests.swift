@@ -26,26 +26,41 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testCreateAndDeleteProfile() async throws {
+    func testCreateAndDeleteProfile() {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        let randomCountry = try await ServersListUtils.getRandomCountry()
-        
-        loginAndOpenProfiles(as: UserType.Basic.credentials)
+        loginRobot
+            .enterCredentials(UserType.Plus.credentials)
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
+            .goToCountriesTab()
+
+        let countryName = CountryListRobot().getRandomServerFromList()
+
+        homeRobot
+            .goToProfilesTab()
             .tapAddNewProfile()
             .verify.isOnProfilesEditScreen()
-            .setProfileDetails(profile: profileName, country: randomCountry.name)
+            .setProfileDetails(profile: profileName, country: countryName)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated(profile: profileName)
-            .deleteProfile(profileName, randomCountry.name)
+            .deleteProfile(profileName)
             .verify.profileIsDeleted(profileName)
     }
     
     @MainActor
-    func testCreateProfileWithTheSameName() async throws {
+    func testCreateProfileWithTheSameName() {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        let (countryName, _) = try await ServersListUtils.getRandomCountry()
-        
-        loginAndOpenProfiles(as: UserType.Plus.credentials)
+
+        loginRobot
+            .enterCredentials(UserType.Plus.credentials)
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
+            .goToCountriesTab()
+
+        let countryName = CountryListRobot().getRandomServerFromList()
+
+        homeRobot
+            .goToProfilesTab()
             .tapAddNewProfile()
             .verify.isOnProfilesEditScreen()
             .setProfileDetails(profile: profileName, country: countryName)
@@ -58,13 +73,21 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testEditProfile() async throws {
+    func testEditProfile() {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         let newProfileName = StringUtils.randomAlphanumericString(length: 10)
-        let (countryName, _) = try await ServersListUtils.getRandomCountry()
-        let (newCountryName, _) = try await ServersListUtils.getRandomCountry()
-        
-        loginAndOpenProfiles(as: UserType.Plus.credentials)
+
+        loginRobot
+            .enterCredentials(UserType.Plus.credentials)
+            .signIn(robot: HomeRobot.self)
+            .verify.isLoggedIn()
+            .goToCountriesTab()
+
+        let countryName = CountryListRobot().getRandomServerFromList()
+        let newCountryName = CountryListRobot().getRandomServerFromList()
+
+        homeRobot
+            .goToProfilesTab()
             .tapAddNewProfile()
             .verify.isOnProfilesEditScreen()
             .setProfileDetails(profile: profileName, country: countryName)
@@ -74,6 +97,7 @@ class ProfilesTests: ProtonVPNUITests {
             .setProfileDetails(profile: newProfileName, country: newCountryName)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsEdited(profile: newProfileName)
+            .deleteProfile(newProfileName)
     }
     
     @MainActor

@@ -52,7 +52,7 @@ class CreateProfileRobot: CoreElements {
     @discardableResult
     private func tapCountryField() -> CreateProfileRobot {
         let countryField = staticText(countryField)
-        if countryField.waitUntilExists(time: WaitTimeout.short).exists() {
+        if countryField.waitUntilExists(time: 1).exists() {
             countryField.tap()
         } else {
             staticText(NSPredicate(format: "label CONTAINS[c] %@", "Country")).waitUntilExists(time: WaitTimeout.short).tap()
@@ -64,10 +64,12 @@ class CreateProfileRobot: CoreElements {
     @discardableResult
     private func chooseCountry(_ countryname: String) -> CreateProfileRobot {
         tapCountryField()
-        staticText(countriesLabel).waitUntilExists().checkExists()
+        staticText(countriesLabel).waitUntilExists().checkExists(message: "Countries list is not opened")
         staticText()
             .containsLabel(countryname)
+            .firstMatch()
             .checkExists(message: "Country \(countryname) not found")
+            .swipeUpUntilVisible()
             .tap()
         return self
     }
@@ -98,7 +100,8 @@ class CreateProfileRobot: CoreElements {
     @discardableResult
     private func setSecureCoreToggle(state: Bool) -> CreateProfileRobot {
         swittch(secureCoreToggle)
-            .waitUntilExists(time: WaitTimeout.short).checkExists()
+            .waitUntilExists(time: WaitTimeout.short)
+            .checkExists(message: "Secure core toggle is not visible")
         let secureCoreValue = swittch(secureCoreToggle).value() as? String
         let currentSecureCoreState = Bool(secureCoreValue ?? "") ?? false
 

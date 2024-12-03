@@ -119,9 +119,9 @@ class HomeRobot: ConnectionBaseRobot {
 
         @discardableResult
         func isLoggedIn() -> HomeRobot {
-            button(tabHome)
+            button(tabSettings)
                 .waitUntilExists(time: 30)
-                .checkExists(message: "Failed to check that user is logged in. Home tab is not visible in 30 seconds")
+                .checkExists(message: "Failed to check that user is logged in. Settings tab is not visible in 30 seconds")
             return HomeRobot()
         }
     }
