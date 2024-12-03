@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v11)],
+        .macOS(.v13)],
     products: [
         .library(
             name: "BugReport",

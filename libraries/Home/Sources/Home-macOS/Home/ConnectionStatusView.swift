@@ -23,7 +23,6 @@ import Strings
 import ComposableArchitecture
 import ProtonCoreUIFoundations
 
-@available(macOS 12.0, *)
 struct ConnectionStatusView: View {
 
     let store: StoreOf<ConnectionStatusFeature>
@@ -133,7 +132,6 @@ struct ConnectionStatusView: View {
     }
 }
 
-@available(macOS 12.0, *)
 struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
 

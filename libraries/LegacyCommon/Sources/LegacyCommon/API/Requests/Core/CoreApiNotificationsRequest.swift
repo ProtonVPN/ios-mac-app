@@ -127,8 +127,7 @@ extension NSScreen {
     /// Height in pixels that we need to subtract because it's occupied by system.
     private static func occupiedHeight(_ screen: NSScreen) -> CGFloat {
         let isNotch: Bool
-        if #available(macOS 12.0, *),
-           let top = NSScreen.main?.safeAreaInsets.top {
+        if let top = NSScreen.main?.safeAreaInsets.top {
             isNotch = top != 0
         } else {
             isNotch = false
