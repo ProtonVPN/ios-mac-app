@@ -71,6 +71,7 @@ struct FreeConnectionInfoModal: View {
                 }
             }
             .padding(.vertical, .themeSpacing8)
+            Spacer()
             Button {
                 store.send(.upgradeButtonTapped)
             } label: {
@@ -79,6 +80,7 @@ struct FreeConnectionInfoModal: View {
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.top, .themeSpacing24)
+        .padding(.bottom, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
                 Color.clear.preference(key: InnerHeightPreferenceKey.self,
@@ -90,6 +92,7 @@ struct FreeConnectionInfoModal: View {
         }
         .presentationDetents([.height(sheetHeight)])
         .presentationDragIndicator(.visible)
+        .background(Color(.background, .normal))
     }
 }
 
