@@ -18,6 +18,8 @@
         "ConnectionTests",
         "ConnectionTestsFreeUser",
         "LoginTests",
+        "MacOSMainMeasurementsTests\/testConnectionSLI()",
+        "MacOSMainMeasurementsTests\/testConnectionToSpecificServer()",
         "MapTests",
         "ProfileTests",
         "ProtonVPNUITests",

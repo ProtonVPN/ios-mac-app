@@ -36,9 +36,9 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
             .setProduct("VPN")
             .setEnvironment("prod")
             .setLokiEndpoint(ProcessInfo.processInfo.environment["LOKI_ENDPOINT"] ?? "invalid")
-            .setLokiCertificate(ProcessInfo.processInfo.environment["CERTIFICATE_IOS_SDK"] ?? "invalid")
-            .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["CERTIFICATE_IOS_SDK_PASSPHRASE"] ?? "invalid")
-        
+            .setLokiCertificate(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK"] ?? "invalid")
+            .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK_PRIVATE_KEY"] ?? "invalid")
+
     }
     
     override func setUp() {
