@@ -62,7 +62,7 @@
             reference = "container:TestPlans/ProtonVPN-macOS-UI-Connections.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:TestPlans/ProtonVPN-macOS-UI-SLI-prod.xctestplan">
+            reference = "container:TestPlans/ProtonVPN-macOS-SLI-All.xctestplan">
          </TestPlanReference>
       </TestPlans>
       <Testables>

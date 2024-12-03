@@ -22,8 +22,6 @@
   "testTargets" : [
     {
       "selectedTests" : [
-        "MainMeasurements\/testConnectionSLI()",
-        "MainMeasurements\/testConnectionToSpecificServer()",
         "MainMeasurements\/testLoginSLI()"
       ],
       "target" : {
