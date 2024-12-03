@@ -1,5 +1,5 @@
 //
-//  Created on 25/10/2024.
+//  Created on 03/12/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -16,11 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import Foundation
 
-public struct CGFloatPreferenceKey: PreferenceKey {
-    public static let defaultValue: CGFloat = .zero
-    public static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
+public enum BannerType: CaseIterable {
+    case worldwideCover
+    case fasterBrowsing
+    case streaming
+    case netshield
+    case secureCore
+    case p2p
+    case devices
+    case tor
+    case more
 }

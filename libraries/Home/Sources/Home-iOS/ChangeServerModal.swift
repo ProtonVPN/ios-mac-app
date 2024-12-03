@@ -75,11 +75,11 @@ struct ChangeServerModal: View {
         .padding(.horizontal, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: CGFloatPreferenceKey.self,
+                Color.clear.preference(key: ChangeServerHeightPreferenceKey.self,
                                        value: geometry.size.height)
             }
         }
-        .onPreferenceChange(CGFloatPreferenceKey.self) { newHeight in
+        .onPreferenceChange(ChangeServerHeightPreferenceKey.self) { newHeight in
             sheetHeight = newHeight
         }
         .presentationDetents([.height(sheetHeight)])
@@ -106,6 +106,8 @@ struct ChangeServerModal: View {
         .buttonStyle(ChangeServerButtonStyle(isActive: true))
     }
 }
+
+fileprivate struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey { }
 
 @available(iOS 17, *)
 #Preview("In Progress Short", traits: .sizeThatFitsLayout) {

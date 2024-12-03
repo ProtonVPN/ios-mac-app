@@ -814,14 +814,6 @@ public final class ProfilesUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource { .profiles }
 }
 
-public final class VPNAcceleratorUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellModalSource? { .vpnAccelerator }
-}
-
-public final class CustomizationUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellModalSource? { .allowLan }
-}
-
 public final class CountryUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .countries }
 
@@ -830,10 +822,6 @@ public final class CountryUpsellAlert: UpsellAlert {
     public init(countryFlag: Image) {
         self.countryFlag = countryFlag
     }
-}
-
-public final class SecureCoreUpsellAlert: UpsellAlert {
-    public override var modalSource: UpsellModalSource? { .secureCore }
 }
 
 public final class SafeModeUpsellAlert: UpsellAlert {

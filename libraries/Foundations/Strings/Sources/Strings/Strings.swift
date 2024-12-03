@@ -883,7 +883,6 @@ public enum Localizable {
   /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
   public static func operatingSystemOutOfDateAlertDescription(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.")
-    return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.")
   }
   /// User's OS version is no longer actively supported by Proton VPN (alert title)
   public static var operatingSystemOutOfDateAlertTitle: String { return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_title", fallback: "Update your software") }
@@ -2014,8 +2013,16 @@ public enum Localizable {
   public static var upsellCustomizationQuickConnectBold: String { return Localizable.tr("Localizable", "upsell_customization_quick_connect_bold", fallback: "Quick Connect") }
   /// Title of Customization upsell modal
   public static var upsellCustomizationTitle: String { return Localizable.tr("Localizable", "upsell_customization_title", fallback: "Unlock advanced VPN customization") }
+  /// Subtitle of devices upsell modal
+  public static var upsellDevicesSubtitle: String { return Localizable.tr("Localizable", "upsell_devices_subtitle", fallback: "Proton VPN is available on 8 different platforms.") }
+  /// Title of devices upsell modal
+  public static var upsellDevicesTitle: String { return Localizable.tr("Localizable", "upsell_devices_title", fallback: "Protect 10 devices at once") }
   /// Button title when user is on lower tier than the server requires [Redesign_2023]
   public static var upsellGetPlus: String { return Localizable.tr("Localizable", "upsell_get_plus", fallback: "Get Plus") }
+  /// Subtitle of p2p support upsell modal
+  public static var upsellP2pSupportSubtitle: String { return Localizable.tr("Localizable", "upsell_p2pSupport_subtitle", fallback: "Improve your upload and download speeds while hiding your IP address.") }
+  /// Title of p2p support upsell modal
+  public static var upsellP2pSupportTitle: String { return Localizable.tr("Localizable", "upsell_p2pSupport_title", fallback: "Unlock peer-to-peer (P2P) downloads and file sharing") }
   /// Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
   public static var upsellPlansListOptionAmountPerMonth: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerMonth", fallback: " /month") }
   /// Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
@@ -2050,6 +2057,14 @@ public enum Localizable {
   public static var upsellSpecificLocationSubtitle2: String { return Localizable.tr("Localizable", "upsell_specific_location_subtitle2", fallback: "With Proton Free, you can change servers a few times per hour. Get unlimited server changes with VPN Plus.") }
   /// Displayed when the user clicks "Connect to Random Server" too many times in a given time interval.
   public static var upsellSpecificLocationTitle: String { return Localizable.tr("Localizable", "upsell_specific_location_title", fallback: "You've reached the maximum number of Free server changes for now.") }
+  /// Subtitle of streaming upsell modal
+  public static var upsellStreamingSubtitle: String { return Localizable.tr("Localizable", "upsell_streaming_subtitle", fallback: "Enjoy your favorite movies and TV shows from anywhere in the world.") }
+  /// Title of streaming upsell modal
+  public static var upsellStreamingTitle: String { return Localizable.tr("Localizable", "upsell_streaming_title", fallback: "Stream in 4K") }
+  /// Subtitle of torOverVPN upsell modal
+  public static var upsellTorOverVPNSubtitle: String { return Localizable.tr("Localizable", "upsell_torOverVPN_subtitle", fallback: "Connect to hidden services and onion sites with your regular browser.") }
+  /// Title of torOverVPN upsell modal
+  public static var upsellTorOverVPNTitle: String { return Localizable.tr("Localizable", "upsell_torOverVPN_title", fallback: "Access the Tor network in one tap") }
   /// Feature of VPN Accelerator upsell modal
   public static var upsellVpnAcceleratorDistantServers: String { return Localizable.tr("Localizable", "upsell_vpn_accelerator_distant_servers", fallback: "Improved speed and stability when connected to distant servers.") }
   /// Feature of VPN Accelerator upsell modal

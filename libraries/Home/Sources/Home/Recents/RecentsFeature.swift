@@ -53,7 +53,7 @@ public struct RecentsFeature {
         case remove(RecentConnection)
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)
-        case upsellTapped
+        case upsellTapped(BannerType)
 
         case delegate(Delegate)
 
@@ -87,8 +87,28 @@ public struct RecentsFeature {
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
 
-            case .upsellTapped:
-                pushAlert(AllCountriesUpsellAlert())
+            case .upsellTapped(let type):
+                switch type {
+                case .worldwideCover:
+                    pushAlert(AllCountriesUpsellAlert())
+                case .fasterBrowsing:
+                    pushAlert(VPNAcceleratorUpsellAlert())
+                case .streaming:
+                    pushAlert(StreamingUpsellAlert())
+                case .netshield:
+                    pushAlert(NetShieldUpsellAlert())
+                case .secureCore:
+                    pushAlert(SecureCoreUpsellAlert())
+                case .p2p:
+                    pushAlert(P2PUpsellAlert())
+                case .devices:
+                    pushAlert(DevicesUpsellAlert())
+                case .tor:
+                    pushAlert(TorUpsellAlert())
+                case .more:
+                    pushAlert(CustomizationUpsellAlert())
+                }
+
                 return .none
 
             case .newConnectionStatus(let connectionStatus):

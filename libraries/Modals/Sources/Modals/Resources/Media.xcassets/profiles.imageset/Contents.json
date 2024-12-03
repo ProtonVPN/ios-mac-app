@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "profiles@1x.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "profiles@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "profiles@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "profiles.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

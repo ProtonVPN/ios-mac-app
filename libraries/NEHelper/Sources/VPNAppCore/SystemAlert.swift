@@ -68,7 +68,9 @@ public enum UpsellModalSource {
     case netShield
     case countries
     case p2p
+    case tor
     case streaming
+    case devices
     case portForwarding
     case profiles
     case vpnAccelerator
@@ -89,4 +91,32 @@ public class AllCountriesUpsellAlert: UpsellAlert {
 
 public final class NetShieldUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .netShield }
+}
+
+public final class SecureCoreUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .secureCore }
+}
+
+public final class VPNAcceleratorUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .vpnAccelerator }
+}
+
+public final class StreamingUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .streaming }
+}
+
+public final class P2PUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .p2p }
+}
+
+public final class DevicesUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .devices }
+}
+
+public final class TorUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .tor }
+}
+
+public final class CustomizationUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .allowLan }
 }

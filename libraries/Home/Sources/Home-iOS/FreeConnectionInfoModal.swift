@@ -85,11 +85,11 @@ struct FreeConnectionInfoModal: View {
         .padding(.bottom, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: CGFloatPreferenceKey.self,
+                Color.clear.preference(key: FreeConnectionHeightPreferenceKey.self,
                                        value: geometry.size.height)
             }
         }
-        .onPreferenceChange(CGFloatPreferenceKey.self) { newHeight in
+        .onPreferenceChange(FreeConnectionHeightPreferenceKey.self) { newHeight in
             sheetHeight = newHeight
         }
         .presentationDetents([.height(sheetHeight)])
@@ -97,6 +97,8 @@ struct FreeConnectionInfoModal: View {
         .background(Color(.background, .normal))
     }
 }
+
+fileprivate struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey { }
 
 // MARK: - View Helpers
 

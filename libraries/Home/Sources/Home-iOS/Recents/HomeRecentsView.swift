@@ -43,6 +43,7 @@ public struct RecentsSectionView: View {
                 .padding([.top, .horizontal], .themeSpacing12)
             Spacer()
         }
+        .frame(maxWidth: Constants.maxHomeContentWidth)
     }
 
 
@@ -62,16 +63,14 @@ public struct RecentsSectionView: View {
     }
 
     public var body: some View {
-        if !store.recents.connectionsList.isEmpty {
+        if !store.recents.connectionsList.isEmpty, !store.userTier.isFreeTier {
             sectionTitleView(title: Localizable.homeRecentsRecentSection)
-                .frame(maxWidth: Constants.maxHomeContentWidth)
             recentsList
                 .frame(maxWidth: Constants.maxHomeContentWidth)
                 .task { store.send(.watchConnectionStatus) }
         }
         if store.userTier.isFreeTier {
             sectionTitleView(title: Localizable.homeRecentsUpsellSection)
-                .frame(maxWidth: Constants.maxHomeContentWidth)
             UpsellCarousel(sendAction: { _ = store.send($0) })
         }
     }

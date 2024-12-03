@@ -31,14 +31,20 @@ struct UpsellCarousel: View {
         max((scrollViewWidth - Constants.maxHomeContentWidth) / 2, 0)
     }
 
+    private var bannerWidth: CGFloat {
+        let margins: CGFloat = .themeSpacing32
+        let peek: CGFloat = .themeSpacing48
+        return (scrollViewWidth - margins - peek) / 2
+    }
+
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: true) {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(BannerModel.Banner.allCases, id: \.hashValue) { type in
+                ForEach(BannerType.allCases, id: \.hashValue) { type in
                     Button {
-                        sendAction(.upsellTapped)
+                        sendAction(.upsellTapped(type))
                     } label: {
-                        UpsellBanner(type)
+                        UpsellBanner(type, width: bannerWidth)
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
@@ -48,17 +54,19 @@ struct UpsellCarousel: View {
         .scrollClipDisabled() // for iPad
         .padding(.vertical, .themeSpacing8)
         .padding(.horizontal, .themeSpacing16)
-        .overlay { GeometryReader { Color.clear.preference(key: CGFloatPreferenceKey.self, value: $0.size.width) } }
-        .onPreferenceChange(CGFloatPreferenceKey.self) { scrollViewWidth = $0 }
+        .overlay { GeometryReader { Color.clear.preference(key: CarouselWidthPreferenceKey.self, value: $0.size.width) } }
+        .onPreferenceChange(CarouselWidthPreferenceKey.self) { scrollViewWidth = $0 }
     }
 }
 
 fileprivate struct UpsellBanner: View {
 
     let model: BannerModel
+    let width: CGFloat
 
-    init(_ type: BannerModel.Banner) {
+    init(_ type: BannerType, width: CGFloat) {
         self.model = BannerModel(type: type)
+        self.width = max(126, min(300, width))
     }
 
     var body: some View {
@@ -76,7 +84,7 @@ fileprivate struct UpsellBanner: View {
         }
         .padding(.vertical, .themeSpacing24)
         .padding(.horizontal, .themeSpacing16)
-        .frame(width: 162)
+        .frame(width: width)
         .background(Color(.background, .weak))
         .clipRectangle(cornerRadius: .radius8)
     }
@@ -87,19 +95,7 @@ fileprivate struct BannerModel {
     let subtitle: String
     let image: Home.ImageAsset
 
-    enum Banner: CaseIterable {
-        case worldwideCover
-        case fasterBrowsing
-        case streaming
-        case netshield
-        case secureCore
-        case p2p
-        case devices
-        case tor
-        case more
-    }
-
-    init(type: Banner) {
+    init(type: BannerType) {
         switch type {
         case .worldwideCover:
             title = Localizable.upsellCarouselWorldwideTitle
@@ -141,12 +137,9 @@ fileprivate struct BannerModel {
     }
 }
 
+fileprivate struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey { }
+
 @available(iOS 17.0, *)
 #Preview {
-    VStack {
-        Spacer()
-        UpsellCarousel { action in
-            
-        }
-    }
+    UpsellCarousel { _ in }
 }

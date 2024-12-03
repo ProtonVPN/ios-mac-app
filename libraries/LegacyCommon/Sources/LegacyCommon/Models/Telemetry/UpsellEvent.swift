@@ -137,6 +137,8 @@ extension UpsellModalSource: Encodable {
         case .promoOffer: try container.encode("promo_offer")
         case .downgrade: try container.encode("downgrade")
         case .maxConnections: try container.encode("max_connections")
+        case .tor: try container.encode("tor")
+        case .devices: try container.encode("devices")
         }
     }
 }
