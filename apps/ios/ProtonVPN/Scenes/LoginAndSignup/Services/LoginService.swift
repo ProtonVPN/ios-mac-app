@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import SwiftUI
+import UIKit
+
 import Dependencies
-import LegacyCommon
+
 import ProtonCoreDataModel
 import ProtonCoreLogin
 import ProtonCoreFeatureFlags
@@ -17,9 +20,14 @@ import ProtonCoreNetworking
 import ProtonCorePayments
 import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
-import UIKit
+
+import LegacyCommon
+
 import CommonNetworking
 import VPNShared
+
+import Settings_iOS
+
 import Strings
 
 protocol LoginServiceFactory: AnyObject {
@@ -292,22 +300,16 @@ extension CoreLoginService: LoginService {
             #endif
         }
     }
-}
 
-// MARK: Environment selection
 
 #if !RELEASE
-extension CoreLoginService: EnvironmentsViewControllerDelegate {
     private func showEnvironmentSelection() {
-        let environmentsViewController = UIStoryboard(name: "Environments", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
-        environmentsViewController.propertiesManager = propertiesManager
-        environmentsViewController.doh = doh
-        environmentsViewController.delegate = self
+        let environmentsView = EnvironmentSelectorView { [weak self] in
+            self?.show(initialError: nil, withOverlayViewController: nil)
+        }
+
+        let environmentsViewController = UIHostingController(rootView: environmentsView)
         windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
     }
-
-    func userDidSelectContinue() {
-        show(initialError: nil, withOverlayViewController: nil)
-    }
-}
 #endif
+}

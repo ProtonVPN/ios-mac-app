@@ -320,7 +320,7 @@ extension CoreNetworking: APIServiceDelegate {
         return appInfo.appVersion + "-dev"
 #else
         // Help the backend figure out whether we're distributing through a TestFlight build.
-        if Bundle.isTestflightBeta {
+        if Bundle.isTestflight {
             return appInfo.appVersion + "-beta"
         } else {
             return appInfo.appVersion

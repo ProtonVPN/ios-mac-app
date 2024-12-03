@@ -42,10 +42,10 @@ extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
-        #if DEBUG || STAGING
-        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
-        #else
+        #if RELEASE
         let customHost: String? = nil
+        #else
+        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
         #endif
 
         let doh = DoHVPN(

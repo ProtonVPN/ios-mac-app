@@ -131,7 +131,13 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var forceExtensionUpgrade: Bool { get set }
     var connectedServerNameDoNotUse: String? { get set }
     #endif
-    
+
+    #if !RELEASE
+    var atlasSecret: String? { get set }
+    var atlasSecretFetchURLString: String? { get set }
+    var featureFlagOverrides: [String: Bool]? { get set }
+    #endif
+
     func logoutCleanup()
     
     func getValue(forKey: String) -> Bool
@@ -252,6 +258,12 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         #endif
 
         case didShowDeprecationWarningForOSVersion = "DidShowDeprecationWarningForOSVersion"
+
+        #if !RELEASE
+        case atlasSecret = "AtlasSecret"
+        case atlasSecretFetchURL = "AtlasSecretFetchURL"
+        case featureFlagOverrides = "FeatureFlagOverrides"
+        #endif
     }
 
     public static let activeConnectionChangedNotification = Notification.Name("ActiveConnectionChangedNotification")
@@ -479,6 +491,12 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
 
     @StringProperty(.didShowDeprecationWarningForOSVersion) public var didShowDeprecationWarningForOSVersion: String?
+
+    #if !RELEASE
+    @StringProperty(.atlasSecret) public var atlasSecret: String?
+    @StringProperty(.atlasSecretFetchURL) public var atlasSecretFetchURLString: String?
+    @Property(.featureFlagOverrides) public var featureFlagOverrides: [String: Bool]?
+    #endif
 
     @Dependency(\.storage) var storage
 

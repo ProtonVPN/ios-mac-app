@@ -28,6 +28,7 @@ let package = Package(
             name: "Settings",
             dependencies: [
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 "Theme",
                 "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
@@ -38,7 +39,10 @@ let package = Package(
         ),
         .target(
             name: "Settings-iOS",
-            dependencies: ["Settings"],
+            dependencies: [
+                "Settings",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
             exclude: ["swiftgen.yml"],
             resources: [.process("Resources")]
         ),

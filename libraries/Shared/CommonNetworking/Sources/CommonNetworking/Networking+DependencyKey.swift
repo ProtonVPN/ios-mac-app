@@ -130,6 +130,7 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
     }
 }
 
+#if DEBUG
 struct VPNNetworkingMock: VPNNetworking {
     var userTierResult: Result<Int, Error>
 
@@ -169,3 +170,4 @@ struct VPNNetworkingMock: VPNNetworking {
         fatalError("Not implemented")
     }
 }
+#endif

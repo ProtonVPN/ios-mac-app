@@ -49,6 +49,7 @@ import Logging
 import PMLogger
 import VPNShared
 import VPNAppCore
+import Settings
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
@@ -99,6 +100,12 @@ extension AppDelegate: UIApplicationDelegate {
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
 //      Safety measure to not accidentally switch on the redesign before it's ready
 //      FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)
+
+        // Next, properly set the feature flag overrides in the repository.
+        for (name, value) in propertiesManager.featureFlagOverrides ?? [:] {
+            guard let feature = ManuallySpecifiedFeatureFlag(rawValue: name) else { continue }
+            FeatureFlagsRepository.shared.setFlagOverride(feature, value)
+        }
 
         setupCoreIntegration(launchOptions: launchOptions)
         setupLogsForApp()

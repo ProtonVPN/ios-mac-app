@@ -20,8 +20,11 @@ import Foundation
 
 import Dependencies
 
-import VPNShared
+import ProtonCoreFeatureFlags
+
 import LegacyCommon
+import VPNAppCore
+import VPNShared
 import Persistence
 import Ergonomics
 
@@ -39,36 +42,87 @@ extension ChallengeParametersProviderKey: DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
 }
 
+extension SettingsStorageKey: DependencyKey {
+    public static let liveValue: SettingsStorage = .init(
+        getConnectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.connectionProtocol
+        },
+        setConnectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.connectionProtocol = $0
+        },
+        getNetShield: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.lastConnectionRequest?.netShieldType ?? .off
+        },
+        setNetShield: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: $0)
+        },
+        getEnvironment: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            #if RELEASE
+            return .init(
+                apiEndpoint: "",
+                atlasSecret: "",
+                atlasSecretFetchURLString: "",
+                featureFlagOverrides: [:]
+            )
+            #else
+            return .init(
+                apiEndpoint: propertiesManager.apiEndpoint ?? Bundle.dynamicDomain ?? "",
+                atlasSecret: propertiesManager.atlasSecret ?? Bundle.atlasSecret ?? "",
+                atlasSecretFetchURLString: propertiesManager.atlasSecretFetchURLString ?? "",
+                featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:]
+            )
+            #endif
+        },
+        setEnvironment: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.apiEndpoint = $0.apiEndpoint.valueIfNotEmpty
+            propertiesManager.atlasSecret = $0.atlasSecret.valueIfNotEmpty
+            propertiesManager.atlasSecretFetchURLString = $0.atlasSecretFetchURLString.valueIfNotEmpty
+            propertiesManager.featureFlagOverrides = $0.featureFlagOverrides
+        }
+    )
+}
+
+private extension String {
+    var valueIfNotEmpty: String? {
+        guard !isEmpty else { return nil }
+        return self
+    }
+}
+
 extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
-        #if DEBUG || STAGING
-        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
-        #else
+        #if RELEASE
         let customHost: String? = nil
+        let atlasSecret: String? = nil
+        #else
+        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
+        let atlasSecret = Bundle.atlasSecret ?? propertiesManager.atlasSecret
         #endif
 
         let doh = DoHVPN(
             alternativeRouting: propertiesManager.alternativeRouting,
-            customHost: customHost
+            customHost: customHost,
+            atlasSecret: atlasSecret
         )
 
         propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
         }
+
         return doh
     }
 }
 
 extension DoHVPN {
-    convenience init(alternativeRouting: Bool, customHost: String?) {
-        #if DEBUG || STAGING
-        let atlasSecret = Bundle.atlasSecret
-        #else
-        let atlasSecret: String? = nil
-        #endif
-
+    convenience init(alternativeRouting: Bool, customHost: String?, atlasSecret: String?) {
         self.init(
             apiHost: ObfuscatedConstants.apiHost,
             verifyHost: ObfuscatedConstants.humanVerificationV3Host,
