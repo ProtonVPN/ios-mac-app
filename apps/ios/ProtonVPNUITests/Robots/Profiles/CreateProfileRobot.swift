@@ -64,7 +64,7 @@ class CreateProfileRobot: CoreElements {
     @discardableResult
     private func chooseCountry(_ countryname: String) -> CreateProfileRobot {
         tapCountryField()
-        staticText(countriesLabel).waitUntilExists().checkExists()
+        staticText(countriesLabel).waitUntilExists().checkExists(message: "Countries list is not opened")
         staticText()
             .containsLabel(countryname)
             .firstMatch()

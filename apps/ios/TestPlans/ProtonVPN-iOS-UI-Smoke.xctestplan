@@ -10,8 +10,7 @@
             "value" : "$(DYNAMIC_DOMAIN)"
           }
         ],
-        "maximumTestRepetitions" : 5,
-        "testRepetitionMode" : "fixedIterations"
+        "testRepetitionMode" : "retryOnFailure"
       }
     }
   ],
@@ -37,6 +36,9 @@
   "testTargets" : [
     {
       "selectedTests" : [
+        "LoginTests\/testLoginAsSubuserWithNoConnectionsAssigned()",
+        "LoginTests\/testLoginWithIncorrectCredentials()",
+        "LoginTests\/testLoginWithTwoPassAnd2FAUser()",
         "ProfilesTests\/testCreateAndDeleteProfile()",
         "ProfilesTests\/testCreateProfileWithTheSameName()",
         "ProfilesTests\/testEditProfile()",
