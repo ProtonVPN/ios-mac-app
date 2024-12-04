@@ -44,42 +44,39 @@ class ConnectionDetailsRobot: CoreElements {
 
         @discardableResult
         func connectionDetailsHeader(title: String) -> ConnectionDetailsRobot {
-            staticText("connection_screen_info")
-                .firstMatch()
-                .checkContainsLabel(title)
+            checkStaticText("connection_screen_info", contains: title)
             return ConnectionDetailsRobot()
         }
 
         @discardableResult
         func connectionDetailsCountry(name: String) -> ConnectionDetailsRobot {
-            staticText("connection_details_country")
-                .firstMatch()
-                .checkContainsLabel(name)
+            checkStaticText("connection_details_country", contains: name)
             return ConnectionDetailsRobot()
         }
 
         @discardableResult
         func connectionDetailsCity(name: String) -> ConnectionDetailsRobot {
-            staticText("connection_details_city")
-                .firstMatch()
-                .checkContainsLabel(name)
+            checkStaticText("connection_details_city", contains: name)
             return ConnectionDetailsRobot()
         }
 
         @discardableResult
         func connectionDetailsServer(name: String) -> ConnectionDetailsRobot {
-            staticText("connection_details_server")
-                .firstMatch()
-                .checkContainsLabel(name)
+            checkStaticText("connection_details_server", contains: name)
             return ConnectionDetailsRobot()
         }
 
         @discardableResult
         func connectionDetailsProtocol(name: String) -> ConnectionDetailsRobot {
-            staticText("connection_details_protocol")
-                .firstMatch()
-                .checkContainsLabel(name)
+            checkStaticText("connection_details_protocol", contains: name)
             return ConnectionDetailsRobot()
+        }
+
+        @discardableResult
+        private func checkStaticText(_ identifier: String, contains label: String) -> UIElement {
+            return staticText(identifier)
+                .firstMatch()
+                .checkContainsLabel(label)
         }
     }
 }
