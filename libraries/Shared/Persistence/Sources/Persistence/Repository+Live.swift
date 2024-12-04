@@ -116,8 +116,16 @@ extension ServerRepository {
                 return executor.read(dbWriter: dbWriter) { db in
                     let request = GroupInfoResult.request(filters: filters, groupOrder: order)
 
-                    return try GroupInfoResult.fetchAll(db, request)
-                        .map { $0.domainModel }
+                    let groups = try GroupInfoResult.fetchAll(db, request).map { $0.domainModel }
+                    return Dictionary(grouping: groups.filter {
+                        if case .gateway = $0.kind { return true }
+                        return false
+                    }, by: \.kind)
+                    .compactMap { $0.value.first } // We group gateways by gateway name.
+                    + groups.filter {
+                        if case .gateway = $0.kind { return false }
+                        return true
+                    } // Then adding all other kinds.
                 }
             },
             getMetadata: { key in
