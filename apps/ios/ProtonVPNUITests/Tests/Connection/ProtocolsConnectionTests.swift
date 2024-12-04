@@ -23,48 +23,58 @@ import XCTest
 class ProtocolsConnectionTests: ConnectionTestsBase {
 
     func testConnectViaWireGuardUDPProtocol() {
-        testConnection(protocol: ConnectionProtocol.WireGuardUDP)
+        testConnection(connectionProtocol: ConnectionProtocol.WireGuardUDP)
     }
 
     func testConnectViaWireGuardTCPProtocol() {
-        testConnection(protocol: ConnectionProtocol.WireGuardTCP)
+        testConnection(connectionProtocol: ConnectionProtocol.WireGuardTCP)
     }
 
     func testConnectViaSmartProtocol() {
-        testConnection(protocol: ConnectionProtocol.Smart)
+        testConnection(connectionProtocol: ConnectionProtocol.Smart)
     }
 
     func testConnectViaStealthProtocol() {
-        testConnection(protocol: ConnectionProtocol.Stealth)
+        testConnection(connectionProtocol: ConnectionProtocol.Stealth)
     }
 
     func testConnectViaWireGuardUDPProtocolKillSwitchON() {
-        testConnection(protocol: ConnectionProtocol.WireGuardUDP, isKSOn: true)
+        testConnection(connectionProtocol: ConnectionProtocol.WireGuardUDP, isKSOn: true)
     }
 
     func testConnectViaWireGuardTCPProtocolKillSwitchON() {
-        testConnection(protocol: ConnectionProtocol.WireGuardTCP, isKSOn: true)
+        testConnection(connectionProtocol: ConnectionProtocol.WireGuardTCP, isKSOn: true)
     }
 
     func testConnectViaSmartProtocolKillSwitchON() {
-        testConnection(protocol: ConnectionProtocol.Smart, isKSOn: true)
+        testConnection(connectionProtocol: ConnectionProtocol.Smart, isKSOn: true)
     }
 
     func testConnectViaStealthProtocolKillSwitchON() {
-        testConnection(protocol: ConnectionProtocol.Stealth, isKSOn: true)
+        testConnection(connectionProtocol: ConnectionProtocol.Stealth, isKSOn: true)
     }
 
-    private func testConnection(protocol: ConnectionProtocol, isKSOn: Bool = false) {
+    private func testConnection(connectionProtocol: ConnectionProtocol, isKSOn: Bool = false) {
         login(as: UserType.Plus.credentials)
             .goToSettingsTab()
             .goToProtocolsList()
-            .chooseProtocol(ConnectionProtocol.WireGuardUDP)
+            .chooseProtocol(connectionProtocol)
             .returnToSettings()
             .toggleKillSwitch(state: isKSOn)
         homeRobot
             .goToHomeTab(robot: HomeRobot.self)
             .quickConnectViaQCButton()
             .verify.connectionStatusConnected()
+            .openConnectionDetails()
+            .verify.connectionDetailsIsShown()
+
+        if connectionProtocol != .Smart {
+            connectionDetailsRobot
+                .verify.connectionDetailsProtocol(name: connectionProtocol.rawValue)
+        }
+        connectionDetailsRobot
+
+            .closeConnectionDetails()
             .quickDisconnectViaQCButton()
             .verify.connectionStatusNotConnected()
     }

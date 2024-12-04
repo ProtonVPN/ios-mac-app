@@ -26,6 +26,10 @@ class FreeUserConnectionTests: ConnectionTestsBase {
         login(as: UserType.Free.credentials)
             .quickConnectViaQCButton()
             .verify.connectionStatusConnected()
+            .openConnectionDetails()
+            .verify.connectionDetailsIsShown()
+            .verify.connectionDetailsHeader(title: "Fastest country")
+            .closeConnectionDetails()
             .quickDisconnectViaQCButton()
             .verify.connectionStatusNotConnected()
     }

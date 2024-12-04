@@ -92,6 +92,7 @@
 		770AD2DE2CEDF024000FFB38 /* CountriesConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD2DD2CEDF01B000FFB38 /* CountriesConnectionTests.swift */; };
 		770AD2E02CEDF8CD000FFB38 /* ConnectionBaseRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770AD2DF2CEDF8C9000FFB38 /* ConnectionBaseRobot.swift */; };
 		773B252F2C8860C8001CA9F0 /* CountrySearchRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773B252E2C8860C8001CA9F0 /* CountrySearchRobot.swift */; };
+		7745A9442D009E79003A78E2 /* ConnectionDetailsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7745A9432D009E72003A78E2 /* ConnectionDetailsRobot.swift */; };
 		774F43582CED03C0004AA1BE /* ProtocolsConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774F43572CED03BA004AA1BE /* ProtocolsConnectionTests.swift */; };
 		774F435A2CED03D7004AA1BE /* ConnectionTestsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774F43592CED03D1004AA1BE /* ConnectionTestsBase.swift */; };
 		776B11B32CECA15C0012D2D8 /* XCUIElement+tapAndClearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */; };
@@ -575,6 +576,7 @@
 		770AD2DD2CEDF01B000FFB38 /* CountriesConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesConnectionTests.swift; sourceTree = "<group>"; };
 		770AD2DF2CEDF8C9000FFB38 /* ConnectionBaseRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBaseRobot.swift; sourceTree = "<group>"; };
 		773B252E2C8860C8001CA9F0 /* CountrySearchRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountrySearchRobot.swift; sourceTree = "<group>"; };
+		7745A9432D009E72003A78E2 /* ConnectionDetailsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDetailsRobot.swift; sourceTree = "<group>"; };
 		774F43572CED03BA004AA1BE /* ProtocolsConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolsConnectionTests.swift; sourceTree = "<group>"; };
 		774F43592CED03D1004AA1BE /* ConnectionTestsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTestsBase.swift; sourceTree = "<group>"; };
 		776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+tapAndClearText.swift"; sourceTree = "<group>"; };
@@ -2149,6 +2151,7 @@
 		F3B783E926E6428C006768A8 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
+				7745A9432D009E72003A78E2 /* ConnectionDetailsRobot.swift */,
 				770AD2DF2CEDF8C9000FFB38 /* ConnectionBaseRobot.swift */,
 				F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */,
 				F3B783ED26E6428C006768A8 /* ServerListRobot.swift */,
@@ -3019,6 +3022,7 @@
 				F377836C26E644BC00392958 /* ProfileConnectionTests.swift in Sources */,
 				E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */,
 				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
+				7745A9442D009E79003A78E2 /* ConnectionDetailsRobot.swift in Sources */,
 				67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */,
 				77E01ACB2CC112C00013F3D7 /* BF22Users.swift in Sources */,
 				89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */,

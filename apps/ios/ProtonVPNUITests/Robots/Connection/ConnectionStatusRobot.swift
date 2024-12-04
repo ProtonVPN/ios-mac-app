@@ -94,7 +94,6 @@ class ConnectionStatusRobot: CoreElements {
             staticText(connectionStatusProtected)
                 .waitUntilExists(time: 60)
                 .checkExists(message: "\(connectionStatusProtected) is not visible in 60 seconds")
-            staticText(netShieldStatsViewId).checkExists(message: "NetShieldStats view is not visible")
             return T()
         }
         

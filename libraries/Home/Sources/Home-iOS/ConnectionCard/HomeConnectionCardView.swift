@@ -42,6 +42,7 @@ struct HomeConnectionCardView: View {
         static let buttonConnect: String = "connect_button"
         static let buttonDisconnect: String = "disconnect_button"
         static let connectionInfoHeader: String = "connection_info_header"
+        static let connectionInfo: String = "connection_info"
     }
 
     private var accessibilityText: String {
@@ -129,7 +130,7 @@ struct HomeConnectionCardView: View {
             }
             .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfoHeader)
             .padding(.themeSpacing16)
-        }
+        }.accessibilityIdentifier(AccessibilityIdentifiers.connectionInfo)
     }
 
     private var card: some View {
