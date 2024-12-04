@@ -4,7 +4,7 @@ Copyright (c) 2023 Proton Technologies AG
 
 ## Dependencies
 
-This project uses Swift Package Manager for all of it's dependencies. Allow Xcode to resolve packages before running any target.
+This project uses Swift Package Manager for all of its dependencies. Allow Xcode to resolve packages before running any target.
 
 ### Third-party dependencies
 
@@ -23,7 +23,7 @@ This project uses Swift Package Manager for all of it's dependencies. Allow Xcod
 
 A set of secrets is required in order to build the project.
 These include URLs and keys, and are kept in files named `ObfuscatedConstants.swift`.
-These files are kept in a seperate repository, which requires some additional setup to keep synchronised.
+These files are kept in a seperate repository, which requires some additional setup to keep synchronized.
 
 Firstly, invoke the script located at `Integration/Scripts/credentials.sh` with the `setup` command.
 Provide the path where you wish the secrets repository to be cloned locally using the `-p` argument, and the url of the repository using the `-r` argument.
@@ -36,7 +36,7 @@ Then, to verify that setup has been successful:
 ./Integration/Scripts/credentials.sh checkout
 ```
 
-If setup correctly, obfuscated constants will be automatically synchronised during the Generate Obfuscated Constants build phase of each app.
+If setup correctly, obfuscated constants will be automatically synchronized during the Generate Obfuscated Constants build phase of each app.
 
 ## Package Structure
 
