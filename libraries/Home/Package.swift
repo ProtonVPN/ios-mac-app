@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.15.1")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.17.6"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Domain"),
@@ -85,6 +86,15 @@ let package = Package(
                 "Home",
                 "Theme",
                 .product(name: "OrderedCollections", package: "swift-collections"),
+            ]
+        ),
+        .testTarget(
+            name: "HomeSnapshotTests",
+            dependencies: [
+                "Home",
+                "Home-iOS",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
             ]
         )
     ]

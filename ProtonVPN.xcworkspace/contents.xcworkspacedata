@@ -166,4 +166,7 @@
          location = "group:scripts">
       </FileRef>
    </Group>
+   <FileRef
+      location = "group:libraries/Home/Tests/Home-iOS.xctestplan">
+   </FileRef>
 </Workspace>

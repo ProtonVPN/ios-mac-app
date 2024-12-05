@@ -51,7 +51,9 @@ public struct HomeView: View {
     @State private var connectionViewHeight: CGFloat = .zero
     private var mapHeight: CGFloat {
         let recentPeek: CGFloat = store.recents.recents.isEmpty ? 0 : .themeSpacing64
-        return max(0, viewHeight - (connectionViewHeight + recentPeek))
+        let mapHeight = max(0, viewHeight - (connectionViewHeight + recentPeek))
+//        print("pj \(mapHeight)")
+        return mapHeight
     }
 
     public init(store: StoreOf<HomeFeature>) {
