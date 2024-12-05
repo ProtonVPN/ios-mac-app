@@ -23,7 +23,6 @@ import Theme
 import VPNAppCore
 
 public struct ConnectionFlagInfoView: View {
-
     public enum Action {
         case pin
         case unpin
@@ -40,7 +39,7 @@ public struct ConnectionFlagInfoView: View {
     let isConnected: Bool
 
     let textHeaderString: String
-    let subheaderModel: ConnectionInfoSubheaderModel
+    let subheaderModel: LocationFeatureSubheaderModel
     let resolvedLocation: ConnectionSpec.Location
 
     let detailAction: ((Action) -> Void)?
@@ -79,6 +78,7 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
+        // VPNAPPL-XXX: Use `ConnectionFlagInfoView`
         HStack(alignment: .firstTextBaseline, spacing: 0) {
             FlagView(location: resolvedLocation, flagSize: .defaultSize)
 
@@ -156,70 +156,16 @@ public struct ConnectionFlagInfoView: View {
 #endif
     }
 
-    private func subheader(model: ConnectionInfoSubheaderModel) -> some View {
-        ConnectionInfoSubheader(model: model)
+    private func subheader(model: LocationFeatureSubheaderModel) -> some View {
+        LocationFeatureSubheader(model: model)
             .lineLimit(2)
             .foregroundColor(.init(.border))
     }
 }
 
-extension ConnectionInfoSubheaderModel {
+extension LocationFeatureSubheaderModel {
     var shouldShowSpacerInFlagView: Bool {
         self != .none
-    }
-}
-
-public struct ConnectionInfoSubheader: View {
-    private let model: ConnectionInfoSubheaderModel
-
-    public init(model: ConnectionInfoSubheaderModel) {
-        self.model = model
-    }
-
-    public var body: some View {
-        content
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .fixedSize(horizontal: false, vertical: true)
-            .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
-            .font(.body())
-#elseif canImport(UIKit)
-            .font(.body2(emphasised: false))
-#endif
-    }
-
-    @ViewBuilder private var content: some View {
-        switch model {
-        case .textual(let textModel):
-            [Text(textModel.location)]
-                .appending(torText, if: textModel.showTor)
-                .appending(p2pText, if: textModel.showP2P)
-                .joined(separator: Text(" • "))
-
-        case .freeServerSelectionDisclaimer:
-            freeServerSelectionDisclaimerView
-
-        case .none:
-            EmptyView()
-        }
-    }
-
-    private var freeServerSelectionDisclaimerView: some View {
-        HStack(spacing: .themeSpacing4) {
-            Text(Localizable.homeFastestConnectionSelectionDescription)
-            Asset.freeFlags.swiftUIImage
-            Text(Localizable.homeFastestConnectionAdditionalCountryCount(2))
-        }
-    }
-
-    private var torText: Text {
-        return Text(Asset.icsBrandTor.swiftUIImage)
-            + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
-    }
-
-    private var p2pText: Text {
-        return Text(Image(systemName: "arrow.left.arrow.right"))
-        + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
     }
 }
 

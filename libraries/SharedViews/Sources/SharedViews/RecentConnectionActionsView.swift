@@ -52,6 +52,7 @@ struct RecentConnectionActionsView: View {
     }
 
     private var flagInfoView: some View {
+        // VPNAPPL-XXX: Use `ConnectionFlagInfoView`
         ConnectionFlagInfoView(
             intent: intent,
             underMaintenance: false,

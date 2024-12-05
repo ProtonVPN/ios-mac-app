@@ -77,9 +77,9 @@ public struct ConnectionInfoBuilder {
         }
     }
 
-    public var subheader: ConnectionInfoSubheaderModel {
+    public var subheader: LocationFeatureSubheaderModel {
         if let subheaderString {
-            let model = TextSubheaderModel(
+            let model = LocationFeatureSubheaderModel.TextSubheaderModel(
                 location: subheaderString,
                 showTor: shouldShow(feature: .tor),
                 showP2P: shouldShow(feature: .p2p)
@@ -128,16 +128,4 @@ public struct ConnectionInfoBuilder {
         }
         return ConnectionSpec.Location.region(code: vpnConnectionActual.server.logical.exitCountryCode)
     }
-}
-
-public enum ConnectionInfoSubheaderModel: Equatable {
-    case textual(TextSubheaderModel)
-    case freeServerSelectionDisclaimer(additionalFreeCountryCount: Int)
-    case none
-}
-
-public struct TextSubheaderModel: Equatable {
-    let location: String
-    let showTor: Bool
-    let showP2P: Bool
 }
