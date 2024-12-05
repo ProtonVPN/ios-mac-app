@@ -37,7 +37,6 @@ public struct ConnectionFlagInfoView: View {
     let intent: ConnectionSpec
     let isPinned: Bool
     let underMaintenance: Bool
-    let withDivider: Bool
     let isConnected: Bool
 
     let textHeaderString: String
@@ -58,14 +57,12 @@ public struct ConnectionFlagInfoView: View {
         isPinned: Bool,
         vpnConnectionActual: VPNConnectionActual? = nil,
         withServerNumber: Bool = false,
-        withDivider: Bool,
         isConnected: Bool,
         images: RecentsImages = .init(),
         detailAction: ((Action) -> Void)? = nil
     ) {
         self.intent = intent
         self.underMaintenance = underMaintenance
-        self.withDivider = withDivider
         self.isConnected = isConnected
         self.detailAction = detailAction
         self.isPinned = isPinned
@@ -82,8 +79,8 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-        HStack(spacing: 0) {
-            flag
+        HStack(alignment: .firstTextBaseline, spacing: 0) {
+            FlagView(location: resolvedLocation, flagSize: .defaultSize)
 
             Spacer()
                 .frame(width: 12)
@@ -130,17 +127,11 @@ public struct ConnectionFlagInfoView: View {
                         }
                     }
                 }
-                if withDivider {
-                    VStack() {
-                        Spacer()
-                        Divider()
-                    }
-                }
             }
         }
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
-        .frame(height: withDivider ? 64 : 42)
+        .frame(height: 64)
         .accessibilityIdentifier(AccessibilityIdentifiers.connectionFlagInfo)
     }
 
@@ -163,23 +154,6 @@ public struct ConnectionFlagInfoView: View {
 #elseif canImport(UIKit)
             .themeFont(.body1(.semibold))
 #endif
-    }
-
-    private var flag: some View {
-        VStack(spacing: 0) {
-            if withDivider {
-                Spacer()
-                    .frame(width: 20, height: 12)
-            }
-            FlagView(location: resolvedLocation, flagSize: .defaultSize)
-            if subheaderModel.shouldShowSpacerInFlagView {
-                Spacer()
-            }
-            if withDivider {
-                Spacer()
-                    .frame(height: 12)
-            }
-        }
     }
 
     private func subheader(model: ConnectionInfoSubheaderModel) -> some View {
@@ -261,7 +235,6 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             ConnectionFlagInfoView(intent: intent,
                                    underMaintenance: false,
                                    isPinned: true,
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
@@ -270,10 +243,8 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             Divider()
 
             ConnectionFlagInfoView(intent: intent,
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: actual,
-                                   withDivider: false,
                                    isConnected: .random())
                 .frame(width: cellWidth)
         }
@@ -284,55 +255,43 @@ struct ConnectionFlagView_Previews: PreviewProvider {
         VStack {
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: []),
-                                   underMaintenance: false, 
                                    isPinned: true,
                                    vpnConnectionActual: .mock(),
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: []),
-                                   underMaintenance: false, 
                                    isPinned: false,
                                    vpnConnectionActual: .mock(),
-                                   withDivider: false,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: [.p2p, .tor]),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: [.p2p, .tor]),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
-                                   withDivider: false,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
                                                           features: []),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(),
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
                                                           features: [.p2p, .tor]),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
-                                   withDivider: false,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }

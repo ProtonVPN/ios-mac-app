@@ -51,7 +51,6 @@ public struct ConnectionScreenView: View {
                     ConnectionFlagInfoView(intent: spec,
                                            isPinned: false,
                                            vpnConnectionActual: store.vpnConnectionStatus.actual,
-                                           withDivider: false,
                                            isConnected: false,
                                            images: .coreImages)
                     .accessibilityIdentifier(

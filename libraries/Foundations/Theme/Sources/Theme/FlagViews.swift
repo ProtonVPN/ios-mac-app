@@ -83,6 +83,7 @@ public struct SimpleFlagView: View {
             .swiftUIImage
             .resizable()
             .cornerRadius(cornerRadius * scale)
+            .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale}
             .frame(width: startSize.width * scale,
                    height: startSize.height * scale)
     }
@@ -179,15 +180,16 @@ public struct SecureCoreFlagView: View {
 
                 SimpleFlagView(regionCode: regionCode, size: flagSize.scTopFlag)
                     .padding([.leading], (flagSize.frame.width - flagSize.scTopFlag.width) * scale)
+                    .alignmentGuide(.firstTextBaseline) { $0[.bottom] }
 
             } else {
-
                 SecureCoreFlagCurveView(curveColor: flagCurveColor, startSize: flagSize.simpleFlag)
                     .frame(width: flagSize.simpleFlag.width * scale,
                            height: flagSize.simpleFlag.height * scale)
                     .offset(x: -3 * scale, y: 3 * scale)
 
                 SimpleFlagView(regionCode: regionCode, size: flagSize.simpleFlag)
+                    .alignmentGuide(.firstTextBaseline) { $0[.firstTextBaseline] }
             }
         }
     }
@@ -200,6 +202,26 @@ public struct SecureCoreFlagView: View {
         self.regionCode = regionCode
         self.viaRegionCode = viaRegionCode
         self.flagSize = flagSize
+    }
+}
+
+#Preview("Baseline Alignment") {
+    VStack(alignment: .leading) {
+
+        HStack(alignment: .firstTextBaseline) {
+            SimpleFlagView(regionCode: "CH", flagSize: .defaultSize)
+            Text("Switzerland")
+        }
+
+        HStack(alignment: .firstTextBaseline) {
+            SecureCoreFlagView(regionCode: "US", viaRegionCode: "SE", flagSize: .defaultSize)
+            Text("US via Sweden")
+        }
+
+        HStack(alignment: .firstTextBaseline) {
+            SecureCoreFlagView(regionCode: "AU", viaRegionCode: nil, flagSize: .defaultSize)
+            Text("Australia")
+        }
     }
 }
 

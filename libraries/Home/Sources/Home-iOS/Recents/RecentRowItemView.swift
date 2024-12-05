@@ -30,7 +30,6 @@ struct RecentRowItemView: View {
 
     let item: RecentConnection
     let isConnected: Bool
-    let isLastItem: Bool
     let sendAction: RecentsFeature.ActionSender
 
     @ScaledMetric
@@ -39,7 +38,7 @@ struct RecentRowItemView: View {
     @Dependency(\.locale)
     private var locale
 
-    private var trailingIcon: some View {
+    private var leadingIcon: some View {
         item.icon
             .resizable()
             .foregroundColor(.init(.icon, .weak))
@@ -49,13 +48,14 @@ struct RecentRowItemView: View {
 
     private var content: some View {
         HStack(alignment: .center, spacing: 0) {
-            trailingIcon
-            ConnectionFlagInfoView(intent: item.connection,
-                                   underMaintenance: item.underMaintenance, 
-                                   isPinned: item.pinned,
-                                   withDivider: !isLastItem,
-                                   isConnected: isConnected,
-                                   images: .coreImages) { action in
+            leadingIcon
+            ConnectionFlagInfoView(
+                intent: item.connection,
+                underMaintenance: item.underMaintenance,
+                isPinned: item.pinned,
+                isConnected: isConnected,
+                images: .coreImages
+            ) { action in
                 switch action {
                 case .pin:
                     sendAction(.pin(item))
@@ -112,7 +112,6 @@ extension RecentConnection {
         ForEach(RecentConnection.sampleData) { item in
             RecentRowItemView(item: item,
                               isConnected: .random(),
-                              isLastItem: item == last,
                               sendAction: { _ in () })
         }
     }

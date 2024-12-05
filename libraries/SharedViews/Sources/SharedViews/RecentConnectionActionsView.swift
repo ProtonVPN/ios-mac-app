@@ -57,12 +57,10 @@ struct RecentConnectionActionsView: View {
             underMaintenance: false,
             isPinned: false,
             vpnConnectionActual: nil,
-            withDivider: false,
             isConnected: false,
             images: images,
             detailAction: nil
         )
-        .listRowBackground(Color(.background))
     }
 
     private func button(model: ButtonModel) -> some View {
