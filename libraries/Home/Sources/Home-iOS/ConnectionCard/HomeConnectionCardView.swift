@@ -63,7 +63,7 @@ struct HomeConnectionCardView: View {
         if store.vpnConnectionStatus.connectionStatusAvailable {
             IconProvider.chevronRight
                 .foregroundColor(Color(.icon, .weak))
-        } else if store.userTier.isFreeTier {
+        } else if store.vpnConnectionStatus == .disconnected && store.userTier.isFreeTier {
             IconProvider.infoCircle
                 .foregroundColor(Color(.icon, .weak))
         }

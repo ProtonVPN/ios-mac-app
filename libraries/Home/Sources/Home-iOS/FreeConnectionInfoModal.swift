@@ -71,14 +71,18 @@ struct FreeConnectionInfoModal: View {
                 }
             }
             .padding(.vertical, .themeSpacing8)
-            Button {
-                store.send(.upgradeButtonTapped)
-            } label: {
-                Text(Localizable.upgrade)
-            }.buttonStyle(PrimaryButtonStyle())
+            VStack {
+                Spacer()
+                Button {
+                    store.send(.upgradeButtonTapped)
+                } label: {
+                    Text(Localizable.upgrade)
+                }.buttonStyle(PrimaryButtonStyle())
+            }
         }
         .padding(.horizontal, .themeSpacing16)
         .padding(.top, .themeSpacing24)
+        .padding(.bottom, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
                 Color.clear.preference(key: InnerHeightPreferenceKey.self,
@@ -90,6 +94,7 @@ struct FreeConnectionInfoModal: View {
         }
         .presentationDetents([.height(sheetHeight)])
         .presentationDragIndicator(.visible)
+        .background(Color(.background, .normal))
     }
 }
 

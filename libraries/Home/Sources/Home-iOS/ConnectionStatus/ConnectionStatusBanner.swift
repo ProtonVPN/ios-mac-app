@@ -31,18 +31,20 @@ struct ConnectionStatusBanner: View {
     let store: StoreOf<ConnectionStatusBannerFeature>
     
     var body: some View {
-        switch store.protectionState {
-        case .protected(let netShield), .protectedSecureCore(let netShield):
-            if store.userTier.isFreeTier {
-                ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
-            } else if netShield.enabled {
-                NetShieldStatsView(viewModel: netShield)
+        WithPerceptionTracking {
+            switch store.protectionState {
+            case .protected(let netShield), .protectedSecureCore(let netShield):
+                if store.userTier.isFreeTier {
+                    ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
+                } else if netShield.enabled {
+                    NetShieldStatsView(viewModel: netShield)
+                }
+            case .unprotected, .protecting:
+                locationText()
+                    .padding(.horizontal, .themeSpacing8)
+                    .padding(.vertical, .themeSpacing4)
+                    .accessibilityIdentifier(AccessibilityIdentifiers.locationText)
             }
-        case .unprotected, .protecting:
-            locationText()
-                .padding(.horizontal, .themeSpacing8)
-                .padding(.vertical, .themeSpacing4)
-                .accessibilityIdentifier(AccessibilityIdentifiers.locationText)
         }
     }
 

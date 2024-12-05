@@ -663,7 +663,7 @@ class CountriesSectionViewModel {
     }
 
     private func gatewaysSection(for groups: [ServerGroupInfo]) -> ServerSection? {
-        let gateways = Dictionary(grouping: groups.filter { $0.isGateway }, by: \.kind).compactMap { $0.value.first }
+        let gateways = groups.filter { $0.isGateway }
         if gateways.isEmpty { return nil }
 
         return ServerSection(
