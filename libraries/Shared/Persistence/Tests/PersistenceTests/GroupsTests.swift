@@ -37,18 +37,25 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     func testStandardGroups() throws {
         let groups = repository.getGroups(filteredBy: [.features(.standard)])
 
-        XCTAssertEqual(groups.count, 8)
+        XCTAssertEqual(groups.count, 9)
 
         assert(
             groups[0],
-            isOfKind: .gateway(name: "Mega Gateway 2000"),
+            isOfKind: .gateway(name: "Mega Gateway 1000"),
             hasServerCount: 2,
+            isUnderMaintenance: false,
+            supports: .all
+        )
+        assert(
+            groups[1],
+            isOfKind: .gateway(name: "Mega Gateway 2000"),
+            hasServerCount: 1,
             isUnderMaintenance: false,
             supports: .all
         )
 
         assert(
-            groups[2],
+            groups[3],
             isOfKind: .country(code: "DE"),
             hasServerCount: 2,
             isUnderMaintenance: false,
@@ -56,7 +63,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         )
 
         assert(
-            groups[6],
+            groups[7],
             isOfKind: .country(code: "AE"),
             hasServerCount: 1,
             isUnderMaintenance: false,
@@ -77,6 +84,29 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isUnderMaintenance: false,
             supports: [.all]
         )
+    }
+
+    func testGatewayGrouping() throws {
+        let groups = repository.getGroups(filteredBy: [.kind(.gateway)])
+
+        XCTAssertEqual(groups.count, 2)
+
+        assert(
+            groups[0],
+            isOfKind: .gateway(name: "Mega Gateway 1000"),
+            hasServerCount: 2,
+            isUnderMaintenance: false,
+            supports: [.all]
+        )
+
+        assert(
+            groups[1],
+            isOfKind: .gateway(name: "Mega Gateway 2000"),
+            hasServerCount: 1,
+            isUnderMaintenance: false,
+            supports: [.all]
+        )
+
     }
 
     func assert(

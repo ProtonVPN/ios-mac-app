@@ -325,26 +325,26 @@
     },
     {
         "logical": {
-            "status": 1,
-            "score": 1.5,
+            "feature": 32,
+            "domain": "US-GTW-01.protonvpn.com",
             "name": "GTW#1",
-            "city": "Vancouver",
+            "score": 1.4,
+            "tier": 2,
+            "id": "fastestMegaGateway1000Server1",
             "latitude": 38.28,
             "load": 65,
-            "domain": "US-GTW-01.protonvpn.com",
-            "tier": 2,
-            "exitCountryCode": "CA",
-            "feature": 32,
-            "kind": { "gateway": { "name": "Mega Gateway 2000" } },
-            "id": "1abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111118==",
-            "longitude": 140.46
+            "status": 1,
+            "city": "California",
+            "longitude": 140.46,
+            "exitCountryCode": "US",
+            "kind": { "gateway": { "name": "Mega Gateway 1000" } },
         },
         "endpoints": [
             {
-                "exitIp": "1.2.3.13",
-                "id": "1abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111118==",
+                "exitIp": "1.2.3.14",
                 "status": 1,
-                "domain": "US-GTW-01.protonvpn.com"
+                "id": "fastestMegaGateway1000ServerIP1",
+                "domain": "US-GTW-02.protonvpn.com"
             }
         ]
     },
@@ -366,9 +366,34 @@
         },
         "endpoints": [
             {
-                "exitIp": "1.2.3.13",
+                "exitIp": "1.2.3.14",
                 "status": 1,
                 "id": "fastestMegaGateway2000ServerIP1",
+                "domain": "US-GTW-02.protonvpn.com"
+            }
+        ]
+    },
+    {
+        "logical": {
+            "feature": 32,
+            "domain": "US-GTW-03.protonvpn.com",
+            "name": "GTW#3",
+            "score": 1.4,
+            "tier": 2,
+            "id": "fastestMegaGateway1000Server2",
+            "latitude": 38.28,
+            "load": 65,
+            "status": 1,
+            "city": "Geneva",
+            "longitude": 140.46,
+            "exitCountryCode": "CH",
+            "kind": { "gateway": { "name": "Mega Gateway 1000" } },
+        },
+        "endpoints": [
+            {
+                "exitIp": "1.2.3.14",
+                "status": 1,
+                "id": "fastestMegaGateway1000ServerIP3",
                 "domain": "US-GTW-02.protonvpn.com"
             }
         ]

@@ -337,18 +337,16 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         var currentContent = state.currentContent
 
-        let gatewayContent: [RowViewModel] = currentContent
+        let gatewayContent = currentContent
             .filter {
                 switch $0.kind {
                 case .country: return false
                 case .gateway: return true
                 }
             }
-            .grouped { $0.kind }
-            .compactMap { (_, servers) in
-                guard let firstServer = servers.first else { return nil }
-                return RowViewModel.serverGroup(countryCellModel(
-                    serversGroup: firstServer,
+            .map {
+                RowViewModel.serverGroup(countryCellModel(
+                    serversGroup: $0,
                     serversFilter: gatewaysServersFilter,
                     showCountryConnectButton: false,
                     showFeatureIcons: false
