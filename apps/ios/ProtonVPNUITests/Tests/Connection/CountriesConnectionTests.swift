@@ -32,6 +32,11 @@ class CountriesConnectionTests: ConnectionTestsBase {
             .verify.serverFound(server: countryName)
             .hitPowerButton(server: countryName)
             .verify.connectedToAServer(countryName)
+            .openConnectionDetails()
+            .verify.connectionDetailsIsShown()
+            .verify.connectionDetailsHeader(title: countryName)
+            .verify.connectionDetailsCountry(name: countryName)
+            .closeConnectionDetails()
             .goToCountriesTab()
             .searchForServer(serverName: countryName)
             .hitPowerButton(server: countryName)
@@ -81,7 +86,11 @@ class CountriesConnectionTests: ConnectionTestsBase {
         countryListRobot
             .connectToCountry(secureCoreCountry)
             .verify.connectedToAServer(secureCoreCountry)
-            //TODO: verify connection details
+            .openConnectionDetails()
+            .verify.connectionDetailsIsShown()
+            .verify.connectionDetailsHeader(title: secureCoreCountry)
+            .verify.connectionDetailsCountry(name: secureCoreCountry)
+            .closeConnectionDetails()
             .quickDisconnectViaQCButton()
             .verify.connectionStatusNotConnected()
             .goToCountriesTab()
@@ -110,7 +119,11 @@ class CountriesConnectionTests: ConnectionTestsBase {
         countryListRobot
             .connectToCountry(secureCoreCountry)
             .verify.connectedToAServer(secureCoreCountry)
-            //TODO: verify connection details
+            .openConnectionDetails()
+            .verify.connectionDetailsIsShown()
+            .verify.connectionDetailsHeader(title: secureCoreCountry)
+            .verify.connectionDetailsCountry(name: secureCoreCountry)
+            .closeConnectionDetails()
     }
 
     func testReconnectionViaWithKsOn() async throws {

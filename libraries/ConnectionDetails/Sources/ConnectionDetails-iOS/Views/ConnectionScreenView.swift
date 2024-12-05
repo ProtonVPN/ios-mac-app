@@ -33,6 +33,10 @@ public struct ConnectionScreenView: View {
 
     let store: StoreOf<ConnectionScreenFeature>
 
+    private enum AccessibilityIdentifiers {
+        static let connectionScreenInfo: String = "connection_screen_info"
+    }
+
     @ScaledMetric var closeButtonSize: CGFloat = 24
     @Environment(\.dismiss) var dismiss
 
@@ -50,6 +54,9 @@ public struct ConnectionScreenView: View {
                                            withDivider: false,
                                            isConnected: false,
                                            images: .coreImages)
+                    .accessibilityIdentifier(
+                        AccessibilityIdentifiers.connectionScreenInfo
+                    )
                 }
 
                 Spacer()

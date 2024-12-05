@@ -24,6 +24,7 @@ fileprivate let buttonAccount = Localizable.account
 fileprivate let showLoginButtonLabelText = Localizable.logIn
 fileprivate let showSignupButtonLabelText = "Create an account"
 fileprivate let upselModalId = "TitleLabel"
+fileprivate let connectionInfo = "connection_info"
 
 // HomeRobot class contains actions for Home view.
 
@@ -87,7 +88,12 @@ class HomeRobot: ConnectionBaseRobot {
     }
 
     public func isLoggedIn() -> Bool {
-        return button(tabHome).waitUntilExists(time: 4).exists()
+        return button(tabSettings).waitUntilExists(time: 4).exists()
+    }
+
+    public func openConnectionDetails() -> ConnectionDetailsRobot {
+        button(connectionInfo).tap()
+        return ConnectionDetailsRobot()
     }
 
     class Verify: CoreElements {
@@ -122,6 +128,13 @@ class HomeRobot: ConnectionBaseRobot {
             button(tabSettings)
                 .waitUntilExists(time: 30)
                 .checkExists(message: "Failed to check that user is logged in. Settings tab is not visible in 30 seconds")
+            return HomeRobot()
+        }
+
+        @discardableResult
+        func isOnHomeScreen() -> HomeRobot {
+            button(tabHome)
+                .checkExists(message: "Home screen is not visible")
             return HomeRobot()
         }
     }

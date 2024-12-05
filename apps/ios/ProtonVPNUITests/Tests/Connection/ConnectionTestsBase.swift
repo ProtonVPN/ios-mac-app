@@ -29,6 +29,7 @@ class ConnectionTestsBase: ProtonVPNUITests {
     let countryListRobot = CountryListRobot()
     let countrySearchRobot = CountrySearchRobot()
     let serverListRobot = ServerListRobot()
+    let connectionDetailsRobot = ConnectionDetailsRobot()
 
     override func setUp() {
         super.setUp()
@@ -55,6 +56,7 @@ class ConnectionTestsBase: ProtonVPNUITests {
             .enterCredentials(userCredentials)
             .signIn(robot: LoginRobot.self)
             .verify.loginScreenIsNotShown()
+        homeRobot.verify.isOnHomeScreen()
         disconnectIfNeeded()
         connectionStatusRobot
             .verify.connectionStatusNotConnected()

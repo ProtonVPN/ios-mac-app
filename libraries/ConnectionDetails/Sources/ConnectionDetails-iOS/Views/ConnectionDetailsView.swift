@@ -26,7 +26,14 @@ import Domain
 
 struct ConnectionDetailsView: View {
     let store: StoreOf<ConnectionDetailsFeature>
-    
+
+    private enum AccessibilityIdentifiers {
+        static let connectionDetailsCountry: String = "connection_details_country"
+        static let connectionDetailsCity: String = "connection_details_city"
+        static let connectionDetailsServer: String = "connection_details_server"
+        static let connectionDetailsProtocol: String = "connection_details_protocol"
+    }
+
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
@@ -46,16 +53,25 @@ struct ConnectionDetailsView: View {
                         }
                         Group {
                             Row(title: Localizable.connectionDetailsCountry, contentType: .text(store.country))
+                                .accessibilityIdentifier(
+                                    AccessibilityIdentifiers.connectionDetailsCountry
+                                )
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         if shouldShowCityRow {
                             Group {
                                 Row(title: Localizable.connectionDetailsCity, contentType: .text(store.city))
+                                    .accessibilityIdentifier(
+                                        AccessibilityIdentifiers.connectionDetailsCity
+                                    )
                                 Divider().padding([.leading], .themeSpacing8)
                             }
                         }
                         Group {
                             Row(title: Localizable.connectionDetailsServer, contentType: .text(store.server))
+                                .accessibilityIdentifier(
+                                    AccessibilityIdentifiers.connectionDetailsServer
+                                )
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
@@ -64,6 +80,9 @@ struct ConnectionDetailsView: View {
                         Group {
                             Divider().padding([.leading], .themeSpacing8)
                             Row(title: Localizable.connectionDetailsProtocol, contentType: .text(store.protocolName))
+                                .accessibilityIdentifier(
+                                    AccessibilityIdentifiers.connectionDetailsProtocol
+                                )
                         }
                     }
                     .background(
