@@ -39,6 +39,7 @@ public struct HomeFeature {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
         case freeConnectionsInfo(FreeConnectionInfoFeature)
+        case defaultConnection(DefaultConnectionFeature)
     }
 
     @ObservableState
@@ -168,7 +169,7 @@ public struct HomeFeature {
                     return .none
 
                 case .defaultConnectionTapped:
-                    state.connectionCard.bottomSheetExpansionState = true
+                    state.destination = .defaultConnection(.init(selection: .fastest))
                     return .none
                 }
             case .connectionCard:

@@ -18,9 +18,14 @@
 
 import SwiftUI
 
-public struct LocationFeatureHeaderModel {
+public struct LocationFeatureHeaderModel: Equatable {
     let title: String
     let showConnectedPin: Bool
+
+    public init(title: String, showConnectedPin: Bool) {
+        self.title = title
+        self.showConnectedPin = showConnectedPin
+    }
 }
 
 struct LocationFeatureHeader: View {

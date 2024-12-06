@@ -33,7 +33,6 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
 
-        public var bottomSheetExpansionState: Bool = false
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
                 return userTier.isFreeTier

@@ -84,5 +84,15 @@ public enum LocationFeatureSubheaderModel: Equatable {
         let location: String
         let showTor: Bool
         let showP2P: Bool
+
+        public init(location: String, showTor: Bool, showP2P: Bool) {
+            self.location = location
+            self.showTor = showTor
+            self.showP2P = showP2P
+        }
+
+        public static func withoutFeatures(location: String) -> Self {
+            self.init(location: location, showTor: false, showP2P: false)
+        }
     }
 }
