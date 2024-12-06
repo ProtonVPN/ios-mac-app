@@ -46,7 +46,7 @@ struct DefaultConnectionSheet: View {
             .padding(.horizontal, .themeSpacing16)
 
         // Fastest, Last
-        preferences(models: store.staticPreferenceModels, showDividerUnderLastElement: true)
+        preferences(models: ConnectionPreferenceModel.staticPreferenceModels, showDividerUnderLastElement: true)
 
         // Recents
         dynamicPreferenceSection

@@ -33,17 +33,13 @@ public struct DefaultConnectionFeature {
         @SharedReader(.recents) var recents: OrderedSet<RecentConnection>
         @Shared(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference?
 
-        // Normally we would define these in the view layer, but `ConnectionInfoBuilder` dependency
-        // is required to initialise them - which we want to avoid using in the view layer.
-        public let staticPreferenceModels: [ConnectionPreferenceModel]
         public var dynamicPreferenceModels: [ConnectionPreferenceModel] {
-            recents.map(DefaultConnectionFeature.model(for:))
+            @Dependency(\.defaultConnectionResolver) var resolver
+            return resolver.preferenceModels(recents: recents)
         }
         public var selection: DefaultConnectionPreference
 
         public init() {
-            self.staticPreferenceModels = DefaultConnectionPreference.staticPreferences
-                .map { DefaultConnectionFeature.model(for: $0) }
             @Dependency(\.defaultConnectionStorage) var storage
             do {
                 self.selection = try storage.getPreference() ?? .fastest
@@ -74,45 +70,6 @@ public struct DefaultConnectionFeature {
             }
         }
     }
-
-    public static func model(for recentConnection: RecentConnection) -> ConnectionPreferenceModel {
-        return model(for: .recent(recentConnection.connection))
-    }
-
-    public static func model(for preference: DefaultConnectionPreference) -> ConnectionPreferenceModel {
-        switch preference {
-        case .fastest:
-            return ConnectionPreferenceModel(
-                preference: .fastest,
-                locationFeatureModel: LocationFeatureModel(
-                    flag: .fastest,
-                    header: .init(title: "Fastest", showConnectedPin: false),
-                    subheader: .textual(.withoutFeatures(location: "The best server based on your location"))
-                )
-            )
-
-        case .mostRecent:
-            return ConnectionPreferenceModel(
-                preference: .mostRecent,
-                locationFeatureModel: .init(
-                    flag: .mostRecent,
-                    header: .init(title: "Most Recent", showConnectedPin: false),
-                    subheader: .textual(.withoutFeatures(location: "Your most recently used connection"))
-                )
-            )
-
-        case .recent(let spec):
-            let infoBuilder = ConnectionInfoBuilder(intent: spec, vpnConnectionActual: nil, withServerNumber: true)
-            return ConnectionPreferenceModel(
-                preference: .recent(spec),
-                locationFeatureModel: .init(
-                    flag: spec.location.flagComposition,
-                    header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
-                    subheader: infoBuilder.subheader
-                )
-            )
-        }
-    }
 }
 
 public struct ConnectionPreferenceModel: Equatable, Hashable {
@@ -122,4 +79,23 @@ public struct ConnectionPreferenceModel: Equatable, Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(preference.hashValue)
     }
+
+    public static let staticPreferenceModels: [Self] = [
+        ConnectionPreferenceModel(
+            preference: .fastest,
+            locationFeatureModel: LocationFeatureModel(
+                flag: .fastest,
+                header: .init(title: "Fastest", showConnectedPin: false),
+                subheader: .textual(.withoutFeatures(location: "The best server based on your location"))
+            )
+        ),
+        ConnectionPreferenceModel(
+            preference: .mostRecent,
+            locationFeatureModel: .init(
+                flag: .mostRecent,
+                header: .init(title: "Most Recent", showConnectedPin: false),
+                subheader: .textual(.withoutFeatures(location: "Your most recently used connection"))
+            )
+        )
+    ]
 }

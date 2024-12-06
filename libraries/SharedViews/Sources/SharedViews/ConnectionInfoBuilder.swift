@@ -27,8 +27,9 @@ import Localization
 import Theme
 import VPNAppCore
 
+// VPNAPPL-2542: Separate out view (e.g. Locale) and business (what elements to display) logic into separate
+// dependencies used in the appropriate layers. Remove usages of business logic dependencies from view layer.
 public struct ConnectionInfoBuilder {
-
     let withServerNumber: Bool
     public let intent: ConnectionSpec
     public let vpnConnectionActual: VPNConnectionActual?

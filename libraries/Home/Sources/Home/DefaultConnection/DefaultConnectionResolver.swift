@@ -20,37 +20,64 @@ import Foundation
 import Collections
 import Dependencies
 import DependenciesMacros
+import SharedViews
 import Domain
 
 @DependencyClient
-struct DefaultConnectionResolver {
+struct DefaultConnectionResolver: Sendable {
     @DependencyEndpoint
-    var connectionSpec: (
+    private var connectionSpec: (
         _ preference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>,
         _ isSecureCoreEnabled: Bool
     ) -> ConnectionSpec = { _, _, _ in .defaultFastest }
+
+    @DependencyEndpoint
+    private var preferenceModels: @Sendable (
+        _ recents: OrderedSet<RecentConnection>
+    ) -> [ConnectionPreferenceModel] = { _ in XCTFail("\(Self.self).preferenceModels"); return [] }
 }
 
 extension DefaultConnectionResolver: DependencyKey {
     static let liveValue = DefaultConnectionResolver(
-        connectionSpec: { preference, recents, isSecureCoreEnabled in
-            let fastest = ConnectionSpec(location: isSecureCoreEnabled ? .secureCore(.fastest) : .fastest, features: [])
+        connectionSpec: { preference, recents, _ in
+            // Fastest overall connection doesn't take secure core into account.
+            // Check `DefaultConnectionPreference.fastest` docs for reasoning.
+            let fastestNonSecureCore = ConnectionSpec(location: .fastest, features: [])
 
             switch preference {
             case .fastest:
-                return fastest
+                return fastestNonSecureCore
 
             case .mostRecent:
-                return recents.mostRecent?.connection ?? fastest
+                guard let mostRecent = recents.mostRecent else {
+                    log.info("No recent connections, returning fastest", metadata: ["preference": "\(preference)"])
+                    return fastestNonSecureCore
+                }
+                return mostRecent.connection
 
             case .recent(let spec):
                 return spec
             }
+        }, preferenceModels: { recents in
+            // Filter out 'Fastest', since it's already a static preference
+            let recentsWithoutFastestConnection = recents.filter { $0.connection.location != .fastest }
+            return recentsWithoutFastestConnection.map { recent in
+                let spec = recent.connection
+                let infoBuilder = ConnectionInfoBuilder(intent: spec, vpnConnectionActual: nil, withServerNumber: false)
+
+                return ConnectionPreferenceModel(
+                    preference: .recent(spec),
+                    locationFeatureModel: .init(
+                        flag: spec.location.flagComposition,
+                        header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
+                        subheader: infoBuilder.subheader
+                    )
+                )
+            }
         }
     )
 }
-
 extension DependencyValues {
     var defaultConnectionResolver: DefaultConnectionResolver {
         get { self[DefaultConnectionResolver.self] }
