@@ -43,4 +43,6 @@ extension BundleIDClient: DependencyKey {
         fatalError("Unsupported platform")
         #endif
     }
+
+    public static let testValue = liveValue
 }

@@ -25,9 +25,9 @@ import VPNAppCore
 public struct SharedPropertiesFeature {
     @ObservableState
     public struct State: Equatable {
-        @Shared(.userCountry) public var userCountry: String?
-        @Shared(.userIP) public var userIP: String?
-        @Shared(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.userCountry) public fileprivate(set) var userCountry: String?
+        @Shared(.userIP) public fileprivate(set) var userIP: String?
+        @Shared(.vpnConnectionStatus) public fileprivate(set) var vpnConnectionStatus: VPNConnectionStatus
     }
 
     @CasePathable
@@ -42,7 +42,6 @@ public struct SharedPropertiesFeature {
     }
 
     init() {
-
     }
 
     let userLocationEffect: Effect<Action> = .publisher {
@@ -55,19 +54,19 @@ public struct SharedPropertiesFeature {
             .map(Action.userLocationChange)
     }
 
+    // ConnectionFeature already feeds status to this SharedPropertiesFeature Reducer
+    // via .newConnectionStatus(VPNConnectionStatus) no?
     let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
-        let initialConnectionStatus = await Dependency(\.vpnConnectionStatus).wrappedValue()
-        send(.newConnectionStatus(initialConnectionStatus))
-
-        let stream = Dependency(\.vpnConnectionStatusPublisher)
-            .wrappedValue()
+        let stream = Dependency(\.connectionBridge)
+            .wrappedValue
+            .statusStream
             .map { Action.newConnectionStatus($0) }
 
         for await value in stream {
             send(value)
         }
     }
-        .cancellable(id: CancelId.watchConnectionStatus)
+    .cancellable(id: CancelId.watchConnectionStatus)
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in

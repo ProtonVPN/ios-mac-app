@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 
 extension DependencyValues {
     /// Atm it's neither async nor throws, but the plan is to return only after connection is closed and also to throw exceptions
     /// so user can be presented with an error from UI, and not from the depths of VPN connection related code.
     public var disconnectVPN: @Sendable () async throws -> Void {
-    get { self[DisconnectVPNKey.self] }
-    set { self[DisconnectVPNKey.self] = newValue }
-  }
+        get { self[DisconnectVPNKey.self] }
+        set { self[DisconnectVPNKey.self] = newValue }
+    }
 }
 
 public enum DisconnectVPNKey: TestDependencyKey {

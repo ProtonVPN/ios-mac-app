@@ -1,7 +1,7 @@
 //
-//  Created on 2022-07-01.
+//  Created on 03/12/2024.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import NetworkExtension
+import ComposableArchitecture
+import Connection
+import ProtonCoreFeatureFlags
+import Domain
+import VPNAppCore
 
-extension NEVPNStatus: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .disconnecting:
-            return "disconnecting"
-        case .disconnected:
-            return "disconnected"
-        case .connecting:
-            return "connecting"
-        case .connected:
-            return "connected"
-        case .reasserting:
-            return "reasserting"
-        case .invalid:
-            return "invalid"
-        @unknown default:
-            return "invalid unknown"
-        }
+extension ListenVPNStatusKey: DependencyKey {
+    public static let liveValue: @Sendable () -> AsyncStream<VPNConnectionStatus> = {
+        return Dependency(\.connectionBridge).wrappedValue.statusStream
     }
 }

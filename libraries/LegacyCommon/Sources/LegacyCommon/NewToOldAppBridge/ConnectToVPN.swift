@@ -14,15 +14,37 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
 import ComposableArchitecture
-
+import ProtonCoreFeatureFlags
+import Connection
 import Domain
 import VPNAppCore
 
 extension ConnectToVPNKey: DependencyKey {
-    public static let liveValue = legacyConnect
+    public static let liveValue = {
+        let isRedesignEnabled = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
+        if isRedesignEnabled, #available(iOS 16, *) {
+            return newConnect
+        } else {
+            return legacyConnect
+        }
+    }()
+
+    @available(iOS 16, *)
+    public static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
+        @Dependency(\.connectionBridge) var bridge
+        @Dependency(\.serverSelector) var selector
+
+        let server = try selector.select(intent)
+
+        let connectAction = ConnectionFeature.Action.connect(.init(
+            server: server,
+            transport: .udp,
+            features: .defaultTVFeatures // TODO: Give appropriate features
+        ))
+
+        bridge.push(intent: connectAction)
+    }
 
     /// Bridges new connection dependency with the legacy connection layer
     public static let legacyConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
@@ -56,7 +78,6 @@ extension ConnectToVPNKey: DependencyKey {
             case .locationNotFound(let profileName):
                 alert(LocationNotAvailableAlert(profileName: profileName))
             }
-
         }
     }
 }

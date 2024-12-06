@@ -32,7 +32,7 @@ import struct VPNShared.PublicKey
 // in this package when we are ready to refactor VpnAuthenticationKeychain.
 
 extension VPNShared.VPNKeysGenerator: DependencyKey {
-    public static var liveValue: VPNShared.VPNKeysGenerator {
+    private static var commonImplementation: VPNShared.VPNKeysGenerator {
         return .init(generateKeys: {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)!
@@ -41,6 +41,18 @@ extension VPNShared.VPNKeysGenerator: DependencyKey {
             return VpnKeys(privateKey: privateKey, publicKey: publicKey)
         })
     }
+
+    public static let testValue: VPNShared.VPNKeysGenerator = commonImplementation
+    public static let liveValue: VPNShared.VPNKeysGenerator = {
+        #if os(macOS)
+        return commonImplementation
+        #else
+        return .init {
+            struct UnavailableGenerator: Swift.Error {}
+            throw UnavailableGenerator()
+        }
+        #endif
+    }()
 }
 
 extension VPNShared.PublicKey {

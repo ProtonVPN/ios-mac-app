@@ -44,7 +44,6 @@ public struct VPNKeysGenerator: DependencyKey {
                 throw GoLibsCryptoError.keyConversionFailure(error)
             }
         })
-
     }
 }
 

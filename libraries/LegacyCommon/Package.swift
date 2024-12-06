@@ -45,6 +45,7 @@ let package = Package(
         .package(path: "../Foundations/Timer"),
 
         .package(path: "../Shared/CommonNetworking"),
+        .package(path: "../Shared/Connection"),
         .package(path: "../Shared/ExtensionIPC"),
         .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
@@ -72,6 +73,7 @@ let package = Package(
             dependencies: [
                 // Local
                 "Domain",
+                "Connection",
                 "Ergonomics",
                 "LocalFeatureFlags",
                 "PMLogger",

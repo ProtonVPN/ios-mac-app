@@ -22,6 +22,8 @@ import Dependencies
 import Domain
 import VPNAppCore
 import ConnectionDetails
+import Connection
+import Combine
 
 @available(iOS 17, *)
 @Reducer
@@ -45,12 +47,18 @@ public struct HomeFeature {
     @ObservableState
     public struct State: Equatable {
 
+        /// For simplicity's sake, let's immplement Connection as a child feature of Home.
+        /// In the future, when we add a sibling feature (like countries, settings or profiles),
+        /// we will have to have a parent App feature.  Connection can be moved
+        public var connection: ConnectionFeature.State
         public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
         public var sharedProperties: SharedPropertiesFeature.State
 
+        @SharedReader(.connectionState)
+        var connectionState: ConnectionState?
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
@@ -63,7 +71,12 @@ public struct HomeFeature {
             self.sharedProperties = .init()
             self.recents = .init()
             self.map = .init()
+            self.connection = .init()
         }
+    }
+
+    private enum CancelID {
+        case connectionState
     }
 
     @CasePathable
@@ -74,6 +87,11 @@ public struct HomeFeature {
         case changeServer
         case disconnect
 
+        case onAppear // or onStart?
+
+        case onNewConnectionState(ConnectionState)
+
+        case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
         case recents(RecentsFeature.Action)
         case connectionStatus(ConnectionStatusFeature.Action)
@@ -89,6 +107,9 @@ public struct HomeFeature {
     }
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.connection, action: \.connection) {
+            ConnectionFeature()._printChanges()
+        }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()
         }
@@ -114,8 +135,10 @@ public struct HomeFeature {
                 return .none
             case let .connect(spec):
                 return .run { send in
-                    try? await connectToVPN(spec)
+                    try await connectToVPN(spec)
                     await send(.recents(.connectionEstablished(spec)))
+                } catch: { error, _ in
+                    log.error("Error connecting to VPN: \(error)")
                 }
             case .changeServer:
                 guard case .available = authorizer.serverChangeAvailability() else {
@@ -130,7 +153,9 @@ public struct HomeFeature {
 
             case .disconnect:
                 return .run { _ in
-                    try? await disconnectVPN()
+                    try await disconnectVPN()
+                } catch: { error, _ in
+                    log.error("Error disconnecting from VPN: \(error)")
                 }
 
             case .connectionStatus:
@@ -173,36 +198,46 @@ public struct HomeFeature {
                 }
             case .connectionCard:
                 return .none
-            case .destination(let action):
-                switch action {
-                case .presented(.changeServer(.buttonTapped)):
-                    state.destination = nil
-                    if case .available = authorizer.serverChangeAvailability() {
-                        return .send(.changeServer)
-                    }
-                    return .run { send in
-                        @Dependency(\.continuousClock) var clock
-                        try await clock.sleep(for: .seconds(1)) // give some time for the current presented view to disappear
-                        @Dependency(\.pushAlert) var pushAlert
-                        pushAlert(AllCountriesUpsellAlert())
-                    }
-                case .presented(.freeConnectionsInfo(.dismissButtonTapped)):
-                    state.destination = nil
-                    return .none
-                case .presented(.freeConnectionsInfo(.upgradeButtonTapped)):
-                    return .run { send in
-                        @Dependency(\.pushAlert) var pushAlert
-                        pushAlert(AllCountriesUpsellAlert())
-                    }
-                case .presented(.defaultConnection(.preferenceSelected)):
-                    state.destination = nil
-                    return .none
-                default:
-                    return .none
+            case .destination(.presented(.changeServer(.buttonTapped))):
+                state.destination = nil
+                if case .available = authorizer.serverChangeAvailability() {
+                    return .send(.changeServer)
                 }
+                return .run { send in
+                    @Dependency(\.continuousClock) var clock
+                    try await clock.sleep(for: .seconds(1)) // give some time for the current presented view to disappear
+                    @Dependency(\.pushAlert) var pushAlert
+                    pushAlert(AllCountriesUpsellAlert())
+                }
+            case .destination(.presented(.freeConnectionsInfo(.dismissButtonTapped))):
+                state.destination = nil
+                return .none
+            case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
+                return .run { send in
+                    @Dependency(\.pushAlert) var pushAlert
+                    pushAlert(AllCountriesUpsellAlert())
+                }
+            case destination(.presented(.defaultConnection(.preferenceSelected))):
+                state.destination = nil
+                return .none
+            case .destination(_):
+                return .none
+            case .onAppear:
+                return .concatenate(
+                    .run { send in await send(.connection(.startObserving)) },
+                    .onChange(of: state.$connectionState, reinject: Action.onNewConnectionState)
+                )
+                .cancellable(id: CancelID.connectionState)
+
+            case .onNewConnectionState(let newConnectionState):
+                log.debug("Connection layer state update \(newConnectionState)")
+                return .send(.sharedProperties(.newConnectionStatus(newConnectionState.status)))
+
             case .map:
                 return .none
             case .freeConnectionsInfo(_):
+                return .none
+            case .connection:
                 return .none
             }
         }
@@ -210,4 +245,62 @@ public struct HomeFeature {
     }
 
     public init() {}
+}
+
+@available(iOS 16, *)
+extension ConnectionState {
+    public var status: VPNConnectionStatus {
+        switch self {
+        case .disconnected(_):
+            return .disconnected
+
+        case .connecting(let server):
+            let spec: ConnectionSpec = .defaultFastest
+            let actualConnection = server.map {
+                VPNConnectionActual(connectedDate: .now, vpnProtocol: .wireGuard(.udp), natType: .moderateNAT, safeMode: nil, server: $0)
+            }
+            return .connecting(spec, actualConnection)
+
+        case .disconnecting:
+            return .disconnecting(.defaultFastest, nil)
+
+        case .connected(let server, _):
+            let spec: ConnectionSpec = .defaultFastest
+            return .connected(spec, VPNConnectionActual(connectedDate: .now, vpnProtocol: .wireGuard(.udp), natType: .moderateNAT, safeMode: nil, server: server))
+        }
+    }
+}
+
+private extension Effect {
+    static func onChange<Value>(
+        of shared: SharedReader<Value>,
+        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
+        reinject transform: @escaping (Value) -> Action
+    ) -> Self {
+        return listen(to: shared.publisher, on: scheduler, reinjecting: transform)
+    }
+
+    static func onChange<Value>(
+        of shared: SharedReader<Value?>,
+        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
+        reinject transform: @escaping (Value) -> Action
+    ) -> Self {
+        return listen(to: shared.publisher, on: scheduler, reinjecting: transform)
+    }
+
+    static func listen<Output>(
+        to publisher: some Publisher<Output, Never>,
+        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
+        reinjecting transform: @escaping (Output) -> Action
+    ) -> Self {
+        return self.publisher { publisher.receive(on: scheduler).map(transform) }
+    }
+
+    static func listen<Output>(
+        to publisher: some Publisher<Output?, Never>,
+        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
+        reinjecting transform: @escaping (Output) -> Action
+    ) -> Self {
+        return self.publisher { publisher.receive(on: scheduler).compactMap({ $0 }).map(transform) }
+    }
 }

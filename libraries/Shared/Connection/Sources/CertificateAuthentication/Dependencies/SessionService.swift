@@ -41,7 +41,7 @@ public struct SessionService: TestDependencyKey {
 
 extension DependencyValues {
     public var sessionService: SessionService {
-      get { self[SessionService.self] }
-      set { self[SessionService.self] = newValue }
+        get { self[SessionService.self] }
+        set { self[SessionService.self] = newValue }
     }
 }

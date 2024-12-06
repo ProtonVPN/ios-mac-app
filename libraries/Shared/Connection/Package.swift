@@ -35,6 +35,7 @@ let package = Package(
                 "Ergonomics",
                 "ExtensionIPC",
                 "PMLogger",
+                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

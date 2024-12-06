@@ -22,7 +22,7 @@ import Dependencies
 /// Used by `VpnAuthenticationStorage` to generate new keys. However, keys should not be generated inside extensions,
 /// only in the app targets. The real implementation also requires GoLibs, which are too heavy to pull into extension
 /// targets. Therefore, this dependency is stubbed out, with the real implementation being linked in `LegacyCommon` for
-/// iOS and MacOS, and in `Connection` for tvOS.
+/// macOS, and in `Connection` for iOS/tvOS.
 public struct VPNKeysGenerator: TestDependencyKey {
     public private(set) var generateKeys: @Sendable () throws -> VpnKeys
 
@@ -31,7 +31,7 @@ public struct VPNKeysGenerator: TestDependencyKey {
         fatalError("Either live implementation is missing or `generateKeys` should not be used in this environment")
     })
 
-    public init(generateKeys: @Sendable @escaping () -> VpnKeys) {
+    public init(generateKeys: @Sendable @escaping () throws -> VpnKeys) {
         self.generateKeys = generateKeys
     }
 }

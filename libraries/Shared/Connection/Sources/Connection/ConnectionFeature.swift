@@ -33,9 +33,10 @@ import LocalAgent
 
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
-    @Dependency(\.continuousClock) var clock
-    @Dependency(\.serverIdentifier) var serverIdentifier
-    @Dependency(\.tunnelKeychain) var tunnelConfigKeychain
+    @Dependency(\.continuousClock) private var clock
+    @Dependency(\.serverIdentifier) private var serverIdentifier
+    @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
+    @Dependency(\.connectionBridge) private var connectionBridge
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
@@ -78,7 +79,10 @@ public struct ConnectionFeature: Reducer, Sendable {
         case userIntent
     }
 
-    private enum CancelID { case connectionTimeout }
+    private enum CancelID {
+        case connectionTimeout
+        case observation
+    }
 
     @Shared(.connectionState) var connectionState: ConnectionState?
 
@@ -94,12 +98,19 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .startObserving:
                 return .merge(
                     .send(.tunnel(.startObservingStateChanges)),
-                    .send(.localAgent(.startObservingEvents))
+                    .send(.localAgent(.startObservingEvents)),
+                    .listen(to: connectionBridge.intentStream) { streamElement in
+                        // streamElement is an action so we just return it, this is the action that we wanna run
+                        return streamElement
+                    }
                 )
+                .cancellable(id: CancelID.observation)
+
             case .stopObserving:
                 return .merge(
                     .send(.tunnel(.stopObservingStateChanges)),
-                    .send(.localAgent(.stopObservingEvents))
+                    .send(.localAgent(.stopObservingEvents)),
+                    .cancel(id: CancelID.observation)
                 )
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
@@ -112,8 +123,10 @@ public struct ConnectionFeature: Reducer, Sendable {
 
                 return .run { send in
                     await send(.tunnel(.connect(intent)))
+
                     try await clock.sleep(for: Self.defaultConnectionTimeout)
                     try Task.checkCancellation()
+
                     await send(.disconnect(.connectionFailure(.timeout)))
                 } catch: { error, _ in
                     log.info("Timeout task cancellation error: \(error)")
@@ -240,7 +253,6 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
             }
         }
-
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {

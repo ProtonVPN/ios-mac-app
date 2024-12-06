@@ -161,6 +161,31 @@ public struct HomeView: View {
             }
             .background(Color(.background))
         }
+        .task {
+            store.send(.onAppear)
+            store.send(.sharedProperties(.listen))
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
+        ) { store in
+            ConnectionScreenView(store: store)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)
+        ) { store in
+            WithPerceptionTracking {
+                ChangeServerModal(store: store)
+            }
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)
+        ) { store in
+            WithPerceptionTracking {
+                FreeConnectionInfoModal(store: store)
+            }
+        }
     }
 
     // MARK: - Private view helpers
@@ -230,5 +255,4 @@ private struct ViewHeightPreferenceKey: PreferenceKey {
         HomeFeature()
     }))
 }
-
 #endif
