@@ -78,56 +78,42 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-        // VPNAPPL-XXX: Use `ConnectionFlagInfoView`
-        HStack(alignment: .firstTextBaseline, spacing: 0) {
-            FlagView(location: resolvedLocation, flagSize: .defaultSize)
+        HStack(alignment: .center, spacing: 0) {
+            LocationFeatureView(model: .init(
+                flag: resolvedLocation.flagComposition,
+                header: .init(title: textHeaderString, showConnectedPin: isConnected),
+                subheader: subheaderModel
+            ))
 
             Spacer()
-                .frame(width: 12)
 
-            ZStack(alignment: .leading) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack {
-                            textHeader
-
-                            if isConnected {
-                                connectedPin
-                            }
-                        }
-                        subheader(model: subheaderModel)
-                    }
-
-                    Spacer()
-
-                    if underMaintenance {
-                        images
-                            .wrench
-                            .resizable()
-                            .frame(.square(maintenanceIconSize))
-                            .foregroundColor(.init(.icon, .weak))
-                            .padding(.horizontal, .themeSpacing12)
-                    }
-
-                    if #available(iOS 16.0, macOS 13.0, *), let detailAction {
-                        Button(action: {
-                            showDetail = true
-                        }, label: {
-                            images
-                                .threeDotsHorizontal
-                                .foregroundStyle(Color(.icon))
-                        })
-                        .popover(isPresented: self.$showDetail, attachmentAnchor: .point(.topLeading)) {
-                            RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
-                                showDetail = false
-                                detailAction(action)
-                            }
-                            .presentationDetents([.fraction(1 / 3)])
-                            .presentationDragIndicator(.visible)
-                        }
-                    }
-                }
+            if underMaintenance {
+                images
+                    .wrench
+                    .resizable()
+                    .frame(.square(maintenanceIconSize))
+                    .foregroundColor(.init(.icon, .weak))
+                    .padding(.horizontal, .themeSpacing12)
             }
+
+            if #available(iOS 16.0, macOS 13.0, *), let detailAction {
+                Button(action: {
+                    showDetail = true
+                }, label: {
+                    images
+                        .threeDotsHorizontal
+                        .foregroundStyle(Color(.icon))
+                })
+                .popover(isPresented: self.$showDetail, attachmentAnchor: .point(.topLeading)) {
+                    RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
+                        showDetail = false
+                        detailAction(action)
+                    }
+                    .presentationDetents([.fraction(1 / 3)])
+                    .presentationDragIndicator(.visible)
+                }.background(Color(.background))
+            }
+
         }
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
@@ -160,12 +146,6 @@ public struct ConnectionFlagInfoView: View {
         LocationFeatureSubheader(model: model)
             .lineLimit(2)
             .foregroundColor(.init(.border))
-    }
-}
-
-extension LocationFeatureSubheaderModel {
-    var shouldShowSpacerInFlagView: Bool {
-        self != .none
     }
 }
 

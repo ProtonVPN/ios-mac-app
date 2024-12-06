@@ -51,17 +51,13 @@ struct RecentConnectionActionsView: View {
               text: Localizable.actionRemove)
     }
 
-    private var flagInfoView: some View {
-        // VPNAPPL-XXX: Use `ConnectionFlagInfoView`
-        ConnectionFlagInfoView(
-            intent: intent,
-            underMaintenance: false,
-            isPinned: false,
-            vpnConnectionActual: nil,
-            isConnected: false,
-            images: images,
-            detailAction: nil
-        )
+    @ViewBuilder private var flagInfoView: some View {
+        let infoBuilder = ConnectionInfoBuilder(intent: intent, vpnConnectionActual: nil, withServerNumber: true)
+        LocationFeatureView(model: .init(
+            flag: intent.location.flagComposition,
+            header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
+            subheader: infoBuilder.subheader
+        ))
     }
 
     private func button(model: ButtonModel) -> some View {
