@@ -64,21 +64,15 @@ public struct HomeConnectionCardFeature {
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
             case .disconnected:
-                let fastest = ConnectionSpec(location: secureCoreToggle ? .secureCore(.fastest) : .fastest, features: [])
-
+                @Dependency(\.defaultConnectionResolver) var resolver
                 @Dependency(\.recentsStorage) var recentsStorage
                 let recents = recentsStorage.readFromStorage()
 
-                switch defaultConnectionPreference ?? .fastest {
-                case .fastest:
-                    return fastest
-
-                case .mostRecent:
-                    return recents.mostRecent?.connection ?? fastest
-
-                case .recent(let spec):
-                    return spec
-                }
+                return resolver.connectionSpec(
+                    preference: defaultConnectionPreference ?? .fastest,
+                    recents: recents,
+                    isSecureCoreEnabled: secureCoreToggle
+                )
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
                     .loadingConnectionInfo(let connectionSpec, _),
