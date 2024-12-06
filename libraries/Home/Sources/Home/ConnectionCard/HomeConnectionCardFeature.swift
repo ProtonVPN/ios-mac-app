@@ -32,6 +32,7 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
+        @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference?
 
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
@@ -63,11 +64,21 @@ public struct HomeConnectionCardFeature {
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
             case .disconnected:
+                let fastest = ConnectionSpec(location: secureCoreToggle ? .secureCore(.fastest) : .fastest, features: [])
+
                 @Dependency(\.recentsStorage) var recentsStorage
-                if let spec = recentsStorage.readFromStorage().mostRecent?.connection {
+                let recents = recentsStorage.readFromStorage()
+
+                switch defaultConnectionPreference ?? .fastest {
+                case .fastest:
+                    return fastest
+
+                case .mostRecent:
+                    return recents.mostRecent?.connection ?? fastest
+
+                case .recent(let spec):
                     return spec
                 }
-                return .init(location: secureCoreToggle ? .secureCore(.fastest) : .fastest, features: [])
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
                     .loadingConnectionInfo(let connectionSpec, _),

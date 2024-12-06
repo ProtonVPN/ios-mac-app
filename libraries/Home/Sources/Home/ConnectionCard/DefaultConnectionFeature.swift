@@ -30,9 +30,11 @@ public struct DefaultConnectionFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.recents) public var recents: OrderedSet<RecentConnection>
+        @SharedReader(.recents) var recents: OrderedSet<RecentConnection>
+        @Shared(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference?
 
-        // Normally we should define these in the view layer, but we need the `ConnectionInfoBuilder` dependency
+        // Normally we would define these in the view layer, but `ConnectionInfoBuilder` dependency
+        // is required to initialise them - which we want to avoid using in the view layer.
         public let staticPreferenceModels: [ConnectionPreferenceModel]
         public var dynamicPreferenceModels: [ConnectionPreferenceModel] {
             recents.map { DefaultConnectionFeature.model(for: $0) }
@@ -62,6 +64,7 @@ public struct DefaultConnectionFeature {
             switch action {
             case .preferenceSelected(let preference):
                 state.selection = preference
+                state.defaultConnectionPreference = preference
                 return .run { _ in
                     @Dependency(\.defaultConnectionStorage) var storage
                     try storage.set(preference: preference)
