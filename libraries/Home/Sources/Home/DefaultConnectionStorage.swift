@@ -18,38 +18,25 @@
 
 import Foundation
 import Dependencies
+import DependenciesMacros
 import Domain
 
 // Improvement: Sendable conformance (requires refactor to Storage dependency)
-public struct DefaultConnectionPreferenceStorage {
-    private var getDefaultConnectionPreference: () throws -> DefaultConnectionPreference?
-    private var setDefaultConnectionPreference: (DefaultConnectionPreference) throws -> Void
+@DependencyClient
+public struct DefaultConnectionPreferenceStorage: DependencyKey {
+    @DependencyEndpoint private var set: (_ preference: DefaultConnectionPreference) throws -> Void
+    public var getPreference: () throws -> DefaultConnectionPreference?
 
     private static let storageKeyPrefix = "DefaultConnectionPreference"
-
-    public init(
-        getDefaultConnectionPreference: @escaping () throws -> DefaultConnectionPreference?,
-        setDefaultConnectionPreference: @escaping (DefaultConnectionPreference) throws -> Void
-    ) {
-        self.getDefaultConnectionPreference = getDefaultConnectionPreference
-        self.setDefaultConnectionPreference = setDefaultConnectionPreference
-    }
 }
 
-extension DefaultConnectionPreferenceStorage: DependencyKey {
-    public func getPreference() throws -> DefaultConnectionPreference? {
-        return try getDefaultConnectionPreference()
-    }
-
-    public func set(preference: DefaultConnectionPreference) throws {
-        try setDefaultConnectionPreference(preference)
-    }
+extension DefaultConnectionPreferenceStorage {
 
     public static let liveValue: DefaultConnectionPreferenceStorage = {
         @Dependency(\.storage) var storage
         return .init(
-            getDefaultConnectionPreference: { try storage.getForUser(DefaultConnectionPreference.self, forKey: storageKeyPrefix) },
-            setDefaultConnectionPreference: { try storage.setForUser($0, forKey: storageKeyPrefix) }
+            set: { try storage.setForUser($0, forKey: storageKeyPrefix) },
+            getPreference: { try storage.getForUser(DefaultConnectionPreference.self, forKey: storageKeyPrefix) }
         )
     }()
 }

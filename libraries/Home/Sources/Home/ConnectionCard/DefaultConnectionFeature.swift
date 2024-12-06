@@ -37,7 +37,7 @@ public struct DefaultConnectionFeature {
         // is required to initialise them - which we want to avoid using in the view layer.
         public let staticPreferenceModels: [ConnectionPreferenceModel]
         public var dynamicPreferenceModels: [ConnectionPreferenceModel] {
-            recents.map { DefaultConnectionFeature.model(for: $0) }
+            recents.map(DefaultConnectionFeature.model(for:))
         }
         public var selection: DefaultConnectionPreference
 

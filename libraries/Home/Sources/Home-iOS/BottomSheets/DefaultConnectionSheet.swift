@@ -85,18 +85,16 @@ struct DefaultConnectionSheet: View {
 @available(iOS 18, *)
 #Preview(traits: .dependencies {
     $0.recentsStorage = .previewValue
-    $0.defaultConnectionStorage = .init(
-        getDefaultConnectionPreference: { .mostRecent },
-        setDefaultConnectionPreference: { _ in }
-    )
 }) {
     let initialState = DefaultConnectionFeature.State()
     let previewStore = Store(initialState: initialState) { DefaultConnectionFeature() }
     VStack { } // Any old view that we can hook the sheet onto
         .sheet(isPresented: .constant(true)) {
             DefaultConnectionSheet(store: previewStore)
-        }.presentationDragIndicator(.visible)
-        .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium, .large])
+
+        }
         .preferredColorScheme(.dark)
 }
 #endif

@@ -25,7 +25,7 @@ import SwiftUI
 ///
 /// Note: Since content is passed as an escaping closure, wrap the contents with `WithPerceptionTracking` if it relies
 /// on a `Store`.
-public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
+public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View where Data.Index: Hashable {
     private let data: Data
     private let showDividerUnderLastElement: Bool
     private let content: (Data.Element) -> Content
@@ -57,18 +57,18 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
     //     }
     // }
     public var body: some View {
-        ForEach(Array(data.enumerated()), id: \.element.self) { index, element in
+        ForEach(data.indices, id: \.self) { index in
             VStack(alignment: .leading, spacing: 0) {
-                content(element)
-                if shouldRenderDivider(at: index, of: data.count - 1) {
+                content(data[index])
+                if shouldRenderDivider(at: index, last: data.endIndex) {
                     Divider()
                 }
             }
         }
     }
 
-    private func shouldRenderDivider(at index: Int, of lastIndex: Int) -> Bool {
-        if index < lastIndex {
+    private func shouldRenderDivider(at index: Data.Index, last: Data.Index) -> Bool {
+        if index < last {
             return true
         }
 

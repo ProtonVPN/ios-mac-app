@@ -19,26 +19,25 @@
 import Foundation
 import Collections
 import Dependencies
+import DependenciesMacros
 import Domain
 
+@DependencyClient
 struct DefaultConnectionResolver {
-    private var defaultConnectionSpec: (DefaultConnectionPreference, OrderedSet<RecentConnection>, Bool) -> ConnectionSpec
+    @DependencyEndpoint
+    var connectionSpec: (
+        _ preference: DefaultConnectionPreference,
+        _ recents: OrderedSet<RecentConnection>,
+        _ isSecureCoreEnabled: Bool
+    ) -> ConnectionSpec = { _, _, _ in .defaultFastest }
 }
 
 extension DefaultConnectionResolver: DependencyKey {
-    public func connectionSpec(
-        preference: DefaultConnectionPreference,
-        recents: OrderedSet<RecentConnection>,
-        isSecureCoreEnabled: Bool
-    ) -> ConnectionSpec {
-        defaultConnectionSpec(preference, recents, isSecureCoreEnabled)
-    }
-
-    public static let liveValue = DefaultConnectionResolver(
-        defaultConnectionSpec: { defaultConnectionPreference, recents, isSecureCoreEnabled in
+    static let liveValue = DefaultConnectionResolver(
+        connectionSpec: { preference, recents, isSecureCoreEnabled in
             let fastest = ConnectionSpec(location: isSecureCoreEnabled ? .secureCore(.fastest) : .fastest, features: [])
 
-            switch defaultConnectionPreference {
+            switch preference {
             case .fastest:
                 return fastest
 

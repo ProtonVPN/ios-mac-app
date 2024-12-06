@@ -30,12 +30,12 @@ struct ConnectionPreferenceView: View {
 
     let model: ConnectionPreferenceModel
     let isSelected: Bool
-    let sendAction: DefaultConnectionFeature.ActionSender?
+    let sendAction: DefaultConnectionFeature.ActionSender
 
     init(
         model: ConnectionPreferenceModel,
         isSelected: Bool,
-        sendAction: DefaultConnectionFeature.ActionSender? = nil
+        sendAction: @escaping DefaultConnectionFeature.ActionSender
     ) {
         self.model = model
         self.isSelected = isSelected
@@ -44,7 +44,7 @@ struct ConnectionPreferenceView: View {
 
     public var body: some View {
         Button {
-            sendAction?(.preferenceSelected(model.preference))
+            sendAction(.preferenceSelected(model.preference))
         } label: {
             content
         }
