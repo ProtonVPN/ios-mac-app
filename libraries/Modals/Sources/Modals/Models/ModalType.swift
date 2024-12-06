@@ -35,6 +35,10 @@ public enum ModalType {
     case moderateNAT
     case vpnAccelerator
     case customization
+    case streaming
+    case p2pSupport
+    case devices
+    case torOverVPN
     case profiles
     case cantSkip(before: Date, totalDuration: TimeInterval, longSkip: Bool)
     case subscription
@@ -115,6 +119,22 @@ public extension ModalType {
             Asset.welcomePlus.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+        case .streaming:
+            Asset.streaming.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .p2pSupport:
+            Asset.p2p.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .devices:
+            Asset.devices.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        case .torOverVPN:
+            Asset.tor.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
     }
 
@@ -140,7 +160,7 @@ public extension ModalType {
 
     var hasNewUpsellScreen: Bool {
         switch self {
-        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription:
+        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN:
             return true
         case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
             return false
@@ -225,6 +245,14 @@ private extension ModalType {
             return Localizable.settingsTitleCensorship
         case .subscription:
             return Localizable.upsellPlansListTitle
+        case .streaming:
+            return Localizable.upsellPlansListTitle
+        case .p2pSupport:
+            return Localizable.upsellP2pSupportTitle
+        case .devices:
+            return Localizable.upsellDevicesTitle
+        case .torOverVPN:
+            return Localizable.upsellTorOverVPNTitle
         }
     }
 
@@ -292,6 +320,14 @@ private extension ModalType {
             return nil
         case .subscription:
             return .init(text: Localizable.upsellPlansListSubtitle)
+        case .streaming:
+            return .init(text: Localizable.upsellStreamingSubtitle)
+        case .p2pSupport:
+            return .init(text: Localizable.upsellP2pSupportSubtitle)
+        case .devices:
+            return .init(text: Localizable.upsellDevicesSubtitle)
+        case .torOverVPN:
+            return .init(text: Localizable.upsellTorOverVPNSubtitle)
         }
     }
 
@@ -350,6 +386,8 @@ private extension ModalType {
                 )
             ]
         case .subscription:
+            return []
+        case .streaming, .p2pSupport, .devices, .torOverVPN:
             return []
         }
     }

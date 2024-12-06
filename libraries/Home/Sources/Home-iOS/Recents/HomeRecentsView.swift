@@ -29,132 +29,49 @@ import Theme
 import VPNAppCore
 import SharedViews
 import ProtonCoreUIFoundations
+import OrderedCollections
 
 @available(iOS 17, *)
 public struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>
 
-    public var body: some View {
+    func sectionTitleView(title: String) -> some View {
+        HStack(spacing: 0) {
+            Text(title)
+                .themeFont(.caption())
+                .styled(.weak)
+                .padding([.top, .horizontal], .themeSpacing12)
+            Spacer()
+        }
+        .frame(maxWidth: Constants.maxHomeContentWidth)
+    }
+
+
+    private var recentsList: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                if !store.recents.connectionsList.isEmpty {
-                    HStack(spacing: 0) {
-                        Text(Localizable.homeRecentsRecentSection)
-                            .themeFont(.caption())
-                            .styled(.weak)
-                            .padding([.top, .horizontal], .themeSpacing12)
-                        Spacer()
-                    }
-                }
                 let last = store.recents.connectionsList.last
                 ForEach(store.recents.connectionsList) { item in
+                    let isConnected = store.vpnConnectionStatus.spec == item.connection
                     RecentRowItemView(item: item,
-                                      isConnected: store.vpnConnectionStatus.spec == item.connection,
+                                      isConnected: isConnected,
                                       isLastItem: item == last,
                                       sendAction: { _ = store.send($0) })
                 }
             }
         }
-        .task {
-            store.send(.watchConnectionStatus)
+    }
+
+    public var body: some View {
+        if !store.recents.connectionsList.isEmpty, !store.userTier.isFreeTier {
+            sectionTitleView(title: Localizable.homeRecentsRecentSection)
+            recentsList
+                .frame(maxWidth: Constants.maxHomeContentWidth)
+                .task { store.send(.watchConnectionStatus) }
         }
-    }
-}
-
-struct VerticalLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack {
-            configuration.icon
-            configuration.title
-        }
-    }
-}
-
-extension DragGesture.Value {
-    /// Ratios as a percentage of the view width for certain swipe/button behaviors.
-    enum ThresholdRatio: CGFloat {
-        /// How far should we swipe before leaving the button exposed?
-        case exposeButton = 0.15
-        /// How far should we swipe before performing the action?
-        case performAction = 0.5
-    }
-
-    func reached(_ threshold: ThresholdRatio, accordingTo viewSize: CGSize) -> Bool {
-        let thresholdWidth = threshold.rawValue * viewSize.width
-
-        return abs(translation.width) > thresholdWidth
-    }
-}
-
-@available(iOS 17, *)
-extension RecentsFeature.Action {
-    var text: Text {
-        let words: String
-        switch self {
-        case .delegate(.connect):
-            words = Localizable.actionConnect
-        case .pin:
-            words = Localizable.actionHomePin
-        case .unpin:
-            words = Localizable.actionHomeUnpin
-        case .remove:
-            words = Localizable.actionRemove
-        default:
-            words = ""
-        }
-
-        return Text(words)
-            .themeFont()
-            .styled(.inverted)
-    }
-
-    var icon: Image? {
-        switch self {
-        case .pin:
-            return IconProvider.pinFilled
-        case .unpin:
-            return IconProvider.pinSlashFilled
-        case .remove:
-            return IconProvider.trash
-        default:
-            return nil
-        }
-    }
-
-    var color: Color? {
-        switch self {
-        case .pin, .unpin:
-            return .init(.background, [.warning, .weak])
-        case .remove:
-            return .init(.background, .danger)
-        default:
-            return nil
-        }
-    }
-
-    var role: ButtonRole? {
-        switch self {
-        case .remove:
-            return .destructive
-        default:
-            return nil
-        }
-    }
-
-    @ViewBuilder
-    var label: some View {
-        if let icon {
-            Label {
-                text
-            } icon: {
-                icon
-                    .resizable()
-                    .styled(.inverted)
-                    .frame(.square(.themeSpacing16)) // this doesn't change size with dynamic type
-            }
-            .labelStyle(VerticalLabelStyle())
-        } else {
-            text
+        if store.userTier.isFreeTier {
+            sectionTitleView(title: Localizable.homeRecentsUpsellSection)
+            UpsellCarousel(sendAction: { _ = store.send($0) })
         }
     }
 }

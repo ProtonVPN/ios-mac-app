@@ -1635,6 +1635,9 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Discover VPN Plus";
+
 /* The section of recent connections in the Home tab. [Redesign_2023] */
 "_home_recents_recent_section" = "Recents";
 
@@ -2150,6 +2153,30 @@
 
 // MARK: New upsell modals
 
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Stream in 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Enjoy your favorite movies and TV shows from anywhere in the world.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Unlock peer-to-peer (P2P) downloads and file sharing";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Improve your upload and download speeds while hiding your IP address.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Protect 10 devices at once";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN is available on 8 different platforms.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Access the Tor network in one tap";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Connect to hidden services and onion sites with your regular browser.";
+
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Browse at even higher speeds (up to 10 Gbps)";
 
@@ -2496,3 +2523,43 @@
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
 "_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.";
+"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";
+
+// MARK: Upsell Carousel
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Worldwide cover";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ server locations in 63 countries";
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Faster browsing";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Browse at even higher speeds (up to 10 Gbps)";
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Streaming";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Watch your favorite movies and TV shows";
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Block ads, malware, and trackers";
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Add another layer of encryption to your VPN connection";
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "P2P support";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Download files through BitTorrent and other file sharing protocols";
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Protect 10 devices";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Security and privacy on all your devices";
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor over VPN";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Use the Tor network over your VPN connection for extra privacy";
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "And much more...";
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";

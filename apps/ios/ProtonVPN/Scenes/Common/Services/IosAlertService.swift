@@ -211,6 +211,18 @@ extension IosAlertService: CoreAlertService {
         case let customizationUpsell as CustomizationUpsellAlert:
             show(alert: customizationUpsell, modalType: .customization)
 
+        case let streamingUpsell as StreamingUpsellAlert:
+            show(alert: streamingUpsell, modalType: .streaming)
+
+        case let p2pUpsell as P2PUpsellAlert:
+            show(alert: p2pUpsell, modalType: .p2pSupport)
+
+        case let devicesUpsell as DevicesUpsellAlert:
+            show(alert: devicesUpsell, modalType: .devices)
+
+        case let torUpsell as TorUpsellAlert:
+            show(alert: torUpsell, modalType: .torOverVPN)
+
         case let countryUpsell as CountryUpsellAlert:
             @Dependency(\.serverRepository) var repository
             show(
