@@ -76,6 +76,8 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
     }
 }
 
+#if DEBUG && compiler(>=6)
+@available(iOS 18, *)
 #Preview {
     let elements = [
         "globe",
@@ -113,3 +115,4 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
     }
     .padding()
 }
+#endif
