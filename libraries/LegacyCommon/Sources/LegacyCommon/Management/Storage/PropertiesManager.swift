@@ -757,3 +757,56 @@ public class DateProperty {
 
 extension ConnectionSpec: DefaultableProperty {
 }
+
+extension SettingsStorageKey: DependencyKey {
+    public static let liveValue: SettingsStorage = .init(
+        getConnectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.connectionProtocol
+        },
+        setConnectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.connectionProtocol = $0
+        },
+        getNetShield: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.lastConnectionRequest?.netShieldType ?? .off
+        },
+        setNetShield: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: $0)
+        },
+        getEnvironment: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            #if RELEASE
+            return .init(
+                apiEndpoint: "",
+                atlasSecret: "",
+                atlasSecretFetchURLString: "",
+                featureFlagOverrides: [:]
+            )
+            #else
+            return .init(
+                apiEndpoint: propertiesManager.apiEndpoint ?? Bundle.dynamicDomain ?? "",
+                atlasSecret: propertiesManager.atlasSecret ?? Bundle.atlasSecret ?? "",
+                atlasSecretFetchURLString: propertiesManager.atlasSecretFetchURLString ?? "",
+                featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:]
+            )
+            #endif
+        },
+        setEnvironment: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.apiEndpoint = $0.apiEndpoint.valueIfNotEmpty
+            propertiesManager.atlasSecret = $0.atlasSecret.valueIfNotEmpty
+            propertiesManager.atlasSecretFetchURLString = $0.atlasSecretFetchURLString.valueIfNotEmpty
+            propertiesManager.featureFlagOverrides = $0.featureFlagOverrides
+        }
+    )
+}
+
+private extension String {
+    var valueIfNotEmpty: String? {
+        guard !isEmpty else { return nil }
+        return self
+    }
+}

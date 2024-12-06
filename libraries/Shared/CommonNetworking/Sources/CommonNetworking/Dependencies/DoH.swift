@@ -30,10 +30,10 @@ public class DoHVPN: DoH, ServerConfig {
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
-        #if DEBUG // Note: set for both Staging and Debug
-        return customHost ?? liveURL
-        #else
+        #if RELEASE
         return liveURL
+        #else // Note: set for both Staging and Debug
+        return customHost ?? liveURL
         #endif
     }
     public var captchaHost: String {

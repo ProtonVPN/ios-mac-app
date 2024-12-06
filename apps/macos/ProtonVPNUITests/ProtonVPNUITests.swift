@@ -21,14 +21,30 @@
 //
 
 import XCTest
+
+import fusion
+import ProtonCoreDoh
 import ProtonCoreTestingToolkitUITestsCore
+
 import Strings
 import PMLogger
-import UITestsHelpers
 import Ergonomics
+import UITestsHelpers
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
-    
+    enum TestCaseEnvironment: String {
+        /// Points at vpn-api.proton.me
+        case production
+        /// Points at a custom environment, if one is set
+        case atlas
+        /// Uses whichever environment happens to be set by the application.
+        case `default`
+    }
+
+    var environment: TestCaseEnvironment {
+        .default
+    }
+
     private let loginRobot = LoginRobot()
     private let mainRobot = MainRobot()
     private let alertRobot = AlertRobot()
@@ -65,6 +81,14 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         window = XCUIApplication().windows["Proton VPN"]
         waitForLoaderDisappear()
         
+        switch environment {
+        case .production:
+            setupProdEnvironment()
+        case .atlas:
+            setupAtlasEnvironment()
+        case .default:
+            openLoginScreen()
+        }
     }
     
     override open func tearDownWithError() throws {
@@ -84,6 +108,42 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
     
+    func setupAtlasEnvironment() {
+        let url = doh.getCurrentlyUsedHostUrl()
+        if staticText(url).waitUntilExists(time: 1).exists() {
+            openLoginScreen()
+        } else {
+            textField("customEnvironmentTextField")
+                .waitUntilExists(time: 1).tap().clearText().typeText(url)
+            button("Change and kill the app").tap()
+            closeAndOpenTheApp()
+        }
+    }
+
+    func setupProdEnvironment() {
+        if staticText("https://vpn-api.proton.me")
+            .waitUntilExists(time: 1).exists() {
+            openLoginScreen()
+        } else {
+            button("Reset to production and kill the app").tap()
+            closeAndOpenTheApp()
+        }
+    }
+
+    func getCredentials(from resource: String) -> [Credentials] {
+        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+    }
+
+    private func closeAndOpenTheApp() {
+        button("Kill").tap()
+        XCUIApplication().launch()
+        button("Use and continue").tap()
+    }
+
+    private func openLoginScreen() {
+        button("Use and continue").tap()
+    }
+
     func loginAsFreeUser() {
         login(withCredentials: credentials[0])
     }
@@ -198,5 +258,31 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         app.terminate()
         app.launch()
         waitForLoaderDisappear()
+    }
+
+    var doh: DoH {
+        if let customDomain = Bundle.dynamicDomain, !customDomain.isEmpty {
+            return CustomServerConfigDoH(
+                signupDomain: customDomain,
+                captchaHost: "https://api.\(customDomain)",
+                humanVerificationV3Host: "https://verify.\(customDomain)",
+                accountHost: "https://account.\(customDomain)",
+                defaultHost: "https://\(customDomain)",
+                apiHost: ObfuscatedConstants.blackApiHost,
+                defaultPath: ObfuscatedConstants.blackDefaultPath,
+                apnEnvironment: .development
+            )
+        } else {
+            return CustomServerConfigDoH(
+                signupDomain: ObfuscatedConstants.blackSignupDomain,
+                captchaHost: ObfuscatedConstants.blackCaptchaHost,
+                humanVerificationV3Host: ObfuscatedConstants.blackHumanVerificationV3Host,
+                accountHost: ObfuscatedConstants.blackAccountHost,
+                defaultHost: ObfuscatedConstants.blackDefaultHost,
+                apiHost: ObfuscatedConstants.blackApiHost,
+                defaultPath: ObfuscatedConstants.blackDefaultPath,
+                apnEnvironment: .development
+            )
+        }
     }
 }

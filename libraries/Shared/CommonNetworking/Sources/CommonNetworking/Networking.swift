@@ -121,6 +121,10 @@ public final class CoreNetworking: Networking {
         @Dependency(\.dohConfiguration) var doh
         @Dependency(\.challengeParametersProvider) var challengeParametersProvider
 
+        #if !RELEASE
+        log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
+        #endif
+
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
             apiService = PMAPIService.createAPIService(
                 doh: doh,
@@ -310,7 +314,8 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var locale: String {
-        return NSLocale.current.languageCode ?? "en_US"
+        @Dependency(\.locale) var locale
+        return locale.language.languageCode?.identifier ?? "en_US"
     }
 
     public var appVersion: String {

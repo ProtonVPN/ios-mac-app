@@ -304,7 +304,7 @@ extension CoreLoginService: LoginService {
 
 #if !RELEASE
     private func showEnvironmentSelection() {
-        let environmentsView = EnvironmentSelectorView { [weak self] in
+        let environmentsView = EnvironmentSelectorMobileView { [weak self] in
             self?.show(initialError: nil, withOverlayViewController: nil)
         }
 

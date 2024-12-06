@@ -25,6 +25,8 @@ import ProtonCoreFeatureFlags // Needed to create a manual override type
 
 @Reducer
 public struct EnvironmentSelectorFeature {
+    static let reasonableAtlasSecretLength = 64
+
     public struct FeatureOverride: Equatable, Identifiable {
         public let id = UUID()
 
@@ -78,7 +80,7 @@ public struct EnvironmentSelectorFeature {
             if atlasSecret.hasPrefix("https://") {
                 if let url = URL(string: atlasSecret),
                    url.host() != nil {
-                    return (.vpnGreen, "Hit 'Fetch' to continue...")
+                    return (.success, "Hit 'Fetch' to continue...")
                 } else {
                     return (.warning, "Make sure to enter a valid URL before tapping 'Fetch'.")
                 }
@@ -113,7 +115,7 @@ public struct EnvironmentSelectorFeature {
             self.apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
             self.newApiEndpointURLString = self.apiEndpoint
             self.atlasSecret = settings.atlasSecret
-            self.atlasSecretFetchURLString = settings.atlasSecretFetchURLString ?? ""
+            self.atlasSecretFetchURLString = settings.atlasSecretFetchURLString
             self.overrides = settings.featureFlagOverrides
                 .sorted(by: { $0.key < $1.key })
                 .enumerated()
@@ -152,7 +154,8 @@ public struct EnvironmentSelectorFeature {
                 case .success(let data):
                     state.fetchingAtlasSecret = false
 
-                    guard let string = String(data: data, encoding: .utf8), string.count < 64 else {
+                    guard let string = String(data: data, encoding: .utf8),
+                          string.count < Self.reasonableAtlasSecretLength else {
                         return .send(
                             .atlasSecretResponseReceived(.failure(URLError(.badServerResponse)))
                         )
@@ -186,7 +189,7 @@ public struct EnvironmentSelectorFeature {
                 }
             case .resetAndKillAppButtonTapped:
                 state.newApiEndpointURLString = State.defaultApiUrlString
-                return .concatenate([
+                return .concatenate(
                     .run { [state] send in
                         @Dependency(\.settingsStorage) var storage
                         do {
@@ -199,13 +202,13 @@ public struct EnvironmentSelectorFeature {
                         }
                     },
                     .send(.displayKillAppConfirmationAlert)
-                ])
+                )
             case .changeAndKillAppButtonTapped:
                 if state.newApiEndpointURLString == State.defaultApiUrlString {
                     state.newApiEndpointURLString = "" // Empty value means 'production'
                 }
                 // Need to send alert telling user to kill the app
-                return .concatenate([
+                return .concatenate(
                     .run { [state] send in
                         @Dependency(\.settingsStorage) var storage
                         do {
@@ -221,7 +224,7 @@ public struct EnvironmentSelectorFeature {
                         }
                     },
                     .send(.displayKillAppConfirmationAlert)
-                ])
+                )
             case .displayKillAppConfirmationAlert:
                 state.alert = AlertState {
                     TextState("Environment changed")
@@ -232,9 +235,9 @@ public struct EnvironmentSelectorFeature {
                     ButtonState(role: .destructive, action: .killApp) {
                         TextState("Kill")
                     }
-                } message: { [state] in
+                } message: { [apiEndpoint = state.newApiEndpointURLString] in
                     TextState("""
-                        Environment has been changed to \(state.newApiEndpointURLString)
+                        Environment has been changed to \(apiEndpoint)
 
                         You need to KILL THE APP and start it again for the change to take effect.
                         """

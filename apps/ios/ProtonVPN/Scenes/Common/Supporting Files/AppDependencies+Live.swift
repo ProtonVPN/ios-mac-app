@@ -42,59 +42,6 @@ extension ChallengeParametersProviderKey: DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
 }
 
-extension SettingsStorageKey: DependencyKey {
-    public static let liveValue: SettingsStorage = .init(
-        getConnectionProtocol: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.connectionProtocol
-        },
-        setConnectionProtocol: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            propertiesManager.connectionProtocol = $0
-        },
-        getNetShield: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            return propertiesManager.lastConnectionRequest?.netShieldType ?? .off
-        },
-        setNetShield: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: $0)
-        },
-        getEnvironment: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            #if RELEASE
-            return .init(
-                apiEndpoint: "",
-                atlasSecret: "",
-                atlasSecretFetchURLString: "",
-                featureFlagOverrides: [:]
-            )
-            #else
-            return .init(
-                apiEndpoint: propertiesManager.apiEndpoint ?? Bundle.dynamicDomain ?? "",
-                atlasSecret: propertiesManager.atlasSecret ?? Bundle.atlasSecret ?? "",
-                atlasSecretFetchURLString: propertiesManager.atlasSecretFetchURLString ?? "",
-                featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:]
-            )
-            #endif
-        },
-        setEnvironment: {
-            @Dependency(\.propertiesManager) var propertiesManager
-            propertiesManager.apiEndpoint = $0.apiEndpoint.valueIfNotEmpty
-            propertiesManager.atlasSecret = $0.atlasSecret.valueIfNotEmpty
-            propertiesManager.atlasSecretFetchURLString = $0.atlasSecretFetchURLString.valueIfNotEmpty
-            propertiesManager.featureFlagOverrides = $0.featureFlagOverrides
-        }
-    )
-}
-
-private extension String {
-    var valueIfNotEmpty: String? {
-        guard !isEmpty else { return nil }
-        return self
-    }
-}
-
 extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
@@ -102,9 +49,11 @@ extension DoHConfigurationKey: DependencyKey {
         #if RELEASE
         let customHost: String? = nil
         let atlasSecret: String? = nil
+        log.info("Custom host is disabled (release configuration)")
         #else
         let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
         let atlasSecret = Bundle.atlasSecret ?? propertiesManager.atlasSecret
+        log.info("Custom host: \(optional: customHost), atlasSecret: \(optional: atlasSecret)")
         #endif
 
         let doh = DoHVPN(

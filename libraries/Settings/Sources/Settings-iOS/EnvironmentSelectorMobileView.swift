@@ -24,7 +24,7 @@ import ComposableArchitecture
 import Settings
 import Theme
 
-public struct EnvironmentSelectorView: View {
+public struct EnvironmentSelectorMobileView: View {
     @Binding public var store: StoreOf<EnvironmentSelectorFeature>
 
     @ViewBuilder
@@ -105,7 +105,7 @@ public struct EnvironmentSelectorView: View {
 
                         Spacer()
                         Image(systemName: featureOverride.value ? "checkmark.square.fill" : "clear.fill")
-                            .styled(featureOverride.value ? .vpnGreen : .danger)
+                            .styled(featureOverride.value ? .success : .danger)
                             .onTapGesture {
                                 store.send(.toggle(id: featureOverride.id))
                             }
@@ -117,6 +117,7 @@ public struct EnvironmentSelectorView: View {
             }
             .scrollContentBackground(.hidden)
             .availabilitySafeContentMargins(.top, .init(top: 0, leading: 0, bottom: 0, trailing: 0))
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
 
     }
@@ -150,6 +151,7 @@ public struct EnvironmentSelectorView: View {
             }
             .padding(.top, .themeSpacing16)
             .alert($store.scope(state: \.alert, action: \.alert))
+            .frame(maxWidth: Theme.Constants.readableContentWidth)
         }
     }
 
@@ -203,7 +205,7 @@ extension View {
 }
 
 #Preview {
-    EnvironmentSelectorView(store: Store(
+    EnvironmentSelectorMobileView(store: Store(
         initialState: EnvironmentSelectorFeature.State(
             apiEndpoint: "https://vpn-api.proton.me",
             atlasSecret: String((0..<32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
