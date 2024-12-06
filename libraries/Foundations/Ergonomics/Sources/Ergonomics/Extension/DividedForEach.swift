@@ -18,78 +18,98 @@
 
 import SwiftUI
 
-/// Inserts dividers between each element, aligned to the leading edge of the first `Text` in each row. Much like
-/// `List` does by default, according to platform conventions.
+/// Inserts dividers between each element, with the option to also include one under the last element.
 ///
 /// Useful when you want to render dividers between items, and you'd like to avoid the style restrictions and
 /// additional behaviour that come with Lists (edge insets, tappable area, etc).
 ///
-/// Uses `listRowSeparatorLeading` under the hood to align the dividers. Check "Custom Alignment" preview section below
-/// for an example of how to define custom alignments.
-///
 /// Note: Since content is passed as an escaping closure, wrap the contents with `WithPerceptionTracking` if it relies
-///  on a `Store`.
+/// on a `Store`.
 public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
     private let data: Data
+    private let showDividerUnderLastElement: Bool
     private let content: (Data.Element) -> Content
 
     public init(
         _ data: Data,
+        showDividerUnderLastElement: Bool = false,
         @ViewBuilder content: @escaping (Data.Element) -> Content
     ) {
         self.data = data
+        self.showDividerUnderLastElement = showDividerUnderLastElement
         self.content = content
     }
 
+    // Improvement: align to the leading edge of the first `Text` in each row, ine line with platform convention
+    // `List` does this by default, using `listRowSeparatorLeading` under the hood
+    // I got this almost working, with the Divider aligned with the text, but could not find a way to reduce its width
+    // The following snippet is a good start (you may have to wrap it in a GeometryReader)
+    // VStack(alignment: .leading, spacing: 0) {
+    //     ForEach(Array(data.enumerated()), id: \.element.self) { index, element in
+    //         VStack(alignment: .listRowSeparatorLeading, spacing: 0) {
+    //             content(element)
+    //
+    //             if shouldRenderDivider(at: index, of: data.count - 1) {
+    //                 Divider()
+    //                     .alignmentGuide(.leading) { $0[.listRowSeparatorLeading] }
+    //             }
+    //         }
+    //     }
+    // }
     public var body: some View {
-        GeometryReader { proxy in
+        ForEach(Array(data.enumerated()), id: \.element.self) { index, element in
             VStack(alignment: .leading, spacing: 0) {
-                ForEach(Array(data.enumerated()), id: \.element.self) { index, element in
-                    VStack(alignment: .listRowSeparatorLeading, spacing: 0) {
-                        content(element)
-
-                        if shouldRenderDivider(at: index, of: data.count - 1) {
-                            Divider()
-                                .alignmentGuide(.leading) { $0[.listRowSeparatorLeading] }
-                        }
-                    }
+                content(element)
+                if shouldRenderDivider(at: index, of: data.count - 1) {
+                    Divider()
                 }
             }
         }
     }
 
     private func shouldRenderDivider(at index: Int, of lastIndex: Int) -> Bool {
-        // render the divider if this is not the last element
-        index < lastIndex
+        if index < lastIndex {
+            return true
+        }
+
+        return showDividerUnderLastElement
     }
 }
 
-#Preview("Default Alignment") {
-    VStack(alignment: .leading) {
-        DividedForEach(["goodbye,", "cruel", "world!"]) { item in
-            HStack {
-                Image(systemName: "globe")
-                    .resizable()
-                    .frame(width: CGFloat(item.count * 10), height: 32)
-                Text("\(item)")
-                    .padding()
-            }
-        }
-    }
-}
+#Preview {
+    let elements = [
+        "globe",
+        "externaldrive.fill.badge.plus",
+        "speaker.zzz",
+        "exclamationmark.triangle"
+    ]
 
-#Preview("Custom Alignment") {
-    VStack(alignment: .leading) {
-        DividedForEach(["hello,", "beautiful", "world"]) { item in
-            let width = CGFloat(item.count * 10)
-            HStack {
-                Image(systemName: "globe")
-                    .resizable()
-                    .frame(width: width, height: 32)
-                    .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] }
-                Text("\(item)")
-                    .padding()
+    VStack {
+        Spacer()
+
+        VStack(alignment: .leading) {
+            DividedForEach(elements) { item in
+                HStack {
+                    Image(systemName: item)
+                    Text(item)
+                    Spacer()
+                }
             }
         }
+
+        Spacer()
+
+        VStack(alignment: .leading) {
+            DividedForEach(elements, showDividerUnderLastElement: true) { item in
+                HStack {
+                    Image(systemName: item)
+                    Text(item)
+                    Spacer()
+                }
+            }
+        }
+
+        Spacer()
     }
+    .padding()
 }
