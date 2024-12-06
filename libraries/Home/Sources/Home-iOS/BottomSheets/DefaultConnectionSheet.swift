@@ -83,8 +83,14 @@ struct DefaultConnectionSheet: View {
 
 #if DEBUG && compiler(>=6)
 @available(iOS 18, *)
-#Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    let initialState = DefaultConnectionFeature.State(selection: .fastest)
+#Preview(traits: .dependencies {
+    $0.recentsStorage = .previewValue
+    $0.defaultConnectionStorage = .init(
+        getDefaultConnectionPreference: { .mostRecent },
+        setDefaultConnectionPreference: { _ in }
+    )
+}) {
+    let initialState = DefaultConnectionFeature.State()
     let previewStore = Store(initialState: initialState) { DefaultConnectionFeature() }
     VStack { } // Any old view that we can hook the sheet onto
         .sheet(isPresented: .constant(true)) {

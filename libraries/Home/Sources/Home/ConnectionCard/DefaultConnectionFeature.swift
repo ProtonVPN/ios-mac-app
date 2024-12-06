@@ -18,12 +18,9 @@
 
 import Foundation
 import Collections
-
 import ComposableArchitecture
 import SharedViews
-
-import struct Domain.ConnectionSpec
-import struct Domain.RecentConnection
+import Domain
 
 @Reducer
 public struct DefaultConnectionFeature {
@@ -42,10 +39,16 @@ public struct DefaultConnectionFeature {
         }
         public var selection: DefaultConnectionPreference
 
-        public init(selection: DefaultConnectionPreference) {
-            self.selection = selection
+        public init() {
             self.staticPreferenceModels = DefaultConnectionPreference.staticPreferences
                 .map { DefaultConnectionFeature.model(for: $0) }
+            @Dependency(\.defaultConnectionStorage) var storage
+            do {
+                self.selection = try storage.getPreference() ?? .fastest
+            } catch {
+                log.error("Failed to load default connection preference", metadata: ["error": "\(error)"])
+                self.selection = .fastest
+            }
         }
     }
 
@@ -59,7 +62,12 @@ public struct DefaultConnectionFeature {
             switch action {
             case .preferenceSelected(let preference):
                 state.selection = preference
-                return .none
+                return .run { _ in
+                    @Dependency(\.defaultConnectionStorage) var storage
+                    try storage.set(preference: preference)
+                } catch: { error, _ in
+                    log.error("Error saving default connection preference", metadata: ["error": "\(error)"])
+                }
             }
         }
     }
@@ -102,14 +110,6 @@ public struct DefaultConnectionFeature {
             )
         }
     }
-}
-
-public enum DefaultConnectionPreference: Equatable, Hashable {
-    case fastest
-    case mostRecent
-    case recent(ConnectionSpec)
-
-    public static let staticPreferences: [Self] = [.fastest, .mostRecent]
 }
 
 public struct ConnectionPreferenceModel: Equatable, Hashable {

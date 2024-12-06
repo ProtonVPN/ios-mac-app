@@ -169,7 +169,7 @@ public struct HomeFeature {
                     return .none
 
                 case .defaultConnectionTapped:
-                    state.destination = .defaultConnection(.init(selection: .fastest))
+                    state.destination = .defaultConnection(.init())
                     return .none
                 }
             case .connectionCard:
@@ -195,6 +195,9 @@ public struct HomeFeature {
                         @Dependency(\.pushAlert) var pushAlert
                         pushAlert(AllCountriesUpsellAlert())
                     }
+                case .presented(.defaultConnection(.preferenceSelected)):
+                    state.destination = nil
+                    return .none
                 default:
                     return .none
                 }
