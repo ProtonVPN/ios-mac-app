@@ -32,7 +32,7 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
-        @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference?
+        @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference
 
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
@@ -65,19 +65,8 @@ public struct HomeConnectionCardFeature {
             switch vpnConnectionStatus {
             case .disconnected:
                 @Dependency(\.defaultConnectionResolver) var resolver
-                @Dependency(\.recentsStorage) var recentsStorage
-                @Dependency(\.defaultConnectionStorage) var storage
-                let recents = recentsStorage.readFromStorage()
-                let preference: DefaultConnectionPreference?
-                do {
-                    preference = try storage.getPreference()
-                } catch {
-                    preference = nil
-                    log.error("Failed to fetch default connection preference", metadata: ["error": "\(error)"])
-                }
-
                 return resolver.connectionSpec(
-                    preference: preference ?? .fastest,
+                    preference: defaultConnectionPreference,
                     recents: recents,
                     isSecureCoreEnabled: secureCoreToggle
                 )

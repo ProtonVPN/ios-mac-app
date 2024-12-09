@@ -32,23 +32,14 @@ public struct DefaultConnectionFeature {
     @ObservableState
     public struct State: Equatable {
         @SharedReader(.recents) var recents: OrderedSet<RecentConnection>
-        @Shared(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference?
+        @Shared(.defaultConnectionPreference) public var defaultConnectionPreference: DefaultConnectionPreference
 
         public var dynamicPreferenceModels: [ConnectionPreferenceModel] {
             @Dependency(\.defaultConnectionResolver) var resolver
             return resolver.preferenceModels(recents: recents)
         }
-        public var selection: DefaultConnectionPreference
 
-        public init() {
-            @Dependency(\.defaultConnectionStorage) var storage
-            do {
-                self.selection = try storage.getPreference() ?? .fastest
-            } catch {
-                log.error("Failed to load default connection preference", metadata: ["error": "\(error)"])
-                self.selection = .fastest
-            }
-        }
+        public init() { }
     }
 
     @CasePathable
@@ -60,7 +51,6 @@ public struct DefaultConnectionFeature {
         Reduce { state, action in
             switch action {
             case .preferenceSelected(let preference):
-                state.selection = preference
                 state.defaultConnectionPreference = preference
                 return .run { _ in
                     @Dependency(\.defaultConnectionStorage) var storage

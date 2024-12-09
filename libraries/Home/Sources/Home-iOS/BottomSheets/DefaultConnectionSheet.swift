@@ -73,7 +73,7 @@ struct DefaultConnectionSheet: View {
                 WithPerceptionTracking {
                     ConnectionPreferenceView(
                         model: model,
-                        isSelected: store.selection == model.preference,
+                        isSelected: store.defaultConnectionPreference == model.preference,
                         sendAction: { store.send($0) }
                     )
                 }

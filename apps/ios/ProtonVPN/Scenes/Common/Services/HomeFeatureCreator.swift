@@ -20,6 +20,7 @@ import UIKit
 import Strings
 import ProtonCoreUIFoundations
 import SwiftUI
+import Domain
 import Home
 import Home_iOS
 import Settings_iOS
@@ -30,8 +31,20 @@ import LegacyCommon
 
 @available(iOS 17, *)
 enum HomeFeatureCreator {
+    static func loadInitialState() -> HomeFeature.State {
+        @Dependency(\.appStateLoader) var appStateLoader
+        do {
+            return try appStateLoader.load()
+        } catch {
+            log.error("Failed to load initial app state", metadata: ["error": "\(error)"])
+            return .default
+        }
+    }
+
     static func homeViewController() -> UINavigationController {
-        let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
+        let initialState: HomeFeature.State
+
+        let homeStore = StoreOf<HomeFeature>(initialState: loadInitialState()) {
             HomeFeature()
 #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
@@ -51,4 +64,28 @@ enum HomeFeatureCreator {
 
         return navigationController
     }
+}
+
+@available(iOS 17, *)
+struct AppStateLoader: DependencyKey {
+    typealias AppState = HomeFeature.State
+    var load: @Sendable () throws -> AppState
+
+    static let liveValue: AppStateLoader = .init(load: {
+        @Dependency(\.defaultConnectionStorage) var storage
+        return .init(defaultConnectionPreference: try storage.getPreference() ?? .fastest)
+    })
+}
+
+@available(iOS 17, *)
+extension DependencyValues {
+    var appStateLoader: AppStateLoader {
+        get { self[AppStateLoader.self] }
+        set { self[AppStateLoader.self] = newValue }
+    }
+}
+
+@available(iOS 17, *)
+extension HomeFeature.State {
+    static let `default`: Self = .init(defaultConnectionPreference: .fastest)
 }
