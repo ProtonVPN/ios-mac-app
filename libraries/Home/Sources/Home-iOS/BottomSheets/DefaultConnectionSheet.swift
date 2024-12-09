@@ -20,6 +20,7 @@ import SwiftUI
 import ComposableArchitecture
 import Domain
 import Ergonomics
+import Strings
 import Theme
 import SharedViews
 import Home
@@ -39,7 +40,7 @@ struct DefaultConnectionSheet: View {
     }
 
     @ViewBuilder private var content: some View {
-        Text("Select your default connection")
+        Text(Localizable.homeDefaultConnectionTitle)
             .styled(.normal)
             .themeFont(.body2())
             .padding(.top, .themeSpacing24)
@@ -56,7 +57,7 @@ struct DefaultConnectionSheet: View {
 
     @ViewBuilder private var dynamicPreferenceSection: some View {
         if !store.dynamicPreferenceModels.isEmpty {
-            Text("Recents")
+            Text(Localizable.homeRecentsRecentSection)
                 .styled(.weak)
                 .themeFont(.body3())
                 .padding(.top, .themeSpacing24)

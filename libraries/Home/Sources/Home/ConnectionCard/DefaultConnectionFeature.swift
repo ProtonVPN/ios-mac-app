@@ -21,6 +21,7 @@ import Collections
 import ComposableArchitecture
 import SharedViews
 import Domain
+import Strings
 
 @Reducer
 public struct DefaultConnectionFeature {
@@ -85,16 +86,16 @@ public struct ConnectionPreferenceModel: Equatable, Hashable {
             preference: .fastest,
             locationFeatureModel: LocationFeatureModel(
                 flag: .fastest,
-                header: .init(title: "Fastest", showConnectedPin: false),
-                subheader: .textual(.withoutFeatures(location: "The best server based on your location"))
+                header: .init(title: Localizable.homeDefaultConnectionFastestName, showConnectedPin: false),
+                subheader: .textual(.withoutFeatures(location: Localizable.homeDefaultConnectionFastestDescription))
             )
         ),
         ConnectionPreferenceModel(
             preference: .mostRecent,
             locationFeatureModel: .init(
                 flag: .mostRecent,
-                header: .init(title: "Most Recent", showConnectedPin: false),
-                subheader: .textual(.withoutFeatures(location: "Your most recently used connection"))
+                header: .init(title: Localizable.homeDefaultConnectionMostRecentName, showConnectedPin: false),
+                subheader: .textual(.withoutFeatures(location: Localizable.homeDefaultConnectionMostRecentDescription))
             )
         )
     ]

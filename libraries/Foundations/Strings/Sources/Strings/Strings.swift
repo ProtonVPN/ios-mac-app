@@ -882,9 +882,9 @@ public enum Localizable {
   public static var openVpnLogs: String { return Localizable.tr("Localizable", "_open_vpn_logs", fallback: "OpenVPN Logs") }
   /// OpenVPN
   public static var openvpn: String { return Localizable.tr("Localizable", "_openvpn", fallback: "OpenVPN") }
-  /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
+  /// A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.
   public static func operatingSystemOutOfDateAlertDescription(_ p1: Any, _ p2: Any) -> String {
-    return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.")
+    return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.")
   }
   /// User's OS version is no longer actively supported by Proton VPN (alert title)
   public static var operatingSystemOutOfDateAlertTitle: String { return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_title", fallback: "Update your software") }
@@ -1703,6 +1703,16 @@ public enum Localizable {
   public static var freeConnectionsModalTitle: String { return Localizable.tr("Localizable", "free_connections_modal_title", fallback: "Free connections") }
   /// Free tier plan title
   public static var freeTierPlanTitle: String { return Localizable.tr("Localizable", "free_tier_plan_title", fallback: "Proton VPN Free") }
+  /// Description of the "Fastest" default connection option, in the default connection sheet on the home screen
+  public static var homeDefaultConnectionFastestDescription: String { return Localizable.tr("Localizable", "home_default_connection_fastest_description", fallback: "The best server based on your location") }
+  /// Name of the "Fastest" default connection option, in the default connection sheet on the home screen
+  public static var homeDefaultConnectionFastestName: String { return Localizable.tr("Localizable", "home_default_connection_fastest_name", fallback: "Fastest") }
+  /// Description of the "Most Recent" default connection option, in the default connection sheet on the home screen
+  public static var homeDefaultConnectionMostRecentDescription: String { return Localizable.tr("Localizable", "home_default_connection_most_recent_description", fallback: "Your most recently used connection") }
+  /// Name of the "Most Recent" default connection option, in the default connection sheet on the home screen
+  public static var homeDefaultConnectionMostRecentName: String { return Localizable.tr("Localizable", "home_default_connection_most_recent_name", fallback: "Most Recent") }
+  /// Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection)
+  public static var homeDefaultConnectionTitle: String { return Localizable.tr("Localizable", "home_default_connection_title", fallback: "Select your default connection") }
   /// Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023]
   public static func homeFastestConnectionAdditionalCountryCount(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "home_fastest_connection_additional_country_count", String(describing: p1), fallback: "+%@")
