@@ -111,13 +111,25 @@ public extension RecentConnection {
             )
         )
     }
-    static var connectionSecureCoreFastest: RecentConnection {
+    static var connectionSecureCoreFastestTo: RecentConnection {
         .init(
             pinnedDate: nil,
             underMaintenance: false,
             connectionDate: Date().addingTimeInterval(-6 * 60 * 60.0),
             connection: .init(
                 location: .secureCore(.fastestHop(to: "AR")),
+                features: []
+            )
+        )
+    }
+
+    static var connectionSecureCoreFastest: RecentConnection {
+        .init(
+            pinnedDate: nil,
+            underMaintenance: false,
+            connectionDate: Date().addingTimeInterval(-10 * 60 * 60.0),
+            connection: .init(
+                location: .secureCore(.fastest),
                 features: []
             )
         )

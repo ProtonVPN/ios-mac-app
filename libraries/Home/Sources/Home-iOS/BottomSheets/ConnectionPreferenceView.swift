@@ -21,6 +21,7 @@ import Dependencies
 import Theme
 import SharedViews
 import Domain
+import Ergonomics
 import Home
 import ProtonCoreUIFoundations
 
@@ -52,12 +53,22 @@ struct ConnectionPreferenceView: View {
     }
 
     private var content: some View {
-        HStack(alignment: .center, spacing: 12) {
+        HStack(alignment: .center, spacing: .themeSpacing12) {
             LocationFeatureView(model: model.locationFeatureModel)
             Spacer()
             Accessory(style: .checkmark(isActive: isSelected), size: .large)
         }
         .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing12)
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
+    }
+}
+
+#Preview {
+    let staticModels = ConnectionPreferenceModel.staticPreferenceModels
+    VStack(alignment: .leading, spacing: 0) {
+        DividedForEach(staticModels) { model in
+            ConnectionPreferenceView(model: model, isSelected: false, sendAction: { _ in })
+        }
     }
 }

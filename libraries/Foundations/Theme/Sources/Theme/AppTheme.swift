@@ -101,7 +101,6 @@ public enum AppTheme {
         case spacing8 = 8
         case spacing12 = 12
         case spacing16 = 16
-        case spacing20 = 20
         case spacing24 = 24
         case spacing32 = 32
         case spacing48 = 48

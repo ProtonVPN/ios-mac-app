@@ -38,6 +38,8 @@ struct HomeConnectionCardView: View {
 
     let model = ConnectionCardModel()
 
+    static let flagInfoViewHeight: CGFloat = 42.0
+
     private enum AccessibilityIdentifiers {
         static let buttonConnect: String = "connect_button"
         static let buttonDisconnect: String = "disconnect_button"
@@ -122,7 +124,7 @@ struct HomeConnectionCardView: View {
                     withServerNumber: store.userTier.isFreeTier,
                     isConnected: false,
                     images: .coreImages
-                )
+                ).frame(height: Self.flagInfoViewHeight)
 
                 Spacer()
 

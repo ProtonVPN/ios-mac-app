@@ -117,7 +117,6 @@ public struct ConnectionFlagInfoView: View {
         }
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
-        .frame(height: 64)
         .accessibilityIdentifier(AccessibilityIdentifiers.connectionFlagInfo)
     }
 
