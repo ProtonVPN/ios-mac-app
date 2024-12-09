@@ -40,44 +40,62 @@ struct DefaultConnectionResolver: Sendable {
 
 extension DefaultConnectionResolver: DependencyKey {
     static let liveValue = DefaultConnectionResolver(
-        connectionSpec: { preference, recents, _ in
-            // Fastest overall connection doesn't take secure core into account.
-            // Check `DefaultConnectionPreference.fastest` docs for reasoning.
-            let fastestNonSecureCore = ConnectionSpec(location: .fastest, features: [])
-
-            switch preference {
-            case .fastest:
-                return fastestNonSecureCore
-
-            case .mostRecent:
-                guard let mostRecent = recents.mostRecent else {
-                    log.info("No recent connections, returning fastest", metadata: ["preference": "\(preference)"])
-                    return fastestNonSecureCore
-                }
-                return mostRecent.connection
-
-            case .recent(let spec):
-                return spec
-            }
-        }, preferenceModels: { recents in
-            // Filter out 'Fastest', since it's already a static preference
-            let recentsWithoutFastestConnection = recents.filter { $0.connection.location != .fastest }
-            return recentsWithoutFastestConnection.map { recent in
-                let spec = recent.connection
-                let infoBuilder = ConnectionInfoBuilder(intent: spec, vpnConnectionActual: nil, withServerNumber: false)
-
-                return ConnectionPreferenceModel(
-                    preference: .recent(spec),
-                    locationFeatureModel: .init(
-                        flag: spec.location.flagComposition,
-                        header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
-                        subheader: infoBuilder.subheader
-                    )
-                )
-            }
-        }
+        connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:isSecureCoreEnabled:),
+        preferenceModels: DefaultConnectionResolverImplementation.preferenceModels(for:)
     )
 }
+
+enum DefaultConnectionResolverImplementation {
+    static func connectionSpec(
+        for preference: DefaultConnectionPreference,
+        recents: OrderedSet<RecentConnection>,
+        isSecureCoreEnabled: Bool
+    ) -> ConnectionSpec {
+        // Fastest overall connection doesn't take secure core into account.
+        // Check `DefaultConnectionPreference.fastest` docs for reasoning.
+        let fastestNonSecureCore = ConnectionSpec(location: .fastest, features: [])
+
+        switch preference {
+        case .fastest:
+            return fastestNonSecureCore
+
+        case .mostRecent:
+            guard let mostRecent = recents.mostRecent else {
+                log.info("No recent connections, returning fastest", metadata: ["preference": "\(preference)"])
+                return fastestNonSecureCore
+            }
+            return mostRecent.connection
+
+        case .recent(let spec):
+            return spec
+        }
+    }
+
+    static func shouldOfferDefaultConnectionPreference(for recent: RecentConnection) -> Bool {
+        // 'Fastest' is already a static preference, so lets not offer it as an option
+        return recent.connection.location != .fastest
+    }
+
+    @Sendable
+    static func preferenceModels(for recents: OrderedSet<RecentConnection>) -> [ConnectionPreferenceModel] {
+        return recents
+            .filter(shouldOfferDefaultConnectionPreference(for:))
+            .map { recent in
+            let spec = recent.connection
+            let infoBuilder = ConnectionInfoBuilder(intent: spec, vpnConnectionActual: nil, withServerNumber: false)
+
+            return ConnectionPreferenceModel(
+                preference: .recent(spec),
+                locationFeatureModel: .init(
+                    flag: spec.location.flagComposition,
+                    header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
+                    subheader: infoBuilder.subheader
+                )
+            )
+        }
+    }
+}
+
 extension DependencyValues {
     var defaultConnectionResolver: DefaultConnectionResolver {
         get { self[DefaultConnectionResolver.self] }

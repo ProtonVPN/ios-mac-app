@@ -66,10 +66,18 @@ public struct HomeConnectionCardFeature {
             case .disconnected:
                 @Dependency(\.defaultConnectionResolver) var resolver
                 @Dependency(\.recentsStorage) var recentsStorage
+                @Dependency(\.defaultConnectionStorage) var storage
                 let recents = recentsStorage.readFromStorage()
+                let preference: DefaultConnectionPreference?
+                do {
+                    preference = try storage.getPreference()
+                } catch {
+                    preference = nil
+                    log.error("Failed to fetch default connection preference", metadata: ["error": "\(error)"])
+                }
 
                 return resolver.connectionSpec(
-                    preference: defaultConnectionPreference ?? .fastest,
+                    preference: preference ?? .fastest,
                     recents: recents,
                     isSecureCoreEnabled: secureCoreToggle
                 )
