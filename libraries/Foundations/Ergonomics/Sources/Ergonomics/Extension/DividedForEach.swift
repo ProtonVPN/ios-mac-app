@@ -57,10 +57,11 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
     //     }
     // }
     public var body: some View {
-        ForEach(data.indices, id: \.self) { index in
+        let lastIndex = data.index(before: data.endIndex)
+        return ForEach(data.indices, id: \.self) { index in
             VStack(alignment: .leading, spacing: 0) {
                 content(data[index])
-                if shouldRenderDivider(at: index, last: data.endIndex) {
+                if shouldRenderDivider(at: index, last: lastIndex) {
                     Divider()
                 }
             }
@@ -86,10 +87,8 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
         "exclamationmark.triangle"
     ]
 
-    VStack {
-        Spacer()
-
-        VStack(alignment: .leading) {
+    VStack(alignment: .leading) {
+        VStack {
             DividedForEach(elements) { item in
                 HStack {
                     Image(systemName: item)
@@ -101,7 +100,9 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
 
         Spacer()
 
-        VStack(alignment: .leading) {
+        Text("With Divider Under Last Element:")
+            .padding()
+        VStack {
             DividedForEach(elements, showDividerUnderLastElement: true) { item in
                 HStack {
                     Image(systemName: item)
@@ -112,6 +113,14 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
         }
 
         Spacer()
+
+        Text("Edge Case (empty)")
+            .padding()
+        VStack {
+            DividedForEach([], showDividerUnderLastElement: true) { item in
+                HStack { }
+            }
+        }
     }
     .padding()
 }
