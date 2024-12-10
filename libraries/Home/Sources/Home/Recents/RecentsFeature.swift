@@ -33,8 +33,19 @@ public struct RecentsFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
+        @SharedReader(.defaultConnectionPreference)
+        private var defaultConnectionPreference
         @Shared(.recents)
         public var recents: OrderedSet<RecentConnection>
+
+        // VPNAPPL- : Move this and other recents logic (defined in OrderedSet extension) to a client/dependency
+        public var recentConnectionList: OrderedSet<RecentConnection> {
+            if case .mostRecent = defaultConnectionPreference {
+                // We are already showing the most recent connection in the connection card
+                return recents.connectionsList // without most recent connection, unless it's pinned
+            }
+            return recents
+        }
 
         @SharedReader(.userTier)
         public var userTier: Int

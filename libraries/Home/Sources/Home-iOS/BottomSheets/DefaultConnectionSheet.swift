@@ -95,7 +95,7 @@ struct DefaultConnectionSheet: View {
     }
 }
 
-#if DEBUG && compiler(>=6)
+#if DEBUG
 @available(iOS 18, *)
 #Preview {
     @Shared(.recents) var recents: OrderedSet<RecentConnection> = [

@@ -52,7 +52,7 @@ public struct RecentsSectionView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
                 sectionTitleView(title: Localizable.homeRecentsRecentSection)
-                DividedForEach(store.recents.connectionsList) { item in
+                DividedForEach(store.recentConnectionList) { item in
                     WithPerceptionTracking {
                         RecentRowItemView(
                             item: item,

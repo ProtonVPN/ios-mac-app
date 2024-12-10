@@ -64,6 +64,7 @@ struct ConnectionPreferenceView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let staticModels = ConnectionPreferenceModel.staticPreferenceModels
     VStack(alignment: .leading, spacing: 0) {
@@ -72,3 +73,4 @@ struct ConnectionPreferenceView: View {
         }
     }
 }
+#endif
