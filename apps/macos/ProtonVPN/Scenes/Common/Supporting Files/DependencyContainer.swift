@@ -241,13 +241,6 @@ extension DependencyContainer: HeaderViewModelFactory {
     }
 }
 
-// MARK: - UpdateFileSelectorFactory
-extension DependencyContainer: UpdateFileSelectorFactory {
-    func makeUpdateFileSelector() -> UpdateFileSelector {
-        return UpdateFileSelectorImplementation(self)
-    }
-}
-
 // MARK: - SystemExtensionManagerFactory
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {

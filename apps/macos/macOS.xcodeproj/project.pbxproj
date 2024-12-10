@@ -138,7 +138,6 @@
 		D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */; };
 		D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */; };
 		D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D50B8020295DC3F900D85D29 /* NEHelper */; };
-		D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
@@ -162,8 +161,6 @@
 		D5C7C8B52B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */; };
 		D5C7C8B82B0B9A9600641808 /* AnnouncementRefresherMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B62B0B9A9500641808 /* AnnouncementRefresherMock.swift */; };
 		D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7C8B72B0B9A9500641808 /* AppSessionRefreshTimerMock.swift */; };
-		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
-		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
 		D5EE412F2AD9539A00ECC064 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5EE412E2AD9539A00ECC064 /* WireGuardKit */; };
 		D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */; };
@@ -648,7 +645,6 @@
 		D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrenchIcon.swift; sourceTree = "<group>"; };
 		D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiFiSecurityMonitor.swift; sourceTree = "<group>"; };
 		D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiWarningPopupViewController.swift; sourceTree = "<group>"; };
-		D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelectorMock.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
 		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
@@ -675,8 +671,6 @@
 		D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCertificateRefreshManagerMock.swift; sourceTree = "<group>"; };
 		D5C7C8B62B0B9A9500641808 /* AnnouncementRefresherMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementRefresherMock.swift; sourceTree = "<group>"; };
 		D5C7C8B72B0B9A9500641808 /* AppSessionRefreshTimerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimerMock.swift; sourceTree = "<group>"; };
-		D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelectorImplementationTests.swift; sourceTree = "<group>"; };
-		D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelector.swift; sourceTree = "<group>"; };
 		D5D6A949230D296400A432D1 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
 		DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
@@ -1375,19 +1369,10 @@
 		D5421EA825B6DAFB00280C29 /* Management */ = {
 			isa = PBXGroup;
 			children = (
-				D5421EA925B6DB0200280C29 /* Updates */,
 				E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */,
 				D5C7C8B42B0B9A8600641808 /* AppCertificateRefreshManagerMock.swift */,
 			);
 			path = Management;
-			sourceTree = "<group>";
-		};
-		D5421EA925B6DB0200280C29 /* Updates */ = {
-			isa = PBXGroup;
-			children = (
-				D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */,
-			);
-			path = Updates;
 			sourceTree = "<group>";
 		};
 		D549C8F5262EF4B900A0903F /* ViewModels */ = {
@@ -1421,17 +1406,8 @@
 		D5D298A925B5BBFE000FBD74 /* Management */ = {
 			isa = PBXGroup;
 			children = (
-				D5D298AA25B5BC06000FBD74 /* Updates */,
 			);
 			path = Management;
-			sourceTree = "<group>";
-		};
-		D5D298AA25B5BC06000FBD74 /* Updates */ = {
-			isa = PBXGroup;
-			children = (
-				D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */,
-			);
-			path = Updates;
 			sourceTree = "<group>";
 		};
 		E13F4CFF20FCD6CF00D985C2 /* Tests */ = {
@@ -1853,7 +1829,6 @@
 				EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */,
 				427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */,
 				D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */,
-				D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */,
 				E142F24C20A9B45800029163 /* UpdateManager.swift */,
 				EE4E7DF41F6276C9000F7D5E /* WindowService.swift */,
 				F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */,
@@ -3087,7 +3062,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
-				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				ADDB04AB2B7A533800211434 /* CountriesSectionViewModelTests.swift in Sources */,
 				D5C7C8B92B0B9A9600641808 /* AppSessionRefreshTimerMock.swift in Sources */,
@@ -3095,7 +3069,6 @@
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				D5C7C8B82B0B9A9600641808 /* AnnouncementRefresherMock.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
-				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
 				D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
@@ -3334,7 +3307,6 @@
 				D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */,
 				42BEF96326318875009180A7 /* FeaturesOverlayViewModel.swift in Sources */,
 				E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */,
-				D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				E5FF89652A810046002B4A49 /* SideBarView.swift in Sources */,
 				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,

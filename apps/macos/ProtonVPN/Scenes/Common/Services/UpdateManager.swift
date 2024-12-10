@@ -32,11 +32,11 @@ protocol UpdateManagerFactory {
 
 final class UpdateManager: NSObject {
     private static let updateChillInterval: TimeInterval = .hours(1)
-    
-    public typealias Factory = UpdateFileSelectorFactory & PropertiesManagerFactory
+    private static let feedURLString = "https://protonvpn.com/download/macos/updates/v4/sparkle.xml"
+
+
+    public typealias Factory = PropertiesManagerFactory
     private let factory: Factory
-    
-    private lazy var updateFileSelector: UpdateFileSelector = factory.makeUpdateFileSelector()
     
     // Callback for UI
     public var stateUpdated: (() -> Void)?
@@ -211,9 +211,7 @@ extension UpdateManager: SPUUpdaterDelegate {
     }
     
     func feedURLString(for updater: SPUUpdater) -> String? {
-        let url = updateFileSelector.updateFileUrl
-        log.info("FeedURL is \(url)", category: .appUpdate)
-        return url
+        return Self.feedURLString
     }
     
     func updaterMayCheck(forUpdates updater: SPUUpdater) -> Bool {

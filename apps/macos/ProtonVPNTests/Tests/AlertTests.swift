@@ -216,15 +216,11 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
     }
     
     func makeUpdateManager() -> UpdateManager {
-        return UpdateManager(UpdateFileSelectorFactoryMock())
+        return UpdateManager(UpdateManagerFactoryMock())
     }
 }
 
-fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
-    func makeUpdateFileSelector() -> UpdateFileSelector {
-        return UpdateFileSelectorMock()
-    }
-
+fileprivate class UpdateManagerFactoryMock: PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return PropertiesManagerMock()
     }
