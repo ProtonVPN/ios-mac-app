@@ -31,7 +31,6 @@ import ProtonCoreFeatureFlags
 ///
 /// Keep in mind that external feature flags update their values only after app restart.
 public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
-
     /// Enable or disable Sentry integration. If disabled, SentryHelper.default instance
     /// will be nil, thus calls to it will do nothing.
     case sentry = "Sentry"
@@ -58,7 +57,4 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
     case timestampedLogicals = "TimestampedLogicals"
-
-    /// Use the new sparkle URL that's hosted on Ceph instead of in the downloads repository.
-    case newSparkleURL = "NewSparkleURL"
 }
