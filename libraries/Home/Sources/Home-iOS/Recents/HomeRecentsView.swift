@@ -50,28 +50,28 @@ public struct RecentsSectionView: View {
     private var recentsList: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                let last = store.recents.connectionsList.last
-                ForEach(store.recents.connectionsList) { item in
-                    let isConnected = store.vpnConnectionStatus.spec == item.connection
-                    RecentRowItemView(item: item,
-                                      isConnected: isConnected,
-                                      isLastItem: item == last,
-                                      sendAction: { _ = store.send($0) })
+                if let last = store.recents.connectionsList.last {
+                    sectionTitleView(title: Localizable.homeRecentsRecentSection)
+                    ForEach(store.recents.connectionsList) { item in
+                        let isConnected = store.vpnConnectionStatus.spec == item.connection
+                        RecentRowItemView(item: item,
+                                          isConnected: isConnected,
+                                          isLastItem: item == last,
+                                          sendAction: { _ = store.send($0) })
+                    }
                 }
             }
         }
     }
 
     public var body: some View {
-        if !store.recents.connectionsList.isEmpty, !store.userTier.isFreeTier {
-            sectionTitleView(title: Localizable.homeRecentsRecentSection)
-            recentsList
-                .frame(maxWidth: Constants.maxHomeContentWidth)
-                .task { store.send(.watchConnectionStatus) }
-        }
         if store.userTier.isFreeTier {
             sectionTitleView(title: Localizable.homeRecentsUpsellSection)
             UpsellCarousel(sendAction: { _ = store.send($0) })
+        } else {
+            recentsList
+                .frame(maxWidth: Constants.maxHomeContentWidth)
+                .task { store.send(.watchConnectionStatus) }
         }
     }
 }
