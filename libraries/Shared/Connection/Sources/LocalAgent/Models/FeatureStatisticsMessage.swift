@@ -25,10 +25,10 @@ public struct FeatureStatisticsMessage: Sendable {
     public let netShield: NetShieldStats
 
     public struct NetShieldStats: Sendable, Decodable {
-        let malwareBlocked: Int?
-        let adsBlocked: Int?
-        let trackersBlocked: Int?
-        let bytesSaved: Int // The only field guaranteed to be present
+        public let malwareBlocked: Int?
+        public let adsBlocked: Int?
+        public let trackersBlocked: Int?
+        public let bytesSaved: Int // The only field guaranteed to be present
     }
 }
 

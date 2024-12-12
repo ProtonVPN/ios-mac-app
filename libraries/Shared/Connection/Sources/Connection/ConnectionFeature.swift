@@ -109,7 +109,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .stopObserving:
                 return .merge(
                     .send(.tunnel(.stopObservingStateChanges)),
-                    .send(.localAgent(.stopObservingEvents)),
+                    .send(.localAgent(.stopAllObservations)),
                     .cancel(id: CancelID.observation)
                 )
             case .connect(let intent):

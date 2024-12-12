@@ -106,6 +106,7 @@ final class ConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
@@ -135,7 +136,7 @@ final class ConnectionFeatureTests: XCTestCase {
         }
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
     }
 
     @MainActor func testDisconnectsWithErrorWhenUnrecoverableLocalAgentErrorReceived() async {
@@ -207,6 +208,7 @@ final class ConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
@@ -238,7 +240,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
 
         // Ensure that the final state post-disconnection contains the error so that it can be shown in the UI
         let disconnectedWithPolicyViolationDelinquent: ConnectionFeature.State = .init(
@@ -326,6 +328,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
@@ -363,6 +366,7 @@ final class ConnectionFeatureTests: XCTestCase {
         // Reconnect with refreshed certificate
 
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
@@ -374,7 +378,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
 
         let connectedWithRefreshedCertificate: ConnectionFeature.State = .init(
             tunnelState: .connected(connectedLogicalServer),
@@ -385,7 +389,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
     }
 
     @MainActor func testDisconnectsWithTimeoutErrorWhenConnectionTimesOut() async {
@@ -459,6 +463,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
@@ -475,7 +480,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
     }
 
     /// Verifies that a connection can be queued up if the feature is in the disconnecting state and the user
@@ -561,6 +566,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
@@ -572,7 +578,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
     }
 
     /// Test that we do not get stuck in a `disconnecting` state if we received a Local Agent error before we are able
@@ -647,12 +653,13 @@ final class ConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
 
         // Let's simulate a max sessions error being received before we are able to finish connecting
-        mockAgent.eventHandler?(.error(.maxSessionsPro))
+        mockAgent.streamTuple?.continuation.yield(.error(.maxSessionsPro))
         mockAgent.connectionTask?.cancel()
 
         await store.receive(\.localAgent.event.error.maxSessionsPro)
@@ -675,7 +682,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
     }
 
     /// Resilience test - assert that the feature gracefully handles not receiving the expected tunnel status changes
@@ -740,7 +747,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
-        await store.receive(\.localAgent.stopObservingEvents)
+        await store.receive(\.localAgent.stopAllObservations)
     }
 }
 #endif

@@ -51,6 +51,7 @@ let package = Package(
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Algorithms", package: "swift-algorithms"),

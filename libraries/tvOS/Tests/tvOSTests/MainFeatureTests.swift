@@ -86,7 +86,7 @@ final class MainFeatureTests: XCTestCase {
         await store.receive(\.connection.localAgent.event.state.disconnected) {
             $0.connection.localAgent = .disconnected(nil)
         }
-        await store.send(.connection(.localAgent(.stopObservingEvents)))
+        await store.send(.connection(.localAgent(.stopAllObservations)))
     }
 
     @MainActor

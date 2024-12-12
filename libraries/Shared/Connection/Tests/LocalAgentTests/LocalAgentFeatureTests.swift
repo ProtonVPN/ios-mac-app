@@ -47,6 +47,7 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         await store.send(.startObservingEvents)
         await store.send(.connect(server, .empty))
+        await store.receive(\.startNetShieldStatsObservation)
         await store.receive(\.event.state.connecting) {
             $0 = .connecting
         }
@@ -62,12 +63,12 @@ final class LocalAgentFeatureTests: XCTestCase {
             deviceCountry: "CH"
         )
 
-        localAgentMock.eventHandler?(.connectionDetails(mockConnectionDetails))
+        localAgentMock.streamTuple?.continuation.yield(.connectionDetails(mockConnectionDetails))
         await store.receive(\.event.connectionDetails) {
             $0 = .connected(mockConnectionDetails)
         }
 
-        await store.send(.stopObservingEvents)
+        await store.send(.stopAllObservations)
     }
 
     @MainActor
@@ -96,12 +97,12 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.receive(\.event.state.connecting)
 
         // Now, test that events are still received after resubscribing to mimic logging out and logging back in
-        await store.send(.stopObservingEvents)
+        await store.send(.stopAllObservations)
         await store.send(.startObservingEvents)
 
         client.delegate?.didReceive(event: .state(.connecting))
         await store.receive(\.event.state.connecting)
 
-        await store.send(.stopObservingEvents)
+        await store.send(.stopAllObservations)
     }
 }

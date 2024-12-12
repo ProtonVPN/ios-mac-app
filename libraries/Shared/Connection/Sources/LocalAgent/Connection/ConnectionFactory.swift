@@ -20,9 +20,11 @@ import Foundation
 
 import Dependencies
 
+import Domain
+
 import protocol GoLibs.LocalAgentNativeClientProtocol
 import func GoLibs.LocalAgentNewAgentConnection
-import func GoLibs.LocalAgentNewFeatures
+import class GoLibs.LocalAgentFeatures
 
 import CoreConnection
 
@@ -73,7 +75,7 @@ extension ConnectionFactory {
                 localAgentConfiguration.localAgentHostname,
                 connectionConfiguration.hostname,
                 client,
-                LocalAgentNewFeatures(),
+                connectionConfiguration.features.localAgentFeatures,
                 true,
                 &error
             )
@@ -90,4 +92,25 @@ extension ConnectionFactory {
             return connection
         }
     )
+}
+
+private extension VPNConnectionFeatures {
+    private enum LocalAgentFeaturesKeys: String {
+        case vpnAccelerator = "split-tcp"
+        case netShield = "netshield-level"
+        case jailed = "jail"
+        case natType = "randomized-nat"
+        case bouncing
+        case safeMode = "safe-mode"
+    }
+
+    var localAgentFeatures: LocalAgentFeatures? {
+        let featuresObject = LocalAgentFeatures()
+        featuresObject?.setInt(LocalAgentFeaturesKeys.netShield.rawValue, value: Int64(netshield.rawValue))
+        featuresObject?.setBool(LocalAgentFeaturesKeys.vpnAccelerator.rawValue, value: vpnAccelerator)
+        bouncing.map { featuresObject?.setString(LocalAgentFeaturesKeys.bouncing.rawValue, value: $0) }
+        featuresObject?.setBool(LocalAgentFeaturesKeys.natType.rawValue, value: natType.flag)
+        safeMode.map { featuresObject?.setBool(LocalAgentFeaturesKeys.safeMode.rawValue, value: $0) }
+        return featuresObject
+    }
 }

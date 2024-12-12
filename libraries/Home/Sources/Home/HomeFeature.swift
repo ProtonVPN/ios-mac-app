@@ -25,6 +25,9 @@ import ConnectionDetails
 import Connection
 import Combine
 
+import LocalAgent
+import NetShield
+
 @available(iOS 17, *)
 @Reducer
 public struct HomeFeature {
@@ -237,7 +240,9 @@ public struct HomeFeature {
                 return .none
             case .freeConnectionsInfo(_):
                 return .none
-            case .connection:
+            case .connection(.localAgent(.event(.stats(let message)))):
+                return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
+            case .connection(_):
                 return .none
             }
         }
@@ -268,6 +273,17 @@ extension ConnectionState {
             let spec: ConnectionSpec = .defaultFastest
             return .connected(spec, VPNConnectionActual(connectedDate: .now, vpnProtocol: .wireGuard(.udp), natType: .moderateNAT, safeMode: nil, server: server))
         }
+    }
+}
+
+private extension FeatureStatisticsMessage.NetShieldStats {
+    var toNetShieldModel: NetShield.NetShieldModel {
+        return NetShieldModel(
+            trackersCount: trackersBlocked ?? 0,
+            adsCount: adsBlocked ?? 0,
+            dataSaved: UInt64(bytesSaved),
+            enabled: true
+        )
     }
 }
 

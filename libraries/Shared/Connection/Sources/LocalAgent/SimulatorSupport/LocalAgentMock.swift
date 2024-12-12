@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator)
-
 import Foundation
 import Dependencies
+import Domain
 import XCTestDynamicOverlay
 import CoreConnection
 
@@ -27,28 +27,11 @@ import CoreConnection
 final class LocalAgentMock: LocalAgent {
     @Dependency(\.continuousClock) var clock
 
-    var eventHandler: ((LocalAgentEvent) -> Void)?
+    private(set) var netShieldType: NetShieldType = .off
 
-    var state: LocalAgentState {
+    private var state: LocalAgentState {
         didSet {
-            guard let eventHandler else {
-                // If this failure is triggered in tests, this mock was used before a reducer subscribed to receive
-                // events through `eventStream`.
-                XCTFail("Event was emitted but handler is nil")
-                return
-            }
-            eventHandler(.state(state))
-        }
-    }
-
-    func createEventStream() -> AsyncStream<LocalAgentEvent> {
-        AsyncStream { continuation in
-            eventHandler = { event in
-                continuation.yield(event)
-            }
-            continuation.onTermination = { @Sendable _ in
-                self.eventHandler = nil
-            }
+            streamTuple?.1.yield(.state(state))
         }
     }
 
@@ -58,12 +41,23 @@ final class LocalAgentMock: LocalAgent {
     var disconnectionTask: Task<Void, Error>?
     var disconnectionDuration: Duration = .milliseconds(250)
 
+    var streamTuple: (stream: AsyncStream<LocalAgentEvent>, continuation: AsyncStream<LocalAgentEvent>.Continuation)?
+
     init(
         state: LocalAgentState,
         connectionErrorToThrow: Error? = nil
     ) {
+        self.streamTuple = AsyncStream<LocalAgentEvent>.makeStream()
+
         self.state = state
+
         self.connectionErrorToThrow = connectionErrorToThrow
+    }
+
+    func createEventStream() -> AsyncStream<LocalAgentEvent> {
+        let tuple = AsyncStream<LocalAgentEvent>.makeStream()
+        streamTuple = tuple
+        return tuple.stream
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
@@ -76,10 +70,9 @@ final class LocalAgentMock: LocalAgent {
         state = .connecting
 
         connectionTask = Task {
-
             try await clock.sleep(for: connectionDuration)
-
             self.state = .connected
+            self.netShieldType = configuration.features.netshield
         }
     }
 
@@ -89,6 +82,16 @@ final class LocalAgentMock: LocalAgent {
             self.state = .disconnected
         }
     }
-}
 
+    func retrieveNetShieldStats() {
+        let netshieldStats = FeatureStatisticsMessage.NetShieldStats(
+            malwareBlocked: .random(in: 0...100),
+            adsBlocked: .random(in: 0...100),
+            trackersBlocked: .random(in: 0...100),
+            bytesSaved: .random(in: 0...100)
+        )
+        let message = FeatureStatisticsMessage(netShield: netshieldStats)
+        streamTuple?.continuation.yield(.stats(message))
+    }
+}
 #endif

@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct VPNAuthenticationData {
+public struct VPNAuthenticationData: Sendable {
     public let clientKey: PrivateKey
     public let clientCertificate: String
 

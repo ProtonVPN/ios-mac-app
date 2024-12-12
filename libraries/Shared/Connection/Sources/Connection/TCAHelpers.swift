@@ -24,7 +24,7 @@ public extension Effect {
     static func listen<StreamElement>(
         to stream: @escaping @autoclosure () -> AsyncStream<StreamElement>,
         priority: TaskPriority? = nil,
-        reinjecting toAction: @escaping @Sendable (StreamElement) async throws -> Action,
+        reinjecting toAction: @escaping @MainActor @Sendable (StreamElement) async throws -> Action,
         catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
     ) -> Self {
         self.run(

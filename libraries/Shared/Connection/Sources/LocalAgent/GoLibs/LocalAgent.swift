@@ -28,8 +28,13 @@ import CoreConnection
 
 protocol LocalAgent {
     func createEventStream() -> AsyncStream<LocalAgentEvent>
+
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws
     func disconnect()
+
+    var netShieldType: NetShieldType { get }
+
+    func retrieveNetShieldStats()
 }
 
 @CasePathable
@@ -43,13 +48,11 @@ public enum LocalAgentEvent: Sendable {
 
 @available(iOS 16, *)
 struct LocalAgentKey: DependencyKey {
-
 #if targetEnvironment(simulator)
     static let liveValue: LocalAgent = LocalAgentMock(state: .disconnected)
 #else
     static let liveValue: LocalAgent = LocalAgentImplementation()
 #endif
-
 }
 
 @available(iOS 16, *)
@@ -57,5 +60,16 @@ extension DependencyValues {
     var localAgent: LocalAgent {
         get { self[LocalAgentKey.self] }
         set { self[LocalAgentKey.self] = newValue }
+    }
+}
+
+package extension NetShieldType {
+    var shouldObserveNetShieldStats: Bool {
+        switch self {
+        case .off, .level1:
+            return false
+        case .level2:
+            return true
+        }
     }
 }

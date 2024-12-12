@@ -83,7 +83,6 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
                 metadata: ["error": "\(errorMessageWithMaskedIPs)"]
             )
         }
-
     }
 
     private func didReceive(statistics: LocalAgentStringToValueMap) {
