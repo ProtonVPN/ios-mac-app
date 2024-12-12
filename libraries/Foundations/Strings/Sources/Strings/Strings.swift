@@ -238,15 +238,15 @@ public enum Localizable {
   /// Connection details screen: Country (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsCountry: String { return Localizable.tr("Localizable", "_connection_details_country", fallback: "Country") }
   /// Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023]
-  public static var connectionDetailsFeatureDescriptionP2p: String { return Localizable.tr("Localizable", "_connection_details_feature_description_p2p", fallback: "Download files through BitTorrent and other file sharing protocols") }
+  public static var connectionDetailsFeatureDescriptionP2p: String { return Localizable.tr("Localizable", "_connection_details_feature_description_p2p", fallback: "Peer-to-peer file sharing is enabled on this server.") }
   /// Connection details screen: Secure core description (macOS and iOS) [Redesign_2023]
-  public static var connectionDetailsFeatureDescriptionSecureCore: String { return Localizable.tr("Localizable", "_connection_details_feature_description_secure_core", fallback: "Download files through BitTorrent and other file sharing protocols") }
+  public static var connectionDetailsFeatureDescriptionSecureCore: String { return Localizable.tr("Localizable", "_connection_details_feature_description_secure_core", fallback: "Your activity is encrypted behind 2 high-security VPN servers.") }
   /// Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsFeatureDescriptionSmartRouting: String { return Localizable.tr("Localizable", "_connection_details_feature_description_smart_routing", fallback: "Servers are physically located in Singapore, but you’ll appear to be browsing from Thailand.") }
   /// Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023]
-  public static var connectionDetailsFeatureDescriptionStreaming: String { return Localizable.tr("Localizable", "_connection_details_feature_description_streaming", fallback: "Watch your favorite movies and TV shows.") }
+  public static var connectionDetailsFeatureDescriptionStreaming: String { return Localizable.tr("Localizable", "_connection_details_feature_description_streaming", fallback: "This server is optimized for TV and movie playback.") }
   /// Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023]
-  public static var connectionDetailsFeatureDescriptionTor: String { return Localizable.tr("Localizable", "_connection_details_feature_description_tor", fallback: "Connect to the Tor anonymity network using any browser") }
+  public static var connectionDetailsFeatureDescriptionTor: String { return Localizable.tr("Localizable", "_connection_details_feature_description_tor", fallback: "You can connect to .onion sites with your regular browser.") }
   /// Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsFeatureTitleP2p: String { return Localizable.tr("Localizable", "_connection_details_feature_title_p2p", fallback: "P2P") }
   /// Connection details screen: Secure core title (macOS and iOS) [Redesign_2023]
