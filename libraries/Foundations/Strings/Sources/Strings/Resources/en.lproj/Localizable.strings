@@ -1753,13 +1753,13 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "Connect to the Tor anonymity network using any browser";
+"_connection_details_feature_description_tor" = "You can connect to .onion sites with your regular browser.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
 
 /* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_p2p" = "Download files through BitTorrent and other file sharing protocols";
+"_connection_details_feature_description_p2p" = "Peer-to-peer file sharing is enabled on this server.";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
@@ -1771,13 +1771,13 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Download files through BitTorrent and other file sharing protocols";
+"_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Streaming";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "Watch your favorite movies and TV shows.";
+"_connection_details_feature_description_streaming" = "This server is optimized for TV and movie playback.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "Features";

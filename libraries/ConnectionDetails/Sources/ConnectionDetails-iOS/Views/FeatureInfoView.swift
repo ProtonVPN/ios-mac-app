@@ -92,7 +92,7 @@ extension FeatureInfoView {
             text = Localizable.connectionDetailsFeatureDescriptionSmartRouting
 
         case .streaming:
-            icon = IconProvider.arrowRightArrowLeft
+            icon = IconProvider.play
             title = Localizable.connectionDetailsFeatureTitleStreaming
             text = Localizable.connectionDetailsFeatureDescriptionStreaming
         }
@@ -115,6 +115,7 @@ struct FeatureInfoView_Previews: PreviewProvider {
             FeatureInfoView(for: .tor).previewDisplayName("Tor")
             FeatureInfoView(for: .p2p).previewDisplayName("P2P")
             FeatureInfoView(for: .smart).previewDisplayName("Smart Routing")
+            FeatureInfoView(for: .streaming).previewDisplayName("Streaming")
         }
     }
 }
