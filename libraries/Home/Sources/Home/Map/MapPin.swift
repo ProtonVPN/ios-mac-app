@@ -22,19 +22,14 @@ import Theme
 @available(iOS 17.0, *)
 public struct MapPin: View {
 
-    var mode: Mode
+    @Binding var mode: Mode
 
     var isMinimized: Bool { [.hop, .connecting].contains(mode) }
-
-    public init(mode: Mode) {
-        self.mode = mode
-    }
 
     public var body: some View {
         ZStack {
             externalGradientCircle
                 .scaleEffect(isMinimized ? 0 : 1)
-                .opacity(isMinimized ? 0 : 1)
             externalCircle
                 .scaleEffect(isMinimized ? 0.5 : 1)
             innerCircle
@@ -74,7 +69,7 @@ public struct MapPin: View {
 
 @available(iOS 17.0, *)
 public extension MapPin {
-    enum Mode {
+    enum Mode: CaseIterable {
         case exitConnected
         case connecting
         case disconnected
@@ -83,7 +78,7 @@ public extension MapPin {
         var color: Color {
             switch self {
             case .exitConnected: Color(.icon, .vpnGreen)
-            case .connecting: Color(.icon, .danger)
+            case .connecting: Color(.icon, .weak)
             case .disconnected: Color(.icon, .danger)
             case .hop: Color(.background, [.interactive, .active])
             }
@@ -133,20 +128,18 @@ private enum AnimationPhase: CaseIterable {
 
 @available(iOS 17, *)
 #Preview {
-    return WrapperView()
-}
+    @Previewable @State var mode: MapPin.Mode = .exitConnected
 
-@available(iOS 17.0, *)
-struct WrapperView: View {
-    /*@Previewable*/ @State var mode: MapPin.Mode = .exitConnected
-
-    var body: some View {
-        VStack {
-            MapPin(mode: mode)
-            Button { withAnimation { mode = .exitConnected } } label: { Text("exitConnected") }
-            Button { withAnimation { mode = .connecting } } label: { Text("connecting") }
-            Button { withAnimation { mode = .disconnected } } label: { Text("disconnected") }
-            Button { withAnimation { mode = .hop } } label: { Text("hop") }
+    VStack {
+        MapPin(mode: $mode)
+        ForEach(MapPin.Mode.allCases, id: \.self) { newMode in
+            Button {
+                withAnimation {
+                    mode = newMode
+                }
+            } label: {
+                Text(String(describing: newMode))
+            }
         }
     }
 }

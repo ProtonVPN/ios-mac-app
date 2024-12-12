@@ -22,16 +22,29 @@ import Domain
 import VPNAppCore
 import SwiftUI
 import CoreLocation
+import Ergonomics
+import SVGView
 
 @available(iOS 17.0, *)
 @Reducer
 public struct HomeMapFeature {
+
+    private static let timerDurationInMilliseconds: Int = 50
 
     @ObservableState
     public struct State: Equatable {
         
         public var mapState: MapState = .disconnected
         public var pinMode: MapPin.Mode = .disconnected
+
+        var shouldShowPin: Bool {
+            if case .connected = vpnConnectionStatus { // we're connected to a known country
+                return true
+            }
+            return userCountry != nil // or we know the user country
+        }
+
+        var pinOffset: CGSize = .zero
 
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userCountry) public var userCountry: String?
@@ -46,6 +59,29 @@ public struct HomeMapFeature {
         case connectingCoordinates(CLLocationCoordinate2D, String?)
         case disconnected
 
+        init(_ connectionStatus: VPNConnectionStatus) {
+            switch connectionStatus {
+            case .disconnected, .disconnecting:
+                self = .disconnected
+            case .connected(let spec, let actual):
+                if let actual {
+                    self = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
+                } else if let code = spec.countryCode {
+                    self = .connectedCountry(code)
+                } else {
+                    self = .disconnected
+                }
+            case .connecting(let spec, let actual), .loadingConnectionInfo(let spec, let actual):
+                if let actual {
+                    self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
+                } else if let code = spec.countryCode {
+                    self = .connectingCountry(code)
+                } else {
+                    self = .disconnected
+                }
+            }
+        }
+
         fileprivate var pinMode: MapPin.Mode {
             switch self {
             case .connectedCountry, .connectedCoordinates:
@@ -55,6 +91,19 @@ public struct HomeMapFeature {
             case .disconnected:
                 return .disconnected
             }
+        }
+
+        @MainActor
+        func pinOffset(userCountry: String?) -> CGSize {
+            guard let code = (code ?? userCountry)?.lowercased(),
+                  let coordinates = coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
+                return .zero
+            }
+            let location = CLLocationCoordinate2D(latitude: coordinates.latitude,
+                                                  longitude: coordinates.longitude - 10) // -10 to account for the shifted map
+            let projection = NaturalEarthProjection.projection(from: location, in: SVGView.mapBounds.size)
+
+            return .init(width: projection.x, height: -projection.y)
         }
 
         var code: String? {
@@ -92,10 +141,16 @@ public struct HomeMapFeature {
         case observeConnectionState
         case connectionStateUpdated(VPNConnectionStatus)
         case onAppear
+        case newMapState(MapState)
+        case newPinOffset(CGSize)
     }
 
     private enum CancelId {
         case connectionState
+    }
+
+    private enum IDs {
+        case mapState
     }
 
     public var body: some Reducer<State, Action> {
@@ -110,37 +165,29 @@ public struct HomeMapFeature {
                         .map(Action.connectionStateUpdated)
                 }
                 .cancellable(id: CancelId.connectionState)
+
             case .onAppear:
                 return .send(.observeConnectionState)
+
             case .connectionStateUpdated(let connectionStatus):
-                let mapState: MapState
-                switch connectionStatus {
-                case .disconnected, .disconnecting:
-                    mapState = .disconnected
-                case .connected(let spec, let actual):
-                    if let actual {
-                        mapState = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
-                    } else if let code = spec.countryCode {
-                        mapState = .connectedCountry(code)
-                    } else {
-                        mapState = .disconnected
-                    }
-                case .connecting(let spec, let actual), .loadingConnectionInfo(let spec, let actual):
-                    if let actual {
-                        mapState = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
-                    } else if let code = spec.countryCode {
-                        mapState = .connectingCountry(code)
-                    } else {
-                        mapState = .disconnected
-                    }
-                }
-                
-                // withAnimation {  With animation causes the pin to sometimes show the previous state, not the actual. Disabling for now.
+                let mapState = MapState(connectionStatus)
+                return .concatenate(
+                    .send(.newMapState(mapState), animation: .default),
+                    .run { [userCountry = state.userCountry] send in
+                        let pinOffset = await mapState.pinOffset(userCountry: userCountry)
+                        await send(.newPinOffset(pinOffset))
+                    })
+                .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: UIScheduler.shared)
+
+            case .newMapState(let mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
-                // }
+                return .none
+
+            case .newPinOffset(let offset):
+                state.pinOffset = offset
+                return .none
             }
-            return .none
         }
     }
 }

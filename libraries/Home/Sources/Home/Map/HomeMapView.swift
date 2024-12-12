@@ -33,6 +33,8 @@ public struct HomeMapView: View {
 
     private var store: StoreOf<HomeMapFeature>
 
+    @State private var pinMode: MapPin.Mode = .disconnected
+
     public init(store: StoreOf<HomeMapFeature>, availableHeight: CGFloat, availableWidth: CGFloat) {
         self.store = store
         self.availableHeight = availableHeight
@@ -40,22 +42,15 @@ public struct HomeMapView: View {
         self.mapBounds = SVGView.mapBounds
     }
 
-    private var shouldShowPin: Bool {
-        if case .connected = store.vpnConnectionStatus { // we're connected to a known country {
-            return true
-        }
-        return store.userCountry != nil // or we know the user country
-    }
-
     public var body: some View {
         ZStack {
             map
-            MapPin(mode: store.pinMode)
+            MapPin(mode: .constant(store.pinMode))
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
-                .offset(pinOffset())
-                .opacity(shouldShowPin ? 1 : 0)
+                .offset(store.pinOffset)
+                .opacity(store.shouldShowPin ? 1 : 0)
         }
-        .frame(width: mapBounds.width,  height: mapBounds.height)
+        .frame(width: mapBounds.width, height: mapBounds.height)
         .scaleEffect(mapScale())
         .offset(mapOffset())
         .onAppear {
@@ -73,16 +68,6 @@ public struct HomeMapView: View {
         map = MapRenderView(highlightedCountryCode: focusedCountryCode)
     }
 
-    private func pinOffset() -> CGSize {
-        guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let coordinates = store.mapState.coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
-            return .zero
-        }
-        let location = CLLocationCoordinate2D(latitude: coordinates.latitude,
-                                              longitude: coordinates.longitude - 10) // -10 to account for the shifted map
-        let projection = NaturalEarthProjection.projection(from: location, in: mapBounds.size)
-        return .init(width: projection.x, height: -projection.y)
-    }
 
     private func mapOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
