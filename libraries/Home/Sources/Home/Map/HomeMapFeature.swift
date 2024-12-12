@@ -53,9 +53,7 @@ public struct HomeMapFeature {
     }
 
     public enum MapState: Equatable {
-        case connectedCountry(String)
         case connectedCoordinates(CLLocationCoordinate2D, String?)
-        case connectingCountry(String)
         case connectingCoordinates(CLLocationCoordinate2D, String?)
         case disconnected
 
@@ -63,19 +61,15 @@ public struct HomeMapFeature {
             switch connectionStatus {
             case .disconnected, .disconnecting:
                 self = .disconnected
-            case .connected(let spec, let actual):
+            case .connected(_, let actual):
                 if let actual {
                     self = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
-                } else if let code = spec.countryCode {
-                    self = .connectedCountry(code)
                 } else {
                     self = .disconnected
                 }
-            case .connecting(let spec, let actual), .loadingConnectionInfo(let spec, let actual):
+            case .connecting(_, let actual), .loadingConnectionInfo(_, let actual):
                 if let actual {
                     self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
-                } else if let code = spec.countryCode {
-                    self = .connectingCountry(code)
                 } else {
                     self = .disconnected
                 }
@@ -84,9 +78,9 @@ public struct HomeMapFeature {
 
         fileprivate var pinMode: MapPin.Mode {
             switch self {
-            case .connectedCountry, .connectedCoordinates:
+            case .connectedCoordinates:
                 return .exitConnected
-            case .connectingCountry, .connectingCoordinates:
+            case .connectingCoordinates:
                 return .connecting
             case .disconnected:
                 return .disconnected
@@ -108,11 +102,7 @@ public struct HomeMapFeature {
 
         var code: String? {
             switch self {
-            case .connectedCountry(let code):
-                return code
             case .connectedCoordinates(_, let code):
-                return code
-            case .connectingCountry(let code):
                 return code
             case .connectingCoordinates(_, let code):
                 return code
@@ -123,12 +113,8 @@ public struct HomeMapFeature {
         
         var coordinates: CLLocationCoordinate2D? {
             switch self {
-            case .connectedCountry(let code):
-                return CountriesCoordinates.countryCenterCoordinates(code.uppercased())
             case .connectedCoordinates(let coordinates, _):
                 return coordinates
-            case .connectingCountry(let code):
-                return CountriesCoordinates.countryCenterCoordinates(code.uppercased())
             case .connectingCoordinates(let coordinates, _):
                 return coordinates
             case .disconnected:

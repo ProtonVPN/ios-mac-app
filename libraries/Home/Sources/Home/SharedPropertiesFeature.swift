@@ -79,8 +79,13 @@ public struct SharedPropertiesFeature {
                 )
 
             case .userLocationChange(let location):
-                state.userCountry = location?.country.lowercased()
-                state.userIP = location?.ip
+                // Try preventing the whole map view because of possibly missing userLocation
+                // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
+                if let userCountry = location?.country.lowercased(),
+                   let userIP = location?.ip ?? state.userIP {
+                    state.userCountry = userCountry
+                    state.userIP = userIP
+                }
                 return .none
 
             case .newConnectionStatus(let connectionStatus):

@@ -125,7 +125,7 @@ private enum AnimationPhase: CaseIterable {
 }
 
 // MARK: - Preview
-
+#if compiler(>=6)
 @available(iOS 17, *)
 #Preview {
     @Previewable @State var mode: MapPin.Mode = .exitConnected
@@ -144,4 +144,4 @@ private enum AnimationPhase: CaseIterable {
     }
 }
 
-// MARK: -
+#endif
