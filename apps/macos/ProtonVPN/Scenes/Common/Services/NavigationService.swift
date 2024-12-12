@@ -78,7 +78,7 @@ class NavigationService {
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     
     var appHasPresented = false
-    var isSystemLoggingOff = false
+    var isSystemTeardown = false
 
     private var notificationTokens: [NotificationToken] = []
     
@@ -87,12 +87,38 @@ class NavigationService {
     }
     
     func launched() {
-        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(powerOff(_:)),
-                                                          name: NSWorkspace.willPowerOffNotification, object: nil)
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(sessionSwitchedOut(_:)), name: NSWorkspace.sessionDidResignActiveNotification, object: nil)
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(sessionBecameActive(_:)), name: NSWorkspace.sessionDidBecomeActiveNotification, object: nil)
-        
+        notificationTokens.append(
+            NotificationCenter.default.addObserver(
+                for: SessionChanged.self,
+                object: appSessionManager,
+                handler: sessionChanged
+            )
+        )
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(tearDown(_:)),
+            name: NSWorkspace.willPowerOffNotification,
+            object: nil
+        )
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(tearDown(_:)),
+            name: HelpMenuViewModel.deletingAppDataNotification,
+            object: nil
+        )
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(sessionSwitchedOut(_:)),
+            name: NSWorkspace.sessionDidResignActiveNotification,
+            object: nil
+        )
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(sessionBecameActive(_:)),
+            name: NSWorkspace.sessionDidBecomeActiveNotification,
+            object: nil
+        )
+
         if propertiesManager.startMinimized {
             attemptSilentLogIn()
         } else {
@@ -242,9 +268,9 @@ extension NavigationService {
         windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService, vpnKeychain: vpnKeychain))
     }
     
-    @objc private func powerOff(_ notification: Notification) {
-        log.debug("System user is being logged off", category: .os)
-        isSystemLoggingOff = true
+    @objc private func tearDown(_ notification: Notification) {
+        log.debug("System user is being logged out, or app data is being cleared", category: .os)
+        isSystemTeardown = true
     }
     
     private func openRequiredWindow() {
@@ -282,7 +308,7 @@ extension NavigationService {
     }
     
     func handleApplicationShouldTerminate() -> NSApplication.TerminateReply {
-        guard isSystemLoggingOff else {
+        guard isSystemTeardown else {
             appSessionManager.replyToApplicationShouldTerminate()
             return .terminateLater
         }
@@ -296,7 +322,7 @@ extension NavigationService {
         
         vpnGateway.disconnect {
             DispatchQueue.main.async {
-                self.isSystemLoggingOff = false
+                self.isSystemTeardown = false
                 NSApp.reply(toApplicationShouldTerminate: true)
             }
         }

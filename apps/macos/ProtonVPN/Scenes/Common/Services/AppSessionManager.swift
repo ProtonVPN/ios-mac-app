@@ -384,9 +384,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             return
         }
 
-        let cancelationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
+        let cancellationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
 
-        let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
+        let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancellationClosure)
         alertService.push(alert: alert)
     }
 

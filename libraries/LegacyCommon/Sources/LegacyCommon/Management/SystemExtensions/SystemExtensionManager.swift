@@ -124,6 +124,7 @@ public class SystemExtensionManager: NSObject {
                     group.leave()
                 default:
                     log.error("Unexpected state transition for uninstall: \(stateChange)")
+                    group.leave()
                 }
             })
         }
