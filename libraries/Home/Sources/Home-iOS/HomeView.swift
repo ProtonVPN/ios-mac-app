@@ -151,7 +151,6 @@ public struct HomeView: View {
                 FreeConnectionInfoModal(store: store)
             }
         }
-        .transaction { $0.animation = nil } // disable implicit animations, especially for ConnectionStatusView
     }
 
     // MARK: - Private view helpers
