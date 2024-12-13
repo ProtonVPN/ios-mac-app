@@ -42,7 +42,7 @@ class MainMeasurements: ProtonVPNUITests {
             .setBundle(Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!)
             .setProduct("VPN")
             .setEnvironment("prod")
-            .setLokiEndpoint(ProcessInfo.processInfo.environment["LOKI_ENDPOINT"] ?? "invalid")
+            .setLokiEndpoint(lokiEndpoint)
             .setLokiCertificate(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK"] ?? "invalid")
             .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK_PRIVATE_KEY"] ?? "invalid")
     }
