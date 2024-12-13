@@ -20,20 +20,20 @@ import ComposableArchitecture
 import Foundation
 import Domain
 
-public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
+public extension SharedKey where Self == AppStorageKey<String?> {
     static var userCountry: Self {
-        appStorage("userCountry")
+        .appStorage("userCountry")
     }
 }
 
-public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
+public extension SharedKey where Self == AppStorageKey<String?> {
     static var userIP: Self {
-        appStorage("userIP")
+        .appStorage("userIP")
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<AppStorageKey<Int>> {
+public extension SharedKey where Self == AppStorageKey<Int>.Default {
     static var userTier: Self {
-        PersistenceKeyDefault(.appStorage("userTier"), 0)
+        Self[.appStorage("userTier"), default: 0]
     }
 }

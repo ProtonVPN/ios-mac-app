@@ -267,7 +267,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                server == nil {
                 return
             } else {
-                connectionState = newConnectionState
+                $connectionState.withLock { $0 = newConnectionState }
             }
         }
     }

@@ -39,7 +39,7 @@ struct SettingsDrillDownFeature {
         Reduce { state, action in
             switch action {
             case .onExitCommand:
-                mainBackground = .clear
+                $mainBackground.withLock { $0 = .clear }
                 return .run { _ in await dismiss() }
             }
         }

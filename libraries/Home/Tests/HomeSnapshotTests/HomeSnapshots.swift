@@ -56,51 +56,53 @@ struct SwiftTestingTests {
             @Shared(.userCountry) var userCountry: String?
             @Shared(.userIP) var userIP: String?
             @Shared(.recents) var recents: OrderedSet<RecentConnection>
-            recents = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
+            $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
             store.send(.map(.observeConnectionState))
 
-            userCountry = "PL"
-            userIP = "1.2.3.4"
+            $userCountry.withLock { $0 = "PL" }
+            $userIP.withLock { $0 = "1.2.3.4" }
 
-            userTier = .freeTier
-            protectionState = .unprotected
-            vpnConnectionStatus = .disconnected
+            $userTier.withLock { $0 = .freeTier }
+            $protectionState.withLock { $0 = .unprotected }
+            $vpnConnectionStatus.withLock { $0 = .disconnected }
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.1 Home Free Unprotected")
+            let actual = VPNConnectionActual.mock(country: "PL",
+                                                  coordinates: .init(latitude: 52.229686, longitude: 21.012247))
 
-            protectionState = .protecting(country: "Poland", ip: "1.2.3.4")
-            vpnConnectionStatus = .connecting(.specificCountryServer, nil)
+            $protectionState.withLock { $0 = .protecting(country: "Poland", ip: "1.2.3.4") }
+            $vpnConnectionStatus.withLock { $0 = .connecting(.specificCountryServer, actual) }
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.2 Home Free Protecting")
 
-            protectionState = .protected(netShield: .zero(enabled: false))
-            vpnConnectionStatus = .connected(.specificCountryServer, nil)
+            $protectionState.withLock { $0 = .protected(netShield: .zero(enabled: false)) }
+            $vpnConnectionStatus.withLock { $0 = .connected(.specificCountryServer, actual) }
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.3 Home Free Protected")
 
-            userTier = .paidTier
-            protectionState = .unprotected
-            vpnConnectionStatus = .disconnected
+            $userTier.withLock { $0 = .paidTier }
+            $protectionState.withLock { $0 = .unprotected }
+            $vpnConnectionStatus.withLock { $0 = .disconnected }
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.1 Home Paid Unprotected")
 
-            protectionState = .protecting(country: "Poland", ip: "1.2.3.4")
-            vpnConnectionStatus = .connecting(.specificCountryServer, nil)
+            $protectionState.withLock { $0 = .protecting(country: "Poland", ip: "1.2.3.4") }
+            $vpnConnectionStatus.withLock { $0 = .connecting(.specificCountryServer, actual) }
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.2 Home Paid Protecting")
 
-            protectionState = .protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true))
-            vpnConnectionStatus = .connected(.specificCountryServer, nil)
+            $protectionState.withLock { $0 = .protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)) }
+            $vpnConnectionStatus.withLock { $0 = .connected(.specificCountryServer, actual) }
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),

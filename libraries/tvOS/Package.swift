@@ -14,8 +14,8 @@ let package = Package(
         .library(name: "tvOSTestSupport", targets: ["tvOSTestSupport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", exact: "1.15.1"),
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.17.6"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.0")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(path: "../../external/protoncore"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),

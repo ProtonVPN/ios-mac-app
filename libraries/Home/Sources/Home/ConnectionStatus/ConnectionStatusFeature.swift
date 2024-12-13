@@ -81,7 +81,7 @@ public struct ConnectionStatusFeature {
                         if masked == state.protectionState { // fully masked already
                             return .cancel(id: IDs.maskLocation)
                         }
-                        state.protectionState = masked
+                        state.$protectionState.withLock { $0 = masked }
                     }
                     return .run { action in
                         try await Task.sleep(nanoseconds: UInt64(Self.timerDurationInMilliseconds) * NSEC_PER_MSEC)
@@ -133,16 +133,16 @@ public struct ConnectionStatusFeature {
                     } else if protectionState == state.startingProtectionState {
                         return .none // however do nothing if we got the same protection state
                     }
-                    state.protectionState = protectionState // store the new state
+                    state.$protectionState.withLock { $0 = protectionState } // store the new state
                     return .send(.maskLocationTick)
                 } else {
-                    state.protectionState = protectionState // store the new state
+                    state.$protectionState.withLock { $0 = protectionState } // store the new state
                     state.startingProtectionState = .unprotected // reset startingProtectionState
                     return .cancel(id: IDs.maskLocation)
                 }
 
             case .newNetShieldStats(let netShieldModel):
-                state.protectionState = state.protectionState.copy(withNetShield: netShieldModel)
+                state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
                 return .none
 
             case .stickToTop(let stickToTop):

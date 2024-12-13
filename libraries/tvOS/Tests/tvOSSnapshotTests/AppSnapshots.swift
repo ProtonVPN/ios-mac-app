@@ -37,7 +37,7 @@ class AppFeatureSnapshotTests: XCTestCase {
 
     func upsell(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(
-            userTier: .init(0),
+            userTier: .init(value: 0),
             welcome: .init(destination: .upsell(.loading)),
             networking: .authenticated(.auth(uid: "")))
         ) { AppFeature() }

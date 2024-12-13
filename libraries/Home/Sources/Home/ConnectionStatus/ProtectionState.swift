@@ -64,8 +64,8 @@ extension VPNConnectionStatus {
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ProtectionState>> {
+public extension SharedKey where Self == InMemoryKey<ProtectionState>.Default {
     static var protectionState: Self {
-        PersistenceKeyDefault(.inMemory("protectionState"), .unprotected)
+        Self[.inMemory("protectionState"), default: .unprotected]
     }
 }

@@ -20,27 +20,27 @@ import ComposableArchitecture
 import Foundation
 import Domain
 
-extension PersistenceReaderKey where Self == AppStorageKey<String?> {
+extension SharedKey where Self == AppStorageKey<String?> {
     static var userDisplayName: Self {
-        appStorage("userDisplayName")
+        .appStorage("userDisplayName")
     }
 }
 
-extension PersistenceReaderKey where Self == AppStorageKey<Int?> {
+extension SharedKey where Self == AppStorageKey<Int?> {
     static var userTier: Self {
-        appStorage("userTier")
+        .appStorage("userTier")
     }
 }
 
-extension PersistenceReaderKey where Self == AppStorageKey<TimeInterval> {
+extension SharedKey where Self == AppStorageKey<TimeInterval> {
     static var lastLogicalsRefresh: Self {
-        appStorage("lastLogicalsRefresh")
+        .appStorage("lastLogicalsRefresh")
     }
 }
 
 
-public extension PersistenceReaderKey where Self == InMemoryKey<UserLocation?> {
+public extension SharedKey where Self == InMemoryKey<UserLocation?> {
     static var userLocation: Self {
-        inMemory("userLocation")
+        .inMemory("userLocation")
     }
 }

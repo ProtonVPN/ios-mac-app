@@ -129,7 +129,7 @@ public struct HomeFeature {
                 ])
 
             case .disconnect:
-                state.connectionStatus.protectionState = .unprotected
+                state.connectionStatus.$protectionState.withLock { $0 = .unprotected }
                 return .run { send in
                     try? await disconnectVPN()
                 }

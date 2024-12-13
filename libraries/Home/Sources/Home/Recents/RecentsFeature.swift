@@ -56,7 +56,7 @@ public struct RecentsFeature {
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
-            recents = recentsStorage.readFromStorage()
+            $recents.withLock { $0 = recentsStorage.readFromStorage() }
         }
     }
 
@@ -140,7 +140,7 @@ public struct RecentsFeature {
                     return .none
                 }
                 withAnimation {
-                    state.recents.updateList(with: spec)
+                    state.$recents.withLock { $0.updateList(with: spec) }
                 }
                 recentsStorage.saveToStorage(state.recents)
 
@@ -148,21 +148,21 @@ public struct RecentsFeature {
 
             case let .pin(recent):
                 withAnimation {
-                    state.recents.pin(recent: recent, pinnedDate: date.now)
+                    state.$recents.withLock { $0.pin(recent: recent, pinnedDate: date.now) }
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case let .unpin(recent):
                 withAnimation {
-                    state.recents.unpin(recent: recent)
+                    state.$recents.withLock { $0.unpin(recent: recent) }
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case let .remove(recent):
                 withAnimation {
-                    state.recents.remove(recent)
+                    state.$recents.withLock { $0.remove(recent) }
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
