@@ -22,12 +22,14 @@ import Localization
 import Home
 import NetShield_iOS
 
+@available(iOS 16.4, *)
 struct ConnectionStatusBanner: View {
 
     private enum AccessibilityIdentifiers {
         static let locationText: String = "location_text"
     }
-    
+    @Shared(.appStorage("isCountryLabelMonospaced")) var isMonospaced: Bool = false
+
     let store: StoreOf<ConnectionStatusBannerFeature>
     
     var body: some View {
@@ -36,7 +38,7 @@ struct ConnectionStatusBanner: View {
             case .protected(let netShield), .protectedSecureCore(let netShield):
                 if store.userTier.isFreeTier {
                     ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
-                } else if netShield.enabled {
+                } else if store.netShieldLevel == .level2 {
                     NetShieldStatsView(viewModel: netShield)
                 }
             case .unprotected, .protecting:
@@ -44,6 +46,7 @@ struct ConnectionStatusBanner: View {
                     .padding(.horizontal, .themeSpacing8)
                     .padding(.vertical, .themeSpacing4)
                     .accessibilityIdentifier(AccessibilityIdentifiers.locationText)
+                    .onTapGesture { $isMonospaced.withLock { $0.toggle() } }
             }
         }
     }
@@ -65,11 +68,13 @@ struct ConnectionStatusBanner: View {
         guard let displayIP, let displayCountry else { return nil }
         return Text(displayCountry)
             .font(.themeFont(.body2()))
+            .monospaced(isMonospaced)
             .foregroundColor(Color(.text))
         + Text(" • ")
             .foregroundColor(Color(.text))
         + Text(displayIP)
             .font(.themeFont(.body2()))
+            .monospaced(isMonospaced)
             .foregroundColor(Color(.text, .weak))
     }
 }

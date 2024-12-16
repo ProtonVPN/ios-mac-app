@@ -27,10 +27,6 @@ class AppConstants {
 
     static var appBundleId: String = (Bundle.main.bundleIdentifier ?? "ch.protonmail.vpn").asMainAppBundleIdentifier
     
-    struct AppGroups {
-        static let main = "group.ch.protonmail.vpn"
-    }
-    
     struct NetworkExtensions {
         static let openVpn = "\(appBundleId).OpenVPN-Extension"
         static let wireguard = "\(appBundleId).WireGuardiOS-Extension"

@@ -32,17 +32,17 @@ public struct ConnectionStatusFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.protectionState) public internal(set) var protectionState: ProtectionState
-        @SharedReader(.userCountry) public var userCountry: String?
-        @SharedReader(.userIP) public var userIP: String?
-        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.protectionState) package private(set) var protectionState: ProtectionState
+        @SharedReader(.userCountry) package var userCountry: String?
+        @SharedReader(.userIP) package var userIP: String?
+        @SharedReader(.vpnConnectionStatus) package var vpnConnectionStatus: VPNConnectionStatus
 
-        public var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
+        package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
         var startingProtectionState: ProtectionState = .unprotected
 
-        public internal(set) var stickToTop: Bool = false
+        package internal(set) var stickToTop: Bool = false
 
-        public init() {}
+        package init() {}
     }
 
     @CasePathable
@@ -76,21 +76,20 @@ public struct ConnectionStatusFeature {
         Reduce { state, action in
             switch action {
             case .maskLocationTick:
-                if case let .protecting(country, ip) = state.protectionState {
-                    if let masked = partiallyMaskedLocation(country: country, ip: ip) {
-                        if masked == state.protectionState { // fully masked already
-                            return .cancel(id: IDs.maskLocation)
-                        }
-                        state.$protectionState.withLock { $0 = masked }
-                    }
-                    return .run { action in
-                        try await Task.sleep(nanoseconds: UInt64(Self.timerDurationInMilliseconds) * NSEC_PER_MSEC)
-                        await action(.maskLocationTick)
-                    }
-                    .cancellable(id: IDs.maskLocation, cancelInFlight: true)
-                } else {
+                guard case let .protecting(country, ip) = state.protectionState else {
                     return .cancel(id: IDs.maskLocation)
                 }
+                if let masked = partiallyMaskedLocation(country: country, ip: ip) {
+                    if masked == state.protectionState { // fully masked already
+                        return .cancel(id: IDs.maskLocation)
+                    }
+                    state.$protectionState.withLock { $0 = masked }
+                }
+                return .run { action in
+                    try await Task.sleep(nanoseconds: UInt64(Self.timerDurationInMilliseconds) * NSEC_PER_MSEC)
+                    await action(.maskLocationTick)
+                }
+                .cancellable(id: IDs.maskLocation, cancelInFlight: true)
 
             case .watchConnectionStatus:
                 return .merge([
@@ -136,13 +135,20 @@ public struct ConnectionStatusFeature {
                     state.$protectionState.withLock { $0 = protectionState } // store the new state
                     return .send(.maskLocationTick)
                 } else {
-                    state.$protectionState.withLock { $0 = protectionState } // store the new state
+                    let updateProtectionState = { state.$protectionState.withLock { $0 = protectionState } } // store the new state
+                    if protectionState.shouldAnimateChange {
+                        withAnimation(updateProtectionState)
+                    } else {
+                        updateProtectionState()
+                    }
                     state.startingProtectionState = .unprotected // reset startingProtectionState
                     return .cancel(id: IDs.maskLocation)
                 }
 
             case .newNetShieldStats(let netShieldModel):
-                state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
+                withAnimation {
+                    state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
+                }
                 return .none
 
             case .stickToTop(let stickToTop):
@@ -171,5 +177,16 @@ public struct ConnectionStatusFeature {
             return .protecting(country: replacedCountry, ip: ip)
         }
         return nil
+    }
+}
+
+fileprivate extension ProtectionState {
+    var shouldAnimateChange: Bool {
+        if case .protected = self {
+            return true
+        } else if case .protectedSecureCore = self {
+            return true
+        }
+        return false
     }
 }

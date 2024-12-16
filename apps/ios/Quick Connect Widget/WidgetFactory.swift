@@ -25,11 +25,12 @@ import LegacyCommon
 import NetworkExtension
 import VPNShared
 import ProtonCoreCryptoVPNPatchedGoImplementation
+import Domain
 
 final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
     private let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
-    private let appGroup = AppConstants.AppGroups.main
+    private let appGroup = DomainConstants.AppGroups.main
 
     private let alertService = ExtensionAlertService()
     private let propertiesManager = PropertiesManager()

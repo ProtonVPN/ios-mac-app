@@ -29,6 +29,7 @@ import Search
 import Review
 import Timer
 import Ergonomics
+import Domain
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -83,7 +84,7 @@ final class DependencyContainer: Container {
             Config(
                 os: "iOS",
                 appIdentifierPrefix: prefix,
-                appGroup: AppConstants.AppGroups.main,
+                appGroup: DomainConstants.AppGroups.main,
                 accessGroup: "\(prefix)prt.ProtonVPN",
                 openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
                 wireguardVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.wireguard,
@@ -130,7 +131,7 @@ final class DependencyContainer: Container {
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
             .deletingLastPathComponent()
         return IOSLogContentProvider(appLogsFolder: appLogsFolder,
-                                     appGroup: AppConstants.AppGroups.main,
+                                     appGroup: DomainConstants.AppGroups.main,
                                      wireguardProtocolFactory: wireguardFactory)
     }
 
