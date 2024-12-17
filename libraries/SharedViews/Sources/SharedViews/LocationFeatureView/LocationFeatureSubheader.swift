@@ -65,13 +65,13 @@ public struct LocationFeatureSubheader: View {
     }
 
     private var torText: Text {
-        return Text(Asset.icsBrandTor.swiftUIImage)
+        Text(Asset.icsBrandTor.swiftUIImage)
             + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
     }
 
     private var p2pText: Text {
-        return Text(Image(systemName: "arrow.left.arrow.right"))
-        + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
+        Text(Image(systemName: "arrow.left.arrow.right"))
+            + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
     }
 }
 

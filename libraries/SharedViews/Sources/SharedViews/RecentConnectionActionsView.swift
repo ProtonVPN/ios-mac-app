@@ -51,16 +51,17 @@ struct RecentConnectionActionsView: View {
               text: Localizable.actionRemove)
     }
 
-    @ViewBuilder private var flagInfoView: some View {
+    @ViewBuilder private var recentListItem: some View {
         let infoBuilder = ConnectionInfoBuilder(intent: intent, vpnConnectionActual: nil, withServerNumber: true)
         LocationFeatureView(model: .init(
             flag: intent.location.flagComposition,
             header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
             subheader: infoBuilder.subheader
         ))
+        .listRowBackground(Color(.background))
     }
 
-    private func button(model: ButtonModel) -> some View {
+    private func buttonListItem(model: ButtonModel) -> some View {
         Button {
             detailAction(model.action)
         } label: {
@@ -83,9 +84,9 @@ struct RecentConnectionActionsView: View {
             }
 #endif
             List {
-                flagInfoView
-                button(model: isPinned ? unpinModel : pinModel)
-                button(model: removeModel)
+                recentListItem
+                buttonListItem(model: isPinned ? unpinModel : pinModel)
+                buttonListItem(model: removeModel)
             }
             .environment(\.defaultMinListRowHeight, 64)
             .listStyle(PlainListStyle())

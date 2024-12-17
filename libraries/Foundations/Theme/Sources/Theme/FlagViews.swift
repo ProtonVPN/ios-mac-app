@@ -32,6 +32,7 @@ public enum Flag: Equatable {
     case country(code: String)
 
     public var imageName: String {
+        // VPNAPPL-2543: Refer to static assets via swiftgen asset, instead of hardcoded name
         switch self {
         case .fastest:
             return "Fastest"

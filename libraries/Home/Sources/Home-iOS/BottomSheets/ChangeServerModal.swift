@@ -111,26 +111,30 @@ fileprivate struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {
 
 @available(iOS 17, *)
 #Preview("In Progress Short", traits: .sizeThatFitsLayout) {
-    let availability: ServerChangeAuthorizer.ServerChangeAvailability
-    availability = .unavailable(until: .now + 15,
-                                duration: 15,
-                                exhaustedSkips: false)
-    return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
-        ChangeServerFeature()
-    })
-    .frame(width: 375)
+    ZStack {
+        let availability: ServerChangeAuthorizer.ServerChangeAvailability
+        availability = .unavailable(until: .now + 15,
+                                    duration: 15,
+                                    exhaustedSkips: false)
+        return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
+            ChangeServerFeature()
+        })
+        .frame(width: 375)
+    }
 }
 
 @available(iOS 17, *)
 #Preview("In Progress Long", traits: .sizeThatFitsLayout) {
-    let availability: ServerChangeAuthorizer.ServerChangeAvailability
-    availability = .unavailable(until: .now + 95,
-                                duration: 95,
-                                exhaustedSkips: false)
-    return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
-        ChangeServerFeature()
-    })
-    .frame(width: 375)
+    ZStack {
+        let availability: ServerChangeAuthorizer.ServerChangeAvailability
+        availability = .unavailable(until: .now + 95,
+                                    duration: 95,
+                                    exhaustedSkips: false)
+        return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
+            ChangeServerFeature()
+        })
+        .frame(width: 375)
+    }
 }
 
 @available(iOS 17, *)

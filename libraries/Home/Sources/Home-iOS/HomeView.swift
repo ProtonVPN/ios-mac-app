@@ -158,9 +158,6 @@ public struct HomeView: View {
             }
             .background(Color(.background))
         }
-        .task {
-            store.send(.sharedProperties(.listen))
-        }
     }
 
     // MARK: - Private view helpers
@@ -226,7 +223,7 @@ private struct ViewHeightPreferenceKey: PreferenceKey {
 #if DEBUG && compiler(>=6)
 @available(iOS 18, *)
 #Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    HomeView(store: .init(initialState: .init(defaultConnectionPreference: .fastest), reducer: {
+    HomeView(store: .init(initialState: .init(), reducer: {
         HomeFeature()
     }))
 }

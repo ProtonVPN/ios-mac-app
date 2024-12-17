@@ -111,7 +111,7 @@ public struct ConnectionFlagInfoView: View {
                     }
                     .presentationDetents([.fraction(1 / 3)])
                     .presentationDragIndicator(.visible)
-                }.background(Color(.background))
+                }.background(Color(.background)) // Sets background of the three dots button
             }
 
         }

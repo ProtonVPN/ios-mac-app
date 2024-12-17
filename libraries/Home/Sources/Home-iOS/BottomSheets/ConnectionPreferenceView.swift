@@ -66,9 +66,8 @@ struct ConnectionPreferenceView: View {
 
 #if DEBUG
 #Preview {
-    let staticModels = ConnectionPreferenceModel.staticPreferenceModels
     VStack(alignment: .leading, spacing: 0) {
-        DividedForEach(staticModels) { model in
+        DividedForEach(ConnectionPreferenceModel.staticPreferenceModels) { model in
             ConnectionPreferenceView(model: model, isSelected: false, sendAction: { _ in })
         }
     }

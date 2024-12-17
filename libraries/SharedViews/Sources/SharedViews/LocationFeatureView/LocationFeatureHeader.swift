@@ -29,12 +29,7 @@ public struct LocationFeatureHeaderModel: Equatable {
 }
 
 struct LocationFeatureHeader: View {
-    
     let model: LocationFeatureHeaderModel
-
-    init(model: LocationFeatureHeaderModel) {
-        self.model = model
-    }
 
     var body: some View {
         HStack {

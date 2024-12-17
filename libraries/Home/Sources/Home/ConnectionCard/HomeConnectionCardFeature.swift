@@ -41,7 +41,7 @@ public struct HomeConnectionCardFeature {
             return false
         }
 
-        public var headerModel: ConnectionCardHeaderModel {
+        package var headerModel: ConnectionCardHeaderModel {
             ConnectionCardHeaderModel(connectionStatus: vpnConnectionStatus, userTier: userTier)
         }
 
@@ -131,7 +131,7 @@ public struct HomeConnectionCardFeature {
     }
 }
 
-public enum ConnectionCardHeaderModel: Equatable {
+package enum ConnectionCardHeaderModel: Equatable {
     case disconnected(isPaid: Bool)
     case connected
     case connecting

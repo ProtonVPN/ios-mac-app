@@ -54,19 +54,15 @@ public struct HomeFeature {
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
-        @Shared(.defaultConnectionPreference)
-        var defaultConnectionPreference: DefaultConnectionPreference
-
         @Presents
         public var destination: Destination.State?
 
-        public init(defaultConnectionPreference: DefaultConnectionPreference) {
+        public init() {
             self.connectionStatus = .init()
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
             self.map = .init()
-            self.defaultConnectionPreference = defaultConnectionPreference
         }
     }
 

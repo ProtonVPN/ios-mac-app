@@ -37,8 +37,8 @@ struct DefaultConnectionSheet: View {
                 content
             }
             .safeAreaPadding(.vertical)
-            .background(Color(.background))
         }
+        .background(Color(.background))
     }
 
     @ViewBuilder private var content: some View {
@@ -96,21 +96,24 @@ struct DefaultConnectionSheet: View {
 }
 
 #if DEBUG
-@available(iOS 18, *)
-#Preview {
-    @Shared(.recents) var recents: OrderedSet<RecentConnection> = [
-        .pinnedFastest,
-        .connectionRegion,
-        .connectionSecureCoreFastest
-    ]
-    let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
-    VStack { } // Any old view that we can hook the sheet onto
-        .sheet(isPresented: .constant(true)) {
-            DefaultConnectionSheet(store: previewStore)
-                .presentationDragIndicator(.visible)
-                .presentationDetents([.medium, .large])
 
-        }
-        .preferredColorScheme(.dark)
+@available(iOS 17, *)
+#Preview {
+    ZStack { // Xcode 15: #Preview macro only supports a single View in its body
+        @Shared(.recents) var recents: OrderedSet<RecentConnection> = [
+            .pinnedFastest,
+            .connectionRegion,
+            .connectionSecureCoreFastest
+        ]
+        let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
+        VStack { } // Any old view that we can hook the sheet onto
+            .sheet(isPresented: .constant(true)) {
+                DefaultConnectionSheet(store: previewStore)
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.medium, .large])
+
+            }
+            .preferredColorScheme(.dark)
+    }
 }
 #endif
