@@ -19,56 +19,21 @@
 import Domain
 import Dependencies
 import DependenciesMacros
+import Ergonomics
 import Persistence
 
 import Connection
 
-@DependencyClient
-struct ServerSelector: Sendable {
-    enum SelectionError: Error {
-        case noLogical
-        case noEndpoints
-    }
-
-    var select: @Sendable (_ spec: ConnectionSpec) throws -> Server
-}
-
-extension ServerSelector: DependencyKey {
-    static let liveValue = ServerSelector { spec in
-        @Dependency(\.serverRepository) var repository
-
-        // TODO: VPNAPPL-2502, Server selection based on `ConnectionSpec`
-        let server = repository.getFirstServer(filteredBy: [], orderedBy: .random)
-
-        guard let server else {
-            throw SelectionError.noLogical
-        }
-
-        guard let endpoint = server.endpoints.randomElement() else {
-            throw SelectionError.noEndpoints
-        }
-
-        return Server(logical: server.logical, endpoint: endpoint)
-    }
-}
-
-extension DependencyValues {
-    var serverSelector: ServerSelector {
-        get { self[ServerSelector.self] }
-        set { self[ServerSelector.self] = newValue }
-    }
-}
-
 extension ServerIdentifier: DependencyKey {
-    public static let liveValue: ServerIdentifier = .init(
+    public static let liveValue: ServerIdentifier = ServerIdentifier(
         fullServerInfo: { logicalServerInfo in
             @Dependency(\.serverRepository) var repository
             let idFilter = VPNServerFilter.logicalID(logicalServerInfo.logicalID)
             guard let server = repository.getFirstServer(filteredBy: [idFilter], orderedBy: .none) else {
-                fatalError()
+                return nil
             }
             guard let endpoint = server.endpoints[id: logicalServerInfo.serverID] else {
-                log.debug(
+                log.error(
                     "Unable to identify server - missing endpoint",
                     category: .persistence,
                     metadata: [
@@ -81,10 +46,4 @@ extension ServerIdentifier: DependencyKey {
             return Server(logical: server.logical, endpoint: endpoint)
         }
     )
-}
-
-extension Collection where Element: Identifiable {
-    subscript(id elementID: Element.ID) -> Element? {
-        return first { $0.id == elementID }
-    }
 }

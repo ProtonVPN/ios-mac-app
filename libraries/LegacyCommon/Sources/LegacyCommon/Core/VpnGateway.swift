@@ -55,18 +55,6 @@ public enum ResolutionUnavailableReason: Equatable {
     case locationNotFound(String?)
 }
 
-public enum RestrictedServerGroup {
-    
-    case all
-    case country(code: String)
-}
-
-public enum ServerSelection {
-    
-    case fastest
-    case random
-}
-
 public protocol VpnGatewayProtocol: AnyObject {
     
     var connection: ConnectionStatus { get }

@@ -37,8 +37,9 @@ extension ConnectToVPNKey: DependencyKey {
         @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
 
         let server = try selector.select(intent)
-        let features = vpnFeaturesProvider.connectionFeatures()
+        log.info("Server selected: \(server)")
 
+        let features = vpnFeaturesProvider.connectionFeatures()
         let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
