@@ -23,6 +23,7 @@ import struct Domain.TunnelFeatures
 extension TunnelSettings {
     public static let mock = TunnelSettings(
         transport: .udp,
+        ports: [],
         tunnelFeatures: TunnelFeatures.mock
     )
 }

@@ -78,10 +78,7 @@ final class PacketTunnelManagerTests: XCTestCase {
     ///
     /// Configuration specifics are up to the `tunnelProviderConfigurator`.
     func testStartingTunnelToServerConfiguresExistingManager() async throws {
-        let tunnelSettings = TunnelSettings(
-            transport: .udp,
-            tunnelFeatures: TunnelFeatures.mock
-        )
+        let tunnelSettings = TunnelSettings.mock
         let intent = ServerConnectionIntent(server: .mock, tunnelSettings: tunnelSettings, features: .mock)
         let clock = TestClock()
 
