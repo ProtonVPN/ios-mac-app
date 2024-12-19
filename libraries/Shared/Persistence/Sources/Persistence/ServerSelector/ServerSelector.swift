@@ -21,31 +21,93 @@ import Ergonomics
 import Dependencies
 
 public struct ServerSelector: Sendable {
-    public var select: @Sendable (_ spec: ConnectionSpec) throws -> Server
+    public var select: @Sendable (_ spec: ConnectionSpec, _ acceptableProtocols: ProtocolSupport) throws -> Server
 
-    public enum SelectionError: Error {
-        case noLogical
-        case noEndpoints
+    public enum ServerSelectionError: Error, Equatable {
+        case noLogical(LogicalResolutionFailureReason)
+        case noEndpoints(EndpointResolutionFailureReason)
+
+        public enum LogicalResolutionFailureReason: Equatable {
+            case locationNotFound(ConnectionSpec.Location)
+            case featuresNotSupported(VPNServerFilter.ServerFeatureFilter)
+            case protocolNotSupported(ProtocolSupport)
+            case maintenance
+        }
+
+        public enum EndpointResolutionFailureReason: Equatable {
+            case protocolNotSupported(ProtocolSupport)
+            case maintenance
+        }
     }
 }
 
 extension ServerSelector: DependencyKey {
-    public static let liveValue = ServerSelector(select: { spec in
+    public static let liveValue = ServerSelector(select: { spec, acceptableProtocols in
         @Dependency(\.serverRepository) var repository
 
-        let server = repository.getFirstServer(filteredBy: spec.serverFilters, orderedBy: spec.order)
+        let baseFilters = spec.locationFilters + [spec.serverTierFilter].compactMap { $0 }
+        let order = spec.order
+
+        let additionalFilters: [VPNServerFilter] = [
+            .features(spec.serverFeatureFilter),
+            .supports(protocol: acceptableProtocols),
+            .isNotUnderMaintenance
+        ]
+
+        let allFilters = baseFilters + additionalFilters
+        let server = repository.getFirstServer(filteredBy: allFilters, orderedBy: spec.order)
 
         guard let server else {
-            throw SelectionError.noLogical
+            let resolutionFailureReason = Self.logicalResolutionFailureReason(
+                spec: spec,
+                acceptableProtocols: acceptableProtocols,
+                baseFilters: baseFilters
+            )
+            throw ServerSelectionError.noLogical(resolutionFailureReason)
         }
 
-        // VPNAPPL-2506: choose endpoint according to protocol we are connecting with
-        guard let endpoint = server.endpoints.randomElement() else {
-            throw SelectionError.noEndpoints
+        let endpointsSupportingProtocol = server.endpoints.filter { $0.supports(protocolSet: acceptableProtocols) }
+        if endpointsSupportingProtocol.isEmpty {
+            throw ServerSelectionError.noEndpoints(.protocolNotSupported(acceptableProtocols))
+        }
+
+        let availableEndpoints = endpointsSupportingProtocol.filter { !$0.isUnderMaintenance }
+        guard let endpoint = availableEndpoints.randomElement() else {
+            throw ServerSelectionError.noEndpoints(.maintenance)
         }
 
         return Server(logical: server.logical, endpoint: endpoint)
     })
+
+    private static func logicalResolutionFailureReason(
+        spec: ConnectionSpec,
+        acceptableProtocols: ProtocolSupport,
+        baseFilters: [VPNServerFilter]
+    ) -> ServerSelectionError.LogicalResolutionFailureReason {
+        @Dependency(\.serverRepository) var repository
+        let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
+        if servers.isEmpty {
+            return .locationNotFound(spec.location)
+        }
+
+        let serversSupportingFeatures = servers.filter { $0.logical.satisfies(spec.serverFeatureFilter) }
+        if serversSupportingFeatures.isEmpty {
+            return .featuresNotSupported(spec.serverFeatureFilter)
+        }
+
+        let serversSupportingProtocol = serversSupportingFeatures
+            .filter { !$0.protocolSupport.isDisjoint(with: acceptableProtocols) }
+        if serversSupportingProtocol.isEmpty {
+            return .protocolNotSupported(acceptableProtocols)
+        }
+
+        let serversWithoutMaintenance = serversSupportingProtocol.filter { !$0.logical.isUnderMaintenance }
+        if serversWithoutMaintenance.isEmpty {
+            return .maintenance
+        }
+        log.assertionFailure("Unexpected logical resolution failure reason")
+        return .maintenance
+    }
 }
 
 extension DependencyValues {
@@ -76,27 +138,23 @@ extension ConnectionSpec {
         }
     }
 
-    var serverFilters: [VPNServerFilter] {
-        let allFilters: [[VPNServerFilter?]] = [[featureFilter], [serverTierFilter], locationFilters]
-
-        return allFilters
-            .flatMap(\.self)
-            .compactMap(\.self)
+    var serverFeatureFilter: VPNServerFilter.ServerFeatureFilter {
+        .init(required: requiredFeatureSet, excluded: excludedFeatureSet)
     }
 
-    private var featureFilter: VPNServerFilter {
-        let additionalFeatures: [ServerFeature] = features
+    private var excludedFeatureSet: ServerFeature {
+        location.isSecureCore ? .zero : .secureCore
+    }
+
+    private var requiredFeatureSet: ServerFeature {
+        let requiredFeatures: [ServerFeature] = features
             .compactMap { ServerFeature.init(connectionSpecFeature: $0) }
+            .appending(.secureCore, if: location.isSecureCore)
 
-        if location.isSecureCore {
-            assert(additionalFeatures.isEmpty, "Secure Core should be disjoint with other features")
-            return .features(.secureCore)
-        } else {
-            return .features(.standard(with: ServerFeature(additionalFeatures)))
-        }
+        return ServerFeature(requiredFeatures)
     }
 
-    private var serverTierFilter: VPNServerFilter? {
+    var serverTierFilter: VPNServerFilter? {
         switch location {
         case .exact(.free, _, _, _):
             return .tier(.max(tier: 0))
@@ -106,7 +164,7 @@ extension ConnectionSpec {
         }
     }
 
-    private var locationFilters: [VPNServerFilter] {
+    var locationFilters: [VPNServerFilter] {
         switch location {
         case .fastest, .random, .secureCore(.random), .secureCore(.fastest):
             return []
@@ -118,7 +176,7 @@ extension ConnectionSpec {
             return [
                 Self.regionFilter(region: region, number: number),
                 subRegion.map(VPNServerFilter.city)
-            ].compactMap(\.self)
+            ].compactMap { $0 }
 
         case .secureCore(.fastestHop(let to)):
             return [.exitCountryCode(to)]
@@ -133,5 +191,11 @@ extension ConnectionSpec {
             return .exitCountryCode(region)
         }
         return .matches("\(region)#\(number)")
+    }
+}
+
+extension Domain.Logical {
+    func satisfies(_ filter: VPNServerFilter.ServerFeatureFilter) -> Bool {
+        feature.isDisjoint(with: filter.excluded) && feature.isSuperset(of: filter.required)
     }
 }

@@ -54,7 +54,7 @@ public enum VPNServerFilter {
     /// Text search filter - filters by country code, or substring of gateway name, city or localized country name
     case matches(String)
 
-    public struct ServerFeatureFilter {
+    public struct ServerFeatureFilter: Equatable {
         /// Limits results to servers that provide at least these features
         let required: ServerFeature
 

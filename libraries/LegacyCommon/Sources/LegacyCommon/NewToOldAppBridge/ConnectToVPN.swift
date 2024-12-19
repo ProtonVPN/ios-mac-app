@@ -33,14 +33,26 @@ extension ConnectToVPNKey: DependencyKey {
     @available(iOS 16, *)
     public static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.connectionBridge) var bridge
+        @Dependency(\.propertiesManager) var propertiesManager
         @Dependency(\.serverSelector) var selector
         @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
 
-        let server = try selector.select(intent)
+        // Let's grab protocol information from PropertiesManager until redesigned settings are in place
+        let acceptableProtocols: ProtocolSupport
+        switch propertiesManager.connectionProtocol {
+        case .vpnProtocol(let vpnProtocol):
+            acceptableProtocols = vpnProtocol.protocolSupport
+        case .smartProtocol:
+            acceptableProtocols = propertiesManager.smartProtocolConfig.supportedProtocols
+                .reduce(.zero, { $0.union($1.protocolSupport) })
+        }
+
+        let server = try selector.select(intent, acceptableProtocols)
         log.info("Server selected: \(server)")
 
         let features = vpnFeaturesProvider.connectionFeatures()
         let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        // VPNAPPL-2506: choose protocol and port for smart protocol
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }

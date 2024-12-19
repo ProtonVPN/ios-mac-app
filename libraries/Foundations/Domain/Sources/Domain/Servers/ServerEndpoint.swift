@@ -47,6 +47,8 @@ public struct ServerEndpoint: Codable, Equatable, Identifiable, Sendable {
         self.x25519PublicKey = x25519PublicKey
         self.protocolEntries = protocolEntries
     }
+
+    public var isUnderMaintenance: Bool { status == 0 }
 }
 
 typealias ProtocolOverrides = [VpnProtocol: ServerProtocolEntry]
