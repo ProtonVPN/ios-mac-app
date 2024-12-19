@@ -34,16 +34,14 @@ extension ConnectToVPNKey: DependencyKey {
     public static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.connectionBridge) var bridge
         @Dependency(\.serverSelector) var selector
+        @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
 
         let server = try selector.select(intent)
+        let features = vpnFeaturesProvider.connectionFeatures()
 
-        let connectAction = ConnectionFeature.Action.connect(.init(
-            server: server,
-            transport: .udp,
-            features: .defaultTVFeatures // TODO: Give appropriate features
-        ))
+        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
 
-        bridge.push(intent: connectAction)
+        bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }
 
     /// Bridges new connection dependency with the legacy connection layer

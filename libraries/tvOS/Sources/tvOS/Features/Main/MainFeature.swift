@@ -27,8 +27,9 @@ import Domain
 
 @Reducer
 struct MainFeature {
-    @Dependency(\.serverRepository) var repository
-    @Dependency(\.alertService) var alertService
+    @Dependency(\.serverRepository) private var repository
+    @Dependency(\.alertService) private var alertService
+    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
 
     enum Tab {
         case home
@@ -207,7 +208,8 @@ struct MainFeature {
         }
 
         let server = Server(logical: fastestStreamingServer.logical, endpoint: endpoint)
-        return .init(server: server, transport: .udp, features: .defaultTVFeatures)
+        let features = vpnFeaturesProvider.connectionFeatures()
+        return .init(server: server, transport: .udp, features: features)
     }
 }
 

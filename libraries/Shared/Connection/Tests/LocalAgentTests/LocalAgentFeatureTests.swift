@@ -16,11 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if targetEnvironment(simulator)
 import Foundation
 import XCTest
 import struct Network.IPv4Address
 
 import ComposableArchitecture
+
+import Connection
 
 import Domain
 import DomainTestSupport
@@ -45,8 +48,12 @@ final class LocalAgentFeatureTests: XCTestCase {
             $0.date = .constant(.now)
         }
 
+        @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
+
+        let defaultFeatures = vpnFeaturesProvider.connectionFeatures()
+
         await store.send(.startObservingEvents)
-        await store.send(.connect(server, .empty))
+        await store.send(.connect(server, .empty, defaultFeatures))
         await store.receive(\.startNetShieldStatsObservation)
         await store.receive(\.event.state.connecting) {
             $0 = .connecting
@@ -106,3 +113,4 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.send(.stopAllObservations)
     }
 }
+#endif

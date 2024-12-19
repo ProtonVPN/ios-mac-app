@@ -20,7 +20,7 @@ import Foundation
 
 import ComposableArchitecture
 
-import struct Domain.ServerEndpoint
+import Domain
 import CoreConnection
 
 @available(iOS 16, *)
@@ -48,7 +48,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case startNetShieldStatsObservation
         case stopAllObservations
         case event(LocalAgentEvent)
-        case connect(ServerEndpoint, VPNAuthenticationData)
+        case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures)
         case disconnect(LocalAgentConnectionError?)
         case delegate(DelegateAction)
 
@@ -83,15 +83,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
 
-            case .connect(let server, let authenticationData):
-                let connectionConfiguration = ConnectionConfiguration(
-                    hostname: server.domain,
-                    netshield: .level2, // TODO: Check again this value
-                    vpnAccelerator: true,
-                    bouncing: server.label,
-                    natType: .moderateNAT,
-                    safeMode: false
-                )
+            case .connect(let server, let authenticationData, let features):
+                let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
                 let shouldStartNetShieldStatsObservation: Bool
                 do {
                     // Not a blocking call. Starts the LA connection process which, if unsuccessful, will continue to
@@ -266,7 +259,7 @@ public extension Effect {
     static func timer(
         interval: Duration,
         tolerance: Duration? = nil,
-        operation: @escaping @Sendable (_ send: Send<Action>) async throws -> Void,
+        operation: @escaping @Sendable @MainActor (_ send: Send<Action>) async throws -> Void,
         catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
     ) -> Self {
         self.run(

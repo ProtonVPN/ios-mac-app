@@ -27,8 +27,6 @@ final class LocalAgentImplementation: LocalAgent {
 
     private let client: LocalAgentClient
     private var connection: LocalAgentConnection?
-    private var previousState: LocalAgentState?
-
     private var streamContinuation: AsyncStream<LocalAgentEvent>.Continuation?
 
     init() {

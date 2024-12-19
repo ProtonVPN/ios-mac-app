@@ -37,15 +37,16 @@ public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
     @Dependency(\.connectionBridge) private var connectionBridge
+    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
     public init() { }
 
     public struct State: Equatable, Sendable {
-        public var tunnel: ExtensionFeature.State
-        public var localAgent: LocalAgentFeature.State
-        public var certAuth: CertificateAuthenticationFeature.State
+        public internal(set) var tunnel: ExtensionFeature.State
+        public internal(set) var localAgent: LocalAgentFeature.State
+        public internal(set) var certAuth: CertificateAuthenticationFeature.State
         var serverReconnectionIntent: ServerConnectionIntent?
 
         public init(
@@ -66,6 +67,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         case tunnel(ExtensionFeature.Action)
         case certAuth(CertificateAuthenticationFeature.Action)
         case localAgent(LocalAgentFeature.Action)
+        case setFeatures(VPNConnectionFeatures)
         case clearErrors
         case startObserving
         case stopObserving
@@ -155,7 +157,8 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .send(.disconnect(.connectionFailure(.serverMissing)))
                 }
                 let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
-                return .send(.localAgent(.connect(server.endpoint, data)))
+                let features = vpnFeaturesProvider.connectionFeatures()
+                return .send(.localAgent(.connect(server.endpoint, data, features)))
 
             case .certAuth(.loadingFinished(.failure(let error))):
                 log.error("Failed to load authentication data: \(error)")
@@ -218,6 +221,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                         .send(.certAuth(.loadAuthenticationData))
                     )
                 }
+
+            case .setFeatures(let features):
+                vpnFeaturesProvider.setConnectionFeatures(features)
+                return .none
 
             case .tunnel:
                 return .none

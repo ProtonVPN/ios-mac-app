@@ -103,6 +103,7 @@ let package = Package(
             name: "LocalAgentTests",
             dependencies: [
                 "LocalAgent",
+                "Connection",
                 .product(name: "DomainTestSupport", package: "Domain"),
             ]
         ),
