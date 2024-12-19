@@ -17,6 +17,7 @@
 import ComposableArchitecture
 import ProtonCoreFeatureFlags
 import Connection
+import Persistence
 import Domain
 import VPNAppCore
 
@@ -34,7 +35,8 @@ extension ConnectToVPNKey: DependencyKey {
     public static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.connectionBridge) var bridge
         @Dependency(\.propertiesManager) var propertiesManager
-        @Dependency(\.serverSelector) var selector
+        @Dependency(\.serverSelector) var serverSelector
+        @Dependency(\.smartPortSelector) var portSelector
         @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
 
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
@@ -47,12 +49,13 @@ extension ConnectToVPNKey: DependencyKey {
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
 
-        let server = try selector.select(intent, acceptableProtocols)
+        let server = try serverSelector.select(intent, acceptableProtocols)
         log.info("Server selected: \(server)")
 
         let features = vpnFeaturesProvider.connectionFeatures()
         let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
-        // VPNAPPL-2506: choose protocol and port for smart protocol
+
+        let port = try await portSelector.select(server.endpoint, propertiesManager.connectionProtocol)
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }

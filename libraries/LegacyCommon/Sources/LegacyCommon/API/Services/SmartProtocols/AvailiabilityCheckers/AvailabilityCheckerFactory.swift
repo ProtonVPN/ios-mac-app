@@ -29,7 +29,7 @@ public protocol AvailabilityCheckerResolver {
     func availabilityChecker(for: VpnProtocol) -> SmartProtocolAvailabilityChecker
 }
 
-public class AvailabilityCheckerResolverImplementation: AvailabilityCheckerResolver {
+public final class AvailabilityCheckerResolverImplementation: AvailabilityCheckerResolver, Sendable {
     let wireguardConfig: WireguardConfig
 
     public init(wireguardConfig: WireguardConfig) {
