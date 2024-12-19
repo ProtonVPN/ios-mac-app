@@ -28,6 +28,8 @@ import Combine
 import LocalAgent
 import NetShield
 
+import ProtonCoreFeatureFlags
+
 @available(iOS 17, *)
 @Reducer
 public struct HomeFeature {
@@ -109,9 +111,15 @@ public struct HomeFeature {
         case destination(PresentationAction<Destination.Action>)
     }
 
+    private var shouldUseConnectionFeature: Bool {
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+    }
+
     public var body: some Reducer<State, Action> {
-        Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()._printChanges()
+        if shouldUseConnectionFeature {
+            Scope(state: \.connection, action: \.connection) {
+                ConnectionFeature()._printChanges()
+            }
         }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
             SharedPropertiesFeature()

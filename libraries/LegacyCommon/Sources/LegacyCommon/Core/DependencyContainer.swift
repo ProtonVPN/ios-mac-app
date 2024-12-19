@@ -27,6 +27,7 @@ import VPNAppCore
 import VPNShared
 import Dependencies
 
+import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
 
 typealias PropertiesToOverride = NetworkingDelegateFactory &
@@ -295,7 +296,11 @@ extension Container: VpnStateConfigurationFactory {
 
 extension Container: VpnManagerFactory {
     public func makeVpnManager() -> VpnManagerProtocol {
-        vpnManager
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            return NoOpVpnManager()
+        } else {
+            return vpnManager
+        }
     }
 }
 
