@@ -228,7 +228,7 @@ public struct HomeFeature {
                     @Dependency(\.pushAlert) var pushAlert
                     pushAlert(AllCountriesUpsellAlert())
                 }
-            case destination(.presented(.defaultConnection(.preferenceSelected))):
+            case .destination(.presented(.defaultConnection(.preferenceSelected))):
                 state.destination = nil
                 return .none
             case .destination(_):
