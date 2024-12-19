@@ -35,12 +35,6 @@ public struct ConnectionConfiguration {
 }
 
 public enum ConnectionConfigurationKey: DependencyKey {
-    public static var liveValue: ConnectionConfiguration {
-        return .init(
-            username: "mockman",
-            wireguardConfig: .init()
-        )
-    }
     public static let testValue = ConnectionConfiguration(username: "mock_username", wireguardConfig: .init())
     public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
 }
@@ -89,7 +83,7 @@ extension ManagerConfigurator {
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             serverPublicKey: server.endpoint.x25519PublicKey,
             entryServerAddress: entryIP,
-            ports: connectionIntent.ports,
+            ports: connectionIntent.tunnelSettings.ports,
             timestamp: date.now
         )
 

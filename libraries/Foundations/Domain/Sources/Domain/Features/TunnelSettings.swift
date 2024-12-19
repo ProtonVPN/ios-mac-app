@@ -20,10 +20,12 @@ import Foundation
 
 public struct TunnelSettings: Equatable, Sendable {
     public private(set) var transport: WireGuardTransport
+    public private(set) var ports: [Int]
     public private(set) var tunnelFeatures: TunnelFeatures
 
-    public init(transport: WireGuardTransport, tunnelFeatures: TunnelFeatures) {
+    public init(transport: WireGuardTransport, ports: [Int],  tunnelFeatures: TunnelFeatures) {
         self.transport = transport
+        self.ports = ports
         self.tunnelFeatures = tunnelFeatures
     }
 }

@@ -65,6 +65,7 @@ extension ConnectToVPNKey: DependencyKey {
         let features = vpnFeaturesProvider.connectionFeatures()
         let tunnelSettings = TunnelSettings(
             transport: .udp,
+            ports: ports,
             tunnelFeatures: TunnelFeatures(
                 killSwitch: propertiesManager.killSwitch,
                 excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
