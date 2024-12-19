@@ -38,6 +38,7 @@ extension ConnectToVPNKey: DependencyKey {
         @Dependency(\.serverSelector) var serverSelector
         @Dependency(\.smartPortSelector) var portSelector
         @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
+        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         let acceptableProtocols: ProtocolSupport
@@ -70,7 +71,6 @@ extension ConnectToVPNKey: DependencyKey {
             )
         )
         let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
         // VPNAPPL-2506: choose protocol and port for smart protocol
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
