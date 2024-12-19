@@ -25,7 +25,6 @@ import OrderedCollections
 
 @Reducer
 public struct HomeConnectionCardFeature {
-    
     public typealias ActionSender = (Action) -> Void
 
     @ObservableState
@@ -33,12 +32,17 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.userTier) public var userTier: Int
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
+        @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference
 
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
                 return userTier.isFreeTier
             }
             return false
+        }
+
+        package var headerModel: ConnectionCardHeaderModel {
+            ConnectionCardHeaderModel(connectionStatus: vpnConnectionStatus, userTier: userTier)
         }
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
@@ -60,11 +64,12 @@ public struct HomeConnectionCardFeature {
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
             case .disconnected:
-                @Dependency(\.recentsStorage) var recentsStorage
-                if let spec = recentsStorage.readFromStorage().mostRecent?.connection {
-                    return spec
-                }
-                return .init(location: secureCoreToggle ? .secureCore(.fastest) : .fastest, features: [])
+                @Dependency(\.defaultConnectionResolver) var resolver
+                return resolver.connectionSpec(
+                    preference: defaultConnectionPreference,
+                    recents: recents,
+                    isSecureCoreEnabled: secureCoreToggle
+                )
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
                     .loadingConnectionInfo(let connectionSpec, _),
@@ -86,6 +91,9 @@ public struct HomeConnectionCardFeature {
             case disconnect
             case tapAction
             case changeServerButtonTapped
+
+            // Header
+            case defaultConnectionTapped
         }
         case delegate(Delegate)
         case watchConnectionStatus
@@ -119,6 +127,25 @@ public struct HomeConnectionCardFeature {
 
                 return .none
             }
+        }
+    }
+}
+
+package enum ConnectionCardHeaderModel: Equatable {
+    case disconnected(isPaid: Bool)
+    case connected
+    case connecting
+
+    init(connectionStatus: VPNConnectionStatus, userTier: Int) {
+        switch connectionStatus {
+        case .disconnected, .disconnecting:
+            self = .disconnected(isPaid: userTier.isPaidTier)
+
+        case .connected:
+            self = .connected
+
+        case .connecting, .loadingConnectionInfo:
+            self = .connecting
         }
     }
 }

@@ -23,7 +23,6 @@ import Theme
 import VPNAppCore
 
 public struct ConnectionFlagInfoView: View {
-
     public enum Action {
         case pin
         case unpin
@@ -37,11 +36,10 @@ public struct ConnectionFlagInfoView: View {
     let intent: ConnectionSpec
     let isPinned: Bool
     let underMaintenance: Bool
-    let withDivider: Bool
     let isConnected: Bool
 
     let textHeaderString: String
-    let subheaderModel: ConnectionInfoSubheaderModel
+    let subheaderModel: LocationFeatureSubheaderModel
     let resolvedLocation: ConnectionSpec.Location
 
     let detailAction: ((Action) -> Void)?
@@ -58,14 +56,12 @@ public struct ConnectionFlagInfoView: View {
         isPinned: Bool,
         vpnConnectionActual: VPNConnectionActual? = nil,
         withServerNumber: Bool = false,
-        withDivider: Bool,
         isConnected: Bool,
         images: RecentsImages = .init(),
         detailAction: ((Action) -> Void)? = nil
     ) {
         self.intent = intent
         self.underMaintenance = underMaintenance
-        self.withDivider = withDivider
         self.isConnected = isConnected
         self.detailAction = detailAction
         self.isPinned = isPinned
@@ -82,65 +78,45 @@ public struct ConnectionFlagInfoView: View {
     }
 
     public var body: some View {
-        HStack(spacing: 0) {
-            flag
+        HStack(alignment: .center, spacing: 0) {
+            LocationFeatureView(model: .init(
+                flag: resolvedLocation.flagComposition,
+                header: .init(title: textHeaderString, showConnectedPin: isConnected),
+                subheader: subheaderModel
+            ))
 
             Spacer()
-                .frame(width: 12)
 
-            ZStack(alignment: .leading) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack {
-                            textHeader
-
-                            if isConnected {
-                                connectedPin
-                            }
-                        }
-                        subheader(model: subheaderModel)
-                    }
-
-                    Spacer()
-
-                    if underMaintenance {
-                        images
-                            .wrench
-                            .resizable()
-                            .frame(.square(maintenanceIconSize))
-                            .foregroundColor(.init(.icon, .weak))
-                            .padding(.horizontal, .themeSpacing12)
-                    }
-
-                    if #available(iOS 16.0, macOS 13.0, *), let detailAction {
-                        Button(action: {
-                            showDetail = true
-                        }, label: {
-                            images
-                                .threeDotsHorizontal
-                                .foregroundStyle(Color(.icon))
-                        })
-                        .popover(isPresented: self.$showDetail, attachmentAnchor: .point(.topLeading)) {
-                            RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
-                                showDetail = false
-                                detailAction(action)
-                            }
-                            .presentationDetents([.fraction(1 / 3)])
-                            .presentationDragIndicator(.visible)
-                        }
-                    }
-                }
-                if withDivider {
-                    VStack() {
-                        Spacer()
-                        Divider()
-                    }
-                }
+            if underMaintenance {
+                images
+                    .wrench
+                    .resizable()
+                    .frame(.square(maintenanceIconSize))
+                    .foregroundColor(.init(.icon, .weak))
+                    .padding(.horizontal, .themeSpacing12)
             }
+
+            if #available(iOS 16.0, macOS 13.0, *), let detailAction {
+                Button(action: {
+                    showDetail = true
+                }, label: {
+                    images
+                        .threeDotsHorizontal
+                        .foregroundStyle(Color(.icon))
+                })
+                .popover(isPresented: self.$showDetail, attachmentAnchor: .point(.topLeading)) {
+                    RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
+                        showDetail = false
+                        detailAction(action)
+                    }
+                    .presentationDetents([.fraction(1 / 3)])
+                    .presentationDragIndicator(.visible)
+                }.background(Color(.background)) // Sets background of the three dots button
+            }
+
         }
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
-        .frame(height: withDivider ? 64 : 42)
         .accessibilityIdentifier(AccessibilityIdentifiers.connectionFlagInfo)
     }
 
@@ -165,87 +141,10 @@ public struct ConnectionFlagInfoView: View {
 #endif
     }
 
-    private var flag: some View {
-        VStack(spacing: 0) {
-            if withDivider {
-                Spacer()
-                    .frame(width: 20, height: 12)
-            }
-            FlagView(location: resolvedLocation, flagSize: .defaultSize)
-            if subheaderModel.shouldShowSpacerInFlagView {
-                Spacer()
-            }
-            if withDivider {
-                Spacer()
-                    .frame(height: 12)
-            }
-        }
-    }
-
-    private func subheader(model: ConnectionInfoSubheaderModel) -> some View {
-        ConnectionInfoSubheader(model: model)
+    private func subheader(model: LocationFeatureSubheaderModel) -> some View {
+        LocationFeatureSubheader(model: model)
             .lineLimit(2)
             .foregroundColor(.init(.border))
-    }
-}
-
-extension ConnectionInfoSubheaderModel {
-    var shouldShowSpacerInFlagView: Bool {
-        self != .none
-    }
-}
-
-public struct ConnectionInfoSubheader: View {
-    private let model: ConnectionInfoSubheaderModel
-
-    public init(model: ConnectionInfoSubheaderModel) {
-        self.model = model
-    }
-
-    public var body: some View {
-        content
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .fixedSize(horizontal: false, vertical: true)
-            .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
-            .font(.body())
-#elseif canImport(UIKit)
-            .font(.body2(emphasised: false))
-#endif
-    }
-
-    @ViewBuilder private var content: some View {
-        switch model {
-        case .textual(let textModel):
-            [Text(textModel.location)]
-                .appending(torText, if: textModel.showTor)
-                .appending(p2pText, if: textModel.showP2P)
-                .joined(separator: Text(" • "))
-
-        case .freeServerSelectionDisclaimer:
-            freeServerSelectionDisclaimerView
-
-        case .none:
-            EmptyView()
-        }
-    }
-
-    private var freeServerSelectionDisclaimerView: some View {
-        HStack(spacing: .themeSpacing4) {
-            Text(Localizable.homeFastestConnectionSelectionDescription)
-            Asset.freeFlags.swiftUIImage
-            Text(Localizable.homeFastestConnectionAdditionalCountryCount(2))
-        }
-    }
-
-    private var torText: Text {
-        return Text(Asset.icsBrandTor.swiftUIImage)
-            + Text(" \(Localizable.connectionDetailsFeatureTitleTor)")
-    }
-
-    private var p2pText: Text {
-        return Text(Image(systemName: "arrow.left.arrow.right"))
-        + Text(" \(Localizable.connectionDetailsFeatureTitleP2p)")
     }
 }
 
@@ -261,7 +160,6 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             ConnectionFlagInfoView(intent: intent,
                                    underMaintenance: false,
                                    isPinned: true,
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
@@ -270,10 +168,8 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             Divider()
 
             ConnectionFlagInfoView(intent: intent,
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: actual,
-                                   withDivider: false,
                                    isConnected: .random())
                 .frame(width: cellWidth)
         }
@@ -284,55 +180,43 @@ struct ConnectionFlagView_Previews: PreviewProvider {
         VStack {
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: []),
-                                   underMaintenance: false, 
                                    isPinned: true,
                                    vpnConnectionActual: .mock(),
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: []),
-                                   underMaintenance: false, 
                                    isPinned: false,
                                    vpnConnectionActual: .mock(),
-                                   withDivider: false,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: [.p2p, .tor]),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: [.p2p, .tor]),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
-                                   withDivider: false,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
                                                           features: []),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(),
-                                   withDivider: true,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
                                                           features: [.p2p, .tor]),
-                                   underMaintenance: false,
                                    isPinned: true,
                                    vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
-                                   withDivider: false,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }

@@ -39,6 +39,7 @@ public struct HomeFeature {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
         case freeConnectionsInfo(FreeConnectionInfoFeature)
+        case defaultConnection(DefaultConnectionFeature)
     }
 
     @ObservableState
@@ -166,6 +167,10 @@ public struct HomeFeature {
                     }
                     state.destination = .changeServer(.init(serverChangeAvailability: availability))
                     return .none
+
+                case .defaultConnectionTapped:
+                    state.destination = .defaultConnection(.init())
+                    return .none
                 }
             case .connectionCard:
                 return .none
@@ -190,6 +195,9 @@ public struct HomeFeature {
                         @Dependency(\.pushAlert) var pushAlert
                         pushAlert(AllCountriesUpsellAlert())
                     }
+                case .presented(.defaultConnection(.preferenceSelected)):
+                    state.destination = nil
+                    return .none
                 default:
                     return .none
                 }

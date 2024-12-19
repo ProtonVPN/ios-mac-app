@@ -20,9 +20,11 @@ import UIKit
 import Strings
 import ProtonCoreUIFoundations
 import SwiftUI
+import Domain
 import Home
 import Home_iOS
 import Settings_iOS
+import Dependencies
 import ComposableArchitecture
 import NEHelper
 import VPNAppCore
@@ -30,8 +32,21 @@ import LegacyCommon
 
 @available(iOS 17, *)
 enum HomeFeatureCreator {
+    static func loadInitialState() -> HomeFeature.State {
+        do {
+            // Set initial values of properties that can't be loaded easily from user defaults
+            @Dependency(\.defaultConnectionStorage) var storage
+            @Shared(.defaultConnectionPreference) var defaultConnectionPreference
+            defaultConnectionPreference = (try storage.getPreference()) ?? .fastest
+        } catch {
+            log.error("Failed to load initial state: \(error)")
+        }
+
+        return .init()
+    }
+
     static func homeViewController() -> UINavigationController {
-        let homeStore = StoreOf<HomeFeature>(initialState: .init()) {
+        let homeStore = StoreOf<HomeFeature>(initialState: loadInitialState()) {
             HomeFeature()
 #if targetEnvironment(simulator)
                 .dependency(\.connectToVPN, SimulatorHelper.shared.connect)

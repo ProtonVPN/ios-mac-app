@@ -25,3 +25,9 @@ public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemo
         PersistenceKeyDefault(.inMemory("recents"), [])
     }
 }
+
+public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<DefaultConnectionPreference>> {
+    static var defaultConnectionPreference: Self {
+        PersistenceKeyDefault(.inMemory("defaultConnectionPreference"), .fastest)
+    }
+}

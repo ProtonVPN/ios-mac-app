@@ -1617,6 +1617,9 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
 
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Default connection";
+
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
 "_connection_card_safely_browsing_from" = "Browsing safely from";
 
@@ -1634,6 +1637,21 @@
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Select your default connection";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Fastest";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "The best server based on your location";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Most Recent";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Your most recently used connection";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
 "_home_recents_upsell_section" = "Discover VPN Plus";

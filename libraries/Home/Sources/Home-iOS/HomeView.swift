@@ -73,6 +73,33 @@ public struct HomeView: View {
     }
 
     public var body: some View {
+        content
+        .sheet(item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)) { store in
+            WithPerceptionTracking {
+                ConnectionScreenView(store: store)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+            }
+        }
+        .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)) { store in
+            WithPerceptionTracking {
+                ChangeServerModal(store: store)
+            }
+        }
+        .sheet(item: $store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)) { store in
+            WithPerceptionTracking {
+                DefaultConnectionSheet(store: store)
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.medium, .large])
+            }
+        }
+        .task {
+            store.send(.sharedProperties(.listen))
+        }
+        .transaction { $0.animation = nil } // disable implicit animations, especially for ConnectionStatusView
+    }
+
+    private var content: some View {
         #PerceptibleGeometryReader { proxy in
             ZStack(alignment: .top) {
                 HomeMapView(
@@ -130,26 +157,6 @@ public struct HomeView: View {
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
             }
             .background(Color(.background))
-        }
-        .task {
-            store.send(.sharedProperties(.listen))
-        }
-        .sheet(item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)) { store in
-            ConnectionScreenView(store: store)
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)) { store in
-            WithPerceptionTracking {
-                ChangeServerModal(store: store)
-            }
-        }
-        .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo,
-                                  action: \.destination.freeConnectionsInfo))
-            { store in
-            WithPerceptionTracking {
-                FreeConnectionInfoModal(store: store)
-            }
         }
     }
 

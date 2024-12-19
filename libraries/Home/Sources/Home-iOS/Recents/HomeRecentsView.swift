@@ -26,6 +26,7 @@ import Domain
 import Home
 import Strings
 import Theme
+import Ergonomics
 import VPNAppCore
 import SharedViews
 import ProtonCoreUIFoundations
@@ -50,14 +51,14 @@ public struct RecentsSectionView: View {
     private var recentsList: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                if let last = store.recents.connectionsList.last {
-                    sectionTitleView(title: Localizable.homeRecentsRecentSection)
-                    ForEach(store.recents.connectionsList) { item in
-                        let isConnected = store.vpnConnectionStatus.spec == item.connection
-                        RecentRowItemView(item: item,
-                                          isConnected: isConnected,
-                                          isLastItem: item == last,
-                                          sendAction: { _ = store.send($0) })
+                sectionTitleView(title: Localizable.homeRecentsRecentSection)
+                DividedForEach(store.recentConnectionList) { item in
+                    WithPerceptionTracking {
+                        RecentRowItemView(
+                            item: item,
+                            isConnected: store.vpnConnectionStatus.spec == item.connection,
+                            sendAction: { _ = store.send($0) }
+                        )
                     }
                 }
             }

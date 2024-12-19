@@ -19,6 +19,36 @@
 import Foundation
 import SwiftUI
 
+public enum FlagComposition: Equatable {
+    case standard(Flag)
+    case withCurve(Flag)
+    case stacked(bottom: Flag, top: Flag)
+}
+
+public enum Flag: Equatable {
+    case fastest
+    case mostRecent
+    case random
+    case country(code: String)
+
+    public var imageName: String {
+        // VPNAPPL-2543: Refer to static assets via swiftgen asset, instead of hardcoded name
+        switch self {
+        case .fastest:
+            return "Fastest"
+
+        case .mostRecent:
+            return "MostRecent"
+
+        case .random:
+            return "Random"
+
+        case .country(let code):
+            return code
+        }
+    }
+}
+
 public struct FlagSizes {
 
     let frame: CGSize
@@ -83,6 +113,7 @@ public struct SimpleFlagView: View {
             .swiftUIImage
             .resizable()
             .cornerRadius(cornerRadius * scale)
+            .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale}
             .frame(width: startSize.width * scale,
                    height: startSize.height * scale)
     }
@@ -99,6 +130,10 @@ public struct SimpleFlagView: View {
         self.startSize = flagSize.simpleFlag
         self.cornerRadius = flagSize.cornerRadius
         self.folder = flagSize.folder
+    }
+
+    public init(flag: Flag, flagSize: FlagSizes) {
+        self.init(regionCode: flag.imageName, flagSize: flagSize)
     }
 }
 
@@ -179,15 +214,16 @@ public struct SecureCoreFlagView: View {
 
                 SimpleFlagView(regionCode: regionCode, size: flagSize.scTopFlag)
                     .padding([.leading], (flagSize.frame.width - flagSize.scTopFlag.width) * scale)
+                    .alignmentGuide(.firstTextBaseline) { $0[.bottom] }
 
             } else {
-
                 SecureCoreFlagCurveView(curveColor: flagCurveColor, startSize: flagSize.simpleFlag)
                     .frame(width: flagSize.simpleFlag.width * scale,
                            height: flagSize.simpleFlag.height * scale)
                     .offset(x: -3 * scale, y: 3 * scale)
 
                 SimpleFlagView(regionCode: regionCode, size: flagSize.simpleFlag)
+                    .alignmentGuide(.firstTextBaseline) { $0[.firstTextBaseline] }
             }
         }
     }
@@ -200,6 +236,26 @@ public struct SecureCoreFlagView: View {
         self.regionCode = regionCode
         self.viaRegionCode = viaRegionCode
         self.flagSize = flagSize
+    }
+}
+
+#Preview("Baseline Alignment") {
+    VStack(alignment: .leading) {
+
+        HStack(alignment: .firstTextBaseline) {
+            SimpleFlagView(regionCode: "CH", flagSize: .defaultSize)
+            Text("Switzerland")
+        }
+
+        HStack(alignment: .firstTextBaseline) {
+            SecureCoreFlagView(regionCode: "US", viaRegionCode: "SE", flagSize: .defaultSize)
+            Text("US via Sweden")
+        }
+
+        HStack(alignment: .firstTextBaseline) {
+            SecureCoreFlagView(regionCode: "AU", viaRegionCode: nil, flagSize: .defaultSize)
+            Text("Australia")
+        }
     }
 }
 

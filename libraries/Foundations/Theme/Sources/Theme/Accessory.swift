@@ -22,6 +22,7 @@ import var ProtonCoreUIFoundations.IconProvider
 public struct Accessory: View {
     private let style: Style
     private let size: Size
+    @ScaledMetric private var scale: CGFloat = 1.0
 
     public init(style: Style, size: Size = .regular) {
         self.style = style
@@ -30,7 +31,8 @@ public struct Accessory: View {
 
     public var body: some View {
         style.image?
-            .resizable().frame(.square(style.iconSize * size.modifier))
+            .resizable()
+            .frame(.square(style.iconSize * size.modifier * scale))
             .flipsForRightToLeftLayoutDirection(true)
             .foregroundColor(style.color)
     }
@@ -48,9 +50,8 @@ public struct Accessory: View {
     }
 
     public enum Style {
-
-        @ScaledMetric private static var radius: CGFloat = .themeRadius16
-        @ScaledMetric private static var square: CGFloat = .themeSpacing24
+        private static var radius: CGFloat = .themeRadius16
+        private static var square: CGFloat = .themeSpacing24
 
         case disclosure
         case externalLink

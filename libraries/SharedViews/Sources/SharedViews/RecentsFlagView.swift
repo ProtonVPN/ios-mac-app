@@ -24,47 +24,42 @@ import Theme
 import VPNAppCore
 
 public struct FlagView: View {
-    let location: ConnectionSpec.Location
+    let flagComposition: FlagComposition
     let flagSize: FlagSizes
 
+    public init(flag: Flag, flagSize: FlagSizes) {
+        self.flagComposition = .standard(flag)
+        self.flagSize = flagSize
+    }
+
+    public init(flag: FlagComposition, flagSize: FlagSizes) {
+        self.flagComposition = flag
+        self.flagSize = flagSize
+    }
+
     public init(location: ConnectionSpec.Location, flagSize: FlagSizes) {
-        self.location = location
+        self.flagComposition = location.flagComposition
         self.flagSize = flagSize
     }
 
     public var body: some View {
-        switch location {
-        case .random:
-            SimpleFlagView(regionCode: "Random", flagSize: flagSize)
-        case .fastest:
-            SimpleFlagView(regionCode: "Fastest", flagSize: flagSize)
-        case .region(let regionCode), .exact(_, _, _, let regionCode):
-            SimpleFlagView(regionCode: regionCode, flagSize: flagSize)
-        case .secureCore(let secureCoreSpec):
-            SecureCoreFlagView(secureCoreSpec: secureCoreSpec, flagSize: flagSize)
-        }
-    }
-}
+        switch flagComposition {
+        case .standard(let flag):
+            SimpleFlagView(regionCode: flag.imageName, flagSize: flagSize)
 
-extension SecureCoreFlagView {
-    init(secureCoreSpec: ConnectionSpec.SecureCoreSpec, flagSize: FlagSizes) {
-        switch secureCoreSpec {
-        case .fastest:
-            self = SecureCoreFlagView(regionCode: "Fastest",
-                                      viaRegionCode: nil,
-                                      flagSize: flagSize)
-        case .random:
-            self = SecureCoreFlagView(regionCode: "Random",
-                                      viaRegionCode: nil,
-                                      flagSize: flagSize)
-        case .fastestHop(to: let regionCode):
-            self = SecureCoreFlagView(regionCode: regionCode,
-                                      viaRegionCode: nil,
-                                      flagSize: flagSize)
-        case .hop(to: let toRegion, via: let viaRegion):
-            self = SecureCoreFlagView(regionCode: toRegion,
-                                      viaRegionCode: viaRegion,
-                                      flagSize: flagSize)
+        case .withCurve(let flag):
+            SecureCoreFlagView(
+                regionCode: flag.imageName,
+                viaRegionCode: nil,
+                flagSize: flagSize
+            )
+
+        case .stacked(let bottom, let top):
+            SecureCoreFlagView(
+                regionCode: top.imageName,
+                viaRegionCode: bottom.imageName,
+                flagSize: flagSize
+            )
         }
     }
 }
@@ -94,5 +89,32 @@ struct SecureCoreFlagView_Previews: PreviewProvider {
             FlagView(location: .secureCore(.hop(to: "GB", via: "LT")), flagSize: .defaultSize)
         }
         .padding(8)
+    }
+}
+
+extension ConnectionSpec.Location {
+    public var flagComposition: FlagComposition {
+        switch self {
+        case .random:
+            return .standard(.random)
+
+        case .fastest:
+            return .standard(.fastest)
+
+        case .region(let regionCode), .exact(_, _, _, let regionCode):
+            return .standard(.country(code: regionCode))
+
+        case .secureCore(.fastest):
+            return .withCurve(.fastest)
+
+        case .secureCore(.random):
+            return .withCurve(.random)
+
+        case .secureCore(.fastestHop(let regionCode)):
+            return .withCurve(.country(code: regionCode))
+
+        case .secureCore(.hop(let toRegionCode, let viaRegionCode)):
+            return .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
+        }
     }
 }
