@@ -271,6 +271,9 @@ extension IosAlertService: CoreAlertService {
         case let alert as UpgradeOperatingSystemAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as ConnectionPackageErrorAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

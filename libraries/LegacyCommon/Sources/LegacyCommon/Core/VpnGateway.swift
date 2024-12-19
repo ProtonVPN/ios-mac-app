@@ -27,6 +27,8 @@ import Domain
 import VPNShared
 import VPNAppCore
 
+import ProtonCoreFeatureFlags
+
 public enum ConnectionStatus {
     
     case disconnected
@@ -389,7 +391,41 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
 
+    func newConnect(with request: ConnectionRequest?) {
+        guard let request else {
+            assertionFailure("To connect with the new Connection package, you need a ConnectionSpec"); return
+        }
+
+        @Dependency(\.connectToVPN) var connect
+        @Dependency(\.specBuilder) var specBuilder
+
+        let spec = specBuilder.spec(request)
+
+        Task {
+            do {
+                try await connect(spec)
+            } catch {
+                await newConnectDidFail(error: error)
+            }
+        }
+    }
+
+    @MainActor
+    func newConnectDidFail(error: any Error) {
+        log.error("An error occured while connecting: \(error.localizedDescription)")
+
+        let alert = ConnectionPackageErrorAlert()
+        alert.title = "Connection Error"
+        alert.message = "An error occurred while connecting: " + error.localizedDescription
+        alertService?.push(alert: alert)
+    }
+
     public func connect(with request: ConnectionRequest?) {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            newConnect(with: request)
+            return
+        }
+
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
         if `protocol`.isDeprecated && propertiesManager.featureFlags.enforceDeprecatedProtocols {
