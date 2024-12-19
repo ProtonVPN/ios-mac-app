@@ -8,8 +8,6 @@
 
 import Foundation
 
-import XCTestDynamicOverlay
-
 import Domain
 import VPNShared
 

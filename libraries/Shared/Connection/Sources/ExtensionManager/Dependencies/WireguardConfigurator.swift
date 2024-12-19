@@ -35,16 +35,12 @@ public struct ConnectionConfiguration {
 }
 
 public enum ConnectionConfigurationKey: DependencyKey {
-    public static var liveValue: ConnectionConfiguration {
-        return .init(
-            username: "mockman",
-            wireguardConfig: .init()
-        )
-    }
+    public static let testValue = ConnectionConfiguration(username: "mock_username", wireguardConfig: .init())
+    public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
 }
 
 extension DependencyValues {
-    var connectionConfiguration: ConnectionConfiguration {
+    public var connectionConfiguration: ConnectionConfiguration {
         get { self[ConnectionConfigurationKey.self] }
         set { self[ConnectionConfigurationKey.self] = newValue }
     }
@@ -74,7 +70,6 @@ extension ManagerConfigurator {
         guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.transport)) else {
             throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.transport)
         }
-        let overridePorts = server.endpoint.overridePorts(using: .wireGuard(connectionIntent.transport))
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
@@ -83,7 +78,7 @@ extension ManagerConfigurator {
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             serverPublicKey: server.endpoint.x25519PublicKey,
             entryServerAddress: entryIP,
-            ports: overridePorts ?? connectionConfiguration.wireguardConfig.defaultPorts(for: connectionIntent.transport),
+            ports: connectionIntent.ports,
             timestamp: date.now
         )
 

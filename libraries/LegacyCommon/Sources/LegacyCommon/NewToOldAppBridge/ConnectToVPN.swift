@@ -50,12 +50,19 @@ extension ConnectToVPNKey: DependencyKey {
         }
 
         let server = try serverSelector.select(intent, acceptableProtocols)
-        log.info("Server selected: \(server)")
+        log.info("Server selected: \(server)", category: .connection)
+        let portSelectionResult = try await portSelector.select(
+            endpoint: server.endpoint,
+            connectionProtocol: propertiesManager.connectionProtocol
+        )
+        guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
+            throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
+        }
+        let ports = portSelectionResult.ports
+        log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
 
         let features = vpnFeaturesProvider.connectionFeatures()
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
-
-        let port = try await portSelector.select(server.endpoint, propertiesManager.connectionProtocol)
+        let intent = ServerConnectionIntent(server: server, transport: transport, ports: ports, features: features)
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }
@@ -93,5 +100,9 @@ extension ConnectToVPNKey: DependencyKey {
                 alert(LocationNotAvailableAlert(profileName: profileName))
             }
         }
+    }
+
+    enum ConnectionError: Error {
+        case unexpectedProtocol(VpnProtocol)
     }
 }

@@ -38,7 +38,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let server = Server.ca // Canadian server mock
         let features = VPNConnectionFeatures.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -128,7 +128,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.startObservingStateChanges)
         await store.receive(\.tunnelStatusChanged.invalid)

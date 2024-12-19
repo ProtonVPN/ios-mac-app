@@ -46,7 +46,6 @@ extension ServerSelector: DependencyKey {
         @Dependency(\.serverRepository) var repository
 
         let baseFilters = spec.locationFilters + [spec.serverTierFilter].compactMap { $0 }
-        let order = spec.order
 
         let additionalFilters: [VPNServerFilter] = [
             .features(spec.serverFeatureFilter),

@@ -80,7 +80,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -182,7 +182,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -308,7 +308,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -442,7 +442,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -534,7 +534,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnecting)
 
         // Connection feature is in the 'disconnecting' state, now let's send a connection request
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent)) {
             $0.serverReconnectionIntent = intent
@@ -627,7 +627,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -718,7 +718,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {

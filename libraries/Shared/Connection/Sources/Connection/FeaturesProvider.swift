@@ -20,7 +20,6 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
-import NEHelper
 
 @available(iOS 16, tvOS 17, *)
 public struct VPNConnectionFeaturesProvider: Sendable {

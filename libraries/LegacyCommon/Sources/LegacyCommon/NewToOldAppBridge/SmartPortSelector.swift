@@ -18,10 +18,12 @@
 
 import Foundation
 import Dependencies
+import DependenciesMacros
 import Domain
 
+@DependencyClient
 struct SmartPortSelectorBridge: Sendable {
-    var select: @Sendable (ServerEndpoint, ConnectionProtocol) async throws -> ServerEndpointPortResolution
+    private var select: @Sendable (_ endpoint: ServerEndpoint, _ connectionProtocol: ConnectionProtocol) async throws -> ServerEndpointPortResolution
 }
 
 struct ServerEndpointPortResolution: Sendable {
@@ -29,44 +31,44 @@ struct ServerEndpointPortResolution: Sendable {
     let ports: [Int]
 }
 
+// Protocol and port selection should ideally be implemented in the `Connection` package.
+// Due to time constraints, let's reuse the legacy implementations until this is e.g. required on tvOS
+// or we want to deprecate LegacyCommon.
 extension SmartPortSelectorBridge: DependencyKey {
-    static let liveValue = {
+    static let liveValue = SmartPortSelectorBridge(select: { endpoint, connectionProtocol in
         @Dependency(\.propertiesManager) var propertiesManager
         let resolver = AvailabilityCheckerResolverImplementation(wireguardConfig: propertiesManager.wireguardConfig)
+        let serverIP = ServerIp(endpoint: endpoint)
 
-        let smartProtocolImplementation = SmartProtocolImplementation(
-            availabilityCheckerResolver: resolver,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig,
-            wireguardConfig: propertiesManager.wireguardConfig
-        )
+        return await withCheckedContinuation { continuation in
+            switch connectionProtocol {
+            case .smartProtocol:
+                let smartProtocolImplementation = SmartProtocolImplementation(
+                    availabilityCheckerResolver: resolver,
+                    smartProtocolConfig: propertiesManager.smartProtocolConfig,
+                    wireguardConfig: propertiesManager.wireguardConfig
+                )
 
-        let smartPortSelector = SmartPortSelectorImplementation(
-            wireguardUdpChecker: resolver.availabilityChecker(for: .wireGuard(.udp)),
-            wireguardTcpChecker: resolver.availabilityChecker(for: .wireGuard(.tcp))
-        )
+                smartProtocolImplementation.determineBestProtocol(
+                    server: ServerIp(endpoint: endpoint)
+                ) { chosenProtocol, ports in
+                    let result = ServerEndpointPortResolution(chosenProtocol: chosenProtocol, ports: ports)
+                    continuation.resume(returning: result)
+                }
 
-        return SmartPortSelectorBridge(select: { endpoint, connectionProtocol in
-            let serverIP = ServerIp(endpoint: endpoint)
+            case .vpnProtocol(let vpnProtocol):
+                let smartPortSelector = SmartPortSelectorImplementation(
+                    wireguardUdpChecker: resolver.availabilityChecker(for: .wireGuard(.udp)),
+                    wireguardTcpChecker: resolver.availabilityChecker(for: .wireGuard(.tcp))
+                )
 
-            return await withCheckedContinuation { continuation in
-                switch connectionProtocol {
-                case .smartProtocol:
-                    smartProtocolImplementation.determineBestProtocol(
-                        server: ServerIp(endpoint: endpoint)
-                    ) { chosenProtocol, ports in
-                        let result = ServerEndpointPortResolution(chosenProtocol: chosenProtocol, ports: ports)
-                        continuation.resume(returning: result)
-                    }
-
-                case .vpnProtocol(let vpnProtocol):
-                    smartPortSelector.determineBestPort(for: vpnProtocol, on: serverIP) { ports in
-                        let result = ServerEndpointPortResolution(chosenProtocol: vpnProtocol, ports: ports)
-                        continuation.resume(returning: result)
-                    }
+                smartPortSelector.determineBestPort(for: vpnProtocol, on: serverIP) { ports in
+                    let result = ServerEndpointPortResolution(chosenProtocol: vpnProtocol, ports: ports)
+                    continuation.resume(returning: result)
                 }
             }
-        })
-    }()
+        }
+    })
 }
 
 extension DependencyValues {

@@ -209,7 +209,11 @@ struct MainFeature {
 
         let server = Server(logical: fastestStreamingServer.logical, endpoint: endpoint)
         let features = vpnFeaturesProvider.connectionFeatures()
-        return .init(server: server, transport: .udp, features: features)
+
+        @Dependency(\.connectionConfiguration) var configuration
+        let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)
+        let ports = server.endpoint.overridePorts(using: .wireGuard(.udp)) ?? defaultPorts
+        return .init(server: server, transport: .udp, ports: ports, features: features)
     }
 }
 
