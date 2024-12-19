@@ -62,7 +62,16 @@ extension ConnectToVPNKey: DependencyKey {
         log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
 
         let features = vpnFeaturesProvider.connectionFeatures()
-        let intent = ServerConnectionIntent(server: server, transport: transport, ports: ports, features: features)
+        let tunnelSettings = TunnelSettings(
+            transport: .udp,
+            tunnelFeatures: TunnelFeatures(
+                killSwitch: propertiesManager.killSwitch,
+                excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
+            )
+        )
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(server: server, transport: .udp, features: features)
+        // VPNAPPL-2506: choose protocol and port for smart protocol
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }

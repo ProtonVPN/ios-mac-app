@@ -20,14 +20,12 @@ import Foundation
 
 public struct ServerConnectionIntent: Equatable, Sendable {
     public let server: Server
-    public let transport: WireGuardTransport
-    public let ports: [Int]
+    public let tunnelSettings: TunnelSettings
     public let features: VPNConnectionFeatures
 
-    public init(server: Server, transport: WireGuardTransport, ports: [Int], features: VPNConnectionFeatures) {
+    public init(server: Server, tunnelSettings: TunnelSettings, features: VPNConnectionFeatures) {
         self.server = server
-        self.transport = transport
-        self.ports = ports
+        self.tunnelSettings = tunnelSettings
         self.features = features.copyWithChanged(bouncing: server.endpoint.label)
     }
 }

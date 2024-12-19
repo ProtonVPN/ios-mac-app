@@ -35,6 +35,12 @@ public struct ConnectionConfiguration {
 }
 
 public enum ConnectionConfigurationKey: DependencyKey {
+    public static var liveValue: ConnectionConfiguration {
+        return .init(
+            username: "mockman",
+            wireguardConfig: .init()
+        )
+    }
     public static let testValue = ConnectionConfiguration(username: "mock_username", wireguardConfig: .init())
     public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
 }
@@ -59,7 +65,7 @@ extension ManagerConfigurator {
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
         protocolConfiguration.serverAddress = server.endpoint.exitIp
-        protocolConfiguration.wgProtocol = connectionIntent.transport.rawValue
+        protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
@@ -67,8 +73,13 @@ extension ManagerConfigurator {
         @Dependency(\.date) var date
         protocolConfiguration.username = connectionConfiguration.username
 
-        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.transport)) else {
-            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.transport)
+#if os(iOS)
+        protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.tunnelFeatures.killSwitch
+        protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.tunnelFeatures.excludeLocalNetworks
+#endif
+
+        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {
+            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
         }
 
         let encoder = JSONEncoder()

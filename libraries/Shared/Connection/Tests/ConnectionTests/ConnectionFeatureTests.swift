@@ -57,6 +57,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
@@ -80,7 +81,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -159,6 +160,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
@@ -182,7 +184,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -274,6 +276,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(
@@ -308,7 +311,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -416,6 +419,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(
@@ -442,7 +446,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -507,6 +511,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let intitialState = ConnectionFeature.State.init(
@@ -534,7 +539,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnecting)
 
         // Connection feature is in the 'disconnecting' state, now let's send a connection request
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent)) {
             $0.serverReconnectionIntent = intent
@@ -603,6 +608,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
@@ -627,7 +633,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -695,6 +701,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let server = Server.mock
         let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
@@ -718,7 +725,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, transport: .udp, ports: [], features: features)
+        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
