@@ -420,13 +420,13 @@ public class VpnGateway: VpnGatewayProtocol {
         alertService?.push(alert: alert)
     }
 
-    private var shouldUseNoConnect: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) &&
+    private var shouldUseNewConnect: Bool {
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) ||
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
     }
 
     public func connect(with request: ConnectionRequest?) {
-        if shouldUseNoConnect {
+        if shouldUseNewConnect {
             newConnect(with: request)
             return
         }

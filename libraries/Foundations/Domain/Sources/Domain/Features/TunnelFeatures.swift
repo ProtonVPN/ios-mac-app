@@ -21,9 +21,9 @@ import Foundation
 public struct TunnelFeatures: Equatable, Sendable {
 
 #if !os(tvOS)
-    public private(set) var killSwitch: Bool
-    public private(set) var excludeLocalNetworks: Bool
-    
+    public let killSwitch: Bool
+    public let excludeLocalNetworks: Bool
+
     public init(killSwitch: Bool, excludeLocalNetworks: Bool) {
         self.killSwitch = killSwitch
         self.excludeLocalNetworks = excludeLocalNetworks

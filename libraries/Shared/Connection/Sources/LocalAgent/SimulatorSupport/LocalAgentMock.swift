@@ -31,7 +31,7 @@ final class LocalAgentMock: LocalAgent {
 
     private var state: LocalAgentState {
         didSet {
-            streamTuple?.1.yield(.state(state))
+            streamTuple?.continuation.yield(.state(state))
         }
     }
 

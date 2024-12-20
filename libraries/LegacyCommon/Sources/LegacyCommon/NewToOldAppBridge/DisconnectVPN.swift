@@ -24,8 +24,9 @@ import VPNAppCore
 
 extension DisconnectVPNKey: DependencyKey {
     public static let liveValue = {
-        let isRedesignEnabled = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
-        if isRedesignEnabled, #available(iOS 16, *) {
+        let isEnabled = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) ||
+            FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        if isEnabled, #available(iOS 16, *) {
             return newDisconnect
         } else {
             return legacyDisconnect

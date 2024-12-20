@@ -35,7 +35,7 @@ extension VPNConnectionFeaturesProvider: DependencyKey {
             return .init(
                 netshield: netShieldPropertyProvider.netShieldType,
                 vpnAccelerator: featurePropertyProvider.getValue(for: VPNAccelerator.self).isOn,
-                bouncing: nil, // TODO: how to properly handle this?
+                bouncing: nil, // VPNAPPL-2561: how to properly handle this?
                 natType: natTypePropertyProvider.natType,
                 safeMode: safeModePropertyProvider.safeMode
             )
@@ -56,11 +56,6 @@ extension VPNConnectionFeaturesProvider: DependencyKey {
 
 private extension VPNAccelerator {
     var isOn: Bool {
-        switch self {
-        case .on:
-            return true
-        case .off:
-            return false
-        }
+        self == .on
     }
 }

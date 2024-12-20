@@ -112,7 +112,8 @@ public struct HomeFeature {
     }
 
     private var shouldUseConnectionFeature: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) ||
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
     }
 
     public var body: some Reducer<State, Action> {
@@ -216,7 +217,7 @@ public struct HomeFeature {
                 }
                 return .run { send in
                     @Dependency(\.continuousClock) var clock
-                    try await clock.sleep(for: .seconds(1)) // give some time for the current presented view to disappear
+                    try await clock.sleep(for: .seconds(1)) // VPNAPPL-2560: give some time for the current presented view to disappear
                     @Dependency(\.pushAlert) var pushAlert
                     pushAlert(AllCountriesUpsellAlert())
                 }

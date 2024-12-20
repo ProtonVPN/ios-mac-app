@@ -21,7 +21,7 @@ import DependenciesMacros
 
 @DependencyClient
 package struct BundleIDClient: Sendable {
-    package internal(set) var bundleIdentifierForTarget: @Sendable () -> String = { "<invalid>" }
+    package let bundleIdentifierForTarget: @Sendable () -> String
 }
 
 extension DependencyValues {
