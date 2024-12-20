@@ -65,7 +65,7 @@ extension ConnectToVPNKey: DependencyKey {
 
         let features = vpnFeaturesProvider.connectionFeatures()
         let tunnelSettings = TunnelSettings(
-            transport: .udp,
+            transport: transport,
             ports: ports,
             tunnelFeatures: TunnelFeatures(
                 killSwitch: propertiesManager.killSwitch,
@@ -73,7 +73,6 @@ extension ConnectToVPNKey: DependencyKey {
             )
         )
         let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
-        // VPNAPPL-2506: choose protocol and port for smart protocol
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }
