@@ -48,6 +48,7 @@ extension VPNShared.VPNKeysGenerator: DependencyKey {
         return commonImplementation
         #else
         return .init {
+            // On non macOS platform, you should consider using Connection.VPNKeysGenerator
             struct UnavailableGenerator: Swift.Error {}
             throw UnavailableGenerator()
         }

@@ -73,8 +73,6 @@ final class LocalAgentImplementation: LocalAgent {
 
     func disconnect() {
         connection?.close()
-        // TODO: Should we do it or not?
-        // streamContinuation = nil
     }
 }
 
