@@ -21,7 +21,7 @@ import Ergonomics
 import Dependencies
 
 public struct ServerSelector: Sendable {
-    public var select: @Sendable (_ spec: ConnectionSpec, _ acceptableProtocols: ProtocolSupport) throws -> Server
+    public internal(set) var select: @Sendable (_ spec: ConnectionSpec, _ userTier: Int, _ acceptableProtocols: ProtocolSupport) throws -> Server
 
     public enum ServerSelectionError: Error, Equatable {
         case noLogical(LogicalResolutionFailureReason)
@@ -42,10 +42,11 @@ public struct ServerSelector: Sendable {
 }
 
 extension ServerSelector: DependencyKey {
-    public static let liveValue = ServerSelector(select: { spec, acceptableProtocols in
+    public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols in
         @Dependency(\.serverRepository) var repository
 
-        let baseFilters = spec.locationFilters + [spec.serverTierFilter].compactMap { $0 }
+        let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
+        let baseFilters = spec.locationFilters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
 
         let additionalFilters: [VPNServerFilter] = [
             .features(spec.serverFeatureFilter),

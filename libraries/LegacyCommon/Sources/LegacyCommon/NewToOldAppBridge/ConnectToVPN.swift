@@ -41,6 +41,8 @@ extension ConnectToVPNKey: DependencyKey {
         @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
         @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
+        @SharedReader(.userTier) var userTier: Int
+
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         let acceptableProtocols: ProtocolSupport
         switch propertiesManager.connectionProtocol {
@@ -51,7 +53,7 @@ extension ConnectToVPNKey: DependencyKey {
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
 
-        let server = try serverSelector.select(intent, acceptableProtocols)
+        let server = try serverSelector.select(intent, userTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
         let portSelectionResult = try await portSelector.select(
             endpoint: server.endpoint,

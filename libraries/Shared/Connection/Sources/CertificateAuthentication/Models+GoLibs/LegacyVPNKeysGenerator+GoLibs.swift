@@ -21,10 +21,13 @@ import Dependencies
 
 import func GoLibs.Ed25519NewKeyPair
 import class GoLibs.Ed25519KeyPair
+
 import struct VPNShared.VPNKeysGenerator
 import struct VPNShared.VpnKeys
 import struct VPNShared.PrivateKey
 import struct VPNShared.PublicKey
+
+import CoreConnection
 
 // We are reusing `VPNShared.VpnAuthenticationKeychain` for now. This requires the key generator dependency to be
 // implemented in another package, since we do not want `VPNShared` to depend on GoLibs.
@@ -48,12 +51,27 @@ extension VPNShared.VPNKeysGenerator: DependencyKey {
         return commonImplementation
         #else
         return .init {
-            // On non macOS platform, you should consider using Connection.VPNKeysGenerator
-            struct UnavailableGenerator: Swift.Error {}
-            throw UnavailableGenerator()
+            let keys = try VPNKeysGenerator.liveValue.generateKeys() // Leveraging this generator with better error handling
+            return VpnKeys(fromConnectionPackageKeys: keys)
         }
         #endif
     }()
+}
+
+extension VpnKeys {
+    init(fromConnectionPackageKeys keys: VPNKeys) {
+        self.init(
+            privateKey: .init(
+                rawRepresentation: keys.privateKey.rawRepresentation,
+                derRepresentation: keys.privateKey.derRepresentation,
+                base64X25519Representation: keys.privateKey.base64X25519Representation
+            ),
+            publicKey: .init(
+                rawRepresentation: keys.publicKey.rawRepresentation,
+                derRepresentation: keys.publicKey.derRepresentation
+            )
+        )
+    }
 }
 
 extension VPNShared.PublicKey {
