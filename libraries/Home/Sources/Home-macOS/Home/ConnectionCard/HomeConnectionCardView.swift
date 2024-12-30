@@ -271,6 +271,7 @@ private extension HomeFeature.State {
 private extension ConnectionSpec {
     static var chrząszczyrzewoszczyce: Self {
         .init(location: .exact(.paid,
+                               logicalID: nil,
                                number: 42,
                                subregion: "Chrząszczyrzewoszczyce",
                                regionCode: "PL"),
@@ -279,6 +280,7 @@ private extension ConnectionSpec {
 
     static var dibba: Self {
         .init(location: .exact(.paid,
+                               logicalID: nil,
                                number: 42,
                                subregion: "Dibba Al-Fujairah",
                                regionCode: "AE"),

@@ -241,15 +241,15 @@ struct ConnectionFlagView_Previews: PreviewProvider {
                 actual: .mock(feature: .tor)
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"), features: []),
+                intent: ConnectionSpec(location: .exact(.free, logicalID: nil, number: 1, subregion: nil, regionCode: "US"), features: []),
                 actual: .mock(serverName: "FREE #1")
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
+                intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
                 actual: .mock(feature: [.p2p, .tor])
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: "AR", regionCode: "US"), features: []),
+                intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: 1, subregion: "AR", regionCode: "US"), features: []),
                 actual: .mock()
             )
             sideBySide(

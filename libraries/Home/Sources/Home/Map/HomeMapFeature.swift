@@ -186,7 +186,7 @@ extension ConnectionSpec {
             break
         case .region(code: let code):
             return code
-        case .exact(_, _, _, let regionCode):
+        case .exact(_, _, _, _, let regionCode):
             return regionCode
         case .secureCore(let spec):
             switch spec {

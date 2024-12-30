@@ -101,7 +101,7 @@ extension ConnectionSpec.Location {
         case .fastest:
             return .standard(.fastest)
 
-        case .region(let regionCode), .exact(_, _, _, let regionCode):
+        case .region(let regionCode), .exact(_, _, _, _, let regionCode):
             return .standard(.country(code: regionCode))
 
         case .secureCore(.fastest):

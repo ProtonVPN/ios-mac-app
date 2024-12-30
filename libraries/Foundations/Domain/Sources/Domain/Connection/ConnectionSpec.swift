@@ -44,7 +44,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
         case fastest
         case random
         case region(code: String)
-        case exact(Server, number: Int?, subregion: String?, regionCode: String)
+        case exact(Server, logicalID: String?, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
     }
 
@@ -88,8 +88,8 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
 public extension ConnectionSpec.Location {
     func withServer(number: Int) -> Self {
         switch self {
-        case let .exact(server, _, subregion, regionCode):
-            return .exact(server, number: number, subregion: subregion, regionCode: regionCode)
+        case let .exact(server, logicalID, _, subregion, regionCode):
+            return .exact(server, logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode)
         default:
             return self
         }
@@ -98,16 +98,19 @@ public extension ConnectionSpec.Location {
 
 public extension ConnectionSpec.Location {
     static let specificCity = Self.exact(.paid,
+                                         logicalID: nil,
                                          number: nil,
                                          subregion: "Szczebrzeszyn",
                                          regionCode: "PL")
 
     static let specificCityServer = Self.exact(.paid,
+                                               logicalID: nil,
                                                number: 456,
                                                subregion: "Szczebrzeszyn",
                                                regionCode: "PL")
 
     static let specificCountryServer = Self.exact(.free,
+                                                  logicalID: nil,
                                                   number: 123,
                                                   subregion: nil,
                                                   regionCode: "PL")

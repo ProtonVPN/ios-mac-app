@@ -54,6 +54,7 @@ extension ConnectionSpec {
                 } else {
                     location = .exact(
                         .paid,
+                        logicalID: serverModel.id,
                         number: serverModel.serverNameComponents.sequence,
                         subregion: serverModel.city,
                         regionCode: country
@@ -61,7 +62,7 @@ extension ConnectionSpec {
                 }
             }
         case .city(let country, let city):
-            location = .exact(.paid, number: nil, subregion: city, regionCode: country)
+            location = .exact(.paid, logicalID: nil, number: nil, subregion: city, regionCode: country)
         }
         self = .init(location: location, features: features, profileId: connectionRequest.profileId)
     }

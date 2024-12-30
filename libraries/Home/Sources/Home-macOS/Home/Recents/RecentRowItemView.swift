@@ -42,7 +42,7 @@ struct RecentRowItemView: View {
     @State var isHovered: Bool = false
 
     var isPaid: Bool { // todo: This is probably not enough to determine if server is paid
-        if case let .exact(server, _, _, _) = item.connection.location {
+        if case let .exact(server, _, _, _, _) = item.connection.location {
             return server == .paid
         }
         return false

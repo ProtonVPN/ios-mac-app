@@ -156,7 +156,7 @@ extension ConnectionSpec {
 
     var serverTierFilter: VPNServerFilter? {
         switch location {
-        case .exact(.free, _, _, _):
+        case .exact(.free, _, _, _, _):
             return .tier(.max(tier: 0))
 
         default:
@@ -172,8 +172,8 @@ extension ConnectionSpec {
         case .region(let code):
             return [.exitCountryCode(code)]
 
-        case .exact(_, let number, let subRegion, let region):
-            return [
+        case .exact(_, let logicalID, let number, let subRegion, let region):
+            return logicalID.map { [.logicalID($0)] } ?? [
                 Self.regionFilter(region: region, number: number),
                 subRegion.map(VPNServerFilter.city)
             ].compactMap { $0 }
