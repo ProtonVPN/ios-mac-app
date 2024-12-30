@@ -45,7 +45,6 @@ struct SwiftTestingTests {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = .en
             $0.date = .constant(Date())
-            $0.defaultConnectionResolver
         }
         let appView = HomeView(store: store)
             .frame(.rect(width: 375, height: 667)) // iphone se 2022 size
