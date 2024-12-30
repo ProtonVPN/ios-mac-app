@@ -161,10 +161,6 @@ public struct HomeView: View {
             }
             .background(Color(.background))
         }
-        .task {
-            store.send(.onAppear)
-            store.send(.sharedProperties(.listen))
-        }
         .sheet(
             item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
         ) { store in

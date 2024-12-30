@@ -56,9 +56,12 @@ enum HomeFeatureCreator {
         }
 
         let hostingController = UIHostingController(rootView: HomeView(store: homeStore))
-        hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab,
-                                                    image: IconProvider.houseFilled,
-                                                    tag: 0)
+        hostingController.tabBarItem = UITabBarItem(title: Localizable.homeTab, image: IconProvider.houseFilled, tag: 0)
+
+        // Those should be called once
+        homeStore.send(.onStart)
+        homeStore.send(.sharedProperties(.listen))
+
         // Embed a UINavigationController to prevent layout and sizing issues that arise when using NavigationStack directly within a UIHostingController.
         let navigationController = UINavigationController(rootViewController: hostingController)
         navigationController.additionalSafeAreaInsets = .zero

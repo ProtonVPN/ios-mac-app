@@ -92,7 +92,8 @@ public struct HomeFeature {
         case changeServer
         case disconnect
 
-        case onAppear // or onStart?
+        // This must be called once
+        case onStart
 
         case onNewConnectionState(ConnectionState)
 
@@ -234,7 +235,7 @@ public struct HomeFeature {
                 return .none
             case .destination(_):
                 return .none
-            case .onAppear:
+            case .onStart:
                 return .concatenate(
                     .run { send in await send(.connection(.startObserving)) },
                     .onChange(of: state.$connectionState, reinject: Action.onNewConnectionState)
