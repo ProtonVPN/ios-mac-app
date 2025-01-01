@@ -22,7 +22,6 @@ import ComposableArchitecture
 import SharedViews
 import Domain
 import Strings
-import Ergonomics
 
 @Reducer
 public struct DefaultConnectionFeature {
@@ -52,7 +51,7 @@ public struct DefaultConnectionFeature {
         Reduce { state, action in
             switch action {
             case .preferenceSelected(let preference):
-                state.$defaultConnectionPreference |=| preference
+                state.$defaultConnectionPreference.withLock { $0 = preference }
                 return .run { _ in
                     @Dependency(\.defaultConnectionStorage) var storage
                     try storage.set(preference: preference)

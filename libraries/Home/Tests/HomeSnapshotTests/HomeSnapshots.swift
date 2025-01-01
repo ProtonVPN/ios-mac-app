@@ -123,6 +123,12 @@ struct SwiftTestingTests {
     }
 }
 
+infix operator |=|
+
+public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {
+    lhs.withLock { $0 = rhs }
+}
+
 #endif
 
 /*

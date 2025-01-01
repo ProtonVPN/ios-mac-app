@@ -22,7 +22,6 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 
-import Ergonomics
 import Domain
 import Home
 import Theme
@@ -184,8 +183,8 @@ fileprivate extension VPNConnectionStatus {
 #Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
     @Shared(.userTier) var userTier
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    $userTier |=| 0
-    $vpnConnectionStatus |=| .connected(.secureCoreCountryHop, nil)
+    $userTier.withLock { $0 = 0 }
+    $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
     return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
         HomeConnectionCardFeature()
     }))
@@ -197,8 +196,8 @@ fileprivate extension VPNConnectionStatus {
 #Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
     @Shared(.userTier) var userTier
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    $userTier |=| 0
-    $vpnConnectionStatus |=| .connected(.secureCoreCountryHop, nil)
+    $userTier.withLock { $0 = 0 }
+    $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
     return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
         HomeConnectionCardFeature()
     }))

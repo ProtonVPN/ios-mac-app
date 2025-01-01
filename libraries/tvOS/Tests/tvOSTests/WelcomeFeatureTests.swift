@@ -19,7 +19,6 @@
 import XCTest
 import ComposableArchitecture
 @testable import tvOS
-import Ergonomics
 
 final class WelcomeFeatureTests: XCTestCase {
 
@@ -87,12 +86,12 @@ final class WelcomeFeatureTests: XCTestCase {
 
         await store.send(.onAppear)
 
-        $userTier |=| nil
+        $userTier.withLock { $0 = nil }
 
         await store.receive(\.userTierUpdated)
         await store.receive(\.userTierUpdated) // for some reason setting nil sends the publisher event twice...
 
-        $userTier |=| 1 // to cancel the publisher
+        $userTier.withLock { $0 = 1 } // to cancel the publisher
         await store.receive(\.userTierUpdated)
     }
 
@@ -107,7 +106,7 @@ final class WelcomeFeatureTests: XCTestCase {
 
         await store.receive(\.userTierUpdated)
 
-        $userTier |=| 1
+        $userTier.withLock { $0 = 1 }
 
         await store.receive(\.userTierUpdated) {
             $0.destination = nil

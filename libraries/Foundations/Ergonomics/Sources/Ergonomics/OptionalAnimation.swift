@@ -21,11 +21,13 @@
 import UIKit
 import SwiftUI
 
-public func withOptionalAnimation<Result>(_ animation: Animation? = .default, _ body: () throws -> Result) rethrows -> Result {
-    if UIAccessibility.isReduceMotionEnabled {
-        try body()
-    } else {
+public func withOptionalAnimation<Result>(_ shouldAnimate: Bool = true,
+                                          _ animation: Animation? = .default,
+                                          _ body: () throws -> Result) rethrows -> Result {
+    if shouldAnimate && !UIAccessibility.isReduceMotionEnabled {
         try withAnimation(animation, body)
+    } else {
+        try body()
     }
 }
 

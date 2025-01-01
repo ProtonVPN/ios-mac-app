@@ -24,6 +24,7 @@ import SwiftUI
 @testable import CommonNetworking
 @testable import ExtensionManager
 @testable import LocalAgent
+import Ergonomics
 
 class SettingsFeatureSnapshotTests: XCTestCase {
     
@@ -47,9 +48,9 @@ class SettingsFeatureSnapshotTests: XCTestCase {
         }
 
         @Shared(.userDisplayName) var userDisplayName: String?
-        $userDisplayName |=| "test user"
+        $userDisplayName.withLock { $0 = "test user" }
         @Shared(.userTier) var userTier: Int?
-        $userTier |=| 2
+        $userTier.withLock { $0 = 2 }
 
         let appView = NavigationStack {
             AppView(store: store)

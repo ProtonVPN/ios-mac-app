@@ -23,7 +23,7 @@ import ComposableArchitecture
 import SwiftUI
 @testable import Connection
 import Domain
-import Ergonomics
+import struct Ergonomics.GenericError
 @testable import ExtensionManager
 @testable import LocalAgent
 import PersistenceTestSupport
@@ -78,7 +78,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         }
 
         @Shared(.userLocation) var userLocation: UserLocation?
-        $userLocation |=| .init(ip: "1.2.3.4", country: "PL", isp: "")
+        $userLocation.withLock { $0 = .init(ip: "1.2.3.4", country: "PL", isp: "") }
 
         let mainView = MainView(store: store)
             .frame(.rect(width: 1920, height: 1080))
@@ -88,11 +88,11 @@ final class MainFeatureSnapshotTests: XCTestCase {
 
         @Shared(.connectionState) var connectionState: ConnectionState?
         
-        $connectionState |=| .disconnected(nil)
+        $connectionState.withLock { $0 = .disconnected(nil) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
-        $connectionState |=| .connecting(.ca)
+        $connectionState.withLock { $0 = .connecting(.ca) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
-        $connectionState |=| .connected(.ca, nil)
+        $connectionState.withLock { $0 = .connected(.ca, nil) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "3 Connected " + trait.name)
     }
 }

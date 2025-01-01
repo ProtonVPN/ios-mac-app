@@ -22,7 +22,6 @@ import ComposableArchitecture
 
 import ProtonCoreUIFoundations
 
-import Ergonomics
 import Domain
 import Strings
 import ConnectionDetails
@@ -131,10 +130,10 @@ public struct ConnectionScreenView: View {
         coordinates: .mockPoland()
     )
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
-    $vpnConnectionStatus |=| .connected(spec, actual)
+    $vpnConnectionStatus.withLock { $0 = .connected(spec, actual) }
 
     @Shared(.userIP) var userIP: String?
-    $userIP |=| "127.0.0.1"
+    $userIP.withLock { $0 = "127.0.0.1" }
 
     let store: StoreOf<ConnectionScreenFeature> = .init(
         initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState(),

@@ -18,7 +18,6 @@
 
 import ComposableArchitecture
 import SwiftUI
-import Ergonomics
 
 @Reducer
 struct SettingsFeature {
@@ -79,9 +78,9 @@ struct SettingsFeature {
             switch action {
             case .tabSelected:
                 if state.destination == nil {
-                    state.$mainBackground |=| .clear
+                    state.$mainBackground.withLock { $0 = .clear }
                 } else {
-                    state.$mainBackground |=| .settingsDrillDown
+                    state.$mainBackground.withLock { $0 = .settingsDrillDown }
                 }
                 return .none
             case .showDrillDown(let type):
@@ -95,7 +94,7 @@ struct SettingsFeature {
                 case .privacyPolicy:
                     state.destination = .settingsDrillDown(.dynamic(.privacyPolicy))
                 }
-                state.$mainBackground |=| .settingsDrillDown
+                state.$mainBackground.withLock { $0 = .settingsDrillDown }
                 return .none
             case .signOutSelected:
                 state.alert = Self.signOutAlert
@@ -109,8 +108,8 @@ struct SettingsFeature {
                 return .none
             case .finishSignOut:
                 state.isLoading = false
-                state.$userDisplayName |=| nil
-                state.$userTier |=| nil
+                state.$userDisplayName.withLock { $0 = nil }
+                state.$userTier.withLock { $0 = nil }
                 return .none
             case .showProgressView:
                 state.isLoading = true
