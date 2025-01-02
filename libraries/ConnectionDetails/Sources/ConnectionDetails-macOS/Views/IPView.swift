@@ -22,6 +22,7 @@ import ConnectionDetails
 import ComposableArchitecture
 import Strings
 import ProtonCoreUIFoundations
+import Ergonomics
 
 public struct IPView: View {
 
@@ -84,7 +85,7 @@ public struct IPView: View {
 
 #Preview {
     @Shared(.userIP) var userIP: String?
-    $userIP.withLock { $0 = "127.0.0.1" }
+    $userIP |=| "127.0.0.1"
 
     return IPView(store: Store(initialState: .init(), reducer: { IPViewFeature() }))
         .padding(16)

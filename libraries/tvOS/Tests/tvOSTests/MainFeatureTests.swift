@@ -18,6 +18,7 @@
 
 import XCTest
 import ComposableArchitecture
+import Ergonomics
 @testable import tvOS
 @testable import Connection
 @testable import ExtensionManager
@@ -35,12 +36,12 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.selectTab(.settings)) {
             $0.currentTab = .settings
-            $0.$mainBackground.withLock { $0 = .clear }
+            $0.$mainBackground |=| .clear
         }
         await store.receive(\.settings.tabSelected)
         await store.send(.selectTab(.home)) {
             $0.currentTab = .home
-            $0.$mainBackground.withLock { $0 = .connecting }
+            $0.$mainBackground |=| .connecting
         }
     }
 
@@ -51,7 +52,7 @@ final class MainFeatureTests: XCTestCase {
         }
         await store.send(.settings(.showDrillDown(.contactUs))) {
             $0.settings.destination = .settingsDrillDown(.dynamic(.contactUs))
-            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+            $0.$mainBackground |=| .settingsDrillDown
         }
     }
 
@@ -106,7 +107,7 @@ final class MainFeatureTests: XCTestCase {
 
         store.exhaustivity = .off
 
-        $connectionState.withLock { $0 = .disconnected(nil) }
+        $connectionState |=| .disconnected(nil)
         await store.send(.homeLoading(.loaded(.protectionStatus(.delegate(.userClickedConnect)))))
 
         await store.receive(\.connection.connect) {

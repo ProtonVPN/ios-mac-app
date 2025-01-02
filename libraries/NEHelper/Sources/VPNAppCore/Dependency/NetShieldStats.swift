@@ -45,7 +45,7 @@ extension NetShieldStatsProvider: DependencyKey {
         let actor = NetShieldStatsProviderImplementation()
 
         return NetShieldStatsProvider(
-            getStats: { actor.stats },
+            getStats: { await actor.stats },
             statsStream: { NotificationCenter.default.notifications(NetShieldStatsNotification.self) }
         )
     }()

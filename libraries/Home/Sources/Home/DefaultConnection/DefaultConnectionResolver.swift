@@ -43,6 +43,9 @@ extension DefaultConnectionResolver: DependencyKey {
         connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:isSecureCoreEnabled:),
         preferenceModels: DefaultConnectionResolverImplementation.preferenceModels(for:)
     )
+    static let testValue = DefaultConnectionResolver(
+        connectionSpec: { _, _, _  in .defaultFastest },
+        preferenceModels: { _ in .fallbackValue })
 }
 
 enum DefaultConnectionResolverImplementation {

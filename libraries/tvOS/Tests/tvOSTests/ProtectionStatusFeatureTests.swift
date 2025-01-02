@@ -21,6 +21,7 @@ import ComposableArchitecture
 @testable import tvOS
 import Connection
 import DomainTestSupport
+import Ergonomics
 
 final class ProtectionStatusFeatureTests: XCTestCase {
 
@@ -52,7 +53,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState?
-        $connectionState.withLock { $0 = .connecting(.ca) }
+        $connectionState |=| .connecting(.ca)
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedCancel)
@@ -64,7 +65,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState? 
-        $connectionState.withLock { $0 = .connected(.mock, nil) }
+        $connectionState |=| .connected(.mock, nil)
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedDisconnect)
@@ -76,7 +77,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState? 
-        $connectionState.withLock { $0 = .disconnecting }
+        $connectionState |=| .disconnecting
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedConnect)

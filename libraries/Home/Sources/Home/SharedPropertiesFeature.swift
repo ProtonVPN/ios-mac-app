@@ -20,6 +20,7 @@ import ComposableArchitecture
 import Foundation
 import Domain
 import VPNAppCore
+import Ergonomics
 
 @Reducer
 public struct SharedPropertiesFeature {
@@ -83,13 +84,13 @@ public struct SharedPropertiesFeature {
                 // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
                 if let userCountry = location?.country.lowercased(),
                    let userIP = location?.ip ?? state.userIP {
-                    state.$userCountry.withLock { $0 = location?.country.lowercased() }
-                    state.$userIP.withLock { $0 = location?.ip }
+                    state.$userCountry |=| location?.country.lowercased()
+                    state.$userIP |=| location?.ip
                 }
                 return .none
 
             case .newConnectionStatus(let connectionStatus):
-                state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
+                state.$vpnConnectionStatus |=| connectionStatus
                 return .none
             }
         }

@@ -24,6 +24,7 @@ import Connection
 import Persistence
 import Foundation
 import Domain
+import Ergonomics
 
 @Reducer
 struct MainFeature {
@@ -85,7 +86,7 @@ struct MainFeature {
             switch action {
             case .connectionStateUpdated(let connectionState):
                 if state.currentTab == .home {
-                    state.$mainBackground.withLock { $0 = .init(connectionState: connectionState) }
+                    state.$mainBackground |=| .init(connectionState: connectionState)
                 }
                 return .none
             case .observeConnectionState:
@@ -106,7 +107,7 @@ struct MainFeature {
                 state.currentTab = tab
                 switch tab {
                 case .home:
-                    state.$mainBackground.withLock { $0 = .init(connectionState: state.connectionState) }
+                    state.$mainBackground |=| .init(connectionState: state.connectionState)
                     return .none
                 case .settings:
                     return .send(.settings(.tabSelected))

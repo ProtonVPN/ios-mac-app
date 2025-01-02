@@ -87,7 +87,6 @@ public struct HomeMapFeature {
             }
         }
 
-        @MainActor
         func pinOffset(userCountry: String?) -> CGSize {
             guard let code = (code ?? userCountry)?.lowercased(),
                   let coordinates = coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
@@ -157,12 +156,11 @@ public struct HomeMapFeature {
 
             case .connectionStateUpdated(let connectionStatus):
                 let mapState = MapState(connectionStatus)
-                return .concatenate(
-                    .send(.newMapState(mapState), animation: .default),
-                    .run { [userCountry = state.userCountry] send in
-                        let pinOffset = await mapState.pinOffset(userCountry: userCountry)
-                        await send(.newPinOffset(pinOffset))
-                    })
+                let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
+                return .merge(
+                    .send(.newMapState(mapState), animation: UIAccessibility.isReduceMotionEnabled ? nil : .default),
+                    .send(.newPinOffset(pinOffset))
+                    )
                 .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: UIScheduler.shared)
 
             case .newMapState(let mapState):

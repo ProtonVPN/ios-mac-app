@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import Ergonomics
 
 @Reducer
 struct SettingsDrillDownFeature {
@@ -39,7 +40,7 @@ struct SettingsDrillDownFeature {
         Reduce { state, action in
             switch action {
             case .onExitCommand:
-                $mainBackground.withLock { $0 = .clear }
+                $mainBackground |=| .clear
                 return .run { _ in await dismiss() }
             }
         }

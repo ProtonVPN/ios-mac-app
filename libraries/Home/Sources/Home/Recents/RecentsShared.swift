@@ -26,8 +26,8 @@ public extension SharedKey where Self == InMemoryKey<OrderedSet<RecentConnection
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<DefaultConnectionPreference>> {
+public extension SharedKey where Self == InMemoryKey<DefaultConnectionPreference>.Default {
     static var defaultConnectionPreference: Self {
-        PersistenceKeyDefault(.inMemory("defaultConnectionPreference"), .fastest)
+        Self[.inMemory("defaultConnectionPreference"), default: .fastest]
     }
 }

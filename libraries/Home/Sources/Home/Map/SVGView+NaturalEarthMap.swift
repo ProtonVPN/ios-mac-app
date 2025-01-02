@@ -31,7 +31,7 @@ struct MapRenderView: View {
     }
 }
 
-@MainActor extension SVGView {
+extension SVGView {
     typealias CountryCodeSVGTuple = (highlightedCountryCode: String?, svg: SVGNode)
 
     private static let xmlMap: XMLElement = {

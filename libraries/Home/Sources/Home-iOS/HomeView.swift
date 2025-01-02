@@ -96,7 +96,6 @@ public struct HomeView: View {
         .task {
             store.send(.sharedProperties(.listen))
         }
-        .transaction { $0.animation = nil } // disable implicit animations, especially for ConnectionStatusView
     }
 
     private var content: some View {

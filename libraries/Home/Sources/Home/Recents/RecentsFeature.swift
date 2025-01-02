@@ -23,6 +23,7 @@ import VPNAppCore
 import VPNShared
 import OrderedCollections
 import SwiftUI
+import Ergonomics
 
 @Reducer
 public struct RecentsFeature {
@@ -56,7 +57,7 @@ public struct RecentsFeature {
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
-            $recents.withLock { $0 = recentsStorage.readFromStorage() }
+            $recents |=| recentsStorage.readFromStorage()
         }
     }
 

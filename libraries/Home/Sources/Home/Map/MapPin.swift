@@ -24,6 +24,8 @@ public struct MapPin: View {
 
     @Binding var mode: Mode
 
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+
     var isMinimized: Bool { [.hop, .connecting].contains(mode) }
 
     public var body: some View {
@@ -63,7 +65,12 @@ public struct MapPin: View {
                 content
                     .scaleEffect(phase.scaleEffect)
                     .rotationEffect(phase.rotationEffect)
-            } animation: { $0.animation }
+            } animation: {
+                if reduceMotion {
+                    return nil
+                }
+                return $0.animation
+            }
     }
 }
 

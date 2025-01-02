@@ -23,7 +23,7 @@ import VPNShared
 // MARK: Live implementations of dependencies required by the MacOS app AND its extensions
 
 extension DefaultsProvider: DependencyKey {
-    public static var liveValue: DefaultsProvider = DefaultsProvider(
+    public static let liveValue: DefaultsProvider = DefaultsProvider(
         getDefaults: { UserDefaults.standard }
     )
 }

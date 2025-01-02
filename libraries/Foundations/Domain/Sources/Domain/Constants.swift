@@ -18,8 +18,8 @@
 
 import Foundation
 
-public class DomainConstants {
-    public struct AppGroups {
+public enum DomainConstants {
+    public enum AppGroups {
         public static let main = "group.ch.protonmail.vpn"
     }
 }

@@ -20,6 +20,7 @@ import ComposableArchitecture
 
 import SwiftUI
 
+import Ergonomics
 import Domain
 import NetShield
 import VPNAppCore
@@ -83,7 +84,7 @@ public struct ConnectionStatusFeature {
                     if masked == state.protectionState { // fully masked already
                         return .cancel(id: IDs.maskLocation)
                     }
-                    state.$protectionState.withLock { $0 = masked }
+                    state.$protectionState |=| masked
                 }
                 return .run { action in
                     try await Task.sleep(nanoseconds: UInt64(Self.timerDurationInMilliseconds) * NSEC_PER_MSEC)
@@ -132,22 +133,23 @@ public struct ConnectionStatusFeature {
                     } else if protectionState == state.startingProtectionState {
                         return .none // however do nothing if we got the same protection state
                     }
-                    state.$protectionState.withLock { $0 = protectionState } // store the new state
+                    state.$protectionState |=| protectionState // store the new state
                     return .send(.maskLocationTick)
                 } else {
-                    let updateProtectionState = { state.$protectionState.withLock { $0 = protectionState } } // store the new state
+
                     if protectionState.shouldAnimateChange {
-                        withAnimation(updateProtectionState)
+                        withOptionalAnimation { state.$protectionState |=| protectionState }
                     } else {
-                        updateProtectionState()
+                        state.$protectionState |=| protectionState
                     }
                     state.startingProtectionState = .unprotected // reset startingProtectionState
                     return .cancel(id: IDs.maskLocation)
                 }
 
             case .newNetShieldStats(let netShieldModel):
-                withAnimation {
-                    state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
+
+                withOptionalAnimation {
+                    state.$protectionState |=| state.protectionState.copy(withNetShield: netShieldModel)
                 }
                 return .none
 

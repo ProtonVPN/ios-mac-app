@@ -30,6 +30,7 @@ import ConnectionFoundations
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
+import Ergonomics
 
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
@@ -267,7 +268,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                server == nil {
                 return
             } else {
-                $connectionState.withLock { $0 = newConnectionState }
+                $connectionState |=| newConnectionState
             }
         }
     }

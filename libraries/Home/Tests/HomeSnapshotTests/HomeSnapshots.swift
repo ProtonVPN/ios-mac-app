@@ -24,12 +24,13 @@ import SnapshotTesting
 import ComposableArchitecture
 import VPNAppCore
 import Domain
+import Ergonomics
 @testable import Home
 @testable import Home_iOS
 import SwiftUI
 
 extension Locale {
-    public static let en = Locale(identifier: "en")
+    static let en = Locale(identifier: "en")
 }
 
 @Suite("Home")
@@ -42,11 +43,16 @@ struct SwiftTestingTests {
 
         let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
+            $0.locale = .en
+            $0.date = .constant(Date())
+            $0.defaultConnectionResolver
         }
         let appView = HomeView(store: store)
             .frame(.rect(width: 375, height: 667)) // iphone se 2022 size
+            .transaction { $0.animation = nil }
+            .environment(\._accessibilityReduceMotion, true)
 
-        withDependencies {
+        try await withDependencies {
             $0.locale = .en
             $0.date = .constant(Date())
         } operation: {
@@ -56,15 +62,17 @@ struct SwiftTestingTests {
             @Shared(.userCountry) var userCountry: String?
             @Shared(.userIP) var userIP: String?
             @Shared(.recents) var recents: OrderedSet<RecentConnection>
-            $recents.withLock { $0 = [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore] }
+            $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
             store.send(.map(.observeConnectionState))
 
-            $userCountry.withLock { $0 = "PL" }
-            $userIP.withLock { $0 = "1.2.3.4" }
+            $userCountry |=| "PL"
+            $userIP |=| "1.2.3.4"
 
-            $userTier.withLock { $0 = .freeTier }
-            $protectionState.withLock { $0 = .unprotected }
-            $vpnConnectionStatus.withLock { $0 = .disconnected }
+            $userTier |=| .freeTier
+            $protectionState |=| .unprotected
+            $vpnConnectionStatus |=| .disconnected
+
+            try await Task.sleep(for: .milliseconds(50))
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
@@ -72,38 +80,43 @@ struct SwiftTestingTests {
             let actual = VPNConnectionActual.mock(country: "PL",
                                                   coordinates: .init(latitude: 52.229686, longitude: 21.012247))
 
-            $protectionState.withLock { $0 = .protecting(country: "Poland", ip: "1.2.3.4") }
-            $vpnConnectionStatus.withLock { $0 = .connecting(.specificCountryServer, actual) }
+            $protectionState |=| .protecting(country: "Poland", ip: "1.2.3.4")
+            $vpnConnectionStatus |=| .connecting(.specificCountryServer, actual)
 
+            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.2 Home Free Protecting")
 
-            $protectionState.withLock { $0 = .protected(netShield: .zero(enabled: false)) }
-            $vpnConnectionStatus.withLock { $0 = .connected(.specificCountryServer, actual) }
+            $protectionState |=| .protected(netShield: .zero(enabled: false))
+            $vpnConnectionStatus |=| .connected(.specificCountryServer, actual)
 
+            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.3 Home Free Protected")
 
-            $userTier.withLock { $0 = .paidTier }
-            $protectionState.withLock { $0 = .unprotected }
-            $vpnConnectionStatus.withLock { $0 = .disconnected }
+            $userTier |=| .paidTier
+            $protectionState |=| .unprotected
+            $vpnConnectionStatus |=| .disconnected
 
+            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.1 Home Paid Unprotected")
 
-            $protectionState.withLock { $0 = .protecting(country: "Poland", ip: "1.2.3.4") }
-            $vpnConnectionStatus.withLock { $0 = .connecting(.specificCountryServer, actual) }
+            $protectionState |=| .protecting(country: "Poland", ip: "1.2.3.4")
+            $vpnConnectionStatus |=| .connecting(.specificCountryServer, actual)
 
+            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.2 Home Paid Protecting")
 
-            $protectionState.withLock { $0 = .protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)) }
-            $vpnConnectionStatus.withLock { $0 = .connected(.specificCountryServer, actual) }
+            $protectionState |=| .protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true))
+            $vpnConnectionStatus |=| .connected(.specificCountryServer, actual)
 
+            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.3 Home Paid Protected")

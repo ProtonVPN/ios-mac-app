@@ -20,6 +20,7 @@ import Foundation
 import Dependencies
 import Domain
 import ComposableArchitecture
+import Ergonomics
 
 public class UserLocationService {
 
@@ -38,7 +39,7 @@ public class UserLocationService {
     private func refresh() async throws {
         @Dependency(\.locationClient) var client
         let newLocation = try await client.fetchLocation()
-        $userLocation.withLock { $0 = newLocation }
+        $userLocation |=| newLocation
     }
 }
 

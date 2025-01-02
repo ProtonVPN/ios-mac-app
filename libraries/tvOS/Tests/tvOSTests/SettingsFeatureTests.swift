@@ -19,6 +19,7 @@
 import XCTest
 import ComposableArchitecture
 @testable import tvOS
+import Ergonomics
 
 final class SettingsFeatureTests: XCTestCase {
 
@@ -29,7 +30,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.send(.finishSignOut) {
             $0.isLoading = false
-            $0.$userDisplayName.withLock { $0 = nil }
+            $0.$userDisplayName |=| nil
         }
     }
 
@@ -47,7 +48,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.receive(\.finishSignOut) {
             $0.isLoading = false
-            $0.$userDisplayName.withLock { $0 = nil }
+            $0.$userDisplayName |=| nil
         }
     }
 
@@ -71,7 +72,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.send(.showDrillDown(.eula)) {
             $0.destination = .settingsDrillDown(.eula)
-            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+            $0.$mainBackground |=| .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
@@ -85,7 +86,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.send(.showDrillDown(.contactUs)) {
             $0.destination = .settingsDrillDown(.dynamic(.contactUs))
-            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+            $0.$mainBackground |=| .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
@@ -99,7 +100,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.send(.showDrillDown(.supportCenter)) {
             $0.destination = .settingsDrillDown(.dynamic(.supportCenter))
-            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+            $0.$mainBackground |=| .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
@@ -113,7 +114,7 @@ final class SettingsFeatureTests: XCTestCase {
         }
         await store.send(.showDrillDown(.privacyPolicy)) {
             $0.destination = .settingsDrillDown(.dynamic(.privacyPolicy))
-            $0.$mainBackground.withLock { $0 = .settingsDrillDown }
+            $0.$mainBackground |=| .settingsDrillDown
         }
         await store.send(.destination(.dismiss)) {
             $0.destination = nil
