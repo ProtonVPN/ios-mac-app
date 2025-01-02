@@ -157,11 +157,12 @@ public struct HomeMapFeature {
             case .connectionStateUpdated(let connectionStatus):
                 let mapState = MapState(connectionStatus)
                 let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
+                @Dependency(\.debounceScheduler) var scheduler
                 return .merge(
                     .send(.newMapState(mapState), animation: UIAccessibility.isReduceMotionEnabled ? nil : .default),
                     .send(.newPinOffset(pinOffset))
                     )
-                .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: UIScheduler.shared)
+                    .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: scheduler)
 
             case .newMapState(let mapState):
                 state.pinMode = mapState.pinMode

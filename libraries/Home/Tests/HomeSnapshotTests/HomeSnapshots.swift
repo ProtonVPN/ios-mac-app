@@ -51,7 +51,7 @@ struct SwiftTestingTests {
             .transaction { $0.animation = nil }
             .environment(\._accessibilityReduceMotion, true)
 
-        try await withDependencies {
+        withDependencies {
             $0.locale = .en
             $0.date = .constant(Date())
         } operation: {
@@ -71,8 +71,6 @@ struct SwiftTestingTests {
             $protectionState |=| .unprotected
             $vpnConnectionStatus |=| .disconnected
 
-            try await Task.sleep(for: .milliseconds(50))
-
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.1 Home Free Unprotected")
@@ -82,7 +80,6 @@ struct SwiftTestingTests {
             $protectionState |=| .protecting(country: "Poland", ip: "1.2.3.4")
             $vpnConnectionStatus |=| .connecting(.specificCountryServer, actual)
 
-            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.2 Home Free Protecting")
@@ -90,7 +87,6 @@ struct SwiftTestingTests {
             $protectionState |=| .protected(netShield: .zero(enabled: false))
             $vpnConnectionStatus |=| .connected(.specificCountryServer, actual)
 
-            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "1.3 Home Free Protected")
@@ -99,7 +95,6 @@ struct SwiftTestingTests {
             $protectionState |=| .unprotected
             $vpnConnectionStatus |=| .disconnected
 
-            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.1 Home Paid Unprotected")
@@ -107,7 +102,6 @@ struct SwiftTestingTests {
             $protectionState |=| .protecting(country: "Poland", ip: "1.2.3.4")
             $vpnConnectionStatus |=| .connecting(.specificCountryServer, actual)
 
-            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.2 Home Paid Protecting")
@@ -115,7 +109,6 @@ struct SwiftTestingTests {
             $protectionState |=| .protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true))
             $vpnConnectionStatus |=| .connected(.specificCountryServer, actual)
 
-            try await Task.sleep(for: .milliseconds(50))
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
                            testName: "2.3 Home Paid Protected")
