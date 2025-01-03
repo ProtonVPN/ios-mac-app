@@ -476,7 +476,7 @@ public final class ExtensionAPIService {
     /// refresh the certificate because they're missing from the keychain for whatever reason (most likely an app
     /// upgrade occurred, and the user hasn't launched the app yet).
     private func fetchApiCredentials(allowUsingAppsCredentials: Bool = false) -> (AuthCredentials, AppContext)? {
-        if let authCredentials = keychain.fetch() {
+        if let authCredentials = keychain.fetch(forContext: .wireGuardExtension) {
             log.info("Using extension's API session.")
             return (authCredentials, .wireGuardExtension)
         }
