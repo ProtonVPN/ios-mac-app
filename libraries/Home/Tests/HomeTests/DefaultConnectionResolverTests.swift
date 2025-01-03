@@ -72,8 +72,9 @@ final class DefaultConnectionResolverTests: XCTestCase {
 }
 
 extension Date {
-    static var referenceDate: Date { Date(timeIntervalSince1970: .init(integerLiteral: 9_223_372_036_854_775_807)) }
-    static var earlier: Date { referenceDate.addingTimeInterval(-10_000_000) }
+    static let referenceDate = Date(timeIntervalSince1970: 591742800)
+    static var earlier: Date { referenceDate.addingTimeInterval(-2443332) }
+    static var later: Date { referenceDate.addingTimeInterval(2443332) }
 }
 
 extension ConnectionSpec {
@@ -82,9 +83,9 @@ extension ConnectionSpec {
     static let franceWithP2P = ConnectionSpec(location: .region(code: "FR"), features: [.p2p])
     static let poland = ConnectionSpec(location: .region(code: "PL"), features: [])
 
-    func recent(with date: Date) -> RecentConnection {
+    func recent(with date: Date, pinnedDate: Date? = nil) -> RecentConnection {
         return RecentConnection(
-            pinnedDate: nil,
+            pinnedDate: pinnedDate,
             underMaintenance: false,
             connectionDate: date,
             connection: self

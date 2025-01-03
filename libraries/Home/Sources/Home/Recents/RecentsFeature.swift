@@ -38,19 +38,10 @@ public struct RecentsFeature {
         @Shared(.recents)
         public var recents: OrderedSet<RecentConnection>
 
-        // VPNAPPL- : Move this and other recents logic (defined in OrderedSet extension) to a client/dependency
+        /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
-            return recents
-            // The below is not correct and needs fixing
-//            switch defaultConnectionPreference {
-//            case .mostRecent:
-//                // We are already showing the most recent connection in the connection card
-//                return recents.connectionsList // without most recent connection, unless it's pinned
-//            case .recent(let spec):
-//                return recents.filter { $0.connection != spec || $0.pinned }
-//            case .fastest:
-//                return recents.filter { $0.connection != .defaultFastest || $0.pinned }
-//            }
+            @Dependency(\.connectionPresenter) var presenter
+            return presenter.recentConnectionList(defaultConnectionPreference: defaultConnectionPreference, recents: recents)
         }
 
         @SharedReader(.userTier)
