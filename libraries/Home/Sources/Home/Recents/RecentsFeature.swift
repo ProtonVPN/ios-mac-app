@@ -36,7 +36,7 @@ public struct RecentsFeature {
         @SharedReader(.defaultConnectionPreference)
         private var defaultConnectionPreference
         @Shared(.recents)
-        public var recents: OrderedSet<RecentConnection>
+        fileprivate var recents: OrderedSet<RecentConnection>
 
         /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
