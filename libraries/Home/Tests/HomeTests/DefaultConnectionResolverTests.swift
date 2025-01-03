@@ -28,16 +28,6 @@ final class DefaultConnectionResolverTests: XCTestCase {
 
     // MARK: ConnectionSpec Resolving
 
-    func testResolverReturnsNormalFastestRegardlessWhetherSecureCoreIsEnabled() {
-        let fastestNonSCSpec = ConnectionSpec(location: .fastest, features: [])
-
-        let resolvedSpecWithSCEnabled = Sut.connectionSpec(for: .fastest, recents: [], isSecureCoreEnabled: true)
-        let resolvedSpecWithSCDisabled = Sut.connectionSpec(for: .fastest, recents: [], isSecureCoreEnabled: false)
-
-        XCTAssertEqual(resolvedSpecWithSCEnabled, fastestNonSCSpec)
-        XCTAssertEqual(resolvedSpecWithSCDisabled, fastestNonSCSpec)
-    }
-
     func testResolverReturnsMostRecentConnectionWhenPreferenceIsMostRecent() {
         let mostRecentConnection = ConnectionSpec.franceWithP2P.recent(with: .referenceDate)
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
@@ -45,12 +35,12 @@ final class DefaultConnectionResolverTests: XCTestCase {
         let recents: OrderedSet<RecentConnection> = [mostRecentConnection, olderRecentConnection]
         XCTAssertEqual(recents.mostRecent, mostRecentConnection) // sanity check
 
-        let resolvedSpec = Sut.connectionSpec(for: .mostRecent, recents: recents, isSecureCoreEnabled: false)
+        let resolvedSpec = Sut.connectionSpec(for: .mostRecent, recents: recents)
         XCTAssertEqual(resolvedSpec, mostRecentConnection.connection)
     }
 
     func testResolverReturnsSpecificRecentConnectionWhenPrefenceIsSpecific() {
-        let resolvedSpec = Sut.connectionSpec(for: .recent(.poland), recents: [], isSecureCoreEnabled: false)
+        let resolvedSpec = Sut.connectionSpec(for: .recent(.poland), recents: [])
         XCTAssertEqual(resolvedSpec, .poland)
     }
 

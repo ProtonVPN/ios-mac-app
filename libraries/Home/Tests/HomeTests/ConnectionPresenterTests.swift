@@ -30,7 +30,8 @@ class ConnectionPresenterTests: XCTestCase {
 
         let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
             defaultConnectionPreference: .mostRecent,
-            recents: [mostRecentConnection, olderRecentConnection]
+            recents: [mostRecentConnection, olderRecentConnection],
+            currentConnection: nil
         )
 
         XCTAssertEqual(recentConnections, [olderRecentConnection])
@@ -43,7 +44,8 @@ class ConnectionPresenterTests: XCTestCase {
 
         let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
             defaultConnectionPreference: .mostRecent,
-            recents: connections
+            recents: connections,
+            currentConnection: nil
         )
 
         XCTAssertEqual(recentConnections, connections)
@@ -55,7 +57,8 @@ class ConnectionPresenterTests: XCTestCase {
 
         let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
             defaultConnectionPreference: .fastest,
-            recents: [fastestConnection, olderRecentConnection]
+            recents: [fastestConnection, olderRecentConnection],
+            currentConnection: nil
         )
 
         XCTAssertEqual(recentConnections, [olderRecentConnection])
@@ -68,7 +71,8 @@ class ConnectionPresenterTests: XCTestCase {
 
         let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
             defaultConnectionPreference: .fastest,
-            recents: connections
+            recents: connections,
+            currentConnection: nil
         )
 
         XCTAssertEqual(recentConnections, connections)
@@ -80,7 +84,8 @@ class ConnectionPresenterTests: XCTestCase {
 
         let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
             defaultConnectionPreference: .recent(specifiedConnection.connection),
-            recents: [specifiedConnection, olderRecentConnection]
+            recents: [specifiedConnection, olderRecentConnection],
+            currentConnection: nil
         )
 
         XCTAssertEqual(recentConnections, [olderRecentConnection])
@@ -93,9 +98,24 @@ class ConnectionPresenterTests: XCTestCase {
 
         let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
             defaultConnectionPreference: .recent(specifiedConnection.connection),
-            recents: connections
+            recents: connections,
+            currentConnection: nil
         )
 
         XCTAssertEqual(recentConnections, connections)
+    }
+
+    func testDefaultConnectionIncludedAndCurrentConnectionFilteredOutWhenConnected() {
+        let currentConnection = ConnectionSpec.poland.recent(with: .referenceDate)
+        let specifiedConnection = ConnectionSpec.franceWithP2P.recent(with: .earlier)
+
+        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+            defaultConnectionPreference: .recent(specifiedConnection.connection),
+            recents: [currentConnection, specifiedConnection],
+            currentConnection: currentConnection.connection
+        )
+
+        XCTAssertTrue(recentConnections.contains(specifiedConnection))
+        XCTAssertFalse(recentConnections.contains(currentConnection))
     }
 }

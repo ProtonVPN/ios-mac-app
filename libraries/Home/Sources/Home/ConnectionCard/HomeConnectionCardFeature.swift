@@ -67,8 +67,7 @@ public struct HomeConnectionCardFeature {
                 @Dependency(\.defaultConnectionResolver) var resolver
                 return resolver.connectionSpec(
                     preference: defaultConnectionPreference,
-                    recents: recents,
-                    isSecureCoreEnabled: secureCoreToggle
+                    recents: recents
                 )
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),

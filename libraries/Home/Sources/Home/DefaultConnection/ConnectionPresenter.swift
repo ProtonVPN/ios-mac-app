@@ -27,35 +27,47 @@ struct ConnectionPresenter: Sendable {
     /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
     private var recentConnectionList: @Sendable (
         _ defaultConnectionPreference: DefaultConnectionPreference,
-        _ recents: OrderedSet<RecentConnection>
-    ) -> OrderedSet<RecentConnection> = { _, _ in XCTFail("\(Self.self).recentConnectionList"); return [] }
+        _ recents: OrderedSet<RecentConnection>,
+        _ currentConnection: ConnectionSpec?
+    ) -> OrderedSet<RecentConnection> = { _, _, _ in XCTFail("\(Self.self).recentConnectionList"); return [] }
 }
 
 extension ConnectionPresenter: DependencyKey {
-
-    private static func filteredConnection(
-        preference: DefaultConnectionPreference,
-        recents: OrderedSet<RecentConnection>
-    ) -> RecentConnection? {
-        switch preference {
-        case .mostRecent:
-            return recents.mostRecent
-
-        case .fastest:
-            return recents.first { $0.connection == .defaultFastest }
-
-        case .recent(let spec):
-            return recents.first { $0.connection == spec }
+    private static func shouldIncludeInRecents(
+        recentConnection: RecentConnection,
+        defaultConnectionSpec: ConnectionSpec,
+        currentConnectionSpec: ConnectionSpec?
+    ) -> Bool {
+        if recentConnection.pinned {
+            // Never hide connections that are pinned
+            return true
         }
+
+        // Are we already showing recentConnection in the connection card?
+        if let currentConnectionSpec {
+            // Include connection in recents if it's not the currently connected spec
+            return recentConnection.connection != currentConnectionSpec
+        }
+
+        // Lastly, if we are not connected, connection card holds our default connection
+        // Include this connection if it's not the default connection spec
+        return recentConnection.connection != defaultConnectionSpec
     }
 
-    static var liveValue: Self = ConnectionPresenter(recentConnectionList: { defaultConnectionPreference, recents in
-        let connection = filteredConnection(preference: defaultConnectionPreference, recents: recents)
-        if let connectionToFilterOut = connection, !connectionToFilterOut.pinned {
-            return recents.subtracting([connectionToFilterOut])
+
+    static var liveValue: Self = ConnectionPresenter(
+        recentConnectionList: { preference, recents, currentConnection in
+            @Dependency(\.defaultConnectionResolver) var resolver
+            let defaultConnectionSpec = resolver.connectionSpec(preference: preference, recents: recents)
+            return recents.filter {
+                shouldIncludeInRecents(
+                    recentConnection: $0,
+                    defaultConnectionSpec: defaultConnectionSpec,
+                    currentConnectionSpec: currentConnection
+                )
+            }
         }
-        return recents
-    })
+    )
 }
 
 extension DependencyValues {

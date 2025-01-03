@@ -41,7 +41,11 @@ public struct RecentsFeature {
         /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
             @Dependency(\.connectionPresenter) var presenter
-            return presenter.recentConnectionList(defaultConnectionPreference: defaultConnectionPreference, recents: recents)
+            return presenter.recentConnectionList(
+                defaultConnectionPreference: defaultConnectionPreference,
+                recents: recents,
+                currentConnection: vpnConnectionStatus.spec
+            )
         }
 
         @SharedReader(.userTier)
