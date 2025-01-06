@@ -132,10 +132,6 @@ public struct RecentsFeature {
                 return .send(.connectionEstablished(spec))
 
             case .connectionEstablished(let spec):
-                guard spec.shouldManifestRecentsEntry else {
-                    log.debug("Ignoring entry to recents list for spec", metadata: ["spec": "\(spec)"])
-                    return .none
-                }
                 withAnimation {
                     state.$recents.withLock { $0.updateList(with: spec) }
                 }
@@ -168,12 +164,5 @@ public struct RecentsFeature {
                 return .none
             }
         }
-    }
-}
-
-extension ConnectionSpec {
-    public var shouldManifestRecentsEntry: Bool {
-        // We don't want the change server action to add a `Random` item into recents
-        location != .random
     }
 }

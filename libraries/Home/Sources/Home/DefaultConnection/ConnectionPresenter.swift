@@ -54,7 +54,6 @@ extension ConnectionPresenter: DependencyKey {
         return recentConnection.connection != defaultConnectionSpec
     }
 
-
     static var liveValue: Self = ConnectionPresenter(
         recentConnectionList: { preference, recents, currentConnection in
             @Dependency(\.defaultConnectionResolver) var resolver
