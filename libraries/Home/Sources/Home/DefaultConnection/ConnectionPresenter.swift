@@ -67,6 +67,8 @@ extension ConnectionPresenter: DependencyKey {
             }
         }
     )
+
+    static var testValue: Self = .liveValue
 }
 
 extension DependencyValues {

@@ -61,6 +61,8 @@ struct SwiftTestingTests {
             @Shared(.userCountry) var userCountry: String?
             @Shared(.userIP) var userIP: String?
             @Shared(.recents) var recents: OrderedSet<RecentConnection>
+            @Shared(.netShieldLevel) var netShieldLevel: NetShieldType
+            $netShieldLevel.withLock { $0 = .level2 }
             $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
             store.send(.map(.observeConnectionState))
 

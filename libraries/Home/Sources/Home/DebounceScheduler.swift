@@ -25,8 +25,8 @@ extension DependencyValues {
         set { self[DebounceScheduler.self] = newValue }
     }
 
-    public enum DebounceScheduler: TestDependencyKey {
-        public static let liveValue = UIScheduler.shared
+    public enum DebounceScheduler: DependencyKey {
+        public static let liveValue = UIScheduler.shared.eraseToAnyScheduler()
         public static let testValue = UIScheduler.immediate.eraseToAnyScheduler()
     }
 }
