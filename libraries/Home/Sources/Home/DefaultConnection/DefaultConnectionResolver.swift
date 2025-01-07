@@ -25,14 +25,12 @@ import Domain
 
 @DependencyClient
 struct DefaultConnectionResolver: Sendable {
-    @DependencyEndpoint
-    private var connectionSpec: (
+    var connectionSpec: (
         _ preference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>
     ) -> ConnectionSpec = { _, _ in .defaultFastest }
 
-    @DependencyEndpoint
-    private var preferenceModels: @Sendable (
+    var preferenceModels: @Sendable (
         _ recents: OrderedSet<RecentConnection>
     ) -> [ConnectionPreferenceModel] = { _ in XCTFail("\(Self.self).preferenceModels"); return [] }
 }
