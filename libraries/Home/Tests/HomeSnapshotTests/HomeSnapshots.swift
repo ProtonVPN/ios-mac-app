@@ -29,18 +29,30 @@ import Ergonomics
 @testable import Home_iOS
 import SwiftUI
 
-extension Locale {
-    static let en = Locale(identifier: "en")
-}
-
 @Suite("Home")
 struct SwiftTestingTests {
 
-    @available(iOS 17, *)
-    @Test("Home screen")
-    @MainActor
-    func homeScreen() async throws {
+    static let homeTestData = [
+        (
+            ProtectionState.unprotected,
+            VPNConnectionStatus.disconnected
+        ),
+        (
+            ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
+            VPNConnectionStatus.connecting(.specificCountryServer, .mock(country: "PL",
+                                                                         coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
+        ),
+        (
+            ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
+            VPNConnectionStatus.connected(.specificCountryServer, .mock(country: "PL",
+                                                                        coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
+        )
+    ]
 
+    @available(iOS 17, *)
+    @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
+    @MainActor
+    func homeScreen(tier: Int, connectionState: (ProtectionState, VPNConnectionStatus)) async throws {
         let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = .en
@@ -62,58 +74,20 @@ struct SwiftTestingTests {
             @Shared(.userIP) var userIP: String?
             @Shared(.recents) var recents: OrderedSet<RecentConnection>
             @Shared(.netShieldLevel) var netShieldLevel: NetShieldType
-            $netShieldLevel.withLock { $0 = .level2 }
-            $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
-            store.send(.map(.observeConnectionState))
 
+            $netShieldLevel |=| .level2
+            $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
             $userCountry |=| "PL"
             $userIP |=| "1.2.3.4"
+            $userTier |=| tier
+            $protectionState |=| connectionState.0
+            $vpnConnectionStatus |=| connectionState.1
 
-            $userTier |=| .freeTier
-            $protectionState |=| .unprotected
-            $vpnConnectionStatus |=| .disconnected
-
-            assertSnapshot(of: appView,
-                           as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "1.1 Home Free Unprotected")
-            let actual = VPNConnectionActual.mock(country: "PL",
-                                                  coordinates: .init(latitude: 52.229686, longitude: 21.012247))
-
-            $protectionState |=| .protecting(country: "Poland", ip: "1.2.3.4")
-            $vpnConnectionStatus |=| .connecting(.specificCountryServer, actual)
+            let tierTitle = tier.isFreeTier ? "Free" : "Paid"
 
             assertSnapshot(of: appView,
                            as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "1.2 Home Free Protecting")
-
-            $protectionState |=| .protected(netShield: .zero(enabled: false))
-            $vpnConnectionStatus |=| .connected(.specificCountryServer, actual)
-
-            assertSnapshot(of: appView,
-                           as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "1.3 Home Free Protected")
-
-            $userTier |=| .paidTier
-            $protectionState |=| .unprotected
-            $vpnConnectionStatus |=| .disconnected
-
-            assertSnapshot(of: appView,
-                           as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "2.1 Home Paid Unprotected")
-
-            $protectionState |=| .protecting(country: "Poland", ip: "1.2.3.4")
-            $vpnConnectionStatus |=| .connecting(.specificCountryServer, actual)
-
-            assertSnapshot(of: appView,
-                           as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "2.2 Home Paid Protecting")
-
-            $protectionState |=| .protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true))
-            $vpnConnectionStatus |=| .connected(.specificCountryServer, actual)
-
-            assertSnapshot(of: appView,
-                           as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "2.3 Home Paid Protected")
+                           testName: "\(tierTitle) \(protectionState.shortDescription()), \(vpnConnectionStatus.shortDescription())")
         }
     }
 }
@@ -122,6 +96,33 @@ infix operator |=|
 
 public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {
     lhs.withLock { $0 = rhs }
+}
+
+extension Locale {
+    static let en = Locale(identifier: "en")
+}
+
+extension ProtectionState {
+    fileprivate func shortDescription() -> String {
+        switch self {
+        case .unprotected: return "Unprotected"
+        case .protecting: return "Protecting"
+        case .protected: return "Protected"
+        case .protectedSecureCore: return "ProtectedSecureCore"
+        }
+    }
+}
+
+extension VPNConnectionStatus {
+    fileprivate func shortDescription() -> String {
+        switch self {
+        case .disconnected: return "Disconnected"
+        case .connecting: return "Connecting"
+        case .loadingConnectionInfo: return "LoadingConnectionInfo"
+        case .disconnecting: return "Disconnecting"
+        case .connected: return "Connected"
+        }
+    }
 }
 
 #endif

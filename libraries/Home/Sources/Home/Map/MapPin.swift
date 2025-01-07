@@ -66,9 +66,7 @@ public struct MapPin: View {
                     .scaleEffect(phase.scaleEffect)
                     .rotationEffect(phase.rotationEffect)
             } animation: {
-                if reduceMotion {
-                    return nil
-                }
+                guard !reduceMotion else { return nil }
                 return $0.animation
             }
     }

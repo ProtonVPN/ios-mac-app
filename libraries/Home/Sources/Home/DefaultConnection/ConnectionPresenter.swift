@@ -68,7 +68,7 @@ extension ConnectionPresenter: DependencyKey {
         }
     )
 
-    static var testValue: Self = .liveValue
+    static let testValue: Self = .liveValue
 }
 
 extension DependencyValues {
