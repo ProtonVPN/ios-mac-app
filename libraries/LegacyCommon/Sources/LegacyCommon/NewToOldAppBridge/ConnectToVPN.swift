@@ -40,7 +40,7 @@ extension ConnectToVPNKey: DependencyKey {
     }()
 
     @available(iOS 16, *)
-    static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
+    static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { spec in
         @Dependency(\.connectionBridge) var bridge
         @Dependency(\.propertiesManager) var propertiesManager
         @Dependency(\.serverSelector) var serverSelector
@@ -60,7 +60,7 @@ extension ConnectToVPNKey: DependencyKey {
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
 
-        let server = try serverSelector.select(intent, userTier, acceptableProtocols)
+        let server = try serverSelector.select(spec, userTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
 
         let portSelectionResult = try await portSelector.select(
@@ -82,7 +82,9 @@ extension ConnectToVPNKey: DependencyKey {
                 excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
             )
         )
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: spec, server: server, tunnelSettings: tunnelSettings, features: features)
+        @Dependency(\.connectionIntentStorage) var storage
+        try storage.set(connectionIntent: intent)
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
     }

@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct TunnelFeatures: Equatable, Sendable {
+public struct TunnelFeatures: Equatable, Sendable, Codable {
 
 #if !os(tvOS)
     public let killSwitch: Bool

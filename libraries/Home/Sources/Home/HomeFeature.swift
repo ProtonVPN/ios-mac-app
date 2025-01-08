@@ -244,7 +244,15 @@ public struct HomeFeature {
 
             case .onNewConnectionState(let newConnectionState):
                 log.debug("Connection layer state update \(newConnectionState)")
-                return .send(.sharedProperties(.newConnectionStatus(newConnectionState.status)))
+                @Dependency(\.connectionIntentStorage) var storage
+                do {
+                    let originalIntent = try storage.getConnectionIntent()
+                    let newConnectionStatus = newConnectionState.connectionStatus(originalIntent: originalIntent)
+                    return .send(.sharedProperties(.newConnectionStatus(newConnectionStatus)))
+                } catch {
+                    log.error("Missing original connection intent", metadata: ["error": "\(error)"])
+                    return .send(.connection(.disconnect(.connectionFailure(.intentMissing))))
+                }
 
             case .map:
                 return .none
@@ -260,30 +268,6 @@ public struct HomeFeature {
     }
 
     public init() {}
-}
-
-@available(iOS 16, *)
-extension ConnectionState {
-    public var status: VPNConnectionStatus {
-        switch self {
-        case .disconnected(_):
-            return .disconnected
-
-        case .connecting(let server):
-            let spec: ConnectionSpec = .defaultFastest
-            let actualConnection = server.map {
-                VPNConnectionActual(connectedDate: .now, vpnProtocol: .wireGuard(.udp), natType: .moderateNAT, safeMode: nil, server: $0)
-            }
-            return .connecting(spec, actualConnection)
-
-        case .disconnecting:
-            return .disconnecting(.defaultFastest, nil)
-
-        case .connected(let server, _):
-            let spec: ConnectionSpec = .defaultFastest
-            return .connected(spec, VPNConnectionActual(connectedDate: .now, vpnProtocol: .wireGuard(.udp), natType: .moderateNAT, safeMode: nil, server: server))
-        }
-    }
 }
 
 private extension FeatureStatisticsMessage.NetShieldStats {

@@ -20,7 +20,7 @@ import Foundation
 import Strings
 
 /// Defines users intent as to where (s)he wanted to connect
-public struct ConnectionSpec: Equatable, Hashable, Codable {
+public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
 
     public let location: Location
     public let features: Set<Feature>
@@ -28,19 +28,19 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
 
     // MARK: -
 
-    public enum Server: Equatable, Hashable, Codable {
+    public enum Server: Equatable, Hashable, Codable, Sendable {
         case free
         case paid
     }
 
-    public enum SecureCoreSpec: Equatable, Hashable, Codable {
+    public enum SecureCoreSpec: Equatable, Hashable, Codable, Sendable {
         case random
         case fastest
         case fastestHop(to: String)
         case hop(to: String, via: String)
     }
 
-    public enum Location: Equatable, Hashable, Codable {
+    public enum Location: Equatable, Hashable, Codable, Sendable {
         case fastest
         case random
         case region(code: String)
@@ -48,7 +48,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable {
         case secureCore(SecureCoreSpec)
     }
 
-    public enum Feature: Equatable, Hashable, CaseIterable, CustomStringConvertible, Identifiable, Codable {
+    public enum Feature: Equatable, Hashable, CaseIterable, CustomStringConvertible, Identifiable, Codable, Sendable {
         public var id: Self { self } // Identifiable
 
         case smart // smart routing

@@ -145,6 +145,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
 
             case .tunnel(.connectionFinished(.success)):
+                log.info("Tunnel started: loading authentication data")
                 return .send(.certAuth(.loadAuthenticationData))
 
             case .certAuth(.loadingFinished(.success(let authData))):
@@ -297,6 +298,7 @@ public enum ConnectionError: Error, Equatable, Sendable {
     case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
+    case intentMissing // Original connection intent is missing, and we cannot provide accurate connection details
     case serverMissing
     case timeout
 }

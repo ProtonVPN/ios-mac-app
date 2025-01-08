@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct TunnelSettings: Equatable, Sendable {
+public struct TunnelSettings: Equatable, Sendable, Codable {
     public let transport: WireGuardTransport
     public let ports: [Int]
     public let tunnelFeatures: TunnelFeatures
