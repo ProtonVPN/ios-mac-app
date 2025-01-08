@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import Connection
+import ExtensionManager
 import CoreConnection
 import Ergonomics
 
@@ -46,9 +47,10 @@ final class ConnectionStateTests: XCTestCase {
 
     func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
         let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
+        let now = Date.now
 
         let state = ConnectionState(
-            tunnelState: .connected(server),
+            tunnelState: .connected(TunnelConnectionResult(logicalInfo: server, connectionDate: now)),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )

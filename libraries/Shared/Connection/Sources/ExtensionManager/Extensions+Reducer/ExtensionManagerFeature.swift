@@ -44,7 +44,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case disconnecting(TunnelConnectionError?)
         case preparingConnection(LogicalServerInfo) // Preparing managers and requesting tunnel start
         case connecting(LogicalServerInfo?) // Tunnel has been launched
-        case connected(LogicalServerInfo)
+        case connected(TunnelConnectionResult)
     }
 
     @CasePathable
@@ -53,7 +53,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case stopObservingStateChanges
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
-        case connectionFinished(Result<LogicalServerInfo, Error>)
+        case connectionFinished(Result<TunnelConnectionResult, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect(TunnelConnectionError?)
         case removeManagers
@@ -100,9 +100,9 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
-            case .connectionFinished(.success(let logicalServerInfo)):
+            case .connectionFinished(.success(let connectionInfo)):
                 // Tunnel has started, and responded with information about what logical and server it has connected to
-                state = .connected(logicalServerInfo)
+                state = .connected(connectionInfo)
                 return .none
 
             case .tunnelStatusChanged(.connecting):
@@ -122,9 +122,12 @@ public struct ExtensionFeature: Reducer, Sendable {
                 state = .connecting(state.connecting ?? nil)
 
                 return .run { send in
-                    await send(.connectionFinished(Result {
-                        try await tunnelManager.connectedServer
-                    }))
+                    @Dependency(\.date) var date
+                    let result = await Result { TunnelConnectionResult(
+                        logicalInfo: try await tunnelManager.connectedServer,
+                        connectionDate: try await tunnelManager.session.connectedDate ?? date.now
+                    ) }
+                    return await send(.connectionFinished(result))
                 }
 
             case .tunnelStatusChanged(.disconnecting):
@@ -202,5 +205,15 @@ public enum TunnelConnectionError: Error, Equatable {
         default:
             return false
         }
+    }
+}
+
+public struct TunnelConnectionResult: Equatable, Sendable {
+    public let logicalInfo: LogicalServerInfo
+    public let connectionDate: Date
+
+    package init(logicalInfo: LogicalServerInfo, connectionDate: Date) {
+        self.logicalInfo = logicalInfo
+        self.connectionDate = connectionDate
     }
 }

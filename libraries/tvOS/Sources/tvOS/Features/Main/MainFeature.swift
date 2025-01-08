@@ -126,7 +126,7 @@ struct MainFeature {
                 }
                 // these two below are separate because the server is optional in one and non-optional in the other case
                 // which causes the compiler to ignore the non-optional and just send a nil instead
-                if case let .connected(server, _) = state.connectionState {
+                if case let .connected(server, _, _) = state.connectionState {
                     return effect(server)
                 }
                 if case let .connecting(server) = state.connectionState {
@@ -213,7 +213,8 @@ struct MainFeature {
         @Dependency(\.connectionConfiguration) var configuration
         let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)
         let ports = server.endpoint.overridePorts(using: .wireGuard(.udp)) ?? defaultPorts
-        return .init(server: server, tunnelSettings: TunnelSettings(transport: .udp, ports: ports, tunnelFeatures: TunnelFeatures()), features: features)
+        let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, tunnelFeatures: TunnelFeatures())
+        return .init(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
     }
 }
 

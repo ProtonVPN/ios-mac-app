@@ -33,7 +33,7 @@ import struct Domain.VPNConnectionFeatures
 public enum ConnectionState: Equatable, Sendable {
     case disconnected(ConnectionError?)
     case connecting(Server?)
-    case connected(Server, ConnectionDetailsMessage?)
+    case connected(Server, Date, ConnectionDetailsMessage?)
     case disconnecting
 
     public init(
@@ -57,14 +57,14 @@ public enum ConnectionState: Equatable, Sendable {
         }
 
         switch (tunnelState, localAgentState) {
-        case (.connected(let logicalServerInfo), .connected(let connectionDetails)):
+        case (.connected(let tunnelConnectionInfo), .connected(let connectionDetails)):
             @Dependency(\.serverIdentifier) var serverIdentifier
-            guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
+            guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
                 assertionFailure("Unknown server")
                 self = .disconnected(.serverMissing)
                 return
             }
-            self = .connected(server, connectionDetails)
+            self = .connected(server, tunnelConnectionInfo.connectionDate, connectionDetails)
 
         case (.connected, _):
             self = .connecting(nil)

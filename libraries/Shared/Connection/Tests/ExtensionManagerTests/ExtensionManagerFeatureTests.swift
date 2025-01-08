@@ -39,7 +39,8 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let features = VPNConnectionFeatures.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
         let tunnelSettings = TunnelSettings.mock
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+        let now = Date.now
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -55,7 +56,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         } withDependencies: {
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
-            $0.date = .constant(.now)
+            $0.date = .constant(now)
         }
 
         await store.send(.startObservingStateChanges)
@@ -74,14 +75,14 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await mockClock.advance(by: .milliseconds(500))
         await store.receive(\.tunnelStatusChanged.connected)
         await store.receive(\.connectionFinished.success) {
-            $0 = .connected(logicalServerInfo)
+            $0 = .connected(TunnelConnectionResult(logicalInfo: logicalServerInfo, connectionDate: now))
         }
 
         await store.send(.stopObservingStateChanges)
     }
 
     @MainActor
-    func testStateSetToConnectedIfExistingTunnelIsConencted() async {
+    func testStateSetToConnectedIfExistingTunnelIsConnected() async {
         let mockManager = MockTunnelManager()
         mockManager.connection = VPNSessionMock(
             status: .connected,
@@ -90,12 +91,14 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         )
         let previouslyConnectedServer = LogicalServerInfo(logicalID: "logical", serverID: "server")
         mockManager.connection.connectedServer = previouslyConnectedServer
+        let now = Date.now
 
         let disconnected = ExtensionFeature.State.disconnected(nil)
         let store = TestStore(initialState: disconnected) {
             ExtensionFeature()
         } withDependencies: {
             $0.tunnelManager = mockManager
+            $0.date = .constant(now)
         }
 
         await store.send(.startObservingStateChanges)
@@ -103,7 +106,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
             $0 = .connecting(nil)
         }
         await store.receive(\.connectionFinished.success) {
-            $0 = .connected(previouslyConnectedServer)
+            $0 = .connected(TunnelConnectionResult(logicalInfo: previouslyConnectedServer, connectionDate: now))
         }
 
         await store.send(.stopObservingStateChanges)
@@ -130,7 +133,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.startObservingStateChanges)
         await store.receive(\.tunnelStatusChanged.invalid)

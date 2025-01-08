@@ -44,5 +44,9 @@ extension BundleIDClient: DependencyKey {
         #endif
     }
 
+    package static func mock(bundleID: String) -> Self {
+        BundleIDClient(bundleIdentifierForTarget: { bundleID })
+    }
+
     public static let testValue = liveValue
 }

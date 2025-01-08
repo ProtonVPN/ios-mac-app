@@ -65,7 +65,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let store = TestStore(initialState: disconnected) {
             ConnectionFeature()
         } withDependencies: {
-            $0.date = .constant(.now)
+            $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -81,7 +81,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -95,7 +95,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(connectedLogicalServer)
+            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData) {
@@ -168,7 +168,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let store = TestStore(initialState: disconnected) {
             ConnectionFeature()
         } withDependencies: {
-            $0.date = .constant(.now)
+            $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -184,7 +184,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -198,7 +198,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(connectedLogicalServer)
+            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData) {
@@ -311,7 +311,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -325,7 +325,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(connectedLogicalServer)
+            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData)
@@ -384,7 +384,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
 
         let connectedWithRefreshedCertificate: ConnectionFeature.State = .init(
-            tunnelState: .connected(connectedLogicalServer),
+            tunnelState: .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now)),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate)),
             localAgentState: .connected(nil)
         )
@@ -446,7 +446,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -461,7 +461,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(connectedLogicalServer)
+            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData)
@@ -539,7 +539,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnecting)
 
         // Connection feature is in the 'disconnecting' state, now let's send a connection request
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent)) {
             $0.serverReconnectionIntent = intent
@@ -565,7 +565,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(connectedLogicalServer)
+            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData)
@@ -616,7 +616,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let store = TestStore(initialState: disconnected) {
             ConnectionFeature()
         } withDependencies: {
-            $0.date = .constant(.now)
+            $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
             $0.certificateRefreshClient = .init(refreshCertificate: { .ok }, pushSelector: { })
@@ -633,7 +633,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
@@ -647,7 +647,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(connectedLogicalServer)
+            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData) {
@@ -725,7 +725,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection
 
-        let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
         await store.send(.connect(intent))
         await store.receive(\.tunnel.connect) {
