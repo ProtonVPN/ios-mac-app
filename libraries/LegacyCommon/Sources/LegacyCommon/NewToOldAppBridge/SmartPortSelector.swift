@@ -23,7 +23,7 @@ import Domain
 
 @DependencyClient
 struct SmartPortSelectorBridge: Sendable {
-    private var select: @Sendable (_ endpoint: ServerEndpoint, _ connectionProtocol: ConnectionProtocol) async throws -> ServerEndpointPortResolution
+    var select: @Sendable (_ endpoint: ServerEndpoint, _ connectionProtocol: ConnectionProtocol) async throws -> ServerEndpointPortResolution
 }
 
 struct ServerEndpointPortResolution: Sendable {
@@ -49,9 +49,7 @@ extension SmartPortSelectorBridge: DependencyKey {
                     wireguardConfig: propertiesManager.wireguardConfig
                 )
 
-                smartProtocolImplementation.determineBestProtocol(
-                    server: ServerIp(endpoint: endpoint)
-                ) { chosenProtocol, ports in
+                smartProtocolImplementation.determineBestProtocol(server: serverIP) { chosenProtocol, ports in
                     let result = ServerEndpointPortResolution(chosenProtocol: chosenProtocol, ports: ports)
                     continuation.resume(returning: result)
                 }

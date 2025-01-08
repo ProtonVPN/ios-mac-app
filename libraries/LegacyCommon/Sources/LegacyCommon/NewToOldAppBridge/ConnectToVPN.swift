@@ -22,10 +22,17 @@ import Domain
 import VPNAppCore
 
 extension ConnectToVPNKey: DependencyKey {
+    enum ConnectionError: Error {
+        case unexpectedProtocol(VpnProtocol)
+    }
+
+    private static var isEnabled: Bool {
+        let ffRepository = FeatureFlagsRepository.shared
+        return ffRepository.isEnabled(VPNFeatureFlagType.redesigniOS) || ffRepository.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+    }
+
     public static let liveValue = {
-        let isEnabled = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) ||
-            FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
-        if isEnabled, #available(iOS 16, *) {
+        if Self.isEnabled, #available(iOS 16, *) {
             return newConnect
         } else {
             return legacyConnect
@@ -33,7 +40,7 @@ extension ConnectToVPNKey: DependencyKey {
     }()
 
     @available(iOS 16, *)
-    public static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
+    static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
         @Dependency(\.connectionBridge) var bridge
         @Dependency(\.propertiesManager) var propertiesManager
         @Dependency(\.serverSelector) var serverSelector
@@ -55,6 +62,7 @@ extension ConnectToVPNKey: DependencyKey {
 
         let server = try serverSelector.select(intent, userTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
+
         let portSelectionResult = try await portSelector.select(
             endpoint: server.endpoint,
             connectionProtocol: propertiesManager.connectionProtocol
@@ -77,44 +85,5 @@ extension ConnectToVPNKey: DependencyKey {
         let intent = ServerConnectionIntent(server: server, tunnelSettings: tunnelSettings, features: features)
 
         bridge.push(intent: ConnectionFeature.Action.connect(intent))
-    }
-
-    /// Bridges new connection dependency with the legacy connection layer
-    public static let legacyConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
-        @Dependency(\.siriHelper) var siriHelper
-        siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
-
-        do {
-            let gateway = Container.sharedContainer.makeVpnGateway2()
-            try await gateway.connect(withIntent: intent)
-
-            let propertyManager = Container.sharedContainer.makePropertiesManager()
-            propertyManager.lastConnectionIntent = intent
-
-        } catch VpnGateway2.GatewayError.noServerFound {
-            log.error("No server found", metadata: ["intent": "\(intent)"])
-            throw VpnGateway2.GatewayError.noServerFound // Not sure
-
-        } catch VpnGateway2.GatewayError.resolutionUnavailable(let forSpecificCountry, let type, let reason) {
-            log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)", "intent": "\(intent)"])
-
-//            Code from serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
-            @Dependency(\.pushAlert) var alert
-
-            switch reason {
-            case .upgrade:
-                alert(AllCountriesUpsellAlert())
-            case .maintenance:
-                alert(MaintenanceAlert(forSpecificCountry: forSpecificCountry))
-            case .protocolNotSupported:
-                alert(ProtocolNotAvailableForServerAlert())
-            case .locationNotFound(let profileName):
-                alert(LocationNotAvailableAlert(profileName: profileName))
-            }
-        }
-    }
-
-    enum ConnectionError: Error {
-        case unexpectedProtocol(VpnProtocol)
     }
 }
