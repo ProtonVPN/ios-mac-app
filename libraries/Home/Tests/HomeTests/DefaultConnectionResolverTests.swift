@@ -28,16 +28,6 @@ final class DefaultConnectionResolverTests: XCTestCase {
 
     // MARK: ConnectionSpec Resolving
 
-    func testResolverReturnsNormalFastestRegardlessWhetherSecureCoreIsEnabled() {
-        let fastestNonSCSpec = ConnectionSpec(location: .fastest, features: [])
-
-        let resolvedSpecWithSCEnabled = Sut.connectionSpec(for: .fastest, recents: [], isSecureCoreEnabled: true)
-        let resolvedSpecWithSCDisabled = Sut.connectionSpec(for: .fastest, recents: [], isSecureCoreEnabled: false)
-
-        XCTAssertEqual(resolvedSpecWithSCEnabled, fastestNonSCSpec)
-        XCTAssertEqual(resolvedSpecWithSCDisabled, fastestNonSCSpec)
-    }
-
     func testResolverReturnsMostRecentConnectionWhenPreferenceIsMostRecent() {
         let mostRecentConnection = ConnectionSpec.franceWithP2P.recent(with: .referenceDate)
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
@@ -45,12 +35,12 @@ final class DefaultConnectionResolverTests: XCTestCase {
         let recents: OrderedSet<RecentConnection> = [mostRecentConnection, olderRecentConnection]
         XCTAssertEqual(recents.mostRecent, mostRecentConnection) // sanity check
 
-        let resolvedSpec = Sut.connectionSpec(for: .mostRecent, recents: recents, isSecureCoreEnabled: false)
+        let resolvedSpec = Sut.connectionSpec(for: .mostRecent, recents: recents)
         XCTAssertEqual(resolvedSpec, mostRecentConnection.connection)
     }
 
     func testResolverReturnsSpecificRecentConnectionWhenPrefenceIsSpecific() {
-        let resolvedSpec = Sut.connectionSpec(for: .recent(.poland), recents: [], isSecureCoreEnabled: false)
+        let resolvedSpec = Sut.connectionSpec(for: .recent(.poland), recents: [])
         XCTAssertEqual(resolvedSpec, .poland)
     }
 
@@ -72,8 +62,9 @@ final class DefaultConnectionResolverTests: XCTestCase {
 }
 
 extension Date {
-    static var referenceDate: Date { Date(timeIntervalSince1970: .init(integerLiteral: 9_223_372_036_854_775_807)) }
-    static var earlier: Date { referenceDate.addingTimeInterval(-10_000_000) }
+    static let referenceDate = Date(timeIntervalSince1970: 591742800)
+    static var earlier: Date { referenceDate.addingTimeInterval(-2443332) }
+    static var later: Date { referenceDate.addingTimeInterval(2443332) }
 }
 
 extension ConnectionSpec {
@@ -82,9 +73,9 @@ extension ConnectionSpec {
     static let franceWithP2P = ConnectionSpec(location: .region(code: "FR"), features: [.p2p])
     static let poland = ConnectionSpec(location: .region(code: "PL"), features: [])
 
-    func recent(with date: Date) -> RecentConnection {
+    func recent(with date: Date, pinnedDate: Date? = nil) -> RecentConnection {
         return RecentConnection(
-            pinnedDate: nil,
+            pinnedDate: pinnedDate,
             underMaintenance: false,
             connectionDate: date,
             connection: self

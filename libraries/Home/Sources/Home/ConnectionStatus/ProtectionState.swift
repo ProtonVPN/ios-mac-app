@@ -34,9 +34,9 @@ public enum ProtectionState: Equatable {
     func copy(withNetShield netShield: NetShieldModel) -> ProtectionState {
         switch self {
         case .protected:
-            return .protected(netShield: netShield)
+            return .protected(netShield: netShield.copy(enabled: true))
         case .protectedSecureCore:
-            return .protectedSecureCore(netShield: netShield)
+            return .protectedSecureCore(netShield: netShield.copy(enabled: true))
         case .unprotected:
             return self
         case .protecting:
@@ -53,9 +53,9 @@ extension VPNConnectionStatus {
             return .unprotected
         case .connected(let spec, _):
             if case .secureCore = spec.location {
-                return .protectedSecureCore(netShield: await provider.getStats())
+                return .protectedSecureCore(netShield: await provider.getStats().copy(enabled: true))
             }
-            return .protected(netShield: await provider.getStats())
+            return .protected(netShield: await provider.getStats().copy(enabled: true))
         case .connecting, .loadingConnectionInfo:
             return .protecting(country: country, ip: ip)
         case .disconnecting:
@@ -64,8 +64,8 @@ extension VPNConnectionStatus {
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<ProtectionState>> {
+public extension SharedKey where Self == InMemoryKey<ProtectionState>.Default {
     static var protectionState: Self {
-        PersistenceKeyDefault(.inMemory("protectionState"), .unprotected)
+        Self[.inMemory("protectionState"), default: .unprotected]
     }
 }

@@ -20,14 +20,14 @@ import OrderedCollections
 import ComposableArchitecture
 import Domain
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<OrderedSet<RecentConnection>>> {
+public extension SharedKey where Self == InMemoryKey<OrderedSet<RecentConnection>>.Default {
     static var recents: Self {
-        PersistenceKeyDefault(.inMemory("recents"), [])
+        Self[.inMemory("recents"), default: []]
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<DefaultConnectionPreference>> {
+public extension SharedKey where Self == InMemoryKey<DefaultConnectionPreference>.Default {
     static var defaultConnectionPreference: Self {
-        PersistenceKeyDefault(.inMemory("defaultConnectionPreference"), .fastest)
+        Self[.inMemory("defaultConnectionPreference"), default: .fastest]
     }
 }

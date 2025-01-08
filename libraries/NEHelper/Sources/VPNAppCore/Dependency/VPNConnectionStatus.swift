@@ -58,9 +58,9 @@ public enum VPNConnectionStatus: Equatable {
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<InMemoryKey<VPNConnectionStatus>> {
+public extension SharedKey where Self == InMemoryKey<VPNConnectionStatus>.Default {
     static var vpnConnectionStatus: Self {
-        PersistenceKeyDefault(.inMemory("vpnConnectionStatus"), .disconnected)
+        Self[.inMemory("vpnConnectionStatus"), default: .disconnected]
     }
 }
 

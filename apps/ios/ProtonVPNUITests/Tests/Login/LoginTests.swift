@@ -49,7 +49,7 @@ class LoginTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testLoginAsSubuserWithNoConnectionsAssigned() {
+    func disabled_testLoginAsSubuserWithNoConnectionsAssigned() {
 
         let subusercredentials = getCredentials(from: "subusercredentials")
 

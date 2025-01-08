@@ -37,7 +37,7 @@ enum HomeFeatureCreator {
             // Set initial values of properties that can't be loaded easily from user defaults
             @Dependency(\.defaultConnectionStorage) var storage
             @Shared(.defaultConnectionPreference) var defaultConnectionPreference
-            defaultConnectionPreference = (try storage.getPreference()) ?? .fastest
+            try $defaultConnectionPreference.withLock { $0 = ((try storage.getPreference()) ?? .fastest) }
         } catch {
             log.error("Failed to load initial state: \(error)")
         }

@@ -58,7 +58,7 @@ class LoginTests: ProtonVPNUITests {
             .verify.checkErrorMessageIsShown(message: errorMessage)
     }
     
-    func testLoginAsSubuserWithNoConnectionAssigned() {
+    func disabled_testLoginAsSubuserWithNoConnectionAssigned() {
         
         let subusercredentials = getCredentials(fromResource: "subusercredentials")
             

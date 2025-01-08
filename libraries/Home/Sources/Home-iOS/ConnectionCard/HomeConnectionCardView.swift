@@ -180,31 +180,27 @@ fileprivate extension VPNConnectionStatus {
 #if targetEnvironment(simulator)
 #if compiler(>=6)
 @available(iOS 18, *)
-#Preview("Change Server Available",
-         traits: .sizeThatFitsLayout,
-                 .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
+#Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
     @Shared(.userTier) var userTier
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    userTier = 0
-    vpnConnectionStatus = .connected(.secureCoreCountryHop, nil)
+    $userTier.withLock { $0 = 0 }
+    $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
     return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
-            HomeConnectionCardFeature()
-        }))
+        HomeConnectionCardFeature()
+    }))
     .padding()
     .preferredColorScheme(.dark)
 }
 
 @available(iOS 18, *)
-#Preview("Change Server Unavailable",
-         traits: .sizeThatFitsLayout,
-                 .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
+#Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
     @Shared(.userTier) var userTier
     @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    userTier = 0
-    vpnConnectionStatus = .connected(.secureCoreCountryHop, nil)
+    $userTier.withLock { $0 = 0 }
+    $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
     return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
-            HomeConnectionCardFeature()
-        }))
+        HomeConnectionCardFeature()
+    }))
     .padding()
     .preferredColorScheme(.dark)
 }
@@ -262,7 +258,7 @@ fileprivate func cardPair(spec: ConnectionSpec, userTier: Int = 2) -> some View 
 }
 
 extension HomeConnectionCardFeature.State {
-    static func constant(status: VPNConnectionStatus, 
+    static func constant(status: VPNConnectionStatus,
                          defaultConnection: ConnectionSpec,
                          userTier: Int) -> Self {
         var state = HomeConnectionCardFeature.State()

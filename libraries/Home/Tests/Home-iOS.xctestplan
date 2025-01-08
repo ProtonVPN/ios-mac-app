@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "FF2D9572-F6E6-46D2-8866-D08D5500810E",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "HomeSnapshotTests",
+        "name" : "HomeSnapshotTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "HomeTests",
+        "name" : "HomeTests"
+      }
+    }
+  ],
+  "version" : 1
+}

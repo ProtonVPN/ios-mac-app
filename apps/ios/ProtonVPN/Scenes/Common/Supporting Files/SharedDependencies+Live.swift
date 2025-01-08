@@ -20,16 +20,12 @@ import Foundation
 import struct VPNShared.DefaultsProvider
 import enum VPNShared.VPNAuthenticationStorageConfigKey
 import Dependencies
+import Domain
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 
 extension DefaultsProvider: DependencyKey {
-    public static var liveValue: DefaultsProvider = DefaultsProvider(
-        getDefaults: {
-            // Use shared defaults
-            UserDefaults(suiteName: AppConstants.AppGroups.main)!
-        }
-    )
+    public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults } )
 }
 
 extension VPNAuthenticationStorageConfigKey: DependencyKey {

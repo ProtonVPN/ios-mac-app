@@ -42,7 +42,7 @@ final class AppFeatureTests: XCTestCase {
         }
         await store.send(.main(.selectTab(.settings))) {
             $0.main.currentTab = .settings
-            $0.main.mainBackground = .clear
+            $0.main.$mainBackground.withLock { $0 = .clear }
         }
         await store.receive(\.main.settings.tabSelected)
     }
@@ -105,8 +105,11 @@ final class AppFeatureTests: XCTestCase {
         }
 
         await store.send(.welcome(.onAppear))
+
+        await store.receive(\.welcome.userTierUpdated)
+
         await store.send(.upsell(.upsold(tier: 2))) {
-            $0.userTier = 2
+            $0.$userTier.withLock { $0 = 2 }
         }
 
         await store.receive(\.welcome.userTierUpdated) {

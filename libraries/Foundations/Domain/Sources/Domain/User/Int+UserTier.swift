@@ -23,7 +23,7 @@ public extension Int {
     var isFreeTier: Bool {
         self == Int.freeTier
     }
-    static var freeTier: Int = .freeTier
+    static var freeTier: Int = VpnTiers.free
     static var paidTier: Int = VpnTiers.plus
     static var internalTier: Int = VpnTiers.internal // Dev-only
 

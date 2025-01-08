@@ -49,8 +49,12 @@ public struct HomeView: View {
     @State private var shouldUpdateViewHeight: Bool = true
     @State private var viewHeight: CGFloat = .zero
     @State private var connectionViewHeight: CGFloat = .zero
+
+    @SharedReader(.userTier) private var userTier: Int
+
     private var mapHeight: CGFloat {
-        let recentPeek: CGFloat = store.recents.recents.isEmpty ? 0 : .themeSpacing64
+        let hasRecents = !store.recents.recentConnectionList.isEmpty
+        let recentPeek: CGFloat = (hasRecents || userTier.isFreeTier) ? .themeSpacing64 : 0
         return max(0, viewHeight - (connectionViewHeight + recentPeek))
     }
 
@@ -96,7 +100,6 @@ public struct HomeView: View {
         .task {
             store.send(.sharedProperties(.listen))
         }
-        .transaction { $0.animation = nil } // disable implicit animations, especially for ConnectionStatusView
     }
 
     private var content: some View {

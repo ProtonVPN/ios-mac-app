@@ -18,8 +18,8 @@
 
 import ComposableArchitecture
 
-extension PersistenceReaderKey where Self == InMemoryKey<MainBackground> {
+extension SharedKey where Self == InMemoryKey<MainBackground>.Default {
     static var mainBackground: Self {
-        inMemory("mainBackground")
+        Self[.inMemory("mainBackground"), default: .clear]
     }
 }

@@ -156,11 +156,11 @@ struct AppFeature {
                 return .none
 
             case .networking(.delegate(.tier(let tier))):
-                state.userTier = tier
+                state.$userTier.withLock { $0 = tier }
                 return .none
 
             case .networking(.delegate(.displayName(let name))):
-                state.userDisplayName = name
+                state.$userDisplayName.withLock { $0 = name }
                 return .none
             case .networking:
                 return .none
@@ -189,7 +189,7 @@ struct AppFeature {
 
             case .upsell(.upsold(let tier)):
                 // We already have a session at this point. Updating tier will dimiss the upsell flow
-                state.userTier = tier
+                state.$userTier.withLock { $0 = tier }
                 return .none
 
             case .upsell:

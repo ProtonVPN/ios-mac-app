@@ -25,31 +25,28 @@ import Domain
 
 @DependencyClient
 struct DefaultConnectionResolver: Sendable {
-    @DependencyEndpoint
-    private var connectionSpec: (
+    var connectionSpec: (
         _ preference: DefaultConnectionPreference,
-        _ recents: OrderedSet<RecentConnection>,
-        _ isSecureCoreEnabled: Bool
-    ) -> ConnectionSpec = { _, _, _ in .defaultFastest }
+        _ recents: OrderedSet<RecentConnection>
+    ) -> ConnectionSpec = { _, _ in .defaultFastest }
 
-    @DependencyEndpoint
-    private var preferenceModels: @Sendable (
+    var preferenceModels: @Sendable (
         _ recents: OrderedSet<RecentConnection>
     ) -> [ConnectionPreferenceModel] = { _ in XCTFail("\(Self.self).preferenceModels"); return [] }
 }
 
 extension DefaultConnectionResolver: DependencyKey {
     static let liveValue = DefaultConnectionResolver(
-        connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:isSecureCoreEnabled:),
+        connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:),
         preferenceModels: DefaultConnectionResolverImplementation.preferenceModels(for:)
     )
+    static let testValue = liveValue
 }
 
 enum DefaultConnectionResolverImplementation {
     static func connectionSpec(
         for preference: DefaultConnectionPreference,
-        recents: OrderedSet<RecentConnection>,
-        isSecureCoreEnabled: Bool
+        recents: OrderedSet<RecentConnection>
     ) -> ConnectionSpec {
         // Fastest overall connection doesn't take secure core into account.
         // Check `DefaultConnectionPreference.fastest` docs for reasoning.

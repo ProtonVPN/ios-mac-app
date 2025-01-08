@@ -40,20 +40,19 @@ final class AppConnectionIntegrationTests: XCTestCase {
             main: .init(
                 currentTab: .settings,
                 settings: .init(
-                    userDisplayName: Shared<String?>(""),
-                    userTier: Shared<Int?>(1),
-                    mainBackground: .clear,
+                    userDisplayName: Shared<String?>(value: ""),
+                    userTier: Shared<Int?>(value: 1),
+                    mainBackground: .init(value: .clear),
                     destination: nil,
                     alert: SettingsFeature.signOutAlert,
                     isLoading: false
                 ),
                 connection: .init(tunnelState: .connected(.init(logicalServer: .mock))),
-                userLocation: Shared<UserLocation?>(UserLocation(ip: "", country: "", isp: ""))
+                userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
             ),
             networking: .authenticated(.auth(uid: "sessionID"))
         )
 
-        let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
             AppFeature()
         } withDependencies: {

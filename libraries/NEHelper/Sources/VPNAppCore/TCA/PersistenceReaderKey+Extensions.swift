@@ -20,20 +20,31 @@ import ComposableArchitecture
 import Foundation
 import Domain
 
-public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
+public extension SharedKey where Self == AppStorageKey<String?> {
     static var userCountry: Self {
-        appStorage("userCountry")
+        .appStorage("userCountry")
     }
 }
 
-public extension PersistenceReaderKey where Self == AppStorageKey<String?> {
+public extension SharedKey where Self == AppStorageKey<String?> {
     static var userIP: Self {
-        appStorage("userIP")
+        .appStorage("userIP")
     }
 }
 
-public extension PersistenceReaderKey where Self == PersistenceKeyDefault<AppStorageKey<Int>> {
+public extension SharedKey where Self == AppStorageKey<Int>.Default {
     static var userTier: Self {
-        PersistenceKeyDefault(.appStorage("userTier"), 0)
+        Self[.appStorage("userTier"), default: 0]
+    }
+}
+
+public extension SharedKey where Self == AppStorageKey<NetShieldType>.Default {
+    static var netShieldLevel: Self {
+        @Dependency(\.authKeychain) var authKeychain
+        // Key is defined in NetShieldPropertyProviderImplementation in LegacyCommon.
+        // Username is normally added via an extension of UserDefaults in VPNShared
+        // Here we only want to pass the domain user defaults
+        let key = "NetShield" + (authKeychain.username ?? "")
+        return Self[.appStorage(key, store: .domainUserDefaults), default: .off]
     }
 }

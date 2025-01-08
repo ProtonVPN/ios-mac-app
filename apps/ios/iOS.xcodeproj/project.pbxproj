@@ -4093,8 +4093,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = exactVersion;
-				version = 1.15.1;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.17.1;
 			};
 		};
 		4CB776D32A1F62DF004CA127 /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -4117,8 +4117,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
 			requirement = {
-				kind = exactVersion;
-				version = 1.5.4;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.5.4;
 			};
 		};
 		E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */ = {

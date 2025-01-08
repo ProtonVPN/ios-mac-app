@@ -253,7 +253,7 @@ final class NavigationService {
         if #available(iOS 17, *), isRedesign {
             @Dependency(\.credentialsProvider) var credentials
             @Shared(.userTier) var userTier
-            userTier = credentials.tier
+            $userTier.withLock { $0 = credentials.tier }
             let home = HomeFeatureCreator.homeViewController()
             tabViewControllers.append(home)
         }

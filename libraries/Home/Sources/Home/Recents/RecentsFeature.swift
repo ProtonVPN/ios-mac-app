@@ -36,19 +36,16 @@ public struct RecentsFeature {
         @SharedReader(.defaultConnectionPreference)
         private var defaultConnectionPreference
         @Shared(.recents)
-        public var recents: OrderedSet<RecentConnection>
+        fileprivate var recents: OrderedSet<RecentConnection>
 
-        // VPNAPPL- : Move this and other recents logic (defined in OrderedSet extension) to a client/dependency
+        /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
-            switch defaultConnectionPreference {
-            case .mostRecent:
-                // We are already showing the most recent connection in the connection card
-                return recents.connectionsList // without most recent connection, unless it's pinned
-            case .recent(let spec):
-                return recents.filter { $0.connection != spec && $0.notPinned }
-            case .fastest:
-                return recents.filter { $0.connection != .defaultFastest && $0.notPinned }
-            }
+            @Dependency(\.connectionPresenter) var presenter
+            return presenter.recentConnectionList(
+                defaultConnectionPreference: defaultConnectionPreference,
+                recents: recents,
+                currentConnection: vpnConnectionStatus.spec
+            )
         }
 
         @SharedReader(.userTier)
@@ -56,7 +53,7 @@ public struct RecentsFeature {
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
-            recents = recentsStorage.readFromStorage()
+            $recents.withLock { $0 = recentsStorage.readFromStorage() }
         }
     }
 
@@ -135,12 +132,8 @@ public struct RecentsFeature {
                 return .send(.connectionEstablished(spec))
 
             case .connectionEstablished(let spec):
-                guard spec.shouldManifestRecentsEntry else {
-                    log.debug("Ignoring entry to recents list for spec", metadata: ["spec": "\(spec)"])
-                    return .none
-                }
                 withAnimation {
-                    state.recents.updateList(with: spec)
+                    state.$recents.withLock { $0.updateList(with: spec) }
                 }
                 recentsStorage.saveToStorage(state.recents)
 
@@ -148,21 +141,21 @@ public struct RecentsFeature {
 
             case let .pin(recent):
                 withAnimation {
-                    state.recents.pin(recent: recent, pinnedDate: date.now)
+                    state.$recents.withLock { $0.pin(recent: recent, pinnedDate: date.now) }
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case let .unpin(recent):
                 withAnimation {
-                    state.recents.unpin(recent: recent)
+                    state.$recents.withLock { $0.unpin(recent: recent) }
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
 
             case let .remove(recent):
                 withAnimation {
-                    state.recents.remove(recent)
+                    state.$recents.withLock { $0.remove(recent) }
                 }
                 recentsStorage.saveToStorage(state.recents)
                 return .none
@@ -171,12 +164,5 @@ public struct RecentsFeature {
                 return .none
             }
         }
-    }
-}
-
-extension ConnectionSpec {
-    public var shouldManifestRecentsEntry: Bool {
-        // We don't want the change server action to add a `Random` item into recents
-        location != .random
     }
 }

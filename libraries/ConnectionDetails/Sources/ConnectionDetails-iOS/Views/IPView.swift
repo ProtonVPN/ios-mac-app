@@ -88,7 +88,7 @@ public struct IPView: View {
 
 #Preview {
     @Shared(.userIP) var userIP: String?
-    userIP = "127.0.0.1"
+    $userIP.withLock { $0 = "127.0.0.1" }
 
     return IPView(store: .init(initialState: .init(), reducer: { IPViewFeature() }))
         .colorScheme(.dark)

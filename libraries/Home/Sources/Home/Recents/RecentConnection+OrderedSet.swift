@@ -54,15 +54,6 @@ extension OrderedSet<RecentConnection> {
         ]).first
     }
 
-    /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
-    /// We only remove it from the list if the item is not pinned.
-    public var connectionsList: Self {
-        guard let mostRecent, mostRecent.notPinned else {
-            return self
-        }
-        return subtracting([mostRecent])
-    }
-
     mutating func updateList(with spec: ConnectionSpec) {
         var oldRecent: RecentConnection?
         if let index = index(for: spec) {

@@ -48,7 +48,7 @@ public struct HomeFeature {
         public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
-        public var connectionStatus: ConnectionStatusFeature.State
+        package var connectionStatus: ConnectionStatusFeature.State
         public var sharedProperties: SharedPropertiesFeature.State
 
         @SharedReader(.vpnConnectionStatus)
@@ -129,8 +129,7 @@ public struct HomeFeature {
                 ])
 
             case .disconnect:
-                state.connectionStatus.protectionState = .unprotected
-                return .run { send in
+                return .run { _ in
                     try? await disconnectVPN()
                 }
 

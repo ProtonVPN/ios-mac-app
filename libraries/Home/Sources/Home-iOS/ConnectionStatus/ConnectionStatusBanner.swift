@@ -36,7 +36,7 @@ struct ConnectionStatusBanner: View {
             case .protected(let netShield), .protectedSecureCore(let netShield):
                 if store.userTier.isFreeTier {
                     ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
-                } else if netShield.enabled {
+                } else if store.netShieldLevel == .level2 {
                     NetShieldStatsView(viewModel: netShield)
                 }
             case .unprotected, .protecting:
