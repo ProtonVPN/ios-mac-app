@@ -35,7 +35,7 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
         .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.36.0"),
     ],
     targets: [

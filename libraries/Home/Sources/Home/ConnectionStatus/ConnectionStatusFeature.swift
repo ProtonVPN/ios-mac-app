@@ -33,7 +33,7 @@ public struct ConnectionStatusFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @Shared(.protectionState) package private(set) var protectionState: ProtectionState
+        @Shared(.protectionState) package var protectionState: ProtectionState
         @SharedReader(.userCountry) package var userCountry: String?
         @SharedReader(.userIP) package var userIP: String?
         @SharedReader(.vpnConnectionStatus) package var vpnConnectionStatus: VPNConnectionStatus

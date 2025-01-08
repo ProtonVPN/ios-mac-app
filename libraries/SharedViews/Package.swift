@@ -25,7 +25,7 @@ let package = Package(
         .package(path: "../Shared/Localization"),
 
         // 3rd party
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-perception", .upToNextMajor(from: "1.3.5")),
         .package(url: "https://github.com/swiftlang/swift-syntax", from: "600.0.1"),
