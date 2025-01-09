@@ -25,9 +25,9 @@ import VPNAppCore
 public struct SharedPropertiesFeature {
     @ObservableState
     public struct State: Equatable {
-        @Shared(.userCountry) public fileprivate(set) var userCountry: String?
-        @Shared(.userIP) public fileprivate(set) var userIP: String?
-        @Shared(.vpnConnectionStatus) public fileprivate(set) var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.userCountry) public var userCountry: String?
+        @Shared(.userIP) public var userIP: String?
+        @Shared(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
     }
 
     @CasePathable
