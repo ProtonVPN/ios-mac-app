@@ -64,7 +64,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
             ProtectionStatusFeature()
         }
         @Shared(.connectionState) var connectionState: ConnectionState? 
-        $connectionState.withLock { $0 = .connected(.mock, nil) }
+        $connectionState.withLock { $0 = .connected(.mock, .now, nil) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedDisconnect)

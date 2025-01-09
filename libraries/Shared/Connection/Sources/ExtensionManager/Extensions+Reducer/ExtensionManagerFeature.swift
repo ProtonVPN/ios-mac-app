@@ -44,7 +44,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case disconnecting(TunnelConnectionError?)
         case preparingConnection(LogicalServerInfo) // Preparing managers and requesting tunnel start
         case connecting(LogicalServerInfo?) // Tunnel has been launched
-        case connected(TunnelConnectionResult)
+        case connected(TunnelConnectionResponse)
     }
 
     @CasePathable
@@ -53,7 +53,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case stopObservingStateChanges
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
-        case connectionFinished(Result<TunnelConnectionResult, Error>)
+        case connectionFinished(Result<TunnelConnectionResponse, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect(TunnelConnectionError?)
         case removeManagers
@@ -123,7 +123,7 @@ public struct ExtensionFeature: Reducer, Sendable {
 
                 return .run { send in
                     @Dependency(\.date) var date
-                    let result = await Result { TunnelConnectionResult(
+                    let result = await Result { TunnelConnectionResponse(
                         logicalInfo: try await tunnelManager.connectedServer,
                         connectionDate: try await tunnelManager.session.connectedDate ?? date.now
                     ) }
@@ -208,7 +208,7 @@ public enum TunnelConnectionError: Error, Equatable {
     }
 }
 
-public struct TunnelConnectionResult: Equatable, Sendable {
+public struct TunnelConnectionResponse: Equatable, Sendable {
     public let logicalInfo: LogicalServerInfo
     public let connectionDate: Date
 

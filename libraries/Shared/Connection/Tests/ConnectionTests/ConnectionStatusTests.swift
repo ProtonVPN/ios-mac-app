@@ -50,7 +50,7 @@ final class ConnectionStateTests: XCTestCase {
         let now = Date.now
 
         let state = ConnectionState(
-            tunnelState: .connected(TunnelConnectionResult(logicalInfo: server, connectionDate: now)),
+            tunnelState: .connected(TunnelConnectionResponse(logicalInfo: server, connectionDate: now)),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )

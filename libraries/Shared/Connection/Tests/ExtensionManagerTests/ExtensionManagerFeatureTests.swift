@@ -75,7 +75,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         await mockClock.advance(by: .milliseconds(500))
         await store.receive(\.tunnelStatusChanged.connected)
         await store.receive(\.connectionFinished.success) {
-            $0 = .connected(TunnelConnectionResult(logicalInfo: logicalServerInfo, connectionDate: now))
+            $0 = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
         }
 
         await store.send(.stopObservingStateChanges)
@@ -106,7 +106,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
             $0 = .connecting(nil)
         }
         await store.receive(\.connectionFinished.success) {
-            $0 = .connected(TunnelConnectionResult(logicalInfo: previouslyConnectedServer, connectionDate: now))
+            $0 = .connected(TunnelConnectionResponse(logicalInfo: previouslyConnectedServer, connectionDate: now))
         }
 
         await store.send(.stopObservingStateChanges)

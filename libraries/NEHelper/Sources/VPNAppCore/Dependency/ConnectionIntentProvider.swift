@@ -22,8 +22,8 @@ import Domain
 
 @DependencyClient
 public struct ConnectionIntentStorage: TestDependencyKey, Sendable {
-    public var getConnectionIntent: @Sendable () throws -> ServerConnectionIntent
-    public var set: @Sendable (_ connectionIntent: ServerConnectionIntent) throws -> Void
+    public internal(set) var getConnectionIntent: @Sendable () throws -> ServerConnectionIntent
+    public internal(set) var set: @Sendable (_ connectionIntent: ServerConnectionIntent) throws -> Void
 
     public static let testValue = ConnectionIntentStorage()
 }

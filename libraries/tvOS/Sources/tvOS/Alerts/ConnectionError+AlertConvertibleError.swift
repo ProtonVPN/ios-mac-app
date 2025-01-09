@@ -32,6 +32,8 @@ extension ConnectionError: AlertConvertibleError {
             return agentError.alert
         case .serverMissing:
             break
+        case .intentMissing:
+            break
         case .timeout:
             break
         }

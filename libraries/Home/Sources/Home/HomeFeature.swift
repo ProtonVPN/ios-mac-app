@@ -37,6 +37,7 @@ public struct HomeFeature {
     @Dependency(\.connectToVPN) private var connectToVPN
     @Dependency(\.disconnectVPN) private var disconnectVPN
     @Dependency(\.serverRepository) var serverRepository
+    @Dependency(\.connectionIntentStorage) var storage
     @Dependency(\.date) private var date
 
     @SharedReader(.userTier) private var userTier: Int
@@ -244,7 +245,6 @@ public struct HomeFeature {
 
             case .onNewConnectionState(let newConnectionState):
                 log.debug("Connection layer state update \(newConnectionState)")
-                @Dependency(\.connectionIntentStorage) var storage
                 do {
                     let originalIntent = try storage.getConnectionIntent()
                     let newConnectionStatus = newConnectionState.connectionStatus(originalIntent: originalIntent)

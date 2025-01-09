@@ -95,7 +95,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData) {
@@ -198,7 +198,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData) {
@@ -325,7 +325,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData)
@@ -384,7 +384,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
 
         let connectedWithRefreshedCertificate: ConnectionFeature.State = .init(
-            tunnelState: .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now)),
+            tunnelState: .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now)),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate)),
             localAgentState: .connected(nil)
         )
@@ -461,7 +461,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData)
@@ -565,7 +565,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData)
@@ -647,7 +647,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
         await store.receive(\.tunnel.tunnelStatusChanged.connected)
         await store.receive(\.tunnel.connectionFinished.success) {
-            $0.tunnel = .connected(TunnelConnectionResult(logicalInfo: connectedLogicalServer, connectionDate: now))
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
 
         await store.receive(\.certAuth.loadAuthenticationData) {
