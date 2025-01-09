@@ -149,7 +149,11 @@ extension AuthKeychain: AuthKeychainHandle {
 
     public func fetch(forContext context: AppContext?) throws -> AuthCredentials {
         NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
-        let key: String = context.flatMap { storageKey(forContext: $0) } ?? defaultStorageKey
+
+        guard let key = (context != nil) ? context.flatMap({ storageKey(forContext: $0) }) : defaultStorageKey else {
+            throw KeychainError.credentialsMissing("No valid storage key found.")
+        }
+
         guard let data = try keychain.getData(key) else {
             throw KeychainError.credentialsMissing(key)
         }
