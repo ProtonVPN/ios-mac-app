@@ -117,22 +117,26 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
 
-                if case .disconnecting = ConnectionState(connectionFeatureState: state) {
+                let currentConnectionState = ConnectionState(connectionFeatureState: state)
+                switch currentConnectionState {
+                case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
                     state.serverReconnectionIntent = intent
                     return .none
+                case .connecting, .connected:
+                    return .send(.disconnect(.reconnection(intent)))
+                case .disconnected:
+                    return .run { send in
+                        await send(.tunnel(.connect(intent)))
+
+                        try await clock.sleep(for: Self.defaultConnectionTimeout)
+                        try Task.checkCancellation()
+
+                        await send(.disconnect(.connectionFailure(.timeout)))
+                    } catch: { error, _ in
+                        log.info("Timeout task cancellation error: \(error)")
+                    }.cancellable(id: CancelID.connectionTimeout)
                 }
-
-                return .run { send in
-                    await send(.tunnel(.connect(intent)))
-
-                    try await clock.sleep(for: Self.defaultConnectionTimeout)
-                    try Task.checkCancellation()
-
-                    await send(.disconnect(.connectionFailure(.timeout)))
-                } catch: { error, _ in
-                    log.info("Timeout task cancellation error: \(error)")
-                }.cancellable(id: CancelID.connectionTimeout)
 
             case .disconnect(let reason):
                 if case let .reconnection(intent) = reason {

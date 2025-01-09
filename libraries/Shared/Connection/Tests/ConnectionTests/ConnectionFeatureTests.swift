@@ -586,6 +586,66 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
     }
 
+    /// Verifies that a connection can be queued up if the feature is in the connected state already.
+    @MainActor func testStartingConnectionWhileConnectedResultsInReconnection() async {
+        let now = Date.now
+        let tomorrow = now.addingTimeInterval(.days(1))
+
+        let mockVPNSession = VPNSessionMock(
+            status: .connected,
+            connectedDate: now,
+            lastDisconnectError: nil
+        )
+        let mockManager = MockTunnelManager(connection: mockVPNSession)
+        let mockClock = TestClock()
+        let mockAgent = LocalAgentMock(state: .connected)
+
+        let mockStorage = MockVpnAuthenticationStorage()
+        let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        mockStorage.keys = keys
+        mockStorage.cert = certificate
+
+        let server = Server.mock
+        let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+        let intitialState = ConnectionFeature.State.init(
+            tunnelState: .connected(.init(logicalInfo: connectedLogicalServer, connectionDate: now)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
+            localAgentState: .connected(nil)
+        )
+
+        let store = TestStore(initialState: intitialState) {
+            ConnectionFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.certificateRefreshClient = .init(refreshCertificate: { .ok }, pushSelector: { })
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.localAgent = mockAgent
+            $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+        }
+
+        store.exhaustivity = .off
+
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
+
+        await store.receive(\.tunnel.tunnelStatusChanged.connected)
+
+        // Connection feature is in the 'connected' state, now let's send a connection request
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+
+        await store.send(.connect(intent))
+        await store.receive(\.disconnect.reconnection) {
+            $0.serverReconnectionIntent = intent
+        }
+    }
+
     /// Test that we do not get stuck in a `disconnecting` state if we received a Local Agent error before we are able
     /// to establish the connection
     @MainActor func testDisconnectsSuccessfullyAfterReceivingLocalAgentErrorDuringConnection() async {
