@@ -49,9 +49,7 @@ extension ConnectionBridge: DependencyKey {
     public static let liveValue = {
         let (intentStream, intentContinuation) = AsyncStream<Intent>.makeStream()
         let (statusStream, statusContinuation) = AsyncStream<VPNConnectionStatus>.makeStream()
-        // We have to feed the statusStream continuation an initial value
-        // TODO: Make the initial value reflective off the real current state
-        statusContinuation.yield(.disconnected)
+        // Ideally, we would feed the statusStream continuation a coherent initialValue
         return ConnectionBridge(intentStream: intentStream, statusStream: statusStream) { intent in
             intentContinuation.yield(intent)
         } pushStatus: { status in

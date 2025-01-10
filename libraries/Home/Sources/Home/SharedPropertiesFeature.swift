@@ -44,7 +44,7 @@ public struct SharedPropertiesFeature {
     init() {
     }
 
-    let userLocationEffect: Effect<Action> = .publisher {
+    private let userLocationEffect: Effect<Action> = .publisher {
         NotificationCenter.default
             .publisher(for: .userIpNotification)
             .map {
@@ -54,9 +54,7 @@ public struct SharedPropertiesFeature {
             .map(Action.userLocationChange)
     }
 
-    // ConnectionFeature already feeds status to this SharedPropertiesFeature Reducer
-    // via .newConnectionStatus(VPNConnectionStatus) no?
-    let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
+    private let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
         let stream = Dependency(\.connectionBridge)
             .wrappedValue
             .statusStream
@@ -82,8 +80,8 @@ public struct SharedPropertiesFeature {
                 // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
                 if let userCountry = location?.country.lowercased(),
                    let userIP = location?.ip ?? state.userIP {
-                    state.$userCountry.withLock { $0 = location?.country.lowercased() }
-                    state.$userIP.withLock { $0 = location?.ip }
+                    state.$userCountry.withLock { $0 = userCountry }
+                    state.$userIP.withLock { $0 = userIP }
                 }
                 return .none
 
