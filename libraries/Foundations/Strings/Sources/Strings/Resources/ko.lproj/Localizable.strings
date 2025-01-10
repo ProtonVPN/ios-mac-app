@@ -1683,10 +1683,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ 설정이 변경되지 않을 수 있습니다. 나중에 다시 시도하거나 다른 서버로 연결하십시오";
 
-/*
- Home tab in bottom menu
- Home tab in bottom menu [Redesign_2023]
-*/
+/* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "홈";
 
 /* Countries tab in bottom menu [Redesign_2023] */

@@ -1683,10 +1683,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ ayarı değiştirilemedi. Lütfen bir süre sonra yeniden deneyin ya da farklı bir sunucuya bağlanın";
 
-/*
- Home tab in bottom menu
- Home tab in bottom menu [Redesign_2023]
-*/
+/* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Giriş";
 
 /* Countries tab in bottom menu [Redesign_2023] */

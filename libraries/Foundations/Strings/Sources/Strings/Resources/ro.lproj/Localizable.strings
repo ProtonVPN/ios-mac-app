@@ -1683,10 +1683,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ nu s-a putut modifica. Reîncercați mai târziu sau conectați-vă la alt server.";
 
-/*
- Home tab in bottom menu
- Home tab in bottom menu [Redesign_2023]
-*/
+/* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Început";
 
 /* Countries tab in bottom menu [Redesign_2023] */
