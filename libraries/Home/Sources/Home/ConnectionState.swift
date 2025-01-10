@@ -19,23 +19,28 @@
 import Foundation
 import Domain
 import Connection
+import Dependencies
 import VPNAppCore
 
 @available(iOS 16, *)
 extension ConnectionState {
-    public func connectionStatus(originalIntent: ServerConnectionIntent) -> VPNConnectionStatus {
+    public func connectionStatus() throws -> VPNConnectionStatus {
+        @Dependency(\.connectionIntentStorage) var storage
         switch self {
-        case .disconnected(_):
+        case .disconnected:
             return .disconnected
 
         case .connecting(let server):
+            let originalIntent = try storage.getConnectionIntent()
             let resolvedConnection = server.map { VPNConnectionActual(server: $0, intent: originalIntent, connectedDate: nil) }
             return .connecting(originalIntent.spec, resolvedConnection)
 
         case .disconnecting:
-            return .disconnecting(originalIntent.spec, nil)
+            let originalIntent = try? storage.getConnectionIntent()
+            return .disconnecting(originalIntent?.spec ?? .defaultFastest, nil)
 
         case .connected(let server, let date, _):
+            let originalIntent = try storage.getConnectionIntent()
             let resolvedConnection = VPNConnectionActual(server: server, intent: originalIntent, connectedDate: date)
             return .connected(originalIntent.spec, resolvedConnection)
         }
