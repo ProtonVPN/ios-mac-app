@@ -484,6 +484,9 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "cez %@";
 
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "cez Secure Core";
+
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "cez";
 
@@ -1680,6 +1683,123 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ nastavenie nebolo možné zmeniť. Skúste to prosím neskôr alebo sa pripojte k inému serveru";
 
+/*
+ Home tab in bottom menu
+ Home tab in bottom menu [Redesign_2023]
+*/
+"_home_tab" = "Domov";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Krajiny";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Nastavenia";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Bez ochrany";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Prezeráte nechránené stránky z %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN je odpojená. Pripojte sa k serveru a surfujte na internete bezpečne.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Predvolené pripojenie";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Bezpečné surfovanie z";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Naposledy pripojené k";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Pripájanie k...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Pripája sa ku %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Posledné pripojenie ste mali k %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Surfujete bezpečne z %@.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Vyberte vaše predvolené pripojenie";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Najrýchlejšie";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Najlepší server na základe vašej polohy";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Nedávne";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Vaše naposledy použité pripojenie";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Objavte VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Nedávne";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Akcie";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Server je dostupný s VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Na serveri prebieha údržba";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Nápoveda";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Pripojiť";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Odstrániť";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Odpojiť";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Zrušiť";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Zobraziť podrobnosti pripojenia";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Pripnúť";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Odopnúť";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Automatický výber z";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "cez %@";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Bez ochrany";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Vaša digitálna identita je chránená";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Chránené";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Získajte Plus";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Webové stránky obsahujúce reklamy používajú súbory cookies a sledovače na to, aby vás lepšie zacielili.";
 
@@ -1709,6 +1829,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@E";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Podrobnosti pripojenia";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Pripojené";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Krajina";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Mesto";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Server";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Vyťaženie servera";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protokol";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "Moja IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "IP VPN";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Nedostupné";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "K lokalitám .onion sa môžete pripojiť pomocou bežného prehliadača.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Na tomto serveri je povolené peer-to-peer zdieľanie súborov.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Servery sa fyzicky nachádzajú v Singapure, ale zdá sa, že surfujete z Thajska.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Vaša aktivita je šifrovaná za 2 vysoko zabezpečenými VPN servermi.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Streamovanie";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Tento server je optimalizovaný na pozeranie TV a filmov.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Funkcie";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Info";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protokol je nedostupný";
 
@@ -1729,6 +1915,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Zavrieť";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Nastavenia";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Účet";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Funkcie";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Pripojenie";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Všeobecné";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Podpora";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Vylepšite Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill Switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protokol";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Pokročilé nastavenia";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Vzhľad";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Beta prístup";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widget";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Centrum podpory";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Nahlásiť problém";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Záznamy o chybách";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Pomôžte nám bojovať s cenzúrou";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Ohodnoťte Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Obnoviť východzie nastavenia";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Odhlásiť sa";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Verzia aplikácie: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Zap.";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Vyp.";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Zap.";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Vyp.";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Automaticky";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Tmavý";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Svetlý";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Automaticky*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Tmavý";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Svetlý";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Rýchlosť (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Spoľahlivosť (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Automaticky vyberie najlepší protokol pre vaše pripojenie.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Rýchly, bezpečný a efektívny. WireGuard je energeticky účinnejší ako ostatné protokoly.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Rýchly, bezpečný a efektívny. WireGuard je ťažké odhaliť a zablokovať.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Prekonáva blokovanie VPN tým, že skrýva vaše pripojenie VPN pred cenzormi. Tento protokol je odolný voči DPI (hĺbková kontrola paketov), ale nemusí byť taký rýchly ako iné protokoly. Stealth je určený výhradne pre Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Zavedený, dobre otestovaný a bezpečný. Oproti iným protokolom je OpenVPN menej energeticky úsporný.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Zavedený, dobre otestovaný a bezpečný. OpenVPN je spoľahlivý v zlých sieťových podmienkach, ale nemusí byť tak rýchly ako iné protokoly.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Rýchle, bezpečné a stabilné - ale cenzori ich ľahšie odhalia a zablokujú.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "ODPORÚČANÉ";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "NOVÉ";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "VPN protokol určuje spôsob prenosu údajov medzi VPN serverom a vaším zariadením. **[Ďalšie informácie](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN pripojenie je aktívne";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Zmena protokolov ukončí aktuálnu reláciu VPN.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Zrušiť";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Pokračovať";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Nesprávne sieťové rozhranie";
@@ -1955,6 +2288,30 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Pre pripojenie k tomuto zariadeniu, odpojte prosím iné zariadenie.";
 
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Streamovanie v 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Vychutnajte si svoje obľúbené filmy a televízne programy odkiaľkoľvek na svete.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Odomknite peer-to-peer (P2P) sťahovanie a zdieľanie súborov";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Zlepšite rýchlosť odosielania a sťahovania a zároveň skryte svoju IP adresu.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Chráňte až 10 zariadení súčasne";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN je k dispozícii na 8 rôznych platformách.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Pristupujte k sieti Tor jedným ťuknutím";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Pripojte sa k skrytým službám a \"onion\" webom pomocou bežného prehliadača.";
+
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Prehliadanie pri ešte vyšších rýchlostiach (až do 10 Gb/s)";
 
@@ -2168,6 +2525,9 @@
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Proton Free vás automaticky pripojí k najrýchlejšiemu dostupnému serveru. Zvyčajne je to server, ktorý je najbližšie k vašej polohe.";
 
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free vás automaticky pripojí k najrýchlejšiemu dostupnému bezplatnému serveru z našich %@ bezplatných krajín. Obvykle sa jedná o server, ktorý je najbližšie k vašej polohe.";
+
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Získajte celosvetové pokrytie s VPN Plus";
 
@@ -2292,4 +2652,58 @@
 "_operating_system_out_of_date_alert_title" = "Aktualizujte váš softvér";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "K dispozícii je nová verzia Proton VPN. Ak chcete získať aktualizáciu, musíte najprv aktualizovať svoje zariadenie na %@ %@ alebo novšiu verziu.";
+"_operating_system_out_of_date_alert_description" = "K dispozícii je nová verzia Proton VPN. Ak chcete získať aktualizáciu, musíte najprv aktualizovať svoje zariadenie na %1$@ %2$@ alebo novšiu verziu.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Celosvetové pokrytie";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ umiestnení serverov v 63 krajinách";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Rýchlejšie prehliadanie";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Prehliadanie pri ešte vyšších rýchlostiach (až do 10 Gb/s)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Streamovanie";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Pozerajte vaše obľúbené filmy a televízne relácie";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Blokujte reklamy, malvér a sledovače";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Pridajte ďalšiu úroveň šifrovania k vášmu VPN pripojeniu";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "Podpora P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Sťahujte súbory cez BitTorrent a iné protokoly na zdieľanie súborov";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Chráňte 10 zariadení";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Bezpečnosť a súkromie na všetkých vašich zariadeniach";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor cez VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Použite sieť Tor nad vaším VPN pripojením pre väčšie súkromie";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "A oveľa viac...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Odomknite pokročilé funkcie výkonu a ochrany súkromia";

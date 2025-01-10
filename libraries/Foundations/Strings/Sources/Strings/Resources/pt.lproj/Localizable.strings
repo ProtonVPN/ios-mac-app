@@ -20,7 +20,7 @@
 "_disconnecting" = "A desligar";
 
 /* Common word */
-"_done" = "Feito";
+"_done" = "Terminado";
 
 /* Common word */
 "_edit" = "Editar";
@@ -141,7 +141,7 @@
 "_get_plus_for_feature" = "Obtenha o Proton VPN Plus para desbloquear esta e outras funcionalidades.";
 
 /* Display more information */
-"_more_info" = "Mais informação";
+"_more_info" = "Saiba mais";
 
 /* Display less information */
 "_less_info" = "Menos informação";
@@ -483,6 +483,9 @@
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
+
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "vía Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
@@ -1304,7 +1307,7 @@
 "_netshield_business_upsell_title" = "Bloqueie anúncios com NetShield";
 
 /* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
-"_netshield_business_upsell_subtitle" = "Quando fizer \"upgrade\" para a VPN Business";
+"_netshield_business_upsell_subtitle" = "Quando melhorar para o VPN Plus";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1401,7 +1404,7 @@
 "_smart_protocol_reconnect_modal_body" = "A ligação será reiniciada para alterar o modo do Smart Protocol.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Para utilizar o Proton VPN, terá de activar os **protocolos VPN personalizados** no seu Mac.";
+"_sysex_description_1" = "Para utilizar o Proton VPN, terá de ativar os **protocolos VPN personalizados** no seu Mac.";
 
 /* Part 2 of the description of the system extension wizard in mac */
 "_sysex_description_2" = "Os protocolos personalizados permitem ligações mais rápidas e mais seguras, pelo que terá de os ativar para se ligar à maioria dos servidores Proton VPN.";
@@ -1526,16 +1529,16 @@
 
 "_locations_plus" = "Localizações Plus";
 
-"_locations_gateways" = "Gateways";
+"_locations_gateways" = "Portas de entrada";
 
 /* Header before the list of connections available for free users (in the country list) */
 "_connections_free" = "Conexões gratuitas";
 
 /* Gateways info modals title (both iOS and macOS) */
-"_gateways_modal_title" = "O que é um gateway?";
+"_gateways_modal_title" = "O que é uma porta de entrada?";
 
 /* Gateways info modals text (both iOS and macOS) */
-"_gateways_modal_text" = "Um gateway de VPN é uma conexão segura que oferece acesso controlado aos dados e serviços da sua empresa através de servidores dedicados";
+"_gateways_modal_text" = "Uma porta de entrada de VPN é uma conexão segura que oferece acesso controlado aos dados e serviços da sua empresa através de servidores dedicados";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 
@@ -1618,7 +1621,7 @@
 "_moderate_nat_change_title" = "Ativar NAT moderado";
 
 /* Clickable label title in the onboarding screen for mac */
-"_settings_mac_telemetry_learn_more" = "Mais informação";
+"_settings_mac_telemetry_learn_more" = "Saiba mais";
 
 /* Telemetry label in the onboarding screen for mac next to a toggle */
 "_onboarding_mac_usage_stats" = "Partilhar estatísticas de utilização anónimas. Isto ajuda-nos a ultrapassar bloqueios de VPN e a melhorar a aplicação.";
@@ -1680,11 +1683,128 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Não é possível alterar a configuração %@. Tente novamente mais tarde ou ligue-se a um servidor diferente.";
 
+/*
+ Home tab in bottom menu
+ Home tab in bottom menu [Redesign_2023]
+*/
+"_home_tab" = "Início";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Países";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Definições";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Não está protegido.";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Ligação predefinida";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Navegação segura desde";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Última ligação a";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "A ligar a...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "A ligar a %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Select your default connection";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "A mais rápida";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "The best server based on your location";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "A mais recente";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Your most recently used connection";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Descubra VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Recentes";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Ações";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Servidor disponível com VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Servidor em manutenção";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Ajuda";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Ligar";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Remover";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Desligar";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Cancelar";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Mostrar os detalhes da ligação";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Fixar";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Desafixar";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Seleção automática de";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "via %@";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Não está protegido.";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "A proteger a sua identidade digital";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Protegido";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Obter o Plus";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "As publicidades utilizam cookies e rastreadores para o seguir.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "Os rastreadores são sítios web de terceiros que recolhem, armazenam e vendem informações sobre a sua actividade na web.";
+"netshield_stats_hint_trackers" = "Os rastreadores são sítios web de terceiros que recolhem, armazenam e vendem informações sobre a sua atividade na web.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Quantidade estimada de anúncios, rastreadores e malware que o NetShield bloqueou.";
@@ -1709,6 +1829,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ E";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Detalhes da ligação";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Ligado por";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "País";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Cidade";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Servidor";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Carga do servidor";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protocolo";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "O meu IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "IP da VPN";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Indisponível";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "You can connect to .onion sites with your regular browser.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Peer-to-peer file sharing is enabled on this server.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Servers are physically located in Singapore, but you’ll appear to be browsing from Thailand.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Streaming";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "This server is optimized for TV and movie playback.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Funcionalidades";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Informação";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protocolo indisponível";
 
@@ -1729,6 +1915,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Fechar";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Definições";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Conta";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Funcionalidades";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Ligação";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Geral";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Apoio ao cliente";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Melhorar a Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill Switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protocolo";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Definições avançadas";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = " Tema";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Acesso Beta";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widget";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Centro de suporte";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Reportar um problema";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Registos de depuração";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Ajude-nos a combater a censura";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Avalie o Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Restaurar as definições padrão";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Terminar a sessão";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Versão da aplicação: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Ligado";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Desligado";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Ligado";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Desligado";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Automático";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Escuro";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Claro";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Automático*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Escuro";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Claro";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Velocidade (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Fiabilidade (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Auto-selects the best protocol for your connection.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Fast, secure, and efficient. WireGuard is difficult to detect and block.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Established, well-tested, and secure. OpenVPN is less battery-efficient than some other protocols.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Established, well-tested, and secure. OpenVPN is reliable in poor network conditions, but may not be as fast as other protocols.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "RECOMENDADO";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "NOVO";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "Um protocolo VPN determina como os dados são transmitidos entre um servidor VPN e o seu dispositivo. **[Saiba mais](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "Ligação VPN ativa";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "A alteração dos protocolos terminará a sessão VPN atual.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Cancelar";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Continuar";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Interface de rede incorrecta";
@@ -1815,7 +2148,7 @@
 "modals_upsell_stay_free" = "Agora não";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Quando fizer \"upgrade\" para o Plus";
+"modals_upsell_features_subtitle" = "Quando melhorar para o Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Tem necessidades informáticas avançadas ou profissionais que requerem portas não standard?\n\nActualize para o VPN Plus para aceder a esta e outras funcionalidades premium.";
@@ -1893,7 +2226,7 @@
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";
 
 /* Title of Secure Core upsell screen */
-"modals_new_upsell_secure_core_title" = "Double your protection";
+"modals_new_upsell_secure_core_title" = "Dobre a sua proteção";
 
 /* Subtitle of Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle" = "Add another layer of encryption to your VPN connection with Secure Core.";
@@ -1954,6 +2287,30 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Desligue outro dispositivo para ligar a este.";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Streaming em 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Enjoy your favorite movies and TV shows from anywhere in the world.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Unlock peer-to-peer (P2P) downloads and file sharing";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Improve your upload and download speeds while hiding your IP address.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Proteja 10 dispositivos de uma só vez.";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN está disponível em 8 plataformas diferentes.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Aceda à rede Tor num só toque";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Ligue-se a serviços ocultos e sítios web onion com o seu navegador normal.";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Navegue a velocidades ainda mais elevadas (até 10 Gbps)";
@@ -2046,13 +2403,13 @@
 "modals_whats_new_button_title" = "Dar uma vista de olhos";
 
 /* Title of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_title" = "New look, same protection";
+"modals_whats_new_redesign_title" = "Novo visual, mesma proteção";
 
 /* Subtitle of redesign related content of the "What's new" screen */
 "modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
 
 /* Title of recents related content of the "What's new" screen */
-"modals_whats_new_recents_title" = "Introducing Recents";
+"modals_whats_new_recents_title" = "Aqui estão as ligações recentes";
 
 /* Subtitle of recents related content of the "What's new" screen */
 "modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
@@ -2091,7 +2448,7 @@
 "welcome_upgrade_subtitle_plus" = "Aproveite funcionalidades de privacidade extra, desempenho de alta qualidade, e uma personalização da VPN de outro nível.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.";
+"welcome_upgrade_subtitle_Unlimited" = "Parabéns! Desbloqueou funcionalidades de segurança e desempenho premium em todos os serviços Proton, além de 500 GB de armazenamento total.\n\nDesfrute do melhor da privacidade Proton.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
 "welcome_upgrade_subtitle_Unlimited_markdown" = "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.";
@@ -2118,7 +2475,7 @@
 "welcome_to_proton_banner_subtitle_redesign" = "We’ll never log your internet activity or share your information with third parties.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Share anonymous usage statistics";
+"onboarding_get_started_statistics_toggle_title" = "Partilhar estatísticas anónimas de utilização";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
 "onboarding_get_started_statistics_toggle_subtitle" = "Usage data helps us overcome VPN blocks and improve app performance.";
@@ -2160,13 +2517,16 @@
 
 "onboarding_footer" = "Estas estatísticas não contêm o seu endereço IP e não podem ser utilizadas para o identificar. Nunca as partilharemos com terceiros.";
 
-"onboarding_footer_learn_more" = "Mais informação";
+"onboarding_footer_learn_more" = "Saiba mais";
 
 /* Modal that lists countries in which servers are available to free users: Title */
 "free_connections_modal_title" = "Conexões gratuitas";
 
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "O Proton Free liga-o automaticamente ao servidor mais rápido disponível. Este será, geralmente, o servidor mais próximo da sua localização.";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free automatically connects you to the fastest available free server from our %@ free countries. This will normally be the closest server to your location.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Obtenha uma cobertura global com a VPN Plus";
@@ -2178,10 +2538,10 @@
 "_wrong_country_banner_title" = "Não é o país que pretendia?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Faça 'upgrade' para escolher qualquer servidor";
+"_wrong_country_banner_subtitle" = "Melhore para escolher qualquer servidor";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Não é o país que pretendia? Faça 'upgrade' para escolher qualquer servidor";
+"_wrong_country_banner_text" = "Não é o país que pretendia? Melhore para escolher qualquer servidor.";
 
 /* ReportBugwindow title */
 "_br_window_title" = "Reportar um problema";
@@ -2277,7 +2637,7 @@
 "_ike_deprecation_alert_enable_smart_button_title" = "Ativar Smart Protocol";
 
 /* User is trying to connect to a server that is currently unavailable. (title) */
-"_location_not_available_title" = "Server unavailable";
+"_location_not_available_title" = "Servidor indisponível";
 
 /* User is trying to connect to a server that is currently unavailable. (text) */
 "_location_not_available_text" = "This server has been removed. Try connecting to another server.";
@@ -2289,7 +2649,61 @@
 "_location_not_available_for_profile_text" = "The server you selected for '%@' is currently unavailable. Select a different server or try again later.";
 
 /* User's OS version is no longer actively supported by Proton VPN (alert title) */
-"_operating_system_out_of_date_alert_title" = "Update your software";
+"_operating_system_out_of_date_alert_title" = "Atualize o seu software";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";
+"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Cobertura mundial";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "Mais de 1700 localizações de servidores em 63 países";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Navegação mais rápida";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Browse at even higher speeds (up to 10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Streaming";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Watch your favorite movies and TV shows";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Bloqueie anúncios, malware e rastreadores";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Add another layer of encryption to your VPN connection";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "Suporte a P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Download files through BitTorrent and other file sharing protocols";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Proteja 10 dispositivos";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Security and privacy on all your devices";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor sobre VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Use the Tor network over your VPN connection for extra privacy";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "E muito mais...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";

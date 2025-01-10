@@ -102,7 +102,7 @@
 "_vpn_protocol_not_supported_title" = "VPN-protokollaa ei tueta";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "VPN-protokolla ei sovellu valitulle yhteydelle. Yhdistääksesi, vaihda protokollaa tai palvelinta.";
+"_vpn_protocol_not_supported_text" = "VPN-protokolla ei sovellu valitsemallesi yhteydelle. Yhdistä vaihtamalla protokollaa tai palvelinta.";
 
 /* iOS: button in settings screen */
 "_log_out" = "Kirjaudu ulos";
@@ -484,6 +484,9 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "maan %@ kautta";
 
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "Secure Coren kautta";
+
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "Reititys:";
 
@@ -756,7 +759,7 @@
 "_server_under_maintenance" = "Palvelin on huollossa";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Valitettavasti tilauksellasi ei voi käyttää tätä palvelinta. Mikäli haluat käyttöösi useampia palvelimia, harkitse tilauksesi päivitystä.";
+"_upgrade_plan_to_access_server" = "Valitettavasti tämä palvelin ei sisälly tilaukseesi. Mikäli haluat käyttöösi useampia palvelimia, harkitse tilauspäivitystä.";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Kaikki tässä maassa sijaitsevat palvelimet ovat huollossa. Yhdistä toiseen maahan.";
@@ -1289,7 +1292,7 @@
 "_netshield_stats_data_saved" = "Tiedonsiirtoa\nsäästetty";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
-"_netshield_feature_description" = "Suojaa itsesi mainoksilta, haittaohjelmilta ja seuraajilta verkkosivuilla ja sovelluksissa. Jos verkkosivut eivät lataudu, kokeile kytkeä NetShield pois päältä.\nLue lisää";
+"_netshield_feature_description" = "Suojaa itsesi mainoksilta, haittaohjelmilta ja seurannoilta verkkosivuilla ja sovelluksissa. Jos verkkosivut eivät lataudu, kokeile kytkeä NetShield pois päältä.\nLue lisää";
 
 /* Link with more info in the NetShield Feature description */
 "_netshield_feature_description_alt_link" = "Lue lisää";
@@ -1596,7 +1599,7 @@
 
 "_subuser_alert_description2" = "Tämä vaihe kestää vain muutamia minuutteja, jonka jälkeen voit kirjautua sisään ja suojata kaikki laitteesi.";
 
-"_subuser_alert_description3" = "Tälle tilille ei ole tällä hetkellä määritetty VPN-yhteyttä. Aloita Proton VPN -matkasi olemalla yhteydessä ylläpitoosi.";
+"_subuser_alert_description3" = "Tilin käyttöön ei tällä hetkellä ole määritetty VPN-yhteyksiä. Aloita Proton VPN -matkasi olemalla yhteydessä ylläpitoosi.";
 
 "_subuser_alert_enable_connections_button" = "Määritä VPN-yhteydet";
 
@@ -1680,6 +1683,123 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ -asetusta ei voitu muuttaa. Yritä myöhemmin uudelleen tai yhdistä toiseen palvelimeen";
 
+/*
+ Home tab in bottom menu
+ Home tab in bottom menu [Redesign_2023]
+*/
+"_home_tab" = "Koti";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Maat";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Asetukset";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Sinua ei ole suojattu";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Selaat suojaamattomana sijainnista %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN-yhteys on katkaistu. Yhdistä palvelimeen selataksesi Internetiä turvallisesti.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Oletusyhteys";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Selaat turvallisesti sijainnista";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Viimeksi yhteydessä maahan";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Yhdistetään maahan...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Yhdistetään maahan %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Olit viimeksi yhteydessä maahan %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Selaat turvallisesti maasta %@.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Valitse oletusyhteytesi";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Nopein";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Sijaintisi perusteella paras palvelin";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Viimeisin";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Viimeksi käyttämäsi yhteys";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Tutustu VPN Plussaan";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Viimeisimmät";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Toiminnot";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Palvelin on käytettävissä VPN Plussalla";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Palvelin on huollossa";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Tuki";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Yhdistä";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Poista";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Katkaise yhteys";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Peruuta";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Näytä yhteyden tiedot";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Kiinnitä";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Irrota";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Valittu automaattisesti seuraavista";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "maan %@ kautta";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Sinua ei ole suojattu";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Digitaalista identiteettiäsi suojataan";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Suojattu";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Hanki Plus";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Mainossivustot käyttävät evästeitä ja seurantoja kohdistettuun markkinointiin.";
 
@@ -1709,6 +1829,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ E";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Yhteyden tiedot";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Yhdistettynä";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Maa";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Kaupunki";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Palvelin";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Palvelimen kuormitus";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protokolla";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "Oma IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN:n IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Ei käytettävissä";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Voit muodostaa yhteyden .onion-sivustoihin tavallisella selaimellasi.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Tiedostojen jako vertaisverkon kautta on käytössä tällä palvelimella.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Palvelimet sijaitsevat fyysisesti Singaporessa, mutta näytät selaavasi Thaimaasta.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Toimintasi on salattu kahdella huipputurvallisella VPN-palvelimella.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Suoratoisto";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Tämä palvelin on optimoitu TV-ohjelmien ja elokuvien toistoon.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Ominaisuudet";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Tiedot";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protokolla ei ole käytettävissä";
 
@@ -1729,6 +1915,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Sulje";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Asetukset";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Tili";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Ominaisuudet";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Yhteys";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Yleiset";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Tuki";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Paranna Protonia";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Tappokytkin";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protokolla";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Lisäasetukset";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Teema";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Käytä beetaversiota";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widgetti";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Tukikeskus";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Ilmoita ongelmasta";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Vianselvityslokit";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Auta meitä taistelemaan sensuuria vastaan";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Arvostele Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Palauta oletusasetukset";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Kirjaudu ulos";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Sovellusversio: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Päällä";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Pois";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Päällä";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Pois";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Autom.";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Tumma";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Vaalea";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Autom*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Tumma";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Vaalea";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Nopeus (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Luotettavuus (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Valitsee automaattisesti yhteydellesi sopivimman protokollan.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Nopea, turvallinen ja tehokas. WireGuard kuluttaa muita protokollia vähemmän virtaa.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Nopea, turvallinen ja tehokas. WireGuardia on vaikea havaita ja estää.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Kiertää VPN-estot piilottamalla VPN-yhteytesi sensuureilta. Tämä protokolla on DPI-vastustuskykyinen (Deep Packet Inspection), mutta ei välttämättä yhtä nopea kuin muut protokollat. Stealth on Proton VPN:n yksinoikeus.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Vakiintunut, hyvin testattu ja turvallinen. OpenVPN:n virrankulutus ei ole yhtä hyvä kuin joidenkin muiden protokollien.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Vakiintunut, hyvin testattu ja turvallinen. OpenVPN on luotettava huonoissakin verkko-olosuhteissa, muttei välttämättä saavuta muiden porotokollien nopeuksia.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Nopea, turvallinen ja vakaa—mutta sensuurien on helpompi havaita ja estää.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "SUOSITELTU";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "UUSI";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "VPN-protokolla määrittää, miten tiedonsiirto VPN-palvelimen ja laitteesi välillä tapahtuu. **[Lue lisää](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN-yhteys on aktiivinen";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Protokollan vaihto päättää nykyisen VPN-istunnon.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Peruuta";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Jatka";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Huono verkkosovitin";
@@ -1842,7 +2175,7 @@
 "modals_upsell_all_countries_feature_streaming" = "Suoratoista suosikkielokuviasi";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_highSpeed" = "Selaa suurimmilla nopeuksilla (10 Gbps)";
+"modals_upsell_all_countries_feature_highSpeed" = "Selaa suurimmilla nopeuksilla (10 Gbit/s)";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_netshield" = "Estä mainoksia ja haittaohjelmia NetShieldillä";
@@ -1875,7 +2208,7 @@
 "modals_new_upsell_vpn_accelerator_title" = "Selaa vielä korkeammilla nopeuksilla";
 
 /* Subtitle of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_subtitle" = "Avaa nopeampia ja ruuhkattomampia palvelimia, joiden nopeudet ovat jopa 10 Gbps.";
+"modals_new_upsell_vpn_accelerator_subtitle" = "Avaa nopeampia ja ruuhkattomampia palvelimia, joiden nopeudet ovat jopa 10 Gbit/s.";
 
 /* Subtitle of the Customization scren */
 "modals_new_upsell_customization_subtitle" = "Käytä lähiverkkosi (LAN) laitteita VPN Plussalla.";
@@ -1955,14 +2288,38 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Katkaise yhteys joltakin toiselta laitteeltasi yhdistääksesi tämän laitteen.";
 
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Suoratoista 4K-tarkkuudella";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Nauti suosikkielokuvistasi ja -sarjoistasi kaikkialta maailmasta.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Avaa peer-to-peer (P2P) -lataukset ja -tiedostojako";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Paranna lähetys- ja latausnopeuksiasi samalla kun piilotat IP-osoitteesi.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Suojaa 10 laitetta samanaikaisesti";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN on saatavilla 8 eri alustalla.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Käytä Tor-verkkoa yhdellä napautuksella";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Yhdistä piilotettuihin palveluihin ja avaa Onion-sivustot tavallisella selaimellasi.";
+
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "Selaa vieläkin korkeammilla nopeuksilla (jopa 10 Gbps)";
+"upsell_vpn_accelerator_title" = "Selaa vieläkin korkeammilla nopeuksilla (jopa 10 Gbit/s)";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_faster_servers" = "Pääset käyttämään nopeampia, vähemmän ruuhkaisia palvelimia.";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_increase_connection_speeds" = "Nopeuta yhteyttä jopa 400%% VPN Acceleratorin avulla.";
+"upsell_vpn_accelerator_increase_connection_speeds" = "Nopeuta yhteyttä jopa 400 %% VPN Acceleratorilla.";
 
 /* Bold part of the feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
@@ -2067,7 +2424,7 @@
 "upsell_specific_location_subtitle" = "Hanki rajattomasti vaihtoja VPN Plussalla";
 
 /* Displayed when the user clicks "Change server" after they've just changed it. */
-"upsell_specific_location_subtitle2" = "Proton Freellä voit vaihtaa palvelinta muutaman kerran tunnissa. Saat rajattomasti palvelinvaihtoja VPN Plussalla.";
+"upsell_specific_location_subtitle2" = "Proton Freellä voit vaihtaa palvelinta muutaman kerran tunnissa. Poista rajoitus päivittämällä VPN Plussaan.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Olet saavuttanut tällä erää käytettävissä olevan palvelinvaihdosten enimmäismäärän.";
@@ -2167,6 +2524,9 @@
 
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Proton Free yhdistää automaattisesti nopeimpaan käytettävissä olevaan palvelimeen. Yleensä tämä on lähinnä sijaintiasi oleva palvelin.";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free yhdistää sinut automaattisesti nopeimpaan saatavilla olevaan ilmaiseen palvelimeen %@ ilmaisessa maassa. Tämä on yleensä lähinnä sijaintiasi oleva palvelin.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Hanki maailmanlaajuinen kattavuus VPN Plus -tilauksella";
@@ -2292,4 +2652,58 @@
 "_operating_system_out_of_date_alert_title" = "Päivitä ohjelmistosi";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "Uusi Proton VPN -versio on saatavilla. Asentaaksesi päivityksen, sinun on ensin päivitettävä laitteesi vähintään %@ versioon %@.";
+"_operating_system_out_of_date_alert_description" = "Proton VPN:n uusi versio on saatavilla. Saadaksesi päivityksen sinun on ensin päivitettävä laitteesi %1$@ %2$@ tai uudempaan versioon.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Maailmalaajuinen kattavuus";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ palvelinta 63 maassa";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Selaa nopeammin";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Selaa vielä korkeammilla nopeuksilla (jopa 10 Gbit/s)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Suoratoisto";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Katsele suosikkielokuviasi ja -sarjojasi";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Estä haittaohjelmia, mainoksia ja seurantoja";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Lisää VPN-yhteyteesi toinen salauskerros";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "P2P-tuki";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Lataa tiedostoja mm. BitTorrentin kaltaisilla tiedonsiirtoprotokollilla";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Suojaa 10 laitetta";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Tietoturvaa ja yksityisyyttä kaikilla laitteillasi";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor + VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Käytä Tor-verkkoa VPN-yhteytesi välityksellä ja tehosta tietosuojaasi";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "Ja paljon muuta...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Avaa edistyneitä suorituskyky- ja yksityisyysominaisuuksia";

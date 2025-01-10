@@ -198,9 +198,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d прылада</string>
-        <key>few</key>
         <string>%d прылады</string>
+        <key>few</key>
+        <string>%d прылад</string>
         <key>many</key>
         <string>%d прылад</string>
         <key>other</key>
@@ -218,13 +218,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d краіны</string>
+        <string>%d краіне</string>
         <key>few</key>
-        <string>%d краін</string>
+        <string>%d краінах</string>
         <key>many</key>
-        <string>%d краін</string>
+        <string>%d краінах</string>
         <key>other</key>
-        <string>%d краін</string>
+        <string>%d краінах</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -370,7 +370,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d дні/дзён</string>
+        <string>%d дзён</string>
         <key>one</key>
         <string>%d дзень</string>
         <key>few</key>
@@ -390,7 +390,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d дні/дзён</string>
+        <string>%d дзён</string>
         <key>one</key>
         <string>%d дзень</string>
         <key>few</key>

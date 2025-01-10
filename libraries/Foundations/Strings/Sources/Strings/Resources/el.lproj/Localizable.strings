@@ -484,6 +484,9 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "μέσω %@";
 
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "μέσω Secure Core";
+
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "μέσω";
 
@@ -1429,7 +1432,7 @@
 
 "_sysex_cannot_enable" = "Δεν είναι δυνατή η ενεργοποίηση της Επέκτασης Συστήματος";
 
-"_sysex_error_description" = "Παρουσιάστηκε σφάλμα κατά την εγκατάσταση της επέκτασης συστήματος.\nΕπανεγκαταστήστε το Proton VPN, βεβαιωθείτε ότι βρίσκεται στο φάκελο Εφαρμογές, για να διορθώσετε αυτό το πρόβλημα. Εναλλακτικά, επικοινωνήστε με την υποστήριξή μας.";
+"_sysex_error_description" = "Παρουσιάστηκε σφάλμα κατά την εγκατάσταση της επέκτασης συστήματος.\nΕπανεγκαταστήστε το Proton VPN, βεβαιωθείτε ότι βρίσκεται στον φάκελο Εφαρμογές, για να διορθώσετε αυτό το πρόβλημα. Εναλλακτικά, επικοινωνήστε με την υποστήριξή μας.";
 
 "_vpnauth_certfail_title" = "Σφάλμα ταυτοποίησης";
 
@@ -1680,6 +1683,123 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Αδυναμία αλλαγής ρύθμισης %@. Παρακαλούμε δοκιμάστε ξανά αργότερα ή συνδεθείτε σε άλλον διακομιστή";
 
+/*
+ Home tab in bottom menu
+ Home tab in bottom menu [Redesign_2023]
+*/
+"_home_tab" = "Αρχική";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Χώρες";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Ρυθμίσεις";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Είστε απροστάτευτοι";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Περιηγείστε χωρίς προστασία από το %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "Το VPN έχει αποσυνδεθεί. Συνδεθείτε σε ένα διακομιστή για ασφαλή περιήγηση στο διαδίκτυο.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Προεπιλεγμένη σύνδεση";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Ασφαλής περιήγηση από";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Τελευταία σύνδεση στη";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Σύνδεση σε...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Σύνδεση σε %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Συνδεθήκατε τελευταία φορά στο %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Περιηγείστε με ασφάλεια από %@.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Επιλέξτε την προεπιλεγμένη σύνδεσή σας";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Γρηγορότερο";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Ο καλύτερος διακομιστής με βάση την τοποθεσία σας";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Πιο Πρόσφατα";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Η σύνδεση που χρησιμοποιήσατε πιο πρόσφατα";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Ανακαλύψτε το VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Πρόσφατες";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Ενέργειες";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Διακομιστής διαθέσιμος με VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Διακομιστής υπό συντήρηση";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Βοήθεια";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Σύνδεση";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Αφαίρεση";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Αποσύνδεση";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Ακύρωση";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Εμφάνιση λεπτομερειών σύνδεσης";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Καρφίτσωμα";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Ξεκαρφίτσωμα";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Επιλέχθηκε αυτόματα από";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "μέσω %@";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Είστε απροστάτευτοι";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Προστασία της ψηφιακής σας ταυτότητας";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Προστατευμένο";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Αποκτήστε Plus";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Οι διαφημιστικοί ιστότοποι χρησιμοποιούν cookies και ιχνηλάτες για να σας στοχεύσουν.";
 
@@ -1709,6 +1829,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ E";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Λεπτομέρειες σύνδεσης";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Συνδεδεμένο για";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Χώρα";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Πόλη";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Διακομιστής";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Φορτίο διακομιστή";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Πρωτόκολλο";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "Η IP μου";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Μη διαθέσιμο";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Μπορείτε να συνδεθείτε σε ιστότοπους .onion με το κανονικό σας πρόγραμμα περιήγησης.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Ομότιμη κοινή χρήση αρχείων είναι ενεργοποιημένη σε αυτόν το διακομιστή.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Η φυσική τοποθεσία των διακομιστών βρίσκεται στη Σιγκαπούρη, αλλά θα φαίνεται ότι περιηγείστε από την Ταϊλάνδη.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Η δραστηριότητά σας κρυπτογραφείται πίσω από 2 διακομιστές VPN υψηλής ασφάλειας.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Ροή";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Αυτός ο διακομιστής έχει βελτιστοποιηθεί για αναπαραγωγή τηλεόρασης και ταινιών.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Χαρακτηριστικά";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Πληροφορίες";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Μη διαθέσιμο πρωτόκολλο";
 
@@ -1729,6 +1915,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Κλείσιμο";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Ρυθμίσεις";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Λογαριασμός";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Χαρακτηριστικά";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Σύνδεση";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Γενικά";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Υποστήριξη";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Βελτιώστε το Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill Switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Πρωτόκολλο";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Προηγμένες ρυθμίσεις";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Θέμα";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Πρόσβαση Beta";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widget";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Κέντρο υποστήριξης";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Αναφορά προβλήματος";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Αρχεία εντοπισμού σφαλμάτων";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Βοηθήστε μας να καταπολεμήσουμε τη λογοκρισία";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Βαθμολογήστε το Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Επαναφορά προεπιλεγμένων ρυθμίσεων";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Έξοδος";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Έκδοση εφαρμογής: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Ενεργό";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Ανενεργό";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Ενεργό";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Ανενεργό";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Αυτόματο";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Σκοτεινό";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Φωτεινό";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Αυτόματο*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Σκοτεινό";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Φωτεινό";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Ταχύτητα (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Αξιοπιστία (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Επιλέγει αυτόματα το καλύτερο πρωτόκολλο για τη σύνδεσή σας.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Γρήγορο, ασφαλές και αποτελεσματικό. Το WireGuard είναι πιο αποδοτικό για την μπαταρία από άλλα πρωτόκολλα.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Γρήγορο, ασφαλές και αποτελεσματικό. Το WireGuard είναι δύσκολο να εντοπιστεί και να αποκλειστεί.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Ξεπερνά τα μπλοκαρίσματα VPN κρύβοντας τη σύνδεσή σας VPN από τους λογοκριτές. Αυτό το πρωτόκολλο είναι ανθεκτικό στο DPI (deep packet inspection), αλλά μπορεί να μην είναι τόσο γρήγορο όσο άλλα πρωτόκολλα. Το Stealth είναι αποκλειστικό για το Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Καθιερωμένο, καλά δοκιμασμένο και ασφαλές. Το OpenVPN είναι λιγότερο αποδοτικό στην μπαταρία από ορισμένα άλλα πρωτόκολλα.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Καθιερωμένο, καλά δοκιμασμένο και ασφαλές. Το OpenVPN είναι αξιόπιστο σε κακές συνθήκες δικτύου, αλλά μπορεί να μην είναι τόσο γρήγορο όσο άλλα πρωτόκολλα.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Γρήγορο, ασφαλές και σταθερό— αλλά πιο εύκολο για τους λογοκριτές να το εντοπίσουν και να το μπλοκάρουν.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "ΠΡΟΤΕΙΝΟΜΕΝΑ";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "ΝΕΟ";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "Ένα πρωτόκολλο VPN καθορίζει τον τρόπο με τον οποίο μετακινούνται τα δεδομένα μεταξύ ενός διακομιστή VPN και της συσκευής σας. **[Μάθετε περισσότερα](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "Ενεργή Σύνδεση VPN";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Αλλάζοντας πρωτόκολλα θα τερματιστεί η τρέχουσα σύνδεση σας στο VPN.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Ακύρωση";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Συνέχεια";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Κακή διεπαφή δικτύου";
@@ -1851,7 +2184,7 @@
 "modals_upsell_net_shield_title" = "Απολαύστε περιήγηση χωρίς διαφημίσεις με το NetShield";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Φραγή διαφημίσεων και ιχνηλατών";
+"modals_upsell_net_shield_ads" = "Αποκλεισμός διαφημίσεων και ιχνηλατών";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_malware" = "Προστασία της συσκευής σας από κακόβουλο λογισμικό";
@@ -1954,6 +2287,30 @@
 
 /* Description of user account update screen */
 "maximum_device_limit" = "Για να συνδέσετε αυτήν τη συσκευή, παρακαλούμε αποσυνδέστε μια άλλη.";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Ροή σε 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Απολαύστε τις αγαπημένες σας ταινίες και τηλεοπτικές εκπομπές από οπουδήποτε στον κόσμο.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Ξεκλείδωμα ομότιμων λήψεων (P2P) και κοινής χρήσης αρχείων";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Βελτιώστε τις ταχύτητες μεταφόρτωσης και λήψης ενώ αποκρύπτετε τη διεύθυνση IP σας.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Προστατέψτε 10 συσκευές ταυτόχρονα";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Το Proton VPN είναι διαθέσιμο σε 8 διαφορετικές πλατφόρμες.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Αποκτήστε πρόσβαση στο δίκτυο Tor με ένα πάτημα";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Συνδεθείτε σε κρυφές υπηρεσίες και ιστότοπους onion με το κανονικό σας πρόγραμμα περιήγησης.";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Περιηγηθείτε με ακόμα υψηλότερες ταχύτητες (έως 10 Gbps)";
@@ -2168,6 +2525,9 @@
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Το Proton Free σας συνδέει αυτόματα στον ταχύτερο διαθέσιμο διακομιστή. Αυτός θα είναι συνήθως ο πλησιέστερος διακομιστής στην τοποθεσία σας.";
 
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Το Proton Free σας συνδέει αυτόματα με τον ταχύτερο διαθέσιμο δωρεάν διακομιστή από τις %@ δωρεάν χώρες μας. Αυτός θα είναι συνήθως ο πλησιέστερος διακομιστής στην τοποθεσία σας.";
+
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Αποκτήστε παγκόσμια κάλυψη με το VPN Plus";
 
@@ -2292,4 +2652,58 @@
 "_operating_system_out_of_date_alert_title" = "Ενημερώσετε το λογισμικό σας";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "Μια νέα έκδοση του Proton VPN είναι διαθέσιμη. Για να λάβετε την ενημέρωση, θα πρέπει πρώτα να ενημερώσετε τη συσκευή σας σε %@ %@ ή νεότερη έκδοση.";
+"_operating_system_out_of_date_alert_description" = "Μια νέα έκδοση του Proton VPN είναι διαθέσιμη. Για να λάβετε την ενημέρωση, θα πρέπει πρώτα να ενημερώσετε τη συσκευή σας σε %1$@ %2$@ ή νεότερη έκδοση.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Παγκόσμια κάλυψη";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ τοποθεσίες διακομιστών σε 63 χώρες";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Ταχύτερη περιήγηση";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Περιηγηθείτε με ακόμα υψηλότερες ταχύτητες (έως 10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Ροή";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Παρακολουθήστε τις αγαπημένες σας ταινίες και τηλεοπτικές εκπομπές";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Αποκλεισμός διαφημίσεων, κακόβουλου λογισμικού και ιχνηλατών";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Επιπρόσθετο επίπεδο κρυπτογράφησης στη σύνδεση VPN σας";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "Υποστήριξη P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Λήψη αρχείων μέσω BitTorrent και άλλων πρωτοκόλλων κοινής χρήσης αρχείων";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Προστατέψτε 10 συσκευές";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Ασφάλεια και απόρρητο σε όλες τις συσκευές σας";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor μέσω VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Χρησιμοποιήστε το δίκτυο Tor μέσω της σύνδεσής σας VPN για επιπλέον ιδιωτικότητα";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "Και πολλά περισσότερα...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Ξεκλειδώστε προηγμένες δυνατότητες απόδοσης και απορρήτου";

@@ -484,6 +484,9 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "%@ üzerinden";
 
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "Secure Core ile";
+
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "şu ülkeden";
 
@@ -1510,7 +1513,7 @@
 
 "_feature_p2p_description" = "Bu sunucular, BitTorrent ve dosya paylaşımı için en iyi başarımı sağlar.";
 
-"_feature_tor_description" = "İnternet trafiğinizi Tor ağı üzerinden yöneltin. Yavaş ama daha güvenli.";
+"_feature_tor_description" = "İnternet trafiğinizi Tor ağı üzerinden yöneltir. Daha yavaştır ama daha güvenlidir.";
 
 "_performance_load_description" = "Yükü yüksek olan sunucular, düşük olanlara göre daha yavaştır.";
 
@@ -1680,6 +1683,123 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ ayarı değiştirilemedi. Lütfen bir süre sonra yeniden deneyin ya da farklı bir sunucuya bağlanın";
 
+/*
+ Home tab in bottom menu
+ Home tab in bottom menu [Redesign_2023]
+*/
+"_home_tab" = "Giriş";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Ülkeler";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Ayarlar";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Korunmuyorsunuz";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "%@ üzerinden korunmasız olarak geziniyorsunuz.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN bağlantısı yok. İnternet üzerinde güvenle gezinmek için bir sunucuya bağlanın.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Varsayılan bağlantı";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Şuradan güvenle geziniliyor";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Son bağlantı";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Şurası ile bağlantı kuruluyor...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "%@ ile bağlantı kuruluyor.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "En son balantıyı %@ ile kurdunuz.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "%@ üzerinden güvenli olarak geziniyorsunuz.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Varsayılan bağlantınızı seçin";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "En hızlı";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Konumunuza uygun en iyi sunucu";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Son kullanılan";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Son kullandığınız bağlantı";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "VPN Plus özelliklerini keşfedin";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Son kullanılanlar";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "İşlemler";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Sunucu VPN Plus tarifesi ile kullanılabilir";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Sunucuda bakım yapılıyor";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Yardım";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Bağlan";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Kaldır";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Bağlantıyı kes";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "İptal";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Bağlantı bilgilerini görüntüle";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Sabitle";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Sabitlemeyi kaldır";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Şuradan otomatik seçildi";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "%@ üzerinden";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Korunmuyorsunuz";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Dijital kimliğiniz korunuyor";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Korunmuş";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Plus edinin";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Reklam siteleri sizi hedeflemek için çerezler ve izleyiciler kullanır.";
 
@@ -1709,6 +1829,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ Sekstilyon";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Bağlantı bilgileri";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Şununla bağlı";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Ülke";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "İl";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Sunucu";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Sunucu yükü";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "İletişim kuralı";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "IP adresim";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP adresi";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Kullanılamıyor";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = ".onion sitelerine normal tarayıcınızla bağlanabilirsiniz.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Bu sunucuda eşler arası dosya paylaşımı kullanılıyor.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Sunucular fiziksel olarak Singapore konumunda bulunuyor ancak siz Thailand konumundan geziniyor gibi görüneceksiniz.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "İşlemleriniz yüksek güvenlikli 2 VPN sunucusunun arkasında şifrelenir.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Yayın akışı izlemek";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Bu sunucu TV ve filmleri oynatmak için ayarlanmıştır.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Özellikler";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Bilgiler";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "İletişim kuralı kullanılamıyor";
 
@@ -1729,6 +1915,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Kapat";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Ayarlar";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Hesap";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Özellikler";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Bağlantı";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Genel";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Destek";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Proton uygulamasını geliştirin";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Bağlantı kesici";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "İletişim kuralı";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Gelişmiş ayarlar";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Tema";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Beta erişimi";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Gereç";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Destek merkezi";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Sorun bildireceğim";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Hata ayıklama günlüğü";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Sansüre karşı koymamıza yardımcı olun";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Proton VPN uygulamasını değerlendir";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Varsayılan ayarları yükle";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Oturumu kapat";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Uygulama sürümü: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Açık";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Kapalı";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Açık";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Kapalı";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Otomatik";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Koyu";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Açık";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Otomatik*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Koyu";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Açık";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Hız (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Güvenilirlik (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Bağlantınız için en iyi iletişim kuralını otomatik olarak seçer.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Hızlı, güvenli ve verimli. WireGuard diğer iletişim kurallarına göre daha az pil harcar.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Hızlı, güvenli ve etkili. WireGuard iletişim kuralının farkedilip engellenmesi zordur.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "VPN bağlantınızı sansür uygulamalarından gizleyerek VPN engellemelerini aşar. Bu iletişim kuralı DPİ (derin paket inceleme) uygulamalarına karşı dirençlidir ancak diğer iletişim kuralları kadar hızlı olmayabilir. Stealth, Proton VPN uygulamasına özel bir iletişim kuralıdır.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Yerleşik, iyi sınanmış ve güvenli. OpenVPN diğer iletişim kurallarından daha fazla pil harcayabilir.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Oturmuş, iyi sınanmış ve güvenli. OpenVPN zayıf ağ koşullarında güvenilirdir ancak diğer iletişim kuralları kadar hızlı olmayabilir.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Hızlı, güvenli ve kararlı. Ancak sansür uygulayıcılarının bulması ve engellemesi kolay.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "ÖNERİLEN";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "YENİ";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "Bir VPN iletişim kuralı, verilerin VPN sunucusu ile aygıtınız arasında nasıl gidip geleceğini belirler. **[Ayrıntılı bilgi alın](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN bağlantısı etkin";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "İletişim kurallarını değiştirmek, var olan VPN oturumunuzu sonlandıracak.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "İptal";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "İlerle";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Ağ arayüzü sorunlu";
@@ -1955,6 +2288,30 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";
 
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "4K yayın akışlarını izleyin";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Dünya üzerinde her yerdeki beğendiğiniz film ve TV dizilerini izleyin.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Eşler arası (P2P) indirmeleri ve dosya paylaşımını kullanın";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "IP adresinizi gizlerken yükleme ve indirme hızlarınızı iyileştirin.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Aynı anda 10 aygıtı koruyun";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN 8 farklı platformda kullanılabilir.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Tek dokunmayla Tor ağına erişin";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Her gün kullandığınız tarayıcı ile gizli hizmetlere ve onion sitelerine bağlanın.";
+
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Daha da yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
 
@@ -2168,6 +2525,9 @@
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Proton Free sizi otomatik olarak kullanılabilecek en hızlı sunucuya bağlar. Bu sunucu normalde konumunuza en yakın sunucudur.";
 
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free otomatik olarak %@ Free ülkemizdeki en hızlı Free sunucusuyla bağlantınızı kurar. Bu sunucu normalde konumunuza en yakın sunucudur.";
+
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "VPN Plus tarifesi ile tüm Dünya'ya erişin";
 
@@ -2292,4 +2652,58 @@
 "_operating_system_out_of_date_alert_title" = "İşletim sisteminizi güncelleyin";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "Yeni bir Proton VPN sürümü yayınlanmış. Güncellemek için önce aygıtınızı %@ %@ veya üzerindeki bir sürüme güncellemeniz gerekir.";
+"_operating_system_out_of_date_alert_description" = "Yeni bir Proton VPN sürümü yayımlanmış. Güncellemeyi almak için önce aygıtınızı %1$@ %2$@ veya üzerindeki bir sürüme güncellemeniz gerekir.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Dünya çapında kapsama";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "63 ülkede 1.700 üzerinde sunucu konumu";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Daha hızlı gezinin";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Daha da yüksek hızlarda gezinin (10 Gb/sn değerine varan)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Yayın akışı izlemek";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Beğendiğiniz film ve TV dizilerini izleyin";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Reklamları, kötü amaçlı yazılımları ve etkinlik izleyicileri engelleyin";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "VPN bağlantınıze ek bir şifreleme düzeyi ekleyin";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "P2P desteği";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Dosyaları BitTorrent ve diğer dosya paylaşım iletişim kuralları üzerinden indirin";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "10 aygıta kadar koruyun";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Tüm aygıtlarınız için güvenlik ve gizlilik";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "VPN üzerinden Tor";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Ek gizlilik sağlamak için VPN bağlantınızı Tor ağından geçirin";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "Ve daha fazlası...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Gelişmiş başarım ve gizlilik özelliklerine erişin";
