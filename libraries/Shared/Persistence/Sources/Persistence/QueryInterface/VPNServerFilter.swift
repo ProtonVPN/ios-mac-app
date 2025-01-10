@@ -48,6 +48,9 @@ public enum VPNServerFilter {
     /// Filter by city name
     case city(String)
 
+    /// Matches server name exactly: e.g. CH#30
+    case name(String)
+
     /// Text search filter - filters by country code, or substring of gateway name, city or localized country name
     case matches(String)
 

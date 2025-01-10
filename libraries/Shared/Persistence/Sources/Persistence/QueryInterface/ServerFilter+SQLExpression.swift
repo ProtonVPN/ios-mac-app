@@ -89,6 +89,9 @@ extension VPNServerFilter {
 
         case .city(let name):
             return logical[Logical.Columns.city] == name
+
+        case .name(let name):
+            return logical[Logical.Columns.name] == name
         }
 
     }

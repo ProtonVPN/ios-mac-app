@@ -140,12 +140,6 @@ public struct ConnectionFlagInfoView: View {
             .themeFont(.body1(.semibold))
 #endif
     }
-
-    private func subheader(model: LocationFeatureSubheaderModel) -> some View {
-        LocationFeatureSubheader(model: model)
-            .lineLimit(2)
-            .foregroundColor(.init(.border))
-    }
 }
 
 #if DEBUG

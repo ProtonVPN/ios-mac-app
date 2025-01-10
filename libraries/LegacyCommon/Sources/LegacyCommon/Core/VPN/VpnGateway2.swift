@@ -21,6 +21,7 @@ import Foundation
 import Dependencies
 
 import Domain
+import Persistence
 import VPNShared
 import VPNAppCore
 
@@ -230,10 +231,12 @@ fileprivate extension ConnectionSpec {
         case .exact(_, let number, let subregion, let regionCode):
             if let number {
                 @Dependency(\.serverRepository) var serverRepository
-                let filter = "\(regionCode)#\(number)"
-                if let server = serverRepository.getFirstServer(filteredBy: [.matches(filter)], orderedBy: .none) {
+                let name = "\(regionCode)#\(number)"
+                let filters: [VPNServerFilter?] = [.name(name), subregion.map { .city($0) }]
+                if let server = serverRepository.getFirstServer(filteredBy: filters.compactMap { $0 }, orderedBy: .none) {
                     return .country(regionCode, .server(.init(server: server)))
                 }
+                log.warning("Failed to find server matching \(filters), falling back to fastest in \(regionCode)")
                 return .country(regionCode, .fastest)
             } else if let subregion {
                 return .city(country: regionCode, city: subregion)
