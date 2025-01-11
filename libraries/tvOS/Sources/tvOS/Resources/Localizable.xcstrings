@@ -79,6 +79,12 @@
             "value" : " /mese"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " / 月"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -227,6 +233,12 @@
             "value" : " /anno"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /年間"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -367,6 +379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@/mese"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / 月"
           }
         },
         "ka" : {
@@ -511,6 +529,12 @@
             "value" : "Accetta e continua"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同意して続ける"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -653,6 +677,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tutti i paesi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全ての国"
           }
         },
         "ka" : {
@@ -973,6 +1003,12 @@
             "value" : "Sei sicuro di volerti disconnettere da Proton VPN?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本当にProton VPNからサインアウトしますか？"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1006,7 +1042,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Você tem certeza que deseja encerrar a sessão do Proton VPN?"
+            "value" : "Você tem certeza de que deseja sair do Proton VPN?"
           }
         },
         "ro" : {
@@ -1114,6 +1150,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disponibile con Proton VPN Plus"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN Plusで利用可能"
           }
         },
         "ka" : {
@@ -1428,6 +1470,12 @@
             "value" : "Connettiti a server ad alta velocità in tutto il mondo e riproduci in streaming i tuoi programmi preferiti con la protezione VPN."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "世界中の高速なサーバーに接続し、VPN保護を利用してお気に入りの番組をストリーミングしましょう。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1461,7 +1509,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conecte-se a servidores de alta velocidade em todo o mundo e transmita seus programas favoritos com proteção VPN."
+            "value" : "Conecte-se a servidores de alta velocidade ao redor do mundo e assista a seus programas favoritos com proteção VPN."
           }
         },
         "ro" : {
@@ -2125,7 +2173,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contate-nos"
+            "value" : "Fale conosco"
           }
         },
         "ro" : {
@@ -3131,7 +3179,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mais rápido"
+            "value" : "O mais rápido"
           }
         },
         "ro" : {
@@ -3247,6 +3295,12 @@
             "value" : "Genera un nuovo codice"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しいコードを生成"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3280,7 +3334,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gerar novo código"
+            "value" : "Gerar um novo código"
           }
         },
         "ro" : {
@@ -3422,7 +3476,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Forstått"
+            "value" : "Skjønner"
           }
         },
         "nl" : {
@@ -3724,6 +3778,12 @@
             "value" : "Se riscontri problemi nell'utilizzo di Proton VPN, il nostro team di assistenza clienti sarà lieto di aiutarti.\n\nTi basta scansionare il codice QR o andare su"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPNで何か問題が発生した場合、私たちのカスタマーサポートチームが喜んでお手伝いします。\n\nQRコードをスキャンするか、以下にアクセスするだけです。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3757,7 +3817,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se estiver tendo problemas para usar o Proton VPN, nossa equipe de suporte ao cliente terá prazer em ajudar.\n\nBasta escanear o código QR ou ir para"
+            "value" : "Se estiver com dificuldades para usar o Proton VPN, nossa equipe de suporte ao cliente terá prazer em ajudar.\n\nBasta escanear o QR code ou ir para"
           }
         },
         "ro" : {
@@ -3866,6 +3926,12 @@
             "value" : "Include protezione VPN premium per dispositivi mobili e desktop (connetti fino a 10 dispositivi contemporaneamente)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モバイルとデスクトップ(一度に最大 10 台まで接続可能)のプレミアムVPN保護が含まれます"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3923,7 +3989,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inkluderar premium VPN-skydd för din mobil och stationära dator (anslut upp till 10 enheter samtidigt)"
+            "value" : "Inkluderar premium VPN-skydd för din mobil och dator (anslut upp till 10 enheter samtidigt)"
           }
         },
         "tr" : {
@@ -4009,6 +4075,12 @@
             "value" : "Caricamento dei paesi"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "国を読み込んでいます"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4066,7 +4138,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laddar länder"
+            "value" : "Läser in länder"
           }
         },
         "tr" : {
@@ -4153,6 +4225,12 @@
             "value" : "Hai bisogno di aiuto per configurare o utilizzare Proton VPN?\n\nVisita il nostro Centro di supporto online per suggerimenti per la risoluzione dei problemi, guide all'installazione e risposte alle domande frequenti.\n\nTi basta scansionare il codice QR o andare su"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPNの設定や使用に助けが必要ですか？\n\nトラブルシューティングのヒント、セットアップガイド、そしてよくある質問への回答は私たちのオンラインサポートセンターをご覧ください。\n\nQRコードをスキャンするか、以下にアクセスしてください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4186,7 +4264,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Precisa de ajuda para configurar o Proton VPN?\n\nVisite nosso centro de ajuda para soluções de problemas, dicas, gias de configuração e respostas para as perguntasse frequentes.\n\nDigitalize o código QR ou acesse"
+            "value" : "Precisa de ajuda para configurar ou usar o Proton VPN?\n\nVisite nossa Central de Ajuda para dicas de soluções de problemas, guias de configuração e respostas para perguntas frequentes.\n\nAponte seu dispositivo para o QR code ou vá para"
           }
         },
         "ro" : {
@@ -4793,6 +4871,12 @@
             "value" : "Proton VPN per Apple TV è disponibile su tutti i piani a pagamento. Puoi controllare e gestire il tuo abbonamento sul nostro sito web."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全ての有料プランでApple TV用のProton VPNは利用可能です。サブスクリプションの確認と管理は、私たちのウェブサイトで行えます。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4826,7 +4910,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Proton VPN para Apple TV está disponível para todos os planos pagos. Você pode verificar e gerenciar sia assinatura no nosso site."
+            "value" : "O Proton VPN para Apple TV está disponível para todos os planos pagos. Você pode verificar e gerenciar sua assinatura em nosso site."
           }
         },
         "ro" : {
@@ -4933,6 +5017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN per Apple TV non è disponibile per i piani gratuiti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無料プランではApple TV用のProton VPNは利用できません"
           }
         },
         "ka" : {
@@ -5077,6 +5167,12 @@
             "value" : "La rigorosa politica no-log di Proton VPN è certificata da un audit esterno. Non ti rintracceremo mai online, non registreremo il tuo indirizzo IP e non condivideremo le tue informazioni con terze parti."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPNの厳格なノーログポリシーは、外部監査によって認証されています。私たちは決してあなたをオンラインで追跡したり、あなたのIPアドレスを記録したり、第三者と情報を共有したりしません。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5110,7 +5206,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A rigorosa política de não registro do Proton VPN é certificada por uma auditoria externa. Nunca o rastrearemos on-line, registraremos seu endereço IP ou compartilharemos suas informações com terceiros."
+            "value" : "A rigorosa política do Proton VPN de não manter históricos é certificada por uma auditoria externa. Nunca rastrearemos você on-line, salvaremos seu endereço de IP, nem compartilharemos suas informações com terceiros."
           }
         },
         "ro" : {
@@ -5470,7 +5566,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rekommenderad"
+            "value" : "Rekommenderat"
           }
         },
         "tr" : {
@@ -5557,6 +5653,12 @@
             "value" : "Scansiona il codice QR o vai su\n"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QRコードをスキャンするか、以下にアクセスしてください。\n"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5590,7 +5692,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escaneie o código QR ou vá para\n"
+            "value" : "Escaneie o QR code ou vá para\n"
           }
         },
         "ro" : {
@@ -6396,7 +6498,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sair da sessão?"
+            "value" : "Sair?"
           }
         },
         "ro" : {
@@ -6594,7 +6696,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loggar ut …"
+            "value" : "Loggar ut..."
           }
         },
         "tr" : {
@@ -6681,6 +6783,12 @@
             "value" : "Centro assistenza"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サポートセンター"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6714,7 +6822,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Centro de ajuda"
+            "value" : "Central de Ajuda"
           }
         },
         "ro" : {
@@ -6989,6 +7097,12 @@
             "value" : "Termini di servizio"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用規約"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7132,6 +7246,12 @@
             "value" : "Si è verificato un problema.\nControlla la tua connessione di rete"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問題が発生しました。\nインターネット接続を確認してください"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7147,7 +7267,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Et problem oppstod.\nVennligst sjekk internettforbindelsen din"
+            "value" : "Et problem oppstod.\nSjekk internettforbindelsen din"
           }
         },
         "nl" : {
@@ -7165,7 +7285,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Houve um problema.\nVerifique sua conexão á rede"
+            "value" : "Ocorreu um problema.\nVerifique sua conexão de rede"
           }
         },
         "ro" : {
@@ -7189,7 +7309,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Det var ett problem.\nKontrollera din nätverksanslutning"
+            "value" : "Ett problem uppstod.\nKontrollera din nätverksanslutning"
           }
         },
         "tr" : {
@@ -7276,6 +7396,12 @@
             "value" : "Per leggere la nostra informativa sulla privacy, scansiona il codice QR o vai su"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシーを閲覧するには、QRコードをスキャンするか、以下にアクセスしてください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7309,7 +7435,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para ler nossa política de privacidade, escaneie o código QR ou vá para"
+            "value" : "Para ler nossa política de privacidade, escaneie o QR code ou vá para"
           }
         },
         "ro" : {
@@ -7418,6 +7544,12 @@
             "value" : "Per sbloccare uno streaming veloce con server in oltre 100 paesi, iscriviti a VPN Plus."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 以上の国にあるサーバーで超高速ストリーミングを利用するには、VPN Plusに登録してください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7451,7 +7583,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para usufruir de streaming ultrarrápido com servidores em mais de 100 países, assine o VPN Plus."
+            "value" : "Para liberar streaming ultrarrápido com servidores em mais de 100 países, assine o VPN Plus."
           }
         },
         "ro" : {
@@ -7728,6 +7860,12 @@
             "value" : "Esegui ora l'upgrade per utilizzare l'app o accedi con un account diverso se disponi già di Proton VPN Plus"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アップグレードしてアプリを使用するか、すでにProton VPN Plusをお持ちの場合は別のアカウントでサインインしてください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7870,6 +8008,12 @@
             "value" : "Migliora la tua privacy"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたのプライバシーをアップグレード"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7903,7 +8047,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dê um upgrade na sua privacidade"
+            "value" : "Faça um upgrade na sua privacidade"
           }
         },
         "ro" : {
@@ -8020,6 +8164,12 @@
             "value" : "Utilizzando un altro dispositivo, vai su"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "別のデバイスを使用して、次のページにアクセスしてください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8077,7 +8227,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Använd en annan enhet, gå till"
+            "value" : "Med en annan enhet, gå till"
           }
         },
         "tr" : {
@@ -8164,6 +8314,12 @@
             "value" : "Utilizzi Proton Free?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protonを無料で使いますか？"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8197,7 +8353,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usando Proton Free?"
+            "value" : "Usando Proton Grátis?"
           }
         },
         "ro" : {
@@ -8306,6 +8462,12 @@
             "value" : "Visita il nostro Centro assistenza online per suggerimenti sulla risoluzione dei problemi, guide all'installazione e risposte alle domande frequenti."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トラブルシューティングのヒント、セットアップガイド、よくある質問への回答はオンラインサポートセンターをご覧ください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8339,7 +8501,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visite nosso Centro de Suporte on-line para obter dicas de solução de problemas, guias de configuração e respostas a perguntas frequentes."
+            "value" : "Visite nossa Central de Ajuda on-line para obter dicas de solução de problemas, guias de configuração e respostas a perguntas frequentes."
           }
         },
         "ro" : {
@@ -8449,6 +8611,12 @@
             "value" : "Guardare senza essere guardati."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "見られずに見る。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8482,7 +8650,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Assista sem ser espionado"
+            "value" : "Assista sem ser vigiado."
           }
         },
         "ro" : {
@@ -8506,7 +8674,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Titta utan att bli sedd."
+            "value" : "Titta utan att bli tittad på."
           }
         },
         "tr" : {
@@ -8589,6 +8757,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guarda i tuoi film e serie TV preferiti su qualsiasi piattaforma di streaming"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お気に入りの映画やテレビ番組を主要なストリーミングプラットフォームで視聴しましょう。"
           }
         },
         "ka" : {
@@ -8735,6 +8909,12 @@
             "value" : "Quando ti viene richiesto il codice di verifica, inserisci"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認コードを求められたら、入力してください。"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8879,6 +9059,12 @@
             "value" : "Quando ti viene richiesto il codice di verifica, inserisci (recupero...)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認コードを求められたら、入力してください。(取得中…)"
+          }
+        },
         "ka" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8912,7 +9098,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando for solicitado seu código de verificação, digite (recuperando...)"
+            "value" : "Quando for solicitado seu código de verificação, digite (consultando...)"
           }
         },
         "ro" : {
@@ -8936,7 +9122,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "När du tillfrågas om din verifieringskod, ange (hämtar …)"
+            "value" : "När du tillfrågas om din verifieringskod, ange (hämtar...)"
           }
         },
         "tr" : {
@@ -9020,6 +9206,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il tuo codice di verifica è scaduto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認コードは期限切れです"
           }
         },
         "ka" : {
