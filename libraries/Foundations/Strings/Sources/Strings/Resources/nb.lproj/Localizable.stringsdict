@@ -188,11 +188,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Du har nådd maksimalt antall innstillingsendringer. Vennligst prøv igjen etter minst %d minutt.</string>
+        <string>Du har nådd maksimalt antall innstillingsendringer. Prøv igjen etter minst %d minutt.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>Du har nådd maksimalt antall innstillingsendringer. Vennligst prøv igjen etter minst %d minutter.</string>
+        <string>Du har nådd maksimalt antall innstillingsendringer. Prøv igjen etter minst %d minutter.</string>
       </dict>
     </dict>
     <key>_countries_count_plus</key>

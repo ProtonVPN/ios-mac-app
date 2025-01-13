@@ -360,7 +360,7 @@
 "_forgot_username" = "Glemt brukernavn";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Kunne ikke logge på med SSO, vennligst prøv igjen.";
+"_sso_login_failure" = "Kunne ikke logge på med SSO. Prøv igjen.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Glemt passord?";
@@ -396,7 +396,7 @@
 "_get_verification_sms" = "Få bekreftelses-SMS";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option" = "Vennligst velg et bekreftelsesalternativ for å fortsette:";
+"_select_verification_option" = "Velg et verifiseringsalternativ for å fortsette:";
 
 /* iOS: text in human verification options screen */
 "_select_verification_option_top_message" = "For å forhindre misbruk må du bekrefte at du er et menneske.";
@@ -437,7 +437,7 @@
 "_privacy_policy" = "Personvernerklæring";
 
 /* iOS: text in human verification code form */
-"_verification_instructions" = "En verifiseringskode er sendt til deg, vennligst skriv den inn nedenfor.";
+"_verification_instructions" = "En verifiseringskode er sendt til deg, skriv den inn nedenfor.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Oppsett fullført";
@@ -483,6 +483,9 @@
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
+
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "via";
@@ -653,16 +656,16 @@
 "_select_server" = "Velg tjener";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Vennligst skriv inn et navn";
+"_profile_name_is_required" = "Skriv inn et navn";
 
 /* Error in profile create/change form */
 "_profile_name_is_too_long" = "Maksimal lengde på profilnavnet er 25 tegn";
 
 /* Error when user hasn't selected profile country */
-"_country_selection_is_required" = "Vennligst velg et land";
+"_country_selection_is_required" = "Velg et land";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Vennligst velg en tjener";
+"_server_selection_is_required" = "Velg en tjener";
 
 "_profile_name_needs_to_be_unique" = "En profil med dette navnet eksisterer allerede";
 
@@ -670,7 +673,7 @@
 "_current_selection_will_be_lost" = "Ved å fortsette vil gjeldende utvalg gå tapt. Vil du fortsette?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Vennligst sjekk om alle feltene er fylt ut";
+"_check_if_fields_present" = "Sjekk om alle feltene er fylt ut";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Slett profil";
@@ -699,13 +702,13 @@
 "_error_user_credentials_missing" = "Brukerlegitimasjon mangler, kan ikke logge på.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Brukerlegitimasjon er utløpt, vennligst logg på.";
+"_error_user_credentials_expired" = "Brukerlegitimasjon er utløpt. Logg på.";
 
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN-legitimasjon mangler fra nøkkelringen";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Vi har ikke kunnet bekrefte at du er et menneske. Vennligst prøv igjen eller kjøp en premiumplan.";
+"_error_user_failed_human_validation" = "Vi har ikke kunnet bekrefte at du er et menneske. Prøv igjen eller kjøp en premiumplan.";
 
 /* Error decoding an object */
 "_error_decode" = "Kunne ikke dekode arkiverte data i klassen: %@.";
@@ -714,7 +717,7 @@
 "_error_email_verification_disabled" = "E-postbekreftelse midlertidig deaktivert";
 
 /* Error writing to system keychain */
-"_error_keychain_write" = "Proton kunne ikke kommunisere med enheten din. Vennligst prøv igjen senere.";
+"_error_keychain_write" = "Proton kunne ikke kommunisere med enheten din. Prøv igjen senere.";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Kan ikke finne bruker fra økten";
@@ -744,7 +747,7 @@
 "_delinquent_user_description" = "Kontoen din har for øyeblikket en forfalt faktura. Betal alle ubetalte fakturaer på account.protonvpn.com.";
 
 /* Generic sign in error */
-"_error_sign_in_again" = "Beklager, noe gikk galt. Vennligst logg på igjen.";
+"_error_sign_in_again" = "Beklager, noe gikk galt. Logg på igjen.";
 
 "_p2p_detected_popup_title" = "P2P-trafikk er ikke tillatt på denne tjeneren";
 
@@ -759,7 +762,7 @@
 "_upgrade_plan_to_access_server" = "Beklager, denne tjeneren er ikke tilgjengelig for abonnementsnivået ditt. Hvis du vil ha tilgang til flere tjenere, bør du vurdere å oppgradere abonnementet.";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Alle tjenere i dette landet er under vedlikehold. Vennligst koble til et annet land.";
+"_all_servers_in_country_under_maintenance" = "Alle tjenere i dette landet er under vedlikehold. Koble til et annet land.";
 
 "_unsecure_wifi" = "Usikker WiFi-tilkobling oppdaget";
 
@@ -787,7 +790,7 @@
 
 "_p2p_forwarded_popup_body" = "Tilkoblingen din har blitt omdirigert automatisk gjennom en annen tjener fordi noen tjenere ikke støtter P2P-trafikk. Dette kan redusere tilkoblingshastigheten. Bruk tjenere med P2P-etiketten for å unngå omruting.";
 
-"_p2p_forwarded_popup_body_p1" = "Tilkoblingen din har blitt omdirigert automatisk gjennom en annen tjener fordi noen tjenere ikke støtter P2P-trafikk. Dette kan redusere tilkoblingshastigheten. Vennligst bruk tjenere med";
+"_p2p_forwarded_popup_body_p1" = "Tilkoblingen din har blitt omdirigert automatisk gjennom en annen tjener fordi noen tjenere ikke støtter P2P-trafikk. Dette kan redusere tilkoblingshastigheten. Bruk tjenere med";
 
 "_p2p_forwarded_popup_body_p2" = "ikon for å omgå omruting av trafikk.";
 
@@ -799,7 +802,7 @@
 
 "_update_required" = "Oppdatering kreves";
 
-"_update_required_no_longer_supported" = "Denne versjonen av Proton VPN er ikke lenger støttet, vennligst oppdater appen for å fortsette å bruke den.";
+"_update_required_no_longer_supported" = "Denne versjonen av Proton VPN er ikke lenger støttet, oppdater appen for å fortsette å bruke den.";
 
 /* Secondary button title in the App update required alert */
 "_update_required_support" = "Kontakt brukerstøtte";
@@ -807,13 +810,13 @@
 /* Primary button title in the App update required alert */
 "_update_required_update" = "Oppdater";
 
-"_invalid_refresh_token_please_login" = "Det er en stund siden du sist brukte Proton VPN-appen. Vennligst logg på igjen.";
+"_invalid_refresh_token_please_login" = "Det er en stund siden du sist brukte Proton VPN-appen. Logg på igjen.";
 
 "_error_mitm_title" = "Usikker forbindelse";
 
 "_error_mitm_description" = "TLS-sertifikatvalidering mislyktes under forsøk på å koble til Proto-API. Din gjeldende internettforbindelse kan være under overvåking. For å holde dataene dine sikre, forhindrer vi appen i å få tilgang til Proton API.\nFor å logge på eller få tilgang til kontoen din, bytt til et nytt nettverk og prøv å koble til igjen.";
 
-"_error_mitm_vpn_description" = "TLS-sertifikatvalidering mislyktes under forsøk på å koble til Proton VPN-tjeneren. Din gjeldende internettforbindelse kan være under overvåking. For å holde dataene dine sikre, hindrer vi appen i å få tilgang til VPN-tjeneren.\nVennligst velg annen tjener.";
+"_error_mitm_vpn_description" = "TLS-sertifikatvalidering mislyktes under forsøk på å koble til Proton VPN-tjeneren. Din gjeldende internettforbindelse kan være under overvåking. For å holde dataene dine sikre, hindrer vi appen i å få tilgang til VPN-tjeneren.\nVelg annen tjener.";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
 "_error_tls_initialisation" = "Feil ved TLS-initialisering";
@@ -840,13 +843,13 @@
 "_neagent_second_step" = "(2)";
 
 /* Button in several different alerts */
-"_got_it" = "Forstått!";
+"_got_it" = "Skjønner!";
 
 /* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Oppgradering utilgjengelig i app";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Proton VPN-abonnementet ditt kan ikke oppgraderes fra appen, vennligst besøk account.protonvpn.com for å oppgradere.";
+"_upgrade_unavailable_body" = "Proton VPN-abonnementet ditt kan ikke oppgraderes fra appen, besøk account.protonvpn.com for å oppgradere.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Tøm applikasjonsdata";
@@ -917,7 +920,7 @@
 "_early_access" = "Tidlig tilgang";
 
 /* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Vær den første til å få de siste oppdateringene. Vennligst vær oppmerksom på at tidlige versjoner kan være mindre stabile.";
+"_early_access_tooltip" = "Vær den første til å få de siste oppdateringene. Vær oppmerksom på at tidlige versjoner kan være mindre stabile.";
 
 /* MacOS: Settings -> General: name of field. */
 "_unprotected_network" = "Varsle om ubeskyttede nettverk";
@@ -1147,7 +1150,7 @@
 "_usage_statistics" = "Bruksstatistikk";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Vennligst logg på for å komme i gang";
+"_log_in_to_use_widget" = "Logg på for å komme i gang";
 
 "_vpnstatus_not_loggedin" = "Du er ikke logget på Proton VPN. Åpne Proton VPN-appen og logg på.";
 
@@ -1247,7 +1250,7 @@
 
 "_troubleshoot_item_nointernet_title" = "Ingen internettforbindelse";
 
-"_troubleshoot_item_nointernet_description" = "Vennligst forsikre deg om at internett-forbindelsen din fungerer.";
+"_troubleshoot_item_nointernet_description" = "Forsikre deg om at internett-forbindelsen din fungerer.";
 
 "_troubleshoot_item_isp_title" = "Internett-leverandør (ISP) problem";
 
@@ -1433,11 +1436,11 @@
 
 "_vpnauth_certfail_title" = "Autentiseringsfeil";
 
-"_vpnauth_certfail_description" = "Kunne ikke oppdatere VPN-sertifikatet. Vennligst kontroller tilkoblingen din.";
+"_vpnauth_certfail_description" = "Kunne ikke oppdatere VPN-sertifikatet. Kontroller tilkoblingen din.";
 
 "_vpnauth_too_many_certs_title" = "Autentiseringsfeil";
 
-"_vpnauth_too_many_certs_description" = "Du har nådd maksimalt antall innstillingsendringer. Vennligst prøv igjen om noen minutter.";
+"_vpnauth_too_many_certs_description" = "Du har nådd maksimalt antall innstillingsendringer. Prøv igjen om noen minutter.";
 
 "_from_server_title" = "Fra tjener:";
 
@@ -1455,10 +1458,10 @@
 
 "_maximum_device_title" = "Du har nådd den maksimale grensen for enheter";
 
-"_maximum_device_reached_description" = "Vennligst koble fra en annen enhet for å koble til denne.";
+"_maximum_device_reached_description" = "Koble fra en annen enhet for å koble til denne.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Vennligst koble fra en annen enhet for å koble til denne eller oppgrader til %@.";
+"maximum_device_plan_limit_part_1" = "Koble fra en annen enhet for å koble til denne eller oppgrader til %@.";
 
 "_reconnect_title" = "Vi kobler til den raskeste tilgjengelige tjeneren på nytt.";
 
@@ -1551,7 +1554,7 @@
 
 "_local_agent_server_error_title" = "Tjenerfeil";
 
-"_local_agent_server_error_message" = "Det oppstod en feil på tjeneren. Vennligst koble til en annen tjener.";
+"_local_agent_server_error_message" = "Det oppstod en feil på tjeneren. Koble til en annen tjener.";
 
 "_local_agent_policy_violation_error_title" = "Brudd på retningslinjene";
 
@@ -1592,11 +1595,11 @@
 
 "_subuser_alert_title" = "Takk for oppgradering til Business/Visionary";
 
-"_subuser_alert_description1" = "For å starte reisen din i Proton VPN, vennligst aktiver VPN-tilkoblinger til kontoen din eller en hvilken som helst annen underkonto.";
+"_subuser_alert_description1" = "For å starte reisen din i Proton VPN, aktiver VPN-tilkoblinger til kontoen din eller en hvilken som helst annen underkonto.";
 
 "_subuser_alert_description2" = "Dette trinnet tar bare noen få minutter. Etter det vil du kunne logge på og beskytte alle enhetene dine.";
 
-"_subuser_alert_description3" = "Det er for øyeblikket ingen VPN-tilkobling aktivert for denne kontoen. For å starte reisen din med Proton VPN, vennligst kontakt administratoren din.";
+"_subuser_alert_description3" = "Det er for øyeblikket ingen VPN-tilkobling aktivert for denne kontoen. For å starte reisen din med Proton VPN, kontakt administratoren din.";
 
 "_subuser_alert_enable_connections_button" = "Aktiver VPN-forbindelser";
 
@@ -1654,7 +1657,7 @@
 "_non_standard_ports_change_title" = "Aktiver ikke-standard porter";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Proton VPN-nettstedet kan være midlertidig utilgjengelig på grunn av nettverksbegrensninger. Vennligst bruk mobilappen til å opprette en ny Proton-konto.";
+"proton_website_unreachable" = "Proton VPN-nettstedet kan være midlertidig utilgjengelig på grunn av nettverksbegrensninger. Bruk mobilappen til å opprette en ny Proton-konto.";
 
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Tofaktorautentisering";
@@ -1675,10 +1678,124 @@
 "authenticate" = "Autentiser";
 
 /* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Ugyldig påloggingsmetode. Vennligst kontakt brukerstøtte.";
+"login_unsupported_state" = "Ugyldig påloggingsmetode. Kontakt brukerstøtte.";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
-"vpn_feature_cannot_be_set_error" = "%@-innstilling kunne ikke endres. Vennligst forsøk igjen senere eller koble til en annen tjener.";
+"vpn_feature_cannot_be_set_error" = "%@-innstilling kunne ikke endres. Forsøk igjen senere eller koble til en annen tjener.";
+
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "Hjem";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Land";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Innstillinger";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Du er ikke beskyttet";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Du surfer ubeskyttet fra %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN-et er frakoblet. Koble til en tjener for å surfe sikkert på internett.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Standard forbindelse";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Surfer trygt fra";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Sist koblet til";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Kobler til...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Kobler til %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Du var sist tilkoblet %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Du surfer sikkert fra %@.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Velg standardtilkobling";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Raskeste";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Den beste tjeneren basert på plasseringen din";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Nyeste";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Den sist brukte tilkoblingen";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Oppdag VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Nylige";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Handlinger";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Tjener tilgjengelig med VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Tjener under vedlikehold";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Hjelp";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Koble til";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Fjern";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Koble fra";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Avbryt";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Vis forbindelsesdetaljer";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Fest";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Løsne";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Auto-valgt fra";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "via %@";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Du er ikke beskyttet";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Beskytter den digitale identiteten din";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Beskyttet";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Skaff deg Plus";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Annonsenettsteder bruker informasjonskapsler og sporere for å målrette deg.";
@@ -1709,6 +1826,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ E";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Forbindelsesdetaljer";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Tilkoblet for";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Land";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "By";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Tjener";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Tjenerbelastning";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protokoll";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "Min IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN-IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Utilgjengelig";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Du kan koble til .onion-nettsteder med den vanlige nettleseren din.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Node-til-node-fildeling er aktivert på denne tjeneren.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Tjenere er fysisk plassert i Singapore, men det ser ut til at du surfer fra Thailand.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Aktiviteten din er kryptert bak 2 VPN-tjenere med høy sikkerhet.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Strømming";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Denne tjeneren er optimalisert for TV- og filmavspilling.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Funksjoner";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Info";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protokoll utilgjengelig";
 
@@ -1729,6 +1912,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Lukk";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Innstillinger";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Konto";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Funksjoner";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Tilkobling";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Generelt";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Brukerstøtte";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Forbedre Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Nødstopp";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protokoll";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Avanserte innstillinger";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Tema";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Beta-tilgang";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widget";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Støttesenter";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Rapporter et problem";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Feilsøkslogger";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Hjelp oss å bekjempe sensur";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Vurder Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Gjenopprett standardinnstillinger";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Logg av";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "App-versjon: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "På";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Av";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "På";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Av";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Auto";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Mørk";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Lys";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Auto*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Mørk";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Lys";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Hastighet (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Pålitelighet (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Velger automatisk den beste protokollen for tilkoblingen din.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Rask, sikker og effektiv. WireGuard er mer batterieffektiv enn andre protokoller.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Rask, sikker og effektiv. WireGuard er vanskelig å oppdage og blokkere.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Overvinner VPN-blokkeringer ved å skjule VPN-tilkoblingen din fra sensorer. Denne protokollen er DPI (dyp pakkeinspeksjon) motstandsdyktig, men er kanskje ikke så rask som andre protokoller. Stealth er eksklusivt for Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Etablert, godt testet og sikker. OpenVPN er mindre batterieffektiv enn noen andre protokoller.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Etablert, godt testet og sikker. OpenVPN er pålitelig under dårlige nettverksforhold, men er kanskje ikke like rask som andre protokoller.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Rask, sikker og stabil – men enklere for sensorer å oppdage og blokkere.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "ANBEFALT";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "NY";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "En VPN-protokoll bestemmer hvordan data beveger seg mellom en VPN-tjener og enheten din. **[Lær mer](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN-forbindelse aktiv";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Endring av protokoller vil avslutte din nåværende VPN-økt.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Avbryt";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Fortsett";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Dårlig nettverksgrensesnitt";
@@ -1770,7 +2100,7 @@
 "search_no_results_title" = "Ingen resultater funnet";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Vennligst forsøk et annet nøkkelord";
+"search_no_results_subtitle" = "Forsøk et annet nøkkelord";
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Nylig sett";
@@ -1935,7 +2265,7 @@
 "new_plans_brand_subtitle" = "Vi presenterer Protons oppdaterte utseende.\nMange tjenester, ett oppdrag. Velkommen til et internett hvor personvern er standarden.";
 
 /* Title of "done" button in New Brand screen */
-"new_plans_brand_got_it" = "Forstått";
+"new_plans_brand_got_it" = "Skjønner";
 
 /* Common button title */
 "modals_common_cancel" = "Avbryt";
@@ -1950,10 +2280,34 @@
 "modals_common_get_started" = "Kom i gang";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Vennligst koble fra en annen enhet for å koble til denne eller oppgrader til %@.";
+"maximum_device_plan_limit_part_1" = "Koble fra en annen enhet for å koble til denne eller oppgrader til %@.";
 
 /* Description of user account update screen */
-"maximum_device_limit" = "Vennligst koble fra en annen enhet for å koble til denne.";
+"maximum_device_limit" = "Koble fra en annen enhet for å koble til denne.";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Strøm i 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Nyt favorittfilmene og TV-programmene dine fra hvor som helst i verden.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Lås opp node-til-node-nedlastinger (P2P) og fildeling";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Forbedre opplastings- og nedlastingshastighetene mens du skjuler IP-adressen din.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Beskytt opptil 10 enheter samtidig";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN er tilgjengelig på 8 forskjellige plattformer.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Få tilgang til Tor-nettverket med ett trykk";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Koble til skjulte tjenester og onion-sider med din vanlige nettleser.";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Surf med enda høyere hastigheter (opptil 10 Gbps).";
@@ -2168,6 +2522,9 @@
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Proton Free kobler deg automatisk til den raskeste tilgjengelige tjeneren. Dette vil normalt være den nærmeste tjeneren til din plassering.";
 
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free kobler deg automatisk til den raskeste tilgjengelige tjeneren fra våre %@ gratis land. Dette vil normalt være den nærmeste tjeneren til din plassering.";
+
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Skaff deg verdensomspennende dekning med VPN Plus";
 
@@ -2232,7 +2589,7 @@
 "_br_success_subtitle" = "Vi kommer tilbake til deg så snart vi kan.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Forstått";
+"_br_success_button" = "Skjønner";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Rapporten din ble ikke sendt";
@@ -2292,4 +2649,58 @@
 "_operating_system_out_of_date_alert_title" = "Oppdater programvaren din";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "En ny versjon av Proton VPN er tilgjengelig. For å få oppdateringen må du først oppdatere enheten til %@ %@ eller senere.";
+"_operating_system_out_of_date_alert_description" = "En ny versjon av Proton VPN er tilgjengelig. For å få oppdateringen må du først oppdatere enheten til %1$@ %2$@ eller senere.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Verdensomspennende dekning";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ tjenerplasseringer i 63 land";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Raskere surfing";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Surf med enda høyere hastigheter (opptil 10 Gbps).";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Strømming";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Se favorittfilmene og TV-programmene dine";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Blokkér reklamer, skadevare og sporere";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Legg til et ekstra krypteringslag til VPN-tilkoblingen din.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "P2P-støtte";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Last ned filer gjennom BitTorrent og andre fildelingsprotokoller";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Beskytt 10 enheter";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Sikkerhet og personvern på alle enhetene dine";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "TOR over VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Bruk Tor-nettverket over VPN-tilkoblingen for ekstra personvern";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "Og mye mer…";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Lås opp avanserte ytelses- og personvernfunksjoner";

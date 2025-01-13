@@ -93,7 +93,7 @@
 "_network_unreachable" = "Jaringan Tidak Dapat Dijangkau";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Tidak dapat mengukuhkan koneksi VPN. Anda tidak sedang terhubung ke internet.";
+"_not_connected_to_the_internet" = "Koneksi VPN tidak dapat dikukuhkan. Anda tidak sedang terhubung ke internet.";
 
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Sambungan VPN Aktif";
@@ -102,7 +102,7 @@
 "_vpn_protocol_not_supported_title" = "Protokol VPN Tidak Didukung";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
-"_vpn_protocol_not_supported_text" = "Protokol VPN ini tidak tersedia untuk sambungan yang Anda pilih. Untuk dapat tersambung, cobalah untuk mengubah protokol atau server.";
+"_vpn_protocol_not_supported_text" = "Protokol VPN ini tidak tersedia untuk koneksi yang Anda pilih. Untuk dapat terhubung, cobalah untuk mengubah protokol atau server.";
 
 /* iOS: button in settings screen */
 "_log_out" = "Keluar";
@@ -162,7 +162,7 @@
 "_public_ip" = "IP Publik: %@";
 
 /* Several places in both iOS and Mac apps */
-"_quick_connect" = "Terhubung dengan cepat";
+"_quick_connect" = "Quick Connect";
 
 /* Title of the change server button */
 "_change_server" = "Ubah server";
@@ -199,12 +199,12 @@
 "_countries_premium" = "Negara Premium";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "%@ menyambungkan";
+"_connecting_vpn" = "%@ menghubungkan";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "Menyambungkan ke %@";
+"_connecting_to" = "Menghubungkan ke %@";
 
-"_reconnecting_to" = "Menyambung kembali ke %@";
+"_reconnecting_to" = "Menghubungkan ulang ke %@";
 
 /* iOS status view */
 "_connected_to" = "Terhubung ke";
@@ -216,7 +216,7 @@
 "_connection_timed_out_bold" = "terputus";
 
 /* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
-"_connected_to_vpn" = "Tersambung ke %@";
+"_connected_to_vpn" = "Terhubung ke %@";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Tidak Terhubung";
@@ -285,7 +285,7 @@
 "_switch_side_button_off" = "MATI";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Aplikasi lain mungkin mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
+"_timeout_ks_ike_descritpion" = "Aplikasi lain mungkin mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, beralihlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba lagi";
@@ -297,7 +297,7 @@
 "_kill_switch_blocking_connection" = "Kill switch memblokir seluruh koneksi";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "VPN Selalu-aktif otomatis akan menyambungkan Anda kembali";
+"_always_on_will_reconnect" = "VPN always-on akan menghubungkan Anda kembali secara otomatis";
 
 /* MacOS: About window title */
 "_about" = "Tentang";
@@ -360,7 +360,7 @@
 "_forgot_username" = "Lupa Nama Pengguna";
 
 /* MacOS: generic failure message for SSO login */
-"_sso_login_failure" = "Masuk dengan SSO gagal. Silakan coba lagi.";
+"_sso_login_failure" = "Entri masuk dengan SSO gagal. Silakan coba lagi.";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Lupa Kata Sandi?";
@@ -443,25 +443,25 @@
 "_setup_complete" = "Pengaturan Selesai";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Anda telah terdaftar untuk paket Proton VPN Free. Untuk memulai perjalanan Anda, nikmati paket Proton VPN Plus selama tujuh hari secara gratis.";
+"_setup_complete_free" = "Anda kini telah terdaftar untuk paket Proton VPN Free. Untuk membantu Anda memulai, nikmati paket Proton VPN Plus kami selama tujuh hari secara gratis.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Pembelian Anda berhasil. Paket Proton VPN Plus Anda kini telah aktif.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Lindungi diri Anda saat daring";
+"_data_disclaimer_title" = "Lindungi diri Anda saat online";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_text" = "Proton VPN berkomitmen untuk melindungi dan menghormati privasi Anda. Kami mengusung kebijakan dasar untuk mengumpulkan data pengguna sesedikit mungkin demi memastikan pengalaman pengguna yang pribadi dan anonim dalam penggunaan Aplikasi, khususnya:\n\n%@ – untuk masuk, membantu memulihkan kata sandi yang hilang, dan mengirimkan pembaruan layanan penting.\n\n%@ – hanya untuk pelaporan crash dan eror.\n\nAplikasi Proton VPN tidak memproses informasi pengguna apa pun di luar data ini. Kami tidak mencatat aktivitas daring Anda atau informasi pribadi apa pun yang dapat diidentifikasi. Seluruh data di atas disimpan dan diproses pada sistem milik Proton VPN, tanpa ada pihak ketiga mana pun yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_user_details" = "Nama pengguna, alamat surel";
+"_data_disclaimer_user_details" = "Nama pengguna, alamat email";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_device_details" = "Versi Sistem Operasi dan model perangkat Anda";
+"_data_disclaimer_device_details" = "Model perangkat dan versi sistem operasi Anda";
 
 /* iOS: data disclaimer screen button */
-"_data_disclaimer_agree" = "Setuju & Lanjutkan";
+"_data_disclaimer_agree" = "Setujui & Lanjutkan";
 
 /* iOS: Map screen title and tabbar item */
 "_map" = "Peta";
@@ -482,10 +482,13 @@
 "_premium_description" = "Server Premium";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "melalui %@";
+"_via_country" = "via %@";
+
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "via Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "melalui";
+"_via" = "via";
 
 /* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
 "_server_load_percentage" = "Muatan %@%%";
@@ -499,7 +502,7 @@
 "_no_servers_to_show" = "Tidak ada server yang dapat ditampilkan pada saat ini.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Paket Anda tidak termasuk fitur Secure Core.";
+"_plan_does_not_include_secure_core" = "Paket Anda tidak meliputi fitur Secure Core.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Pelajari lebih lanjut tentang Secure Core";
@@ -511,7 +514,7 @@
 "_secure_core_info" = "Memberikan perlindungan tambahan terhadap kebocoran server VPN dengan mengalihkan lalu lintas melalui Secure Core Network kami";
 
 /* Text in warning screen before actions that will disconnect VPN */
-"_view_toggle_will_cause_disconnect" = "Mengaktifkan Secure Core akan memutus koneksi Anda saat ini.";
+"_view_toggle_will_cause_disconnect" = "Mengaktifkan Secure Core akan mengakhiri koneksi Anda saat ini.";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Muatan Server:";
@@ -636,7 +639,7 @@
 "_make_default_profile" = "Jadikan Profil Bawaan";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Tombol \"Quick Connect\" menggunakan profil default.\n";
+"_default_profile_tooltip" = "Tombol \"Quick Connect\" menggunakan profil bawaan.\n";
 
 "_feature" = "Fitur";
 
@@ -670,7 +673,7 @@
 "_current_selection_will_be_lost" = "Dengan melanjutkan, pilihan saat ini tidak akan tersimpan. Apakah Anda ingin melanjutkan?";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Harap periksa apakah semua kolom telah diisi";
+"_check_if_fields_present" = "Silakan periksa apakah seluruh kolom telah terisi";
 
 /* MacOS: profile deletion warning */
 "_delete_profile_header" = "Hapus Profil";
@@ -777,7 +780,7 @@
 "_reconnect_on_settings_change_body" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini.";
 
 /* Under maintenance alert */
-"_country_servers_under_maintenance" = "Server %@ sedang dalam pemeliharaan";
+"_country_servers_under_maintenance" = "%@ server dalam pemeliharaan";
 
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Server profil dalam pemeliharaan";
@@ -797,7 +800,7 @@
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Sesi VPN sebelumnya gagal diakhiri oleh perangkat. Anda perlu untuk menyalakan ulang perangkat Anda sebelum mengukuhkan sambungan VPN baru.";
 
-"_update_required" = "Pembaruan dibutuhkan";
+"_update_required" = "Pembaruan diperlukan";
 
 "_update_required_no_longer_supported" = "Versi Proton VPN ini sudah tidak lagi didukung. Silakan perbarui aplikasi untuk dapat melanjutkan.";
 
@@ -846,7 +849,7 @@
 "_upgrade_unavailable_title" = "Peningkatan tidak tersedia di aplikasi";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Jenis akun Proton VPN Anda tidak dapat ditingkatkan dari dalam aplikasi. Silakan kunjungi account.protonvpn.com untuk meningkatkan jenis akun Anda.";
+"_upgrade_unavailable_body" = "Langganan Proton VPN Anda tidak dapat ditingkatkan dari dalam aplikasi. Silakan kunjungi account.protonvpn.com untuk meningkatkan langganan.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Bersihkan data aplikasi";
@@ -858,7 +861,7 @@
 "_kill_switch_disable" = "Nonaktifkan kill switch";
 
 /* iOS and macOS: Enable kill switch on badly-routed networks */
-"_kill_switch_enable" = "Aktifkan Kill Switch";
+"_kill_switch_enable" = "Aktifkan kill switch";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferensi";
@@ -879,12 +882,12 @@
 "_general" = "Umum";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_type" = "Tipe akun";
+"_account_type" = "Jenis akun";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "Jenis akun";
+"_account_plan" = "Paket akun";
 
-"_manage_subscription_on_web" = "Kelola langganan Anda di dasbor web";
+"_manage_subscription_on_web" = "Kelola langganan Anda pada dasbor web";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill switch";
@@ -896,7 +899,7 @@
 "_always_on_vpn" = "VPN always-on";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "VPN Selalu-Aktif membangun kembali sambungan aman VPN dengan segera dan otomatis. Demi keamanan Anda, fitur ini selalu aktif.";
+"_always_on_vpn_tooltip_ios" = "VPN always-on mengukuhkan kembali sambungan VPN yang aman dengan segera dan otomatis. Demi keamanan Anda, fitur ini selalu aktif.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_auto_connect" = "Terhubung Otomatis";
@@ -923,7 +926,7 @@
 "_unprotected_network" = "Beri tahu jaringan yang tidak dilindungi";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Terima notifikasi pada saat Proton VPN mendeteksi Anda sedang tersambung ke jaringan yang tidak dilindungi.";
+"_unprotected_network_tooltip" = "Terima notifikasi pada saat Proton VPN mendeteksi Anda sedang terhubung ke jaringan yang tidak terlindung.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_dns_leak_protection" = "Perlindungan Kebocoran DNS";
@@ -1164,7 +1167,7 @@
 "_report_report" = "Laporkan pesan";
 
 /* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "Surel kontak";
+"_report_placeholder_email" = "Email kontak";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "Pesan Anda...";
@@ -1179,7 +1182,7 @@
 "_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas log Proton VPN\n• Berkas log Open VPN \n• Berkas log WireGuard";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "Surel:";
+"_report_field_email" = "Email:";
 
 /* Mac bug report: feedback field label */
 "_report_field_feedback" = "Apa yang salah?";
@@ -1281,7 +1284,7 @@
 
 "_troubleshoot_item_other_link1" = "formulir dukungan";
 
-"_troubleshoot_item_other_link2" = "surel";
+"_troubleshoot_item_other_link2" = "email";
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
@@ -1680,6 +1683,120 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Pengaturan %@ tidak dapat diubah. Silakan coba lagi nanti atau hubungkan ke server lain";
 
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "Beranda";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Negara";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Pengaturan";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Anda tidak terlindung";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "Anda sedang menjelajah internet tanpa terlindung dari %@.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN sedang tidak tersambung. Hubungkan ke salah satu server untuk menjelajah internet secara aman.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Koneksi bawaan";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Menjelajah internet secara aman dari";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Terakhir terhubung ke";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Menghubungkan ke...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Menghubungkan ke %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Anda terakhir terhubung ke %@";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Anda sedang menjelajah internet secara aman dari %@";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Pilih koneksi bawaan Anda";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Tercepat";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "Server terbaik berdasarkan lokasi Anda";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Paling Terkini";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "Koneksi yang paling terakhir Anda gunakan";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "Telusuri VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Terkini";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Tindakan";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "Server tersedia dengan VPN Plus";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "Server dalam pemeliharaan";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Bantuan";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Hubungkan";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Hapus";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Putuskan";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Batalkan";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Tampilkan rincian koneksi";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Sematkan";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Lepas sematan";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Terpilih secara otomatis dari";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "via %@";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Anda tidak terlindung";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Melindungi identitas digital Anda";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Terlindung";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Dapatkan Plus";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Situs iklan menggunakan cookie dan pelacak untuk mengincar Anda.";
 
@@ -1709,6 +1826,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ E";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Rincian koneksi";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Terhubung selama";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Negara";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Kota";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Server";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Muatan server";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protokol";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "IP saya";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "IP VPN";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Tidak tersedia";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "Anda dapat terhubung ke situs .onion melalui browser yang biasa Anda gunakan.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "Pembagian berkas secara peer-to-peer diaktifkan pada server ini.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "Server yang melayani Anda secara fisik terletak di Singapura, namun Anda akan terlihat seolah-olah Anda sedang berselancar dari Thailand.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Aktivitas Anda terenkripsi di balik 2 server VPN berkeamanan tinggi.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Streaming";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Server ini dioptimalkan untuk pemutaran tayangan TV dan film.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Fitur";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Info";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protokol Tidak Tersedia";
 
@@ -1729,6 +1912,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Tutup";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Pengaturan";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Akun";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Fitur";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Koneksi";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Umum";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Layanan Dukungan";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Tingkatkan Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill Switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protokol";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Pengaturan lanjutan";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Tema";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Akses beta";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Widget";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Pusat dukungan";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Laporkan masalah";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Log debug";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Bantu kami melawan sensor";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Beri nilai Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Pulihkan pengaturan bawaan";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Keluar";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Versi Aplikasi: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Aktif";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Nonaktif";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Aktif";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Nonaktif";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Otomatis";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Gelap";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Terang";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Otomatis*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Gelap";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Terang";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Kecepatan (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Keterandalan (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Memilih protokol terbaik secara otomatis untuk koneksi Anda.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Cepat, aman, dan efisien. WireGuard lebih efisien dalam penggunaan baterai dibanding protokol lainnya.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Cepat, aman, dan efisien. WireGuard sulit untuk dideteksi dan diblokir.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Menangkal pemblokiran VPN dengan menyembunyikan koneksi VPN Anda dari sensor. Protokol ini tahan terhadap DPI (inspeksi paket mendalam/deep packet inspection), namun dapat tidak berfungsi secepat protokol lainnya. Stealth tersedia khusus pada Proton VPN.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Mapan, teruji, dan aman. OpenVPN tidak seefisien sebagian protokol lainnya dalam hal penggunaan baterai.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Mapan, teruji, dan aman. OpenVPN dapat diandalkan dalam kondisi jaringan yang buruk, namun dapat tidak berfungsi secepat protokol lainnya.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Cepat, aman, dan stabil—namun lebih mudah untuk dideteksi dan diblokir oleh sensor.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "DIREKOMENDASIKAN";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "BARU";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "Protokol VPN menentukan bagaimana data akan berpindah antara server VPN dan perangkat Anda. **[Pelajari lebih lanjut](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "Koneksi VPN Aktif";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "Dengan mengubah protokol, sesi VPN Anda saat ini akan berakhir.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Batalkan";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Lanjutkan";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Antarmuka Jaringan Tidak Benar";
@@ -1955,6 +2285,30 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
 
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Streaming dalam 4K";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Nikmati film dan tayangan TV kesayangan Anda di mana pun Anda berada.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Akses unduhan peer-to-peer (P2P) dan pembagian berkas";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Tingkatkan kecepatan pengunggahan dan pengunduhan Anda sambil menyembunyikan alamat IP Anda.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Lindungi 10 perangkat secara bersamaan";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN tersedia pada 8 platform yang berbeda.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Akses jaringan Tor dengan sekali ketuk";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "Hubungkan ke berbagai layanan tersembunyi dan situs onion melalui peramban biasa Anda.";
+
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Jelajahi internet pada kecepatan yang bahkan lebih tinggi lagi (10 Gbps)";
 
@@ -2168,6 +2522,9 @@
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Proton Free akan menghubungkan Anda secara otomatis ke server tercepat yang tersedia. Pada umumnya, server ini adalah server yang terletak paling dekat dengan lokasi Anda.";
 
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free akan menghubungkan Anda secara otomatis ke server tercepat yang tersedia dari %@ negara gratis kami. Pada umumnya, server ini adalah server yang terletak paling dekat dengan lokasi Anda.";
+
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Dapatkan cakupan server di seluruh dunia dengan VPN Plus";
 
@@ -2190,10 +2547,10 @@
 "_br_1_title" = "Masalah apa yang Anda hadapi?";
 
 /* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Solusi instan";
+"_br_2_title" = "Solusi kilat";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
-"_br_2_subtitle" = "Tips berikut dapat membantu untuk menyelesaikan masalah Anda dengan cepat.";
+"_br_2_subtitle" = "Tips-tips berikut dapat membantu untuk menyelesaikan masalah Anda dengan lebih cepat.";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
 "_br_2_footer" = "Tidak membantu?";
@@ -2292,4 +2649,58 @@
 "_operating_system_out_of_date_alert_title" = "Perbarui perangkat lunak Anda";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "Versi Proton VPN yang baru telah tersedia. Untuk mendapatkan pembaruan, Anda perlu memperbarui perangkat Anda ke %@ %@ atau lebih baru.";
+"_operating_system_out_of_date_alert_description" = "Versi Proton VPN yang baru telah tersedia. Untuk mendapatkan pembaruan, Anda perlu memperbarui perangkat Anda ke %1$@ %2$@ atau lebih baru.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Jangkauan global";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ lokasi server di 63 negara";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Berselancar lebih cepat";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Jelajahi internet pada kecepatan yang jauh lebih tinggi (10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Streaming";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Tonton film dan tayangan TV kesayangan Anda";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Blokir iklan, malware, dan pelacak";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Tambahkan lapisan enkripsi tambahan ke koneksi VPN Anda";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "Dukungan P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Unduh berkas melalui BitTorrent dan berbagai protokol pembagian berkas lainnya";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "Lindungi 10 perangkat";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Keamanan dan privasi pada semua perangkat Anda";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor melalui VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Gunakan jaringan Tor melalui koneksi VPN Anda untuk privasi tambahan";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "Dan masih banyak lagi...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Akses performa tingkat lanjut dan berbagai fitur privasi";

@@ -484,6 +484,9 @@
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "%@-ის გავლით";
 
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "Secure Core-ის გავლით";
+
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "გავლით";
 
@@ -1680,6 +1683,120 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ პარამეტრის შეცვლა შეუძლებელია. მოგვიანებით სცადეთ ან სხვა სერვერს დაუკავშირდით";
 
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "მთავარი";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "ქვეყნები";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "მორგება";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "დაცული არ ბრძანდებით";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "თქვენ მუშაობთ დაუცველად %@-დან.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN გათიშულია. დაუკავშირდით სერვერს ინტერნეტში უსაფრთხოდ საუშაოდ.";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "ნაგულისხმევი მიერთება";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "მუშაობთ ინტერნეტში უსაფრთხოდ ქვეყნიდან";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "ბოლოს მიუერთდით";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "დაკავშირება...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "%@-სთან დაკავშირება.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "ბოლოს იყავით მიერთებული ვისთან: %@";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "თქვენ უსაფრთხოდ მუშაობთ ინტერნეტში %@-დან.";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "აირჩიეთ თქვენი ნაგულისხმევი მიერთება";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "უსწრაფესი";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "საუკეთესო სერვერი თქვენს მდებარეობაზე დაყრდნობით";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "უახლესი";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "ბოლოს გამოყენებული მიერთება";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "აღმოაჩინეთ VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "ახლახან გამოყენებულები";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "ქმედებები";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "სერვერი ხელმისაწვდომია VPN Plus-ით";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "სერვერი ტექმომსახურებაშია";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "დახმარება";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "დაკავშირება";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "წაშლა";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "გათიშვა";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "გაუქმება";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "მიერთების დეტალების ჩვენება";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "მიმაგრება";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "მოხსნა";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "ავტომატურადაა არჩეული წყაროდან";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "%@-ის გავლით";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "დაცული არ ბრძანდებით";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "ვიცავთ თქვენს ციფრულ მონაცემებს";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "დაცულია";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Plus-ის მიღება";
+
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "რეკლამის ვებგვერდები ტრეკერებს და ქუქიებს თქვენს საპოვნელად იყენებენ.";
 
@@ -1709,6 +1826,72 @@
 /* The count of trackers/ads blocked in sextillions */
 "_netshield_stats_blocked_E" = "%@ ე";
 
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "მიერთების დეტალები";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "დაკავშირებულია";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "ქვეყანა";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "ქალაქი";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "სერვერი";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "სერვერის დატვირთვა";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "პროტოკოლი";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "ჩემი IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "ხელმიუწვდომელია";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = ".onion საიტებთან წვდომა ჩეულებრივი ბრაუზერითაც შეგეიძლიათ.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "ამ სერვერზე ჩართულია გამჭოლი ფაილი გაზიარება.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_smart_routing" = "სერვერები ფიზიკურად სინგაპურშია, მაგრამ თქვენ გამოჩნდებით, თითქოს ტაილანდიდან მუშაობთ.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "თქვენი აქტივობა დაშიფრულია 2 ჩქაროსნული VPN სერვერის მიღმა.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "სტრიმინგი";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "ეს სერვერი ოპტიმიზებულია TV-ისა და ფილმების საყურებლად";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "ფუნქციები";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "ინფორმაცია";
+
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "პროტოკოლი ხელმიუწვდომელია";
 
@@ -1729,6 +1912,153 @@
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "დახურვა";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "მორგება";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "ანგარიში";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "ფუნქციები";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "კავშირი";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "ზოგადი";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "მხარდაჭერა";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "გააუმჯობესეთ Proton";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "პროტოკოლი";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "დამატებითი პარამეტრები";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "თემა";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "წვდომა ბეტა ვერსიებზე";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "ვიჯეტი";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "მხარდაჭერის ცენტრი";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "პრობლემის ანგარიშის გადაგზავნა";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "გამართვის ჟურნალი";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "დაგვეხმარეთ, ვებრძოლოთ ცენზურას";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "შეაფასეთ Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "ნაგულისხმევი პარამეტრების აღდგენა";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "გასვლა";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "აპის ვერსია: %@";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "ჩართ";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "გამორთ";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "ჩართ";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "გამორთ";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "ავტო";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "მუქი";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "ღია";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "ავტო*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "მუქი";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "ღია";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "სიჩქარე (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "საიმედოობა (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "ავტომატურად აირჩევს საუკეთესო პროტოკოლს თქვენი მიერთებისთვის.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "სწრაფი, დაცული და ეფექტური. WireGuard უფრო ნაკლებ ელემენტს ხარჯავს, ვიდრე სხვა პროტოკოლები.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "სწრაფი, დაცული და ეფექტური. WireGuard-ის აღმოჩენა და დაბლოკვა რთულია.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "თავიდან აიცილებს VPN ბლოკებს თქვენი VPN მიერთების ცენსზორებისგან დამალვით. ეს პროტოკოლ DPI-სგან (პაკეტები ღრმა ინსპექცია) დაცულია, მაგრამ შეიძლება, სხვა პროტოკოლებისნაირი ჩქარი არ იყოს. ფუნქცია 'Stealth' Proton VPN-ის ექსკლუზიურ ფუნქციას წარმოადგენს.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "ცნობილი, დატესტილი და დაცული. OpenVPN ნაკლებად მეგობრობს ელემენტთან, ვიდრე სხვა პროტოკოლები.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "გამოცდილი, დატესტილი და დაცული. OpenVPN სანდოა ნელი ქსელის პირობებში, მაგრამ ის ისეთი სწრაფი არაა, როგორც სხვა პროტოკოლები.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "სწრაფი, დაცული და სტაბილური - მაგრამ ადვილად დადგენადი და დაბლოკვადი ცენზორების მიერ.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "რეკომენდებულია";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "ახალი";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN შეერთება აქტიურია";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "პროტოკოლის ცვლილება VPN-ის მიმდინარე სესიას გათიშავს.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "გაუქმება";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "გაგრძელება";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "არასწორი ქსელის ინტერფეისი";
@@ -1955,6 +2285,30 @@
 /* Description of user account update screen */
 "maximum_device_limit" = "ამ მოწყობილობით შესასვლელად გამორთეთ სხვა, ჩართული მოწყობილობა.";
 
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "სტრიმინგი 4K-ში";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "ისიამოვნეთ თქვენი საყვარელი ფილმებითა და სერიალებით მსოფლიოს ნებისმიერი წერტილიდან.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "განბლოკეთ პარტნიორიდან-პარტნიორამდე (P2P) გადმოწერები და ფაილების გაზიარება";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "გააუმჯობესეთ თქვენი ატვირთვისა და გადმოწერის სიჩქარეები თქვენი IP მისამართის გამოჩენის გარეშე.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "დაიცავით 10 მოწყობილობა ერთდროულად";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN ხელმისაწვდომია 8 სხვადასხვა პლატფორმაზე.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "წვდომა Tor-ის ქსელთან ერთი დატყაპუნებით";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "დაუკავშირდით დამალულ სერვისებსა და onion საიტებს თქვენი ჩვეულებრივი ბრაუზერიდან.";
+
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "იმუშავეთ კიდევ უფრო სწრაფად (10 გბ/წმ-მდე)";
 
@@ -2168,6 +2522,9 @@
 /* Modal that lists countries in which servers are available to free users: Description */
 "free_connections_modal_description" = "Proton Free ავტომატურად მიუერთდება უსწრაფეს ხელმისაწვდომ სერვერს. ეს ჩვეულებრივ თქვენს მდებარეობასთან არსებული უახლოესი სერვერია.";
 
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free ავტომატურად მიუერთდება უსწრაფეს უფასო ხელმისაწვდომ სერვერს ჩვენი %@ უფასო ქვეყნიდან. ეს ჩვეულებრივ თქვენს მდებარეობასთან არსებული უახლოესი სერვერია.";
+
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "იქონიეთ წვდომა ყველაფერზე VPN Plus-თან ერთად";
 
@@ -2292,4 +2649,58 @@
 "_operating_system_out_of_date_alert_title" = "განაახლეთ თქვენი პროგრამები";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %@ %@ or later.";
+"_operating_system_out_of_date_alert_description" = "ხელმისაწვდომია Proton VPN-ის ახალი ვერსია. განახლების ხელმისაწვდომად, ჯერ თქვენი მოწყობილობა %1$@ %2$@-ზე, ან უფრო ახალზე უნდა განაახლოთ.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "მთელი დედამიწის დაფარვა";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ სერვერი 63 ქვეყანაში";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "უფრო სწრაფი მუშაობა ინერნეტში";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "იმუშავეთ კიდევ უფრო სწრაფად (10 გბ/წმ-მდე)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "სტრიმინგი";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "უყურეთ თქვენს საყვარელ ფილმებსა და სერიალებს";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "დაბლოკეთ რეკლამა, მავნე პროგრამები და ტრეკერები";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "დაამატეთ თქვენს VPN-ს უსაფრთხოების კიდევ ერთი დონე";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "P2P-ის მხარდაჭერა";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "გადმოწერეთ ფაილები BitTorrent-ით და სხვა ფაილების გაზიარების პროტოკოლებით";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "დაიცავით 10 მოწყობილობა";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "უსაფრთხოება და კონფიდენციალობა ყველა თქვენს მოწყობილობაზე";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor VPN-ის ზემოდან";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "გამოიყენეთ Tor-ის ქსელი თქვენი VPN მიერთების ზემოდან, დამატებითი კონფიდენციალობისთვის";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "და მრავალი სხვა…";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "განბლოკეთ უფრო მეტი წარმადობისა და კონფიდენციალობის ფუნქცია";
