@@ -292,7 +292,7 @@ extension CoreLoginService: LoginService {
 
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
         DispatchQueue.main.async {
-            #if !RELEASE
+            #if DEBUG
             self.showAppDebugConfiguration()
             #else
             self.show(initialError: initialError, withOverlayViewController: overlayViewController)
@@ -300,7 +300,7 @@ extension CoreLoginService: LoginService {
         }
     }
 
-#if !RELEASE
+#if DEBUG
     private func showAppDebugConfiguration() {
         let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
             self?.show(initialError: nil, withOverlayViewController: nil)

@@ -42,15 +42,9 @@ extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
-        #if RELEASE
-        let customHost: String? = nil
-        let atlasSecret: String? = nil
-        log.info("Custom host is disabled (release configuration)")
-        #else
         let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
         let atlasSecret = Bundle.atlasSecret ?? propertiesManager.atlasSecret
         log.info("Custom host: \(optional: customHost), atlasSecret: \(optional: atlasSecret)")
-        #endif
 
         let doh = DoHVPN(
             alternativeRouting: propertiesManager.alternativeRouting,
