@@ -589,6 +589,12 @@
             "value" : "Súhlasiť a pokračovať"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprejmi in nadaljuj"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6690,7 +6696,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odjavljanje..."
+            "value" : "Izpisovanje ..."
           }
         },
         "sv" : {
@@ -6841,6 +6847,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Centrum podpory"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Center za podporo"
           }
         },
         "sv" : {
@@ -7155,6 +7167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Podmienky používania"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pogoji uporabe"
           }
         },
         "sv" : {
