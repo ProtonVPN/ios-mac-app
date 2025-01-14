@@ -49,10 +49,18 @@ struct SwiftTestingTests {
         )
     ]
 
+    @Shared(.protectionState) var protectionState
+    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+    @Shared(.userTier) var userTier
+    @Shared(.userCountry) var userCountry
+    @Shared(.userIP) var userIP
+    @Shared(.recents) var recents
+    @Shared(.netShieldLevel) var netShieldLevel
+
     @available(iOS 17, *)
     @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
     @MainActor
-    func homeScreen(tier: Int, connectionState: (ProtectionState, VPNConnectionStatus)) async throws {
+    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: VPNConnectionStatus)) async throws {
         let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
             $0.serverChangeAuthorizer = .availableValue
             $0.locale = .en
@@ -60,34 +68,26 @@ struct SwiftTestingTests {
         }
         let appView = HomeView(store: store)
             .frame(.rect(width: 375, height: 667)) // iphone se 2022 size
-            .transaction { $0.animation = nil }
             .environment(\._accessibilityReduceMotion, true)
+            .environment(\.colorScheme, .dark)
 
         withDependencies {
             $0.locale = .en
             $0.date = .constant(Date())
         } operation: {
-            @Shared(.protectionState) var protectionState: ProtectionState
-            @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
-            @Shared(.userTier) var userTier: Int
-            @Shared(.userCountry) var userCountry: String?
-            @Shared(.userIP) var userIP: String?
-            @Shared(.recents) var recents: OrderedSet<RecentConnection>
-            @Shared(.netShieldLevel) var netShieldLevel: NetShieldType
-
             $netShieldLevel |=| .level2
             $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
             $userCountry |=| "PL"
             $userIP |=| "1.2.3.4"
             $userTier |=| tier
-            $protectionState |=| connectionState.0
-            $vpnConnectionStatus |=| connectionState.1
+            $protectionState |=| state.protection
+            $vpnConnectionStatus |=| state.connection
 
-            let tierTitle = tier.isFreeTier ? "Free" : "Paid"
+            let testName = [tier.isFreeTier ? "Free" : "Paid",
+                            protectionState.shortDescription(),
+                            vpnConnectionStatus.shortDescription()].joined(separator: "-")
 
-            assertSnapshot(of: appView,
-                           as: .image(traits: UITraitCollection(userInterfaceStyle: .dark)),
-                           testName: "\(tierTitle) \(protectionState.shortDescription()), \(vpnConnectionStatus.shortDescription())")
+            assertSnapshot(of: appView, as: .image, testName: testName)
         }
     }
 }

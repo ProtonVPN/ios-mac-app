@@ -231,7 +231,7 @@ public enum Localizable {
   public static var connectionCardActionCancel: String { return Localizable.tr("Localizable", "_connection_card_action_cancel", fallback: "Cancel") }
   /// Connection card in home tab: "Connecting to <country name>" [Redesign_2023]
   public static var connectionCardConnectingTo: String { return Localizable.tr("Localizable", "_connection_card_connecting_to", fallback: "Connecting to...") }
-  /// Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. [Redesign_2023]
+  /// Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised.
   public static var connectionCardDefaultConnection: String { return Localizable.tr("Localizable", "_connection_card_default_connection", fallback: "Default connection") }
   /// Connection card in home tab: "Last connected to... <country name>" [Redesign_2023]
   public static var connectionCardLastConnectedTo: String { return Localizable.tr("Localizable", "_connection_card_last_connected_to", fallback: "Last connected to") }
@@ -886,7 +886,7 @@ public enum Localizable {
   public static var openVpnLogs: String { return Localizable.tr("Localizable", "_open_vpn_logs", fallback: "OpenVPN Logs") }
   /// OpenVPN
   public static var openvpn: String { return Localizable.tr("Localizable", "_openvpn", fallback: "OpenVPN") }
-    /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
+  /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
   public static func operatingSystemOutOfDateAlertDescription(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.")
   }
@@ -2137,6 +2137,8 @@ public enum Localizable {
   public static var welcomeUpgradeTitlePlus: String { return Localizable.tr("Localizable", "welcome_upgrade_title_plus", fallback: "Welcome to VPN Plus") }
   /// The title of the Welcome screen when user upgrades to VPN Unlimited
   public static var welcomeUpgradeTitleUnlimited: String { return Localizable.tr("Localizable", "welcome_upgrade_title_unlimited", fallback: "Welcome to Proton Unlimited") }
+  /// Text that appears as subtitle to the widget when user is creating it
+  public static var widgetTrayDescription: String { return Localizable.tr("Localizable", "widget_tray_description", fallback: "Check if you’re connected to VPN and get quick access to your favorite connections.") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

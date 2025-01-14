@@ -2589,3 +2589,8 @@
 "upsell_carousel_more_title" = "And much more...";
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";
+
+// MARK: Widget
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
