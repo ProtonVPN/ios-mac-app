@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "取消";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "此版本的 Proton VPN 已不再受支援，請更新應用程式以繼續使用。";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "聯絡支援";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "更新";
 
 "_invalid_refresh_token_please_login" = "距上一次使用 ProtonVPN 應用程式已有一段時間。請重新登入。";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ 設定值無法變更。請稍後再試或嘗試連結另一臺伺服器。";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Home";
 

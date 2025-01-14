@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Avbryt";
 
 /* Common word */
@@ -64,7 +65,7 @@
 "_maintenance" = "Underhåll";
 
 /* MacOS: quit application button in custom status menu */
-"_quit" = "Sluta";
+"_quit" = "Avsluta";
 
 /* MacOS: alert show before quitting app if VPN is connected */
 "_quit_warning" = "Att avsluta applikationen kommer att koppla från den aktiva VPN-anslutningen. Vill du fortsätta?";
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Denna version av Proton VPN stöds inte längre, uppdatera appen för att fortsätta använda den.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Kontakta support";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Uppdatera";
 
 "_invalid_refresh_token_please_login" = "Det har gått ett tag sedan du sist använde Proton VPN-appen. Logga in igen.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@-inställningen kunde inte ändras. Försök igen senare eller anslut till en annan server";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Hem";
 

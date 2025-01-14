@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Скасаваць";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Гэта версія праграмы Proton VPN больш не падтрымліваецца. Абнавіце праграму, каб працягнуць карыстацца ёй.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Звязацца са службай падтрымкі";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Абнавіць";
 
 "_invalid_refresh_token_please_login" = "З таго часу, як вы апошні раз карысталіся Proton VPN, мінула шмат часу. Увайдзіце ў сістэму паўторна.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Не атрымалася змяніць наладу %@. Паспрабуйце яшчэ раз пазней або падключыцеся да іншага сервера";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Галоўная";
 

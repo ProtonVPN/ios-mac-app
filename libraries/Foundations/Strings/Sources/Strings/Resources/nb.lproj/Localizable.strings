@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Avbryt";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Denne versjonen av Proton VPN er ikke lenger støttet, oppdater appen for å fortsette å bruke den.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Kontakt brukerstøtte";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Oppdater";
 
 "_invalid_refresh_token_please_login" = "Det er en stund siden du sist brukte Proton VPN-appen. Logg på igjen.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@-innstilling kunne ikke endres. Forsøk igjen senere eller koble til en annen tjener.";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Hjem";
 

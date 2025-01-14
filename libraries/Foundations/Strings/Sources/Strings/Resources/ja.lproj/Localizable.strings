@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "キャンセル";
 
 /* Common word */
@@ -690,7 +691,7 @@
 /* Plan speed */
 "_plan_speed_high" = "高速";
 
-"_plan_speed_fastest" = "最速の速度";
+"_plan_speed_fastest" = "最速";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "内部 API エラーが発生しました";
@@ -708,7 +709,7 @@
 "_error_vpn_credentials_missing" = "キーチェーンにVPN認証情報がありません";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "人による操作であることが確認できません。再試行するかPREMIUMプランを購入してください。";
+"_error_user_failed_human_validation" = "あなたが人間であることを確認できませんでした。もう一度試すか、プレミアムプランをご購入ください。";
 
 /* Error decoding an object */
 "_error_decode" = "アーカイブデータのデコードに失敗しました。クラス：%@";
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "このバージョンの Proton VPN はサポートされていません。使用を継続するにはアップデートしてください。";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "サポートへ連絡";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "更新";
 
 "_invalid_refresh_token_please_login" = "Proton VPN アプリをしばらく起動していないため、再ログインする必要があります。";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ 設定は変更できませんでした。後ほど再度試すか、別のサーバーに接続してください。";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "ホーム";
 

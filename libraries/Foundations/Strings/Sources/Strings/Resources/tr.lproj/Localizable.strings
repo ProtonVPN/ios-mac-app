@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "İptal";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Bu Proton VPN sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için uygulamayı güncelleyin.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Destek ekibimizle görüşün";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Güncelle";
 
 "_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ ayarı değiştirilemedi. Lütfen bir süre sonra yeniden deneyin ya da farklı bir sunucuya bağlanın";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Giriş";
 

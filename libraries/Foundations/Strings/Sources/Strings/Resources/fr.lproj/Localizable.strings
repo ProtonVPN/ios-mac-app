@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Annuler";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Cette version de Proton VPN n'est plus prise en charge, nous vous invitons à mettre à jour l'application pour continuer à l'utiliser.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Contacter le support";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Mettre à jour";
 
 "_invalid_refresh_token_please_login" = "Cela fait un moment que vous n'avez pas utilisé l'application Proton VPN. Nous vous invitons à vous reconnecter.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "Le paramètre %@ ne peut pas être modifié. Nous vous invitons à réessayer plus tard ou à vous connecter à un autre serveur.";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Accueil";
 
