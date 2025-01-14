@@ -20,8 +20,11 @@ import Foundation
 
 import Dependencies
 
-import VPNShared
+import ProtonCoreFeatureFlags
+
 import LegacyCommon
+import VPNAppCore
+import VPNShared
 import Persistence
 import Ergonomics
 
@@ -43,32 +46,32 @@ extension DoHConfigurationKey: DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
-        #if DEBUG || STAGING
-        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
-        #else
+        #if RELEASE
         let customHost: String? = nil
+        let atlasSecret: String? = nil
+        log.info("Custom host is disabled (release configuration)")
+        #else
+        let customHost = Bundle.dynamicDomain ?? propertiesManager.apiEndpoint
+        let atlasSecret = Bundle.atlasSecret ?? propertiesManager.atlasSecret
+        log.info("Custom host: \(optional: customHost), atlasSecret: \(optional: atlasSecret)")
         #endif
 
         let doh = DoHVPN(
             alternativeRouting: propertiesManager.alternativeRouting,
-            customHost: customHost
+            customHost: customHost,
+            atlasSecret: atlasSecret
         )
 
         propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
         }
+
         return doh
     }
 }
 
 extension DoHVPN {
-    convenience init(alternativeRouting: Bool, customHost: String?) {
-        #if DEBUG || STAGING
-        let atlasSecret = Bundle.atlasSecret
-        #else
-        let atlasSecret: String? = nil
-        #endif
-
+    convenience init(alternativeRouting: Bool, customHost: String?, atlasSecret: String?) {
         self.init(
             apiHost: ObfuscatedConstants.apiHost,
             verifyHost: ObfuscatedConstants.humanVerificationV3Host,

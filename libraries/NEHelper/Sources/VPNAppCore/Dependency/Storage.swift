@@ -29,21 +29,44 @@ public struct SettingsStorage: Sendable {
     public var getNetShield: @Sendable () async throws -> NetShieldType
     public var setNetShield: @Sendable (NetShieldType) async throws -> Void
 
+    public struct EnvironmentSettings {
+        public let apiEndpoint: String
+        public let atlasSecret: String
+        public let atlasSecretFetchURLString: String
+        public let featureFlagOverrides: [String: Bool]
+
+        public init(apiEndpoint: String, atlasSecret: String, atlasSecretFetchURLString: String, featureFlagOverrides: [String : Bool]) {
+            self.apiEndpoint = apiEndpoint
+            self.atlasSecret = atlasSecret
+            self.atlasSecretFetchURLString = atlasSecretFetchURLString
+            self.featureFlagOverrides = featureFlagOverrides
+        }
+    }
+    
+    public var getEnvironment: @Sendable () -> EnvironmentSettings
+    public var setEnvironment: @Sendable (EnvironmentSettings) throws -> Void
+
     public init(
         getConnectionProtocol: @Sendable @escaping () async throws -> ConnectionProtocol = unimplemented(placeholder: .smartProtocol),
         setConnectionProtocol: @Sendable @escaping (ConnectionProtocol) async throws -> Void = unimplemented(),
         getNetShield: @Sendable @escaping () async throws -> NetShieldType = unimplemented(placeholder: .off),
-        setNetShield: @Sendable @escaping (NetShieldType) async throws -> Void = unimplemented()
+        setNetShield: @Sendable @escaping (NetShieldType) async throws -> Void = unimplemented(),
+        getEnvironment: @Sendable @escaping () -> EnvironmentSettings = unimplemented(),
+        setEnvironment: @Sendable @escaping (EnvironmentSettings) throws -> Void = unimplemented()
     ) {
         self.getConnectionProtocol = getConnectionProtocol
         self.setConnectionProtocol = setConnectionProtocol
         self.getNetShield = getNetShield
         self.setNetShield = setNetShield
+        self.getEnvironment = getEnvironment
+        self.setEnvironment = setEnvironment
     }
+
+    static let mock: Self = .init()
 }
 
-public enum SettingsStorageKey: DependencyKey {
-    public static let liveValue: SettingsStorage = .init()
+public enum SettingsStorageKey: TestDependencyKey {
+    public static let testValue: SettingsStorage = .mock
 }
 
 extension DependencyValues {

@@ -47,6 +47,7 @@ import Logging
 import PMLogger
 import VPNShared
 import Timer
+import Settings
 
 import AppKit
 
@@ -93,6 +94,11 @@ extension AppDelegate: NSApplicationDelegate {
 
         // Clear out any overrides that may have been present in previous builds
         FeatureFlagsRepository.shared.resetOverrides()
+
+        for (featureFlagOverride, value) in propertiesManager.featureFlagOverrides ?? [:] {
+            guard let feature = ManuallySpecifiedFeatureFlag(rawValue: featureFlagOverride) else { continue }
+            FeatureFlagsRepository.shared.setFlagOverride(feature, value)
+        }
 
         setupCoreIntegration()
         setupLogsForApp()

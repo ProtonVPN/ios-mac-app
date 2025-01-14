@@ -20,17 +20,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import AuthenticationServices
 import Cocoa
-import LegacyCommon
+import SwiftUI
 import Foundation
-import Theme
-import Ergonomics
-import Strings
+import AuthenticationServices
+
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreObservability
 import ProtonCoreServices
+
+import LegacyCommon
+
+import Settings_macOS
+
+import Theme
+import Ergonomics
+import Strings
 
 final class LoginViewController: NSViewController {
     
@@ -67,6 +73,26 @@ final class LoginViewController: NSViewController {
         view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         return view
     }()
+
+    #if !RELEASE
+    private lazy var environmentSelectionView: NSHostingView<EnvironmentSelectorDesktopView> = {
+        let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
+            guard let `self` = self else { return }
+
+            _ = self.environmentSelectionView.resignFirstResponder()
+            self.environmentSelectionView.removeFromSuperview()
+
+            self.onboardingView.becomeFirstResponder()
+
+            self.presentOnboardingScreen(withErrorDescription: nil)
+        }
+
+        let hostingView = NSHostingView(rootView: environmentsView)
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+
+        return hostingView
+    }()
+    #endif
 
     @IBOutlet private weak var logoImage: NSImageView!
     private lazy var warningView: WarningView = {
@@ -200,8 +226,9 @@ final class LoginViewController: NSViewController {
         usernameTextField.tag = TextField.username.rawValue
         usernameTextField.delegate = self
         usernameTextField.focusDelegate = self
-        usernameTextField.setAccessibilityIdentifier("UsernameTextField")
         
+        usernameTextField.setAccessibilityIdentifier("UsernameTextField")
+
         usernameHorizontalLine.fillColor = .color(.border, .weak)
     }
     
@@ -221,7 +248,7 @@ final class LoginViewController: NSViewController {
         passwordTextField.focusDelegate = self
         
         passwordSecureTextField.setAccessibilityIdentifier("PasswordTextField")
-        
+
         passwordRevealButton.setButtonType(.toggle)
         passwordRevealButton.image = AppTheme.Icon.eye
         passwordRevealButton.alternateImage = AppTheme.Icon.eyeSlash
@@ -298,13 +325,32 @@ final class LoginViewController: NSViewController {
         }
     }
 
+#if !RELEASE
+    private func presentEnvironmentSelectionScreen() {
+        onboardingView.isHidden = true
+        logoImage.isHidden = true
+        twoFactorView.isHidden = true
+        environmentSelectionView.isHidden = false
+        loadingView.animate(false)
+
+        view.addSubview(environmentSelectionView)
+        environmentSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        environmentSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        environmentSelectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        environmentSelectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+        _ = environmentSelectionView.becomeFirstResponder()
+    }
+#endif
+
     private func presentTwoFactorScreen(withErrorDescription description: String?) {
         twoFactorView.warningMessage = description
 
-        _ = twoFactorView.becomeFirstResponder()
         onboardingView.isHidden = true
         twoFactorView.isHidden = false
         logoImage.isHidden = false
+
+        _ = twoFactorView.becomeFirstResponder()
 
         loadingView.animate(false)
     }
@@ -332,6 +378,13 @@ final class LoginViewController: NSViewController {
             signInWithSSOButtonAction()
             presentOnboardingScreen(withErrorDescription: errorMessage, warningType: .info)
         } else {
+        #if !RELEASE
+            guard let errorMessage, !CommandLine.arguments.contains("-SkipEnvironmentSelection") else {
+                // If we're on DEBUG or STAGING, present environment selection screen before proceeding to login.
+                presentEnvironmentSelectionScreen()
+                return
+            }
+        #endif
             presentOnboardingScreen(withErrorDescription: errorMessage)
         }
     }
@@ -344,10 +397,18 @@ final class LoginViewController: NSViewController {
     private func presentOnboardingScreen(withErrorDescription description: String?, warningType: WarningType = .error) {
         warningView.setMessage(description, warningType: warningType)
 
-        _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false
         twoFactorView.isHidden = true
         loadingView.isHidden = true
+
+    #if !RELEASE
+        // This occludes the username text field, which upsets UI tests. Since we don't need it anymore, remove it from
+        // the current view.
+        environmentSelectionView.removeFromSuperview()
+    #endif
+
+        _ = usernameTextField.becomeFirstResponder()
+
         logoImage.isHidden = false
         loadingView.animate(false)
     }

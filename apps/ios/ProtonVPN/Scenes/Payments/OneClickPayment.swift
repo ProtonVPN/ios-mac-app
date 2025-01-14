@@ -30,6 +30,20 @@ import ProtonCorePayments
 final class OneClickPayment {
     typealias Factory = PlanServiceFactory & CoreAlertServiceFactory
 
+    static var allowPayments: Bool {
+        if Bundle.isTestflight {
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.allowSandboxPurchases) {
+                log.info("Allowing Sandbox purchases (feature flag enabled)")
+                return true
+            } else {
+                log.info("Disabling Sandbox purchases (feature flag disabled)")
+                return false
+            }
+        }
+        log.info("Allowing payments (not on TestFlight)")
+        return true
+    }
+
     let plansDataSource: PlansDataSourceProtocol
 
     var completionHandler: () -> Void = {
@@ -43,16 +57,25 @@ final class OneClickPayment {
     private var plansClientValue: PlansClient?
 
     init?(alertService: CoreAlertService, planService: PlanService, payments: Payments) {
+        guard Self.allowPayments else { return nil }
+
         guard case .right(let plansDataSource) = payments.planService else {
             log.error("DynamicPlan FF disabled!")
             return nil
         }
+
         self.plansDataSource = plansDataSource
         self.alertService = alertService
         self.planService = planService
         self.payments = payments
+
         // listen to notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(userDidDismissWelcomeScreen), name: .userDismissedWelcomeScreen, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(userDidDismissWelcomeScreen),
+            name: .userDismissedWelcomeScreen,
+            object: nil
+        )
     }
 
     @objc
@@ -80,7 +103,11 @@ final class OneClickPayment {
 
     @MainActor
     func oneClickIAPViewController(dismissAction: (() -> Void)? = nil) -> UIViewController {
-        return ModalsFactory().upsellViewController(modalType: .subscription, client: plansClient(), dismissAction: dismissAction)
+        return ModalsFactory().upsellViewController(
+            modalType: .subscription,
+            client: plansClient(),
+            dismissAction: dismissAction
+        )
     }
 
     @MainActor

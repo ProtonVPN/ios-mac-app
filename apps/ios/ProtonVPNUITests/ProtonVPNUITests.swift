@@ -20,17 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import XCTest
+
 import fusion
-import PMLogger
 import ProtonCoreDoh
 import ProtonCoreEnvironment
 import ProtonCoreLog
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUnitTestsCore
 import ProtonCoreTestingToolkitUITestsCore
-import XCTest
+
 import UITestsHelpers
 import Ergonomics
+import PMLogger
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
 

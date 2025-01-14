@@ -348,7 +348,7 @@ extension IosAlertService: CoreAlertService {
             planService: planService,
             payments: planService.payments
         ) else {
-            // Can be disabled if `DynamicPlan` FF set to false, but this doesn't happen in practice (default is true).
+            // Can happen if `DynamicPlan` FF disabled, or if on TestFlight and `AllowSandboxPurchases` FF is disabled.
             return
         }
 

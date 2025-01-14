@@ -23,10 +23,6 @@
 import Cocoa
 
 class TextFieldWithFocus: NSTextField {
-    
-    private let commandKey = NSEvent.ModifierFlags.command.rawValue
-    private let commandShiftKey = NSEvent.ModifierFlags.command.rawValue | NSEvent.ModifierFlags.shift.rawValue
-    
     weak var focusDelegate: TextFieldFocusDelegate?
     
     required init?(coder: NSCoder) {
@@ -64,28 +60,37 @@ class TextFieldWithFocus: NSTextField {
     
     // swiftlint:disable cyclomatic_complexity
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
-        if event.type == NSEvent.EventType.keyDown {
-            if (event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue) == commandKey {
-                switch event.charactersIgnoringModifiers! {
-                case "x":
-                    if NSApp.sendAction(#selector(NSText.cut(_:)), to: nil, from: self) { return true }
-                case "c":
-                    if NSApp.sendAction(#selector(NSText.copy(_:)), to: nil, from: self) { return true }
-                case "v":
-                    if NSApp.sendAction(#selector(NSText.paste(_:)), to: nil, from: self) { return true }
-                case "z":
-                    if NSApp.sendAction(Selector(("undo:")), to: nil, from: self) { return true }
-                case "a":
-                    if NSApp.sendAction(#selector(NSResponder.selectAll(_:)), to: nil, from: self) { return true }
-                default:
-                    break
-                }
-            } else if (event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue) == commandShiftKey {
-                if event.charactersIgnoringModifiers == "Z" {
-                    if NSApp.sendAction(Selector(("redo:")), to: nil, from: self) { return true }
-                }
-            }
+        guard event.type == NSEvent.EventType.keyDown else {
+            return super.performKeyEquivalent(with: event)
         }
+
+        var selector: Selector?
+        switch event.modifierFlags.deviceIndependentFlags {
+        case .command:
+            switch event.charactersIgnoringModifiers! {
+            case "x":
+                selector = #selector(NSText.cut(_:))
+            case "c":
+                selector = #selector(NSText.copy(_:))
+            case "v":
+                selector = #selector(NSText.paste(_:))
+            case "z":
+                selector = Selector(("undo:"))
+            case "a":
+                selector = #selector(NSResponder.selectAll(_:))
+            default:
+                break
+            }
+        case .command.plus(.shift) where event.charactersIgnoringModifiers == "Z":
+            selector = Selector(("redo:"))
+        default:
+            break
+        }
+
+        if let selector, NSApp.sendAction(selector, to: nil, from: self) {
+            return true
+        }
+
         return super.performKeyEquivalent(with: event)
     }
     // swiftlint:enable cyclomatic_complexity
@@ -95,5 +100,15 @@ class TextFieldWithFocus: NSTextField {
         isBordered = false
         focusRingType = .none
         drawsBackground = false
+    }
+}
+
+fileprivate extension NSEvent.ModifierFlags {
+    var deviceIndependentFlags: Self {
+        Self(rawValue: rawValue & Self.deviceIndependentFlagsMask.rawValue)
+    }
+
+    func plus(_ another: Self) -> Self {
+        Self(rawValue: self.rawValue | another.rawValue)
     }
 }

@@ -131,7 +131,13 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var forceExtensionUpgrade: Bool { get set }
     var connectedServerNameDoNotUse: String? { get set }
     #endif
-    
+
+    #if !RELEASE
+    var atlasSecret: String? { get set }
+    var atlasSecretFetchURLString: String? { get set }
+    var featureFlagOverrides: [String: Bool]? { get set }
+    #endif
+
     func logoutCleanup()
     
     func getValue(forKey: String) -> Bool
@@ -252,6 +258,12 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         #endif
 
         case didShowDeprecationWarningForOSVersion = "DidShowDeprecationWarningForOSVersion"
+
+        #if !RELEASE
+        case atlasSecret = "AtlasSecret"
+        case atlasSecretFetchURL = "AtlasSecretFetchURL"
+        case featureFlagOverrides = "FeatureFlagOverrides"
+        #endif
     }
 
     public static let activeConnectionChangedNotification = Notification.Name("ActiveConnectionChangedNotification")
@@ -479,6 +491,12 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
 
     @StringProperty(.didShowDeprecationWarningForOSVersion) public var didShowDeprecationWarningForOSVersion: String?
+
+    #if !RELEASE
+    @StringProperty(.atlasSecret) public var atlasSecret: String?
+    @StringProperty(.atlasSecretFetchURL) public var atlasSecretFetchURLString: String?
+    @Property(.featureFlagOverrides) public var featureFlagOverrides: [String: Bool]?
+    #endif
 
     @Dependency(\.storage) var storage
 
@@ -738,4 +756,57 @@ public class DateProperty {
 }
 
 extension ConnectionSpec: DefaultableProperty {
+}
+
+extension SettingsStorageKey: DependencyKey {
+    public static let liveValue: SettingsStorage = .init(
+        getConnectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.connectionProtocol
+        },
+        setConnectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.connectionProtocol = $0
+        },
+        getNetShield: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.lastConnectionRequest?.netShieldType ?? .off
+        },
+        setNetShield: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: $0)
+        },
+        getEnvironment: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            #if RELEASE
+            return .init(
+                apiEndpoint: "",
+                atlasSecret: "",
+                atlasSecretFetchURLString: "",
+                featureFlagOverrides: [:]
+            )
+            #else
+            return .init(
+                apiEndpoint: propertiesManager.apiEndpoint ?? Bundle.dynamicDomain ?? "",
+                atlasSecret: propertiesManager.atlasSecret ?? Bundle.atlasSecret ?? "",
+                atlasSecretFetchURLString: propertiesManager.atlasSecretFetchURLString ?? "",
+                featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:]
+            )
+            #endif
+        },
+        setEnvironment: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            propertiesManager.apiEndpoint = $0.apiEndpoint.valueIfNotEmpty
+            propertiesManager.atlasSecret = $0.atlasSecret.valueIfNotEmpty
+            propertiesManager.atlasSecretFetchURLString = $0.atlasSecretFetchURLString.valueIfNotEmpty
+            propertiesManager.featureFlagOverrides = $0.featureFlagOverrides
+        }
+    )
+}
+
+private extension String {
+    var valueIfNotEmpty: String? {
+        guard !isEmpty else { return nil }
+        return self
+    }
 }

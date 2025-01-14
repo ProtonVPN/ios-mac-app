@@ -204,6 +204,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         NotificationCenter.default.post(name: Self.telemetryCrashReportsNotification, object: enabled)
     }
 
+    public var atlasSecret: String?
+    public var atlasSecretFetchURLString: String?
+    public var featureFlagOverrides: [String : Bool]?
+
     private var customBools: [String: Bool] = [:]
     private var defaultCustomBoolValue = false
 
