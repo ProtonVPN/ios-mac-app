@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Annuleer";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Deze versie van Proton VPN wordt niet langer ondersteund, update de app om deze te blijven gebruiken.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Neem contact op met ondersteuning";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Bijwerken";
 
 "_invalid_refresh_token_please_login" = "Het is een tijdje geleden sinds u de Proton VPN-app voor het laatst hebt gebruikt. Log alstublieft opnieuw in.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ instelling kon gewijzigd worden. Probeer later opnieuw of verbind met een andere server";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Start";
 

@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "Peruuta";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "Nykyistä Proton VPN -versiota ei enää tueta ja se on päivitettävä käytön jatkamiseksi.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Ota yhteyttä tukeen";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Päivitä";
 
 "_invalid_refresh_token_please_login" = "Edellisestä Proton VPN:n käyttökerrastasi on vierähtänyt tovi. Kirjaudu uudelleen.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ -asetusta ei voitu muuttaa. Yritä myöhemmin uudelleen tai yhdistä toiseen palvelimeen";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "Koti";
 

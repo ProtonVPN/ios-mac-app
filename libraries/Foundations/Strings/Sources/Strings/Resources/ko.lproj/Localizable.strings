@@ -1,4 +1,5 @@
 /* Common word */
+
 "_cancel" = "취소";
 
 /* Common word */
@@ -804,10 +805,10 @@
 
 "_update_required_no_longer_supported" = "이 버전의 Proton VPN은 더 이상 지원되지 않습니다. 계속 사용하려면 업데이트하세요.";
 
-/* Secondary button title in the App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "문의하기";
 
-/* Primary button title in the App update required alert */
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "업데이트";
 
 "_invalid_refresh_token_please_login" = "마지막으로 Proton VPN 앱을 사용한 지 오래되었습니다. 다시 로그인해 주세요.";
@@ -1683,6 +1684,7 @@
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
 "vpn_feature_cannot_be_set_error" = "%@ 설정이 변경되지 않을 수 있습니다. 나중에 다시 시도하거나 다른 서버로 연결하십시오";
 
+/* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
 "_home_tab" = "홈";
 
