@@ -97,7 +97,6 @@ public struct HomeView: View {
                     .presentationDetents([.medium, .large])
             }
         }
-        .transaction { $0.animation = nil } // disable implicit animations, especially for ConnectionStatusView
     }
 
     private var content: some View {
