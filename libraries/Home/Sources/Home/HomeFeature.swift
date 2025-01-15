@@ -20,6 +20,7 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 import Domain
+import Ergonomics
 import VPNAppCore
 import ConnectionDetails
 import Connection
@@ -120,7 +121,9 @@ public struct HomeFeature {
     public var body: some Reducer<State, Action> {
         if shouldUseConnectionFeature {
             Scope(state: \.connection, action: \.connection) {
-                ConnectionFeature()._printChanges()
+                ConnectionFeature()
+                    ._printChanges()
+                    .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
             }
         }
         Scope(state: \.sharedProperties, action: \.sharedProperties) {
