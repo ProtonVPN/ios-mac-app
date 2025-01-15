@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Strings
 
 struct UnauthenticatedView: View {
 
@@ -33,9 +34,9 @@ struct UnauthenticatedView: View {
             }
             Spacer()
             Button {
-
+                // This button opens the app. Should we do something more?
             } label: {
-                Text("Sign in")
+                Text(Localizable.logIn)
             }
             .buttonStyle(PrimaryButtonStyle())
         }
