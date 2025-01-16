@@ -21,8 +21,6 @@
 		AD6253FF2C3C023F00A38AF9 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */; };
 		AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181632C10C42300E59BD4 /* Dependencies.swift */; };
 		AD8FA9072BEB9DBB00E751F6 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
-		ADB299112D39200700B0025A /* BundleIdentifier+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB299102D39200700B0025A /* BundleIdentifier+tvOS.swift */; };
-		ADB299122D39200700B0025A /* BundleIdentifier+tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB299102D39200700B0025A /* BundleIdentifier+tvOS.swift */; };
 		E53729F72BFDF777003D7409 /* tvOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53729F62BFDF777003D7409 /* tvOS */; };
 		E53729F92BFDF7AE003D7409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E53729F82BFDF7AE003D7409 /* Assets.xcassets */; };
 		E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */ = {isa = PBXBuildFile; productRef = E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */; };
@@ -88,7 +86,6 @@
 		AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dependencies+Live.swift"; sourceTree = "<group>"; };
 		AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-TV-Info.plist"; sourceTree = "<group>"; };
 		AD8FA9062BEB9DBB00E751F6 /* Client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Client.plist; sourceTree = "<group>"; };
-		ADB299102D39200700B0025A /* BundleIdentifier+tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BundleIdentifier+tvOS.swift"; sourceTree = "<group>"; };
 		E53729F82BFDF7AE003D7409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -206,7 +203,6 @@
 		AD8FA9002BEB958C00E751F6 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				ADB299102D39200700B0025A /* BundleIdentifier+tvOS.swift */,
 				AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */,
 				AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */,
 				E53CF66C2BFF232C00458430 /* ObfuscatedConstants.example.swift */,
@@ -410,7 +406,6 @@
 			files = (
 				4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */,
 				4C54B01B2BC027FD00315A3B /* ProtonVPNApp.swift in Sources */,
-				ADB299112D39200700B0025A /* BundleIdentifier+tvOS.swift in Sources */,
 				AD6253FE2C3C021D00A38AF9 /* SharedDependencies+Live.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +424,6 @@
 			files = (
 				AD8643F42C24D45B001024CF /* Dependencies.swift in Sources */,
 				4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */,
-				ADB299122D39200700B0025A /* BundleIdentifier+tvOS.swift in Sources */,
 				AD6253FF2C3C023F00A38AF9 /* SharedDependencies+Live.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
