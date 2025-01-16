@@ -114,6 +114,7 @@
 		AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */; };
 		AD9F19502B55D6770034F329 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD9F194F2B55D6770034F329 /* Persistence */; };
 		ADA1A03E2A95E34000F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */; };
+		ADB299142D39202800B0025A /* BundleIdentifier+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB299132D39202800B0025A /* BundleIdentifier+macOS.swift */; };
 		ADDB04AB2B7A533800211434 /* CountriesSectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */; };
 		ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */; };
 		B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F9278DC19E00DBB8CA /* LoginTests.swift */; };
@@ -620,6 +621,7 @@
 		AD8130FE2A85360800729E03 /* SharedDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SharedDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerImplementationTests.swift; sourceTree = "<group>"; };
 		ADA1A03D2A95E34000F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
+		ADB299132D39202800B0025A /* BundleIdentifier+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BundleIdentifier+macOS.swift"; sourceTree = "<group>"; };
 		ADDB04AA2B7A533800211434 /* CountriesSectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewModelTests.swift; sourceTree = "<group>"; };
 		ADE590CB2A616E4B00089165 /* ProtocolDeprecatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDeprecatedViewController.swift; sourceTree = "<group>"; };
 		B22F32F9278DC19E00DBB8CA /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
@@ -1856,6 +1858,7 @@
 			isa = PBXGroup;
 			children = (
 				D5D6A949230D296400A432D1 /* DependencyContainer.swift */,
+				ADB299132D39202800B0025A /* BundleIdentifier+macOS.swift */,
 				AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */,
 				AD8130FE2A85360800729E03 /* SharedDependencies+Live.swift */,
 				EE4E7DF81F629195000F7D5E /* WindowController.swift */,
@@ -3206,6 +3209,7 @@
 				E5FF89602A810043002B4A49 /* InitialStateProvider.swift in Sources */,
 				EE24A39B1F1BCA0D00B70949 /* ProfileItemView.swift in Sources */,
 				E1616C0F21CA67CB00F42D79 /* ProfileIcon+Extension.swift in Sources */,
+				ADB299142D39202800B0025A /* BundleIdentifier+macOS.swift in Sources */,
 				E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */,
 				EE5B17451F39CDF700879BE0 /* HeaderViewModel.swift in Sources */,
 				EE4E7DF71F62909A000F7D5E /* ProfilesWindowController.swift in Sources */,

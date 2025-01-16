@@ -201,6 +201,7 @@
 		ADA1A0402A95E4EB00F9A6B6 /* Verifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */; };
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
+		ADB2990F2D391FF200B0025A /* BundleIdentifier+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB2990E2D391FF200B0025A /* BundleIdentifier+iOS.swift */; };
 		ADDB04A72B768CC200211434 /* CountriesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */; };
 		ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */; };
 		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
@@ -676,6 +677,7 @@
 		ADA1A03F2A95E4EB00F9A6B6 /* Verifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verifier.swift; sourceTree = "<group>"; };
 		ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsTableViewCell.xib; sourceTree = "<group>"; };
 		ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsTableViewCell.swift; sourceTree = "<group>"; };
+		ADB2990E2D391FF200B0025A /* BundleIdentifier+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BundleIdentifier+iOS.swift"; sourceTree = "<group>"; };
 		ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewModelTests.swift; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
@@ -1905,6 +1907,7 @@
 		F36ECC992611C65D0089B898 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ADB2990E2D391FF200B0025A /* BundleIdentifier+iOS.swift */,
 				AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */,
 				D5C137692334A54D00D20514 /* Coordinator.swift */,
 				D5F56898232620C600795953 /* DependencyContainer.swift */,
@@ -2865,6 +2868,7 @@
 				7950441B21183FBD0022ED35 /* ProfilesTableViewCell.swift in Sources */,
 				791DE612208E098300A29EA5 /* ProtonQCViewController.swift in Sources */,
 				7995FCFC2090A4820030E1EB /* UIKitString+Extension.swift in Sources */,
+				ADB2990F2D391FF200B0025A /* BundleIdentifier+iOS.swift in Sources */,
 				66E34BBA27AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift in Sources */,
 				D5BCDD2925307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */,

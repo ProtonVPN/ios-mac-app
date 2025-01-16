@@ -20,8 +20,18 @@ import Dependencies
 import DependenciesMacros
 
 @DependencyClient
-package struct BundleIDClient: Sendable {
+public struct BundleIDClient: TestDependencyKey, Sendable {
     package let bundleIdentifierForTarget: @Sendable () -> String
+
+    public init(bundleIdentifierForTarget: @Sendable @escaping () -> String) {
+        self.bundleIdentifierForTarget = bundleIdentifierForTarget
+    }
+
+    public static func mock(bundleID: String) -> Self {
+        BundleIDClient(bundleIdentifierForTarget: { bundleID })
+    }
+
+    public static let testValue = Self { fatalError("No bundle identifier provided") }
 }
 
 extension DependencyValues {
@@ -29,24 +39,4 @@ extension DependencyValues {
         get { self[BundleIDClient.self] }
         set { self[BundleIDClient.self] = newValue }
     }
-}
-
-extension BundleIDClient: DependencyKey {
-    package static let liveValue = BundleIDClient {
-        #if os(iOS)
-        return "ch.protonmail.vpn.WireGuardiOS-Extension"
-        #elseif os(macOS)
-        return "ch.protonvpn.mac.WireGuard-Extension"
-        #elseif os(tvOS)
-        return "ch.protonmail.vpn.WireGuard-tvOS"
-        #else
-        fatalError("Unsupported platform")
-        #endif
-    }
-
-    package static func mock(bundleID: String) -> Self {
-        BundleIDClient(bundleIdentifierForTarget: { bundleID })
-    }
-
-    public static let testValue = liveValue
 }
