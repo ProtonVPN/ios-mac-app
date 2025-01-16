@@ -583,6 +583,7 @@
 				CURRENT_PROJECT_VERSION = 2407112124;
 				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN/PreviewContent\"";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				DONT_GENERATE_INFOPLIST_FILE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ProtonVPN-TV-Info.plist";
@@ -616,6 +617,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProtonVPN/PreviewContent\"";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				DONT_GENERATE_INFOPLIST_FILE = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ProtonVPN-TV-Info.plist";
@@ -686,7 +688,7 @@
 				CURRENT_PROJECT_VERSION = 2407031421;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Proton VPN WireGuard Extension (tvOS)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
@@ -718,7 +720,7 @@
 				CURRENT_PROJECT_VERSION = 2407031421;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_HARDENED_RUNTIME = "";
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "WireGuard-tvOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Proton VPN WireGuard Extension (tvOS)";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Proton Technologies AG. All rights reserved.";
