@@ -63,3 +63,15 @@ public struct LoginIntent: AppIntent {
         return .result()
     }
 }
+
+public struct LoginIntent: AppIntent {
+    public static var title: LocalizedStringResource = "Login"
+
+    public static var openAppWhenRun = true
+
+    public init() { }
+
+    public func perform() async throws -> some IntentResult {
+        return .result()
+    }
+}
