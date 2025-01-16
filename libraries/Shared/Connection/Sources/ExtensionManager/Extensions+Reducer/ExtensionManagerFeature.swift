@@ -139,7 +139,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // A notable scenario in which the tunnel state is invalid is before the user gives the app permission
                 // to manage VPN configurations
                 state = .disconnected(nil)
-                return .none
+                return logLastDisconnectEffect
 
             case .tunnelStatusChanged(.disconnected):
                 let existingError = state.disconnecting ?? nil // Potential cause of disconnection
@@ -167,7 +167,7 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .tunnelStartRequestFinished(.failure(let error)):
                 // Start request failed, so there's no need to disconnect
                 state = .disconnected(.tunnelStartFailed(error))
-                return .none
+                return logLastDisconnectEffect
 
             case .connectionFinished(.failure(let error)):
                 log.error("Tunnel failed to connect", category: .connection, metadata: ["error": "\(error)"])
@@ -185,6 +185,16 @@ public struct ExtensionFeature: Reducer, Sendable {
                     log.assertionFailure("Failed to remove managers: \(error)")
                 }
             }
+        }
+    }
+
+    private var logLastDisconnectEffect: Effect<Action> {
+        .run { send in
+            if let error = try await tunnelManager.session.fetchLastDisconnectError() {
+                log.error("Last disconnect error: \(error)", category: .connection)
+            }
+        } catch: { error, send in
+            log.error("Failed to determined last disconnect error \(error)", category: .connection)
         }
     }
 }
