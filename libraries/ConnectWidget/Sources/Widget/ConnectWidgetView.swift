@@ -40,11 +40,11 @@ public struct ConnectWidgetView : View {
             Text(vpnConnection)
             Spacer()
             if vpnConnection == "Connected" {
-                Button(intent: DisconnectFromVPN()) {
+                Button(intent: DisconnectFromVPNIntent()) {
                     Text("Disconnect")
                 }
             } else {
-                Button(intent: ConnectToVPN()) {
+                Button(intent: ConnectToVPNIntent()) {
                     Text("Connect")
                 }
             }

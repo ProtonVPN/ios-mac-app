@@ -33,9 +33,7 @@ struct UnauthenticatedView: View {
                 Image(.logoWithTitle)
             }
             Spacer()
-            Button {
-                // This button opens the app. Should we do something more?
-            } label: {
+            Button (intent: LoginIntent()) {
                 Text(Localizable.logIn)
             }
             .buttonStyle(PrimaryButtonStyle())

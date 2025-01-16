@@ -21,16 +21,14 @@ import SwiftUI
 
 import Theme
 
-public struct PrimaryButtonStyle: ButtonStyle {
+struct PrimaryButtonStyle: ButtonStyle {
 
-    public init() { }
-
-    public func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
             .foregroundColor(Color(.text, .primary))
-            .frame(maxWidth: .infinity, minHeight: .themeSpacing24)
-            .bold()
+            .frame(maxWidth: .infinity, idealHeight: 40.0)
+            .font(.themeFont(.caption(emphasised: true)))
             .padding(.vertical, .themeSpacing8)
             .background(Color(.background, [.interactive]))
             .clipRectangle(cornerRadius: .radius12)
