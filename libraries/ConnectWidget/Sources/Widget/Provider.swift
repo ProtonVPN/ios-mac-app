@@ -19,19 +19,33 @@
 import WidgetKit
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> EmptyEntry {
-        .init(date: .now)
+    func placeholder(in context: Context) -> ConnectWidgetEntry {
+        .init(date: .now, signedIn: true, protectionState: .protected)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (EmptyEntry) -> ()) {
-        completion(EmptyEntry(date: .now))
+    func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
+        completion(ConnectWidgetEntry(date: .now, signedIn: true, protectionState: .protected))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        completion(Timeline(entries: [EmptyEntry(date: .now)], policy: .never)) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
+        completion(Timeline(entries: [ // Temporary entries.
+            ConnectWidgetEntry(date: .now, signedIn: false, protectionState: .unprotected),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, protectionState: .unprotected),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, protectionState: .protecting),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, protectionState: .protected)
+        ], policy: .never)) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
     }
 }
 
-struct EmptyEntry: TimelineEntry {
-    let date: Date
+public enum ProtectionState: Equatable {
+    case protected
+    case unprotected
+    case protecting
+}
+
+// Still WIP
+public struct ConnectWidgetEntry: TimelineEntry {
+    public let date: Date
+    let signedIn: Bool
+    let protectionState: ProtectionState
 }

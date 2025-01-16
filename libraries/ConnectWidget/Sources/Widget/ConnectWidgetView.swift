@@ -19,36 +19,68 @@
 import SwiftUI
 import WidgetKit
 import VPNAppCore
+import Theme
 
 import ComposableArchitecture
 
 /// TODO: Revamp this view [VPNAPPL-2591]
 public struct ConnectWidgetView : View {
 
-    @Environment(\.widgetFamily) var widgetFamily
+    let entry: ConnectWidgetEntry
 
-    @SharedReader(.vpnConnection) public var vpnConnection: String
+    @Environment(\.widgetFamily) var widgetFamily
 
     public var body: some View {
         VStack {
-            switch widgetFamily {
-            case .systemLarge:
-                Image(.logoWithTitle)
-            default:
-                Image(.logoMarks)
-            }
-            Text(vpnConnection)
-            Spacer()
-            if vpnConnection == "Connected" {
-                Button(intent: DisconnectFromVPNIntent()) {
-                    Text("Disconnect")
-                }
+            if !entry.signedIn {
+                UnauthenticatedView()
             } else {
-                Button(intent: ConnectToVPNIntent()) {
-                    Text("Connect")
+                Spacer()
+                switch entry.protectionState {
+                case .protected, .protecting:
+                    Button(intent: DisconnectFromVPNIntent()) {
+                        Text("Disconnect")
+                    }
+                case .unprotected:
+                    Button(intent: ConnectToVPNIntent()) {
+                        Text("Connect")
+                    }
                 }
             }
-
         }
+        .containerBackground(for: .widget) {
+            ZStack {
+                Asset.widgetBackground.swiftUIColor
+                gradientColor(for: entry)
+            }
+        }
+
     }
+}
+
+// MARK: - Private helpers
+
+private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
+
+    guard entry.signedIn else {
+        return .linearGradient(stops: [.init(color: Asset.widgetLoggedOutGradientStart.swiftUIColor, location: 0),
+                                       .init(color: Asset.widgetLoggedOutGradientStop.swiftUIColor, location: 0.7)],
+                               startPoint: .topTrailing,
+                               endPoint: .bottomLeading)
+    }
+
+    let startColor: Color
+    switch entry.protectionState {
+    case .protected:
+        startColor = Asset.widgetStatusProtected.swiftUIColor
+    case .unprotected:
+        startColor = Asset.widgetStatusUnprotected.swiftUIColor
+    case .protecting:
+        startColor = Asset.widgetStatusProtecting.swiftUIColor
+    }
+
+    return .linearGradient(stops: [.init(color: startColor, location: 0),
+                                   .init(color: .clear, location: 0.5)],
+                           startPoint: .top,
+                           endPoint: .bottom)
 }

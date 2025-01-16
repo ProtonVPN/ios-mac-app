@@ -28,13 +28,8 @@ public struct ConnectWidget: Widget {
 
     public var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            ConnectWidgetView()
+            ConnectWidgetView(entry: entry)
                 .environment(\.colorScheme, .dark)
-                .containerBackground(.linearGradient(stops: [.init(color: Asset.loggedOutGradientStart.swiftUIColor, location: 0),
-                                                             .init(color: Asset.loggedOutGradientStop.swiftUIColor, location: 0.7)],
-                                                     startPoint: .topTrailing,
-                                                     endPoint: .bottomLeading),
-                                     for: .widget)
         }
         .configurationDisplayName("Proton VPN")
         .description(Localizable.widgetTrayDescription)
@@ -45,5 +40,5 @@ public struct ConnectWidget: Widget {
 #Preview(as: .systemSmall) {
     ConnectWidget()
 } timeline: {
-    EmptyEntry(date: .now)
+    ConnectWidgetEntry(date: .now, signedIn: true, protectionState: .protected)
 }
