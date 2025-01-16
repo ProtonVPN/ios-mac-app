@@ -29,7 +29,6 @@ extension TunnelProviderManagerFactory {
             create: {
                 log.info("Creating new Tunnel Provider Manager")
                 let manager = NETunnelProviderManager()
-                manager.localizedDescription = "Proton VPN Tunnel"
                 return manager
             },
             removeAll: {
