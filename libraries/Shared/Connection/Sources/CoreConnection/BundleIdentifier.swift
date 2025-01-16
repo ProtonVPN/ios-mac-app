@@ -18,6 +18,7 @@
 
 import Dependencies
 import DependenciesMacros
+import Foundation
 
 @DependencyClient
 package struct BundleIDClient: Sendable {
@@ -32,9 +33,14 @@ extension DependencyValues {
 }
 
 extension BundleIDClient: DependencyKey {
+    private static var isStagingBuild: Bool {
+        let containerBundleIdentifier = Bundle.main.bundleIdentifier
+        return containerBundleIdentifier?.contains("debug") ?? false
+    }
+
     package static let liveValue = BundleIDClient {
         #if os(iOS)
-        return "ch.protonmail.vpn.WireGuardiOS-Extension"
+        return isStagingBuild ? "ch.protonmail.vpn.debug.WireGuardiOS-Extension" : "ch.protonmail.vpn.WireGuardiOS-Extension"
         #elseif os(macOS)
         return "ch.protonvpn.mac.WireGuard-Extension"
         #elseif os(tvOS)
