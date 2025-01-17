@@ -22,6 +22,8 @@ import VPNAppCore
 import Theme
 import Strings
 import ProtonCoreUIFoundations
+import Domain
+import SharedViews
 
 import ComposableArchitecture
 
@@ -33,11 +35,13 @@ public struct ConnectWidgetView : View {
     @Environment(\.widgetFamily) var widgetFamily
 
     public var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             if !entry.signedIn {
                 UnauthenticatedView()
             } else {
                 header(entry, widgetFamily: widgetFamily)
+                Spacer()
+                serverInfo(entry, widgetFamily: widgetFamily)
                 Spacer()
                 buttons(entry, widgetFamily: widgetFamily)
             }
@@ -81,32 +85,72 @@ private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
 
 // MARK: - Subviews
 private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
-    Group {
+    HStack(alignment: .center) {
         if widgetFamily == .systemSmall {
-            EmptyView()
+            // We show server flag if available
+            if let location = entry.connectionSpec?.location {
+                FlagView(location: location, flagSize: .defaultSize)
+                Spacer()
+            } else {
+                EmptyView()
+            }
         } else {
-            HStack(alignment: .center) {
-                switch entry.protectionState {
-                case .protected:
-                    Group {
+            switch entry.protectionState {
+            case .protected:
+                ZStack(alignment: .leading) {
+                    if let location = entry.connectionSpec?.location, location.subtext(locale: .current) != nil, widgetFamily == .systemMedium {
+                        FlagView(location: location, flagSize: .defaultSize)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    HStack {
                         IconProvider.lockFilled
                         Text(Localizable.connectionStatusProtected)
                             .font(.body3(emphasised: true))
                     }
                     .foregroundStyle(Color(.icon, .vpnGreen))
-                case .protecting:
-                    Text(Localizable.connecting)
-                        .font(.body3(emphasised: true))
-                        .foregroundStyle(Color(.text, .normal))
-                case .unprotected:
-                    Group {
-                        IconProvider.lockOpenFilled2
-                        Text(Localizable.connectionStatusUnprotected)
-                            .font(.body3(emphasised: true))
-                    }
-                    .foregroundStyle(ColorProvider.NotificationError)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
+                .frame(maxWidth: .infinity)
+            case .protecting:
+                Text(Localizable.connecting)
+                    .font(.body3(emphasised: true))
+                    .foregroundStyle(Color(.text, .normal))
+            case .unprotected:
+                Group {
+                    IconProvider.lockOpenFilled2
+                    Text(Localizable.connectionStatusUnprotected)
+                        .font(.body3(emphasised: true))
+                }
+                .foregroundStyle(ColorProvider.NotificationError)
             }
+        }
+    }
+    .frame(maxWidth: .infinity, idealHeight: 32.0)
+}
+
+private func serverInfo(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
+    Group {
+        if widgetFamily == .systemMedium && entry.protectionState == .unprotected {
+            EmptyView()
+        } else {
+            if let location = entry.connectionSpec?.location {
+                VStack(alignment: .leading, spacing: .themeSpacing8) {
+                    if widgetFamily != .systemSmall && (widgetFamily != .systemMedium || location.subtext(locale: .current) == nil) {
+                        FlagView(location: location, flagSize: .defaultSize)
+                    }
+                    VStack(alignment: .leading) {
+                        Text(location.headerText(locale: .current) ?? "")
+                            .themeFont(.caption(emphasised: true))
+                            .foregroundStyle(Color(.text, .normal))
+                        Text(location.subtext(locale: .current) ?? "")
+                            .themeFont(.overline(emphasised: false))
+                            .foregroundStyle(Color(.text, .weak))
+                    }
+                }
+            } else {
+                EmptyView()
+            }
+
         }
     }
 }

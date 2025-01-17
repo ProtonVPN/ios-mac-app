@@ -17,22 +17,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import WidgetKit
+import Domain
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> ConnectWidgetEntry {
-        .init(date: .now, signedIn: true, protectionState: .protected(.defaultFastest), recentServers: [])
+        .init(date: .now, signedIn: true, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: [])
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
-        completion(ConnectWidgetEntry(date: .now, signedIn: true, protectionState: .protected(.defaultFastest), recentServers: []))
+        completion(ConnectWidgetEntry(date: .now, signedIn: true, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: []))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         completion(Timeline(entries: [ // Temporary entries.
-            ConnectWidgetEntry(date: .now, signedIn: false, protectionState: .unprotected, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, protectionState: .unprotected, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, protectionState: .protecting(.defaultFastest), recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, protectionState: .protected(.defaultFastest), recentServers: [])
+            ConnectWidgetEntry(date: .now, signedIn: false, connectionSpec: nil, protectionState: .unprotected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(10), signedIn: true, connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [])
         ], policy: .never)) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
     }
 }

@@ -25,12 +25,13 @@ import Domain
 public struct ConnectWidgetEntry: TimelineEntry {
     public let date: Date
     public let signedIn: Bool
+    public let connectionSpec: ConnectionSpec?
     public let protectionState: ProtectionState
     public let recentServers: [RecentConnection]
 
     public enum ProtectionState: Equatable {
-        case protected(ConnectionSpec)
+        case protected
         case unprotected
-        case protecting(ConnectionSpec)
+        case protecting
     }
 }

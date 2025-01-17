@@ -20,6 +20,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
+        .package(path: "../SharedViews"),
         ],
     targets: [
         .target(
@@ -28,6 +29,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "Theme",
                 "Strings",
+                "SharedViews",
                 .product(name: "VPNAppCore", package: "NEHelper"),
             ],
             resources: [
