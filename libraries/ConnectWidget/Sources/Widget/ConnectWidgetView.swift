@@ -35,55 +35,33 @@ public struct ConnectWidgetView : View {
     @Environment(\.widgetFamily) var widgetFamily
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            if !entry.signedIn {
-                UnauthenticatedView()
-            } else {
-                header(entry, widgetFamily: widgetFamily)
-                Spacer()
-                serverInfo(entry, widgetFamily: widgetFamily)
-                Spacer()
-                buttons(entry, widgetFamily: widgetFamily)
+        GeometryReader { geometry in
+            VStack(alignment: .leading, spacing: 0) {
+                if !entry.signedIn {
+                    UnauthenticatedView()
+                } else {
+                    header(entry, widgetFamily: widgetFamily)
+                    Spacer()
+                    serverInfo(entry, widgetFamily: widgetFamily)
+                    VStack(spacing: .themeSpacing16) {
+                        buttons(entry, widgetFamily: widgetFamily)
+                        recents(entry, widgetFamily: widgetFamily, geometry: geometry)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .containerBackground(for: .widget) {
+                ZStack {
+                    Color(.background)
+                    gradientColor(for: entry)
+                }
             }
         }
-        .containerBackground(for: .widget) {
-            ZStack {
-                Color(.background)
-                gradientColor(for: entry)
-            }
-        }
-
     }
-}
-
-// MARK: - Private helpers
-
-private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
-
-    guard entry.signedIn else {
-        return .linearGradient(stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
-                                       .init(color: Color(.loggedOutGradientStop), location: 0.7)],
-                               startPoint: .topTrailing,
-                               endPoint: .bottomLeading)
-    }
-
-    let startColor: Color
-    switch entry.protectionState {
-    case .protected:
-        startColor = Color(.statusProtected)
-    case .unprotected:
-        startColor = Color(.statusUnprotected)
-    case .protecting:
-        startColor = Color(.statusProtecting)
-    }
-
-    return .linearGradient(stops: [.init(color: startColor, location: 0),
-                                   .init(color: .clear, location: 0.5)],
-                           startPoint: .top,
-                           endPoint: .bottom)
 }
 
 // MARK: - Subviews
+
 private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
     HStack(alignment: .center) {
         if widgetFamily == .systemSmall {
@@ -91,8 +69,6 @@ private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> 
             if let location = entry.connectionSpec?.location {
                 FlagView(location: location, flagSize: .defaultSize)
                 Spacer()
-            } else {
-                EmptyView()
             }
         } else {
             switch entry.protectionState {
@@ -125,32 +101,60 @@ private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> 
             }
         }
     }
-    .frame(maxWidth: .infinity, idealHeight: 32.0)
+    .frame(maxWidth: .infinity, idealHeight: 40)
 }
 
 private func serverInfo(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
     Group {
-        if widgetFamily == .systemMedium && entry.protectionState == .unprotected {
-            EmptyView()
-        } else {
-            if let location = entry.connectionSpec?.location {
-                VStack(alignment: .leading, spacing: .themeSpacing8) {
-                    if widgetFamily != .systemSmall && (widgetFamily != .systemMedium || location.subtext(locale: .current) == nil) {
-                        FlagView(location: location, flagSize: .defaultSize)
-                    }
-                    VStack(alignment: .leading) {
-                        Text(location.headerText(locale: .current) ?? "")
+        if !(widgetFamily == .systemMedium && entry.protectionState == .unprotected), let location = entry.connectionSpec?.location {
+            VStack(alignment: .leading, spacing: .themeSpacing8) {
+                if widgetFamily != .systemSmall && (widgetFamily != .systemMedium || location.subtext(locale: .current) == nil) {
+                    FlagView(location: location, flagSize: .defaultSize)
+                }
+                VStack(alignment: .leading) {
+                    if let headerText = location.headerText(locale: .current) {
+                        Text(headerText)
                             .themeFont(.caption(emphasised: true))
                             .foregroundStyle(Color(.text, .normal))
-                        Text(location.subtext(locale: .current) ?? "")
+                    }
+                    if let subtext = location.subtext(locale: .current) {
+                        Text(subtext)
                             .themeFont(.overline(emphasised: false))
                             .foregroundStyle(Color(.text, .weak))
                     }
                 }
-            } else {
-                EmptyView()
             }
+            Spacer()
+        }
+    }
+}
 
+private func recents(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily, geometry: GeometryProxy) -> some View {
+    Group {
+        let itemWidth = geometry.size.width / 3 - .themeSpacing8
+        if widgetFamily == .systemMedium && entry.protectionState == .unprotected || widgetFamily == .systemLarge && entry.recentServers.count > 0 {
+            LazyHGrid(rows: Array(repeating: GridItem(.fixed(itemWidth)), count: 1), spacing: .themeSpacing8) {
+                ForEach(entry.recentServers, id: \.self) { recentConnection in
+                    VStack(alignment: .leading) {
+                        FlagView(location: recentConnection.connection.location, flagSize: .defaultSize)
+                        if let headerText = recentConnection.connection.location.headerText(locale: .current) {
+                            Text(headerText)
+                                .themeFont(.caption(emphasised: true))
+                                .foregroundStyle(Color(.text, .normal))
+                        }
+                        if let subtext = recentConnection.connection.location.subtext(locale: .current) {
+                            Text(subtext)
+                                .themeFont(.overline(emphasised: false))
+                                .foregroundStyle(Color(.text, .weak))
+                        }
+                    }
+                    .padding(.themeSpacing8)
+                    .frame(width: itemWidth, height: 90.0)
+                    .background(Color(.background, .weak))
+                    .clipRectangle(cornerRadius: .radius12)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
@@ -169,10 +173,7 @@ private func buttons(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) ->
             }
             .buttonStyle(SecondaryButtonStyle())
         case .unprotected:
-            switch widgetFamily {
-            case .systemMedium: // In medium-sized widgets, we display recent items instead of the connect button.
-                EmptyView()
-            default:
+            if widgetFamily != .systemMedium {
                 Button(intent: ConnectToVPNIntent()) {
                     Text(Localizable.connect)
                 }
@@ -182,3 +183,29 @@ private func buttons(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) ->
     }
 }
 
+// MARK: - Private helpers
+
+private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
+
+    guard entry.signedIn else {
+        return .linearGradient(stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
+                                       .init(color: Color(.loggedOutGradientStop), location: 0.7)],
+                               startPoint: .topTrailing,
+                               endPoint: .bottomLeading)
+    }
+
+    let startColor: Color
+    switch entry.protectionState {
+    case .protected:
+        startColor = Color(.statusProtected)
+    case .unprotected:
+        startColor = Color(.statusUnprotected)
+    case .protecting:
+        startColor = Color(.statusProtecting)
+    }
+
+    return .linearGradient(stops: [.init(color: startColor, location: 0),
+                                   .init(color: .clear, location: 0.5)],
+                           startPoint: .top,
+                           endPoint: .bottom)
+}

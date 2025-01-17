@@ -31,10 +31,10 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         completion(Timeline(entries: [ // Temporary entries.
             ConnectWidgetEntry(date: .now, signedIn: false, connectionSpec: nil, protectionState: .unprotected, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(10), signedIn: true, connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [])
+            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(10), signedIn: true, connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [.defaultFastest])
         ], policy: .never)) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
     }
 }
