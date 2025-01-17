@@ -559,12 +559,6 @@ public enum Asset {
   public static let emptyIcon = ImageAsset(name: "empty_icon")
   public static let idle = ImageAsset(name: "idle")
   public static let welcomeToProtonVpn = ImageAsset(name: "welcome-to-proton-vpn")
-  public static let widgetBackground = ColorAsset(name: "widget-background")
-  public static let widgetLoggedOutGradientStart = ColorAsset(name: "widget-logged-out-gradient-start")
-  public static let widgetLoggedOutGradientStop = ColorAsset(name: "widget-logged-out-gradient-stop")
-  public static let widgetStatusProtected = ColorAsset(name: "widget-status-protected")
-  public static let widgetStatusProtecting = ColorAsset(name: "widget-status-protecting")
-  public static let widgetStatusUnprotected = ColorAsset(name: "widget-status-unprotected")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

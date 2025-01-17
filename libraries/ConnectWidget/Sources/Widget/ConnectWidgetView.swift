@@ -58,7 +58,7 @@ public struct ConnectWidgetView : View {
         }
         .containerBackground(for: .widget) {
             ZStack {
-                Asset.widgetBackground.swiftUIColor
+                Color(.background)
                 gradientColor(for: entry)
             }
         }
@@ -71,8 +71,8 @@ public struct ConnectWidgetView : View {
 private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
 
     guard entry.signedIn else {
-        return .linearGradient(stops: [.init(color: Asset.widgetLoggedOutGradientStart.swiftUIColor, location: 0),
-                                       .init(color: Asset.widgetLoggedOutGradientStop.swiftUIColor, location: 0.7)],
+        return .linearGradient(stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
+                                       .init(color: Color(.loggedOutGradientStop), location: 0.7)],
                                startPoint: .topTrailing,
                                endPoint: .bottomLeading)
     }
@@ -80,11 +80,11 @@ private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
     let startColor: Color
     switch entry.protectionState {
     case .protected:
-        startColor = Asset.widgetStatusProtected.swiftUIColor
+        startColor = Color(.statusProtected)
     case .unprotected:
-        startColor = Asset.widgetStatusUnprotected.swiftUIColor
+        startColor = Color(.statusUnprotected)
     case .protecting:
-        startColor = Asset.widgetStatusProtecting.swiftUIColor
+        startColor = Color(.statusProtecting)
     }
 
     return .linearGradient(stops: [.init(color: startColor, location: 0),
