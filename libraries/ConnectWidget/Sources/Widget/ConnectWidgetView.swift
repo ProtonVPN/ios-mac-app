@@ -20,6 +20,7 @@ import SwiftUI
 import WidgetKit
 import VPNAppCore
 import Theme
+import Strings
 
 import ComposableArchitecture
 
@@ -37,14 +38,21 @@ public struct ConnectWidgetView : View {
             } else {
                 Spacer()
                 switch entry.protectionState {
-                case .protected, .protecting:
+                case .protected:
                     Button(intent: DisconnectFromVPNIntent()) {
-                        Text("Disconnect")
+                        Text(Localizable.disconnect)
                     }
+                    .buttonStyle(SecondaryButtonStyle())
+                case .protecting:
+                    Button(intent: DisconnectFromVPNIntent()) {
+                        Text(Localizable.cancel)
+                    }
+                    .buttonStyle(SecondaryButtonStyle())
                 case .unprotected:
                     Button(intent: ConnectToVPNIntent()) {
-                        Text("Connect")
+                        Text(Localizable.connect)
                     }
+                    .buttonStyle(PrimaryButtonStyle())
                 }
             }
         }
