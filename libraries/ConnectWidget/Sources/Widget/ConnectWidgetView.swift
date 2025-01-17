@@ -21,6 +21,7 @@ import WidgetKit
 import VPNAppCore
 import Theme
 import Strings
+import ProtonCoreUIFoundations
 
 import ComposableArchitecture
 
@@ -36,24 +37,9 @@ public struct ConnectWidgetView : View {
             if !entry.signedIn {
                 UnauthenticatedView()
             } else {
+                header(entry, widgetFamily: widgetFamily)
                 Spacer()
-                switch entry.protectionState {
-                case .protected:
-                    Button(intent: DisconnectFromVPNIntent()) {
-                        Text(Localizable.disconnect)
-                    }
-                    .buttonStyle(SecondaryButtonStyle())
-                case .protecting:
-                    Button(intent: DisconnectFromVPNIntent()) {
-                        Text(Localizable.cancel)
-                    }
-                    .buttonStyle(SecondaryButtonStyle())
-                case .unprotected:
-                    Button(intent: ConnectToVPNIntent()) {
-                        Text(Localizable.connect)
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                }
+                buttons(entry, widgetFamily: widgetFamily)
             }
         }
         .containerBackground(for: .widget) {
@@ -92,3 +78,63 @@ private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
                            startPoint: .top,
                            endPoint: .bottom)
 }
+
+// MARK: - Subviews
+private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
+    Group {
+        if widgetFamily == .systemSmall {
+            EmptyView()
+        } else {
+            HStack(alignment: .center) {
+                switch entry.protectionState {
+                case .protected:
+                    Group {
+                        IconProvider.lockFilled
+                        Text(Localizable.connectionStatusProtected)
+                            .font(.body3(emphasised: true))
+                    }
+                    .foregroundStyle(Color(.icon, .vpnGreen))
+                case .protecting:
+                    Text(Localizable.connecting)
+                        .font(.body3(emphasised: true))
+                        .foregroundStyle(Color(.text, .normal))
+                case .unprotected:
+                    Group {
+                        IconProvider.lockOpenFilled2
+                        Text(Localizable.connectionStatusUnprotected)
+                            .font(.body3(emphasised: true))
+                    }
+                    .foregroundStyle(ColorProvider.NotificationError)
+                }
+            }
+        }
+    }
+}
+
+private func buttons(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
+    Group {
+        switch entry.protectionState {
+        case .protected:
+            Button(intent: DisconnectFromVPNIntent()) {
+                Text(Localizable.disconnect)
+            }
+            .buttonStyle(SecondaryButtonStyle())
+        case .protecting:
+            Button(intent: DisconnectFromVPNIntent()) { // TODO: have another app intent for cancellation.
+                Text(Localizable.cancel)
+            }
+            .buttonStyle(SecondaryButtonStyle())
+        case .unprotected:
+            switch widgetFamily {
+            case .systemMedium: // In medium-sized widgets, we display recent items instead of the connect button.
+                EmptyView()
+            default:
+                Button(intent: ConnectToVPNIntent()) {
+                    Text(Localizable.connect)
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
+        }
+    }
+}
+
