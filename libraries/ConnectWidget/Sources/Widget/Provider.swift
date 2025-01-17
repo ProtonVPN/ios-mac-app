@@ -20,32 +20,19 @@ import WidgetKit
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> ConnectWidgetEntry {
-        .init(date: .now, signedIn: true, protectionState: .protected)
+        .init(date: .now, signedIn: true, protectionState: .protected(.defaultFastest), recentServers: [])
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
-        completion(ConnectWidgetEntry(date: .now, signedIn: true, protectionState: .protected))
+        completion(ConnectWidgetEntry(date: .now, signedIn: true, protectionState: .protected(.defaultFastest), recentServers: []))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         completion(Timeline(entries: [ // Temporary entries.
-            ConnectWidgetEntry(date: .now, signedIn: false, protectionState: .unprotected),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, protectionState: .unprotected),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, protectionState: .protecting),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, protectionState: .protected)
+            ConnectWidgetEntry(date: .now, signedIn: false, protectionState: .unprotected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, protectionState: .unprotected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, protectionState: .protecting(.defaultFastest), recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, protectionState: .protected(.defaultFastest), recentServers: [])
         ], policy: .never)) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
     }
-}
-
-public enum ProtectionState: Equatable {
-    case protected
-    case unprotected
-    case protecting
-}
-
-// Still WIP
-public struct ConnectWidgetEntry: TimelineEntry {
-    public let date: Date
-    let signedIn: Bool
-    let protectionState: ProtectionState
 }
