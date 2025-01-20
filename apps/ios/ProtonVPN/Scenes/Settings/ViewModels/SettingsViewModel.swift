@@ -789,4 +789,52 @@ final class SettingsViewModel {
     private func logOut() {
         appSessionManager.logOut(force: false, reason: nil)
     }
+
+    private func getFeatureChangeAvailability(completion: @escaping (VpnFeatureChangeState) -> Void) {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            vpnStateConfiguration.getInfo { info in
+                let availability = VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol)
+                completion(availability)
+            }
+        } else {
+            @Dependency(\.connectionConfigurer) var configurer
+            Task {
+                let currentConnectionState = await configurer.connectionState()
+                let availability = VpnFeatureChangeState(connectionState: currentConnectionState)
+                completion(availability)
+            }
+        }
+    }
+}
+
+public struct ConnectionConfigurer: TestDependencyKey {
+    var connectionState: @Sendable () async -> ConnectionState
+
+    public enum ConnectionState: Sendable {
+        case disconnected
+
+        // Either connected, or connecting
+        case active(vpnProtocol: VpnProtocol)
+    }
+
+    public static let testValue = ConnectionConfigurer { .disconnected }
+}
+
+extension DependencyValues {
+    public var connectionConfigurer: ConnectionConfigurer {
+        get { self[ConnectionConfigurer.self] }
+        set { self[ConnectionConfigurer.self] = newValue }
+    }
+}
+
+extension VpnFeatureChangeState {
+    init(connectionState: ConnectionConfigurer.ConnectionState) {
+        switch connectionState {
+        case .disconnected:
+            self = .immediately
+        case .active(let vpnProtocol):
+            let canApplySettingsWhileActive = vpnProtocol.authenticationType == .certificate
+            self = canApplySettingsWhileActive ? .withConnectionUpdate : .withReconnect
+        }
+    }
 }
