@@ -27,7 +27,6 @@ import SharedViews
 
 import ComposableArchitecture
 
-/// TODO: Revamp this view [VPNAPPL-2591]
 public struct ConnectWidgetView : View {
 
     let entry: ConnectWidgetEntry
@@ -131,25 +130,33 @@ private func serverInfo(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily)
 
 private func recents(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily, geometry: GeometryProxy) -> some View {
     Group {
-        let itemWidth = geometry.size.width / 3 - .themeSpacing8
+        let itemWidth = geometry.size.width / 3 - .themeSpacing6
         if widgetFamily == .systemMedium && entry.protectionState == .unprotected || widgetFamily == .systemLarge && entry.recentServers.count > 0 {
-            LazyHGrid(rows: Array(repeating: GridItem(.fixed(itemWidth)), count: 1), spacing: .themeSpacing8) {
+            LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
                 ForEach(entry.recentServers, id: \.self) { recentConnection in
-                    VStack(alignment: .leading) {
-                        FlagView(location: recentConnection.connection.location, flagSize: .defaultSize)
-                        if let headerText = recentConnection.connection.location.headerText(locale: .current) {
-                            Text(headerText)
-                                .themeFont(.caption(emphasised: true))
-                                .foregroundStyle(Color(.text, .normal))
-                        }
-                        if let subtext = recentConnection.connection.location.subtext(locale: .current) {
-                            Text(subtext)
-                                .themeFont(.overline(emphasised: false))
-                                .foregroundStyle(Color(.text, .weak))
+                    Button(intent: ConnectToVPNIntent()) { // TODO: Send the recentConnection as parameter to the AppIntent.
+                        VStack(alignment: .leading) {
+                            if recentConnection.underMaintenance {
+                                IconProvider.wrench
+                            } else {
+                                FlagView(location: recentConnection.connection.location, flagSize: .defaultSize)
+                            }
+                            if let headerText = recentConnection.connection.location.headerText(locale: .current) {
+                                Text(headerText)
+                                    .themeFont(.caption(emphasised: true))
+                                    .foregroundStyle(Color(.text, .normal))
+                            }
+                            if let subtext = recentConnection.connection.location.subtext(locale: .current) {
+                                Text(subtext)
+                                    .themeFont(.overline(emphasised: false))
+                                    .foregroundStyle(Color(.text, .weak))
+                            }
                         }
                     }
+                    .buttonStyle(PlainButtonStyle())
+                    .disabled(recentConnection.underMaintenance)
                     .padding(.themeSpacing8)
-                    .frame(width: itemWidth, height: 90.0)
+                    .frame(width: itemWidth, height: 90, alignment: .leading)
                     .background(Color(.background, .weak))
                     .clipRectangle(cornerRadius: .radius12)
                 }

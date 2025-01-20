@@ -34,7 +34,11 @@ struct Provider: TimelineProvider {
             ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
             ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: [.defaultFastest]),
             ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(10), signedIn: true, connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [.defaultFastest])
+            ConnectWidgetEntry(date: .now.addingTimeInterval(10), signedIn: true, connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [
+                .defaultFastest,
+                .init(pinnedDate: nil, underMaintenance: false, connectionDate: Date(), connection: .init(location: .exact(.paid, number: 332, subregion: "ZU", regionCode: "CH"), features: [])),
+                .init(pinnedDate: nil, underMaintenance: true, connectionDate: Date(), connection: .init(location: .exact(.paid, number: 332, subregion: "MI", regionCode: "IT"), features: []))
+            ])
         ], policy: .never)) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
     }
 }
