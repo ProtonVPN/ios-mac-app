@@ -36,7 +36,7 @@ public struct ConnectWidgetView : View {
     public var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {
-                if !entry.signedIn {
+                if entry.protectionState == .signedOut {
                     UnauthenticatedView()
                 } else {
                     header(entry, widgetFamily: widgetFamily)
@@ -97,6 +97,8 @@ private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> 
                         .font(.body3(emphasised: true))
                 }
                 .foregroundStyle(ColorProvider.NotificationError)
+            case .signedOut:
+                EmptyView()
             }
         }
     }
@@ -186,6 +188,8 @@ private func buttons(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) ->
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
+        case .signedOut:
+            EmptyView()
         }
     }
 }
@@ -194,24 +198,22 @@ private func buttons(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) ->
 
 private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
 
-    guard entry.signedIn else {
+    let startColor: Color
+    switch entry.protectionState {
+    case .signedOut:
         return .linearGradient(stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
                                        .init(color: Color(.loggedOutGradientStop), location: 0.7)],
                                startPoint: .topTrailing,
                                endPoint: .bottomLeading)
-    }
-
-    let startColor: Color
-    switch entry.protectionState {
     case .protected:
-        startColor = Color(.statusProtected)
+        startColor = Color(.icon, .vpnGreen)
     case .unprotected:
-        startColor = Color(.statusUnprotected)
+        startColor = Color(.background, .danger)
     case .protecting:
-        startColor = Color(.statusProtecting)
+        startColor = .white
     }
 
-    return .linearGradient(stops: [.init(color: startColor, location: 0),
+    return .linearGradient(stops: [.init(color: startColor.opacity(0.5), location: 0),
                                    .init(color: .clear, location: 1)],
                            startPoint: .top,
                            endPoint: .center)

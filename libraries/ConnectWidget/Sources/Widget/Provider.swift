@@ -21,20 +21,20 @@ import Domain
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> ConnectWidgetEntry {
-        .init(date: .now, signedIn: true, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: [])
+        .init(date: .now, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: [])
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
-        completion(ConnectWidgetEntry(date: .now, signedIn: true, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: []))
+        completion(ConnectWidgetEntry(date: .now, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: []))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         completion(Timeline(entries: [ // Temporary entries.
-            ConnectWidgetEntry(date: .now, signedIn: false, connectionSpec: nil, protectionState: .unprotected, recentServers: []),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(4), signedIn: true, connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(6), signedIn: true, connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(8), signedIn: true, connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(10), signedIn: true, connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [
+            ConnectWidgetEntry(date: .now, connectionSpec: nil, protectionState: .signedOut, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(4), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(6), connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(8), connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(10), connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [
                 .defaultFastest,
                 .init(pinnedDate: nil, underMaintenance: false, connectionDate: Date(), connection: .init(location: .exact(.paid, number: 332, subregion: "ZU", regionCode: "CH"), features: [])),
                 .init(pinnedDate: nil, underMaintenance: true, connectionDate: Date(), connection: .init(location: .exact(.paid, number: 332, subregion: "MI", regionCode: "IT"), features: []))
