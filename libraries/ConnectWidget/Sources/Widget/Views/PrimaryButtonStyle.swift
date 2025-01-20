@@ -26,11 +26,11 @@ struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
-            .foregroundColor(Color(.text, .primary))
+            .foregroundColor(Color(.text))
             .frame(maxWidth: .infinity, idealHeight: 40.0)
             .font(.themeFont(.caption(emphasised: true)))
             .padding(.vertical, .themeSpacing8)
-            .background(Color(.background, [.interactive]))
+            .background(Color(.background, .interactive))
             .clipRectangle(cornerRadius: .radius12)
     }
 }

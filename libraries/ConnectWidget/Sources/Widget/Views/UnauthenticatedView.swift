@@ -33,7 +33,7 @@ struct UnauthenticatedView: View {
                 Image(.logoWithTitle)
             }
             Spacer()
-            Button (intent: LoginIntent()) {
+            Button(intent: LoginIntent()) {
                 Text(Localizable.logIn)
             }
             .buttonStyle(PrimaryButtonStyle())
