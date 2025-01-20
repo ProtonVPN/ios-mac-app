@@ -27,7 +27,6 @@ import ProtonCoreDoh
 import ProtonCoreEnvironment
 import ProtonCoreLog
 import ProtonCoreQuarkCommands
-import ProtonCoreTestingToolkitUnitTestsCore
 import ProtonCoreTestingToolkitUITestsCore
 
 import UITestsHelpers
