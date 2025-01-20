@@ -212,7 +212,7 @@ private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
     }
 
     return .linearGradient(stops: [.init(color: startColor, location: 0),
-                                   .init(color: .clear, location: 0.5)],
+                                   .init(color: .clear, location: 1)],
                            startPoint: .top,
-                           endPoint: .bottom)
+                           endPoint: .center)
 }
