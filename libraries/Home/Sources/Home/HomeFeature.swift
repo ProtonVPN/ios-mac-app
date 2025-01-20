@@ -52,7 +52,6 @@ public struct HomeFeature {
 
     @ObservableState
     public struct State: Equatable {
-
         /// For simplicity's sake, let's immplement Connection as a child feature of Home.
         /// In the future, when we add a sibling feature (like countries, settings or profiles),
         /// we will have to have a parent App feature.  Connection can be moved
@@ -60,8 +59,8 @@ public struct HomeFeature {
         public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
-        package var connectionStatus: ConnectionStatusFeature.State
         public var sharedProperties: SharedPropertiesFeature.State
+        package var connectionStatus: ConnectionStatusFeature.State
 
         @SharedReader(.connectionState)
         var connectionState: ConnectionState?
@@ -147,7 +146,10 @@ public struct HomeFeature {
                 return .send(.connect(spec))
             case .recents:
                 return .none
-            case .sharedProperties:
+            case .sharedProperties(.userLocationChange(_)):
+                // a bit unfortunate but map.pinOffset can only be updated via this action atm
+                return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
+            case .sharedProperties(_):
                 return .none
             case let .connect(spec):
                 return .run { send in

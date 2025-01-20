@@ -18,33 +18,35 @@
 
 import Foundation
 import Dependencies
+import DependenciesMacros
 import Domain
 
+@DependencyClient
 public struct LocationClient: Sendable {
-    public var fetchLocation: @Sendable () async throws -> UserLocation
+    public internal(set) var fetchLocation: @Sendable () async throws -> UserLocation
 }
 
 extension LocationClient: DependencyKey {
-    public static var liveValue: LocationClient {
+    public static let liveValue: LocationClient = {
         @Dependency(\.networking) var networking
         return LocationClient(
             fetchLocation: {
                 let request = LocationRequest()
-                let response: LocationResponse = try await networking.perform(request: request)
-                return response
+                return try await networking.perform(request: request)
             }
         )
-    }
-    public static var testValue: LocationClient {
+    }()
+
+    public static let testValue: LocationClient = {
         LocationClient {
             .init(ip: "1.2.3.4", country: "PL", isp: "Play")
         }
-    }
+    }()
 }
 
 extension DependencyValues {
     public var locationClient: LocationClient {
-      get { self[LocationClient.self] }
-      set { self[LocationClient.self] = newValue }
+        get { self[LocationClient.self] }
+        set { self[LocationClient.self] = newValue }
     }
 }

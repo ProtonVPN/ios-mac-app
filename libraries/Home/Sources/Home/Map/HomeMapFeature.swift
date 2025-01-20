@@ -33,9 +33,8 @@ public struct HomeMapFeature {
 
     @ObservableState
     public struct State: Equatable {
-        
-        public var mapState: MapState = .disconnected
-        public var pinMode: MapPin.Mode = .disconnected
+        public internal(set) var mapState: MapState = .disconnected
+        public internal(set) var pinMode: MapPin.Mode = .disconnected
 
         var shouldShowPin: Bool {
             if case .connected = vpnConnectionStatus { // we're connected to a known country
@@ -161,8 +160,8 @@ public struct HomeMapFeature {
                 return .merge(
                     .send(.newMapState(mapState), animation: UIAccessibility.isReduceMotionEnabled ? nil : .default),
                     .send(.newPinOffset(pinOffset))
-                    )
-                    .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: scheduler)
+                )
+                .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: scheduler)
 
             case .newMapState(let mapState):
                 state.pinMode = mapState.pinMode

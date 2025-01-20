@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import CommonNetworking
 import Foundation
 import Domain
 import VPNAppCore
@@ -41,20 +42,21 @@ public struct SharedPropertiesFeature {
         case watchConnectionStatus
     }
 
-    init() {
+    private let initialUserLocationEffect: Effect<Action> = .run { send in
+        @Dependency(\.locationClient) var client
+        let initialLocation = try await client.fetchLocation()
+        send(.userLocationChange(location: initialLocation))
     }
 
-    private let userLocationEffect: Effect<Action> = .publisher {
+    private let longLivingUserLocationEffect: Effect<Action> = .publisher {
         NotificationCenter.default
             .publisher(for: .userIpNotification)
-            .map {
-                $0.object as? Domain.UserLocation
-            }
+            .map { $0.object as? Domain.UserLocation }
             .receive(on: UIScheduler.shared)
             .map(Action.userLocationChange)
     }
 
-    private let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
+    private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
         let stream = Dependency(\.connectionBridge)
             .wrappedValue
             .statusStream
@@ -71,8 +73,9 @@ public struct SharedPropertiesFeature {
             switch action {
             case .listen:
                 return .merge(
-                    userLocationEffect,
-                    connectionStatusEffect
+                    initialUserLocationEffect,
+                    longLivingUserLocationEffect,
+                    longLivingConnectionStatusEffect
                 )
 
             case .userLocationChange(let location):
