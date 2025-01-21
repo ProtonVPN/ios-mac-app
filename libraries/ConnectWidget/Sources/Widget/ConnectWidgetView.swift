@@ -31,20 +31,18 @@ public struct ConnectWidgetView : View {
 
     let entry: ConnectWidgetEntry
 
-    @Environment(\.widgetFamily) var widgetFamily
-
     public var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {
                 if entry.protectionState == .signedOut {
                     UnauthenticatedView()
                 } else {
-                    header(entry, widgetFamily: widgetFamily)
+                    HeaderView(entry: entry)
                     Spacer()
-                    serverInfo(entry, widgetFamily: widgetFamily)
+                    ServerInfoView(entry: entry)
                     VStack(spacing: .themeSpacing16) {
-                        buttons(entry, widgetFamily: widgetFamily)
-                        recents(entry, widgetFamily: widgetFamily, geometry: geometry)
+                        ButtonsView(entry: entry)
+                        RecentsView(entry: entry, geometry: geometry)
                     }
                 }
             }
@@ -52,7 +50,7 @@ public struct ConnectWidgetView : View {
             .containerBackground(for: .widget) {
                 ZStack {
                     Color(.background)
-                    gradientColor(for: entry)
+                    linearGradient(for: entry)
                 }
             }
         }
@@ -61,143 +59,165 @@ public struct ConnectWidgetView : View {
 
 // MARK: - Subviews
 
-private func header(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
-    HStack(alignment: .center) {
-        if widgetFamily == .systemSmall {
-            // We show server flag if available
-            if let location = entry.connectionSpec?.location {
-                FlagView(location: location, flagSize: .defaultSize)
-                Spacer()
-            }
-        } else {
-            switch entry.protectionState {
-            case .protected:
-                ZStack(alignment: .leading) {
-                    if let location = entry.connectionSpec?.location, location.subtext(locale: .current) != nil, widgetFamily == .systemMedium {
-                        FlagView(location: location, flagSize: .defaultSize)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+private struct HeaderView: View {
+    @Environment(\.widgetFamily) var widgetFamily
+    let entry: ConnectWidgetEntry
+
+    var body: some View {
+        HStack(alignment: .center) {
+            if widgetFamily == .systemSmall {
+                // We show server flag if available
+                if let location = entry.connectionSpec?.location {
+                    FlagView(location: location, flagSize: .defaultSize)
+                    Spacer()
+                }
+            } else {
+                switch entry.protectionState {
+                case .protected:
+                    ZStack(alignment: .leading) {
+                        if let location = entry.connectionSpec?.location, showFlagInHeader(location: location, widgetFamily: widgetFamily) {
+                            FlagView(location: location, flagSize: .defaultSize)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        HStack {
+                            IconProvider.lockFilled
+                            Text(Localizable.connectionStatusProtected)
+                                .font(.body3(emphasised: true))
+                        }
+                        .foregroundStyle(Color(.icon, .vpnGreen))
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    HStack {
-                        IconProvider.lockFilled
-                        Text(Localizable.connectionStatusProtected)
+                    .frame(maxWidth: .infinity)
+                case .protecting:
+                    Text(Localizable.connecting)
+                        .font(.body3(emphasised: true))
+                        .foregroundStyle(Color(.text, .normal))
+                case .unprotected:
+                    Group {
+                        IconProvider.lockOpenFilled2
+                        Text(Localizable.connectionStatusUnprotected)
                             .font(.body3(emphasised: true))
                     }
-                    .foregroundStyle(Color(.icon, .vpnGreen))
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .foregroundStyle(Color(.text, .danger))
+                case .signedOut:
+                    EmptyView()
                 }
-                .frame(maxWidth: .infinity)
+            }
+        }
+        .frame(maxWidth: .infinity, idealHeight: 40)
+    }
+
+}
+
+private struct ServerInfoView: View {
+    @Environment(\.widgetFamily) var widgetFamily
+    let entry: ConnectWidgetEntry
+
+    var body: some View {
+        Group {
+            if !(widgetFamily == .systemMedium && entry.protectionState == .unprotected), let location = entry.connectionSpec?.location {
+                VStack(alignment: .leading, spacing: .themeSpacing8) {
+
+                    if !showFlagInHeader(location: location, widgetFamily: widgetFamily) {
+                        FlagView(location: location, flagSize: .defaultSize)
+                    }
+                    VStack(alignment: .leading) {
+                        if let headerText = location.headerText(locale: .current) {
+                            Text(headerText)
+                                .themeFont(.caption(emphasised: true))
+                                .foregroundStyle(Color(.text, .normal))
+                        }
+                        if let subtext = location.subtext(locale: .current) {
+                            Text(subtext)
+                                .themeFont(.overline(emphasised: false))
+                                .foregroundStyle(Color(.text, .weak))
+                        }
+                    }
+                }
+                Spacer()
+            }
+        }
+    }
+}
+
+private struct RecentsView: View {
+    @Environment(\.widgetFamily) var widgetFamily
+    let entry: ConnectWidgetEntry
+    let geometry: GeometryProxy
+
+    var body: some View {
+        Group {
+            let itemWidth = (geometry.size.width - 2 * .themeSpacing8) / 3
+            if (widgetFamily == .systemMedium && entry.protectionState == .unprotected) || (widgetFamily == .systemLarge && entry.recentServers.count > 0) {
+                LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
+                    ForEach(entry.recentServers.prefix(3), id: \.self) { recentConnection in
+                        Button(intent: ConnectToVPNIntent()) { // TODO: VPNAPPL-2467 - Send the recentConnection as parameter to the AppIntent.
+                            VStack(alignment: .leading) {
+                                if recentConnection.underMaintenance {
+                                    IconProvider.wrench
+                                } else {
+                                    FlagView(location: recentConnection.connection.location, flagSize: .defaultSize)
+                                }
+                                if let headerText = recentConnection.connection.location.headerText(locale: .current) {
+                                    Text(headerText)
+                                        .themeFont(.caption(emphasised: true))
+                                        .foregroundStyle(Color(.text, .normal))
+                                }
+                                if let subtext = recentConnection.connection.location.subtext(locale: .current) {
+                                    Text(subtext)
+                                        .themeFont(.overline(emphasised: false))
+                                        .foregroundStyle(Color(.text, .weak))
+                                }
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.themeSpacing8)
+                        .frame(width: itemWidth, height: 90, alignment: .leading)
+                        .background(.white.opacity(0.08))
+                        .clipRectangle(cornerRadius: .radius12)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+    }
+}
+
+private struct ButtonsView : View {
+    @Environment(\.widgetFamily) var widgetFamily
+    let entry: ConnectWidgetEntry
+
+    var body: some View
+    {
+        Group {
+            switch entry.protectionState {
+            case .protected:
+                Button(intent: DisconnectFromVPNIntent()) {
+                    Text(Localizable.disconnect)
+                }
+                .buttonStyle(SecondaryButtonStyle())
             case .protecting:
-                Text(Localizable.connecting)
-                    .font(.body3(emphasised: true))
-                    .foregroundStyle(Color(.text, .normal))
-            case .unprotected:
-                Group {
-                    IconProvider.lockOpenFilled2
-                    Text(Localizable.connectionStatusUnprotected)
-                        .font(.body3(emphasised: true))
+                Button(intent: DisconnectFromVPNIntent()) { // TODO: [Widget] define another app intent for cancellation.
+                    Text(Localizable.cancel)
                 }
-                .foregroundStyle(ColorProvider.NotificationError)
+                .buttonStyle(SecondaryButtonStyle())
+            case .unprotected:
+                if widgetFamily != .systemMedium {
+                    Button(intent: ConnectToVPNIntent()) {
+                        Text(Localizable.connect)
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
+                }
             case .signedOut:
                 EmptyView()
             }
-        }
-    }
-    .frame(maxWidth: .infinity, idealHeight: 40)
-}
-
-private func serverInfo(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
-    Group {
-        if !(widgetFamily == .systemMedium && entry.protectionState == .unprotected), let location = entry.connectionSpec?.location {
-            VStack(alignment: .leading, spacing: .themeSpacing8) {
-                if widgetFamily != .systemSmall && (widgetFamily != .systemMedium || location.subtext(locale: .current) == nil) {
-                    FlagView(location: location, flagSize: .defaultSize)
-                }
-                VStack(alignment: .leading) {
-                    if let headerText = location.headerText(locale: .current) {
-                        Text(headerText)
-                            .themeFont(.caption(emphasised: true))
-                            .foregroundStyle(Color(.text, .normal))
-                    }
-                    if let subtext = location.subtext(locale: .current) {
-                        Text(subtext)
-                            .themeFont(.overline(emphasised: false))
-                            .foregroundStyle(Color(.text, .weak))
-                    }
-                }
-            }
-            Spacer()
-        }
-    }
-}
-
-private func recents(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily, geometry: GeometryProxy) -> some View {
-    Group {
-        let itemWidth = geometry.size.width / 3 - .themeSpacing6
-        if widgetFamily == .systemMedium && entry.protectionState == .unprotected || widgetFamily == .systemLarge && entry.recentServers.count > 0 {
-            LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
-                ForEach(entry.recentServers, id: \.self) { recentConnection in
-                    Button(intent: ConnectToVPNIntent()) { // TODO: Send the recentConnection as parameter to the AppIntent.
-                        VStack(alignment: .leading) {
-                            if recentConnection.underMaintenance {
-                                IconProvider.wrench
-                            } else {
-                                FlagView(location: recentConnection.connection.location, flagSize: .defaultSize)
-                            }
-                            if let headerText = recentConnection.connection.location.headerText(locale: .current) {
-                                Text(headerText)
-                                    .themeFont(.caption(emphasised: true))
-                                    .foregroundStyle(Color(.text, .normal))
-                            }
-                            if let subtext = recentConnection.connection.location.subtext(locale: .current) {
-                                Text(subtext)
-                                    .themeFont(.overline(emphasised: false))
-                                    .foregroundStyle(Color(.text, .weak))
-                            }
-                        }
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                    .disabled(recentConnection.underMaintenance)
-                    .padding(.themeSpacing8)
-                    .frame(width: itemWidth, height: 90, alignment: .leading)
-                    .background(Color(.background, .weak))
-                    .clipRectangle(cornerRadius: .radius12)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-    }
-}
-
-private func buttons(_ entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> some View {
-    Group {
-        switch entry.protectionState {
-        case .protected:
-            Button(intent: DisconnectFromVPNIntent()) {
-                Text(Localizable.disconnect)
-            }
-            .buttonStyle(SecondaryButtonStyle())
-        case .protecting:
-            Button(intent: DisconnectFromVPNIntent()) { // TODO: have another app intent for cancellation.
-                Text(Localizable.cancel)
-            }
-            .buttonStyle(SecondaryButtonStyle())
-        case .unprotected:
-            if widgetFamily != .systemMedium {
-                Button(intent: ConnectToVPNIntent()) {
-                    Text(Localizable.connect)
-                }
-                .buttonStyle(PrimaryButtonStyle())
-            }
-        case .signedOut:
-            EmptyView()
         }
     }
 }
 
 // MARK: - Private helpers
 
-private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
-
+private func linearGradient(for entry: ConnectWidgetEntry) -> LinearGradient {
     let startColor: Color
     switch entry.protectionState {
     case .signedOut:
@@ -217,4 +237,15 @@ private func gradientColor(for entry: ConnectWidgetEntry) -> LinearGradient {
                                    .init(color: .clear, location: 1)],
                            startPoint: .top,
                            endPoint: .center)
+}
+
+private func showFlagInHeader(location: ConnectionSpec.Location, widgetFamily: WidgetFamily) -> Bool {
+    switch widgetFamily {
+    case .systemSmall:
+        return true
+    case .systemMedium:
+        return location.subtext(locale: .current) != nil
+    default:
+        return false
+    }
 }
