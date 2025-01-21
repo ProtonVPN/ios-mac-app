@@ -50,7 +50,7 @@ public struct CertificateAuthenticationFeature: Reducer {
         case loadFromStorage
         case loadingFromStorageFinished(CertificateLoadingResult)
         case refreshCertificate
-        case selectorPushingFinished(Result<Void, Error>)
+        case selectorPushingFinished(Result<Bool, Error>)
         case refreshFinished(Result<CertificateRefreshResult, Error>)
         case loadingFinished(Result<FullAuthenticationData, Error>)
     }
@@ -122,7 +122,11 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .refreshFinished(.success(.sessionMissingOrExpired)):
                 return .run { send in
-                    await send(.selectorPushingFinished(Result { try await refreshClient.pushSelector() }))
+                    await send(.selectorPushingFinished(Result {
+                        try await refreshClient.pushSelector()
+                        // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
+                        return true
+                    }))
                 }
 
             case .selectorPushingFinished(.success):
