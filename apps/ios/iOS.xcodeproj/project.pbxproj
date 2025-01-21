@@ -395,7 +395,6 @@
 		E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A026A6FE0C0083D61E /* Logger.swift */; };
 		E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */; };
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
-		EB2FD53E2D3ABBAA003E609D /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = EB2FD53D2D3ABBAA003E609D /* SharedViews */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* NetShieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* NetShieldSelectionViewController.swift */; };
@@ -1024,7 +1023,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55CCA9E2D30121E00FD0AAD /* SwiftUI.framework in Frameworks */,
-				EB2FD53E2D3ABBAA003E609D /* SharedViews in Frameworks */,
 				E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
