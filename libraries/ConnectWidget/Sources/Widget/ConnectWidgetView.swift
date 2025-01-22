@@ -82,7 +82,7 @@ private struct HeaderView: View {
                         HStack {
                             IconProvider.lockFilled
                             Text(Localizable.connectionStatusProtected)
-                                .font(.body3(emphasised: true))
+                                .font(.body2(emphasised: true))
                         }
                         .foregroundStyle(Color(.icon, .vpnGreen))
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -90,13 +90,13 @@ private struct HeaderView: View {
                     .frame(maxWidth: .infinity)
                 case .protecting:
                     Text(Localizable.connecting)
-                        .font(.body3(emphasised: true))
+                        .font(.body2(emphasised: true))
                         .foregroundStyle(Color(.text, .normal))
                 case .unprotected:
                     Group {
                         IconProvider.lockOpenFilled2
                         Text(Localizable.connectionStatusUnprotected)
-                            .font(.body3(emphasised: true))
+                            .font(.body2(emphasised: true))
                     }
                     .foregroundStyle(Color(.text, .danger))
                 case .signedOut:
@@ -129,7 +129,7 @@ private struct ServerInfoView: View {
                         }
                         if let subtext = location.subtext(locale: .current) {
                             Text(subtext)
-                                .themeFont(.overline(emphasised: false))
+                                .themeFont(widgetFamily == .systemSmall ? .caption(emphasised: false) : .body2(emphasised: false))
                                 .foregroundStyle(Color(.text, .weak))
                         }
                     }

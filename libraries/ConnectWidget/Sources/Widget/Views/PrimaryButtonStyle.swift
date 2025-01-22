@@ -27,9 +27,10 @@ struct PrimaryButtonStyle: ButtonStyle {
         configuration
             .label
             .foregroundColor(Color(.text))
-            .frame(maxWidth: .infinity, idealHeight: 40.0)
+            .frame(maxWidth: .infinity)
             .font(.themeFont(.caption(emphasised: true)))
             .padding(.vertical, .themeSpacing8)
+            .frame(height: 40)
             .background(Color(.background, .interactive))
             .clipRectangle(cornerRadius: .radius12)
     }
