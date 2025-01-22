@@ -19,12 +19,13 @@
 import Foundation
 import Dependencies
 import DependenciesMacros
+import WidgetKit
 import Domain
 
 // Improvement: Sendable conformance (requires refactor to Storage dependency)
 @DependencyClient
 public struct DefaultConnectionPreferenceStorage: DependencyKey {
-    @DependencyEndpoint private var set: (_ preference: DefaultConnectionPreference) throws -> Void
+    @DependencyEndpoint public var set: (_ preference: DefaultConnectionPreference) throws -> Void
     public var getPreference: () throws -> DefaultConnectionPreference?
 
     private static let storageKeyPrefix = "DefaultConnectionPreference"
@@ -35,7 +36,10 @@ extension DefaultConnectionPreferenceStorage {
     public static let liveValue: DefaultConnectionPreferenceStorage = {
         @Dependency(\.storage) var storage
         return .init(
-            set: { try storage.setForUser($0, forKey: storageKeyPrefix) },
+            set: {
+                try storage.setForUser($0, forKey: storageKeyPrefix)
+                WidgetCenter.shared.reloadAllTimelines()
+            },
             getPreference: { try storage.getForUser(DefaultConnectionPreference.self, forKey: storageKeyPrefix) }
         )
     }()

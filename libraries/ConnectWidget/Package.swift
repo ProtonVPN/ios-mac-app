@@ -31,6 +31,7 @@ let package = Package(
                 "Strings",
                 "SharedViews",
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNShared", package: "NEHelper"),
             ],
             resources: [
                 .process("Resources")

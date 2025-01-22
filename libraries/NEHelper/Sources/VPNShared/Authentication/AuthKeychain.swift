@@ -24,6 +24,7 @@ import KeychainAccess
 import Dependencies
 import Ergonomics
 import Domain
+import WidgetKit
 
 public protocol AuthKeychainHandle {
     var username: String? { get }
@@ -215,6 +216,7 @@ extension AuthKeychain: AuthKeychainHandle {
                 #endif
             }
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     public func clear() {

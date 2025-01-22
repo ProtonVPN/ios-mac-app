@@ -6,5 +6,9 @@
 	<array>
 		<string>group.ch.protonmail.vpn</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)prt.ProtonVPN</string>
+	</array>
 </dict>
 </plist>

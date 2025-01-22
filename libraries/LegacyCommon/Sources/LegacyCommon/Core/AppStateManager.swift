@@ -29,8 +29,6 @@ import VPNShared
 #if canImport(AppKit)
 import AppKit
 #endif
-import ComposableArchitecture
-import WidgetKit
 
 public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager
@@ -105,23 +103,6 @@ public class AppStateManagerImplementation: AppStateManager {
             DispatchQueue.main.async { [displayState] in
                 AppEvent.appStateManagerDisplayStateChange.post(displayState)
             }
-
-            // TODO: Start. Remove this shared key [VPNAPPL-2591]
-            @Shared(.vpnConnection) var vpnConnection: String
-            switch displayState {
-            case .connected:
-                $vpnConnection.withLock { $0 = "Connected" }
-            case .connecting:
-                $vpnConnection.withLock { $0 = "Connecting" }
-            case .disconnected:
-                $vpnConnection.withLock { $0 = "Disconnected" }
-            case .disconnecting:
-                $vpnConnection.withLock { $0 = "Disconnecting" }
-            case .loadingConnectionInfo:
-                $vpnConnection.withLock { $0 = "Loading Connection Info" }
-            }
-            WidgetCenter.shared.reloadAllTimelines()
-            // TODO: End.
         }
     }
     private var vpnState: VpnState = .invalid {

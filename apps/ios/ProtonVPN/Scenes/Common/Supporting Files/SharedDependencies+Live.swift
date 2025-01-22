@@ -17,16 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import struct VPNShared.DefaultsProvider
 import enum VPNShared.VPNAuthenticationStorageConfigKey
 import Dependencies
-import Domain
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
-
-extension DefaultsProvider: DependencyKey {
-    public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults } )
-}
 
 extension VPNAuthenticationStorageConfigKey: DependencyKey {
     public static let liveValue: String = {

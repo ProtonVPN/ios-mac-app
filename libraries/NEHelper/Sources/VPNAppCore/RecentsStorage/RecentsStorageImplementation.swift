@@ -20,7 +20,8 @@ import Foundation
 import Domain
 import OrderedCollections
 import Dependencies
-import VPNAppCore
+import Ergonomics
+import WidgetKit
 
 public final class RecentsStorageImplementation {
     private static let storageKeyPrefix = "RecentConnections"
@@ -45,6 +46,7 @@ public final class RecentsStorageImplementation {
             log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
                       category: .persistence)
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     public static func readFromStorage() -> OrderedSet<RecentConnection> {

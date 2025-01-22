@@ -75,13 +75,6 @@ public extension SharedKey where Self == InMemoryKey<VPNConnectionStatus>.Defaul
     }
 }
 
-// TODO: Remove this shared key [VPNAPPL-2591]
-public extension SharedKey where Self == AppStorageKey<String>.Default {
-    static var vpnConnection: Self {
-        Self[.appStorage("vpnConnection", store: .domainUserDefaults), default: "Disconnected"]
-    }
-}
-
 public struct VPNConnectionActual: Equatable {
     public let connectedDate: Date?
     public let vpnProtocol: VpnProtocol
