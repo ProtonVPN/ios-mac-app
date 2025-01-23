@@ -22,6 +22,7 @@ import Dependencies
 import CasePaths
 
 import protocol GoLibs.LocalAgentNativeClientProtocol
+import class GoLibs.LocalAgentFeatures
 
 import Domain
 import CoreConnection
@@ -30,6 +31,7 @@ protocol LocalAgent {
     func createEventStream() -> AsyncStream<LocalAgentEvent>
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws
+    func set(features: LocalAgentFeatures)
     func disconnect()
 
     var netShieldType: NetShieldType { get }

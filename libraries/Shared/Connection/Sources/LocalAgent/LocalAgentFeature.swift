@@ -22,6 +22,7 @@ import ComposableArchitecture
 
 import Domain
 import CoreConnection
+import class GoLibs.LocalAgentFeatures
 
 @available(iOS 16, *)
 public struct LocalAgentFeature: Reducer, Sendable {
@@ -47,6 +48,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case startObservingEvents
         case startNetShieldStatsObservation
         case stopAllObservations
+        case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
         case event(LocalAgentEvent)
         case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures)
         case disconnect(LocalAgentConnectionError?)
@@ -82,6 +84,18 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     .cancel(id: CancelIDs.eventObservation),
                     .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
+
+            case .setFeatures(let features):
+                guard case .connected = state else {
+                    log.error("Feature changes will not be applied since we are not in connected state")
+                    return .none
+                }
+                guard let features = LocalAgentFeatures.from(featureSet: features) else {
+                    log.error("Failed to construct LocalAgentFeatures")
+                    return .none
+                }
+                localAgent.set(features: features)
+                return .none
 
             case .connect(let server, let authenticationData, let features):
                 let connectionConfiguration = ConnectionConfiguration(server: server, features: features)

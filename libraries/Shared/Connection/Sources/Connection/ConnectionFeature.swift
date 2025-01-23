@@ -23,9 +23,7 @@ import Clocks
 import ComposableArchitecture
 import Dependencies
 
-import struct Domain.Server
-import struct Domain.VPNConnectionFeatures
-import struct Domain.ServerConnectionIntent
+import Domain
 import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
@@ -67,7 +65,6 @@ public struct ConnectionFeature: Reducer, Sendable {
         case tunnel(ExtensionFeature.Action)
         case certAuth(CertificateAuthenticationFeature.Action)
         case localAgent(LocalAgentFeature.Action)
-        case setFeatures(VPNConnectionFeatures)
         case clearErrors
         case startObserving
         case stopObserving
@@ -226,10 +223,6 @@ public struct ConnectionFeature: Reducer, Sendable {
                         .send(.certAuth(.loadAuthenticationData))
                     )
                 }
-
-            case .setFeatures(let features):
-                vpnFeaturesProvider.setConnectionFeatures(features)
-                return .none
 
             case .tunnel:
                 return .none

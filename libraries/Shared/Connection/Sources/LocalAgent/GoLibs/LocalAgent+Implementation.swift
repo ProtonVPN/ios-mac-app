@@ -19,6 +19,7 @@
 import Dependencies
 import Domain
 import CoreConnection
+import class GoLibs.LocalAgentFeatures
 
 final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.localAgentConnectionFactory) var connectionFactory
@@ -65,6 +66,10 @@ final class LocalAgentImplementation: LocalAgent {
         if netShieldType.shouldObserveNetShieldStats {
             retrieveNetShieldStats()
         }
+    }
+
+    func set(features: LocalAgentFeatures) {
+        connection?.setFeatures(features)
     }
 
     func retrieveNetShieldStats() {

@@ -133,12 +133,12 @@ struct SettingsCell_Previews: PreviewProvider {
             Section {
                 SettingsCell(
                     icon: IconProvider.gift,
-                    content: .standard(title: "NetShield", value: NetShieldType.on.localizedDescription),
+                    content: .standard(title: "NetShield", value: NetShieldState.on.localizedDescription),
                     accessory: .disclosure
                 )
                 SettingsCell(
                     icon: IconProvider.lifeRing,
-                    content: .standard(title: "Support Center", value: NetShieldType.on.localizedDescription),
+                    content: .standard(title: "Support Center", value: NetShieldState.on.localizedDescription),
                     accessory: .externalLink
                 )
                 SettingsCell(

@@ -94,14 +94,15 @@ extension ConnectionFactory {
     )
 }
 
-private extension VPNConnectionFeatures {
-    private enum LocalAgentFeaturesKeys: String {
+fileprivate extension VPNConnectionFeatures {
+    enum LocalAgentFeaturesKeys: String {
         case vpnAccelerator = "split-tcp"
         case netShield = "netshield-level"
         case jailed = "jail"
         case natType = "randomized-nat"
         case bouncing
         case safeMode = "safe-mode"
+
     }
 
     var localAgentFeatures: LocalAgentFeatures? {
@@ -112,5 +113,26 @@ private extension VPNConnectionFeatures {
         featuresObject?.setBool(LocalAgentFeaturesKeys.natType.rawValue, value: natType.flag)
         safeMode.map { featuresObject?.setBool(LocalAgentFeaturesKeys.safeMode.rawValue, value: $0) }
         return featuresObject
+    }
+}
+
+extension LocalAgentFeatures {
+    static func from(featureSet features: Set<ConnectionFeatureChange.AgentFeature>) -> LocalAgentFeatures? {
+        let featuresObject = LocalAgentFeatures()
+        features.forEach {
+            featuresObject?.set(feature: $0)
+        }
+        return featuresObject
+    }
+
+    func set(feature: ConnectionFeatureChange.AgentFeature) {
+        switch feature {
+        case .moderateNAT(let value):
+            setBool(VPNConnectionFeatures.LocalAgentFeaturesKeys.natType.rawValue, value: value.flag)
+        case .netShield(let netShieldType):
+            setInt(VPNConnectionFeatures.LocalAgentFeaturesKeys.netShield.rawValue, value: Int64(netShieldType.rawValue))
+        case .vpnAccelerator(let value):
+            setBool(VPNConnectionFeatures.LocalAgentFeaturesKeys.vpnAccelerator.rawValue, value: value)
+        }
     }
 }
