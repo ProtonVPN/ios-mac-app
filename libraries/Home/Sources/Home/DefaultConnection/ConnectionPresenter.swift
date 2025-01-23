@@ -23,9 +23,9 @@ import Collections
 import Domain
 
 @DependencyClient
-struct ConnectionPresenter: Sendable {
+public struct ConnectionPresenter: Sendable {
     /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
-    var recentConnectionList: @Sendable (
+    public var recentConnectionList: @Sendable (
         _ defaultConnectionPreference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>,
         _ currentConnection: ConnectionSpec?
@@ -54,7 +54,7 @@ extension ConnectionPresenter: DependencyKey {
         return recentConnection.connection != defaultConnectionSpec
     }
 
-    static var liveValue: Self = ConnectionPresenter(
+    public static var liveValue: Self = ConnectionPresenter(
         recentConnectionList: { preference, recents, currentConnection in
             @Dependency(\.defaultConnectionResolver) var resolver
             let defaultConnectionSpec = resolver.connectionSpec(preference: preference, recents: recents)
@@ -68,11 +68,11 @@ extension ConnectionPresenter: DependencyKey {
         }
     )
 
-    static let testValue: Self = .liveValue
+    public static let testValue: Self = .liveValue
 }
 
-extension DependencyValues {
-    var connectionPresenter: ConnectionPresenter {
+public extension DependencyValues {
+    public var connectionPresenter: ConnectionPresenter {
         get { self[ConnectionPresenter.self] }
         set { self[ConnectionPresenter.self] = newValue }
     }

@@ -20,12 +20,27 @@ import WidgetKit
 import Domain
 import Dependencies
 import VPNShared
+import VPNAppCore
+import Home
+import OrderedCollections
 
 struct Provider: TimelineProvider {
 
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
+    @Dependency(\.connectionPresenter) var presenter
+
+    func recentConnectionList() -> [RecentConnection] {
+
+        let preference = try? defaultConnectionStorage.getPreference()
+
+        return presenter.recentConnectionList(
+            defaultConnectionPreference: preference ?? .fastest,
+            recents: recentsStorage.readFromStorage(),
+            currentConnection: ConnectionSpec.defaultFastest
+        ).elements
+    }
 
     func placeholder(in context: Context) -> ConnectWidgetEntry {
         .init(date: .now,
@@ -54,10 +69,12 @@ struct Provider: TimelineProvider {
             return
         }
 
+        let recents = recentConnectionList()
+
         entry = ConnectWidgetEntry(date: .now,
                                    connectionSpec: connectionSpec(),
                                    protectionState: .unprotected,
-                                   recentServers: recentsStorage.readFromStorage().elements)
+                                   recentServers: recents)
         completion(Timeline(entries: [entry], policy: .never))
     }
 

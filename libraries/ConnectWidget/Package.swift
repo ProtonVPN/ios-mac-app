@@ -21,12 +21,14 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
         .package(path: "../SharedViews"),
+        .package(path: "Home"),
         ],
     targets: [
         .target(
             name: "ConnectWidget",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "Home",
                 "Theme",
                 "Strings",
                 "SharedViews",
