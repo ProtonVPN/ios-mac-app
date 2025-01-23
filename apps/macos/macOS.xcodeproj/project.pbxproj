@@ -2820,7 +2820,6 @@
 				"pt-BR",
 				es,
 				nl,
-				"pt-PT",
 				de,
 				ru,
 				fa,
