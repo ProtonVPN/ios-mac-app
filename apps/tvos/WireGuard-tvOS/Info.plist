@@ -11,7 +11,7 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleDisplayName</key>
-	<string>WireGuard-tvOS</string>
+	<string>Proton VPN WireGuard Extension (tvOS)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -47,13 +47,11 @@
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>2407112124</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>arm64</string>
-	</array>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>AppleTVOS</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2024 Proton Technologies AG. All rights reserved.</string>
 </dict>
 </plist>

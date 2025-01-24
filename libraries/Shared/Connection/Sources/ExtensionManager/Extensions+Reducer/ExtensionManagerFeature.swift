@@ -52,7 +52,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case startObservingStateChanges
         case stopObservingStateChanges
         case connect(ServerConnectionIntent)
-        case tunnelStartRequestFinished(Result<Void, Error>)
+        case tunnelStartRequestFinished(Result<Bool, Error>)
         case connectionFinished(Result<LogicalServerInfo, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect(TunnelConnectionError?)
@@ -74,7 +74,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                         await send(.tunnelStatusChanged(status))
                     }
                 }
-                    .cancellable(id: CancelID.observation)
+                .cancellable(id: CancelID.observation)
 
                 // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
                 // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`
@@ -91,6 +91,8 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(with: intent)
+                        // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
+                        return true
                     }))
                 }
 
