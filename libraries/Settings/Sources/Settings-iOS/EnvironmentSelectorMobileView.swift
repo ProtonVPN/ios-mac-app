@@ -29,16 +29,15 @@ public struct EnvironmentSelectorMobileView: View {
 
     @ViewBuilder
     var selectedEnvironmentSection: some View {
-        Section(header: Text("Selected Environment").font(.headline)) {
+        Section {
             Text(store.apiEndpoint)
                 .themeFont(.body1(.regular))
                 .padding(.top, .themeSpacing2)
-
-            Button("Use and continue") {
-                store.send(.useAndContinueButtonTapped)
-            }
-            .buttonStyle(EnvironmentSelectorButtonStyle.active)
-            .padding(.vertical, .themeSpacing6)
+        } header: {
+            Text("Selected Environment").font(.headline)
+        } footer: {
+            sendActionButton(title: "Use and continue",
+                             action: .useAndContinueButtonTapped)
         }
     }
 
@@ -51,31 +50,18 @@ public struct EnvironmentSelectorMobileView: View {
 
     @ViewBuilder
     var changeEnvironmentSection: some View {
-        Section(header: Text("Change Environment").font(.headline)) {
-            TextField("Environment URL", text: $store.newApiEndpointURLString)
-                .accessibilityIdentifier("customEnvironmentTextField") // Needed for automation
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
-                .padding(.themeSpacing4)
-                .font()
-                .border(Color(.border, .weak))
-                .clipShape(.rect(cornerRadius: .themeRadius4))
-                .padding(.horizontal, .themeSpacing12)
 
+        Section {
             HStack {
-                Text("Atlas:")
-                    .styled(.weak)
-                    .font(.body1(.regular))
-                    .padding(.leading, .themeSpacing12)
-
+                TextField("Environment URL", text: $store.newApiEndpointURLString)
+                    .accessibilityIdentifier("customEnvironmentTextField") // Needed for automation
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+            }
+            HStack {
                 TextField("Atlas Secret", text: $store.atlasSecret)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
-                    .padding(.themeSpacing4)
-                    .font()
-                    .border(Color(.border, .weak))
-                    .clipShape(.rect(cornerRadius: .themeRadius4))
-                    .padding(.horizontal, .themeSpacing12)
 
                 if store.state.fetchingAtlasSecret {
                     ProgressView()
@@ -89,7 +75,9 @@ public struct EnvironmentSelectorMobileView: View {
                 .buttonStyle(EnvironmentSelectorButtonStyle.inActive)
                 .padding(.trailing, .themeSpacing12)
             }
-
+        } header: {
+            Text("Change Environment").font(.headline)
+        } footer: {
             changeEnvironmentCaption
         }
     }
@@ -97,57 +85,64 @@ public struct EnvironmentSelectorMobileView: View {
     @ViewBuilder
     var featureOverridesSection: some View {
         Section(header: Text("Feature Overrides").font(.headline)) {
-            List {
-                ForEach($store.overrides, id: \.id) { $featureOverride in
-                    HStack {
-                        TextField("Override \(featureOverride.index + 1)", text: $featureOverride.name)
-                            .autocorrectionDisabled()
+            ForEach($store.overrides, id: \.id) { $featureOverride in
+                HStack {
+                    TextField("Override \(featureOverride.index + 1)", text: $featureOverride.name)
+                        .autocorrectionDisabled()
 
-                        Spacer()
-                        Image(systemName: featureOverride.value ? "checkmark.square.fill" : "clear.fill")
-                            .styled(featureOverride.value ? .success : .danger)
-                            .onTapGesture {
-                                store.send(.toggle(id: featureOverride.id))
-                            }
-                    }
+                    Spacer()
+                    Image(systemName: featureOverride.value ? "checkmark.square.fill" : "clear.fill")
+                        .styled(featureOverride.value ? .success : .danger)
+                        .onTapGesture {
+                            store.send(.toggle(id: featureOverride.id))
+                        }
                 }
-                .onDelete(perform: { indexSet in
-                    store.send(.overridesRemoved(indexSet))
-                })
             }
-            .scrollContentBackground(.hidden)
-            .availabilitySafeContentMargins(.top, .init(top: 0, leading: 0, bottom: 0, trailing: 0))
-            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .onDelete(perform: { indexSet in
+                store.send(.overridesRemoved(indexSet))
+            })
         }
+        .scrollContentBackground(.hidden)
+        .availabilitySafeContentMargins(.top, .init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
 
+    func sendActionButton(title: String,
+                          action: EnvironmentSelectorFeature.Action) -> some View {
+        HStack {
+            Spacer()
+            Button(title) {
+                store.send(action)
+            }
+            .buttonStyle(EnvironmentSelectorButtonStyle.active)
+            .padding(.bottom, .themeSpacing6)
+            Spacer()
+        }
     }
 
     @ViewBuilder
     var bottomButtonsSection: some View {
-        Button("Change and kill the app") {
-            store.send(.changeAndKillAppButtonTapped)
-        }
-        .buttonStyle(EnvironmentSelectorButtonStyle.active)
-        .padding(.bottom, .themeSpacing4)
+        Section {
 
-        Button("Reset to production and kill the app") {
-            store.send(.resetAndKillAppButtonTapped)
+        } header: {
+            Text("Apply changes").font(.headline)
+        } footer: {
+            VStack {
+                sendActionButton(title: "Change and kill the app",
+                                 action: .changeAndKillAppButtonTapped)
+                sendActionButton(title: "Reset to production and kill the app",
+                                 action: .resetAndKillAppButtonTapped)
+            }
         }
-        .buttonStyle(EnvironmentSelectorButtonStyle.active)
     }
 
     public var body: some View {
         WithPerceptionTracking {
-            NavigationStack {
-                VStack(alignment: .center) {
-                    selectedEnvironmentSection
-                        .padding(.vertical, .themeSpacing6)
-                    changeEnvironmentSection
-                        .padding(.bottom, .themeSpacing6)
-                    featureOverridesSection
-                        .padding(.bottom, .themeSpacing6)
-                    bottomButtonsSection
-                }
+            Form {
+                selectedEnvironmentSection
+                changeEnvironmentSection
+                featureOverridesSection
+                bottomButtonsSection
             }
             .padding(.top, .themeSpacing16)
             .alert($store.scope(state: \.alert, action: \.alert))

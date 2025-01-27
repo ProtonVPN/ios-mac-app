@@ -309,7 +309,7 @@ extension CoreLoginService: LoginService {
         }
 
         let environmentsViewController = UIHostingController(rootView: environmentsView)
-        windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
+        windowService.show(viewController: environmentsViewController)
     }
 #endif
 }
