@@ -21,17 +21,17 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
         .package(path: "../SharedViews"),
-        .package(path: "Home"),
+        .package(path: "../Shared/ConnectionPresenter"),
         ],
     targets: [
         .target(
             name: "ConnectWidget",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                "Home",
                 "Theme",
                 "Strings",
                 "SharedViews",
+                "ConnectionPresenter",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
             ],

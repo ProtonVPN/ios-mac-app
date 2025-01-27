@@ -21,7 +21,7 @@ import Domain
 import Dependencies
 import VPNShared
 import VPNAppCore
-import Home
+import ConnectionPresenter
 import OrderedCollections
 
 struct Provider: TimelineProvider {
@@ -29,13 +29,13 @@ struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-    @Dependency(\.connectionPresenter) var presenter
+    @Dependency(\.connectionPresenter) var connectionPresenter
 
     func recentConnectionList() -> [RecentConnection] {
 
         let preference = try? defaultConnectionStorage.getPreference()
 
-        return presenter.recentConnectionList(
+        return connectionPresenter.recentConnectionList(
             defaultConnectionPreference: preference ?? .fastest,
             recents: recentsStorage.readFromStorage(),
             currentConnection: ConnectionSpec.defaultFastest

@@ -23,7 +23,7 @@ import SharedViews
 import Domain
 import Ergonomics
 import Home
-import ProtonCoreUIFoundations
+import ConnectionPresenter
 
 struct ConnectionPreferenceView: View {
     @Dependency(\.locale) private var locale

@@ -72,7 +72,7 @@ extension ConnectionPresenter: DependencyKey {
 }
 
 public extension DependencyValues {
-    public var connectionPresenter: ConnectionPresenter {
+    var connectionPresenter: ConnectionPresenter {
         get { self[ConnectionPresenter.self] }
         set { self[ConnectionPresenter.self] = newValue }
     }

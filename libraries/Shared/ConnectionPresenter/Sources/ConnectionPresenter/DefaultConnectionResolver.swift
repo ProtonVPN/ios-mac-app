@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Collections
 import Dependencies
 import DependenciesMacros
@@ -25,23 +24,23 @@ import IssueReporting
 import Domain
 
 @DependencyClient
-struct DefaultConnectionResolver: Sendable {
-    var connectionSpec: (
+public struct DefaultConnectionResolver: Sendable {
+    public var connectionSpec: (
         _ preference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>
     ) -> ConnectionSpec = { _, _ in .defaultFastest }
 
-    var preferenceModels: @Sendable (
+    public var preferenceModels: @Sendable (
         _ recents: OrderedSet<RecentConnection>
     ) -> [ConnectionPreferenceModel] = { _ in reportIssue("\(Self.self).preferenceModels"); return [] }
 }
 
 extension DefaultConnectionResolver: DependencyKey {
-    static let liveValue = DefaultConnectionResolver(
+    public static let liveValue = DefaultConnectionResolver(
         connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:),
         preferenceModels: DefaultConnectionResolverImplementation.preferenceModels(for:)
     )
-    static let testValue = liveValue
+    public static let testValue = liveValue
 }
 
 enum DefaultConnectionResolverImplementation {
@@ -94,7 +93,7 @@ enum DefaultConnectionResolverImplementation {
     }
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var defaultConnectionResolver: DefaultConnectionResolver {
         get { self[DefaultConnectionResolver.self] }
         set { self[DefaultConnectionResolver.self] = newValue }
