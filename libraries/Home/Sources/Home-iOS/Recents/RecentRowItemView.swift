@@ -47,23 +47,21 @@ struct RecentRowItemView: View {
     }
 
     private var content: some View {
-        HStack(alignment: .center, spacing: 0) {
-            leadingIcon
-            ConnectionFlagInfoView(
-                intent: item.connection,
-                underMaintenance: item.underMaintenance,
-                isPinned: item.pinned,
-                isConnected: isConnected,
-                images: .coreImages
-            ) { action in
-                switch action {
-                case .pin:
-                    sendAction(.pin(item))
-                case .unpin:
-                    sendAction(.unpin(item))
-                case .remove:
-                    sendAction(.remove(item))
-                }
+        ConnectionFlagInfoView(
+            intent: item.connection,
+            underMaintenance: item.underMaintenance,
+            isPinned: item.pinned,
+            isConnected: isConnected,
+            images: .coreImages,
+            attachedLeadingView: { AnyView(erasing: leadingIcon) }
+        ) { action in
+            switch action {
+            case .pin:
+                sendAction(.pin(item))
+            case .unpin:
+                sendAction(.unpin(item))
+            case .remove:
+                sendAction(.remove(item))
             }
         }
         .padding(.horizontal, .themeSpacing16)

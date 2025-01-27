@@ -42,6 +42,8 @@ public struct ConnectionFlagInfoView: View {
     let subheaderModel: LocationFeatureSubheaderModel
     let resolvedLocation: ConnectionSpec.Location
 
+    let attachedLeadingView: (() -> AnyView)?
+
     let detailAction: ((Action) -> Void)?
     let images: RecentsImages
 
@@ -58,11 +60,13 @@ public struct ConnectionFlagInfoView: View {
         withServerNumber: Bool = false,
         isConnected: Bool,
         images: RecentsImages = .init(),
+        attachedLeadingView: (() -> AnyView)? = nil,
         detailAction: ((Action) -> Void)? = nil
     ) {
         self.intent = intent
         self.underMaintenance = underMaintenance
         self.isConnected = isConnected
+        self.attachedLeadingView = attachedLeadingView
         self.detailAction = detailAction
         self.isPinned = isPinned
         self.images = images
@@ -79,11 +83,14 @@ public struct ConnectionFlagInfoView: View {
 
     public var body: some View {
         HStack(alignment: .center, spacing: 0) {
-            LocationFeatureView(model: .init(
-                flag: resolvedLocation.flagComposition,
-                header: .init(title: textHeaderString, showConnectedPin: isConnected),
-                subheader: subheaderModel
-            ))
+            LocationFeatureView(
+                model: .init(
+                    flag: resolvedLocation.flagComposition,
+                    header: .init(title: textHeaderString, showConnectedPin: isConnected),
+                    subheader: subheaderModel
+                ),
+                attachedLeadingView: attachedLeadingView
+            )
 
             Spacer()
 

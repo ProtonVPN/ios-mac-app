@@ -41,14 +41,19 @@ public struct LocationFeatureModel: Equatable {
 
 public struct LocationFeatureView: View {
     let model: LocationFeatureModel
+    let attachedLeadingView: AnyView?
 
-    public init(model: LocationFeatureModel) {
+    public init(model: LocationFeatureModel, attachedLeadingView: (() -> AnyView)? = nil) {
+        self.attachedLeadingView = attachedLeadingView?()
         self.model = model
     }
 
     public var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 12) {
-            FlagView(flag: model.flag, flagSize: .defaultSize)
+            HStack(alignment: .center, spacing: 0) {
+                attachedLeadingView
+                FlagView(flag: model.flag, flagSize: .defaultSize)
+            }
 
             VStack(alignment: .leading, spacing: 0) {
                 LocationFeatureHeader(model: model.header)
