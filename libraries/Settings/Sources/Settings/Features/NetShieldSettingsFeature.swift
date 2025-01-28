@@ -41,7 +41,7 @@ public struct NetShieldSettingsFeature: Reducer {
     public init() { }
 
     public enum Action: Equatable {
-        case set(value: NetShieldState)
+        case set(value: State)
     }
 
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {

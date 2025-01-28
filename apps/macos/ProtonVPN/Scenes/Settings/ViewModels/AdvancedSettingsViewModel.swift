@@ -154,7 +154,7 @@ final class AdvancedSettingsViewModel {
                 }, cancelHandler: {
                     completion(false)
                 }))
-            case .immediately:
+            case .immediate:
                 self?.natTypePropertyProvider.natType = natType
                 completion(true)
             }
@@ -188,7 +188,7 @@ final class AdvancedSettingsViewModel {
                 }, cancelHandler: {
                     completion(false)
                 }))
-            case .immediately:
+            case .immediate:
                 self?.safeModePropertyProvider.safeMode = safeMode
                 completion(true)
             }

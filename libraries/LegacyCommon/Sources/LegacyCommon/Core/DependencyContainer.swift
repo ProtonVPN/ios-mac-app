@@ -296,12 +296,12 @@ extension Container: VpnStateConfigurationFactory {
 
 extension Container: VpnManagerFactory {
     private var shouldUseNoOpManager: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) ||
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
     }
 
     public func makeVpnManager() -> VpnManagerProtocol {
         if shouldUseNoOpManager {
+            log.info("Legacy connection: returning NoOpVPNManager", category: .connection)
             return NoOpVpnManager()
         } else {
             return vpnManager

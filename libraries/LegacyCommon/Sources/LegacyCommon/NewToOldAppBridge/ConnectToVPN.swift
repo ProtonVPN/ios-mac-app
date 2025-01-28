@@ -27,8 +27,7 @@ extension ConnectToVPNKey: DependencyKey {
     }
 
     private static var isEnabled: Bool {
-        let ffRepository = FeatureFlagsRepository.shared
-        return ffRepository.isEnabled(VPNFeatureFlagType.redesigniOS) || ffRepository.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
     }
 
     public static let liveValue = {

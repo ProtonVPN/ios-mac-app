@@ -421,8 +421,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     private var shouldUseNewConnect: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS) ||
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
     }
 
     public func connect(with request: ConnectionRequest?) {

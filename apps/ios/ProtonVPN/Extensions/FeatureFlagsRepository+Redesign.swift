@@ -26,4 +26,8 @@ extension FeatureFlagsRepository {
         }
         return false
     }
+
+    var isConnectionFeatureEnabled: Bool {
+        return isRedesigniOSEnabled && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+    }
 }

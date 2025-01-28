@@ -113,7 +113,7 @@ public struct HomeFeature {
     }
 
     private var shouldUseConnectionFeature: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) ||
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) &&
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
     }
 

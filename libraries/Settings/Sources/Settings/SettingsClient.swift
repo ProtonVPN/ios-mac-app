@@ -20,13 +20,13 @@ import Dependencies
 import DependenciesMacros
 import Domain
 
-public struct SettingsClient: TestDependencyKey {
-    public var isActive: @Sendable () -> Bool
-    public var featureChangeAvailability: @Sendable (ConnectionFeatureChange) -> FeatureChangeAvailability
-    public var protocolChangeAvailability: @Sendable (ConnectionProtocol) -> ProtocolChangeAvailability
-    public var disconnect: @Sendable () async throws -> Void
-    public var reconnect: @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) async throws -> Void
-    public var update: @Sendable (Set<ConnectionFeatureChange.AgentFeature>) -> Void
+public struct SettingsClient: TestDependencyKey, Sendable {
+    public private(set) var isActive: @Sendable () -> Bool
+    public private(set) var featureChangeAvailability: @Sendable (ConnectionFeatureChange) -> FeatureChangeAvailability
+    public private(set) var protocolChangeAvailability: @Sendable (ConnectionProtocol) -> ProtocolChangeAvailability
+    public private(set) var disconnect: @Sendable () async throws -> Void
+    public private(set) var reconnect: @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) async throws -> Void
+    public private(set) var update: @Sendable (Set<ConnectionFeatureChange.AgentFeature>) -> Void
 
     public init(
         isActive: @escaping @Sendable () -> Bool,
@@ -60,7 +60,6 @@ extension DependencyValues {
         set { self[SettingsClient.self] = newValue }
     }
 }
-
 
 public enum FeatureChangeAvailability: Sendable, Equatable {
     case immediate

@@ -391,7 +391,7 @@ final class ConnectionSettingsViewModel {
                 }, cancelHandler: {
                     completion(false)
                 }))
-            case .immediately:
+            case .immediate:
                 self?.featurePropertyProvider.setValue(newValue)
                 completion(true)
             }
