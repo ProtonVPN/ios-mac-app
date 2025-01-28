@@ -841,7 +841,7 @@ final class SettingsViewModel {
             }
             Task {
                 do {
-                    await settingsClient.reconnect(Set([tunnelFeatureChange]))
+                    try await settingsClient.reconnect(Set([tunnelFeatureChange]))
                 } catch {
                     log.error("Failed to reconnect: \(error)", category: .connection)
                 }

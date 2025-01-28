@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 import XCTestDynamicOverlay
 import CoreConnection
+import class GoLibs.LocalAgentFeatures
 
 @available(iOS 16, *)
 final class LocalAgentMock: LocalAgent {
@@ -93,5 +94,7 @@ final class LocalAgentMock: LocalAgent {
         let message = FeatureStatisticsMessage(netShield: netshieldStats)
         streamTuple?.continuation.yield(.stats(message))
     }
+
+    func set(features: LocalAgentFeatures) { }
 }
 #endif
