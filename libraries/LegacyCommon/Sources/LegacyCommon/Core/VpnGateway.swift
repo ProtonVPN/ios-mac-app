@@ -405,19 +405,9 @@ public class VpnGateway: VpnGatewayProtocol {
             do {
                 try await connect(spec)
             } catch {
-                await newConnectDidFail(error: error)
+                log.error("An error occured while connecting: \(error.localizedDescription)")
             }
         }
-    }
-
-    @MainActor
-    func newConnectDidFail(error: any Error) {
-        log.error("An error occured while connecting: \(error.localizedDescription)")
-
-        let alert = ConnectionPackageErrorAlert()
-        alert.title = "Connection Error"
-        alert.message = "An error occurred while connecting: " + error.localizedDescription
-        alertService?.push(alert: alert)
     }
 
     private var shouldUseNewConnect: Bool {

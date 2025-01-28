@@ -85,7 +85,7 @@ public enum UpsellModalSource {
     case maxConnections
 }
 
-public class AllCountriesUpsellAlert: UpsellAlert {
+public final class AllCountriesUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .countries }
 }
 
@@ -119,4 +119,14 @@ public final class TorUpsellAlert: UpsellAlert {
 
 public final class CustomizationUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .allowLan }
+}
+
+public final class ConnectionPackageErrorAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() {}
 }

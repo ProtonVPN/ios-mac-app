@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../Shared/Persistence"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Domain"),
+        .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Core/NEHelper"),
         .package(path: "../Modals"),
     ],
@@ -29,6 +30,7 @@ let package = Package(
         .target(
             name: "tvOS",
             dependencies: [
+                "Ergonomics",
                 "Theme",
                 "CommonNetworking",
                 "Connection",

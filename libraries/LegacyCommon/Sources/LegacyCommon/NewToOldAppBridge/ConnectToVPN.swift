@@ -22,7 +22,6 @@ import VPNAppCore
 
 import protocol Foundation.LocalizedError
 
-import AsyncAlgorithms
 import ComposableArchitecture
 
 extension ConnectToVPNKey: DependencyKey {

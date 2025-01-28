@@ -1015,13 +1015,3 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
         ]
     }
 }
-
-public final class ConnectionPackageErrorAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() {}
-}

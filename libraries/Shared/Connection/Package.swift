@@ -67,6 +67,7 @@ let package = Package(
         .target(
             name: "Connection",
             dependencies: [
+                "Ergonomics",
                 "Strings",
                 "CertificateAuthentication",
                 "ExtensionManager",

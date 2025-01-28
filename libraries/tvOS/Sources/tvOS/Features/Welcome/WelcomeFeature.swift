@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Dependencies
+import Ergonomics
 
 @Reducer
 struct WelcomeFeature {

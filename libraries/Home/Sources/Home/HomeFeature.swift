@@ -16,18 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Combine
 import Foundation
+
 import ComposableArchitecture
 import Dependencies
-import Domain
-import Ergonomics
-import VPNAppCore
+
 import ConnectionDetails
 import Connection
-import Combine
-
+import Domain
+import Ergonomics
 import LocalAgent
 import NetShield
+import VPNAppCore
 
 import ProtonCoreFeatureFlags
 
@@ -37,8 +38,10 @@ public struct HomeFeature {
     @Dependency(\.serverChangeAuthorizer) private var authorizer
     @Dependency(\.connectToVPN) private var connectToVPN
     @Dependency(\.disconnectVPN) private var disconnectVPN
-    @Dependency(\.serverRepository) var serverRepository
+    @Dependency(\.serverRepository) private var serverRepository
+    @Dependency(\.pushAlert) private var pushAlert
     @Dependency(\.date) private var date
+    @Dependency(\.alertService) private var alertService
 
     @SharedReader(.userTier) private var userTier: Int
 
@@ -87,14 +90,16 @@ public struct HomeFeature {
 
     @CasePathable
     public enum Action {
+        /// This must be called once
+        case onStart
+
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
         case changeServer
         case disconnect
 
-        // This must be called once
-        case onStart
+        case incomingAlert(AlertService.Alert)
 
         case onNewConnectionState(ConnectionState)
 
@@ -145,6 +150,19 @@ public struct HomeFeature {
         }
         Reduce { state, action in
             switch action {
+            case .onStart:
+                return .concatenate(
+                    .run { send in await send(.connection(.startObserving)) },
+                    .merge(
+                        .onChange(of: state.$connectionState, reinject: Action.onNewConnectionState),
+                        .run { send in
+                            for await alert in await alertService.alerts() {
+                                await send(.incomingAlert(alert))
+                            }
+                        }
+                    )
+                )
+                .cancellable(id: CancelID.connectionState)
             case .recents(.delegate(.connect(let spec))):
                 return .send(.connect(spec))
             case .recents:
@@ -159,6 +177,7 @@ public struct HomeFeature {
                     try await connectToVPN(spec)
                     await send(.recents(.connectionEstablished(spec)))
                 } catch: { error, _ in
+                    await alertService.feed(error)
                     log.error("Error connecting to VPN: \(error)")
                 }
                 .cancellable(id: CancelID.connectTask)
@@ -178,6 +197,7 @@ public struct HomeFeature {
                 return .run { _ in
                     try await disconnectVPN()
                 } catch: { error, _ in
+                    await alertService.feed(error)
                     log.error("Error disconnecting from VPN: \(error)")
                 }
 
@@ -232,7 +252,6 @@ public struct HomeFeature {
                 return .run { send in
                     @Dependency(\.continuousClock) var clock
                     try await clock.sleep(for: .seconds(1)) // VPNAPPL-2560: give some time for the current presented view to disappear
-                    @Dependency(\.pushAlert) var pushAlert
                     pushAlert(AllCountriesUpsellAlert())
                 }
             case .destination(.presented(.freeConnectionsInfo(.dismissButtonTapped))):
@@ -248,13 +267,6 @@ public struct HomeFeature {
                 return .none
             case .destination(_):
                 return .none
-            case .onStart:
-                return .concatenate(
-                    .run { send in await send(.connection(.startObserving)) },
-                    .onChange(of: state.$connectionState, reinject: Action.onNewConnectionState)
-                )
-                .cancellable(id: CancelID.connectionState)
-
             case .onNewConnectionState(let newConnectionState):
                 log.debug("Connection layer state update \(newConnectionState)")
                 do {
@@ -264,7 +276,6 @@ public struct HomeFeature {
                     log.error("Missing original connection intent", metadata: ["error": "\(error)"])
                     return .send(.connection(.disconnect(.connectionFailure(.intentMissing))))
                 }
-
             case .map:
                 return .none
             case .freeConnectionsInfo(_):
@@ -273,9 +284,21 @@ public struct HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case .connection(_):
                 return .none
+            case .incomingAlert(let alert):
+                pushAlert(alert.toSystemAlert)
+                return .none
             }
         }
         .ifLet(\.$destination, action: \.destination)
+    }
+}
+
+fileprivate extension AlertService.Alert {
+    var toSystemAlert: any SystemAlert {
+        let alert = ConnectionPackageErrorAlert()
+        alert.title = String(localized: title)
+        alert.message = String(localized: message)
+        return alert
     }
 }
 
@@ -286,6 +309,25 @@ private extension FeatureStatisticsMessage.NetShieldStats {
             adsCount: adsBlocked ?? 0,
             dataSaved: UInt64(bytesSaved),
             enabled: true
+        )
+    }
+}
+
+private extension Effect {
+    static func listen<StreamElement>(
+        to stream: @escaping @autoclosure () -> AsyncStream<StreamElement>,
+        priority: TaskPriority? = nil,
+        reinjecting toAction: @escaping @MainActor @Sendable (StreamElement) async throws -> Action,
+        catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
+    ) -> Self {
+        self.run(
+            priority: priority,
+            operation: { send in
+                for await value in stream() {
+                    await send(try toAction(value))
+                }
+            },
+            catch: handler
         )
     }
 }

@@ -26,6 +26,7 @@ import ProtonCoreNetworking
 import ProtonCoreServices
 
 import CommonNetworking
+import Ergonomics
 import VPNShared
 
 /// Platform independent reducer without UI, responsible for session management.

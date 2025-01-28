@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@preconcurrency import Ergonomics
 @preconcurrency import VPNAppCore
 
 import Dependencies
@@ -34,8 +35,11 @@ public struct ConnectionBridge: Sendable {
     // When Swift6 available, switch to some AsyncSequence<VPNConnectionStatus, Never> or equivalent
     public internal(set) var statusStream: AsyncStream<VPNConnectionStatus>
 
+//    public internal(set) var alertStream: @Sendable () async -> AsyncStream<AlertService.Alert> = { unimplemented(placeholder: .init { $0.finish() }) }
+
     public internal(set) var push: @Sendable (_ intent: Intent) -> Void
     public internal(set) var pushStatus: @Sendable (_ status: VPNConnectionStatus) -> Void
+//    public internal(set) var pushAlert: @Sendable (_ error: Error) async -> Void
 }
 
 extension DependencyValues {
