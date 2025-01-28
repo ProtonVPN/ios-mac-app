@@ -1364,7 +1364,7 @@
 
 "_ip_will_not_be_exposed" = "IP 주소가 노출되지 않습니다.";
 
-"_cancel_reconnection" = "이는 재연결 시도를 취소하고 연결이 끊어질 것입니다";
+"_cancel_reconnection" = "이 작업은 재연결 시도를 취소하고 연결을 해제합니다.";
 
 "_quick_settings_netshield_option_off" = "차단하지 않기";
 

@@ -1447,7 +1447,7 @@
 
 "_to_server_title" = "Naar Server:";
 
-"_update_billing" = "MIJN FACTURERING UPDATEN";
+"_update_billing" = "MIJN FACTURERING BIJWERKEN";
 
 "_upgrade_again" = "UPGRADE OPNIEUW";
 
@@ -1575,7 +1575,7 @@
 
 "_force_upgrade_title" = "Applicatie upgrade vereist";
 
-"_force_upgrade_message" = "De versie van de Proton VPN-app die u momenteel gebruikt, wordt niet langer ondersteund. Gelieve te updaten naar de meest recente versie.";
+"_force_upgrade_message" = "De versie van de Proton VPN-app die u momenteel gebruikt, wordt niet langer ondersteund. Werk bij naar de meest recente versie.";
 
 "login_fetch_vpn_data" = "VPN-toegang aan het configureren";
 

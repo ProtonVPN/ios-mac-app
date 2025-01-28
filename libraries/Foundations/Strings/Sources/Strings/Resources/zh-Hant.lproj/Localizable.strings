@@ -1755,7 +1755,7 @@
 "_home_recents_server_under_maintenance" = "Server under maintenance";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
-"_action_help" = "Help";
+"_action_help" = "幫助";
 
 /* For buttons which have an action that connects to a server. [Redesign_2023] */
 "_action_connect" = "Connect";
@@ -1776,7 +1776,7 @@
 "_action_home_pin" = "Pin";
 
 /* Home screen: unpin this connection from the recents view. [Redesign_2023] */
-"_action_home_unpin" = "Unpin";
+"_action_home_unpin" = "移除釘選";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
 "home_fastest_connection_selection_description" = "Auto-selected from";
@@ -1892,7 +1892,7 @@
 "_connection_details_features_title" = "Features";
 
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
-"_connection_details_info_button" = "Info";
+"_connection_details_info_button" = "資訊";
 
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "協定無法使用";
@@ -2225,7 +2225,7 @@
 "modals_new_upsell_netshield_subtitle_bold" = "NetShield";
 
 /* Title of Secure Core upsell screen */
-"modals_new_upsell_secure_core_title" = "Double your protection";
+"modals_new_upsell_secure_core_title" = "雙重保護";
 
 /* Subtitle of Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle" = "使用 Secure Core 為您的 VPN 連線多添一層加密。";

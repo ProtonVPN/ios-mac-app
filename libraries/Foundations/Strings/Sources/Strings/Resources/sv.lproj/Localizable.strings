@@ -865,7 +865,7 @@
 "_kill_switch_enable" = "Aktivera kill switch";
 
 /* MacOS: Settings screen title */
-"_preferences" = "Inställningar";
+"_preferences" = "Preferenser";
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "Inställningar";
@@ -915,7 +915,7 @@
 "_start_minimized" = "Starta minimerad";
 
 /* MacOS: Settings -> General: name of field. */
-"_system_notifications" = "Systemnotiser";
+"_system_notifications" = "Systemaviseringar";
 
 /* MacOS: Settings -> General: name of field. */
 "_early_access" = "Förhandstillgång";
@@ -924,10 +924,10 @@
 "_early_access_tooltip" = "Var först med att få de senaste uppdateringarna. Tänk på att tidiga versioner kan vara mindre stabila.";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Notiser om oskyddade nätverk";
+"_unprotected_network" = "Avisera oskyddade nätverk";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Få en notis när Proton VPN upptäcker att du är ansluten till ett oskyddat nätverk.";
+"_unprotected_network_tooltip" = "Få en avisering när Proton VPN upptäcker att du är ansluten till ett oskyddat nätverk.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_dns_leak_protection" = "Skydd mot DNS-läckage";
@@ -1204,7 +1204,7 @@
 "_menu_check_updates" = "Sök efter uppdateringar...";
 
 /* Main mac app menu item */
-"_menu_preferences" = "Inställningar";
+"_menu_preferences" = "Preferenser";
 
 /* Main mac app menu item */
 "_menu_hide_self" = "Dölj Proton VPN";
@@ -1414,7 +1414,7 @@
 "_sysex_description_3" = "För att fortsätta, klicka på **Öppna systeminställningar** och följ sedan videoinstruktionerna på denna skärm.";
 
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "För att fortsätta, klicka på **Öppna säkerhetsinställningar** och följ sedan videoinstruktionerna på denna skärm.";
+"_sysex_description_4" = "För att fortsätta, klicka på **Öppna säkerhetspreferenser** och följ sedan videoinstruktionerna på denna skärm.";
 
 /* Title of the system extension wizard in mac */
 "_sysex_set_up_proton_vpn" = "Konfigurera Proton VPN";
@@ -1423,7 +1423,7 @@
 "_sysex_open_system_settings" = "Öppna systeminställningar";
 
 /* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Öppna säkerhetsinställningar";
+"_sysex_open_security_preferences" = "Öppna säkerhetspreferenser";
 
 "_sysex_settings_description" = "Proton VPN kräver att ett systemtillägg laddas för att utnyttja Smart Protocol, OpenVPN och WireGuard.";
 
@@ -1701,7 +1701,7 @@
 "_home_unprotected_accessibility_label" = "Du surfar oskyddat från %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_hint" = "VPN ej ansluten. Anslut till en server för att surfa säkert på internet.";
+"_home_unprotected_accessibility_hint" = "VPN är frånkopplat. Anslut till en server för att surfa säkert på internet.";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Standardanslutning";
@@ -1770,13 +1770,13 @@
 "_connection_card_action_cancel" = "Avbryt";
 
 /* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
-"_show_connection_details_button_hint" = "Visa anslutningsuppgifter";
+"_show_connection_details_button_hint" = "Visa anslutningsdetaljer";
 
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
 "_action_home_pin" = "Fäst";
 
 /* Home screen: unpin this connection from the recents view. [Redesign_2023] */
-"_action_home_unpin" = "Avfäst";
+"_action_home_unpin" = "Lossa";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
 "home_fastest_connection_selection_description" = "Autovald från";
@@ -1829,7 +1829,7 @@
 "_netshield_stats_blocked_E" = "%@ T";
 
 /* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
-"_connection_details_title" = "Anslutningsuppgifter";
+"_connection_details_title" = "Anslutningsdetaljer";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
 "_connection_details_connected_for" = "Ansluten i";

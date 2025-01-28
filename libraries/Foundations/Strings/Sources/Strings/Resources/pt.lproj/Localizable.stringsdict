@@ -91,7 +91,7 @@
     <key>modals_new_upsell_all_countries_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus.</string>
+      <string>Desbloqueie %#@num_servers@ em %#@num_countries@ com VPN Plus.</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
@@ -333,7 +333,7 @@ parados</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d minuto</string>
+        <string>%d minutos</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -376,7 +376,7 @@ parados</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d minuto</string>
+        <string>%d minutos</string>
       </dict>
       <key>SECONDS</key>
       <dict>
@@ -403,7 +403,7 @@ parados</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d minuto</string>
+        <string>%d minutos</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
