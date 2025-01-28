@@ -20,38 +20,56 @@ import Dependencies
 import DependenciesMacros
 import Domain
 
-public struct ConnectionConfigurer: TestDependencyKey {
+public struct SettingsClient: TestDependencyKey {
+    public var isActive: @Sendable () -> Bool
     public var featureChangeAvailability: @Sendable (ConnectionFeatureChange) -> FeatureChangeAvailability
-    public var reconnect: @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) -> Void
+    public var protocolChangeAvailability: @Sendable (ConnectionProtocol) -> ProtocolChangeAvailability
+    public var disconnect: @Sendable () async throws -> Void
+    public var reconnect: @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) async throws -> Void
     public var update: @Sendable (Set<ConnectionFeatureChange.AgentFeature>) -> Void
 
     public init(
+        isActive: @escaping @Sendable () -> Bool,
         featureChangeAvailability: @escaping @Sendable (ConnectionFeatureChange) -> FeatureChangeAvailability,
-        reconnect: @escaping @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) -> Void,
+        protocolChangeAvailability: @escaping @Sendable (ConnectionProtocol) -> ProtocolChangeAvailability,
+        disconnect: @escaping @Sendable () async throws -> Void,
+        reconnect: @escaping @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) async throws -> Void,
         update: @escaping @Sendable (Set<ConnectionFeatureChange.AgentFeature>) -> Void
     ) {
+        self.isActive = isActive
         self.featureChangeAvailability = featureChangeAvailability
+        self.protocolChangeAvailability = protocolChangeAvailability
+        self.disconnect = disconnect
         self.reconnect = reconnect
         self.update = update
     }
 
-    public static let testValue = ConnectionConfigurer(
+    public static let testValue = SettingsClient(
+        isActive: { false },
         featureChangeAvailability: { _ in .immediate },
+        protocolChangeAvailability: { _ in .immediate },
+        disconnect: { },
         reconnect: { _ in },
         update: { _ in }
     )
 }
 
 extension DependencyValues {
-    public var connectionConfigurer: ConnectionConfigurer {
-        get { self[ConnectionConfigurer.self] }
-        set { self[ConnectionConfigurer.self] = newValue }
+    public var settingsClient: SettingsClient {
+        get { self[SettingsClient.self] }
+        set { self[SettingsClient.self] = newValue }
     }
 }
 
 
-public enum FeatureChangeAvailability: Equatable {
+public enum FeatureChangeAvailability: Sendable, Equatable {
     case immediate
     case withConnectionUpdate
     case withReconnect
+}
+
+public enum ProtocolChangeAvailability: Sendable, Equatable {
+    case immediate
+    case withReconnect
+    case protocolUnavailable // currently connected server doesn't support the new protocol
 }

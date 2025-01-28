@@ -22,8 +22,15 @@ import Dependencies
 import Sharing
 import VPNAppCore
 
-extension ConnectionConfigurer: DependencyKey {
-    public static let liveValue = ConnectionConfigurer(
+extension SettingsClient: DependencyKey {
+    public static let liveValue = SettingsClient(
+        isActive: {
+            @Shared(.connectionState) var connectionState
+            if case .disconnected = connectionState {
+                return false
+            }
+            return true
+        },
         featureChangeAvailability: { feature in
             @Shared(.connectionState) var connectionState
 
@@ -40,9 +47,37 @@ extension ConnectionConfigurer: DependencyKey {
                 return .withConnectionUpdate
             }
         },
-        reconnect: { tunnelFeatures in
-            @Dependency(\.connectToVPN) var connect
+        protocolChangeAvailability: { connectionProtocol in
+            @Shared(.connectionState) var connectionState
+            guard let connectionState else {
+                return .immediate
+            }
 
+            switch connectionState {
+            case .disconnected, .disconnecting:
+                return .immediate
+
+            case .connecting(.none):
+                return .withReconnect
+
+            case .connected(let server, _, _), .connecting(.some(let server)):
+                @Dependency(\.propertiesManager) var properties
+                let supportedProtocols = properties.smartProtocolConfig.supportedProtocols
+                let serverSupportsNewProtocol = server.endpoint.supports(protocolSet: .init(vpnProtocols: supportedProtocols))
+
+                return serverSupportsNewProtocol ? .withReconnect : .protocolUnavailable
+            }
+        },
+        disconnect: {
+            @Dependency(\.disconnectVPN) var disconnect
+            try await disconnect()
+        },
+        reconnect: { featureChanges in
+            @Dependency(\.connectionIntentStorage) var storage
+            let lastIntent = try storage.getConnectionIntent()
+
+            @Dependency(\.connectToVPN) var connect
+            try await connect(lastIntent.spec)
         }, update: { agentFeatures in
             @Dependency(\.connectionBridge) var bridge
             bridge.push(.localAgent(.setFeatures(agentFeatures)))

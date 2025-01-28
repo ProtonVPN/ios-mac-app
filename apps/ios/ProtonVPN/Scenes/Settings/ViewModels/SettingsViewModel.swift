@@ -81,6 +81,7 @@ final class SettingsViewModel {
     
     var reloadNeeded: (() -> Void)?
 
+    @Dependency(\.settingsClient) var settingsClient
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
@@ -131,18 +132,6 @@ final class SettingsViewModel {
         return sections
     }
     
-    var isSessionEstablished: Bool {
-        return appSessionManager.sessionStatus == .established
-    }
-    
-    var isConnected: Bool {
-        return vpnGateway.connection == .connected
-    }
-    
-    var isStateStable: Bool {
-        return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
-    }
-
     var shouldShowAccountRecovery: Bool {
         accountRecoveryStatus?.isVisibleInSettings ?? false
     }
@@ -321,13 +310,14 @@ final class SettingsViewModel {
                     self.getFeatureChangeAvailability(for: .agent(.vpnAccelerator(toggleOn))) { featureChangeAvailability in
                         let acceleratorValue = toggleOn ? VPNAccelerator.on : VPNAccelerator.off
                         switch featureChangeAvailability {
+                        case .withReconnect:
+                            // We don't support any non cert-auth protocols on iOS.
+                            log.assertionFailure("VPNAccelerator should never require a reconnect on iOS")
+                            fallthrough
                         case .withConnectionUpdate:
                             self.featurePropertyProvider.setValue(acceleratorValue)
                             self.apply(agentFeatureChange: .vpnAccelerator(toggleOn))
                             callback(toggleOn)
-                        case .withReconnect:
-                            // We don't support any non cert-auth protocols on iOS.
-                            log.assertionFailure("VPNAccelerator should never require a reconnect on iOS")
                         case .immediate:
                             self.featurePropertyProvider.setValue(toggleOn ? VPNAccelerator.on : VPNAccelerator.off)
                             callback(toggleOn)
@@ -386,13 +376,14 @@ final class SettingsViewModel {
 
                     self?.getFeatureChangeAvailability(for: .agent(.moderateNAT(natType))) { [weak self] featureChangeAvailability in
                         switch featureChangeAvailability {
+                        case .withReconnect:
+                            // We don't support any non cert-auth protocols on iOS.
+                            log.assertionFailure("NATType should never require a reconnect on iOS")
+                            fallthrough
                         case .withConnectionUpdate:
                             self?.natTypePropertyProvider.natType = natType
                             self?.apply(agentFeatureChange: .moderateNAT(natType))
                             callback(toggleOn)
-                        case .withReconnect:
-                            // We don't support any non cert-auth protocols on iOS.
-                            log.assertionFailure("NATType should never require a reconnect on iOS")
                         case .immediate:
                             self?.natTypePropertyProvider.natType = natType
                             callback(toggleOn)
@@ -506,29 +497,29 @@ final class SettingsViewModel {
     
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
-            let isConnected = self.vpnGateway.connection == .connected || self.vpnGateway.connection == .connecting
+            let isActive = self.isActive()
             let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
             
             var alert: SystemAlert
             
             if self.propertiesManager.killSwitch, excludeLAN == .off {
-                alert = AllowLANConnectionsAlert(connected: isConnected) {
+                alert = AllowLANConnectionsAlert(connected: isActive) {
                     self.featurePropertyProvider.setValue(ExcludeLocalNetworks.on)
                     self.propertiesManager.killSwitch = false
-                    if isConnected {
+                    if isActive {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                        self.vpnGateway.retryConnection()
+                        self.reconnect(with: .allowLAN(false))
                     }
                     self.reloadNeeded?()
                     callback(true)
                 } cancelHandler: {
                     callback(false)
                 }
-            } else if isConnected {
+            } else if isActive {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
                     self.featurePropertyProvider.setValue(toggleOn ? ExcludeLocalNetworks.on : .off)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
-                    self.vpnGateway.retryConnection()
+                    self.reconnect(with: .allowLAN(false))
                     callback(toggleOn)
                 }, cancelHandler: {
                     callback(self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on)
@@ -545,15 +536,15 @@ final class SettingsViewModel {
     
     private func ksSwitchCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
-            let isConnected = self.vpnGateway.connection == .connected || self.vpnGateway.connection == .connecting
-            
+            let isActive = self.isActive()
+
             var alert: SystemAlert
 
             if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on, !self.propertiesManager.killSwitch {
                 alert = TurnOnKillSwitchAlert {
                     self.featurePropertyProvider.setValue(ExcludeLocalNetworks.off)
                     self.propertiesManager.killSwitch = true
-                    if isConnected {
+                    if isActive {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
                         self.reconnect(with: .killSwitch(toggleOn))
                     }
@@ -562,7 +553,7 @@ final class SettingsViewModel {
                 } cancelHandler: {
                     callback(false)
                 }
-            } else if isConnected {
+            } else if isActive {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
                     self.propertiesManager.killSwitch.toggle()
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
@@ -630,21 +621,6 @@ final class SettingsViewModel {
         return TableViewSection(title: "", cells: cells)
     }
     
-    private func formQuickActionDescription() -> String? {
-        guard isSessionEstablished else {
-            return nil
-        }
-        
-        let description: String
-        switch vpnGateway.connection {
-        case .connected, .disconnecting:
-            description = Localizable.disconnect
-        case .disconnected, .connecting:
-            description = Localizable.quickConnect
-        }
-        return description
-    }
-    
     private func pushSettingsAccountViewController() {
         guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
@@ -664,16 +640,14 @@ final class SettingsViewModel {
                                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                                         featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
-            guard !self.appStateManager.state.isSafeToEnd,
-                  let activeConnection = appStateManager.activeConnection() else {
+            switch self.getProtocolChangeAvailability(for: newProtocol) {
+            case .immediate:
                 completion(.success(true))
                 return
-            }
 
-            // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
-            // sure the user knows that the app is about to disconnect.
-            guard activeConnection.serverIp.supports(connectionProtocol: newProtocol,
-                                                     smartProtocolConfig: propertiesManager.smartProtocolConfig) else {
+            case .protocolUnavailable:
+                // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
+                // sure the user knows that the app is about to disconnect.
                 self.alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
                     log.debug("Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
                               category: .connectionDisconnect, event: .trigger)
@@ -681,20 +655,21 @@ final class SettingsViewModel {
                 }, cancelHandler: {
                     completion(.failure(.userCancelled))
                 }))
-                return
-            }
 
-            // Otherwise, reconnect normally after changing the protocol.
-            let alert = ChangeProtocolDisconnectAlert {
-                log.debug("Reconnect requested after changing protocol to \(newProtocol)",
-                          category: .connectionDisconnect, event: .trigger)
-                completion(.success(true))
+            case .withReconnect:
+                // Otherwise, reconnect normally after changing the protocol.
+                let alert = ChangeProtocolDisconnectAlert {
+                    log.debug("Reconnect requested after changing protocol to \(newProtocol)",
+                              category: .connectionDisconnect, event: .trigger)
+                    completion(.success(true))
+                }
+                alert.dismiss = { completion(.failure(.userCancelled)) }
+                self.alertService.push(alert: alert)
             }
-            alert.dismiss = { completion(.failure(.userCancelled)) }
-            self.alertService.push(alert: alert)
         }
-        vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, shouldReconnect in
-            switch connectionProtocol {
+
+        vpnProtocolViewModel.protocolChanged = { [self] newProtocol, shouldReconnect in
+            switch newProtocol {
             case .smartProtocol:
                 self.propertiesManager.smartProtocol = true
             case .vpnProtocol(let vpnProtocol):
@@ -702,11 +677,18 @@ final class SettingsViewModel {
                 self.propertiesManager.vpnProtocol = vpnProtocol
             }
 
-            if !self.appStateManager.state.isSafeToEnd {
+            switch getProtocolChangeAvailability(for: newProtocol) {
+            case .immediate:
+                break // we're not connected, so nothing needs to be done
+
+            case .protocolUnavailable:
+                self.disconnect()
+
+            case .withReconnect:
                 if shouldReconnect {
-                    self.vpnGateway.reconnect(with: connectionProtocol)
+                    self.reconnect(with: .connectionProtocol(newProtocol))
                 } else {
-                    self.vpnGateway.disconnect()
+                    self.disconnect()
                 }
             }
         }
@@ -780,23 +762,63 @@ final class SettingsViewModel {
         appSessionManager.logOut(force: false, reason: nil)
     }
 
+    func isActive() -> Bool {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            return settingsClient.isActive()
+        } else {
+            return !appStateManager.state.isSafeToEnd
+        }
+    }
+
+    private func getProtocolChangeAvailability(
+        for connectionProtocol: ConnectionProtocol
+    ) -> ProtocolChangeAvailability {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            return settingsClient.protocolChangeAvailability(connectionProtocol)
+        } else {
+            guard let activeConnection = appStateManager.activeConnection() else {
+                return .immediate
+            }
+            // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
+            // sure the user knows that the app is about to disconnect.
+            let activeServerSupportsNewProtocol = activeConnection.serverIp
+                .supports(connectionProtocol: connectionProtocol, smartProtocolConfig: propertiesManager.smartProtocolConfig)
+            return activeServerSupportsNewProtocol ? .withReconnect : .protocolUnavailable
+        }
+    }
+
     private func getFeatureChangeAvailability(
         for featureChange: ConnectionFeatureChange,
         completion: @escaping (VpnFeatureChangeState) -> Void
     ) {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            completion(settingsClient.featureChangeAvailability(featureChange))
+        } else {
             vpnStateConfiguration.getInfo { info in
                 let availability = VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol)
                 completion(availability)
             }
+        }
+    }
+
+    private func disconnect() {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            Task {
+                do {
+                    try await settingsClient.disconnect()
+                } catch {
+                    log.error("Failed to disconnect: \(error)", category: .connection)
+                }
+            }
         } else {
-            @Dependency(\.connectionConfigurer) var configurer
-            completion(configurer.featureChangeAvailability(featureChange))
+            vpnGateway.disconnect()
         }
     }
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            settingsClient.update(Set([agentFeatureChange]))
+        } else {
             switch agentFeatureChange {
             case .netShield(let value):
                 vpnManager.set(netShieldType: value)
@@ -807,28 +829,35 @@ final class SettingsViewModel {
             case .moderateNAT(let value):
                 vpnManager.set(natType: value)
             }
-        } else {
-            @Dependency(\.connectionConfigurer) var configurer
-            configurer.update(Set([agentFeatureChange]))
         }
     }
 
     private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
+        // KS and LAN features are applied by the viewmodel.
+        // We only need to worry about updating the protocol here.
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            if case .connectionProtocol(let connectionProtocol) = tunnelFeatureChange {
+                propertiesManager.connectionProtocol = connectionProtocol
+            }
+            Task {
+                do {
+                    await settingsClient.reconnect(Set([tunnelFeatureChange]))
+                } catch {
+                    log.error("Failed to reconnect: \(error)", category: .connection)
+                }
+            }
+
+        } else {
             switch tunnelFeatureChange {
-            case .allowLAN(let value):
+            case .allowLAN:
                 vpnGateway.retryConnection()
 
-            case .killSwitch(let value):
+            case .killSwitch:
                 vpnGateway.retryConnection()
 
             case .connectionProtocol(let value):
                 vpnGateway.reconnect(with: value)
-
             }
-        } else {
-            @Dependency(\.connectionConfigurer) var configurer
-            configurer.reconnect(Set([tunnelFeatureChange]))
         }
     }
 }
