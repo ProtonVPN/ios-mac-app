@@ -45,7 +45,7 @@ public struct SharedPropertiesFeature {
     private let initialUserLocationEffect: Effect<Action> = .run { send in
         @Dependency(\.locationClient) var client
         let initialLocation = try await client.fetchLocation()
-        send(.userLocationChange(location: initialLocation))
+        await send(.userLocationChange(location: initialLocation))
     }
 
     private let longLivingUserLocationEffect: Effect<Action> = .publisher {

@@ -33,6 +33,7 @@ let package = Package(
         .package(path: "../SharedViews"),
         .package(path: "../NetShield"),
         .package(path: "../NEHelper"),
+        .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),
         .package(path: "../Shared/Persistence"),
         .package(path: "../Modals"),
@@ -43,6 +44,7 @@ let package = Package(
             name: "Home",
             dependencies: [
                 "Connection",
+                "CommonNetworking",
                 "Persistence",
                 "SharedViews",
                 "NetShield",
