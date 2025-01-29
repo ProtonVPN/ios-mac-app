@@ -23,6 +23,7 @@ import VPNShared
 import VPNAppCore
 import ConnectionPresenter
 import OrderedCollections
+import AppIntents
 
 struct Provider: TimelineProvider {
 
@@ -89,5 +90,14 @@ struct Provider: TimelineProvider {
         case .recent(let spec):
             return spec
         }
+    }
+}
+
+struct ConnectShortcuts: AppShortcutsProvider {
+    static var appShortcuts: [AppShortcut] {
+        AppShortcut(intent: ConnectToVPNIntent(),
+                    phrases: ["Connect to VPN"],
+                    shortTitle: "Connect to VPN",
+                    systemImageName: "square")
     }
 }

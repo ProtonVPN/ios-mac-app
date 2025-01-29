@@ -19,6 +19,7 @@
 import Dependencies
 import VPNAppCore
 import AppIntents
+import Domain
 
 public struct DisconnectFromVPN: AppIntent {
     public static var title: LocalizedStringResource = "Disconnect from VPN"
@@ -40,11 +41,25 @@ public struct ConnectToVPN: AppIntent {
 
     public static var openAppWhenRun = false
 
-    public init() { }
+    @Parameter(title: "Country") var country: String
+
+    public static var parameterSummary: some ParameterSummary {
+        Summary("Connect to \(\.$country)") {
+            \.$country
+        }
+    }
+
+    public init() {
+        self.country = "US"
+    }
+
+    public init(country: String) {
+        self.country = country
+    }
 
     public func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN
-        try? await connectToVPN(.defaultFastest)
+        try? await connectToVPN(.init(location: .region(code: country), features: []))
         return .result()
     }
 }
