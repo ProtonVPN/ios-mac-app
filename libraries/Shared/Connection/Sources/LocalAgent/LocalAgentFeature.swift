@@ -112,7 +112,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return shouldStartNetShieldStatsObservation ? .send(.startNetShieldStatsObservation) : .none
 
             case .disconnect(let error):
-                if case .disconnecting = state { return .none }
+                guard state.shouldTransitionToDisconnecting else { return .none }
                 state = .disconnecting(error)
                 localAgent.disconnect()
                 return .none
@@ -265,6 +265,17 @@ extension LocalAgentError {
 
         case .unknown:
             return .none
+        }
+    }
+}
+
+private extension LocalAgentFeature.State {
+    var shouldTransitionToDisconnecting: Bool {
+        switch self {
+        case .connecting, .connected:
+            return true
+        case .disconnecting, .disconnected:
+            return false
         }
     }
 }

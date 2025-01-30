@@ -71,6 +71,7 @@ let package = Package(
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
+                .product(name: "VPNAppCore", package: "NEHelper"),
             ]
         ),
         .target(name: "CoreConnectionTestSupport", dependencies: ["CoreConnection"]),

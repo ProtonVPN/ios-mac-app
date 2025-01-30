@@ -57,6 +57,7 @@ let package = Package(
         .package(path: "../Settings"),
 
         // External dependencies
+        .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.5")),
@@ -130,7 +131,8 @@ let package = Package(
                 .product(name: "Reachability", package: "Reachability.swift"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "TrustKit", package: "TrustKit"),
-                .product(name: "DictionaryCoder", package: "DictionaryCoder")
+                .product(name: "DictionaryCoder", package: "DictionaryCoder"),
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
             ],
             plugins: [
 //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")

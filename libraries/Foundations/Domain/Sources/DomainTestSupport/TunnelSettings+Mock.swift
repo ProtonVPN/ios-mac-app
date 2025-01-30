@@ -24,6 +24,6 @@ extension TunnelSettings {
     public static let mock = TunnelSettings(
         transport: .udp,
         ports: [],
-        tunnelFeatures: TunnelFeatures.mock
+        features: TunnelFeatures.mock
     )
 }

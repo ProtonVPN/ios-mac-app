@@ -14,16 +14,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
 import ProtonCoreFeatureFlags
 import Connection
 import Persistence
 import Domain
 import VPNAppCore
 
+import protocol Foundation.LocalizedError
+
+import AsyncAlgorithms
+import ComposableArchitecture
+
 extension ConnectToVPNKey: DependencyKey {
-    enum ConnectionError: Error {
-        case unexpectedProtocol(VpnProtocol)
+    enum ConnectionError: LocalizedError {
+        case cancelled
+
+        var errorDescription: String {
+            switch self {
+            case .cancelled:
+                return "Connection attempt cancelled"
+            }
+        }
     }
 
     private static var isEnabled: Bool {
@@ -41,10 +52,25 @@ extension ConnectToVPNKey: DependencyKey {
     @available(iOS 16, *)
     static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { spec in
         @Dependency(\.connectionBridge) var bridge
-        @Dependency(\.propertiesManager) var propertiesManager
+
+        @SharedReader(.connectionState) var connectionState: ConnectionState?
+
+        if connectionState.is(\.connected) {
+            bridge.push(intent: ConnectionFeature.Action.disconnect(.userIntent))
+
+            try await $connectionState.when(willBe: \.disconnected, every: .milliseconds(20), deadline: .seconds(2)) {
+                try await prepareConnection(spec)
+            }
+        } else {
+            try await prepareConnection(spec)
+        }
+    }
+
+    @available(iOS 16, *)
+    private static let prepareConnection: @Sendable (ConnectionSpec) async throws -> Void = { spec in
+        @Dependency(\.connectionBridge) var bridge
         @Dependency(\.serverSelector) var serverSelector
-        @Dependency(\.smartPortSelector) var portSelector
-        @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
+        @Dependency(\.propertiesManager) var propertiesManager
         @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
         @SharedReader(.userTier) var userTier: Int
@@ -62,29 +88,17 @@ extension ConnectToVPNKey: DependencyKey {
         let server = try serverSelector.select(spec, userTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
 
-        let portSelectionResult = try await portSelector.select(
-            endpoint: server.endpoint,
-            connectionProtocol: propertiesManager.connectionProtocol
-        )
-        guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
-            throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
+        guard !Task.isCancelled else {
+            throw ConnectionError.cancelled
         }
-        let ports = portSelectionResult.ports
-        log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
 
-        let features = vpnFeaturesProvider.connectionFeatures()
-        let tunnelSettings = TunnelSettings(
-            transport: transport,
-            ports: ports,
-            tunnelFeatures: TunnelFeatures(
-                killSwitch: propertiesManager.killSwitch,
-                excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
-            )
+        let connectionProtocol = propertiesManager.connectionProtocol
+
+        let tunnelFeatures = TunnelFeatures(
+            killSwitch: propertiesManager.killSwitch,
+            excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
         )
-        let intent = ServerConnectionIntent(spec: spec, server: server, tunnelSettings: tunnelSettings, features: features)
-        @Dependency(\.connectionIntentStorage) var storage
-        try storage.set(connectionIntent: intent)
 
-        bridge.push(intent: ConnectionFeature.Action.connect(intent))
+        bridge.push(intent: ConnectionFeature.Action.preparation(spec, server, connectionProtocol, tunnelFeatures))
     }
 }

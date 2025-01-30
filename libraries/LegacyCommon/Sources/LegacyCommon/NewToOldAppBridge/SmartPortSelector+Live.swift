@@ -19,23 +19,15 @@
 import Foundation
 import Dependencies
 import DependenciesMacros
+
+import Connection
 import Domain
-
-@DependencyClient
-struct SmartPortSelectorBridge: Sendable {
-    var select: @Sendable (_ endpoint: ServerEndpoint, _ connectionProtocol: ConnectionProtocol) async throws -> ServerEndpointPortResolution
-}
-
-struct ServerEndpointPortResolution: Sendable {
-    let chosenProtocol: VpnProtocol
-    let ports: [Int]
-}
 
 // Protocol and port selection should ideally be implemented in the `Connection` package.
 // Due to time constraints, let's reuse the legacy implementations until this is e.g. required on tvOS
 // or we want to deprecate LegacyCommon.
 extension SmartPortSelectorBridge: DependencyKey {
-    static let liveValue = SmartPortSelectorBridge(select: { endpoint, connectionProtocol in
+    public static let liveValue = SmartPortSelectorBridge(select: { endpoint, connectionProtocol in
         @Dependency(\.propertiesManager) var propertiesManager
         let resolver = AvailabilityCheckerResolverImplementation(wireguardConfig: propertiesManager.wireguardConfig)
         let serverIP = ServerIp(endpoint: endpoint)
@@ -67,11 +59,4 @@ extension SmartPortSelectorBridge: DependencyKey {
             }
         }
     })
-}
-
-extension DependencyValues {
-    var smartPortSelector: SmartPortSelectorBridge {
-        get { self[SmartPortSelectorBridge.self] }
-        set { self[SmartPortSelectorBridge.self] = newValue }
-    }
 }

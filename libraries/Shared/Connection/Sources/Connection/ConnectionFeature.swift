@@ -28,12 +28,15 @@ import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
+import VPNAppCore
 
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
+    @Dependency(\.smartPortSelector) private var portSelector
+    @Dependency(\.connectionIntentStorage) private var storage
     @Dependency(\.connectionBridge) private var connectionBridge
     @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
 
@@ -60,6 +63,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     @CasePathable
     public enum Action: Sendable {
+        case preparation(ConnectionSpec, Server, ConnectionProtocol, TunnelFeatures)
         case connect(ServerConnectionIntent)
         case disconnect(DisconnectReason)
         case tunnel(ExtensionFeature.Action)
@@ -79,6 +83,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     }
 
     private enum CancelID {
+        case preparation
         case connectionTimeout
         case observation
     }
@@ -91,7 +96,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
             defer {
-                updateConnectionState(action: action, state: state)
+                updateConnectionState(currentState: state, forceUpdate: action.is(\.disconnect))
             }
             switch action {
             case .startObserving:
@@ -111,6 +116,42 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .send(.localAgent(.stopAllObservations)),
                     .cancel(id: CancelID.observation)
                 )
+            case .preparation(let spec, let selectedServer, let connectionProtocol, let tunnelFeatures):
+                return .run { send in
+                    let portSelectionResult = try await portSelector.select(selectedServer.endpoint, connectionProtocol)
+
+                    try Task.checkCancellation()
+
+                    guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
+                        throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
+                    }
+
+                    let ports = portSelectionResult.ports
+                    log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
+
+                    let features = vpnFeaturesProvider.connectionFeatures()
+                    let tunnelSettings = TunnelSettings(transport: transport, ports: ports, features: tunnelFeatures)
+
+                    let intent = ServerConnectionIntent(
+                        spec: spec,
+                        server: selectedServer,
+                        tunnelSettings: tunnelSettings,
+                        features: features
+                    )
+
+                    try storage.set(intent)
+
+                    await send(.connect(intent))
+                } catch: { error, send in
+                    switch error {
+                    case let connectionError as ConnectionError:
+                        await send(.disconnect(.connectionFailure(connectionError)))
+                    default:
+                        log.error("Failed in preparing connection with error: \(error)")
+                    }
+                }
+                .cancellable(id: CancelID.preparation)
+
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
 
@@ -140,6 +181,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     state.serverReconnectionIntent = intent
                 }
                 return .merge(
+                    .cancel(id: CancelID.preparation),
                     .cancel(id: CancelID.connectionTimeout),
                     .send(.localAgent(.disconnect(nil))),
                     .send(.tunnel(.disconnect(nil)))
@@ -275,8 +317,8 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
     }
 
-    func updateConnectionState(action: ConnectionFeature.Action, state: ConnectionFeature.State) {
-        let newConnectionState = ConnectionState(connectionFeatureState: state)
+    func updateConnectionState(currentState: ConnectionFeature.State, forceUpdate: Bool = false) {
+        let newConnectionState = ConnectionState(connectionFeatureState: currentState)
         if newConnectionState != connectionState {
             if case let .connecting(server) = connectionState,
                server != nil,
@@ -286,12 +328,15 @@ public struct ConnectionFeature: Reducer, Sendable {
             } else {
                 $connectionState.withLock { $0 = newConnectionState }
             }
+        } else if forceUpdate {
+            $connectionState.withLock { $0 = newConnectionState }
         }
     }
 }
 
 @CasePathable
 public enum ConnectionError: Error, Equatable, Sendable {
+    case unexpectedProtocol(VpnProtocol)
     case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)

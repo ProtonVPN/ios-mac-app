@@ -51,7 +51,7 @@ extension ConnectionIntentStorage: DependencyKey {
         }
         // TunnelFeatures are not currently used by a consumer of `getConnectionIntent`
         let tunnelFeatures = TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
-        let tunnelSettings = TunnelSettings(transport: transport, ports: lastWGConfig.ports, tunnelFeatures: tunnelFeatures)
+        let tunnelSettings = TunnelSettings(transport: transport, ports: lastWGConfig.ports, features: tunnelFeatures)
         @Dependency(\.vpnFeaturesProvider) var featuresProvider
         let features = featuresProvider.connectionFeatures()
         let legacyIntent = ServerConnectionIntent(spec: legacySpec, server: legacyServer, tunnelSettings: tunnelSettings, features: features)

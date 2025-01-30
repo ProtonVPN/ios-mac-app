@@ -81,6 +81,7 @@ public struct HomeFeature {
     }
 
     private enum CancelID {
+        case connectTask
         case connectionState
     }
 
@@ -116,6 +117,8 @@ public struct HomeFeature {
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) &&
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
     }
+
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         if shouldUseConnectionFeature {
@@ -158,6 +161,8 @@ public struct HomeFeature {
                 } catch: { error, _ in
                     log.error("Error connecting to VPN: \(error)")
                 }
+                .cancellable(id: CancelID.connectTask)
+
             case .changeServer:
                 guard case .available = authorizer.serverChangeAvailability() else {
                     log.error("User is not authorized for server change, action should have been unavailable")
@@ -187,7 +192,10 @@ public struct HomeFeature {
                 case .connect(let spec):
                     return .send(.connect(spec))
                 case .disconnect:
-                    return .send(.disconnect)
+                    return .merge(
+                        .send(.disconnect),
+                        .cancel(id: CancelID.connectTask)
+                    )
                 case .tapAction:
                     if let connectionState = state.vpnConnectionStatus.actual?.connectionScreenFeatureState() {
                         state.destination = .connectionDetails(connectionState)
@@ -269,8 +277,6 @@ public struct HomeFeature {
         }
         .ifLet(\.$destination, action: \.destination)
     }
-
-    public init() {}
 }
 
 private extension FeatureStatisticsMessage.NetShieldStats {
@@ -281,39 +287,5 @@ private extension FeatureStatisticsMessage.NetShieldStats {
             dataSaved: UInt64(bytesSaved),
             enabled: true
         )
-    }
-}
-
-private extension Effect {
-    static func onChange<Value>(
-        of shared: SharedReader<Value>,
-        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
-        reinject transform: @escaping (Value) -> Action
-    ) -> Self {
-        return listen(to: shared.publisher, on: scheduler, reinjecting: transform)
-    }
-
-    static func onChange<Value>(
-        of shared: SharedReader<Value?>,
-        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
-        reinject transform: @escaping (Value) -> Action
-    ) -> Self {
-        return listen(to: shared.publisher, on: scheduler, reinjecting: transform)
-    }
-
-    static func listen<Output>(
-        to publisher: some Publisher<Output, Never>,
-        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
-        reinjecting transform: @escaping (Output) -> Action
-    ) -> Self {
-        return self.publisher { publisher.receive(on: scheduler).map(transform) }
-    }
-
-    static func listen<Output>(
-        to publisher: some Publisher<Output?, Never>,
-        on scheduler: AnySchedulerOf<UIScheduler> = .shared,
-        reinjecting transform: @escaping (Output) -> Action
-    ) -> Self {
-        return self.publisher { publisher.receive(on: scheduler).compactMap({ $0 }).map(transform) }
     }
 }

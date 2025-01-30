@@ -35,7 +35,10 @@ public struct ExtensionFeature: Reducer, Sendable {
 
     public init() { }
 
-    private enum CancelID { case observation }
+    private enum CancelID {
+        case tunnelStart
+        case observation
+    }
 
     @CasePathable
     @dynamicMemberLookup
@@ -91,10 +94,11 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(with: intent)
+                        try Task.checkCancellation()
                         // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
                         return true
                     }))
-                }
+                }.cancellable(id: CancelID.tunnelStart)
 
             case .tunnelStartRequestFinished(.success):
                 // Tunnel has started, but we may still need to wait for connection to be established
@@ -154,15 +158,19 @@ public struct ExtensionFeature: Reducer, Sendable {
                 if case .preparingConnection = state {
                     // The tunnel has not yet been started, so we can transition straight into `.disconnected`.
                     state = .disconnected(error)
-                    return .none
+                    return .cancel(id: CancelID.tunnelStart)
                 }
-                if case .disconnecting = state { return .none }
-                state = .disconnecting(error)
-                return .run {
-                    _ in try await tunnelManager.stopTunnel()
-                } catch: { error, _ in
-                    log.assertionFailure("Failed to stop tunnel: \(error)")
+                if state.shouldTransitionToDisconnecting {
+                    state = .disconnecting(error)
                 }
+                return .merge(
+                    .cancel(id: CancelID.tunnelStart),
+                    .run { _ in
+                        try await tunnelManager.stopTunnel()
+                    } catch: { error, _ in
+                        log.assertionFailure("Failed to stop tunnel: \(error)")
+                    }
+                )
 
             case .tunnelStartRequestFinished(.failure(let error)):
                 // Start request failed, so there's no need to disconnect
@@ -195,6 +203,20 @@ public struct ExtensionFeature: Reducer, Sendable {
             }
         } catch: { error, send in
             log.error("Failed to determined last disconnect error \(error)", category: .connection)
+        }
+    }
+}
+
+private extension ExtensionFeature.State {
+    /// In case of an explicit disconnect action received within the Reducer, we should transition to `.disconnecting`
+    /// only when it makes sense.
+    /// Especially, we want to avoid transitioning to `.disconnecting` when we were already `.disconnected`.
+    var shouldTransitionToDisconnecting: Bool {
+        switch self {
+        case .preparingConnection, .connecting, .connected:
+            return true
+        case .disconnecting, .disconnected:
+            return false
         }
     }
 }

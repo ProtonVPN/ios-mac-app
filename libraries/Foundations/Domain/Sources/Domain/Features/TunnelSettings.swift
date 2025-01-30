@@ -21,11 +21,11 @@ import Foundation
 public struct TunnelSettings: Equatable, Sendable, Codable {
     public let transport: WireGuardTransport
     public let ports: [Int]
-    public let tunnelFeatures: TunnelFeatures
+    public let features: TunnelFeatures
 
-    public init(transport: WireGuardTransport, ports: [Int],  tunnelFeatures: TunnelFeatures) {
+    public init(transport: WireGuardTransport, ports: [Int], features: TunnelFeatures) {
         self.transport = transport
         self.ports = ports
-        self.tunnelFeatures = tunnelFeatures
+        self.features = features
     }
 }

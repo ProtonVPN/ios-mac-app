@@ -43,6 +43,7 @@ let package = Package(
         .target(
             name: "Home",
             dependencies: [
+                "CommonNetworking",
                 "Connection",
                 "CommonNetworking",
                 "Persistence",
@@ -85,6 +86,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 "Theme",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ]
         ),

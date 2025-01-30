@@ -68,8 +68,8 @@ extension ManagerConfigurator {
         protocolConfiguration.username = connectionConfiguration.username
 
 #if os(iOS)
-        protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.tunnelFeatures.killSwitch
-        protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.tunnelFeatures.excludeLocalNetworks
+        protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
+        protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
 #endif
 
         guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {

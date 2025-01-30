@@ -213,7 +213,7 @@ struct MainFeature {
         @Dependency(\.connectionConfiguration) var configuration
         let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)
         let ports = server.endpoint.overridePorts(using: .wireGuard(.udp)) ?? defaultPorts
-        let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, tunnelFeatures: TunnelFeatures())
+        let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, features: TunnelFeatures())
         return .init(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
     }
 }

@@ -36,6 +36,8 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .timeout:
             break
+        case .unexpectedProtocol(_):
+            break
         }
         return ConnectionFailedAlert()
     }

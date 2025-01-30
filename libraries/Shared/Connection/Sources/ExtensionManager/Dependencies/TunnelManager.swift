@@ -92,8 +92,8 @@ final class PacketTunnelManager: TunnelManager {
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
         let manager = try await updateTunnel(for: .connection(intent))
-        let session = manager.session
-        try session.startTunnel()
+        try Task.checkCancellation()
+        try manager.session.startTunnel()
     }
 
     func stopTunnel() async throws {

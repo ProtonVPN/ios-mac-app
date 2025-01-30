@@ -799,18 +799,13 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
         await store.receive(\.disconnect.connectionFailure.timeout)
 
-        await store.receive(\.localAgent.disconnect) {
-            $0.localAgent = .disconnecting(nil)
-        }
+        await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {
             // If we never started the tunnel, we should transition straight away into .disconnected
             $0.tunnel = .disconnected(nil)
         }
 
         await mockClock.advance(by: .milliseconds(250))
-        await store.receive(\.localAgent.event.state.disconnected) {
-            $0.localAgent = .disconnected(nil)
-        }
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
