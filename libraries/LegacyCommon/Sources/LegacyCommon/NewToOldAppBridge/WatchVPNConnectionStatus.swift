@@ -27,7 +27,6 @@ import PMLogger
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
 @available(macOS 13, *)
-@available(iOS, unavailable)
 @available(tvOS, unavailable)
 extension VPNConnectionStatusPublisherKey: DependencyKey {
 

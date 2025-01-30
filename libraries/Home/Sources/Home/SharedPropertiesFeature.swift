@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import ProtonCoreFeatureFlags
 import CommonNetworking
 import Foundation
 import Domain
@@ -56,13 +57,18 @@ public struct SharedPropertiesFeature {
             .map(Action.userLocationChange)
     }
 
-    private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
-        let stream = Dependency(\.connectionBridge)
-            .wrappedValue
-            .statusStream
-            .map { Action.newConnectionStatus($0) }
+    private static var connectionStatusStream: AsyncStream<VPNConnectionStatus> {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            return Dependency(\.connectionBridge).wrappedValue.statusStream
+        } else {
+            return Dependency(\.vpnConnectionStatusPublisher).wrappedValue()
+        }
+    }
 
-        for await value in stream {
+    private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
+        let actionStream = Self.connectionStatusStream.map { Action.newConnectionStatus($0) }
+
+        for await value in actionStream {
             send(value)
         }
     }
