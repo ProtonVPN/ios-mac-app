@@ -988,16 +988,16 @@
 "_wireguard_logs" = "WireGuard günlük kayıtları";
 
 /* iOS widget help screen: title */
-"_activate_widget" = "Ekran bileşenini kullanıma al";
+"_activate_widget" = "Araç takımını kullanıma al";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Ekran bileşenlerinize erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
+"_activate_widget_step_1" = "Araç takımlarınıza erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Tamamen aşağı kaydırın ve düzenle düğmesine dokunun.";
+"_activate_widget_step_2" = "Tümüyle aşağı kaydırın ve düzenle düğmesine dokunun.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Proton VPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
+"_activate_widget_step_3" = "Proton VPN araç takımını etkin araç takımları listesine ekleyin.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Sorun bildireceğim";
@@ -1145,7 +1145,7 @@
 "_extensions" = "Uzantılar";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS ekran bileşeni";
+"_widget" = "iOS araç takımı";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Kullanım istatistikleri";
@@ -1958,7 +1958,7 @@
 "_settings_title_beta_access" = "Beta erişimi";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
-"_settings_title_widget" = "Gereç";
+"_settings_title_widget" = "Araç takımı";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
 "_settings_title_support_center" = "Destek merkezi";

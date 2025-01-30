@@ -1546,7 +1546,7 @@
 "_vpn_accelerator_change_title" = "Cambiar VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator activa un conjunto de tecnologías únicas para mejorar el rendimiento que pueden aumentar las velocidades de VPN hasta en un 400%%.\nMás información";
+"_vpn_accelerator_description" = "VPN Accelerator activa un conjunto de tecnologías únicas para mejorar el rendimiento que pueden aumentar las velocidades de VPN hasta en un 400%%.\nMás información";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Más información";
@@ -1898,13 +1898,13 @@
 "_alert_protocol_deprecated_title" = "Protocolo no disponible";
 
 /* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
-"_alert_protocol_deprecated_body_macos" = "Este perfil utiliza un protocolo desactualizado y no compatible. Pulsa \"Actualizar\" para utilizar Smart Protocol por defecto. Más información";
+"_alert_protocol_deprecated_body_macos" = "Este perfil utiliza un protocolo desactualizado y no compatible. Pulsa «Actualizar» para utilizar el protocolo Smart Protocol por defecto. Más información";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
 "_alert_protocol_deprecated_link_text" = "Más información";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
-"_alert_protocol_deprecated_body_ios" = "Este perfil utiliza un protocolo obsoleto que ya no es compatible. Pulsa \"Actualizar\" para emplear el protocolo Smart predeterminado.";
+"_alert_protocol_deprecated_body_ios" = "Este perfil utiliza un protocolo obsoleto que ya no es compatible. Pulsa «Actualizar» para utilizar el protocolo Smart Protocol determinado.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
 "_alert_protocol_deprecated_enable_smart" = "Actualizar";

@@ -2048,7 +2048,7 @@
 "_settings_protocol_tag_new" = "BARU";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
-"_settings_protocol_footer" = "Protokol VPN menentukan bagaimana data akan berpindah antara server VPN dan perangkat Anda. **[Pelajari lebih lanjut](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+"_settings_protocol_footer" = "Protokol VPN menentukan bagaimana data antara server VPN dan perangkat Anda akan saling berpindah. **[Pelajari lebih lanjut](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_title" = "Koneksi VPN Aktif";
@@ -2297,7 +2297,7 @@
 "upsell_p2pSupport_title" = "Akses unduhan peer-to-peer (P2P) dan pembagian berkas";
 
 /* Subtitle of p2p support upsell modal */
-"upsell_p2pSupport_subtitle" = "Tingkatkan kecepatan pengunggahan dan pengunduhan Anda sambil menyembunyikan alamat IP Anda.";
+"upsell_p2pSupport_subtitle" = "Tingkatkan kecepatan unggahan dan unduhan Anda sambil menyembunyikan alamat IP Anda.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Lindungi 10 perangkat secara bersamaan";

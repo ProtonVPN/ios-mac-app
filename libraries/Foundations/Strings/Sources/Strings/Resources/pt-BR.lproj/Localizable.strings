@@ -1719,10 +1719,10 @@
 "_connection_card_accessibility_connecting_to" = "Conectando com %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
+"_connection_card_accessibility_last_connected_to" = "Você foi conectado pela última vez a %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
+"_connection_card_accessibility_browsing_from" = "Você está navegando com segurança em %@.";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Selecione sua conexão padrão";
@@ -2618,7 +2618,7 @@
 "_change_password" = "Alterar senha";
 
 /* Change password alert message */
-"_password_changed_successfully" = "Senha alterada com sucesso";
+"_password_changed_successfully" = "A senha foi alterada.";
 
 /* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
 "_ike_deprecation_alert_title" = "Ativar IKEv2?";

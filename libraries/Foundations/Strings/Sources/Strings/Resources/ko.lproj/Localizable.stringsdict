@@ -73,7 +73,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>보안 서버 %d개</string>
+        <string>%d개 보안 서버</string>
       </dict>
     </dict>
     <key>modals_new_upsell_all_countries_subtitle</key>
@@ -96,7 +96,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 보안 서버</string>
+        <string>%d개 이상 보안 서버</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>

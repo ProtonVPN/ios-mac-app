@@ -1686,7 +1686,7 @@
 
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
-"_home_tab" = "Home";
+"_home_tab" = "Domači";
 
 /* Countries tab in bottom menu [Redesign_2023] */
 "_countries_tab" = "Countries";
@@ -1955,7 +1955,7 @@
 "_settings_title_theme" = "Tema";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
-"_settings_title_beta_access" = "Beta access";
+"_settings_title_beta_access" = "Beta dostop";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "Pripomoček";
@@ -2015,7 +2015,7 @@
 "_settings_theme_label_light" = "Svetla";
 
 /* UDP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_udp" = "Speed (UDP)";
+"_settings_protocol_section_title_udp" = "Hitrost (UDP)";
 
 /* TCP protocols section header in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_section_title_tcp" = "Reliability (TCP)";
@@ -2288,7 +2288,7 @@
 "maximum_device_limit" = "Odklopite drugo napravo, da povežete to.";
 
 /* Title of streaming upsell modal */
-"upsell_streaming_title" = "Stream in 4K";
+"upsell_streaming_title" = "Pretakajte v 4K";
 
 /* Subtitle of streaming upsell modal */
 "upsell_streaming_subtitle" = "Enjoy your favorite movies and TV shows from anywhere in the world.";
@@ -2399,7 +2399,7 @@
 "modals_whats_new" = "Kaj je novega";
 
 /* Button Title of the "What's new" screen */
-"modals_whats_new_button_title" = "Take a look";
+"modals_whats_new_button_title" = "Poglej";
 
 /* Title of redesign related content of the "What's new" screen */
 "modals_whats_new_redesign_title" = "New look, same protection";
@@ -2684,7 +2684,7 @@
 "upsell_carousel_secure_core_subtitle" = "Add another layer of encryption to your VPN connection";
 
 /* Home upsell carousel card title */
-"upsell_carousel_p2p_title" = "P2P support";
+"upsell_carousel_p2p_title" = "Podpora za P2P";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_p2p_subtitle" = "Download files through BitTorrent and other file sharing protocols";
@@ -2696,7 +2696,7 @@
 "upsell_carousel_devices_subtitle" = "Security and privacy on all your devices";
 
 /* Home upsell carousel card title */
-"upsell_carousel_tor_title" = "Tor over VPN";
+"upsell_carousel_tor_title" = "Tor preko VPN";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_tor_subtitle" = "Use the Tor network over your VPN connection for extra privacy";

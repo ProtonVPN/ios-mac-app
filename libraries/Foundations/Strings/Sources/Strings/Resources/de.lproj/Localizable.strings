@@ -1734,7 +1734,7 @@
 "home_default_connection_fastest_description" = "Der beste Server für deinen Standort";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_name" = "Most Recent";
+"home_default_connection_most_recent_name" = "Neueste";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_description" = "Deine zuletzt verwendete Verbindung";
