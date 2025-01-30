@@ -21,6 +21,21 @@
 //
 
 import Foundation
+import VPNShared
+import Dependencies
+
+private enum AnnouncementManagerKey: TestDependencyKey {
+    static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()
+    static let previewValue: any AnnouncementManager = AnnouncementManagerImplementation()
+    static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
+}
+
+public extension DependencyValues {
+    var announcementManager: AnnouncementManager {
+        get { self[AnnouncementManagerKey.self] }
+        set { self[AnnouncementManagerKey.self] = newValue }
+    }
+}
 
 public protocol AnnouncementManager {
     var hasUnreadAnnouncements: Bool { get }
@@ -31,22 +46,16 @@ public protocol AnnouncementManager {
     func shouldShowAnnouncementsIcon() -> Bool
 }
 
-public protocol AnnouncementManagerFactory {
-    func makeAnnouncementManager() -> AnnouncementManager
-}
-
 /// Fetches announcements from storage.
 /// Informs if there are any unread current announcements.
 /// Marks announcements as read.
 public class AnnouncementManagerImplementation: AnnouncementManager {
     
-    public typealias Factory = AnnouncementStorageFactory
-    private let factory: Factory
+    private var announcementStorage: AnnouncementStorage
     
-    private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
-    
-    public init(factory: Factory) {
-        self.factory = factory
+    public init() {
+        @Dependency(\.defaultsProvider) var provider
+        self.announcementStorage = AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
     }
 
     public func shouldShowAnnouncementsIcon() -> Bool {

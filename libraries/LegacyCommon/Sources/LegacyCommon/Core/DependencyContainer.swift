@@ -421,13 +421,6 @@ extension Container: AnnouncementRefresherFactory {
     }
 }
 
-// MARK: - AnnouncementManagerFactory
-extension Container: AnnouncementManagerFactory {
-    public func makeAnnouncementManager() -> AnnouncementManager {
-        AnnouncementManagerImplementation(factory: self)
-    }
-}
-
 // MARK: AnnouncementsViewModelFactory
 extension Container: AnnouncementsViewModelFactory {
     public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {

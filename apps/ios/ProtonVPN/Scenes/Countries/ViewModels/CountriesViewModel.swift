@@ -35,6 +35,7 @@ import Search
 import LegacyCommon
 import ProtonCoreFeatureFlags
 import VPNAppCore
+import VPNShared
 
 typealias Row = RowViewModel
 
@@ -127,7 +128,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & NetShieldPropertyProviderFactory
         & NATTypePropertyProviderFactory
         & SafeModePropertyProviderFactory
-        & AnnouncementManagerFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -141,7 +141,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+    @Dependency(\.announcementManager) var announcementManager
 
     var delegate: CountriesVMDelegate?
 

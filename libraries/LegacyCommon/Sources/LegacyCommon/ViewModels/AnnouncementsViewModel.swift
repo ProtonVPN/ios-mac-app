@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import Dependencies
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel
@@ -30,10 +31,10 @@ public protocol AnnouncementsViewModelFactory {
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
     
-    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
+    public typealias Factory = SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
     private let factory: Factory
-    
-    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+
+    @Dependency(\.announcementManager) var announcementManager
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()

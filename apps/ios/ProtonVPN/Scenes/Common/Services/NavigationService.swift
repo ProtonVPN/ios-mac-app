@@ -139,7 +139,7 @@ final class NavigationService {
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
     private lazy var sessionService = factory.makeSessionService()
-    private lazy var announcementManager = factory.makeAnnouncementManager()
+    @Dependency(\.announcementManager) var announcementManager
 
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService()
