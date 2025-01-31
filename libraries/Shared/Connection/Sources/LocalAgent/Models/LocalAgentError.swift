@@ -19,7 +19,7 @@
 import Foundation
 import CasePaths
 import GoLibs
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 public enum LocalAgentErrorSystemError {
     case splitTcp

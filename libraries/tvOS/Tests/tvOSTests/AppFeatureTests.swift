@@ -18,7 +18,8 @@
 
 import XCTest
 import ComposableArchitecture
-import struct Ergonomics.GenericError
+import Ergonomics
+import ModalsServices
 @testable import tvOS
 @testable import CommonNetworking
 

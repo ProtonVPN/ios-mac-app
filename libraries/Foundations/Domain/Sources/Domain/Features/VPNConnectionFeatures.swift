@@ -19,11 +19,11 @@
 import Foundation
 
 public struct VPNConnectionFeatures: Equatable, Sendable {
-    public let netshield: NetShieldType
-    public let vpnAccelerator: Bool
-    public let bouncing: String?
-    public let natType: NATType
-    public let safeMode: Bool?
+    public private(set) var netshield: NetShieldType
+    public private(set) var vpnAccelerator: Bool
+    public private(set) var bouncing: String?
+    public private(set) var natType: NATType
+    public private(set) var safeMode: Bool?
 
     public init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
         self.netshield = netshield
@@ -48,12 +48,14 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         return result
     }
 
+    public func copy<V>(with changes: (field: WritableKeyPath<VPNConnectionFeatures, V>, newValue: V)...) -> Self {
+        var copy = self
+        changes.forEach { copy[keyPath: $0.field] = $0.newValue }
+        return copy
+    }
+
     public func copyWithChanged(bouncing: String?) -> Self {
-        return Self(netshield: netshield,
-                    vpnAccelerator: vpnAccelerator,
-                    bouncing: bouncing,
-                    natType: natType,
-                    safeMode: safeMode)
+        return copy(with: (field: \.bouncing, newValue: bouncing))
     }
 }
 
@@ -93,14 +95,4 @@ extension VPNConnectionFeatures {
 
         return equalsWithoutSafeMode && self.safeMode == other?.safeMode
     }
-}
-
-public extension VPNConnectionFeatures {
-    static let defaultTVFeatures = VPNConnectionFeatures(
-        netshield: .level1,
-        vpnAccelerator: true,
-        bouncing: nil, // This is set to the target server's `label` property during connection
-        natType: .moderateNAT,
-        safeMode: false
-    )
 }

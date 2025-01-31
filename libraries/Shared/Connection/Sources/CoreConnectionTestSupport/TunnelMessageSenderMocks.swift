@@ -19,7 +19,7 @@
 import Foundation
 import XCTestDynamicOverlay
 import ExtensionIPC
-import ConnectionFoundations
+import CoreConnection
 
 extension TunnelMessageSender {
     public static let unimplemented: TunnelMessageSender = .init(send: { request in

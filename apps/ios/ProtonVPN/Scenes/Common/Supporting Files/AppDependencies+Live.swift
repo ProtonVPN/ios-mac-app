@@ -34,6 +34,10 @@ extension DatabaseConfigurationKey: DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
 }
 
+extension AppInfoKey: DependencyKey {
+    public static let liveValue: AppInfo = AppInfoImplementation(context: .mainApp)
+}
+
 import CommonNetworking
 import ProtonCoreChallenge
 import ProtonCoreFoundations

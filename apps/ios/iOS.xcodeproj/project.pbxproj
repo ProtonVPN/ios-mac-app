@@ -183,6 +183,7 @@
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
+		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
 		AD4770B72BBED3AF005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */; };
@@ -667,6 +668,7 @@
 		8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Extension.swift"; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
 		AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
@@ -1347,6 +1349,14 @@
 			path = SLIs;
 			sourceTree = "<group>";
 		};
+		AD1D1B8A2D41196A00C185FD /* Settings+Connection */ = {
+			isa = PBXGroup;
+			children = (
+				AD1D1B8B2D41197700C185FD /* SettingsClient.swift */,
+			);
+			path = "Settings+Connection";
+			sourceTree = "<group>";
+		};
 		ADDB04A52B768CAC00211434 /* Countries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1905,6 +1915,7 @@
 		F36ECC992611C65D0089B898 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AD1D1B8A2D41196A00C185FD /* Settings+Connection */,
 				AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */,
 				D5C137692334A54D00D20514 /* Coordinator.swift */,
 				D5F56898232620C600795953 /* DependencyContainer.swift */,
@@ -2938,6 +2949,7 @@
 				E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */,
 				79DEE9092111A5E100C354EF /* TabBar.swift in Sources */,
 				792B58C02150DEA3000BB3A3 /* StatusViewController.swift in Sources */,
+				AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */,
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,
 				E1D187E92301A20700C5F492 /* VpnProtocolViewController.swift in Sources */,
 				D5F56899232620C600795953 /* DependencyContainer.swift in Sources */,

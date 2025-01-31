@@ -114,7 +114,9 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        group.notify(queue: .global()) { [fallback] in
+        group.notify(queue: .global()) { [self, fallback] in
+            _ = self // making sure self stays alive while we wait for the tasks to complete
+
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {

@@ -24,7 +24,7 @@ import Dependencies
 
 import ExtensionIPC
 import struct Domain.ServerConnectionIntent
-import struct ConnectionFoundations.LogicalServerInfo
+import struct CoreConnection.LogicalServerInfo
 
 @available(iOS 16, *)
 final class MockTunnelManager: TunnelManager {

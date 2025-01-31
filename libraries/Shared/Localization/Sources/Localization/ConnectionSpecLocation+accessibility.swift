@@ -56,7 +56,7 @@ public extension ConnectionSpec.Location {
             return "Random server"
 
         case .region(let code),
-                .exact(_, _, _, let code),
+                .exact(_, _, _, _, let code),
                 .secureCore(.fastestHop(let code)),
                 .secureCore(.hop(let code, _)):
             return regionName(locale: locale, code: code)
@@ -67,7 +67,7 @@ public extension ConnectionSpec.Location {
         switch self {
         case .fastest, .random, .region, .secureCore(.random):
             return nil
-        case let .exact(server, number, subregion, _):
+        case let .exact(server, _, number, subregion, _):
             var text = ""
             if case .free = server {
                 text = "FREE"

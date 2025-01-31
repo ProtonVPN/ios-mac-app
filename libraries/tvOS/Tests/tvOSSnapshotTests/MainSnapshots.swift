@@ -92,7 +92,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
         $connectionState.withLock { $0 = .connecting(.ca) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
-        $connectionState.withLock { $0 = .connected(.ca, nil) }
+        $connectionState.withLock { $0 = .connected(.ca, .now, nil) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "3 Connected " + trait.name)
     }
 }

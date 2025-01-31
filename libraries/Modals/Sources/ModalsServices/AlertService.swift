@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import enum Connection.ConnectionError
-
 import Combine
 import Foundation
-import ComposableArchitecture
 import Dependencies
+import DependenciesMacros
 import protocol Foundation.LocalizedError
 
 import XCTestDynamicOverlay
@@ -31,48 +29,42 @@ public protocol AlertConvertibleError: Error {
     var alert: AlertService.Alert { get }
 }
 
-// TODO: - When Swift 6 is available, consider generalizing to an AsyncSequence<Alert> instead of a concrete AsyncStream
-
 /// A basic AlertService.
+@DependencyClient
 public struct AlertService {
     /// A stream of alerts.
-    public internal(set) var alerts: @Sendable () async -> AsyncStream<Alert> = unimplemented()
+    public internal(set) var alerts: @Sendable () async -> AsyncStream<Alert> = { .init { $0.finish() } }
     /// Entry point of errors that will be treated accordingly by the service.
-    var feed: @Sendable (Error) async -> Void = unimplemented()
+    public internal(set) var feed: @Sendable (Error) async -> Void
     /// Manually interrupt alert listening.
-    public internal(set) var finish: @Sendable () async -> Void = unimplemented()
+    public internal(set) var finish: @Sendable () async -> Void
 }
 
 extension AlertService {
-    public static var live: AlertService {
+    public static let live: AlertService = {
         let subject = CurrentValueSubject<Alert?, Never>(nil)
+        // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
+        // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
         let stream = subject.compactMap { $0 }.values.eraseToStream()
 
         return AlertService {
             return stream
         } feed: { error in
-
             let alert: Alert
             if let alertConvertibleError = error as? AlertConvertibleError {
                 alert = alertConvertibleError.alert
             } else if let localizedError = error as? LocalizedError {
                 alert = Alert(localizedError: localizedError)
             } else if type(of: error) is NSError.Type {
-                // Until we integrate BugReport, show specific error information to users
-                // even if the error is not explicitly convertible/localizable by us
                 alert = Alert(title: "Error", message: (error as NSError).localizedDescription)
             } else {
-                // and even if it's not localizable at all
                 alert = Alert(title: "Error", message: "\(error)")
-            }
-            if let currentAlert = subject.value, alert == currentAlert {
-                log.warning("An error of this type has already been received, feeding anyway...")
             }
             subject.send(alert)
         } finish: {
             subject.send(completion: .finished)
         }
-    }
+    }()
 }
 
 // MARK: - Dependency
@@ -84,7 +76,7 @@ extension AlertService: DependencyKey {
 
 extension DependencyValues {
     public var alertService: AlertService {
-      get { self[AlertService.self] }
-      set { self[AlertService.self] = newValue }
+        get { self[AlertService.self] }
+        set { self[AlertService.self] = newValue }
     }
 }

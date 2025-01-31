@@ -26,7 +26,6 @@ import Connection
 struct ProtectionStatusFeature {
     @ObservableState
     struct State: Equatable {
-
         @SharedReader(.connectionState) var connectionState: ConnectionState?
         @Shared(.userLocation) var userLocation: UserLocation?
     }

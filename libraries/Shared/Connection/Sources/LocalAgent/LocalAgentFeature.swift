@@ -20,11 +20,15 @@ import Foundation
 
 import ComposableArchitecture
 
-import struct Domain.ServerEndpoint
-import ConnectionFoundations
+import Domain
+import CoreConnection
+import class GoLibs.LocalAgentFeatures
 
 @available(iOS 16, *)
 public struct LocalAgentFeature: Reducer, Sendable {
+    static let netShieldTimerInterval: Duration = .seconds(60)
+    static let netShieldTimerTolerance: Duration = .seconds(5)
+
     @Dependency(\.localAgent) var localAgent
     @Dependency(\.localAgentConfiguration) var configuration
 
@@ -42,9 +46,11 @@ public struct LocalAgentFeature: Reducer, Sendable {
     @CasePathable
     public enum Action: Sendable {
         case startObservingEvents
-        case stopObservingEvents
+        case startNetShieldStatsObservation
+        case stopAllObservations
+        case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
         case event(LocalAgentEvent)
-        case connect(ServerEndpoint, VPNAuthenticationData)
+        case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures)
         case disconnect(LocalAgentConnectionError?)
         case delegate(DelegateAction)
 
@@ -56,43 +62,57 @@ public struct LocalAgentFeature: Reducer, Sendable {
         }
     }
 
-    private enum CancelID { case observation }
+    private enum CancelIDs {
+        case eventObservation
+        case netshieldStatsObservation
+    }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .startObservingEvents:
+                // TODO: (nit) Use new .listen TCA helper!
                 return .run { send in
                     for await event in self.localAgent.createEventStream() {
                         await send(.event(event))
                     }
                 }
-                .cancellable(id: CancelID.observation)
+                .cancellable(id: CancelIDs.eventObservation)
 
-            case .stopObservingEvents:
-                return .cancel(id: CancelID.observation)
-
-            case .connect(let server, let authenticationData):
-                let connectionConfiguration = ConnectionConfiguration(
-                    hostname: server.domain,
-                    netshield: .level1,
-                    vpnAccelerator: true,
-                    bouncing: server.label,
-                    natType: .moderateNAT,
-                    safeMode: false
+            case .stopAllObservations:
+                return .merge(
+                    .cancel(id: CancelIDs.eventObservation),
+                    .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
 
+            case .setFeatures(let features):
+                guard case .connected = state else {
+                    log.error("Feature changes will not be applied since we are not in connected state")
+                    return .none
+                }
+                guard let features = LocalAgentFeatures.from(featureSet: features) else {
+                    log.error("Failed to construct LocalAgentFeatures")
+                    return .none
+                }
+                localAgent.set(features: features)
+                return .none
+
+            case .connect(let server, let authenticationData, let features):
+                let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
+                let shouldStartNetShieldStatsObservation: Bool
                 do {
                     // Not a blocking call. Starts the LA connection process which, if unsuccessful, will continue to
                     // retry with increasing backoff delays.
                     try localAgent.connect(configuration: connectionConfiguration, data: authenticationData)
+                    shouldStartNetShieldStatsObservation = true
                 } catch {
                     state = .disconnected(.failedToEstablishConnection(error))
+                    shouldStartNetShieldStatsObservation = false
                 }
-                return .none
+                return shouldStartNetShieldStatsObservation ? .send(.startNetShieldStatsObservation) : .none
 
             case .disconnect(let error):
-                if case .disconnecting = state { return .none }
+                guard state.shouldTransitionToDisconnecting else { return .none }
                 state = .disconnecting(error)
                 localAgent.disconnect()
                 return .none
@@ -101,7 +121,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 // Persist potential errors causing the disconnection, saved in the previous state
                 let existingError: LocalAgentConnectionError? = state.disconnected ?? state.disconnecting ?? nil
                 state = .disconnected(existingError)
-                return .none
+                return .cancel(id: CancelIDs.netshieldStatsObservation)
 
             case .event(.state(.connecting)):
                 state = .connecting
@@ -138,8 +158,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .send(.disconnect(.serverCertificateError))
 
             case .event(.state(.softJailed)),
-                .event(.state(.hardJailed)),
-                .event(.state(.clientCertificateError)):
+                    .event(.state(.hardJailed)),
+                    .event(.state(.clientCertificateError)):
                 return .send(.delegate(.certificateRefreshRequired))
 
             case .event(.state(.invalid)):
@@ -163,6 +183,12 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
             case .delegate:
                 return .none // Delegate actions to be handled by parent
+
+            case .startNetShieldStatsObservation:
+                return .timer(interval: Self.netShieldTimerInterval, tolerance: Self.netShieldTimerTolerance) { _ in
+                    localAgent.retrieveNetShieldStats()
+                }
+                .cancellable(id: CancelIDs.netshieldStatsObservation)
             }
         }
     }
@@ -189,7 +215,6 @@ public enum LocalAgentConnectionError: Error, Equatable {
         }
     }
 }
-
 
 package enum LocalAgentErrorResolutionStrategy {
     case none // do nothing, error might resolve itself or doesn't warrant a response
@@ -241,5 +266,35 @@ extension LocalAgentError {
         case .unknown:
             return .none
         }
+    }
+}
+
+private extension LocalAgentFeature.State {
+    var shouldTransitionToDisconnecting: Bool {
+        switch self {
+        case .connecting, .connected:
+            return true
+        case .disconnecting, .disconnected:
+            return false
+        }
+    }
+}
+
+public extension Effect {
+    static func timer(
+        interval: Duration,
+        tolerance: Duration? = nil,
+        operation: @escaping @Sendable @MainActor (_ send: Send<Action>) async throws -> Void,
+        catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
+    ) -> Self {
+        self.run(
+            operation: { send in
+                @Dependency(\.continuousClock) var clock
+                for await _ in clock.timer(interval: interval, tolerance: tolerance) {
+                    try await operation(send)
+                }
+            },
+            catch: handler
+        )
     }
 }

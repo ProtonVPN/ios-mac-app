@@ -26,9 +26,10 @@ import PMLogger
 
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
+@available(macOS 13, *)
+@available(tvOS, unavailable)
 extension VPNConnectionStatusPublisherKey: DependencyKey {
 
-    @available(macOS 12, *)
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default
             .notifications(named: .AppStateManager.displayStateChange)
@@ -54,9 +55,11 @@ extension VPNConnectionStatusPublisherKey: DependencyKey {
             return .finished
         }
     }
-
 }
 
+@available(macOS 13, *)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
 extension VPNConnectionStatusKey: DependencyKey {
     public static var liveValue: @Sendable () async -> VPNConnectionStatus = {
         let appStateManager = Container.sharedContainer.makeAppStateManager()

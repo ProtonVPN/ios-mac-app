@@ -74,7 +74,7 @@ public protocol VpnManagerFactory {
     func makeVpnManager() -> VpnManagerProtocol
 }
 
-public class VpnManager: VpnManagerProtocol {
+public final class VpnManager: VpnManagerProtocol {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
     private var quickReconnection = false

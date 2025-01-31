@@ -1,5 +1,5 @@
 //
-//  Created on 13/06/2024.
+//  Created on 18/12/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -18,22 +18,8 @@
 
 import Foundation
 
-public struct VPNAuthenticationData {
-    public let clientKey: PrivateKey
-    public let clientCertificate: String
-
-    public init(clientKey: PrivateKey, clientCertificate: String) {
-        self.clientKey = clientKey
-        self.clientCertificate = clientCertificate
+public extension Collection where Element: Identifiable {
+    subscript(id elementID: Element.ID) -> Element? {
+        return first { $0.id == elementID }
     }
 }
-
-#if DEBUG
-// Can be moved to a separate target if there are more things we'd like mocks of in the future
-extension VPNAuthenticationData {
-    public static let empty = VPNAuthenticationData(
-        clientKey: .init(rawRepresentation: [], derRepresentation: "", base64X25519Representation: ""),
-        clientCertificate: ""
-    )
-}
-#endif

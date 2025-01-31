@@ -25,42 +25,32 @@ import Dependencies
 
 import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
-import struct ConnectionFoundations.WireguardConfig
-import struct ConnectionFoundations.StoredWireguardConfig
-import enum ConnectionFoundations.TunnelKeychainImplementationError
+
+import CoreConnection
 
 public struct ConnectionConfiguration {
-
     /// Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
     public let username: String
     public let wireguardConfig: WireguardConfig
-
-
 }
 
 public enum ConnectionConfigurationKey: DependencyKey {
-
-    public static var liveValue: ConnectionConfiguration {
-        return .init(
-            username: "mockman",
-            wireguardConfig: .init()
-        )
-    }
+    public static let testValue = ConnectionConfiguration(username: "mock_username", wireguardConfig: .init())
+    public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
 }
 
 extension DependencyValues {
-    var connectionConfiguration: ConnectionConfiguration {
+    public var connectionConfiguration: ConnectionConfiguration {
         get { self[ConnectionConfigurationKey.self] }
         set { self[ConnectionConfigurationKey.self] = newValue }
     }
 }
 
-
 extension ManagerConfigurator {
 
     private static func configuration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
-        // TODO: Provide bundle ID using a Dependency
-        let bundleID: String = "ch.protonmail.vpn.WireGuard-tvOS"
+        @Dependency(\.bundleIDClient) var bundleIDClient
+        let bundleID: String = bundleIDClient.bundleIdentifierForTarget()
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleID
 
@@ -69,7 +59,7 @@ extension ManagerConfigurator {
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
         protocolConfiguration.serverAddress = server.endpoint.exitIp
-        protocolConfiguration.wgProtocol = connectionIntent.transport.rawValue
+        protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
@@ -77,10 +67,14 @@ extension ManagerConfigurator {
         @Dependency(\.date) var date
         protocolConfiguration.username = connectionConfiguration.username
 
-        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.transport)) else {
-            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.transport)
+#if os(iOS)
+        protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
+        protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
+#endif
+
+        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {
+            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
         }
-        let overridePorts = server.endpoint.overridePorts(using: .wireGuard(connectionIntent.transport))
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
@@ -89,7 +83,7 @@ extension ManagerConfigurator {
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             serverPublicKey: server.endpoint.x25519PublicKey,
             entryServerAddress: entryIP,
-            ports: overridePorts ?? connectionConfiguration.wireguardConfig.defaultPorts(for: connectionIntent.transport),
+            ports: connectionIntent.tunnelSettings.ports,
             timestamp: date.now
         )
 

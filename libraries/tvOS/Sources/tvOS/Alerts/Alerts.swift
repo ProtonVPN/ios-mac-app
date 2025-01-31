@@ -17,47 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import protocol Foundation.LocalizedError
+import ModalsServices
 import Strings
-import SwiftUI
-
-// MARK: - Definitions
-
-extension AlertService.Alert {
-    private static var titleFallback: LocalizedStringKey { "Error" }
-    private static var messageFallback: LocalizedStringKey { "An error occurred." }
-}
-
-extension AlertService {
-    public struct Alert: Equatable {
-        let title: LocalizedStringKey
-        let message: LocalizedStringKey
-
-        init() {
-            self.title = Self.titleFallback
-            self.message = Self.messageFallback
-        }
-
-        init(title: LocalizedStringKey = Self.titleFallback, message: LocalizedStringKey = Self.messageFallback) {
-            self.title = title
-            self.message = message
-        }
-
-        init(title: String? = nil, message: String? = nil) {
-            self.title = title.flatMap { LocalizedStringKey($0) } ?? Self.titleFallback
-            self.message = message.flatMap { LocalizedStringKey($0) } ?? Self.messageFallback
-        }
-
-        init(localizedError: LocalizedError) {
-            self.title = localizedError.failureReason.map { .init($0) } ?? Self.titleFallback
-            self.message = localizedError.errorDescription.map { .init($0) } ?? Self.messageFallback
-        }
-
-        func callAsFunction() -> Self {
-            return self
-        }
-    }
-}
 
 // MARK: - Error alerts definitions
 
@@ -68,6 +29,8 @@ let ConnectionFailedAlert = AlertService.Alert(message: Localizable.connectionFa
 
 extension AlertService.Alert {
     func alertState<Action>(from: Action.Type) -> AlertState<Action> {
-        return AlertState<Action>(title: TextState(title), message: TextState(message))
+        let title = TextState(String(localized: title))
+        let message = TextState(String(localized: message))
+        return AlertState<Action>(title: title, message: message)
     }
 }

@@ -19,7 +19,7 @@
 import Foundation
 import Dependencies
 import func GoLibs.Ed25519NewKeyPair
-import ConnectionFoundations
+import CoreConnection
 
 // This should supercede our old VPNShared.VPNKeysGenerator
 public struct VPNKeysGenerator: DependencyKey {
@@ -44,7 +44,6 @@ public struct VPNKeysGenerator: DependencyKey {
                 throw GoLibsCryptoError.keyConversionFailure(error)
             }
         })
-
     }
 }
 

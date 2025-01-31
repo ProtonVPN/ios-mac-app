@@ -1,7 +1,7 @@
 //
-//  Created on 2022-07-01.
+//  Created on 22/07/2024.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2024 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import NetworkExtension
+import ProtonCoreFeatureFlags
+import Domain
 
-extension NEVPNStatus: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .disconnecting:
-            return "disconnecting"
-        case .disconnected:
-            return "disconnected"
-        case .connecting:
-            return "connecting"
-        case .connected:
-            return "connected"
-        case .reasserting:
-            return "reasserting"
-        case .invalid:
-            return "invalid"
-        @unknown default:
-            return "invalid unknown"
+extension FeatureFlagsRepository {
+    @available(tvOS, unavailable)
+    @available(macOS, unavailable)
+    public var isRedesigniOSEnabled: Bool {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS), #available(iOS 17, *) {
+            return true
         }
+        return false
+    }
+
+    public var isConnectionFeatureEnabled: Bool {
+        #if os(iOS)
+        return isRedesigniOSEnabled && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        #else
+        return false
+        #endif
     }
 }

@@ -17,8 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 import Connection
 import LocalAgent
+import ModalsServices
 import Strings
 
 extension ConnectionError: AlertConvertibleError {
@@ -32,7 +34,11 @@ extension ConnectionError: AlertConvertibleError {
             return agentError.alert
         case .serverMissing:
             break
+        case .intentMissing:
+            break
         case .timeout:
+            break
+        case .unexpectedProtocol(_):
             break
         }
         return ConnectionFailedAlert()

@@ -27,6 +27,8 @@ import Domain
 import VPNShared
 import VPNAppCore
 
+import ProtonCoreFeatureFlags
+
 public enum ConnectionStatus {
     
     case disconnected
@@ -53,18 +55,6 @@ public enum ResolutionUnavailableReason: Equatable {
     case maintenance
     case protocolNotSupported
     case locationNotFound(String?)
-}
-
-public enum RestrictedServerGroup {
-    
-    case all
-    case country(code: String)
-}
-
-public enum ServerSelection {
-    
-    case fastest
-    case random
 }
 
 public protocol VpnGatewayProtocol: AnyObject {
@@ -401,7 +391,48 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
 
+    func newConnect(with request: ConnectionRequest?) {
+        guard let request else {
+            assertionFailure("To connect with the new Connection package, you need a ConnectionSpec"); return
+        }
+
+        @Dependency(\.connectToVPN) var connect
+        @Dependency(\.specBuilder) var specBuilder
+
+        let spec = specBuilder.spec(request)
+
+        Task {
+            do {
+                try await connect(spec)
+            } catch {
+                await handleNewConnectError(error)
+            }
+        }
+    }
+
+    @MainActor
+    private func handleNewConnectError(_ error: any Error) {
+        @Dependency(\.pushAlert) var pushAlert
+
+        log.error("An error occured while connecting: \(error.localizedDescription)")
+
+        let alert = ConnectionPackageErrorAlert()
+        alert.title = "Error"
+        alert.message = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+
+        pushAlert(alert)
+    }
+
+    private var shouldUseNewConnect: Bool {
+        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+    }
+
     public func connect(with request: ConnectionRequest?) {
+        if shouldUseNewConnect {
+            newConnect(with: request)
+            return
+        }
+
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
         if `protocol`.isDeprecated && propertiesManager.featureFlags.enforceDeprecatedProtocols {

@@ -21,10 +21,13 @@ import Dependencies
 
 import func GoLibs.Ed25519NewKeyPair
 import class GoLibs.Ed25519KeyPair
+
 import struct VPNShared.VPNKeysGenerator
 import struct VPNShared.VpnKeys
 import struct VPNShared.PrivateKey
 import struct VPNShared.PublicKey
+
+import CoreConnection
 
 // We are reusing `VPNShared.VpnAuthenticationKeychain` for now. This requires the key generator dependency to be
 // implemented in another package, since we do not want `VPNShared` to depend on GoLibs.
@@ -32,7 +35,7 @@ import struct VPNShared.PublicKey
 // in this package when we are ready to refactor VpnAuthenticationKeychain.
 
 extension VPNShared.VPNKeysGenerator: DependencyKey {
-    public static var liveValue: VPNShared.VPNKeysGenerator {
+    private static var commonImplementation: VPNShared.VPNKeysGenerator {
         return .init(generateKeys: {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)!
@@ -40,6 +43,34 @@ extension VPNShared.VPNKeysGenerator: DependencyKey {
             let publicKey = PublicKey(keyPair: keyPair)
             return VpnKeys(privateKey: privateKey, publicKey: publicKey)
         })
+    }
+
+    public static let testValue: VPNShared.VPNKeysGenerator = commonImplementation
+    public static let liveValue: VPNShared.VPNKeysGenerator = {
+        #if os(macOS)
+        return commonImplementation
+        #else
+        return .init {
+            let keys = try VPNKeysGenerator.liveValue.generateKeys() // Leveraging this generator with better error handling
+            return VpnKeys(fromConnectionPackageKeys: keys)
+        }
+        #endif
+    }()
+}
+
+extension VpnKeys {
+    init(fromConnectionPackageKeys keys: VPNKeys) {
+        self.init(
+            privateKey: .init(
+                rawRepresentation: keys.privateKey.rawRepresentation,
+                derRepresentation: keys.privateKey.derRepresentation,
+                base64X25519Representation: keys.privateKey.base64X25519Representation
+            ),
+            publicKey: .init(
+                rawRepresentation: keys.publicKey.rawRepresentation,
+                derRepresentation: keys.publicKey.derRepresentation
+            )
+        )
     }
 }
 

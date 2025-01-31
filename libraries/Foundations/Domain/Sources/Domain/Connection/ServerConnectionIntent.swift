@@ -18,14 +18,16 @@
 
 import Foundation
 
-public struct ServerConnectionIntent: Equatable, Sendable {
+public struct ServerConnectionIntent: Equatable, Sendable, Codable {
+    public let spec: ConnectionSpec
     public let server: Server
-    public let transport: WireGuardTransport
+    public let tunnelSettings: TunnelSettings
     public let features: VPNConnectionFeatures
 
-    public init(server: Server, transport: WireGuardTransport, features: VPNConnectionFeatures) {
+    public init(spec: ConnectionSpec, server: Server, tunnelSettings: TunnelSettings, features: VPNConnectionFeatures) {
+        self.spec = spec
         self.server = server
-        self.transport = transport
+        self.tunnelSettings = tunnelSettings
         self.features = features.copyWithChanged(bouncing: server.endpoint.label)
     }
 }

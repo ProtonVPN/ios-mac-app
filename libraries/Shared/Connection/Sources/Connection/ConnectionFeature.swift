@@ -23,28 +23,31 @@ import Clocks
 import ComposableArchitecture
 import Dependencies
 
-import struct Domain.Server
-import struct Domain.VPNConnectionFeatures
-import struct Domain.ServerConnectionIntent
-import ConnectionFoundations
+import Domain
+import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
+import VPNAppCore
 
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
-    @Dependency(\.continuousClock) var clock
-    @Dependency(\.serverIdentifier) var serverIdentifier
-    @Dependency(\.tunnelKeychain) var tunnelConfigKeychain
+    @Dependency(\.continuousClock) private var clock
+    @Dependency(\.serverIdentifier) private var serverIdentifier
+    @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
+    @Dependency(\.smartPortSelector) private var portSelector
+    @Dependency(\.connectionIntentStorage) private var storage
+    @Dependency(\.connectionBridge) private var connectionBridge
+    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
     public init() { }
 
     public struct State: Equatable, Sendable {
-        public var tunnel: ExtensionFeature.State
-        public var localAgent: LocalAgentFeature.State
-        public var certAuth: CertificateAuthenticationFeature.State
+        public internal(set) var tunnel: ExtensionFeature.State
+        public internal(set) var localAgent: LocalAgentFeature.State
+        public internal(set) var certAuth: CertificateAuthenticationFeature.State
         var serverReconnectionIntent: ServerConnectionIntent?
 
         public init(
@@ -60,6 +63,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     @CasePathable
     public enum Action: Sendable {
+        case preparation(ConnectionSpec, Server, ConnectionProtocol, TunnelFeatures)
         case connect(ServerConnectionIntent)
         case disconnect(DisconnectReason)
         case tunnel(ExtensionFeature.Action)
@@ -78,7 +82,11 @@ public struct ConnectionFeature: Reducer, Sendable {
         case userIntent
     }
 
-    private enum CancelID { case connectionTimeout }
+    private enum CancelID {
+        case preparation
+        case connectionTimeout
+        case observation
+    }
 
     @Shared(.connectionState) var connectionState: ConnectionState?
 
@@ -88,61 +96,113 @@ public struct ConnectionFeature: Reducer, Sendable {
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
             defer {
-                updateConnectionState(action: action, state: state)
+                updateConnectionState(currentState: state, forceUpdate: action.is(\.disconnect))
             }
             switch action {
             case .startObserving:
                 return .merge(
                     .send(.tunnel(.startObservingStateChanges)),
-                    .send(.localAgent(.startObservingEvents))
+                    .send(.localAgent(.startObservingEvents)),
+                    .listen(to: connectionBridge.intentStream) { streamElement in
+                        // streamElement is an action so we just return it, this is the action that we wanna run
+                        return streamElement
+                    }
                 )
+                .cancellable(id: CancelID.observation)
+
             case .stopObserving:
                 return .merge(
                     .send(.tunnel(.stopObservingStateChanges)),
-                    .send(.localAgent(.stopObservingEvents))
+                    .send(.localAgent(.stopAllObservations)),
+                    .cancel(id: CancelID.observation)
                 )
+            case .preparation(let spec, let selectedServer, let connectionProtocol, let tunnelFeatures):
+                return .run { send in
+                    let portSelectionResult = try await portSelector.select(selectedServer.endpoint, connectionProtocol)
+
+                    try Task.checkCancellation()
+
+                    guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
+                        throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
+                    }
+
+                    let ports = portSelectionResult.ports
+                    log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
+
+                    let features = vpnFeaturesProvider.connectionFeatures()
+                    let tunnelSettings = TunnelSettings(transport: transport, ports: ports, features: tunnelFeatures)
+
+                    let intent = ServerConnectionIntent(
+                        spec: spec,
+                        server: selectedServer,
+                        tunnelSettings: tunnelSettings,
+                        features: features
+                    )
+
+                    try storage.set(intent)
+
+                    await send(.connect(intent))
+                } catch: { error, send in
+                    switch error {
+                    case let connectionError as ConnectionError:
+                        await send(.disconnect(.connectionFailure(connectionError)))
+                    default:
+                        log.error("Failed in preparing connection with error: \(error)")
+                    }
+                }
+                .cancellable(id: CancelID.preparation)
+
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
 
-                if case .disconnecting = ConnectionState(connectionFeatureState: state) {
+                let currentConnectionState = ConnectionState(connectionFeatureState: state)
+                switch currentConnectionState {
+                case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
                     state.serverReconnectionIntent = intent
                     return .none
-                }
+                case .connecting, .connected:
+                    return .send(.disconnect(.reconnection(intent)))
+                case .disconnected:
+                    return .run { send in
+                        await send(.tunnel(.connect(intent)))
 
-                return .run { send in
-                    await send(.tunnel(.connect(intent)))
-                    try await clock.sleep(for: Self.defaultConnectionTimeout)
-                    try Task.checkCancellation()
-                    await send(.disconnect(.connectionFailure(.timeout)))
-                } catch: { error, _ in
-                    log.info("Timeout task cancellation error: \(error)")
-                }.cancellable(id: CancelID.connectionTimeout)
+                        try await clock.sleep(for: Self.defaultConnectionTimeout)
+                        try Task.checkCancellation()
+
+                        await send(.disconnect(.connectionFailure(.timeout)))
+                    } catch: { error, _ in
+                        log.info("Timeout task cancellation error: \(error)")
+                    }.cancellable(id: CancelID.connectionTimeout)
+                }
 
             case .disconnect(let reason):
                 if case let .reconnection(intent) = reason {
                     state.serverReconnectionIntent = intent
                 }
                 return .merge(
+                    .cancel(id: CancelID.preparation),
                     .cancel(id: CancelID.connectionTimeout),
                     .send(.localAgent(.disconnect(nil))),
                     .send(.tunnel(.disconnect(nil)))
                 )
 
             case .tunnel(.connectionFinished(.success)):
+                log.info("Tunnel started: loading authentication data")
                 return .send(.certAuth(.loadAuthenticationData))
 
             case .certAuth(.loadingFinished(.success(let authData))):
-                guard case .connected(let logicalInfo) = state.tunnel else {
+                guard case .connected(let tunnelConnectionInfo) = state.tunnel else {
                     log.error("Finished loading auth data but tunnel is not connected")
                     return .none
                 }
-                guard let server = serverIdentifier.fullServerInfo(logicalInfo) else {
+                guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
                     log.error("Detected connection to unknown server, disconnecting", category: .connection)
                     return .send(.disconnect(.connectionFailure(.serverMissing)))
                 }
                 let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
-                return .send(.localAgent(.connect(server.endpoint, data)))
+                let features = vpnFeaturesProvider.connectionFeatures()
+                return .send(.localAgent(.connect(server.endpoint, data, features)))
 
             case .certAuth(.loadingFinished(.failure(let error))):
                 log.error("Failed to load authentication data: \(error)")
@@ -240,7 +300,6 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
             }
         }
-
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {
@@ -258,8 +317,8 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
     }
 
-    func updateConnectionState(action: ConnectionFeature.Action, state: ConnectionFeature.State) {
-        let newConnectionState = ConnectionState(connectionFeatureState: state)
+    func updateConnectionState(currentState: ConnectionFeature.State, forceUpdate: Bool = false) {
+        let newConnectionState = ConnectionState(connectionFeatureState: currentState)
         if newConnectionState != connectionState {
             if case let .connecting(server) = connectionState,
                server != nil,
@@ -269,15 +328,19 @@ public struct ConnectionFeature: Reducer, Sendable {
             } else {
                 $connectionState.withLock { $0 = newConnectionState }
             }
+        } else if forceUpdate {
+            $connectionState.withLock { $0 = newConnectionState }
         }
     }
 }
 
 @CasePathable
 public enum ConnectionError: Error, Equatable, Sendable {
+    case unexpectedProtocol(VpnProtocol)
     case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
+    case intentMissing // Original connection intent is missing, and we cannot provide accurate connection details
     case serverMissing
     case timeout
 }

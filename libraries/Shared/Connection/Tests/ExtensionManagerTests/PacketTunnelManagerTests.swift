@@ -32,11 +32,12 @@ final class PacketTunnelManagerTests: XCTestCase {
         let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
         let newManagerLoaded = XCTestExpectation(description: "Tunnel Manager must load any newly created manager")
 
-        let newManager = MockTunnelProviderManager.manager(state: .requiresLoad)
+        let newManager = MockTunnelProviderManager.manager(withBundleIdentifier: "123", state: .requiresLoad)
 
         newManager.loadFromPreferencesBlock = { newManagerLoaded.fulfill() }
 
         _ = try await withDependencies {
+            $0.bundleIDClient = .mock(bundleID: "123")
             $0.tunnelProviderManagerFactory = .init(
                 create: { newManager },
                 removeAll: unimplemented(),
@@ -55,9 +56,13 @@ final class PacketTunnelManagerTests: XCTestCase {
     func testLoadsManagerWithMatchingBundleIdentifier() async throws {
         let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
 
-        let existingManager = MockTunnelProviderManager.manager(state: .ready)
+        let existingManager = MockTunnelProviderManager.manager(
+            withBundleIdentifier: "123",
+            state: .ready
+        )
 
         _ = try await withDependencies {
+            $0.bundleIDClient = .mock(bundleID: "123")
             $0.tunnelProviderManagerFactory = .init(
                 create: unimplemented(),
                 removeAll: unimplemented(),
@@ -78,10 +83,11 @@ final class PacketTunnelManagerTests: XCTestCase {
     ///
     /// Configuration specifics are up to the `tunnelProviderConfigurator`.
     func testStartingTunnelToServerConfiguresExistingManager() async throws {
-        let intent = ServerConnectionIntent(server: .mock, transport: .udp, features: .mock)
+        let tunnelSettings = TunnelSettings.mock
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: tunnelSettings, features: .mock)
         let clock = TestClock()
 
-        let providerManager = MockTunnelProviderManager.manager(state: .ready)
+        let providerManager = MockTunnelProviderManager.manager(withBundleIdentifier: "123", state: .ready)
 
         let managerConfigured = XCTestExpectation(description: "Expected manager to be configured")
         let managerSaved = XCTestExpectation(description: "Manager must be saved after being configuration")
@@ -92,6 +98,7 @@ final class PacketTunnelManagerTests: XCTestCase {
 
         _ = try await withDependencies {
             $0.continuousClock = clock
+            $0.bundleIDClient = .mock(bundleID: "123")
             $0.tunnelProviderManagerFactory = .init(
                 create: unimplemented(),
                 removeAll: unimplemented(),
@@ -112,7 +119,7 @@ final class PacketTunnelManagerTests: XCTestCase {
     func testStoppingTunnelConfiguresCurrentManager() async throws {
         let clock = TestClock()
 
-        let providerManager = MockTunnelProviderManager.manager(state: .ready)
+        let providerManager = MockTunnelProviderManager.manager(withBundleIdentifier: "123", state: .ready)
 
         let managerConfigured = XCTestExpectation(description: "Expected manager to be configured")
         let managerSaved = XCTestExpectation(description: "Manager must be saved after being configuration")
@@ -123,6 +130,7 @@ final class PacketTunnelManagerTests: XCTestCase {
 
         _ = try await withDependencies {
             $0.continuousClock = clock
+            $0.bundleIDClient = .mock(bundleID: "123")
             $0.tunnelProviderManagerFactory = .init(
                 create: unimplemented(),
                 removeAll: unimplemented(),
@@ -143,7 +151,7 @@ final class PacketTunnelManagerTests: XCTestCase {
 
 extension MockTunnelProviderManager {
     static func manager(
-        withBundleIdentifier bundleIdentifier: String = "ch.protonmail.vpn.WireGuard-tvOS",
+        withBundleIdentifier bundleIdentifier: String,
         state: MockTunnelProviderManager.MockProviderState = .ready
     ) -> MockTunnelProviderManager {
         let configuration = NETunnelProviderProtocol()

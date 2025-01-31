@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../Shared/Persistence"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Domain"),
+        .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Core/NEHelper"),
         .package(path: "../Modals"),
     ],
@@ -29,11 +30,13 @@ let package = Package(
         .target(
             name: "tvOS",
             dependencies: [
+                "Ergonomics",
                 "Theme",
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
                 "Modals",
+                .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .core(module: "ForceUpgrade"),

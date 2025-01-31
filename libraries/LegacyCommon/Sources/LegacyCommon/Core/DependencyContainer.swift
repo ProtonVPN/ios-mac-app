@@ -27,6 +27,7 @@ import VPNAppCore
 import VPNShared
 import Dependencies
 
+import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
 
 typealias PropertiesToOverride = NetworkingDelegateFactory &
@@ -294,8 +295,17 @@ extension Container: VpnStateConfigurationFactory {
 }
 
 extension Container: VpnManagerFactory {
+    private var shouldUseNoOpManager: Bool {
+        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+    }
+
     public func makeVpnManager() -> VpnManagerProtocol {
-        vpnManager
+        if shouldUseNoOpManager {
+            log.info("Legacy connection: returning NoOpVPNManager", category: .connection)
+            return NoOpVpnManager()
+        } else {
+            return vpnManager
+        }
     }
 }
 

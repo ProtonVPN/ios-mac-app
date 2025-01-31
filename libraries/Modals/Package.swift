@@ -16,6 +16,9 @@ let package = Package(
             name: "Modals",
             targets: ["Modals"]),
         .library(
+            name: "ModalsServices",
+            targets: ["ModalsServices"]),
+        .library(
             name: "Modals-macOS",
             targets: ["Modals-macOS"]),
         .library(
@@ -24,6 +27,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -39,6 +43,13 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/Media.xcassets")
+            ]
+        ),
+        .target(
+            name: "ModalsServices",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies")
             ]
         ),
         .target(

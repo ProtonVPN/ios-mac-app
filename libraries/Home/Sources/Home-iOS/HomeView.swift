@@ -97,9 +97,6 @@ public struct HomeView: View {
                     .presentationDetents([.medium, .large])
             }
         }
-        .task {
-            store.send(.sharedProperties(.listen))
-        }
     }
 
     private var content: some View {
@@ -160,6 +157,27 @@ public struct HomeView: View {
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
             }
             .background(Color(.background))
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
+        ) { store in
+            ConnectionScreenView(store: store)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)
+        ) { store in
+            WithPerceptionTracking {
+                ChangeServerModal(store: store)
+            }
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)
+        ) { store in
+            WithPerceptionTracking {
+                FreeConnectionInfoModal(store: store)
+            }
         }
     }
 
@@ -230,5 +248,4 @@ private struct ViewHeightPreferenceKey: PreferenceKey {
         HomeFeature()
     }))
 }
-
 #endif

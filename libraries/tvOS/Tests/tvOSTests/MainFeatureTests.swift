@@ -71,22 +71,15 @@ final class MainFeatureTests: XCTestCase {
 
         await store.send(.connection(.localAgent(.startObservingEvents)))
         await store.send(.connection(.disconnect(.connectionFailure(.serverMissing))))
-        await store.receive(\.connection.localAgent.disconnect) {
-            $0.connection.localAgent = .disconnecting(nil)
-        }
-        await store.receive(\.connection.tunnel.disconnect) {
-            $0.connection.tunnel = .disconnecting(nil)
-        }
+        await store.receive(\.connection.localAgent.disconnect)
+        await store.receive(\.connection.tunnel.disconnect)
 
         await store.receive(\.errorOccurred) // TODO: Check error is serverMissing
 
         await store.receive(\.updateUserLocation)
         await store.receive(\.connection.clearErrors)
         await clock.advance(by: .seconds(1))
-        await store.receive(\.connection.localAgent.event.state.disconnected) {
-            $0.connection.localAgent = .disconnected(nil)
-        }
-        await store.send(.connection(.localAgent(.stopObservingEvents)))
+        await store.send(.connection(.localAgent(.stopAllObservations)))
     }
 
     @MainActor

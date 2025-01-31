@@ -1,5 +1,5 @@
 //
-//  Created on 04/06/2024.
+//  Created on 19/12/2024.
 //
 //  Copyright (c) 2024 Proton AG
 //
@@ -17,10 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Logging
-import PMLogger
 
-/// Logger shared across all targets in this module.
-/// Requires importing via `import let ConnectionFoundations.log` or a blanket import `import ConnectionFoundations`
-/// before it can be used outside this target.
-package let log = Logging.Logger(label: "ProtonVPN.Connection.logger")
+public struct TunnelSettings: Equatable, Sendable, Codable {
+    public let transport: WireGuardTransport
+    public let ports: [Int]
+    public let features: TunnelFeatures
+
+    public init(transport: WireGuardTransport, ports: [Int], features: TunnelFeatures) {
+        self.transport = transport
+        self.ports = ports
+        self.features = features
+    }
+}

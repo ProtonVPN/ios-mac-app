@@ -21,8 +21,8 @@ import XCTest
 import ComposableArchitecture
 import VPNShared
 import VPNSharedTesting
-import ConnectionFoundations
-import ConnectionFoundationsTestSupport
+import CoreConnection
+import CoreConnectionTestSupport
 @testable import CertificateAuthentication
 
 final class CertificateAuthenticationTests: XCTestCase {

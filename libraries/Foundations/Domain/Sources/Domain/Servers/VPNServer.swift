@@ -45,7 +45,7 @@ public struct VPNServer: Codable, Equatable, Identifiable, Sendable {
 }
 
 /// A pairing of a logical and a single server, used to reduce ambiguity when choosing what server to connect to
-public struct Server: Equatable, Sendable {
+public struct Server: Equatable, Sendable, Codable {
     public let logical: Logical
     public let endpoint: ServerEndpoint
 

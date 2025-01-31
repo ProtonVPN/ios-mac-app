@@ -20,7 +20,7 @@ import Foundation
 
 import class NetworkExtension.NETunnelProviderManager
 
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 extension TunnelProviderManagerFactory {
 
@@ -29,7 +29,6 @@ extension TunnelProviderManagerFactory {
             create: {
                 log.info("Creating new Tunnel Provider Manager")
                 let manager = NETunnelProviderManager()
-                manager.localizedDescription = "Proton VPN Tunnel"
                 return manager
             },
             removeAll: {

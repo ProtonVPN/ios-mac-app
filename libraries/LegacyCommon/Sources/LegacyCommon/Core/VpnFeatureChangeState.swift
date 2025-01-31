@@ -23,13 +23,10 @@
 import Foundation
 
 import Domain
+import Settings
 import VPNShared
 
-public enum VpnFeatureChangeState {
-    case withConnectionUpdate
-    case withReconnect
-    case immediately
-}
+public typealias VpnFeatureChangeState = FeatureChangeAvailability
 
 extension VpnFeatureChangeState {
     public init(state: VpnState, vpnProtocol: VpnProtocol?) {
@@ -39,7 +36,7 @@ extension VpnFeatureChangeState {
         case .connected, .connecting:
             self = .withReconnect
         default:
-            self = .immediately
+            self = .immediate
         }
     }
 }

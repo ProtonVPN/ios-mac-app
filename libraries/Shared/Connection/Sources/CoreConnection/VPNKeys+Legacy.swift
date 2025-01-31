@@ -24,7 +24,7 @@ import struct VPNShared.VpnKeys
 
 // Bridge between new key models with improved error handling and old keys from LegacyCommon
 
-extension ConnectionFoundations.PrivateKey {
+extension CoreConnection.PrivateKey {
     package init(fromLegacyKey legacyKey: VPNShared.PrivateKey) {
         self.init(
             rawRepresentation: legacyKey.rawRepresentation,
@@ -34,7 +34,7 @@ extension ConnectionFoundations.PrivateKey {
     }
 }
 
-extension ConnectionFoundations.PublicKey {
+extension CoreConnection.PublicKey {
     package init(fromLegacyKey legacyKey: VPNShared.PublicKey) {
         self.init(
             rawRepresentation: legacyKey.rawRepresentation,
@@ -43,7 +43,7 @@ extension ConnectionFoundations.PublicKey {
     }
 }
 
-extension ConnectionFoundations.VPNKeys {
+extension CoreConnection.VPNKeys {
     package init(fromLegacyKeys legacyKeys: VPNShared.VpnKeys) {
         self.init(
             privateKey: .init(fromLegacyKey: legacyKeys.privateKey),

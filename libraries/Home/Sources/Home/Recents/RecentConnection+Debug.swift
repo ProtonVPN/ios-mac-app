@@ -31,6 +31,7 @@ public extension RecentConnection {
             connection: .init(
                 location: .exact(
                     .paid,
+                    logicalID: nil,
                     number: 42,
                     subregion: nil,
                     regionCode: "CH"
@@ -81,6 +82,7 @@ public extension RecentConnection {
             connection: .init(
                 location: .exact(
                     .free,
+                    logicalID: nil,
                     number: 42,
                     subregion: nil,
                     regionCode: "FR"

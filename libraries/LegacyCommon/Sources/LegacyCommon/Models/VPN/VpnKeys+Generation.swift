@@ -36,15 +36,3 @@ extension PrivateKey {
                   base64X25519Representation: keyPair.toX25519Base64())
     }
 }
-
-extension VPNKeysGenerator: DependencyKey {
-    public static var liveValue: VPNShared.VPNKeysGenerator {
-        return .init(generateKeys: {
-            var error: NSError?
-            let keyPair = Ed25519NewKeyPair(&error)!
-            let privateKey = PrivateKey(keyPair: keyPair)
-            let publicKey = PublicKey(keyPair: keyPair)
-            return VpnKeys(privateKey: privateKey, publicKey: publicKey)
-        })
-    }
-}

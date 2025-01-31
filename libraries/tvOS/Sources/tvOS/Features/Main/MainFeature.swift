@@ -21,14 +21,16 @@ import ComposableArchitecture
 import struct Domain.VPNConnectionFeatures
 import struct Domain.Server
 import Connection
+import ModalsServices
 import Persistence
 import Foundation
 import Domain
 
 @Reducer
 struct MainFeature {
-    @Dependency(\.serverRepository) var repository
-    @Dependency(\.alertService) var alertService
+    @Dependency(\.serverRepository) private var repository
+    @Dependency(\.alertService) private var alertService
+    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
 
     enum Tab {
         case home
@@ -125,7 +127,7 @@ struct MainFeature {
                 }
                 // these two below are separate because the server is optional in one and non-optional in the other case
                 // which causes the compiler to ignore the non-optional and just send a nil instead
-                if case let .connected(server, _) = state.connectionState {
+                if case let .connected(server, _, _) = state.connectionState {
                     return effect(server)
                 }
                 if case let .connecting(server) = state.connectionState {
@@ -207,7 +209,13 @@ struct MainFeature {
         }
 
         let server = Server(logical: fastestStreamingServer.logical, endpoint: endpoint)
-        return .init(server: server, transport: .udp, features: .defaultTVFeatures)
+        let features = vpnFeaturesProvider.connectionFeatures()
+
+        @Dependency(\.connectionConfiguration) var configuration
+        let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)
+        let ports = server.endpoint.overridePorts(using: .wireGuard(.udp)) ?? defaultPorts
+        let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, features: TunnelFeatures())
+        return .init(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
     }
 }
 

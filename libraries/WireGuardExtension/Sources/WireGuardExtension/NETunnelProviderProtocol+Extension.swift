@@ -5,7 +5,7 @@ import NetworkExtension
 import WireGuardKit
 import WireGuardLogging
 import KeychainAccess
-import ConnectionFoundations
+import CoreConnection
 
 enum PacketTunnelProviderError: String, Error {
     case savedProtocolConfigurationIsInvalid

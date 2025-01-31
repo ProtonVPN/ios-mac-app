@@ -16,41 +16,37 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTestDynamicOverlay
 import Dependencies
-import ConnectionFoundations
+import Domain
+import CoreConnection
+import class GoLibs.LocalAgentFeatures
 
 final class LocalAgentImplementation: LocalAgent {
     @Dependency(\.localAgentConnectionFactory) var connectionFactory
 
-    private var connection: LocalAgentConnection?
-    private let client: LocalAgentClient
-    private var previousState: LocalAgentState?
-    private var listener: ((LocalAgentEvent) -> Void)?
+    private(set) var netShieldType: NetShieldType = .off
 
-    func createEventStream() -> AsyncStream<LocalAgentEvent> {
-        return AsyncStream<LocalAgentEvent> { continuation in
-            listener = { event in
-                continuation.yield(event)
-            }
-            continuation.onTermination = { @Sendable [weak self] _ in
-                self?.listener = nil
-            }
-        }
-    }
+    private let client: LocalAgentClient
+    private var connection: LocalAgentConnection?
+    private var streamContinuation: AsyncStream<LocalAgentEvent>.Continuation?
 
     init() {
         log.info("LocalAgentImplementation init")
 
         @Dependency(\.localAgentClientFactory) var clientFactory
-        client = clientFactory.createLocalAgentClient()
-        client.delegate = self
+        self.client = clientFactory.createLocalAgentClient()
+        self.client.delegate = self
     }
 
     deinit {
         log.info("LocalAgentImplementation deinit")
         connection?.close()
+    }
+
+    func createEventStream() -> AsyncStream<LocalAgentEvent> {
+        let tuple = AsyncStream<LocalAgentEvent>.makeStream()
+        streamContinuation = tuple.continuation
+        return tuple.stream
     }
 
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
@@ -63,6 +59,21 @@ final class LocalAgentImplementation: LocalAgent {
         )
 
         connection = try connectionFactory.makeLocalAgentConnection(configuration, data, client)
+
+        netShieldType = configuration.features.netshield
+
+        // Initiate at least one fetch of NetShield Stats
+        if netShieldType.shouldObserveNetShieldStats {
+            retrieveNetShieldStats()
+        }
+    }
+
+    func set(features: LocalAgentFeatures) {
+        connection?.setFeatures(features)
+    }
+
+    func retrieveNetShieldStats() {
+        connection?.sendGetStatus(true)
     }
 
     func disconnect() {
@@ -72,10 +83,6 @@ final class LocalAgentImplementation: LocalAgent {
 
 extension LocalAgentImplementation: LocalAgentClientDelegate {
     func didReceive(event: LocalAgentEvent) {
-        guard let listener else {
-            log.assertionFailure("No listener available to receive event: \(event)")
-            return
-        }
-        listener(event)
+        streamContinuation?.yield(event)
     }
 }

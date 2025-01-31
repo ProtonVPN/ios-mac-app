@@ -16,12 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
+import Connection
+import ProtonCoreFeatureFlags
+import Domain
 import VPNAppCore
 
 extension DisconnectVPNKey: DependencyKey {
-    public static let liveValue = legacyDisconnect
+    public static let liveValue = {
+        let isEnabled = FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+        if isEnabled, #available(iOS 16, *) {
+            return newDisconnect
+        } else {
+            return legacyDisconnect
+        }
+    }()
+
+    public static let newDisconnect: @Sendable () async throws -> Void = {
+        Dependency(\.connectionBridge).wrappedValue.push(intent: .disconnect(.userIntent))
+    }
 
     /// Bridges new disconnection dependency with the legacy connection layer
     public static let legacyDisconnect: @Sendable () async throws -> Void = {

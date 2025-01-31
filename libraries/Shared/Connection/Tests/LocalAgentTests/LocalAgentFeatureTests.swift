@@ -16,11 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if targetEnvironment(simulator)
 import Foundation
 import XCTest
 import struct Network.IPv4Address
 
 import ComposableArchitecture
+
+import Connection
 
 import Domain
 import DomainTestSupport
@@ -45,8 +48,13 @@ final class LocalAgentFeatureTests: XCTestCase {
             $0.date = .constant(.now)
         }
 
+        @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
+
+        let defaultFeatures = vpnFeaturesProvider.connectionFeatures()
+
         await store.send(.startObservingEvents)
-        await store.send(.connect(server, .empty))
+        await store.send(.connect(server, .empty, defaultFeatures))
+        await store.receive(\.startNetShieldStatsObservation)
         await store.receive(\.event.state.connecting) {
             $0 = .connecting
         }
@@ -62,12 +70,12 @@ final class LocalAgentFeatureTests: XCTestCase {
             deviceCountry: "CH"
         )
 
-        localAgentMock.eventHandler?(.connectionDetails(mockConnectionDetails))
+        localAgentMock.streamTuple?.continuation.yield(.connectionDetails(mockConnectionDetails))
         await store.receive(\.event.connectionDetails) {
             $0 = .connected(mockConnectionDetails)
         }
 
-        await store.send(.stopObservingEvents)
+        await store.send(.stopAllObservations)
     }
 
     @MainActor
@@ -96,12 +104,13 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.receive(\.event.state.connecting)
 
         // Now, test that events are still received after resubscribing to mimic logging out and logging back in
-        await store.send(.stopObservingEvents)
+        await store.send(.stopAllObservations)
         await store.send(.startObservingEvents)
 
         client.delegate?.didReceive(event: .state(.connecting))
         await store.receive(\.event.state.connecting)
 
-        await store.send(.stopObservingEvents)
+        await store.send(.stopAllObservations)
     }
 }
+#endif

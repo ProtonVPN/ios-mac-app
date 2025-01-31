@@ -631,7 +631,7 @@ class StatusViewModel {
                     self.contentChanged?()
                     completion(false)
                 }))
-            case .immediately:
+            case .immediate:
                 self.netShieldPropertyProvider.netShieldType = newValue
                 self.contentChanged?()
                 completion(true)

@@ -22,8 +22,7 @@ import enum NetworkExtension.NEVPNStatus
 import Dependencies
 
 import struct Domain.ServerConnectionIntent
-import let ConnectionFoundations.log
-import struct ConnectionFoundations.LogicalServerInfo
+import CoreConnection
 import ExtensionIPC
 
 protocol TunnelManager {
@@ -35,7 +34,6 @@ protocol TunnelManager {
     var connectedServer: LogicalServerInfo { get async throws }
     var status: NEVPNStatus { get async throws }
     var statusStream: AsyncStream<NEVPNStatus> { get async throws }
-
 }
 
 @available(iOS 16, *)
@@ -54,13 +52,13 @@ enum TunnelManagerKey: DependencyKey {
 final class PacketTunnelManager: TunnelManager {
     @Dependency(\.tunnelProviderManagerFactory) var managerFactory
     @Dependency(\.tunnelProviderConfigurator) var configurator
+    @Dependency(\.bundleIDClient) var bundleID
 
     private var cachedLoadedManager: TunnelProviderManager?
 
     /// Creates and loads a new `TunnelProviderManager`.
     private func loadManager() async throws -> TunnelProviderManager {
-        // TODO: Provide bundle ID using a Dependency
-        let bundleID = "ch.protonmail.vpn.WireGuard-tvOS"
+        let bundleID = bundleID.bundleIdentifierForTarget()
         let manager = try await managerFactory.loadManager(forProviderBundleID: bundleID)
         self.cachedLoadedManager = manager
         return manager
@@ -94,8 +92,8 @@ final class PacketTunnelManager: TunnelManager {
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
         let manager = try await updateTunnel(for: .connection(intent))
-        let session = manager.session
-        try session.startTunnel()
+        try Task.checkCancellation()
+        try manager.session.startTunnel()
     }
 
     func stopTunnel() async throws {

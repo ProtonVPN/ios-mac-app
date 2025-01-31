@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import ProtonCoreFeatureFlags
+import CommonNetworking
 import Foundation
 import Domain
 import VPNAppCore
@@ -41,41 +43,51 @@ public struct SharedPropertiesFeature {
         case watchConnectionStatus
     }
 
-    init() {
-
+    private let initialUserLocationEffect: Effect<Action> = .run { send in
+        @Dependency(\.locationClient) var client
+        let initialLocation = try await client.fetchLocation()
+        await send(.userLocationChange(location: initialLocation))
     }
 
-    let userLocationEffect: Effect<Action> = .publisher {
+    private let longLivingUserLocationEffect: Effect<Action> = .publisher {
         NotificationCenter.default
             .publisher(for: .userIpNotification)
-            .map {
-                $0.object as? Domain.UserLocation
-            }
+            .map { $0.object as? Domain.UserLocation }
             .receive(on: UIScheduler.shared)
             .map(Action.userLocationChange)
     }
 
-    let connectionStatusEffect: Effect<Action> = .run { @MainActor send in
-        let initialConnectionStatus = await Dependency(\.vpnConnectionStatus).wrappedValue()
-        send(.newConnectionStatus(initialConnectionStatus))
+    private static var connectionStatusStream: AsyncStream<VPNConnectionStatus> {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            return Dependency(\.connectionBridge).wrappedValue.statusStream
+        } else {
+            return Dependency(\.vpnConnectionStatusPublisher).wrappedValue()
+        }
+    }
 
-        let stream = Dependency(\.vpnConnectionStatusPublisher)
-            .wrappedValue()
-            .map { Action.newConnectionStatus($0) }
+    private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            // Legacy connection status stream does not yield an initial value, so let's manually grab it
+            let initialConnectionStatus = await Dependency(\.vpnConnectionStatus).wrappedValue()
+            send(.newConnectionStatus(initialConnectionStatus))
+        }
 
-        for await value in stream {
+        let actionStream = Self.connectionStatusStream.map { Action.newConnectionStatus($0) }
+
+        for await value in actionStream {
             send(value)
         }
     }
-        .cancellable(id: CancelId.watchConnectionStatus)
+    .cancellable(id: CancelId.watchConnectionStatus)
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .listen:
                 return .merge(
-                    userLocationEffect,
-                    connectionStatusEffect
+                    initialUserLocationEffect,
+                    longLivingUserLocationEffect,
+                    longLivingConnectionStatusEffect
                 )
 
             case .userLocationChange(let location):
@@ -83,8 +95,8 @@ public struct SharedPropertiesFeature {
                 // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
                 if let userCountry = location?.country.lowercased(),
                    let userIP = location?.ip ?? state.userIP {
-                    state.$userCountry.withLock { $0 = location?.country.lowercased() }
-                    state.$userIP.withLock { $0 = location?.ip }
+                    state.$userCountry.withLock { $0 = userCountry }
+                    state.$userIP.withLock { $0 = userIP }
                 }
                 return .none
 

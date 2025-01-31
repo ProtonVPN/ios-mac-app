@@ -19,7 +19,7 @@
 import Foundation
 import Network
 import class GoLibs.LocalAgentConnectionDetails
-import ConnectionFoundations
+import CoreConnection
 
 public struct ConnectionDetailsMessage: Sendable, Equatable {
     public let exitIp: IPAddress

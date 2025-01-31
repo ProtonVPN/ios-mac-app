@@ -14,49 +14,90 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-
-import ComposableArchitecture
-
+import ProtonCoreFeatureFlags
+import Connection
+import Persistence
 import Domain
 import VPNAppCore
 
+import protocol Foundation.LocalizedError
+
+import ComposableArchitecture
+
 extension ConnectToVPNKey: DependencyKey {
-    public static let liveValue = legacyConnect
+    enum ConnectionError: LocalizedError {
+        case cancelled
 
-    /// Bridges new connection dependency with the legacy connection layer
-    public static let legacyConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
-        @Dependency(\.siriHelper) var siriHelper
-        siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
-
-        do {
-            let gateway = Container.sharedContainer.makeVpnGateway2()
-            try await gateway.connect(withIntent: intent)
-
-            let propertyManager = Container.sharedContainer.makePropertiesManager()
-            propertyManager.lastConnectionIntent = intent
-
-        } catch VpnGateway2.GatewayError.noServerFound {
-            log.error("No server found", metadata: ["intent": "\(intent)"])
-            throw VpnGateway2.GatewayError.noServerFound // Not sure
-
-        } catch VpnGateway2.GatewayError.resolutionUnavailable(let forSpecificCountry, let type, let reason) {
-            log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)", "intent": "\(intent)"])
-
-//            Code from serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
-            @Dependency(\.pushAlert) var alert
-
-            switch reason {
-            case .upgrade:
-                alert(AllCountriesUpsellAlert())
-            case .maintenance:
-                alert(MaintenanceAlert(forSpecificCountry: forSpecificCountry))
-            case .protocolNotSupported:
-                alert(ProtocolNotAvailableForServerAlert())
-            case .locationNotFound(let profileName):
-                alert(LocationNotAvailableAlert(profileName: profileName))
+        var errorDescription: String {
+            switch self {
+            case .cancelled:
+                return "Connection attempt cancelled"
             }
-
         }
+    }
+
+    private static var isEnabled: Bool {
+        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+    }
+
+    public static let liveValue = {
+        if Self.isEnabled, #available(iOS 16, *) {
+            return newConnect
+        } else {
+            return legacyConnect
+        }
+    }()
+
+    @available(iOS 16, *)
+    static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { spec in
+        @Dependency(\.connectionBridge) var bridge
+
+        @SharedReader(.connectionState) var connectionState: ConnectionState?
+
+        if connectionState.is(\.connected) {
+            bridge.push(intent: ConnectionFeature.Action.disconnect(.userIntent))
+
+            try await $connectionState.when(willBe: \.disconnected, every: .milliseconds(20), deadline: .seconds(2)) {
+                try await prepareConnection(spec)
+            }
+        } else {
+            try await prepareConnection(spec)
+        }
+    }
+
+    @available(iOS 16, *)
+    private static let prepareConnection: @Sendable (ConnectionSpec) async throws -> Void = { spec in
+        @Dependency(\.connectionBridge) var bridge
+        @Dependency(\.serverSelector) var serverSelector
+        @Dependency(\.propertiesManager) var propertiesManager
+        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+
+        @SharedReader(.userTier) var userTier: Int
+
+        // Let's grab protocol information from PropertiesManager until redesigned settings are in place
+        let acceptableProtocols: ProtocolSupport
+        switch propertiesManager.connectionProtocol {
+        case .vpnProtocol(let vpnProtocol):
+            acceptableProtocols = vpnProtocol.protocolSupport
+        case .smartProtocol:
+            acceptableProtocols = propertiesManager.smartProtocolConfig.supportedProtocols
+                .reduce(.zero, { $0.union($1.protocolSupport) })
+        }
+
+        let server = try serverSelector.select(spec, userTier, acceptableProtocols)
+        log.info("Server selected: \(server)", category: .connection)
+
+        guard !Task.isCancelled else {
+            throw ConnectionError.cancelled
+        }
+
+        let connectionProtocol = propertiesManager.connectionProtocol
+
+        let tunnelFeatures = TunnelFeatures(
+            killSwitch: propertiesManager.killSwitch,
+            excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
+        )
+
+        bridge.push(intent: ConnectionFeature.Action.preparation(spec, server, connectionProtocol, tunnelFeatures))
     }
 }

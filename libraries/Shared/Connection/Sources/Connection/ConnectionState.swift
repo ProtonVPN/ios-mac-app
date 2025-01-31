@@ -21,7 +21,7 @@ import Foundation
 import CasePaths
 import Dependencies
 
-import ConnectionFoundations
+import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
@@ -30,10 +30,10 @@ import struct Domain.VPNConnectionFeatures
 
 @available(iOS 16, *)
 @CasePathable
-public enum ConnectionState: Equatable, Sendable {
+public enum ConnectionState: Equatable, Sendable, CasePathable {
     case disconnected(ConnectionError?)
     case connecting(Server?)
-    case connected(Server, ConnectionDetailsMessage?)
+    case connected(Server, Date, ConnectionDetailsMessage?)
     case disconnecting
 
     public init(
@@ -57,14 +57,14 @@ public enum ConnectionState: Equatable, Sendable {
         }
 
         switch (tunnelState, localAgentState) {
-        case (.connected(let logicalServerInfo), .connected(let connectionDetails)):
+        case (.connected(let tunnelConnectionInfo), .connected(let connectionDetails)):
             @Dependency(\.serverIdentifier) var serverIdentifier
-            guard let server = serverIdentifier.fullServerInfo(logicalServerInfo) else {
+            guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
                 assertionFailure("Unknown server")
                 self = .disconnected(.serverMissing)
                 return
             }
-            self = .connected(server, connectionDetails)
+            self = .connected(server, tunnelConnectionInfo.connectionDate, connectionDetails)
 
         case (.connected, _):
             self = .connecting(nil)

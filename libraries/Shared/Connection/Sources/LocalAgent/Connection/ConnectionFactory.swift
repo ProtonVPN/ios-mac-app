@@ -20,11 +20,13 @@ import Foundation
 
 import Dependencies
 
+import Domain
+
 import protocol GoLibs.LocalAgentNativeClientProtocol
 import func GoLibs.LocalAgentNewAgentConnection
-import func GoLibs.LocalAgentNewFeatures
+import class GoLibs.LocalAgentFeatures
 
-import ConnectionFoundations
+import CoreConnection
 
 typealias ConnectionCreator = @Sendable (ConnectionConfiguration, VPNAuthenticationData, LocalAgentNativeClientProtocol) throws -> LocalAgentConnection
 
@@ -73,7 +75,7 @@ extension ConnectionFactory {
                 localAgentConfiguration.localAgentHostname,
                 connectionConfiguration.hostname,
                 client,
-                LocalAgentNewFeatures(),
+                LocalAgentFeatures.from(connectionFeatures: connectionConfiguration.features),
                 true,
                 &error
             )
@@ -90,4 +92,46 @@ extension ConnectionFactory {
             return connection
         }
     )
+}
+
+
+extension LocalAgentFeatures {
+    enum Keys: String {
+        case vpnAccelerator = "split-tcp"
+        case netShield = "netshield-level"
+        case jailed = "jail"
+        case natType = "randomized-nat"
+        case bouncing
+        case safeMode = "safe-mode"
+
+    }
+
+    func set(feature: ConnectionFeatureChange.AgentFeature) {
+        switch feature {
+        case .moderateNAT(let value):
+            setBool(Keys.natType.rawValue, value: value.flag)
+        case .netShield(let netShieldType):
+            setInt(Keys.netShield.rawValue, value: Int64(netShieldType.rawValue))
+        case .vpnAccelerator(let value):
+            setBool(Keys.vpnAccelerator.rawValue, value: value)
+        }
+    }
+
+    static func from(featureSet features: Set<ConnectionFeatureChange.AgentFeature>) -> LocalAgentFeatures? {
+        let featuresObject = LocalAgentFeatures()
+        features.forEach {
+            featuresObject?.set(feature: $0)
+        }
+        return featuresObject
+    }
+
+    static func from(connectionFeatures: VPNConnectionFeatures) -> LocalAgentFeatures? {
+        let featuresObject = LocalAgentFeatures()
+        featuresObject?.setInt(Keys.netShield.rawValue, value: Int64(connectionFeatures.netshield.rawValue))
+        featuresObject?.setBool(Keys.vpnAccelerator.rawValue, value: connectionFeatures.vpnAccelerator)
+        connectionFeatures.bouncing.map { featuresObject?.setString(Keys.bouncing.rawValue, value: $0) }
+        featuresObject?.setBool(Keys.natType.rawValue, value: connectionFeatures.natType.flag)
+        connectionFeatures.safeMode.map { featuresObject?.setBool(Keys.safeMode.rawValue, value: $0) }
+        return featuresObject
+    }
 }

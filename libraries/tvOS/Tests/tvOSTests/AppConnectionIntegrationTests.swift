@@ -25,7 +25,7 @@ import ComposableArchitecture
 @testable import Connection
 @testable import LocalAgent
 @testable import ExtensionManager
-@testable import ConnectionFoundations
+@testable import CoreConnection
 import Domain
 import VPNSharedTesting
 
@@ -36,6 +36,7 @@ final class AppConnectionIntegrationTests: XCTestCase {
         let clock = TestClock()
         let mockVPNSession = VPNSessionMock(status: .connecting)
         let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
+        let tunnelConnectionResponse = TunnelConnectionResponse(logicalInfo: .init(logicalServer: .mock), connectionDate: Date())
         let state = AppFeature.State(
             main: .init(
                 currentTab: .settings,
@@ -47,7 +48,7 @@ final class AppConnectionIntegrationTests: XCTestCase {
                     alert: SettingsFeature.signOutAlert,
                     isLoading: false
                 ),
-                connection: .init(tunnelState: .connected(.init(logicalServer: .mock))),
+                connection: .init(tunnelState: .connected(tunnelConnectionResponse)),
                 userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
             ),
             networking: .authenticated(.auth(uid: "sessionID"))

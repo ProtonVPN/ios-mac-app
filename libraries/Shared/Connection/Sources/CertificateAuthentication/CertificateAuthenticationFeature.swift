@@ -18,7 +18,7 @@
 
 import Foundation
 import ComposableArchitecture
-import ConnectionFoundations
+import CoreConnection
 import enum ExtensionIPC.WireguardProviderRequest
 import Ergonomics
 import struct Domain.Server

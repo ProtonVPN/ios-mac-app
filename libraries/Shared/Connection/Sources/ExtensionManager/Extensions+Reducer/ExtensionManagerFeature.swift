@@ -25,9 +25,9 @@ import Dependencies
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
 import struct Domain.ServerConnectionIntent
-import struct ConnectionFoundations.LogicalServerInfo
+import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 @available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {
@@ -35,7 +35,10 @@ public struct ExtensionFeature: Reducer, Sendable {
 
     public init() { }
 
-    private enum CancelID { case observation }
+    private enum CancelID {
+        case tunnelStart
+        case observation
+    }
 
     @CasePathable
     @dynamicMemberLookup
@@ -44,7 +47,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case disconnecting(TunnelConnectionError?)
         case preparingConnection(LogicalServerInfo) // Preparing managers and requesting tunnel start
         case connecting(LogicalServerInfo?) // Tunnel has been launched
-        case connected(LogicalServerInfo)
+        case connected(TunnelConnectionResponse)
     }
 
     @CasePathable
@@ -53,7 +56,7 @@ public struct ExtensionFeature: Reducer, Sendable {
         case stopObservingStateChanges
         case connect(ServerConnectionIntent)
         case tunnelStartRequestFinished(Result<Bool, Error>)
-        case connectionFinished(Result<LogicalServerInfo, Error>)
+        case connectionFinished(Result<TunnelConnectionResponse, Error>)
         case tunnelStatusChanged(NEVPNStatus)
         case disconnect(TunnelConnectionError?)
         case removeManagers
@@ -91,18 +94,19 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .run { send in
                     await send(.tunnelStartRequestFinished(Result {
                         try await tunnelManager.startTunnel(with: intent)
+                        try Task.checkCancellation()
                         // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
                         return true
                     }))
-                }
+                }.cancellable(id: CancelID.tunnelStart)
 
             case .tunnelStartRequestFinished(.success):
                 // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
-            case .connectionFinished(.success(let logicalServerInfo)):
+            case .connectionFinished(.success(let connectionInfo)):
                 // Tunnel has started, and responded with information about what logical and server it has connected to
-                state = .connected(logicalServerInfo)
+                state = .connected(connectionInfo)
                 return .none
 
             case .tunnelStatusChanged(.connecting):
@@ -122,9 +126,12 @@ public struct ExtensionFeature: Reducer, Sendable {
                 state = .connecting(state.connecting ?? nil)
 
                 return .run { send in
-                    await send(.connectionFinished(Result {
-                        try await tunnelManager.connectedServer
-                    }))
+                    @Dependency(\.date) var date
+                    let result = await Result { TunnelConnectionResponse(
+                        logicalInfo: try await tunnelManager.connectedServer,
+                        connectionDate: try await tunnelManager.session.connectedDate ?? date.now
+                    ) }
+                    return await send(.connectionFinished(result))
                 }
 
             case .tunnelStatusChanged(.disconnecting):
@@ -136,7 +143,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // A notable scenario in which the tunnel state is invalid is before the user gives the app permission
                 // to manage VPN configurations
                 state = .disconnected(nil)
-                return .none
+                return logLastDisconnectEffect
 
             case .tunnelStatusChanged(.disconnected):
                 let existingError = state.disconnecting ?? nil // Potential cause of disconnection
@@ -151,20 +158,24 @@ public struct ExtensionFeature: Reducer, Sendable {
                 if case .preparingConnection = state {
                     // The tunnel has not yet been started, so we can transition straight into `.disconnected`.
                     state = .disconnected(error)
-                    return .none
+                    return .cancel(id: CancelID.tunnelStart)
                 }
-                if case .disconnecting = state { return .none }
-                state = .disconnecting(error)
-                return .run {
-                    _ in try await tunnelManager.stopTunnel()
-                } catch: { error, _ in
-                    log.assertionFailure("Failed to stop tunnel: \(error)")
+                if state.shouldTransitionToDisconnecting {
+                    state = .disconnecting(error)
                 }
+                return .merge(
+                    .cancel(id: CancelID.tunnelStart),
+                    .run { _ in
+                        try await tunnelManager.stopTunnel()
+                    } catch: { error, _ in
+                        log.assertionFailure("Failed to stop tunnel: \(error)")
+                    }
+                )
 
             case .tunnelStartRequestFinished(.failure(let error)):
                 // Start request failed, so there's no need to disconnect
                 state = .disconnected(.tunnelStartFailed(error))
-                return .none
+                return logLastDisconnectEffect
 
             case .connectionFinished(.failure(let error)):
                 log.error("Tunnel failed to connect", category: .connection, metadata: ["error": "\(error)"])
@@ -182,6 +193,30 @@ public struct ExtensionFeature: Reducer, Sendable {
                     log.assertionFailure("Failed to remove managers: \(error)")
                 }
             }
+        }
+    }
+
+    private var logLastDisconnectEffect: Effect<Action> {
+        .run { send in
+            if let error = try await tunnelManager.session.fetchLastDisconnectError() {
+                log.error("Last disconnect error: \(error)", category: .connection)
+            }
+        } catch: { error, send in
+            log.error("Failed to determined last disconnect error \(error)", category: .connection)
+        }
+    }
+}
+
+private extension ExtensionFeature.State {
+    /// In case of an explicit disconnect action received within the Reducer, we should transition to `.disconnecting`
+    /// only when it makes sense.
+    /// Especially, we want to avoid transitioning to `.disconnecting` when we were already `.disconnected`.
+    var shouldTransitionToDisconnecting: Bool {
+        switch self {
+        case .preparingConnection, .connecting, .connected:
+            return true
+        case .disconnecting, .disconnected:
+            return false
         }
     }
 }
@@ -202,5 +237,15 @@ public enum TunnelConnectionError: Error, Equatable {
         default:
             return false
         }
+    }
+}
+
+public struct TunnelConnectionResponse: Equatable, Sendable {
+    public let logicalInfo: LogicalServerInfo
+    public let connectionDate: Date
+
+    package init(logicalInfo: LogicalServerInfo, connectionDate: Date) {
+        self.logicalInfo = logicalInfo
+        self.connectionDate = connectionDate
     }
 }

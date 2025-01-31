@@ -88,6 +88,8 @@ public struct VPNConnectionActual: Equatable {
 
 // MARK: - Watch for changes
 
+@available(macOS 13, *)
+@available(tvOS, unavailable)
 public extension DependencyValues {
     var vpnConnectionStatusPublisher: () -> AsyncStream<VPNConnectionStatus> {
         get { self[VPNConnectionStatusPublisherKey.self] }
@@ -95,6 +97,8 @@ public extension DependencyValues {
     }
 }
 
+@available(macOS 13, *)
+@available(tvOS, unavailable)
 public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
     public static let testValue: () -> AsyncStream<VPNConnectionStatus> = { .finished }
 }

@@ -42,6 +42,8 @@ public struct ConnectionFlagInfoView: View {
     let subheaderModel: LocationFeatureSubheaderModel
     let resolvedLocation: ConnectionSpec.Location
 
+    let attachedLeadingView: (() -> AnyView)?
+
     let detailAction: ((Action) -> Void)?
     let images: RecentsImages
 
@@ -58,11 +60,13 @@ public struct ConnectionFlagInfoView: View {
         withServerNumber: Bool = false,
         isConnected: Bool,
         images: RecentsImages = .init(),
+        attachedLeadingView: (() -> AnyView)? = nil,
         detailAction: ((Action) -> Void)? = nil
     ) {
         self.intent = intent
         self.underMaintenance = underMaintenance
         self.isConnected = isConnected
+        self.attachedLeadingView = attachedLeadingView
         self.detailAction = detailAction
         self.isPinned = isPinned
         self.images = images
@@ -79,11 +83,14 @@ public struct ConnectionFlagInfoView: View {
 
     public var body: some View {
         HStack(alignment: .center, spacing: 0) {
-            LocationFeatureView(model: .init(
-                flag: resolvedLocation.flagComposition,
-                header: .init(title: textHeaderString, showConnectedPin: isConnected),
-                subheader: subheaderModel
-            ))
+            LocationFeatureView(
+                model: .init(
+                    flag: resolvedLocation.flagComposition,
+                    header: .init(title: textHeaderString, showConnectedPin: isConnected),
+                    subheader: subheaderModel
+                ),
+                attachedLeadingView: attachedLeadingView
+            )
 
             Spacer()
 
@@ -241,15 +248,15 @@ struct ConnectionFlagView_Previews: PreviewProvider {
                 actual: .mock(feature: .tor)
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.free, number: 1, subregion: nil, regionCode: "US"), features: []),
+                intent: ConnectionSpec(location: .exact(.free, logicalID: nil, number: 1, subregion: nil, regionCode: "US"), features: []),
                 actual: .mock(serverName: "FREE #1")
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
+                intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
                 actual: .mock(feature: [.p2p, .tor])
             )
             sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, number: 1, subregion: "AR", regionCode: "US"), features: []),
+                intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: 1, subregion: "AR", regionCode: "US"), features: []),
                 actual: .mock()
             )
             sideBySide(

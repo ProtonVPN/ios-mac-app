@@ -57,6 +57,9 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Plutonium flag for macOS
     case plutoniumMacOS = "Plutonium"
+    
+    /// Use ConnectionFeature reducer from ConnectionPackage
+    case useConnectionFeature = "UseConnectionFeature"
 
     /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
     case timestampedLogicals = "TimestampedLogicals"

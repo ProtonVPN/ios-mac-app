@@ -23,7 +23,7 @@ import ComposableArchitecture
 import Localization
 import Strings
 
-public enum NetShieldType: LocalizedStringConvertible {
+public enum NetShieldState: LocalizedStringConvertible {
     case on
     case off
 
@@ -36,12 +36,12 @@ public enum NetShieldType: LocalizedStringConvertible {
 }
 
 public struct NetShieldSettingsFeature: Reducer {
-    public typealias State = NetShieldType
+    public typealias State = NetShieldState
 
     public init() { }
 
     public enum Action: Equatable {
-        case set(value: NetShieldType)
+        case set(value: State)
     }
 
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {

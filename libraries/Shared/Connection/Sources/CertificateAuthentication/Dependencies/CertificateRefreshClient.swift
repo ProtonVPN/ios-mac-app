@@ -20,7 +20,7 @@ import Foundation
 import Dependencies
 import Ergonomics
 import ExtensionIPC
-import ConnectionFoundations
+import CoreConnection
 
 struct CertificateRefreshClient: DependencyKey {
     var refreshCertificate: () async throws -> CertificateRefreshResult

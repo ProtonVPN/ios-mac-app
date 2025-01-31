@@ -22,22 +22,22 @@ import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentConnectionDetails
 import class GoLibs.LocalAgentStringToValueMap
 
-import let ConnectionFoundations.log
+import let CoreConnection.log
 
 final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
     weak var delegate: LocalAgentClientDelegate?
 
     func onTlsSessionStarted() {
-        ConnectionFoundations.log.debug("TLS session started", category: .localAgent)
+        CoreConnection.log.debug("TLS session started", category: .localAgent)
     }
 
     func onTlsSessionEnded() {
-        ConnectionFoundations.log.debug("TLS session ended", category: .localAgent)
+        CoreConnection.log.debug("TLS session ended", category: .localAgent)
     }
 
     /// Logging callback required by `LocalAgentNativeClientProtocol` protocol
     func log(_ text: String?) {
-        text.map { ConnectionFoundations.log.info("\($0)", category: .localAgent, event: .log) }
+        text.map { CoreConnection.log.info("\($0)", category: .localAgent, event: .log) }
     }
 
     func onError(_ code: Int, description: String?) {
@@ -47,11 +47,11 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
 
     func onState(_ state: String?) {
         guard let state = state else {
-            ConnectionFoundations.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
+            CoreConnection.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }
 
-        ConnectionFoundations.log.info("Local agent shared library state reported as changed to \(state)", category: .localAgent, event: .stateChange)
+        CoreConnection.log.info("Local agent shared library state reported as changed to \(state)", category: .localAgent, event: .stateChange)
         delegate?.didReceive(event: .state(LocalAgentState.from(string: state)))
     }
 
@@ -68,7 +68,7 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
     private func didReceive(connectionDetails: LocalAgentConnectionDetails) {
         do {
             let detailsMessage = try ConnectionDetailsMessage(details: connectionDetails)
-            ConnectionFoundations.log.info(
+            CoreConnection.log.info(
                 "Received connection details: \("\(detailsMessage)".maskIPs)",
                 category: .localAgent,
                 event: .connect
@@ -76,23 +76,22 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
             delegate?.didReceive(event: .connectionDetails(detailsMessage))
         } catch {
             let errorMessageWithMaskedIPs = "\(error)".maskIPs
-            ConnectionFoundations.log.error(
+            CoreConnection.log.error(
                 "Failed to decode connection details",
                 category: .localAgent,
                 event: .error,
                 metadata: ["error": "\(errorMessageWithMaskedIPs)"]
             )
         }
-
     }
 
     private func didReceive(statistics: LocalAgentStringToValueMap) {
         do {
             let stats = try FeatureStatisticsMessage(localAgentStatsDictionary: statistics)
-            ConnectionFoundations.log.info("Received statistics: \(stats)", category: .localAgent, event: .stateChange)
+            CoreConnection.log.info("Received statistics: \(stats)", category: .localAgent, event: .stateChange)
             delegate?.didReceive(event: .stats(stats))
         } catch {
-            ConnectionFoundations.log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
+            CoreConnection.log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
         }
     }
 }

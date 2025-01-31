@@ -158,7 +158,6 @@ extension ConnectionRequest: Codable {
 }
 
 public enum ConnectionRequestType {
-    
     case fastest
     case random
     case country(String, CountryConnectionRequestType)
@@ -166,7 +165,6 @@ public enum ConnectionRequestType {
 }
 
 public enum CountryConnectionRequestType {
-    
     case fastest
     case random
     case server(ServerModel)

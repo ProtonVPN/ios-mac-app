@@ -24,6 +24,8 @@ final class CoreVPNKeysGeneratorTests: XCTestCase {
 
     func testDifferentKeysAreGenerated() throws {
         let generator = VPNKeysGenerator.liveValue
+
+        // When macOS will switch to Connection, then VPNKeysGenerator could be removed and this test file as well...
         let key1 = try generator.generateKeys()
         XCTAssertFalse(key1.publicKey.derRepresentation.isEmpty)
         XCTAssertFalse(key1.privateKey.derRepresentation.isEmpty)

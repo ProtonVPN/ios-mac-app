@@ -22,6 +22,8 @@ import Dependencies
 
 import Domain
 
+@available(macOS 13, *)
+@available(tvOS, unavailable)
 extension DependencyValues {
     public var vpnConnectionStatus: @Sendable () async -> VPNConnectionStatus {
         get { self[VPNConnectionStatusKey.self] }
@@ -29,6 +31,8 @@ extension DependencyValues {
     }
 }
 
+@available(macOS 13, *)
+@available(tvOS, unavailable)
 public enum VPNConnectionStatusKey: TestDependencyKey {
     public static let testValue: @Sendable () async -> VPNConnectionStatus = { .disconnected }
 }

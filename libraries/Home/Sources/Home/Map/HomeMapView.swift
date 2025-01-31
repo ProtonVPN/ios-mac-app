@@ -25,13 +25,13 @@ import CoreLocation
 
 @available(iOS 17.0, *)
 public struct HomeMapView: View {
+    let store: StoreOf<HomeMapFeature>
+
     @State private var map: MapRenderView?
 
     private let mapBounds: CGRect
     private let availableHeight: CGFloat
     private let availableWidth: CGFloat
-
-    private var store: StoreOf<HomeMapFeature>
 
     @State private var pinMode: MapPin.Mode = .disconnected
 
@@ -67,7 +67,6 @@ public struct HomeMapView: View {
         log.info("Rendering map (focused on: \(optional: focusedCountryCode)")
         map = MapRenderView(highlightedCountryCode: focusedCountryCode)
     }
-
 
     private func mapOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
