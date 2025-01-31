@@ -383,8 +383,7 @@ extension MacAlertService: CoreAlertService {
         case .image(let imagePanel):
             vc = AnnouncementImageViewController(
                 data: imagePanel,
-                offerReference: alert.offerReference,
-                sessionService: sessionService
+                offerReference: alert.offerReference
             )
         }
 

@@ -26,6 +26,7 @@ import CommonNetworking
 import VPNAppCore
 import VPNShared
 import Dependencies
+import Ergonomics
 
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
@@ -354,13 +355,6 @@ extension Container: VpnGateway2Factory {
 extension Container: ServerTierCheckerFactory {
     func makeServerTierChecker() -> ServerTierChecker {
         ServerTierChecker(alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain())
-    }
-}
-
-// MARK: SessionServiceFactory
-extension Container: SessionServiceFactory {
-    public func makeSessionService() -> SessionService {
-        SessionServiceImplementation(factory: self)
     }
 }
 

@@ -55,6 +55,7 @@ let package = Package(
         .package(path: "../NetShield"),
         .package(path: "../NEHelper"),
         .package(path: "../Settings"),
+        .package(path: "../Features/Announcement"),
 
         // External dependencies
         .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
@@ -94,6 +95,7 @@ let package = Package(
                 "Modals",
                 "Settings",
                 "BugReport",
+                "Announcement",
 
                 // Todo: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),

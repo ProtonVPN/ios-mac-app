@@ -18,6 +18,7 @@
 
 import Foundation
 import LegacyCommon
+import Ergonomics
 
 class SecureCoreWarningViewModel {
     let sessionService: SessionService

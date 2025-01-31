@@ -138,7 +138,6 @@ final class NavigationService {
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
-    private lazy var sessionService = factory.makeSessionService()
     @Dependency(\.announcementManager) var announcementManager
 
     private lazy var onboardingService: OnboardingService = {
@@ -303,7 +302,6 @@ extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
         countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self)
-        countriesViewController.sessionService = sessionService
         countriesViewController.connectionBarViewController = makeConnectionBarViewController()
         
         return countriesViewController

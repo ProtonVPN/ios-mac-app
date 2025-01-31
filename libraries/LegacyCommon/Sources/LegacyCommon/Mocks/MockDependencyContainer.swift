@@ -89,12 +89,10 @@ public class MockDependencyContainer {
         authKeychain: authKeychain
     )
 
-    public let sessionService = SessionServiceMock()
     public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
 
     #if os(iOS)
     public lazy var vpnAuthentication = VpnAuthenticationRemoteClient(
-        sessionService: sessionService,
         authenticationStorage: vpnAuthenticationStorage
     )
     #elseif os(macOS)

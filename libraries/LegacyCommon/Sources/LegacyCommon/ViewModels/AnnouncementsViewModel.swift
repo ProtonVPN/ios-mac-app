@@ -23,6 +23,7 @@
 import Foundation
 import VPNShared
 import Dependencies
+import Ergonomics
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel

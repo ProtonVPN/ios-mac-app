@@ -24,6 +24,7 @@ import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import Ergonomics
 
 class FeatureTableViewCell: UITableViewCell {
     

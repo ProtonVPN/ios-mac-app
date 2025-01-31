@@ -18,13 +18,16 @@
 
 import Foundation
 import ComposableArchitecture
+
 import CoreConnection
+import CommonNetworking
 import enum ExtensionIPC.WireguardProviderRequest
-import struct Domain.Server
-import protocol Domain.ProtonVPNError
+
 import Localization
 import Ergonomics
 import Strings
+import struct Domain.Server
+import protocol Domain.ProtonVPNError
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {

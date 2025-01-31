@@ -22,6 +22,7 @@
 
 #if DEBUG
 import Foundation
+import Ergonomics
 
 public class SafariServiceMock: SafariServiceProtocol {
     

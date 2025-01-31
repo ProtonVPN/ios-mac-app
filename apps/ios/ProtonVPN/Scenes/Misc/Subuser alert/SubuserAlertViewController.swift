@@ -21,6 +21,7 @@ import UIKit
 import LegacyCommon
 import Theme
 import Strings
+import Ergonomics
 
 class SubuserAlertViewController: UIViewController {
     

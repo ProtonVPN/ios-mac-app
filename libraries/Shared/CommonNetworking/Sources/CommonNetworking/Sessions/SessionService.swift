@@ -18,23 +18,32 @@
 
 import Foundation
 import Dependencies
+import Domain
 
 public struct SessionService: TestDependencyKey {
     public var selector: () async throws -> String
     public var sessionCookie: () -> HTTPCookie?
+    public var getUpgradePlanSession: (String) async -> String
+    public var getExtensionSessionSelector: (AppContext) async throws -> String
 
     public init(
         selector: @escaping () async throws -> String,
-        sessionCookie: @escaping () -> HTTPCookie?
+        sessionCookie: @escaping () -> HTTPCookie?,
+        getUpgradePlanSession: @escaping (String) async -> String,
+        getExtensionSessionSelector: @escaping (AppContext) async throws -> String
     ) {
         self.selector = selector
         self.sessionCookie = sessionCookie
+        self.getUpgradePlanSession = getUpgradePlanSession
+        self.getExtensionSessionSelector = getExtensionSessionSelector
     }
 
     public static let testValue: SessionService = {
         return SessionService(
             selector: unimplemented(),
-            sessionCookie: unimplemented(placeholder: nil)
+            sessionCookie: unimplemented(placeholder: nil),
+            getUpgradePlanSession: unimplemented(placeholder: ""),
+            getExtensionSessionSelector: unimplemented(placeholder: "")
         )
     }()
 }

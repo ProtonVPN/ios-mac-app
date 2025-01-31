@@ -27,6 +27,7 @@ let package = Package(
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../NEHelper"),
+        .package(path: "../CommonNetworking"),
     ],
     targets: [
         .target(
@@ -46,6 +47,7 @@ let package = Package(
             dependencies: [
                 "CoreConnection",
                 "ExtensionIPC",
+                "CommonNetworking",
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
             ]

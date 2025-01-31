@@ -40,8 +40,7 @@ final class IosAlertService {
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory &
         SafariServiceFactory &
-        PlanServiceFactory &
-        SessionServiceFactory
+        PlanServiceFactory
 
     private let factory: Factory
     
@@ -446,7 +445,7 @@ extension IosAlertService: CoreAlertService {
             announcement = AnnouncementDetailViewController(legacyPanel)
             announcement.modalPresentationStyle = .fullScreen
         case .image(let imagePanel):
-            announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference, sessionService: factory.makeSessionService())
+            announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference)
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }
         announcement.cancelled = { [weak self] in

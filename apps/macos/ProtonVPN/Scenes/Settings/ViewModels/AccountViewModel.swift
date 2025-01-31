@@ -24,6 +24,7 @@ import Foundation
 import LegacyCommon
 import VPNShared
 import Strings
+import Ergonomics
 
 final class AccountViewModel {
     

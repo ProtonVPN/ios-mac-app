@@ -1,7 +1,7 @@
 //
-//  Created on 11/01/2024.
+//  Created on 2025-01-30.
 //
-//  Copyright (c) 2024 Proton AG
+//  Copyright (c) 2025 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,10 @@
 import Foundation
 import Strings
 import Timer
+import Domain
+import CommonNetworking
+import Ergonomics
+import Dependencies
 
 public struct OfferBannerViewModel {
 
@@ -45,8 +49,9 @@ public struct OfferBannerViewModel {
         self.endTime = endTime
         self.showCountdown = showCountdown
         self.dismiss = dismiss
-        self.action = { sessionService in
-            let url = await sessionService.getUpgradePlanSession(url: buttonURL.absoluteString)
+        self.action = { _ in
+            @Dependency(\.sessionService) var sessionService
+            let url = await sessionService.getUpgradePlanSession(buttonURL.absoluteString)
             SafariService().open(url: url)
             NotificationCenter.default.post(name: .userWasDisplayedAnnouncement,
                                             object: offerReference)

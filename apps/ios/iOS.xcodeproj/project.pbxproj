@@ -331,6 +331,7 @@
 		E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */; };
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
+		E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = E53E5B292D4CF128002D88B2 /* CommonNetworking */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E55B1A642B922031001EF2C6 /* PMLogger */; };
 		E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */; };
@@ -908,6 +909,7 @@
 				4C05E5682A716995009102EB /* LegacyCommon in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
+				E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 			);
@@ -2301,6 +2303,7 @@
 				8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */,
 				8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */,
 				E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */,
+				E53E5B292D4CF128002D88B2 /* CommonNetworking */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4616,6 +4619,10 @@
 		E53D64C42811698F0060C463 /* Modals-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-iOS";
+		};
+		E53E5B292D4CF128002D88B2 /* CommonNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CommonNetworking;
 		};
 		E55B1A642B922031001EF2C6 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

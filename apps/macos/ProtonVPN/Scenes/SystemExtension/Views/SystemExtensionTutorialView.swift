@@ -23,6 +23,7 @@ import AVKit
 import ProtonCoreUIFoundations
 import LegacyCommon
 import Strings
+import Ergonomics
 
 struct SystemExtensionTutorialView: View {
 

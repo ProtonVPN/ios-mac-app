@@ -24,29 +24,26 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import VPNShared
+import CommonNetworking
 
 #if os(iOS)
 public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private var connectionProvider: ProviderMessageSender?
-    private let sessionService: SessionService
     private let authenticationStorage: VpnAuthenticationStorageSync
 
-    public typealias Factory = SessionServiceFactory &
+    public typealias Factory =
         VpnAuthenticationStorageFactory &
         SafeModePropertyProviderFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            sessionService: factory.makeSessionService(),
             authenticationStorage: factory.makeVpnAuthenticationStorage()
         )
     }
 
     public init(
-        sessionService: SessionService,
         authenticationStorage: VpnAuthenticationStorageSync
     ) {
-        self.sessionService = sessionService
         self.authenticationStorage = authenticationStorage
 
         NotificationCenter.default.addObserver(forName: VpnKeychain.vpnPlanChanged, object: nil, queue: nil,
@@ -182,7 +179,8 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private func pushSelectorToProvider(extensionContext: AppContext = .wireGuardExtension, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         Task {
             do {
-                let selector = try await sessionService.getExtensionSessionSelector(extensionContext: extensionContext)
+                @Dependency(\.sessionService) var sessionService
+                let selector = try await sessionService.getExtensionSessionSelector(extensionContext)
                 pushToProvider(selector: selector, completionHandler: completionHandler)
             } catch {
                 log.error("Received error forking API session: \(error)", category: .userCert)
@@ -196,7 +194,8 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.
         // The network extension will always send requests from behind the tunnel (except when it can't, because of the
         // Apple's "killswitch").
-        let sessionId = sessionService.sessionCookie
+        @Dependency(\.sessionService) var sessionService
+        let sessionId = sessionService.sessionCookie()
         let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: sessionId)
 
         connectionProvider?.send(request, completion: { result in

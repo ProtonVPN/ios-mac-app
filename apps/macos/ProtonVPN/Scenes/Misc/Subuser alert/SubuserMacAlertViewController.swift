@@ -20,6 +20,7 @@ import Cocoa
 import LegacyCommon
 import Strings
 import Theme
+import Ergonomics
 
 final class SubuserMacAlertViewController: NSViewController {
     

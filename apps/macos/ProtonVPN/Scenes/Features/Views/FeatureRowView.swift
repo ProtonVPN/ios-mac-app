@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import Ergonomics
 
 class FeatureRowView: NSView {
     

@@ -27,6 +27,9 @@ import Theme
 import SDWebImage
 import Strings
 import Timer
+import Announcement
+import CommonNetworking
+import Dependencies
 
 final class OfferBannerView: NSView {
 
@@ -39,8 +42,6 @@ final class OfferBannerView: NSView {
     private var viewModel: OfferBannerViewModel!
 
     var timer: BackgroundTimer?
-
-    var sessionService: SessionService?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -95,7 +96,7 @@ final class OfferBannerView: NSView {
     // MARK: - Actions
 
     @IBAction private func didTap(_ sender: Any) {
-        guard let sessionService else { return }
+        @Dependency(\.sessionService) var sessionService
         Task {
             await viewModel.action(sessionService)
         }

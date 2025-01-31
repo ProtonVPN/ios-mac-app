@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import Strings
+import Ergonomics
 
 protocol OverviewItemViewModelDelegate: AnyObject {
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)

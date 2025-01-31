@@ -20,6 +20,7 @@ import Foundation
 import Dependencies
 import ExtensionIPC
 import CoreConnection
+import CommonNetworking
 
 struct CertificateRefreshClientError: Error {
     let localizedDescription: String

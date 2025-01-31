@@ -20,16 +20,13 @@ import Foundation
 import Combine
 import Reachability
 import VPNAppCore
+import Announcement
 
 public extension Notification.Name {
     /// A user initiated a change to the VPN configuration.
     static let userInitiatedVPNChange: Self = .init("UserInitiatedVPNChange")
     /// An upsell alert was displayed due to a user clicking on a feature reserved for paid users.
     static let upsellAlertWasDisplayed: Self = .init("UpsellAlertWasDisplayed")
-    /// A user was displayed a announcement.
-    static let userWasDisplayedAnnouncement: Self = .init("UserWasDisplayedAnnouncement")
-    /// A user was redirected to a payment portal through a notification.
-    static let userEngagedWithAnnouncement: Self = .init("UserEngagedWithAnnouncement")
     /// A user was upsold by clicking on a paid feature, and proceeded to the "Upgrade" step.
     static let userEngagedWithUpsellAlert: Self = .init("UserEngagedWithUpsellAlert")
     /// A user upgraded their plan - it's up to the TelemetryService to figure out if this was the result of an upsell.

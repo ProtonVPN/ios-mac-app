@@ -23,6 +23,7 @@
 import Foundation
 import VPNShared
 import Dependencies
+import Announcement
 
 private enum AnnouncementManagerKey: TestDependencyKey {
     static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()

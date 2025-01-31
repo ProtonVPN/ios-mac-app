@@ -20,6 +20,8 @@ import AppKit
 import LegacyCommon
 import Ergonomics
 import Strings
+import Dependencies
+import CommonNetworking
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!
@@ -30,16 +32,14 @@ final class AnnouncementImageViewController: NSViewController {
 
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?
-    private let sessionService: SessionService
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(data: OfferPanel.ImagePanel, offerReference: String?, sessionService: SessionService) {
+    init(data: OfferPanel.ImagePanel, offerReference: String?) {
         self.data = data
         self.offerReference = offerReference
-        self.sessionService = sessionService
         super.init(nibName: NSNib.Name(String(describing: AnnouncementImageViewController.self)), bundle: nil)
     }
 
@@ -126,8 +126,9 @@ final class AnnouncementImageViewController: NSViewController {
         actionButton.isEnabled = false
 
         Task { [weak actionButton, weak view] in
+            @Dependency(\.sessionService) var sessionService
             // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
-            let url = await sessionService.getUpgradePlanSession(url: data.button.url)
+            let url = await sessionService.getUpgradePlanSession(data.button.url)
             actionButton?.isEnabled = true
             SafariService().open(url: url)
             view?.window?.close()

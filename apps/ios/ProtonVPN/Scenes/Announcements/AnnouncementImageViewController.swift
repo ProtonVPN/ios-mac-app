@@ -21,6 +21,8 @@ import UIKit
 import LegacyCommon
 import Alamofire
 import ProtonCoreUIFoundations
+import Dependencies
+import CommonNetworking
 
 final class AnnouncementImageViewController: AnnouncementViewController {
 
@@ -36,16 +38,13 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
     var didShowTheWholeModal = false
 
-    private let sessionService: SessionService
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(data: OfferPanel.ImagePanel, offerReference: String?, sessionService: SessionService) {
+    init(data: OfferPanel.ImagePanel, offerReference: String?) {
         self.data = data
         self.offerReference = offerReference
-        self.sessionService = sessionService
         super.init(nibName: String(describing: AnnouncementImageViewController.self), bundle: nil)
     }
 
@@ -149,8 +148,9 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         actionButton.isEnabled = false
 
         getUpgradePlanSessionTask = Task {
+            @Dependency(\.sessionService) var sessionService
             // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
-            let url = await sessionService.getUpgradePlanSession(url: data.button.url)
+            let url = await sessionService.getUpgradePlanSession(data.button.url)
             guard getUpgradePlanSessionTask?.isCancelled == false else { return }
             actionButton.isEnabled = true
             urlRequested?(url)

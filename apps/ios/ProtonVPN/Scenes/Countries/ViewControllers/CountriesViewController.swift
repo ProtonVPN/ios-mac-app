@@ -26,6 +26,8 @@ import Search
 import ProtonCoreUIFoundations
 import Strings
 import ProtonCoreFeatureFlags
+import CommonNetworking
+import Dependencies
 
 final class CountriesViewController: UIViewController {
     
@@ -41,7 +43,6 @@ final class CountriesViewController: UIViewController {
     var connectionBarViewController: ConnectionBarViewController?
 
     var coordinator: SearchCoordinator?
-    var sessionService: SessionService?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -239,7 +240,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             viewModel.action()
 
         case .offerBanner(let viewModel):
-            guard let sessionService else { return }
+            @Dependency(\.sessionService) var sessionService
             Task {
                 await viewModel.action(sessionService)
             }

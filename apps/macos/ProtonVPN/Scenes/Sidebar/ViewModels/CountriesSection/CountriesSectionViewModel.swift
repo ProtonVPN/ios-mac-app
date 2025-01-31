@@ -35,6 +35,7 @@ import LegacyCommon
 import VPNShared
 import VPNAppCore
 import Modals
+import Announcement
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)
@@ -77,7 +78,6 @@ protocol CountriesSettingsDelegate: AnyObject {
 class CountriesSectionViewModel {
     @Dependency(\.serverRepository) var repository
 
-    let sessionService: SessionService
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
@@ -86,7 +86,7 @@ class CountriesSectionViewModel {
     private var expandedCountries: Set<String> = []
     private var currentQuery: String?
     private let sysexManager: SystemExtensionManager
-    private let announcementManager: AnnouncementManager
+    @Dependency(\.announcementManager) var announcementManager
 
     weak var delegate: CountriesSettingsDelegate?
 
@@ -157,8 +157,6 @@ class CountriesSectionViewModel {
         & VpnStateConfigurationFactory
         & ModelIdCheckerFactory
         & SystemExtensionManagerFactory
-        & AnnouncementManagerFactory
-        & SessionServiceFactory
 
     private let factory: Factory
 
@@ -166,7 +164,6 @@ class CountriesSectionViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        self.sessionService = factory.makeSessionService()
         self.vpnGateway = factory.makeVpnGateway()
         self.vpnKeychain = factory.makeVpnKeychain()
         self.appStateManager = factory.makeAppStateManager()
@@ -174,7 +171,6 @@ class CountriesSectionViewModel {
         self.propertiesManager = factory.makePropertiesManager()
         self.secureCoreState = self.propertiesManager.secureCoreToggle
         self.sysexManager = factory.makeSystemExtensionManager()
-        self.announcementManager = factory.makeAnnouncementManager()
         if case .connected = appStateManager.state {
             self.connectedServer = appStateManager.activeConnection()?.server
         }

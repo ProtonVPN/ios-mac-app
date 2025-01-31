@@ -29,6 +29,7 @@ import PMLogger
 import Strings
 import Modals_macOS
 import Dependencies
+import Ergonomics
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService

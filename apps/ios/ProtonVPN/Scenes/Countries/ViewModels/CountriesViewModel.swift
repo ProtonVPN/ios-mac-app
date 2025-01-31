@@ -36,6 +36,7 @@ import LegacyCommon
 import ProtonCoreFeatureFlags
 import VPNAppCore
 import VPNShared
+import Announcement
 
 typealias Row = RowViewModel
 

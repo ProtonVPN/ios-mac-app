@@ -23,6 +23,7 @@
 import Cocoa
 import LegacyCommon
 import VPNAppCore
+import Ergonomics
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
     
