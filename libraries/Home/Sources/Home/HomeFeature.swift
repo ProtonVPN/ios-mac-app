@@ -26,6 +26,7 @@ import ConnectionDetails
 import Connection
 import Domain
 import Ergonomics
+import ModalsServices
 import LocalAgent
 import NetShield
 import VPNAppCore
@@ -309,25 +310,6 @@ private extension FeatureStatisticsMessage.NetShieldStats {
             adsCount: adsBlocked ?? 0,
             dataSaved: UInt64(bytesSaved),
             enabled: true
-        )
-    }
-}
-
-private extension Effect {
-    static func listen<StreamElement>(
-        to stream: @escaping @autoclosure () -> AsyncStream<StreamElement>,
-        priority: TaskPriority? = nil,
-        reinjecting toAction: @escaping @MainActor @Sendable (StreamElement) async throws -> Action,
-        catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
-    ) -> Self {
-        self.run(
-            priority: priority,
-            operation: { send in
-                for await value in stream() {
-                    await send(try toAction(value))
-                }
-            },
-            catch: handler
         )
     }
 }

@@ -21,7 +21,7 @@ import ComposableArchitecture
 import struct Domain.VPNConnectionFeatures
 import struct Domain.Server
 import Connection
-import Ergonomics
+import ModalsServices
 import Persistence
 import Foundation
 import Domain

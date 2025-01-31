@@ -16,10 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Ergonomics
 import Foundation
+
 import Connection
 import LocalAgent
+import ModalsServices
 import Strings
 
 extension ConnectionError: AlertConvertibleError {
