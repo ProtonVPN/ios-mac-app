@@ -65,17 +65,21 @@ public struct RecentsSectionView: View {
         }
     }
 
-    public var body: some View {
+    @ViewBuilder private var content: some View {
         if store.userTier.isFreeTier {
             sectionTitleView(title: Localizable.homeRecentsUpsellSection)
             UpsellCarousel(sendAction: { _ = store.send($0) })
         } else if !store.recentConnectionList.isEmpty {
             recentsList
                 .frame(maxWidth: Constants.maxHomeContentWidth)
-                .task { store.send(.watchConnectionStatus) }
         } else {
             EmptyView()
         }
+    }
+
+    public var body: some View {
+        content
+            .task { store.send(.watchConnectionStatus) }
     }
 }
 
