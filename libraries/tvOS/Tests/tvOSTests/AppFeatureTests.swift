@@ -19,6 +19,7 @@
 import XCTest
 import ComposableArchitecture
 import Ergonomics
+import ModalsServices
 @testable import tvOS
 @testable import CommonNetworking
 
