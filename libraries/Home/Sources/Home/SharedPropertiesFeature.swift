@@ -66,6 +66,12 @@ public struct SharedPropertiesFeature {
     }
 
     private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
+            // Legacy connection status stream does not yield an initial value, so let's manually grab it
+            let initialConnectionStatus = await Dependency(\.vpnConnectionStatus).wrappedValue()
+            send(.newConnectionStatus(initialConnectionStatus))
+        }
+
         let actionStream = Self.connectionStatusStream.map { Action.newConnectionStatus($0) }
 
         for await value in actionStream {

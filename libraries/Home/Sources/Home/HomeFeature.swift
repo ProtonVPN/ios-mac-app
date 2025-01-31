@@ -274,7 +274,7 @@ public struct HomeFeature {
                     let newConnectionStatus = try newConnectionState.connectionStatus()
                     return .send(.sharedProperties(.newConnectionStatus(newConnectionStatus)))
                 } catch {
-                    log.error("Missing original connection intent", metadata: ["error": "\(error)"])
+                    log.error("Missing original connection intent", category: .connection, metadata: ["error": "\(error)"])
                     return .send(.connection(.disconnect(.connectionFailure(.intentMissing))))
                 }
             case .map:
