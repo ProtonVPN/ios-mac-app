@@ -74,6 +74,8 @@ extension ConnectToVPNKey: DependencyKey {
 
         @SharedReader(.userTier) var userTier: Int
 
+        bridge.pushStatus(status: .connecting(spec, nil))
+
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         let acceptableProtocols: ProtocolSupport
         switch propertiesManager.connectionProtocol {
