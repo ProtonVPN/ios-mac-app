@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 import LegacyCommon
 import AlamofireImage
+import Announcement
 
 final class AnnouncementFeatureView: UIView {
 

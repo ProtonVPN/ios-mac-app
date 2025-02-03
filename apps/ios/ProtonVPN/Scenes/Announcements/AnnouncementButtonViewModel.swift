@@ -23,6 +23,7 @@
 import Foundation
 import LegacyCommon
 import Dependencies
+import Announcement
 
 protocol AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel

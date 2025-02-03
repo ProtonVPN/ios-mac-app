@@ -23,6 +23,7 @@ import Domain
 import CommonNetworking
 import Ergonomics
 import Dependencies
+import Connection
 
 public struct OfferBannerViewModel {
 

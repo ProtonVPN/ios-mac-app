@@ -25,6 +25,7 @@ import UIKit
 import LegacyCommon
 import Alamofire
 import ProtonCoreUIFoundations
+import Announcement
 
 final class AnnouncementDetailViewController: AnnouncementViewController {
     @IBOutlet private weak var closeButton: UIButton!

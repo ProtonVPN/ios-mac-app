@@ -19,6 +19,8 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../Shared/CommonNetworking"),
+        .package(path: "../Shared/Connection"),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
     ],
     targets: [
         .target(
@@ -27,6 +29,8 @@ let package = Package(
                 "Strings",
                 "Domain",
                 "CommonNetworking",
+                "Connection",
+                .product(name: "SDWebImage", package: "SDWebImage"),
             ]),
         .testTarget(
             name: "AnnouncementTests",

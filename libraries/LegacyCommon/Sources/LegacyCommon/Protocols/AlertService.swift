@@ -25,6 +25,7 @@ import Dependencies
 import Persistence
 import VPNAppCore
 import Ergonomics
+import Announcement
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService

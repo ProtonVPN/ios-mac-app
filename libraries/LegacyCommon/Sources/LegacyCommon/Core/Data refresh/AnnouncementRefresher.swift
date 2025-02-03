@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Announcement
 
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {

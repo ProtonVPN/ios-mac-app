@@ -51,3 +51,20 @@ extension DependencyValues {
         set { self[AppContext.self] = newValue }
     }
 }
+
+//import Foundation
+//import Dependencies
+//import CommonNetworking
+//import VPNShared
+//import Domain
+
+public protocol SessionService {
+    var sessionCookie: HTTPCookie? { get }
+    var accountHost: URL { get }
+
+    func clientSessionId(forContext: AppContext) -> String
+
+    func getSelector(clientId: String,
+                     independent: Bool,
+                     timeout: TimeInterval?) async throws -> String
+}

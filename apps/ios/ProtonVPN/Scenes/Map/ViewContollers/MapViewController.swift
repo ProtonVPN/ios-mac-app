@@ -25,6 +25,7 @@ import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import Announcement
 
 final class MapViewController: UIViewController {
 

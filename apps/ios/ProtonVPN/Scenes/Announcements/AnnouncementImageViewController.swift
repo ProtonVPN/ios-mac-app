@@ -23,6 +23,7 @@ import Alamofire
 import ProtonCoreUIFoundations
 import Dependencies
 import CommonNetworking
+import Announcement
 
 final class AnnouncementImageViewController: AnnouncementViewController {
 

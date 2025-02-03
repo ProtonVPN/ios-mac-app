@@ -16,19 +16,4 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
-import CommonNetworking
-import VPNShared
-import Domain
 
-public protocol SessionService {
-    var sessionCookie: HTTPCookie? { get }
-    var accountHost: URL { get }
-
-    func clientSessionId(forContext: AppContext) -> String
-
-    func getSelector(clientId: String,
-                     independent: Bool,
-                     timeout: TimeInterval?) async throws -> String
-}

@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Announcement
 
 public struct GetApiNotificationsResponse: Codable {   
     let notifications: [Announcement]

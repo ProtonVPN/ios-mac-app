@@ -27,6 +27,7 @@ import VPNAppCore
 import VPNShared
 import Dependencies
 import Ergonomics
+import Announcement
 
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications

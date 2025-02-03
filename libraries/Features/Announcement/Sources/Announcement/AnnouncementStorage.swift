@@ -76,7 +76,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
             userDefaults.set(jsonData, forKey: storageKey)
             DispatchQueue.main.async { NotificationCenter.default.post(name: AnnouncementStorageNotifications.contentChanged, object: objects) }
         } catch let error {
-            log.error("\(error)", category: .ui)
+//            log.error("\(error)", category: .ui)
         }
     }
 

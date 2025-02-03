@@ -22,6 +22,7 @@
 
 #if DEBUG
 import Foundation
+import Announcement
 
 public class AnnouncementStorageMock: AnnouncementStorage {
     public var announcements: [Announcement]

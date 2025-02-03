@@ -19,6 +19,7 @@
 import CertificateAuthentication
 import CommonNetworking
 import Dependencies
+import Domain
 
 extension CertificateAuthentication.SessionService: DependencyKey {
     public static let liveValue: CertificateAuthentication.SessionService = {
@@ -26,13 +27,44 @@ extension CertificateAuthentication.SessionService: DependencyKey {
         @Dependency(\.appInfo) var appInfo
 
         return CertificateAuthentication.SessionService(
-            selector: {
-                let clientId = appInfo.clientId(forContext: .wireGuardExtension)
-                let forkRequest = ForkSessionRequest(useCase: .getSelector(clientId: clientId, independent: false))
-                let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
-                return response.selector
-            },
-            sessionCookie: { networking.sessionCookie }
+            selector: selector,
+            sessionCookie: { networking.sessionCookie },
+            getUpgradePlanSession: getUpgradePlanSession,
+            getExtensionSessionSelector: getExtensionSessionSelector
         )
     }()
+
+    static private func selector() async throws -> String {
+        @Dependency(\.appInfo) var appInfo
+        let clientId = appInfo.clientId(forContext: .wireGuardExtension)
+        return try await selector(clientId: clientId)
+    }
+
+    static private func selector(clientId: String) async throws -> String {
+        @Dependency(\.networking) var networking
+        let forkRequest = ForkSessionRequest(useCase: .getSelector(clientId: clientId, independent: false))
+        let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
+        return response.selector
+    }
+
+
+    static private func getUpgradePlanSession(url: String) async -> String {
+        do {
+            let selector = try await selector(clientId: "web-account-lite")
+            return url + "#selector=" + selector
+        } catch {
+            log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
+            return url
+        }
+    }
+
+    static private func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
+        try await selector(clientId: clientSessionId(forContext: extensionContext))
+    }
+
+    static private func clientSessionId(forContext context: AppContext) -> String {
+        @Dependency(\.appInfo) var appInfo
+        return appInfo.clientId(forContext: context)
+    }
+
 }

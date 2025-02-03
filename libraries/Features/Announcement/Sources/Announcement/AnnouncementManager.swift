@@ -23,7 +23,6 @@
 import Foundation
 import VPNShared
 import Dependencies
-import Announcement
 
 private enum AnnouncementManagerKey: TestDependencyKey {
     static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()
@@ -87,8 +86,8 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         }
         if offers.count > 1 {
             let errorMessage = "There should only ever be one or none welcome offer banner, having more is an error."
-            log.assertionFailure(errorMessage)
-            log.error(.init(stringLiteral: errorMessage), category: .api)
+//            log.assertionFailure(errorMessage)
+//            log.error(.init(stringLiteral: errorMessage), category: .api)
         }
         // Only return the one with closest endTime. If the offer was read, return nothing, though there might be others in queue.
         // This should not really happen, it would be a configuration error if it did.
@@ -119,4 +118,17 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         announcementStorage.store(announcements)
     }
     
+}
+
+public extension Date {
+
+    /// Check if this date represnt time in future
+    var isFuture: Bool {
+        return self.timeIntervalSinceNow > 0
+    }
+
+    /// Check if this date represnt time in future
+    var isPast: Bool {
+        return self.timeIntervalSinceNow < 0
+    }
 }

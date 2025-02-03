@@ -22,15 +22,3 @@
 
 import Foundation
 
-public extension Date {
-    
-    /// Check if this date represnt time in future
-    var isFuture: Bool {
-        return self.timeIntervalSinceNow > 0
-    }
-    
-    /// Check if this date represnt time in future
-    var isPast: Bool {
-        return self.timeIntervalSinceNow < 0
-    }
-}

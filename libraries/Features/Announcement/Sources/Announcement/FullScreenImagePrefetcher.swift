@@ -37,10 +37,10 @@ public struct FullScreenImagePrefetcher {
 
     public func prefetchImages(urls: [URL]) async {
         guard !urls.isEmpty else {
-            log.debug("No URLs to prefetch")
+//            log.debug("No URLs to prefetch")
             return
         }
-        log.debug("Prefetching urls: \(urls)")
+//        log.debug("Prefetching urls: \(urls)")
         await imageCache.prefetchURLs(urls)
     }
 }

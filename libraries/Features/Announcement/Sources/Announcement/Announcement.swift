@@ -65,7 +65,7 @@ extension Announcement {
         return panel.fullScreenImage
     }
 
-    var prefetchableImage: URL? {
+    public var prefetchableImage: URL? {
         guard let url = fullScreenImage?.firstURL else {
             return nil
         }

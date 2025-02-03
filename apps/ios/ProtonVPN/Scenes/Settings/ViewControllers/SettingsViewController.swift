@@ -25,6 +25,7 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
 import ProtonCoreFeatureFlags
+import Announcement
 
 final class SettingsViewController: UIViewController {
 

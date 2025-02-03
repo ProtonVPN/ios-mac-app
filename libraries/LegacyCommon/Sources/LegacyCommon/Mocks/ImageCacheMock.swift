@@ -18,6 +18,7 @@
 
 #if DEBUG
 import Foundation
+import Announcement
 
 public struct ImageCacheMock: ImageCacheProtocol {
     public static var completionBlockParameterValue = true
