@@ -243,7 +243,7 @@
 "_test_servers" = "TESTOVACÍ servery";
 
 /* MacOS: connecting overlay */
-"_initializing_connection" = "Navazování spojení...";
+"_initializing_connection" = "Inicializace připojení...";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Úspěšně připojeno";

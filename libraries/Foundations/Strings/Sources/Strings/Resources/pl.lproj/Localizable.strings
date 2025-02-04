@@ -301,7 +301,7 @@
 "_always_on_will_reconnect" = "Stale aktywny VPN automatycznie przywróci Twoje połączenie";
 
 /* MacOS: About window title */
-"_about" = "Informacje";
+"_about" = "O aplikacji";
 
 /* iOS setting: after this word actual version and build number are appended */
 "_version" = "Wersja";
