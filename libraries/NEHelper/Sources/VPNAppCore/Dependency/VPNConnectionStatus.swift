@@ -26,6 +26,7 @@ import Domain
 import Ergonomics
 
 // This struct is still WIP
+@CasePathable
 public enum VPNConnectionStatus: Equatable {
     case disconnected
     case connected(ConnectionSpec, VPNConnectionActual?)

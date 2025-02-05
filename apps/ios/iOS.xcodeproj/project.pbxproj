@@ -4397,8 +4397,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-case-paths";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.5.4;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.1;
 			};
 		};
 		E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */ = {
