@@ -53,9 +53,7 @@ final class CoreNetworkingDelegateMock: NetworkingDelegate {
 }
 
 public enum CoreNetworkingDelegateKey: TestDependencyKey {
-    public static var testValue: NetworkingDelegate {
-        CoreNetworkingDelegateMock()
-    }
+    public static let testValue: NetworkingDelegate = CoreNetworkingDelegateMock()
 }
 
 extension DependencyValues {

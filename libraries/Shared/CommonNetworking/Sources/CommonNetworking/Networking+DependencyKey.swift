@@ -42,6 +42,10 @@ public protocol VPNNetworking {
 public struct CoreNetworkingWrapper: VPNNetworking {
     let wrapped: Networking
 
+    public init(wrapped: Networking) {
+        self.wrapped = wrapped
+    }
+
     public var sessionCookie: HTTPCookie? {
         @Dependency(\.dohConfiguration) var doh
         guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
@@ -92,9 +96,15 @@ public struct CoreNetworkingWrapper: VPNNetworking {
     }
 }
 
-/// If using this dependency, make sure `liveValue` owns the only `CoreNetworking` instance.
-public enum VPNNetworkingKey: DependencyKey {
-    public static var liveValue: VPNNetworking {
+/// When using this dependency, make sure `liveValue` owns the only `CoreNetworking` instance.
+public enum VPNNetworkingKey: TestDependencyKey {
+    public static let testValue: VPNNetworking = VPNNetworkingMock()
+}
+
+#if os(tvOS)
+// iOS and macOS implementations live in LegacyCommon, since we don't want to create a duplicate CoreNetworking instance.
+extension VPNNetworkingKey: DependencyKey {
+    public static let liveValue: VPNNetworking = {
         #if TLS_PIN_DISABLE
         let pinAPIEndpoints = false
         #else
@@ -110,8 +120,9 @@ public enum VPNNetworkingKey: DependencyKey {
         )
 
         return CoreNetworkingWrapper(wrapped: networking)
-    }
+    }()
 }
+#endif
 
 extension DependencyValues {
     public var networking: VPNNetworking {
