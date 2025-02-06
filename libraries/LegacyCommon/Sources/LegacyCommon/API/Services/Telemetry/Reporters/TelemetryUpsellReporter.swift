@@ -23,6 +23,10 @@ import VPNAppCore
 
 class TelemetryUpsellReporter {
 
+    struct Error: Swift.Error {
+        let localizedDescription: String
+    }
+
     public typealias Factory = PropertiesManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
 
     private let factory: Factory
@@ -62,7 +66,7 @@ class TelemetryUpsellReporter {
         #endif
 
         guard let modalSource else {
-            throw "unable to determine modal source, ignoring event" as GenericError
+            throw Error(localizedDescription: "unable to determine modal source, ignoring event")
         }
 
         previousModalSource = modalSource
@@ -71,7 +75,7 @@ class TelemetryUpsellReporter {
         }
 
         guard let accountCreationDate = propertiesManager.userAccountCreationDate else {
-            throw "user account creation date is nil, ignoring event: \(modalSource)" as GenericError
+            throw Error(localizedDescription: "user account creation date is nil, ignoring event: \(modalSource)")
         }
 
         let cached = try? vpnKeychain.fetchCached()

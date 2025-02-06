@@ -18,9 +18,16 @@
 
 import Foundation
 import Dependencies
-import Ergonomics
 import ExtensionIPC
 import CoreConnection
+
+struct CertificateRefreshClientError: Error {
+    let localizedDescription: String
+
+    init(_ localizedDescription: String) {
+        self.localizedDescription = localizedDescription
+    }
+}
 
 struct CertificateRefreshClient: DependencyKey {
     var refreshCertificate: () async throws -> CertificateRefreshResult
@@ -35,7 +42,6 @@ extension DependencyValues {
 }
 
 extension CertificateRefreshClient {
-
     public static let liveValue: CertificateRefreshClient = .init(
         refreshCertificate: {
             @Dependency(\.tunnelMessageSender) var messageSender
@@ -71,7 +77,7 @@ extension CertificateRefreshClient {
 
             guard case .ok = response else {
                 // Unlike during certificate refresh, we don't expect any non-ok responses
-                throw "Unexpected ipc result: \(response)" as GenericError
+                throw CertificateRefreshClientError("Unexpected ipc result: \(response)")
             }
         }
     )

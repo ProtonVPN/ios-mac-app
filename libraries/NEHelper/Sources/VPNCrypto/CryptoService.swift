@@ -18,7 +18,6 @@
 
 import Foundation
 import Dependencies
-import Ergonomics
 
 internal enum CryptoServiceEnvironment {
     static var secKeyCopyData = SecKeyCopyExternalRepresentation
@@ -27,6 +26,10 @@ internal enum CryptoServiceEnvironment {
     static var secCreateSignature = SecKeyCreateSignature
     static var secKeyCopyPublicKey = SecKeyCopyPublicKey
     static var secKeyVerifySignature = SecKeyVerifySignature
+}
+
+struct NEHelperVPNCryptoError: Swift.Error {
+    let localizedDescription: String
 }
 
 public class CryptoService {
@@ -72,7 +75,7 @@ public class CryptoService {
             throw error
         }
 
-        throw "Could not sign data provided data using algorithm \(algorithm.rawValue)" as GenericError
+        throw NEHelperVPNCryptoError(localizedDescription: "Could not sign data provided data using algorithm \(algorithm.rawValue)")
     }
 
     public func verify(
@@ -168,7 +171,7 @@ public extension CryptoService.Key {
                 throw error
             }
 
-            throw "Couldn't decode key data" as GenericError
+            throw NEHelperVPNCryptoError(localizedDescription: "Couldn't decode key data")
         }
     }
 
@@ -198,7 +201,8 @@ public extension CryptoService.Key {
             }
 
             let base64 = data.base64EncodedString()
-            throw "Could not convert key. keyType: \(keyType) keyClass: \(keyClass) keySize: \(keySize) data: \(base64)" as GenericError
+            let error = "Could not convert key. keyType: \(keyType) keyClass: \(keyClass) keySize: \(keySize) data: \(base64)"
+            throw NEHelperVPNCryptoError(localizedDescription: error)
         }
 
         self.init(rawValue: key)
@@ -215,7 +219,7 @@ public extension CryptoService.Key {
             throw error
         }
 
-        throw "Couldn't create key with attrs \(attrs)" as GenericError
+        throw NEHelperVPNCryptoError(localizedDescription: "Couldn't create key with attrs \(attrs)")
     }
 }
 

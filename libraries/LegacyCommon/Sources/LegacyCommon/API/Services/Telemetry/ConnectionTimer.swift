@@ -17,9 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Ergonomics
 
 class ConnectionTimer: TelemetryTimer {
+
+    enum Error: Swift.Error {
+        case missingStartedConnectionDate
+        case missingStoppedConnectionDate
+    }
 
     private var startedConnectingDate: Date?
     private var startedConnectionDate: Date?
@@ -43,23 +47,23 @@ class ConnectionTimer: TelemetryTimer {
 
     var connectionDuration: TimeInterval {
         get throws {
-            guard let startedConnectionDate else { throw "Missing startedConnectionDate" as GenericError }
-            guard let stoppedConnectionDate else { throw "Missing stoppedConnectionDate" as GenericError }
+            guard let startedConnectionDate else { throw Error.missingStartedConnectionDate }
+            guard let stoppedConnectionDate else { throw Error.missingStoppedConnectionDate }
             return stoppedConnectionDate.timeIntervalSince(startedConnectionDate)
         }
     }
 
     var timeToConnect: TimeInterval {
         get throws {
-            guard let startedConnectingDate else { throw "Missing startedConnectingDate" as GenericError }
-            guard let startedConnectionDate else { throw "Missing startedConnectionDate" as GenericError }
-            return startedConnectionDate.timeIntervalSince(startedConnectingDate)
+            guard let startedConnectionDate else { throw Error.missingStartedConnectionDate }
+            guard let stoppedConnectionDate else { throw Error.missingStoppedConnectionDate }
+            return startedConnectionDate.timeIntervalSince(stoppedConnectionDate)
         }
     }
 
     var timeConnecting: TimeInterval {
         get throws {
-            guard let startedConnectingDate else { throw "Missing startedConnectingDate" as GenericError }
+            guard let startedConnectingDate else { throw Error.missingStartedConnectionDate }
             return Date().timeIntervalSince(startedConnectingDate)
         }
     }

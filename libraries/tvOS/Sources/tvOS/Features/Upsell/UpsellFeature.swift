@@ -189,6 +189,14 @@ struct UpsellFeature {
 }
 
 extension ProcessCompletionResult {
+    struct ProcessCompletionResultError: Swift.Error {
+        let localizedDescription: String
+
+        init(_ localizedDescription: String) {
+            self.localizedDescription = localizedDescription
+        }
+    }
+
     /// Returns .success(true) if the purchase result warrants refreshing user account information.
     var upsellResult: Result<Bool, Error> {
         switch self {
@@ -211,7 +219,7 @@ extension ProcessCompletionResult {
                 .finished(.resolvingIAPToCredits),
                 .finished(.resolvingIAPToCreditsCausedByError):
             log.assertionFailure("Unexpected IAP purchase result: \(self)")
-            return .failure("Unexpected IAP purchase result: \(self)" as GenericError)
+            return .failure(ProcessCompletionResultError("Unexpected IAP purchase result: \(self)"))
         }
     }
 }

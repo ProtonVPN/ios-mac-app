@@ -17,10 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Ergonomics
 import KeychainAccess
 import VPNCrypto
 import VPNAppCore
+
+struct SecureDeepLinkGeneratorError: Error {
+    let localizedDescription: String
+}
 
 class SecureDeepLinkGenerator {
     private typealias Env = SecureDeepLinkGeneratorEnvironment
@@ -65,7 +68,7 @@ class SecureDeepLinkGenerator {
         ])
 
         guard let publicKey = key.publicKey else {
-            throw "Could not extract public key from \(key.rawValue)" as GenericError
+            throw SecureDeepLinkGeneratorError(localizedDescription: "Could not extract public key from \(key.rawValue)")
         }
 
         try setPublicKey(publicKey)
@@ -121,7 +124,7 @@ fileprivate extension Keychain {
 
     func getKey(key: String, keyClass: CryptoService.KeyClass) throws -> Key {
         guard let data = try getData(key) else {
-            throw "Couldn't find key data" as GenericError
+            throw SecureDeepLinkGeneratorError(localizedDescription: "Couldn't find key data")
         }
 
         return try Key(
