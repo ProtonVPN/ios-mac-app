@@ -7,6 +7,7 @@ let package = Package(
     name: "Domain",
     platforms: [
         .iOS(.v16),
+        .tvOS(.v17),
         .macOS(.v13)
     ],
     products: [
