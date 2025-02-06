@@ -2582,7 +2582,7 @@
 				4C7D405A2A6027C400ACDBED /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				4C7D40622A60282D00ACDBED /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
-				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */,
+				4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */,
 				E5DEF05D2A7399EC006FC9DC /* XCRemoteSwiftPackageReference "DictionaryCoder" */,
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */,
@@ -4345,7 +4345,7 @@
 				version = 9.1.0;
 			};
 		};
-		4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability.swift" */ = {
+		4C7D40722A60297400ACDBED /* XCRemoteSwiftPackageReference "Reachability" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
 			requirement = {
