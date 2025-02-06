@@ -171,9 +171,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return false
         }
 
-        if (try? vpnKeychain.fetchCached()) != nil {
+        do {
+            _ = try vpnKeychain.fetchCached()
+            let _: AuthCredentials = try authKeychain.fetch()
             setAndNotify(for: .established, reason: nil)
-        } else {
+        } catch {
+            log.info("User is not logged in", metadata: ["reason": "\(error)"])
             setAndNotify(for: .notEstablished, reason: nil)
         }
         return true
