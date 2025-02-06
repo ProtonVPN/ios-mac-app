@@ -98,7 +98,9 @@ public struct CoreNetworkingWrapper: VPNNetworking {
 
 /// When using this dependency, make sure `liveValue` owns the only `CoreNetworking` instance.
 public enum VPNNetworkingKey: TestDependencyKey {
-    public static let testValue: VPNNetworking = VPNNetworkingMock()
+    public static let testValue: VPNNetworking = {
+        fatalError("\(Self.self) must have a implementation")
+    }()
 }
 
 #if os(tvOS)
