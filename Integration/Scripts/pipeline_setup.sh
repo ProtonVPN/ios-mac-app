@@ -10,7 +10,7 @@ MACROS_ALLOWLIST_PATH="./Integration/Gitlab/misc/macros.json"
 MACROS_ALLOWLIST_INSTALL_DIR="~/Library/org.swift.swiftpm/security"
 
 # Delete all ssh private keys
-ssh-add -D 
+ssh-add -D
 
 # Add private key for access to gitlab
 echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
