@@ -27,34 +27,21 @@ import VPNAppCore
 public struct SharedPropertiesFeature {
     @ObservableState
     public struct State: Equatable {
-        @Shared(.userCountry) public var userCountry: String?
-        @Shared(.userIP) public var userIP: String?
-        @Shared(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.vpnConnectionStatus)
+        var vpnConnectionStatus: VPNConnectionStatus
+
+        var userLocation: UserLocationFeature.State = .init()
     }
 
     @CasePathable
     public enum Action {
         case listen
-        case userLocationChange(location: UserLocation?)
+        case userLocation(UserLocationFeature.Action)
         case newConnectionStatus(VPNConnectionStatus)
     }
 
     private enum CancelId {
         case watchConnectionStatus
-    }
-
-    private let initialUserLocationEffect: Effect<Action> = .run { send in
-        @Dependency(\.locationClient) var client
-        let initialLocation = try await client.fetchLocation()
-        await send(.userLocationChange(location: initialLocation))
-    }
-
-    private let longLivingUserLocationEffect: Effect<Action> = .publisher {
-        NotificationCenter.default
-            .publisher(for: .userIpNotification)
-            .map { $0.object as? Domain.UserLocation }
-            .receive(on: UIScheduler.shared)
-            .map(Action.userLocationChange)
     }
 
     private static var connectionStatusStream: AsyncStream<VPNConnectionStatus> {
@@ -81,23 +68,18 @@ public struct SharedPropertiesFeature {
     .cancellable(id: CancelId.watchConnectionStatus)
 
     public var body: some Reducer<State, Action> {
+        Scope(state: \.userLocation, action: \.userLocation) {
+            UserLocationFeature()
+        }
         Reduce { state, action in
             switch action {
             case .listen:
                 return .merge(
-                    initialUserLocationEffect,
-                    longLivingUserLocationEffect,
+                    .send(.userLocation(.listen)),
                     longLivingConnectionStatusEffect
                 )
 
-            case .userLocationChange(let location):
-                // Try preventing the whole map view because of possibly missing userLocation
-                // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
-                if let userCountry = location?.country.lowercased(),
-                   let userIP = location?.ip ?? state.userIP {
-                    state.$userCountry.withLock { $0 = userCountry }
-                    state.$userIP.withLock { $0 = userIP }
-                }
+            case .userLocation(_):
                 return .none
 
             case .newConnectionStatus(let connectionStatus):
@@ -107,3 +89,15 @@ public struct SharedPropertiesFeature {
         }
     }
 }
+
+#if DEBUG
+import Combine
+
+extension LocationClient {
+    public static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
+        Timer.publish(every: interval, on: .main, in: .default)
+            .autoconnect()
+            .map { _ in UserLocation.samples.randomElement()! }
+    }
+}
+#endif

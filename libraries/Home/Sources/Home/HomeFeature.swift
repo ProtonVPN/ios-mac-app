@@ -63,7 +63,7 @@ public struct HomeFeature {
         public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
-        public var sharedProperties: SharedPropertiesFeature.State
+        package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
 
         @SharedReader(.connectionState)
@@ -168,7 +168,7 @@ public struct HomeFeature {
                 return .send(.connect(spec))
             case .recents:
                 return .none
-            case .sharedProperties(.userLocationChange(_)):
+            case .sharedProperties(.userLocation(.userLocationChange(_))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
                 return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
             case .sharedProperties(_):

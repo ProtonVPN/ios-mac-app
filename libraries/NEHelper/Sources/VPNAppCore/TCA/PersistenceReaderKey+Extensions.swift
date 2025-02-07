@@ -32,6 +32,12 @@ public extension SharedKey where Self == AppStorageKey<String?> {
     }
 }
 
+public extension SharedKey where Self == AppStorageKey<Date?> {
+    static var lastLocationRetrieval: Self {
+        .appStorage("lastLocationRetrieval")
+    }
+}
+
 public extension SharedKey where Self == AppStorageKey<Int>.Default {
     static var userTier: Self {
         Self[.appStorage("userTier"), default: 0]
