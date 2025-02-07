@@ -546,13 +546,17 @@ extension CreateOrEditProfileViewModel {
     private var serverSelectionDataSet: SelectionDataSet? {
         guard let countryGroup else { return nil }
 
-        // Default profiles: fastest and random
-        var sections: [SelectionSection] = [
-            SelectionSection(title: nil, cells: [
-                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.serverOfferingID)),
-                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.serverOfferingID)),
+        var sections: [SelectionSection] = []
+
+        // Default profiles: fastest and random, only if not a gateway!
+        if !countryGroup.kind.isGateway {
+            sections.append(contentsOf: [
+                SelectionSection(title: nil, cells: [
+                    SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.serverOfferingID)),
+                    SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.serverOfferingID)),
+                ])
             ])
-        ]
+        }
 
         // Servers grouped into sections by tiers
         for tier in orderedTiers() {

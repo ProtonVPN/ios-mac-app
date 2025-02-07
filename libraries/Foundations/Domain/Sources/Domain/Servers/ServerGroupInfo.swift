@@ -82,3 +82,14 @@ extension ServerGroupInfo: Equatable {
         lhs.protocolSupport == rhs.protocolSupport
     }
 }
+
+extension ServerGroupInfo.Kind {
+    public var isGateway: Bool {
+        switch self {
+        case .country:
+            return false
+        case .gateway:
+            return true
+        }
+    }
+}
