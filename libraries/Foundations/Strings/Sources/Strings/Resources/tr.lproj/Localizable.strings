@@ -1880,7 +1880,7 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "İşlemleriniz yüksek güvenlikli 2 VPN sunucusunun arkasında şifrelenir.";
+"_connection_details_feature_description_secure_core" = "Etkinlikleriniz yüksek güvenlikli 2 VPN sunucusunun arkasında şifrelenir.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Yayın akışı izlemek";
@@ -2471,7 +2471,7 @@
 "welcome_to_proton_banner_subtitle" = "VPN etkinliğiniz İsviçre gizlilik yasalarıyla korunur. Sizi asla çevrim içi olarak izlemeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle_redesign" = "İnternet işlemlerinizi asla kaydetmeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız.";
+"welcome_to_proton_banner_subtitle_redesign" = "İnternet etkinliklerinizi asla kaydetmeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
 "onboarding_get_started_statistics_toggle_title" = "Anonim kullanım istatistikleri paylaşılsın";

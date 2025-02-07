@@ -1124,7 +1124,7 @@
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "升級到 %@ 方案以繼續享受下列功能：";
 
-"_5_connections_description" = "在同時間使用 5 個裝置同時連接";
+"_5_connections_description" = "在同時間使用 5 個裝置\n同時連接";
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "超安全的伺服器\n由我們為您架構";
@@ -1133,13 +1133,13 @@
 "_multiple_servers_title" = "多個伺服器";
 
 /* MacOS: \Trial about to expire\ screen */
-"_multiple_servers_description" = "全球數以百計的伺服器";
+"_multiple_servers_description" = "全球數以百計的伺服器\n";
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_title" = "安全的串流";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "安全的串流傳輸您喜歡的內容";
+"_secure_streaming_description" = "安全的串流傳輸您\n喜歡的內容";
 
 /* iOS: Table header in settings screen */
 "_extensions" = "附加元件";
@@ -1865,7 +1865,7 @@
 "_connection_details_feature_description_tor" = "You can connect to .onion sites with your regular browser.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_p2p" = "P2P";
+"_connection_details_feature_title_p2p" = "P2P ";
 
 /* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_description_p2p" = "Peer-to-peer file sharing is enabled on this server.";
@@ -2066,7 +2066,7 @@
 "_bad_interface_ip_range_alert_title" = "網路設定不安全";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "您的本地網路可能並不安全（您的端口 %@ 有 IP 位置和前置 %@）。您的資料可能被人未經加密地在本地網絡上傳輸。啟用緊急終止開關會阻礙這類流量。連線至本地裝置會被干擾。";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "您的本地網路可能並不安全(您的端口 %@ 有 IP 位置和前置 %@)。您的資料可能被人未經加密地在本地網絡上傳輸。啟用緊急終止開關會阻礙這類流量。連線至本地裝置會被干擾。";
 
 /* Title of the search screen */
 "search_title" = "搜尋";
@@ -2168,7 +2168,7 @@
 "modals_upsell_features_moderate_nat_gaming" = "提升線上遊戲及視訊通話效能";
 
 /* Feature of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_direct_connections" = "第二類 NAT（中等）透過啟用裝置之間的的直接連線來改善速度與穩定性";
+"modals_upsell_features_moderate_nat_direct_connections" = "第二類 NAT(中等)透過啟用裝置之間的的直接連線來改善速度與穩定性";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "串流您最喜歡的電影";
@@ -2216,7 +2216,7 @@
 "modals_new_upsell_moderate_nat_subtitle" = "使用 NAT 類型 2 提升線上遊戲與視像通話效能。";
 
 /* Title of Netshield upsell screen */
-"modals_new_upsell_netshield_title" = "享受吳廣告的瀏覽體驗";
+"modals_new_upsell_netshield_title" = "享受無廣告的瀏覽體驗";
 
 /* Subtitle of Netshield upsell screen */
 "modals_new_upsell_netshield_subtitle" = "使用 NetShield 封鎖廣告、追蹤器與惡意軟體。";
@@ -2312,7 +2312,7 @@
 "upsell_torOverVPN_subtitle" = "Connect to hidden services and onion sites with your regular browser.";
 
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "以較高的速度瀏覽（高達 10 Gbps）";
+"upsell_vpn_accelerator_title" = "以較高的速度瀏覽(高達 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_faster_servers" = "更快速存取，減少群聚伺服器。";

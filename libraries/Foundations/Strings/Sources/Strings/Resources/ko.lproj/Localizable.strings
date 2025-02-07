@@ -1229,7 +1229,7 @@
 
 "_subscription_will_expire" = "현재 요금제가 %@ 에 만료됩니다.";
 
-"_subscription_will_renew" = "현재 요금제가 자동으로 %@개월 뒤 갱신됩니다.";
+"_subscription_will_renew" = "현재 플랜이 자동으로 %@에 갱신됩니다.";
 
 "_subscription_description" = "현재 요금제를 자동으로 연장하기 위해 더 많은 크레딧을 구매할 수 있습니다. 현재 구독 기간이 끝나면, 크레딧이 요금제를 지속적으로 구매하기 위해 적용될 것입니다.";
 

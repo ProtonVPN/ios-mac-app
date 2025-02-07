@@ -1267,7 +1267,7 @@
 
 "_troubleshoot_item_antivirus_title" = "Interferencia del antivirus";
 
-"_troubleshoot_item_antivirus_description" = "Desactiva o borra temporalmente tu software antivirus.";
+"_troubleshoot_item_antivirus_description" = "Desactiva o elimina temporalmente tu software antivirus.";
 
 "_troubleshoot_item_proxy_title" = "Interferencia de proxy/cortafuego";
 
@@ -1761,7 +1761,7 @@
 "_action_connect" = "Conectar";
 
 /* For buttons which have an action that removes an item. [Redesign_2023] */
-"_action_remove" = "Borrar";
+"_action_remove" = "Eliminar";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
 "_action_disconnect" = "Desconectar";
@@ -2639,7 +2639,7 @@
 "_location_not_available_title" = "El servidor no está disponible.";
 
 /* User is trying to connect to a server that is currently unavailable. (text) */
-"_location_not_available_text" = "Se ha borrado este servidor. Intenta conectarte a otro servidor.";
+"_location_not_available_text" = "Se ha eliminado este servidor. Intenta conectarte a otro servidor.";
 
 /* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
 "_location_not_available_for_profile_title" = "Error de conexión";

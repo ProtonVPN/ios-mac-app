@@ -1189,7 +1189,7 @@
 "_report_field_feedback" = "O que correu mal?";
 
 /* Mac bug report: steps field label */
-"_report_field_steps" = "Quais são exactamente os passos que deu?";
+"_report_field_steps" = "Quais foram os passos exatos que realizou?";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "Começar a escrever...";
