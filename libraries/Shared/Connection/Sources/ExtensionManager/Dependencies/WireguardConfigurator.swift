@@ -118,7 +118,7 @@ extension ManagerConfigurator {
 
                 case .disconnection:
                     manager.isOnDemandEnabled = false
-                    manager.isEnabled = false
+                    manager.isEnabled = true
                 }
             }
         )
