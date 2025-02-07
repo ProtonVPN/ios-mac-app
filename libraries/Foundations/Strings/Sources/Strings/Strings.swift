@@ -219,6 +219,10 @@ public enum Localizable {
   public static func connectionCardAccessibilityConnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_connecting_to", String(describing: p1), fallback: "Connecting to %@.")
   }
+  /// The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents
+  public static var connectionCardAccessibilityFastest: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest", fallback: "The fastest country available") }
+  /// The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled
+  public static var connectionCardAccessibilityFastestSc: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest_sc", fallback: "The fastest secure core country available") }
   /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
   public static func connectionCardAccessibilityLastConnectedTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_last_connected_to", String(describing: p1), fallback: "You were last connected to %@.")
@@ -1706,7 +1710,7 @@ public enum Localizable {
   /// Description of the "Fastest" default connection option, in the default connection sheet on the home screen
   public static var homeDefaultConnectionFastestDescription: String { return Localizable.tr("Localizable", "home_default_connection_fastest_description", fallback: "The best server based on your location") }
   /// Name of the "Fastest" default connection option, in the default connection sheet on the home screen
-  public static var homeDefaultConnectionFastestName: String { return Localizable.tr("Localizable", "home_default_connection_fastest_name", fallback: "Fastest") }
+  public static var homeDefaultConnectionFastestName: String { return Localizable.tr("Localizable", "home_default_connection_fastest_name", fallback: "Fastest Country") }
   /// Description of the "Most Recent" default connection option, in the default connection sheet on the home screen
   public static var homeDefaultConnectionMostRecentDescription: String { return Localizable.tr("Localizable", "home_default_connection_most_recent_description", fallback: "Your most recently used connection") }
   /// Name of the "Most Recent" default connection option, in the default connection sheet on the home screen
@@ -1719,6 +1723,8 @@ public enum Localizable {
   }
   /// Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023]
   public static var homeFastestConnectionSelectionDescription: String { return Localizable.tr("Localizable", "home_fastest_connection_selection_description", fallback: "Auto-selected from") }
+  /// Title of the "Random" recent connection item
+  public static var homeRecentsRandomServerTitle: String { return Localizable.tr("Localizable", "home_recents_random_server_title", fallback: "Random Country") }
   /// Configuring your VPN access
   public static var loginFetchVpnData: String { return Localizable.tr("Localizable", "login_fetch_vpn_data", fallback: "Configuring your VPN access") }
   /// Start using Proton VPN

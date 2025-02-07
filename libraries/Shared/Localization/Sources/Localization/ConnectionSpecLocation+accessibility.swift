@@ -29,9 +29,9 @@ public extension ConnectionSpec.Location {
     func accessibilityText(locale: Locale) -> String {
         switch self {
         case .fastest:
-            return "The fastest country available"
+            return Localizable.connectionCardAccessibilityFastest
         case .secureCore(.fastest):
-            return "The fastest secure core country available"
+            return Localizable.connectionCardAccessibilityFastestSc
         default:
             return text(locale: locale)
         }
@@ -50,10 +50,10 @@ public extension ConnectionSpec.Location {
     func text(locale: Locale) -> String {
         switch self {
         case .fastest, .secureCore(.fastest):
-            return "Fastest country"
+            return Localizable.homeDefaultConnectionFastestName
 
         case .random, .secureCore(.random):
-            return "Random server"
+            return Localizable.homeRecentsRandomServerTitle
 
         case .region(let code),
                 .exact(_, _, _, _, let code),

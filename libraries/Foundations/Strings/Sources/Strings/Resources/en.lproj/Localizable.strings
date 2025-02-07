@@ -1617,6 +1617,12 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
 
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "The fastest country available";
+
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "The fastest secure core country available";
+
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Default connection";
 
@@ -1642,7 +1648,7 @@
 "home_default_connection_title" = "Select your default connection";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Fastest";
+"home_default_connection_fastest_name" = "Fastest Country";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "The best server based on your location";
@@ -1667,6 +1673,9 @@
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Server under maintenance";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Random Country";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Help";
