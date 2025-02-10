@@ -21,7 +21,6 @@ import WidgetKit
 import SwiftUI
 import Domain
 
-// Still WIP
 public struct ConnectWidgetEntry: TimelineEntry {
     public let date: Date
     public let connectionSpec: ConnectionSpec?

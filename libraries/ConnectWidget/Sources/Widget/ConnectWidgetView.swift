@@ -140,6 +140,9 @@ private struct ServerInfoView: View {
 }
 
 private struct RecentsView: View {
+
+    private static let recentsHeight: CGFloat = 90
+
     @Environment(\.widgetFamily) var widgetFamily
     let entry: ConnectWidgetEntry
     let geometry: GeometryProxy
@@ -159,8 +162,8 @@ private struct RecentsView: View {
                         .foregroundStyle(Color(.text, .weak))
                         .frame(maxWidth: .infinity)
                     }
-                    .frame(height: 90)
-                    .background(.white.opacity(0.08))
+                    .frame(height: Self.recentsHeight)
+                    .background(ColorProvider.Shade100.opacity(0.08))
                     .clipRectangle(cornerRadius: .radius12)
                 } else {
                     VStack(alignment: .leading, spacing: .themeSpacing12) {
@@ -193,8 +196,8 @@ private struct RecentsView: View {
                                 }
                                 .buttonStyle(PlainButtonStyle())
                                 .padding(.themeSpacing8)
-                                .frame(width: itemWidth, height: 90, alignment: .leading)
-                                .background(.white.opacity(0.08))
+                                .frame(width: itemWidth, height: Self.recentsHeight, alignment: .leading)
+                                .background(ColorProvider.Shade100.opacity(0.08))
                                 .clipRectangle(cornerRadius: .radius12)
                             }
                         }
@@ -221,7 +224,7 @@ private struct ButtonsView : View {
                     }
                     .buttonStyle(SecondaryButtonStyle())
                 case .protecting:
-                    Button(intent: DisconnectFromVPNIntent()) { // TODO: [Widget] define another app intent for cancellation.
+                    Button(intent: DisconnectFromVPNIntent()) { // TODO: VPNAPPL-2629 - define another app intent for cancellation.
                         Text(Localizable.cancel)
                     }
                     .buttonStyle(SecondaryButtonStyle())

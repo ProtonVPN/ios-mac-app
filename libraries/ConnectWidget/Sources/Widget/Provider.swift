@@ -29,7 +29,7 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        completion(Timeline(entries: [ // Temporary entries.
+        completion(Timeline(entries: [ // TODO: VPNAPPL-2630 - Remove temporary entries.
             ConnectWidgetEntry(date: .now, connectionSpec: nil, protectionState: .signedOut, recentServers: []),
             ConnectWidgetEntry(date: .now.addingTimeInterval(4), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
             ConnectWidgetEntry(date: .now.addingTimeInterval(6), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: []),
