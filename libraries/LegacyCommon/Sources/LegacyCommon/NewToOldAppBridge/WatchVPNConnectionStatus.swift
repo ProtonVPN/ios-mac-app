@@ -102,7 +102,7 @@ extension AppDisplayState {
             return .connecting(intent, resolvedConnection)
 
         case .loadingConnectionInfo:
-            return .loadingConnectionInfo(intent, resolvedConnection)
+            return .resolving(intent, resolvedConnection)
 
         case .disconnecting:
             return .disconnecting(intent, resolvedConnection)

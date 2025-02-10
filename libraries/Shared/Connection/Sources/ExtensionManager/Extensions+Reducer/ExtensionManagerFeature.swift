@@ -43,6 +43,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     @CasePathable
     @dynamicMemberLookup
     public enum State: Equatable, Sendable {
+        case unknown // Initial tunnel state
         case disconnected(TunnelConnectionError?)
         case disconnecting(TunnelConnectionError?)
         case preparingConnection(LogicalServerInfo) // Preparing managers and requesting tunnel start
@@ -215,7 +216,7 @@ private extension ExtensionFeature.State {
         switch self {
         case .preparingConnection, .connecting, .connected:
             return true
-        case .disconnecting, .disconnected:
+        case .unknown, .disconnecting, .disconnected:
             return false
         }
     }

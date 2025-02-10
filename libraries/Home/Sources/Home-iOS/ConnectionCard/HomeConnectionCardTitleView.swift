@@ -88,6 +88,9 @@ struct HomeConnectionCardHeader: View {
 
     private var titleString: String {
         switch model {
+        case .resolving:
+            return Localizable.connectionCardResolving
+
         case .disconnected(isPaid: true):
             return Localizable.connectionCardDefaultConnection
 

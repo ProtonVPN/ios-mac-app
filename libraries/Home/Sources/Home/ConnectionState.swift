@@ -27,6 +27,11 @@ extension ConnectionState {
     public func connectionStatus() throws -> VPNConnectionStatus {
         @Dependency(\.connectionIntentStorage) var storage
         switch self {
+        case .unknown:
+            // While we are in the unknown state, we cannot yet be sure if the tunnel is active or not,
+            // So let's not even try to grab the original connection intent in case we are disconnected.
+            return .resolving(nil, nil)
+
         case .disconnected:
             return .disconnected
 

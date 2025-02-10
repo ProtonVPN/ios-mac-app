@@ -39,7 +39,7 @@ public struct ConnectionStatusFeature {
         @SharedReader(.vpnConnectionStatus) package var vpnConnectionStatus: VPNConnectionStatus
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
-        var startingProtectionState: ProtectionState = .unprotected
+        var startingProtectionState: ProtectionState = .resolving
 
         package internal(set) var stickToTop: Bool = false
 

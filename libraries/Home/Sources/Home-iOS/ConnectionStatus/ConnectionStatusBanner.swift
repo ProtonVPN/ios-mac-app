@@ -39,7 +39,7 @@ struct ConnectionStatusBanner: View {
                 } else if store.netShieldLevel == .level2 {
                     NetShieldStatsView(viewModel: netShield)
                 }
-            case .unprotected, .protecting:
+            case .unprotected, .protecting, .resolving:
                 locationText()
                     .padding(.horizontal, .themeSpacing8)
                     .padding(.vertical, .themeSpacing4)
@@ -52,6 +52,8 @@ struct ConnectionStatusBanner: View {
         let displayCountry: String?
         let displayIP: String?
         switch store.protectionState {
+        case .resolving:
+            return nil
         case .protected, .protectedSecureCore:
             return nil
         case .unprotected:
