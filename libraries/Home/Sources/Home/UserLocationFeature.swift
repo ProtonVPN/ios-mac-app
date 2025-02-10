@@ -49,16 +49,6 @@ public struct UserLocationFeature {
         @Shared(.userCountry) var userCountry: String?
         @Shared(.userIP) var userIP: String?
         @Shared(.lastLocationRetrieval) var lastLocationRetrieval: Date?
-
-        public init(
-            userCountry: String? = nil,
-            userIP: String? = nil,
-            lastLocationRetrieval: Date? = nil
-        ) {
-            self.$userCountry.withLock { $0 = userCountry }
-            self.$userIP.withLock { $0 = userIP }
-            self.$lastLocationRetrieval.withLock { $0 = lastLocationRetrieval }
-        }
     }
 
     @CasePathable
@@ -102,32 +92,45 @@ public struct UserLocationFeature {
                     longLivingUserLocationTimerEffect
                 )
             case .fetchUserLocation:
+                // No need to query the fetch userLocation if we're connected
+                guard !state.vpnConnectionStatus.is(\.connected) else {
+                    return .none
+                }
                 log.info("Explicit User Location retrieval attempt")
                 return .run { send in
                     @Dependency(\.locationClient) var locationClient
                     let location = try await locationClient.fetchLocation()
                     await send(.userLocationChange(location: location))
                 } catch: { error, _ in
-                    log.error("Initial User location retrieval failed: \(error.localizedDescription)")
+                    log.error("User location retrieval failed: \(error.localizedDescription)")
                 }
 
             case .userLocationChange(let location):
                 // Try preventing the whole map view because of possibly missing userLocation
                 // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
-                if let userCountry = location?.country.lowercased(), let userIP = location?.ip ?? state.userIP {
-                    log.info("User Location did change, updating defaults")
+                log.debug("User Location change response received")
+                var didUpdateUserDefaults = false
+                if let userCountry = location?.country.lowercased() {
+                    log.debug("Updating userCountry defaults")
                     state.$userCountry.withLock { $0 = userCountry }
+                    didUpdateUserDefaults = true
+                }
+                if let userIP = location?.ip ?? state.userIP {
+                    log.debug("Updating userIP defaults")
                     state.$userIP.withLock { $0 = userIP }
+                    didUpdateUserDefaults = true
+                }
+                if didUpdateUserDefaults {
                     state.$lastLocationRetrieval.withLock { $0 = Date.now }
+                } else {
+                    log.error("No updates to userCountry or userIP defaults")
                 }
                 return .none
 
             case .didBecomeActive(_):
-                // No need to query the fetch userLocation if we're connected
-                guard !state.vpnConnectionStatus.is(\.connected) else { return .none }
                 let lastLocationRetrievalInterval = abs((state.lastLocationRetrieval ?? .now).timeIntervalSinceNow)
-                let moreThanOneHour = lastLocationRetrievalInterval >= Self.locationCooldownInterval
-                return moreThanOneHour ? .send(.fetchUserLocation) : .none
+                let isLocationCooldownPassed = lastLocationRetrievalInterval >= Self.locationCooldownInterval
+                return isLocationCooldownPassed ? .send(.fetchUserLocation) : .none
 
             case .tearDown:
                 return .merge(
