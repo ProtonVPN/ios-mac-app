@@ -186,7 +186,8 @@ final class OneClickPayment {
             plan.fingerprint == planOption.fingerprint
         }
         guard let iAP = plan?.1 else {
-            return .purchaseError(error: OneClickPurchaseError.planNotFound, processingPlan: nil)
+            let planName = plan?.1.protonName ?? "Unknown"
+            return .purchaseError(error: OneClickPurchaseError.planNotFound(planName), processingPlan: nil)
         }
         return await withCheckedContinuation {
             payments.purchaseManager.buyPlan(plan: iAP,
@@ -201,7 +202,7 @@ final class OneClickPayment {
 
 enum OneClickPurchaseError: Error, LocalizedError {
     case defaultPlanNotFound
-    case planNotFound
+    case planNotFound(String)
     case unfinishedPurchaseInQueue
     case presentingScreenDismissed
 
@@ -209,8 +210,8 @@ enum OneClickPurchaseError: Error, LocalizedError {
         switch self {
         case .defaultPlanNotFound:
             return "Default plan not found"
-        case .planNotFound:
-            return "StoreKitManager plan not found"
+        case .planNotFound(let planName):
+            return "StoreKitManager plan (\(planName)) not found"
         case .unfinishedPurchaseInQueue:
             return "StoreKitManager is not ready to purchase"
         case .presentingScreenDismissed:
