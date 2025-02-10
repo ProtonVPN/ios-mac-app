@@ -346,12 +346,16 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
-        guard let oneClickPayment = OneClickPayment(
-            alertService: self,
-            planService: planService,
-            payments: planService.payments
-        ) else {
-            // Can happen if `DynamicPlan` FF disabled, or if on TestFlight and `AllowSandboxPurchases` FF is disabled.
+        let oneClickPayment: OneClickPayment
+        do {
+            oneClickPayment = try OneClickPayment(
+                sessionService: factory.makeSessionService(),
+                alertService: self,
+                planService: planService,
+                payments: planService.payments
+            )
+        } catch {
+            log.error("Unexpected payments error: \(error)")
             return
         }
 

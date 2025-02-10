@@ -42,7 +42,7 @@ protocol PlanServiceDelegate: AnyObject {
 }
 
 protocol PlanService {
-    var allowUpgrade: Bool { get }
+    var iapStatus: IAPSupportStatus { get }
     var countriesCount: Int { get }
     var delegate: PlanServiceDelegate? { get set }
     var payments: Payments { get }
@@ -77,8 +77,8 @@ final class CorePlanService: PlanService {
 
     weak var delegate: PlanServiceDelegate?
 
-    var allowUpgrade: Bool {
-        return userCachedStatus.paymentsBackendStatusAcceptsIAP
+    var iapStatus: IAPSupportStatus {
+        return userCachedStatus.iapSupportStatus
     }
 
     public typealias Factory = NetworkingFactory &
@@ -114,8 +114,8 @@ final class CorePlanService: PlanService {
     }
 
     func presentPlanSelection(modalSource: UpsellModalSource?) {
-        guard userCachedStatus.paymentsBackendStatusAcceptsIAP else {
-            alertService.push(alert: UpgradeUnavailableAlert())
+        if case let .disabled(localizedReason) = userCachedStatus.iapSupportStatus {
+            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
             return
         }
 

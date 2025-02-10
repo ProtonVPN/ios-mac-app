@@ -47,7 +47,7 @@ final class PlansCache: ServicePlanDataStorage {
     var currentSubscription: Subscription?
     var credits: Credits?
     var paymentMethods: [PaymentMethod]?
-    var paymentsBackendStatusAcceptsIAP: Bool = false
+    var iapSupportStatus: IAPSupportStatus = .disabled(localizedReason: nil)
 }
 
 struct PaymentsFFDisabledError: Swift.Error {

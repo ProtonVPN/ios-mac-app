@@ -21,8 +21,10 @@ final class UserCachedStatus: ServicePlanDataStorage {
         case servicePlansDetails
         case defaultPlanDetails
         case currentSubscription
-        case paymentsBackendStatusAcceptsIAP
+        case iapSupportStatus
         case paymentMethods
+        /// - Note: this value has been replaced by `iapSupportStatus`.
+        case paymentsBackendStatusAcceptsIAP
     }
 
     var servicePlansDetails: [Plan]? {
@@ -52,12 +54,20 @@ final class UserCachedStatus: ServicePlanDataStorage {
         }
     }
 
-    var paymentsBackendStatusAcceptsIAP: Bool {
+    var iapSupportStatus: IAPSupportStatus {
         get {
-            return provider.getDefaults().bool(forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
+            // First, try to get the newer `iapSupportStatus` default.
+            if let status = try? storage.get(IAPSupportStatus.self, forKey: UserCachedStatusKeys.iapSupportStatus.rawValue) {
+                return status
+            }
+            // If we can't find it, then fall back to the old value with a nil reason.
+            guard provider.getDefaults().bool(forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue) else {
+                return .disabled(localizedReason: nil)
+            }
+            return .enabled
         }
         set {
-            provider.getDefaults().set(newValue, forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
+            try? storage.set(newValue, forKey: UserCachedStatusKeys.iapSupportStatus.rawValue)
         }
     }
 

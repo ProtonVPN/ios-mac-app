@@ -1591,6 +1591,8 @@ public enum Localizable {
   public static var upgradeToPlus: String { return Localizable.tr("Localizable", "_upgrade_to_plus", fallback: "Upgrade to Plus") }
   /// Plan upgrade unavailable alert
   public static var upgradeUnavailableBody: String { return Localizable.tr("Localizable", "_upgrade_unavailable_body", fallback: "Your Proton VPN subscription cannot be upgraded from within the app, please visit account.protonvpn.com to upgrade.") }
+  /// Plan upgrade unavailable alert, with an attached reason.
+  public static var upgradeUnavailableOnTestflight: String { return Localizable.tr("Localizable", "_upgrade_unavailable_on_testflight", fallback: "Your Proton VPN subscription cannot be upgraded from the TestFlight version of the app, please visit account.protonvpn.com to upgrade.") }
   /// If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert
   public static var upgradeUnavailableTitle: String { return Localizable.tr("Localizable", "_upgrade_unavailable_title", fallback: "Upgrade Unavailable in App") }
   /// Menu point in settings screen
