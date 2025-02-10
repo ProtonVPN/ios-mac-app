@@ -32,9 +32,11 @@ struct Provider: TimelineProvider {
         completion(Timeline(entries: [ // Temporary entries.
             ConnectWidgetEntry(date: .now, connectionSpec: nil, protectionState: .signedOut, recentServers: []),
             ConnectWidgetEntry(date: .now.addingTimeInterval(4), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(6), connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(8), connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: [.defaultFastest]),
-            ConnectWidgetEntry(date: .now.addingTimeInterval(10), connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [
+            ConnectWidgetEntry(date: .now.addingTimeInterval(6), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(8), connectionSpec: .init(location: .region(code: "US"), features: []), protectionState: .protecting, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(10), connectionSpec: .init(location: .region(code: "CH"), features: []), protectionState: .protected, recentServers: [.defaultFastest]),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(12), connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: []),
+            ConnectWidgetEntry(date: .now.addingTimeInterval(14), connectionSpec: .init(location: .exact(.paid, number: 123, subregion: "LA", regionCode: "US"), features: []), protectionState: .protected, recentServers: [
                 .defaultFastest,
                 .init(pinnedDate: nil, underMaintenance: false, connectionDate: Date(), connection: .init(location: .exact(.paid, number: 332, subregion: "ZU", regionCode: "CH"), features: [])),
                 .init(pinnedDate: nil, underMaintenance: true, connectionDate: Date(), connection: .init(location: .exact(.paid, number: 332, subregion: "MI", regionCode: "IT"), features: []))

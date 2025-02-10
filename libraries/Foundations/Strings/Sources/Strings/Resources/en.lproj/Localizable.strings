@@ -2703,3 +2703,9 @@
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+
+/* Recents section title */
+"widget_recents_title" = "Recents";
+
+/* Recents section description */
+"widget_recents_description" = "View your connection history here.";
