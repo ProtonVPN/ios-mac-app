@@ -115,7 +115,7 @@ private struct ServerInfoView: View {
 
     var body: some View {
         Group {
-            if showConnectionInfo(entry: entry, widgetFamily: widgetFamily), let location = entry.connectionSpec?.location {
+            if let location = entry.connectionSpec?.location {
                 HStack(alignment: .top, spacing: .themeSpacing8) {
                     if widgetFamily != .systemSmall {
                         FlagView(location: location, flagSize: .defaultSize)
@@ -150,8 +150,8 @@ private struct RecentsView: View {
     var body: some View {
         Group {
             let itemWidth = (geometry.size.width - 2 * .themeSpacing8) / 3
-            if (showRecentConnections(entry: entry, widgetFamily: widgetFamily)) {
-                if (widgetFamily == .systemLarge) && (entry.recentServers.isEmpty) { // Showing empty recents section on systemLarge size.
+            if (widgetFamily == .systemLarge) {
+                if entry.recentServers.isEmpty {
                     HStack(alignment: .center) {
                         VStack {
                             Text(Localizable.widgetRecentsTitle)
@@ -163,7 +163,7 @@ private struct RecentsView: View {
                         .frame(maxWidth: .infinity)
                     }
                     .frame(height: Self.recentsHeight)
-                    .background(ColorProvider.Shade100.opacity(0.08))
+                    .background(Color(.background, .weak))
                     .clipRectangle(cornerRadius: .radius12)
                 } else {
                     VStack(alignment: .leading, spacing: .themeSpacing12) {
@@ -197,7 +197,7 @@ private struct RecentsView: View {
                                 .buttonStyle(PlainButtonStyle())
                                 .padding(.themeSpacing8)
                                 .frame(width: itemWidth, height: Self.recentsHeight, alignment: .leading)
-                                .background(ColorProvider.Shade100.opacity(0.08))
+                                .background(Color(.background, [.interactive, .weak]))
                                 .clipRectangle(cornerRadius: .radius12)
                             }
                         }
@@ -216,26 +216,24 @@ private struct ButtonsView : View {
     var body: some View
     {
         Group {
-            if showConnectionInfo(entry: entry, widgetFamily: widgetFamily) {
-                switch entry.protectionState {
-                case .protected:
-                    Button(intent: DisconnectFromVPNIntent()) {
-                        Text(Localizable.disconnect)
-                    }
-                    .buttonStyle(SecondaryButtonStyle())
-                case .protecting:
-                    Button(intent: DisconnectFromVPNIntent()) { // TODO: VPNAPPL-2629 - define another app intent for cancellation.
-                        Text(Localizable.cancel)
-                    }
-                    .buttonStyle(SecondaryButtonStyle())
-                case .unprotected:
-                    Button(intent: ConnectToVPNIntent()) {
-                        Text(Localizable.connect)
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                case .signedOut:
-                    EmptyView()
+            switch entry.protectionState {
+            case .protected:
+                Button(intent: DisconnectFromVPNIntent()) {
+                    Text(Localizable.disconnect)
                 }
+                .buttonStyle(SecondaryButtonStyle())
+            case .protecting:
+                Button(intent: DisconnectFromVPNIntent()) { // TODO: VPNAPPL-2629 - define another app intent for cancellation.
+                    Text(Localizable.cancel)
+                }
+                .buttonStyle(SecondaryButtonStyle())
+            case .unprotected:
+                Button(intent: ConnectToVPNIntent()) {
+                    Text(Localizable.connect)
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            case .signedOut:
+                EmptyView()
             }
         }
     }
@@ -263,30 +261,4 @@ private func linearGradient(for entry: ConnectWidgetEntry) -> LinearGradient {
                                    .init(color: .clear, location: 1)],
                            startPoint: .top,
                            endPoint: .center)
-}
-
-private func showRecentConnections(entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> Bool {
-    switch widgetFamily {
-    case .systemSmall:
-        return false
-    case .systemMedium:
-        return (entry.protectionState == .unprotected) && entry.recentServers.count > 0
-    case .systemLarge:
-        return true
-    default:
-        return false
-    }
-}
-
-private func showConnectionInfo(entry: ConnectWidgetEntry, widgetFamily: WidgetFamily) -> Bool {
-    switch widgetFamily {
-    case .systemSmall:
-        return true
-    case .systemMedium:
-        return !showRecentConnections(entry: entry, widgetFamily: widgetFamily)
-    case .systemLarge:
-        return true
-    default:
-        return false
-    }
 }
