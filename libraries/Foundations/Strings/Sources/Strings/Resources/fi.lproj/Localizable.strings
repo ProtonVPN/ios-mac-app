@@ -991,7 +991,7 @@
 "_activate_widget" = "Aktivoi widgetti";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Pyyhkäise kotinäyttösi vasemmanpuoleisimpaan laitaan nähdäksesi pienoisohjelmat.";
+"_activate_widget_step_1" = "Pyyhkäise aloitusnäyttösi vasemmanpuoleisimpaan laitaan nähdäksesi pienoisohjelmat.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "Vieritä alas ja napauta muokkauspainiketta.";

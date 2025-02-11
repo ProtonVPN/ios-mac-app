@@ -284,7 +284,7 @@
         <key>few</key>
         <string>%d države</string>
         <key>other</key>
-        <string>%d države</string>
+        <string>%d držav</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -582,7 +582,7 @@ ustavljeni</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Lokacije brezplačnih strežnikov (%d)</string>
+        <string>Lokacije brezplačnega strežnika (%d)</string>
         <key>two</key>
         <string>Lokacije brezplačnih strežnikov (%d)</string>
         <key>few</key>

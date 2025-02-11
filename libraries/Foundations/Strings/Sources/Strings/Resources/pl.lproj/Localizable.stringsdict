@@ -318,17 +318,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>reklama
-zablokowana</string>
+        <string>zablokowana
+reklama</string>
         <key>few</key>
-        <string>reklamy
-zablokowane</string>
+        <string>zablokowane
+reklamy</string>
         <key>many</key>
-        <string>reklam
-zablokowanych</string>
+        <string>zablokowanych
+reklam</string>
         <key>other</key>
-        <string>reklam
-zablokowanych</string>
+        <string>zablokowanych
+reklam</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -342,17 +342,17 @@ zablokowanych</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>element śledzący
-zatrzymany</string>
+        <string>zatrzymany
+element śledzący</string>
         <key>few</key>
-        <string>elementy śledzące
-zatrzymane</string>
+        <string>zatrzymane
+elementy śledzące</string>
         <key>many</key>
-        <string>elementów śledzących
-zatrzymanych</string>
+        <string>zatrzymanych
+elementów śledzących</string>
         <key>other</key>
-        <string>elementów śledzących
-zatrzymanych</string>
+        <string>zatrzymanych
+elementów śledzących</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

@@ -2417,7 +2417,7 @@
 "modals_whats_new_gateways_title" = "Gateways wurden verschoben";
 
 /* Subtitle of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
+"modals_whats_new_gateways_subtitle" = "Du kannst jetzt auf die dedizierten Server deiner Organisation über die Hauptnavigation zugreifen.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Erhalte unbegrenzte Wechsel mit VPN Plus";

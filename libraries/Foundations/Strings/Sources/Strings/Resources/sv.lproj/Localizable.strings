@@ -2291,7 +2291,7 @@
 "upsell_streaming_title" = "Streama i 4K";
 
 /* Subtitle of streaming upsell modal */
-"upsell_streaming_subtitle" = "Njut av dina käraste filmer och TV-program från var som helst i världen.";
+"upsell_streaming_subtitle" = "Njut av dina favoritfilmer och TV-program från var som helst i världen.";
 
 /* Title of p2p support upsell modal */
 "upsell_p2pSupport_title" = "Få tillgång till peer-to-peer-nedladdningar (P2P) och fildelning";
@@ -2705,4 +2705,4 @@
 "upsell_carousel_more_title" = "Och mycket mer...";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_more_subtitle" = "Få tillgång till ännu mer prestanda och integritetsfunktioner";
+"upsell_carousel_more_subtitle" = "Lås upp avancerade funktioner för prestanda och integritet";

@@ -506,7 +506,7 @@
 "_plan_does_not_include_secure_core" = "Tarifenizde Secure Core özelliği bulunmuyor.";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Secure Core hakkında ayrıntılı bilgi alın";
+"_learn_more_about_secure_core" = "Secure Core ile ilgili ayrıntılı bilgi alın";
 
 /* MacOS: placeholder for country search */
 "_search_for_country" = "Ülke ara";
@@ -1243,9 +1243,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Sorun giderme";
 
-"_troubleshoot_item_alt_title" = "Alternatif yöneltme kullanılabilsin";
+"_troubleshoot_item_alt_title" = "Alternatif yönlendirmeye izin ver";
 
-"_troubleshoot_item_alt_description" = "Bu seçenek, Proton sitelerinin engellenmesi durumunda, uygulamanın Proton ağına ulaşmak için alternatif ağ yöneltmesi kullanmasını sağlar. Bu seçenek, güvenlik duvarlarını veya ağ sorunlarını aşmak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
+"_troubleshoot_item_alt_description" = "Proton sitelerinin engellenmesi durumunda bu ayar uygulamanın Proton'a ulaşmak için alternatif ağ yönlendirmesini denemesini sağlar; bu, güvenlik duvarlarını veya ağ sorunlarını atlamak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
 
 "_troubleshoot_item_alt_link1" = "Ayrıntılı bilgi alın";
 
@@ -2249,7 +2249,7 @@
 "modals_new_upsell_profiles_subtitle" = "VPN Plus tarifesi ile profiiller özelliğini edinin.";
 
 /* Title of the Secure Core discouragement screen */
-"modals_discourage_secure_core_title" = "Hız hakkında bir not...";
+"modals_discourage_secure_core_title" = "Hız ile ilgili bir not...";
 
 /* Subtitle of the Secure Core discouragement screen */
 "modals_discourage_secure_core_subtitle" = "Secure Core, en yüksek düzeyde güvenlik ve gizlilik sunar. Ancak internet hızınızı düşürebilir. Başarımı yükseltmeye gerek duyuyorsanız, Secure Core özelliğini kapatabilirsiniz.";

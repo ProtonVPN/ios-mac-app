@@ -447,7 +447,7 @@
 "_setup_complete_free" = "Τώρα έχετε εγγραφεί για ένα δωρεάν πρόγραμμα Proton VPN. Για να ξεκινήσετε, απολαύστε δωρεάν τις επτά ημέρες του πακέτου Proton VPN Plus.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας Proton VPN Plus είναι τώρα ενεργό.";
+"_setup_complete_plus" = "Η αγορά σας ήταν επιτυχής. Το πλάνο σας Proton VPN Plus είναι τώρα ενεργό.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Προστατεύστε τον εαυτό σας online";
@@ -1017,7 +1017,7 @@
 "_turn_ks_on_description" = "Ενεργοποιώντας τη λειτουργία kill switch, δε θα μπορείτε να έχετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο. \n\nΣυνέχεια;";
 
 /* %@ is a plan name e.g. Get Plus Plan */
-"_get_plan" = "Αποκτήστε το πρόγραμμα %@";
+"_get_plan" = "Αποκτήστε το πλάνο %@";
 
 /* Account plan description */
 "_free_countries" = "3 Χώρες";
@@ -1229,13 +1229,13 @@
 
 "_subscription_will_expire" = "Το τρέχον πλάνο θα λήξει στις %@.";
 
-"_subscription_will_renew" = "Το τρέχον πρόγραμμα θα ανανεωθεί αυτόματα την %@.";
+"_subscription_will_renew" = "Το τρέχον πλάνο θα ανανεωθεί αυτόματα στις %@.";
 
 "_subscription_description" = "Μπορείτε να αγοράσετε περισσότερα credits για να επεκτείνετε αυτόματα το τρέχον πακέτο σας. Στο τέλος της τρέχουσας περιόδου εγγραφής σας, οι πιστώσεις αυτές θα εφαρμοστούν προκειμένου να συνεχίσετε το πακέτο σας.";
 
-"_subscription_button" = "Επεκτείνετε το πρόγραμμα για 1 χρόνο \n%@.";
+"_subscription_button" = "Επεκτείνετε το πλάνο για 1 χρόνο \n%@.";
 
-"_subscription_extended_success" = "Έχετε αγοράσει με επιτυχία μονάδες για την επέκταση του τρέχοντος πακέτου σας.";
+"_subscription_extended_success" = "Έχετε αγοράσει με επιτυχία μονάδες για την επέκταση του τρέχοντος πλάνου σας.";
 
 /* Button on alert after a problem with internet connection */
 "_ne_troubleshoot" = "Επίλυση προβλημάτων";
@@ -1455,7 +1455,7 @@
 
 "_delinquent_description" = "Η πρόσβασή σας στις premium υπηρεσίες θα αποκατασταθεί μετά την πληρωμή αυτών.";
 
-"_delinquent_reconnection_description" = "Θα μπορείτε να αποκτήσετε ξανά πρόσβαση σε premium λειτουργίες μετά την πληρωμή αυτών. Προς το παρόν, επανασυνδεόμαστε στον ταχύτερο διαθέσιμο διακομιστή δωρεάν προγράμματος.";
+"_delinquent_reconnection_description" = "Θα μπορείτε να αποκτήσετε ξανά πρόσβαση σε premium λειτουργίες μετά την πληρωμή αυτών. Προς το παρόν, επανασυνδεόμαστε στον ταχύτερο διαθέσιμο διακομιστή Free πλάνου.";
 
 "_maximum_device_title" = "Έχετε φτάσει το μέγιστο όριό σας συσκευών.";
 
@@ -1466,7 +1466,7 @@
 
 "_reconnect_title" = "Επανασυνδεόμαστε στον ταχύτερο διαθέσιμο διακομιστή.";
 
-"_subscription_expired_title" = "Το πρόγραμμά σας συνδρομής VPN έχει λήξει.";
+"_subscription_expired_title" = "Το πλάνο συνδρομής σας VPN έχει λήξει.";
 
 "_subscription_expired_description" = "Η συνδρομή σας έχει υποβαθμιστεί.";
 
@@ -1559,7 +1559,7 @@
 
 "_local_agent_policy_violation_error_title" = "Παραβίαση πολιτικής";
 
-"_local_agent_policy_violation_error_message" = "Δεν επιτρέπεται να συνδεθείτε με το διακομιστή. Επιλέξτε διαφορετικό διακομιστή ή αναβαθμίστε το πρόγραμμά σας.";
+"_local_agent_policy_violation_error_message" = "Δεν επιτρέπεται να συνδεθείτε με το διακομιστή. Επιλέξτε διαφορετικό διακομιστή ή αναβαθμίστε το πλάνο σας.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Γίνεται φόρτωση στοιχείων σύνδεσης";

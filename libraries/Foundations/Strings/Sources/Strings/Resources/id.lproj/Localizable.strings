@@ -420,7 +420,7 @@
 "_submit_verification_code" = "Kirim";
 
 /* iOS: button in human verification code form */
-"_resend_no_code" = "Tidak mendapatkan kode?";
+"_resend_no_code" = "Tidak menerima kode verifikasi?";
 
 /* iOS: button in human verification code form */
 "_resend_code" = "Minta kode baru";
