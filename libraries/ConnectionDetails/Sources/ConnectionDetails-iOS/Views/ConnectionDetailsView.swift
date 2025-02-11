@@ -137,10 +137,9 @@ struct ConnectionDetailsView: View {
         
         var body: some View {
             rowView
-                .accessibilityLabel(title) // todo: test how this works
-                .accessibilityLabel(content.accessibilityValue)
                 .padding(.vertical, .themeSpacing12)
                 .padding(.horizontal, .themeSpacing16)
+                .accessibilityElement(children: .combine)
         }
         
         @ViewBuilder
@@ -168,6 +167,7 @@ struct ConnectionDetailsView: View {
                     IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
             }
+            .accessibilityLabel(title) // todo: test how this works
             .foregroundColor(Color(.text, .weak))
         }
         
@@ -184,6 +184,7 @@ struct ConnectionDetailsView: View {
                     Text(percentage, format: .percent).themeFont(.body1())
                 }
             }
+            .accessibilityLabel(content.accessibilityValue)
             .foregroundColor(Color(.text, .normal))
         }
     }

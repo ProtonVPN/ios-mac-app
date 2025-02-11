@@ -54,6 +54,7 @@ public struct LocationFeatureView: View {
                 attachedLeadingView
                 FlagView(flag: model.flag, flagSize: .defaultSize)
             }
+            .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 0) {
                 LocationFeatureHeader(model: model.header)

@@ -41,6 +41,7 @@ struct FeatureInfoView: View {
             icon
                 .resizable().frame(width: mainIconSize, height: mainIconSize)
                 .foregroundColor(Color(.text, .normal))
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading) {
                 HStack(spacing: 4) {
@@ -49,6 +50,7 @@ struct FeatureInfoView: View {
                         .foregroundColor(Color(.text, .normal))
 
                     Spacer()
+
                     Group {
                         Text(Localizable.connectionDetailsInfoButton)
                             .font(.themeFont(.caption(emphasised: true)))
@@ -58,7 +60,7 @@ struct FeatureInfoView: View {
                             .resizable().frame(width: infoIconSize, height: infoIconSize)
                             .foregroundColor(Color(.text, .weak))
                     }
-                        .opacity(0) // remove until we decide to add more info screen
+                    .opacity(0) // remove until we decide to add more info screen
                 }
 
                 Text(text)

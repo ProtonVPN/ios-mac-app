@@ -57,6 +57,9 @@ struct HomeConnectionCardView: View {
             model: store.headerModel,
             actionSender: { store.send($0) }
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityText)
+        .accessibilityAddTraits(.isHeader)
         .padding(.bottom, .themeSpacing8)
         .padding(.top, .themeSpacing24)
     }
@@ -72,7 +75,10 @@ struct HomeConnectionCardView: View {
         }
     }
 
+    @ViewBuilder
     private var connectionButton: some View {
+        let isDisconnected = store.vpnConnectionStatus.is(\.disconnected)
+        let buttonContent = model.buttonText(for: store.vpnConnectionStatus)
         Button {
             withAnimation(.linear) {
                 switch store.vpnConnectionStatus {
@@ -89,10 +95,15 @@ struct HomeConnectionCardView: View {
                 }
             }
         } label: {
-            Text(model.buttonText(for: store.vpnConnectionStatus))
+            Text(buttonContent)
         }
-        .buttonStyle(ConnectButtonStyle(isDisconnected: store.vpnConnectionStatus == .disconnected))
-        .accessibilityIdentifier(store.vpnConnectionStatus == .disconnected ? AccessibilityIdentifiers.buttonConnect : AccessibilityIdentifiers.buttonDisconnect)
+        .buttonStyle(ConnectButtonStyle(isDisconnected: isDisconnected))
+        .accessibilityElement()
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(buttonContent)
+        .accessibilityIdentifier(
+            isDisconnected ? AccessibilityIdentifiers.buttonConnect : AccessibilityIdentifiers.buttonDisconnect
+        )
     }
 
     @ViewBuilder
@@ -132,7 +143,8 @@ struct HomeConnectionCardView: View {
             }
             .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfoHeader)
             .padding(.themeSpacing16)
-        }.accessibilityIdentifier(AccessibilityIdentifiers.connectionInfo)
+        }
+        .accessibilityIdentifier(AccessibilityIdentifiers.connectionInfo)
     }
 
     private var card: some View {
@@ -146,10 +158,9 @@ struct HomeConnectionCardView: View {
                 .padding(.horizontal, .themeSpacing16)
                 .padding(.bottom, .themeSpacing16)
         }
+        .accessibilityElement(children: .contain)
         .background(Color(.background, .weak))
-        .themeBorder(color: Color(.border, .strong),
-                     lineWidth: 1,
-                     cornerRadius: .radius16)
+        .themeBorder(color: Color(.border, .strong), lineWidth: 1, cornerRadius: .radius16)
     }
 
     public var body: some View {
@@ -158,8 +169,7 @@ struct HomeConnectionCardView: View {
                 header
                 card
             }
-            .accessibilityElement()
-            .accessibilityLabel(accessibilityText)
+            .accessibilityElement(children: .contain)
             .accessibilityAction(named: Text(Localizable.actionConnect)) {
                 store.send(.delegate(.connect(store.presentedSpec)))
             }

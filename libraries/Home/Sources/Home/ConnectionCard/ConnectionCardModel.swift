@@ -19,21 +19,20 @@
 import Domain
 import Strings
 
+import Localization
 import VPNAppCore
 
-public struct ConnectionCardModel {
+package struct ConnectionCardModel {
+    package init() {}
 
-    public init() {
-
-    }
-
-    public func accessibilityText(for vpnConnectionStatus: VPNConnectionStatus,
-                           countryName: String) -> String {
+    package func accessibilityText(for vpnConnectionStatus: VPNConnectionStatus, countryName: String) -> String {
         switch vpnConnectionStatus {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case .connected:
-            return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
+        case .connected(_, let actual):
+            // TODO: Maybe improve this to include more detailed informations
+            let browsingFrom = actual.flatMap { LocalizationUtility.default.countryName(forCode: $0.server.logical.exitCountryCode) } ?? countryName
+            return Localizable.connectionCardAccessibilityBrowsingFrom(browsingFrom)
         case .connecting:
             return Localizable.connectionCardAccessibilityConnectingTo(countryName)
         case .resolving:
@@ -41,7 +40,7 @@ public struct ConnectionCardModel {
         }
     }
 
-    public func buttonText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
+    package func buttonText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
         switch vpnConnectionStatus {
         case .disconnected:
             return Localizable.actionConnect
@@ -51,5 +50,4 @@ public struct ConnectionCardModel {
             return Localizable.connectionCardActionCancel
         }
     }
-
 }

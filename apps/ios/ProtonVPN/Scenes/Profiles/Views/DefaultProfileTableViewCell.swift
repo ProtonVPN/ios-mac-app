@@ -23,7 +23,7 @@
 import UIKit
 import LegacyCommon
 
-class DefaultProfileTableViewCell: UITableViewCell {
+final class DefaultProfileTableViewCell: UITableViewCell {
 
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -45,11 +45,15 @@ class DefaultProfileTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        leftImageView.tintColor = .white
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
         backgroundColor = .backgroundColor()
+        leftImageView.tintColor = .white
         connectButton.backgroundColor = .weakInteractionColor()
         connectButton.tintColor = .white
         label.textColor = .normalTextColor()
@@ -76,7 +80,5 @@ class DefaultProfileTableViewCell: UITableViewCell {
             connectButton.setImage(viewModel.connectIcon, for: .normal)
             connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
         }
-
     }
-    
 }

@@ -86,6 +86,7 @@ struct ProtectionStatusView: View {
     private func protectionTitle(model: Model) -> some View {
         HStack(spacing: .themeSpacing24) {
             protectionIcon(model: model)
+                .accessibilityHidden(true)
             Text(model.title)
                 .font(.title3)
         }

@@ -24,7 +24,7 @@ import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 
-class ProfilesTableViewCell: UITableViewCell {
+final class ProfilesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var labelsStackView: UIStackView!
@@ -63,6 +63,10 @@ class ProfilesTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+
         selectionStyle = .none
         backgroundColor = .backgroundColor()
         tintColor = .normalTextColor()

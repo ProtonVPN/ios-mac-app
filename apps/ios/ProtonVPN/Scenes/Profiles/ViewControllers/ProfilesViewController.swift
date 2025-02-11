@@ -34,7 +34,7 @@ protocol ProfilesViewControllerDelegate: AnyObject {
     func reloadProfiles()
 }
 
-class ProfilesViewController: UIViewController {
+final class ProfilesViewController: UIViewController {
 
     @IBOutlet weak var connectionBarContainerView: UIView!
     @IBOutlet weak var tableView: UITableView!

@@ -70,6 +70,7 @@ public struct ConnectionStatusView: View {
     private func protectedTitleView(secureCore: Bool) -> some View {
         HStack(spacing: .themeSpacing4) {
             Text((secureCore ? HomeAsset.lockDouble : HomeAsset.lockSingle).swiftUIImage)
+                .accessibilityHidden(true)
             Text(Localizable.connectionStatusProtected)
         }
         .font(.themeFont(.body1(.bold)))
@@ -90,6 +91,7 @@ public struct ConnectionStatusView: View {
         case .unprotected:
             IconProvider.lockOpenFilled2
                 .styled(.danger)
+                .accessibilityHidden(true)
         }
     }
 
