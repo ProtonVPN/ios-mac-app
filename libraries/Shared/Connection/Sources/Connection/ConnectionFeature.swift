@@ -320,7 +320,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     func updateConnectionState(currentState: ConnectionFeature.State, forceUpdate: Bool = false) {
         let newConnectionState = ConnectionState(connectionFeatureState: currentState)
         if newConnectionState != connectionState {
-            if case .unknown = connectionState, !newConnectionState.shouldTransitionFromUknown {
+            if case .unknown = connectionState, !newConnectionState.shouldTransitionFromUnknown {
                 // Don't transition away from unknown until we fully resolved our connection state
                 return
             }

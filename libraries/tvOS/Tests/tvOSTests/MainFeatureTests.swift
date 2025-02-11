@@ -102,9 +102,7 @@ final class MainFeatureTests: XCTestCase {
         $connectionState.withLock { $0 = .disconnected(nil) }
         await store.send(.homeLoading(.loaded(.protectionStatus(.delegate(.userClickedConnect)))))
 
-        await store.receive(\.connection.connect) {
-            $0.connection.tunnel = .disconnected(nil)
-        }
+        await store.receive(\.connection.connect)
         await store.receive(\.connection.tunnel.connect) {
             $0.connection.tunnel = .preparingConnection(.init(logicalID: "", serverID: "some id"))
         }

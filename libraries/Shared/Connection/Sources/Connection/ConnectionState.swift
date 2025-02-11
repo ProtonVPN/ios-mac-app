@@ -108,7 +108,7 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
     /// due to tunnel operations being asynchronous. When the application is launched, we start
     /// from the `unknown` state, and to prevent showing incorrect states, we must not transition
     /// away from `unknown` to `connecting`.
-    var shouldTransitionFromUknown: Bool {
+    var shouldTransitionFromUnknown: Bool {
         switch self {
         case .connected, .disconnecting, .disconnected:
             return true

@@ -82,13 +82,15 @@ public struct SharedPropertiesFeature {
             case .userLocation(_):
                 return .none
 
-            case .newConnectionStatus(let connectionStatus):
-                if case .connected(let spec, let server) = state.vpnConnectionStatus, case .connecting = connectionStatus {
+            case .newConnectionStatus(let newValue):
+                let connectionStatus: VPNConnectionStatus
+                if case .connecting = newValue, case .connected(let spec, let server) = state.vpnConnectionStatus {
                     // If we transition directly from connected to connecting, it's due to local agent disconnecting
                     // and needing to re-establish connection. Let's skip this state transition to avoid showing the
                     // connecting state despite us already being connected
-                    state.$vpnConnectionStatus.withLock { $0 = .resolving(spec, server) }
-                    return .none
+                    connectionStatus = .resolving(spec, server)
+                } else {
+                    connectionStatus = newValue
                 }
                 state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
                 return .none
