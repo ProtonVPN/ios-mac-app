@@ -153,7 +153,7 @@ public struct HomeFeature {
             switch action {
             case .onStart:
                 return .concatenate(
-                    .run { send in await send(.connection(.startObserving)) },
+                    .send(.connection(.startObserving)),
                     .merge(
                         .onChange(of: state.$connectionState, reinject: Action.onNewConnectionState),
                         .run { send in

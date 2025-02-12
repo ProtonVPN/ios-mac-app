@@ -29,7 +29,7 @@ import SVGView
 @Reducer
 public struct HomeMapFeature {
 
-    private static let timerDurationInMilliseconds: Int = 50
+    private static let mapStateDebounceIntervalInMilliseconds: Int = 50
 
     @ObservableState
     public struct State: Equatable {
@@ -137,6 +137,8 @@ public struct HomeMapFeature {
         case mapState
     }
 
+    @Dependency(\.debounceScheduler) private var scheduler
+
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -156,12 +158,22 @@ public struct HomeMapFeature {
             case .connectionStateUpdated(let connectionStatus):
                 let mapState = MapState(connectionStatus)
                 let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
-                @Dependency(\.debounceScheduler) var scheduler
-                return .merge(
-                    .send(.newMapState(mapState), animation: UIAccessibility.isReduceMotionEnabled ? nil : .default),
-                    .send(.newPinOffset(pinOffset))
+                let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
+                let effect: Effect<Action> = .merge(
+                    .send(.newMapState(mapState), animation: animation),
+                    .send(.newPinOffset(pinOffset), animation: animation)
                 )
-                .debounce(id: IDs.mapState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: scheduler)
+                // If we're setting initial pinOffset
+                if state.pinOffset == .zero {
+                    return effect
+                } else {
+                    return effect
+                        .debounce(
+                            id: IDs.mapState,
+                            for: .milliseconds(Self.mapStateDebounceIntervalInMilliseconds),
+                            scheduler: scheduler
+                        )
+                }
 
             case .newMapState(let mapState):
                 state.pinMode = mapState.pinMode
