@@ -31,6 +31,7 @@ import struct Domain.VPNConnectionFeatures
 @available(iOS 16, *)
 @CasePathable
 public enum ConnectionState: Equatable, Sendable, CasePathable {
+    case unknown
     case disconnected(ConnectionError?)
     case connecting(Server?)
     case connected(Server, Date, ConnectionDetailsMessage?)
@@ -41,7 +42,7 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
         certAuthState: CertificateAuthenticationFeature.State,
         localAgentState: LocalAgentFeature.State
     ) {
-        if case .disconnected(let tunnelConnectionError) = tunnelState, let tunnelConnectionError {
+        if case .disconnected(.some(let tunnelConnectionError)) = tunnelState {
             self = .disconnected(.tunnel(tunnelConnectionError))
             return
         }
@@ -51,12 +52,15 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
             return
         }
 
-        if case .disconnected(let agentConnectionError) = localAgentState, let agentConnectionError {
+        if case .disconnected(.some(let agentConnectionError)) = localAgentState {
             self = .disconnected(.agent(agentConnectionError))
             return
         }
 
         switch (tunnelState, localAgentState) {
+        case (.unknown, _):
+            self = .unknown
+
         case (.connected(let tunnelConnectionInfo), .connected(let connectionDetails)):
             @Dependency(\.serverIdentifier) var serverIdentifier
             guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
@@ -68,7 +72,6 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
 
         case (.connected, _):
             self = .connecting(nil)
-            break
 
         case (.preparingConnection(let logicalServerInfo), _):
             @Dependency(\.serverIdentifier) var serverIdentifier
@@ -85,9 +88,11 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
         case (.disconnecting, _):
             self = .disconnecting
 
-        case (.disconnected, _):
+        case (.disconnected(.none), _):
             // Disconnected with errors is already covered before the switch.
             self = .disconnected(nil)
+        case (_, _):
+            self = .unknown
         }
     }
 
@@ -97,5 +102,19 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
             certAuthState: connectionFeatureState.certAuth,
             localAgentState: connectionFeatureState.localAgent
         )
+    }
+
+    /// It's impossible to immediately retrieve the full connection state at initialisation
+    /// due to tunnel operations being asynchronous. When the application is launched, we start
+    /// from the `unknown` state, and to prevent showing incorrect states, we must not transition
+    /// away from `unknown` to `connecting`.
+    var shouldTransitionFromUnknown: Bool {
+        switch self {
+        case .connected, .disconnecting, .disconnected:
+            return true
+
+        case .connecting, .unknown:
+            return false
+        }
     }
 }

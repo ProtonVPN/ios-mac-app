@@ -63,7 +63,7 @@ public struct HomeConnectionCardFeature {
 
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
-            case .disconnected:
+            case .disconnected, .resolving(.none, _):
                 @Dependency(\.defaultConnectionResolver) var resolver
                 return resolver.connectionSpec(
                     preference: defaultConnectionPreference,
@@ -71,7 +71,7 @@ public struct HomeConnectionCardFeature {
                 )
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
-                    .loadingConnectionInfo(let connectionSpec, _),
+                    .resolving(.some(let connectionSpec), _),
                     .disconnecting(let connectionSpec, _):
                 return connectionSpec
             }
@@ -131,19 +131,23 @@ public struct HomeConnectionCardFeature {
 }
 
 package enum ConnectionCardHeaderModel: Equatable {
+    case resolving
     case disconnected(isPaid: Bool)
     case connected
     case connecting
 
     init(connectionStatus: VPNConnectionStatus, userTier: Int) {
         switch connectionStatus {
+        case .resolving:
+            self = .resolving
+
         case .disconnected, .disconnecting:
             self = .disconnected(isPaid: userTier.isPaidTier)
 
         case .connected:
             self = .connected
 
-        case .connecting, .loadingConnectionInfo:
+        case .connecting:
             self = .connecting
         }
     }

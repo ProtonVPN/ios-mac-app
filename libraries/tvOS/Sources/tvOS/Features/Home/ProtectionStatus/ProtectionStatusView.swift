@@ -56,6 +56,11 @@ struct ProtectionStatusView: View {
                 title = "Disconnecting"
                 foregroundColor = Color(.text)
                 buttonTitle = "Quick Connect"
+            case .unknown:
+                icon = nil
+                title = "Resolving"
+                foregroundColor = Color(.text)
+                buttonTitle = "Cancel"
             }
         }
     }

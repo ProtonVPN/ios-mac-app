@@ -54,7 +54,7 @@ extension SettingsClient: DependencyKey {
             }
 
             switch connectionState {
-            case .disconnected, .disconnecting:
+            case .disconnected, .disconnecting, .unknown:
                 return .immediate
 
             case .connecting(.none):

@@ -44,6 +44,8 @@ public struct ConnectionStatusView: View {
 
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
+        case .resolving:
+            return Localizable.connectionStatusResolving
         case .protected, .protectedSecureCore:
             return nil
         case .unprotected:
@@ -59,7 +61,7 @@ public struct ConnectionStatusView: View {
             return Color(.background, .success)
         case .unprotected:
             return Color(.background, .danger)
-        case .protecting:
+        case .protecting, .resolving:
             return .white
         }
     }
@@ -81,7 +83,7 @@ public struct ConnectionStatusView: View {
             protectedTitleView(secureCore: false)
         case .protectedSecureCore:
             protectedTitleView(secureCore: true)
-        case .protecting:
+        case .protecting, .resolving:
             ProgressView()
                 .controlSize(.regular)
                 .tint(.white)
@@ -108,7 +110,7 @@ public struct ConnectionStatusView: View {
                 IconProvider.locksFilled
                     .foregroundColor(Asset.vpnGreen.swiftUIColor)
                 protectedText
-            case .protecting:
+            case .protecting, .resolving:
                 ProgressView()
                     .controlSize(.regular)
                     .tint(.white)
@@ -185,6 +187,16 @@ public struct ConnectionStatusView: View {
     @Shared(.userCountry) var userCountry: String? = "PL"
     @Shared(.userIP) var userIP: String? = "123.456.789.0"
     return ConnectionStatusView(store: Store(initialState: .init()) {
+        ConnectionStatusFeature()
+    })
+}
+
+@available(iOS 17, *)
+#Preview("resolving", traits: .sizeThatFitsLayout) {
+    @Shared(.protectionState) var protectionState: ProtectionState = .resolving
+    @Shared(.userCountry) var userCountry: String? = "PL"
+    @Shared(.userIP) var userIP: String? = "123.456.789.0"
+    ConnectionStatusView(store: Store(initialState: .init()) {
         ConnectionStatusFeature()
     })
 }

@@ -66,7 +66,7 @@ public struct HomeMapFeature {
                 } else {
                     self = .disconnected
                 }
-            case .connecting(_, let actual), .loadingConnectionInfo(_, let actual):
+            case .connecting(_, let actual), .resolving(_, let actual):
                 if let actual {
                     self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {

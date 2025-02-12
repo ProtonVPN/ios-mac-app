@@ -82,7 +82,7 @@ struct HomeConnectionCardView: View {
                     store.send(.delegate(.disconnect))
                 case .connecting:
                     store.send(.delegate(.disconnect))
-                case .loadingConnectionInfo:
+                case .resolving:
                     store.send(.delegate(.disconnect))
                 case .disconnecting:
                     break

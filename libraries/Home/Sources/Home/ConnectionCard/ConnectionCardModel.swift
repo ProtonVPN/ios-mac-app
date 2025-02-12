@@ -34,8 +34,10 @@ public struct ConnectionCardModel {
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
         case .connected:
             return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
-        case .connecting, .loadingConnectionInfo:
+        case .connecting:
             return Localizable.connectionCardAccessibilityConnectingTo(countryName)
+        case .resolving:
+            return Localizable.connectionCardAccessibilityResolving
         }
     }
 
@@ -45,10 +47,8 @@ public struct ConnectionCardModel {
             return Localizable.actionConnect
         case .connected:
             return Localizable.actionDisconnect
-        case .connecting, .loadingConnectionInfo:
+        case .connecting, .disconnecting, .resolving:
             return Localizable.connectionCardActionCancel
-        case .disconnecting:
-            return Localizable.connectionCardActionCancel // ? not sure
         }
     }
 

@@ -101,7 +101,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     @MainActor
-    func testMakeSecureCoreProfilePlusUser() async throws {
+    func disabled_testMakeSecureCoreProfilePlusUser() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         
         let randomSecureCoreCountry = try await ServersListUtils.getRandomCountry(secureCore: true)

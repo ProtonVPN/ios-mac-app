@@ -123,7 +123,7 @@ extension VPNConnectionStatus {
             return .connected
         case .connecting:
             return .connecting
-        case .loadingConnectionInfo:
+        case .resolving:
             return .loadingConnectionInfo
         case .disconnecting:
             return .disconnecting

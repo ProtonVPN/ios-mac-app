@@ -28,10 +28,10 @@ import Ergonomics
 // This struct is still WIP
 @CasePathable
 public enum VPNConnectionStatus: Equatable {
+    case resolving(ConnectionSpec?, VPNConnectionActual?)
     case disconnected
     case connected(ConnectionSpec, VPNConnectionActual?)
     case connecting(ConnectionSpec, VPNConnectionActual?)
-    case loadingConnectionInfo(ConnectionSpec, VPNConnectionActual?)
     case disconnecting(ConnectionSpec, VPNConnectionActual?)
 
     public var actual: VPNConnectionActual? {
@@ -40,7 +40,7 @@ public enum VPNConnectionStatus: Equatable {
             return nil
         case .connected(_, let vpnConnectionActual),
                 .connecting(_, let vpnConnectionActual),
-                .loadingConnectionInfo(_, let vpnConnectionActual),
+                .resolving(_, let vpnConnectionActual),
                 .disconnecting(_, let vpnConnectionActual):
             return vpnConnectionActual
         }
@@ -48,11 +48,11 @@ public enum VPNConnectionStatus: Equatable {
 
     public var spec: ConnectionSpec? {
         switch self {
-        case .disconnected:
+        case .disconnected, .resolving(.none, _):
             return nil
         case .connected(let spec, _),
                 .connecting(let spec, _),
-                .loadingConnectionInfo(let spec, _),
+                .resolving(.some(let spec), _),
                 .disconnecting(let spec, _):
             return spec
         }
@@ -61,7 +61,7 @@ public enum VPNConnectionStatus: Equatable {
 
 public extension SharedKey where Self == InMemoryKey<VPNConnectionStatus>.Default {
     static var vpnConnectionStatus: Self {
-        Self[.inMemory("vpnConnectionStatus"), default: .disconnected]
+        Self[.inMemory("vpnConnectionStatus"), default: .resolving(nil, nil)]
     }
 }
 

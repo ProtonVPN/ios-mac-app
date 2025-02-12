@@ -1632,6 +1632,9 @@
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Last connected to";
 
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_resolving" = "Resolving";
+
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Connecting to...";
 
@@ -1643,6 +1646,9 @@
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
+
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_resolving" = "Resolving...";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Select your default connection";
@@ -1716,6 +1722,8 @@
 "connection_status_protecting" = "Protecting your digital identity";
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Protected";
+/* Connection status title while VPN status is unknown */
+"connection_status_resolving" = "Resolving";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Get Plus";

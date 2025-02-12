@@ -26,6 +26,7 @@ import NetShield
 import ComposableArchitecture
 
 public enum ProtectionState: Equatable {
+    case resolving // Transitionary state. Shown at app start while we figure out what state the tunnel is in.
     case protected(netShield: NetShieldModel)
     case protectedSecureCore(netShield: NetShieldModel)
     case unprotected
@@ -33,6 +34,8 @@ public enum ProtectionState: Equatable {
 
     func copy(withNetShield netShield: NetShieldModel) -> ProtectionState {
         switch self {
+        case .resolving:
+            return self
         case .protected:
             return .protected(netShield: netShield.copy(enabled: true))
         case .protectedSecureCore:
@@ -56,8 +59,10 @@ extension VPNConnectionStatus {
                 return .protectedSecureCore(netShield: await provider.getStats().copy(enabled: true))
             }
             return .protected(netShield: await provider.getStats().copy(enabled: true))
-        case .connecting, .loadingConnectionInfo:
+        case .connecting:
             return .protecting(country: country, ip: ip)
+        case .resolving:
+            return .resolving
         case .disconnecting:
             return .unprotected
         }
@@ -66,6 +71,6 @@ extension VPNConnectionStatus {
 
 public extension SharedKey where Self == InMemoryKey<ProtectionState>.Default {
     static var protectionState: Self {
-        Self[.inMemory("protectionState"), default: .unprotected]
+        Self[.inMemory("protectionState"), default: .resolving]
     }
 }

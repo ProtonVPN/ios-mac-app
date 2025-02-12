@@ -51,7 +51,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         var serverReconnectionIntent: ServerConnectionIntent?
 
         public init(
-            tunnelState: ExtensionFeature.State = .disconnected(nil),
+            tunnelState: ExtensionFeature.State = .unknown,
             certAuthState: CertificateAuthenticationFeature.State = .idle,
             localAgentState: LocalAgentFeature.State = .disconnected(nil)
         ) {
@@ -163,7 +163,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .none
                 case .connecting, .connected:
                     return .send(.disconnect(.reconnection(intent)))
-                case .disconnected:
+                case .disconnected, .unknown:
                     return .run { send in
                         await send(.tunnel(.connect(intent)))
 
@@ -320,14 +320,16 @@ public struct ConnectionFeature: Reducer, Sendable {
     func updateConnectionState(currentState: ConnectionFeature.State, forceUpdate: Bool = false) {
         let newConnectionState = ConnectionState(connectionFeatureState: currentState)
         if newConnectionState != connectionState {
-            if case let .connecting(server) = connectionState,
-               server != nil,
-               case let .connecting(server) = newConnectionState,
-               server == nil {
+            if case .unknown = connectionState, !newConnectionState.shouldTransitionFromUnknown {
+                // Don't transition away from unknown until we fully resolved our connection state
                 return
-            } else {
-                $connectionState.withLock { $0 = newConnectionState }
             }
+            if case .connecting(.some) = connectionState, case .connecting(.none) = newConnectionState {
+                // Don't erase server information if new state has less data than the previous state
+                return
+            }
+            $connectionState.withLock { $0 = newConnectionState }
+
         } else if forceUpdate {
             $connectionState.withLock { $0 = newConnectionState }
         }
