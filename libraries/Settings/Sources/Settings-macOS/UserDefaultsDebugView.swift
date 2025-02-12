@@ -1,0 +1,65 @@
+//
+//  Created on 11/02/2025.
+//
+//  Copyright (c) 2025 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import SwiftUI
+import ComposableArchitecture
+import Settings
+
+struct UserDefaultsDebugView: View {
+    @Binding public var store: StoreOf<UserDefaultsDebugFeature>
+
+    var body: some View {
+        NavigationStack {
+            WithPerceptionTracking {
+                VStack {
+                    content
+                    Button("Back to Environment Selection") { store.send(.delegate(.dismiss)) }
+                }
+                .padding()
+                .alert($store.scope(state: \.alert, action: \.alert))
+                .navigationTitle("User Defaults")
+            }
+        }
+    }
+
+    @ViewBuilder private var content: some View {
+        switch store.content {
+        case .none:
+            ProgressView()
+                .task { store.send(.loadDefaults) }
+
+        case .loading:
+            ProgressView()
+
+        case .loaded(let entries):
+            VStack {
+                Text("\(entries.count) Key-value pairs")
+                Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
+            }
+
+        case .failed(let error):
+            HStack(alignment: .center) {
+                VStack(alignment: .center, spacing: 20) {
+                    Image(systemName: "exclamationmark.triangle")
+                    Text(error)
+                        .multilineTextAlignment(.center)
+                }.padding()
+            }
+        }
+    }
+}
