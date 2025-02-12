@@ -25,7 +25,7 @@ import Settings
 import Theme
 
 public struct EnvironmentSelectorMobileView: View {
-    @Binding public var store: StoreOf<EnvironmentSelectorFeature>
+    @Binding public var store: StoreOf<DebugConfigurationFeature>
 
     @ViewBuilder
     var selectedEnvironmentSection: some View {
@@ -107,8 +107,17 @@ public struct EnvironmentSelectorMobileView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
-    func sendActionButton(title: String,
-                          action: EnvironmentSelectorFeature.Action) -> some View {
+    private var userDefaultsCell: some View {
+        SettingsCell(
+            icon: .init(systemName: "text.book.closed"),
+            content: .standard(title: "User Defaults", value: nil),
+            accessory: .disclosure
+        ) {
+            store.send(.userDefaultsTapped)
+        }
+    }
+
+    func sendActionButton(title: String, action: DebugConfigurationFeature.Action) -> some View {
         HStack {
             Spacer()
             Button(title) {
@@ -137,26 +146,30 @@ public struct EnvironmentSelectorMobileView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            Form {
-                selectedEnvironmentSection
-                changeEnvironmentSection
-                featureOverridesSection
-                bottomButtonsSection
+        NavigationStack {
+            WithPerceptionTracking {
+                Form {
+                    selectedEnvironmentSection
+                    changeEnvironmentSection
+                    featureOverridesSection
+                    userDefaultsCell
+                    bottomButtonsSection
+                }
+                .padding(.top, .themeSpacing16)
+                .frame(maxWidth: Theme.Constants.readableContentWidth)
+                .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+                .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
             }
-            .padding(.top, .themeSpacing16)
-            .alert($store.scope(state: \.alert, action: \.alert))
-            .frame(maxWidth: Theme.Constants.readableContentWidth)
         }
     }
 
-    init(store: StoreOf<EnvironmentSelectorFeature>) {
+    init(store: StoreOf<DebugConfigurationFeature>) {
         self._store = .constant(store)
     }
 
     public init(continueHandler: @escaping () -> Void) {
-        self.init(store: .init(initialState: EnvironmentSelectorFeature.State(), reducer: {
-            EnvironmentSelectorFeature(continueHandler: continueHandler)
+        self.init(store: .init(initialState: DebugConfigurationFeature.State(), reducer: {
+            DebugConfigurationFeature(continueHandler: continueHandler)
         }))
     }
 }
@@ -201,13 +214,13 @@ extension View {
 
 #Preview {
     EnvironmentSelectorMobileView(store: Store(
-        initialState: EnvironmentSelectorFeature.State(
+        initialState: DebugConfigurationFeature.State(
             apiEndpoint: "https://vpn-api.proton.me",
             atlasSecret: String((0..<32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
             atlasSecretFetchURLString: "",
             overrides: [.empty()]
         ),
-        reducer: { EnvironmentSelectorFeature() }
+        reducer: { DebugConfigurationFeature() }
     ))
     .preferredColorScheme(.dark)
 }

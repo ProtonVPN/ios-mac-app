@@ -25,7 +25,7 @@ import Settings
 import Theme
 
 public struct EnvironmentSelectorDesktopView: View {
-    @Binding public var store: StoreOf<EnvironmentSelectorFeature>
+    @Binding public var store: StoreOf<DebugConfigurationFeature>
 
     @ViewBuilder
     var selectedEnvironmentSection: some View {
@@ -119,6 +119,19 @@ public struct EnvironmentSelectorDesktopView: View {
 
     }
 
+    private var userDefaultsCell: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 16) {
+            Image(systemName: "text.book.closed")
+            Text("User Defaults")
+            Spacer()
+            Image(systemName: "chevron.right")
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            store.send(.userDefaultsTapped)
+        }
+    }
+
     @ViewBuilder
     var bottomButtonsSection: some View {
         Button("Change and kill the app") {
@@ -136,31 +149,33 @@ public struct EnvironmentSelectorDesktopView: View {
     public var body: some View {
         WithPerceptionTracking {
             NavigationStack {
-                VStack(alignment: .center) {
+                VStack(alignment: .center, spacing: .themeSpacing6) {
                     selectedEnvironmentSection
-                        .padding(.bottom, .themeSpacing6)
                     changeEnvironmentSection
-                        .padding(.bottom, .themeSpacing6)
                     featureOverridesSection
-                        .padding(.bottom, .themeSpacing6)
+                    Form {
+                        userDefaultsCell
+                    }.padding(.horizontal)
                     bottomButtonsSection
                 }
+                .padding(.vertical, .themeSpacing16)
+                .navigationTitle("Debug Configuration")
+                .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+                .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
+                .frame(maxWidth: Theme.Constants.readableContentWidth)
             }
-            .padding(.vertical, .themeSpacing16)
-            .alert($store.scope(state: \.alert, action: \.alert))
-            .frame(maxWidth: Theme.Constants.readableContentWidth)
         }
     }
 
-    init(store: StoreOf<EnvironmentSelectorFeature>) {
+    init(store: StoreOf<DebugConfigurationFeature>) {
         self._store = .constant(store)
     }
 
     public init(continueHandler: @escaping () -> Void) {
         self.init(store: .init(
-            initialState: EnvironmentSelectorFeature.State(),
+            initialState: DebugConfigurationFeature.State(),
             reducer: {
-                EnvironmentSelectorFeature(continueHandler: continueHandler)
+                DebugConfigurationFeature(continueHandler: continueHandler)
             }
         ))
     }
@@ -207,13 +222,13 @@ extension View {
 
 #Preview {
     EnvironmentSelectorDesktopView(store: Store(
-        initialState: EnvironmentSelectorFeature.State(
+        initialState: DebugConfigurationFeature.State(
             apiEndpoint: "https://vpn-api.proton.me",
             atlasSecret: String((0..<32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
             atlasSecretFetchURLString: "",
             overrides: [.empty()]
         ),
-        reducer: { EnvironmentSelectorFeature() }
+        reducer: { DebugConfigurationFeature() }
     ))
     .preferredColorScheme(.dark)
 }

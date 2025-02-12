@@ -24,7 +24,7 @@ import Theme
 import ProtonCoreFeatureFlags // Needed to create a manual override type
 
 @Reducer
-public struct EnvironmentSelectorFeature {
+public struct DebugConfigurationFeature {
     static let reasonableAtlasSecretLength = 64
 
     public struct FeatureOverride: Equatable, Identifiable {
@@ -94,7 +94,7 @@ public struct EnvironmentSelectorFeature {
             )
         }
 
-        @Presents public var alert: AlertState<Action.Alert>?
+        @Presents public var destination: Destination.State?
 
         public init(
             apiEndpoint: String,
@@ -126,7 +126,8 @@ public struct EnvironmentSelectorFeature {
         }
     }
 
-  public enum Action: BindableAction {
+    public enum Action: BindableAction {
+        case userDefaultsTapped
         case useAndContinueButtonTapped
         case displayKillAppConfirmationAlert
         case fetchAtlasSecretButtonTapped
@@ -136,7 +137,7 @@ public struct EnvironmentSelectorFeature {
         case toggle(id: UUID)
         case overridesRemoved(IndexSet)
         case binding(BindingAction<State>)
-        case alert(PresentationAction<Alert>)
+        case destination(PresentationAction<Destination.Action>)
 
         public enum Alert: String {
             case killApp
@@ -149,6 +150,9 @@ public struct EnvironmentSelectorFeature {
 
         Reduce { [continueHandler] state, action in
             switch action {
+            case .userDefaultsTapped:
+                state.destination = .userDefaults(.init(alert: nil, content: .none))
+
             case .atlasSecretResponseReceived(let result):
                 switch result {
                 case .success(let data):
@@ -226,7 +230,7 @@ public struct EnvironmentSelectorFeature {
                     .send(.displayKillAppConfirmationAlert)
                 )
             case .displayKillAppConfirmationAlert:
-                state.alert = AlertState {
+                state.destination = .alert(AlertState {
                     TextState("Environment changed")
                 } actions: {
                     ButtonState(role: .cancel, action: .proceed) {
@@ -242,7 +246,7 @@ public struct EnvironmentSelectorFeature {
                         You need to KILL THE APP and start it again for the change to take effect.
                         """
                     )
-                }
+                })
             case .overridesRemoved(let indexSet):
                 state.overrides.remove(atOffsets: indexSet)
 
@@ -259,16 +263,21 @@ public struct EnvironmentSelectorFeature {
                 }
             case .binding:
                 break
-            case .useAndContinueButtonTapped, .alert(.presented(.proceed)):
+            case .useAndContinueButtonTapped, .destination(.presented(.alert(.proceed))):
                 continueHandler?()
-            case .alert(.presented(.killApp)):
+            case .destination(.presented(.alert)):
                 exit(EXIT_SUCCESS)
-            case .alert:
+            case .destination(.presented(.userDefaults(.delegate(.dismiss)))):
+                state.destination = nil
+            case .destination(.presented(.userDefaults)):
                 break
+            case .destination(.dismiss):
+                state.destination = nil
             }
             return .none
         }
-        .ifLet(\.$alert, action: \.alert)
+        .ifLet(\.$destination, action: \.destination)
+        ._printChanges()
     }
 
     var continueHandler: (() -> Void)?
@@ -288,3 +297,13 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
     
     public var rawValue: String
 }
+
+extension DebugConfigurationFeature {
+    @Reducer
+    public enum Destination {
+        case userDefaults(UserDefaultsDebugFeature)
+        case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
+    }
+}
+
+extension DebugConfigurationFeature.Destination.State: Equatable { }
