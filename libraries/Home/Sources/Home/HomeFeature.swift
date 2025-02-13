@@ -75,7 +75,7 @@ public struct HomeFeature {
         public var destination: Destination.State?
 
         public init() {
-            self.connectionStatus = .init()
+            self.connectionStatus = .init(isUsingConnectionPackage: HomeFeature.shouldUseConnectionFeature)
             self.connectionCard = .init()
             self.sharedProperties = .init()
             self.recents = .init()
@@ -119,7 +119,7 @@ public struct HomeFeature {
         case destination(PresentationAction<Destination.Action>)
     }
 
-    private var shouldUseConnectionFeature: Bool {
+    private static var shouldUseConnectionFeature: Bool {
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) &&
         FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS)
     }
@@ -127,7 +127,7 @@ public struct HomeFeature {
     public init() {}
 
     public var body: some Reducer<State, Action> {
-        if shouldUseConnectionFeature {
+        if Self.shouldUseConnectionFeature {
             Scope(state: \.connection, action: \.connection) {
                 ConnectionFeature()
                     ._printChanges()
@@ -178,8 +178,8 @@ public struct HomeFeature {
                     try await connectToVPN(spec)
                     await send(.recents(.connectionEstablished(spec)))
                 } catch: { error, _ in
-                    await alertService.feed(error)
                     log.error("Error connecting to VPN: \(error)")
+                    await alertService.feed(error)
                 }
                 .cancellable(id: CancelID.connectTask)
 
@@ -198,8 +198,8 @@ public struct HomeFeature {
                 return .run { _ in
                     try await disconnectVPN()
                 } catch: { error, _ in
-                    await alertService.feed(error)
                     log.error("Error disconnecting from VPN: \(error)")
+                    await alertService.feed(error)
                 }
 
             case .connectionStatus:

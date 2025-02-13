@@ -21,9 +21,11 @@ import Dependencies
 import Ergonomics
 import NetShield
 
+// This approach is broken because we're listening to the stream from two places
+// Besides, the notification isn't even posted with Connection package
 public struct NetShieldStatsProvider: TestDependencyKey, Sendable {
-    public var getStats: @Sendable () async -> NetShieldModel
-    public var statsStream: @Sendable () -> AsyncStream<NetShieldModel>
+    public internal(set) var getStats: @Sendable () async -> NetShieldModel
+    public internal(set) var statsStream: @Sendable () -> AsyncStream<NetShieldModel>
 
     public static let testValue = NetShieldStatsProvider(
         getStats: { .init(trackersCount: 34, adsCount: 75, dataSaved: 2945, enabled: true) },

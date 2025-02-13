@@ -50,6 +50,12 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
     }
 }
 
+extension NetShieldModel: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "NetShieldModel(trackersCount: \(trackersCount), adsCount: \(adsCount), dataSaved: \(dataSaved), enabled: \(enabled))"
+    }
+}
+
 public struct StatModel: Equatable {
     public let value: String
     public let title: String

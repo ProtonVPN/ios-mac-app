@@ -28,7 +28,7 @@ extension ConnectToVPNKey: DependencyKey {
     enum ConnectionError: LocalizedError {
         case cancelled
 
-        var errorDescription: String {
+        var errorDescription: String? {
             switch self {
             case .cancelled:
                 return "Connection attempt cancelled"

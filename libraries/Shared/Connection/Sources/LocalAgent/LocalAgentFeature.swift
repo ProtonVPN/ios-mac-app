@@ -178,7 +178,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .event(.stats(let stats)):
-                log.info("Feature statistics received: \(stats)")
+                log.debug("Feature statistics received: \(stats)")
                 return .none
 
             case .delegate:

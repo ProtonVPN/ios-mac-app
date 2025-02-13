@@ -29,8 +29,6 @@ import Ergonomics
 @Reducer
 public struct ConnectionStatusFeature {
 
-    private static let timerDurationInMilliseconds: Int = 50
-
     @ObservableState
     public struct State: Equatable {
         @Shared(.protectionState) package var protectionState: ProtectionState
@@ -39,11 +37,16 @@ public struct ConnectionStatusFeature {
         @SharedReader(.vpnConnectionStatus) package var vpnConnectionStatus: VPNConnectionStatus
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
-        var startingProtectionState: ProtectionState = .resolving
 
         package internal(set) var stickToTop: Bool = false
 
-        package init() {}
+        fileprivate(set) var startingProtectionState: ProtectionState = .resolving
+
+        fileprivate(set) var isUsingConnectionPackage: Bool = true
+
+        package init(isUsingConnectionPackage: Bool = true) {
+            self.isUsingConnectionPackage = isUsingConnectionPackage
+        }
     }
 
     @CasePathable
@@ -56,8 +59,15 @@ public struct ConnectionStatusFeature {
         case newNetShieldStats(NetShieldModel)
         case stickToTop(Bool)
 
+        case tearDown
+
         case connectionStatusBanner(ConnectionStatusBannerFeature.Action)
     }
+
+    public init() { }
+
+    private static let maskTickTimerDuration: TimeInterval = .milliseconds(50)
+    private static let statusDebounceIntervalInMilliseconds: Int = 50
 
     private enum MaskLocation {
         case task
@@ -69,7 +79,7 @@ public struct ConnectionStatusFeature {
         case protectionState
     }
 
-    public init() { }
+    @Dependency(\.netShieldStatsProvider) private var provider
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner) { ConnectionStatusBannerFeature() }
@@ -87,39 +97,54 @@ public struct ConnectionStatusFeature {
                     state.$protectionState.withLock { $0 = masked }
                 }
                 return .run { action in
-                    try await Task.sleep(nanoseconds: UInt64(Self.timerDurationInMilliseconds) * NSEC_PER_MSEC)
+                    try await Task.sleep(nanoseconds: UInt64(Self.maskTickTimerDuration) * NSEC_PER_MSEC)
                     await action(.maskLocationTick)
                 }
                 .cancellable(id: IDs.maskLocation, cancelInFlight: true)
 
             case .watchConnectionStatus:
-                return .merge([
-                    .publisher {
-                        state
-                            .$vpnConnectionStatus
-                            .publisher
-                            .receive(on: UIScheduler.shared)
-                            .map(Action.newConnectionStatus)
-                    },
-                    .run { @MainActor send in
-                        @Dependency(\.netShieldStatsProvider) var provider
-                        send(.newNetShieldStats(await provider.getStats()))
-                        for await stats in provider.statsStream() {
-                            send(.newNetShieldStats(stats))
+                var effects: [Effect<Action>] = [
+                    .concatenate(
+                        .cancel(id: IDs.watchConnectionStatus),
+                        .publisher {
+                            state
+                                .$vpnConnectionStatus
+                                .publisher
+                                .removeDuplicates()
+                                .receive(on: UIScheduler.shared)
+                                .map(Action.newConnectionStatus)
+                        }.cancellable(id: IDs.watchConnectionStatus)
+                    )
+                ]
+                if !state.isUsingConnectionPackage {
+                    effects.append(
+                        .run { @MainActor send in
+                            let initialValue = await provider.getStats()
+                            send(.newNetShieldStats(initialValue))
+                            for await stats in provider.statsStream() {
+                                send(.newNetShieldStats(stats))
+                            }
                         }
-                    }
-                ]).cancellable(id: IDs.watchConnectionStatus)
+                    )
+                }
+                return .merge(effects)
 
             case .newConnectionStatus(let status):
                 let code = state.userCountry
-                let displayCountry = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
+                let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
                 let userIP = state.userIP ?? ""
+                let netShieldModel = state.protectionState.netShieldModel
                 return .run { send in
-                    // Determine protection state and fetch NetShield stats
-                    let protectionState = await status.protectionState(country: displayCountry, ip: userIP)
+                    // Determine protection state and fetch NetShield stats if necessary
+                    // (awaiting for a `ProtectionState` here is not ideal; let's implement a dedicated client for this in the future)
+                    let protectionState = await status.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
                     await send(.newProtectionState(protectionState))
                 }
-                .debounce(id: IDs.protectionState, for: .milliseconds(Self.timerDurationInMilliseconds), scheduler: UIScheduler.shared)
+                .debounce(
+                    id: IDs.protectionState,
+                    for: .milliseconds(Self.statusDebounceIntervalInMilliseconds),
+                    scheduler: UIScheduler.shared
+                )
 
             case .newProtectionState(let protectionState):
                 // let's check that we're not already masking location twice with same data
@@ -144,7 +169,6 @@ public struct ConnectionStatusFeature {
                 }
 
             case .newNetShieldStats(let netShieldModel):
-
                 withOptionalAnimation {
                     state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
                 }
@@ -155,8 +179,12 @@ public struct ConnectionStatusFeature {
                 guard state.stickToTop != stickToTop else { return .none }
                 state.stickToTop = stickToTop
                 return .none
+
             case .connectionStatusBanner:
                 return .none
+
+            case .tearDown:
+                return .cancel(id: IDs.watchConnectionStatus)
             }
         }
     }
