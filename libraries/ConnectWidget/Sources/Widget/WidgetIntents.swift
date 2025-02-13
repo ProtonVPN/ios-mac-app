@@ -22,7 +22,7 @@ import AppIntents
 /// These intents are never actually used. They are only here in order to be able to invoke them from this package.
 /// The real implementation lives in the iOS app target.
 
-public struct DisconnectFromVPNIntent: AppIntent {
+public struct DisconnectFromVPN: AppIntent {
     public static var title: LocalizedStringResource = "Disconnect from VPN"
 
     public init() { }
@@ -32,19 +32,8 @@ public struct DisconnectFromVPNIntent: AppIntent {
     }
 }
 
-public struct ConnectToVPNIntent: AppIntent {
+public struct ConnectToVPN: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
-
-    public init() { }
-
-    public func perform() async throws -> some IntentResult {
-        return .result()
-    }
-}
-
-public struct LoginIntent: AppIntent {
-    public static var title: LocalizedStringResource = "Login"
-    public static let openAppWhenRun = true
 
     public init() { }
 
