@@ -2241,6 +2241,8 @@ public enum Localizable {
   public static var welcomeUpgradeTitlePlus: String { return Localizable.tr("Localizable", "welcome_upgrade_title_plus", fallback: "Welcome to VPN Plus") }
   /// The title of the Welcome screen when user upgrades to VPN Unlimited
   public static var welcomeUpgradeTitleUnlimited: String { return Localizable.tr("Localizable", "welcome_upgrade_title_unlimited", fallback: "Welcome to Proton Unlimited") }
+  /// Text that appears as subtitle to the widget when user is creating it
+  public static var widgetTrayDescription: String { return Localizable.tr("Localizable", "widget_tray_description", fallback: "Check if you’re connected to VPN and get quick access to your favorite connections.") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
