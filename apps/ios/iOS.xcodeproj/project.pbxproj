@@ -4236,7 +4236,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ConnectWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug.ConnectWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -4426,6 +4426,15 @@
 			};
 			name = Release;
 		};
+		EBE8244F2D5BAE0D00E8D787 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				PRODUCT_NAME = ConnectWidgetExtension;
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4501,6 +4510,7 @@
 				E55CCAAC2D30122100FD0AAD /* Debug */,
 				E55CCAAD2D30122100FD0AAD /* Staging */,
 				E55CCAAE2D30122100FD0AAD /* Release */,
+				EBE8244F2D5BAE0D00E8D787 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
