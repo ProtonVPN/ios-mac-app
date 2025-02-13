@@ -21,6 +21,8 @@ import Connection
 import VPNAppCore
 import Domain
 
+import Foundation
+
 extension ConnectToVPNKey {
     /// Bridges new connection dependency with the legacy connection layer
     static let legacyConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
@@ -54,6 +56,8 @@ extension ConnectToVPNKey {
             case .locationNotFound(let profileName):
                 alert(LocationNotAvailableAlert(profileName: profileName))
             }
+        } catch {
+            throw error
         }
     }
 }
