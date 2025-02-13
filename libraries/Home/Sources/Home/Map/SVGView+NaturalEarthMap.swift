@@ -96,6 +96,7 @@ extension SVGView {
 
         guard let newNode = currentSVG.node(code: lowercaseCountryCode) else {
             log.error("Failed to find new node to highlight")
+            cachedMapTuple = nil
             return idleMapView
         }
         if let codes = CountriesCoordinates.disputedCountries[lowercaseCountryCode] {
@@ -125,10 +126,19 @@ extension SVGView {
 extension SVGNode {
     private static let highlightedCountryColor = SVGColor(hex: "0x4A4658")
     private static let countryColor = SVGColor(hex: "0x292733")
+    private static let alternativeCountryCodes = [
+        "gb": "uk",
+    ]
 
     func node(code: String) -> SVGNode? {
-        getNode(byId: code + "x")
-        ?? getNode(byId: code) // add "x" so that by default we only consider mainland of each country
+        [
+            code + "x", // add "x" so that by default we only consider mainland of each country
+            code,
+            Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
+        ]
+            .lazy
+            .compactMap { $0.flatMap { self.getNode(byId: $0) } }
+            .first
     }
 
     func fill(highlighted: Bool) {
