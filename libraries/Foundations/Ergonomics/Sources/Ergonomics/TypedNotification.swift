@@ -163,7 +163,6 @@ extension NotificationCenter {
             .compactMap { N.data(from: $0) }
             .eraseToStream()
     }
-
 }
 
 extension TypedNotification {
