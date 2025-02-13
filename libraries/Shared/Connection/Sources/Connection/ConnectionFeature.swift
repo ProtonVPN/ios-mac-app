@@ -143,11 +143,13 @@ public struct ConnectionFeature: Reducer, Sendable {
 
                     await send(.connect(intent))
                 } catch: { error, send in
+                    log.error("Failed in preparing connection with error: \(error)")
                     switch error {
                     case let connectionError as ConnectionError:
                         await send(.disconnect(.connectionFailure(connectionError)))
                     default:
-                        log.error("Failed in preparing connection with error: \(error)")
+                        let wrappedError = ConnectionError.WrappedError(wrapped: error)
+                        await send(.disconnect(.connectionFailure(.preparation(wrappedError))))
                     }
                 }
                 .cancellable(id: CancelID.preparation)
@@ -338,10 +340,22 @@ public struct ConnectionFeature: Reducer, Sendable {
 
 @CasePathable
 public enum ConnectionError: Error, Equatable, Sendable {
+    public struct WrappedError: Error, Equatable {
+        let wrapped: any Error
+
+        public init(wrapped: any Error) {
+            self.wrapped = wrapped
+        }
+
+        public static func == (lhs: WrappedError, rhs: WrappedError) -> Bool {
+            String(reflecting: lhs.wrapped) == String(reflecting: rhs.wrapped)
+        }
+    }
     case unexpectedProtocol(VpnProtocol)
     case certAuth(CertificateAuthenticationError)
     case tunnel(TunnelConnectionError)
     case agent(LocalAgentConnectionError)
+    case preparation(WrappedError)
     case intentMissing // Original connection intent is missing, and we cannot provide accurate connection details
     case serverMissing
     case timeout

@@ -32,6 +32,8 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .agent(let agentError):
             return agentError.alert
+        case .preparation(let wrappedError):
+            return wrappedError.alert
         case .serverMissing:
             break
         case .intentMissing:
@@ -104,6 +106,12 @@ extension LocalAgentError: AlertConvertibleError {
                 .unknown:
             break
         }
+        return ConnectionFailedAlert()
+    }
+}
+
+extension ConnectionError.WrappedError: AlertConvertibleError {
+    public var alert: AlertService.Alert {
         return ConnectionFailedAlert()
     }
 }

@@ -283,7 +283,14 @@ public struct HomeFeature {
                 return .none
             case .connection(.localAgent(.event(.stats(let message)))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
+            case .connection(.disconnect(.connectionFailure(let error))):
+                return .run { _ in await alertService.feed(error) }
+            case .connection(.localAgent(.disconnect(let error?))):
+                return .run { _ in await alertService.feed(error) }
             case .connection(_):
+                if case .disconnected(let error) = state.connectionState, let error {
+                    return .run { _ in await alertService.feed(error) }
+                }
                 return .none
             case .incomingAlert(let alert):
                 pushAlert(alert.toSystemAlert)
