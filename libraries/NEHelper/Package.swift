@@ -23,7 +23,6 @@ let package = Package(
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NetShield"),
-        .package(path: "../Foundations/LocalFeatureFlags"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Timer"),
@@ -50,7 +49,6 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
-                .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
                 .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
@@ -62,7 +60,6 @@ let package = Package(
                 "VPNShared",
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
                 .core(module: "Utilities")
             ]
         ),

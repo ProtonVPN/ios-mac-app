@@ -20,11 +20,11 @@ import Foundation
 
 import Dependencies
 
-import Domain
-import LocalFeatureFlags
-import Strings
 import LegacyCommon
 import VPNShared
+
+import Domain
+import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory
@@ -71,10 +71,6 @@ final class AdvancedSettingsViewModel {
 
     var isNATTypeFeatureEnabled: Bool {
         return featureFlags.moderateNAT
-    }
-
-    var isTelemetryFeatureEnabled: Bool {
-        LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
     }
 
     var usageData: Bool {
@@ -201,5 +197,5 @@ final class AdvancedSettingsViewModel {
 
     @objc private func settingsChanged() {
         reloadNeeded?()
-    } 
+    }
 }

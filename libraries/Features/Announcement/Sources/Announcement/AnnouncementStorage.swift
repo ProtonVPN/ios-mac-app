@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import Ergonomics
 
 public protocol AnnouncementStorage {
     func fetch() -> [Announcement]
@@ -74,9 +75,12 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
             let encoder = JSONEncoder()
             let jsonData = try encoder.encode(objectsWithReadFlag)
             userDefaults.set(jsonData, forKey: storageKey)
-            DispatchQueue.main.async { NotificationCenter.default.post(name: AnnouncementStorageNotifications.contentChanged, object: objects) }
+
+            executeOnUIThread {
+                NotificationCenter.default.post(name: AnnouncementStorageNotifications.contentChanged, object: objects)
+            }
         } catch let error {
-//            log.error("\(error)", category: .ui)
+            log.error("Announcement error: \(error)", category: .ui)
         }
     }
 

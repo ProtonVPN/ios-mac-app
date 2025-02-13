@@ -28,20 +28,14 @@ import Dependencies
 
 import GoLibs
 
+import VPNShared
+import NetShield
+
 import Domain
 import Ergonomics
-import LocalFeatureFlags
-import NetShield
 import Timer
-import VPNShared
 
 import NetShield
-
-private enum LocalAgentFeature: String, FeatureFlag {
-    var category: String { "LocalAgent" }
-
-    case connectionDetails = "ConnectionDetails"
-}
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
@@ -288,8 +282,6 @@ final class LocalAgentImplementation: LocalAgent {
 
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
     func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage) {
-        guard LocalFeatureFlags.isEnabled(LocalAgentFeature.connectionDetails) else { return }
-
         delegate?.didReceiveConnectionDetails(details)
     }
 

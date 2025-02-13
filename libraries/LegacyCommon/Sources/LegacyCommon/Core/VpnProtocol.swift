@@ -9,11 +9,10 @@
 
 import Foundation
 
-import Domain
-import LocalFeatureFlags
-import Strings
-
 import VPNShared
+
+import Strings
+import Domain
 
 extension VpnProtocol: DefaultableProperty {
     public init() {
@@ -33,18 +32,7 @@ extension VpnProtocol { // Authentication
     public var authenticationType: AuthenticationType {
         switch self {
         case .ike: return .credentials
-        case .openVpn:
-            #if os(macOS)
-            guard isEnabled(OpenVPNFeature.macCertificates) else {
-                return .credentials
-            }
-            return .certificate
-            #else
-            guard isEnabled(OpenVPNFeature.iosCertificates) else {
-                return .credentials
-            }
-            return .certificate
-            #endif
+        case .openVpn: return .certificate
         case .wireGuard: return .certificate
         }
     }
@@ -57,12 +45,12 @@ extension VpnProtocol {
         static let vpnProtocol = "vpnProtocol"
         static let transportProtocol = "transportProtocol"
     }
-    
+
     public init?(coder aDecoder: NSCoder) {
         guard let data = aDecoder.decodeObject(forKey: CoderKey.vpnProtocol) as? Data else {
             return nil
         }
-        
+
         switch data[0] {
         case 1:
             self = .openVpn(OpenVpnTransport(coder: aDecoder))
@@ -72,7 +60,7 @@ extension VpnProtocol {
             self = .ike
         }
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }

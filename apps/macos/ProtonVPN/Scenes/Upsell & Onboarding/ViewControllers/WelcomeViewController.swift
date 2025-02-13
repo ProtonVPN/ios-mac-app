@@ -23,7 +23,6 @@
 import Cocoa
 
 import LegacyCommon
-import LocalFeatureFlags
 import VPNAppCore
 
 import Theme
@@ -36,7 +35,7 @@ class WelcomeViewController: NSViewController {
         case usageData
         case crashReports
     }
-    
+
     @IBOutlet weak var mapView: NSImageView!
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var descriptionLabel: NSTextField!
@@ -50,53 +49,48 @@ class WelcomeViewController: NSViewController {
 
     let windowService: WindowService
     let telemetrySettings: TelemetrySettings
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(windowService: WindowService, telemetrySettings: TelemetrySettings) {
         self.windowService = windowService
         self.telemetrySettings = telemetrySettings
         super.init(nibName: NSNib.Name("Welcome"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         if let mapImage = mapView.image {
             mapView.image = mapImage.colored(context: .background)
         }
-        
+
         titleLabel.attributedStringValue = Localizable.welcomeTitle.styled(font: .themeFont(.title, bold: true))
         usageStatisticsLabel.attributedStringValue = Localizable.onboardingMacUsageStats.styled(font: .themeFont(.small), alignment: .left)
         crashReportsLabel.attributedStringValue = Localizable.onboardingMacCrashReports.styled(font: .themeFont(.small), alignment: .left)
-        
+
         let description = NSMutableAttributedString(attributedString: Localizable.welcomeDescription.styled(font: .themeFont(.heading2)))
         let fullRange = (description.string as NSString).range(of: description.string)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         paragraphStyle.lineSpacing = 6
-        
+
         description.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
         descriptionLabel.attributedStringValue = description
-        
+
         noThanksButton.title = Localizable.continue
 
         setupTelemetry()
     }
 
     func setupTelemetry() {
-        guard LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) else {
-            telemetryStackView.isHidden = true
-            return
-        }
-
         learnMore.fontSize = .small
         learnMore.title = Localizable.learnMore
         learnMore.target = self
@@ -123,12 +117,12 @@ class WelcomeViewController: NSViewController {
     @objc func learnMoreClicked() {
         SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMoreTelemetry)
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyInfoAppearance()
     }
-    
+
     @IBAction func cancel(_ sender: Any) {
         dismiss(nil)
     }

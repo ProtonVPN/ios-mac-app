@@ -17,13 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 import ProtonCoreFeatureFlags
 import ProtonCoreAPIClient
 import ProtonCoreNetworking
-import Domain
-import LocalFeatureFlags
+
 import VPNShared
+
 import Ergonomics
+import Domain
 
 /// The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
 public struct LogicalsRequest: ConditionalRequest {
@@ -58,16 +60,12 @@ public struct LogicalsRequest: ConditionalRequest {
         let path = URL(string: "/vpn/v1/logicals")!
 
         let queryItems: [URLQueryItem] = Array(
-            ("WithTranslations", nil)
+            ("WithTranslations", nil),
+            ("WithEntriesForProtocols", Self.protocolDescriptions)
         )
-        .appending(Array(("WithEntriesForProtocols", Self.protocolDescriptions)), if: shouldUseProtocolEntries)
         .appending(Array(("Tier", "0")), if: freeTier)
 
         return path.appendingQueryItems(queryItems).absoluteString
-    }
-
-    var shouldUseProtocolEntries: Bool {
-        LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries)
     }
 
     public var isAuth: Bool {

@@ -82,7 +82,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupUsageDataTypeItem() {
-        usageDataView.isHidden = !viewModel.isTelemetryFeatureEnabled
+        usageDataView.isHidden = false
         let tooltip = Localizable.settingsMacUsageStatsTooltip
         let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacUsageStatsTitle,
                                                   buttonState: viewModel.usageData,
@@ -92,7 +92,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupCrashReportsTypeItem() {
-        crashReportsView.isHidden = !viewModel.isTelemetryFeatureEnabled
+        crashReportsView.isHidden = false
         let tooltip = Localizable.settingsMacCrashReportsTooltip
         let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacCrashReportsTitle,
                                                   buttonState: viewModel.crashReports,

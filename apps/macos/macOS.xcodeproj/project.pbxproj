@@ -261,7 +261,6 @@
 		E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF62A4C363700B09111 /* ComposableArchitecture */; };
 		E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF82A4C365000B09111 /* ConnectionDetails */; };
 		E5E48CFB2A4C365000B09111 /* ConnectionDetails-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CFA2A4C365000B09111 /* ConnectionDetails-macOS */; };
-		E5E48CFF2A4C37A900B09111 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */; };
 		E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D002A4C37F000B09111 /* PMLogger */; };
 		E5E48D032A4C3D7100B09111 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D022A4C3D7100B09111 /* Logging */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
@@ -1047,7 +1046,6 @@
 				EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */,
 				4C660DB42CCA810300780D42 /* Version in Frameworks */,
 				4C25999C2A7AA29800A31895 /* Dependencies in Frameworks */,
-				E5E48CFF2A4C37A900B09111 /* LocalFeatureFlags in Frameworks */,
 				E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */,
 				4CD1F7872A72BEDA00E8AB01 /* BugReport in Frameworks */,
 				AD9F19502B55D6770034F329 /* Persistence in Frameworks */,
@@ -2717,7 +2715,6 @@
 				E5E48CF62A4C363700B09111 /* ComposableArchitecture */,
 				E5E48CF82A4C365000B09111 /* ConnectionDetails */,
 				E5E48CFA2A4C365000B09111 /* ConnectionDetails-macOS */,
-				E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */,
 				E5E48D002A4C37F000B09111 /* PMLogger */,
 				E5E48D022A4C3D7100B09111 /* Logging */,
 				4C7D40582A60251700ACDBED /* SDWebImage */,
@@ -4838,10 +4835,6 @@
 		E5E48CFA2A4C365000B09111 /* ConnectionDetails-macOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "ConnectionDetails-macOS";
-		};
-		E5E48CFE2A4C37A900B09111 /* LocalFeatureFlags */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LocalFeatureFlags;
 		};
 		E5E48D002A4C37F000B09111 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

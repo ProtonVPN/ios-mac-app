@@ -153,7 +153,7 @@ final class OneClickPayment {
     }
 
     @MainActor
-    func validate(selectedPlan: PlanOption) async -> Void {
+    func validate(selectedPlan: PlanOption) async {
         let result = await self.buyPlan(planOption: selectedPlan)
         await self.buyPlanResultHandler(result)
     }
@@ -168,20 +168,16 @@ final class OneClickPayment {
             await planService.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
-            break
         case .planPurchaseProcessingInProgress(let plan):
             log.debug("Purchasing \(plan.protonName)", category: .iap)
-            break
         // a purchaseError, we don't dismiss the flow so user can retry (user can manually dismiss the flow)
         case let .purchaseError(error, _):
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
-            break
         // same, we don't dismiss the flow, we're displaying an alert (user can manually dismiss the flow)
         case let .apiMightBeBlocked(message, originalError, _):
             log.error("\(message)", category: .connection, metadata: ["error": "\(originalError)"])
             alertService.push(alert: PaymentAlert(message: message, isError: true))
-            break
         case .purchaseCancelled:
             break
         // renewal is not triggering the welcome screen immediately, so dismissing the flow after payment succeeds

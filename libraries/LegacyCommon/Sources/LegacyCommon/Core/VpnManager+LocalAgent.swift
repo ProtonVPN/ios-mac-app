@@ -24,14 +24,13 @@ import Foundation
 
 import Dependencies
 
-import Domain
-import Ergonomics
-import LocalFeatureFlags
 import ExtensionIPC
 import VPNShared
 import VPNAppCore
-
 import NetShield
+
+import Domain
+import Ergonomics
 
 private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
 
@@ -236,7 +235,7 @@ extension VpnManager {
             log.warning("Server with such id not found", category: .connection, event: .error, metadata: ["serverId": "\(serverId)"])
             return
         }
-        
+
         let newServer = ServerModel(server: result)
         guard let newIp = newServer.ips.first(where: { $0.id == ipId }) else {
             log.warning("Server IP with such id not found", category: .connection, event: .error, metadata: ["ipId": "\(ipId)", "serverId": "\(serverId)"])
@@ -248,45 +247,6 @@ extension VpnManager {
             return $0?.withChanged(server: newServer, ip: newIp)
         }
     }
-
-    // Danger: If you're adding another `updateActiveConnection` here, consider also updating `lastConnectionRequest`.
-
-    /// Asks NE for currently connected logical and ip ids. If these are not as expected last connection configuration is updated, so UI can show up-to-date info.
-    func checkActiveServer() {
-        guard LocalFeatureFlags.isEnabled(VpnReconnectionFeatureFlag()) else { return }
-        guard case .connected = state else { return }
-        log.debug("Checking if NE is still connected to the same server", category: .connection)
-        self.currentVpnProtocolFactory?.vpnProviderManager(for: .configuration, completion: { manager, error in
-            guard let manager = manager else {
-                log.error("No vpn manager found", category: .localAgent, event: .error)
-                return
-            }
-            let sender = manager.vpnConnection as? ProviderMessageSender
-            sender?.send(WireguardProviderRequest.getCurrentLogicalAndServerId) { result in
-                switch result {
-                case .success(let response):
-                    guard case .ok(let data) = response, let data = data, let ids = String(data: data, encoding: .utf8) else {
-                        log.error("Error while decoding getCurrentLogicalAndServerId response", category: .connection, event: .error)
-                        return
-                    }
-                    let id = ids.components(separatedBy: ";")
-
-                    guard self.lastConnectionConfiguration?.server.id != id[0], self.lastConnectionConfiguration?.serverIp.id != id[1] else {
-                        log.info("Current vpn server is as expected", category: .connection)
-                        return
-                    }
-
-                    self.updateActiveConnection(serverId: id[0], ipId: id[1])
-                    self.disconnectLocalAgent()
-                    self.connectLocalAgent()
-
-                case .failure(let error):
-                    log.error("Error while getting currently connected vpn server and ip: \(error)", category: .connection, event: .error)
-                }
-            }
-        })
-    }
-
 }
 
 extension VpnManager: LocalAgentDelegate {
@@ -352,11 +312,7 @@ extension VpnManager: LocalAgentDelegate {
             didReceiveError(error: LocalAgentError.certificateExpired)
 
         case .serverCertificateError:
-            #if os(iOS)
-            // Most probably NE has changed the server. Let's check if it is the case
-            // (currently only iOS NE can change server).
-            checkActiveServer()
-            #endif
+            log.debug("LocalAgent: Server certificate error")
 
         default:
             break
@@ -422,7 +378,7 @@ extension VpnManager: LocalAgentDelegate {
         log.debug("Safe Mode was set to \(currentSafeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
         safeModePropertyProvider.safeMode = safeMode
     }
-    
+
     private func didReceiveFeature(vpnAccelerator: Bool) {
         let localValue = featurePropertyProvider.getValue(for: VPNAccelerator.self)
         let localAgentValue: VPNAccelerator = vpnAccelerator ? .on : .off
@@ -459,6 +415,3 @@ extension VpnManager: LocalAgentDelegate {
         natTypePropertyProvider.natType = natType
     }
 }
-
-// This lets us not depend on LocalFeatureFlags in VPNShared library
-extension VPNShared.VpnReconnectionFeatureFlag: FeatureFlag { }

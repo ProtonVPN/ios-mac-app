@@ -38,7 +38,6 @@ let package = Package(
         // Local packages
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/LocalFeatureFlags"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
@@ -77,7 +76,6 @@ let package = Package(
                 "Domain",
                 "Connection",
                 "Ergonomics",
-                "LocalFeatureFlags",
                 "PMLogger",
                 "Strings",
                 "Theme",

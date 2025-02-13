@@ -24,10 +24,10 @@ import Foundation
 
 import Dependencies
 
+import VPNShared
+
 import Domain
 import Ergonomics
-import LocalFeatureFlags
-import VPNShared
 
 public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
     /// Current NetShield type
@@ -62,7 +62,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
         return lastActiveType
     }
-    
+
     public var netShieldType: NetShieldType {
         get {
             guard let value = getStoredNetShieldValue(key: .netShield) else {
@@ -101,7 +101,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             }
         }
     }
-    
+
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         // Turn NetShield off on downgrade to free plan
         if tier.isFreeTier {
@@ -134,7 +134,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
         return type
     }
-    
+
     private var defaultNetShieldType: NetShieldType {
         authorizer(.level2) == .success ? .level2 : .off
     }

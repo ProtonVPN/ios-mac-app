@@ -29,17 +29,17 @@ import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 
-import Domain
-import LocalFeatureFlags
-import Strings
-
 import CommonNetworking
 import VPNShared
 import LegacyCommon
 import VPNAppCore
 import Settings
 
+import Domain
+import Strings
+
 // TODO: Migrate to @MainActor once overall codebase is ready for it
+
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
     AppSessionManagerFactory &
@@ -62,7 +62,7 @@ final class SettingsViewModel {
     NetworkingFactory
 
     private let factory: Factory
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -79,7 +79,7 @@ final class SettingsViewModel {
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var networking: Networking = factory.makeNetworking()
     private let protocolService: ProtocolService
-    
+
     var reloadNeeded: (() -> Void)?
 
     @Dependency(\.settingsClient) var settingsClient
@@ -113,26 +113,25 @@ final class SettingsViewModel {
 
     var tableViewData: [TableViewSection] {
         var sections: [TableViewSection] = []
-        
+
         sections.append(accountSection)
         sections.append(securitySection)
         sections.append(advancedSection)
-        
+
         if let connectionSection = connectionSection {
             sections.append(connectionSection)
         }
         if #unavailable(iOS 18) {
             sections.append(extensionsSection)
         }
-        if LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) {
-            sections.append(usageStatisticsSection)
-        }
+
+        sections.append(usageStatisticsSection)
         sections.append(logSection)
         sections.append(bottomSection)
-        
+
         return sections
     }
-    
+
     var shouldShowAccountRecovery: Bool {
         accountRecoveryStatus?.isVisibleInSettings ?? false
     }
@@ -150,7 +149,7 @@ final class SettingsViewModel {
         view.appVersionLabel.text = Localizable.version + " \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))"
         return view
     }
-    
+
     // MARK: - Private functions
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
@@ -172,28 +171,28 @@ final class SettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: PropertiesManager.smartProtocolNotification, object: nil)
     }
-    
+
     @objc private func sessionChanged(_ notification: Notification) {
         if appSessionManager.sessionStatus == .established, let vpnGateway = notification.object as? VpnGatewayProtocol {
             sessionEstablished(vpnGateway: vpnGateway)
         } else {
             sessionEnded()
         }
-        
+
         reloadNeeded?()
     }
-    
+
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
-        
+
         profileManager = factory.makeProfileManager()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: profileManager!.contentChanged, object: nil)
     }
-    
+
     private func sessionEnded() {
         NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
         if let profileManager {
@@ -206,12 +205,12 @@ final class SettingsViewModel {
     @objc private func reload() {
         reloadNeeded?()
     }
-    
+
     private var accountSection: TableViewSection {
 
         let username: String = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
-        
+
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
             accountPlanName = vpnCredentials.planTitle
         } else {
@@ -242,7 +241,7 @@ final class SettingsViewModel {
 
     private var securitySection: TableViewSection {
         let vpnProtocol = propertiesManager.vpnProtocol
-        
+
         var cells: [TableViewCellModel] = []
 
         let protocolValue = propertiesManager.smartProtocol ? Localizable.smartTitle : vpnProtocol.localizedDescription
@@ -252,7 +251,7 @@ final class SettingsViewModel {
         cells.append(.tooltip(text: Localizable.smartProtocolDescription))
 
         cells.append(contentsOf: netShieldCells)
-        
+
         cells.append(.upsellableToggle(
             title: Localizable.alwaysOnVpn,
             state: { .available(enabled: true, interactive: false) },
@@ -495,14 +494,14 @@ final class SettingsViewModel {
 
         return cells.isEmpty ? nil : TableViewSection(title: Localizable.connection, cells: cells)
     }
-    
+
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
             let isActive = self.isActive()
             let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
-            
+
             var alert: SystemAlert
-            
+
             if self.propertiesManager.killSwitch, excludeLAN == .off {
                 alert = AllowLANConnectionsAlert(connected: isActive) {
                     self.featurePropertyProvider.setValue(ExcludeLocalNetworks.on)
@@ -530,11 +529,11 @@ final class SettingsViewModel {
                 callback(toggleOn)
                 return
             }
-            
+
             self.alertService.push(alert: alert)
         }
     }
-    
+
     private func ksSwitchCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
             let isActive = self.isActive()
@@ -568,11 +567,11 @@ final class SettingsViewModel {
                 callback(self.propertiesManager.killSwitch)
                 return
             }
-            
+
             self.alertService.push(alert: alert)
         }
     }
-    
+
     private var extensionsSection: TableViewSection {
         let cells: [TableViewCellModel] = [
             .pushStandard(
@@ -582,7 +581,7 @@ final class SettingsViewModel {
                 }
             )
         ]
-        
+
         return TableViewSection(title: Localizable.extensions, cells: cells)
     }
 
@@ -598,17 +597,17 @@ final class SettingsViewModel {
 
         return TableViewSection(title: "", cells: cells)
     }
-    
+
     private var logSection: TableViewSection {
         let cells: [TableViewCellModel] = [
             .pushStandard(title: Localizable.viewLogs, handler: { [pushLogSelectionViewController] in
                 pushLogSelectionViewController()
             })
         ]
-        
+
         return TableViewSection(title: "", cells: cells)
     }
-    
+
     private var bottomSection: TableViewSection {
         let cells: [TableViewCellModel] = [
             .button(title: Localizable.reportBug, accessibilityIdentifier: "Report Bug", color: .normalTextColor(), handler: { [reportBug] in
@@ -618,10 +617,10 @@ final class SettingsViewModel {
                 logOut()
             })
         ]
-        
+
         return TableViewSection(title: "", cells: cells)
     }
-    
+
     private func pushSettingsAccountViewController() {
         guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
@@ -632,7 +631,7 @@ final class SettingsViewModel {
     private func pushAccountRecoveryViewController() {
         assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
         guard let pushHandler = pushHandler else { return }
-        let accountRecoveryViewController = settingsService.makeAccountRecoveryViewController() 
+        let accountRecoveryViewController = settingsService.makeAccountRecoveryViewController()
         pushHandler(accountRecoveryViewController)
     }
 
@@ -758,7 +757,7 @@ final class SettingsViewModel {
     private func reportBug() {
         settingsService.presentReportBug()
     }
-    
+
     private func logOut() {
         if isActive() {
             let confirmationClosure: () -> Void = { [weak self] in

@@ -18,15 +18,16 @@
 
 import Foundation
 import UIKit
+
+import Dependencies
+
+import ProtonCoreFeatureFlags
+
 import LegacyCommon
-import LocalFeatureFlags
+import Persistence
 import VPNShared
 import Modals
 import Modals_iOS
-import Dependencies
-import Persistence
-
-import ProtonCoreFeatureFlags
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService

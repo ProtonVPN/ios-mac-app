@@ -22,24 +22,13 @@ import Dependencies
 
 import GoLibs
 
-import Domain
-import LocalFeatureFlags
-import TimerMock
 import VPNShared
+
+import Domain
+import TimerMock
 @testable import LegacyCommon
 
 final class LocalAgentTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-        setLocalFeatureFlagOverrides(["NetShield": ["NetShieldStats": true]])
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        setLocalFeatureFlagOverrides(nil)
-    }
-
     func testStatsTimerStartedAfterFinishingConnecting() {
         let connectionFactory = LocalAgentConnectionMockFactory()
         let propertiesManager = PropertiesManagerMock()
