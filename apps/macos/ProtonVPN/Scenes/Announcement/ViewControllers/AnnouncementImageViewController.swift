@@ -17,11 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
+
+import Dependencies
+
 import LegacyCommon
+import CommonNetworking
+import Announcement
+import VPNAppCore
+
 import Ergonomics
 import Strings
-import Dependencies
-import CommonNetworking
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!
@@ -128,7 +133,7 @@ final class AnnouncementImageViewController: NSViewController {
         Task { [weak actionButton, weak view] in
             @Dependency(\.sessionService) var sessionService
             // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
-            let url = await sessionService.getUpgradePlanSession(data.button.url)
+            let url = await sessionService.getUpgradePlanSession(url: data.button.url)
             actionButton?.isEnabled = true
             SafariService().open(url: url)
             view?.window?.close()

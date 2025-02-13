@@ -18,10 +18,12 @@
 
 import Foundation
 import UIKit
+
+import VPNAppCore
 import LegacyCommon
 import Theme
+
 import Strings
-import Ergonomics
 
 class SubuserAlertViewController: UIViewController {
     

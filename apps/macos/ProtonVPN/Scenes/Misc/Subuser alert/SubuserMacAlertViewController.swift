@@ -17,9 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+
 import LegacyCommon
-import Strings
+import VPNAppCore
+
 import Theme
+import Strings
 import Ergonomics
 
 final class SubuserMacAlertViewController: NSViewController {

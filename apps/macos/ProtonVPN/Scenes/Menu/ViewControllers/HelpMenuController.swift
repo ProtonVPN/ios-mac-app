@@ -22,8 +22,8 @@
 
 import Cocoa
 import LegacyCommon
+import VPNAppCore
 import Strings
-import Ergonomics
 
 class HelpMenuController: NSObject {
     

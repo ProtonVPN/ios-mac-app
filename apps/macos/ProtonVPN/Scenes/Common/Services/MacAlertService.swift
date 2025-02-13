@@ -21,21 +21,36 @@
 //
 
 import Foundation
-import Dependencies
-import Ergonomics
-import LegacyCommon
 import AppKit
+
+import Dependencies
+
+import LegacyCommon
+import VPNShared
+import VPNAppCore
+import CommonNetworking
+
 import Modals
 import Modals_macOS
-import VPNShared
+
+import Ergonomics
 import Theme
 import Strings
-import VPNAppCore
 
 final class MacAlertService {
     @Dependency(\.serverRepository) var serverRepository
 
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    typealias Factory = UIAlertServiceFactory &
+        AppSessionManagerFactory &
+        WindowServiceFactory &
+        NotificationManagerFactory &
+        UpdateManagerFactory &
+        PropertiesManagerFactory &
+        TroubleshootViewModelFactory &
+        NavigationServiceFactory &
+        TelemetrySettingsFactory &
+        VpnKeychainFactory
+    
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -44,11 +59,12 @@ final class MacAlertService {
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var sessionService: SessionService = factory.makeSessionService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    
+
+    @Dependency(\.sessionService) var sessionService
+
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
     init(factory: Factory) {

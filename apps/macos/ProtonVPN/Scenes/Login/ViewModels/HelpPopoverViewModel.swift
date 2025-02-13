@@ -22,7 +22,7 @@
 
 import Foundation
 import LegacyCommon
-import Ergonomics
+import VPNAppCore
 
 final class HelpPopoverViewModel {
 

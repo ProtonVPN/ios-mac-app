@@ -17,15 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
-import Ergonomics
+import VPNAppCore
+import CommonNetworking
 
-class SecureCoreWarningViewModel {
-    let sessionService: SessionService
-
-    init(sessionService: SessionService) {
-        self.sessionService = sessionService
-    }
+final class SecureCoreWarningViewModel {
+    @Dependency(\.sessionService)
+    var sessionService: SessionService
 
     func upgradeButtonPressed() async {
         let url = await sessionService.getPlanSession(mode: .upgrade)
@@ -35,4 +36,6 @@ class SecureCoreWarningViewModel {
     func learnMoreButtonPressed() {
         SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
     }
+
+    init() {}
 }

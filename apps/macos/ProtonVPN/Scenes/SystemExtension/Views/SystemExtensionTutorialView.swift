@@ -17,11 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Combine
 import SwiftUI
 import AVKit
+
 import ProtonCoreUIFoundations
+
 import LegacyCommon
+import VPNAppCore
+
 import Strings
 import Ergonomics
 
@@ -35,8 +38,7 @@ struct SystemExtensionTutorialView: View {
     var body: some View {
         ZStack {
             videoView
-                .frame(width: 864,
-                       height: 512)
+                .frame(width: 864, height: 512)
         }
     }
 
@@ -69,11 +71,7 @@ struct SystemExtensionTutorialView: View {
     }
 
     func descriptionWithMarkdown(localised: String) -> Text {
-        if #available(macOS 12, *) {
-            return Text(try! AttributedString(markdown: localised))
-        } else {
-            return Text(localised)
-        }
+        Text(try! AttributedString(markdown: localised))
     }
 
     var videoView: some View {

@@ -20,12 +20,15 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Strings
+
 import Dependencies
+
 import Persistence
 import VPNAppCore
-import Ergonomics
 import Announcement
+
+import Strings
+import Ergonomics
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService

@@ -21,10 +21,14 @@
 //
 
 import Foundation
-import VPNShared
+
 import Dependencies
-import Ergonomics
+
 import Announcement
+import VPNShared
+import VPNAppCore
+
+import Ergonomics
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel

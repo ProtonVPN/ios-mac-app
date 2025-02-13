@@ -21,7 +21,11 @@
 //
 
 import Cocoa
+
 import LegacyCommon
+import Announcement
+import VPNAppCore
+
 import Ergonomics
 import Strings
 

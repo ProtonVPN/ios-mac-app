@@ -21,10 +21,13 @@
 //
 
 import UIKit
-import LegacyCommon
+
 import ProtonCoreUIFoundations
+
+import LegacyCommon
+import VPNAppCore
+
 import Strings
-import Ergonomics
 
 class FeatureTableViewCell: UITableViewCell {
     

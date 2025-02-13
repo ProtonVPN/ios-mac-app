@@ -21,11 +21,14 @@
 //
 
 import UIKit
-import LegacyCommon
+
 import ProtonCoreUIFoundations
-import Strings
 import ProtonCoreFeatureFlags
+
+import LegacyCommon
 import Announcement
+
+import Strings
 
 final class SettingsViewController: UIViewController {
 

@@ -20,17 +20,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import AppKit
 import Foundation
-import LegacyCommon
+import AppKit
+
 import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreFeatureFlags
 import ProtonCoreServices
 import ProtonCoreObservability
+
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
 import VPNShared
+
 import Strings
 
 struct LoginViewModelError: Swift.Error {

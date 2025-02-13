@@ -20,17 +20,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Ergonomics
 import Foundation
-import LegacyCommon
-import Modals
-import Modals_iOS
 import UIKit
-import ProtonCoreUIFoundations
-import Strings
+
 import Dependencies
+
+import ProtonCoreUIFoundations
+
+import LegacyCommon
 import Persistence
 import VPNAppCore
+import Modals
+import Modals_iOS
+
+import Ergonomics
+import Strings
 
 final class IosAlertService {
         

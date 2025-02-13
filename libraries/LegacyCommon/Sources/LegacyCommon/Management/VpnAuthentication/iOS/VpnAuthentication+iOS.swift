@@ -176,11 +176,14 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     /// may find that its session has expired, or that it does not have any session saved in its keychain. In such
     /// a case, it will reply to refresh requests with `.errorSessionExpired`, at which point it will be the
     /// main app's responsibility to (re)fork its session and send the selector to the extension.
-    private func pushSelectorToProvider(extensionContext: AppContext = .wireGuardExtension, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    private func pushSelectorToProvider(
+        extensionContext context: AppContext = .wireGuardExtension,
+        completionHandler: @escaping ((Result<(), Error>) -> Void)
+    ) {
         Task {
             do {
                 @Dependency(\.sessionService) var sessionService
-                let selector = try await sessionService.getExtensionSessionSelector(extensionContext)
+                let selector = try await sessionService.getExtensionSessionSelector(extensionContext: context)
                 pushToProvider(selector: selector, completionHandler: completionHandler)
             } catch {
                 log.error("Received error forking API session: \(error)", category: .userCert)

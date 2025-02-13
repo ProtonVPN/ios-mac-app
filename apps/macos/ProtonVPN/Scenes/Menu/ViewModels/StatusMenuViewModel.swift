@@ -24,15 +24,15 @@ import Cocoa
 
 import Dependencies
 
+import LegacyCommon
+import VPNAppCore
+import Persistence
+import CommonNetworking
+
 import Domain
 import Ergonomics
-import Strings
 import Theme
-import VPNAppCore
-
-import Persistence
-
-import LegacyCommon
+import Strings
 
 protocol StatusMenuViewModelFactory {
      func makeStatusMenuViewModel() -> StatusMenuViewModel
@@ -48,7 +48,6 @@ final class StatusMenuViewModel {
         & AppStateManagerFactory
         & WiFiSecurityMonitorFactory
         & ProfileManagerFactory
-        & SessionServiceFactory
         & VpnGatewayFactory
 
     private let factory: Factory
@@ -63,8 +62,10 @@ final class StatusMenuViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
-    private lazy var sessionService: SessionService = factory.makeSessionService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+
+    @Dependency(\.sessionService)
+    private var sessionService: SessionService
 
     var contentChanged: (() -> Void)?
     var changeServerStateChanged: ((ServerChangeViewState) -> Void)?

@@ -25,12 +25,13 @@ import os
 
 import ComposableArchitecture
 
-import CommonNetworking
-import Ergonomics
 import PMLogger
+
 import LegacyCommon
+import CommonNetworking
 import VPNShared
 
+import Ergonomics
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
@@ -60,7 +61,6 @@ class NavigationService {
         & SafeModePropertyProviderFactory
         & ProtonReachabilityCheckerFactory
         & NetworkingFactory
-        & SessionServiceFactory
         & AuthKeychainHandleFactory
         & TelemetrySettingsFactory
     private let factory: Factory
@@ -245,12 +245,15 @@ extension NavigationService {
     func openSettings(to tab: SettingsTab) {
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory),
-                                         tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
-                                         accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(),
-                                                                            propertiesManager: factory.makePropertiesManager(),
-                                                                            sessionService: factory.makeSessionService(),
-                                                                            authKeychain: factory.makeAuthKeychainHandle()))
+        windowService.openSettingsWindow(
+            viewModel: SettingsContainerViewModel(factory: factory),
+            tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
+            accountViewModel: AccountViewModel(
+                vpnKeychain: factory.makeVpnKeychain(),
+                propertiesManager: factory.makePropertiesManager(),
+                authKeychain: factory.makeAuthKeychainHandle()
+            )
+        )
     }
     
     func logOutRequested() {

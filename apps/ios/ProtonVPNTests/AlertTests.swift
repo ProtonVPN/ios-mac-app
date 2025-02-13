@@ -21,18 +21,21 @@
 //
 
 import XCTest
+import SwiftUI
+
 import GSMessages
+
 import PMLogger
 import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
 import ProtonCorePasswordChange
-import SwiftUI
+
 import Modals_iOS
 import LegacyCommon
+import VPNAppCore
 
 @testable import ProtonVPN
 
-fileprivate let sessionService = SessionServiceMock()
 fileprivate let windowService = WindowServiceMock()
 fileprivate let uiAlertService = IosUiAlertService(windowService: windowService)
 
@@ -119,10 +122,6 @@ fileprivate class WindowServiceMock: WindowService {
 }
 
 fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
-    func makeSessionService() -> SessionService {
-        return sessionService
-    }
-    
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService
     }

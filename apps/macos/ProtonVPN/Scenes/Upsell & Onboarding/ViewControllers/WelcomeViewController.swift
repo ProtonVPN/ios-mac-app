@@ -21,8 +21,11 @@
 //
 
 import Cocoa
+
 import LegacyCommon
 import LocalFeatureFlags
+import VPNAppCore
+
 import Theme
 import Ergonomics
 import Strings

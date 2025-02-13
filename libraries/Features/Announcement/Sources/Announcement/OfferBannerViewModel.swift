@@ -17,13 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
+import Dependencies
+
+import VPNAppCore
+import Connection
+import CommonNetworking
+
 import Strings
 import Timer
 import Domain
-import CommonNetworking
 import Ergonomics
-import Dependencies
-import Connection
 
 public struct OfferBannerViewModel {
 
@@ -52,7 +56,7 @@ public struct OfferBannerViewModel {
         self.dismiss = dismiss
         self.action = { _ in
             @Dependency(\.sessionService) var sessionService
-            let url = await sessionService.getUpgradePlanSession(buttonURL.absoluteString)
+            let url = await sessionService.getUpgradePlanSession(url: buttonURL.absoluteString)
             SafariService().open(url: url)
             NotificationCenter.default.post(name: .userWasDisplayedAnnouncement,
                                             object: offerReference)

@@ -23,7 +23,6 @@ public enum AppContext: String {
     case mainApp
     case siriIntentHandler
     case wireGuardExtension
-    case openVpnExtension
 
     public var clientIdKey: String {
         switch self {
@@ -31,8 +30,6 @@ public enum AppContext: String {
             return "Id"
         case .wireGuardExtension:
             return "WireGuardId"
-        case .openVpnExtension:
-            return "OpenVpnId"
         }
     }
 
@@ -50,21 +47,4 @@ extension DependencyValues {
         get { self[AppContext.self] }
         set { self[AppContext.self] = newValue }
     }
-}
-
-//import Foundation
-//import Dependencies
-//import CommonNetworking
-//import VPNShared
-//import Domain
-
-public protocol SessionService {
-    var sessionCookie: HTTPCookie? { get }
-    var accountHost: URL { get }
-
-    func clientSessionId(forContext: AppContext) -> String
-
-    func getSelector(clientId: String,
-                     independent: Bool,
-                     timeout: TimeInterval?) async throws -> String
 }

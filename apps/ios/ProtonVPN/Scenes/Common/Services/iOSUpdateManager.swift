@@ -17,8 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Ergonomics
+
+import VPNAppCore
 import LegacyCommon
+
+import Ergonomics
 
 final class iOSUpdateManager: UpdateChecker {
     private lazy var updateURL: URL? = {

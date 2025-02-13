@@ -151,7 +151,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         getUpgradePlanSessionTask = Task {
             @Dependency(\.sessionService) var sessionService
             // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
-            let url = await sessionService.getUpgradePlanSession(data.button.url)
+            let url = await sessionService.getUpgradePlanSession(url: data.button.url)
             guard getUpgradePlanSessionTask?.isCancelled == false else { return }
             actionButton.isEnabled = true
             urlRequested?(url)

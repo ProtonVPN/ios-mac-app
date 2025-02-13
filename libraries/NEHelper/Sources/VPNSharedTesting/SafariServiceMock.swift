@@ -23,6 +23,7 @@
 #if DEBUG
 import Foundation
 import Ergonomics
+import VPNAppCore
 
 public class SafariServiceMock: SafariServiceProtocol {
     

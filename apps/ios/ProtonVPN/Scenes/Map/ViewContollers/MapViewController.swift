@@ -22,10 +22,13 @@
 
 import CoreLocation
 import UIKit
-import LegacyCommon
+
 import ProtonCoreUIFoundations
-import Strings
+
+import LegacyCommon
 import Announcement
+
+import Strings
 
 final class MapViewController: UIViewController {
 

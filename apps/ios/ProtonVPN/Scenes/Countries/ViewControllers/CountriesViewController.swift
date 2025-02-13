@@ -21,13 +21,18 @@
 //
 
 import UIKit
-import LegacyCommon
-import Search
-import ProtonCoreUIFoundations
-import Strings
-import ProtonCoreFeatureFlags
-import CommonNetworking
+
 import Dependencies
+
+import ProtonCoreUIFoundations
+import ProtonCoreFeatureFlags
+
+import CommonNetworking
+import LegacyCommon
+import Announcement
+import Search
+
+import Strings
 
 final class CountriesViewController: UIViewController {
     

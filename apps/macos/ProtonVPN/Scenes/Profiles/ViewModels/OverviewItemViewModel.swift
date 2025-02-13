@@ -21,9 +21,15 @@
 //
 
 import Cocoa
+
+import Dependencies
+
+import VPNAppCore
 import LegacyCommon
-import Strings
+import CommonNetworking
+
 import Ergonomics
+import Strings
 
 protocol OverviewItemViewModelDelegate: AnyObject {
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)
@@ -34,7 +40,9 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
-    private let sessionService: SessionService
+
+    @Dependency(\.sessionService)
+    private var sessionService
     
     weak var delegate: OverviewItemViewModelDelegate?
     
@@ -62,11 +70,10 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         return formConnectButtonTitle()
     }
     
-    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int, sessionService: SessionService) {
+    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int) {
         self.editProfile = editProfile
         self.profileManager = profileManager
         self.vpnGateway = vpnGateway
-        self.sessionService = sessionService
         super.init(profile: profile, userTier: userTier)
     }
     
