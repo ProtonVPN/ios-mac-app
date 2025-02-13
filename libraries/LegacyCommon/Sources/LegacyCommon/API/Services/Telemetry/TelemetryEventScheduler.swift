@@ -19,9 +19,12 @@
 import LocalFeatureFlags
 import Foundation
 import CommonNetworking
-import Ergonomics
 
 class TelemetryEventScheduler {
+    struct Error: Swift.Error {
+        let localizedDescription: String
+    }
+
     public typealias Factory = NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory
 
     private let factory: Factory
@@ -54,7 +57,7 @@ class TelemetryEventScheduler {
         if telemetryUsageData {
             try await sendEvent(event)
         } else {
-            throw "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled" as GenericError
+            throw Error(localizedDescription: "Didn't send \(isBusiness ? "Business" : "Telemetry") event, feature disabled")
         }
     }
 
@@ -99,7 +102,7 @@ class TelemetryEventScheduler {
             bufferedEvent = .init(try encoder.encode(event), id: UUID())
             try await buffer.save(event: bufferedEvent)
         } catch {
-            throw "Failed scheduling telemetry event: \(event), error: \(error)" as GenericError
+            throw Error(localizedDescription: "Failed scheduling telemetry event: \(event), error: \(error)")
         }
         log.debug("Telemetry event scheduled:\n\(String(data: bufferedEvent.data, encoding: .utf8)!)")
     }

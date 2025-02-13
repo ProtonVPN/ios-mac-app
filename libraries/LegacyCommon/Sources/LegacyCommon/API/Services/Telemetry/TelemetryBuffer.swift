@@ -18,9 +18,12 @@
 
 import Foundation
 import Dependencies
-import Ergonomics
 
 actor TelemetryBuffer {
+    struct Error: Swift.Error {
+        let localizedDescription: String
+    }
+
     struct Constants {
         static let maxStoredEvents = 100
         static let maxStorageDuration: TimeInterval = .days(7)
@@ -114,7 +117,7 @@ actor TelemetryBuffer {
             let data = try encoder.encode(events)
             try dataManager.save(data, fileUrl)
         } catch {
-            throw "Couldn't write Telemetry events to storage: \(error)" as GenericError
+            throw Error(localizedDescription: "Couldn't write Telemetry events to storage: \(error)")
         }
     }
 

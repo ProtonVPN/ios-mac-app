@@ -23,7 +23,6 @@ import Foundation
 import KeychainAccess
 import Logging
 import Dependencies
-import Ergonomics
 
 import VPNShared
 import VPNCrypto
@@ -95,6 +94,10 @@ internal enum KeychainEnvironment {
 }
 
 public class VpnKeychain: VpnKeychainProtocol {
+    struct Error: Swift.Error {
+        let localizedDescription: String
+    }
+
     private struct StorageKey {
         static let vpnCredentials = "vpnCredentials"
         static let openVpnPassword_old = "openVpnPassword"
@@ -375,7 +378,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     #if os(iOS)
     public func fetchWidgetPublicKey() throws -> CryptoService.Key {
         guard let data = try appKeychain.getData(StorageKey.widgetPublicKey) else {
-            throw "Keychain error: widget public key not found" as GenericError
+            throw Error(localizedDescription: "Keychain error: widget public key not found")
         }
 
         return try CryptoService.Key(

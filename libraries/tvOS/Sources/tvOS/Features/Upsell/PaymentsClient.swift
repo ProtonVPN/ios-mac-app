@@ -21,7 +21,6 @@ import Dependencies
 import StoreKit
 import ProtonCorePayments
 import Modals // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
-import struct Ergonomics.GenericError
 
 struct PlanIAPTuple: Identifiable, Equatable {
     let planOption: PlanOption

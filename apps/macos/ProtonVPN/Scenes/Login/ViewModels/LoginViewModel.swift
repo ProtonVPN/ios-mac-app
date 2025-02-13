@@ -22,7 +22,6 @@
 
 import AppKit
 import Foundation
-import Ergonomics
 import LegacyCommon
 import ProtonCoreLogin
 import ProtonCoreNetworking
@@ -34,8 +33,11 @@ import CommonNetworking
 import VPNShared
 import Strings
 
+struct LoginViewModelError: Swift.Error {
+    let localizedDescription: String
+}
+
 final class LoginViewModel {
-    
     typealias Factory = NavigationServiceFactory &
                         PropertiesManagerFactory &
                         AppSessionManagerFactory &
@@ -44,6 +46,7 @@ final class LoginViewModel {
                         ProtonReachabilityCheckerFactory &
                         NetworkingFactory &
                         SystemExtensionManagerFactory
+
     private let factory: Factory
     
     private lazy var apiService: APIService = factory.makeNetworking().apiService
@@ -215,7 +218,7 @@ final class LoginViewModel {
                     case (let request?, _):
                         ssoChallengeReceived?(request)
                     case (_, let error?):
-                        handleError(error: GenericError(message: error))
+                        handleError(error: LoginViewModelError(localizedDescription: error))
                     default:
                         break
                     }

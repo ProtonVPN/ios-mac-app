@@ -16,8 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Ergonomics
-
 public enum OpenVpnTransport: String, Codable, CaseIterable, Sendable {
     case tcp = "tcp"
     case udp = "udp"
@@ -37,6 +35,10 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     public static let allCases: [VpnProtocol] = [.ike]
         + OpenVpnTransport.allCases.map(Self.openVpn)
         + WireGuardTransport.allCases.map(Self.wireGuard)
+
+    public enum CodingError: Swift.Error {
+        case unknownValue(Int)
+    }
 
     #if os(macOS)
     /// Set of protocols that are deprecated on macOS
@@ -71,7 +73,7 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
             let transportProtocol = (try? container.decode(WireGuardTransport.self, forKey: .transportProtocol)) ?? .udp
             self = .wireGuard(transportProtocol)
         default:
-            throw "CodingError.unknownValue" as GenericError
+            throw CodingError.unknownValue(rawValue)
         }
     }
 

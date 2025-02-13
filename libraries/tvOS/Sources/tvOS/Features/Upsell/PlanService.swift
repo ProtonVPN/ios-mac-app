@@ -20,7 +20,6 @@ import Foundation
 import class StoreKit.SKProduct
 import Dependencies
 import ProtonCorePayments
-import struct Ergonomics.GenericError
 
 struct PaymentsFactory {
     var payments: @Sendable () -> Payments
@@ -51,11 +50,15 @@ final class PlansCache: ServicePlanDataStorage {
     var paymentsBackendStatusAcceptsIAP: Bool = false
 }
 
+struct PaymentsFFDisabledError: Swift.Error {
+    let localizedDescription: String = "DynamicPlan FF disabled!"
+}
+
 extension Payments {
     var plansDataSource: PlansDataSourceProtocol {
-        get throws {
+        get throws(PaymentsFFDisabledError) {
             guard case .right(let plansDataSource) = planService else {
-                throw GenericError("DynamicPlan FF disabled!")
+                throw PaymentsFFDisabledError()
             }
             return plansDataSource
         }

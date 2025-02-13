@@ -21,10 +21,13 @@ import Domain
 import OrderedCollections
 import Dependencies
 import VPNAppCore
-import Ergonomics
 
 public final class RecentsStorageImplementation {
     private static let storageKeyPrefix = "RecentConnections"
+
+    struct Error: Swift.Error {
+        let localizedDescription: String
+    }
 
     static func storageKey(_ userID: String) -> String {
         Self.storageKeyPrefix + userID
@@ -34,7 +37,7 @@ public final class RecentsStorageImplementation {
         do {
             @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {
-                throw GenericError(message: "Couldn't retrieve UserID")
+                throw Error(localizedDescription: "Couldn't retrieve UserID")
             }
             @Dependency(\.storage) var storage
             try storage.set(collection, forKey: Self.storageKey(userID))
@@ -48,7 +51,7 @@ public final class RecentsStorageImplementation {
         do {
             @Dependency(\.authKeychain) var authKeychain
             guard let userID = authKeychain.userId else {
-                throw GenericError(message: "Couldn't retrieve UserID")
+                throw Error(localizedDescription: "Couldn't retrieve UserID")
             }
             @Dependency(\.storage) var storage
             return try storage.get(OrderedSet<RecentConnection>.self, forKey: storageKey(userID)) ?? []
