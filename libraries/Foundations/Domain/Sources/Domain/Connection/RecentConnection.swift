@@ -57,7 +57,7 @@ extension RecentConnection {
             return "CZ"
         case .region(code: let code):
             return code
-        case .exact(_, number: let number, subregion: let subregion, regionCode: let regionCode):
+        case .exact(_, _, _, _, regionCode: let regionCode):
             return regionCode
         case .secureCore:
             return "CZ"
