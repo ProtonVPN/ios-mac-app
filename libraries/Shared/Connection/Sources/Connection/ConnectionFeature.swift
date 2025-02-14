@@ -103,7 +103,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .merge(
                     .send(.tunnel(.startObservingStateChanges)),
                     .send(.localAgent(.startObservingEvents)),
-                    .listen(to: connectionBridge.intentStream) { streamElement in
+                    .listen(to: connectionBridge.intentStream()) { streamElement in
                         // streamElement is an action so we just return it, this is the action that we wanna run
                         return streamElement
                     }

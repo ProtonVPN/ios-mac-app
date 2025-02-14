@@ -26,7 +26,8 @@ public struct SettingsClient: TestDependencyKey, Sendable {
     public private(set) var protocolChangeAvailability: @Sendable (ConnectionProtocol) -> ProtocolChangeAvailability
     public private(set) var disconnect: @Sendable () async throws -> Void
     public private(set) var reconnect: @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) async throws -> Void
-    public private(set) var update: @Sendable (Set<ConnectionFeatureChange.AgentFeature>) -> Void
+    // Normally @MainActor implies @Sendable but compiler is somewhat unhappy anyway so let's have both annotations
+    public private(set) var update: @Sendable @MainActor (Set<ConnectionFeatureChange.AgentFeature>) -> Void
 
     public init(
         isActive: @escaping @Sendable () -> Bool,
@@ -34,7 +35,7 @@ public struct SettingsClient: TestDependencyKey, Sendable {
         protocolChangeAvailability: @escaping @Sendable (ConnectionProtocol) -> ProtocolChangeAvailability,
         disconnect: @escaping @Sendable () async throws -> Void,
         reconnect: @escaping @Sendable (Set<ConnectionFeatureChange.TunnelFeature>) async throws -> Void,
-        update: @escaping @Sendable (Set<ConnectionFeatureChange.AgentFeature>) -> Void
+        update: @escaping @Sendable @MainActor (Set<ConnectionFeatureChange.AgentFeature>) -> Void
     ) {
         self.isActive = isActive
         self.featureChangeAvailability = featureChangeAvailability
