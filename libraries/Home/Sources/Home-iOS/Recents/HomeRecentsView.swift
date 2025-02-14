@@ -36,7 +36,7 @@ import OrderedCollections
 public struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>
 
-    func sectionTitleView(title: String) -> some View {
+    private func sectionTitleView(title: String) -> some View {
         HStack(spacing: 0) {
             Text(title)
                 .themeFont(.caption())
@@ -46,7 +46,6 @@ public struct RecentsSectionView: View {
         }
         .frame(maxWidth: Constants.maxHomeContentWidth)
     }
-
 
     private var recentsList: some View {
         WithPerceptionTracking {
@@ -73,7 +72,11 @@ public struct RecentsSectionView: View {
             recentsList
                 .frame(maxWidth: Constants.maxHomeContentWidth)
         } else {
-            EmptyView()
+            // EmptyView() causes the container view to be completely discarded by SwiftUI
+            // and it won't invoke the task below (i.e. sending `watchConnectionStatus` to the store)
+            Color.clear
+                .frame(width: 0, height: 0)
+                .hidden()
         }
     }
 
