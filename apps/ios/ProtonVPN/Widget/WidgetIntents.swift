@@ -21,7 +21,7 @@ import VPNAppCore
 import AppIntents
 import Domain
 
-public struct DisconnectFromVPN: AppIntent {
+public struct DisconnectFromVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Disconnect from VPN"
 
     public static var openAppWhenRun = false
@@ -36,7 +36,7 @@ public struct DisconnectFromVPN: AppIntent {
     }
 }
 
-public struct ConnectToVPN: AppIntent {
+public struct ConnectToVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
 
     public static var openAppWhenRun = false
