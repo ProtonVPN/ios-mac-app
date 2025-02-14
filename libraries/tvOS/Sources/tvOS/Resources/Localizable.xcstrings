@@ -4001,7 +4001,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mobil ve masaüstünüz için ücretli VPN koruması sunar (aynı anda 10 aygıta kadar bağlanın)"
+            "value" : "Mobil aygıtınız ve bilgisayarınız için ücretli VPN koruması sunar (aynı anda 10 aygıta kadar bağlanın)"
           }
         },
         "uk" : {
@@ -4784,7 +4784,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zaščiteni"
+            "value" : "Zaščiteno"
           }
         },
         "sv" : {
@@ -4832,7 +4832,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το Proton VPN για Apple TV είναι διαθέσιμο σε όλα τα προγράμματα επί πληρωμή. Μπορείτε να ελέγξετε και να διαχειριστείτε τη συνδρομή σας στον ιστότοπό μας."
+            "value" : "Το Proton VPN για Apple TV είναι διαθέσιμο σε όλα τα πλάνα επί πληρωμή. Μπορείτε να ελέγξετε και να διαχειριστείτε τη συνδρομή σας στον ιστότοπό μας."
           }
         },
         "en" : {
@@ -4980,7 +4980,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το Proton VPN δεν είναι διαθέσιμο για το Apple TV στα δωρεάν προγράμματα"
+            "value" : "Το Proton VPN δεν είναι διαθέσιμο για το Apple TV στα δωρεάν πλάνα"
           }
         },
         "en" : {
@@ -5242,7 +5242,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Proton VPN sıkı kayıt tutmama ilkesi bir dış denetim tarafından onaylanmıştır. Sizi asla çevrim içi olarak izlemeyeceğiz, IP adresinizi kaydetmeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız."
+            "value" : "Proton VPN katı kayıt tutmama ilkesi bir dış denetleme ile onaylanmıştır. Sizi asla çevrim içi olarak izlemeyeceğiz, IP adresinizi kaydetmeyeceğiz veya bilgilerinizi üçüncü taraflarla paylaşmayacağız."
           }
         },
         "uk" : {
@@ -7330,7 +7330,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ett problem uppstod.\nKontrollera din nätverksanslutning"
+            "value" : "Det var ett problem.\nKontrollera din nätverksanslutning"
           }
         },
         "tr" : {
@@ -7790,7 +7790,7 @@
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nezaščiten"
+            "value" : "Nezaščiteno"
           }
         },
         "sv" : {
