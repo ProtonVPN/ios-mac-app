@@ -20,7 +20,7 @@ fileprivate let moderateNatSwitch = Localizable.moderateNatTitle
 fileprivate let continueButton = Localizable.continue
 fileprivate let logOutButton = Localizable.logOut
 fileprivate let cancelButton = Localizable.cancel
-fileprivate let firstAppScreen = "Selected environment"
+fileprivate let firstAppScreen = "SELECTED ENVIRONMENT"
 
 class SettingsRobot: CoreElements {
     
