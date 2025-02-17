@@ -55,8 +55,8 @@ public struct SharedPropertiesFeature {
     private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
         if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature) {
             // Legacy connection status stream does not yield an initial value
-            // Let's manually send resolving since this is always the initial connection state at app launch
-            send(.newConnectionStatus(.resolving(nil, nil)))
+            let initialConnectionStatus = await Dependency(\.vpnConnectionStatus).wrappedValue()
+            send(.newConnectionStatus(initialConnectionStatus))
         }
 
         let actionStream = Self.connectionStatusStream.map { Action.newConnectionStatus($0) }
@@ -84,10 +84,12 @@ public struct SharedPropertiesFeature {
 
             case .newConnectionStatus(let newValue):
                 let connectionStatus: VPNConnectionStatus
-                if case .connecting = newValue, case .connected(let spec, let server) = state.vpnConnectionStatus {
+                let isNewConnection = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+                if isNewConnection, case .connecting = newValue, case .connected(let spec, let server) = state.vpnConnectionStatus {
                     // If we transition directly from connected to connecting, it's due to local agent disconnecting
                     // and needing to re-establish connection. Let's skip this state transition to avoid showing the
                     // connecting state despite us already being connected
+                    log.debug("Setting state to resolving since we were previously connected", category: .connection)
                     connectionStatus = .resolving(spec, server)
                 } else {
                     connectionStatus = newValue
