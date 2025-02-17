@@ -37,7 +37,7 @@ public struct ConnectionCardModel {
         case .connecting:
             return Localizable.connectionCardAccessibilityConnectingTo(countryName)
         case .resolving:
-            return Localizable.connectionCardAccessibilityResolving
+            return Localizable.connectionCardAccessibilityLoading
         }
     }
 
