@@ -45,7 +45,7 @@ public struct ConnectionStatusView: View {
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .resolving:
-            return Localizable.connectionStatusResolving
+            return Localizable.connectionStatusLoading
         case .protected, .protectedSecureCore:
             return nil
         case .unprotected:

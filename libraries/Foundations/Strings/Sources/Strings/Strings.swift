@@ -228,7 +228,7 @@ public enum Localizable {
     return Localizable.tr("Localizable", "_connection_card_accessibility_last_connected_to", String(describing: p1), fallback: "You were last connected to %@.")
   }
   /// Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in.
-  public static var connectionCardAccessibilityResolving: String { return Localizable.tr("Localizable", "_connection_card_accessibility_resolving", fallback: "Resolving...") }
+  public static var connectionCardAccessibilityLoading: String { return Localizable.tr("Localizable", "_connection_card_accessibility_loading", fallback: "Loading") }
   /// For buttons which have an action that cancels connecting to a server. [Redesign_2023]
   public static var connectionCardActionCancel: String { return Localizable.tr("Localizable", "_connection_card_action_cancel", fallback: "Cancel") }
   /// Connection card in home tab: "Connecting to <country name>" [Redesign_2023]
@@ -238,7 +238,7 @@ public enum Localizable {
   /// Connection card in home tab: "Last connected to... <country name>" [Redesign_2023]
   public static var connectionCardLastConnectedTo: String { return Localizable.tr("Localizable", "_connection_card_last_connected_to", fallback: "Last connected to") }
   /// Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in.
-  public static var connectionCardResolving: String { return Localizable.tr("Localizable", "_connection_card_resolving", fallback: "Resolving") }
+  public static var connectionCardLoading: String { return Localizable.tr("Localizable", "_connection_card_loading", fallback: "Loading...") }
   /// Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023]
   public static var connectionCardSafelyBrowsingFrom: String { return Localizable.tr("Localizable", "_connection_card_safely_browsing_from", fallback: "Browsing safely from") }
   /// Connection details screen: City (macOS and iOS) [Redesign_2023]
@@ -1689,12 +1689,12 @@ public enum Localizable {
   public static var youAreNotConnected: String { return Localizable.tr("Localizable", "_you_are_not_connected", fallback: "You are not connected") }
   /// Button to confirm two-factor or recovery code in login
   public static var authenticate: String { return Localizable.tr("Localizable", "authenticate", fallback: "Authenticate") }
+  /// Connection status title while VPN status is unknown
+  public static var connectionStatusLoading: String { return Localizable.tr("Localizable", "connection_status_loading", fallback: "Loading") }
   /// Connection status title when user is connected to a VPN [Redesign_2023]
   public static var connectionStatusProtected: String { return Localizable.tr("Localizable", "connection_status_protected", fallback: "Protected") }
   /// Connection status title when user is initiating connection to a VPN [Redesign_2023]
   public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
-  /// Connection status title while VPN status is unknown
-  public static var connectionStatusResolving: String { return Localizable.tr("Localizable", "connection_status_resolving", fallback: "Resolving") }
   /// Connection status title when user is not connected to a VPN [Redesign_2023]
   public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
   /// Modal that lists countries in which servers are available to free users: banner with CTA
