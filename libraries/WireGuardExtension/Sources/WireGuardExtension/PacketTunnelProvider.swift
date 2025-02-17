@@ -245,10 +245,6 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
                 wg_log(.info, message: "CertificateRefreshManager successfully started")
             }
         }
-
-        #if CHECK_CONNECTIVITY
-        self.startTestingConnectivity()
-        #endif
     }
 
     open override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
