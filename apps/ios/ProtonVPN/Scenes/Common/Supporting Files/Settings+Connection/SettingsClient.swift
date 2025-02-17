@@ -78,7 +78,8 @@ extension SettingsClient: DependencyKey {
 
             @Dependency(\.connectToVPN) var connect
             try await connect(lastIntent.spec)
-        }, update: { agentFeatures in
+        },
+        update: { agentFeatures in
             @Dependency(\.connectionBridge) var bridge
             bridge.push(.localAgent(.setFeatures(agentFeatures)))
         }

@@ -30,13 +30,13 @@ public struct ConnectionBridge: Sendable {
     public typealias Intent = ConnectionFeature.Action
 
     // When Swift6 available, switch to some AsyncSequence<ConnectionIntent, Never> or equivalent
-    public internal(set) var intentStream: AsyncStream<Intent>
+    public internal(set) var intentStream: () -> AsyncStream<Intent> = { .finished }
 
     // When Swift6 available, switch to some AsyncSequence<VPNConnectionStatus, Never> or equivalent
-    public internal(set) var statusStream: AsyncStream<VPNConnectionStatus>
+    public internal(set) var statusStream: () -> AsyncStream<VPNConnectionStatus> = { .finished }
 
-    public internal(set) var push: @Sendable (_ intent: Intent) -> Void
-    public internal(set) var pushStatus: @Sendable (_ status: VPNConnectionStatus) -> Void
+    public internal(set) var push: @MainActor (_ intent: Intent) -> Void
+    public internal(set) var pushStatus: @MainActor (_ status: VPNConnectionStatus) -> Void
 }
 
 extension DependencyValues {
@@ -48,13 +48,22 @@ extension DependencyValues {
 
 extension ConnectionBridge: DependencyKey {
     public static let liveValue = {
-        let (intentStream, intentContinuation) = AsyncStream<Intent>.makeStream()
-        let (statusStream, statusContinuation) = AsyncStream<VPNConnectionStatus>.makeStream()
-        // Ideally, we would feed the statusStream continuation a coherent initialValue
-        return ConnectionBridge(intentStream: intentStream, statusStream: statusStream) { intent in
-            intentContinuation.yield(intent)
-        } pushStatus: { status in
-            statusContinuation.yield(status)
+        // Without annotating `push` & `pushStatus` endpoints with @MainActor, this would have generated errors in Swift 6
+        var intentContinuation: AsyncStream<ConnectionBridge.Intent>.Continuation?
+        var statusContinuation: AsyncStream<VPNConnectionStatus>.Continuation?
+        return ConnectionBridge {
+            let (stream, continuation) = AsyncStream<Intent>.makeStream()
+            intentContinuation = continuation
+            return stream
+        } statusStream: {
+            // Ideally, we would feed the statusStream continuation a coherent initialValue
+            let (stream, continuation) = AsyncStream<VPNConnectionStatus>.makeStream()
+            statusContinuation = continuation
+            return stream
+        } push: { intent  in
+            intentContinuation?.yield(intent)
+        } pushStatus: { status  in
+            statusContinuation?.yield(status)
         }
     }()
 

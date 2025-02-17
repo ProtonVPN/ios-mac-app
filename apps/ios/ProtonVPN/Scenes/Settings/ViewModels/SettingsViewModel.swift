@@ -39,6 +39,7 @@ import LegacyCommon
 import VPNAppCore
 import Settings
 
+// TODO: Migrate to @MainActor once overall codebase is ready for it
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
     AppSessionManagerFactory &
@@ -817,7 +818,9 @@ final class SettingsViewModel {
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
         if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
-            settingsClient.update(Set([agentFeatureChange]))
+            MainActor.assumeIsolated {
+                settingsClient.update(Set([agentFeatureChange]))
+            }
         } else {
             switch agentFeatureChange {
             case .netShield(let value):
