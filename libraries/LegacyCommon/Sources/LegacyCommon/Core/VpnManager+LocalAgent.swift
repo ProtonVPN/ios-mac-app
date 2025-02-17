@@ -154,7 +154,7 @@ extension VpnManager {
             self?.refreshCertificateWithError { result in
                 log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
                 executeOnUIThread {
-                    NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+                    AppEvent.needsReconnect.post()
                 }
             }
         }

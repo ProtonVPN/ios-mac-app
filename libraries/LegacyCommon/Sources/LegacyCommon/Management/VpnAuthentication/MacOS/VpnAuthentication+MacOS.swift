@@ -45,8 +45,11 @@ public final class VpnAuthenticationManager: VpnAuthentication {
         queue.maxConcurrentOperationCount = 1
         queue.underlyingQueue = operationDispatchQueue
 
-        NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnUserDelinquent, object: nil)
+        let events: [AppEvent] = [
+            .planChanged,
+            .userDelinquent
+        ]
+        events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
     }
 
     @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification) {

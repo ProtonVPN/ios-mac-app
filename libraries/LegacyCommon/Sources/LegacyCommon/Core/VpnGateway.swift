@@ -61,10 +61,6 @@ public protocol VpnGatewayProtocol: AnyObject {
     
     var connection: ConnectionStatus { get }
     var lastConnectionRequest: ConnectionRequest? { get }
-
-    static var connectionChanged: Notification.Name { get }
-    static var activeServerTypeChanged: Notification.Name { get }
-    static var needsReconnectNotification: Notification.Name { get }
     
     func userTier() throws -> Int
     func changeActiveServerType(_ serverType: ServerType)
@@ -123,10 +119,6 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     private var connectionPreparer: VpnConnectionPreparer?
-    
-    public static let connectionChanged = Notification.Name("VpnGatewayConnectionChanged")
-    public static let activeServerTypeChanged = Notification.Name("VpnGatewayActiveServerTypeChanged")
-    public static let needsReconnectNotification = Notification.Name("VpnManagerNeedsReconnect")
     
     public weak var alertService: CoreAlertService? {
         didSet {
@@ -232,30 +224,10 @@ public class VpnGateway: VpnGatewayProtocol {
             changeActiveServerType(activeServer.serverType)
         }
 
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(appStateChanged),
-            name: .AppStateManager.stateChange,
-            object: nil
-        )
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(userPlanChanged),
-            name: type(of: vpnKeychain).vpnPlanChanged,
-            object: nil
-        )
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(userBecameDelinquent),
-            name: type(of: vpnKeychain).vpnUserDelinquent,
-            object: nil
-        )
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(reconnectOnNotification),
-            name: Self.needsReconnectNotification,
-            object: nil
-        )
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+        AppEvent.planChanged.subscribe(self, selector: #selector(userPlanChanged))
+        AppEvent.userDelinquent.subscribe(self, selector: #selector(userBecameDelinquent))
+        AppEvent.needsReconnect.subscribe(self, selector: #selector(reconnectOnNotification))
     }
     
     public func userTier() throws -> Int {
@@ -272,10 +244,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            notificationCenter.post(
-                name: VpnGateway.activeServerTypeChanged,
-                object: self.connection
-            )
+            AppEvent.activeServerTypeChanged.post(self.connection)
         }
     }
     
@@ -523,10 +492,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func stopConnecting(userInitiated: Bool) {
-        notificationCenter.post(
-            name: .userInitiatedVPNChange,
-            object: UserInitiatedVPNChange.abort
-        )
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
         log.info("Connecting cancelled, userInitiated: \(userInitiated)", category: .connectionConnect)
         connectionPreparer = nil
         appStateManager.cancelConnectionAttempt()
@@ -716,9 +682,8 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            notificationCenter.post(
-                name: VpnGateway.connectionChanged,
-                object: self.connection,
+            AppEvent.connectionStateChanged.post(
+                self.connection,
                 userInfo: [AppState.appStateKey: self.appStateManager.state]
             )
         }

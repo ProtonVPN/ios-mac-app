@@ -32,10 +32,12 @@ import CommonNetworking
 
 import Modals
 import Modals_macOS
+import Announcement
 
 import Ergonomics
 import Theme
 import Strings
+import Domain
 
 final class MacAlertService {
     @Dependency(\.serverRepository) var serverRepository
@@ -371,12 +373,12 @@ extension MacAlertService: CoreAlertService {
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
                     return
                 }
-                NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: modalSource)
+                AppEvent.userEngagedWithUpsellAlert.post(modalSource)
                 SafariService.openLink(url: url)
             }
         }
         
-        NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: modalSource)
+        AppEvent.upsellAlertWasDisplayed.post(modalSource)
 
         let upsellViewController = ModalsFactory.upsellViewController(
             modalType: modalType,

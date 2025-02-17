@@ -18,12 +18,16 @@
 
 import Foundation
 import UIKit
-import LegacyCommon
-import Alamofire
-import ProtonCoreUIFoundations
+
 import Dependencies
+import Alamofire
+
+import ProtonCoreUIFoundations
+
+import LegacyCommon
 import CommonNetworking
 import Announcement
+import Domain
 
 final class AnnouncementImageViewController: AnnouncementViewController {
 
@@ -101,7 +105,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
     func didPresentOffer() {
         DispatchQueue.main.async { [offerReference] in
-            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement, object: offerReference)
+            AppEvent.userWasDisplayedAnnouncement.post(offerReference)
         }
     }
 
@@ -137,7 +141,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         }
         
         DispatchQueue.main.async { [offerReference] in
-            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: offerReference)
+            AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {

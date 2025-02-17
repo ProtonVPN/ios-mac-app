@@ -27,6 +27,8 @@ import Dependencies
 import LegacyCommon
 import CommonNetworking
 
+import Domain
+
 final class OverviewViewModel {
     
     private let profileManager: ProfileManager
@@ -43,12 +45,7 @@ final class OverviewViewModel {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(profilesChanged),
-            name: profileManager.contentChanged,
-            object: nil
-        )
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
     
     @objc private func profilesChanged() {

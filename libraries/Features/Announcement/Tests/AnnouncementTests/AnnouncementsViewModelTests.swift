@@ -20,10 +20,15 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-@testable import LegacyCommon
 import XCTest
 import VPNShared
+import VPNAppCore
+
 import Domain
+
+@testable import Announcement
+@testable import LegacyCommon
+@testable import VPNSharedTesting
 
 class AnnouncementsViewModelTests: XCTestCase {
     
@@ -37,7 +42,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         super.setUp()
         
         storage = AnnouncementStorageMock()
-        manager = AnnouncementManagerImplementation(factory: AnnouncementManagerImplementationFactoryMock(announcementStorage: storage))
+        manager = AnnouncementManagerImplementation()
         safariService = SafariServiceMock()
         propertiesManager = PropertiesManagerMock()
         viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, propertiesManager: propertiesManager, safariService: safariService, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
@@ -99,19 +104,6 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
 
     func makeAppInfo(context: AppContext) -> AppInfo {
         return AppInfoImplementation(context: context)
-    }
-}
-
-fileprivate class AnnouncementManagerImplementationFactoryMock: AnnouncementManagerImplementation.Factory {
-    
-    private var announcementStorage: AnnouncementStorage
-    
-    init(announcementStorage: AnnouncementStorage) {
-        self.announcementStorage = announcementStorage
-    }
-    
-    func makeAnnouncementStorage() -> AnnouncementStorage {
-        return announcementStorage
     }
 }
 

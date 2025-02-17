@@ -24,6 +24,7 @@
 import Foundation
 import SystemExtensions
 import VPNAppCore
+import Domain
 
 public protocol SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager
@@ -60,9 +61,6 @@ public enum SystemExtensionInstallationFailure: Error {
 }
 
 public class SystemExtensionManager: NSObject {
-    public static let allExtensionsInstalled = Notification.Name("SystemExtensionsAllInstalled")
-    public static let userCancelledTour = Notification.Name("SystemExtensionTourUserCancelled")
-
     static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 
     public typealias Factory = CoreAlertServiceFactory &
@@ -242,7 +240,7 @@ public class SystemExtensionManager: NSObject {
                 SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : "cancelled"])
                 DispatchQueue.main.async {
                     actionHandler(.failure(.tourCancelled))
-                    NotificationCenter.default.post(name: Self.userCancelledTour, object: nil)
+                    AppEvent.systemExtensionTourCancelled.post()
                 }
             })
 
@@ -263,7 +261,7 @@ public class SystemExtensionManager: NSObject {
             DispatchQueue.main.async {
                 actionHandler(result)
                 if case .success(.installed) = result {
-                    NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: didRequireUserApproval)
+                    AppEvent.systemExtensionsAllInstalled.post(didRequireUserApproval)
                     self.alertService.push(alert: SysexEnabledAlert())
                 }
             }

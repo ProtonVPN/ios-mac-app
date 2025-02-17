@@ -49,7 +49,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     
     public var connection: ConnectionStatus {
         didSet {
-            NotificationCenter.default.post(name: VpnGateway.connectionChanged, object: connection)
+            AppEvent.connectionStateChanged.post(connection)
         }
     }
     public var activeIp: String?

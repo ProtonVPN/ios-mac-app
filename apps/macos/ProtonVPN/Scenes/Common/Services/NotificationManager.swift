@@ -25,6 +25,7 @@ import Dependencies
 import LegacyCommon
 import VPNShared
 import Strings
+import Domain
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
     
@@ -49,8 +50,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         
         setNonTransientState(state: appStateManager.state)
         NSUserNotificationCenter.default.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged),
-                                               name: .AppStateManager.stateChange, object: nil)
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
     }
     
     @objc private func appStateChanged(_ notification: Notification) {

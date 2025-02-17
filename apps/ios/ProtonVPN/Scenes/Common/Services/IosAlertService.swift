@@ -32,9 +32,11 @@ import Persistence
 import VPNAppCore
 import Modals
 import Modals_iOS
+import Announcement
 
 import Ergonomics
 import Strings
+import Domain
 
 final class IosAlertService {
         
@@ -342,7 +344,7 @@ extension IosAlertService: CoreAlertService {
         }
         let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)
-            NotificationCenter.default.post(name: .userDismissedWelcomeScreen, object: nil)
+            AppEvent.userDismissedWelcomeScreen.post()
         })
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)
@@ -370,7 +372,7 @@ extension IosAlertService: CoreAlertService {
             modalType: modalType,
             client: oneClickPayment.plansClient(
                 validationHandler: {
-                    NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: alert.modalSource)
+                    AppEvent.userEngagedWithUpsellAlert.post(alert.modalSource)
                 },
                 notNowHandler: { [weak self] in
                     self?.windowService.dismissModal(nil)
@@ -381,7 +383,7 @@ extension IosAlertService: CoreAlertService {
         self.oneClickPayment = oneClickPayment
 
         windowService.present(modal: viewController)
-        NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: alert.modalSource)
+        AppEvent.upsellAlertWasDisplayed.post(alert.modalSource)
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
@@ -459,7 +461,7 @@ extension IosAlertService: CoreAlertService {
             self?.safariService.open(url: url)
 
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: alert.offerReference)
+                AppEvent.userEngagedWithAnnouncement.post(alert.offerReference)
             }
         }
         windowService.present(modal: announcement)

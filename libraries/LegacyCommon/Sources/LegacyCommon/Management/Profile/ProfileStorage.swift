@@ -22,6 +22,7 @@
 import Foundation
 import Dependencies
 import VPNShared
+import Domain
 
 public protocol ProfileStorageFactory {
     func makeProfileStorage() -> ProfileStorage
@@ -40,8 +41,6 @@ public final class ProfileStorage {
 
     private static let storageVersion = StorageVersion.v2
     private static let versionKey     = "profileCacheVersion"
-    
-    public static let contentChanged = Notification.Name("ProfileStorageContentChanged")
 
     private let authKeychain: AuthKeychainHandle
 
@@ -88,7 +87,9 @@ public final class ProfileStorage {
             return
         }
         storeInMemory(profiles, storageKey: storageKey)
-        DispatchQueue.main.async { NotificationCenter.default.post(name: Self.contentChanged, object: profiles) }
+        DispatchQueue.main.async {
+            AppEvent.profileContentChanged.post(profiles)
+        }
     }
     
     // MARK: - Private functions

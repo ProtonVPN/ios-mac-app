@@ -72,7 +72,7 @@ final class NetShieldSelectionViewModel {
         self.title = title
         self.selectedFeature = selectedFeature
 
-        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: factory.makeAppSessionManager().dataReloaded, object: nil)
+        AppEvent.sessionManagerDataReloaded.subscribe(self, selector: #selector(reload))
     }
 
     var tableViewData: [TableViewSection] {

@@ -22,6 +22,7 @@
 
 import XCTest
 import ProtonCoreNetworking
+@testable import Announcement
 @testable import LegacyCommon
 
 class AnnouncementRefresherImplementationTests: XCTestCase {

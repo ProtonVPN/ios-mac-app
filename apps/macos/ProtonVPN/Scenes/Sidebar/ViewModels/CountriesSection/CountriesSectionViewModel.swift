@@ -175,18 +175,34 @@ class CountriesSectionViewModel {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
 
-        notificationCenter.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).activeServerTypeChanged, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).connectionChanged, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).killSwitchNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(updateSettings), name: VPNAccelerator.notificationName, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).smartProtocolNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        // Reloads data if feature flags change. Can be removed if we stop using feature flags for generating table data (currently none is used).
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(reloadDataOnChange), name: ServerListUpdateNotification.name, object: nil)
+        let reloadConnectionEvents: [AppEvent] = [
+            .activeServerTypeChanged,
+            .connectionStateChanged,
+        ]
+        reloadConnectionEvents.subscribe(self, selector: #selector(reloadDataOnChange))
+
+        let updateSettingsEvents: [AppEvent] = [
+            .netShield,
+            .killSwitch,
+            .vpnAccelerator,
+        ]
+        updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
+
+        let reloadDataEvents: [AppEvent] = [
+            .smartProtocol,
+            .vpnProtocol,
+            .featureFlags,
+            .planChanged,
+            .userDelinquent,
+        ]
+        reloadDataEvents.subscribe(self, selector: #selector(reloadDataOnChange))
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(reloadDataOnChange),
+            name: ServerListUpdateNotification.name,
+            object: nil
+        )
         updateState()
     }
 

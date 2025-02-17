@@ -32,6 +32,7 @@ import CommonNetworking
 import VPNShared
 
 import Ergonomics
+import Domain
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
@@ -94,16 +95,12 @@ class NavigationService {
                 handler: sessionChanged
             )
         )
+        AppEvent.clearingApplicationData.subscribe(self, selector: #selector(tearDown(_:)))
+
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
             selector: #selector(tearDown(_:)),
             name: NSWorkspace.willPowerOffNotification,
-            object: nil
-        )
-        NSWorkspace.shared.notificationCenter.addObserver(
-            self,
-            selector: #selector(tearDown(_:)),
-            name: HelpMenuViewModel.deletingAppDataNotification,
             object: nil
         )
         NSWorkspace.shared.notificationCenter.addObserver(

@@ -20,6 +20,8 @@ let package = Package(
         .package(path: "../Foundations/Domain"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../Shared/Connection"),
+        .package(path: "../Core/NEHelper"),
+        .package(path: "../Core/LegacyCommon"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
     ],
     targets: [
@@ -29,6 +31,7 @@ let package = Package(
                 "Strings",
                 "Domain",
                 "CommonNetworking",
+                "LegacyCommon",
                 "Connection",
                 .product(name: "SDWebImage", package: "SDWebImage"),
             ]),

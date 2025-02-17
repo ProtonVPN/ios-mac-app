@@ -220,9 +220,6 @@ extension AuthKeychain: AuthKeychainHandle {
     public func clear() {
         keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
         saveToCache(nil)
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)
-        }
     }
 }
 

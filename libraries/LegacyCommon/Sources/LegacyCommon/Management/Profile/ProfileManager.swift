@@ -48,8 +48,6 @@ public protocol ProfileManagerFactory {
 public final class ProfileManager {
     @Dependency(\.authKeychain) var authKeychain
 
-    public let contentChanged = Notification.Name("ProfileManagerContentChanged")
-
     public var customProfiles: [Profile] = []
     public var defaultProfiles: [Profile] {
         ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol)
@@ -73,8 +71,7 @@ public final class ProfileManager {
         self.propertiesManager = propertiesManager
         self.profileStorage = profileStorage
 
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged(_:)),
-                                               name: ProfileStorage.contentChanged, object: nil)
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
         // VPNAPPL-2075 - refresh UI on server list update
         // NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)), name: serverStorage.contentChanged, object: nil)
         refreshProfiles()
@@ -164,14 +161,14 @@ public final class ProfileManager {
     @objc private func profilesChanged(_ notification: Notification) {
         if let newProfiles = notification.object as? [Profile] {
             customProfiles = newProfiles
-            NotificationCenter.default.post(name: contentChanged, object: customProfiles)
+            AppEvent.profileContentChanged.post(customProfiles)
         }
     }
     
     @objc private func serversChanged(_ notification: Notification) {
         if let newServers = notification.object as? [ServerModel] {
             servers = newServers
-            NotificationCenter.default.post(name: contentChanged, object: customProfiles)
+            AppEvent.profileContentChanged.post(customProfiles)
         }
     }
 }

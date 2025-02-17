@@ -135,14 +135,16 @@ class MapViewModel: SecureCoreToggleHandler {
     
     // MARK: - Private functions
     private func addObservers() {
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(connectionChanged))
+        AppEvent.planChanged.subscribe(self, selector: #selector(resetCurrentState))
         
-        NotificationCenter.default.addObserver(self, selector: #selector(activeServerTypeSet),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
-                                               name: VpnKeychain.vpnPlanChanged, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(resetCurrentState),
+            name: ServerListUpdateNotification.name,
+            object: nil
+        )
     }
     
     private func refreshAnnotations(forView viewType: ServerType) {

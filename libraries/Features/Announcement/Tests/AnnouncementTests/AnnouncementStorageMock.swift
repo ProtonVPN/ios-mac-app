@@ -20,9 +20,7 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#if DEBUG
 import Foundation
-import Announcement
 
 public class AnnouncementStorageMock: AnnouncementStorage {
     public var announcements: [Announcement]
@@ -65,4 +63,3 @@ extension Array where Element == Announcement {
         })
     }
 }
-#endif

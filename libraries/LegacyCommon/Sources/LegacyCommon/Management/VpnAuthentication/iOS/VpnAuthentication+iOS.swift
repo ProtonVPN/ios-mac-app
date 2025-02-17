@@ -46,10 +46,11 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     ) {
         self.authenticationStorage = authenticationStorage
 
-        NotificationCenter.default.addObserver(forName: VpnKeychain.vpnPlanChanged, object: nil, queue: nil,
-                                               using: userDowngradedPlanOrBecameDelinquent(_:))
-        NotificationCenter.default.addObserver(forName: VpnKeychain.vpnUserDelinquent, object: nil, queue: nil,
-                                               using: userDowngradedPlanOrBecameDelinquent(_:))
+        let events: [AppEvent] = [
+            .planChanged,
+            .userDelinquent
+        ]
+        events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
     }
 
     public func setConnectionProvider(provider: ProviderMessageSender?) {
@@ -250,7 +251,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         })
     }
 
-    private func userDowngradedPlanOrBecameDelinquent(_ notification: Notification) {
+    @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: Notification) {
         log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
 
         var features: VPNConnectionFeatures?

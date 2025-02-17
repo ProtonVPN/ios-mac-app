@@ -58,10 +58,8 @@ public struct OfferBannerViewModel {
             @Dependency(\.sessionService) var sessionService
             let url = await sessionService.getUpgradePlanSession(url: buttonURL.absoluteString)
             SafariService().open(url: url)
-            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement,
-                                            object: offerReference)
-            NotificationCenter.default.post(name: .userEngagedWithAnnouncement,
-                                            object: offerReference)
+            AppEvent.userWasDisplayedAnnouncement.post(offerReference)
+            AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }
     }
 

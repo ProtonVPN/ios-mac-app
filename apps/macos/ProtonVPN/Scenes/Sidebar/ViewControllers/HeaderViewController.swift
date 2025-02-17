@@ -29,6 +29,7 @@ import Announcement
 
 import Theme
 import Ergonomics
+import Domain
 
 final class HeaderViewController: NSViewController {
     
@@ -79,7 +80,8 @@ final class HeaderViewController: NSViewController {
         
         setupAnnouncements()
         setupBadgeView()
-        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+
+        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
     
     override func viewDidAppear() {

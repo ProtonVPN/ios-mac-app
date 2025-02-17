@@ -22,6 +22,7 @@
 
 // System frameworks
 import Cocoa
+import AppKit
 import ServiceManagement
 
 // Third-party dependencies
@@ -38,18 +39,18 @@ import ProtonCoreObservability
 import ProtonCorePushNotifications
 import ProtonCoreCryptoVPNPatchedGoImplementation
 
-// Local dependencies
+// Local dependencies (Core first, then Shared, then Features, then Foundations)
+import LegacyCommon
 import VPNAppCore
+import VPNShared
+import Settings
+import Announcement
+import Logging
 import Domain
 import Ergonomics
-import LegacyCommon
-import Logging
 import PMLogger
-import VPNShared
 import Timer
-import Settings
 
-import AppKit
 
 #if !REDESIGN
 
@@ -192,7 +193,7 @@ extension AppDelegate: NSApplicationDelegate {
             }
         }
 
-        NotificationCenter.default.post(name: PropertiesManager.announcementsNotification, object: nil)
+        AppEvent.urlActivationRefresh.post()
     }
 
     private func setupDebugHelpers() {
@@ -437,7 +438,7 @@ extension AppDelegate {
     private func registerForTelemetryChanges() {
         let center = NotificationCenter.default
         tokens.append(
-            center.addObserver(for: PropertiesManager.telemetryCrashReportsNotification, object: nil) { [weak self] notification in
+            center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
                 switch (notification.object as? Bool) {
                 case true:
                     self?.enableExternalLogging()

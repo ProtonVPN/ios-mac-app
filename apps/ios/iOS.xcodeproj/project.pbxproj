@@ -46,6 +46,7 @@
 		4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4C93F5792CDCD9B8006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F5782CDCD9B8006BFD77 /* Ergonomics */; };
 		4C9754FA2A6018040035A61B /* GSMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F92A6018040035A61B /* GSMessages */; };
+		4C9FF4882D64897C004DBF89 /* Announcement in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9FF4872D64897C004DBF89 /* Announcement */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
 		4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */; };
 		4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */; };
@@ -911,6 +912,7 @@
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
+				4C9FF4882D64897C004DBF89 /* Announcement in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2304,6 +2306,7 @@
 				8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */,
 				E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */,
 				E53E5B292D4CF128002D88B2 /* CommonNetworking */,
+				4C9FF4872D64897C004DBF89 /* Announcement */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4490,6 +4493,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C9754F82A6018040035A61B /* XCRemoteSwiftPackageReference "GSMessages" */;
 			productName = GSMessages;
+		};
+		4C9FF4872D64897C004DBF89 /* Announcement */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Announcement;
 		};
 		4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */ = {
 			isa = XCSwiftPackageProductDependency;

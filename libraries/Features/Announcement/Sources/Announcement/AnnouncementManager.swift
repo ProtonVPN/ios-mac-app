@@ -70,12 +70,14 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
               let buttonURL = URL(string: buttonURLString) else {
             return nil
         }
-        return OfferBannerViewModel(imageURL: imageURL,
-                                    endTime: offerBanner.endTime,
-                                    showCountdown: offerBanner.offer?.panel?.showCountdown ?? false,
-                                    buttonURL: buttonURL,
-                                    offerReference: offerBanner.reference,
-                                    dismiss: { dismiss(offerBanner) })
+        return OfferBannerViewModel(
+            imageURL: imageURL,
+            endTime: offerBanner.endTime,
+            showCountdown: offerBanner.offer?.panel?.showCountdown ?? false,
+            buttonURL: buttonURL,
+            offerReference: offerBanner.reference,
+            dismiss: { dismiss(offerBanner) }
+        )
     }
 
     public func fetchCurrentOfferBannerFromStorage() -> Announcement? {
@@ -85,9 +87,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
             $0.endTime < $1.endTime
         }
         if offers.count > 1 {
-            let errorMessage = "There should only ever be one or none welcome offer banner, having more is an error."
-//            log.assertionFailure(errorMessage)
-//            log.error(.init(stringLiteral: errorMessage), category: .api)
+            log.error("There should only ever be one or none welcome offer banner, having more is an error.")
         }
         // Only return the one with closest endTime. If the offer was read, return nothing, though there might be others in queue.
         // This should not really happen, it would be a configuration error if it did.
@@ -120,8 +120,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     
 }
 
-public extension Date {
-
+private extension Date {
     /// Check if this date represnt time in future
     var isFuture: Bool {
         return self.timeIntervalSinceNow > 0

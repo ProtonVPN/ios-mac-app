@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Domain
 
 /// Also known as `split-tcp`.
 public enum VPNAccelerator: String, Codable, ToggleableFeature {
@@ -33,6 +34,8 @@ extension VPNAccelerator: PaidAppFeature {
 }
 
 extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature {
+    public static let event: AppEvent? = .vpnAccelerator
+
     public static func defaultValue(
         onPlan plan: String,
         userTier: Int,
@@ -42,7 +45,6 @@ extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature
     }
 
     public static let storageKey: String = "VpnAcceleratorEnabled"
-    public static let notificationName: Notification.Name? = Notification.Name("ch.protonvpn.feature.vpnaccelerator.changed")
 
     public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {

@@ -1,34 +1,30 @@
 //
-//  CoreNewsRequest.swift
-//  vpncore - Created on 2020-10-05.
+//  Created on 14.02.2025 by John Biggs.
 //
-//  Copyright (c) 2019 Proton Technologies AG
+//  Copyright (c) 2025 Proton AG
 //
-//  This file is part of LegacyCommon.
-//
-//  vpncore is free software: you can redistribute it and/or modify
+//  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  vpncore is distributed in the hope that it will be useful,
+//  ProtonVPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
-//
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCoreNetworking
+import ProtonCoreUIFoundations
 #if canImport(UIKit)
 import UIKit
 #elseif canImport(AppKit)
 import AppKit
 #endif
 
-final class CoreApiNotificationsRequest {
-
+final class AnnouncementRequest {
     private let basePath = "/core/v4/notifications"
 
     private let supportedFormats: [ImageFormat] = [.png]
@@ -74,7 +70,7 @@ final class CoreApiNotificationsRequest {
     }
 }
 
-extension CoreApiNotificationsRequest: Request {
+extension AnnouncementsRequest: Request {
     var path: String {
         var components = URLComponents(string: basePath)
         components?.queryItems = queryItems()

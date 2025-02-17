@@ -190,7 +190,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         trigger: .country)
 
         let stateChangedToErrorExpectation = XCTestExpectation()
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else {
                 XCTFail("Did not send app state as part of notification")
                 return
@@ -335,7 +335,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             var observedState: AppState?
             var hasReconnected = false
 
-            for await notification in NotificationCenter.default.notifications(named: .AppStateManager.stateChange, object: nil) {
+            for await notification in NotificationCenter.default.notifications(named: AppEvent.appStateManagerStateChange.name, object: nil) {
                 guard let appState = notification.object as? AppState else {
                     XCTFail("Did not send app state as part of notification")
                     return
@@ -663,7 +663,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
              nAppStateConnectTransitions) = (0, 0, 0)
 
         var observedStates: [AppState] = []
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else { return }
             defer { observedStates.append(appState) }
             // debounce multiple "connected" notifications... we should probably fix that
@@ -861,7 +861,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         var observedStates: [AppState] = []
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else { return }
             defer { observedStates.append(appState) }
             // debounce multiple "connected" notifications... we should probably fix that

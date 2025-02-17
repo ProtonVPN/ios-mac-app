@@ -21,8 +21,9 @@
 //
 
 import Foundation
-import LegacyCommon
 import ProtonCoreFeatureFlags
+import LegacyCommon
+import Domain
 
 protocol TabBarViewModelModelDelegate: AnyObject {
     func removeLoginBox()
@@ -42,11 +43,11 @@ class TabBarViewModel {
     let vpnGateway: VpnGatewayProtocol
     let connectionStatusService: ConnectionStatusService
     weak var delegate: TabBarViewModelDelegate?
-    
+
     var showLoginAnimated: Bool {
         return true
     }
-    
+
     // MARK: Initializers
     init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.navigationService = navigationService
@@ -54,32 +55,32 @@ class TabBarViewModel {
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.connectionStatusService = navigationService
-        
+
         startObserving()
     }
-    
+
     // MARK: Functions
-    
+
     func quickConnectTapped() {
         log.debug("Connect requested by clicking on Quick connect", category: .connectionConnect, event: .trigger)
-        
+
         if vpnGateway.connection == .disconnected || vpnGateway.connection == .disconnecting {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             vpnGateway.quickConnect(trigger: .quick)
             connectionStatusService.presentStatusViewController()
-            
+
         } else if vpnGateway.connection == .connecting {
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             vpnGateway.stopConnecting(userInitiated: true)
-            
+
         } else {
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.quick))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.quick))
             vpnGateway.disconnect()
         }
     }
-    
+
     func settingShouldBeSelected() -> Bool {
         if sessionManager.loggedIn {
             return true
@@ -88,7 +89,7 @@ class TabBarViewModel {
             return false
         }
     }
-    
+
     @objc func stateChanged() {
         guard !FeatureFlagsRepository.shared.isRedesigniOSEnabled else { return }
         DispatchQueue.main.async { [weak self] in
@@ -109,7 +110,6 @@ class TabBarViewModel {
 
     // MARK: - Private
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: .AppStateManager.displayStateChange, object: nil)
+        AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(stateChanged))
     }
 }

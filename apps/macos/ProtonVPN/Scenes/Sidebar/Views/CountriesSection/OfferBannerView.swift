@@ -21,15 +21,18 @@
 //
 
 import Cocoa
-import Ergonomics
-import LegacyCommon
-import Theme
+
 import SDWebImage
+import Dependencies
+
+import CommonNetworking
+import LegacyCommon
+import Announcement
+
+import Ergonomics
+import Theme
 import Strings
 import Timer
-import Announcement
-import CommonNetworking
-import Dependencies
 
 final class OfferBannerView: NSView {
 

@@ -135,11 +135,11 @@ final class CountryItemViewModel {
     
     func connectAction() {
         if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.country))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.country))
             log.debug("Disconnect requested by selecting country in the list.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             let serverType = ServerType.standard
             log.debug("Connect requested by selecting country in the list. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .country)

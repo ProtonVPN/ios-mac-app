@@ -21,7 +21,23 @@
 //
 
 import Foundation
-import Announcement
+
+import Dependencies
+
+import ProtonCoreFeatureFlags
+
+import VPNAppCore
+import LegacyCommon
+
+import Ergonomics
+import Domain
+
+// MARK: AnnouncementRefresherFactory
+extension Container: AnnouncementRefresherFactory {
+    public func makeAnnouncementRefresher() -> AnnouncementRefresher {
+        AnnouncementRefresherImplementation(factory: self)
+    }
+}
 
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
@@ -34,27 +50,25 @@ public protocol AnnouncementRefresherFactory {
 }
 
 public class AnnouncementRefresherImplementation: AnnouncementRefresher {
-    
-    public typealias Factory = CoreApiServiceFactory & AnnouncementStorageFactory
+    static let refreshInterval: TimeInterval = .hours(3)
+
+    public typealias Factory = AnnouncementStorageFactory
     private let factory: Factory
     
-    private lazy var coreApiService: CoreApiService = factory.makeCoreApiService()
     private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
     
     private var lastRefreshDate: Date?
-    private var minRefreshInterval: TimeInterval
-    
-    public init(factory: Factory, minRefreshTime: TimeInterval = CoreAppConstants.UpdateTime.announcementRefreshTime) {
+
+    public init(factory: Factory) {
         self.factory = factory
-        self.minRefreshInterval = minRefreshTime
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refresh), name: PropertiesManager.announcementsNotification, object: nil)
+
+        AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
+        AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(refresh))
     }
     
     public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < minRefreshInterval {
+           Date().timeIntervalSince(lastRefresh) < Self.refreshInterval {
             return
         }
         lastRefreshDate = Date()
@@ -62,11 +76,13 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
 
     @objc private func refresh() {
-        coreApiService.getApiNotifications { [weak self] result in
-            switch result {
-            case let .success(announcementsResponse):
-                self?.announcementStorage.store(announcementsResponse.notifications)
-            case let .failure(error):
+        Task { [weak self] in
+            do {
+                @Dependency(\.announcementClient) var announcementClient
+
+                let announcements = try await announcementClient.fetchAnnouncements()
+                self?.announcementStorage.store(announcements.notifications)
+            } catch {
                 log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
             }
         }
@@ -78,7 +94,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
     
     @objc func featureFlagsChanged(_ notification: NSNotification) {
-        guard let featureFlags = notification.object as? FeatureFlags else { return }
+        guard let featureFlags = notification.object as? LegacyCommon.FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {
             tryRefreshing()
         } else { // Hide announcements

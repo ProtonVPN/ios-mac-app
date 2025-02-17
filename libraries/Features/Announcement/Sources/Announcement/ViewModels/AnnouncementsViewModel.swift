@@ -24,14 +24,41 @@ import Foundation
 
 import Dependencies
 
-import Announcement
 import VPNShared
 import VPNAppCore
+import LegacyCommon
 
 import Ergonomics
+import Domain
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel
+}
+
+// MARK: AnnouncementsViewModelFactory
+extension Container: AnnouncementsViewModelFactory {
+    public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
+        AnnouncementsViewModel(factory: self)
+    }
+}
+
+/// The full-screen alert that gets displayed when the user taps on an announcement offer.
+///
+/// This is defined here instead of `AlertService.swift` in LegacyCommon to avoid creating a circular dependency.
+public final class AnnouncementOfferAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public let data: OfferPanel
+    public let offerReference: String?
+
+    public init(data: OfferPanel, offerReference: String?) {
+        self.data = data
+        self.offerReference = offerReference
+    }
 }
 
 /// Control view showing the list of announcements
@@ -66,7 +93,7 @@ public class AnnouncementsViewModel {
         fillItems()
         // This type of announcement should ONLY be opened right after opening the app
         openOneTimeAnnouncement()
-        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(dataChanged))
     }
 
     public func openOneTimeAnnouncement() {

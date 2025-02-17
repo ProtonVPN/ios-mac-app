@@ -24,6 +24,8 @@ import Foundation
 import Dependencies
 import ProtonCoreDoh
 
+import Domain
+
 public class DoHVPN: DoH, ServerConfig {
     public var proxyToken: String?
     public let liveURL: String = "https://vpn-api.proton.me"
@@ -114,7 +116,7 @@ public class DoHVPN: DoH, ServerConfig {
         self.isAppStateNotificationConnected = isAppStateNotificationConnected
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: Notification.Name("AppStateManagerStateChange"), object: nil)
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(stateChanged))
 
         status = alternativeRouting ? .on : .off
     }

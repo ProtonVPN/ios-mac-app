@@ -21,10 +21,13 @@
 //
 
 import Foundation
-import Sparkle
-import LegacyCommon
 import Cocoa
+
+import Sparkle
 import Version
+
+import LegacyCommon
+import Domain
 
 protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager
@@ -95,9 +98,9 @@ final class UpdateManager: NSObject {
     public init(_ factory: Factory) {
         self.factory = factory
         super.init()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(earlyAccessChanged), name: PropertiesManager.earlyAccessNotification, object: nil)
-        
+
+        AppEvent.earlyAccess.subscribe(self, selector: #selector(earlyAccessChanged))
+
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
         
         updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)

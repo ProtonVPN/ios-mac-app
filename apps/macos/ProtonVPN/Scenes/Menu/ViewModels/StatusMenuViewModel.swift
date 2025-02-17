@@ -193,7 +193,7 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.tray))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.tray))
             vpnGateway.disconnect()
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
@@ -298,15 +298,21 @@ final class StatusMenuViewModel {
     
     // MARK: - Private functions
     private func startObserving() {
-        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                               name: .userIpNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                               name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                               name: type(of: propertiesManager).hasConnectedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePlanChange),
-                                               name: VpnKeychain.vpnPlanChanged, object: nil)
+        notificationTokens.append(
+            NotificationCenter.default.addObserver(
+                for: SessionChanged.self,
+                object: appSessionManager,
+                handler: sessionChanged
+            )
+        )
+
+        let events: [AppEvent] = [
+            .userIp,
+            .activeConnectionChanged,
+            .hasConnected,
+            .planChanged
+        ]
+        events.subscribe(self, selector: #selector(handleDataChange))
     }
 
     @objc private func serverChangeTimerFired() {
@@ -386,21 +392,23 @@ final class StatusMenuViewModel {
 
         updateCountryList()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleVpnChange),
-                                               name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
-                                               name: profileManager!.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange), name: ServerListUpdateNotification.name, object: nil)
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(handleVpnChange))
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(handleVpnChange))
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(handleDataChange))
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDataChange),
+            name: ServerListUpdateNotification.name,
+            object: nil
+        )
     }
 
     private func sessionEnded() {
-        NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
-        if let profileManager = profileManager {
-            NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
-        }
+        AppEvent.activeServerTypeChanged.unsubscribe(self)
+        AppEvent.connectionStateChanged.unsubscribe(self)
+        AppEvent.profileContentChanged.unsubscribe(self)
+
         NotificationCenter.default.removeObserver(self, name: ServerListUpdateNotification.name, object: nil)
 
         profileManager = nil

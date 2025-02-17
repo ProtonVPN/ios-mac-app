@@ -22,11 +22,12 @@ import Dependencies
 
 import LegacyCommon
 import CommonNetworking
-import Announcement
 import VPNAppCore
+import Announcement
 
 import Ergonomics
 import Strings
+import Domain
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!
@@ -109,7 +110,7 @@ final class AnnouncementImageViewController: NSViewController {
 
     func didPresentOffer() {
         DispatchQueue.main.async { [offerReference] in
-            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement, object: offerReference)
+            AppEvent.userWasDisplayedAnnouncement.post(offerReference)
         }
     }
 
@@ -120,7 +121,7 @@ final class AnnouncementImageViewController: NSViewController {
         }
 
         DispatchQueue.main.async { [offerReference] in
-            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: offerReference)
+            AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {

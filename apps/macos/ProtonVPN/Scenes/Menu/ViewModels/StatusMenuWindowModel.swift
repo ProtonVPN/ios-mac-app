@@ -22,8 +22,10 @@
 
 import Cocoa
 
-import Ergonomics
 import LegacyCommon
+
+import Ergonomics
+import Domain
 
 protocol StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel
@@ -111,16 +113,14 @@ class StatusMenuWindowModel {
     
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
-                                               name: VpnGateway.connectionChanged, object: nil)
+
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(handleChange))
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(handleChange))
     }
     
     private func sessionEnded() {
-        NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.activeServerTypeChanged.unsubscribe(self)
+        AppEvent.connectionStateChanged.unsubscribe(self)
     }
     
     @objc private func handleChange() {

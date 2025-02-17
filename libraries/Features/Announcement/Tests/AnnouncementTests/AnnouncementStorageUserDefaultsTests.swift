@@ -22,6 +22,7 @@
 
 import XCTest
 @testable import LegacyCommon
+@testable import Announcement
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
     
@@ -63,8 +64,13 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
     
     func testNotificationIsFiredOnStore() {
         expectationNotificationFired = XCTestExpectation(description: "AnnouncementStorageNotifications.contentChanged was fired")
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationFired), name: AnnouncementStorageNotifications.contentChanged, object: nil)
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(notificationFired),
+            name: AppEvent.announcementStorageContent.name,
+            object: nil
+        )
+
         storage.store([])
         
         wait(for: [expectationNotificationFired], timeout: 0.2)

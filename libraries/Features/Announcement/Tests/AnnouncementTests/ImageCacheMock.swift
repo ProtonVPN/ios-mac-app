@@ -16,9 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
 import Foundation
-import Announcement
 
 public struct ImageCacheMock: ImageCacheProtocol {
     public static var completionBlockParameterValue = true
@@ -39,4 +37,3 @@ public struct ImageCacheFactoryMock: ImageCacheFactoryProtocol {
     
     public init() {}
 }
-#endif

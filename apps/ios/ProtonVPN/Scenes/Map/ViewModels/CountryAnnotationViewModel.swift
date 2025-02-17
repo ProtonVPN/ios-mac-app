@@ -30,12 +30,12 @@ import LegacyCommon
 import Localization
 
 class CountryAnnotationViewModel: AnnotationViewModel {
-    
+
     enum ViewState {
         case idle
         case selected
     }
-    
+
     let countryCode: String
     let coordinate: CLLocationCoordinate2D
     private let groupInfo: ServerGroupInfo
@@ -44,21 +44,21 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     private let appStateManager: AppStateManager
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
-    
+
     private let requiresUpgrade: Bool
-    
+
     var buttonStateChanged: (() -> Void)?
     var countryTapped: ((CountryAnnotationViewModel) -> Void)?
-    
+
     /// Under maintenance if all servers are
     var underMaintenance: Bool {
         return groupInfo.isUnderMaintenance
     }
-    
+
     var available: Bool {
         return !requiresUpgrade && !underMaintenance
     }
-    
+
     var viewState: AnnotationViewState = .idle {
         didSet {
             if oldValue != viewState { // to prevent excessive draw calls
@@ -68,36 +68,36 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             }
         }
     }
-    
+
     var isConnected: Bool {
         if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.serverType == serverType, activeServer.countryCode == countryCode {
             return true
         }
         return false
     }
-    
+
     var isConnecting: Bool {
         if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
     }
-    
+
     var connectedUiState: Bool {
         return isConnected || isConnecting
     }
-    
+
     var description: NSAttributedString {
         return formDescription()
     }
-    
+
     let minPinHeight: CGFloat = 44
     let maxPinHeight: CGFloat = 60
-    
+
     var anchorPoint: CGPoint {
         return CGPoint(x: 0.5, y: maxPinHeight / maxHeight)
     }
-    
+
     var outlineColor: UIColor {
         if connectedUiState {
             return .brandColor()
@@ -107,7 +107,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             return .normalTextColor()
         }
     }
-    
+
     var labelColor: UIColor {
         if connectedUiState {
             return UIColor.brandColor().withAlphaComponent(0.75)
@@ -115,7 +115,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             return UIColor.weakInteractionColor().withAlphaComponent(0.75)
         }
     }
-    
+
     var flagOverlayColor: UIColor {
         if requiresUpgrade || underMaintenance || isConnected || isConnecting {
             return UIColor.black.withAlphaComponent(0.75)
@@ -128,7 +128,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             }
         }
     }
-    
+
     var connectIconTint: UIColor {
         if connectedUiState {
             return .brandColor()
@@ -136,7 +136,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             return .normalTextColor()
         }
     }
-    
+
     var connectIcon: UIImage? {
         if connectedUiState {
             return Asset.connect.image.withRenderingMode(.alwaysTemplate)
@@ -156,9 +156,9 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             }
         }
     }
-    
+
     let showAnchor: Bool = true
-    
+
     init(
         countryCode: String,
         groupInfo: ServerGroupInfo,
@@ -181,51 +181,50 @@ class CountryAnnotationViewModel: AnnotationViewModel {
 
         startObserving()
     }
-    
+
     func tapped() {
         switch viewState {
         case .idle:
             viewState = .selected
         case .selected:
             log.debug("Connect requested by clicking on Country in the map", category: .connectionConnect, event: .trigger)
-            
+
             if underMaintenance {
                 log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
                 alertService.push(alert: MaintenanceAlert(countryName: labelString.string))
             } else if isConnected {
                 log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
-                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.map))
+                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.map))
                 vpnGateway.disconnect()
             } else if isConnecting {
-                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
                 log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
                 vpnGateway.stopConnecting(userInitiated: true)
             } else {
-                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+                AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
                 log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
                 vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .map)
                 connectionStatusService.presentStatusViewController()
             }
         }
-        
+
         countryTapped?(self)
     }
-    
+
     func deselect() {
         viewState = .idle
     }
-    
+
     // MARK: - Private functions
     fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
-    
+
     private func formDescription() -> NSAttributedString {
         let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         return country.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
     }
-    
+
     @objc fileprivate func stateChanged() {
         if let connectionChanged = buttonStateChanged {
             DispatchQueue.main.async {

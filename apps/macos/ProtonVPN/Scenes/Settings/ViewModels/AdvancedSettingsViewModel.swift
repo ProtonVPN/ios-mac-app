@@ -56,9 +56,14 @@ final class AdvancedSettingsViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
+
+        let events: [AppEvent] = [
+            .natType,
+            .featureFlags,
+            .safeMode
+        ]
+
+        events.subscribe(self, selector: #selector(settingsChanged))
     }
 
     deinit {

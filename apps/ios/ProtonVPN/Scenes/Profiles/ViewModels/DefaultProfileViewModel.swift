@@ -50,7 +50,7 @@ class DefaultProfileViewModel {
 
     @Dependency(\.profileAuthorizer) var authorizer
     fileprivate let alertService: AlertService
-    
+
     fileprivate let serverOffering: ServerOffering
     fileprivate let vpnGateway: VpnGatewayProtocol
     fileprivate let propertiesManager: PropertiesManagerProtocol
@@ -58,7 +58,7 @@ class DefaultProfileViewModel {
     fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
     fileprivate let natTypePropertyProvider: NATTypePropertyProvider
     fileprivate let safeModePropertyProvider: SafeModePropertyProvider
-    
+
     private let defaultAccessTier: Int
 
     fileprivate var profile: Profile {
@@ -83,7 +83,7 @@ class DefaultProfileViewModel {
                            connectionProtocol: propertiesManager.connectionProtocol)
         }
     }
-    
+
     fileprivate let isRedesign: Bool
     fileprivate let extraMargin: Bool
 
@@ -105,7 +105,7 @@ class DefaultProfileViewModel {
         }
         return false
     }
-    
+
     fileprivate var isConnecting: Bool {
         guard vpnGateway.connection == .connecting else { return false }
 
@@ -124,7 +124,7 @@ class DefaultProfileViewModel {
         }
         return false
     }
-    
+
     private var connectedUiState: Bool {
         return isConnected || isConnecting
     }
@@ -132,11 +132,11 @@ class DefaultProfileViewModel {
     fileprivate var isUsersTierTooLow: Bool {
         return !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }
-    
+
     var connectionChanged: (() -> Void)?
-    
+
     var connectIcon: UIImage? = IconProvider.powerOff
-    
+
     var title: String {
         switch serverOffering {
         case .fastest:
@@ -147,7 +147,7 @@ class DefaultProfileViewModel {
             return ""
         }
     }
-    
+
     var image: UIImage {
         switch serverOffering {
         case .fastest:
@@ -166,11 +166,11 @@ class DefaultProfileViewModel {
     var alphaOfMainElements: CGFloat {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
-    
+
     var connectButtonMargin: CGFloat {
         return extraMargin ? 32 : 0
     }
-    
+
     init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false, extraMargin: Bool = false) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
@@ -185,10 +185,10 @@ class DefaultProfileViewModel {
         self.extraMargin = extraMargin
         startObserving()
     }
-    
+
     func connectAction() {
         log.debug("Connect requested by selecting default profile.", category: .connectionConnect, event: .trigger)
-        
+
         guard authorizer.canUseProfiles else {
             log.debug("Connect to profile rejected because user is on free plan", category: .connectionConnect, event: .trigger)
             alertService.push(alert: ProfilesUpsellAlert())
@@ -199,27 +199,26 @@ class DefaultProfileViewModel {
 
     fileprivate func authorizedConnectAction() {
         if isConnecting {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.profile))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.profile))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(profile: profile)
             connectionStatusService.presentStatusViewController()
         }
     }
-    
+
     // MARK: - Private functions
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
-    
+
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
             connectionChanged()

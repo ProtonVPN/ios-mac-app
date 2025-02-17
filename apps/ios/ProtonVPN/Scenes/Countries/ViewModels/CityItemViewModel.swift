@@ -18,13 +18,17 @@
 
 import Foundation
 import UIKit
-import Search
-import LegacyCommon
-import Localization
+
 import ProtonCoreUIFoundations
+
+import LegacyCommon
+import VPNAppCore
+
+import Localization
+import Search
 import Strings
 import Theme
-import VPNAppCore
+import Domain
 
 final class CityItemViewModel: CityViewModel {
 
@@ -108,7 +112,7 @@ final class CityItemViewModel: CityViewModel {
         self.connectionStatusService = connectionStatusService
         self.isRedesign = isRedesign
 
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
 
     func connectAction() {
@@ -121,15 +125,15 @@ final class CityItemViewModel: CityViewModel {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(cityName: countryName))
         } else if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.city))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.city))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to city: \(cityName) in country: \(countryName)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(country: countryCode, city: cityName)
             connectionStatusService.presentStatusViewController()

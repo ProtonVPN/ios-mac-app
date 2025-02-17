@@ -1,7 +1,7 @@
 //
-//  Created on 30/09/2024.
+//  Created on 14.02.2025 by John Biggs.
 //
-//  Copyright (c) 2024 Proton AG
+//  Copyright (c) 2025 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,6 @@
 
 import Foundation
 
-extension Notification.Name {
-    public static let userIpNotification: Self = .init("userIp")
+public struct AnnouncementsResponse: Codable {
+    let notifications: [Announcement]
 }

@@ -152,24 +152,19 @@ final class SettingsViewModel {
 
     // MARK: - Private functions
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
-                                               name: appSessionManager.sessionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: VPNAccelerator.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: appSessionManager.dataReloaded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: type(of: propertiesManager).featureFlagsNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: type(of: vpnKeychain).vpnCredentialsChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: PropertiesManager.smartProtocolNotification, object: nil)
+        AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
+
+        let reloadEvents: [AppEvent] = [
+            .netShield,
+            .vpnAccelerator,
+            .sessionManagerDataReloaded,
+            .natType,
+            .featureFlags,
+            .safeMode,
+            .credentialsChanged,
+            .smartProtocol
+        ]
+        reloadEvents.subscribe(self, selector: #selector(reload))
     }
 
     @objc private func sessionChanged(_ notification: Notification) {
@@ -187,16 +182,18 @@ final class SettingsViewModel {
 
         profileManager = factory.makeProfileManager()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: profileManager!.contentChanged, object: nil)
+        let reloadEvents: [AppEvent] = [
+            .connectionStateChanged,
+            .profileContentChanged
+        ]
+
+        reloadEvents.subscribe(self, selector: #selector(reload))
     }
 
     private func sessionEnded() {
-        NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.unsubscribe(self)
         if let profileManager {
-            NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
+            AppEvent.profileContentChanged.unsubscribe(self)
         }
 
         profileManager = nil

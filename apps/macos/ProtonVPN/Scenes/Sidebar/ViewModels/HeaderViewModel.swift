@@ -47,7 +47,14 @@ final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
 
-    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
+    public typealias Factory = AppStateManagerFactory &
+        PropertiesManagerFactory &
+        CoreAlertServiceFactory &
+        ProfileManagerFactory &
+        NavigationServiceFactory &
+        VpnGatewayFactory &
+        AnnouncementsViewModelFactory
+
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -151,11 +158,11 @@ final class HeaderViewModel {
 
     func quickConnectAction() {
         if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.quick))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.quick))
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             vpnGateway.quickConnect(trigger: .quick)
         }
@@ -212,12 +219,25 @@ final class HeaderViewModel {
     // MARK: - Private functions
 
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: .userIpNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: profileManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: ServerListUpdateNotification.name, object: nil)
+        let connectionChangedEvents: [AppEvent] = [
+            .activeServerTypeChanged,
+            .connectionStateChanged
+        ]
+        connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
+
+        let contentChangedEvents: [AppEvent] = [
+            .userIp,
+            .activeConnectionChanged,
+            .profileContentChanged
+        ]
+        contentChangedEvents.subscribe(self, selector: #selector(contentChangedNotification))
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contentChangedNotification),
+            name: ServerListUpdateNotification.name,
+            object: nil
+        )
     }
 
     @objc private func vpnConnectionChanged() {

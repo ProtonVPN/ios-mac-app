@@ -36,7 +36,7 @@ class SimulatorHelper {
 
     private var status: VPNConnectionStatus = .disconnected {
         didSet {
-            NotificationCenter.default.post(name: .AppStateManager.displayStateChange, object: status.appDisplayState)
+            AppEvent.appStateManagerDisplayStateChange.post(status.appDisplayState)
         }
     }
 

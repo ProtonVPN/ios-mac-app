@@ -27,8 +27,6 @@ import VPNShared
 public protocol NATTypePropertyProvider: FeaturePropertyProvider {
     /// Current NAT type
     var natType: NATType { get set }
-
-    static var natTypeNotification: Notification.Name { get }
 }
 
 public protocol NATTypePropertyProviderFactory {
@@ -36,8 +34,6 @@ public protocol NATTypePropertyProviderFactory {
 }
 
 public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
-    public static let natTypeNotification: Notification.Name = Notification.Name("NATTypeChanged")
-
     private let key = "NATType"
 
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
@@ -63,7 +59,7 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
             @Dependency(\.defaultsProvider) var provider
             provider.getDefaults().setUserValue(newValue.rawValue, forKey: key)
             executeOnUIThread {
-                NotificationCenter.default.post(name: type(of: self).natTypeNotification, object: newValue, userInfo: nil)
+                AppEvent.natType.post(newValue)
             }
         }
     }

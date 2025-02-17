@@ -25,9 +25,11 @@ import Foundation
 import ProtonCoreDataModel
 import ProtonCoreLogin
 
-import Domain
 import VPNShared
 import VPNAppCore
+import CommonNetworking
+
+import Domain
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var isOnboardingInProgress: Bool = false
@@ -46,7 +48,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("vpnAccelerator")
     public static var smartProtocolNotification: Notification.Name = Notification.Name("smartProtocol")
     public static let featureFlagsNotification: Notification.Name = Notification.Name("featureFlags")
-    public static var announcementsNotification: Notification.Name = Notification.Name("announcements")
 
     public static let telemetryUsageDataNotification: Notification.Name = Notification.Name("telemetryUsageData")
 
@@ -103,7 +104,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var intentionallyDisconnected: Bool = false
     public var userLocation: UserLocation? {
         didSet {
-            NotificationCenter.default.post(name: .userIpNotification, object: userLocation)
+            AppEvent.userIp.post(userLocation)
         }
     }
     public var userDataDisclaimerAgreed: Bool = false

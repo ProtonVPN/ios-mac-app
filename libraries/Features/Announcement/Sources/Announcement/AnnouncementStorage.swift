@@ -21,8 +21,14 @@
 //
 
 import Foundation
+
+import Dependencies
+
+import LegacyCommon
+
 import VPNShared
 import Ergonomics
+import Domain
 
 public protocol AnnouncementStorage {
     func fetch() -> [Announcement]
@@ -38,8 +44,12 @@ public protocol AnnouncementStorageFactory {
     func makeAnnouncementStorage() -> AnnouncementStorage
 }
 
-public struct AnnouncementStorageNotifications {
-    public static let contentChanged = Notification.Name("AnnouncementStorage_ContentChanged")
+// MARK: AnnouncementStorageFactory
+extension Container: AnnouncementStorageFactory {
+    public func makeAnnouncementStorage() -> AnnouncementStorage {
+        @Dependency(\.defaultsProvider) var provider
+        return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
+    }
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
@@ -77,7 +87,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
             userDefaults.set(jsonData, forKey: storageKey)
 
             executeOnUIThread {
-                NotificationCenter.default.post(name: AnnouncementStorageNotifications.contentChanged, object: objects)
+                AppEvent.announcementStorageContent.post(objects)
             }
         } catch let error {
             log.error("Announcement error: \(error)", category: .ui)

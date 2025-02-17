@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Domain
 
 /// Defines the requirements for a feature that can be managed by the generic `AppFeaturePropertyProviderProtocol`
 ///
@@ -51,7 +52,7 @@ public protocol StorableFeature: Codable {
     static var storageKey: String { get }
 
     /// notification sent whenever the current value changes
-    static var notificationName: Notification.Name? { get }
+    static var event: AppEvent? { get }
 
 }
 

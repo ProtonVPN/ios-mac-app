@@ -83,19 +83,21 @@ final class CountriesViewModelTests: XCTestCase {
         assert(sut.cellModel(forRow: 3)!, isServerGroupOfKind: .country(code: "SE"), isUnderMaintenance: false)
         assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
 
+        var newProtocol: ConnectionProtocol = .vpnProtocol(.wireGuard(.udp))
         // Now let's update our protocol to WireGuard UDP
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
+        mockPropertiesManager.connectionProtocol = newProtocol
         withMockedRepository {
-            NotificationCenter.default.post(name: PropertiesManager.vpnProtocolNotification, object: nil)
+            AppEvent.vpnProtocol.post(newProtocol)
         }
 
         // Switzerland should now be placed under maintenance (it's only supports ike)
         assert(sut.cellModel(forRow: 4)!, isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
 
+        newProtocol = .vpnProtocol(.wireGuard(.tls))
         // Finally, let's try changing our protocol to Stealth
-        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
+        mockPropertiesManager.connectionProtocol = newProtocol
         withMockedRepository {
-            NotificationCenter.default.post(name: PropertiesManager.vpnProtocolNotification, object: nil)
+            AppEvent.vpnProtocol.post(newProtocol)
         }
 
         // Dev gateway should now also be under maintenance

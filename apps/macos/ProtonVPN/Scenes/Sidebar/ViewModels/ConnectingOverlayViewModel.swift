@@ -22,13 +22,14 @@
 
 import AppKit
 
+import VPNShared
+import VPNAppCore
+import LegacyCommon
+
 import Domain
 import Logging
 import Theme
 import Strings
-import VPNShared
-import VPNAppCore
-import LegacyCommon
 
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()
@@ -86,11 +87,8 @@ class ConnectingOverlayViewModel {
         self.cancellation = cancellation
         
         loadingView = LoadingAnimationView(frame: CGRect.zero)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appStateChanged(_:)),
-                                               name: .AppStateManager.stateChange,
-                                               object: nil)
+
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged(_:)))
     }
     
     deinit {
@@ -202,7 +200,6 @@ class ConnectingOverlayViewModel {
         var buttons = [ButtonInfo]()
         
         if timedOut && isIkeWithKsEnabled {
-            buttons.append(retryWithOpenVpnButton)
             buttons.append(retryWithoutKSButton)
         } else if timedOut {
             buttons.append(retryButton)
@@ -239,13 +236,6 @@ class ConnectingOverlayViewModel {
             self.disableKillSwitch()
             log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
-        })
-    }
-    
-    private var retryWithOpenVpnButton: ButtonInfo {
-        return (Localizable.timeoutKsIkeSwitchProtocol, .interactive, {
-            log.info("Reconnecting with OpenVPN as suggested to user", category: .connectionConnect)
-            self.reconnectWithOvpn()
         })
     }
     
@@ -308,23 +298,6 @@ class ConnectingOverlayViewModel {
         } else {
             vpnGateway.retryConnection()
         }
-    }
-    
-    private func reconnectWithOvpn() {
-        let transportProtocol: VpnProtocol = .openVpn(.udp)
-        
-        // This will trigger reconnect after protocol is changed
-        var token: NSObjectProtocol?
-        token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
-            NotificationCenter.default.removeObserver(token!)
-            guard let newProtocol = notification.object as? VpnProtocol else {
-                return
-            }
-            log.error("New protocol set to \(newProtocol). VPN will reconnect.", category: .connectionConnect, event: .trigger)
-            self?.retryConnection(withProtocol: newProtocol)
-        }
-        
-        vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { _ in }
     }
     
     // MARK: - Notification handlers

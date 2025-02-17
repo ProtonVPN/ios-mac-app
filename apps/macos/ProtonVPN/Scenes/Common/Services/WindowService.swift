@@ -32,6 +32,7 @@ import LegacyCommon
 import VPNAppCore
 import Modals_macOS
 import BugReport
+import Announcement
 
 import Ergonomics
 import Strings

@@ -297,13 +297,17 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(activeServerTypeSet),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
-                                               name: VpnKeychain.vpnPlanChanged, object: nil)
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
+
+        let reloadEvents: [AppEvent] = [
+            .planChanged,
+            .vpnProtocol,
+            .smartProtocol
+        ]
+
+        reloadEvents.subscribe(self, selector: #selector(reloadContent))
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: ServerListUpdateNotification.name, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.vpnProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.smartProtocolNotification, object: nil)
     }
     
     internal func setStateOf(type: ServerType) {

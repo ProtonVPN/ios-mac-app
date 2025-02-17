@@ -35,8 +35,6 @@ public protocol NetShieldPropertyProvider: FeaturePropertyProvider {
 
     /// Used to store last non-off NS level when toggling NS off <-> on in NS V1 UI
     var lastActiveNetShieldType: NetShieldType { get }
-
-    static var netShieldNotification: Notification.Name { get }
 }
 
 public protocol NetShieldPropertyProviderFactory {
@@ -44,7 +42,6 @@ public protocol NetShieldPropertyProviderFactory {
 }
 
 public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider {
-    public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
     @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
 
     private lazy var authorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
@@ -93,10 +90,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
             if success {
                 executeOnUIThread {
-                    NotificationCenter.default.post(
-                        name: type(of: self).netShieldNotification,
-                        object: newValue, userInfo: nil
-                    )
+                    AppEvent.netShield.post(newValue)
                 }
             }
         }

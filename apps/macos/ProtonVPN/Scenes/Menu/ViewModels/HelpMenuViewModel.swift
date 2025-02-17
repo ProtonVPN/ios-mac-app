@@ -22,9 +22,11 @@
 
 import Cocoa
 import Dependencies
+
 import LegacyCommon
 import PMLogger
 import VPNShared
+import Domain
 
 protocol HelpMenuViewModelFactory {
     func makeHelpMenuViewModel() -> HelpMenuViewModel
@@ -37,8 +39,6 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 }
 
 class HelpMenuViewModel {
-    static let deletingAppDataNotification = Notification.Name("ClearingApplicationData")
-
     typealias Factory = VpnManagerFactory
                         & NavigationServiceFactory
                         & VpnKeychainFactory
@@ -106,7 +106,7 @@ class HelpMenuViewModel {
     private func clearAllDataAndTerminate() {
         self.vpnManager.disconnect { }
 
-        NotificationCenter.default.post(name: Self.deletingAppDataNotification, object: nil)
+        AppEvent.clearingApplicationData.post()
 
         if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
             log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)

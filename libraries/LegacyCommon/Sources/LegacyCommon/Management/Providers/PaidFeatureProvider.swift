@@ -151,7 +151,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
     }
 
     private func notifyOfChange<T: ProvidableFeature>(to value: T) {
-        guard let notificationName = T.notificationName else {
+        guard let event = T.event else {
             return
         }
         executeOnUIThread {
@@ -160,7 +160,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
             // any data should be passed through the `userInfo` parameter (or using a type-safe mechanism like
             // Strong-Notification). Not passing `self` can make it difficult implement notification tests (see
             // `XCTNSNotificationExpectation`)
-            NotificationCenter.default.post(name: notificationName, object: value, userInfo: nil)
+            event.post(value)
         }
     }
 }

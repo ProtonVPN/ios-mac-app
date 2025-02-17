@@ -177,8 +177,8 @@ final class CountriesSectionViewController: NSViewController {
                 self?.updateBadge()
             }
         })
-        let netShieldNotification = NetShieldPropertyProviderImplementation.netShieldNotification
-        notificationTokens.append(NotificationCenter.default.addObserver(for: netShieldNotification,
+
+        notificationTokens.append(NotificationCenter.default.addObserver(for: AppEvent.netShield.name,
                                                                          object: nil) { [weak self] level in
             DispatchQueue.main.async {
                 if (level.object as? NetShieldType) != .level2 {

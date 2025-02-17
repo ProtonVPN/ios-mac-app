@@ -86,23 +86,20 @@ class MapSectionViewModel {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
 
-        NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange,
-                                               object: nil,
-                                               queue: nil,
-                                               using: appStateChanged)
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+        AppEvent.vpnProtocol.subscribe(self, selector: #selector(resetCurrentState))
+
         NotificationCenter.default.addObserver(self, selector: #selector(viewToggled(_:)),
                                                name: viewToggle, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
-                                               name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        
+
         activeView = propertiesManager.serverTypeToggle
         annotations = annotations(forView: activeView)
         connections = connections(forView: activeView)
     }
     
     // MARK: - Private functions
-    private func appStateChanged(_ notification: Notification) {
+    @objc private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }

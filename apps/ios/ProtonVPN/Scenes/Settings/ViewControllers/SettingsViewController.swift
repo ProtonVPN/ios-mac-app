@@ -29,6 +29,7 @@ import LegacyCommon
 import Announcement
 
 import Strings
+import Domain
 
 final class SettingsViewController: UIViewController {
 
@@ -74,7 +75,7 @@ final class SettingsViewController: UIViewController {
             setupConnectionBar()
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
     
     override func viewWillAppear(_ animated: Bool) {

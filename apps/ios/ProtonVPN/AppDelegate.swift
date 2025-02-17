@@ -41,15 +41,16 @@ import ProtonCoreServices
 import ProtonCoreUIFoundations
 import ProtonCoreTelemetry
 
-// Local dependencies
-import Domain
-import Ergonomics
+// Local dependencies (Core first, then Shared, then Features, then Foundations)
 import LegacyCommon
-import Logging
-import PMLogger
 import VPNShared
 import VPNAppCore
+import Announcement
 import Settings
+import Logging
+import PMLogger
+import Domain
+import Ergonomics
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
@@ -286,14 +287,14 @@ fileprivate extension AppDelegate {
 
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway.quickConnect(trigger: .widget)
-            NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
+            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateDidUpdate))
             navigationService.presentStatusViewController()
 
         case URLConstants.deepLinkDisconnectAction:
             // Action may only come from a trusted source
             guard verified else { return false }
 
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.widget))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.widget))
             navigationService.vpnGateway.disconnect {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
@@ -315,7 +316,8 @@ fileprivate extension AppDelegate {
                     log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
                 }
             }
-            NotificationCenter.default.post(name: PropertiesManager.announcementsNotification, object: nil)
+
+            AppEvent.urlActivationRefresh.post()
 
         default:
             log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])
@@ -416,7 +418,7 @@ extension AppDelegate {
     private func registerForTelemetryChanges() {
         let center = NotificationCenter.default
         tokens.append(
-            center.addObserver(for: PropertiesManager.telemetryCrashReportsNotification, object: nil) { [weak self] notification in
+            center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
                 switch (notification.object as? Bool) {
                 case true:
                     self?.enableExternalLogging()

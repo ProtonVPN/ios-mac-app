@@ -21,9 +21,12 @@
 //
 
 import Cocoa
+
 import LegacyCommon
+
 import Theme
 import Strings
+import Domain
 
 class MapHeaderViewModel {
     
@@ -35,10 +38,8 @@ class MapHeaderViewModel {
     init(vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager) {
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
     }
     
     var isConnected: Bool {

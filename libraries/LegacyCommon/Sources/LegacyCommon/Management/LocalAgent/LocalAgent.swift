@@ -164,7 +164,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func startObservingNetShieldCriteria() {
-        let notifications = [type(of: netShieldPropertyProvider).netShieldNotification, type(of: propertiesManager).featureFlagsNotification]
+        let notifications = [AppEvent.netShield.name, AppEvent.featureFlags.name]
         notificationTokens = NotificationCenter.default.addObservers(for: notifications, object: nil) { [weak self] _ in
             self?.toggleStatusMonitoringIfNecessary()
         }

@@ -24,16 +24,17 @@ import Cocoa
 import LegacyCommon
 import Ergonomics
 import Strings
+import Domain
 
 final class CreateNewProfileViewController: NSViewController {
-    
+
     @IBOutlet private weak var profileSettingsLabel: PVPNTextField!
     @IBOutlet private weak var nameLabel: PVPNTextField!
     @IBOutlet private weak var nameTextField: TextFieldWithFocus!
     @IBOutlet private weak var nameTextFieldHorizontalLine: NSBox!
     @IBOutlet private weak var colorPickerLabel: PVPNTextField!
     @IBOutlet private weak var colorPickerViewContainer: NSView!
-    
+
     @IBOutlet private weak var connectionSettingsLabel: PVPNTextField!
     @IBOutlet private weak var typeLabel: PVPNTextField!
     @IBOutlet private weak var typeList: HoverDetectionPopUpButton!
@@ -54,11 +55,11 @@ final class CreateNewProfileViewController: NSViewController {
     @IBOutlet private weak var footerView: NSView!
     @IBOutlet private weak var saveButton: PrimaryActionButton!
     @IBOutlet private weak var cancelButton: CancellationButton!
-    
+
     fileprivate var viewModel: CreateNewProfileViewModel!
 
     private var colorPickerViewController: ColorPickerViewController!
-    
+
     private var isSessionUnderway: Bool {
         return !nameTextField.stringValue.isEmpty ||
             typeList.indexOfSelectedItem != 0 ||
@@ -68,15 +69,15 @@ final class CreateNewProfileViewController: NSViewController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: CreateNewProfileViewModel) {
         super.init(nibName: NSNib.Name("CreateNewProfile"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupHeaderView()
         setupNameSection()
@@ -90,26 +91,26 @@ final class CreateNewProfileViewController: NSViewController {
 
         startObserving()
     }
-    
+
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        
+
         cancelButton.isHovered = false
         saveButton.isHovered = false
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = viewModel.cgColor(.background)
         }
     }
-    
+
     private func setupHeaderView() {
         profileSettingsLabel.attributedStringValue = viewModel.style(Localizable.profileSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
         connectionSettingsLabel.attributedStringValue = viewModel.style(Localizable.connectionSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
     }
-    
+
     private func setupNameSection() {
         nameLabel.attributedStringValue = viewModel.style(Localizable.name + ":", font: .themeFont(.heading4), alignment: .left)
 
@@ -119,7 +120,7 @@ final class CreateNewProfileViewController: NSViewController {
         nameTextField.delegate = self
         nameTextField.focusDelegate = self
         nameTextField.setAccessibilityIdentifier("NameTextField")
-        
+
         nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)
     }
 
@@ -137,17 +138,17 @@ final class CreateNewProfileViewController: NSViewController {
 
         protocolListHorizontalLine.fillColor = viewModel.color(.border)
     }
-    
+
     private func setupColorSection() {
         colorPickerLabel.attributedStringValue = viewModel.style(Localizable.color + ":", font: .themeFont(.heading4), alignment: .left)
-        
+
         colorPickerViewController = ColorPickerViewController(viewModel: viewModel.colorPickerViewModel)
         colorPickerViewContainer.pin(viewController: colorPickerViewController)
     }
-    
+
     private func setupTypeSection() {
         typeLabel.attributedStringValue = viewModel.style(Localizable.feature + ":", font: .themeFont(.heading4), alignment: .left)
-        
+
         typeList.isBordered = false
         typeList.target = self
         typeList.action = #selector(typeSelected)
@@ -156,10 +157,10 @@ final class CreateNewProfileViewController: NSViewController {
 
         typeListHorizontalLine.fillColor = viewModel.color(.border)
     }
-    
+
     private func setupCountrySection() {
         countryLabel.attributedStringValue = viewModel.style(Localizable.country + ":", font: .themeFont(.heading4), alignment: .left)
-        
+
         countryList.isBordered = false
         countryList.target = self
         countryList.action = #selector(countrySelected)
@@ -168,10 +169,10 @@ final class CreateNewProfileViewController: NSViewController {
 
         countryListHorizontalLine.fillColor = viewModel.color(.border)
     }
-    
+
     private func setupServerSection() {
         serverLabel.attributedStringValue = viewModel.style(Localizable.server + ":", font: .themeFont(.heading4), alignment: .left)
-        
+
         serverList.isBordered = false
         serverList.target = self
         serverList.action = #selector(serverSelected)
@@ -180,28 +181,28 @@ final class CreateNewProfileViewController: NSViewController {
 
         serverListHorizontalLine.fillColor = viewModel.color(.border)
     }
-        
+
     private func setupWarningSection() {
         warningLabel.isHidden = true
-        
+
         warningLabelHorizontalLine.fillColor = .color(.border, .danger)
         warningLabelHorizontalLine.isHidden = true
-        
+
         warningLabel.setAccessibilityIdentifier("ErrorMessage")
     }
-    
+
     private func setupFooterView() {
         cancelButton.title = Localizable.cancel
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonAction)
-        
+
         saveButton.title = Localizable.save
         saveButton.target = self
         saveButton.action = #selector(saveButtonAction)
-        
+
         cancelButton.setAccessibilityIdentifier("CancelButton")
         saveButton.setAccessibilityIdentifier("SaveButton")
-        
+
         footerView.wantsLayer = true
         DarkAppearance {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
@@ -239,7 +240,7 @@ final class CreateNewProfileViewController: NSViewController {
         }
         viewModel.clearContent()
     }
-    
+
     @objc private func saveButtonAction() {
         viewModel.profileName = nameTextField.stringValue
         viewModel.save()
@@ -250,7 +251,7 @@ final class CreateNewProfileViewController: NSViewController {
         warningLabel.isHidden = false
         warningLabelHorizontalLine.isHidden = false
     }
-    
+
     private func startObserving() {
         viewModel.menuContentChanged = { [weak self] keyPaths in self?.menuContentChanged(keyPaths: keyPaths) }
         viewModel.prefillContent = { [weak self] in self?.prefillContent() }
@@ -263,12 +264,17 @@ final class CreateNewProfileViewController: NSViewController {
                 self?.protocolEnablementProgress.stopAnimation(nil)
             }
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(clearContent),
-                                               name: viewModel.sessionFinished, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled),
-                                               name: SystemExtensionManager.userCancelledTour, object: nil)
+
+        AppEvent.systemExtensionTourCancelled.subscribe(self, selector: #selector(tourCancelled))
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(clearContent),
+            name: viewModel.sessionFinished,
+            object: nil
+        )
     }
-    
+
     private func prefillContent() {
         clearContent()
 
@@ -297,13 +303,13 @@ final class CreateNewProfileViewController: NSViewController {
             list.push(items: viewModel[keyPath: update])
         }
     }
-    
+
     @objc private func clearContent() {
         nameTextField.stringValue = ""
         warningLabel.isHidden = true
         warningLabelHorizontalLine.isHidden = true
     }
-    
+
     private func secureCoreWarning() {
         presentAsModalWindow(SecureCoreWarningViewController(viewModel: viewModel.secureCoreWarningViewModel))
     }

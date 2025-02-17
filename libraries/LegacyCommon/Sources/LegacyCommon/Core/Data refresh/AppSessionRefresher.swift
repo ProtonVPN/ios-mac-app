@@ -24,8 +24,11 @@ import Foundation
 
 import Dependencies
 
-import Ergonomics
 import Persistence
+import CommonNetworking
+
+import Domain
+import Ergonomics
 
 /// Classes that confirm to this protocol can refresh data from API into the app
 public protocol AppSessionRefresher: AnyObject {
@@ -79,18 +82,17 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         vpnKeychain = factory.makeVpnKeychain()
         propertiesManager = factory.makePropertiesManager()
         alertService = factory.makeCoreAlertService()
-        coreApiService = factory.makeCoreApiService()
         updateChecker = factory.makeUpdateChecker()
 
         observation = notificationCenter.addObserver(
-            for: type(of: vpnKeychain).vpnPlanChanged,
+            for: AppEvent.planChanged.name,
             object: nil,
             handler: { [weak self] in
                 self?.userPlanChanged($0)
             }
         )
     }
-    
+
     @objc public func refreshData() {
         attemptSilentLogIn { [weak self] result in
             switch result {
@@ -98,7 +100,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                 Task { [weak self] in
                     await self?.successfulConsecutiveSessionRefreshes.increment()
                     do {
-                        self?.propertiesManager.userSettings = try await self?.coreApiService.getUserSettings()
+                        @Dependency(\.userSettingsClient) var userSettingsClient
+                        self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings()
                     } catch {
                         log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
                     }
@@ -119,7 +122,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             }
         }
     }
-    
+
     @objc public func refreshServerLoads() {
         guard loggedIn else { return }
 
@@ -135,7 +138,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             }
         }
     }
-    
+
     @objc public func refreshAccount() {
         Task { @MainActor in
             do {
@@ -196,7 +199,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
 
     // MARK: - Override
-    
+
     open func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         fatalError("This method should be overridden, but it is not")
     }

@@ -22,9 +22,13 @@
 
 import Cocoa
 import Dependencies
+
 import LegacyCommon
 import VPNShared
+import Announcement
+
 import Strings
+import Domain
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
 
@@ -91,12 +95,13 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
-        let viewModel = ProfilesSectionViewModel(vpnGateway: self.vpnGateway,
-                                                 navService: navService,
-                                                 alertService: factory.makeCoreAlertService(),
-                                                 profileManager: factory.makeProfileManager(),
-                                                 protocolChangeNotifications: [PropertiesManager.vpnProtocolNotification, PropertiesManager.smartProtocolNotification],
-                                                 sysexManager: factory.makeSystemExtensionManager())
+        let viewModel = ProfilesSectionViewModel(
+            vpnGateway: self.vpnGateway,
+            navService: navService,
+            alertService: factory.makeCoreAlertService(),
+            profileManager: factory.makeProfileManager(),
+            sysexManager: factory.makeSystemExtensionManager()
+        )
         return ProfileSectionViewController(viewModel: viewModel)
     }()
     
@@ -122,31 +127,43 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         tabBarViewController.activeTab = .countries
         
         self.loading(show: false)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appStateChanged),
-                                               name: .AppStateManager.stateChange,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(windowDidResize(_:)),
-                                               name: NSWindow.didResizeNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(windowDidEndLiveResize(_:)),
-                                               name: NSWindow.didEndLiveResizeNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(windowWillEnterFullScreen(_:)),
-                                               name: NSWindow.willEnterFullScreenNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(windowWillExitFullScreen(_:)),
-                                               name: NSWindow.willExitFullScreenNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(occlusionStateChanged(_:)),
-                                               name: NSApplication.didChangeOcclusionStateNotification,
-                                               object: nil)
 
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowDidResize(_:)),
+            name: NSWindow.didResizeNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowDidEndLiveResize(_:)),
+            name: NSWindow.didEndLiveResizeNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowWillEnterFullScreen(_:)),
+            name: NSWindow.willEnterFullScreenNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(windowWillExitFullScreen(_:)),
+            name: NSWindow.willExitFullScreenNotification,
+            object: nil
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(occlusionStateChanged(_:)),
+            name: NSApplication.didChangeOcclusionStateNotification,
+            object: nil
+        )
     }
     
     override func viewDidAppear() {

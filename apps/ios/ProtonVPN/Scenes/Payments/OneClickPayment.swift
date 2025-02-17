@@ -111,13 +111,7 @@ final class OneClickPayment {
         self.planService = planService
         self.payments = payments
 
-        // listen to notifications
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(userDidDismissWelcomeScreen),
-            name: .userDismissedWelcomeScreen,
-            object: nil
-        )
+        AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }
 
     @objc
@@ -233,10 +227,6 @@ final class OneClickPayment {
                                              finishCallback: $0.resume(returning:))
         }
     }
-}
- extension Notification.Name {
-     /// A user has been shown the welcome screen after an upsell and did interact with it.
-     static let userDismissedWelcomeScreen: Self = .init("UserDismissedWelcomeScreen")
 }
 
 enum OneClickPurchaseError: Error, LocalizedError {

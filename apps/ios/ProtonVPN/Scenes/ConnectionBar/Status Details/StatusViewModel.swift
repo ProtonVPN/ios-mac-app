@@ -437,15 +437,16 @@ class StatusViewModel {
     // MARK: - Connection status changes
 
     private func startObserving() {
-        let notificationNames = [
-            VpnGateway.connectionChanged,
-            .AppStateManager.displayStateChange,
-            .AppStateManager.stateChange,
-            type(of: netShieldPropertyProvider).netShieldNotification,
-            type(of: natTypePropertyProvider).natTypeNotification,
-            type(of: vpnKeychain).vpnPlanChanged
+        let events: [AppEvent] = [
+            .connectionStateChanged,
+            .appStateManagerDisplayStateChange,
+            .appStateManagerStateChange,
+            .netShield,
+            .natType,
+            .planChanged
         ]
-        let connectionChangedTokens = NotificationCenter.default.addObservers(for: notificationNames, object: nil) { [weak self] notification in
+
+        let connectionChangedTokens = NotificationCenter.default.addObservers(for: events.map(\.name), object: nil) { [weak self] notification in
             self?.stateChanged(notification: notification)
             self?.connectionChanged(notification: notification)
         }
