@@ -56,6 +56,7 @@ let package = Package(
         .package(path: "../Settings"),
 
         // External dependencies
+        .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
@@ -122,6 +123,7 @@ let package = Package(
                 .core(module: "Telemetry"),
 
                 // External
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -162,10 +164,12 @@ let package = Package(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
+                "CommonNetworking",
                 .product(name: "Persistence", package: "Persistence"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .core(module: "TestingToolkitUnitTestsCore"),
                 .core(module: "TestingToolkitUnitTestsFeatureFlag")

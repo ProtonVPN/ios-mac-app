@@ -21,7 +21,8 @@
 //
 
 import XCTest
-@testable import LegacyCommon
+
+import Domain
 @testable import Announcement
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {

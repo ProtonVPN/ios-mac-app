@@ -82,9 +82,6 @@ public class CoreAppConstants {
     public struct UpdateTime {
         public static let quickUpdateTime: TimeInterval = 3.0
         public static let quickReconnectTime: TimeInterval = 0.5
-        
-        // Pull announcements from API
-        public static let announcementRefreshTime: TimeInterval = 3 * 60 * 60 // 3 h
 
         // P2P (need to move to LocalAgent for this)
         public static let p2pBlockedRefreshTime: TimeInterval = 90 // 90 seconds

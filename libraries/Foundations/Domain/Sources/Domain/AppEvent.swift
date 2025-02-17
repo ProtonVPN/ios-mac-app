@@ -120,6 +120,11 @@ public enum AppEvent: String {
     case userDismissedWelcomeScreen
     #endif
 
+    #if DEBUG
+    /// Used for unit and integration testing.
+    case testEvent
+    #endif
+
     public var name: Notification.Name {
         .init(self.rawValue + "VPNAppNotification") // Make sure we de-unique from other common names
     }

@@ -50,7 +50,6 @@ public class MockDependencyContainer {
     }()
 
     public lazy var alertService = CoreAlertServiceDummy()
-    public lazy var coreApiService = CoreApiServiceMock()
     lazy var appSessionRefresher = { withDependencies {
         $0.serverRepository = self.serverRepository
     } operation: {
@@ -220,12 +219,6 @@ extension MockFactory: CountryCodeProviderFactory {
 extension MockFactory: CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService {
         container.alertService
-    }
-}
-
-extension MockFactory: CoreApiServiceFactory {
-    func makeCoreApiService() -> CoreApiService {
-        container.coreApiService
     }
 }
 

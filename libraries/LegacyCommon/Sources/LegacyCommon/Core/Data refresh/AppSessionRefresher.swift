@@ -63,7 +63,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public var vpnKeychain: VpnKeychainProtocol
     public var propertiesManager: PropertiesManagerProtocol
     public var alertService: CoreAlertService
-    public var coreApiService: CoreApiService
     private let updateChecker: UpdateChecker
 
     private var notificationCenter: NotificationCenter = .default
@@ -74,7 +73,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         VpnKeychainFactory &
         PropertiesManagerFactory &
         CoreAlertServiceFactory &
-        CoreApiServiceFactory &
         UpdateCheckerFactory
 
     public init(factory: Factory) {

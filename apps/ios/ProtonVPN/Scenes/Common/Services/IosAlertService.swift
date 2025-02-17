@@ -354,7 +354,6 @@ extension IosAlertService: CoreAlertService {
         let oneClickPayment: OneClickPayment
         do {
             oneClickPayment = try OneClickPayment(
-                sessionService: factory.makeSessionService(),
                 alertService: self,
                 planService: planService,
                 payments: planService.payments

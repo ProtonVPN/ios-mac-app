@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 @testable import LegacyCommon
+@testable import CommonNetworking
 
 class PlanSessionTests: XCTestCase {
     func testManageSubscriptionWithoutSelector() {

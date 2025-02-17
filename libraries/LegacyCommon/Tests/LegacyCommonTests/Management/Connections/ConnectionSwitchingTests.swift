@@ -204,7 +204,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+        defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
@@ -680,7 +680,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 nAppStateConnectTransitions += 1
             }
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+        defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
         var observedStatuses: [NEVPNStatus] = []
         var currentManager: NETunnelProviderManagerMock?
@@ -878,7 +878,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 nAppStateConnectTransitions += 1
             }
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+        defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
         var observedStatuses: [NEVPNStatus] = []
         var currentManager: NETunnelProviderManagerMock?

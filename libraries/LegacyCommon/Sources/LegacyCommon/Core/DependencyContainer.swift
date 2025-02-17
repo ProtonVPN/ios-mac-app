@@ -361,13 +361,6 @@ extension Container: LogFileManagerFactory {
     }
 }
 
-// MARK: CoreApiServiceFactory
-extension Container: CoreApiServiceFactory {
-    public func makeCoreApiService() -> CoreApiService {
-        CoreApiServiceImplementation(networking: makeNetworking())
-    }
-}
-
 // MARK: PaymentsApiServiceFactory
 extension Container: PaymentsApiServiceFactory {
     public func makePaymentsApiService() -> PaymentsApiService {

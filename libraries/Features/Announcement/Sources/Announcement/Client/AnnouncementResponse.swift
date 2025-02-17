@@ -18,6 +18,6 @@
 
 import Foundation
 
-public struct AnnouncementsResponse: Codable {
+public struct AnnouncementResponse: Codable {
     let notifications: [Announcement]
 }

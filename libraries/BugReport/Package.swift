@@ -18,7 +18,6 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.2.0")),
-        .package(url: "https://github.com/pointfreeco/swift-perception", .upToNextMajor(from: "1.3.4")),
     ],
     targets: [
         .target(
@@ -27,7 +26,6 @@ let package = Package(
                 "Strings",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SwiftNavigation", package: "swift-navigation"),
-                .product(name: "Perception", package: "swift-perception"),
             ],
             resources: [
                 .process("Resources")

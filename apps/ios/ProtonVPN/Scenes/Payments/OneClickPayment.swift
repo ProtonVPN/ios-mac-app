@@ -18,10 +18,13 @@
 
 import UIKit
 
+import Dependencies
+
 import Domain
 import Modals
 import Modals_iOS
 import LegacyCommon
+import CommonNetworking
 import Strings
 
 import ProtonCoreFeatureFlags
@@ -74,7 +77,6 @@ final class OneClickPayment {
     private var plansClientValue: PlansClient?
 
     init(
-        sessionService: SessionService,
         alertService: CoreAlertService,
         planService: PlanService,
         payments: Payments
@@ -85,6 +87,8 @@ final class OneClickPayment {
 
         let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
             Task {
+                @Dependency(\.sessionService) var sessionService
+
                 // Fetch a session login URL so the user can easily visit their account page.
                 let url = await sessionService.getPlanSession(mode: .upgrade)
                 alertService.push(

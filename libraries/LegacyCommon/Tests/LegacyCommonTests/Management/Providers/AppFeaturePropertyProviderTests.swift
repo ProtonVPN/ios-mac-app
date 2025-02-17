@@ -21,9 +21,9 @@ import Dependencies
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
+import Domain
 
 fileprivate enum TestFeature: String, ProvidableFeature {
-
     case on
     case off
     case freeDefault
@@ -53,10 +53,9 @@ fileprivate enum TestFeature: String, ProvidableFeature {
     }
 
     static var storageKey = "feature"
-    static var notificationName: Notification.Name? = Notification.Name("ch.protonvpn.test.feature.changed")
+    static var event: AppEvent? = .testEvent
 
     static let legacyConversion: ((Bool) -> TestFeature)? = { $0 ? .on : .off }
-
 }
 
 class AppFeaturePropertyProviderTests: XCTestCase {
@@ -162,7 +161,7 @@ class AppFeaturePropertyProviderTests: XCTestCase {
             $0.storage = storage
             $0.featureAuthorizerProvider = FeatureAuthorizerKey.constant(.success)
         } operation: {
-            let propertyChangeNotification = XCTNSNotificationExpectation(name: TestFeature.notificationName!)
+            let propertyChangeNotification = XCTNSNotificationExpectation(name: TestFeature.event!.name)
 
             let provider = AppFeaturePropertyProviderImplementation()
             provider.setValue(TestFeature.off)

@@ -46,7 +46,6 @@ let package = Package(
             dependencies: [
                 "CommonNetworking",
                 "Connection",
-                "CommonNetworking",
                 "Persistence",
                 "SharedViews",
                 "NetShield",
@@ -74,6 +73,7 @@ let package = Package(
                 "Home",
                 .product(name: "NetShield-iOS", package: "NetShield"),
                 .product(name: "ConnectionDetails-iOS", package: "ConnectionDetails"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(

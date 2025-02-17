@@ -155,9 +155,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/LocalFeatureFlags",
-        "identifier" : "LocalFeatureFlagsTests",
-        "name" : "LocalFeatureFlagsTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
+        "identifier" : "AnnouncementTests",
+        "name" : "AnnouncementTests"
       }
     },
     {

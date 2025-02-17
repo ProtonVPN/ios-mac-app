@@ -36,7 +36,6 @@ import CommonNetworkingTestSupport
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!
-    var coreApiService: CoreApiServiceMock!
     var propertiesManager: PropertiesManagerMock!
     var repositoryWrapper: ServerRepositoryWrapper!
     var networking: NetworkingMock!
@@ -55,7 +54,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     override func setUpWithError() throws {
         super.setUp()
         alertService = CoreAlertServiceDummy()
-        coreApiService = CoreApiServiceMock()
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
@@ -216,7 +214,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, CoreApiServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
 
     func makeTimerFactory() -> TimerFactory {
         return timerFactory
@@ -224,10 +222,6 @@ extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory,
 
     func makeCoreAlertService() -> CoreAlertService {
         return alertService
-    }
-
-    func makeCoreApiService() -> CoreApiService {
-        return coreApiService
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {

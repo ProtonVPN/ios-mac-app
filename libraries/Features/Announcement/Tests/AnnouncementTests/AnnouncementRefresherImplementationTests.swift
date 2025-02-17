@@ -23,24 +23,26 @@
 import XCTest
 import ProtonCoreNetworking
 @testable import Announcement
-@testable import LegacyCommon
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
     
     private var storage: AnnouncementStorageMock = AnnouncementStorageMock()
-    
-    override func setUp() {
-        super.setUp()
+
+    override class func tearDown() {
+        AnnouncementClient.testValue = AnnouncementClient {
+            return .init(notifications: [])
+        }
     }
-    
+
     func testCallsAPIOnRefresh() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
-        
-        let coreApiService = CoreApiServiceMock()
-        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
+
+        AnnouncementClient.testValue = AnnouncementClient {
             expectationApiWasCalled.fulfill()
+            return .init(notifications: [])
         }
-        let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
+
+        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
         let refresher = AnnouncementRefresherImplementation(factory: factory)
         refresher.tryRefreshing()
         
@@ -52,31 +54,30 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         expectationApiWasCalled.expectedFulfillmentCount = 1
         expectationApiWasCalled.assertForOverFulfill = true
         
-        let coreApiService = CoreApiServiceMock()
-        let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 888)
+        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
+        let refresher = AnnouncementRefresherImplementation(factory: factory)
 
-        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            success(GetApiNotificationsResponse(notifications: []))
+        AnnouncementClient.testValue = AnnouncementClient {
             expectationApiWasCalled.fulfill()
-            refresher.tryRefreshing()
+            return .init(notifications: [])
         }
         refresher.tryRefreshing()
         
         wait(for: [expectationApiWasCalled], timeout: 1)
+        refresher.tryRefreshing()
     }
     
     func testRefreshesAfterMinTimePassed() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 2
         expectationApiWasCalled.assertForOverFulfill = true
-        
-        let coreApiService = CoreApiServiceMock()
-        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
+
+        AnnouncementClient.testValue = AnnouncementClient {
             expectationApiWasCalled.fulfill()
+            return .init(notifications: [])
         }
-        let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)
+        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
+        let refresher = AnnouncementRefresherImplementation(factory: factory, refreshInterval: 0)
         refresher.tryRefreshing()
         refresher.tryRefreshing()
         
@@ -89,17 +90,30 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
             Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)
         ])
-        
-        let coreApiService = CoreApiServiceMock()
-        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            let announcements = [
-                Announcement(notificationID: "newDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
-                Announcement(notificationID: "newOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)
-            ]
-            success(GetApiNotificationsResponse(notifications: announcements))
+
+        AnnouncementClient.testValue = AnnouncementClient {
+            return .init(notifications: [
+                Announcement(
+                    notificationID: "newDefault",
+                    startTime: Date(),
+                    endTime: Date(),
+                    type: Announcement.NotificationType.default.rawValue,
+                    offer: nil,
+                    reference: nil
+                ),
+                Announcement(
+                    notificationID: "newOneTime",
+                    startTime: Date(),
+                    endTime: Date(),
+                    type: Announcement.NotificationType.oneTime.rawValue,
+                    offer: nil,
+                    reference: nil
+                )
+            ])
         }
-        let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)
+
+        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
+        let refresher = AnnouncementRefresherImplementation(factory: factory, refreshInterval: 0)
 
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
@@ -120,13 +134,13 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
             Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)]
         )
-        
-        let coreApiService = CoreApiServiceMock()
-        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            failure(ResponseError.unknownError)
+
+        AnnouncementClient.testValue = AnnouncementClient {
+            throw ResponseError.unknownError
         }
-        let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)
+
+        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
+        let refresher = AnnouncementRefresherImplementation(factory: factory, refreshInterval: 0)
 
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
@@ -143,20 +157,13 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
 
 fileprivate class AnnouncementRefresherImplementationFactory: AnnouncementRefresherImplementation.Factory {
     
-    public var coreApiService: CoreApiService
     public var announcementStorage: AnnouncementStorage
     
-    public init(coreApiService: CoreApiService, announcementStorage: AnnouncementStorage) {
-        self.coreApiService = coreApiService
+    public init(announcementStorage: AnnouncementStorage) {
         self.announcementStorage = announcementStorage
     }
-    
-    func makeCoreApiService() -> CoreApiService {
-        return coreApiService
-    }
-    
+
     func makeAnnouncementStorage() -> AnnouncementStorage {
         return announcementStorage
     }
-    
 }

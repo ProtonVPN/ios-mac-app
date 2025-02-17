@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import Announcement
 
 public struct ImageCacheMock: ImageCacheProtocol {
     public static var completionBlockParameterValue = true

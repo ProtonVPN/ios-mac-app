@@ -50,17 +50,23 @@ public protocol AnnouncementRefresherFactory {
 }
 
 public class AnnouncementRefresherImplementation: AnnouncementRefresher {
-    static let refreshInterval: TimeInterval = .hours(3)
+    public static let defaultRefreshInterval: TimeInterval = .hours(3)
 
     public typealias Factory = AnnouncementStorageFactory
     private let factory: Factory
     
     private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
-    
+
+    private let refreshInterval: TimeInterval
+
     private var lastRefreshDate: Date?
 
-    public init(factory: Factory) {
+    public init(
+        factory: Factory,
+        refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval
+    ) {
         self.factory = factory
+        self.refreshInterval = refreshInterval
 
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
         AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(refresh))
@@ -68,7 +74,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     
     public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < Self.refreshInterval {
+           Date().timeIntervalSince(lastRefresh) < Self.defaultRefreshInterval {
             return
         }
         lastRefreshDate = Date()

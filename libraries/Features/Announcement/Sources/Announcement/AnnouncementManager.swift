@@ -46,6 +46,12 @@ public protocol AnnouncementManager {
     func shouldShowAnnouncementsIcon() -> Bool
 }
 
+extension AnnouncementManager {
+    public static var notification: Notification.Name {
+        .init("Announcements")
+    }
+}
+
 /// Fetches announcements from storage.
 /// Informs if there are any unread current announcements.
 /// Marks announcements as read.

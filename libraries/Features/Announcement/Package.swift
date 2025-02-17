@@ -16,28 +16,47 @@ let package = Package(
             targets: ["Announcement"]),
     ],
     dependencies: [
-        .package(path: "../Foundations/Strings"),
-        .package(path: "../Foundations/Domain"),
-        .package(path: "../Shared/CommonNetworking"),
-        .package(path: "../Shared/Connection"),
-        .package(path: "../Core/NEHelper"),
-        .package(path: "../Core/LegacyCommon"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../Foundations/Ergonomics"),
+        .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Shared/CommonNetworking"),
+        .package(path: "../../Shared/Connection"),
+        .package(path: "../../NEHelper"),
+        .package(path: "../../LegacyCommon"),
+        .package(path: "../../../external/protoncore"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [
         .target(
             name: "Announcement",
             dependencies: [
                 "Strings",
+                "Ergonomics",
                 "Domain",
                 "CommonNetworking",
                 "LegacyCommon",
                 "Connection",
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "ProtonCoreNetworking", package: "protoncore"),
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+                .product(name: "Logging", package: "swift-log"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
             ]),
         .testTarget(
             name: "AnnouncementTests",
-            dependencies: ["Announcement"]
+            dependencies: [
+                "Announcement",
+                "LegacyCommon",
+                "Domain",
+                .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
+            ]
         ),
     ]
 )

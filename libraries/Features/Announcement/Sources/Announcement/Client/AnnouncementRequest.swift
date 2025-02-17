@@ -70,7 +70,7 @@ final class AnnouncementRequest {
     }
 }
 
-extension AnnouncementsRequest: Request {
+extension AnnouncementRequest: Request {
     var path: String {
         var components = URLComponents(string: basePath)
         components?.queryItems = queryItems()

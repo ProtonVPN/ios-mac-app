@@ -27,8 +27,8 @@ import VPNAppCore
 import Domain
 
 @testable import Announcement
-@testable import LegacyCommon
 @testable import VPNSharedTesting
+@testable import LegacyCommon
 
 class AnnouncementsViewModelTests: XCTestCase {
     

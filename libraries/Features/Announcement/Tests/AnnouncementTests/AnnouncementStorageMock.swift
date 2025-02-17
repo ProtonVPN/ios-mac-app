@@ -21,6 +21,8 @@
 //
 
 import Foundation
+import Domain
+@testable import Announcement
 
 public class AnnouncementStorageMock: AnnouncementStorage {
     public var announcements: [Announcement]
@@ -35,7 +37,7 @@ public class AnnouncementStorageMock: AnnouncementStorage {
     
     public func store(_ objects: [Announcement]) {
         self.announcements = objects
-        NotificationCenter.default.post(name: AnnouncementStorageNotifications.contentChanged, object: objects)
+        AppEvent.announcementStorageContent.post(objects)
     }
 
     public func clear() {

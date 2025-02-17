@@ -31,8 +31,9 @@ let package = Package(
         .target(
             name: "NetShield",
             dependencies: [
+                "Ergonomics",
                 "Strings",
-                "Theme"
+                "Theme",
             ]
         ),
         .target(

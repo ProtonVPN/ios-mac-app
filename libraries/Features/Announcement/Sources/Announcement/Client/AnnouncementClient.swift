@@ -20,11 +20,12 @@ import Foundation
 import Dependencies
 import DependenciesMacros
 
+@DependencyClient
 public struct AnnouncementClient: Sendable {
     public internal(set) var fetchAnnouncements: @Sendable () async throws -> AnnouncementResponse
 }
 
-extension LocationClient: DependencyKey {
+extension AnnouncementClient: DependencyKey {
     public static let liveValue: AnnouncementClient = {
         @Dependency(\.networking) var networking
         return AnnouncementClient(
@@ -41,12 +42,13 @@ extension LocationClient: DependencyKey {
             AnnouncementResponse(notifications: [])
         }
     }()
+    #endif
 }
 
 extension DependencyValues {
-    public var locationClient: LocationClient {
-        get { self[LocationClient.self] }
-        set { self[LocationClient.self] = newValue }
+    public var announcementClient: AnnouncementClient {
+        get { self[AnnouncementClient.self] }
+        set { self[AnnouncementClient.self] = newValue }
     }
 }
 

@@ -142,6 +142,13 @@
     },
     {
       "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
+        "identifier" : "AnnouncementTests",
+        "name" : "AnnouncementTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:..\/..\/libraries\/NEHelper",
         "identifier" : "VPNSharedTests",
         "name" : "VPNSharedTests"
