@@ -406,32 +406,49 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             self?.logOutCleanup()
             self?.setAndNotify(for: .notEstablished, reason: reason)
         }
-        
-        if appStateManager.state.isSafeToEnd {
+
+        @Dependency(\.settingsClient) var settingsClient
+
+        let isConnectionFeatureEnabled = FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+
+        if isConnectionFeatureEnabled {
+            if !settingsClient.isActive() {
+                logOutRoutine()
+                return
+            }
+        } else if appStateManager.state.isSafeToEnd {
             logOutRoutine()
             return
         }
-        
-        let confirmationClosure: () -> Void = { [weak self] in
-            guard let self = self else {
-                return
-            }
 
-            if self.appStateManager.state.isConnected {
+        let confirmationClosure: () -> Void = { [weak self] in
+            guard let self else { return }
+
+            if isConnectionFeatureEnabled, settingsClient.isActive() {
+                Task {
+                    do {
+                        try await settingsClient.disconnect()
+                        logOutRoutine()
+                    } catch {
+                        log.error("Failed to disconnect: \(error)", category: .connection)
+                    }
+                }
+                return
+            } else if self.appStateManager.state.isConnected {
                 self.appStateManager.disconnect { logOutRoutine() }
                 return
             }
 
             logOutRoutine()
         }
-        
+
         if force {
             confirmationClosure()
         } else {
             alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
         }
     }
-    
+
     private func logOutCleanup() {
         let group = DispatchGroup()
         refreshTimer.stopTimers()

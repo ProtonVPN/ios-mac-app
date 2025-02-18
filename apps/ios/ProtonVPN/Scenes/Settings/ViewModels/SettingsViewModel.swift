@@ -683,13 +683,13 @@ final class SettingsViewModel {
                 break // we're not connected, so nothing needs to be done
 
             case .protocolUnavailable:
-                self.disconnect()
+                self.requestDisconnect()
 
             case .withReconnect:
                 if shouldReconnect {
                     self.reconnect(with: .connectionProtocol(newProtocol))
                 } else {
-                    self.disconnect()
+                    self.requestDisconnect()
                 }
             }
         }
@@ -760,7 +760,14 @@ final class SettingsViewModel {
     }
     
     private func logOut() {
-        appSessionManager.logOut(force: false, reason: nil)
+        if isActive() {
+            let confirmationClosure: () -> Void = { [weak self] in
+                self?.appSessionManager.logOut(force: true, reason: nil)
+            }
+            alertService.push(alert: LogoutWarningAlert(confirmHandler: confirmationClosure))
+        } else {
+            appSessionManager.logOut(force: false, reason: nil)
+        }
     }
 
     func isActive() -> Bool {
@@ -802,24 +809,30 @@ final class SettingsViewModel {
         }
     }
 
-    private func disconnect() {
+    private func requestDisconnect(completionHandler: (@MainActor () -> Void)? = nil) {
         if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
             Task {
                 do {
                     try await settingsClient.disconnect()
+                    await completionHandler?()
                 } catch {
                     log.error("Failed to disconnect: \(error)", category: .connection)
+                    await completionHandler?()
                 }
             }
         } else {
             vpnGateway.disconnect()
+
+            DispatchQueue.main.async {
+                completionHandler?()
+            }
         }
     }
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
         if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
-            MainActor.assumeIsolated {
-                settingsClient.update(Set([agentFeatureChange]))
+            DispatchQueue.main.async {
+                self.settingsClient.update(Set([agentFeatureChange]))
             }
         } else {
             switch agentFeatureChange {
