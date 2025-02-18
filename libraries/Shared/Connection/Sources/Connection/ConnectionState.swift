@@ -30,7 +30,7 @@ import struct Domain.VPNConnectionFeatures
 
 @available(iOS 16, *)
 @CasePathable
-public enum ConnectionState: Equatable, Sendable, CasePathable {
+public enum InternalConnectionState: Equatable, Sendable, CasePathable {
     case unknown
     case disconnected(ConnectionError?)
     case connecting(Server?)

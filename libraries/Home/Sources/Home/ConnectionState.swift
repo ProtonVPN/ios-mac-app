@@ -23,7 +23,7 @@ import Dependencies
 import VPNAppCore
 
 @available(iOS 16, *)
-extension ConnectionState {
+extension InternalConnectionState {
     public func connectionStatus() throws -> VPNConnectionStatus {
         @Dependency(\.connectionIntentStorage) var storage
         switch self {

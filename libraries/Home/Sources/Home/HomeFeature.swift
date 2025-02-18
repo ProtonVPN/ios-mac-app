@@ -68,7 +68,7 @@ public struct HomeFeature {
         package var connectionStatus: ConnectionStatusFeature.State
 
         @SharedReader(.connectionState)
-        var connectionState: ConnectionState?
+        var connectionState: InternalConnectionState?
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
@@ -103,7 +103,7 @@ public struct HomeFeature {
 
         case incomingAlert(Alert)
 
-        case onNewConnectionState(ConnectionState)
+        case onNewConnectionState(InternalConnectionState)
 
         case connection(InternalConnectionFeature.Action)
         case map(HomeMapFeature.Action)

@@ -52,7 +52,7 @@ extension ConnectToVPNKey: DependencyKey {
     static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { spec in
         @Dependency(\.connectionBridge) var bridge
 
-        @SharedReader(.connectionState) var connectionState: ConnectionState?
+        @SharedReader(.connectionState) var connectionState: InternalConnectionState?
 
         if connectionState.is(\.connected) {
             bridge.push(intent: InternalConnectionFeature.Action.disconnect(.userIntent))

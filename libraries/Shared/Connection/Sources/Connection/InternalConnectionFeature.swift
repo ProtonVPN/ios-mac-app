@@ -75,6 +75,10 @@ public struct InternalConnectionFeature: Reducer, Sendable {
         case startObserving
         case stopObserving
         case handleLogout
+
+//        public enum Delegate {
+//            case internalStateChanged(InternalConnectionState)
+//        }
     }
 
     @CasePathable
@@ -90,7 +94,7 @@ public struct InternalConnectionFeature: Reducer, Sendable {
         case observation
     }
 
-    @Shared(.connectionState) var connectionState: ConnectionState?
+    @Shared(.connectionState) var connectionState: InternalConnectionState?
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
@@ -159,7 +163,7 @@ public struct InternalConnectionFeature: Reducer, Sendable {
             case .connect(let intent):
                 clearErrorsFromPreviousAttempts(state: &state)
 
-                let currentConnectionState = ConnectionState(connectionFeatureState: state)
+                let currentConnectionState = InternalConnectionState(connectionFeatureState: state)
                 switch currentConnectionState {
                 case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
@@ -330,7 +334,7 @@ public struct InternalConnectionFeature: Reducer, Sendable {
     }
 
     func updateConnectionState(currentState: InternalConnectionFeature.State, forceUpdate: Bool = false) {
-        let newConnectionState = ConnectionState(connectionFeatureState: currentState)
+        let newConnectionState = InternalConnectionState(connectionFeatureState: currentState)
         if newConnectionState != connectionState {
             if case .unknown = connectionState, !newConnectionState.shouldTransitionFromUnknown {
                 // Don't transition away from unknown until we fully resolved our connection state
