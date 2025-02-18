@@ -60,10 +60,10 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+        let disconnected = InternalConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
 
         let store = TestStore(initialState: disconnected) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -163,10 +163,10 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+        let disconnected = InternalConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
 
         let store = TestStore(initialState: disconnected) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -245,7 +245,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
 
         // Ensure that the final state post-disconnection contains the error so that it can be shown in the UI
-        let disconnectedWithPolicyViolationDelinquent: ConnectionFeature.State = .init(
+        let disconnectedWithPolicyViolationDelinquent: InternalConnectionFeature.State = .init(
             tunnelState: .disconnected(nil),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
             localAgentState: .disconnected(.agentError(.policyViolationDelinquent))
@@ -279,14 +279,14 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(
+        let disconnected = InternalConnectionFeature.State.init(
             tunnelState: .disconnected(nil),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
             localAgentState: .disconnected(nil)
         )
 
         let store = TestStore(initialState: disconnected) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -383,7 +383,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.stopObservingStateChanges)
         await store.receive(\.localAgent.stopAllObservations)
 
-        let connectedWithRefreshedCertificate: ConnectionFeature.State = .init(
+        let connectedWithRefreshedCertificate: InternalConnectionFeature.State = .init(
             tunnelState: .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now)),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate)),
             localAgentState: .connected(nil)
@@ -422,14 +422,14 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(
+        let disconnected = InternalConnectionFeature.State.init(
             tunnelState: .disconnected(nil),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
             localAgentState: .disconnected(nil)
         )
 
         let store = TestStore(initialState: disconnected) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -514,14 +514,14 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let intitialState = ConnectionFeature.State.init(
+        let intitialState = InternalConnectionFeature.State.init(
             tunnelState: .disconnecting(nil),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
             localAgentState: .disconnected(nil)
         )
 
         let store = TestStore(initialState: intitialState) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -611,14 +611,14 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let intitialState = ConnectionFeature.State.init(
+        let intitialState = InternalConnectionFeature.State.init(
             tunnelState: .connected(.init(logicalInfo: connectedLogicalServer, connectionDate: now)),
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
             localAgentState: .connected(nil)
         )
 
         let store = TestStore(initialState: intitialState) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -671,10 +671,10 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+        let disconnected = InternalConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
 
         let store = TestStore(initialState: disconnected) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
@@ -764,10 +764,10 @@ final class ConnectionFeatureTests: XCTestCase {
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-        let disconnected = ConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+        let disconnected = InternalConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
 
         let store = TestStore(initialState: disconnected) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         } withDependencies: {
             $0.date = .constant(.now)
             $0.continuousClock = mockClock

@@ -55,7 +55,7 @@ extension ConnectToVPNKey: DependencyKey {
         @SharedReader(.connectionState) var connectionState: ConnectionState?
 
         if connectionState.is(\.connected) {
-            bridge.push(intent: ConnectionFeature.Action.disconnect(.userIntent))
+            bridge.push(intent: InternalConnectionFeature.Action.disconnect(.userIntent))
 
             try await $connectionState.when(willBe: \.disconnected, every: .milliseconds(20), deadline: .seconds(2)) {
                 try await prepareConnection(spec)
@@ -100,6 +100,6 @@ extension ConnectToVPNKey: DependencyKey {
             excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
         )
 
-        bridge.push(intent: ConnectionFeature.Action.preparation(spec, server, connectionProtocol, tunnelFeatures))
+        bridge.push(intent: InternalConnectionFeature.Action.preparation(spec, server, connectionProtocol, tunnelFeatures))
     }
 }

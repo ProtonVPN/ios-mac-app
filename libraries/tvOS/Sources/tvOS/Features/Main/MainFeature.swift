@@ -43,7 +43,7 @@ struct MainFeature {
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
 
-        var connection = ConnectionFeature.State()
+        var connection = InternalConnectionFeature.State()
 
         @SharedReader(.connectionState) var connectionState: ConnectionState?
         @Shared(.userLocation) var userLocation: UserLocation?
@@ -60,7 +60,7 @@ struct MainFeature {
         case onLogout
         case updateUserLocation
 
-        case connection(ConnectionFeature.Action)
+        case connection(InternalConnectionFeature.Action)
         case connectDisconnectingIfNecessary(String)
 
         case errorOccurred(Error)
@@ -75,7 +75,7 @@ struct MainFeature {
 
     var body: some Reducer<State, Action> {
         Scope(state: \.connection, action: \.connection) {
-            ConnectionFeature()
+            InternalConnectionFeature()
         }
         Scope(state: \.homeLoading, action: \.homeLoading) {
             HomeLoadingFeature()

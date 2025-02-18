@@ -27,7 +27,7 @@ import DependenciesMacros
 public struct ConnectionBridge: Sendable {
     // For prototyping, let's just typealias.
     // Later we can define an enum with a concrete set of actions like connect(...) and disconnect
-    public typealias Intent = ConnectionFeature.Action
+    public typealias Intent = InternalConnectionFeature.Action
 
     // When Swift6 available, switch to some AsyncSequence<ConnectionIntent, Never> or equivalent
     public internal(set) var intentStream: () -> AsyncStream<Intent> = { .finished }

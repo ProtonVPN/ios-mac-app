@@ -96,7 +96,7 @@ public enum ConnectionState: Equatable, Sendable, CasePathable {
         }
     }
 
-    init(connectionFeatureState: ConnectionFeature.State) {
+    init(connectionFeatureState: InternalConnectionFeature.State) {
         self.init(
             tunnelState: connectionFeatureState.tunnel,
             certAuthState: connectionFeatureState.certAuth,

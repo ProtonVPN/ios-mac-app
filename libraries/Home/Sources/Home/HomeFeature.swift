@@ -60,7 +60,7 @@ public struct HomeFeature {
         /// For simplicity's sake, let's immplement Connection as a child feature of Home.
         /// In the future, when we add a sibling feature (like countries, settings or profiles),
         /// we will have to have a parent App feature.  Connection can be moved
-        public var connection: ConnectionFeature.State
+        public var connection: InternalConnectionFeature.State
         public var map: HomeMapFeature.State
         public var recents: RecentsFeature.State
         public var connectionCard: HomeConnectionCardFeature.State
@@ -105,7 +105,7 @@ public struct HomeFeature {
 
         case onNewConnectionState(ConnectionState)
 
-        case connection(ConnectionFeature.Action)
+        case connection(InternalConnectionFeature.Action)
         case map(HomeMapFeature.Action)
         case recents(RecentsFeature.Action)
         case connectionStatus(ConnectionStatusFeature.Action)
@@ -130,7 +130,7 @@ public struct HomeFeature {
     public var body: some Reducer<State, Action> {
         if Self.shouldUseConnectionFeature {
             Scope(state: \.connection, action: \.connection) {
-                ConnectionFeature()
+                InternalConnectionFeature()
                     ._printChanges()
                     .logActions(.connectionLogger) // Logs actions to our usual logger, even outside of DEBUG.
             }

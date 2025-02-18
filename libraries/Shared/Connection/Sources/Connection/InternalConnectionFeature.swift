@@ -32,7 +32,7 @@ import VPNAppCore
 import Domain
 
 @available(iOS 16, *)
-public struct ConnectionFeature: Reducer, Sendable {
+public struct InternalConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
@@ -329,7 +329,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
     }
 
-    func updateConnectionState(currentState: ConnectionFeature.State, forceUpdate: Bool = false) {
+    func updateConnectionState(currentState: InternalConnectionFeature.State, forceUpdate: Bool = false) {
         let newConnectionState = ConnectionState(connectionFeatureState: currentState)
         if newConnectionState != connectionState {
             if case .unknown = connectionState, !newConnectionState.shouldTransitionFromUnknown {
