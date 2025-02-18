@@ -33,7 +33,17 @@ extension DisconnectVPNKey: DependencyKey {
     }()
 
     public static let newDisconnect: @Sendable () async throws -> Void = {
-        Dependency(\.connectionBridge).wrappedValue.push(intent: .disconnect(.userIntent))
+        @Dependency(\.connectionBridge) var bridge
+        @SharedReader(.connectionState) var connectionState: ConnectionState?
+
+        bridge.push(intent: .disconnect(.userIntent))
+
+        // let's wait a bit to be disconnected, but no more than 3 seconds
+        // if it throws a `SharedReaderTimeoutError`, we'll discard it, thus `try?` below
+        // TODO: Improve this to have a clean way to be sure that after awaiting this, we're disconnected!
+        try? await $connectionState.when(willBe: \.disconnected, every: .milliseconds(20), deadline: .seconds(3)) {
+            // no-op
+        }
     }
 
     /// Bridges new disconnection dependency with the legacy connection layer
