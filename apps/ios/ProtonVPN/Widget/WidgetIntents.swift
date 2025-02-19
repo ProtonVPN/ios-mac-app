@@ -63,3 +63,14 @@ public struct ConnectToVPNIntent: AppIntent {
         return .result()
     }
 }
+
+public struct LoginIntent: AppIntent {
+    public static var title: LocalizedStringResource = "Login"
+    public static let openAppWhenRun = true
+
+    public init() { }
+
+    public func perform() async throws -> some IntentResult {
+        return .result()
+    }
+}
