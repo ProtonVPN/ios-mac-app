@@ -30,10 +30,12 @@ import VPNAppCore
 @testable import ProtonVPN
 
 class PlanServiceMock: PlanService {
+    var iapStatus: IAPSupportStatus = .enabled
+
     var plansDataSource: PlansDataSourceProtocol?
     
     var payments: ProtonCorePayments.Payments {
-        fatalError()
+        fatalError("Should not invoke payments accessor")
     }
 
     weak var delegate: PlanServiceDelegate?

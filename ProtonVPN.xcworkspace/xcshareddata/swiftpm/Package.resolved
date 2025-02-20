@@ -284,8 +284,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-identified-collections",
       "state" : {
-        "revision" : "2f5ab6e091dd032b63dacbda052405756010dc3b",
-        "version" : "1.1.0"
+        "revision" : "322d9ffeeba85c9f7c4984b39422ec7cc3c56597",
+        "version" : "1.1.1"
       }
     },
     {
@@ -338,8 +338,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-sharing",
       "state" : {
-        "revision" : "c5ea46f0712cd3b639e2c7d6bf3f193116e0ff8d",
-        "version" : "2.0.2"
+        "revision" : "641edfa456fa6a927d12137c38fc71cbd9861be0",
+        "version" : "2.1.0"
       }
     },
     {

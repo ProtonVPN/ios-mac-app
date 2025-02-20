@@ -186,16 +186,19 @@ public final class RefreshTokenExpiredAlert: SystemAlert {
 
 public final class UpgradeUnavailableAlert: SystemAlert {
     public var title: String? = Localizable.upgradeUnavailableTitle
-    public var message: String? = Localizable.upgradeUnavailableBody
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init() {
-        let confirmHandler: () -> Void = {
-            SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-        }
-        actions.append(AlertAction(title: Localizable.account, style: .confirmative, handler: confirmHandler))
+    public init(message: String? = nil, accountDashboardURL url: URL? = nil) {
+        self.message = message ?? Localizable.upgradeUnavailableBody
+
+        actions.append(AlertAction(title: Localizable.account, style: .confirmative) {
+            SafariService().open(
+                url: url?.absoluteString ?? CoreAppConstants.ProtonVpnLinks.accountDashboard
+            )
+        })
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
 }

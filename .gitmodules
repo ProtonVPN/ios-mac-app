@@ -1,7 +1,7 @@
 [submodule "external/protoncore"]
 	path = external/protoncore
 	url = ../../shared/protoncore
-	tag = 29.0.5
+	tag = 29.0.8
 [submodule "external/apple-fusion"]
 	path = external/apple-fusion
 	url = ../../../tpe/apple-fusion

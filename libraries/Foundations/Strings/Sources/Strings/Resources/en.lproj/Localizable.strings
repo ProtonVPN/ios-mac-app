@@ -844,6 +844,9 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Your Proton VPN subscription cannot be upgraded from within the app, please visit account.protonvpn.com to upgrade.";
 
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Your Proton VPN subscription cannot be upgraded from the TestFlight version of the app, please visit account.protonvpn.com to upgrade.";
+
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Clear application data";
 

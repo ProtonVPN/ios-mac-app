@@ -22,12 +22,30 @@ import Domain
 import Modals
 import Modals_iOS
 import LegacyCommon
+import Strings
 
 import ProtonCoreFeatureFlags
 import ProtonCorePayments
 
 final class OneClickPayment {
     typealias Factory = PlanServiceFactory & CoreAlertServiceFactory
+
+    enum UnavailableError: Error {
+        case featureFlagDisabled
+        case isTestFlight
+        case iapDisabled(localizedReason: String?)
+
+        var localizedDescription: String {
+            switch self {
+            case .featureFlagDisabled:
+                return "Account upgrade is currently unavailable on this device."
+            case .isTestFlight:
+                return "Account upgrade is not available on TestFlight."
+            case .iapDisabled(localizedReason: let reason):
+                return reason ?? "In-App purchases are temporarily unavailable on this device."
+            }
+        }
+    }
 
     static var allowPayments: Bool {
         if Bundle.isTestflight {
@@ -55,12 +73,37 @@ final class OneClickPayment {
 
     private var plansClientValue: PlansClient?
 
-    init?(alertService: CoreAlertService, planService: PlanService, payments: Payments) {
-        guard Self.allowPayments else { return nil }
-
+    init(
+        sessionService: SessionService,
+        alertService: CoreAlertService,
+        planService: PlanService,
+        payments: Payments
+    ) throws {
         guard case .right(let plansDataSource) = payments.planService else {
-            log.error("DynamicPlan FF disabled!")
-            return nil
+            throw UnavailableError.featureFlagDisabled
+        }
+
+        let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
+            Task {
+                // Fetch a session login URL so the user can easily visit their account page.
+                let url = await sessionService.getPlanSession(mode: .upgrade)
+                alertService.push(
+                    alert: UpgradeUnavailableAlert(
+                        message: localizedReason,
+                        accountDashboardURL: url
+                    )
+                )
+            }
+        }
+
+        guard Self.allowPayments else {
+            pushCantUpgradeAlert(Localizable.upgradeUnavailableOnTestflight)
+            throw UnavailableError.isTestFlight
+        }
+
+        if case let .disabled(localizedReason) = planService.iapStatus {
+            pushCantUpgradeAlert(localizedReason)
+            throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
         self.plansDataSource = plansDataSource

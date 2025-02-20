@@ -45,12 +45,13 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory
+    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory & SessionServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
+    private let sessionService: SessionService
 
     private var oneClickPayment: OneClickPayment?
 
@@ -60,6 +61,7 @@ final class OnboardingModuleService {
         self.windowService = factory.makeWindowService()
         self.planService = factory.makePlanService()
         self.alertService = factory.makeCoreAlertService()
+        self.sessionService = factory.makeSessionService()
         self.modalsFactory = ModalsFactory()
     }
 }
@@ -104,12 +106,16 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     func postOnboardingAction() {
-        guard let oneClickPayment = OneClickPayment(
-            alertService: alertService,
-            planService: planService,
-            payments: planService.payments
-        ) else {
-            // Can be disabled if `DynamicPlan` FF set to false, but this doesn't happen in practice (default is true).
+        let oneClickPayment: OneClickPayment
+        do {
+            oneClickPayment = try OneClickPayment(
+                sessionService: sessionService,
+                alertService: alertService,
+                planService: planService,
+                payments: planService.payments
+            )
+        } catch {
+            log.error("Unexpected payments error: \(error)")
             return
         }
 
