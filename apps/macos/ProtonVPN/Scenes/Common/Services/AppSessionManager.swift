@@ -122,7 +122,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func attemptLogin() async throws {
         log.debug("Attempt silent login", category: .app)
         guard authKeychain.fetch() != nil else {
-            throw ProtonVpnError.userCredentialsMissing
+            throw CommonVpnError.userCredentialsMissing
         }
         try await finishLogin()
     }
@@ -132,7 +132,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             try authKeychain.store(authCredentials)
             unauthKeychain.clear()
         } catch {
-            throw ProtonVpnError.keychainWriteFailed
+            throw CommonVpnError.keychainWriteFailed
         }
 
         try await finishLogin()
@@ -218,7 +218,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     /// Ignore errors unless one of the following is true:
-    /// - API returns `ProtonVpnError.subuserWithoutSessions`
+    /// - API returns `CommonVpnError.subuserWithoutSessions`
     /// - Server storage is empty or user IP is not known
     /// - We hit a keychain error
     private func getVPNProperties() async throws -> VpnProperties? {
@@ -231,10 +231,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 lastKnownLocation: location,
                 serversAccordingToTier: shouldRefreshServersAccordingToUserTier
             )
-        } catch ProtonVpnError.subuserWithoutSessions {
+        } catch CommonVpnError.subuserWithoutSessions {
             log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
-            throw ProtonVpnError.subuserWithoutSessions
+            throw CommonVpnError.subuserWithoutSessions
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
             @Dependency(\.serverRepository) var serverRepository
@@ -252,12 +252,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
 
         guard let activeUsername = await appState.descriptor?.username else {
-            throw ProtonVpnError.fetchSession
+            throw CommonVpnError.fetchSession
         }
 
         guard let vpnCredentials = try? vpnKeychain.fetch() else {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
-            throw ProtonVpnError.fetchSession
+            throw CommonVpnError.fetchSession
         }
 
         if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
@@ -282,7 +282,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
                 continuation.resume()
             }, cancelHandler: {
-                continuation.resume(throwing: ProtonVpnError.vpnSessionInProgress)
+                continuation.resume(throwing: CommonVpnError.vpnSessionInProgress)
             })
             self.alertService.push(alert: alert)
         }

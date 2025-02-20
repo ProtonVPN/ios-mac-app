@@ -51,8 +51,8 @@ public class ErrorCode {
     public static let userCreation = 3000
 }
 
-public class NetworkErrorCode {
-    
+public enum NetworkErrorCode {
+
     public static let timedOut = NSURLErrorTimedOut
     public static let cannotFindHost = NSURLErrorCannotFindHost
     public static let cannotConnectToHost = NSURLErrorCannotConnectToHost
@@ -66,7 +66,7 @@ public class NetworkErrorCode {
     public static let tls = 3500
 }
 
-public class ApiErrorCode { // error codes returned by the api
+public enum ApiErrorCode { // error codes returned by the api
     
     public static let alreadyRegistered = 2500
     

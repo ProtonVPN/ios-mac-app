@@ -129,7 +129,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         guard authKeychain.fetch()?.username != nil else {
-            completion(.failure(ProtonVpnError.userCredentialsMissing))
+            completion(.failure(CommonVpnError.userCredentialsMissing))
             return
         }
         Task {
@@ -149,7 +149,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             try authKeychain.store(authCredentials)
             unauthKeychain.clear()
         } catch {
-            throw ProtonVpnError.keychainWriteFailed
+            throw CommonVpnError.keychainWriteFailed
         }
 
         do {
@@ -319,10 +319,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 announcementRefresher.tryRefreshing()
             }
 
-        } catch ProtonVpnError.subuserWithoutSessions {
+        } catch CommonVpnError.subuserWithoutSessions {
             log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
-            throw ProtonVpnError.subuserWithoutSessions
+            throw CommonVpnError.subuserWithoutSessions
         } catch {
             // In case getting vpn properties fails, we don't log user out in all cases. Instead
             // check if we can continue.
@@ -366,7 +366,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         guard let activeUsername = await appStateManager.stateThreadSafe.descriptor?.username,
                 let vpnCredentials = try? vpnKeychain.fetch() else {
-            throw ProtonVpnError.fetchSession // Error
+            throw CommonVpnError.fetchSession // Error
         }
 
         let usernameFromAppStateManager = activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)

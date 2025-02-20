@@ -35,17 +35,30 @@ extension ConnectionProtocol: LocalizedStringConvertible {
 extension VpnProtocol: LocalizedStringConvertible {
 
     public var localizedDescription: String {
+        var string: String
         switch self {
-        case .ike: return "IKEv2"
-        case .openVpn(let transport):
-            return "OpenVPN (\(transport.rawValue.uppercased()))"
-        case .wireGuard(let transport):
-            switch transport {
-            case .udp, .tcp:
-                return "WireGuard (\(transport.rawValue.uppercased()))"
+        case .ike:
+            string = Localizable.ikev2
+        case .openVpn(let transportProtocol):
+            string = Localizable.openvpn
+            switch transportProtocol {
+            case .tcp:
+                string += " (\(Localizable.tcp))"
+            case .udp:
+                string += " (\(Localizable.udp))"
+            }
+        case .wireGuard(let transportProtocol):
+            string = Localizable.wireguard
+            switch transportProtocol {
+            case .udp:
+                string += "" // (\(Localizable.udp))
+            case .tcp:
+                string += " (\(Localizable.tcp))"
             case .tls:
-                return "Stealth"
+                string = Localizable.wireguardTls
             }
         }
+
+        return string
     }
 }

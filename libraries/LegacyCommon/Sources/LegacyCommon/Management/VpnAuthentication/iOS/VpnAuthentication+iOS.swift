@@ -118,7 +118,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                     // Extension has updated the certificate and placed it in the keychain. Let's fetch it on our end.
                     guard let keys = self?.authenticationStorage.getStoredKeys(),
                           let certificate = self?.authenticationStorage.getStoredCertificate() else {
-                        completionHandler(.failure(ProtonVpnError.userCredentialsMissing))
+                        completionHandler(.failure(CommonVpnError.userCredentialsMissing))
                         return
                     }
 
@@ -164,7 +164,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                 return
             }
             guard retryingForExpiredSessions else {
-                completionHandler(.failure(ProtonVpnError.userCredentialsExpired))
+                completionHandler(.failure(CommonVpnError.userCredentialsExpired))
                 return
             }
             self?.promptExtensionForCertificateRefresh(features: features,
@@ -214,7 +214,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                     // We should only ever expect these responses for cert refreshes, not for this entry point.
                     // If we're hitting this, something is very wrong.
                     log.assertionFailure("Received \(response) after trying to renew session?")
-                    completionHandler(.failure(ProtonVpnError.userCredentialsExpired))
+                    completionHandler(.failure(CommonVpnError.userCredentialsExpired))
                 }
             case .failure(let error):
                 completionHandler(.failure(error))

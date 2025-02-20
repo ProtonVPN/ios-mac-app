@@ -11,6 +11,7 @@ import Foundation
 
 import Domain
 import VPNAppCore
+import Localization
 import LegacyCommon
 
 final class VpnProtocolViewModel {
@@ -59,7 +60,7 @@ final class VpnProtocolViewModel {
                     return true
                 }
 
-                return .checkmarkStandard(title: item.localizedString,
+                return .checkmarkStandard(title: item.localizedDescription,
                                           checked: selectedProtocol == item,
                                           handler: handler)
             }

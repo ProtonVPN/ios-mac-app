@@ -651,7 +651,7 @@ public final class VpnManager: VpnManagerProtocol {
             }
 
             guard let vpnManager = vpnManager else {
-                self.setState(withError: ProtonVpnError.vpnManagerUnavailable)
+                self.setState(withError: CommonVpnError.vpnManagerUnavailable)
                 return
             }
             
@@ -747,13 +747,13 @@ public final class VpnManager: VpnManagerProtocol {
                 self.propertiesManager.hasConnected = true
             }
         case .error(let error):
-            if case ProtonVpnError.tlsServerVerification = error {
+            if case CommonVpnError.tlsServerVerification = error {
                 self.disconnect {}
                 SentryHelper.shared?.log(error: error)
                 self.alertService?.push(alert: MITMAlert(messageType: .vpn))
                 break
             }
-            if case ProtonVpnError.tlsInitialisation = error {
+            if case CommonVpnError.tlsInitialisation = error {
                 self.disconnect {} // Prevent infinite connection loop
                 break
             }
@@ -861,11 +861,11 @@ public final class VpnManager: VpnManagerProtocol {
         protocolFactory.vpnProviderManager(for: .configuration) { vpnManager, error in
             if let error = error {
                 log.error("Error loading VPN Manager for removal: \(error)", category: .ui, metadata: ["factory": "\(protocolFactory)"])
-                completionHandler?(ProtonVpnError.removeVpnProfileFailed)
+                completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }
             guard let vpnManager = vpnManager else {
-                completionHandler?(ProtonVpnError.removeVpnProfileFailed)
+                completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }
             

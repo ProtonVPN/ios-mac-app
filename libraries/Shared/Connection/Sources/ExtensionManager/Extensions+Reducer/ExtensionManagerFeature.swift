@@ -22,12 +22,13 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
-import struct Domain.Server
-import struct Domain.VPNConnectionFeatures
-import struct Domain.ServerConnectionIntent
 import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
 import let CoreConnection.log
+
+import Domain
+import Strings
+import Ergonomics
 
 @available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {
@@ -224,7 +225,9 @@ private extension ExtensionFeature.State {
 
 @CasePathable
 public enum TunnelConnectionError: Error, Equatable {
+    /// Starting the tunnel failed, likely due to an operating system issue.
     case tunnelStartFailed(Error)
+    /// The server is unknown or is no longer in the server list.
     case unknownServer
 
     public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
@@ -238,6 +241,43 @@ public enum TunnelConnectionError: Error, Equatable {
         default:
             return false
         }
+    }
+}
+
+extension TunnelConnectionError: ProtonVPNError {
+    public static let errorDomain = "TunnelConnectionErrorDomain"
+
+    public var charCode: String {
+        switch self {
+        case .tunnelStartFailed:
+            return "TNST"
+        case .unknownServer:
+            return "UNKS"
+        }
+    }
+
+    public var errorDescription: String? {
+        switch self {
+        case .tunnelStartFailed(let startingError):
+            return Localizable.connectionErrorTunnelConnectionTunnelStart(String(describing: startingError))
+        case .unknownServer:
+            return Localizable.connectionErrorTunnelConnectionUnknownServer
+        }
+    }
+
+    public var errorUserInfo: [String : Any] {
+        var result: [String: Any] = [
+            NSLocalizedDescriptionKey: errorDescription ?? "unknown error",
+        ]
+
+        switch self {
+        case .tunnelStartFailed(let error):
+            result[NSUnderlyingErrorKey] = error
+        default:
+            break
+        }
+
+        return result
     }
 }
 

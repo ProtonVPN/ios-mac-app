@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [
+        .executableTarget(name: "errordecoder", path: "Sources/ErrorDecoder"),
         .target(
             name: "Domain",
             dependencies: [

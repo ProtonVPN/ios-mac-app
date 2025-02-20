@@ -20,15 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Domain
 import Cocoa
+
 import Dependencies
-import Ergonomics
+
 import LegacyCommon
-import VPNShared
-import Theme
-import Strings
 import VPNAppCore
+import VPNShared
+
+import Theme
+import Domain
+import Strings
+import Ergonomics
 
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)
@@ -130,7 +133,7 @@ final class HeaderViewModel {
             return nil
         }
 
-        return vpnProtocol.localizedString.styled(font: .themeFont(.small))
+        return vpnProtocol.localizedDescription.styled(font: .themeFont(.small))
     }
 
     var isVisible: Bool = false {

@@ -19,6 +19,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Foundations/Domain"),
+        .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Ergonomics")
     ],
     targets: [
@@ -26,7 +27,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ExtensionIPC",
-            dependencies: ["Domain", "Ergonomics"]
+            dependencies: ["Domain", "Ergonomics", "Strings"]
         ),
         .testTarget(
             name: "ExtensionIPCTests",

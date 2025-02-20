@@ -23,13 +23,15 @@
 import UIKit
 
 import GSMessages
+import Dependencies
+
+import VPNAppCore
+import Localization
+import LegacyCommon
+import Persistence
 
 import Domain
 import Strings
-import VPNAppCore
-import LegacyCommon
-import Persistence
-import Dependencies
 
 import ProtonCoreFeatureFlags
 
@@ -268,7 +270,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var protocolCell: TableViewCellModel {
-        return TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedString) { [weak self] in
+        return TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedDescription) { [weak self] in
             self?.pushProtocolViewController()
         }
     }

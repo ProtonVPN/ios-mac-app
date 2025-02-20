@@ -56,7 +56,7 @@ extension ConnectionProtocol: CustomStringConvertible {
     public var localizedString: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.localizedString
+            return vpnProtocol.localizedDescription
         case .smartProtocol:
             return Localizable.smartTitle
         }
