@@ -49,6 +49,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         public internal(set) var localAgent: LocalAgentFeature.State
         public internal(set) var certAuth: CertificateAuthenticationFeature.State
         var serverReconnectionIntent: ServerConnectionIntent?
+        var shouldRegisterServerChangeOnConnection: Bool = false
 
         public init(
             tunnelState: ExtensionFeature.State = .unknown,
@@ -166,6 +167,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 case .connecting, .connected:
                     return .send(.disconnect(.reconnection(intent)))
                 case .disconnected, .unknown:
+                    state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
                     return .run { send in
                         await send(.tunnel(.connect(intent)))
 
@@ -234,6 +236,13 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.connect(intent)) // Connect action cancels any existing timeouts
 
             case .localAgent(.event(.state(.connected))):
+                if state.shouldRegisterServerChangeOnConnection {
+                    @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
+                    @Dependency(\.date) var date
+                    serverChangeAuthorizer.registerServerChange(connectedAt: date.now)
+                    // flag is only set during preparation, so this will only happen once per user-initiated connection
+                    state.shouldRegisterServerChangeOnConnection = false
+                }
                 return .cancel(id: CancelID.connectionTimeout)
 
             case .localAgent(.delegate(.errorReceived(let error))):
