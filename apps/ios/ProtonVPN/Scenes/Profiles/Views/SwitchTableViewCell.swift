@@ -23,6 +23,7 @@
 import UIKit
 import LegacyCommon
 import Theme
+import Strings
 
 final class SwitchTableViewCell: UITableViewCell {
 
@@ -45,7 +46,7 @@ final class SwitchTableViewCell: UITableViewCell {
         upsellImageView.image = Theme.Asset.vpnSubscriptionBadge.image
         upsellImageView.isHidden = true
         upsellImageView.isAccessibilityElement = true
-        upsellImageView.accessibilityValue = "VPN Plus" // TODO: - Localize this
+        upsellImageView.accessibilityValue = Localizable.vpnPlusUpsellAccessibility
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(upsellImageViewTapped))
         upsellImageView.isUserInteractionEnabled = true

@@ -219,9 +219,9 @@ public enum Localizable {
   public static func connectionCardAccessibilityConnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_connecting_to", String(describing: p1), fallback: "Connecting to %@.")
   }
-  /// The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents
+  /// The hint that the screen reader will provide to voiceover users for the fastest connection item in recents
   public static var connectionCardAccessibilityFastest: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest", fallback: "The fastest country available") }
-  /// The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled
+  /// The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled
   public static var connectionCardAccessibilityFastestSc: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest_sc", fallback: "The fastest secure core country available") }
   /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
   public static func connectionCardAccessibilityLastConnectedTo(_ p1: Any) -> String {
@@ -241,6 +241,12 @@ public enum Localizable {
   public static var connectionCardLoading: String { return Localizable.tr("Localizable", "_connection_card_loading", fallback: "Loading...") }
   /// Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023]
   public static var connectionCardSafelyBrowsingFrom: String { return Localizable.tr("Localizable", "_connection_card_safely_browsing_from", fallback: "Browsing safely from") }
+  /// The hint that the screen reader will provide to voiceover users for closing the Connection Details screen
+  public static var connectionDetailsAccessibilityClose: String { return Localizable.tr("Localizable", "_connection_details_accessibility_close", fallback: "Close connection details screen") }
+  /// The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen
+  public static var connectionDetailsAccessibilityIpViewHideAddress: String { return Localizable.tr("Localizable", "_connection_details_accessibility_ipView_hideAddress", fallback: "Double tap to hide your IP address") }
+  /// The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen
+  public static var connectionDetailsAccessibilityIpViewShowAddress: String { return Localizable.tr("Localizable", "_connection_details_accessibility_ipView_showAddress", fallback: "Double tap to show your IP address") }
   /// Connection details screen: City (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsCity: String { return Localizable.tr("Localizable", "_connection_details_city", fallback: "City") }
   /// Connection details screen: Connected for (macOS and iOS) [Redesign_2023]
@@ -1741,6 +1747,8 @@ public enum Localizable {
   }
   /// Authentication error
   public static var vpnauthTooManyCertsTitle: String { return Localizable.tr("Localizable", "_vpnauth_too_many_certs_title", fallback: "Authentication error") }
+  /// Description of the upsell icon button for VoiceOver
+  public static var vpnPlusUpsellAccessibility: String { return Localizable.tr("Localizable", "_vpnPlus_upsell_accessibility", fallback: "VPN Plus") }
   /// You are not signed in to Proton VPN. Open the Proton VPN app and sign in.
   public static var vpnstatusNotLoggedin: String { return Localizable.tr("Localizable", "_vpnstatus_not_loggedin", fallback: "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.") }
   /// Used as a title in alerts/modals

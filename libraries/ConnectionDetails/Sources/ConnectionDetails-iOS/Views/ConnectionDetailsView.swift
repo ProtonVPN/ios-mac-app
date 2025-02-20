@@ -167,7 +167,7 @@ struct ConnectionDetailsView: View {
                     IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
             }
-            .accessibilityLabel(title) // todo: test how this works
+            .accessibilityLabel(title)
             .foregroundColor(Color(.text, .weak))
         }
         

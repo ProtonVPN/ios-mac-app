@@ -37,9 +37,11 @@ public struct IPView: View {
 
     private var ipAddressTuple: (value: String, accessibilityValue: String) {
         let isLocalIpHidden = store.localIpHidden
-        // TODO: Localize following string
         if isLocalIpHidden {
-            return ("***.***.***.***", "Double tap to \(isLocalIpHidden ? "show" : "hide") IP Address")
+            let localizedAction = isLocalIpHidden ?
+                Localizable.connectionDetailsAccessibilityIpViewShowAddress :
+                Localizable.connectionDetailsAccessibilityIpViewHideAddress
+            return ("***.***.***.***", localizedAction)
         } else {
             let value = store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable
             return (value, value)
