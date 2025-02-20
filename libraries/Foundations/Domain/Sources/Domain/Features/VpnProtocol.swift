@@ -101,6 +101,19 @@ extension VpnProtocol {
 #else
     public static let defaultValue: Self = .ike
 #endif
+
+    private static var uiOrder: [VpnProtocol: Int] = [
+        .wireGuard(.udp): 1,
+        .wireGuard(.tcp): 2,
+        .openVpn(.udp): 3,
+        .openVpn(.tcp): 4,
+        .ike: 5,
+        .wireGuard(.tls): 6
+    ]
+
+    public static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
+        uiOrder[lhs] ?? 0 < uiOrder[rhs] ?? 0
+    }
 }
 
 // MARK: - API description

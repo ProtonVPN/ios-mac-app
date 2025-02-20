@@ -242,7 +242,7 @@ class StatusViewModel {
         let cells: [TableViewCellModel] = [
             .staticKeyValue(key: Localizable.ip, value: activeConnection?.serverIp.exitIp ?? ""),
             .staticKeyValue(key: Localizable.server, value: (activeConnection?.server.name ?? "") + city),
-            .staticKeyValue(key: Localizable.protocol, value: activeConnection?.vpnProtocol.localizedString ?? ""),
+            .staticKeyValue(key: Localizable.protocol, value: activeConnection?.vpnProtocol.localizedDescription ?? ""),
             timeCell
         ]
         

@@ -85,7 +85,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         case .disconnected:
             if let error = lastError() {
                 switch error {
-                case ProtonVpnError.tlsServerVerification, ProtonVpnError.tlsInitialisation:
+                case CommonVpnError.tlsServerVerification, CommonVpnError.tlsInitialisation:
                     return .error(error)
                 default: break
                 }
@@ -127,7 +127,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                 guard let self = self, let manager = manager else {
                     guard let error = error else { return }
 
-                    log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedString)\" is active: \"\(String(describing: error))\"", category: .connection)
+                    log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedDescription)\" is active: \"\(String(describing: error))\"", category: .connection)
                     return
                 }
 
@@ -167,7 +167,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                     activeProtocols.append(vpnProtocol)
                 }
             } catch {
-                log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedString)\" is active: \"\(String(describing: error))\"", category: .connection)
+                log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedDescription)\" is active: \"\(String(describing: error))\"", category: .connection)
                 continue
             }
         }
@@ -295,9 +295,9 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
 
         switch lastError {
         case "tlsServerVerification":
-            return ProtonVpnError.tlsServerVerification
+            return CommonVpnError.tlsServerVerification
         case "tlsInitialization":
-            return ProtonVpnError.tlsInitialisation
+            return CommonVpnError.tlsInitialisation
         default:
             return NSError(code: 0, localizedDescription: lastError)
         }

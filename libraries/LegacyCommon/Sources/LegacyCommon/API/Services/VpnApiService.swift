@@ -152,7 +152,7 @@ public class VpnApiService {
             let error = error as NSError
             if error.httpCode == HttpStatusCode.accessForbidden.rawValue,
                error.responseCode == ApiErrorCode.subuserWithoutSessions {
-                throw ProtonVpnError.subuserWithoutSessions
+                throw CommonVpnError.subuserWithoutSessions
             }
             if error.code != -1 {
                 log.error("clientCredentials error", category: .api, event: .response, metadata: ["error": "\(error)"])

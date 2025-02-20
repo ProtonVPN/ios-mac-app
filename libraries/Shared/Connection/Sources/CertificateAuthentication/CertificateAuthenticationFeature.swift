@@ -20,8 +20,11 @@ import Foundation
 import ComposableArchitecture
 import CoreConnection
 import enum ExtensionIPC.WireguardProviderRequest
-import Ergonomics
 import struct Domain.Server
+import protocol Domain.ProtonVPNError
+import Localization
+import Ergonomics
+import Strings
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {
@@ -162,10 +165,29 @@ public struct CertificateAuthenticationFeature: Reducer {
 
 @CasePathable
 public enum CertificateLoadingResult: Sendable, Equatable {
-    case loaded(FullAuthenticationData) // happy path
+    /// Both keys and certificate are available (happy path)
+    case loaded(FullAuthenticationData)
+    /// The keys are missing.
     case keysMissing
+    /// The certificate is missing.
     case certificateMissing
+    /// The certificate is present, but expired.
     case certificateExpired
+}
+
+extension CertificateLoadingResult: LocalizedStringConvertible {
+    public var localizedDescription: String {
+        switch self {
+        case .loaded:
+            return "Keys and certificate are available."
+        case .keysMissing:
+            return Localizable.connectionErrorCertificateAuthenticationWontRefreshKeysMissing
+        case .certificateMissing:
+            return Localizable.connectionErrorCertificateAuthenticationWontRefreshCertMissing
+        case .certificateExpired:
+            return Localizable.connectionErrorCertificateAuthenticationWontRefreshCertExpired
+        }
+    }
 }
 
 @CasePathable
@@ -178,11 +200,18 @@ public enum CertificateRefreshResult: Sendable {
 }
 
 @CasePathable
-public enum CertificateAuthenticationError: Error, Equatable {
+public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
+    public static let errorDomain = "CertificateAuthenticationErrorDomain"
+
+    /// We were unable to create new keys.
     case keyGenerationFailed(Error)
+    /// We will not or are unable to refresh the certificate due to the current state of the stored certs/keys.
     case wontRefresh(CertificateLoadingResult)
+    /// The API told us to wait, we will try again in a certain interval.
     case refreshWasRateLimited(retryAfter: Int?)
+    /// We got a message from the extension with a specific error message.
     case ipc(message: String)
+    /// An unexpected error occurred.
     case unexpected(Error)
 
     public static func == (lhs: CertificateAuthenticationError, rhs: CertificateAuthenticationError) -> Bool {
@@ -205,5 +234,52 @@ public enum CertificateAuthenticationError: Error, Equatable {
         default:
             return false
         }
+    }
+
+    public var charCode: String {
+        switch self {
+        case .keyGenerationFailed:
+            return "KGEN"
+        case .wontRefresh:
+            return "RFSH"
+        case .refreshWasRateLimited:
+            return "RATE"
+        case .ipc:
+            return "RIPC"
+        case .unexpected:
+            return "UNEX"
+        }
+    }
+
+    public var errorDescription: String? {
+        switch self {
+        case .keyGenerationFailed(let keyError):
+            return Localizable.connectionErrorCertificateAuthenticationKeyGenerationFailed(String(describing: keyError))
+        case .wontRefresh(let result):
+            return Localizable.connectionErrorCertificateAuthenticationWontRefresh(result.localizedDescription)
+        case .refreshWasRateLimited:
+            return Localizable.connectionErrorCertificateAuthenticationRateLimited
+        case .ipc(let message):
+            return Localizable.connectionErrorCertificateAuthenticationIpcMessage(message)
+        case .unexpected(let error):
+            return Localizable.connectionErrorCertificateAuthenticationUnexpected(String(describing: error))
+        }
+    }
+
+    public var errorUserInfo: [String : Any] {
+        var result: [String: Any] = [
+            NSLocalizedDescriptionKey: errorDescription ?? "unknown error",
+        ]
+
+        switch self {
+        case .keyGenerationFailed(let keyError):
+            result[NSUnderlyingErrorKey] = keyError
+        case .unexpected(let error):
+            result[NSUnderlyingErrorKey] = error
+        default:
+            break
+        }
+
+        return result
     }
 }

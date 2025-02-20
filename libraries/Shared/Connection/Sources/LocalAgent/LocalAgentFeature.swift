@@ -20,9 +20,12 @@ import Foundation
 
 import ComposableArchitecture
 
-import Domain
 import CoreConnection
 import class GoLibs.LocalAgentFeatures
+
+import Domain
+import Strings
+import Ergonomics
 
 @available(iOS 16, *)
 public struct LocalAgentFeature: Reducer, Sendable {
@@ -196,8 +199,11 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
 @CasePathable
 public enum LocalAgentConnectionError: Error, Equatable {
-    case failedToEstablishConnection(Error) // Thrown during the initial connection attempt
-    case agentError(LocalAgentError) // Raised by the agent after connecting
+    /// Thrown during the initial connection attempt - wasn't able to establish a connection with the LocalAgent server.
+    case failedToEstablishConnection(Error)
+    /// Raised by the agent after connecting. Usually sent by the server to us about something bad about our connection.
+    case agentError(LocalAgentError)
+    /// A certificate error occurred when attempting to connect to the LocalAgent server.
     case serverCertificateError
 
     /// Equatable conformance is only required because feature state must be equatable. We could probably always return
@@ -210,9 +216,55 @@ public enum LocalAgentConnectionError: Error, Equatable {
         case (.agentError, .agentError):
             return true
 
+        case (.serverCertificateError, .serverCertificateError):
+            return true
+
         default:
             return false
         }
+    }
+}
+
+extension LocalAgentConnectionError: ProtonVPNError {
+    public static let errorDomain = "LocalAgentConnectionErrorDomain"
+
+    public var errorDescription: String? {
+        switch self {
+        case .failedToEstablishConnection(let connectionError):
+            return Localizable.connectionErrorLocalAgentFailedEstablishingConnection(String(describing: connectionError))
+        case .agentError(let agentError):
+            return Localizable.connectionErrorLocalAgentRemoteError(String(describing: agentError))
+        case .serverCertificateError:
+            return Localizable.connectionErrorLocalAgentServerCertificate
+        }
+    }
+
+    public var charCode: String {
+        switch self {
+        case .failedToEstablishConnection:
+            return "FCNT"
+        case .agentError:
+            return "AGNT"
+        case .serverCertificateError:
+            return "SCRT"
+        }
+    }
+
+    public var errorUserInfo: [String : Any] {
+        var result: [String: Any] = [
+            NSLocalizedDescriptionKey: errorDescription ?? "unknown error",
+        ]
+
+        switch self {
+        case .failedToEstablishConnection(let connectionError):
+            result[NSUnderlyingErrorKey] = connectionError
+        case .agentError(let agentError):
+            result[NSUnderlyingErrorKey] = agentError
+        default:
+            break
+        }
+
+        return result
     }
 }
 

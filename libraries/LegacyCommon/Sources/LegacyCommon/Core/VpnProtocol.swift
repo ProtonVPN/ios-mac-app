@@ -50,49 +50,6 @@ extension VpnProtocol { // Authentication
     }
 }
 
-extension VpnProtocol { // Text for UI
-    public var localizedString: String {
-        var string: String
-        switch self {
-        case .ike:
-            string = Localizable.ikev2
-        case .openVpn(let transportProtocol):
-            string = Localizable.openvpn
-            switch transportProtocol {
-            case .tcp:
-                string += " (\(Localizable.tcp))"
-            case .udp:
-                string += " (\(Localizable.udp))"
-            }
-        case .wireGuard(let transportProtocol):
-            string = Localizable.wireguard
-            switch transportProtocol {
-            case .udp:
-                string += "" // (\(Localizable.udp))
-            case .tcp:
-                string += " (\(Localizable.tcp))"
-            case .tls:
-                string = Localizable.wireguardTls
-            }
-        }
-
-        return string
-    }
-
-    private static var uiOrder: [VpnProtocol: Int] = [
-        .wireGuard(.udp): 1,
-        .wireGuard(.tcp): 2,
-        .openVpn(.udp): 3,
-        .openVpn(.tcp): 4,
-        .ike: 5,
-        .wireGuard(.tls): 6
-    ]
-
-    public static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
-        uiOrder[lhs] ?? 0 < uiOrder[rhs] ?? 0
-    }
-}
-
 // MARK: - NSCoding (used by Profile)
 
 extension VpnProtocol {

@@ -1,5 +1,5 @@
 //
-//  ProtonVpnError.swift
+//  CommonVpnError.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,33 +21,35 @@
 
 import Foundation
 import Strings
+import Domain
 
 // The errors happend locally
-public enum ProtonVpnError: LocalizedError {
+public enum CommonVpnError: Int, ProtonVPNError {
+    public static var errorDomain = "CommonVpnErrorDomain"
 
-    case fetchSession
+    case fetchSession = 0x00_00_00_01
 
     // Connections
-    case connectionFailed
-    case vpnManagerUnavailable
-    case removeVpnProfileFailed
-    case tlsInitialisation
-    case tlsServerVerification
-    case vpnSessionInProgress
-    
+    case connectionFailed = 0x00_00_10_01
+    case vpnManagerUnavailable = 0x00_00_10_02
+    case removeVpnProfileFailed = 0x00_00_10_03
+    case tlsInitialisation = 0x00_00_10_04
+    case tlsServerVerification = 0x00_00_10_05
+    case vpnSessionInProgress = 0x00_00_10_06
+
     // Keychain
-    case keychainWriteFailed
+    case keychainWriteFailed = 0x00_00_20_01
 
     // Credentials
-    case userCredentialsMissing
-    case userCredentialsExpired
-    case vpnCredentialsMissing
-    
+    case userCredentialsMissing = 0x00_00_30_01
+    case userCredentialsExpired = 0x00_00_30_02
+    case vpnCredentialsMissing = 0x00_00_30_03
+
     // User
-    case subuserWithoutSessions
-    
-    // MARK: -
-    
+    case subuserWithoutSessions = 0x00_00_00_40_01
+
+    // MARK: - Error Descriptions
+
     public var errorDescription: String? {
         switch self {
         case .fetchSession:

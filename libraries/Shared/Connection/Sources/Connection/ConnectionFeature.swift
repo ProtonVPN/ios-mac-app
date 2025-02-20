@@ -23,12 +23,13 @@ import Clocks
 import ComposableArchitecture
 import Dependencies
 
-import Domain
 import CoreConnection
 import CertificateAuthentication
 import ExtensionManager
 import LocalAgent
 import VPNAppCore
+
+import Domain
 
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
@@ -336,27 +337,4 @@ public struct ConnectionFeature: Reducer, Sendable {
             $connectionState.withLock { $0 = newConnectionState }
         }
     }
-}
-
-@CasePathable
-public enum ConnectionError: Error, Equatable, Sendable {
-    public struct WrappedError: Error, Equatable {
-        let wrapped: any Error
-
-        public init(wrapped: any Error) {
-            self.wrapped = wrapped
-        }
-
-        public static func == (lhs: WrappedError, rhs: WrappedError) -> Bool {
-            String(reflecting: lhs.wrapped) == String(reflecting: rhs.wrapped)
-        }
-    }
-    case unexpectedProtocol(VpnProtocol)
-    case certAuth(CertificateAuthenticationError)
-    case tunnel(TunnelConnectionError)
-    case agent(LocalAgentConnectionError)
-    case preparation(WrappedError)
-    case intentMissing // Original connection intent is missing, and we cannot provide accurate connection details
-    case serverMissing
-    case timeout
 }

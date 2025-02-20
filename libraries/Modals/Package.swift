@@ -26,11 +26,13 @@ let package = Package(
             targets: ["Modals-iOS"])
     ],
     dependencies: [
-        .package(path: "../Foundations/Strings"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.2.0")),
+        .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
+        .package(path: "../Foundations/Domain"),
         .package(path: "../SharedViews")
     ],
     targets: [
@@ -39,7 +41,9 @@ let package = Package(
             dependencies: [
                 "Overture",
                 "Strings",
-                "Theme"
+                "Theme",
+                .target(name: "ModalsServices"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             resources: [
                 .process("Resources/Media.xcassets")
@@ -48,6 +52,8 @@ let package = Package(
         .target(
             name: "ModalsServices",
             dependencies: [
+                "Domain",
+                .product(name: "SwiftNavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies")
             ]

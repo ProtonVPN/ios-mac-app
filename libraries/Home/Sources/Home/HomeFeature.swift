@@ -22,16 +22,17 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 
+import ProtonCoreFeatureFlags
+
 import ConnectionDetails
 import Connection
-import Domain
-import Ergonomics
 import ModalsServices
 import LocalAgent
 import NetShield
 import VPNAppCore
 
-import ProtonCoreFeatureFlags
+import Ergonomics
+import Domain
 
 @available(iOS 17, *)
 @Reducer
@@ -100,7 +101,7 @@ public struct HomeFeature {
         case changeServer
         case disconnect
 
-        case incomingAlert(AlertService.Alert)
+        case incomingAlert(Alert)
 
         case onNewConnectionState(ConnectionState)
 
@@ -301,7 +302,7 @@ public struct HomeFeature {
     }
 }
 
-fileprivate extension AlertService.Alert {
+fileprivate extension Alert {
     var toSystemAlert: any SystemAlert {
         let alert = ConnectionPackageErrorAlert()
         alert.title = String(localized: title)

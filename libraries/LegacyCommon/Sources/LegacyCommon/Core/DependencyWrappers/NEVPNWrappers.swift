@@ -64,7 +64,7 @@ extension NETunnelProviderManagerWrapperFactory {
                 return
             }
             guard let managers = managers else {
-                completionHandler(nil, ProtonVpnError.vpnManagerUnavailable)
+                completionHandler(nil, CommonVpnError.vpnManagerUnavailable)
                 return
             }
 

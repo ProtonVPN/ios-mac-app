@@ -28,20 +28,34 @@ import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 
 extension NETunnelProviderSession: VPNSession {
+    static let maxRetries = 5
+    static let retryInterval = Duration.seconds(1)
+
     func send(_ messageData: Data) async throws -> Data {
-        try await withCheckedThrowingContinuation { continuation in
-            do {
-                try sendProviderMessage(messageData) { data in
-                    guard let data else {
-                        continuation.resume(throwing: ProviderMessageError.noDataReceived)
-                        return
+        // From documentation: "If this method can’t start sending the message it throws an error. If an error occurs
+        // while sending the message or returning the result, `nil` should be sent to the response handler as
+        // notification." If we encounter an xpc error, try sleeping for a second and then trying again - the extension
+        // could still be launching, or we could be coming out of sleep. If we retry enough times and still get
+        // nowhere, return an error.
+        for _ in 0..<Self.maxRetries {
+            let data: Data? = try await withCheckedThrowingContinuation { continuation in
+                do {
+                    try sendProviderMessage(messageData) { optionalData in
+                        continuation.resume(returning: optionalData)
                     }
-                    continuation.resume(returning: data)
+                } catch {
+                    continuation.resume(throwing: error)
                 }
-            } catch {
-                continuation.resume(throwing: error)
             }
+
+            if let data {
+                return data
+            }
+
+            try await Task.sleep(for: Self.retryInterval)
         }
+
+        throw ProviderMessageError.noDataReceived
     }
 
     public func send(
@@ -61,8 +75,10 @@ extension NETunnelProviderSession: VPNSession {
     public func fetchLastDisconnectError() async -> Error? {
         // For some reason, the native async alternative returns `Void`
         // return try await fetchLastDisconnectError()
-        await withCheckedContinuation { continuation in
-            self.fetchLastDisconnectError(completionHandler: continuation.resume(returning:))
+        await withCheckedContinuation { [weak self] continuation in
+            self?.fetchLastDisconnectError(completionHandler: { error in
+                continuation.resume(returning: error)
+            })
         }
     }
 }
@@ -86,7 +102,7 @@ extension NETunnelProviderManager: TunnelProviderManager {
             connection.manager.protocolConfiguration = newValue
         }
     }
-    
+
     public var session: VPNSession {
         guard let session = connection as? NETunnelProviderSession else {
             // If we cannot communicate with the extension, VPN functionality is crippled (e.g. IPC is impossible).

@@ -181,7 +181,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         manager.attemptSilentLogIn { result in
             loginExpectation.fulfill()
 
-            guard case .failure(ProtonVpnError.userCredentialsMissing) = result else {
+            guard case .failure(CommonVpnError.userCredentialsMissing) = result else {
                 return XCTFail("Expected missing credentials error but got: \(result)")
             }
 
@@ -201,11 +201,11 @@ final class AppSessionManagerImplementationTests: XCTestCase {
             authCredentials: testAuthCredentials,
             success: {
                 loginExpectation.fulfill()
-                XCTFail("Expected \(ProtonVpnError.subuserWithoutSessions) but sucessfully logged in instead.")
+                XCTFail("Expected \(CommonVpnError.subuserWithoutSessions) but sucessfully logged in instead.")
             },
             failure: { error in
                 loginExpectation.fulfill()
-                guard case ProtonVpnError.subuserWithoutSessions = error else {
+                guard case CommonVpnError.subuserWithoutSessions = error else {
                     return XCTFail("Expected subuser without sessions error but got: \(error)")
                 }
                 XCTAssertFalse(self.manager.loggedIn, "Expected failure logging in, but loggedIn is true")
@@ -281,7 +281,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         manager.attemptSilentLogIn(completion: { result in
             loginExpectation.fulfill()
-            guard case .failure(ProtonVpnError.vpnSessionInProgress) = result else {
+            guard case .failure(CommonVpnError.vpnSessionInProgress) = result else {
                 return XCTFail("Expected success logging in, but got: \(result)")
             }
         })

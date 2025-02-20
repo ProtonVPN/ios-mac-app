@@ -22,14 +22,16 @@
 
 import Cocoa
 
+import Dependencies
+
 import Domain
 import Strings
 import Theme
 import LegacyCommon
+import Localization
 import VPNShared
 import VPNAppCore
 import Persistence
-import Dependencies
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel
@@ -259,7 +261,7 @@ class CreateNewProfileViewModel {
                 ) != false
             }.map { `protocol` in
                 PopUpButtonItemViewModel(
-                    title: menuStyle(`protocol`.localizedString),
+                    title: menuStyle(`protocol`.localizedDescription),
                     checked: `protocol` == state.connectionProtocol,
                     handler: { [weak self] in self?.update(connectionProtocol: `protocol`, userInitiated: true) }
                 )

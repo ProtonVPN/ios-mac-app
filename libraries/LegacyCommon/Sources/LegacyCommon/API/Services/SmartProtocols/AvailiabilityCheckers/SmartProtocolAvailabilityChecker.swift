@@ -26,6 +26,7 @@ import GoLibs
 
 import Domain
 import VPNShared
+import Localization
 
 public enum SmartProtocolAvailabilityCheckerResult {
     case unavailable
@@ -45,7 +46,7 @@ public protocol SmartProtocolAvailabilityChecker: AnyObject {
 
 extension SmartProtocolAvailabilityChecker {
     public var protocolName: String {
-        vpnProtocol.localizedString
+        vpnProtocol.localizedDescription
     }
 
     public var timeout: TimeInterval {
@@ -85,7 +86,7 @@ extension SmartProtocolAvailabilityChecker {
 
     /// Pings all the ports and returns on the first successful try.
     func getFirstToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
-        log.debug("Getting best port for \(server) on \(vpnProtocol.localizedString)", category: .connectionConnect, event: .scan)
+        log.debug("Getting best port for \(server) on \(vpnProtocol.localizedDescription)", category: .connectionConnect, event: .scan)
 
         DispatchQueue.global().async { [unowned self] in
             let group = DispatchGroup()
@@ -103,7 +104,7 @@ extension SmartProtocolAvailabilityChecker {
                             return false
                         }
                         portAlreadyFound = true
-                        log.debug("First port to respond is \(port). Returning this port to be used on \(self.vpnProtocol.localizedString).", category: .connectionConnect, event: .scan)
+                        log.debug("First port to respond is \(port). Returning this port to be used on \(self.vpnProtocol.localizedDescription).", category: .connectionConnect, event: .scan)
                         return true
                     }
 

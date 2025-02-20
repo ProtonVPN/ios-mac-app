@@ -18,6 +18,9 @@
 
 import Foundation
 import NetworkExtension
+import Ergonomics
+import Domain
+import Strings
 
 public protocol ProviderMessage: Equatable {
     var asData: Data { get }
@@ -36,7 +39,9 @@ public protocol ProviderMessageSender: AnyObject {
 extension ProviderMessageSender {
     public func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
         try await withCheckedThrowingContinuation { continuation in
-            send(message, completion: continuation.resume(with:))
+            send(message) {
+                continuation.resume(with: $0)
+            }
         }
     }
 }
@@ -48,4 +53,42 @@ public enum ProviderMessageError: Error {
     case unknownRequest
     case unknownResponse
     case remoteError(message: String)
+}
+
+extension ProviderMessageError: ProtonVPNError {
+    public static let errorDomain = "ProviderMessageErrorDomain"
+
+    public var errorDescription: String? {
+        switch self {
+        case .noDataReceived:
+            return Localizable.providerMessageErrorNoDataReceived
+        case .decodingError:
+            return Localizable.providerMessageErrorDecodingError
+        case .sendingError:
+            return Localizable.providerMessageErrorSendingError
+        case .unknownRequest:
+            return Localizable.providerMessageErrorUnknownRequest
+        case .unknownResponse:
+            return Localizable.providerMessageErrorUnknownResponse
+        case .remoteError(let message):
+            return Localizable.providerMessageErrorRemoteError(message)
+        }
+    }
+
+    public var charCode: String {
+        switch self {
+        case .noDataReceived:
+            return "NRCV"
+        case .decodingError:
+            return "MDCD"
+        case .sendingError:
+            return "MSND"
+        case .unknownRequest:
+            return "UNRQ"
+        case .unknownResponse:
+            return "UNRS"
+        case .remoteError:
+            return "RMOT"
+        }
+    }
 }

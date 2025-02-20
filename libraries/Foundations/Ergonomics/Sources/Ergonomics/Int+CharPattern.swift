@@ -1,7 +1,7 @@
 //
-//  Created on 27/06/2024.
+//  Created on 20.02.2025.
 //
-//  Copyright (c) 2024 Proton AG
+//  Copyright (c) 2025 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Strings
-
-extension ConnectionError {
-    public var localizedMessage: String? {
-        // TODO: Gather actionable failure cases, tips on how to fix them, and add localizations
-        return nil
+extension Int {
+    public init(charPattern: String) {
+        assert(charPattern.count == 4, "Char pattern must have exactly 4 characters")
+        self = charPattern.withCString { int8Pointer in
+            let int32Pointer = UnsafeRawPointer(int8Pointer).bindMemory(to: Int32.self, capacity: 1)
+            return Int(int32Pointer.pointee)
+        }
     }
 }

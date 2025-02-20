@@ -116,7 +116,7 @@ final class LoginViewModel {
             case let .failure(error):
                 self.specialErrorCaseNotification(error)
 
-                if case ProtonVpnError.userCredentialsMissing = error {
+                if case CommonVpnError.userCredentialsMissing = error {
                     self.logInFailure?(nil, nil)
                     return
                 }
@@ -297,7 +297,7 @@ final class LoginViewModel {
                 })
                 self.alertService.push(alert: alert)
                 self.logInFailure?(nil, nil)
-            } else if case ProtonVpnError.subuserWithoutSessions = error {
+            } else if case CommonVpnError.subuserWithoutSessions = error {
                 let role = self.propertiesManager.userRole
                 self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
                 self.isTwoFactorStep = false

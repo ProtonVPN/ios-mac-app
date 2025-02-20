@@ -18,16 +18,19 @@
 
 import Combine
 import Foundation
+
 import Dependencies
 import DependenciesMacros
+import SwiftNavigation
+
+import Logging
 import protocol Foundation.LocalizedError
+import struct Domain.Alert
+import protocol Domain.AlertConvertibleError
+
+package let log = Logging.Logger(label: "ProtonVPN.Modals.Logger")
 
 import XCTestDynamicOverlay
-
-/// An error meant to be displayed within an ``AlertService.Alert`` alert.
-public protocol AlertConvertibleError: Error {
-    var alert: AlertService.Alert { get }
-}
 
 /// A basic AlertService.
 @DependencyClient
@@ -50,6 +53,8 @@ extension AlertService {
         return AlertService {
             return stream
         } feed: { error in
+            log.error("Alerting user to error: \(String(describing: error))")
+
             let alert: Alert
             if let alertConvertibleError = error as? AlertConvertibleError {
                 alert = alertConvertibleError.alert
@@ -65,6 +70,14 @@ extension AlertService {
             subject.send(completion: .finished)
         }
     }()
+}
+
+extension Alert {
+    public func alertState<Action>(from: Action.Type) -> AlertState<Action> {
+        let title = TextState(String(localized: title))
+        let message = TextState(String(localized: message))
+        return AlertState<Action>(title: title, message: message)
+    }
 }
 
 // MARK: - Dependency

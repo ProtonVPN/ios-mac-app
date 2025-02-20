@@ -25,6 +25,7 @@ let package = Package(
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Shared/ExtensionIPC"),
+        .package(path: "../../Shared/Localization"),
         .package(path: "../../NEHelper"),
     ],
     targets: [
@@ -72,6 +73,7 @@ let package = Package(
                 "CertificateAuthentication",
                 "ExtensionManager",
                 "LocalAgent",
+                "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
             ]
         ),

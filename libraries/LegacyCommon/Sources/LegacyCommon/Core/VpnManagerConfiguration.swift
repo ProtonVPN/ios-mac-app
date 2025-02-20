@@ -140,7 +140,7 @@ public class VpnManagerConfigurationPreparer {
     
     public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, clientPrivateKey: PrivateKey?) -> VpnManagerConfiguration? {
         guard let entryServer = connectionConfig.serverIp.entryIp(using: connectionConfig.vpnProtocol) else {
-            log.error("No entry IP is available for \(connectionConfig.vpnProtocol.localizedString).")
+            log.error("No entry IP is available for \(connectionConfig.vpnProtocol.localizedDescription).")
             return nil
         }
 

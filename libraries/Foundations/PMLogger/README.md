@@ -28,7 +28,7 @@ Log:
 
 ```
 log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
-log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedString)\" is active: \"\(String(describing: error))\"", category: .connection)
+log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedDescription)\" is active: \"\(String(describing: error))\"", category: .connection)
 ```
 
 ### Log categories and events

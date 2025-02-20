@@ -245,7 +245,7 @@ final class SettingsViewModel {
         
         var cells: [TableViewCellModel] = []
 
-        let protocolValue = propertiesManager.smartProtocol ? Localizable.smartTitle : vpnProtocol.localizedString
+        let protocolValue = propertiesManager.smartProtocol ? Localizable.smartTitle : vpnProtocol.localizedDescription
         cells.append(.pushKeyValue(key: Localizable.protocol, value: protocolValue, handler: { [weak self] in
             self?.pushProtocolViewController()
         }))
