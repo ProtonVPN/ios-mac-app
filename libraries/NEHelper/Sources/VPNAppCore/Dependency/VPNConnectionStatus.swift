@@ -18,7 +18,10 @@
 
 import CoreLocation
 import ComposableArchitecture
+
+#if canImport(WidgetKit)
 import WidgetKit
+#endif
 
 import Domain
 import Ergonomics
@@ -83,9 +86,11 @@ public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Def
                     try JSONDecoder().decode(VPNConnectionStatus.self, from: data)
                 },
                 encode: { status in
+#if canImport(WidgetKit)
                     defer {
                         WidgetCenter.shared.reloadAllTimelines()
                     }
+#endif
                     return try JSONEncoder().encode(status)
                 }
             ),
