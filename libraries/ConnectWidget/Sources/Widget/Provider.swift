@@ -24,6 +24,7 @@ import VPNAppCore
 import ConnectionPresenter
 import OrderedCollections
 import AppIntents
+import ComposableArchitecture
 
 struct Provider: TimelineProvider {
 
@@ -31,6 +32,7 @@ struct Provider: TimelineProvider {
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
     @Dependency(\.connectionPresenter) var connectionPresenter
+    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     func recentConnectionList() -> [RecentConnection] {
 
@@ -73,8 +75,8 @@ struct Provider: TimelineProvider {
         let recents = recentConnectionList()
 
         entry = ConnectWidgetEntry(date: .now,
-                                   connectionSpec: connectionSpec(),
-                                   protectionState: .unprotected,
+                                   connectionSpec: vpnConnectionStatus.spec ?? connectionSpec(),
+                                   protectionState: vpnConnectionStatus.protectionState,
                                    recentServers: recents)
         completion(Timeline(entries: [entry], policy: .never))
     }
@@ -99,5 +101,23 @@ struct ConnectShortcuts: AppShortcutsProvider {
                     phrases: ["Connect to VPN"],
                     shortTitle: "Connect to VPN",
                     systemImageName: "square")
+    }
+}
+
+
+extension VPNConnectionStatus {
+    var protectionState: ConnectWidgetEntry.ProtectionState {
+        switch self {
+        case .resolving:
+            return .unprotected // Do we need another state for this?
+        case .disconnected:
+            return .unprotected
+        case .connecting:
+            return .protecting
+        case .connected:
+            return .protected
+        case .disconnecting:
+            return .unprotected
+        }
     }
 }

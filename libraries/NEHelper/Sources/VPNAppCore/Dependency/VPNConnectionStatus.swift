@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CoreLocation
+import ComposableArchitecture
+import WidgetKit
 
 import Domain
 import Ergonomics
@@ -29,7 +31,7 @@ import Sharing
 
 // This struct is still WIP
 @CasePathable
-public enum VPNConnectionStatus: Equatable {
+public enum VPNConnectionStatus: Equatable, Codable {
     case resolving(ConnectionSpec?, VPNConnectionActual?)
     case disconnected
     case connected(ConnectionSpec, VPNConnectionActual?)
@@ -69,13 +71,30 @@ public enum VPNConnectionStatus: Equatable {
     }
 }
 
-public extension SharedKey where Self == InMemoryKey<VPNConnectionStatus>.Default {
+fileprivate let persistentFileUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!.appendingPathComponent("shared/vpnConnectionStatus.json")
+
+public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Default {
     static var vpnConnectionStatus: Self {
-        Self[.inMemory("vpnConnectionStatus"), default: .resolving(nil, nil)]
+
+        return Self[
+            .fileStorage(
+                persistentFileUrl,
+                decode: { data in
+                    try JSONDecoder().decode(VPNConnectionStatus.self, from: data)
+                },
+                encode: { status in
+                    defer {
+                        WidgetCenter.shared.reloadAllTimelines()
+                    }
+                    return try JSONEncoder().encode(status)
+                }
+            ),
+            default: .resolving(nil, nil)
+        ]
     }
 }
 
-public struct VPNConnectionActual: Equatable {
+public struct VPNConnectionActual: Equatable, Codable {
     public let connectedDate: Date?
     public let vpnProtocol: VpnProtocol
     public let natType: NATType
