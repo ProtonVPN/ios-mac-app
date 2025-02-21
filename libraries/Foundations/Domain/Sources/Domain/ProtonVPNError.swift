@@ -23,7 +23,7 @@ public protocol ProtonVPNError: LocalizedError, CustomNSError {
     ///
     /// - Invariant: the string **must** be 4 characters long or it may cause a runtime error.
     /// - Example: an enum case like ".connectionFailed" could be represented as "CNFL".
-    var charCode: String { get }
+    var charCode: FourCharCode { get }
 }
 
 public extension ProtonVPNError {
@@ -36,25 +36,26 @@ public extension ProtonVPNError {
     }
 
     var errorCode: Int {
-        Int(charCode: charCode)
-    }
-
-    var charCode: String {
-        "UNDF" /* Undefined */
+        Int(charCode)
     }
 }
 
-public extension ProtonVPNError where Self: RawRepresentable<Int> {
-    var errorCode: Int { rawValue }
+public extension ProtonVPNError where Self: RawRepresentable<FourCharCode> {
+    var charCode: FourCharCode { rawValue }
 }
 
-extension Int {
-    public init(charCode: String) {
-        assert(charCode.count == 4, "Char pattern must have exactly 4 characters")
-        self = charCode.withCString { int8Pointer in
-            int8Pointer.withMemoryRebound(to: Int32.self, capacity: 1) { int32Pointer in
-                Int(Int32(littleEndian: int32Pointer.pointee))
+extension FourCharCode: @retroactive ExpressibleByStringLiteral {
+    public init(stringLiteral value: StaticString) {
+        assert(value.utf8CodeUnitCount == 4, "Char pattern must have exactly 4 characters")
+        assert(value.isASCII, "Char pattern must be ASCII string")
+
+        var result: FourCharCode = 0
+        value.withUTF8Buffer { valueBuffer in
+            withUnsafeMutableBytes(of: &result) { resultBuffer in
+                resultBuffer.copyBytes(from: valueBuffer)
             }
         }
+
+        self = result
     }
 }

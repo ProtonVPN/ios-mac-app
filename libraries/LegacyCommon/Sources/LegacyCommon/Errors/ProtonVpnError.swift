@@ -24,29 +24,29 @@ import Strings
 import Domain
 
 // The errors happend locally
-public enum CommonVpnError: Int, ProtonVPNError {
+public enum CommonVpnError: FourCharCode, ProtonVPNError {
     public static var errorDomain = "CommonVpnErrorDomain"
 
-    case fetchSession = 0x00_00_00_01
+    case fetchSession = "FTSN"
 
     // Connections
-    case connectionFailed = 0x00_00_10_01
-    case vpnManagerUnavailable = 0x00_00_10_02
-    case removeVpnProfileFailed = 0x00_00_10_03
-    case tlsInitialisation = 0x00_00_10_04
-    case tlsServerVerification = 0x00_00_10_05
-    case vpnSessionInProgress = 0x00_00_10_06
+    case connectionFailed = "CNFL"
+    case vpnManagerUnavailable = "VMUN"
+    case removeVpnProfileFailed = "RVPF"
+    case tlsInitialisation = "TINT"
+    case tlsServerVerification = "TSVN"
+    case vpnSessionInProgress = "VSIP"
 
     // Keychain
-    case keychainWriteFailed = 0x00_00_20_01
+    case keychainWriteFailed = "KWFL"
 
     // Credentials
-    case userCredentialsMissing = 0x00_00_30_01
-    case userCredentialsExpired = 0x00_00_30_02
-    case vpnCredentialsMissing = 0x00_00_30_03
+    case userCredentialsMissing = "UCMS"
+    case userCredentialsExpired = "UCEX"
+    case vpnCredentialsMissing = "VCMS"
 
     // User
-    case subuserWithoutSessions = 0x00_00_00_40_01
+    case subuserWithoutSessions = "SUWS"
 
     // MARK: - Error Descriptions
 

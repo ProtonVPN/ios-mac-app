@@ -91,7 +91,7 @@ extension ConnectionError: ProtonVPNError {
         }
     }
 
-    public var charCode: String {
+    public var charCode: FourCharCode {
         switch self {
         case .unexpectedProtocol(let vpnProtocol):
             switch vpnProtocol {
