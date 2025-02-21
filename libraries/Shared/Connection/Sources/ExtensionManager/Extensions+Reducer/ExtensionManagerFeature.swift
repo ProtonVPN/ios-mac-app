@@ -79,7 +79,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                         await send(.tunnelStatusChanged(status))
                     }
                 }
-                .cancellable(id: CancelID.observation)
+                .cancellable(id: CancelID.observation, cancelInFlight: true)
 
                 // These effects must not be executed concurrently until we make `PacketTunnelManager` concurrency safe.
                 // Doing so has the potential to create a duplicate set of `NETunnelProviderManager` and `NEVPNSession`

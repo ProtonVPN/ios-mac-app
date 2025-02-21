@@ -51,6 +51,7 @@ public struct ConnectionStatusFeature {
 
     @CasePathable
     public enum Action: Equatable {
+        case startLocationMasking
         case maskLocationTick
 
         case watchConnectionStatus
@@ -66,7 +67,7 @@ public struct ConnectionStatusFeature {
 
     public init() { }
 
-    private static let maskTickTimerDuration: TimeInterval = .milliseconds(50)
+    private static let maskTickTimerDuration: Duration = .milliseconds(50)
     private static let statusDebounceIntervalInMilliseconds: Int = 50
 
     private enum MaskLocation {
@@ -75,32 +76,37 @@ public struct ConnectionStatusFeature {
 
     private enum IDs {
         case watchConnectionStatus
-        case maskLocation
+        case maskLocationTimer
         case protectionState
     }
 
     @Dependency(\.netShieldStatsProvider) private var provider
+    @Dependency(\.continuousClock) private var clock
 
     public var body: some Reducer<State, Action> {
         Scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner) { ConnectionStatusBannerFeature() }
 
         Reduce { state, action in
             switch action {
+            case .startLocationMasking:
+                return .run { send in
+                    for await _ in self.clock.timer(interval: Self.maskTickTimerDuration) {
+                        await send(.maskLocationTick)
+                    }
+                }
+                .cancellable(id: IDs.maskLocationTimer, cancelInFlight: true)
+
             case .maskLocationTick:
                 guard case let .protecting(country, ip) = state.protectionState else {
-                    return .cancel(id: IDs.maskLocation)
+                    return .cancel(id: IDs.maskLocationTimer)
                 }
                 if let masked = partiallyMaskedLocation(country: country, ip: ip) {
                     if masked == state.protectionState { // fully masked already
-                        return .cancel(id: IDs.maskLocation)
+                        return .cancel(id: IDs.maskLocationTimer)
                     }
                     state.$protectionState.withLock { $0 = masked }
                 }
-                return .run { action in
-                    try await Task.sleep(nanoseconds: UInt64(Self.maskTickTimerDuration) * NSEC_PER_MSEC)
-                    await action(.maskLocationTick)
-                }
-                .cancellable(id: IDs.maskLocation, cancelInFlight: true)
+                return .none
 
             case .watchConnectionStatus:
                 var effects: [Effect<Action>] = [
@@ -159,13 +165,13 @@ public struct ConnectionStatusFeature {
                         return .none // however do nothing if we got the same protection state
                     }
                     state.$protectionState.withLock { $0 = protectionState } // store the new state
-                    return .send(.maskLocationTick)
+                    return .send(.startLocationMasking)
                 } else {
                     withOptionalAnimation(protectionState.shouldAnimateChange ? .default : nil) {
                         state.$protectionState.withLock { $0 = protectionState }
                     }
                     state.startingProtectionState = .unprotected // reset startingProtectionState
-                    return .cancel(id: IDs.maskLocation)
+                    return .cancel(id: IDs.maskLocationTimer)
                 }
 
             case .newNetShieldStats(let netShieldModel):
