@@ -96,16 +96,6 @@ struct Provider: TimelineProvider {
     }
 }
 
-struct ConnectShortcuts: AppShortcutsProvider {
-    static var appShortcuts: [AppShortcut] {
-        AppShortcut(intent: ConnectToVPNIntent(),
-                    phrases: ["Connect to VPN"],
-                    shortTitle: "Connect to VPN",
-                    systemImageName: "square")
-    }
-}
-
-
 extension VPNConnectionStatus {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
