@@ -48,23 +48,6 @@ public struct RecentConnection: Equatable, Hashable {
     }
 }
 
-extension RecentConnection {
-    public var countryCode: String {
-        switch connection.location {
-        case .fastest:
-            return "CZ"
-        case .random:
-            return "CZ"
-        case .region(code: let code):
-            return code
-        case .exact(_, _, _, _, regionCode: let regionCode):
-            return regionCode
-        case .secureCore:
-            return "CZ"
-        }
-    }
-}
-
 extension RecentConnection: Identifiable {
     public var id: String {
         "\(connection)"
