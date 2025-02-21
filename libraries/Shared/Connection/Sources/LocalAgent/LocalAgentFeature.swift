@@ -239,7 +239,7 @@ extension LocalAgentConnectionError: ProtonVPNError {
         }
     }
 
-    public var charCode: String {
+    public var charCode: FourCharCode {
         switch self {
         case .failedToEstablishConnection:
             return "FCNT"

@@ -236,7 +236,7 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
         }
     }
 
-    public var charCode: String {
+    public var charCode: FourCharCode {
         switch self {
         case .keyGenerationFailed:
             return "KGEN"

@@ -23,12 +23,10 @@ import Foundation
 */
 
 extension String {
-    init?(intPattern int: Int) {
-        let result = withUnsafeBytes(of: int.littleEndian) { bufPtr in
-            bufPtr.withMemoryRebound(to: CChar.self) { charBuf -> String? in
-                guard let charPtr = charBuf.baseAddress else { return nil }
-                return String(cString: charPtr)
-            }
+    init?(charCode: FourCharCode) {
+        let result = withUnsafeBytes(of: charCode.littleEndian) { bufPtr in
+            let data = Data(bytes: bufPtr.baseAddress!, count: MemoryLayout<FourCharCode>.size)
+            return String(data: data, encoding: .ascii)
         }
 
         guard let result else { return nil }
@@ -37,7 +35,7 @@ extension String {
 }
 
 for argument in CommandLine.arguments[1...] {
-    guard let intValue = Int(argument), let string = String(intPattern: intValue) else {
+    guard let codeValue = FourCharCode(argument), let string = String(charCode: codeValue) else {
         print("Unrecognized or unknown value \(argument)")
         continue
     }

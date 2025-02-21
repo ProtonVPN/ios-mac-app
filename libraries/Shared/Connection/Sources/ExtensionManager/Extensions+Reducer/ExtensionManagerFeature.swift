@@ -247,7 +247,7 @@ public enum TunnelConnectionError: Error, Equatable {
 extension TunnelConnectionError: ProtonVPNError {
     public static let errorDomain = "TunnelConnectionErrorDomain"
 
-    public var charCode: String {
+    public var charCode: FourCharCode {
         switch self {
         case .tunnelStartFailed:
             return "TNST"

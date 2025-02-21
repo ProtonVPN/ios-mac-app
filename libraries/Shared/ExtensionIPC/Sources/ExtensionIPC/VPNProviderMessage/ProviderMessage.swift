@@ -75,7 +75,7 @@ extension ProviderMessageError: ProtonVPNError {
         }
     }
 
-    public var charCode: String {
+    public var charCode: FourCharCode {
         switch self {
         case .noDataReceived:
             return "NRCV"
