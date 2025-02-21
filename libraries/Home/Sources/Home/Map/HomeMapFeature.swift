@@ -58,15 +58,26 @@ public struct HomeMapFeature {
 
         init(_ connectionStatus: VPNConnectionStatus) {
             switch connectionStatus {
-            case .disconnected, .disconnecting:
+            case .disconnected:
                 self = .disconnected
+            case .disconnecting(_, _):
+                // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
+                self = .disconnected
+
             case .connected(_, let actual):
                 if let actual {
                     self = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {
                     self = .disconnected
                 }
-            case .connecting(_, let actual), .resolving(_, let actual):
+            case .connecting(_, .some(let server)):
+                self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
+
+            case .connecting(_, nil):
+                log.assertionFailure("we need the pin location")
+                self = .disconnected
+
+            case .resolving(_, let actual):
                 if let actual {
                     self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {

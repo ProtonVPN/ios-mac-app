@@ -70,6 +70,9 @@ public enum InternalConnectionState: Equatable, Sendable, CasePathable {
             }
             self = .connected(server, tunnelConnectionInfo.connectionDate, connectionDetails)
 
+        case (.connected, .disconnecting):
+            self = .disconnecting
+
         case (.connected, _):
             self = .connecting(nil)
 

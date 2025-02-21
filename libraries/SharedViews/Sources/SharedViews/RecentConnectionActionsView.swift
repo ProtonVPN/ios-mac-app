@@ -52,7 +52,7 @@ struct RecentConnectionActionsView: View {
     }
 
     @ViewBuilder private var recentListItem: some View {
-        let infoBuilder = ConnectionInfoBuilder(intent: intent, vpnConnectionActual: nil, withServerNumber: true)
+        let infoBuilder = ConnectionInfoBuilder(intent: intent, server: nil, withServerNumber: true)
         LocationFeatureView(model: .init(
             flag: intent.location.flagComposition,
             header: .init(title: infoBuilder.textHeader, showConnectedPin: false),

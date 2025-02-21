@@ -20,27 +20,6 @@ import Domain
 import Ergonomics
 import Dependencies
 
-public struct ServerSelector: Sendable {
-    public internal(set) var select: @Sendable (_ spec: ConnectionSpec, _ userTier: Int, _ acceptableProtocols: ProtocolSupport) throws -> Server
-
-    public enum ServerSelectionError: Error, Equatable {
-        case noLogical(LogicalResolutionFailureReason)
-        case noEndpoints(EndpointResolutionFailureReason)
-
-        public enum LogicalResolutionFailureReason: Equatable {
-            case locationNotFound(ConnectionSpec.Location)
-            case featuresNotSupported(VPNServerFilter.ServerFeatureFilter)
-            case protocolNotSupported(ProtocolSupport)
-            case maintenance
-        }
-
-        public enum EndpointResolutionFailureReason: Equatable {
-            case protocolNotSupported(ProtocolSupport)
-            case maintenance
-        }
-    }
-}
-
 extension ServerSelector: DependencyKey {
     public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols in
         @Dependency(\.serverRepository) var repository
@@ -92,7 +71,7 @@ extension ServerSelector: DependencyKey {
 
         let serversSupportingFeatures = servers.filter { $0.logical.satisfies(spec.serverFeatureFilter) }
         if serversSupportingFeatures.isEmpty {
-            return .featuresNotSupported(spec.serverFeatureFilter)
+            return .featuresNotSupported(spec.features)
         }
 
         let serversSupportingProtocol = serversSupportingFeatures
@@ -107,13 +86,6 @@ extension ServerSelector: DependencyKey {
         }
         log.assertionFailure("Unexpected logical resolution failure reason")
         return .maintenance
-    }
-}
-
-extension DependencyValues {
-    public var serverSelector: ServerSelector {
-        get { self[ServerSelector.self] }
-        set { self[ServerSelector.self] = newValue }
     }
 }
 

@@ -22,36 +22,6 @@ import Connection
 import Dependencies
 import VPNAppCore
 
-@available(iOS 16, *)
-extension InternalConnectionState {
-    public func connectionStatus() throws -> VPNConnectionStatus {
-        @Dependency(\.connectionIntentStorage) var storage
-        switch self {
-        case .unknown:
-            // While we are in the unknown state, we cannot yet be sure if the tunnel is active or not,
-            // So let's not even try to grab the original connection intent in case we are disconnected.
-            return .resolving(nil, nil)
-
-        case .disconnected:
-            return .disconnected
-
-        case .connecting(let server):
-            let originalIntent = try storage.getConnectionIntent()
-            let resolvedConnection = server.map { VPNConnectionActual(server: $0, intent: originalIntent, connectedDate: nil) }
-            return .connecting(originalIntent.spec, resolvedConnection)
-
-        case .disconnecting:
-            let originalIntent = try? storage.getConnectionIntent()
-            return .disconnecting(originalIntent?.spec ?? .defaultFastest, nil)
-
-        case .connected(let server, let date, _):
-            let originalIntent = try storage.getConnectionIntent()
-            let resolvedConnection = VPNConnectionActual(server: server, intent: originalIntent, connectedDate: date)
-            return .connected(originalIntent.spec, resolvedConnection)
-        }
-    }
-}
-
 extension VPNConnectionActual {
     init(server: Server, intent: ServerConnectionIntent, connectedDate: Date?) {
         self.init(

@@ -25,13 +25,19 @@ import Foundation
 public struct VPNConnectionFeaturesProvider: Sendable {
     public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures
     public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
+    public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures
+    public internal(set) var setTunnelFeatures: @Sendable (_: TunnelFeatures) -> Void
 
     public init(
         connectionFeatures: @escaping @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures },
-        setConnectionFeatures: @escaping @Sendable (_: VPNConnectionFeatures) -> Void = { _ in reportIssue() }
+        setConnectionFeatures: @escaping @Sendable (_: VPNConnectionFeatures) -> Void = { _ in reportIssue() },
+        tunnelFeatures: @escaping @Sendable () -> TunnelFeatures = { .unimplementedFeatures },
+        setTunnelFeatures: @escaping @Sendable (_: TunnelFeatures) -> Void = { _ in reportIssue() }
     ) {
         self.connectionFeatures = connectionFeatures
         self.setConnectionFeatures = setConnectionFeatures
+        self.tunnelFeatures = tunnelFeatures
+        self.setTunnelFeatures = setTunnelFeatures
     }
 }
 
@@ -56,5 +62,16 @@ extension VPNConnectionFeatures {
             natType: .moderateNAT,
             safeMode: false
         )
+    }()
+}
+
+extension TunnelFeatures {
+    @usableFromInline
+    static let unimplementedFeatures: TunnelFeatures = {
+#if !os(tvOS)
+        .init(killSwitch: false, excludeLocalNetworks: false)
+#else
+        .init()
+#endif
     }()
 }

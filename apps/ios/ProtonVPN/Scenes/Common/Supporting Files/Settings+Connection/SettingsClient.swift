@@ -26,12 +26,7 @@ extension SettingsClient: DependencyKey {
     public static let liveValue = SettingsClient(
         isActive: {
             @Shared(.connectionState) var connectionState
-            switch connectionState {
-            case .none, .some(.disconnected):
-                return false
-            default:
-                return true
-            }
+            return !connectionState.is(\.disconnected)
         },
         featureChangeAvailability: { feature in
             @Shared(.connectionState) var connectionState
@@ -51,18 +46,14 @@ extension SettingsClient: DependencyKey {
         },
         protocolChangeAvailability: { connectionProtocol in
             @Shared(.connectionState) var connectionState
-            guard let connectionState else {
-                return .immediate
-            }
-
             switch connectionState {
-            case .disconnected, .disconnecting, .unknown:
+            case .disconnected, .disconnecting:
                 return .immediate
-
-            case .connecting(.none):
+            case .resolving:
+                log.warning("Protocol change availability requested before connection layer state was resolved")
                 return .withReconnect
 
-            case .connected(let server, _, _), .connecting(.some(let server)):
+            case .connected(_, let server, _, _), .connecting(_, let server):
                 @Dependency(\.propertiesManager) var properties
                 let supportedProtocols = properties.smartProtocolConfig.supportedProtocols
                 let serverSupportsNewProtocol = server.endpoint.supports(protocolSet: .init(vpnProtocols: supportedProtocols))
@@ -83,7 +74,7 @@ extension SettingsClient: DependencyKey {
         },
         update: { agentFeatures in
             @Dependency(\.connectionBridge) var bridge
-            bridge.push(.localAgent(.setFeatures(agentFeatures)))
+            bridge.push(.applySettings(agentFeatures))
         }
     )
 }

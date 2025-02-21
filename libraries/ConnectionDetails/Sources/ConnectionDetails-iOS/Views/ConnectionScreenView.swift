@@ -50,7 +50,7 @@ public struct ConnectionScreenView: View {
                 if let spec = store.vpnConnectionStatus.spec {
                     ConnectionFlagInfoView(intent: spec,
                                            isPinned: false,
-                                           vpnConnectionActual: store.vpnConnectionStatus.actual,
+                                           server: store.vpnConnectionStatus.server,
                                            isConnected: false,
                                            images: .coreImages)
                     .accessibilityIdentifier(

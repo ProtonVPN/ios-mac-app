@@ -23,10 +23,10 @@ import ExtensionManager
 import CoreConnection
 import Ergonomics
 
-final class ConnectionStateTests: XCTestCase {
+final class InternalConnectionStateTests: XCTestCase {
 
     func testLocalAgentErrorResolvesToError() async {
-        let state = ConnectionState(
+        let state = InternalConnectionState(
             tunnelState: .disconnected(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(.failedToEstablishConnection("" as GenericError))
@@ -36,7 +36,7 @@ final class ConnectionStateTests: XCTestCase {
     }
 
     func testTunnelConnectingResolvesToConnecting() async {
-        let state = ConnectionState(
+        let state = InternalConnectionState(
             tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
@@ -49,7 +49,7 @@ final class ConnectionStateTests: XCTestCase {
         let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
         let now = Date.now
 
-        let state = ConnectionState(
+        let state = InternalConnectionState(
             tunnelState: .connected(TunnelConnectionResponse(logicalInfo: server, connectionDate: now)),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
@@ -59,7 +59,7 @@ final class ConnectionStateTests: XCTestCase {
     }
 
     func testTunnelConnectingLocalAgentDisconnectedResolvesToConnecting() async {
-        let state = ConnectionState(
+        let state = InternalConnectionState(
             tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
