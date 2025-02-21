@@ -20,6 +20,12 @@ import OrderedCollections
 import ComposableArchitecture
 import Domain
 
+public extension SharedKey where Self == InMemoryKey<OrderedSet<RecentConnection>>.Default {
+    static var recents: Self {
+        Self[.inMemory("recents"), default: []]
+    }
+}
+
 public extension SharedKey where Self == InMemoryKey<DefaultConnectionPreference>.Default {
     static var defaultConnectionPreference: Self {
         Self[.inMemory("defaultConnectionPreference"), default: .fastest]
