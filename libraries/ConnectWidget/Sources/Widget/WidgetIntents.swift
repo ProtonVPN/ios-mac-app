@@ -57,8 +57,6 @@ public struct ConnectToVPNIntent: AppIntent {
 //    }
 
     public func perform() async throws -> some IntentResult {
-        @Dependencies.Dependency(\.connectToVPN) var connectToVPN
-        try? await connectToVPN(.init(location: .region(code: country), features: []))
         return .result()
     }
 }

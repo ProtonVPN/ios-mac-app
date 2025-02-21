@@ -61,8 +61,8 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let entry: ConnectWidgetEntry
-
         let credentials: AuthCredentials? = authKeychain.fetch(forContext: nil)
+
         guard credentials?.userId != nil else {
             entry = ConnectWidgetEntry(date: .now,
                                        connectionSpec: nil,
@@ -72,12 +72,14 @@ struct Provider: TimelineProvider {
             return
         }
 
+        authKeychain.saveToCache(credentials) // Save the credentials to the cache so that the storage automatically uses the ready-to-use authKeychain.
         let recents = recentConnectionList()
 
         entry = ConnectWidgetEntry(date: .now,
                                    connectionSpec: vpnConnectionStatus.spec ?? connectionSpec(),
                                    protectionState: vpnConnectionStatus.protectionState,
-                                   recentServers: recents)
+                                   recentServers: recents
+        )
         completion(Timeline(entries: [entry], policy: .never))
     }
 

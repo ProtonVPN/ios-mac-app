@@ -818,7 +818,6 @@
 		E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
-		E50F0BCB2D352DEC0099663C /* ConnectWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConnectWidgetExtension.entitlements; sourceTree = "<group>"; };
 		E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -1022,7 +1021,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E52C08CB2D413AD500B63101 /* SharedViews in Frameworks */,
 				E55CCA9E2D30121E00FD0AAD /* SwiftUI.framework in Frameworks */,
 				E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */,
 			);
@@ -1173,7 +1171,6 @@
 		791DE5D0208DDA3000A29EA5 = {
 			isa = PBXGroup;
 			children = (
-				E50F0BCB2D352DEC0099663C /* ConnectWidgetExtension.entitlements */,
 				E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */,
 				E551EB0329AF570E00B6612D /* swiftgen.yml */,
 				E9DBA50B27917C150010E3BD /* Packages */,
@@ -2512,7 +2509,6 @@
 			name = ConnectWidgetExtension;
 			packageProductDependencies = (
 				E55CCABE2D3142ED00FD0AAD /* ConnectWidget */,
-				EB2FD53D2D3ABBAA003E609D /* SharedViews */,
 			);
 			productName = ConnectWidgetExtension;
 			productReference = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */;
@@ -4188,7 +4184,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ConnectWidget/ConnectWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4228,7 +4224,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ConnectWidget/ConnectWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4265,7 +4261,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ConnectWidget/ConnectWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
