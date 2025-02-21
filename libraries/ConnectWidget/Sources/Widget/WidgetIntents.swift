@@ -36,25 +36,15 @@ public struct DisconnectFromVPNIntent: AppIntent {
 public struct ConnectToVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
 
-    @Parameter(title: "Country") var country: String
-
-    public static var parameterSummary: some ParameterSummary {
-        Summary("Connect to \(\.$country)") {
-            \.$country
-        }
-    }
+    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
     public init() {
-        self.country = "US"
+        recentIndex = nil
     }
 
-    public init(country: String) {
-        self.country = country
+    public init(recentIndex: Int) {
+        self.recentIndex = recentIndex
     }
-
-//    public init(recent: RecentConnection = .defaultFastest) {
-//        self.recent = recent
-//    }
 
     public func perform() async throws -> some IntentResult {
         return .result()

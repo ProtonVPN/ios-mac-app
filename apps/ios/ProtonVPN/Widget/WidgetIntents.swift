@@ -37,30 +37,59 @@ public struct DisconnectFromVPNIntent: AppIntent {
 }
 
 public struct ConnectToVPNIntent: AppIntent {
+
     public static var title: LocalizedStringResource = "Connect to VPN"
 
     public static var openAppWhenRun = false
 
-    @Parameter(title: "Country") var country: String
-
-    public static var parameterSummary: some ParameterSummary {
-        Summary("Connect to \(\.$country)") {
-            \.$country
-        }
-    }
+    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
     public init() {
-        self.country = "US"
+        recentIndex = nil
     }
 
-    public init(country: String) {
-        self.country = country
+    public init(recentIndex: Int) {
+        self.recentIndex = recentIndex
     }
 
     public func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN
-        try? await connectToVPN(.init(location: .region(code: country), features: []))
+
+        let connectionSpec = recentIndex.map { getRecentConnection($0) } ?? getDefaultConnection()
+
+        if let connectionSpec = connectionSpec {
+            try? await connectToVPN(connectionSpec)
+        }
         return .result()
+    }
+
+    // MARK: - Private helpers:
+
+    @Dependencies.Dependency(\.recentsStorage) private var recentsStorage
+    @Dependencies.Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
+
+    private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
+
+        @Dependencies.Dependency(\.connectionPresenter) var connectionPresenter
+
+        return connectionPresenter.recentConnectionList(
+            defaultConnectionPreference: .fastest,
+            recents: recentsStorage.readFromStorage(),
+            currentConnection: ConnectionSpec.defaultFastest
+        ).elements[index].connection
+    }
+
+    private func getDefaultConnection() -> ConnectionSpec? {
+        let preference = try? defaultConnectionStorage.getPreference()
+        switch preference ?? .fastest {
+        case .fastest:
+            return .defaultFastest
+        case .mostRecent:
+            let recents = recentsStorage.readFromStorage()
+            return recents.elements.first?.connection ?? .defaultFastest
+        case .recent(let spec):
+            return spec
+        }
     }
 }
 

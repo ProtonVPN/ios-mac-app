@@ -172,9 +172,12 @@ private struct RecentsView: View {
                             .foregroundStyle(Color(.text, .weak))
                     }
                     LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
-                        ForEach(entry.recentServers.prefix(3), id: \.self) { recentConnection in
+                        ForEach(
+                            Array(entry.recentServers.prefix(3).enumerated()),
+                            id: \.offset
+                        ) { index, recentConnection in
                             let location = recentConnection.connection.location
-                            Button(intent: ConnectToVPNIntent()) { // TODO: VPNAPPL-2467 - Send the recentConnection as parameter to the AppIntent.
+                            Button(intent: ConnectToVPNIntent(recentIndex: index)) {
                                 VStack(alignment: .center) {
                                     if recentConnection.underMaintenance {
                                         IconProvider.wrench
