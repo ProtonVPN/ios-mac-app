@@ -96,19 +96,15 @@ struct Provider: TimelineProvider {
     }
 }
 
-extension VPNConnectionStatus {
+private extension VPNConnectionStatus {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
-        case .resolving:
-            return .unprotected // Do we need another state for this?
-        case .disconnected:
+        case .resolving, .disconnected, .disconnecting:
             return .unprotected
         case .connecting:
             return .protecting
         case .connected:
             return .protected
-        case .disconnecting:
-            return .unprotected
         }
     }
 }
