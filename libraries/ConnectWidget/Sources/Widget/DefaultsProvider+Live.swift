@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import struct VPNShared.DefaultsProvider
 import Domain
 
-extension DefaultsProvider: DependencyKey {
+extension DefaultsProvider: @retroactive DependencyKey {
     public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults } )
 }
