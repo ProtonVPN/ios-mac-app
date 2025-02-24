@@ -2511,6 +2511,7 @@
 			name = ConnectWidgetExtension;
 			packageProductDependencies = (
 				E55CCABE2D3142ED00FD0AAD /* ConnectWidget */,
+				EB2FD53D2D3ABBAA003E609D /* SharedViews */,
 			);
 			productName = ConnectWidgetExtension;
 			productReference = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */;
@@ -4944,6 +4945,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
+		};
+		E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
+			productName = XCTestDynamicOverlay;
+		};
+		EB2FD53D2D3ABBAA003E609D /* SharedViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedViews;
 		};
 		E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */ = {
 			isa = XCSwiftPackageProductDependency;
