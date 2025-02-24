@@ -862,6 +862,7 @@
 		E9DBA50C27917C150010E3BD /* BugReport */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BugReport; path = ../../libraries/BugReport; sourceTree = "<group>"; };
 		E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringBundleIdTests.swift; path = ../../../ios/ProtonVPNTests/Extensions/StringBundleIdTests.swift; sourceTree = "<group>"; };
 		E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../ios/ProtonVPN/Resources/Colors+BugReport.swift"; sourceTree = "<group>"; };
+		EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ConnectWidgetExtensionProfile.entitlements; sourceTree = "<group>"; };
 		F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
 		F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityItemViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Countries/ViewModels/CityItemViewModel.swift; sourceTree = "<group>"; };
 		F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -1171,6 +1172,7 @@
 		791DE5D0208DDA3000A29EA5 = {
 			isa = PBXGroup;
 			children = (
+				EB7804852D6CF6DF00E75937 /* ConnectWidgetExtensionProfile.entitlements */,
 				E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */,
 				E551EB0329AF570E00B6612D /* swiftgen.yml */,
 				E9DBA50B27917C150010E3BD /* Packages */,
@@ -4263,9 +4265,9 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = ConnectWidget/ConnectWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -4283,6 +4285,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ConnectWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -4437,8 +4440,11 @@
 		EBE8244F2D5BAE0D00E8D787 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtensionProfile.entitlements;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ConnectWidget;
 				PRODUCT_NAME = ConnectWidgetExtension;
 			};
 			name = Profile;
