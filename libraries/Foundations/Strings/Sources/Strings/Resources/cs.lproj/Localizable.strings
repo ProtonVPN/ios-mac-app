@@ -852,6 +852,9 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Vaše předplatné Proton VPN nemůže být navýšeno z aplikace, pro navýšení navštivte account.protonvpn.com.";
 
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Vaše předplatné Proton VPN nemůže být navýšeno z TestFlight verze aplikace, pro navýšení navštivte account.protonvpn.com.";
+
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Vymazat data aplikace";
 
@@ -1703,6 +1706,12 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN je odpojena. Připojte se k serveru a bezpečně procházejte internet.";
 
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Nejrychlejší dostupná země";
+
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Nejrychlejší dostupná země Secure Core";
+
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Výchozí připojení";
 
@@ -1711,6 +1720,9 @@
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Naposledy připojeno k";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Načítání...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Připojování k...";
@@ -1724,11 +1736,14 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "Bezpečně procházíte z %@.";
 
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Načítání";
+
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Vyberte vaše výchozí připojení";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Nejrychlejší";
+"home_default_connection_fastest_name" = "Nejrychlejší země";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Nejlepší server na základě vaší polohy";
@@ -1753,6 +1768,9 @@
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Na serveru probíhá údržba";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Náhodná země";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Nápověda";
@@ -1795,6 +1813,9 @@
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Chráněno";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Načítání";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Získat Plus";
@@ -2706,3 +2727,87 @@
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Odemkněte pokročilé funkce pro výkon a soukromí";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Chyba připojení";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
+"_connection_error_unexpected_protocol" = "Vámi vybrané připojení používá protokol (%@), který již není touto aplikací podporován. Vyberte prosím jiné připojení.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_certificate_authentication" = "Při ověřování se serverem došlo k problému: %@";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
+"_connection_error_certificate_authentication_key_generation_failed" = "nepodařilo se nám vygenerovat vaše šifrovací klíče. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
+"_connection_error_certificate_authentication_wont_refresh" = "nemohli jsme obnovit vaše přihlašovací údaje. (%@)";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
+"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Klíče nejsou v zařízení k dispozici.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
+"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Certifikát není v zařízení k dispozici.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
+"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Platnost certifikátu v zařízení vypršela.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
+"_connection_error_certificate_authentication_rate_limited" = "nyní není možné obnovit vaše přihlašovací údaje.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
+"_connection_error_certificate_authentication_ipc_message" = "došlo k chybě protokolu. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_certificate_authentication_unexpected" = "došlo k neočekávané chybě přihlašovacích údajů. (%@)";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_tunnel_connection" = "Došlo k problému při spuštění VPN: %@";
+
+/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_tunnel_connection_tunnel_start" = "tunel nemohl být vytvořen. (%@)";
+
+/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
+"_connection_error_tunnel_connection_unknown_server" = "server, který jste si vybrali, již není k dispozici. Vyberte si prosím jiný server.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+"_connection_error_local_agent" = "Při připojování došlo k neočekávané chybě: %@";
+
+/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
+"_connection_error_local_agent_failed_establishing_connection" = "zařízení nemohlo navázat připojení. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
+"_connection_error_local_agent_remote_error" = "vzdálená služba nepřijala připojení. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
+"_connection_error_local_agent_server_certificate" = "nemohli jsme ověřit připojení.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Nepodařilo se nám připojit k serveru, protože chyběly původní informace o připojení.";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Při přípravě připojení došlo k problému: %@";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Server, který jste si vybrali, již není k dispozici. Vyberte si prosím jiný server.";
+
+/* Error message: we tried to connect, but something took too long and we weren't able to  */
+"_connection_error_timeout" = "Při pokusu o připojení jsme narazili na chybu: server neodpověděl včas. Zkuste to prosím znovu.";
+
+/* Error message: we tried to message the connection provider, but they didn't respond in time. */
+"_provider_message_error_no_data_received" = "Od poskytovatele připojení nebyla přijata žádná data.";
+
+/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
+"_provider_message_error_decoding_error" = "Při pokusu o dekódování odpovědi od poskytovatele připojení došlo k chybě.";
+
+/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
+"_provider_message_error_sending_error" = "Při pokusu o odeslání zprávy poskytovateli připojení došlo k chybě.";
+
+/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
+"_provider_message_error_unknown_request" = "Poskytovatel připojení obdržel neznámý požadavek.";
+
+/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
+"_provider_message_error_unknown_response" = "Poskytovatel připojení vrátil neznámou odpověď.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
+"_provider_message_error_remote_error" = "Poskytovatel připojení vrátil chybu: %@";

@@ -852,6 +852,9 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Votre abonnement Proton VPN ne peut pas être actualisé depuis l'application, rendez-vous sur account.protonvpn.com pour le mettre à niveau.";
 
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Votre abonnement Proton VPN ne peut pas être actualisé depuis la version TestFlight de l'application. Rendez-vous sur account.protonvpn.com pour le mettre à niveau.";
+
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Effacer les données de l'application";
 
@@ -1703,6 +1706,12 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "Le VPN est déconnecté. Connectez-vous à un serveur pour naviguer sur internet en sécurité.";
 
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Le pays le plus rapide disponible";
+
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Le pays Secure Core le plus rapide disponible";
+
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Connexion par défaut";
 
@@ -1711,6 +1720,9 @@
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Dernière connexion :";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Chargement...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Connexion à...";
@@ -1724,11 +1736,14 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "Vous naviguez en toute sécurité depuis %@.";
 
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Chargement";
+
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Sélectionnez votre connexion par défaut";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "La plus rapide";
+"home_default_connection_fastest_name" = "Pays le plus rapide";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Le meilleur serveur selon votre emplacement";
@@ -1753,6 +1768,9 @@
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Le serveur est en maintenance.";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Pays aléatoire";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Aide";
@@ -1795,6 +1813,9 @@
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Protégé";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Chargement";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Obtenir l'abonnement Plus";
@@ -2706,3 +2727,87 @@
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Accédez à des fonctionnalités avancées de productivité respectueuses de votre vie privée.";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Erreur de connexion";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
+"_connection_error_unexpected_protocol" = "La connexion choisie utilise un protocole (%@) qui n'est plus pris en charge par l'application. Veuillez choisir une autre connexion.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_certificate_authentication" = "Une erreur est survenue lors de l'authentification avec le serveur : %@";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
+"_connection_error_certificate_authentication_key_generation_failed" = "nous n'avons pas pu générer vos clés de chiffrement. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
+"_connection_error_certificate_authentication_wont_refresh" = "nous n'avons pas pu actualiser vos identifiants. (%@)";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
+"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Les clés ne sont pas disponibles sur cet appareil.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
+"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Le certificat n'est pas disponible sur cet appareil.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
+"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Le certificat sur cet appareil est arrivé à expiration.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
+"_connection_error_certificate_authentication_rate_limited" = "il n'est pas possible d'actualiser vos identifiants pour le moment.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
+"_connection_error_certificate_authentication_ipc_message" = "une erreur de protocole est survenue. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_certificate_authentication_unexpected" = "une erreur d'identifiant inattendue est survenue. (%@)";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_tunnel_connection" = "Un problème est survenu lors du démarrage du VPN : %@";
+
+/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_tunnel_connection_tunnel_start" = "le tunnel n'a pas pu être établi. (%@)";
+
+/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
+"_connection_error_tunnel_connection_unknown_server" = "le serveur choisi n'est plus disponible. Veuillez choisir un autre serveur.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+"_connection_error_local_agent" = "Une erreur est survenue lors de la connexion : %@";
+
+/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
+"_connection_error_local_agent_failed_establishing_connection" = "l'appareil n'a pas pu établir une connexion. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
+"_connection_error_local_agent_remote_error" = "le serveur distant n'a pas accepté la connexion. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
+"_connection_error_local_agent_server_certificate" = "nous n'avons pas pu authentifier la connexion.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Nous n'avons pas pu vous connecter au serveur car les informations de connexion d'origine sont manquantes.";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Un problème est survenu lors de la préparation de la connexion : %@";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Le serveur choisi n'est plus disponible. Veuillez choisir un autre serveur.";
+
+/* Error message: we tried to connect, but something took too long and we weren't able to  */
+"_connection_error_timeout" = "Une erreur est survenue lors de la tentative de connexion : le serveur n'a pas répondu à temps. Veuillez réessayer.";
+
+/* Error message: we tried to message the connection provider, but they didn't respond in time. */
+"_provider_message_error_no_data_received" = "Aucune donnée n'a été reçue du fournisseur de connexion.";
+
+/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
+"_provider_message_error_decoding_error" = "Une erreur est survenue lors de la tentative de décodage de la réponse du fournisseur de connexion.";
+
+/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
+"_provider_message_error_sending_error" = "Une erreur est survenue lors de la tentative d'envoi d'un message au fournisseur de connexion.";
+
+/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
+"_provider_message_error_unknown_request" = "Le fournisseur de connexion a reçu une demande inconnue.";
+
+/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
+"_provider_message_error_unknown_response" = "Le fournisseur de connexion a renvoyé une réponse inconnue.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
+"_provider_message_error_remote_error" = "Le fournisseur de connexion a rencontré une erreur : %@";

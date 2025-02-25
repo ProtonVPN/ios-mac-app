@@ -852,6 +852,9 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Uw Proton VPN-abonnement kan niet worden geüpgraded vanuit de app, bezoek account.protonvpn.com om te upgraden.";
 
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Uw Proton VPN-abonnement kan niet worden geüpgraded vanuit de app, bezoek account.protonvpn.com om te upgraden.";
+
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Verwijder applicatiegegevens";
 
@@ -1703,6 +1706,12 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "De VPN-verbinding is verbroken. Maak verbinding met een server om veilig door het internet te surfen.";
 
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Het snelste beschikbaar land";
+
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Het snelste beveiligde beschikbaar core land";
+
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Standaardverbinding";
 
@@ -1711,6 +1720,9 @@
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Laatst verbonden met";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Laden";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Verbinding maken met…...";
@@ -1724,11 +1736,14 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "U surft veilig vanaf %@.";
 
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Laden";
+
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Selecteer uw standaard verbinding";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Snelst";
+"home_default_connection_fastest_name" = "Snelste Land";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "De beste server op basis van uw locatie";
@@ -1753,6 +1768,9 @@
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Servers in onderhoud";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Willekeurig Land";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Help";
@@ -1795,6 +1813,9 @@
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Beschermd";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Laden";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Neem Plus";
@@ -2706,3 +2727,87 @@
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Ontgrendel geavanceerde prestatie- en privacyfuncties";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Verbindingsfout";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
+"_connection_error_unexpected_protocol" = "De verbinding die u heeft gekozen gebruikt een protocol (%@) dat niet langer wordt ondersteund door deze applicatie. Kies een andere verbinding.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_certificate_authentication" = "Er is een probleem opgetreden tijdens de authenticatie met de server: %@";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
+"_connection_error_certificate_authentication_key_generation_failed" = "we konden uw encryptiesleutels niet genereren. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
+"_connection_error_certificate_authentication_wont_refresh" = "we konden uw gegevens niet vernieuwen. (%@)";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
+"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "De sleutels zijn niet beschikbaar op het apparaat.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
+"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Het certificaat is niet beschikbaar op het apparaat.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
+"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Het certificaat op het apparaat is verlopen.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
+"_connection_error_certificate_authentication_rate_limited" = "het is momenteel niet mogelijk om uw gegevens te vernieuwen.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
+"_connection_error_certificate_authentication_ipc_message" = "er is een protocolfout opgetreden. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_certificate_authentication_unexpected" = "er is een onverwachte aanmeldfout opgetreden. (%@)";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_tunnel_connection" = "Er was een probleem met het starten van de VPN: %@";
+
+/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_tunnel_connection_tunnel_start" = "de tunnel kon niet worden opgezet. (%@)";
+
+/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
+"_connection_error_tunnel_connection_unknown_server" = "de server die u hebt gekozen is niet meer beschikbaar. Kies een andere server.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+"_connection_error_local_agent" = "Er is een onverwachte fout opgetreden tijdens het verbinden: %@";
+
+/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
+"_connection_error_local_agent_failed_establishing_connection" = "het apparaat kon geen verbinding maken. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
+"_connection_error_local_agent_remote_error" = "de externe service accepteerde de verbinding niet. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
+"_connection_error_local_agent_server_certificate" = "we konden de verbinding niet authenticeren.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "We konden geen verbinding maken met de server, omdat de originele verbinding informatie ontbrak.";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Er is een fout opgetreden bij het opzetten van de verbinding: %@";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "De server die u hebt gekozen is niet meer beschikbaar. Kies een andere server.";
+
+/* Error message: we tried to connect, but something took too long and we weren't able to  */
+"_connection_error_timeout" = "Er is een fout opgetreden tijdens het verbinden: de server heeft niet op tijd gereageerd. Probeer opnieuw.";
+
+/* Error message: we tried to message the connection provider, but they didn't respond in time. */
+"_provider_message_error_no_data_received" = "Er zijn geen gegevens ontvangen van de connectie provider.";
+
+/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
+"_provider_message_error_decoding_error" = "Er is een fout opgetreden bij het decoderen van het antwoord van de netwerkprovider.";
+
+/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
+"_provider_message_error_sending_error" = "Er is een fout opgetreden bij het versturen van een bericht naar de connector provider.";
+
+/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
+"_provider_message_error_unknown_request" = "De netwerkprovider heeft een onbekende aanvraag ontvangen.";
+
+/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
+"_provider_message_error_unknown_response" = "De netwerkprovider gaf een onbekend antwoord terug.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
+"_provider_message_error_remote_error" = "De netwerkprovider ondervond een fout: %@";

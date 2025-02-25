@@ -852,6 +852,9 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Proton VPN aboneliğiniz uygulama içinden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
 
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Proton VPN aboneliğiniz uygulamanın TestFlight sürümünden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
+
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Uygulama verilerini temizle";
 
@@ -1703,6 +1706,12 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN bağlantısı yok. İnternet üzerinde güvenle gezinmek için bir sunucuya bağlanın.";
 
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Kullanılabilecek en hızlı ülke";
+
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Kullanılabilecek en hızlı Secure Core ülkesi";
+
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Varsayılan bağlantı";
 
@@ -1711,6 +1720,9 @@
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Son bağlantı";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Yükleniyor...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Şurası ile bağlantı kuruluyor...";
@@ -1724,11 +1736,14 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "%@ üzerinden güvenli olarak geziniyorsunuz.";
 
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Yükleniyor";
+
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Varsayılan bağlantınızı seçin";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "En hızlı";
+"home_default_connection_fastest_name" = "En hızlı ülke";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Konumunuza uygun en iyi sunucu";
@@ -1753,6 +1768,9 @@
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Sunucuda bakım yapılıyor";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Rastgele ülke";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Yardım";
@@ -1796,11 +1814,14 @@
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Korunmuş";
 
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Yükleniyor";
+
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Plus edinin";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
-"netshield_stats_hint_ads" = "Reklam siteleri sizi hedeflemek için çerezler ve izleyiciler kullanır.";
+"netshield_stats_hint_ads" = "Reklam siteleri sizi hedeflemek için tanımlama bilgileri ve izleyiciler kullanır.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
 "netshield_stats_hint_trackers" = "İzleyiciler, sitelerdeki etkinliğiniz ile ilgili bilgi toplayan, depolayan ve satan üçüncü taraf siteleridir.";
@@ -2706,3 +2727,87 @@
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Gelişmiş başarım ve gizlilik özelliklerine erişin";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Bağlantı sorunu";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
+"_connection_error_unexpected_protocol" = "Seçtiğiniz bağlantı, bu uygulama tarafından artık desteklenmeyen bir iletişim kuralı (%@) kullanıyor. Lütfen başka bir bağlantı seçin.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_certificate_authentication" = "Sunucuda kimlik doğrulanırken bir sorun çıktı: %@";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
+"_connection_error_certificate_authentication_key_generation_failed" = "şifreleme anahtarlarınızı oluşturamadık. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
+"_connection_error_certificate_authentication_wont_refresh" = "kimlik doğrulama bilgilerinizi yenileyemedik. (%@)";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
+"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Anahtarlar aygıtta yok.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
+"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Sertifika aygıtta yok.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
+"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Aygıttaki sertifikanın süresi dolmuş.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
+"_connection_error_certificate_authentication_rate_limited" = "şu anda kimlik doğrulama bilgileriniz yenilenemiyor.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
+"_connection_error_certificate_authentication_ipc_message" = "bir iletişim kuralı sorunu çıktı. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_certificate_authentication_unexpected" = "beklenmeyen bir kimlik doğrulama sorunu çıktı. (%@)";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_tunnel_connection" = "VPN başlatılırken bir sorun çıktı: %@";
+
+/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_tunnel_connection_tunnel_start" = "tünel kurulamadı. (%@)";
+
+/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
+"_connection_error_tunnel_connection_unknown_server" = "seçtiğiniz sunucu artık kullanılamıyor. Lütfen başka bir sunucu seçin.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+"_connection_error_local_agent" = "Bağlanırken beklenmeyen bir sorun çıktı: %@";
+
+/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
+"_connection_error_local_agent_failed_establishing_connection" = "aygıt bağlantı kuramadı. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
+"_connection_error_local_agent_remote_error" = "uzak hizmet bağlantıyı kabul etmedi. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
+"_connection_error_local_agent_server_certificate" = "bağlantının kimliği doğrulanamadı.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Özgün bağlantı bilgileri eksik olduğundan, sunucu ile bağlantı kurulamadı.";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Bağlantı hazırlanırken bir sorun çıktı: %@";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Seçtiğiniz sunucu artık kullanılamıyor. Lütfen başka bir sunucu seçin.";
+
+/* Error message: we tried to connect, but something took too long and we weren't able to  */
+"_connection_error_timeout" = "Bağlantı kurulurken bir sorun çıktı: Sunucu zamanında yanıt vermedi. Lütfen yeniden deneyin.";
+
+/* Error message: we tried to message the connection provider, but they didn't respond in time. */
+"_provider_message_error_no_data_received" = "Bağlantı sağlayıcısından herhangi bir veri alınamadı.";
+
+/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
+"_provider_message_error_decoding_error" = "Bağlantı sağlayıcısından gelen yanıtın kodu çözülürken bir sorun çıktı.";
+
+/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
+"_provider_message_error_sending_error" = "Bağlantı sağlayıcısına ileti gönderilirken bir sorun çıktı.";
+
+/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
+"_provider_message_error_unknown_request" = "Bağlantı sağlayıcısı bilinmeyen bir istek aldı.";
+
+/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
+"_provider_message_error_unknown_response" = "Bağlantı sağlayıcısı bilinmeyen bir yanıt verdi.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
+"_provider_message_error_remote_error" = "Bağlantı sağlayıcısında bir sorun çıktı: %@";
