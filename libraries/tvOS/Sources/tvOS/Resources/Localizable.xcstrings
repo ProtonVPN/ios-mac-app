@@ -1640,7 +1640,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "接続完了"
+            "value" : "接続済み"
           }
         },
         "ka" : {
@@ -1975,7 +1975,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "接続に失敗"
+            "value" : "接続に失敗しました"
           }
         },
         "ka" : {
@@ -2143,7 +2143,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "お問い合わせ先"
+            "value" : "私たちにご連絡ください"
           }
         },
         "ka" : {
@@ -5590,7 +5590,140 @@
       }
     },
     "Resolving" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вырашаецца"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Řešení"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behebung"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σε Επίλυση"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolving"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolviendo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolviendo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résolution"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menyelesaikan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In risoluzione"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解決"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ამოხსნა"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "해결 중"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Løser"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oplossen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rozpatrywanie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resolvendo"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se rezolvă"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Решается"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riešenie"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löser"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çözümleniyor"
+          }
+        }
+      }
     },
     "Scan the QR code or go to\n" : {
       "comment" : "Subtitle of the \"Create Account\" screen. URL is appended to the end of this string. Remember about the new line character",
@@ -6705,7 +6838,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loggar ut..."
+            "value" : "Loggar ut …"
           }
         },
         "tr" : {
@@ -9143,7 +9276,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "När du tillfrågas om din verifieringskod, ange (hämtar...)"
+            "value" : "När du tillfrågas om din verifieringskod, ange (hämtar …)"
           }
         },
         "tr" : {
