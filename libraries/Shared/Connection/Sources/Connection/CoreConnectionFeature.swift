@@ -32,7 +32,7 @@ import VPNAppCore
 import Domain
 
 @available(iOS 16, *)
-public struct InternalConnectionFeature: Reducer, Sendable {
+public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
@@ -72,7 +72,7 @@ public struct InternalConnectionFeature: Reducer, Sendable {
         case delegate(Delegate)
 
         public enum Delegate: Sendable {
-            case stateChanged(InternalConnectionState, InternalConnectionState)
+            case stateChanged(CoreConnectionState, CoreConnectionState)
         }
     }
 
@@ -98,12 +98,12 @@ public struct InternalConnectionFeature: Reducer, Sendable {
         Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
         Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
         Reduce { state, action in
-            let effects = reduceInternal(state: &state, action: action)
+            let effects = reduceCore(state: &state, action: action)
             return reduceWithStateChangeAction(oldState: oldStateCopy, newState: state, effects: effects)
         }
     }
 
-    private func reduceInternal(state: inout State, action: Action) -> Effect<Action> {
+    private func reduceCore(state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .startObserving:
             return .merge(
@@ -266,12 +266,12 @@ public struct InternalConnectionFeature: Reducer, Sendable {
     }
 
     private func reduceWithStateChangeAction(
-        oldState: InternalConnectionFeature.State,
-        newState: InternalConnectionFeature.State,
+        oldState: CoreConnectionFeature.State,
+        newState: CoreConnectionFeature.State,
         effects: Effect<Action>
     ) -> Effect<Action> {
-        let oldValue = InternalConnectionState(connectionFeatureState: oldState)
-        let newValue = InternalConnectionState(connectionFeatureState: newState)
+        let oldValue = CoreConnectionState(connectionFeatureState: oldState)
+        let newValue = CoreConnectionState(connectionFeatureState: newState)
         if oldValue == newValue {
             return effects
         }

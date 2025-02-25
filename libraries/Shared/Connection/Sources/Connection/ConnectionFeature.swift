@@ -16,9 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-// TODO: Clean up imports
 import Foundation
-import enum NetworkExtension.NEVPNStatus
 
 import Clocks
 import ComposableArchitecture
@@ -26,8 +24,6 @@ import Dependencies
 
 import Domain
 import CoreConnection
-import CertificateAuthentication
-import ExtensionManager
 import LocalAgent
 import VPNAppCore
 
@@ -47,14 +43,14 @@ public struct ConnectionFeature: Reducer, Sendable {
         public internal(set) var currentIntent: ServerConnectionIntent?
         public internal(set) var queuedIntent: ConnectionPreparationIntent?
         internal var shouldRegisterServerChangeOnConnection: Bool = false
-        internal var internalState: InternalConnectionFeature.State // Explicitly as internal as it gets
+        internal var core: CoreConnectionFeature.State
 
         public init(
             connectionState: ConnectionState = .resolving,
-            internalState: InternalConnectionFeature.State = .init()
+            core: CoreConnectionFeature.State = .init()
         ) {
             self.connectionState = connectionState
-            self.internalState = internalState
+            self.core = core
         }
     }
 
@@ -62,7 +58,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     public enum Action: Sendable {
         case prepare(ConnectionPreparationIntent)
         case startConnection(ServerConnectionIntent)
-        case internalAction(InternalConnectionFeature.Action)
+        case core(CoreConnectionFeature.Action)
         case input(Input)
         case delegate(Delegate)
 
@@ -89,17 +85,17 @@ public struct ConnectionFeature: Reducer, Sendable {
     public var body: some Reducer<State, Action> {
         // Firstly, process internal connection events
         // TODO: Do we receive the delegate action (state change) event before other effect are processed?
-        Scope(state: \.internalState, action: \.internalAction) { InternalConnectionFeature() }
+        Scope(state: \.core, action: \.core) { CoreConnectionFeature() }
         Reduce { state, action in
             switch action {
             case .input(.onLaunch):
                 return .merge(
-                    .send(.internalAction(.startObserving)),
+                    .send(.core(.startObserving)),
                     .listen(to: connectionBridge.intentStream()) { .input($0) } // reinject intents from bridge into this feature
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .input(.connect(let intent)):
-                switch state.internalConnectionState {
+                switch state.coreConnectionState {
                 case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
                     state.queuedIntent = intent
@@ -107,7 +103,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
                 case .connecting, .connected:
                     state.queuedIntent = intent
-                    return .send(.internalAction(.disconnect(.userIntent))) // TODO: remove disconnect params except maybe error
+                    return .send(.core(.disconnect(.userIntent))) // TODO: remove disconnect params except maybe error
 
                 case .disconnected:
                     return .send(.prepare(intent))
@@ -118,17 +114,17 @@ public struct ConnectionFeature: Reducer, Sendable {
                 }
 
             case .input(.applySettings(let agentFeatures)):
-                return .send(.internalAction(.localAgent(.setFeatures(agentFeatures))))
+                return .send(.core(.localAgent(.setFeatures(agentFeatures))))
 
             case .input(.disconnect):
-                return .send(.internalAction(.disconnect(.userIntent)))
+                return .send(.core(.disconnect(.userIntent)))
 
             case .input(.onLogout):
-                return .send(.internalAction(.handleLogout))
+                return .send(.core(.handleLogout))
 
             case .prepare(let intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
-                assert(state.internalConnectionState.is(\.disconnected))
+                assert(state.coreConnectionState.is(\.disconnected))
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
 
                 return .run { send in
@@ -161,24 +157,24 @@ public struct ConnectionFeature: Reducer, Sendable {
                     log.error("Failed in preparing connection with error: \(error)")
                     switch error {
                     case let connectionError as ConnectionError:
-                        await send(.internalAction(.disconnect(.connectionFailure(connectionError))))
+                        await send(.core(.disconnect(.connectionFailure(connectionError))))
                     default:
                         let wrappedError = ConnectionError.WrappedError(wrapped: error)
-                        await send(.internalAction(.disconnect(.connectionFailure(.preparation(wrappedError)))))
+                        await send(.core(.disconnect(.connectionFailure(.preparation(wrappedError)))))
                     }
                 }.cancellable(id: CancelID.preparation, cancelInFlight: true)
 
             case .startConnection(let intent):
                 state.currentIntent = intent
-                return .send(.internalAction(.connect(intent)))
+                return .send(.core(.connect(intent)))
 
-            case .internalAction(.delegate(.stateChanged(let oldState, .disconnected(.some(let error))))):
+            case .core(.delegate(.stateChanged(let oldState, .disconnected(.some(let error))))):
                 return .concatenate(
                     .send(.delegate(.stateChanged(.disconnected))),
                     .send(.delegate(.connectionFailed(error)))
                 )
 
-            case .internalAction(.delegate(.stateChanged(let oldState, .disconnected(nil)))):
+            case .core(.delegate(.stateChanged(let oldState, .disconnected(nil)))):
                 if let reconnectionIntent = state.queuedIntent {
                     // assert(state.connectionState.is(\.connecting))
                     log.info("Disconnected, proceeding with reconnection to \(reconnectionIntent.server)")
@@ -188,7 +184,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .send(.delegate(.stateChanged(.disconnected)))
                 }
 
-            case .internalAction(.delegate(.stateChanged(let oldState, .connected(let server, let connectedAt, let details)))):
+            case .core(.delegate(.stateChanged(let oldState, .connected(let server, let connectedAt, let details)))):
                 if state.shouldRegisterServerChangeOnConnection {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)
@@ -197,10 +193,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                     let intent = try state.currentIntent ?? intentStorage.getConnectionIntent()
                     return await send(.delegate(.stateChanged(.connected(intent, server, connectedAt, details))))
                 } catch: { error, send in
-                    return await send(.internalAction(.disconnect(.connectionFailure(.intentMissing))))
+                    return await send(.core(.disconnect(.connectionFailure(.intentMissing))))
                 }
 
-            case .internalAction(.delegate(.stateChanged(let oldState, .connecting(let server)))):
+            case .core(.delegate(.stateChanged(let oldState, .connecting(let server)))):
                 if oldState.is(\.unknown) {
                     log.info("Ignoring state transition to connecting since we are resolving from unknown")
                     return .none
@@ -210,10 +206,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                     let resolvedIntent = ConnectionPreparationIntent(spec: intent.spec, server: intent.server)
                     return await send(.delegate(.stateChanged(.connecting(resolvedIntent, server ?? intent.server))))
                 } catch: { error, send in
-                    return await send(.internalAction(.disconnect(.connectionFailure(.intentMissing))))
+                    return await send(.core(.disconnect(.connectionFailure(.intentMissing))))
                 }
 
-            case .internalAction(.delegate(.stateChanged(let oldState, .disconnecting))):
+            case .core(.delegate(.stateChanged(let oldState, .disconnecting))):
                 return .run { [state] send in
                     let intent = try state.currentIntent ?? intentStorage.getConnectionIntent()
                     if let reconnectionIntent = state.queuedIntent {
@@ -228,13 +224,13 @@ public struct ConnectionFeature: Reducer, Sendable {
                         log.error("Unexpected transition to disconnecting from \(oldState)")
                     }
                 } catch: { error, send in
-                    return await send(.internalAction(.disconnect(.connectionFailure(.intentMissing))))
+                    return await send(.core(.disconnect(.connectionFailure(.intentMissing))))
                 }
 
-            case .internalAction(.delegate(.stateChanged(let oldState, .unknown))):
+            case .core(.delegate(.stateChanged(let oldState, .unknown))):
                 return .send(.delegate(.stateChanged(.resolving)))
 
-            case .internalAction:
+            case .core:
                 return .none
 
             case .delegate(.stateChanged):
@@ -250,8 +246,8 @@ public struct ConnectionFeature: Reducer, Sendable {
 }
 
 extension ConnectionFeature.State {
-    var internalConnectionState: InternalConnectionState {
-        return InternalConnectionState(connectionFeatureState: internalState)
+    var coreConnectionState: CoreConnectionState {
+        return CoreConnectionState(connectionFeatureState: core)
     }
 }
 

@@ -22,8 +22,6 @@ import VPNAppCore
 import Domain
 
 extension ConnectionIntentStorage: DependencyKey {
-    public static let storageKey: String = "ServerConnectionIntent"
-
     public static let liveValue = ConnectionIntentStorage(getConnectionIntent: {
         @Dependency(\.storage) var storage
         do {

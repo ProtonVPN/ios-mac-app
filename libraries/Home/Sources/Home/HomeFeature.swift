@@ -269,7 +269,7 @@ public struct HomeFeature {
                 return .none
             case .freeConnectionsInfo(_):
                 return .none
-            case .connection(.internalAction(.localAgent(.event(.stats(let message))))):
+            case .connection(.core(.localAgent(.event(.stats(let message))))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case .connection(.delegate(.connectionFailed(let error))):
                 return .run { _ in await alertService.feed(error) }

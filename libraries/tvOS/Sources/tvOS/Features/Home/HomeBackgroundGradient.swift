@@ -30,7 +30,7 @@ enum MainBackground: Equatable, Sendable {
         switch connectionState {
         case .disconnected:
             self = .disconnected
-        case .connecting, .disconnecting, .none, .unknown:
+        case .connecting, .disconnecting, .none, .resolving:
             self = .connecting
         case .connected:
             self = .connected

@@ -42,10 +42,9 @@ struct MainFeature {
         var currentTab: Tab = .home
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
+        var connection = ConnectionFeature.State()
 
-        var connection = InternalConnectionFeature.State()
-
-        @SharedReader(.connectionState) var connectionState: ConnectionState?
+        @Shared(.connectionState) var connectionState: ConnectionState = .resolving
         @Shared(.userLocation) var userLocation: UserLocation?
         @Shared(.mainBackground) var mainBackground: MainBackground = .clear
     }
@@ -60,13 +59,12 @@ struct MainFeature {
         case onLogout
         case updateUserLocation
 
-        case connection(InternalConnectionFeature.Action)
+        case connection(ConnectionFeature.Action)
         case connectDisconnectingIfNecessary(String)
 
         case errorOccurred(Error)
         
-        case connectionStateUpdated(ConnectionState?)
-        case observeConnectionState
+        case connectionStateUpdated(ConnectionState)
     }
 
     private enum CancelId {
@@ -74,15 +72,9 @@ struct MainFeature {
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.connection, action: \.connection) {
-            InternalConnectionFeature()
-        }
-        Scope(state: \.homeLoading, action: \.homeLoading) {
-            HomeLoadingFeature()
-        }
-        Scope(state: \.settings, action: \.settings) {
-            SettingsFeature()
-        }
+        Scope(state: \.connection, action: \.connection) { ConnectionFeature() }
+        Scope(state: \.homeLoading, action: \.homeLoading) { HomeLoadingFeature() }
+        Scope(state: \.settings, action: \.settings) { SettingsFeature() }
         Reduce { state, action in
             switch action {
             case .connectionStateUpdated(let connectionState):
@@ -90,19 +82,10 @@ struct MainFeature {
                     state.$mainBackground.withLock { $0 = .init(connectionState: connectionState) }
                 }
                 return .none
-            case .observeConnectionState:
-                return .publisher { state.$connectionState.publisher.receive(on: UIScheduler.shared).map(Action.connectionStateUpdated) }
-                    .cancellable(id: CancelId.connectionState)
             case .onAppear:
-                return .merge(
-                    .send(.observeConnectionState),
-                    .send(.connection(.startObserving))
-                )
+                return .send(.connection(.input(.onLaunch)))
             case .onLogout:
-                return .concatenate(
-                    .send(.connection(.handleLogout)),
-                    .send(.connection(.stopObserving))
-                )
+                return .send(.connection(.input(.onLogout)))
 
             case .selectTab(let tab):
                 state.currentTab = tab
@@ -119,7 +102,7 @@ struct MainFeature {
             case .homeLoading(.loaded(.countryList(.selectItem(let item)))):
                 func effect(_ server: Server?) -> Effect<Action> { // when connecting/connected to a country
                     if let server, server.logical.exitCountryCode == item.code { // and the selected server is the same as the connecting/connected one
-                        return .send(.connection(.disconnect(.userIntent))) // just disconnect
+                        return .send(.connection(.input(.disconnect))) // just disconnect
                     } else { // and the selected server is different
                         // start reconnection, which will first cancel/disconnect current connection
                         return .send(.connectDisconnectingIfNecessary(item.code))
@@ -127,10 +110,10 @@ struct MainFeature {
                 }
                 // these two below are separate because the server is optional in one and non-optional in the other case
                 // which causes the compiler to ignore the non-optional and just send a nil instead
-                if case let .connected(server, _, _) = state.connectionState {
+                if case let .connected(_, server, _, _) = state.connectionState {
                     return effect(server)
                 }
-                if case let .connecting(server) = state.connectionState {
+                if case let .connecting(_, server) = state.connectionState {
                     return effect(server)
                 }
                 return .send(.connectDisconnectingIfNecessary(item.code))
@@ -138,9 +121,9 @@ struct MainFeature {
             case .homeLoading(.loaded(.protectionStatus(.delegate(let action)))):
                 switch action {
                 case .userClickedDisconnect:
-                    return .send(.connection(.disconnect(.userIntent)))
+                    return .send(.connection(.input(.disconnect)))
                 case .userClickedCancel:
-                    return .send(.connection(.disconnect(.userIntent)))
+                    return .send(.connection(.input(.disconnect)))
                 case .userClickedConnect:
                     return .send(.connectDisconnectingIfNecessary("Fastest"))
                 }
@@ -149,25 +132,13 @@ struct MainFeature {
                 return .none
 
             case .connectDisconnectingIfNecessary(let code):
-                let isConnected = if case .connected = state.connectionState { true } else { false }
                 return .run { send in
-                    let intent = try serverConnectionIntent(code: code)
-                    if isConnected {
-                        return await send(.connection(.disconnect(.reconnection(intent))))
-                    } else {
-                        return await send(.connection(.connect(intent)))
-                    }
+                    let intent = try connectionPreparationIntent(code: code)
+                    return await send(.connection(.input(.connect(intent))))
                 } catch: { error, _ in
                     await alertService.feed(error)
                 }
 
-            case .connection(.disconnect(.connectionFailure(let error))):
-                return .merge(
-                    .send(.errorOccurred(error)),
-                    .send(.updateUserLocation)
-                )
-            case .connection(.disconnect):
-                return .send(.updateUserLocation)
             case .updateUserLocation:
                 if state.userLocation == nil {
                     return .run { _ in
@@ -176,21 +147,27 @@ struct MainFeature {
                     }
                 }
                 return .none
-            case .connection:
-                if case .disconnected(let error) = state.connectionState, let error {
-                    return .send(.errorOccurred(error))
+
+            case .connection(.delegate(.stateChanged(let connectionState))):
+                state.$connectionState.withLock { $0 = connectionState }
+                if connectionState == .disconnected {
+                    return .send(.updateUserLocation)
                 }
                 return .none
+
+            case .connection(.delegate(.connectionFailed(let error))):
+                return .send(.errorOccurred(error))
+
+            case .connection:
+                return .none
+
             case .errorOccurred(let error):
-                return .run { send in
-                    await alertService.feed(error)
-                    await send(.connection(.clearErrors))
-                }
+                return .run { send in await alertService.feed(error) }
             }
         }
     }
 
-    func serverConnectionIntent(code: String) throws -> ServerConnectionIntent {
+    func connectionPreparationIntent(code: String) throws -> ConnectionPreparationIntent {
         let locationFilters = code == "Fastest" ? [] : [VPNServerFilter.kind(.country(code: code))]
 
         let fastestStreamingServer = repository.getFirstServer(
@@ -209,13 +186,7 @@ struct MainFeature {
         }
 
         let server = Server(logical: fastestStreamingServer.logical, endpoint: endpoint)
-        let features = vpnFeaturesProvider.connectionFeatures()
-
-        @Dependency(\.connectionConfiguration) var configuration
-        let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)
-        let ports = server.endpoint.overridePorts(using: .wireGuard(.udp)) ?? defaultPorts
-        let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, features: TunnelFeatures())
-        return .init(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+        return .init(spec: .defaultFastest, server: server)
     }
 }
 

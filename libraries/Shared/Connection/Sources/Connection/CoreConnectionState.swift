@@ -30,7 +30,7 @@ import struct Domain.VPNConnectionFeatures
 
 @available(iOS 16, *)
 @CasePathable
-public enum InternalConnectionState: Equatable, Sendable, CasePathable {
+public enum CoreConnectionState: Equatable, Sendable, CasePathable {
     case unknown
     case disconnected(ConnectionError?)
     case connecting(Server?)
@@ -99,25 +99,11 @@ public enum InternalConnectionState: Equatable, Sendable, CasePathable {
         }
     }
 
-    init(connectionFeatureState: InternalConnectionFeature.State) {
+    init(connectionFeatureState: CoreConnectionFeature.State) {
         self.init(
             tunnelState: connectionFeatureState.tunnel,
             certAuthState: connectionFeatureState.certAuth,
             localAgentState: connectionFeatureState.localAgent
         )
-    }
-
-    /// It's impossible to immediately retrieve the full connection state at initialisation
-    /// due to tunnel operations being asynchronous. When the application is launched, we start
-    /// from the `unknown` state, and to prevent showing incorrect states, we must not transition
-    /// away from `unknown` to `connecting`.
-    var shouldTransitionFromUnknown: Bool {
-        switch self {
-        case .connected, .disconnecting, .disconnected:
-            return true
-
-        case .connecting, .unknown:
-            return false
-        }
     }
 }

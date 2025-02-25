@@ -4012,6 +4012,9 @@
         }
       }
     },
+    "Loading" : {
+
+    },
     "Loading countries" : {
       "comment" : "Informative text when the app is downloading the country list.",
       "localizations" : {

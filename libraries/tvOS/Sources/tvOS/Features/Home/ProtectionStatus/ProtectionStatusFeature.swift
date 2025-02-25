@@ -26,7 +26,7 @@ import Connection
 struct ProtectionStatusFeature {
     @ObservableState
     struct State: Equatable {
-        @SharedReader(.connectionState) var connectionState: ConnectionState?
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @Shared(.userLocation) var userLocation: UserLocation?
     }
 
@@ -47,16 +47,15 @@ struct ProtectionStatusFeature {
         Reduce { state, action in
             switch action {
             case .userTappedButton:
-                return .run { [connectionState = state.connectionState] send in
-                    switch connectionState ?? .disconnected(nil) {
-                    case .connected:
-                        await send(.delegate(.userClickedDisconnect))
-                    case .connecting:
-                        await send(.delegate(.userClickedCancel))
-                    case .disconnected, .disconnecting, .unknown:
-                        await send(.delegate(.userClickedConnect))
-                    }
+                switch state.connectionState {
+                case .connected:
+                    return .send(.delegate(.userClickedDisconnect))
+                case .connecting:
+                    return .send(.delegate(.userClickedCancel))
+                case .disconnected, .disconnecting, .resolving:
+                    return .send(.delegate(.userClickedConnect))
                 }
+
             case .onAppear:
                 return .run { send in
                     @Dependency(\.userLocationService) var userLocationService

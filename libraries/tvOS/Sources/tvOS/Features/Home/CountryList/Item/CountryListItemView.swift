@@ -27,7 +27,7 @@ struct CountryListItemView: View {
     let isFocused: Bool
     @State var duration = inFocusDuration
 
-    @SharedReader(.connectionState) var connectionState: ConnectionState?
+    @SharedReader(.connectionState) var connectionState: ConnectionState
 
     private static var outFocusDuration = 0.4
     private static var inFocusDuration = 0.1
@@ -57,7 +57,7 @@ struct CountryListItemView: View {
             }
             Spacer()
                 .frame(height: .themeSpacing16)
-            switch connectionState ?? .disconnected(nil) {
+            switch connectionState{
             case .connected:
                 HStack(spacing: .themeSpacing12) {
                     Text("Connected", comment: "VPN connection state")
@@ -88,10 +88,10 @@ struct CountryListItemView: View {
 
     private var connectedCode: String? {
         switch connectionState {
-        case .connected(let server, _, _):
+        case .connected(_, let server, _, _):
             return server.logical.entryCountryCode
-        case .connecting(let server):
-            return server?.logical.entryCountryCode
+        case .connecting(_, let server):
+            return server.logical.entryCountryCode
         default:
             return nil
         }
