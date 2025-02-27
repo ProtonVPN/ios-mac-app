@@ -42,14 +42,20 @@ public struct ConnectionFeature: Reducer, Sendable {
         public var connectionState: ConnectionState // TODO: Remember to write to @Shared(\.connectionState)
         public internal(set) var currentIntent: ServerConnectionIntent?
         public internal(set) var queuedIntent: ConnectionPreparationIntent?
-        internal var shouldRegisterServerChangeOnConnection: Bool = false
+        internal var shouldRegisterServerChangeOnConnection: Bool
         internal var core: CoreConnectionFeature.State
 
         public init(
             connectionState: ConnectionState = .resolving,
+            currentIntent: ServerConnectionIntent? = nil,
+            queuedIntent: ConnectionPreparationIntent? = nil,
+            shouldRegisterServerChangeOnConnection: Bool = false,
             core: CoreConnectionFeature.State = .init()
         ) {
             self.connectionState = connectionState
+            self.currentIntent = currentIntent
+            self.queuedIntent = queuedIntent
+            self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
             self.core = core
         }
     }
@@ -61,7 +67,9 @@ public struct ConnectionFeature: Reducer, Sendable {
         case core(CoreConnectionFeature.Action)
         case input(Input)
         case delegate(Delegate)
+        case stopObserving
 
+        @CasePathable
         public enum Input: Sendable {
             case onLaunch
             case onLogout
@@ -70,6 +78,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case disconnect
         }
 
+        @CasePathable
         public enum Delegate: Sendable {
             case stateChanged(ConnectionState)
             case connectionFailed(ConnectionError)
@@ -94,6 +103,9 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .listen(to: connectionBridge.intentStream()) { .input($0) } // reinject intents from bridge into this feature
                 ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
+            case .stopObserving:
+                return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
+
             case .input(.connect(let intent)):
                 switch state.coreConnectionState {
                 case .disconnecting:
@@ -101,9 +113,9 @@ public struct ConnectionFeature: Reducer, Sendable {
                     state.queuedIntent = intent
                     return .none
 
-                case .connecting, .connected:
+                case .starting, .connecting, .connected:
                     state.queuedIntent = intent
-                    return .send(.core(.disconnect(.userIntent))) // TODO: remove disconnect params except maybe error
+                    return .send(.core(.disconnect(.userIntent)))
 
                 case .disconnected:
                     return .send(.prepare(intent))
@@ -120,7 +132,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.core(.disconnect(.userIntent)))
 
             case .input(.onLogout):
-                return .send(.core(.handleLogout))
+                return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .prepare(let intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
@@ -191,12 +203,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 }
                 return .run { [state] send in
                     let intent = try state.currentIntent ?? intentStorage.getConnectionIntent()
-                    return await send(.delegate(.stateChanged(.connected(intent, server, connectedAt, details))))
+                    return await send(.delegate(.stateChanged(.connected(intent, intent.server, connectedAt, details))))
                 } catch: { error, send in
                     return await send(.core(.disconnect(.connectionFailure(.intentMissing))))
                 }
 
-            case .core(.delegate(.stateChanged(let oldState, .connecting(let server)))):
+            case .core(.delegate(.stateChanged(let oldState, .starting))): // (let server)))):
                 if oldState.is(\.unknown) {
                     log.info("Ignoring state transition to connecting since we are resolving from unknown")
                     return .none
@@ -204,7 +216,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .run { [state] send in
                     let intent = try state.currentIntent ?? intentStorage.getConnectionIntent()
                     let resolvedIntent = ConnectionPreparationIntent(spec: intent.spec, server: intent.server)
-                    return await send(.delegate(.stateChanged(.connecting(resolvedIntent, server ?? intent.server))))
+                    return await send(.delegate(.stateChanged(.connecting(resolvedIntent, intent.server))))
                 } catch: { error, send in
                     return await send(.core(.disconnect(.connectionFailure(.intentMissing))))
                 }
@@ -216,9 +228,9 @@ public struct ConnectionFeature: Reducer, Sendable {
                         return await send(.delegate(.stateChanged(.connecting(reconnectionIntent, reconnectionIntent.server))))
                     } else if case .connected(let server, _, _) = oldState {
                         // try to get spec and server from `oldState`
-                        return await send(.delegate(.stateChanged(.disconnecting(intent, server))))
-                    } else if case .connecting(let server) = oldState {
-                        return await send(.delegate(.stateChanged(.disconnecting(intent, server ?? intent.server))))
+                        return await send(.delegate(.stateChanged(.disconnecting(intent, intent.server))))
+                    } else if case .starting = oldState {
+                        return await send(.delegate(.stateChanged(.disconnecting(intent, intent.server))))
                     } else {
                         // skip state update
                         log.error("Unexpected transition to disconnecting from \(oldState)")

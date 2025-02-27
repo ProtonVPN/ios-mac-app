@@ -71,6 +71,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case handleLogout
         case delegate(Delegate)
 
+        @CasePathable
         public enum Delegate: Sendable {
             case stateChanged(CoreConnectionState, CoreConnectionState)
         }
@@ -83,7 +84,6 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     }
 
     private enum CancelID {
-        case preparation
         case connectionTimeout
         case observation
     }
@@ -116,11 +116,11 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             return .merge(
                 .send(.tunnel(.stopObservingStateChanges)),
                 .send(.localAgent(.stopAllObservations)),
-                .cancel(id: CancelID.observation)
+                .cancel(id: CancelID.connectionTimeout)
             )
 
         case .connect(let intent):
-            // TODO: assert that tunnel is in correct state
+            assert(CoreConnectionState(connectionFeatureState: state).is(\.disconnected))
             clearErrorsFromPreviousAttempts(state: &state)
 
             return .run { send in
@@ -136,7 +136,6 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
         case .disconnect:
             return .merge(
-                .cancel(id: CancelID.preparation),
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.localAgent(.disconnect(nil))),
                 .send(.tunnel(.disconnect(nil)))
@@ -188,6 +187,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
             case .disconnect:
                 return .merge(
+                    .cancel(id: CancelID.connectionTimeout),
                     .send(.localAgent(.disconnect(.agentError(error)))),
                     .send(.tunnel(.disconnect(nil)))
                 )

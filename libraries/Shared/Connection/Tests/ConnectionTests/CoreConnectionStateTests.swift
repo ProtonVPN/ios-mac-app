@@ -23,7 +23,7 @@ import ExtensionManager
 import CoreConnection
 import Ergonomics
 
-final class InternalConnectionStateTests: XCTestCase {
+final class CoreConnectionStateTests: XCTestCase {
 
     func testLocalAgentErrorResolvesToError() async {
         let state = CoreConnectionState(
@@ -35,36 +35,37 @@ final class InternalConnectionStateTests: XCTestCase {
         XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection("" as GenericError))))
     }
 
-    func testTunnelConnectingResolvesToConnecting() async {
+    func testTunnelConnectingResolvesToStarting() async {
         let state = CoreConnectionState(
             tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(nil))
+        XCTAssertEqual(state, .starting)
     }
 
     func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
-        let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
         let now = Date.now
+        let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
+        let response = TunnelConnectionResponse(logicalInfo: server, connectionDate: now)
 
         let state = CoreConnectionState(
-            tunnelState: .connected(TunnelConnectionResponse(logicalInfo: server, connectionDate: now)),
+            tunnelState: .connected(response),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(nil))
+        XCTAssertEqual(state, .connecting(response))
     }
 
-    func testTunnelConnectingLocalAgentDisconnectedResolvesToConnecting() async {
+    func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() async {
         let state = CoreConnectionState(
             tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(nil))
+        XCTAssertEqual(state, .starting)
     }
 }
