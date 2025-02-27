@@ -48,11 +48,6 @@ enum HomeFeatureCreator {
     static func homeViewController() -> UINavigationController {
         let homeStore = StoreOf<HomeFeature>(initialState: loadInitialState()) {
             HomeFeature()
-#if targetEnvironment(simulator)
-                .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
-                .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
-                .dependency(\.serverChangeAuthorizer, SimulatorHelper.serverChangeAuthorizer)
-#endif
         }
 
         let hostingController = UIHostingController(rootView: HomeView(store: homeStore))
