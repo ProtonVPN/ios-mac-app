@@ -74,7 +74,9 @@ public struct HomeMapFeature {
                 self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
             case .connecting(_, nil):
-                log.assertionFailure("we need the pin location")
+                // We could retrieve the coordinates for the country instead, but this case should not be reachable
+                // when using ConnectionFeature since it coalesces the state to resolving instead.
+                log.assertionFailure("Cannot show connecting coordinates: server is nil")
                 self = .disconnected
 
             case .resolving(_, let actual):

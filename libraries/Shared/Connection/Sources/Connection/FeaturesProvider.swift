@@ -22,7 +22,7 @@ import Domain
 import Foundation
 
 @available(iOS 16, tvOS 17, *)
-public struct VPNConnectionFeaturesProvider: Sendable {
+public struct ConnectionFeatureProvider: Sendable {
     public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures
     public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
     public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures
@@ -41,14 +41,14 @@ public struct VPNConnectionFeaturesProvider: Sendable {
     }
 }
 
-extension VPNConnectionFeaturesProvider: TestDependencyKey {
-    public static let testValue: VPNConnectionFeaturesProvider = .init()
+extension ConnectionFeatureProvider: TestDependencyKey {
+    public static let testValue: ConnectionFeatureProvider = .init()
 }
 
 extension DependencyValues {
-    public var vpnFeaturesProvider: VPNConnectionFeaturesProvider {
-        get { self[VPNConnectionFeaturesProvider.self] }
-        set { self[VPNConnectionFeaturesProvider.self] = newValue }
+    public var connectionFeatureProvider: ConnectionFeatureProvider {
+        get { self[ConnectionFeatureProvider.self] }
+        set { self[ConnectionFeatureProvider.self] = newValue }
     }
 }
 

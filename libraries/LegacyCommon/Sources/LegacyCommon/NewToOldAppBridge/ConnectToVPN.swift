@@ -69,6 +69,8 @@ extension ConnectToVPNKey: DependencyKey {
         let server = try serverSelector.select(spec, userTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
 
+        if Task.isCancelled { throw ConnectionError.cancelled }
+
         @Dependency(\.connectionBridge) var bridge
         bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server)))
     }

@@ -30,16 +30,15 @@ import VPNAppCore
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.smartPortSelector) private var portSelector
-    @Dependency(\.serverSelector) private var serverSelector
     @Dependency(\.connectionIntentStorage) private var storage
     @Dependency(\.connectionBridge) private var connectionBridge
-    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
+    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
     @Dependency(\.connectionIntentStorage) private var intentStorage
 
     public init() { }
 
     public struct State: Equatable, Sendable {
-        public var connectionState: ConnectionState // TODO: Remember to write to @Shared(\.connectionState)
+        public var connectionState: ConnectionState
         public internal(set) var currentIntent: ServerConnectionIntent?
         public internal(set) var queuedIntent: ConnectionPreparationIntent?
         internal var shouldRegisterServerChangeOnConnection: Bool
@@ -92,9 +91,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     }
 
     public var body: some Reducer<State, Action> {
-        // Firstly, process internal connection events
-        // TODO: Do we receive the delegate action (state change) event before other effect are processed?
-        Scope(state: \.core, action: \.core) { CoreConnectionFeature() }
+        Scope(state: \.core, action: \.core) { CoreConnectionFeature() } // Firstly, process internal connection events
         Reduce { state, action in
             switch action {
             case .input(.onLaunch):
@@ -151,8 +148,8 @@ public struct ConnectionFeature: Reducer, Sendable {
                     let ports = portSelectionResult.ports
                     log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
 
-                    let features = vpnFeaturesProvider.connectionFeatures()
-                    let tunnelFeatures = vpnFeaturesProvider.tunnelFeatures()
+                    let features = connectionFeatureProvider.connectionFeatures()
+                    let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
                     let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, features: tunnelFeatures)
 
                     let intent = ServerConnectionIntent(

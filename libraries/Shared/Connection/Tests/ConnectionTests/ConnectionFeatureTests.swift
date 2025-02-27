@@ -89,7 +89,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.connectionIntentStorage = .init(getConnectionIntent: { initialIntent }, set: { _ in })
-            $0.vpnFeaturesProvider.connectionFeatures = { connectionFeatures }
+            $0.connectionFeatureProvider.connectionFeatures = { connectionFeatures }
             $0.smartPortSelector.select = { _, _ in
                 portSelectionExpectation.fulfill()
                 return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
@@ -217,7 +217,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.connectionIntentStorage = .init(getConnectionIntent: { initialIntent }, set: { _ in })
-            $0.vpnFeaturesProvider.connectionFeatures = { connectionFeatures }
+            $0.connectionFeatureProvider.connectionFeatures = { connectionFeatures }
             $0.smartPortSelector.select = { _, _ in
                 portSelectionExpectation.fulfill()
                 return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])

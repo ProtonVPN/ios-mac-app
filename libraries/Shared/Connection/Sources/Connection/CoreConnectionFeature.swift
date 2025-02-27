@@ -36,7 +36,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
-    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
+    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
@@ -155,7 +155,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 return .send(.disconnect(.connectionFailure(.serverMissing)))
             }
             let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
-            let features = vpnFeaturesProvider.connectionFeatures()
+            let features = connectionFeatureProvider.connectionFeatures()
             return .send(.localAgent(.connect(server.endpoint, data, features)))
 
         case .certAuth(.loadingFinished(.failure(let error))):

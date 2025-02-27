@@ -30,7 +30,6 @@ import Domain
 struct MainFeature {
     @Dependency(\.serverRepository) private var repository
     @Dependency(\.alertService) private var alertService
-    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
 
     enum Tab {
         case home

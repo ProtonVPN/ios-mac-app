@@ -48,9 +48,9 @@ final class LocalAgentFeatureTests: XCTestCase {
             $0.date = .constant(.now)
         }
 
-        @Dependency(\.vpnFeaturesProvider) var vpnFeaturesProvider
+        @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
 
-        let defaultFeatures = vpnFeaturesProvider.connectionFeatures()
+        let defaultFeatures = connectionFeatureProvider.connectionFeatures()
 
         await store.send(.startObservingEvents)
         await store.send(.connect(server, .empty, defaultFeatures))
