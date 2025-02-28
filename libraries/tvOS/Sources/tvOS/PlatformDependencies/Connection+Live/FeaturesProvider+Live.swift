@@ -24,9 +24,9 @@ import Connection
 extension ConnectionFeatureProvider: DependencyKey {
     public static let liveValue: ConnectionFeatureProvider = .init(
         connectionFeatures: { .defaultFeatures },
-        setConnectionFeatures: { _ in
-            assertionFailure("Nothing to do on tvOS yet")
-        }
+        setConnectionFeatures: { _ in assertionFailure("Nothing to do on tvOS yet") },
+        tunnelFeatures: { .defaultFeatures },
+        connectionProtocol: { .wireGuard(.udp) }
     )
 }
 

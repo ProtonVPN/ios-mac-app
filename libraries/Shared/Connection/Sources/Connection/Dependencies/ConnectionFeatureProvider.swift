@@ -26,18 +26,18 @@ public struct ConnectionFeatureProvider: Sendable {
     public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures
     public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
     public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures
-    public internal(set) var setTunnelFeatures: @Sendable (_: TunnelFeatures) -> Void
+    public internal(set) var connectionProtocol: @Sendable () -> ConnectionProtocol
 
     public init(
         connectionFeatures: @escaping @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures },
         setConnectionFeatures: @escaping @Sendable (_: VPNConnectionFeatures) -> Void = { _ in reportIssue() },
         tunnelFeatures: @escaping @Sendable () -> TunnelFeatures = { .unimplementedFeatures },
-        setTunnelFeatures: @escaping @Sendable (_: TunnelFeatures) -> Void = { _ in reportIssue() }
+        connectionProtocol: @escaping @Sendable () -> ConnectionProtocol = { .smartProtocol }
     ) {
         self.connectionFeatures = connectionFeatures
         self.setConnectionFeatures = setConnectionFeatures
         self.tunnelFeatures = tunnelFeatures
-        self.setTunnelFeatures = setTunnelFeatures
+        self.connectionProtocol = connectionProtocol
     }
 }
 

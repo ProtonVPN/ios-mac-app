@@ -50,6 +50,18 @@ extension ConnectionFeatureProvider: DependencyKey {
             netShieldPropertyProvider.netShieldType = newFeatures.netshield
             natTypePropertyProvider.natType = newFeatures.natType
             safeModePropertyProvider.safeMode = newFeatures.safeMode
+        },
+        tunnelFeatures: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+            return TunnelFeatures(
+                killSwitch: propertiesManager.killSwitch,
+                excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
+            )
+        },
+        connectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.connectionProtocol
         }
     )
 }

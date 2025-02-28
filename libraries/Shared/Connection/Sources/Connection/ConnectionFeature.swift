@@ -29,11 +29,9 @@ import VPNAppCore
 
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
-    @Dependency(\.smartPortSelector) private var portSelector
-    @Dependency(\.connectionIntentStorage) private var storage
     @Dependency(\.connectionBridge) private var connectionBridge
-    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
     @Dependency(\.connectionIntentStorage) private var intentStorage
+    @Dependency(\.connectionIntentResolver) private var intentResolver
 
     public init() { }
 
@@ -118,7 +116,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .send(.prepare(intent))
 
                 case .unknown:
-                    assertionFailure("Connect intent received before feature was ready")
+                    // TODO: return connection failed with appropriate error
                     return .none
                 }
 
@@ -137,31 +135,9 @@ public struct ConnectionFeature: Reducer, Sendable {
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
 
                 return .run { send in
-                    // TODO: make sure it's the correct protocol
-                    let portSelectionResult = try await portSelector.select(intent.server.endpoint, .vpnProtocol(.wireGuard(.udp)))
-                    try Task.checkCancellation()
-
-                    guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
-                        throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
-                    }
-
-                    let ports = portSelectionResult.ports
-                    log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
-
-                    let features = connectionFeatureProvider.connectionFeatures()
-                    let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
-                    let tunnelSettings = TunnelSettings(transport: .udp, ports: ports, features: tunnelFeatures)
-
-                    let intent = ServerConnectionIntent(
-                        spec: intent.spec,
-                        server: intent.server,
-                        tunnelSettings: tunnelSettings,
-                        features: features
-                    )
-
-                    try storage.set(intent)
-                    await send(.startConnection(intent))
-
+                    let resolvedIntent = try await intentResolver.resolve(intent)
+                    try intentStorage.set(resolvedIntent)
+                    await send(.startConnection(resolvedIntent))
                 } catch: { error, send in
                     log.error("Failed in preparing connection with error: \(error)")
                     switch error {

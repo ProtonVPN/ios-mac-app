@@ -229,7 +229,6 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.send(.input(.onLaunch))
         await mockClock.advance(by: .seconds(2))
         await store.receive(stateChange(to: \.connected))
-        // let coreState = CoreConnectionState(connectionFeatureState: store.state.core)
 
         // Connection feature is in the 'connected' state, now let's send a connection request
         await store.send(.input(.connect(reconnectionPreparationIntent))) {
@@ -256,9 +255,60 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give LocalAgent time to connect
         await store.receive(coreStateChange(from: \.connecting, to: \.connected))
         await store.receive(stateChange(to: \.connected))
+    }
 
-        await store.send(.stopObserving)
-        await store.skipReceivedActions()
+    @MainActor func testConnectionStateResolvesToDisconnected() async {
+        let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
+        let mockManager = MockTunnelManager(connection: mockVPNSession)
+        let mockAgent = LocalAgentMock(state: .disconnected)
+
+
+        let store = TestStore(initialState: .init()) {
+            ConnectionFeature()
+        } withDependencies: {
+            $0.tunnelManager = mockManager
+            $0.localAgent = mockAgent
+        }
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(coreStateChange(from: \.unknown, to: \.disconnected))
+        await store.receive(stateChange(to: \.disconnected))
+    }
+
+    @MainActor func testConnectionStateResolvesToConnected() async {
+        let now = Date.now
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let mockClock = TestClock()
+        let mockVPNSession = VPNSessionMock(status: .connected, connectedDate: now, lastDisconnectError: nil)
+        let mockManager = MockTunnelManager(connection: mockVPNSession)
+        let mockAgent = LocalAgentMock(state: .disconnected)
+
+        let mockStorage = MockVpnAuthenticationStorage()
+        let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        mockStorage.keys = keys
+        mockStorage.cert = certificate
+
+        let store = TestStore(initialState: .init()) {
+            ConnectionFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.localAgent = mockAgent
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            $0.connectionIntentStorage = .init(getConnectionIntent: { .mock(withRegionCode: "EU") }, set: { _ in })
+        }
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await mockClock.advance(by: .seconds(2))
+        await store.receive(coreStateChange(from: \.unknown, to: \.starting))
+        await store.receive(coreStateChange(from: \.starting, to: \.connecting))
+        await store.receive(coreStateChange(from: \.connecting, to: \.connected))
+        await store.receive(stateChange(to: \.connected))
     }
 
     func stateChange(to expectedState: PartialCaseKeyPath<ConnectionState>) -> (ConnectionFeature.Action) -> Bool {
