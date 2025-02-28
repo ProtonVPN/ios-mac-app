@@ -49,15 +49,16 @@ extension ConnectToVPNKey: DependencyKey {
     }()
 
     @available(iOS 16, *)
-    static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { spec in
+    static let newConnect: @Sendable (ConnectionSpec, ConnectionProtocol?) async throws -> Void = { spec, specifiedProtocol in
         // First, let's try to resolve the server we want to connect to.
         // This way we can avoid disconnecting if we are already connected and can't resolve the target server
         @Dependency(\.serverSelector) var serverSelector
 
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         @Dependency(\.propertiesManager) var propertiesManager
+        let connectionProtocol = specifiedProtocol ?? propertiesManager.connectionProtocol
         let acceptableProtocols: ProtocolSupport
-        switch propertiesManager.connectionProtocol {
+        switch connectionProtocol {
         case .vpnProtocol(let vpnProtocol):
             acceptableProtocols = vpnProtocol.protocolSupport
         case .smartProtocol:
@@ -72,6 +73,6 @@ extension ConnectToVPNKey: DependencyKey {
         if Task.isCancelled { throw ConnectionError.cancelled }
 
         @Dependency(\.connectionBridge) var bridge
-        bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server)))
+        bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server, connectionProtocol: specifiedProtocol)))
     }
 }

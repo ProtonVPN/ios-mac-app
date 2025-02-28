@@ -116,7 +116,6 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .send(.prepare(intent))
 
                 case .unknown:
-                    // TODO: return connection failed with appropriate error
                     return .none
                 }
 

@@ -172,7 +172,7 @@ public struct HomeFeature {
                 return .none
             case let .connect(spec):
                 return .run { send in
-                    try await connectToVPN(spec)
+                    try await connectToVPN(spec, nil)
                     await send(.recents(.connectionEstablished(spec)))
                 } catch: { error, _ in
                     log.error("Error connecting to VPN: \(error)")

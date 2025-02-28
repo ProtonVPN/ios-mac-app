@@ -70,7 +70,7 @@ extension SettingsClient: DependencyKey {
             let lastIntent = try storage.getConnectionIntent()
 
             @Dependency(\.connectToVPN) var connect
-            try await connect(lastIntent.spec)
+            try await connect(lastIntent.spec, nil)
         },
         update: { agentFeatures in
             @Dependency(\.connectionBridge) var bridge

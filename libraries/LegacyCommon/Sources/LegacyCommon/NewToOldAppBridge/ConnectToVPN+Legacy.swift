@@ -25,7 +25,9 @@ import Foundation
 
 extension ConnectToVPNKey {
     /// Bridges new connection dependency with the legacy connection layer
-    static let legacyConnect: @Sendable (ConnectionSpec) async throws -> Void = { intent in
+    /// Note: protocol parameter is ignored, since connections with this method originate from the home screen only, where
+    /// it's not possible to specify the connection protocol
+    static let legacyConnect: @Sendable (ConnectionSpec, ConnectionProtocol?) async throws -> Void = { intent, _ in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateQuickConnect() // Change to more concrete donation when refactoring Siri stuff
 
