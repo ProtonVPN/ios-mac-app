@@ -80,7 +80,7 @@ public struct HomeFeature {
             self.sharedProperties = .init()
             self.recents = .init()
             self.map = .init()
-            self.connection = .init()
+            self.connection = .initialState
         }
     }
 

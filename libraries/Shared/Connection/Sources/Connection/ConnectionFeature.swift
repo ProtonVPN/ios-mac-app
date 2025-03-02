@@ -42,12 +42,12 @@ public struct ConnectionFeature: Reducer, Sendable {
         var shouldRegisterServerChangeOnConnection: Bool
         var core: CoreConnectionFeature.State
 
-        public init(
-            currentIntent: ServerConnectionIntent? = nil,
-            queuedIntent: ConnectionPreparationIntent? = nil,
-            connectionState: ConnectionState = .resolving,
-            shouldRegisterServerChangeOnConnection: Bool = false,
-            core: CoreConnectionFeature.State = .init()
+        package init(
+            currentIntent: ServerConnectionIntent?,
+            queuedIntent: ConnectionPreparationIntent?,
+            connectionState: ConnectionState,
+            shouldRegisterServerChangeOnConnection: Bool,
+            core: CoreConnectionFeature.State
         ) {
             self.currentIntent = currentIntent
             self.queuedIntent = queuedIntent
@@ -283,4 +283,14 @@ extension ConnectionFeature.State {
         case unresolved(ConnectionPreparationIntent)
         case resolved(ServerConnectionIntent, Server)
     }
+}
+
+extension ConnectionFeature.State {
+    public static let initialState = ConnectionFeature.State(
+        currentIntent: nil,
+        queuedIntent: nil,
+        connectionState:  .resolving,
+        shouldRegisterServerChangeOnConnection:false,
+        core: .initialCoreConnectionState
+    )
 }

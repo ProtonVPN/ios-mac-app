@@ -87,6 +87,7 @@ public final class ConnectionEnvironment {
             initialState: .init(
                 currentIntent: nil,
                 queuedIntent: nil,
+                connectionState: .resolving,
                 shouldRegisterServerChangeOnConnection: false,
                 core: .init(
                     tunnelState: .unknown,

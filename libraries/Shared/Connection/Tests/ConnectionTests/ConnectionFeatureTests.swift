@@ -75,6 +75,8 @@ final class ConnectionFeatureTests: XCTestCase {
         let initialState = ConnectionFeature.State(
             currentIntent: initialIntent,
             queuedIntent: nil,
+            connectionState: .resolving,
+            shouldRegisterServerChangeOnConnection: false,
             core: coreState
         )
 
@@ -207,7 +209,13 @@ final class ConnectionFeatureTests: XCTestCase {
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
             localAgentState: .disconnected(nil)
         )
-        let initialState = ConnectionFeature.State(currentIntent: nil, queuedIntent: nil, core: coreState)
+        let initialState = ConnectionFeature.State(
+            currentIntent: initialIntent,
+            queuedIntent: nil,
+            connectionState: .resolving,
+            shouldRegisterServerChangeOnConnection: false,
+            core: coreState
+        )
 
         let store = TestStore(initialState: initialState) {
             ConnectionFeature()
@@ -266,7 +274,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let mockAgent = LocalAgentMock(state: .disconnected)
 
 
-        let store = TestStore(initialState: .init()) {
+        let store = TestStore(initialState: .initialState) {
             ConnectionFeature()
         } withDependencies: {
             $0.tunnelManager = mockManager
@@ -293,7 +301,7 @@ final class ConnectionFeatureTests: XCTestCase {
         mockStorage.keys = keys
         mockStorage.cert = certificate
 
-        let store = TestStore(initialState: .init()) {
+        let store = TestStore(initialState: .initialState) {
             ConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
