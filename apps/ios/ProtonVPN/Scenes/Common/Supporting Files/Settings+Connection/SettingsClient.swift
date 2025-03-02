@@ -49,15 +49,18 @@ extension SettingsClient: DependencyKey {
             switch connectionState {
             case .disconnected, .disconnecting:
                 return .immediate
+
             case .resolving:
                 log.warning("Protocol change availability requested before connection layer state was resolved")
                 return .withReconnect
 
-            case .connected(_, let server, _, _), .connecting(_, let server):
+            case .connecting(.unresolved):
+                return .withReconnect
+
+            case .connected(_, let server, _, _), .connecting(.resolved(_, let server)):
                 @Dependency(\.propertiesManager) var properties
                 let supportedProtocols = properties.smartProtocolConfig.supportedProtocols
                 let serverSupportsNewProtocol = server.endpoint.supports(protocolSet: .init(vpnProtocols: supportedProtocols))
-
                 return serverSupportsNewProtocol ? .withReconnect : .protocolUnavailable
             }
         },

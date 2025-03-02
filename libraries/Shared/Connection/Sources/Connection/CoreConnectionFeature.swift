@@ -59,6 +59,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     }
 
     @CasePathable
+    @dynamicMemberLookup
     public enum Action: Sendable {
         case connect(ServerConnectionIntent)
         case disconnect(DisconnectReason)
@@ -72,7 +73,9 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case delegate(Delegate)
 
         @CasePathable
+        @dynamicMemberLookup
         public enum Delegate: Sendable {
+            case error(ConnectionError)
             case stateChanged(CoreConnectionState, CoreConnectionState)
         }
     }
@@ -134,7 +137,15 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 log.info("Timeout task cancellation error: \(error)")
             }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
 
-        case .disconnect:
+        case .disconnect(.connectionFailure(let error)):
+            return .merge(
+                .send(.delegate(.error(error))),
+                .cancel(id: CancelID.connectionTimeout),
+                .send(.localAgent(.disconnect(nil))),
+                .send(.tunnel(.disconnect(nil)))
+            )
+
+        case .disconnect(.userIntent):
             return .merge(
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.localAgent(.disconnect(nil))),
@@ -170,6 +181,11 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .tunnel(.tunnelStartRequestFinished(.failure)):
             // Special case of failure that occurs before the tunnel is started
             return .cancel(id: CancelID.connectionTimeout)
+
+        case .localAgent(.delegate(.connectionFailed(let error))):
+            // An error occurred while creating the local agent connection
+            let connectionError = ConnectionError.agent(.failedToEstablishConnection(error))
+            return .send(.disconnect(.connectionFailure(connectionError)))
 
         case .localAgent(.event(.state(.disconnected))):
             guard case .disconnected = state.tunnel else { return .none }

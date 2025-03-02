@@ -57,7 +57,7 @@ struct CountryListItemView: View {
             }
             Spacer()
                 .frame(height: .themeSpacing16)
-            switch connectionState{
+            switch connectionState {
             case .connected:
                 HStack(spacing: .themeSpacing12) {
                     Text("Connected", comment: "VPN connection state")
@@ -90,7 +90,9 @@ struct CountryListItemView: View {
         switch connectionState {
         case .connected(_, let server, _, _):
             return server.logical.entryCountryCode
-        case .connecting(_, let server):
+        case .connecting(.unresolved(let intent)):
+            return intent.server.logical.entryCountryCode
+        case .connecting(.resolved(_, let server)):
             return server.logical.entryCountryCode
         default:
             return nil

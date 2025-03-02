@@ -78,11 +78,13 @@ let package = Package(
             ]
         ),
         .target(name: "CoreConnectionTestSupport", dependencies: ["CoreConnection"]),
+        .target(name: "ConnectionTestSupport", dependencies: ["Connection", "CoreConnectionTestSupport"]),
         .testTarget(
             name: "ConnectionTests",
             dependencies: [
                 "Connection",
                 "CoreConnectionTestSupport",
+                "ConnectionTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

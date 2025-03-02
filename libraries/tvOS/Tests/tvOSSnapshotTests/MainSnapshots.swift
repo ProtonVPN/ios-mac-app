@@ -92,7 +92,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
 
         let connectionPreparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .ca)
-        $connectionState.withLock { $0 = .connecting(connectionPreparationIntent, .ca) }
+        $connectionState.withLock { $0 = .connecting(.unresolved(connectionPreparationIntent)) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
 
         let connectionIntent = ServerConnectionIntent(spec: .defaultFastest, server: .ca, tunnelSettings: .mock, features: .defaultFeatures)

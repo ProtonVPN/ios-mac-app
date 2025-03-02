@@ -28,6 +28,7 @@ import VPNSharedTesting
 
 import CoreConnection
 import CoreConnectionTestSupport
+import ConnectionTestSupport
 @testable import ExtensionManager
 @testable import CertificateAuthentication
 @testable import LocalAgent
@@ -87,7 +88,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .preparingConnection(connectedLogicalServer)
         }
-        await store.receive(\.delegate.stateChanged) // disconnected -> starting
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
@@ -99,7 +100,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connectionFinished.success) {
             $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
-        await store.receive(\.delegate.stateChanged) // starting -> connecting
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
 
         await store.receive(\.certAuth.loadAuthenticationData) {
             $0.certAuth = .loading(shouldRefreshIfNecessary: true)
@@ -119,7 +120,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.event.state.connected) {
             $0.localAgent = .connected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connecting -> connected
+        await store.receive(stateChange(from: \.connecting, to: \.connected))
 
         // Disconnection
 
@@ -130,7 +131,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connected -> disconnecting
+        await store.receive(stateChange(from: \.connected, to: \.disconnecting))
 
         await mockClock.advance(by: .milliseconds(250))
         await store.receive(\.localAgent.event.state.disconnected) {
@@ -140,7 +141,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // disconnecting -> disconnected
+        await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
         await store.receive(\.localAgent.stopAllObservations)
@@ -196,7 +197,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .preparingConnection(connectedLogicalServer)
         }
-        await store.receive(\.delegate.stateChanged) // disconnected -> starting
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
@@ -208,7 +209,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connectionFinished.success) {
             $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
-        await store.receive(\.delegate.stateChanged) // starting -> connecting
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
 
         await store.receive(\.certAuth.loadAuthenticationData) {
             $0.certAuth = .loading(shouldRefreshIfNecessary: true)
@@ -228,7 +229,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.event.state.connected) {
             $0.localAgent = .connected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connecting -> connected
+        await store.receive(stateChange(from: \.connecting, to: \.connected))
 
         // Encounter an unrecoverable error
 
@@ -240,7 +241,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connected -> disconnecting
+        await store.receive(stateChange(from: \.connected, to: \.disconnecting))
 
         await mockClock.advance(by: .milliseconds(250))
         await store.receive(\.localAgent.event.state.disconnected) {
@@ -250,7 +251,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // disconnecting -> disconnected
+        await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
@@ -329,7 +330,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .preparingConnection(connectedLogicalServer)
         }
-        await store.receive(\.delegate.stateChanged) // disconnected -> starting
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
             $0.tunnel = .connecting(connectedLogicalServer)
@@ -340,7 +341,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connectionFinished.success) {
             $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
-        await store.receive(\.delegate.stateChanged) // starting -> connecting
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
 
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
@@ -354,7 +355,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.event.state.connected) {
             $0.localAgent = .connected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connecting -> connected
+        await store.receive(stateChange(from: \.connecting, to: \.connected))
 
         // Certificate expiration
 
@@ -370,7 +371,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.certAuth = .loading(shouldRefreshIfNecessary: true)
         }
         // The next state change is unfortunate. Maybe we need to add a flag: disconnecting(reconnecting: Bool)
-        await store.receive(\.delegate.stateChanged) // connected -> disconnecting
+        await store.receive(stateChange(from: \.connected, to: \.disconnecting))
         await store.receive(\.certAuth.loadFromStorage)
         await store.receive(\.certAuth.loadingFromStorageFinished.certificateExpired)
         await store.receive(\.certAuth.refreshCertificate)
@@ -390,13 +391,13 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.event.state.connecting) {
             $0.localAgent = .connecting
         }
-        await store.receive(\.delegate.stateChanged) // disconnecting -> connecting
+        await store.receive(stateChange(from: \.disconnecting, to: \.connecting))
 
         await mockClock.advance(by: .milliseconds(500))
         await store.receive(\.localAgent.event.state.connected) {
             $0.localAgent = .connected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connecting -> connected
+        await store.receive(stateChange(from: \.connecting, to: \.connected))
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
@@ -471,7 +472,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .preparingConnection(connectedLogicalServer)
         }
-        await store.receive(\.delegate.stateChanged) // disconnected -> starting
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
@@ -483,7 +484,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connectionFinished.success) {
             $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
-        await store.receive(\.delegate.stateChanged) // starting -> connecting
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
 
         await store.receive(\.certAuth.loadAuthenticationData)
         await store.receive(\.certAuth.loadingFinished.success)
@@ -496,13 +497,14 @@ final class CoreConnectionFeatureTests: XCTestCase {
         // Fast forward to the exact time at which the connection should time out
         await mockClock.advance(by: .seconds(29)) // Default timeout minus time spent connecting tunnel (1s)
         await store.receive(\.disconnect.connectionFailure.timeout)
+        await store.receive(\.delegate.error.timeout)
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnecting(nil)
         }
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connecting -> disconnecting
+        await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
@@ -562,7 +564,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .preparingConnection(connectedLogicalServer)
         }
-        await store.receive(\.delegate.stateChanged) // disconnected -> starting
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
         await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
@@ -574,7 +576,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connectionFinished.success) {
             $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
         }
-        await store.receive(\.delegate.stateChanged) // starting -> connecting
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
 
         await store.receive(\.certAuth.loadAuthenticationData) {
             $0.certAuth = .loading(shouldRefreshIfNecessary: true)
@@ -602,7 +604,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting(nil)
         }
-        await store.receive(\.delegate.stateChanged) // connecting -> disconnecting
+        await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
 
         await mockClock.advance(by: .milliseconds(250))
         await store.receive(\.localAgent.event.state.disconnected) {
@@ -612,7 +614,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
             $0.tunnel = .disconnected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // disconnecting -> disconnected
+        await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
@@ -659,7 +661,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.connect) {
             $0.tunnel = .preparingConnection(connectedLogicalServer)
         }
-        await store.receive(\.delegate.stateChanged) // disconnected -> starting}
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
         await store.receive(\.tunnel.tunnelStartRequestFinished.success)
 
@@ -668,19 +670,33 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
         await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
         await store.receive(\.disconnect.connectionFailure.timeout)
+        await store.receive(\.delegate.error.timeout)
 
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {
             // If we never started the tunnel, we should transition straight away into .disconnected
             $0.tunnel = .disconnected(nil)
         }
-        await store.receive(\.delegate.stateChanged) // starting -> disconnected
+        await store.receive(stateChange(from: \.starting, to: \.disconnected))
 
         await mockClock.advance(by: .milliseconds(250))
 
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
         await store.receive(\.localAgent.stopAllObservations)
+    }
+
+    private func stateChange(
+        from oldValue: PartialCaseKeyPath<CoreConnectionState>,
+        to newValue: PartialCaseKeyPath<CoreConnectionState>,
+        strict: Bool = true
+    ) -> (CoreConnectionFeature.Action) -> Bool {
+        return stateChangePredicate(
+            from: oldValue,
+            to: newValue,
+            extract: \CoreConnectionFeature.Action.[case: \.delegate.stateChanged],
+            strict: strict
+        )
     }
 }
 #endif

@@ -47,13 +47,15 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
         case (.unknown, _):
             self = .unknown
 
+        case (.preparingConnection, _):
+            assert(localAgentState.is(\.disconnected))
+            self = .starting
+
+        case (.connecting, _):
+            assert(localAgentState.is(\.disconnected))
+            self = .starting
+
         case (.connected(let tunnelConnectionInfo), .connected(let connectionDetails)):
-//            @Dependency(\.serverIdentifier) var serverIdentifier
-//            guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
-//                assertionFailure("Unknown server")
-//                self = .disconnected(.serverMissing)
-//                return
-//            }
             self = .connected(tunnelConnectionInfo, tunnelConnectionInfo.connectionDate, connectionDetails)
 
         case (.connected, .disconnecting):
@@ -62,46 +64,50 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
         case (.connected, .disconnected(.some)):
             self = .disconnecting
 
-        case (.connected(let tunnelInfo), _):
-            self = .connecting(tunnelInfo) //(nil)
+        case (.connected(let tunnelInfo), .disconnected(nil)):
+            self = .connecting(tunnelInfo)
 
-        case (.preparingConnection(let logicalServerInfo), _):
-//            @Dependency(\.serverIdentifier) var serverIdentifier
-//            let server = serverIdentifier.fullServerInfo(logicalServerInfo)
-            self = .starting // (server)
+        case (.connected(let tunnelInfo), .connecting):
+            self = .connecting(tunnelInfo)
 
-        case (.connecting(let logicalServerInfo), _):
-//            let server = logicalServerInfo.flatMap {
-//                @Dependency(\.serverIdentifier) var serverIdentifier
-//                return serverIdentifier.fullServerInfo($0)
-//            }
-            self = .starting // (server)
+        case (.disconnecting, .disconnected):
+            self = .disconnecting
 
-        case (.disconnecting, _):
+        case (.disconnecting, .disconnecting):
+            self = .disconnecting
+
+        case (.disconnecting, .connected), (.disconnecting, .connecting):
+            log.assertionFailure("Unexpected state: local agent connecting or connected while tunnel disconnecting")
             self = .disconnecting
 
         case (.disconnected(.none), .disconnected(.some(let agentError))):
             self = .disconnected(.agent(agentError))
 
-        case (.disconnected(.some(let tunnelError)), _):
-            self = .disconnected(.tunnel(tunnelError))
+        case (.disconnected(let possibleTunnelError), .connecting),
+            (.disconnected(let possibleTunnelError), .connected):
+            log.assertionFailure("Unexpected state: local agent connecting or connected while tunnel disconnected")
+            self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
-        case (.disconnected(.none), .connecting):
-            assertionFailure("State should not be possible")
-            self = .disconnected(nil)
+        case (.disconnected(let possibleTunnelError), .disconnecting(_)):
+            // While not necessarily an error state, this is unusual because local agent disconnection should be instant
+            // Let's report state as disconnected because local agent connection can just be recreated instantly
+            reportIssue("Suspicious internal state") // highlight this issue in tests
+            log.warning("Suspicious internal state - tunnel is disconnected while LA is still disconnecting")
+            self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
-        case (.disconnected(.none), .connected):
-            assertionFailure("State should not be possible")
-            self = .disconnected(nil)
-
-        case (.disconnected(.none), .disconnecting(_)):
-            self = .disconnecting
         case (.disconnected(.none), .disconnected(.none)):
             let certAuthError: CertificateAuthenticationError? = certAuthState.failed
             let connectionError = certAuthError.map { ConnectionError.certAuth($0) }
             self = .disconnected(connectionError)
-        }
 
+        case (.disconnected(.some(let tunnelError)), .disconnected(.some(_))):
+            // However unlikely (if even possible due to how actions/events are synchronised by reducers) it might be
+            // to simultanesouly encounter a tunnel and local agent error, the former should take precedence
+            self = .disconnected(.tunnel(tunnelError))
+
+        case (.disconnected(.some(let tunnelError)), .disconnected(.none)):
+            self = .disconnected(.tunnel(tunnelError))
+        }
     }
 
     init(connectionFeatureState: CoreConnectionFeature.State) {

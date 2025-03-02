@@ -53,9 +53,9 @@ final class LocalAgentImplementation: LocalAgent {
         connection?.close()
 
         log.debug(
-            "Local agent connecting to \(configuration.hostname)",
+            "Creating local agent connection to \(configuration.hostname)",
             category: .localAgent,
-            metadata: ["config": "\(configuration)"]
+            metadata: ["config": "\(configuration)", "authData": "\(data.clientCertificate)"]
         )
 
         connection = try connectionFactory.makeLocalAgentConnection(configuration, data, client)

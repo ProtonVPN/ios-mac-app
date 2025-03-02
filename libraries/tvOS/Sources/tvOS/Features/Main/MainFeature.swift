@@ -107,12 +107,13 @@ struct MainFeature {
                         return .send(.connectDisconnectingIfNecessary(item.code))
                     }
                 }
-                // these two below are separate because the server is optional in one and non-optional in the other case
-                // which causes the compiler to ignore the non-optional and just send a nil instead
                 if case let .connected(_, server, _, _) = state.connectionState {
                     return effect(server)
                 }
-                if case let .connecting(_, server) = state.connectionState {
+                if case let .connecting(.unresolved(intent)) = state.connectionState {
+                    return effect(intent.server)
+                }
+                if case let .connecting(.resolved(_, server)) = state.connectionState {
                     return effect(server)
                 }
                 return .send(.connectDisconnectingIfNecessary(item.code))

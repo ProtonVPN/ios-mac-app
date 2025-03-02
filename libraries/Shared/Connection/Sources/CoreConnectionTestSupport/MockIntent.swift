@@ -21,13 +21,13 @@ import DomainTestSupport
 
 public extension ServerConnectionIntent {
     static func mock(
-        withRegionCode code: String,
+        withSpecLocation location: ConnectionSpec.Location = .fastest,
         server: Server = .mock,
         tunnelSettings: TunnelSettings = .mock,
         features: VPNConnectionFeatures = .mock
     ) -> ServerConnectionIntent {
         return ServerConnectionIntent(
-            spec: .init(location: .region(code: code), features: []),
+            spec: .init(location: location, features: []),
             server: server,
             tunnelSettings: tunnelSettings,
             features: features
