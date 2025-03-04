@@ -19,11 +19,9 @@
 import SwiftUI
 import ConnectWidget
 
-#if DEBUG // Disable widget in prod before we finish working on it
 @main
 struct ConnectWidgetBundle: WidgetBundle {
     var body: some Widget {
         ConnectWidget()
     }
 }
-#endif

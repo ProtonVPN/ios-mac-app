@@ -33,7 +33,12 @@ public struct ConnectWidget: Widget {
         }
         .configurationDisplayName("Proton VPN")
         .description(Localizable.widgetTrayDescription)
+#if DEBUG // Disable widget in prod before we finish working on it
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+#else
+        .supportedFamilies([])
+#endif
+
     }
 }
 
