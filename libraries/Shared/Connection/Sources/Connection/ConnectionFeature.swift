@@ -68,7 +68,8 @@ public struct ConnectionFeature: Reducer, Sendable {
         case stopObserving
 
         /// A subset of this reducer's actions suitable to be sent from outside
-        @CasePathable public enum Input: Sendable {
+        @CasePathable
+        public enum Input: Sendable {
             case onLaunch
             case onLogout
             case connect(ConnectionPreparationIntent)
@@ -272,7 +273,8 @@ extension ConnectionFeature.State {
 }
 
 // User-facing connection state
-@CasePathable public enum ConnectionState: Equatable, Sendable {
+@CasePathable
+public enum ConnectionState: Equatable, Sendable {
     case resolving
     case disconnected
     case disconnecting(ServerConnectionIntent, Server)
@@ -289,8 +291,8 @@ extension ConnectionFeature.State {
     public static let initialState = ConnectionFeature.State(
         currentIntent: nil,
         queuedIntent: nil,
-        connectionState:  .resolving,
-        shouldRegisterServerChangeOnConnection:false,
+        connectionState: .resolving,
+        shouldRegisterServerChangeOnConnection: false,
         core: .initialCoreConnectionState
     )
 }

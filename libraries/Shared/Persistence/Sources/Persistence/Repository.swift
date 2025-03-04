@@ -19,7 +19,7 @@
 import Foundation
 
 import Dependencies
-import XCTestDynamicOverlay
+import IssueReporting
 
 import Domain
 

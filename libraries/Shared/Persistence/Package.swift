@@ -22,7 +22,7 @@ let package = Package(
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/groue/GRDB.swift", exact: "6.29.2"),
-        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
+        .package(url: "https://github.com/pointfreeco/swift-issue-reporting", .upToNextMajor(from: "1.4.2")),
     ],
     targets: [
         .target(
@@ -35,14 +35,14 @@ let package = Package(
                 "Localization",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay")
             ]
         ),
         .target(
             name: "PersistenceTestSupport",
             dependencies: [
                 "Persistence",
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .testTarget(
@@ -50,7 +50,7 @@ let package = Package(
             dependencies: [
                 "Persistence",
                 "PersistenceTestSupport",
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             resources: [.process("Resources")]
         ),

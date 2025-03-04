@@ -48,7 +48,7 @@ final class AppConnectionIntegrationTests: XCTestCase {
                     alert: SettingsFeature.signOutAlert,
                     isLoading: false
                 ),
-                connection: .init(),
+                connection: .initialState,
                 userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
             ),
             networking: .authenticated(.auth(uid: "sessionID"))

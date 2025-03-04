@@ -19,7 +19,7 @@
 import Foundation
 
 import GRDB
-import XCTestDynamicOverlay
+import IssueReporting
 
 /// Executor suitable for tests, since it will fail on any uncaught errors during the execution of `operation`.
 struct TestDatabaseExecutor: DatabaseExecutor {
@@ -27,7 +27,7 @@ struct TestDatabaseExecutor: DatabaseExecutor {
         do {
             return try operation()
         } catch {
-            XCTFail("Unhandled error: \(error)")
+            reportIssue("Unhandled error: \(error)")
             return fallback
         }
     }

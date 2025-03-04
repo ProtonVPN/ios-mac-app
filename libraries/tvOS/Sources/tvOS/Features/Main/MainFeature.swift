@@ -41,7 +41,7 @@ struct MainFeature {
         var currentTab: Tab = .home
         var homeLoading = HomeLoadingFeature.State.loading
         var settings = SettingsFeature.State()
-        var connection = ConnectionFeature.State()
+        var connection = ConnectionFeature.State.initialState
 
         @Shared(.connectionState) var connectionState: ConnectionState = .resolving
         @Shared(.userLocation) var userLocation: UserLocation?

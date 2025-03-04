@@ -79,7 +79,8 @@ final class MainFeatureTests: XCTestCase {
         let clock = TestClock()
         let mockVPNSession = VPNSessionMock(status: .disconnected)
 
-        let connectionFeatureState = ConnectionFeature.State(core: .init(tunnelState: .disconnected(nil)))
+        var connectionFeatureState = ConnectionFeature.State.initialState
+        connectionFeatureState.core = .init(tunnelState: .disconnected(nil))
         // ServerListFeature.State uses ServerRepository in its constructor. It's not explicitly necessary to override
         // it here, since TestStore accepts an autoclosure argument which is executed with overridden dependencies.
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()), connection: connectionFeatureState)) {
