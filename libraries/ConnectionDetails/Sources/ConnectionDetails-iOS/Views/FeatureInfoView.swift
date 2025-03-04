@@ -18,6 +18,8 @@
 
 import SwiftUI
 
+import Dependencies
+
 import ProtonCoreUIFoundations
 
 import Domain
@@ -86,10 +88,14 @@ extension FeatureInfoView {
             title = Localizable.connectionDetailsFeatureTitleP2p
             text = Localizable.connectionDetailsFeatureDescriptionP2p
 
-        case .smart:
+        case let .smart(hostCountryCode, exitCountryCode):
+            @Dependency(\.locale) var locale
+            let hostCountry = locale.localizedString(forRegionCode: hostCountryCode) ?? hostCountryCode
+            let exitCountry = locale.localizedString(forRegionCode: exitCountryCode) ?? exitCountryCode
+
             icon = IconProvider.globe
             title = Localizable.connectionDetailsFeatureTitleSmartRouting
-            text = Localizable.connectionDetailsFeatureDescriptionSmartRouting
+            text = Localizable.connectionDetailsFeatureDescriptionSmartRouting(hostCountry, exitCountry)
 
         case .streaming:
             icon = IconProvider.play
@@ -114,7 +120,7 @@ struct FeatureInfoView_Previews: PreviewProvider {
             FeatureInfoView(secureCore: true).previewDisplayName("Secure Core")
             FeatureInfoView(for: .tor).previewDisplayName("Tor")
             FeatureInfoView(for: .p2p).previewDisplayName("P2P")
-            FeatureInfoView(for: .smart).previewDisplayName("Smart Routing")
+            FeatureInfoView(for: .smart(hostCountryCode: "US", exitCountryCode: "CH")).previewDisplayName("Smart Routing")
             FeatureInfoView(for: .streaming).previewDisplayName("Streaming")
         }
     }

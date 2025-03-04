@@ -251,8 +251,10 @@ public enum Localizable {
   public static var connectionDetailsFeatureDescriptionP2p: String { return Localizable.tr("Localizable", "_connection_details_feature_description_p2p", fallback: "Peer-to-peer file sharing is enabled on this server.") }
   /// Connection details screen: Secure core description (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsFeatureDescriptionSecureCore: String { return Localizable.tr("Localizable", "_connection_details_feature_description_secure_core", fallback: "Your activity is encrypted behind 2 high-security VPN servers.") }
-  /// Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023]
-  public static var connectionDetailsFeatureDescriptionSmartRouting: String { return Localizable.tr("Localizable", "_connection_details_feature_description_smart_routing", fallback: "Servers are physically located in Singapore, but you’ll appear to be browsing from Thailand.") }
+  /// Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from.
+  public static func connectionDetailsFeatureDescriptionSmartRouting(_ p1: Any, _ p2: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_details_feature_description_smart_routing", String(describing: p1), String(describing: p2), fallback: "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.")
+  }
   /// Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsFeatureDescriptionStreaming: String { return Localizable.tr("Localizable", "_connection_details_feature_description_streaming", fallback: "This server is optimized for TV and movie playback.") }
   /// Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023]

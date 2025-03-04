@@ -98,7 +98,7 @@ public struct ConnectionInfoBuilder {
     private func shouldShow(feature: ConnectionSpec.Feature) -> Bool {
         guard intent.features.contains(feature) else { return false }
         guard let currentlyConnectedServer = vpnConnectionActual?.server else { return true }
-        return currentlyConnectedServer.supports(feature: feature)
+        return currentlyConnectedServer.features.contains(feature)
     }
 
     private var showFeatureP2P: Bool {

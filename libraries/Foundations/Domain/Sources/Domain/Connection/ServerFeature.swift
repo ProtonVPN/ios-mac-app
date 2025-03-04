@@ -20,7 +20,8 @@ import Foundation
 
 import Ergonomics
 
-public struct ServerFeature: OptionSet, Codable, Sendable {
+public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
+    public static let allCases: [ServerFeature] = [.secureCore, .tor, .p2p, .streaming, .ipv6, .restricted]
 
     public let rawValue: Int
     

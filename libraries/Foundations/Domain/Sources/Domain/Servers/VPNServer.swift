@@ -39,8 +39,8 @@ public struct VPNServer: Codable, Equatable, Identifiable, Sendable {
         return endpoints.reduce(.zero) { $0.union($1.supportedProtocols) }
     }
 
-    public func supports(feature: ConnectionSpec.Feature) -> Bool {
-        logical.supports(connectionSpecFeature: feature)
+    public var features: [ConnectionSpec.Feature] {
+        logical.connectionSpecFeatures
     }
 }
 
@@ -54,7 +54,7 @@ public struct Server: Equatable, Sendable, Codable {
         self.endpoint = endpoint
     }
 
-    public func supports(feature: ConnectionSpec.Feature) -> Bool {
-        logical.supports(connectionSpecFeature: feature)
+    public var features: [ConnectionSpec.Feature] {
+        logical.connectionSpecFeatures
     }
 }

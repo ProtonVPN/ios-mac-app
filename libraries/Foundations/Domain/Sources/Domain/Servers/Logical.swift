@@ -95,19 +95,24 @@ public struct Logical: Codable, Equatable, Sendable {
         return status == 0
     }
 
-    public var coordinates: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    public var connectionSpecFeatures: [ConnectionSpec.Feature] {
+        var result: [ConnectionSpec.Feature] = ServerFeature.allCases.reduce(into: []) { result, feature in
+            guard self.feature.contains(feature),
+                  let specFeature = ConnectionSpec.Feature(serverFeature: feature) else {
+                return
+            }
+            result.append(specFeature)
+        }
+
+        if isVirtual, let hostCountry {
+            result.append(.smart(hostCountryCode: hostCountry, exitCountryCode: exitCountryCode))
+        }
+
+        return result
     }
 
-    public func supports(connectionSpecFeature: ConnectionSpec.Feature) -> Bool {
-        if let serverFeature = ServerFeature(connectionSpecFeature: connectionSpecFeature) {
-            return feature.contains(serverFeature)
-        } else if connectionSpecFeature == .smart {
-            return isVirtual
-        } else {
-            assertionFailure("Unhandled feature")
-            return false
-        }
+    public var coordinates: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 
     public var serverNameComponents: ServerNameComponents {

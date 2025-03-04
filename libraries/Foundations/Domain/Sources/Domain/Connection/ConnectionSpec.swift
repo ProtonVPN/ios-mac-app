@@ -48,10 +48,10 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         case secureCore(SecureCoreSpec)
     }
 
-    public enum Feature: Equatable, Hashable, CaseIterable, CustomStringConvertible, Identifiable, Codable, Sendable {
+    public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable, Codable, Sendable {
         public var id: Self { self } // Identifiable
 
-        case smart // smart routing
+        case smart(hostCountryCode: String, exitCountryCode: String) // smart routing
         case streaming
         case p2p
         case tor
@@ -82,6 +82,21 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
     /// Default intent that is set before user asks for any
     public init() {
         self.init(location: .fastest, features: [])
+    }
+}
+
+package extension ConnectionSpec.Feature {
+    init?(serverFeature: ServerFeature) {
+        switch serverFeature {
+        case .streaming:
+            self = .streaming
+        case .p2p:
+            self = .p2p
+        case .tor:
+            self = .tor
+        default:
+            return nil
+        }
     }
 }
 
