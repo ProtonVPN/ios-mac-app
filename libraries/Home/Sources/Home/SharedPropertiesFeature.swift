@@ -38,6 +38,7 @@ public struct SharedPropertiesFeature {
     public enum Action {
         case listen
         case userLocation(UserLocationFeature.Action)
+        // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
         case newConnectionStatus(VPNConnectionStatus)
         case newConnectionState(ConnectionState)
     }

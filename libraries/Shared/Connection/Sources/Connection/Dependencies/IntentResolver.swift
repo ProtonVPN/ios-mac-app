@@ -53,6 +53,7 @@ struct ConnectionIntentResolver: DependencyKey {
         )
     }
 
+    // TODO: Implement a testing client that performs no network requests but can give similar behaviour (VPNAPPL-2678)
     static let testValue = liveValue
 }
 

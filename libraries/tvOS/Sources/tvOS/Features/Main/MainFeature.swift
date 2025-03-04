@@ -64,6 +64,7 @@ struct MainFeature {
         case errorOccurred(Error)
         
         case connectionStateUpdated(ConnectionState)
+        case observeConnectionState
     }
 
     private enum CancelId {
@@ -76,15 +77,26 @@ struct MainFeature {
         Scope(state: \.settings, action: \.settings) { SettingsFeature() }
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                return .merge(
+                    .send(.connection(.input(.onLaunch))),
+                    .send(.observeConnectionState)
+                )
+            case .onLogout:
+                return .send(.connection(.input(.onLogout)))
+            case .observeConnectionState:
+                return .publisher {
+                    state.$connectionState.publisher
+                        .receive(on: UIScheduler.shared)
+                        .map(Action.connectionStateUpdated)
+                }
+                .cancellable(id: CancelId.connectionState)
+
             case .connectionStateUpdated(let connectionState):
-                if state.currentTab == .home {
+                if case .home = state.currentTab {
                     state.$mainBackground.withLock { $0 = .init(connectionState: connectionState) }
                 }
                 return .none
-            case .onAppear:
-                return .send(.connection(.input(.onLaunch)))
-            case .onLogout:
-                return .send(.connection(.input(.onLogout)))
 
             case .selectTab(let tab):
                 state.currentTab = tab
@@ -150,7 +162,7 @@ struct MainFeature {
 
             case .connection(.delegate(.stateChanged(let connectionState))):
                 state.$connectionState.withLock { $0 = connectionState }
-                if connectionState == .disconnected {
+                if case .disconnected = connectionState {
                     return .send(.updateUserLocation)
                 }
                 return .none

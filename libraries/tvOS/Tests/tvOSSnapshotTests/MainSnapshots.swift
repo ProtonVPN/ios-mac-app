@@ -85,6 +85,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
             .background(Color(.background, .strong))
         
         store.send(.connection(.input(.onLaunch)))
+        store.send(.observeConnectionState)
 
         @Shared(.connectionState) var connectionState: ConnectionState
         

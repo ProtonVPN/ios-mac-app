@@ -49,7 +49,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(
@@ -62,7 +62,7 @@ let package = Package(
                 .product(name: "Theme", package: "Theme"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             resources: []
         ),

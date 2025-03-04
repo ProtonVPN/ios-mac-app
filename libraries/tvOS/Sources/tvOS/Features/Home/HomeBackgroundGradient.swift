@@ -26,6 +26,7 @@ enum MainBackground: Equatable, Sendable {
     case connected
     case disconnected
     case clear
+
     init(connectionState: ConnectionState?) {
         switch connectionState {
         case .disconnected:

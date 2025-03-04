@@ -38,7 +38,7 @@ let package = Package(
                 // External
                 .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             swiftSettings: [
                 .define("TLS_PIN_DISABLE", .when(configuration: .debug)),

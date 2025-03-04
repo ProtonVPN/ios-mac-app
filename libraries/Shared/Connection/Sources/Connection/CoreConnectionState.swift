@@ -102,7 +102,7 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
 
         case (.disconnected(.some(let tunnelError)), .disconnected(.some(_))):
             // However unlikely (if even possible due to how actions/events are synchronised by reducers) it might be
-            // to simultanesouly encounter a tunnel and local agent error, the former should take precedence
+            // possible to simultaneously encounter a tunnel and local agent error, the former should take precedence
             self = .disconnected(.tunnel(tunnelError))
 
         case (.disconnected(.some(let tunnelError)), .disconnected(.none)):

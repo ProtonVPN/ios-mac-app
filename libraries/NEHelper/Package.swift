@@ -78,7 +78,7 @@ let package = Package(
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Sentry", package: "sentry-cocoa"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

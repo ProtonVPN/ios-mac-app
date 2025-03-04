@@ -155,9 +155,12 @@ extension ConnectionSpec {
     }
 
     private var requiredFeatureSet: ServerFeature {
-        let requiredFeatures: [ServerFeature] = features
+        var requiredFeatures: [ServerFeature] = features
             .compactMap { ServerFeature.init(connectionSpecFeature: $0) }
-            .appending(.secureCore, if: location.isSecureCore)
+
+        if location.isSecureCore {
+            requiredFeatures.append(.secureCore)
+        }
 
         return ServerFeature(requiredFeatures)
     }

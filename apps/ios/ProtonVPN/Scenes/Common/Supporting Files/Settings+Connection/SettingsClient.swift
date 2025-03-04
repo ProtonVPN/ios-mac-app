@@ -26,7 +26,7 @@ extension SettingsClient: DependencyKey {
     public static let liveValue = SettingsClient(
         isActive: {
             @Shared(.connectionState) var connectionState
-            return !connectionState.is(\.disconnected)
+            return !(connectionState.is(\.disconnected) || connectionState.is(\.resolving))
         },
         featureChangeAvailability: { feature in
             @Shared(.connectionState) var connectionState
