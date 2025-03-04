@@ -68,12 +68,11 @@ public struct ConnectionScreenFeature {
 
 public extension VPNConnectionActual {
     func connectionScreenFeatureState() -> ConnectionScreenFeature.State {
-        let features = ConnectionSpec.Feature.allCases.filter { server.supports(feature: $0) }
         return ConnectionScreenFeature.State(
             ipViewState: .init(),
             connectionDetailsState: .init(actual: self),
             isSecureCore: server.logical.feature.contains(.secureCore),
-            connectionFeatures: features
+            connectionFeatures: server.features
         )
     }
 }
