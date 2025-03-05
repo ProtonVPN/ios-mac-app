@@ -30,9 +30,14 @@ package struct ConnectionCardModel {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
         case .connected(_, let actual):
-            // TODO: Maybe improve this to include more detailed informations
-            let browsingFrom = actual.flatMap { LocalizationUtility.default.countryName(forCode: $0.server.logical.exitCountryCode) } ?? countryName
-            return Localizable.connectionCardAccessibilityBrowsingFrom(browsingFrom)
+            if let parameters = actual?.accessibilityParameters {
+                return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(
+                    parameters.browsingFrom,
+                    parameters.serverNumber,
+                    parameters.protocolDescription
+                )
+            }
+            return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
         case .connecting:
             return Localizable.connectionCardAccessibilityConnectingTo(countryName)
         case .resolving:
@@ -49,5 +54,24 @@ package struct ConnectionCardModel {
         case .connecting, .disconnecting, .resolving:
             return Localizable.connectionCardActionCancel
         }
+    }
+}
+
+private extension VPNConnectionActual {
+    var accessibilityParameters: (browsingFrom: String, serverNumber: String, protocolDescription: String)? {
+        if let browsingFrom, let serverNumber = server.logical.serverNumber {
+            return (browsingFrom, serverNumber, vpnProtocol.apiDescription)
+        }
+        return nil
+    }
+
+    private var browsingFrom: String? {
+        LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
+    }
+}
+
+private extension Logical {
+    var serverNumber: String? {
+        name.split(separator: "#").last.map(String.init)
     }
 }

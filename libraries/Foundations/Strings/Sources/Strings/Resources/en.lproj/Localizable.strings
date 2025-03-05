@@ -1662,6 +1662,9 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Loading";
 

@@ -215,6 +215,10 @@ public enum Localizable {
   public static func connectionCardAccessibilityBrowsingFrom(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_browsing_from", String(describing: p1), fallback: "You are safely browsing from %@.")
   }
+  /// Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023]
+  public static func connectionCardAccessibilityBrowsingFromFullDetails(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_card_accessibility_browsing_from_fullDetails", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "You are safely browsing from %1$@ Server %2$@ using %3$@.")
+  }
   /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
   public static func connectionCardAccessibilityConnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_connecting_to", String(describing: p1), fallback: "Connecting to %@.")
