@@ -852,6 +852,9 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Din Proton VPN-prenumeration kan inte uppgraderas från appen, besök account.protonvpn.com för att uppgradera.";
 
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "Din Proton VPN-prenumeration kan inte uppgraderas från TestFlight-versionen av appen, besök account.protonvpn.com för att uppgradera.";
+
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Rensa applikationsdata";
 
@@ -1703,6 +1706,12 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN är frånkopplat. Anslut till en server för att surfa säkert på internet.";
 
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "Det snabbaste tillgängliga landet";
+
+/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "Det snabbaste tillgängliga Secure Core-landet";
+
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Standardanslutning";
 
@@ -1712,8 +1721,11 @@
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Senast ansluten till";
 
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Laddar in …";
+
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
-"_connection_card_connecting_to" = "Ansluter till...";
+"_connection_card_connecting_to" = "Ansluter till …";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_connecting_to" = "Ansluter till %@.";
@@ -1724,11 +1736,14 @@
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "Du surfar säkert från %@.";
 
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Laddar in";
+
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Vält din standardanslutning";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Snabbast";
+"home_default_connection_fastest_name" = "Snabbaste land";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Den bästa servern baserat på din plats";
@@ -1753,6 +1768,9 @@
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Server underhålls";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Slumpmässigt land";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Hjälp";
@@ -1779,7 +1797,7 @@
 "_action_home_unpin" = "Lossa";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
-"home_fastest_connection_selection_description" = "Autovald från";
+"home_fastest_connection_selection_description" = "Automatiskt valt från";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
 "home_fastest_connection_additional_country_count" = "+%@";
@@ -1795,6 +1813,9 @@
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Skyddad";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Laddar in";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Skaffa Plus";
@@ -2021,7 +2042,7 @@
 "_settings_protocol_section_title_tcp" = "Tillförlitlighet (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Autoväljer det bästa protokollet för din anslutning.";
+"_settings_protocol_description_smart" = "Väljer automatiskt det bästa protokollet för din anslutning.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_udp" = "Snabbt, säkert och effektivt. WireGuard är mer batterieffektivt än andra protokoll.";
@@ -2706,3 +2727,87 @@
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Lås upp avancerade funktioner för prestanda och integritet";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Anslutningsfel";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
+"_connection_error_unexpected_protocol" = "Anslutningen du har valt använder ett protokoll (%@) som inte längre stöds av denna applikation. Välj en annan anslutning.";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_certificate_authentication" = "Ett problem uppstod vid autentisering med servern: %@";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
+"_connection_error_certificate_authentication_key_generation_failed" = "vi kunde inte generera dina krypteringsnycklar. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
+"_connection_error_certificate_authentication_wont_refresh" = "vi kunde inte uppdatera dina inloggningsuppgifter (%@)";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
+"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Nycklarna är inte tillgängliga på enheten.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
+"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Certifikatet är inte tillgängligt på enheten.";
+
+/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
+"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Certifikatet på enheten har löpt ut.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
+"_connection_error_certificate_authentication_rate_limited" = "det är inte möjligt att uppdatera dina inloggningsuppgifter just nu.";
+
+/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
+"_connection_error_certificate_authentication_ipc_message" = "ett protokollfel uppstod. (%@)";
+
+/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_certificate_authentication_unexpected" = "an unexpected credential error occurred. (%@)";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_tunnel_connection" = "Det uppstod ett problem att starta VPN: %@";
+
+/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
+"_connection_error_tunnel_connection_tunnel_start" = "tunneln kunde inte etableras. (%@)";
+
+/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
+"_connection_error_tunnel_connection_unknown_server" = "servern du har valt är inte längre tillgänglig. Välj en annan server.";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+"_connection_error_local_agent" = "Ett oväntat fel uppstod vid anslutning: %@";
+
+/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
+"_connection_error_local_agent_failed_establishing_connection" = "enheten kunde inte etablera en anslutning. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
+"_connection_error_local_agent_remote_error" = "fjärrtjänsten accepterade inte anslutningen. (%@)";
+
+/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
+"_connection_error_local_agent_server_certificate" = "vi kunde inte autentisera anslutningen.";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
+"_connection_error_intent_missing" = "Vi kunde inte ansluta till servern eftersom den ursprungliga anslutningsinformationen saknades.";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
+"_connection_error_preparation" = "Det var ett problem att förbereda anslutningen: %@";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
+"_connection_error_server_missing" = "Servern du har valt är inte längre tillgänglig. Välj en annan server.";
+
+/* Error message: we tried to connect, but something took too long and we weren't able to  */
+"_connection_error_timeout" = "Vi stötte på ett fel vid försöket att ansluta: servern svarade inte i tid. Försök igen.";
+
+/* Error message: we tried to message the connection provider, but they didn't respond in time. */
+"_provider_message_error_no_data_received" = "Inga data mottogs från anslutningsleverantören.";
+
+/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
+"_provider_message_error_decoding_error" = "Ett fel uppstod vid försöket att avkoda svaret från anslutningsleverantören.";
+
+/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
+"_provider_message_error_sending_error" = "Ett fel uppstod vid försöket att skicka ett meddelande till anslutningsleverantören.";
+
+/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
+"_provider_message_error_unknown_request" = "Anslutningsleverantören tog emot en okänd begäran.";
+
+/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
+"_provider_message_error_unknown_response" = "Anslutningsleverantören returnerade ett okänt svar.";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
+"_provider_message_error_remote_error" = "Anslutningsleverantören stötte på ett fel: %@";

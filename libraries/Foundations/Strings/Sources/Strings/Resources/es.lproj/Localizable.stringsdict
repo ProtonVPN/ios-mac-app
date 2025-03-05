@@ -188,11 +188,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Has alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
+        <string>Has alcanzado el número máximo de cambios de configuración. Inténtalo de nuevo después de al menos %d minutos.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
+        <string>Ha alcanzado el número máximo de cambios de configuración. Inténtalo de nuevo después de al menos %d minutos.</string>
       </dict>
     </dict>
     <key>_countries_count_plus</key>
