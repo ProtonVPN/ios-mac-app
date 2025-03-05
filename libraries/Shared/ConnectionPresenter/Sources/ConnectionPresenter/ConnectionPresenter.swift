@@ -25,7 +25,7 @@ import Domain
 @DependencyClient
 public struct ConnectionPresenter: Sendable {
     /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
-    public var recentConnectionList: @Sendable (
+    public internal(set) var recentConnectionList: @Sendable (
         _ defaultConnectionPreference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>,
         _ currentConnection: ConnectionSpec?

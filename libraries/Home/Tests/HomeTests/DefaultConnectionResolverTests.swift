@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 import Collections
 import Dependencies
-import Domain
+@testable import Domain
 @testable import Home
 
 final class DefaultConnectionResolverTests: XCTestCase {

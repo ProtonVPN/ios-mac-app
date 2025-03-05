@@ -73,10 +73,10 @@ public struct ConnectToVPNIntent: AppIntent {
         @Dependencies.Dependency(\.connectionPresenter) var connectionPresenter
 
         return connectionPresenter.recentConnectionList(
-            defaultConnectionPreference: .fastest,
-            recents: recentsStorage.readFromStorage(),
-            currentConnection: ConnectionSpec.defaultFastest
-        ).elements[index].connection
+            .fastest,
+            recentsStorage.readFromStorage(),
+            ConnectionSpec.defaultFastest
+        ).elements[safe: index]?.connection
     }
 
     private func getDefaultConnection() -> ConnectionSpec? {
@@ -101,5 +101,13 @@ public struct LoginIntent: AppIntent {
 
     public func perform() async throws -> some IntentResult {
         return .result()
+    }
+}
+
+// Private helpers:
+
+private extension Collection {
+    subscript(safe index: Index) -> Element? {
+        return (index >= startIndex && index < endIndex) ? self[index] : nil
     }
 }

@@ -39,9 +39,9 @@ struct Provider: TimelineProvider {
         let preference = try? defaultConnectionStorage.getPreference()
 
         return connectionPresenter.recentConnectionList(
-            defaultConnectionPreference: preference ?? .fastest,
-            recents: recentsStorage.readFromStorage(),
-            currentConnection: ConnectionSpec.defaultFastest
+            preference ?? .fastest,
+            recentsStorage.readFromStorage(),
+            ConnectionSpec.defaultFastest
         ).elements
     }
 
@@ -53,33 +53,11 @@ struct Provider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
-        completion(ConnectWidgetEntry(date: .now,
-                                      connectionSpec: .defaultFastest,
-                                      protectionState: .protected,
-                                      recentServers: []))
+        completion(createTimelineEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        let entry: ConnectWidgetEntry
-        let credentials: AuthCredentials? = authKeychain.fetch()
-
-        guard credentials?.userId != nil else {
-            entry = ConnectWidgetEntry(date: .now,
-                                       connectionSpec: nil,
-                                       protectionState: .signedOut,
-                                       recentServers: [])
-            completion(Timeline(entries: [entry], policy: .never))
-            return
-        }
-
-        let recents = recentConnectionList()
-
-        entry = ConnectWidgetEntry(date: .now,
-                                   connectionSpec: vpnConnectionStatus.spec ?? connectionSpec(),
-                                   protectionState: vpnConnectionStatus.protectionState,
-                                   recentServers: recents
-        )
-        completion(Timeline(entries: [entry], policy: .never))
+        completion(Timeline(entries: [createTimelineEntry()], policy: .never))
     }
 
     private func connectionSpec() -> ConnectionSpec {
@@ -93,6 +71,25 @@ struct Provider: TimelineProvider {
         case .recent(let spec):
             return spec
         }
+    }
+
+    private func createTimelineEntry() -> ConnectWidgetEntry {
+        let credentials: AuthCredentials? = authKeychain.fetch()
+
+        guard credentials?.userId != nil else {
+            return ConnectWidgetEntry(date: .now,
+                                       connectionSpec: nil,
+                                       protectionState: .signedOut,
+                                       recentServers: [])
+        }
+
+        let recents = recentConnectionList()
+
+        return ConnectWidgetEntry(date: .now,
+                                   connectionSpec: vpnConnectionStatus.spec ?? connectionSpec(),
+                                   protectionState: vpnConnectionStatus.protectionState,
+                                   recentServers: recents
+        )
     }
 }
 

@@ -25,12 +25,12 @@ import Domain
 
 @DependencyClient
 public struct DefaultConnectionResolver: Sendable {
-    public var connectionSpec: (
+    public internal(set) var connectionSpec: (
         _ preference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>
     ) -> ConnectionSpec = { _, _ in .defaultFastest }
 
-    public var preferenceModels: @Sendable (
+    public internal(set) var preferenceModels: @Sendable (
         _ recents: OrderedSet<RecentConnection>
     ) -> [ConnectionPreferenceModel] = { _ in reportIssue("\(Self.self).preferenceModels"); return [] }
 }

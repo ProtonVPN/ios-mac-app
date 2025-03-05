@@ -21,8 +21,8 @@ import Dependencies
 import OrderedCollections
 
 public struct RecentsStorage {
-    public var readFromStorage: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
-    public var saveToStorage: (OrderedSet<RecentConnection>) -> Void = { _ in unimplemented() }
+    public internal(set) var readFromStorage: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
+    public internal(set) var saveToStorage: (OrderedSet<RecentConnection>) -> Void = { _ in unimplemented() }
 }
 
 extension RecentsStorage: DependencyKey {
