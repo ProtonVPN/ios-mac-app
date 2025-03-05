@@ -15,6 +15,7 @@ swiftlint.xml
 builds
 libraries/Review/Tests/ReviewTests/ExtensionsTests.swift.plist
 libraries/Review/Tests/ReviewTests/UserDefaultsReviewDataStorageTests.swift.plist
+libraries/LegacyCommon/Tests/LegacyCommonTests/Management/Storage/PropertiesManagerTests.swift.plist
 swiftlint.json
 codequality_report.json
 
