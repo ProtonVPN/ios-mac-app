@@ -161,7 +161,7 @@ public struct HomeMapFeature {
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
                 let effect: Effect<Action> = .merge(
                     .send(.newMapState(mapState), animation: animation),
-                    .send(.newPinOffset(pinOffset), animation: animation)
+                    .send(.newPinOffset(pinOffset), animation: nil)
                 )
                 // If we're setting initial pinOffset
                 if state.pinOffset == .zero {
