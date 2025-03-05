@@ -13,9 +13,7 @@ swiftlint.xml
 
 # Directory created by gitlab-runner
 builds
-libraries/Review/Tests/ReviewTests/ExtensionsTests.swift.plist
-libraries/Review/Tests/ReviewTests/UserDefaultsReviewDataStorageTests.swift.plist
-libraries/LegacyCommon/Tests/LegacyCommonTests/Management/Storage/PropertiesManagerTests.swift.plist
+*.swift.plist
 swiftlint.json
 codequality_report.json
 
