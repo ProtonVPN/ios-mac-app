@@ -14,6 +14,7 @@ This project uses Swift Package Manager for all of it's dependencies. Allow Xcod
 
 - Enable [Git LFS](https://git-lfs.github.com) on your machine
 - Clone this repository
+- Ensure you clone submodules (`git submodule init` + `git submodule update`)
 - Make sure you have go installed (`brew install go`)
 - You'll need to use Xcode 14.x for now
 - Configure code signing for all targets with a paid Apple developer account (required due to VPN entitlements) and change the bundle identifiers to something unique
