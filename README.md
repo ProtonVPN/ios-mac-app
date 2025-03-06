@@ -1,6 +1,6 @@
 # Proton VPN for iOS and macOS
 
-Copyright (c) 2023 Proton Technologies AG
+Copyright (c) 2025 Proton Technologies AG
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ This project uses Swift Package Manager for all of it's dependencies. Allow Xcod
 
 ## Setup
 
-- Enable [Git LFS](https://git-lfs.github.com) on your machine 
+- Enable [Git LFS](https://git-lfs.github.com) on your machine
 - Clone this repository
 - Make sure you have go installed (`brew install go`)
 - You'll need to use Xcode 14.x for now
@@ -23,34 +23,37 @@ This project uses Swift Package Manager for all of it's dependencies. Allow Xcod
 
 A set of secrets is required in order to build the project.
 These include URLs and keys, and are kept in files named `ObfuscatedConstants.swift`.
-These files are kept in a seperate repository, which requires some additional setup to keep synchronised.
+These files are kept in a separate repository, which requires some additional setup to keep synchronized.
 
 Firstly, invoke the script located at `Integration/Scripts/credentials.sh` with the `setup` command.
 Provide the path where you wish the secrets repository to be cloned locally using the `-p` argument, and the url of the repository using the `-r` argument.
-```
+
+``` bash
 ./Integration/Scripts/credentials.sh setup -p <path to credentials repo> -r <credentials remote>
 ```
 
 Then, to verify that setup has been successful:
-```
+
+``` bash
 ./Integration/Scripts/credentials.sh checkout
 ```
 
-If setup correctly, obfuscated constants will be automatically synchronised during the Generate Obfuscated Constants build phase of each app.
+If setup correctly, obfuscated constants will be automatically synchronized during the Generate Obfuscated Constants build phase of each app.
 
 ## Package Structure
 
 The project is packaged by layer in order to avoid module dependency hell:
- - Foundations: small, single-purpose libraries for building bigger things. These should only ever link each other, if they do so at all.
- - Shared: slightly larger libraries meant for sharing code between applications or extensions. Portions of this library that get too big or would benefit from being their own module can be broken out into Foundations. These should only ever link Foundations libraries, with the possible exception of these libraries each linking CoreCommon .
- - Features: self-contained libraries containing a single feature. These libraries should only ever link libraries from the Shared or Foundations categories. They are included and instantiated within application, test, or extension code.
+
+- Foundations: small, single-purpose libraries for building bigger things. These should only ever link each other, if they do so at all.
+- Shared: slightly larger libraries meant for sharing code between applications or extensions. Portions of this library that get too big or would benefit from being their own module can be broken out into Foundations. These should only ever link Foundations libraries, with the possible exception of these libraries each linking CoreCommon .
+- Features: self-contained libraries containing a single feature. These libraries should only ever link libraries from the Shared or Foundations categories. They are included and instantiated within application, test, or extension code.
 
 Adding new code/feature to LegacyCommon and NEHelper should be avoided if possible.
 These packages should be gradually chipped away at in order to place their components into new/existing packages in the above three categories.
 
 ### Code linting
 
-During development swiftlint is run on non-strict mode so it's easier to develop without worrying about code formatting. On CI, linting is strict and will fail on any warning. Before commiting code to this repository run the following script to add a pre-commit hook that will check all new/modified files in strict mode and stop you from committing code that won't make it through CI.
+During development swiftlint is run on non-strict mode so it's easier to develop without worrying about code formatting. On CI, linting is strict and will fail on any warning. Before committing code to this repository run the following script to add a pre-commit hook that will check all new/modified files in strict mode and stop you from committing code that won't make it through CI.
 
 `./Integration/Scripts/pre_commit_lint.sh setup`
 
@@ -62,4 +65,4 @@ The app uses [SwiftGen](https://github.com/SwiftGen/SwiftGen) to generate the `L
 
 The code and data files in this distribution are licensed under the terms of the GPLv3 as published by the Free Software Foundation. See <https://www.gnu.org/licenses/> for a copy of this license.
 
-Copyright (c) 2023 Proton Technologies AG
+Copyright (c) 2025 Proton Technologies AG
