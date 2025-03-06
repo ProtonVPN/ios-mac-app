@@ -337,7 +337,6 @@
 				fa,
 				fi,
 				fr,
-				hr,
 				id,
 				it,
 				ja,
