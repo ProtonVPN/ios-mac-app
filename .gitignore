@@ -37,3 +37,4 @@ output/
 
 # Configuration
 .gitconfig
+.vscode/
