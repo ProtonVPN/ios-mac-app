@@ -121,6 +121,12 @@
             "value" : " /mês"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mês"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /місяць"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /月"
           }
         }
       }
@@ -275,6 +287,12 @@
             "value" : " /ano"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /ano"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -309,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /рік"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /年"
           }
         }
       }
@@ -423,6 +447,12 @@
             "value" : "%@/mês"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mês"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -457,6 +487,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@/місяць"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/月"
           }
         }
       }
@@ -571,6 +607,12 @@
             "value" : "Concordar e continuar"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceitar e continuar"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -611,6 +653,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Погодитись і продовжити"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同意並繼續"
           }
         }
       }
@@ -727,6 +775,12 @@
             "value" : "Todos os países"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos os países"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -767,6 +821,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Всі країни"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有國家"
           }
         }
       }
@@ -895,6 +955,12 @@
             "value" : "Ocorreu um erro."
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorreu um erro."
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -935,6 +1001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сталася помилка."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出現錯誤"
           }
         }
       }
@@ -1049,6 +1121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Você tem certeza de que deseja sair do Proton VPN?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tem a certeza que deseja sair do Proton VPN?"
           }
         },
         "ro" : {
@@ -1198,6 +1276,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disponível com Proton VPN Plus"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponível com o Proton VPN Plus"
           }
         },
         "ro" : {
@@ -1362,6 +1446,12 @@
             "value" : "Cancelar"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1402,6 +1492,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Скасувати"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
@@ -1516,6 +1612,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conecte-se a servidores de alta velocidade ao redor do mundo e assista a seus programas favoritos com proteção VPN."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conecte-se a servidores de alta velocidade em todo o mundo e faça streaming dos seus programas favoritos com proteção VPN."
           }
         },
         "ro" : {
@@ -1679,6 +1781,12 @@
             "value" : "Conectado"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligado"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1719,6 +1827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Під'єднано"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已連線"
           }
         }
       }
@@ -1846,6 +1960,12 @@
             "value" : "Conectando"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A ligar"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1886,6 +2006,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "З'єднання"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連線中"
           }
         }
       }
@@ -2014,6 +2140,12 @@
             "value" : "Erro na conexão"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro de ligação"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2054,6 +2186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не вдалося встановити з'єднання"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連線失敗"
           }
         }
       }
@@ -2182,6 +2320,12 @@
             "value" : "Fale conosco"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacte-nos"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2222,6 +2366,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зв'яжіться з нами"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡我們"
           }
         }
       }
@@ -2350,6 +2500,12 @@
             "value" : "Criar conta"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar uma conta"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2390,6 +2546,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зареєструватися"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建立帳號"
           }
         }
       }
@@ -2518,6 +2680,12 @@
             "value" : "Crie sua conta Proton"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar conta Proton"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2558,6 +2726,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Створіть свій обліковий запис Proton"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建立您的 Proton 帳號"
           }
         }
       }
@@ -2686,6 +2860,12 @@
             "value" : "Desconectar"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2726,6 +2906,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Від'єднатися"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中斷連線"
           }
         }
       }
@@ -2854,6 +3040,12 @@
             "value" : "Desconectando"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A desligar"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2894,6 +3086,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Від'єднання"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在中斷連線"
           }
         }
       }
@@ -3022,6 +3220,12 @@
             "value" : "Erro"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3062,6 +3266,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Помилка"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "錯誤"
           }
         }
       }
@@ -3188,6 +3398,12 @@
             "value" : "O mais rápido"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O mais rápido"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3228,6 +3444,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Найшвидший"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最快速"
           }
         }
       }
@@ -3338,6 +3560,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerar um novo código"
+          }
+        },
+        "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gerar um novo código"
@@ -3503,6 +3731,12 @@
             "value" : "Entendi"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3543,6 +3777,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зрозуміло"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "了解"
           }
         }
       }
@@ -3670,6 +3910,12 @@
             "value" : "Início"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Início"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3710,6 +3956,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Домівка"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "首頁"
           }
         }
       }
@@ -3824,6 +4076,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se estiver com dificuldades para usar o Proton VPN, nossa equipe de suporte ao cliente terá prazer em ajudar.\n\nBasta escanear o QR code ou ir para"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se estiver com dificuldades para utilizar o Proton VPN, a nossa equipa de apoio ao cliente terá prazer em ajudar.\n\nBasta escanear o código QR ou ir para"
           }
         },
         "ro" : {
@@ -3972,6 +4230,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inclui proteção VPN premium para seu celular e computador (conecte até 10 dispositivos ao mesmo tempo)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclui proteção VPN premium para o seu telemóvel e computador (conecte até 10 dispositivos em simultâneo)"
           }
         },
         "ro" : {
@@ -4126,6 +4390,12 @@
             "value" : "Carregando países"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A carregar países"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4274,6 +4544,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Precisa de ajuda para configurar ou usar o Proton VPN?\n\nVisite nossa Central de Ajuda para dicas de soluções de problemas, guias de configuração e respostas para perguntas frequentes.\n\nAponte seu dispositivo para o QR code ou vá para"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precisa de ajuda para configurar ou utilizar o Proton VPN?\n\nConsulte o nosso centro de ajuda online para dicas para resolver problemas, guias de configuração, e respostas para perguntas frequentes.\n\nBasta escanear o código QR ou ir para"
           }
         },
         "ro" : {
@@ -4438,6 +4714,12 @@
             "value" : "Política de privacidade"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidade"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4478,6 +4760,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Політика приватності"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隱私權政策"
           }
         }
       }
@@ -4604,6 +4892,12 @@
             "value" : "Politica de privacidade"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidade"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4644,6 +4938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Політика приватності"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隱私權政策"
           }
         }
       }
@@ -4766,6 +5066,12 @@
             "value" : "Protegido"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protegido"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4806,6 +5112,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Захищено"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已受保護"
           }
         }
       }
@@ -4920,6 +5232,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "O Proton VPN para Apple TV está disponível para todos os planos pagos. Você pode verificar e gerenciar sua assinatura em nosso site."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Proton VPN para Apple TV está disponível em todos os planos pagos. Pode verificar e gerir a sua subscrição no nosso sítio web."
           }
         },
         "ro" : {
@@ -5070,6 +5388,12 @@
             "value" : "O Proton VPN para Apple TV não está disponível nos planos gratuitos"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Proton VPN para Apple TV não está disponível nos planos gratuitos."
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5216,6 +5540,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A rigorosa política do Proton VPN de não manter históricos é certificada por uma auditoria externa. Nunca rastrearemos você on-line, salvaremos seu endereço de IP, nem compartilharemos suas informações com terceiros."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rigorosa política de não registo do Proton VPN é certificada por uma auditoria externa. Nunca o rastrearemos online, registaremos o seu endereço IP nem partilharemos as suas informações com terceiros."
           }
         },
         "ro" : {
@@ -5380,6 +5710,12 @@
             "value" : "Conexão rápida"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligação rápida"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5420,6 +5756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Швидке з'єднання"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快速連線"
           }
         }
       }
@@ -5548,6 +5890,12 @@
             "value" : "Recomendado"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5588,6 +5936,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рекомендовано"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推薦使用"
           }
         }
       }
@@ -5694,6 +6048,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resolvendo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A resolver"
           }
         },
         "ro" : {
@@ -5838,6 +6198,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Escaneie o QR code ou vá para\n"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leia o código QR ou vá para\n"
           }
         },
         "ro" : {
@@ -6001,6 +6367,12 @@
             "value" : "Configurações"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definições"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6041,6 +6413,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Параметри"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定"
           }
         }
       }
@@ -6168,6 +6546,12 @@
             "value" : "Iniciar sessão"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sessão"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6208,6 +6592,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійти"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入"
           }
         }
       }
@@ -6324,6 +6714,12 @@
             "value" : "Iniciar sessão em sua conta."
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sessão na sua conta."
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6364,6 +6760,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійдіть у свій обліковий запис."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入您的帳戶."
           }
         }
       }
@@ -6492,6 +6894,12 @@
             "value" : "Encerrar sessão"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminar sessão"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6532,6 +6940,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вийти"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登出"
           }
         }
       }
@@ -6646,6 +7060,12 @@
             "value" : "Sair?"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminar a sessão?"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6686,6 +7106,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вийти?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登出？"
           }
         }
       }
@@ -6814,6 +7240,12 @@
             "value" : "Encerrando a sessão..."
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A terminar sessão..."
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6854,6 +7286,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Триває вихід..."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在登出..."
           }
         }
       }
@@ -6970,6 +7408,12 @@
             "value" : "Central de Ajuda"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centro de suporte"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7010,6 +7454,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Довідковий центр"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支援中心"
           }
         }
       }
@@ -7136,6 +7586,12 @@
             "value" : "Termos de serviço"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termos de serviço"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7176,6 +7632,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Умови надання послуг"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服務條款"
           }
         }
       }
@@ -7290,6 +7752,12 @@
             "value" : "Termos de Serviço"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termos de serviço"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7330,6 +7798,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Умови надання послуг"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服務條款"
           }
         }
       }
@@ -7443,6 +7917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ocorreu um problema.\nVerifique sua conexão de rede"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorreu um problema.\nVerifique a sua conexão de rede."
           }
         },
         "ro" : {
@@ -7595,6 +8075,12 @@
             "value" : "Para ler nossa política de privacidade, escaneie o QR code ou vá para"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para ler nossa política de privacidade, leia o código QR ou vá para"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7741,6 +8227,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Para liberar streaming ultrarrápido com servidores em mais de 100 países, assine o VPN Plus."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para beneficiar de um streaming ultrarrápido com servidores em mais de 100 países, subscreva o VPN Plus."
           }
         },
         "ro" : {
@@ -7905,6 +8397,12 @@
             "value" : "Desprotegido"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem proteção"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7945,6 +8443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Незахищено"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未受保護"
           }
         }
       }
@@ -8057,6 +8561,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Faça o upgrade agora para usar o aplicativo ou entre com uma conta diferente se você já tiver o Proton VPN Plus"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melhore o seu plano agora para utilizar a aplicação ou inicie sessão com outra conta se já tiver o Proton VPN Plus."
           }
         },
         "ro" : {
@@ -8205,6 +8715,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Faça um upgrade na sua privacidade"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melhorar a sua privacidade"
           }
         },
         "ro" : {
@@ -8363,6 +8879,12 @@
             "value" : "Usando outro dispositivo, vá para"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com outro dispositivo, aceda a"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8513,6 +9035,12 @@
             "value" : "Usando Proton Grátis?"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usando o Proton Free?"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8547,6 +9075,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Використовуєте Proton Free?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在使用 Proton Free?"
           }
         }
       }
@@ -8659,6 +9193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visite nossa Central de Ajuda on-line para obter dicas de solução de problemas, guias de configuração e respostas a perguntas frequentes."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulte o nosso centro de ajuda online para dicas para resolver problemas, guias de configuração, e respostas para perguntas frequentes."
           }
         },
         "ro" : {
@@ -8810,6 +9350,12 @@
             "value" : "Assista sem ser vigiado."
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assista o que quiser com total privacidade."
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8956,6 +9502,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Assista a seus filmes e programas de TV favoritos nas principais plataformas de streaming"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desfrute das suas séries de televisão e filmes preferidos na maioria das plataformas de streaming."
           }
         },
         "ro" : {
@@ -9108,6 +9660,12 @@
             "value" : "Quando solicitado a fornecer seu código de verificação, digite"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando solicitado a fornecer o seu código de verificação, Introduza"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9258,6 +9816,12 @@
             "value" : "Quando for solicitado seu código de verificação, digite (consultando...)"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando solicitado a fornecer o seu código de verificação, Introduza (a recuperar)"
+          }
+        },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9405,6 +9969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seu código de verificação expirou"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu código de verificação expirou"
           }
         },
         "ro" : {
