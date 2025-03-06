@@ -19,7 +19,7 @@
 import Foundation
 import Dependencies
 import Domain
-import XCTestDynamicOverlay
+import IssueReporting
 
 public enum PlanSession {
     case upgrade

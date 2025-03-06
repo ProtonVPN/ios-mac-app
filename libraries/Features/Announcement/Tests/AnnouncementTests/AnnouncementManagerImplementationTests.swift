@@ -21,6 +21,7 @@
 //
 
 import XCTest
+import Dependencies
 @testable import LegacyCommon
 @testable import Announcement
 
@@ -30,9 +31,9 @@ extension Offer {
 
 class AnnouncementManagerImplementationTests: XCTestCase {
 
-    private var storage: AnnouncementStorageMock = AnnouncementStorageMock()
-    private var manager: AnnouncementManagerImplementation!
-    
+    @Dependency(\.announcementStorage) var storage
+    @Dependency(\.announcementManager) var manager
+
     override func setUp() {
         super.setUp()
         
@@ -85,9 +86,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 offer: Offer.empty,
                 reference: nil
             ),
-        ])
-        
-        manager = AnnouncementManagerImplementation()
+        ])        
     }
     
     func testFetchesOnlyCurrentNotifications() {

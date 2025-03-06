@@ -19,7 +19,7 @@
 #if DEBUG
 import Foundation
 import Dependencies
-import XCTestDynamicOverlay
+import IssueReporting
 
 public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     var featureAuthorizationMap: [String: FeatureAuthorizationResult] = [:]
@@ -46,7 +46,7 @@ public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         let key = Self.key(for: feature)
         return {
             guard let authorization = self.featureAuthorizationMap[key] else {
-                XCTFail("Authorization requested for `\(feature)`, but no value was registered under key `\(key)`")
+                reportIssue("Authorization requested for `\(feature)`, but no value was registered under key `\(key)`")
                 return .failure(.requiresUpgrade)
             }
             return authorization
@@ -59,7 +59,7 @@ public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         return { subFeature in
             let key = Self.key(for: subFeature)
             guard let authorization = self.featureAuthorizationMap[key] else {
-                XCTFail("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
+                reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
                 return .failure(.requiresUpgrade)
             }
             return authorization
@@ -72,7 +72,7 @@ public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         return Authorizer(canUse: { subFeature in
             let key = Self.key(for: subFeature)
             guard let authorization = self.featureAuthorizationMap[key] else {
-                XCTFail("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
+                reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
                 return .failure(.requiresUpgrade)
             }
             return authorization

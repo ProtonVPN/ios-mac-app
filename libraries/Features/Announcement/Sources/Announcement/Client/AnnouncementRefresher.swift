@@ -35,13 +35,14 @@ import Domain
 // MARK: AnnouncementRefresherFactory
 extension Container: AnnouncementRefresherFactory {
     public func makeAnnouncementRefresher() -> AnnouncementRefresher {
-        AnnouncementRefresherImplementation(factory: self)
+        AnnouncementRefresherImplementation()
     }
 }
 
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
     func tryRefreshing()
+    func tryRefreshingAsync() async
     func clear()
 }
 
@@ -52,20 +53,15 @@ public protocol AnnouncementRefresherFactory {
 public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     public static let defaultRefreshInterval: TimeInterval = .hours(3)
 
-    public typealias Factory = AnnouncementStorageFactory
-    private let factory: Factory
-    
-    private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
+    @Dependency(\.announcementStorage) private var announcementStorage
 
     private let refreshInterval: TimeInterval
 
     private var lastRefreshDate: Date?
 
     public init(
-        factory: Factory,
         refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval
     ) {
-        self.factory = factory
         self.refreshInterval = refreshInterval
 
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
@@ -74,23 +70,36 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     
     public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
-           Date().timeIntervalSince(lastRefresh) < Self.defaultRefreshInterval {
+           Date().timeIntervalSince(lastRefresh) < refreshInterval {
             return
         }
         lastRefreshDate = Date()
         refresh()
     }
 
-    @objc private func refresh() {
-        Task { [weak self] in
-            do {
-                @Dependency(\.announcementClient) var announcementClient
+    public func tryRefreshingAsync() async {
+        if let lastRefresh = lastRefreshDate,
+           Date().timeIntervalSince(lastRefresh) < refreshInterval {
+            return
+        }
+        lastRefreshDate = Date()
+        await refreshAsync()
+    }
 
-                let announcements = try await announcementClient.fetchAnnouncements()
-                self?.announcementStorage.store(announcements.notifications)
-            } catch {
-                log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
-            }
+    @objc private func refresh() {
+        Task {
+            await refreshAsync()
+        }
+    }
+
+    private func refreshAsync() async {
+        do {
+            @Dependency(\.announcementClient) var announcementClient
+
+            let announcements = try await announcementClient.fetchAnnouncements()
+            self.announcementStorage.store(announcements.notifications)
+        } catch {
+            log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
         }
     }
 

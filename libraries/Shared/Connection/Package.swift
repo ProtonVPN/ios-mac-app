@@ -18,7 +18,7 @@ let package = Package(
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(path: "../../../external/protoncore"), // GoLibs
         .package(path: "../../Foundations/Domain"),
@@ -57,7 +57,7 @@ let package = Package(
             name: "LocalAgent",
             dependencies: [
                 "CoreConnection",
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
             ]
         ),
@@ -67,7 +67,7 @@ let package = Package(
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -92,6 +92,7 @@ let package = Package(
                 "Connection",
                 "CoreConnectionTestSupport",
                 "ConnectionTestSupport",
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

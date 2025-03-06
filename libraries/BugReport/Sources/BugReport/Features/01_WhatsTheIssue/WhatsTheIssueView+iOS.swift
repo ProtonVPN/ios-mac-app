@@ -19,6 +19,7 @@
 #if os(iOS)
 import Foundation
 import SwiftUI
+import SwiftUINavigation
 import ComposableArchitecture
 import Strings
 

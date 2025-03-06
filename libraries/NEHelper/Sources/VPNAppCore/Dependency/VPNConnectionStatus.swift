@@ -16,14 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ConcurrencyExtras
-import Dependencies
-import NetShield
 import CoreLocation
-import ComposableArchitecture
 
 import Domain
 import Ergonomics
+import NetShield
+
+import ConcurrencyExtras
+import Dependencies
+import CasePaths
+import Sharing
 
 // This struct is still WIP
 @CasePathable
@@ -112,15 +114,15 @@ public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
     public static let testValue: () -> AsyncStream<VPNConnectionStatus> = { .finished }
 }
 
+// MARK: - Mock for previews
+
+#if DEBUG
 extension CLLocationCoordinate2D {
     public static func mockPoland() -> Self {
         .init(latitude: 52.229675, longitude: 21.012231)
     }
 }
 
-// MARK: - Mock for previews
-
-#if DEBUG
 extension VPNConnectionActual {
     public static func mock(
         connectedDate: Date = Date(),

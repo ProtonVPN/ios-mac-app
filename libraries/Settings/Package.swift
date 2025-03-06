@@ -19,8 +19,8 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Shared/Localization"),
         .package(path: "../NEHelper"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.2.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1"))
     ],
     targets: [

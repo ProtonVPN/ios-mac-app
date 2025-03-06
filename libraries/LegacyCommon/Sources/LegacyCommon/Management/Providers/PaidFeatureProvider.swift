@@ -178,11 +178,11 @@ public class MockFeaturePropertyProvider: AppFeaturePropertyProvider {
     public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
         let key = featureKey(for: feature)
         guard let storedValue = featureValueMap[key] else {
-            XCTFail("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
+            reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
             return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
         }
         guard let value = storedValue as? T else {
-            XCTFail("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
+            reportIssue("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
             return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
         }
         return value

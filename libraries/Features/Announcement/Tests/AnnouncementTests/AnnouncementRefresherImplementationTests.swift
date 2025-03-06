@@ -21,12 +21,13 @@
 //
 
 import XCTest
+import Dependencies
 import ProtonCoreNetworking
 @testable import Announcement
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
-    
-    private var storage: AnnouncementStorageMock = AnnouncementStorageMock()
+
+    @Dependency(\.announcementStorage) var storage
 
     override class func tearDown() {
         AnnouncementClient.testValue = AnnouncementClient {
@@ -42,8 +43,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             return .init(notifications: [])
         }
 
-        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory)
+        let refresher = AnnouncementRefresherImplementation()
         refresher.tryRefreshing()
         
         wait(for: [expectationApiWasCalled], timeout: 0.2)
@@ -54,8 +54,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         expectationApiWasCalled.expectedFulfillmentCount = 1
         expectationApiWasCalled.assertForOverFulfill = true
         
-        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory)
+        let refresher = AnnouncementRefresherImplementation()
 
         AnnouncementClient.testValue = AnnouncementClient {
             expectationApiWasCalled.fulfill()
@@ -76,56 +75,55 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             expectationApiWasCalled.fulfill()
             return .init(notifications: [])
         }
-        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, refreshInterval: 0)
+        let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
         refresher.tryRefreshing()
         refresher.tryRefreshing()
         
         wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
-    
-    func testSavesNewAnnouncementsToStorage() {
-        let storage: AnnouncementStorageMock = AnnouncementStorageMock()
+
+    func testSavesNewAnnouncementsToStorage() async {
         storage.store([
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
             Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)
         ])
 
-        AnnouncementClient.testValue = AnnouncementClient {
-            return .init(notifications: [
-                Announcement(
-                    notificationID: "newDefault",
-                    startTime: Date(),
-                    endTime: Date(),
-                    type: Announcement.NotificationType.default.rawValue,
-                    offer: nil,
-                    reference: nil
-                ),
-                Announcement(
-                    notificationID: "newOneTime",
-                    startTime: Date(),
-                    endTime: Date(),
-                    type: Announcement.NotificationType.oneTime.rawValue,
-                    offer: nil,
-                    reference: nil
-                )
-            ])
+        await withDependencies {
+            $0.announcementClient = AnnouncementClient {
+                return .init(notifications: [
+                    Announcement(
+                        notificationID: "newDefault",
+                        startTime: Date(),
+                        endTime: Date(),
+                        type: Announcement.NotificationType.default.rawValue,
+                        offer: nil,
+                        reference: nil
+                    ),
+                    Announcement(
+                        notificationID: "newOneTime",
+                        startTime: Date(),
+                        endTime: Date(),
+                        type: Announcement.NotificationType.oneTime.rawValue,
+                        offer: nil,
+                        reference: nil
+                    )
+                ])
+            }
+        } operation: {
+            let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
+
+            XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
+            XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
+            XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "newDefault"))
+            XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "newOneTime"))
+
+            await refresher.tryRefreshingAsync()
+
+            XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "oldDefault"))
+            XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
+            XCTAssert(storage.fetch().containsAnnouncement(withId: "newDefault"))
+            XCTAssert(storage.fetch().containsAnnouncement(withId: "newOneTime"))
         }
-
-        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, refreshInterval: 0)
-
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "newDefault"))
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "newOneTime"))
-        
-        refresher.tryRefreshing()
-
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "oldDefault"))
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "newDefault"))
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "newOneTime"))
     }
     
     func testDoesntSaveNewAnnouncementsToStorageOnError() {
@@ -139,8 +137,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             throw ResponseError.unknownError
         }
 
-        let factory = AnnouncementRefresherImplementationFactory(announcementStorage: storage)
-        let refresher = AnnouncementRefresherImplementation(factory: factory, refreshInterval: 0)
+        let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
 
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
@@ -153,17 +150,4 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         XCTAssertEqual(storage.fetch().count, 2)
     }
     
-}
-
-fileprivate class AnnouncementRefresherImplementationFactory: AnnouncementRefresherImplementation.Factory {
-    
-    public var announcementStorage: AnnouncementStorage
-    
-    public init(announcementStorage: AnnouncementStorage) {
-        self.announcementStorage = announcementStorage
-    }
-
-    func makeAnnouncementStorage() -> AnnouncementStorage {
-        return announcementStorage
-    }
 }

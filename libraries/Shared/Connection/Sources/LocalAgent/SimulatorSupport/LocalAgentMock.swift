@@ -20,7 +20,7 @@
 import Foundation
 import Dependencies
 import Domain
-import XCTestDynamicOverlay
+import IssueReporting
 import CoreConnection
 import class GoLibs.LocalAgentFeatures
 

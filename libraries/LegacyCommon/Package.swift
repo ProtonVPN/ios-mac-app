@@ -61,7 +61,7 @@ let package = Package(
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.5")),
-        .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
@@ -123,7 +123,7 @@ let package = Package(
                 .core(module: "Telemetry"),
 
                 // External
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),

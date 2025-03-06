@@ -49,7 +49,6 @@
 		4C9FF4882D64897C004DBF89 /* Announcement in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9FF4872D64897C004DBF89 /* Announcement */; };
 		4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F542D6CDB200028C964 /* Ergonomics */; };
 		4CAC4F572D6CDB790028C964 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F562D6CDB790028C964 /* Ergonomics */; };
-		4CAC4F5A2D6CDF710028C964 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F592D6CDF710028C964 /* Sharing */; };
 		4CAC4F5C2D6DC5BC0028C964 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F5B2D6DC5BC0028C964 /* ComposableArchitecture */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
 		4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */; };
@@ -91,12 +90,14 @@
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
+		66AC92B92D79AB3800124788 /* IssueReporting in Frameworks */ = {isa = PBXBuildFile; productRef = 66AC92B82D79AB3800124788 /* IssueReporting */; };
 		66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */; };
 		66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */; };
 		66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
 		66E34BB627ABEC45002FC827 /* SettingsAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB527ABEC45002FC827 /* SettingsAccountViewController.swift */; };
 		66E34BB827AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB727AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib */; };
 		66E34BBA27AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */; };
+		66FCA5812D79F99900F470C3 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 66FCA5802D79F99900F470C3 /* Sharing */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */; };
 		770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A32CDCBCAC00812C21 /* ModalRobot.swift */; };
@@ -344,7 +345,6 @@
 		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
 		E5867D812C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
-		E59B7A002CAFE36200CE3515 /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */; };
 		E59B7A022CAFE38700CE3515 /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
@@ -899,19 +899,19 @@
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				4C8C31522A73BA24006AD628 /* Settings-iOS in Frameworks */,
 				8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */,
+				66FCA5812D79F99900F470C3 /* Sharing in Frameworks */,
 				4C8C31542A73BA36006AD628 /* ProtonCoreLoginUI in Frameworks */,
 				4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */,
 				4CF361FF2D6E21A60088CEB3 /* Perception in Frameworks */,
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
 				ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */,
+				66AC92B92D79AB3800124788 /* IssueReporting in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
-				E59B7A002CAFE36200CE3515 /* XCTestDynamicOverlay in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
 				4C8C314C2A73BA1F006AD628 /* ConnectionDetails in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
-				4CAC4F5A2D6CDF710028C964 /* Sharing in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */,
 				4C05E5682A716995009102EB /* LegacyCommon in Frameworks */,
@@ -2314,13 +2314,13 @@
 				8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */,
 				8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */,
 				8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */,
-				E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */,
 				E53E5B292D4CF128002D88B2 /* CommonNetworking */,
 				4C9FF4872D64897C004DBF89 /* Announcement */,
 				4CAC4F542D6CDB200028C964 /* Ergonomics */,
-				4CAC4F592D6CDF710028C964 /* Sharing */,
 				4CAC4F5B2D6DC5BC0028C964 /* ComposableArchitecture */,
 				4CF361FE2D6E21A60088CEB3 /* Perception */,
+				66AC92B82D79AB3800124788 /* IssueReporting */,
+				66FCA5802D79F99900F470C3 /* Sharing */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2598,8 +2598,8 @@
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */,
 				E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */,
-				4CAC4F582D6CDF710028C964 /* XCRemoteSwiftPackageReference "swift-sharing" */,
 				4CF361FD2D6E21A60088CEB3 /* XCRemoteSwiftPackageReference "swift-perception" */,
+				66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -4379,14 +4379,6 @@
 				version = 1.7.5;
 			};
 		};
-		4CAC4F582D6CDF710028C964 /* XCRemoteSwiftPackageReference "swift-sharing" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-sharing";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
 		4CB776CB2A1F5E61004CA127 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -4409,6 +4401,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.3.5;
+			};
+		};
+		66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-sharing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.3;
 			};
 		};
 		ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
@@ -4539,11 +4539,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Ergonomics;
 		};
-		4CAC4F592D6CDF710028C964 /* Sharing */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4CAC4F582D6CDF710028C964 /* XCRemoteSwiftPackageReference "swift-sharing" */;
-			productName = Sharing;
-		};
 		4CAC4F5B2D6DC5BC0028C964 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4CB776CB2A1F5E61004CA127 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
@@ -4589,6 +4584,16 @@
 		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreAccountRecovery;
+		};
+		66AC92B82D79AB3800124788 /* IssueReporting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
+			productName = IssueReporting;
+		};
+		66FCA5802D79F99900F470C3 /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */;
+			productName = Sharing;
 		};
 		77E01AC82CC10AB40013F3D7 /* UITestsHelpers */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4695,11 +4700,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
-		};
-		E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
-			productName = XCTestDynamicOverlay;
 		};
 		E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */ = {
 			isa = XCSwiftPackageProductDependency;

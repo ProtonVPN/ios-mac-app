@@ -24,27 +24,6 @@ import Foundation
 import Domain
 @testable import Announcement
 
-public class AnnouncementStorageMock: AnnouncementStorage {
-    public var announcements: [Announcement]
-    
-    public init(_ announcements: [Announcement] = []) {
-        self.announcements = announcements
-    }
-    
-    public func fetch() -> [Announcement] {
-        return announcements
-    }
-    
-    public func store(_ objects: [Announcement]) {
-        self.announcements = objects
-        AppEvent.announcementStorageContent.post(objects)
-    }
-
-    public func clear() {
-        announcements = []
-    }
-}
-
 public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
     public var announcementStorage: AnnouncementStorage
     

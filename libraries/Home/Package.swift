@@ -25,9 +25,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/exyte/SVGView", .upToNextMajor(from: "1.0.6")),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
+        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -61,6 +62,7 @@ let package = Package(
                 .product(name: "SVGView", package: "SVGView"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "CombineSchedulers", package: "combine-schedulers")
             ],
             exclude: ["swiftgen.yml"],
             resources: [

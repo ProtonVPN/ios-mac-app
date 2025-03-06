@@ -29,7 +29,7 @@ struct ConnectionPresenter: Sendable {
         _ defaultConnectionPreference: DefaultConnectionPreference,
         _ recents: OrderedSet<RecentConnection>,
         _ currentConnection: ConnectionSpec?
-    ) -> OrderedSet<RecentConnection> = { _, _, _ in XCTFail("\(Self.self).recentConnectionList"); return [] }
+    ) -> OrderedSet<RecentConnection> = { _, _, _ in reportIssue("\(Self.self).recentConnectionList"); return [] }
 }
 
 extension ConnectionPresenter: DependencyKey {

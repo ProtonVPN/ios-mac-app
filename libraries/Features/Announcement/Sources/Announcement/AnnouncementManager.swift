@@ -30,10 +30,24 @@ private enum AnnouncementManagerKey: TestDependencyKey {
     static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
 }
 
+private enum AnnouncementStorageKey: TestDependencyKey {
+    static let liveValue: any AnnouncementStorage = {
+        @Dependency(\.defaultsProvider) var provider
+        return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
+    }()
+    static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
+    static let testValue: any AnnouncementStorage = AnnouncementStorageMock()
+}
+
 public extension DependencyValues {
     var announcementManager: AnnouncementManager {
         get { self[AnnouncementManagerKey.self] }
         set { self[AnnouncementManagerKey.self] = newValue }
+    }
+
+    var announcementStorage: AnnouncementStorage {
+        get { self[AnnouncementStorageKey.self] }
+        set { self[AnnouncementStorageKey.self] = newValue }
     }
 }
 
@@ -57,12 +71,7 @@ extension AnnouncementManager {
 /// Marks announcements as read.
 public class AnnouncementManagerImplementation: AnnouncementManager {
     
-    private var announcementStorage: AnnouncementStorage
-    
-    public init() {
-        @Dependency(\.defaultsProvider) var provider
-        self.announcementStorage = AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
-    }
+    @Dependency(\.announcementStorage) private var announcementStorage: AnnouncementStorage
 
     public func shouldShowAnnouncementsIcon() -> Bool {
         fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
@@ -125,6 +134,33 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     }
     
 }
+
+// MARK: - Mocks
+
+#if DEBUG
+import Domain
+
+public final class AnnouncementStorageMock: AnnouncementStorage {
+    public var announcements: [Announcement]
+
+    public init(_ announcements: [Announcement] = []) {
+        self.announcements = announcements
+    }
+
+    public func fetch() -> [Announcement] {
+        return announcements
+    }
+
+    public func store(_ objects: [Announcement]) {
+        self.announcements = objects
+        AppEvent.announcementStorageContent.post(objects)
+    }
+
+    public func clear() {
+        announcements = []
+    }
+}
+#endif
 
 private extension Date {
     /// Check if this date represnt time in future

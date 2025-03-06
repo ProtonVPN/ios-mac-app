@@ -26,7 +26,8 @@ import Persistence
 import LegacyCommon
 import Search
 @testable import ProtonVPN
-import XCTestDynamicOverlay
+import IssueReporting
+import Announcement
 
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!
@@ -98,7 +99,7 @@ final class CountriesViewModelTests: XCTestCase {
         // Now let's update our protocol to WireGuard UDP
         mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
         withMockedRepository {
-            NotificationCenter.default.post(name: PropertiesManager.vpnProtocolNotification, object: nil)
+            NotificationCenter.default.post(name: PropertiesManagerMock.vpnProtocolNotification, object: nil)
         }
 
         // Switzerland should be placed under maintenance (it only supports ike)
@@ -107,7 +108,7 @@ final class CountriesViewModelTests: XCTestCase {
         // Finally, let's try changing our protocol to Stealth
         mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
         withMockedRepository {
-            NotificationCenter.default.post(name: PropertiesManager.vpnProtocolNotification, object: nil)
+            NotificationCenter.default.post(name: PropertiesManagerMock.vpnProtocolNotification, object: nil)
         }
 
         // Dev gateway should be placed under maintenance as well - it doesn't support stealth

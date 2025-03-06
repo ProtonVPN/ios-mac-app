@@ -734,6 +734,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         dispatchToMainWithEscapedDependencies {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: downgrade)
+            NotificationCenter.default.post(name: AppEvent.planChanged.name, object: upgrade)
             self.container.vpnKeychain.credentials = freeCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
@@ -765,6 +766,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
+            NotificationCenter.default.post(name: AppEvent.planChanged.name, object: upgrade)
             self.container.vpnKeychain.credentials = plusCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: plusCreds)
             expectations.upgradeNotification.fulfill()
@@ -954,6 +956,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             let upgrade: VpnDowngradeInfo = (freeCreds, plusCreds)
             self.container.vpnKeychain.credentials = plusCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
+            NotificationCenter.default.post(name: AppEvent.planChanged.name, object: upgrade)
 
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: plusCreds)
             expectations.upgradeNotification.fulfill()

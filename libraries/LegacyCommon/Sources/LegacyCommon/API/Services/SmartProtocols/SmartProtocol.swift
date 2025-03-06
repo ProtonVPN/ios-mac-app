@@ -22,7 +22,7 @@
 
 import Foundation
 
-import XCTestDynamicOverlay
+import IssueReporting
 
 import Domain
 import VPNShared
@@ -128,7 +128,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             log.debug("Best protocol for \(server.entryIp ?? "") is \(best.vpnProtocol) with ports \(ports)", category: .connectionConnect, event: .scan)
 
             if ConnectionProtocol.vpnProtocol(best.vpnProtocol).isDeprecated {
-                XCTFail("We should never choose a deprecated protocol (\(best.vpnProtocol)) (VPNAPPL-1843)")
+                reportIssue("We should never choose a deprecated protocol (\(best.vpnProtocol)) (VPNAPPL-1843)")
             }
             completion(best.vpnProtocol, ports)
         }

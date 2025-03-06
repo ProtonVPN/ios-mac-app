@@ -18,7 +18,7 @@
 
 import Foundation
 import Dependencies
-import XCTestDynamicOverlay
+import IssueReporting
 
 /// `FeatureAuthorizerProvider` exposes an interface for generating feature authorizers for features defined using the
 /// `AppFeature` or `ModularAppFeature` protocols.

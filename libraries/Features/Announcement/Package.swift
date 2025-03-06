@@ -54,6 +54,7 @@ let package = Package(
                 "Announcement",
                 "LegacyCommon",
                 "Domain",
+                .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]

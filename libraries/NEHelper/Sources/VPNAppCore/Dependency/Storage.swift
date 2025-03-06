@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import XCTestDynamicOverlay
+import IssueReporting
 
 import Domain
 import VPNShared
@@ -35,6 +35,9 @@ public struct SettingsStorage: Sendable {
         public let atlasSecretFetchURLString: String
         public let featureFlagOverrides: [String: Bool]
 
+        @usableFromInline
+        static let empty: EnvironmentSettings = .init(apiEndpoint: "", atlasSecret: "", atlasSecretFetchURLString: "", featureFlagOverrides: [:])
+
         public init(apiEndpoint: String, atlasSecret: String, atlasSecretFetchURLString: String, featureFlagOverrides: [String : Bool]) {
             self.apiEndpoint = apiEndpoint
             self.atlasSecret = atlasSecret
@@ -51,7 +54,7 @@ public struct SettingsStorage: Sendable {
         setConnectionProtocol: @Sendable @escaping (ConnectionProtocol) async throws -> Void = unimplemented(),
         getNetShield: @Sendable @escaping () async throws -> NetShieldType = unimplemented(placeholder: .off),
         setNetShield: @Sendable @escaping (NetShieldType) async throws -> Void = unimplemented(),
-        getEnvironment: @Sendable @escaping () -> EnvironmentSettings = unimplemented(),
+        getEnvironment: @Sendable @escaping () -> EnvironmentSettings = unimplemented(placeholder: .empty),
         setEnvironment: @Sendable @escaping (EnvironmentSettings) throws -> Void = unimplemented()
     ) {
         self.getConnectionProtocol = getConnectionProtocol

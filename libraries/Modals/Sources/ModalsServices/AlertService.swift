@@ -21,6 +21,7 @@ import Foundation
 
 import Dependencies
 import DependenciesMacros
+import IssueReporting
 import SwiftNavigation
 
 import Logging
@@ -30,17 +31,14 @@ import protocol Domain.AlertConvertibleError
 
 package let log = Logging.Logger(label: "ProtonVPN.Modals.Logger")
 
-import XCTestDynamicOverlay
-
 /// A basic AlertService.
-@DependencyClient
-public struct AlertService {
+public struct AlertService: DependencyKey {
     /// A stream of alerts.
     public internal(set) var alerts: @Sendable () async -> AsyncStream<Alert> = { .init { $0.finish() } }
     /// Entry point of errors that will be treated accordingly by the service.
-    public internal(set) var feed: @Sendable (Error) async -> Void
+    public internal(set) var feed: @Sendable (Error) async -> Void = unimplemented()
     /// Manually interrupt alert listening.
-    public internal(set) var finish: @Sendable () async -> Void
+    public internal(set) var finish: @Sendable () async -> Void = unimplemented()
 }
 
 extension AlertService {
@@ -82,7 +80,7 @@ extension Alert {
 
 // MARK: - Dependency
 
-extension AlertService: DependencyKey {
+extension AlertService {
     public static let liveValue: AlertService = .live
     public static let testValue: AlertService = .live // live implementation is already generic enough and lightweight
 }

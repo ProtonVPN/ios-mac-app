@@ -81,9 +81,6 @@
          location = "container:"
          name = "Features">
          <FileRef
-            location = "group:libraries/Features/Announcement">
-         </FileRef>
-         <FileRef
             location = "group:libraries/NetShield">
          </FileRef>
          <FileRef
@@ -109,6 +106,9 @@
          </FileRef>
          <FileRef
             location = "group:libraries/Settings">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Features/Announcement">
          </FileRef>
       </Group>
    </Group>

@@ -25,6 +25,7 @@ import VPNShared
 import VPNAppCore
 
 import Domain
+import Dependencies
 
 @testable import Announcement
 @testable import VPNSharedTesting
@@ -32,28 +33,30 @@ import Domain
 
 class AnnouncementsViewModelTests: XCTestCase {
     
-    private var storage: AnnouncementStorage!
-    private var manager: AnnouncementManager!
+//    private var manager: AnnouncementManager!
     private var viewModel: AnnouncementsViewModel!
     private var safariService: SafariServiceMock!
     private var propertiesManager: PropertiesManagerMock!
-    
+
+    @Dependency(\.announcementStorage) var storage
+
     override func setUp() {
         super.setUp()
         
-        storage = AnnouncementStorageMock()
-        manager = AnnouncementManagerImplementation()
+        //storage = AnnouncementStorageMock()
+//        manager = AnnouncementManagerImplementation()
         safariService = SafariServiceMock()
         propertiesManager = PropertiesManagerMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, propertiesManager: propertiesManager, safariService: safariService, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
-        
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(propertiesManager: propertiesManager, safariService: safariService, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
+
+        storage.store([])
     }
     
     // public func open(announcement: Announcement)
     
     func testTakesDataFromTheStorage() {
         XCTAssert(viewModel.items.isEmpty)
-        
+
         storage.store([.mock])
         
         XCTAssert(viewModel.items.count == 1)
@@ -65,21 +68,23 @@ class AnnouncementsViewModelTests: XCTestCase {
             expectationViewRefreshed.fulfill()
         }
         
+        @Dependency(\.announcementStorage) var storage
         storage.store([.mock])
-        
+
         wait(for: [expectationViewRefreshed], timeout: 0.2)
     }
 }
 
 fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
-    public let announcementManager: AnnouncementManager
+//    public let announcementManager: AnnouncementManager
     public let propertiesManager: PropertiesManagerProtocol
     public let safariService: SafariServiceProtocol
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
-    
-    init(announcementManager: AnnouncementManager, propertiesManager: PropertiesManagerProtocol, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
-        self.announcementManager = announcementManager
+
+    @Dependency(\.announcementManager) var announcementManager: AnnouncementManager
+
+    init(propertiesManager: PropertiesManagerProtocol, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
         self.propertiesManager = propertiesManager
         self.safariService = safariService
         self.coreAlertService = coreAlertService

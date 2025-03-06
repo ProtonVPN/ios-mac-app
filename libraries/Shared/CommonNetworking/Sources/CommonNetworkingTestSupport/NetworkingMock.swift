@@ -31,7 +31,7 @@ import ProtonCoreServices
 import Domain
 import VPNShared
 
-import XCTestDynamicOverlay
+import IssueReporting
 
 // Ensure mock network requests are quick for fast unit/integration tests
 private let maxMockRequestTime: TimeInterval = 0.1
