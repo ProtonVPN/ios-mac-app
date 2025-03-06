@@ -30,6 +30,7 @@ import struct CoreConnection.LogicalServerInfo
 final class MockTunnelManager: TunnelManager {
 
     var tunnelStartErrorToThrow: Error?
+    var tunnelStartDuration: Duration = .seconds(0)
     var session: VPNSession { connection }
 
     var connection: VPNSessionMock
@@ -39,6 +40,8 @@ final class MockTunnelManager: TunnelManager {
     }
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
+        try await Task.sleep(for: tunnelStartDuration)
+        try Task.checkCancellation()
         if let tunnelStartErrorToThrow {
             throw tunnelStartErrorToThrow
         }

@@ -22,8 +22,6 @@ import VPNAppCore
 import Domain
 
 extension ConnectionIntentStorage: DependencyKey {
-    public static let storageKey: String = "ServerConnectionIntent"
-
     public static let liveValue = ConnectionIntentStorage(getConnectionIntent: {
         @Dependency(\.storage) var storage
         do {
@@ -56,8 +54,8 @@ extension ConnectionIntentStorage: DependencyKey {
         // TunnelFeatures are not currently used by a consumer of `getConnectionIntent`
         let tunnelFeatures = TunnelFeatures(killSwitch: false, excludeLocalNetworks: false)
         let tunnelSettings = TunnelSettings(transport: transport, ports: lastWGConfig.ports, features: tunnelFeatures)
-        @Dependency(\.vpnFeaturesProvider) var featuresProvider
-        let features = featuresProvider.connectionFeatures()
+        @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
+        let features = connectionFeatureProvider.connectionFeatures()
         let legacyIntent = ServerConnectionIntent(spec: legacySpec, server: legacyServer, tunnelSettings: tunnelSettings, features: features)
         try storage.setForUser(legacyIntent, forKey: Self.storageKey)
         log.info("Finished constructing legacy connection intent", category: .connection, metadata: ["intent": "\(legacyIntent)"])

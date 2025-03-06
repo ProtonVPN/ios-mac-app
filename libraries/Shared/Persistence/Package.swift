@@ -35,14 +35,14 @@ let package = Package(
                 "Localization",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay")
             ]
         ),
         .target(
             name: "PersistenceTestSupport",
             dependencies: [
                 "Persistence",
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .testTarget(
@@ -50,7 +50,7 @@ let package = Package(
             dependencies: [
                 "Persistence",
                 "PersistenceTestSupport",
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ],
             resources: [.process("Resources")]
         ),

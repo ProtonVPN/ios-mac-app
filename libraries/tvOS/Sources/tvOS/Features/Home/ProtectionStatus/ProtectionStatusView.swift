@@ -34,8 +34,8 @@ struct ProtectionStatusView: View {
         var foregroundColor: Color
         var buttonTitle: LocalizedStringKey
 
-        init(connectionState: Connection.ConnectionState?) {
-            switch connectionState ?? .disconnected(nil) {
+        init(connectionState: Connection.ConnectionState) {
+            switch connectionState {
             case .connected:
                 icon = IconProvider.lockFilled
                 title = "Protected"
@@ -56,9 +56,9 @@ struct ProtectionStatusView: View {
                 title = "Disconnecting"
                 foregroundColor = Color(.text)
                 buttonTitle = "Quick Connect"
-            case .unknown:
+            case .resolving:
                 icon = nil
-                title = "Resolving"
+                title = "Loading"
                 foregroundColor = Color(.text)
                 buttonTitle = "Cancel"
             }
@@ -66,7 +66,7 @@ struct ProtectionStatusView: View {
     }
 
     var body: some View {
-        view(model: .init(connectionState: store.connectionState ?? .disconnected(nil)))
+        view(model: .init(connectionState: store.connectionState))
     }
 
     private func view(model: Model) -> some View {
@@ -116,8 +116,8 @@ struct ProtectionStatusView: View {
         let country: String?
         let ip: String?
 
-        switch store.connectionState ?? .disconnected(nil) {
-        case .connected(let server, _, let connectionDetails):
+        switch store.connectionState {
+        case .connected(_, let server, _, let connectionDetails):
             country = server.logical.exitCountryCode
             ip = connectionDetails.map { String(describing: $0.exitIp) } ?? server.endpoint.exitIp
         default:

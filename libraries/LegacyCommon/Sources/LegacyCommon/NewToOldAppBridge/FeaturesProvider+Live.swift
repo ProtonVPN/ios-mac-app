@@ -23,8 +23,8 @@ import Domain
 // In an ideal world, ``VPNConnectionFeaturesProvider`` being defined in ``Connection``, its implementation
 // would also being defined there. But for the moment, it's defined here and we'll leverage
 // ``AppFeaturePropertyProvider`` and others to manage the features.
-extension VPNConnectionFeaturesProvider: DependencyKey {
-    public static let liveValue: VPNConnectionFeaturesProvider = .init(
+extension ConnectionFeatureProvider: DependencyKey {
+    public static let liveValue: ConnectionFeatureProvider = .init(
         connectionFeatures: {
             @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
@@ -50,6 +50,18 @@ extension VPNConnectionFeaturesProvider: DependencyKey {
             netShieldPropertyProvider.netShieldType = newFeatures.netshield
             natTypePropertyProvider.natType = newFeatures.natType
             safeModePropertyProvider.safeMode = newFeatures.safeMode
+        },
+        tunnelFeatures: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+            return TunnelFeatures(
+                killSwitch: propertiesManager.killSwitch,
+                excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
+            )
+        },
+        connectionProtocol: {
+            @Dependency(\.propertiesManager) var propertiesManager
+            return propertiesManager.connectionProtocol
         }
     )
 }

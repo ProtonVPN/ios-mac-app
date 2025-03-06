@@ -21,12 +21,12 @@ import Domain
 import Dependencies
 import Connection
 
-extension VPNConnectionFeaturesProvider: DependencyKey {
-    public static let liveValue: VPNConnectionFeaturesProvider = .init(
+extension ConnectionFeatureProvider: DependencyKey {
+    public static let liveValue: ConnectionFeatureProvider = .init(
         connectionFeatures: { .defaultFeatures },
-        setConnectionFeatures: { _ in
-            assertionFailure("Nothing to do on tvOS yet")
-        }
+        setConnectionFeatures: { _ in log.assertionFailure("Nothing to do on tvOS yet") },
+        tunnelFeatures: { .init() },
+        connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
     )
 }
 

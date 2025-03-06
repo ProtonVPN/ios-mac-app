@@ -62,6 +62,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
             case certificateRefreshRequired
             case keyRegenerationRequired
             case errorReceived(LocalAgentError)
+            case connectionFailed(Error)
         }
     }
 
@@ -88,13 +89,13 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
 
-            case .setFeatures(let features):
+            case .setFeatures(let featureSet):
                 guard case .connected = state else {
-                    log.error("Feature changes will not be applied since we are not in connected state")
+                    log.error("Feature changes will not be applied since we are not in connected state", category: .connection, metadata: ["state": "\(state)"])
                     return .none
                 }
-                guard let features = LocalAgentFeatures.from(featureSet: features) else {
-                    log.error("Failed to construct LocalAgentFeatures")
+                guard let features = LocalAgentFeatures.from(featureSet: featureSet) else {
+                    log.error("Failed to construct LocalAgentFeatures", category: .connection, metadata: ["features": "\(featureSet)"])
                     return .none
                 }
                 localAgent.set(features: features)
@@ -102,17 +103,19 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
             case .connect(let server, let authenticationData, let features):
                 let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
-                let shouldStartNetShieldStatsObservation: Bool
                 do {
-                    // Not a blocking call. Starts the LA connection process which, if unsuccessful, will continue to
-                    // retry with increasing backoff delays.
+                    // Not a blocking call. Creates the connection to the Local Agent server
+                    // If successful, will remain in the disconnected state until a reply is received,
+                    // retrying with increasing backoff delays.
+                    // If unsuccessful (e.g. because of mismatched private/public keys), an error is thrown.
+                    // This error is in the "go" domain, rather than one of our well defined LocalAgentErrors
                     try localAgent.connect(configuration: connectionConfiguration, data: authenticationData)
-                    shouldStartNetShieldStatsObservation = true
+                    return .send(.startNetShieldStatsObservation)
                 } catch {
+                    log.error("Failed to create connection to Local Agent server", category: .localAgent, metadata: ["error": "\(error)"])
                     state = .disconnected(.failedToEstablishConnection(error))
-                    shouldStartNetShieldStatsObservation = false
+                    return .send(.delegate(.connectionFailed(error)))
                 }
-                return shouldStartNetShieldStatsObservation ? .send(.startNetShieldStatsObservation) : .none
 
             case .disconnect(let error):
                 guard state.shouldTransitionToDisconnecting else { return .none }
@@ -160,9 +163,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 // If we do enter this state, let's disconnect, since we are most likely connecting to the wrong server
                 return .send(.disconnect(.serverCertificateError))
 
-            case .event(.state(.softJailed)),
-                    .event(.state(.hardJailed)),
-                    .event(.state(.clientCertificateError)):
+            case .event(.state(.softJailed)), .event(.state(.hardJailed)), .event(.state(.clientCertificateError)):
                 return .send(.delegate(.certificateRefreshRequired))
 
             case .event(.state(.invalid)):

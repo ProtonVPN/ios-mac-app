@@ -48,7 +48,7 @@ final class AppConnectionIntegrationTests: XCTestCase {
                     alert: SettingsFeature.signOutAlert,
                     isLoading: false
                 ),
-                connection: .init(tunnelState: .connected(tunnelConnectionResponse)),
+                connection: .initialState,
                 userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
             ),
             networking: .authenticated(.auth(uid: "sessionID"))
@@ -67,17 +67,21 @@ final class AppConnectionIntegrationTests: XCTestCase {
                 storeWireguardConfig: { _ in Data() },
                 clear: { tunnelConfigurationCleared.fulfill() }
             )
+            $0.connectionIntentStorage = .init(
+                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                set: { _ in }
+            )
         }
 
         store.exhaustivity = .off
-        await store.send(\.main.connection.startObserving)
+        await store.send(.main(.connection(.input(.onLaunch))))
         await store.send(\.main.settings.alert.presented.signOut) {
             $0.shouldSignOutAfterDisconnecting = true
         }
-        await store.receive(\.main.connection.disconnect)
+        await store.receive(\.main.connection.input.disconnect)
 
         await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
-        await store.receive(\.main.connection.tunnel.tunnelStatusChanged.disconnected) {
+        await store.receive(\.main.connection.delegate.stateChanged.disconnected) {
             $0.shouldSignOutAfterDisconnecting = false
         }
         await store.receive(\.signOut)

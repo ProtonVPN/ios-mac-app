@@ -21,7 +21,15 @@ import Ergonomics
 import Dependencies
 
 public struct ServerSelector: Sendable {
-    public internal(set) var select: @Sendable (_ spec: ConnectionSpec, _ userTier: Int, _ acceptableProtocols: ProtocolSupport) throws -> Server
+    public internal(set) var select: @Sendable (
+        _ spec: ConnectionSpec,
+        _ userTier: Int,
+        _ acceptableProtocols: ProtocolSupport
+    ) throws(ServerSelectionError) -> Server
+
+    public init(select: @escaping @Sendable (ConnectionSpec, Int, ProtocolSupport) throws(ServerSelectionError) -> Server) {
+        self.select = select
+    }
 
     public enum ServerSelectionError: Error, Equatable {
         case noLogical(LogicalResolutionFailureReason)
@@ -29,7 +37,7 @@ public struct ServerSelector: Sendable {
 
         public enum LogicalResolutionFailureReason: Equatable {
             case locationNotFound(ConnectionSpec.Location)
-            case featuresNotSupported(VPNServerFilter.ServerFeatureFilter)
+            case featuresNotSupported(Set<ConnectionSpec.Feature>)
             case protocolNotSupported(ProtocolSupport)
             case maintenance
         }
@@ -42,7 +50,7 @@ public struct ServerSelector: Sendable {
 }
 
 extension ServerSelector: DependencyKey {
-    public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols in
+    public static let liveValue = ServerSelector(select: { (spec, userTier, acceptableProtocols) throws(ServerSelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
         let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
@@ -92,7 +100,7 @@ extension ServerSelector: DependencyKey {
 
         let serversSupportingFeatures = servers.filter { $0.logical.satisfies(spec.serverFeatureFilter) }
         if serversSupportingFeatures.isEmpty {
-            return .featuresNotSupported(spec.serverFeatureFilter)
+            return .featuresNotSupported(spec.features)
         }
 
         let serversSupportingProtocol = serversSupportingFeatures
@@ -147,9 +155,12 @@ extension ConnectionSpec {
     }
 
     private var requiredFeatureSet: ServerFeature {
-        let requiredFeatures: [ServerFeature] = features
+        var requiredFeatures: [ServerFeature] = features
             .compactMap { ServerFeature.init(connectionSpecFeature: $0) }
-            .appending(.secureCore, if: location.isSecureCore)
+
+        if location.isSecureCore {
+            requiredFeatures.append(.secureCore)
+        }
 
         return ServerFeature(requiredFeatures)
     }

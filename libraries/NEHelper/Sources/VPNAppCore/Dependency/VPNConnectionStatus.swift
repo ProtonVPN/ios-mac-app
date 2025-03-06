@@ -31,18 +31,26 @@ public enum VPNConnectionStatus: Equatable {
     case resolving(ConnectionSpec?, VPNConnectionActual?)
     case disconnected
     case connected(ConnectionSpec, VPNConnectionActual?)
-    case connecting(ConnectionSpec, VPNConnectionActual?)
+    case connecting(ConnectionSpec, Server?)
     case disconnecting(ConnectionSpec, VPNConnectionActual?)
+
+    public var server: Server? {
+        if case .connecting(_, let server) = self {
+            return server
+        }
+        return actual?.server
+    }
 
     public var actual: VPNConnectionActual? {
         switch self {
         case .disconnected:
             return nil
         case .connected(_, let vpnConnectionActual),
-                .connecting(_, let vpnConnectionActual),
                 .resolving(_, let vpnConnectionActual),
                 .disconnecting(_, let vpnConnectionActual):
             return vpnConnectionActual
+        case .connecting:
+            return nil
         }
     }
 

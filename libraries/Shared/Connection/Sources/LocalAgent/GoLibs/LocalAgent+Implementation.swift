@@ -53,7 +53,7 @@ final class LocalAgentImplementation: LocalAgent {
         connection?.close()
 
         log.debug(
-            "Local agent connecting to \(configuration.hostname)",
+            "Creating local agent connection to \(configuration.hostname)",
             category: .localAgent,
             metadata: ["config": "\(configuration)"]
         )

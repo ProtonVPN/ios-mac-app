@@ -96,10 +96,8 @@ extension AppDisplayState {
             // `AppStateManager` posts a notification before `connectionConfiguration` is updated with the target server.
             // Changing this would require complex changes to legacy connection logic, so let's grab the target server
             // from properties manager instead.
-            if let lastPreparedServer {
-                return .connecting(intent, resolvedConnection?.overriding(server: lastPreparedServer))
-            }
-            return .connecting(intent, resolvedConnection)
+            let server = lastPreparedServer.flatMap { Server.withRandomEndpoint(from: $0) } ?? resolvedConnection?.server
+            return .connecting(intent, server)
 
         case .loadingConnectionInfo:
             return .resolving(intent, resolvedConnection)
@@ -132,21 +130,15 @@ extension ConnectionConfiguration {
     }
 }
 
-extension VPNConnectionActual {
-    public func overriding(server: ServerModel) -> VPNConnectionActual {
-        let server = VPNServer(legacyModel: server)
+extension Server {
+    static func withRandomEndpoint(from legacyModel: ServerModel) -> Server? {
+        let server = VPNServer(legacyModel: legacyModel)
 
         guard let endpoint = server.endpoints.randomElement() else {
             log.error("Server has no endpoints")
-            return self
+            return nil
         }
 
-        return VPNConnectionActual(
-            connectedDate: self.connectedDate,
-            vpnProtocol: self.vpnProtocol,
-            natType: self.natType,
-            safeMode: self.safeMode,
-            server: Server(logical: server.logical, endpoint: endpoint)
-        )
+        return Server(logical: server.logical, endpoint: endpoint)
     }
 }

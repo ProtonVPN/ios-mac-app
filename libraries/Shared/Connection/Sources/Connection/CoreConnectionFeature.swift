@@ -1,0 +1,359 @@
+//
+//  Created on 28/05/2024.
+//
+//  Copyright (c) 2024 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+import enum NetworkExtension.NEVPNStatus
+
+import Clocks
+import ComposableArchitecture
+import Dependencies
+
+import CoreConnection
+import CertificateAuthentication
+import ExtensionManager
+import LocalAgent
+import VPNAppCore
+
+import Domain
+
+/// Low-level reducer that handles connection logic internals. Mainly responsible for commmunication between its three
+/// sub-features, as well as failing the connection whenever it times out.
+@available(iOS 16, *)
+public struct CoreConnectionFeature: Reducer, Sendable {
+    @Dependency(\.continuousClock) private var clock
+    @Dependency(\.serverIdentifier) private var serverIdentifier
+    @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
+    @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
+
+    private static let defaultConnectionTimeout = Duration.seconds(30)
+
+    public init() { }
+
+    /// In an effort to prevent duplicating state, we don't hold any state besides child feature state.
+    /// There exists a `CoreConnectionState` enum which consolidates this information into a single piece of state,
+    /// but it is not explicitly stored as part of this feature's state, or its parent's. Every time this reducer
+    /// reduces an action (or set of actions, if they are returned immediately and not through an asynchronous effect),
+    /// and the state has changed, a `Delegate.stateChanged` event is sent and should be handled appropriately by the
+    /// parent.
+    public struct State: Equatable, Sendable {
+        public internal(set) var tunnel: ExtensionFeature.State
+        public internal(set) var localAgent: LocalAgentFeature.State
+        public internal(set) var certAuth: CertificateAuthenticationFeature.State
+
+        package init(
+            tunnelState: ExtensionFeature.State = .unknown,
+            certAuthState: CertificateAuthenticationFeature.State = .idle,
+            localAgentState: LocalAgentFeature.State = .disconnected(nil)
+        ) {
+            self.tunnel = tunnelState
+            self.certAuth = certAuthState
+            self.localAgent = localAgentState
+        }
+    }
+
+    @CasePathable
+    @dynamicMemberLookup
+    public enum Action: Sendable {
+        /// Starts connection to the server with the protocol, tunnel and agent features specified in the intent.
+        /// This action is only accepted in the fully `disconnected` state.
+        case connect(ServerConnectionIntent)
+        /// Starts the disconnection process.
+        /// When sent with a `DisconnectReason.connectionFailure`, a delegate action containing the error is sent.
+        case disconnect(DisconnectReason)
+        /// Sends effects to start observing changes from dependencies owned by child features. Must be immediately
+        /// sent by the parent in order to start resolving the initial connection state.
+        case startObserving
+        /// Cancels observation effects started by `startObserving`
+        case stopObserving
+        /// Starts the disconnection process and clears relevant keychains and configurations
+        case handleLogout
+        /// Tunnel/NetworkExtension child reducer action
+        case tunnel(ExtensionFeature.Action)
+        /// Certificate authentication child reducer action
+        case certAuth(CertificateAuthenticationFeature.Action)
+        /// Local agent child reducer action
+        case localAgent(LocalAgentFeature.Action)
+        /// Delegate action expected to be handled by the parent
+        case delegate(Delegate)
+
+        /// A subset of actions expected to be handled by the parent
+        @CasePathable
+        @dynamicMemberLookup
+        public enum Delegate: Sendable {
+            case error(ConnectionError)
+            case stateChanged(CoreConnectionState, CoreConnectionState)
+        }
+    }
+
+    @CasePathable
+    public enum DisconnectReason: Equatable, Sendable {
+        case connectionFailure(ConnectionError)
+        case userIntent
+    }
+
+    private enum CancelID {
+        case connectionTimeout
+        case observation
+    }
+
+    /// The order of reducers here is important.
+    ///  - Firstly, we save a copy of the internal state.
+    ///  - Then, we run the child reducers individually, which can result in changes to said child state.
+    ///  - After reducing child states, we run the `reduceCore` function which can further alter the state, and lastly
+    ///    we check if the state has changed and append a `stateChanged` delegate action if it has.
+    ///
+    /// This state change calculation logic could likely be cleaned up with a higher order reducer instead.
+    public var body: some Reducer<State, Action> {
+        var oldStateCopy: State = .init()
+        Reduce { state, action in
+            oldStateCopy = state
+            return .none
+        }
+        Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
+        Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
+        Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
+        Reduce { state, action in
+            let effects = reduceCore(state: &state, action: action)
+            return reduceWithStateChangeAction(oldState: oldStateCopy, newState: state, effects: effects)
+        }
+    }
+
+    private func reduceCore(state: inout State, action: Action) -> Effect<Action> {
+        switch action {
+        case .startObserving:
+            return .merge(
+                .send(.tunnel(.startObservingStateChanges)),
+                .send(.localAgent(.startObservingEvents))
+            )
+            .cancellable(id: CancelID.observation, cancelInFlight: true)
+
+        case .stopObserving:
+            return .merge(
+                .send(.tunnel(.stopObservingStateChanges)),
+                .send(.localAgent(.stopAllObservations)),
+                .cancel(id: CancelID.connectionTimeout)
+            )
+
+        case .connect(let intent):
+            assert(CoreConnectionState(connectionFeatureState: state).is(\.disconnected))
+            clearErrorsFromPreviousAttempts(state: &state)
+
+            return .run { send in
+                await send(.tunnel(.connect(intent)))
+
+                try await clock.sleep(for: Self.defaultConnectionTimeout)
+                try Task.checkCancellation()
+
+                await send(.disconnect(.connectionFailure(.timeout)))
+            } catch: { error, _ in
+                log.info("Timeout task cancellation error: \(error)")
+            }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
+
+        case .disconnect(.connectionFailure(let error)):
+            // Disconnection initiated due to an error
+            return .merge(
+                .send(.delegate(.error(error))),
+                .cancel(id: CancelID.connectionTimeout),
+                .send(.localAgent(.disconnect(nil))),
+                .send(.tunnel(.disconnect(nil)))
+            )
+
+        case .disconnect(.userIntent):
+            return .merge(
+                .cancel(id: CancelID.connectionTimeout),
+                .send(.localAgent(.disconnect(nil))),
+                .send(.tunnel(.disconnect(nil)))
+            )
+
+        case .tunnel(.connectionFinished(.success(let tunnelResponse))):
+            log.info(
+                "Tunnel connection finished",
+                category: .connection,
+                metadata: ["date": "\(tunnelResponse.connectionDate)", "logical": "\(tunnelResponse.logicalInfo)"]
+            )
+            // The network extension has been configured and launched (possibly during a previous run of the app).
+            // It has replied with the id of the logical and endpoint that it believes it is connected to, and we have
+            // confirmed that a server with such ids exists in our server database.
+            if !state.localAgent.is(\.disconnected) {
+                log.assertionFailure("Local agent wasn't disconnected when tunnel connection finished")
+            }
+            // Let's dive into the keychain and see if there's a valid certificate we can use to connect to the local agent server with.
+            return .send(.certAuth(.loadAuthenticationData))
+
+        case .certAuth(.loadingFinished(.success(let authData))):
+            guard case .connected(let tunnelConnectionInfo) = state.tunnel else {
+                log.error("Finished loading auth data but tunnel is not connected")
+                return .none
+            }
+            guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
+                log.error("Detected connection to unknown server, disconnecting", category: .connection)
+                return .send(.disconnect(.connectionFailure(.serverMissing)))
+            }
+            let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
+            let features = connectionFeatureProvider.connectionFeatures()
+            if authData.certificate.isExpired || authData.certificate.shouldBeRefreshed {
+                log.assertionFailure("Loaded expired certificate")
+                // loading finished with success, so there should be a valid certificate in the keychain.
+                // let's try to handle this by clearing everything and reconnecting
+                return .concatenate(
+                    .send(.certAuth(.clearEverything)),
+                    .send(.certAuth(.loadAuthenticationData))
+                )
+            }
+            log.debug(
+                "Starting local agent connection process",
+                category: .connection,
+                metadata: ["certificateValidUntil": "\(authData.certificate.validUntil)"]
+            )
+            // The tunnel has been established, we know what server to connect to, and we have a valid certificate
+            return .send(.localAgent(.connect(server.endpoint, data, features)))
+
+        case .certAuth(.loadingFinished(.failure(let error))):
+            log.error("Failed to load authentication data: \(error)")
+            // We encountered an unrecoverable failure to load, fetch or refresh a certificate. Disconnect with the error
+            return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
+
+        case .tunnel(.tunnelStatusChanged(.disconnected)):
+            if case .disconnected = state.localAgent { return .none }
+            // Now that we're fully disconnected, let's cancel the timeout
+            return .cancel(id: CancelID.connectionTimeout)
+
+        case .tunnel(.tunnelStartRequestFinished(.failure)):
+            // Special case of failure that occurs before the tunnel is started.
+            // This could be due to keychain problems or tunnel configuration errors
+            return .cancel(id: CancelID.connectionTimeout)
+
+        case .localAgent(.delegate(.connectionFailed(let error))):
+            // An error occurred while creating the local agent connection
+            // This is likely due to a problem with our keys/certificate. Let's disconnect
+            let connectionError = ConnectionError.agent(.failedToEstablishConnection(error))
+            return .send(.disconnect(.connectionFailure(connectionError)))
+
+        case .localAgent(.event(.state(.disconnected))):
+            guard case .disconnected = state.tunnel else { return .none }
+            // Now that we're fully disconnected, let's cancel the timeout
+            return .cancel(id: CancelID.connectionTimeout)
+
+        case .localAgent(.event(.state(.connected))):
+            // Local agent connection has been created, and we received a response from the server
+            return .cancel(id: CancelID.connectionTimeout)
+
+        case .localAgent(.delegate(.errorReceived(let error))):
+            // We've received a local agent error
+            log.info(
+                "Handling LocalAgent error",
+                category: .connection,
+                metadata: ["error": "\(error)", "strategy": "\(error.resolutionStrategy)"]
+            )
+            return effectToResolve(error: error)
+
+        case .tunnel:
+            return .none
+
+        case .localAgent:
+            return .none
+
+        case .certAuth:
+            return .none
+
+        case .handleLogout:
+            do {
+                try tunnelConfigKeychain.clear()
+            } catch {
+                // An error will be thrown if we haven't made any connections and there is nothing to clear.
+                log.debug("Error clearing VPN keychain: \(error)")
+            }
+            return .merge(
+                .send(.tunnel(.removeManagers)),
+                .send(.certAuth(.clearEverything))
+            )
+        case .delegate:
+            return .none
+        }
+    }
+
+    private func effectToResolve(error: LocalAgentError) -> Effect<Action> {
+        switch error.resolutionStrategy {
+        case .none:
+            return .none
+
+        case .disconnect:
+            return .merge(
+                .cancel(id: CancelID.connectionTimeout),
+                .send(.localAgent(.disconnect(.agentError(error)))),
+                .send(.tunnel(.disconnect(nil)))
+            )
+
+        case .reconnect(.withNewKeysAndCertificate):
+            return .concatenate(
+                .send(.localAgent(.disconnect(nil))),
+                .send(.certAuth(.regenerateKeys)),
+                .send(.certAuth(.loadAuthenticationData))
+            )
+
+        case .reconnect(.withNewCertificate):
+            return .concatenate(
+                .send(.localAgent(.disconnect(nil))),
+                .send(.certAuth(.purgeCertificate)), // In case it's not just expired
+                .send(.certAuth(.loadAuthenticationData))
+            )
+
+        case .reconnect(.withExistingCertificate):
+            return .concatenate(
+                .send(.localAgent(.disconnect(nil))),
+                .send(.certAuth(.loadAuthenticationData))
+            )
+        }
+    }
+
+    private func clearErrorsFromPreviousAttempts(state: inout State) {
+        if case .disconnected(let tunnelError) = state.tunnel, let tunnelError {
+            log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
+            state.tunnel = .disconnected(nil)
+        }
+        if case .failed(let certAuthError) = state.certAuth {
+            log.info("Resetting cert auth error from previous connection attempt: \(certAuthError)")
+            state.certAuth = .idle
+        }
+        if case .disconnected(let agentError) = state.localAgent, let agentError {
+            log.info("Resetting local agent connection error from previous connection attempt: \(agentError)")
+            state.localAgent = .disconnected(nil)
+        }
+    }
+
+    private func reduceWithStateChangeAction(
+        oldState: CoreConnectionFeature.State,
+        newState: CoreConnectionFeature.State,
+        effects: Effect<Action>
+    ) -> Effect<Action> {
+        let oldValue = CoreConnectionState(connectionFeatureState: oldState)
+        let newValue = CoreConnectionState(connectionFeatureState: newState)
+        if oldValue == newValue {
+            return effects
+        }
+        return .concatenate(.send(.delegate(.stateChanged(oldValue, newValue))), effects)
+    }
+}
+
+extension CoreConnectionFeature.State {
+    public static let initialCoreConnectionState: CoreConnectionFeature.State = .init(
+        tunnelState: .unknown,
+        certAuthState: .idle,
+        localAgentState: .disconnected(nil)
+    )
+}

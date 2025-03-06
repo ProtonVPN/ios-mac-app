@@ -56,7 +56,7 @@ public struct ConnectionFlagInfoView: View {
         intent: ConnectionSpec,
         underMaintenance: Bool = false,
         isPinned: Bool,
-        vpnConnectionActual: VPNConnectionActual? = nil,
+        server: Server? = nil,
         withServerNumber: Bool = false,
         isConnected: Bool,
         images: RecentsImages = .init(),
@@ -73,7 +73,7 @@ public struct ConnectionFlagInfoView: View {
 
         let infoBuilder = ConnectionInfoBuilder(
             intent: intent,
-            vpnConnectionActual: vpnConnectionActual,
+            server: server,
             withServerNumber: withServerNumber
         )
         self.textHeaderString = infoBuilder.textHeader
@@ -170,7 +170,7 @@ struct ConnectionFlagView_Previews: PreviewProvider {
 
             ConnectionFlagInfoView(intent: intent,
                                    isPinned: true,
-                                   vpnConnectionActual: actual,
+                                   server: actual.server,
                                    isConnected: .random())
                 .frame(width: cellWidth)
         }
@@ -182,42 +182,42 @@ struct ConnectionFlagView_Previews: PreviewProvider {
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: []),
                                    isPinned: true,
-                                   vpnConnectionActual: .mock(),
+                                   server: VPNConnectionActual.mock().server,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: []),
                                    isPinned: false,
-                                   vpnConnectionActual: .mock(),
+                                   server: VPNConnectionActual.mock().server,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: [.p2p, .tor]),
                                    isPinned: true,
-                                   vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
+                                   server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
                                                           features: [.p2p, .tor]),
                                    isPinned: true,
-                                   vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
+                                   server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
                                                           features: []),
                                    isPinned: true,
-                                   vpnConnectionActual: .mock(),
+                                   server: VPNConnectionActual.mock().server,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }
             ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
                                                           features: [.p2p, .tor]),
                                    isPinned: true,
-                                   vpnConnectionActual: .mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)),
+                                   server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
                                    isConnected: .random()) { _ in
                 // NO-OP
             }

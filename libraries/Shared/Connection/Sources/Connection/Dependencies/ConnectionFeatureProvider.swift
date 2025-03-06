@@ -22,27 +22,33 @@ import Domain
 import Foundation
 
 @available(iOS 16, tvOS 17, *)
-public struct VPNConnectionFeaturesProvider: Sendable {
+public struct ConnectionFeatureProvider: Sendable {
     public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures
     public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void
+    public internal(set) var tunnelFeatures: @Sendable () -> TunnelFeatures
+    public internal(set) var connectionProtocol: @Sendable () -> ConnectionProtocol
 
     public init(
         connectionFeatures: @escaping @Sendable () -> VPNConnectionFeatures = { .unimplementedFeatures },
-        setConnectionFeatures: @escaping @Sendable (_: VPNConnectionFeatures) -> Void = { _ in reportIssue() }
+        setConnectionFeatures: @escaping @Sendable (_: VPNConnectionFeatures) -> Void = { _ in reportIssue() },
+        tunnelFeatures: @escaping @Sendable () -> TunnelFeatures = { .unimplementedFeatures },
+        connectionProtocol: @escaping @Sendable () -> ConnectionProtocol = { .smartProtocol }
     ) {
         self.connectionFeatures = connectionFeatures
         self.setConnectionFeatures = setConnectionFeatures
+        self.tunnelFeatures = tunnelFeatures
+        self.connectionProtocol = connectionProtocol
     }
 }
 
-extension VPNConnectionFeaturesProvider: TestDependencyKey {
-    public static let testValue: VPNConnectionFeaturesProvider = .init()
+extension ConnectionFeatureProvider: TestDependencyKey {
+    public static let testValue: ConnectionFeatureProvider = .init()
 }
 
 extension DependencyValues {
-    public var vpnFeaturesProvider: VPNConnectionFeaturesProvider {
-        get { self[VPNConnectionFeaturesProvider.self] }
-        set { self[VPNConnectionFeaturesProvider.self] = newValue }
+    public var connectionFeatureProvider: ConnectionFeatureProvider {
+        get { self[ConnectionFeatureProvider.self] }
+        set { self[ConnectionFeatureProvider.self] = newValue }
     }
 }
 
@@ -56,5 +62,16 @@ extension VPNConnectionFeatures {
             natType: .moderateNAT,
             safeMode: false
         )
+    }()
+}
+
+extension TunnelFeatures {
+    @usableFromInline
+    static let unimplementedFeatures: TunnelFeatures = {
+#if !os(tvOS)
+        .init(killSwitch: false, excludeLocalNetworks: false)
+#else
+        .init()
+#endif
     }()
 }

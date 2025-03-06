@@ -120,7 +120,7 @@ struct HomeConnectionCardView: View {
                     intent: store.presentedSpec,
                     underMaintenance: false,
                     isPinned: false,
-                    vpnConnectionActual: store.vpnConnectionStatus.actual,
+                    server: store.vpnConnectionStatus.server,
                     withServerNumber: store.userTier.isFreeTier,
                     isConnected: false,
                     images: .coreImages

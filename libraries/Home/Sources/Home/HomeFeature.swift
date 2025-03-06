@@ -67,8 +67,7 @@ public struct HomeFeature {
         package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
 
-        @SharedReader(.connectionState)
-        var connectionState: ConnectionState?
+        @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
 
@@ -81,7 +80,7 @@ public struct HomeFeature {
             self.sharedProperties = .init()
             self.recents = .init()
             self.map = .init()
-            self.connection = .init()
+            self.connection = .initialState
         }
     }
 
@@ -102,8 +101,6 @@ public struct HomeFeature {
         case disconnect
 
         case incomingAlert(Alert)
-
-        case onNewConnectionState(ConnectionState)
 
         case connection(ConnectionFeature.Action)
         case map(HomeMapFeature.Action)
@@ -154,9 +151,8 @@ public struct HomeFeature {
             switch action {
             case .onStart:
                 return .concatenate(
-                    .send(.connection(.startObserving)),
+                    .send(.connection(.input(.onLaunch))),
                     .merge(
-                        .onChange(of: state.$connectionState, reinject: Action.onNewConnectionState),
                         .run { send in
                             for await alert in await alertService.alerts() {
                                 await send(.incomingAlert(alert))
@@ -176,7 +172,7 @@ public struct HomeFeature {
                 return .none
             case let .connect(spec):
                 return .run { send in
-                    try await connectToVPN(spec)
+                    try await connectToVPN(spec, nil)
                     await send(.recents(.connectionEstablished(spec)))
                 } catch: { error, _ in
                     log.error("Error connecting to VPN: \(error)")
@@ -269,32 +265,25 @@ public struct HomeFeature {
                 return .none
             case .destination(_):
                 return .none
-            case .onNewConnectionState(let newConnectionState):
-                log.debug("Connection layer state update \(newConnectionState)")
-                do {
-                    let newConnectionStatus = try newConnectionState.connectionStatus()
-                    return .send(.sharedProperties(.newConnectionStatus(newConnectionStatus)))
-                } catch {
-                    log.error("Missing original connection intent", category: .connection, metadata: ["error": "\(error)"])
-                    return .send(.connection(.disconnect(.connectionFailure(.intentMissing))))
-                }
             case .map:
                 return .none
             case .freeConnectionsInfo(_):
                 return .none
-            case .connection(.localAgent(.event(.stats(let message)))):
+            case .connection(.core(.localAgent(.event(.stats(let message))))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
-            case .connection(.disconnect(.connectionFailure(let error))):
+            case .connection(.delegate(.connectionFailed(let error))):
                 return .run { _ in await alertService.feed(error) }
-            case .connection(.localAgent(.disconnect(let error?))):
-                return .run { _ in await alertService.feed(error) }
-            case .connection(_):
-                if case .disconnected(let error) = state.connectionState, let error {
-                    return .run { _ in await alertService.feed(error) }
-                }
-                return .none
             case .incomingAlert(let alert):
                 pushAlert(alert.toSystemAlert)
+                return .none
+            case .connection(.delegate(.stateChanged(let connectionState))):
+                log.debug("Connection layer state update \(connectionState)")
+                let status = connectionState.status
+                return .concatenate(
+                    .send(.sharedProperties(.newConnectionState(connectionState))),
+                    .send(.sharedProperties(.newConnectionStatus(status)))
+                )
+            case .connection:
                 return .none
             }
         }
@@ -319,5 +308,32 @@ private extension FeatureStatisticsMessage.NetShieldStats {
             dataSaved: UInt64(bytesSaved),
             enabled: true
         )
+    }
+}
+
+extension ConnectionState {
+    var status: VPNConnectionStatus {
+        switch self {
+        case .resolving:
+            // While we are in the unknown state, we cannot yet be sure if the tunnel is active or not,
+            // So let's not even try to grab the original connection intent in case we are disconnected.
+            return .resolving(nil, nil)
+
+        case .disconnected:
+            return .disconnected
+
+        case .connecting(.unresolved(let intent)):
+            return .connecting(intent.spec, intent.server)
+
+        case .connecting(.resolved(let intent, let server)):
+            return .connecting(intent.spec, server)
+
+        case .disconnecting(let intent, let server):
+            return .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
+
+        case .connected(let intent, let server, let date, _):
+            let resolvedConnection = VPNConnectionActual(server: server, intent: intent, connectedDate: date)
+            return .connected(intent.spec, resolvedConnection)
+        }
     }
 }

@@ -1,0 +1,125 @@
+//
+//  Created on 20/06/2024.
+//
+//  Copyright (c) 2024 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+
+import CasePaths
+import Dependencies
+
+import CoreConnection
+import CertificateAuthentication
+import ExtensionManager
+import LocalAgent
+import struct Domain.Server
+import struct Domain.VPNConnectionFeatures
+
+@available(iOS 16, *)
+@CasePathable
+public enum CoreConnectionState: Equatable, Sendable, CasePathable {
+    case unknown
+    case disconnected(ConnectionError?)
+    case starting
+    case connecting(TunnelConnectionResponse?)
+    case connected(TunnelConnectionResponse, Date, ConnectionDetailsMessage?)
+    case disconnecting
+
+    public init(
+        tunnelState: ExtensionFeature.State,
+        certAuthState: CertificateAuthenticationFeature.State,
+        localAgentState: LocalAgentFeature.State
+    ) {
+        switch (tunnelState, localAgentState) {
+        case (.unknown, _):
+            self = .unknown
+
+        case (.preparingConnection, _):
+            assert(localAgentState.is(\.disconnected))
+            self = .starting
+
+        case (.connecting, _):
+            assert(localAgentState.is(\.disconnected))
+            self = .starting
+
+        case (.connected(let tunnelConnectionInfo), .connected(let connectionDetails)):
+            self = .connected(tunnelConnectionInfo, tunnelConnectionInfo.connectionDate, connectionDetails)
+
+        case (.connected, .disconnecting):
+            self = .disconnecting
+
+        case (.connected, .disconnected(.some)):
+            self = .disconnecting
+
+        case (.connected(let tunnelInfo), .disconnected(nil)):
+            self = .connecting(tunnelInfo)
+
+        case (.connected(let tunnelInfo), .connecting):
+            self = .connecting(tunnelInfo)
+
+        case (.disconnecting, .disconnected):
+            self = .disconnecting
+
+        case (.disconnecting, .disconnecting):
+            self = .disconnecting
+
+        case (.disconnecting, .connected), (.disconnecting, .connecting):
+            log.assertionFailure("Unexpected state: local agent connecting or connected while tunnel disconnecting")
+            self = .disconnecting
+
+        case (.disconnected(.none), .disconnected(.some(let agentError))):
+            self = .disconnected(.agent(agentError))
+
+        case (.disconnected(let possibleTunnelError), .connecting),
+            (.disconnected(let possibleTunnelError), .connected):
+            log.assertionFailure("Unexpected state: local agent connecting or connected while tunnel disconnected")
+            self = .disconnected(possibleTunnelError.map { .tunnel($0) })
+
+        case (.disconnected(let possibleTunnelError), .disconnecting(_)):
+            // While not necessarily an error state, this is unusual because local agent disconnection should be instant
+            // Let's report state as disconnected because local agent connection can just be recreated instantly
+            reportIssue("Suspicious internal state") // highlight this issue in tests
+            log.warning("Suspicious internal state - tunnel is disconnected while LA is still disconnecting")
+            self = .disconnected(possibleTunnelError.map { .tunnel($0) })
+
+        case (.disconnected(.none), .disconnected(.none)):
+            let certAuthError: CertificateAuthenticationError? = certAuthState.failed
+            let connectionError = certAuthError.map { ConnectionError.certAuth($0) }
+            self = .disconnected(connectionError)
+
+        case (.disconnected(.some(let tunnelError)), .disconnected(.some(_))):
+            // However unlikely (if even possible due to how actions/events are synchronised by reducers) it might be
+            // possible to simultaneously encounter a tunnel and local agent error, the former should take precedence
+            self = .disconnected(.tunnel(tunnelError))
+
+        case (.disconnected(.some(let tunnelError)), .disconnected(.none)):
+            self = .disconnected(.tunnel(tunnelError))
+        }
+    }
+
+    init(connectionFeatureState: CoreConnectionFeature.State) {
+        self.init(
+            tunnelState: connectionFeatureState.tunnel,
+            certAuthState: connectionFeatureState.certAuth,
+            localAgentState: connectionFeatureState.localAgent
+        )
+    }
+}
+
+enum UnexpectedInternalConnectionState: Error {
+    case agentActive
+    case agentConnectedWhile
+}

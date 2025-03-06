@@ -49,36 +49,16 @@ extension ConnectToVPNKey: DependencyKey {
     }()
 
     @available(iOS 16, *)
-    static let newConnect: @Sendable (ConnectionSpec) async throws -> Void = { spec in
-        @Dependency(\.connectionBridge) var bridge
-
-        @SharedReader(.connectionState) var connectionState: ConnectionState?
-
-        if connectionState.is(\.connected) {
-            bridge.push(intent: ConnectionFeature.Action.disconnect(.userIntent))
-
-            try await $connectionState.when(willBe: \.disconnected, every: .milliseconds(20), deadline: .seconds(2)) {
-                try await prepareConnection(spec)
-            }
-        } else {
-            try await prepareConnection(spec)
-        }
-    }
-
-    @available(iOS 16, *)
-    private static let prepareConnection: @Sendable (ConnectionSpec) async throws -> Void = { spec in
-        @Dependency(\.connectionBridge) var bridge
+    static let newConnect: @Sendable (ConnectionSpec, ConnectionProtocol?) async throws -> Void = { spec, specifiedProtocol in
+        // First, let's try to resolve the server we want to connect to.
+        // This way we can avoid disconnecting if we are already connected and can't resolve the target server
         @Dependency(\.serverSelector) var serverSelector
-        @Dependency(\.propertiesManager) var propertiesManager
-        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-
-        @SharedReader(.userTier) var userTier: Int
-
-        bridge.pushStatus(status: .connecting(spec, nil))
 
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
+        @Dependency(\.propertiesManager) var propertiesManager
+        let connectionProtocol = specifiedProtocol ?? propertiesManager.connectionProtocol
         let acceptableProtocols: ProtocolSupport
-        switch propertiesManager.connectionProtocol {
+        switch connectionProtocol {
         case .vpnProtocol(let vpnProtocol):
             acceptableProtocols = vpnProtocol.protocolSupport
         case .smartProtocol:
@@ -86,20 +66,13 @@ extension ConnectToVPNKey: DependencyKey {
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
 
+        @SharedReader(.userTier) var userTier: Int
         let server = try serverSelector.select(spec, userTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
 
-        guard !Task.isCancelled else {
-            throw ConnectionError.cancelled
-        }
+        if Task.isCancelled { throw ConnectionError.cancelled }
 
-        let connectionProtocol = propertiesManager.connectionProtocol
-
-        let tunnelFeatures = TunnelFeatures(
-            killSwitch: propertiesManager.killSwitch,
-            excludeLocalNetworks: featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
-        )
-
-        bridge.push(intent: ConnectionFeature.Action.preparation(spec, server, connectionProtocol, tunnelFeatures))
+        @Dependency(\.connectionBridge) var bridge
+        bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server, connectionProtocol: specifiedProtocol)))
     }
 }

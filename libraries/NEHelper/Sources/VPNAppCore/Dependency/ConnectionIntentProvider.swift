@@ -26,6 +26,16 @@ public struct ConnectionIntentStorage: TestDependencyKey, Sendable {
     public internal(set) var set: @Sendable (_ connectionIntent: ServerConnectionIntent) throws -> Void
 
     public static let testValue = ConnectionIntentStorage()
+
+    public static let storageKey: String = "ServerConnectionIntent"
+
+    public init(
+        getConnectionIntent: @escaping @Sendable () -> ServerConnectionIntent,
+        set: @escaping @Sendable (_: ServerConnectionIntent) -> Void
+    ) {
+        self.getConnectionIntent = getConnectionIntent
+        self.set = set
+    }
 }
 
 extension DependencyValues {

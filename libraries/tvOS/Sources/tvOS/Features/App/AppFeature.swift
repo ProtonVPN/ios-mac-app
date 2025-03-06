@@ -128,11 +128,11 @@ struct AppFeature {
             case .main(.settings(.alert(.presented(.signOut)))):
                 guard case .disconnected = state.main.connectionState else {
                     state.shouldSignOutAfterDisconnecting = true
-                    return .send(.main(.connection(.disconnect(.userIntent))))
+                    return .send(.main(.connection(.input(.disconnect))))
                 }
                 return .send(.signOut)
 
-            case .main(.connection(.tunnel(.tunnelStatusChanged(.disconnected)))):
+            case .main(.connection(.delegate(.stateChanged(.disconnected)))):
                 if state.shouldSignOutAfterDisconnecting {
                     // Now that VPN is fully disconnected, we can clear keychains and acquire an unauth session
                     state.shouldSignOutAfterDisconnecting = false

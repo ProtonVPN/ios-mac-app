@@ -403,7 +403,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         Task {
             do {
-                try await connect(spec)
+                try await connect(spec, request.connectionProtocol)
             } catch {
                 await handleNewConnectError(error)
             }

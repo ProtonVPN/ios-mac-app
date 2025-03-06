@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import ProtonCoreFeatureFlags
 import CommonNetworking
+import Connection
 import Foundation
 import Domain
 import VPNAppCore
@@ -27,8 +28,8 @@ import VPNAppCore
 public struct SharedPropertiesFeature {
     @ObservableState
     public struct State: Equatable {
-        @Shared(.vpnConnectionStatus)
-        var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @Shared(.connectionState) var connectionState: ConnectionState
 
         var userLocation: UserLocationFeature.State = .init()
     }
@@ -37,7 +38,9 @@ public struct SharedPropertiesFeature {
     public enum Action {
         case listen
         case userLocation(UserLocationFeature.Action)
+        // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
         case newConnectionStatus(VPNConnectionStatus)
+        case newConnectionState(ConnectionState)
     }
 
     private enum CancelId {
@@ -83,18 +86,11 @@ public struct SharedPropertiesFeature {
                 return .none
 
             case .newConnectionStatus(let newValue):
-                let connectionStatus: VPNConnectionStatus
-                let isNewConnection = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
-                if isNewConnection, case .connecting = newValue, case .connected(let spec, let server) = state.vpnConnectionStatus {
-                    // If we transition directly from connected to connecting, it's due to local agent disconnecting
-                    // and needing to re-establish connection. Let's skip this state transition to avoid showing the
-                    // connecting state despite us already being connected
-                    log.debug("Setting state to resolving since we were previously connected", category: .connection)
-                    connectionStatus = .resolving(spec, server)
-                } else {
-                    connectionStatus = newValue
-                }
-                state.$vpnConnectionStatus.withLock { $0 = connectionStatus }
+                state.$vpnConnectionStatus.withLock { $0 = newValue }
+                return .none
+
+            case .newConnectionState(let newValue):
+                state.$connectionState.withLock { $0 = newValue }
                 return .none
             }
         }

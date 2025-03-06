@@ -27,7 +27,7 @@ let package = Package(
         .target(
             name: "Ergonomics",
             dependencies: [
-                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
             ]
         ),

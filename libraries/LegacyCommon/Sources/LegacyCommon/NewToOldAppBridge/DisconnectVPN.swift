@@ -34,9 +34,9 @@ extension DisconnectVPNKey: DependencyKey {
 
     public static let newDisconnect: @Sendable () async throws -> Void = {
         @Dependency(\.connectionBridge) var bridge
-        @SharedReader(.connectionState) var connectionState: ConnectionState?
+        @SharedReader(.connectionState) var connectionState: ConnectionState
 
-        bridge.push(intent: .disconnect(.userIntent))
+        bridge.push(intent: .disconnect)
 
         // let's wait a bit to be disconnected, but no more than 3 seconds
         // if it throws a `SharedReaderTimeoutError`, we'll discard it, thus `try?` below

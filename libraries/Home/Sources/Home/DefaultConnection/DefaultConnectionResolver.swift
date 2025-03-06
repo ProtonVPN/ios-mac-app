@@ -79,7 +79,7 @@ enum DefaultConnectionResolverImplementation {
             .filter(shouldOfferDefaultConnectionPreference(for:))
             .map { recent in
             let spec = recent.connection
-            let infoBuilder = ConnectionInfoBuilder(intent: spec, vpnConnectionActual: nil, withServerNumber: false)
+            let infoBuilder = ConnectionInfoBuilder(intent: spec, server: nil, withServerNumber: false)
 
             return ConnectionPreferenceModel(
                 preference: .recent(spec),

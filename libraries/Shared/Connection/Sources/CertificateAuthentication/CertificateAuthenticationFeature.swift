@@ -37,6 +37,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     public init() { }
 
     @CasePathable
+    @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case idle
         case loading(shouldRefreshIfNecessary: Bool) // Flag prevents infinite recursion

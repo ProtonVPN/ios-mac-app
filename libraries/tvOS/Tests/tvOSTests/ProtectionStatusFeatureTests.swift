@@ -40,7 +40,7 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState? = .disconnected(nil)
+        @Shared(.connectionState) var connectionState: ConnectionState = .disconnected
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedConnect)
@@ -51,8 +51,8 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState?
-        $connectionState.withLock { $0 = .connecting(.ca) }
+        @Shared(.connectionState) var connectionState: ConnectionState
+        $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, server: .ca))) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedCancel)
@@ -63,8 +63,8 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState? 
-        $connectionState.withLock { $0 = .connected(.mock, .now, nil) }
+        @Shared(.connectionState) var connectionState: ConnectionState
+        $connectionState.withLock { $0 = .connected(.init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .defaultFeatures), .mock, .now, nil) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedDisconnect)
@@ -75,8 +75,8 @@ final class ProtectionStatusFeatureTests: XCTestCase {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {
             ProtectionStatusFeature()
         }
-        @Shared(.connectionState) var connectionState: ConnectionState? 
-        $connectionState.withLock { $0 = .disconnecting }
+        @Shared(.connectionState) var connectionState: ConnectionState
+        $connectionState.withLock { $0 = .disconnecting(.init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .defaultFeatures), .mock) }
 
         await store.send(.userTappedButton)
         await store.receive(\.delegate.userClickedConnect)

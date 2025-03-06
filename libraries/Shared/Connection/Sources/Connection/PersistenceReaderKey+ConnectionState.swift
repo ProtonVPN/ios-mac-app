@@ -19,8 +19,8 @@
 import ComposableArchitecture
 
 @available(iOS 16, *)
-public extension SharedKey where Self == InMemoryKey<ConnectionState?> {
+public extension SharedKey where Self == InMemoryKey<ConnectionState>.Default {
     static var connectionState: Self {
-        .inMemory("connectionState")
+        Self[.inMemory("connectionState"), default: .resolving]
     }
 }

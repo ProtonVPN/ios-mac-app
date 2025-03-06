@@ -84,15 +84,20 @@ final class MainFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
         
+        store.send(.connection(.input(.onLaunch)))
         store.send(.observeConnectionState)
 
-        @Shared(.connectionState) var connectionState: ConnectionState?
+        @Shared(.connectionState) var connectionState: ConnectionState
         
-        $connectionState.withLock { $0 = .disconnected(nil) }
+        $connectionState.withLock { $0 = .disconnected }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
-        $connectionState.withLock { $0 = .connecting(.ca) }
+
+        let connectionPreparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .ca)
+        $connectionState.withLock { $0 = .connecting(.unresolved(connectionPreparationIntent)) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
-        $connectionState.withLock { $0 = .connected(.ca, .now, nil) }
+
+        let connectionIntent = ServerConnectionIntent(spec: .defaultFastest, server: .ca, tunnelSettings: .mock, features: .defaultFeatures)
+        $connectionState.withLock { $0 = .connected(connectionIntent, .ca, .now, nil) }
         assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "3 Connected " + trait.name)
     }
 }

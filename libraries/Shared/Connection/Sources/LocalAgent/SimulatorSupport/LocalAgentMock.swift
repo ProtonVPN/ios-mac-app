@@ -72,6 +72,8 @@ final class LocalAgentMock: LocalAgent {
 
         connectionTask = Task {
             try await clock.sleep(for: connectionDuration)
+            try Task.checkCancellation()
+            log.debug("LocalAgentMock finished connecting")
             self.state = .connected
             self.netShieldType = configuration.features.netshield
         }
@@ -80,6 +82,8 @@ final class LocalAgentMock: LocalAgent {
     func disconnect() {
         disconnectionTask = Task {
             try await clock.sleep(for: disconnectionDuration)
+            try Task.checkCancellation()
+            log.debug("LocalAgentMock finished disconnecting")
             self.state = .disconnected
         }
     }

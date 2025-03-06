@@ -68,43 +68,41 @@ final class MainFeatureTests: XCTestCase {
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
             $0.userLocationService = UserLocationServiceMock()
         }
-
-        await store.send(.connection(.localAgent(.startObservingEvents)))
-        await store.send(.connection(.disconnect(.connectionFailure(.serverMissing))))
-        await store.receive(\.connection.localAgent.disconnect)
-        await store.receive(\.connection.tunnel.disconnect)
-
-        await store.receive(\.errorOccurred) // TODO: Check error is serverMissing
-
-        await store.receive(\.updateUserLocation)
-        await store.receive(\.connection.clearErrors)
+        store.exhaustivity = .off
+        await store.send(.connection(.delegate(.connectionFailed(.serverMissing))))
+        await store.receive(\.errorOccurred)
         await clock.advance(by: .seconds(1))
-        await store.send(.connection(.localAgent(.stopAllObservations)))
     }
 
     @MainActor
     func testUserClickedConnect() async {
         let clock = TestClock()
         let mockVPNSession = VPNSessionMock(status: .disconnected)
-        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()))) {
-            MainFeature()
+
+        var connectionFeatureState = ConnectionFeature.State.initialState
+        connectionFeatureState.core = .init(tunnelState: .disconnected(nil))
+        // ServerListFeature.State uses ServerRepository in its constructor. It's not explicitly necessary to override
+        // it here, since TestStore accepts an autoclosure argument which is executed with overridden dependencies.
+        let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()), connection: connectionFeatureState)) {
+            return MainFeature()
         } withDependencies: {
             $0.serverIdentifier = .init(fullServerInfo: { _ in nil })
             $0.serverRepository = .notEmpty()
             $0.continuousClock = clock
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+            $0.smartPortSelector = .init(select: { _, _ in .init(chosenProtocol: .wireGuard(.udp), ports: [80]) })
+            $0.connectionIntentStorage = .init(
+                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                set: { _ in }
+            )
         }
-        @Shared(.connectionState) var connectionState: ConnectionState?
+        @Shared(.connectionState) var connectionState: ConnectionState
 
-        store.exhaustivity = .off
+        store.exhaustivity = .off(showSkippedAssertions: true)
 
-        $connectionState.withLock { $0 = .disconnected(nil) }
+        $connectionState.withLock { $0 = .disconnected }
         await store.send(.homeLoading(.loaded(.protectionStatus(.delegate(.userClickedConnect)))))
-
-        await store.receive(\.connection.connect)
-        await store.receive(\.connection.tunnel.connect) {
-            $0.connection.tunnel = .preparingConnection(.init(logicalID: "", serverID: "some id"))
-        }
+        await store.receive(\.connectDisconnectingIfNecessary)
     }
 }

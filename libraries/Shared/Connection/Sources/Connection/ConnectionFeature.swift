@@ -1,7 +1,7 @@
 //
-//  Created on 28/05/2024.
+//  Created on 18/02/2025.
 //
-//  Copyright (c) 2024 Proton AG
+//  Copyright (c) 2025 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,71 +17,73 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import enum NetworkExtension.NEVPNStatus
 
 import Clocks
 import ComposableArchitecture
 import Dependencies
 
+import Domain
 import CoreConnection
-import CertificateAuthentication
-import ExtensionManager
 import LocalAgent
 import VPNAppCore
 
-import Domain
-
 @available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
-    @Dependency(\.continuousClock) private var clock
-    @Dependency(\.serverIdentifier) private var serverIdentifier
-    @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
-    @Dependency(\.smartPortSelector) private var portSelector
-    @Dependency(\.connectionIntentStorage) private var storage
     @Dependency(\.connectionBridge) private var connectionBridge
-    @Dependency(\.vpnFeaturesProvider) private var vpnFeaturesProvider
-
-    private static let defaultConnectionTimeout = Duration.seconds(30)
+    @Dependency(\.connectionIntentStorage) private var intentStorage
+    @Dependency(\.connectionIntentResolver) private var intentResolver
 
     public init() { }
 
     public struct State: Equatable, Sendable {
-        public internal(set) var tunnel: ExtensionFeature.State
-        public internal(set) var localAgent: LocalAgentFeature.State
-        public internal(set) var certAuth: CertificateAuthenticationFeature.State
-        var serverReconnectionIntent: ServerConnectionIntent?
-        var shouldRegisterServerChangeOnConnection: Bool = false
+        public internal(set) var currentIntent: ServerConnectionIntent?
+        public internal(set) var queuedIntent: ConnectionPreparationIntent?
+        var connectionState: ConnectionState
+        var shouldRegisterServerChangeOnConnection: Bool
+        var core: CoreConnectionFeature.State
 
-        public init(
-            tunnelState: ExtensionFeature.State = .unknown,
-            certAuthState: CertificateAuthenticationFeature.State = .idle,
-            localAgentState: LocalAgentFeature.State = .disconnected(nil)
+        package init(
+            currentIntent: ServerConnectionIntent?,
+            queuedIntent: ConnectionPreparationIntent?,
+            connectionState: ConnectionState,
+            shouldRegisterServerChangeOnConnection: Bool,
+            core: CoreConnectionFeature.State
         ) {
-            self.tunnel = tunnelState
-            self.certAuth = certAuthState
-            self.localAgent = localAgentState
+            self.currentIntent = currentIntent
+            self.queuedIntent = queuedIntent
+            self.connectionState = connectionState
+            self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
+            self.core = core
         }
     }
 
     @CasePathable
+    @dynamicMemberLookup
     public enum Action: Sendable {
-        case preparation(ConnectionSpec, Server, ConnectionProtocol, TunnelFeatures)
-        case connect(ServerConnectionIntent)
-        case disconnect(DisconnectReason)
-        case tunnel(ExtensionFeature.Action)
-        case certAuth(CertificateAuthenticationFeature.Action)
-        case localAgent(LocalAgentFeature.Action)
-        case clearErrors
-        case startObserving
+        case prepare(ConnectionPreparationIntent)
+        case finishedPreparing(Result<ServerConnectionIntent, Error>)
+        case core(CoreConnectionFeature.Action)
+        case input(Input)
+        case delegate(Delegate)
         case stopObserving
-        case handleLogout
-    }
 
-    @CasePathable
-    public enum DisconnectReason: Equatable, Sendable {
-        case reconnection(ServerConnectionIntent)
-        case connectionFailure(ConnectionError)
-        case userIntent
+        /// A subset of this reducer's actions suitable to be sent from outside
+        @CasePathable
+        public enum Input: Sendable {
+            case onLaunch
+            case onLogout
+            case connect(ConnectionPreparationIntent)
+            case applySettings(Set<ConnectionFeatureChange.AgentFeature>)
+            case disconnect
+        }
+
+        /// A subset of this reducer's actions that must be handled appropriately by its parent
+        @CasePathable
+        @dynamicMemberLookup
+        public enum Delegate: Sendable {
+            case stateChanged(ConnectionState)
+            case connectionFailed(ConnectionError)
+        }
     }
 
     private enum CancelID {
@@ -90,260 +92,207 @@ public struct ConnectionFeature: Reducer, Sendable {
         case observation
     }
 
-    @Shared(.connectionState) var connectionState: ConnectionState?
-
     public var body: some Reducer<State, Action> {
-        Scope(state: \.tunnel, action: \.tunnel) { ExtensionFeature() }
-        Scope(state: \.certAuth, action: \.certAuth) { CertificateAuthenticationFeature() }
-        Scope(state: \.localAgent, action: \.localAgent) { LocalAgentFeature() }
+        Scope(state: \.core, action: \.core) { CoreConnectionFeature() } // Firstly, process internal connection events
         Reduce { state, action in
-            defer {
-                updateConnectionState(currentState: state, forceUpdate: action.is(\.disconnect))
-            }
             switch action {
-            case .startObserving:
+            case .input(.onLaunch):
                 return .merge(
-                    .send(.tunnel(.startObservingStateChanges)),
-                    .send(.localAgent(.startObservingEvents)),
-                    .listen(to: connectionBridge.intentStream()) { streamElement in
-                        // streamElement is an action so we just return it, this is the action that we wanna run
-                        return streamElement
-                    }
-                )
-                .cancellable(id: CancelID.observation)
+                    .send(.core(.startObserving)),
+                    .listen(to: connectionBridge.intentStream()) { .input($0) } // reinject intents from bridge into this feature
+                ).cancellable(id: CancelID.observation, cancelInFlight: true)
 
             case .stopObserving:
-                return .merge(
-                    .send(.tunnel(.stopObservingStateChanges)),
-                    .send(.localAgent(.stopAllObservations)),
-                    .cancel(id: CancelID.observation)
-                )
-            case .preparation(let spec, let selectedServer, let connectionProtocol, let tunnelFeatures):
-                return .run { send in
-                    let portSelectionResult = try await portSelector.select(selectedServer.endpoint, connectionProtocol)
+                return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
 
-                    try Task.checkCancellation()
+            case .input(.connect(let intent)):
+                switch state.coreConnectionState {
+                case .unknown:
+                    // We're not ready to accept a connection request yet
+                    log.assertionFailure("Received a connection request before internal state was resolved")
+                    return .none
 
-                    guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
-                        throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
-                    }
-
-                    let ports = portSelectionResult.ports
-                    log.info("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
-
-                    let features = vpnFeaturesProvider.connectionFeatures()
-                    let tunnelSettings = TunnelSettings(transport: transport, ports: ports, features: tunnelFeatures)
-
-                    let intent = ServerConnectionIntent(
-                        spec: spec,
-                        server: selectedServer,
-                        tunnelSettings: tunnelSettings,
-                        features: features
-                    )
-
-                    try storage.set(intent)
-
-                    await send(.connect(intent))
-                } catch: { error, send in
-                    log.error("Failed in preparing connection with error: \(error)")
-                    switch error {
-                    case let connectionError as ConnectionError:
-                        await send(.disconnect(.connectionFailure(connectionError)))
-                    default:
-                        let wrappedError = ConnectionError.WrappedError(wrapped: error)
-                        await send(.disconnect(.connectionFailure(.preparation(wrappedError))))
-                    }
-                }
-                .cancellable(id: CancelID.preparation)
-
-            case .connect(let intent):
-                clearErrorsFromPreviousAttempts(state: &state)
-
-                let currentConnectionState = ConnectionState(connectionFeatureState: state)
-                switch currentConnectionState {
                 case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
-                    state.serverReconnectionIntent = intent
-                    return .none
-                case .connecting, .connected:
-                    return .send(.disconnect(.reconnection(intent)))
-                case .disconnected, .unknown:
-                    state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
-                    return .run { send in
-                        await send(.tunnel(.connect(intent)))
+                    state.queuedIntent = intent
+                    // Disconnection could take some time (updating tunnel managers)
+                    // Let's override user-facing state from disconnecting straight to connecting instead of waiting
+                    let maskedConnectionState = ConnectionState.connecting(.unresolved(intent))
+                    return updateStateSendingEffectIfNecessary(&state, to: maskedConnectionState)
 
-                        try await clock.sleep(for: Self.defaultConnectionTimeout)
-                        try Task.checkCancellation()
+                case .starting, .connecting, .connected:
+                    state.queuedIntent = intent
+                    return .send(.core(.disconnect(.userIntent)))
 
-                        await send(.disconnect(.connectionFailure(.timeout)))
-                    } catch: { error, _ in
-                        log.info("Timeout task cancellation error: \(error)")
-                    }.cancellable(id: CancelID.connectionTimeout)
+                case .disconnected:
+                    return .send(.prepare(intent))
                 }
 
-            case .disconnect(let reason):
-                if case let .reconnection(intent) = reason {
-                    state.serverReconnectionIntent = intent
+            case .input(.applySettings(let agentFeatures)):
+                if !state.coreConnectionState.is(\.connected) {
+                    log.warning("Setting connection features while not connected", category: .connection)
                 }
-                return .merge(
-                    .cancel(id: CancelID.preparation),
-                    .cancel(id: CancelID.connectionTimeout),
-                    .send(.localAgent(.disconnect(nil))),
-                    .send(.tunnel(.disconnect(nil)))
+                return .send(.core(.localAgent(.setFeatures(agentFeatures))))
+
+            case .input(.disconnect):
+                return .send(.core(.disconnect(.userIntent)))
+
+            case .input(.onLogout):
+                return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
+
+            case .prepare(let intent):
+                // protocol and port selection is only sensible while the tunnel is disconnected
+                assert(state.coreConnectionState.is(\.disconnected))
+                state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
+                return .concatenate(
+                    updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(intent))),
+                    .run { send in
+                        let result = await Result { try await intentResolver.resolve(intent) }
+                        return await send(.finishedPreparing(result))
+                    }.cancellable(id: CancelID.preparation, cancelInFlight: true)
                 )
 
-            case .tunnel(.connectionFinished(.success)):
-                log.info("Tunnel started: loading authentication data")
-                return .send(.certAuth(.loadAuthenticationData))
-
-            case .certAuth(.loadingFinished(.success(let authData))):
-                guard case .connected(let tunnelConnectionInfo) = state.tunnel else {
-                    log.error("Finished loading auth data but tunnel is not connected")
-                    return .none
-                }
-                guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
-                    log.error("Detected connection to unknown server, disconnecting", category: .connection)
-                    return .send(.disconnect(.connectionFailure(.serverMissing)))
-                }
-                let data = VPNAuthenticationData(clientKey: authData.keys.privateKey, clientCertificate: authData.certificate.certificate)
-                let features = vpnFeaturesProvider.connectionFeatures()
-                return .send(.localAgent(.connect(server.endpoint, data, features)))
-
-            case .certAuth(.loadingFinished(.failure(let error))):
-                log.error("Failed to load authentication data: \(error)")
-                return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
-
-            case .tunnel(.tunnelStatusChanged(.disconnected)):
-                guard case .disconnected = state.localAgent else { return .none }
-                guard let intent = state.serverReconnectionIntent else {
-                    // Now that we're fully disconnected, let's cancel the timeout
-                    return .cancel(id: CancelID.connectionTimeout)
-                }
-                state.serverReconnectionIntent = nil
-                return .send(.connect(intent)) // Connect action cancels any existing timeouts
-
-            case .tunnel(.tunnelStartRequestFinished(.failure)):
-                // Special case of failure that occurs before the tunnel is started
-                assert(state.serverReconnectionIntent == nil)
-                return .cancel(id: CancelID.connectionTimeout)
-
-            case .localAgent(.event(.state(.disconnected))):
-                guard case .disconnected = state.tunnel else { return .none }
-                guard let intent = state.serverReconnectionIntent else {
-                    // Now that we're fully disconnected, let's cancel the timeout
-                    return .cancel(id: CancelID.connectionTimeout)
-                }
-                state.serverReconnectionIntent = nil
-                return .send(.connect(intent)) // Connect action cancels any existing timeouts
-
-            case .localAgent(.event(.state(.connected))):
-                if state.shouldRegisterServerChangeOnConnection {
-                    @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
-                    @Dependency(\.date) var date
-                    serverChangeAuthorizer.registerServerChange(connectedAt: date.now)
-                    // flag is only set during preparation, so this will only happen once per user-initiated connection
-                    state.shouldRegisterServerChangeOnConnection = false
-                }
-                return .cancel(id: CancelID.connectionTimeout)
-
-            case .localAgent(.delegate(.errorReceived(let error))):
-                switch error.resolutionStrategy {
-                case .none:
-                    return .none
-
-                case .disconnect:
-                    return .merge(
-                        .send(.localAgent(.disconnect(.agentError(error)))),
-                        .send(.tunnel(.disconnect(nil)))
-                    )
-
-                case .reconnect(.withNewKeysAndCertificate):
-                    return .concatenate(
-                        .send(.localAgent(.disconnect(nil))),
-                        .send(.certAuth(.regenerateKeys)),
-                        .send(.certAuth(.loadAuthenticationData))
-                    )
-
-                case .reconnect(.withNewCertificate):
-                    return .concatenate(
-                        .send(.localAgent(.disconnect(nil))),
-                        .send(.certAuth(.purgeCertificate)), // In case it's not just expired
-                        .send(.certAuth(.loadAuthenticationData))
-                    )
-
-                case .reconnect(.withExistingCertificate):
-                    return .concatenate(
-                        .send(.localAgent(.disconnect(nil))),
-                        .send(.certAuth(.loadAuthenticationData))
-                    )
-                }
-
-            case .tunnel:
-                return .none
-
-            case .localAgent:
-                return .none
-
-            case .certAuth:
-                return .none
-
-            case .clearErrors:
-                if case .failed = state.certAuth{
-                    state.certAuth = .idle
-                }
-                if case let .disconnected(error) = state.tunnel, error != nil {
-                    state.tunnel = .disconnected(nil)
-                }
-                if case let .disconnected(error) = state.localAgent, error != nil {
-                    state.localAgent = .disconnected(nil)
-                }
-                return .none
-
-            case .handleLogout:
+            case .finishedPreparing(.success(let resolvedIntent)):
+                assert(state.coreConnectionState.is(\.disconnected))
+                state.currentIntent = resolvedIntent
                 do {
-                    try tunnelConfigKeychain.clear()
+                    try intentStorage.set(resolvedIntent)
+                    return .concatenate(
+                        updateStateSendingEffectIfNecessary(&state, to: .connecting(.resolved(resolvedIntent, resolvedIntent.server))),
+                        .send(.core(.connect(resolvedIntent)))
+                    )
                 } catch {
-                    // An error will be thrown if we haven't made any connections and there is nothing to clear.
-                    log.debug("Error clearing VPN keychain: \(error)")
+                    return .concatenate(
+                        updateStateSendingEffectIfNecessary(&state, to: .disconnected),
+                        .send(.delegate(.connectionFailed(.preparation(.init(wrapped: error)))))
+                    )
                 }
-                return .merge(
-                    .send(.tunnel(.removeManagers)),
-                    .send(.certAuth(.clearEverything))
+
+            case .finishedPreparing(.failure(let error)):
+                log.error("Failed to preparing connection with error: \(error)")
+                let wrappedError = ConnectionError.WrappedError(wrapped: error)
+                return .concatenate(
+                    updateStateSendingEffectIfNecessary(&state, to: .disconnected),
+                    .send(.delegate(.connectionFailed(.preparation(wrappedError))))
                 )
+
+            case .core(.delegate(.stateChanged(_, .disconnected(.some(let error))))):
+                return .concatenate(
+                    updateStateSendingEffectIfNecessary(&state, to: .disconnected),
+                    .send(.delegate(.connectionFailed(error)))
+                )
+
+            case .core(.delegate(.stateChanged(_, .disconnected(nil)))):
+                if let reconnectionIntent = state.queuedIntent {
+                    assert(state.connectionState.is(\.connecting))
+                    log.info("Disconnected, proceeding with reconnection to \(reconnectionIntent.server)")
+                    state.queuedIntent = nil
+                    return .send(.prepare(reconnectionIntent))
+                } else {
+                    return .send(.delegate(.stateChanged(.disconnected)))
+                }
+
+            case .core(.delegate(.stateChanged(_, .connected(_, let connectedAt, let details)))):
+                if state.shouldRegisterServerChangeOnConnection {
+                    @Dependency(\.serverChangeAuthorizer) var authorizer
+                    authorizer.registerServerChange(connectedAt: connectedAt)
+                }
+                return updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                    return .connected(intent, intent.server, connectedAt, details)
+                }
+
+            case .core(.delegate(.stateChanged(let oldState, .starting))):
+                if oldState.is(\.unknown) {
+                    log.debug("Ignoring state transition to connecting since we are resolving from unknown")
+                    return .none
+                }
+                return updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                    return .connecting(.resolved(intent, intent.server))
+                }
+
+            case .core(.delegate(.stateChanged(let oldState, .disconnecting))):
+                let queuedIntent = state.queuedIntent
+                return updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                    if let reconnectionIntent = queuedIntent {
+                        return .connecting(.unresolved(reconnectionIntent))
+                    }
+                    assert(!oldState.is(\.disconnected))
+                    return .disconnecting(intent, intent.server)
+                }
+
+            case .core(.delegate(.stateChanged(_, .unknown))):
+                return .send(.delegate(.stateChanged(.resolving)))
+
+            case .core(.delegate(.error(let connectionError))):
+                return .send(.delegate(.connectionFailed(connectionError)))
+
+            case .core:
+                return .none
+
+            case .delegate:
+                // It's up to the parent feature to respond to delegate actions
+                return .none
             }
         }
     }
 
-    private func clearErrorsFromPreviousAttempts(state: inout State) {
-        if case .disconnected(let tunnelError) = state.tunnel, let tunnelError {
-            log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
-            state.tunnel = .disconnected(nil)
-        }
-        if case .failed(let certAuthError) = state.certAuth {
-            log.info("Resetting cert auth error from previous connection attempt: \(certAuthError)")
-            state.certAuth = .idle
-        }
-        if case .disconnected(let agentError) = state.localAgent, let agentError {
-            log.info("Resetting local agent connection error from previous connection attempt: \(agentError)")
-            state.localAgent = .disconnected(nil)
+    private func updateStateWithStoredIntentOrDisconnect(
+        _ state: inout State,
+        calculateState: (ServerConnectionIntent) -> ConnectionState
+    ) -> Effect<Action> {
+        do {
+            let intent = try state.currentIntent ?? intentStorage.getConnectionIntent()
+            let newState = calculateState(intent)
+            return updateStateSendingEffectIfNecessary(&state, to: newState)
+        } catch {
+            log.error("Failed to fetch stored connection intent", metadata: ["error": "\(error)"])
+            return .concatenate(
+                .send(.delegate(.connectionFailed(.intentMissing))),
+                .send(.core(.disconnect(.connectionFailure(.intentMissing))))
+            )
         }
     }
 
-    func updateConnectionState(currentState: ConnectionFeature.State, forceUpdate: Bool = false) {
-        let newConnectionState = ConnectionState(connectionFeatureState: currentState)
-        if newConnectionState != connectionState {
-            if case .unknown = connectionState, !newConnectionState.shouldTransitionFromUnknown {
-                // Don't transition away from unknown until we fully resolved our connection state
-                return
-            }
-            if case .connecting(.some) = connectionState, case .connecting(.none) = newConnectionState {
-                // Don't erase server information if new state has less data than the previous state
-                return
-            }
-            $connectionState.withLock { $0 = newConnectionState }
-
-        } else if forceUpdate {
-            $connectionState.withLock { $0 = newConnectionState }
+    /// Prevents sending duplicate state change actions, e.g. connecting -> connecting
+    private func updateStateSendingEffectIfNecessary(
+        _ state: inout State,
+        to newValue: ConnectionState
+    ) -> Effect<Action> {
+        if state.connectionState == newValue {
+            return .none
         }
+        state.connectionState = newValue
+        return .send(.delegate(.stateChanged(newValue)))
     }
+}
+
+extension ConnectionFeature.State {
+    var coreConnectionState: CoreConnectionState {
+        return CoreConnectionState(connectionFeatureState: core)
+    }
+}
+
+// User-facing connection state
+@CasePathable
+public enum ConnectionState: Equatable, Sendable {
+    case resolving
+    case disconnected
+    case disconnecting(ServerConnectionIntent, Server)
+    case connecting(Intent)
+    case connected(ServerConnectionIntent, Server, Date, ConnectionDetailsMessage?)
+
+    @CasePathable public enum Intent: Equatable, Sendable {
+        case unresolved(ConnectionPreparationIntent)
+        case resolved(ServerConnectionIntent, Server)
+    }
+}
+
+extension ConnectionFeature.State {
+    public static let initialState = ConnectionFeature.State(
+        currentIntent: nil,
+        queuedIntent: nil,
+        connectionState: .resolving,
+        shouldRegisterServerChangeOnConnection: false,
+        core: .initialCoreConnectionState
+    )
 }

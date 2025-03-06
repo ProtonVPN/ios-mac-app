@@ -23,10 +23,10 @@ import ExtensionManager
 import CoreConnection
 import Ergonomics
 
-final class ConnectionStateTests: XCTestCase {
+final class CoreConnectionStateTests: XCTestCase {
 
     func testLocalAgentErrorResolvesToError() async {
-        let state = ConnectionState(
+        let state = CoreConnectionState(
             tunnelState: .disconnected(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(.failedToEstablishConnection("" as GenericError))
@@ -35,36 +35,37 @@ final class ConnectionStateTests: XCTestCase {
         XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection("" as GenericError))))
     }
 
-    func testTunnelConnectingResolvesToConnecting() async {
-        let state = ConnectionState(
+    func testTunnelConnectingResolvesToStarting() async {
+        let state = CoreConnectionState(
             tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(nil))
+        XCTAssertEqual(state, .starting)
     }
 
     func testTunnelConnectedLocalAgentDisconnectedResolvesToConnecting() async {
-        let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
         let now = Date.now
+        let server = LogicalServerInfo(logicalID: "abcd", serverID: "efgh")
+        let response = TunnelConnectionResponse(logicalInfo: server, connectionDate: now)
 
-        let state = ConnectionState(
-            tunnelState: .connected(TunnelConnectionResponse(logicalInfo: server, connectionDate: now)),
+        let state = CoreConnectionState(
+            tunnelState: .connected(response),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(nil))
+        XCTAssertEqual(state, .connecting(response))
     }
 
-    func testTunnelConnectingLocalAgentDisconnectedResolvesToConnecting() async {
-        let state = ConnectionState(
+    func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() async {
+        let state = CoreConnectionState(
             tunnelState: .connecting(nil),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
 
-        XCTAssertEqual(state, .connecting(nil))
+        XCTAssertEqual(state, .starting)
     }
 }
