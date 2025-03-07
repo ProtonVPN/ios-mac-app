@@ -5839,7 +5839,6 @@
       }
     },
     "Resolving" : {
-      "extractionState" : "stale",
       "localizations" : {
         "be" : {
           "stringUnit" : {
