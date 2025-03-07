@@ -69,7 +69,6 @@
 		4CF298212A7D3B8E00DEB23F /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298082A7D3B8E00DEB23F /* en.lproj */; };
 		4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298092A7D3B8E00DEB23F /* ro.lproj */; };
 		4CF298232A7D3B8E00DEB23F /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980A2A7D3B8E00DEB23F /* de.lproj */; };
-		4CF298242A7D3B8E00DEB23F /* hu.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980B2A7D3B8E00DEB23F /* hu.lproj */; };
 		4CF298262A7D3B8E00DEB23F /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980D2A7D3B8E00DEB23F /* pt.lproj */; };
 		4CF298272A7D3B8E00DEB23F /* uk.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980E2A7D3B8E00DEB23F /* uk.lproj */; };
 		4CF298282A7D3B8E00DEB23F /* pt-BR.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF2980F2A7D3B8E00DEB23F /* pt-BR.lproj */; };
@@ -78,7 +77,6 @@
 		4CF2982B2A7D3B8E00DEB23F /* el.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298122A7D3B8E00DEB23F /* el.lproj */; };
 		4CF2982C2A7D3B8E00DEB23F /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298132A7D3B8E00DEB23F /* tr.lproj */; };
 		4CF2982D2A7D3B8E00DEB23F /* pt-PT.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298142A7D3B8E00DEB23F /* pt-PT.lproj */; };
-		4CF2982E2A7D3B8E00DEB23F /* hr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298152A7D3B8E00DEB23F /* hr.lproj */; };
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
@@ -551,7 +549,6 @@
 		4CF298082A7D3B8E00DEB23F /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		4CF298092A7D3B8E00DEB23F /* ro.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ro.lproj; sourceTree = "<group>"; };
 		4CF2980A2A7D3B8E00DEB23F /* de.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = de.lproj; sourceTree = "<group>"; };
-		4CF2980B2A7D3B8E00DEB23F /* hu.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hu.lproj; sourceTree = "<group>"; };
 		4CF2980D2A7D3B8E00DEB23F /* pt.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pt.lproj; sourceTree = "<group>"; };
 		4CF2980E2A7D3B8E00DEB23F /* uk.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = uk.lproj; sourceTree = "<group>"; };
 		4CF2980F2A7D3B8E00DEB23F /* pt-BR.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "pt-BR.lproj"; sourceTree = "<group>"; };
@@ -560,7 +557,6 @@
 		4CF298122A7D3B8E00DEB23F /* el.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = el.lproj; sourceTree = "<group>"; };
 		4CF298132A7D3B8E00DEB23F /* tr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tr.lproj; sourceTree = "<group>"; };
 		4CF298142A7D3B8E00DEB23F /* pt-PT.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "pt-PT.lproj"; sourceTree = "<group>"; };
-		4CF298152A7D3B8E00DEB23F /* hr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hr.lproj; sourceTree = "<group>"; };
 		4CF298162A7D3B8E00DEB23F /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
 		570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-DEBUG.entitlements"; sourceTree = "<group>"; };
 		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
@@ -1273,8 +1269,6 @@
 				4CF298062A7D3B8E00DEB23F /* es.lproj */,
 				4CF298032A7D3B8D00DEB23F /* fa.lproj */,
 				4CF298162A7D3B8E00DEB23F /* fr.lproj */,
-				4CF298152A7D3B8E00DEB23F /* hr.lproj */,
-				4CF2980B2A7D3B8E00DEB23F /* hu.lproj */,
 				4CF297FE2A7D3B8D00DEB23F /* id.lproj */,
 				4CF298112A7D3B8E00DEB23F /* it.lproj */,
 				4CF298002A7D3B8D00DEB23F /* ja.lproj */,
@@ -2549,10 +2543,8 @@
 				"pt-PT",
 				el,
 				ja,
-				hu,
 				id,
 				pt,
-				hr,
 				tr,
 				uk,
 				"es-419",
@@ -2615,7 +2607,6 @@
 				E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
 				E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */,
 				791DE5E9208DDA3200A29EA5 /* LaunchScreen.storyboard in Resources */,
-				4CF298242A7D3B8E00DEB23F /* hu.lproj in Resources */,
 				4CF2981E2A7D3B8E00DEB23F /* ru.lproj in Resources */,
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
 				4CF2982C2A7D3B8E00DEB23F /* tr.lproj in Resources */,
@@ -2682,7 +2673,6 @@
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
 				E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */,
 				4CF2981A2A7D3B8E00DEB23F /* nl.lproj in Resources */,
-				4CF2982E2A7D3B8E00DEB23F /* hr.lproj in Resources */,
 				A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */,
 				20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */,
 			);

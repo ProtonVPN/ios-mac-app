@@ -70,18 +70,6 @@
             "value" : "Proton VPN"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -256,18 +244,6 @@
           }
         },
         "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proton VPN"
-          }
-        },
-        "hu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN"
@@ -448,18 +424,6 @@
           }
         },
         "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."
-          }
-        },
-        "hu" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Proton Technologies AG. All rights reserved."

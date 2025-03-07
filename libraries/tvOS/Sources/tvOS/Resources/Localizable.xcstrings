@@ -895,12 +895,6 @@
             "value" : "Une erreur s'est produite."
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Došlo je do pogreške."
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1386,12 +1380,6 @@
             "value" : "Annuler"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poništi"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1721,12 +1709,6 @@
             "value" : "Connecté"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Povezano"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1898,12 +1880,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connexion en cours"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Povezivanje"
           }
         },
         "id" : {
@@ -2080,12 +2056,6 @@
             "value" : "La connexion n'a pas abouti."
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neuspjela veza"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2258,12 +2228,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contactez-nous"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kontaktirajte nas"
           }
         },
         "id" : {
@@ -2440,12 +2404,6 @@
             "value" : "Créer un compte"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stvori račun"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2618,12 +2576,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Créez votre compte Proton"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stvorite svoj Proton račun"
           }
         },
         "id" : {
@@ -2800,12 +2752,6 @@
             "value" : "Se déconnecter"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odspoji"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2978,12 +2924,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Déconnexion"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odspajanje"
           }
         },
         "id" : {
@@ -3160,12 +3100,6 @@
             "value" : "Erreur"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pogreška"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3336,12 +3270,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le plus rapide"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Najbrže"
           }
         },
         "id" : {
@@ -3671,12 +3599,6 @@
             "value" : "J'ai compris"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Shvaćam"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3848,12 +3770,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accueil"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Početna"
           }
         },
         "id" : {
@@ -4654,12 +4570,6 @@
             "value" : "Politique de confidentialité"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pravila o privatnosti"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4830,12 +4740,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Politique de confidentialité"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pravila o privatnosti"
           }
         },
         "id" : {
@@ -5650,12 +5554,6 @@
             "value" : "Connexion rapide"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Brzo povezivanje"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5828,12 +5726,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recommandé"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preporučeno"
           }
         },
         "id" : {
@@ -6307,12 +6199,6 @@
             "value" : "Paramètres"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Postavke"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6484,12 +6370,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se connecter"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prijavite se"
           }
         },
         "id" : {
@@ -6834,12 +6714,6 @@
             "value" : "Se déconnecter"
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odjava"
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7180,12 +7054,6 @@
             "value" : "Déconnexion..."
           }
         },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odjavljivanje..."
-          }
-        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7524,12 +7392,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conditions d’utilisation du service"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uvjeti korištenja"
           }
         },
         "id" : {
@@ -8335,12 +8197,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sans protection"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nezaštićeno"
           }
         },
         "id" : {
