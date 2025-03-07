@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UITestsHelpers
+import Strings
 
 @MainActor
 class FreeUserConnectionTests: ConnectionTestsBase {
@@ -28,7 +29,7 @@ class FreeUserConnectionTests: ConnectionTestsBase {
             .verify.connectionStatusConnected()
             .openConnectionDetails()
             .verify.connectionDetailsIsShown()
-            .verify.connectionDetailsHeader(title: "Fastest country")
+            .verify.connectionDetailsHeader(title: Localizable.homeDefaultConnectionFastestName)
             .closeConnectionDetails()
             .quickDisconnectViaQCButton()
             .verify.connectionStatusNotConnected()
