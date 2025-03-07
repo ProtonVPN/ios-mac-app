@@ -2399,7 +2399,6 @@
 "upsell_countries_geoblocked_content" = "Přístup ke geograficky blokovanému obsahu";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Připojení k %d zemím";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Ještě vyšší rychlost VPN";

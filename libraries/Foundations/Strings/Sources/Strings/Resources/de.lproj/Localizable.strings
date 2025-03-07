@@ -2399,7 +2399,6 @@
 "upsell_countries_geoblocked_content" = "Zugriff auf durch Landessperren unzugängliche Inhalte";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Verbinde dich mit %d Ländern";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Noch höhere VPN-Geschwindigkeit";

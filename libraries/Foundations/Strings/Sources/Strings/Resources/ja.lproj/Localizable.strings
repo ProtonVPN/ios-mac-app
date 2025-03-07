@@ -2399,7 +2399,6 @@
 "upsell_countries_geoblocked_content" = "ジオブロックされたコンテンツにアクセスする";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "%d か国に接続します";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "さらに高速なVPN";

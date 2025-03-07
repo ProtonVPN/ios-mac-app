@@ -2399,7 +2399,6 @@
 "upsell_countries_geoblocked_content" = "Bölgenizde engellenen içeriğe erişin";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "%d ülkeden bağlantı kurun";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Daha yüksek VPN hızı";

@@ -2399,7 +2399,6 @@
 "upsell_countries_geoblocked_content" = "Få tilgang til geoblokkert innhold";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Koble til %d land";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Enda høyere VPN-hastighet";

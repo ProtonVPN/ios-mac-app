@@ -2103,9 +2103,9 @@ public enum Localizable {
   public static var upsellCarouselWorldwideTitle: String { return Localizable.tr("Localizable", "upsell_carousel_worldwide_title", fallback: "Worldwide cover") }
   /// Feature of Countries upsell modal
   public static var upsellCountriesAnyLocation: String { return Localizable.tr("Localizable", "upsell_countries_any_location", fallback: "Choose any location") }
-  /// Feature of Country upsell modal
+  /// Plural format key: "Connect to %#@num_countries@"
   public static func upsellCountriesConnectTo(_ p1: Int) -> String {
-    return Localizable.tr("Localizable", "upsell_countries_connect_to", p1, fallback: "Connect to %d countries")
+    return Localizable.tr("Localizable", "upsell_countries_connect_to", p1, fallback: "Plural format key: \"Connect to %#@num_countries@\"")
   }
   /// Feature of Countries upsell modal
   public static var upsellCountriesEvenHigherSpeed: String { return Localizable.tr("Localizable", "upsell_countries_even_higher_speed", fallback: "Even higher VPN speed") }

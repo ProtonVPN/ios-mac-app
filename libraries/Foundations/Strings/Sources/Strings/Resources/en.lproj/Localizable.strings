@@ -2297,9 +2297,6 @@
 "upsell_countries_geoblocked_content" = "Access geoblocked content";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Connect to %d countries";
-
-/* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Even higher VPN speed";
 
 /* Feature of Country upsell modal */

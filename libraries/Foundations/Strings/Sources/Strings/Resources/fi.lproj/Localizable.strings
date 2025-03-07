@@ -2399,7 +2399,6 @@
 "upsell_countries_geoblocked_content" = "Käytä alueellisesti estettyä sisältöä";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Yhdistä %d maahan";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Entistä parempi VPN-nopeus";
