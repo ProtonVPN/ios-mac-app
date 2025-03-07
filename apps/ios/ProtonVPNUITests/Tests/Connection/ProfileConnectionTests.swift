@@ -11,6 +11,7 @@ import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import UITestsHelpers
 import XCTest
+import Strings
 
 @MainActor
 class ProfileConnectionTests: ConnectionTestsBase {
@@ -48,7 +49,7 @@ class ProfileConnectionTests: ConnectionTestsBase {
             .verify.connectionStatusConnected()
             .openConnectionDetails()
             .verify.connectionDetailsIsShown()
-            .verify.connectionDetailsHeader(title: "Fastest country")
+            .verify.connectionDetailsHeader(title: Localizable.homeDefaultConnectionFastestName)
             .closeConnectionDetails()
             .goToProfilesTab()
             .disconnectFromAFastestServer()

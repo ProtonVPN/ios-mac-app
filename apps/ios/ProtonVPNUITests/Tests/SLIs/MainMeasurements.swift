@@ -115,8 +115,8 @@ class MainMeasurements: ProtonVPNUITests {
             .hitPowerButton(server: countryName)
 
         measurementProfile.measure {
-            homeRobot
-                .verify.qcButtonConnected()
+            connectionStatusRobot
+                .verify.connectionStatusConnected()
         }
 
         homeRobot
