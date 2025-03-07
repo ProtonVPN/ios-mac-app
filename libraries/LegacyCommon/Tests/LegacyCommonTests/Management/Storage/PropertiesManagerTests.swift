@@ -53,6 +53,11 @@ class PropertiesManagerTests: XCTestCase {
         sut = PropertiesManager()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        userDefaults.removePersistentDomain(forName: #file)
+    }
+
     func testTelemetrySettingsDefaultValueIsTrueForNewerUsers() {
         userDefaults.setValue(Self.watershed + 1, forKey: "UserAccountCreationDate")
         XCTAssertTrue(sut.getTelemetryUsageData())
