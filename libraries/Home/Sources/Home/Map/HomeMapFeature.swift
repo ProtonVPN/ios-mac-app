@@ -34,6 +34,7 @@ public struct HomeMapFeature {
     @ObservableState
     public struct State: Equatable {
         public internal(set) var mapState: MapState = .disconnected
+        public internal(set) var highlightedCountryCode: String?
         public internal(set) var pinMode: MapPin.Mode = .disconnected
 
         var shouldShowPin: Bool {
@@ -191,6 +192,7 @@ public struct HomeMapFeature {
             case .newMapState(let mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
+                state.highlightedCountryCode = mapState.code ?? state.userCountry
                 return .none
 
             case .newPinOffset(let offset):

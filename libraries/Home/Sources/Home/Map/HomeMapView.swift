@@ -27,8 +27,6 @@ import CoreLocation
 public struct HomeMapView: View {
     let store: StoreOf<HomeMapFeature>
 
-    @State private var map: MapRenderView?
-
     private let mapBounds: CGRect
     private let availableHeight: CGFloat
     private let availableWidth: CGFloat
@@ -44,7 +42,7 @@ public struct HomeMapView: View {
 
     public var body: some View {
         ZStack {
-            map
+            MapRenderView(country: store.highlightedCountryCode)
             MapPin(mode: .constant(store.pinMode))
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(store.pinOffset)
@@ -54,18 +52,8 @@ public struct HomeMapView: View {
         .scaleEffect(mapScale())
         .offset(mapOffset())
         .onAppear {
-            renderMap(focusedCountryCode: store.mapState.code ?? store.userCountry)
             store.send(.onAppear)
         }
-        .onChange(of: store.mapState.code) {
-            renderMap(focusedCountryCode: $0 ?? store.userCountry)
-        }
-    }
-
-    @MainActor
-    private func renderMap(focusedCountryCode: String?) {
-        log.info("Rendering map (focused on: \(optional: focusedCountryCode)")
-        map = MapRenderView(highlightedCountryCode: focusedCountryCode)
     }
 
     private func mapOffset() -> CGSize {
