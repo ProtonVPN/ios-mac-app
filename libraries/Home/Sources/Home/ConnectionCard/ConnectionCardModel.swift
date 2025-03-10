@@ -19,20 +19,24 @@
 import Domain
 import Strings
 
+import Localization
 import VPNAppCore
 
-public struct ConnectionCardModel {
+package struct ConnectionCardModel {
+    package init() {}
 
-    public init() {
-
-    }
-
-    public func accessibilityText(for vpnConnectionStatus: VPNConnectionStatus,
-                           countryName: String) -> String {
+    package func accessibilityText(for vpnConnectionStatus: VPNConnectionStatus, countryName: String) -> String {
         switch vpnConnectionStatus {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case .connected:
+        case .connected(_, let actual):
+            if let parameters = actual?.accessibilityParameters {
+                return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(
+                    parameters.browsingFrom,
+                    parameters.serverNumber,
+                    parameters.protocolDescription
+                )
+            }
             return Localizable.connectionCardAccessibilityBrowsingFrom(countryName)
         case .connecting:
             return Localizable.connectionCardAccessibilityConnectingTo(countryName)
@@ -41,7 +45,7 @@ public struct ConnectionCardModel {
         }
     }
 
-    public func buttonText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
+    package func buttonText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
         switch vpnConnectionStatus {
         case .disconnected:
             return Localizable.actionConnect
@@ -51,5 +55,23 @@ public struct ConnectionCardModel {
             return Localizable.connectionCardActionCancel
         }
     }
+}
 
+private extension VPNConnectionActual {
+    var accessibilityParameters: (browsingFrom: String, serverNumber: String, protocolDescription: String)? {
+        if let browsingFrom, let serverNumber = server.logical.serverNumber {
+            return (browsingFrom, serverNumber, vpnProtocol.apiDescription)
+        }
+        return nil
+    }
+
+    private var browsingFrom: String? {
+        LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
+    }
+}
+
+private extension Logical {
+    var serverNumber: String? {
+        name.split(separator: "#").last.map(String.init)
+    }
 }

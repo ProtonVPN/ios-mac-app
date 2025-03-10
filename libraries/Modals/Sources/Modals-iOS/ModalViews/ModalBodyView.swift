@@ -59,11 +59,14 @@ struct ModalBodyView: View {
     @ViewBuilder
     private var content: some View {
         VStack(spacing: 0) {
-            if let imagePadding {
-                modalType.artImage().padding(imagePadding)
-            } else {
-                modalType.artImage()
+            Group {
+                if let imagePadding {
+                    modalType.artImage().padding(imagePadding)
+                } else {
+                    modalType.artImage()
+                }
             }
+            .accessibilityHidden(true)
 
             Group {
                 mainContent

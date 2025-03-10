@@ -35,6 +35,19 @@ public struct IPView: View {
         self.store = store
     }
 
+    private var ipAddressTuple: (value: String, accessibilityValue: String) {
+        let isLocalIpHidden = store.localIpHidden
+        if isLocalIpHidden {
+            let localizedAction = isLocalIpHidden ?
+                Localizable.connectionDetailsAccessibilityIpViewShowAddress :
+                Localizable.connectionDetailsAccessibilityIpViewHideAddress
+            return ("***.***.***.***", localizedAction)
+        } else {
+            let value = store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable
+            return (value, value)
+        }
+    }
+
     public var body: some View {
         WithPerceptionTracking {
             HStack {
@@ -44,35 +57,47 @@ public struct IPView: View {
                             .foregroundColor(Color(.text, .weak))
                         
                         if store.buttonIsVisible {
-                            Button(action: {
+                            Button {
                                 store.send(.changeIPVisibility)
-                            }, label: {
+                            } label: {
                                 (store.localIpHidden
                                  ? IconProvider.eye
                                  : IconProvider.eyeSlash)
                                 .resizable().frame(width: buttonSize, height: buttonSize)
                                 .foregroundColor(Color(.text, .weak))
-                            })
+                            }
                         }
                     }
                     .frame(minHeight: minTopHeight)
-                    
-                    Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
+
+                    Text(ipAddressTuple.value)
                         .foregroundColor(Color(.text, .normal))
+                        .accessibilityElement()
+                        .accessibilityValue(ipAddressTuple.accessibilityValue)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityAction {
+                    store.send(.changeIPVisibility)
                 }
                 .frame(maxWidth: .infinity) // Makes both sides equal width
                 
                 IconProvider.arrowRight
+                    .accessibilityHidden(true)
                     .foregroundColor(Color(.text, .weak))
                 
                 VStack {
                     Text(Localizable.connectionDetailsIpviewIpVpn)
                         .foregroundColor(Color(.text, .weak))
                         .frame(minHeight: minTopHeight)
-                    
-                    Text(store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable)
+
+                    let vpnIpAddressValue = store.vpnIp ?? Localizable.connectionDetailsIpviewIpUnavailable
+
+                    Text(vpnIpAddressValue)
                         .foregroundColor(Color(.text, .normal))
+                        .accessibilityElement()
+                        .accessibilityValue(vpnIpAddressValue)
                 }
+                .accessibilityElement(children: .combine)
                 .frame(maxWidth: .infinity) // Makes both sides equal width
             }
             .padding(.vertical, .themeSpacing12)

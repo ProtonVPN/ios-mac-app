@@ -93,17 +93,18 @@ private struct PlanOptionLoadedView: View {
                         .themeFont(.body3())
                         .foregroundColor(Color(.text, .weak))
                 }
+                .accessibilityElement(children: .combine)
 
                 if planDuration.components.isMoreThanOneMonth {
                     let amountPerMonth = Double(planPrice.amount) / Double(planDuration.components.amountOfMonths)
 
                     HStack(spacing: .zero) {
-                        Text(PriceFormatter.formatPlanPrice(price: amountPerMonth,
-                                                            locale: planPrice.locale))
+                        Text(PriceFormatter.formatPlanPrice(price: amountPerMonth, locale: planPrice.locale))
                         Text(Localizable.upsellPlansListOptionAmountPerMonth)
                     }
                     .font(.body3())
                     .foregroundColor(Color(.text, .weak))
+                    .accessibilityElement(children: .combine)
                 }
             }
         }

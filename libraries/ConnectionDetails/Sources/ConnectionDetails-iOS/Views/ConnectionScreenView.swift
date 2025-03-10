@@ -71,6 +71,7 @@ public struct ConnectionScreenView: View {
                 })
                 .padding([.leading], .themeRadius16)
                 .padding([.trailing], .themeRadius8)
+                .accessibilityLabel(Localizable.connectionDetailsAccessibilityClose)
             }
             .padding(.themeSpacing16)
 
