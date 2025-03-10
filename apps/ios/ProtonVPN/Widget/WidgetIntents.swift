@@ -17,18 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Ergonomics
 import VPNAppCore
 import AppIntents
 import Domain
 
-public struct DisconnectFromVPNIntent: AppIntent {
-    public static var title: LocalizedStringResource = "Disconnect from VPN"
+internal struct DisconnectFromVPNIntent: AppIntent {
+    static var title: LocalizedStringResource = "Disconnect from VPN"
 
-    public static var openAppWhenRun = false
+    static var openAppWhenRun = false
 
-    public init() { }
+    init() { }
 
-    public func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult {
 
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
         try? await disconnectVPN()
@@ -36,23 +37,23 @@ public struct DisconnectFromVPNIntent: AppIntent {
     }
 }
 
-public struct ConnectToVPNIntent: AppIntent {
+internal struct ConnectToVPNIntent: AppIntent {
 
-    public static var title: LocalizedStringResource = "Connect to VPN"
+    static var title: LocalizedStringResource = "Connect to VPN"
 
-    public static var openAppWhenRun = false
+    static var openAppWhenRun = false
 
     @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
-    public init() {
+    init() {
         recentIndex = nil
     }
 
-    public init(recentIndex: Int) {
+    init(recentIndex: Int) {
         self.recentIndex = recentIndex
     }
 
-    public func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN
 
         let connectionSpec = recentIndex.map { getRecentConnection($0) } ?? getDefaultConnection()
@@ -93,21 +94,16 @@ public struct ConnectToVPNIntent: AppIntent {
     }
 }
 
-public struct LoginIntent: AppIntent {
-    public static var title: LocalizedStringResource = "Login"
-    public static let openAppWhenRun = true
+internal struct LoginIntent: AppIntent {
+    static var title: LocalizedStringResource = "Login"
+    static let openAppWhenRun = true
 
-    public init() { }
+    init() { }
 
-    public func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult {
         return .result()
     }
 }
 
 // Private helpers:
 
-private extension Collection {
-    subscript(safe index: Index) -> Element? {
-        return (index >= startIndex && index < endIndex) ? self[index] : nil
-    }
-}
