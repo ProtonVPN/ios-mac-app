@@ -42,17 +42,13 @@ public struct ChangeServerFeature {
 
     @CasePathable
     public enum Action {
-        case buttonTapped
+        case upgradeButtonTapped
+        case changeServerButtonTapped
     }
 
     public init() { }
 
     public var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-            case .buttonTapped:
-                return .none
-            }
-        }
+        EmptyReducer()
     }
 }
