@@ -19,4 +19,4 @@
 import Foundation
 import Logging
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.ConnectionPresenter.logger")
+let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.ConnectionInventory.logger")

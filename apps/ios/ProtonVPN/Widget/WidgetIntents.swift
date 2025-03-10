@@ -71,9 +71,9 @@ internal struct ConnectToVPNIntent: AppIntent {
 
     private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
 
-        @Dependencies.Dependency(\.connectionPresenter) var connectionPresenter
+        @Dependencies.Dependency(\.connectionInventory) var connectionInventory
 
-        return connectionPresenter.recentConnectionList(
+        return connectionInventory.recentConnectionList(
             .fastest,
             recentsStorage.readFromStorage(),
             ConnectionSpec.defaultFastest

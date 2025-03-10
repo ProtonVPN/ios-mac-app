@@ -21,7 +21,7 @@ import Domain
 import Dependencies
 import VPNShared
 import VPNAppCore
-import ConnectionPresenter
+import ConnectionInventory
 import OrderedCollections
 import AppIntents
 import ComposableArchitecture
@@ -31,14 +31,14 @@ struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-    @Dependency(\.connectionPresenter) var connectionPresenter
+    @Dependency(\.connectionInventory) var connectionInventory
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     func recentConnectionList() -> [RecentConnection] {
 
         let preference = try? defaultConnectionStorage.getPreference()
 
-        return connectionPresenter.recentConnectionList(
+        return connectionInventory.recentConnectionList(
             preference ?? .fastest,
             recentsStorage.readFromStorage(),
             ConnectionSpec.defaultFastest

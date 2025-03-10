@@ -23,7 +23,7 @@ import Collections
 import Domain
 
 @DependencyClient
-public struct ConnectionPresenter: Sendable {
+public struct ConnectionInventory: Sendable {
     /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
     public internal(set) var recentConnectionList: @Sendable (
         _ defaultConnectionPreference: DefaultConnectionPreference,
@@ -32,7 +32,7 @@ public struct ConnectionPresenter: Sendable {
     ) -> OrderedSet<RecentConnection> = { _, _, _ in reportIssue("\(Self.self).recentConnectionList"); return [] }
 }
 
-extension ConnectionPresenter: DependencyKey {
+extension ConnectionInventory: DependencyKey {
     private static func shouldIncludeInRecents(
         recentConnection: RecentConnection,
         defaultConnectionSpec: ConnectionSpec,
@@ -54,7 +54,7 @@ extension ConnectionPresenter: DependencyKey {
         return recentConnection.connection != defaultConnectionSpec
     }
 
-    public static var liveValue: Self = ConnectionPresenter(
+    public static var liveValue: Self = ConnectionInventory(
         recentConnectionList: { preference, recents, currentConnection in
             @Dependency(\.defaultConnectionResolver) var resolver
             let defaultConnectionSpec = resolver.connectionSpec(preference: preference, recents: recents)
@@ -72,8 +72,8 @@ extension ConnectionPresenter: DependencyKey {
 }
 
 public extension DependencyValues {
-    var connectionPresenter: ConnectionPresenter {
-        get { self[ConnectionPresenter.self] }
-        set { self[ConnectionPresenter.self] = newValue }
+    var connectionInventory: ConnectionInventory {
+        get { self[ConnectionInventory.self] }
+        set { self[ConnectionInventory.self] = newValue }
     }
 }

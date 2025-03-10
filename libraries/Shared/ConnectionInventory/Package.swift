@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ConnectionPresenter",
+    name: "ConnectionInventory",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
@@ -12,8 +12,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ConnectionPresenter",
-            targets: ["ConnectionPresenter"]),
+            name: "ConnectionInventory",
+            targets: ["ConnectionInventory"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
@@ -24,7 +24,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ConnectionPresenter",
+            name: "ConnectionInventory",
             dependencies: [
                 "Domain",
                 "SharedViews",
@@ -34,8 +34,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "ConnectionPresenterTests",
-            dependencies: ["ConnectionPresenter"]
+            name: "ConnectionInventoryTests",
+            dependencies: ["ConnectionInventory"]
         ),
     ]
 )

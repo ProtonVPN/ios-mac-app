@@ -19,7 +19,7 @@
 import Collections
 import ComposableArchitecture
 import Domain
-import ConnectionPresenter
+import ConnectionInventory
 
 @Reducer
 public struct DefaultConnectionFeature {

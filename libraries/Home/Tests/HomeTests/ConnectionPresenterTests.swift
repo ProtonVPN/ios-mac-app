@@ -22,13 +22,13 @@ import XCTest
 import Domain
 @testable import Home
 
-class ConnectionPresenterTests: XCTestCase {
+class ConnectionInventoryTests: XCTestCase {
 
     func testMostRecentConnectionFilteredOutWhenNotPinnedAndPreferenceIsMostRecent() {
         let mostRecentConnection = ConnectionSpec.franceWithP2P.recent(with: .referenceDate)
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .mostRecent,
             recents: [mostRecentConnection, olderRecentConnection],
             currentConnection: nil
@@ -42,7 +42,7 @@ class ConnectionPresenterTests: XCTestCase {
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
         let connections: OrderedSet<RecentConnection> = [mostRecentConnection, olderRecentConnection]
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .mostRecent,
             recents: connections,
             currentConnection: nil
@@ -55,7 +55,7 @@ class ConnectionPresenterTests: XCTestCase {
         let fastestConnection = ConnectionSpec.fastest.recent(with: .referenceDate)
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .fastest,
             recents: [fastestConnection, olderRecentConnection],
             currentConnection: nil
@@ -69,7 +69,7 @@ class ConnectionPresenterTests: XCTestCase {
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
         let connections: OrderedSet<RecentConnection> = [fastestConnection, olderRecentConnection]
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .fastest,
             recents: connections,
             currentConnection: nil
@@ -82,7 +82,7 @@ class ConnectionPresenterTests: XCTestCase {
         let specifiedConnection = ConnectionSpec.fastest.recent(with: .referenceDate)
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .recent(specifiedConnection.connection),
             recents: [specifiedConnection, olderRecentConnection],
             currentConnection: nil
@@ -96,7 +96,7 @@ class ConnectionPresenterTests: XCTestCase {
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)
         let connections: OrderedSet<RecentConnection> = [specifiedConnection, olderRecentConnection]
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .recent(specifiedConnection.connection),
             recents: connections,
             currentConnection: nil
@@ -109,7 +109,7 @@ class ConnectionPresenterTests: XCTestCase {
         let currentConnection = ConnectionSpec.poland.recent(with: .referenceDate)
         let specifiedConnection = ConnectionSpec.franceWithP2P.recent(with: .earlier)
 
-        let recentConnections = ConnectionPresenter.liveValue.recentConnectionList(
+        let recentConnections = ConnectionInventory.liveValue.recentConnectionList(
             defaultConnectionPreference: .recent(specifiedConnection.connection),
             recents: [currentConnection, specifiedConnection],
             currentConnection: currentConnection.connection
