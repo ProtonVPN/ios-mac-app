@@ -19,8 +19,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
-        .package(path: "../Core/SharedViews"),
-        .package(path: "../Foundations/Domain"),
+        .package(path: "../../SharedViews"),
+        .package(path: "../../Foundations/Domain"),
     ],
     targets: [
         .target(
