@@ -20,6 +20,8 @@ import Foundation
 import OrderedCollections
 import XCTest
 import Domain
+import ConnectionInventory
+
 @testable import Home
 
 class ConnectionInventoryTests: XCTestCase {

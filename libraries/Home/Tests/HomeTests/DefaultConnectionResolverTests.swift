@@ -22,6 +22,7 @@ import Collections
 import Dependencies
 @testable import Domain
 @testable import Home
+@testable import ConnectionInventory
 
 final class DefaultConnectionResolverTests: XCTestCase {
     typealias Sut = DefaultConnectionResolverImplementation

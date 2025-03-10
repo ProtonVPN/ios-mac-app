@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Home
+@testable import ConnectionInventory
 import Domain
 import Dependencies
 import OrderedCollections
