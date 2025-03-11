@@ -27,10 +27,18 @@ import Domain
 struct MapRenderView: View {
     var country: String?
 
-    @State var svg = SVGView.makeSVG()
+    @State var svg: SVGNode
+    @State var svgView: SVGView
+
+    init(country: String?) {
+        self.country = country
+        let svg = SVGView.idleMapSVG
+        self.svg = svg
+        self.svgView = SVGView(svg: svg)
+    }
 
     var body: some View {
-        SVGView(svg: svg)
+        svgView
             .onChange(of: country) { oldState, newState in
                 log.debug("Rendering map (focused on: \(optional: newState)")
                 updateWith(code: oldState, highlighted: false)
@@ -79,7 +87,7 @@ extension SVGView {
         return node
     }
 
-    private static let idleMapSVG = makeSVG()
+    fileprivate static let idleMapSVG = makeSVG()
 
     /// Optimization: cache the disconnected map view in memory
     static let idleMapView: SVGView = SVGView(svg: idleMapSVG)
