@@ -89,7 +89,7 @@ struct ChangeServerModal: View {
     @ViewBuilder
     private var upgradeButton: some View {
         Button {
-            store.send(.buttonTapped)
+            store.send(.upgradeButtonTapped)
         } label: {
             Text(Localizable.upgrade)
         }
@@ -99,7 +99,7 @@ struct ChangeServerModal: View {
     @ViewBuilder
     private var changeServerButton: some View {
         Button {
-            store.send(.buttonTapped)
+            store.send(.changeServerButtonTapped)
         } label: {
             Text(Localizable.changeServer)
         }

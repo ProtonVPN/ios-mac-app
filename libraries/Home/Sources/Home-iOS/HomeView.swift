@@ -85,7 +85,9 @@ public struct HomeView: View {
                     .presentationDragIndicator(.visible)
             }
         }
-        .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)) { store in
+        .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
+            store.send(.didDismissChangeServer)
+        }) { store in
             WithPerceptionTracking {
                 ChangeServerModal(store: store)
             }
@@ -97,6 +99,12 @@ public struct HomeView: View {
                     .presentationDetents([.medium, .large])
             }
         }
+        .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
+            WithPerceptionTracking {
+                FreeConnectionInfoModal(store: store)
+            }
+        }
+
     }
 
     private var content: some View {
@@ -157,27 +165,6 @@ public struct HomeView: View {
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
             }
             .background(Color(.background))
-        }
-        .sheet(
-            item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
-        ) { store in
-            ConnectionScreenView(store: store)
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(
-            item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer)
-        ) { store in
-            WithPerceptionTracking {
-                ChangeServerModal(store: store)
-            }
-        }
-        .sheet(
-            item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)
-        ) { store in
-            WithPerceptionTracking {
-                FreeConnectionInfoModal(store: store)
-            }
         }
     }
 

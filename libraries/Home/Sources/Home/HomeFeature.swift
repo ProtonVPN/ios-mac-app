@@ -67,6 +67,8 @@ public struct HomeFeature {
         package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
 
+        fileprivate var shouldPushAlert: Bool = false
+
         @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
@@ -98,6 +100,7 @@ public struct HomeFeature {
         /// list, if it isn't already pinned.
         case connect(ConnectionSpec)
         case changeServer
+        case didDismissChangeServer
         case disconnect
 
         case incomingAlert(Alert)
@@ -242,15 +245,14 @@ public struct HomeFeature {
                 }
             case .connectionCard:
                 return .none
-            case .destination(.presented(.changeServer(.buttonTapped))):
+            case .destination(.presented(.changeServer(let buttonAction))):
                 state.destination = nil
-                if case .available = authorizer.serverChangeAvailability() {
+                switch buttonAction {
+                case .upgradeButtonTapped:
+                    state.shouldPushAlert = true
+                    return .none
+                case .changeServerButtonTapped:
                     return .send(.changeServer)
-                }
-                return .run { send in
-                    @Dependency(\.continuousClock) var clock
-                    try await clock.sleep(for: .seconds(1)) // VPNAPPL-2560: give some time for the current presented view to disappear
-                    pushAlert(AllCountriesUpsellAlert())
                 }
             case .destination(.presented(.freeConnectionsInfo(.dismissButtonTapped))):
                 state.destination = nil
@@ -284,6 +286,12 @@ public struct HomeFeature {
                     .send(.sharedProperties(.newConnectionStatus(status)))
                 )
             case .connection:
+                return .none
+            case .didDismissChangeServer:
+                if state.shouldPushAlert {
+                    state.shouldPushAlert = false
+                    pushAlert(AllCountriesUpsellAlert())
+                }
                 return .none
             }
         }
