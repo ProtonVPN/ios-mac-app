@@ -58,7 +58,7 @@ extension ManagerConfigurator {
 
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
-        protocolConfiguration.serverAddress = server.endpoint.exitIp
+        protocolConfiguration.serverAddress = server.endpoint.entryIp
         protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
