@@ -335,7 +335,7 @@ dihentikan</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d detik</string>
+        <string>%d dtk</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -363,7 +363,7 @@ dihentikan</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d detik</string>
+        <string>%d dtk</string>
       </dict>
     </dict>
     <key>_step_of</key>

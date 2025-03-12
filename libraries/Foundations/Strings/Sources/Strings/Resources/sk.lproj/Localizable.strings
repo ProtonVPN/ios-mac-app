@@ -112,7 +112,7 @@
 "_log_out_warning" = "Odhlásenie ukončí reláciu VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Odhlásenie z aplikácie odpojí aktívne pripojenie VPN. Chcete pokračovať?";
+"_log_out_warning_long" = "Odhlásením z aplikácie sa odpojí aktívne pripojenie VPN. Chcete pokračovať?";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Zmena protokolov ukončí aktuálnu reláciu VPN.";
@@ -191,7 +191,7 @@
 /* iOS: main button in tabbar during connecting to vpn phase */
 "_connecting" = "Pripájanie";
 
-"_connectingDotDotDot" = "Pripájanie...";
+"_connectingDotDotDot" = "Pripájanie k...";
 
 /* iOS: countries list section header */
 "_countries_free" = "Krajiny pre bezplatných používateľov";
@@ -223,7 +223,7 @@
 "_not_connected" = "Nepripojené";
 
 /* MacOS: text in main window */
-"_you_are_not_connected" = "Bez pripojenia";
+"_you_are_not_connected" = "Nie ste pripojení";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Skúsiť znova";
@@ -611,7 +611,7 @@
 "_random_available_server" = "Náhodný dostupný server";
 
 /* iOS: Predefined profile with random server */
-"_random_connection" = "Náhodne";
+"_random_connection" = "Náhodný";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Zakaždým iný server";
@@ -648,13 +648,13 @@
 "_use_secure_core" = "Secure Core";
 
 /* Profile create/change form */
-"_select_country" = "Vyberte krajinu";
+"_select_country" = "Vybrať Krajinu";
 
 /* Profile create/change form */
 "_server" = "Server";
 
 /* Profile create/change form */
-"_select_server" = "Vyberte server";
+"_select_server" = "Vybrať Server";
 
 /* Error in profile create/change form */
 "_profile_name_is_required" = "Zadajte názov";
@@ -666,7 +666,7 @@
 "_country_selection_is_required" = "Vyberte krajinu, prosím";
 
 /* Error when user hasn't selected profile server */
-"_server_selection_is_required" = "Vyberte server, prosím";
+"_server_selection_is_required" = "Prosím vyberte server";
 
 "_profile_name_needs_to_be_unique" = "Profil s týmto názvom už existuje";
 
@@ -1180,7 +1180,7 @@
 "_report_send" = "Odoslať hlásenie";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "Ďakujeme Vám za nahlásenie";
+"_report_success" = "Ďakujeme za nahlásenie";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Ak poskytnete nasledujúce údaje, náš tím môže identifikovať váš problém a možné riešenie s väčšou pravdepodobnosťou a v kratšom čase:\n• logy aplikácie Proton VPN\n• logy OpenVPN\n• logy WireGuard";
@@ -1192,7 +1192,7 @@
 "_report_field_feedback" = "Čo sa pokazilo?";
 
 /* Mac bug report: steps field label */
-"_report_field_steps" = "Aké kroky ste presne vykonali?";
+"_report_field_steps" = "Čo sú presné kroky, ktoré ste vykonali?";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "Začnite písať...";
@@ -1278,7 +1278,7 @@
 
 "_troubleshoot_item_proton_title" = "Proton je nedostupný.";
 
-"_troubleshoot_item_proton_description" = "Skontrolujte stav nášho systému na Proton Status.";
+"_troubleshoot_item_proton_description" = "Stav nášho systému nájdete v časti Stav Protonu.";
 
 "_troubleshoot_item_proton_link1" = "Proton Status";
 
@@ -1293,7 +1293,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Dáta\nušetrené";
+"_netshield_stats_data_saved" = "Ušetrené\ndáta";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Chráňte sa pred reklamami, malvérom a sledovacími nástrojmi na webových stránkach a v aplikáciách. Ak sa webové stránky nenačítajú, skúste vypnúť NetShield. \nZistiť viac";
@@ -1454,9 +1454,9 @@
 
 "_upgrade_again" = "AKTUALIZOVAŤ ZNOVA";
 
-"_delinquent_title" = "Váš VPN účet má neuhradené faktúry";
+"_delinquent_title" = "Váš VPN účet má nezaplatené faktúry";
 
-"_delinquent_description" = "Po ich zaplatení budete mať opäť prístup k prémiovým funkciám.";
+"_delinquent_description" = "Prístup k prémiovým funkciám získate opäť po uhradení nezaplatených faktúr.";
 
 "_delinquent_reconnection_description" = "Po ich zaplatení budete mať opäť prístup k prémiovým funkciám. Nateraz sa znova pripájame k najrýchlejšiemu dostupnému serveru bezplatného plánu.";
 
@@ -1469,7 +1469,7 @@
 
 "_reconnect_title" = "Obnovujeme pripojenie k najrýchlejšiemu dostupnému serveru.";
 
-"_subscription_expired_title" = "Platnosť vášho plánu predplatného VPN vypršala";
+"_subscription_expired_title" = "Vaše VPN predplatné vypršalo";
 
 "_subscription_expired_description" = "Vaše predplatné bolo znížené.";
 
@@ -1511,7 +1511,7 @@
 
 "_feature_free_servers_description" = "Bezpečnosť a súkromie pre každého. Bezplatné servery nemajú žiadne dátové limity a nikdy zámerne nespomalíme rýchlosť vášho prehliadania.";
 
-"_feature_smart_routing_description" = "Táto technológia umožňuje, aby aplikácie Proton VPN boli rýchlejšie a bezpečnejšie v krajinách, ktoré nerešpektujú súkromie.";
+"_feature_smart_routing_description" = "Táto technológia umožňuje aplikácii Proton VPN poskytovať vyššiu rýchlosť a bezpečnosť v ťažko dostupných krajinách.";
 
 "_feature_streaming_description" = "Plus servery podporujú streamovanie (Netflix, Disney+, atď.) kdekoľvek na svete.";
 
@@ -1698,7 +1698,7 @@
 "_settings_tab" = "Nastavenia";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_header" = "Bez ochrany";
+"_home_unprotected_header" = "Nie ste chránení";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_label" = "Prezeráte nechránené stránky z %@.";
@@ -1806,7 +1806,7 @@
 "_secure_core_via_country" = "cez %@";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
-"connection_status_unprotected" = "Bez ochrany";
+"connection_status_unprotected" = "Nie ste chránení";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Vaša digitálna identita je chránená";
@@ -1829,7 +1829,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Odhadované množstvo reklám, sledovačov a malvéru, ktoré NetShield zablokoval.";
 
-"_netshield_stats_data_saved" = "Dáta\nušetrené";
+"_netshield_stats_data_saved" = "Ušetrené\ndáta";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
@@ -1874,7 +1874,7 @@
 "_connection_details_ipview_ip_my" = "Moja IP";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_vpn" = "IP VPN";
+"_connection_details_ipview_ip_vpn" = "VPN IP";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_unavailable" = "Nedostupné";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Servery sa fyzicky nachádzajú v Singapure, ale zdá sa, že surfujete z Thajska.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Servery sa fyzicky nachádzajú v lokalite %1$@, ale bude to vyzerať, že surfujete z lokality %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1922,16 +1922,16 @@
 "_alert_protocol_deprecated_body_macos" = "Tento profil používa protokol, ktorý je zastaraný a už nie je podporovaný. Kliknutím na tlačidlo \"Aktualizovať\" sa prepnete na používanie predvoleného protokolu Smart. Viac informácií";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
-"_alert_protocol_deprecated_link_text" = "Viac informácií";
+"_alert_protocol_deprecated_link_text" = "Zistiť viac";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
 "_alert_protocol_deprecated_body_ios" = "Tento profil používa protokol, ktorý je zastaraný a už nie je podporovaný. Kliknutím na tlačidlo \"Aktualizovať\" sa prepnete na používanie predvoleného protokolu Smart.";
 
 /* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
-"_alert_protocol_deprecated_enable_smart" = "Aktualizovať";
+"_alert_protocol_deprecated_enable_smart" = "Aktualizácia";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
-"_alert_protocol_deprecated_learn_more" = "Viac informácií";
+"_alert_protocol_deprecated_learn_more" = "Zistiť viac";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Zavrieť";
@@ -2219,7 +2219,7 @@
 "modals_upsell_secure_core_route" = "Smerovanie cez mimoriadne bezpečné servery vo Švajčiarsku, Švédsku a na Islande";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Pridanie ďalšej vrstvy šifrovania do pripojenia VPN";
+"modals_upsell_secure_core_layer" = "Pridajte ďalšiu úroveň šifrovania k vášmu VPN pripojeniu";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Chráňte sa pred sieťovými útokmi";
@@ -2267,13 +2267,13 @@
 "modals_new_upsell_country_subtitle" = "Odomknite výber krajiny s VPN Plus.";
 
 /* Subtitle of Profiles upsell screen */
-"modals_new_upsell_profiles_subtitle" = "Sprístupnenie profilov s VPN Plus.";
+"modals_new_upsell_profiles_subtitle" = "Odomknite profily pomocou VPN Plus.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Poznámka k rýchlosti...";
 
 /* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "Secure Core ponúka najvyššiu úroveň zabezpečenia a súkromia ale môže znížiť rýchlosť internetového pripojenia. Ak požadujete lepší výkon, môžete Secure Core vypnúť.";
+"modals_discourage_secure_core_subtitle" = "Secure Core ponúka najvyššiu úroveň zabezpečenia a súkromia, ale môže znížiť rýchlosť internetu. Pokiaľ potrebujete vyšší výkon, môžete Secure Core vypnúť.";
 
 /* Turn off Secure Core discouragement screen */
 "modals_discourage_secure_core_dont_show" = "Nezobrazovať znova";
@@ -2462,7 +2462,7 @@
 "welcome_upgrade_title_unlimited" = "Vitajte v Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_title_fallback" = "Blahoželáme!";
+"welcome_upgrade_title_fallback" = "Gratulujeme!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
 "welcome_upgrade_subtitle_plus" = "Vychutnajte si ďalšie funkcie ochrany súkromia, vyšší výkon a prispôsobenie VPN na novej úrovni.";
@@ -2489,19 +2489,19 @@
 "welcome_to_proton_banner_title" = "Certifikovaná sieť VPN bez logov";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Vaše aktivity v sieti VPN sú chránené švajčiarskymi zákonmi o ochrane osobných údajov. Nikdy vás nebudeme sledovať online ani zdieľať vaše informácie s tretími stranami.";
+"welcome_to_proton_banner_subtitle" = "Vaša aktivita v sieti VPN je chránené švajčiarskymi zákonmi o ochrane osobných údajov. Nikdy vás nebudeme sledovať online ani zdieľať vaše informácie s tretími stranami.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle_redesign" = "Nikdy nebudeme zaznamenávať vašu aktivitu na internete ani zdieľať vaše informácie s tretími stranami.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Zdieľať anonymné štatistiky o používaní";
+"onboarding_get_started_statistics_toggle_title" = "Zdieľať anonymné štatistiky používania";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
 "onboarding_get_started_statistics_toggle_subtitle" = "Údaje o používaní nám pomáhajú obchádzať blokovanie VPN a vylepšovať výkon aplikácie.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Zdieľajte anonymné hlásenia o zlyhaní";
+"onboarding_get_started_crashes_toggle_title" = "Zdieľať anonymné hlásenia o zlyhaní";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
 "onboarding_get_started_crashes_toggle_subtitle" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
@@ -2513,7 +2513,7 @@
 "upsell_plans_list_subtitle" = "Získajte pokročilé funkcie ochrany súkromia a vyššiu rýchlosť s VPN Plus.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
-"upsell_plans_list_section_header" = "Vyberte plán";
+"upsell_plans_list_section_header" = "Vyberte svoj plán";
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "Získajte VPN Plus";
@@ -2527,11 +2527,11 @@
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "K dispozícii pre VPN Business.";
 
-"onboarding_usage_stats_title" = "Zdieľajte anonymné štatistiky o používaní";
+"onboarding_usage_stats_title" = "Zdieľať anonymné štatistiky používania";
 
 "onboarding_usage_stats_description" = "Údaje o používaní nám pomáhajú obchádzať blokovanie VPN a vylepšovať výkon aplikácie.";
 
-"onboarding_crash_reports_title" = "Zdieľajte anonymné hlásenia o zlyhaní";
+"onboarding_crash_reports_title" = "Zdieľať anonymné hlásenia o zlyhaní";
 
 "onboarding_crash_reports_description" = "Hlásenia o pádoch nám pomáhajú opravovať chyby, detekovať firewally a vyhýbať sa blokovaniu VPN.";
 
@@ -2705,7 +2705,7 @@
 "upsell_carousel_secure_core_subtitle" = "Pridajte ďalšiu úroveň šifrovania k vášmu VPN pripojeniu";
 
 /* Home upsell carousel card title */
-"upsell_carousel_p2p_title" = "Podpora P2P";
+"upsell_carousel_p2p_title" = "P2P podpora";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_p2p_subtitle" = "Sťahujte súbory cez BitTorrent a iné protokoly na zdieľanie súborov";

@@ -1000,7 +1000,7 @@
 "_activate_widget_step_2" = "Deslice totalmente hacia abajo y pulse el botón editar.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Añada el widget de Proton VPN a la lista de widgets activos.";
+"_activate_widget_step_3" = "Agregue el widget de Proton VPN a la lista de widgets activos.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Reportar un problema";
@@ -1165,7 +1165,7 @@
 "_report_logs" = "Registros VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Activando esta opción añadirá los registros de su VPN a este informe";
+"_report_logs_description" = "Activando esta opción agregará los registros de su VPN a este informe";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Mensaje del informe";
@@ -1396,7 +1396,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "Inteligente";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "Active Smart Protocol para usar automáticamente el protocolo y puerto que ofrecen la mejor conectividad.";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Los servidores están físicamente ubicados en Singapur pero aparecerá que navega desde Tailandia.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Los servidores están físicamente ubicados en %1$@ pero aparecerá que navega desde %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2219,7 +2219,7 @@
 "modals_upsell_secure_core_route" = "Enrute a través de servidores ultra seguros en Suiza, Suecia e Islandia";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Añada otra capa de cifrado a la conexión VPN";
+"modals_upsell_secure_core_layer" = "Agregue otra capa de cifrado a la conexión VPN";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protéjase de los ataques de red";
@@ -2249,7 +2249,7 @@
 "modals_new_upsell_secure_core_title" = "Doble su protección";
 
 /* Subtitle of Secure Core upsell screen */
-"modals_new_upsell_secure_core_subtitle" = "Añada otra capa de protección a la conexión VPN con Secure Core.";
+"modals_new_upsell_secure_core_subtitle" = "Agregue otra capa de protección a la conexión VPN con Secure Core.";
 
 /* The bold portion of the subtitle of the Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";

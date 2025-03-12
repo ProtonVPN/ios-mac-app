@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Schütze bis zu %d Gerät</string>
+        <string>Schütze bis zu %d Geräte</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -79,7 +79,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d sicherer Server</string>
+        <string>%d sichere Server</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -458,13 +458,13 @@ blockiert</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Free-Serverstandorte (%d)</string>
+        <string>Verfügbare Serverstandorte (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Free-Serverstandorte (%d)</string>
+        <string>Verfügbare Serverstandorte (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

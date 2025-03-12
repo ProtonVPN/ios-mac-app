@@ -1396,7 +1396,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "스마트";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "가장 좋은 연결을 제공하는 프로토콜과 포트를 자동으로 사용하려면 Smart Protocol을 활성화하세요.";
@@ -1722,7 +1722,7 @@
 "_connection_card_last_connected_to" = "마지막 연결:";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "불러오는 중...";
+"_connection_card_loading" = "로딩 중...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "연결 중...";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "싱가포르에 위치한 서버지만, 태국에서 탐색하는 것으로 표시됩니다.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "%1$@에 위치한 서버지만, %2$@에서 탐색하는 것으로 표시됩니다.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";

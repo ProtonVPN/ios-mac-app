@@ -1396,7 +1396,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "Inteligente";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "Activa el protocolo inteligente para utilizar automáticamente el protocolo y el puerto que ofrezca la mejor conectividad.";
@@ -1746,13 +1746,13 @@
 "home_default_connection_fastest_name" = "País más rápido";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_description" = "El mejor servidor basado en tu ubicación";
+"home_default_connection_fastest_description" = "El mejor servidor en función de tu ubicación";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_name" = "La más reciente";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_description" = "Conexión más usada últimamente";
+"home_default_connection_most_recent_description" = "Tu conexión usada más recientemente";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
 "_home_recents_upsell_section" = "Descubre VPN Plus";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Los servidores están físicamente ubicados en Singapur pero aparecerá que navegas desde Tailandia.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Los servidores están físicamente ubicados en %1$@ pero aparecerá que navegas desde %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1982,7 +1982,7 @@
 "_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Centro de soporte";
+"_settings_title_support_center" = "Centro de ayuda";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "Notificar un problema";
@@ -2042,7 +2042,7 @@
 "_settings_protocol_section_title_tcp" = "Fiabilidad (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Selecciona automáticamente el mejor protocolo para la conexión.";
+"_settings_protocol_description_smart" = "Selecciona automáticamente el mejor protocolo para tu conexión.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_udp" = "Rápido seguro y eficiente. WireGuard es más eficiente con la batería que otros protocolos.";
@@ -2054,10 +2054,10 @@
 "_settings_protocol_description_wireguard_tls" = "Supera los bloqueos de VPN ocultando la conexión VPN a los censores. Este protocolo es resistente a DPI (inspección profunda de paquetes), pero puede no ser tan rápido como otros protocolos. Stealth es exclusivo de Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Establecido, comprobado y seguro. OpenVPN es menos eficiente con la batería que otros protocolos.";
+"_settings_protocol_description_openvpn_udp" = "De eficacia demostrada, sometido a numerosas pruebas y seguro. OpenVPN es menos eficiente con la batería que otros protocolos.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_tcp" = "Establecido, comprobado y seguro. OpenVPN es confiable en condiciones de red pobres pero podría no ser rápido como otros protocolos.";
+"_settings_protocol_description_openvpn_tcp" = "De eficacia demostrada, sometido a numerosas pruebas y seguro. OpenVPN es fiable en condiciones de red malas, pero podría no ser tan rápido como otros protocolos.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_ikev2" = "Rápido, seguro y estable, pero más fácil de detectar y bloquear para los sensores.";
@@ -2075,7 +2075,7 @@
 "_settings_protocol_alert_title" = "Conexión VPN activa";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "Al cambiar de protocolos finalizará la sesión de VPN actual.";
+"_settings_protocol_alert_body" = "Al cambiar de protocolos finalizará su sesión de VPN actual.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_cancel" = "Cancelar";
@@ -2225,13 +2225,13 @@
 "modals_upsell_secure_core_attacks" = "Protégete de los ataques a la red";
 
 /* Title of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_title" = "Navega a velocidades aún más altas.";
+"modals_new_upsell_vpn_accelerator_title" = "Navegue a velocidades aún más altas";
 
 /* Subtitle of the VPN Accelerator screen */
 "modals_new_upsell_vpn_accelerator_subtitle" = "Desbloquea servidores rápidos y menos concurridos con velocidades de hasta 10 Gbps.";
 
 /* Subtitle of the Customization scren */
-"modals_new_upsell_customization_subtitle" = "Accede a dispositivos en la red de área local (LAN) con VPN Plus.";
+"modals_new_upsell_customization_subtitle" = "Accede a dispositivos en tu red de área local (LAN) con VPN Plus.";
 
 /* Subtitle of Moderate NAT upsell screens */
 "modals_new_upsell_moderate_nat_subtitle" = "Mejora el rendimiento de las videollamadas y juegos en línea con NAT tipo 2.";
@@ -2249,7 +2249,7 @@
 "modals_new_upsell_secure_core_title" = "Dobla tu protección";
 
 /* Subtitle of Secure Core upsell screen */
-"modals_new_upsell_secure_core_subtitle" = "Añada otra capa de protección a la conexión VPN con Secure Core.";
+"modals_new_upsell_secure_core_subtitle" = "Añade otra capa de cifrado a tu conexión VPN con Secure Core.";
 
 /* The bold portion of the subtitle of the Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
@@ -2264,7 +2264,7 @@
 "modals_new_upsell_country_title" = "¿Quieres conectarte a un país específico?";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Desbloquea la selección de países con VPN Plus.";
+"modals_new_upsell_country_subtitle" = "Accede a la selección de países con VPN Plus.";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "Desbloquea los perfiles con VPN Plus.";
@@ -2315,19 +2315,19 @@
 "upsell_streaming_subtitle" = "Disfruta de tus películas y series favoritas en cualquier lugar del mundo.";
 
 /* Title of p2p support upsell modal */
-"upsell_p2pSupport_title" = "Accede a descargas entre pares (P2P) e intercambio de archivos.";
+"upsell_p2pSupport_title" = "Accede a descargas entre pares (P2P) e intercambio de archivos";
 
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Aumenta las velocidades de carga y descarga mientras ocultas tu dirección IP.";
 
 /* Title of devices upsell modal */
-"upsell_devices_title" = "Protege 10 dispositivos a la vez.";
+"upsell_devices_title" = "Protege 10 dispositivos a la vez";
 
 /* Subtitle of devices upsell modal */
 "upsell_devices_subtitle" = "Proton VPN está disponible en 8 plataformas diferentes.";
 
 /* Title of torOverVPN upsell modal */
-"upsell_torOverVPN_title" = "Accede a la red Tor con una pulsación.";
+"upsell_torOverVPN_title" = "Accede a la red Tor con una pulsación";
 
 /* Subtitle of torOverVPN upsell modal */
 "upsell_torOverVPN_subtitle" = "Conéctate a servicios ocultos y sitios onion con tu navegador habitual.";
@@ -2348,7 +2348,7 @@
 "upsell_vpn_accelerator_distant_servers" = "Velocidad y estabilidad mejoradas cuando te conectas a servidores distantes.";
 
 /* Title of Customization upsell modal */
-"upsell_customization_title" = "Desbloquea personalizaciones VPN avanzadas";
+"upsell_customization_title" = "Desbloquea personalizaciones de VPN avanzadas";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Accede a dispositivos en tu red local (LAN)";
@@ -2396,7 +2396,7 @@
 "upsell_countries_even_higher_speed" = "Velocidad VPN aún mayor";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_geoblocked_content" = "Acceda a contenido geobloqueado";
+"upsell_countries_geoblocked_content" = "Accede a contenido geobloqueado";
 
 /* Feature of Country upsell modal */
 "upsell_countries_connect_to" = "Conéctate a %d países";
@@ -2411,7 +2411,7 @@
 "upsell_country_feature_title" = "¿Deseas elegir un país específico?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Desbloquea la selección de países con VPN Plus";
+"upsell_country_feature_subtitle" = "Desbloquea la selección de país con VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "selección de países";
@@ -2465,7 +2465,7 @@
 "welcome_upgrade_title_fallback" = "¡Felicitaciones!";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_subtitle_plus" = "Disfruta de funciones de privacidad adicionales, rendimiento recargado y una personalización VPN de otro nivel.";
+"welcome_upgrade_subtitle_plus" = "Disfruta de funciones de privacidad adicionales, rendimiento excepcional y una personalización de VPN de otro nivel.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited" = "¡Felicitaciones! Has desbloqueado seguridad premium y funciones de rendimiento en todos los servicios de Proton además de 500 GB de almacenamiento total.\n\nDisfruta lo mejor de la privacidad de Proton.";
@@ -2477,7 +2477,7 @@
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "Has mejorado tu suscripción. Disfruta funciones de privacidad avanzadas y rendimiento de otro nivel.";
+"welcome_upgrade_subtitle_fallback" = "Has mejorado tu suscripción. Disfruta de funciones de privacidad avanzadas y rendimiento a otro nivel.";
 
 /* Welcome to Proton screen shown during onboarding. Title label. */
 "welcome_to_proton_title" = "Te damos la bienvenida a Proton VPN";
@@ -2489,28 +2489,28 @@
 "welcome_to_proton_banner_title" = "VPN certificada sin registros";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Tu actividad VPN está protegida por las leyes de privacidad suizas. Nunca te rastrearemos en línea ni compartiremos tus datos con terceros.";
+"welcome_to_proton_banner_subtitle" = "Tu actividad VPN está protegida por las leyes de privacidad suizas. Nunca te rastrearemos en línea ni compartiremos tu información con terceros.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle_redesign" = "Nunca registraremos tu actividad en línea o compartiremos tu información con terceros.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Compartir estadísticas de uso anónimo";
+"onboarding_get_started_statistics_toggle_title" = "Compartir estadísticas anónimas de uso";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
 "onboarding_get_started_statistics_toggle_subtitle" = "Los datos de uso nos ayudan a evitar bloqueos de VPN y mejorar el rendimiento de la aplicación.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Compartir informes de errores anónimos";
+"onboarding_get_started_crashes_toggle_title" = "Compartir informes anónimos de incidencias";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Los informes de errores nos ayudan a corregir errores, detectar cortafuegos y evitar bloqueos de VPN.";
+"onboarding_get_started_crashes_toggle_subtitle" = "Los informes de erorres nos ayudan a corregir errores, detectar cortafuegos y evitar bloqueos de VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Mejora tu privacidad";
 
 /* Subtitle of paid plans list. */
-"upsell_plans_list_subtitle" = "Obtén funciones de privacidad avanzadas y velocidades altas con VPN Plus.";
+"upsell_plans_list_subtitle" = "Obtén funciones de privacidad avanzadas y una mayor velocidad con VPN Plus.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
 "upsell_plans_list_section_header" = "Elige tu suscripción";
@@ -2555,10 +2555,10 @@
 "_free_banner_text" = "Disfruta de una cobertura global con VPN Plus.";
 
 /* Title of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_title" = "¿No es el país que querías?";
+"_wrong_country_banner_title" = "¿No es el país que deseas?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Mejora para elegir cualquier servidor";
+"_wrong_country_banner_subtitle" = "Cambia de plan para elegir cualquier servidor";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
 "_wrong_country_banner_text" = "¿No es el país que querías? Mejora para elegir cualquier servidor.";
@@ -2684,31 +2684,31 @@
 "upsell_carousel_faster_browsing_title" = "Navegación más rápida";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Navega a velocidades aún mayores (hasta 10 Gbps).";
+"upsell_carousel_faster_browsing_subtitle" = "Navega a velocidades aún mayores (hasta 10 Gbps)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Streaming";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_streaming_subtitle" = "Ve tus películas y programas favoritos.";
+"upsell_carousel_streaming_subtitle" = "Ve tus películas y programas favoritos";
 
 /* Home upsell carousel card title */
 "upsell_carousel_netshield_title" = "NetShield";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_netshield_subtitle" = "Bloquea anuncios, malware y rastreadores.";
+"upsell_carousel_netshield_subtitle" = "Bloquea anuncios, malware y rastreadores";
 
 /* Home upsell carousel card title */
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Añade otra capa de encriptación a tu conexión VPN.";
+"upsell_carousel_secure_core_subtitle" = "Añade otra capa de encriptación a tu conexión VPN";
 
 /* Home upsell carousel card title */
 "upsell_carousel_p2p_title" = "Compatibilidad con P2P";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_p2p_subtitle" = "Descarga archivos con BitTorrent y otros protocolos de intercambio de archivos.";
+"upsell_carousel_p2p_subtitle" = "Descarga archivos con BitTorrent y otros protocolos de intercambio de archivos";
 
 /* Home upsell carousel card title */
 "upsell_carousel_devices_title" = "Protege hasta 10 dispositivos";
@@ -2720,7 +2720,7 @@
 "upsell_carousel_tor_title" = "Tor sobre VPN";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Usa la red Tor a través de tu conexión VPN para más privacidad.";
+"upsell_carousel_tor_subtitle" = "Usa la red Tor a través de tu conexión VPN para más privacidad";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "Y mucho más...";

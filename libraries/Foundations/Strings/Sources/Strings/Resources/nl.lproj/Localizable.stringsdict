@@ -79,7 +79,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d beveiligde server</string>
+        <string>%d beveiligde servers</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -313,13 +313,13 @@ gestopt</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d uur</string>
+        <string>%d u</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d uren</string>
+        <string>%d u</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -340,13 +340,13 @@ gestopt</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d uur</string>
+        <string>%d u</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d uren</string>
+        <string>%d u</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -356,13 +356,13 @@ gestopt</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d uur</string>
+        <string>%d u</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d uren</string>
+        <string>%d u</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>

@@ -68,7 +68,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d länder</string>
+        <string>%d land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -79,7 +79,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d säker server</string>
+        <string>%d säkra servrar</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -95,7 +95,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d land</string>
+        <string>%d länder</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -112,7 +112,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d+ säkra servrar</string>
+        <string>%d+ säker server</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
@@ -329,13 +329,13 @@ stoppade</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -372,13 +372,13 @@ stoppade</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
       <key>SECONDS</key>
       <dict>
@@ -399,13 +399,13 @@ stoppade</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>

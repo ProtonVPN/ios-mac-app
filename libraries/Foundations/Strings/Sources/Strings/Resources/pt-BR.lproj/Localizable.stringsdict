@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Proteja até %d dispositivo</string>
+        <string>Proteja até %d dispositivos</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -68,7 +68,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d países</string>
+        <string>%d país</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -79,7 +79,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d servidor seguro</string>
+        <string>%d servidores seguros</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -101,7 +101,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d países</string>
+        <string>%d país</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -112,7 +112,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d servidores seguros</string>
+        <string>%d servidor seguro</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
@@ -383,13 +383,13 @@ parados</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d seg</string>
+        <string>%d s</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d seg</string>
+        <string>%d s</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -415,13 +415,13 @@ parados</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d seg</string>
+        <string>%d s</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d seg</string>
+        <string>%d s</string>
       </dict>
     </dict>
     <key>_step_of</key>

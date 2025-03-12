@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Proteção até %d dispositivo</string>
+        <string>Proteção até %d dispositivos</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -64,7 +64,7 @@
     <key>modals_upsell_all_countries_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Aceda a mais de %#@num_servers@ em %#@num_countries@</string>
+      <string>Aceda a mais de %#@num_servers@ em %#@num_countries@.</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
@@ -327,13 +327,13 @@ parados</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d minuto</string>
+        <string>%d min</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d minutos</string>
+        <string>%d min</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -370,13 +370,13 @@ parados</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d minuto</string>
+        <string>%d min</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d minutos</string>
+        <string>%d min</string>
       </dict>
       <key>SECONDS</key>
       <dict>
@@ -397,13 +397,13 @@ parados</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d minuto</string>
+        <string>%d min</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d minutos</string>
+        <string>%d min</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -456,13 +456,13 @@ parados</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Localizações de servidor gratuitas (%d)</string>
+        <string>Localizações dos servidores gratuitas (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Localizações de servidor gratuitas (%d)</string>
+        <string>Localizações dos servidores gratuitas (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

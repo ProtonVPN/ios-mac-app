@@ -1093,7 +1093,7 @@
 "_welcome_description" = "დიდი მადლობა Proton VPN-ის გამოყენებისთვის.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "პლუსი";
+"_plus" = "Plus";
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P სერვერები";
@@ -1396,7 +1396,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "ჭკვიანი";
+"_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "ჩართეთ Smart Protocol ავტომატურად გამოიყენოს პროტოკოლი და პორტი, რომელიც გთავაზობთ საუკეთესო კავშირს.";
@@ -1481,7 +1481,7 @@
 
 "_tier_free" = "უფასო";
 
-"_tier_plus" = "პლუსი";
+"_tier_plus" = "Plus";
 
 "_tier_visionary" = "Visionary";
 
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "სერვერები ფიზიკურად სინგაპურშია, მაგრამ თქვენ გამოჩნდებით, თითქოს ტაილანდიდან მუშაობთ.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "სერვერები ფიზიკურად განთავსებულია ქვეყანაში %1$@, მაგრამ თქვენ გამოჩნდებით, თითქოს, %2$@-დან მუშაობთ.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1910,7 +1910,7 @@
 "_connection_details_feature_description_streaming" = "ეს სერვერი ოპტიმიზებულია TV-ისა და ფილმების საყურებლად";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
-"_connection_details_features_title" = "ფუნქციები";
+"_connection_details_features_title" = "თვისებები";
 
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
 "_connection_details_info_button" = "ინფორმაცია";
@@ -1943,13 +1943,13 @@
 "_settings_section_title_account" = "ანგარიში";
 
 /* Title of the 'Features' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_features" = "ფუნქციები";
+"_settings_section_title_features" = "თვისებები";
 
 /* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_connection" = "კავშირი";
 
 /* Title of the 'General' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_general" = "ზოგადი";
+"_settings_section_title_general" = "საერთო";
 
 /* Title of the 'Support' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_support" = "მხარდაჭერა";
@@ -2009,19 +2009,19 @@
 "_settings_netshield_on" = "ჩართ";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "გამორთ";
+"_settings_netshield_off" = "გამორთული";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_on" = "ჩართ";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "გამორთ";
+"_settings_killswitch_off" = "გამორთული";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_auto" = "ავტო";
 
 /* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_dark" = "მუქი";
+"_settings_theme_value_dark" = "ბნელი";
 
 /* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_light" = "ღია";
@@ -2030,7 +2030,7 @@
 "_settings_theme_label_auto" = "ავტო*";
 
 /* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_dark" = "მუქი";
+"_settings_theme_label_dark" = "ბნელი";
 
 /* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
 "_settings_theme_label_light" = "ღია";

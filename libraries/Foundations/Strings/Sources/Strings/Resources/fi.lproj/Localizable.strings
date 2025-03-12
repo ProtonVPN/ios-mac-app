@@ -12,10 +12,10 @@
 "_delete" = "Poista";
 
 /* Common word */
-"_disconnect" = "Katkaise yhteys";
+"_disconnect" = "Katkaise";
 
 /* Common word */
-"_disconnected" = "Yhteys katkaistu";
+"_disconnected" = "Ei yhdistetty";
 
 /* Status of VPN connection reported by Siri */
 "_disconnecting" = "Katkaistaan yhteyttä";
@@ -255,7 +255,7 @@
 "_connection_failed" = "Yhteys epäonnistui";
 
 /* iOS status view */
-"_security" = "Suojaus";
+"_security" = "Turvallisuus";
 
 /* iOS status view */
 "_status" = "Tila";
@@ -334,10 +334,10 @@
 "_hide" = "PIILOTA";
 
 /* MacOS: Login button */
-"_login" = "Kirjaudu";
+"_login" = "Kirjaudu sisään";
 
 /* iOS: Login button in several places */
-"_log_in" = "Kirjaudu";
+"_log_in" = "Kirjaudu sisään";
 
 /* MacOS: label in login and settings screens */
 "_remember_login" = "Muista kirjautua";
@@ -521,7 +521,7 @@
 "_server_load" = "Palvelimen kuormitus:";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_server_ip" = "Palvelimen IP-osoite:";
+"_server_ip" = "Palvelimen IP:";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_auto_assigned" = "Automaattisesti määritetty";
@@ -715,7 +715,7 @@
 "_error_decode" = "Arkistoitujen tietojen purku epäonnistui luokassa: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Sähköpostivahvistus on väliaikaisesti pois käytöstä";
+"_error_email_verification_disabled" = "Sähköpostivahvistus on tilapäisesti pois käytöstä";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton ei voinut viestiä laitteesi kanssa. Yritä myöhemmin uudelleen.";
@@ -924,7 +924,7 @@
 "_early_access" = "Ennakkoversiot";
 
 /* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Saa uusimmat päivitykset ensimmäisten joukossa. Huomoi, että varhaiset kehitysversiot saattavat olla epävakaita.";
+"_early_access_tooltip" = "Saat uusimmat päivitykset ensimmäisten joukossa. Huomioi, että varhaiset kehitysversiot saattavat olla epävakaita.";
 
 /* MacOS: Settings -> General: name of field. */
 "_unprotected_network" = "Ilmoita suojaamattomista verkoista";
@@ -936,7 +936,7 @@
 "_dns_leak_protection" = "DNS-vuotosuojaus";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Estä DNS-kyselyiden vuotaminen ulkopuolisille. Aina päällä.";
+"_dns_leak_protection_tooltip" = "Estä DNS-kyselyitä vuotamasta ulkopuolisille. Aina käytössä.";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Suojausavaimet";
@@ -1044,7 +1044,7 @@
 "_plus_plan_features" = "Plus-palvelimet\nSecure Core\nTor-palvelimet";
 
 /* Used instead of price for free plans. */
-"_free" = "Ilmainen";
+"_free" = "Free";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Haluatko aktivoida ostetun sopimuksen tilille ";
@@ -1288,7 +1288,7 @@
 
 "_troubleshoot_item_other_link1" = "tukilomake";
 
-"_troubleshoot_item_other_link2" = "sähköposti";
+"_troubleshoot_item_other_link2" = "sähköpostiosoite";
 
 "_troubleshoot_item_other_link3" = "Twitter";
 
@@ -1319,7 +1319,7 @@
 "_netshield_title_tooltip" = "Estä mainoksia, seurantoja ja haittaohjelmia";
 
 /* Settings -> Netshield, Status -> NetShield: Off */
-"_netshield_off" = "Pois";
+"_netshield_off" = "Ei käytössä";
 
 /* Status -> Netshield: On */
 "_netshield_on" = "Käytössä";
@@ -1351,7 +1351,7 @@
 
 "_quick_settings_netShield_description" = "Selaa Internetiä ilman mainoksia ja haittaohjelmia.";
 
-"_quick_settings_killSwitch_description" = "Estää IP-osoitevuodon estämiseksi yhteyden Internetiin VPN-yhteyden katketessa odottamattomasti.";
+"_quick_settings_killSwitch_description" = "Tappokytkin suojaa IP-osoitettasi estämällä Internet-yhteyden, jos VPN-yhteys katkeaa odottamattomasti.";
 
 "_quick_settings_secureCore_note" = "Secure Core voi hidastaa VPN-yhteyttä";
 
@@ -1436,7 +1436,7 @@
 
 "_sysex_cannot_enable" = "Järjestelmälaajennusta ei voida ottaa käyttöön";
 
-"_sysex_error_description" = "Järjestelmälaajennuksen asennuksessa tapahtui virhe.\nKorjaa ongelma asentamalla Proton VPN uudelleen varmistaen, että sen sijainti on Sovellukset-kansiossa. Vaihtoehtoisesti ota yhteyttä tukeemme.";
+"_sysex_error_description" = "Järjestelmälaajennuksen asennuksessa tapahtui virhe.\nKorjaa ongelma asentamalla Proton VPN uudelleen varmistaen, että sen sijainti on Sovellukset-kansiossa. Vaihtoehtoisesti ota yhteyttä asiakaspalveluumme.";
 
 "_vpnauth_certfail_title" = "Todennusvirhe";
 
@@ -1479,7 +1479,7 @@
 
 "_subscription_upgrade_option3" = "Lisäominaisuudet: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Ilmainen";
+"_tier_free" = "Free";
 
 "_tier_plus" = "Plus";
 
@@ -1511,7 +1511,7 @@
 
 "_feature_free_servers_description" = "Suojausta ja yksityisyyttä kaikille. Ilmaispalvelimilla ei ole tiedonsiirtorajoituksia, emmekä koskaan hidasta selausnopeuttasi tahallisesti.";
 
-"_feature_smart_routing_description" = "Tämän tekniikan avulla Proton VPN tarjoaa paremman nopeuden ja suojauksen vaikeasti palveltavissa maissa.";
+"_feature_smart_routing_description" = "Tämän tekniikan ansiosta Proton VPN voi tarjota paremman nopeuden ja suojauksen vaikeasti palveltavissa maissa.";
 
 "_feature_streaming_description" = "Plus-palvelimet tukevat suoratoistoa (Netflix, Disney+ jne.) mistä päin maailmaa tahansa.";
 
@@ -1519,7 +1519,7 @@
 
 "_feature_tor_description" = "Ohjaa Internet-tietoliikenteesi Tor-verkon kautta. Hitaampaa, mutta yksityisempää.";
 
-"_performance_load_description" = "Korkeasti kuormitetut palvelimet ovat matalasti kuormitetuttuja hitaampia.";
+"_performance_load_description" = "Korkeasti kuormitetut palvelimet ovat kevyesti kuormitettuja hitaampia.";
 
 "_performance_load_low" = "Matala";
 
@@ -1574,7 +1574,7 @@
 "_welcome_headline" = "Suojaa itseäsi verkossa";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "Huippunopea sveitsiläinen VPN, joka suojaa yksityisyyttäsi salaamalla Internet-yhteytesi.";
+"_welcome_body" = "Nopea sveitsiläinen VPN, joka suojaa yksityisyyttäsi salaamalla Internet-yhteytesi.";
 
 "_force_upgrade_title" = "Sovelluspäivitys tarvitaan";
 
@@ -1607,7 +1607,7 @@
 
 "_subuser_alert_enable_connections_button" = "Määritä VPN-yhteydet";
 
-"_subuser_alert_login_button" = "Kirjaudu uudelleen";
+"_subuser_alert_login_button" = "Kirjaudu sisään uudelleen";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Keskitasoinen NAT";
@@ -1643,7 +1643,7 @@
 "_settings_mac_crash_reports_title" = "Jaa anonyymejä virheraportteja";
 
 /* Telemetry tooltip in the settings window for mac */
-"_settings_mac_crash_reports_tooltip" = "Kaatumisilmoitukset auttavat meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
+"_settings_mac_crash_reports_tooltip" = "Virheraportit auttavat meitä korjaaman vikoja, havaitsemaan palomuureja ja kiertämään VPN-estoja.";
 
 /* Section title in Settings */
 "_advanced" = "Lisäasetukset";
@@ -1689,7 +1689,7 @@
 
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
-"_home_tab" = "Koti";
+"_home_tab" = "Aloitus";
 
 /* Countries tab in bottom menu [Redesign_2023] */
 "_countries_tab" = "Maat";
@@ -1722,13 +1722,13 @@
 "_connection_card_last_connected_to" = "Viimeksi yhteydessä maahan";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "Loading...";
+"_connection_card_loading" = "Ladataan...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
-"_connection_card_connecting_to" = "Yhdistetään maahan...";
+"_connection_card_connecting_to" = "Yhdistetään palvelimeen...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "Yhdistetään maahan %@.";
+"_connection_card_accessibility_connecting_to" = "Yhdistetään palvelimeen %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "Olit viimeksi yhteydessä maahan %@.";
@@ -1737,7 +1737,7 @@
 "_connection_card_accessibility_browsing_from" = "Selaat turvallisesti maasta %@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
-"_connection_card_accessibility_loading" = "Loading";
+"_connection_card_accessibility_loading" = "Ladataan";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Valitse oletusyhteytesi";
@@ -1764,7 +1764,7 @@
 "_home_recents_options_button_help" = "Toiminnot";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_plus_server" = "Palvelin on käytettävissä VPN Plussalla";
+"_home_recents_plus_server" = "Palvelin on käytettävissä VPN Plus -tilauksella";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Palvelin on huollossa";
@@ -1782,10 +1782,10 @@
 "_action_remove" = "Poista";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
-"_action_disconnect" = "Katkaise yhteys";
+"_action_disconnect" = "Katkaise";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
-"_connection_card_action_cancel" = "Peruuta";
+"_connection_card_action_cancel" = "Peru";
 
 /* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
 "_show_connection_details_button_hint" = "Näytä yhteyden tiedot";
@@ -1815,7 +1815,7 @@
 "connection_status_protected" = "Suojattu";
 
 /* Connection status title while VPN status is unknown */
-"connection_status_loading" = "Loading";
+"connection_status_loading" = "Ladataan";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Hanki Plus";
@@ -1871,7 +1871,7 @@
 "_connection_details_protocol" = "Protokolla";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_my" = "Oma IP";
+"_connection_details_ipview_ip_my" = "Oma IP-osoite";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_vpn" = "VPN:n IP";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Palvelimet sijaitsevat fyysisesti Singaporessa, mutta näytät selaavasi Thaimaasta.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2006,13 +2006,13 @@
 "_settings_app_version" = "Sovellusversio: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_on" = "Päällä";
+"_settings_netshield_on" = "Käytössä";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_off" = "Pois";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_on" = "Päällä";
+"_settings_killswitch_on" = "Käytössä";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_off" = "Pois";
@@ -2078,7 +2078,7 @@
 "_settings_protocol_alert_body" = "Protokollan vaihto päättää nykyisen VPN-istunnon.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "Peruuta";
+"_settings_protocol_alert_button_cancel" = "Peru";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_continue" = "Jatka";
@@ -2123,7 +2123,7 @@
 "search_no_results_title" = "Tuloksia ei löytynyt";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Kokeile toista avainsanaa";
+"search_no_results_subtitle" = "Kokeile eri hakusanaa";
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Viimeksi näytetyt";
@@ -2144,7 +2144,7 @@
 "search_bar_placeholder" = "Maa, kaupunki tai palvelin";
 
 /* Subtitle for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Enemmän sijainteja = enemmän käytettävissä olevaa sisältöä + parempaa suojausta + suurempia nopeuksia";
+"search_upsell_subtitle" = "Enrmmän sijainteja = enemmän vapautettua sisältöä + kattavampaa suojausta + korkeampia nopeuksia";
 
 /* Section header in search */
 "search_secure_core_countries" = "Secure Core -maat";
@@ -2210,16 +2210,16 @@
 "modals_upsell_net_shield_malware" = "Suojaa laitettasi haittaohjelmilta";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_highSpeed" = "Selaa suurimmilla nopeuksilla";
+"modals_upsell_net_shield_highSpeed" = "Selaa korkeimmilla nopeuksilla";
 
 /* Title of the Secure Core upsell screen */
 "modals_upsell_secure_core_title" = "Tuplaa salaus Secure Corella";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_route" = "Ohjaa huipputurvallisten Sveitsissä, Ruotsissa ja Islannissa sijaitsevien palvelimien kautta";
+"modals_upsell_secure_core_route" = "Ohjaa tietoliikenteesi huipputurvallisten Sveitsissä, Ruotsissa ja Islannissa sijaitsevien palvelimien kautta";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Lisää salauskerros VPN-yhteyteesi";
+"modals_upsell_secure_core_layer" = "Lisää VPN-yhteyteesi toinen salauskerros";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Suojaudu verkkohyökkäyksiltä";
@@ -2264,7 +2264,7 @@
 "modals_new_upsell_country_title" = "Haluatko yhdistää tiettyyn maahan?";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Avaa maavalinta VPN Plussalla.";
+"modals_new_upsell_country_subtitle" = "Avaa maavalinta VPN Plus -tilauksella.";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "Avaa profiilit VPN Plussalla.";
@@ -2282,7 +2282,7 @@
 "modals_discourage_secure_core_activate" = "Aktivoi Secure Core";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Päivitetty Proton, yhtenäinen suojaus";
+"new_plans_brand_title" = "Päivitetty Proton yhtenäisellä suojauksella";
 
 /* Subtitle of the New Brand screen */
 "new_plans_brand_subtitle" = "Esittelyssä Protonin uusi ilme.\nUseita palveluita, yhteinen tehtävä. Tervetuloa Internetiin, jossa yksityisyys on oletusarvoista.";
@@ -2375,7 +2375,7 @@
 "upsell_profiles_subtitle" = "Avaa profiilit VPN Plussalla";
 
 /* First bold part of the subtitle of Profiles upsell modal */
-"upsell_profiles_subtitle_bold_1" = "profiileja";
+"upsell_profiles_subtitle_bold_1" = "profiilit";
 
 /* Second bold part of the subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle_bold_2" = "VPN Plus";
@@ -2411,7 +2411,7 @@
 "upsell_country_feature_title" = "Haluatko valita tietyn maan?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Avaa maavalinta VPN Plussalla";
+"upsell_country_feature_subtitle" = "Avaa maavalinta VPN Plussalla.";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "maavalinta";
@@ -2483,7 +2483,7 @@
 "welcome_to_proton_title" = "Tervetuloa Proton VPN:ään";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "Selaa yksityisesti, pääse estettyyn sisältöön ja nauti digitaalisesta vapaudesta.";
+"welcome_to_proton_subtitle" = "Selaa yksityisesti, käytä estettyö sisältöä ja nauti digitaalisesta vapaudesta.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
 "welcome_to_proton_banner_title" = "Todistetusti lokivapaa VPN";
@@ -2510,7 +2510,7 @@
 "upsell_plans_list_title" = "Paranna yksityisyyttäsi";
 
 /* Subtitle of paid plans list. */
-"upsell_plans_list_subtitle" = "Hanki edistyneitä yksityisyytäsi tehostavia ominaisuuksia ja korkeampi nopeus VPN Plussalla.";
+"upsell_plans_list_subtitle" = "Hanki edistyneitä yksityisyytäsi tehostavia ominaisuuksia ja korkeampi nopeus VPN Plus -tilauksella.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
 "upsell_plans_list_section_header" = "Valitse tilauksesi";
@@ -2533,7 +2533,7 @@
 
 "onboarding_crash_reports_title" = "Jaa anonyymejä virheraportteja";
 
-"onboarding_crash_reports_description" = "Kaatumisilmoitukset auttavat meitä korjaaman vikoja, tunnistamaan palomuureja ja kiertämään VPN-estoja.";
+"onboarding_crash_reports_description" = "Virheraportit auttavat meitä korjaaman vikoja, havaitsemaan palomuureja ja kiertämään VPN-estoja.";
 
 "onboarding_footer" = "Nämä tilastot eivät sisällä IP-osoitettasi, eikä sinua ole mahdollista tunnistaa niiden perusteella. Emme koskaa jaa niitä ulkopuolisille tahoille.";
 

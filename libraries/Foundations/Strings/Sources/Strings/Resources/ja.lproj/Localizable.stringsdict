@@ -400,7 +400,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>無料サーバーの場所 (%d)</string>
+        <string>無料のサーバーの場所 (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

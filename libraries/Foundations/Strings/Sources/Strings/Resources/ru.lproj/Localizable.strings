@@ -106,7 +106,7 @@
 "_vpn_protocol_not_supported_text" = "Протокол VPN недоступен для выбранного вами подключения. Чтобы подключиться, попробуйте изменить протокол или сервер.";
 
 /* iOS: button in settings screen */
-"_log_out" = "Выйти";
+"_log_out" = "Bыйти";
 
 /* iOS: Logout alert */
 "_log_out_warning" = "Выход из системы завершит сеанс VPN.";
@@ -486,7 +486,7 @@
 "_via_country" = "через %@";
 
 /* Used for SecureCore connection labels. */
-"_via_secure_core" = "via Secure Core";
+"_via_secure_core" = "через Secure Core";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "через";
@@ -495,7 +495,7 @@
 "_server_load_percentage" = "Нагрузка: %@%%";
 
 /* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
-"_home" = "Домашняя страница";
+"_home" = "Главная";
 
 /* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
 "_countries" = "Страны";
@@ -602,7 +602,7 @@
 "_fastest_available_server" = "Самый быстрый доступный сервер";
 
 /* iOS: Predefined profile with fastest connection */
-"_fastest_connection" = "Самый быстрый";
+"_fastest_connection" = "Быстрейший";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Случайный";
@@ -1219,7 +1219,7 @@
 "_menu_show_all" = "Показать все";
 
 /* Main mac app menu item */
-"_menu_logout" = "Выйти";
+"_menu_logout" = "Bыйти";
 
 /* Main mac app menu item */
 "_menu_quit" = "Закрыть Proton VPN";
@@ -1293,7 +1293,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Данные\nсохранены";
+"_netshield_stats_data_saved" = "Экономия\nтрафика";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Защитите себя от рекламы, вредоносных программ, отслеживания на веб-сайтах и в приложениях. Если сайты не загружаются, попробуйте отключить функцию NetShield.\nПодробнее";
@@ -1479,7 +1479,7 @@
 
 "_subscription_upgrade_option3" = "Дополнительные возможности: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "Бесплатный";
+"_tier_free" = "Free";
 
 "_tier_plus" = "Plus";
 
@@ -1601,7 +1601,7 @@
 
 "_subuser_alert_description1" = "Чтобы продолжить с Proton VPN, разрешите подключения к VPN. Также это нужно сделать для всех пользователей вашей организации.";
 
-"_subuser_alert_description2" = "Этот шаг займет всего несколько минут. После этого вы сможете войти в систему и защитить все свои устройства.";
+"_subuser_alert_description2" = "Этот шаг займет всего несколько минут. После него вы сможете авторизоваться и защитить все свои устройства.";
 
 "_subuser_alert_description3" = "В настоящее время для этого аккаунта не разрешено подключение к VPN. Чтобы начать свое путешествие с Proton VPN, свяжитесь с вашим администратором.";
 
@@ -1689,7 +1689,7 @@
 
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
-"_home_tab" = "Home";
+"_home_tab" = "Главная";
 
 /* Countries tab in bottom menu [Redesign_2023] */
 "_countries_tab" = "Страны";
@@ -1713,22 +1713,22 @@
 "_connection_card_accessibility_fastest_sc" = "The fastest secure core country available";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
-"_connection_card_default_connection" = "Default connection";
+"_connection_card_default_connection" = "Подключение по умолчанию";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "Безопасный просмотр из";
+"_connection_card_safely_browsing_from" = "Безопасный сёрфинг из";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "Последнее подключение к";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "Загрузка...";
+"_connection_card_loading" = "Загружается...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Подключение к...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "Connecting to %@.";
+"_connection_card_accessibility_connecting_to" = "Подключение к %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
@@ -1740,22 +1740,22 @@
 "_connection_card_accessibility_loading" = "Загрузка";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
-"home_default_connection_title" = "Select your default connection";
+"home_default_connection_title" = "Выберите ваше подключение по умолчанию";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_name" = "Fastest Country";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_description" = "The best server based on your location";
+"home_default_connection_fastest_description" = "Лучший сервер на основе вашего местоположения";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_name" = "Most Recent";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_description" = "Your most recently used connection";
+"home_default_connection_most_recent_description" = "Последнее использованное подключение";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
-"_home_recents_upsell_section" = "Discover VPN Plus";
+"_home_recents_upsell_section" = "Откройте для себя VPN Plus";
 
 /* The section of recent connections in the Home tab. [Redesign_2023] */
 "_home_recents_recent_section" = "Недавние";
@@ -1773,16 +1773,16 @@
 "home_recents_random_server_title" = "Random Country";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
-"_action_help" = "Помощь";
+"_action_help" = "Справка";
 
 /* For buttons which have an action that connects to a server. [Redesign_2023] */
-"_action_connect" = "Подключить";
+"_action_connect" = "Подключиться";
 
 /* For buttons which have an action that removes an item. [Redesign_2023] */
 "_action_remove" = "Удалить";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
-"_action_disconnect" = "Отключить";
+"_action_disconnect" = "Отключиться";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
 "_connection_card_action_cancel" = "Отмена";
@@ -1791,25 +1791,25 @@
 "_show_connection_details_button_hint" = "Показать информацию о подключении";
 
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
-"_action_home_pin" = "Закрепить";
+"_action_home_pin" = "Прикрепить";
 
 /* Home screen: unpin this connection from the recents view. [Redesign_2023] */
 "_action_home_unpin" = "Открепить";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
-"home_fastest_connection_selection_description" = "Auto-selected from";
+"home_fastest_connection_selection_description" = "Автоматически выбрано из";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
 "home_fastest_connection_additional_country_count" = "+%@";
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
-"_secure_core_via_country" = "via %@";
+"_secure_core_via_country" = "через %@";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "Вы не защищены";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
-"connection_status_protecting" = "Защита ваших цифровых личных данных.";
+"connection_status_protecting" = "Защита ваших цифровых личных данных";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "Защищено";
@@ -1821,15 +1821,15 @@
 "upsell_get_plus" = "Получить Plus";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
-"netshield_stats_hint_ads" = "С помощью трекеров и cookie сайты отслеживают вас для показа таргетированной рекламы.";
+"netshield_stats_hint_ads" = "Рекламные сайты используют файлы cookie и трекеры, чтобы показывать вам персонализированную рекламу.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
-"netshield_stats_hint_trackers" = "Трекеры – это сторонние веб-сайты, которые собирают, хранят и продают информацию о ваших действиях в сети.";
+"netshield_stats_hint_trackers" = "Трекеры – это сторонние сайты, которые собирают, хранят и продают информацию о ваших действиях в интернете.";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
-"netshield_stats_hint_data" = "Примерный размер заблокированных NetShield данных (рекламы, трекеров, вредоносных программ).";
+"netshield_stats_hint_data" = "Примерный объём рекламы, трекеров и вредоносных программ, которые заблокировал NetShield.";
 
-"_netshield_stats_data_saved" = "Данные\nсохранены";
+"_netshield_stats_data_saved" = "Экономия\nтрафика";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
@@ -1853,7 +1853,7 @@
 "_connection_details_title" = "Информация о подключении";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "Подключено";
+"_connection_details_connected_for" = "Подключено к";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
 "_connection_details_country" = "Страна";
@@ -1865,7 +1865,7 @@
 "_connection_details_server" = "Сервер";
 
 /* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
-"_connection_details_server_load" = "Загруженность сервера";
+"_connection_details_server_load" = "Нагрузка сервера";
 
 /* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
 "_connection_details_protocol" = "Протокол";
@@ -1874,7 +1874,7 @@
 "_connection_details_ipview_ip_my" = "Мой IP";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_vpn" = "IP VPN";
+"_connection_details_ipview_ip_vpn" = "VPN IP";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_unavailable" = "Недоступно";
@@ -1883,31 +1883,31 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "You can connect to .onion sites with your regular browser.";
+"_connection_details_feature_description_tor" = "Вы можете подключиться к сайтам onion с помощью обычного браузера.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
 
 /* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_p2p" = "Peer-to-peer file sharing is enabled on this server.";
+"_connection_details_feature_description_p2p" = "На этом сервере включен одноранговый обмен файлами.";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Серверы физически расположены в Сингапуре, но создается впечатление, что вы просматриваете сайт из Таиланда.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
+"_connection_details_feature_description_secure_core" = "Ваши действия шифруются на двух высокозащищенных серверах VPN.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_streaming" = "Просмотр трансляций";
+"_connection_details_feature_title_streaming" = "Трансляция";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "This server is optimized for TV and movie playback.";
+"_connection_details_feature_description_streaming" = "Этот сервер оптимизирован для воспроизведения телепрограмм и фильмов.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "Функции";
@@ -1922,7 +1922,7 @@
 "_alert_protocol_deprecated_body_macos" = "В этом профиле используется протокол, который устарел и больше не поддерживается. Нажмите \"Обновить\", чтобы перейти к использованию протокола Smart по умолчанию. Узнать больше";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
-"_alert_protocol_deprecated_link_text" = "Подробнее";
+"_alert_protocol_deprecated_link_text" = "Узнать больше";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
 "_alert_protocol_deprecated_body_ios" = "This profile uses a protocol that is outdated and no longer supported. Click \"Update\" to switch to using the default Smart protocol.";
@@ -1931,7 +1931,7 @@
 "_alert_protocol_deprecated_enable_smart" = "Обновить";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
-"_alert_protocol_deprecated_learn_more" = "Подробнее";
+"_alert_protocol_deprecated_learn_more" = "Узнать больше";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "Закрыть";
@@ -1949,7 +1949,7 @@
 "_settings_section_title_connection" = "Подключение";
 
 /* Title of the 'General' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_general" = "Общее";
+"_settings_section_title_general" = "Общие положения";
 
 /* Title of the 'Support' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_support" = "Поддержка";
@@ -1973,91 +1973,91 @@
 "_settings_title_advanced" = "Расширенные настройки";
 
 /* Title of the Theme cell in the Settings tab [Redesign_2023] */
-"_settings_title_theme" = "Theme";
+"_settings_title_theme" = "Тема";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
-"_settings_title_beta_access" = "Beta access";
+"_settings_title_beta_access" = "Бета доступ";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
-"_settings_title_widget" = "Widget";
+"_settings_title_widget" = "Виджет";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Support center";
+"_settings_title_support_center" = "Справочный центр";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
-"_settings_title_report_issue" = "Report an issue";
+"_settings_title_report_issue" = "Сообщить о проблеме";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
-"_settings_title_debug_logs" = "Debug logs";
+"_settings_title_debug_logs" = "Журналы отладки";
 
 /* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
-"_settings_title_censorship" = "Help us fight censorship";
+"_settings_title_censorship" = "Помогите нам бороться с цензурой";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
-"_settings_title_rate" = "Rate Proton VPN";
+"_settings_title_rate" = "Оцените Proton VPN";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_restore_default_settings" = "Restore default settings";
+"_settings_title_restore_default_settings" = "Восстановить настройки по умолчанию";
 
 /* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
-"_settings_title_sign_out" = "Sign out";
+"_settings_title_sign_out" = "Bыйти";
 
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
-"_settings_app_version" = "App Version: %@";
+"_settings_app_version" = "Версия приложения: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_on" = "On";
+"_settings_netshield_on" = "Включён";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "Off";
+"_settings_netshield_off" = "Выключено";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_on" = "On";
+"_settings_killswitch_on" = "Включён";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Off";
+"_settings_killswitch_off" = "Выключено";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_auto" = "Auto";
+"_settings_theme_value_auto" = "По умолчанию";
 
 /* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_dark" = "Dark";
+"_settings_theme_value_dark" = "Темная";
 
 /* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_light" = "Light";
+"_settings_theme_value_light" = "Светлая";
 
 /* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
-"_settings_theme_label_auto" = "Auto*";
+"_settings_theme_label_auto" = "По умолчанию*";
 
 /* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_dark" = "Dark";
+"_settings_theme_label_dark" = "Темная";
 
 /* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_light" = "Light";
+"_settings_theme_label_light" = "Светлая";
 
 /* UDP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_udp" = "Speed (UDP)";
+"_settings_protocol_section_title_udp" = "Скорость (UDP)";
 
 /* TCP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_tcp" = "Reliability (TCP)";
+"_settings_protocol_section_title_tcp" = "Надёжность (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Auto-selects the best protocol for your connection.";
+"_settings_protocol_description_smart" = "Автоматически выбирает лучший протокол для подключения.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_udp" = "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.";
+"_settings_protocol_description_wireguard_udp" = "Быстрый, безопасный и эффективный. WireGuard более энергоэффективен, чем другие протоколы.";
 
 /* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tcp" = "Fast, secure, and efficient. WireGuard is difficult to detect and block.";
+"_settings_protocol_description_wireguard_tcp" = "Быстрый, безопасный и эффективный WireGuard трудно обнаружить и заблокировать.";
 
 /* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tls" = "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.";
+"_settings_protocol_description_wireguard_tls" = "Преодолевает блокировки VPN, скрывая ваше подключение к VPN от цензоров. Этот протокол устойчив к DPI (глубокой проверке пакетов), но может быть не таким быстрым, как другие протоколы. Stealth является уникальным для Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Established, well-tested, and secure. OpenVPN is less battery-efficient than some other protocols.";
+"_settings_protocol_description_openvpn_udp" = "Зарекомендовавший себя, хорошо проверенный и безопасный. OpenVPN менее энергоэффективен, чем некоторые другие протоколы.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_tcp" = "Established, well-tested, and secure. OpenVPN is reliable in poor network conditions, but may not be as fast as other protocols.";
+"_settings_protocol_description_openvpn_tcp" = "Зарекомендовавший себя, хорошо проверенный и безопасный. OpenVPN надёжен в условиях плохой сети, но может быть медленнее других протоколов.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
@@ -2066,22 +2066,22 @@
 "_settings_protocol_tag_recommended" = "RECOMMENDED";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
-"_settings_protocol_tag_new" = "NEW";
+"_settings_protocol_tag_new" = "НОВОЕ";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
 "_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_title" = "VPN Connection Active";
+"_settings_protocol_alert_title" = "VPN-подключение активно";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "Changing protocols will end your current VPN session.";
+"_settings_protocol_alert_body" = "Изменение протоколов завершит вашу текущую сессию VPN.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "Cancel";
+"_settings_protocol_alert_button_cancel" = "Отмена";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_continue" = "Continue";
+"_settings_protocol_alert_button_continue" = "Продолжить";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Плохой сетевой интерфейс";
@@ -2225,7 +2225,7 @@
 "modals_upsell_secure_core_attacks" = "Защитите себя от сетевых атак";
 
 /* Title of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_title" = "Просматривайте веб-страницы на еще более высоких скоростях";
+"modals_new_upsell_vpn_accelerator_title" = "Просматривайте веб-страницы на ещё более высоких скоростях";
 
 /* Subtitle of the VPN Accelerator screen */
 "modals_new_upsell_vpn_accelerator_subtitle" = "Разблокируйте более быстрые и менее загруженные серверы со скоростью до 10 Гбит/с.";
@@ -2249,7 +2249,7 @@
 "modals_new_upsell_secure_core_title" = "Удвойте свою защиту";
 
 /* Subtitle of Secure Core upsell screen */
-"modals_new_upsell_secure_core_subtitle" = "Добавьте еще один уровень шифрования к вашему VPN-подключению с помощью Secure Core.";
+"modals_new_upsell_secure_core_subtitle" = "Добавьте ещё один уровень шифрования к VPN-подключению с помощью Secure Core.";
 
 /* The bold portion of the subtitle of the Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
@@ -2261,7 +2261,7 @@
 "modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
 
 /* Title of Country upsell screen */
-"modals_new_upsell_country_title" = "Хотите подключиться к определенной стране?";
+"modals_new_upsell_country_title" = "Хотите подключиться к определённой стране?";
 
 /* Subtitle of Country upsell screen */
 "modals_new_upsell_country_subtitle" = "Разблокируйте выбор страны с помощью VPN Plus.";
@@ -2300,7 +2300,7 @@
 "modals_common_next" = "Далее";
 
 /* Common button title */
-"modals_common_get_started" = "Начать";
+"modals_common_get_started" = "Приступить к работе";
 
 /* Description of user account update screen part 1 */
 "maximum_device_plan_limit_part_1" = "Отключите другое устройство, чтобы подключиться к этому, или перейдите на %@";
@@ -2309,34 +2309,34 @@
 "maximum_device_limit" = "Отключите другое устройство для подключения к этому.";
 
 /* Title of streaming upsell modal */
-"upsell_streaming_title" = "Stream in 4K";
+"upsell_streaming_title" = "Трансляция в 4K";
 
 /* Subtitle of streaming upsell modal */
-"upsell_streaming_subtitle" = "Enjoy your favorite movies and TV shows from anywhere in the world.";
+"upsell_streaming_subtitle" = "Наслаждайтесь любимыми фильмами и телепередачами из любой точки мира.";
 
 /* Title of p2p support upsell modal */
-"upsell_p2pSupport_title" = "Unlock peer-to-peer (P2P) downloads and file sharing";
+"upsell_p2pSupport_title" = "Разблокировать одноранговые загрузки (P2P) и обмен файлами";
 
 /* Subtitle of p2p support upsell modal */
-"upsell_p2pSupport_subtitle" = "Improve your upload and download speeds while hiding your IP address.";
+"upsell_p2pSupport_subtitle" = "Улучшите скорость загрузки и скачивания, скрывая при этом свой IP-адрес.";
 
 /* Title of devices upsell modal */
-"upsell_devices_title" = "Protect 10 devices at once";
+"upsell_devices_title" = "Защита 10 устройств одновременно";
 
 /* Subtitle of devices upsell modal */
 "upsell_devices_subtitle" = "Proton VPN is available on 8 different platforms.";
 
 /* Title of torOverVPN upsell modal */
-"upsell_torOverVPN_title" = "Access the Tor network in one tap";
+"upsell_torOverVPN_title" = "Доступ к сети Tor одним нажатием";
 
 /* Subtitle of torOverVPN upsell modal */
-"upsell_torOverVPN_subtitle" = "Connect to hidden services and onion sites with your regular browser.";
+"upsell_torOverVPN_subtitle" = "Подключайтесь к скрытым службам и сайтам onion с помощью обычного браузера.";
 
 /* Title of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_title" = "Работайте на еще более высоких скоростях (до 10 Гбит/с).";
+"upsell_vpn_accelerator_title" = "Просматривайте веб-страницы на еще более высоких скоростях (до 10 Гбит/с).";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_faster_servers" = "Access faster, less crowded servers.";
+"upsell_vpn_accelerator_faster_servers" = "Получите доступ к более быстрым и менее загруженным серверам.";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds" = "Увеличьте скорость подключения до 400%% с помощью VPN Accelerator.";
@@ -2348,7 +2348,7 @@
 "upsell_vpn_accelerator_distant_servers" = "Повышенная скорость и стабильность при подключении к удаленным серверам.";
 
 /* Title of Customization upsell modal */
-"upsell_customization_title" = "Разблокируйте расширенную настройку VPN";
+"upsell_customization_title" = "Разблокируйте расширенные настройки VPN";
 
 /* Feature of Customization upsell modal */
 "upsell_customization_access_LAN" = "Доступ к устройствам в вашей локальной сети (LAN)";
@@ -2411,7 +2411,7 @@
 "upsell_country_feature_title" = "Хотите выбрать определенную страну?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Разблокируйте выбор страны с помощью VPN Plus";
+"upsell_country_feature_subtitle" = "Разблокируйте выбор страны с VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "выбор страны";
@@ -2477,7 +2477,7 @@
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
 
 /* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
-"welcome_upgrade_subtitle_fallback" = "Вы улучшили свою подписку. Пользуйтесь расширенными функциями приватности и производительностью нового уровня.";
+"welcome_upgrade_subtitle_fallback" = "Вы обновили свою подписку. Воспользуйтесь расширенными функциями конфиденциальности и производительностью нового уровня.";
 
 /* Welcome to Proton screen shown during onboarding. Title label. */
 "welcome_to_proton_title" = "Добро пожаловать в Proton VPN";
@@ -2486,7 +2486,7 @@
 "welcome_to_proton_subtitle" = "Просматривайте сайты в приватно, получайте доступ к заблокированному содержимому и пользуйтесь цифровой свободой.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Сертифицированная VPN без журналов";
+"welcome_to_proton_banner_title" = "Сертифицированный VPN без журналов";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Работа вашей VPN защищена швейцарскими законами о частной жизни. Мы никогда не будем отслеживать вас в сети или передавать вашу информацию третьим лицам.";
@@ -2495,16 +2495,16 @@
 "welcome_to_proton_banner_subtitle_redesign" = "Мы никогда не будем записывать ваши действия в Интернете или передавать вашу информацию третьим лицам.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Делиться данніми об использовании";
+"onboarding_get_started_statistics_toggle_title" = "Делиться анонимной статистикой использования";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
 "onboarding_get_started_statistics_toggle_subtitle" = "Данные об использовании помогают нам преодолевать блокировки VPN и повышать производительность приложения.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Делиться анонимными отчётами об ошибках";
+"onboarding_get_started_crashes_toggle_title" = "Делиться анонимными сообщениями о сбоях";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Отчеты об ошибках помогают нам исправлять ошибки, обнаруживать брандмауэры и избегать блокировки VPN.";
+"onboarding_get_started_crashes_toggle_subtitle" = "Отчёты об ошибках помогают нам устранять ошибки, обнаруживать брандмауэры и избегать блокировки VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Улучшите свою конфиденциальность";
@@ -2519,13 +2519,13 @@
 "upsell_plans_list_validate_button" = "Получить VPN Plus";
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerMonth" = " /месячный";
+"upsell_plans_list_option_amountPerMonth" = " /месяц";
 
 /* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerYear" = " /год";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
-"_available_with_vpn_business_tooltip" = "Доступно с VPN для бизнеса.";
+"_available_with_vpn_business_tooltip" = "Доступно с VPN Business.";
 
 "onboarding_usage_stats_title" = "Делиться анонимной статистикой использования";
 
@@ -2567,7 +2567,7 @@
 "_br_window_title" = "Сообщить о проблеме";
 
 /* ReportBug 1st step title */
-"_br_1_title" = "В чём проблема?";
+"_br_1_title" = "В чем проблема?";
 
 /* ReportBug 2nd step (Quick fixes) title */
 "_br_2_title" = "Быстрые исправления";
@@ -2603,7 +2603,7 @@
 "_br_3_logs_description" = "Журнал - это тип файла, показывающий нам ваши действия, приведшие к появлению ошибки. Мы используем их только для того, чтобы помочь нашим инженерам исправить ошибки.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в причинах вашей проблемы. Если вы их не предоставите, мы не сможем провести полное расследование.";
+"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в сути вашей проблемы. Если вы не приложите их, мы не сможем провести полную проверку.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "Благодарим за отзыв";
@@ -2612,7 +2612,7 @@
 "_br_success_subtitle" = "Мы свяжемся с вами, как только сможем.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Понятно";
+"_br_success_button" = "Я понял";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Ваш отчет не был отправлен";
@@ -2648,7 +2648,7 @@
 "_ike_deprecation_alert_message" = "Этот протокол будет удален в ближайшее время. Рассмотрите возможность перехода на протокол Smart. Подробнее";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "Подробнее";
+"_ike_deprecation_alert_message_link_text" = "Узнать больше";
 
 /* Button title for 'Continue with IKEv2' */
 "_ike_deprecation_alert_continue_button_title" = "Продолжить с IKEv2";
@@ -2675,52 +2675,52 @@
 "_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.";
 
 /* Home upsell carousel card title */
-"upsell_carousel_worldwide_title" = "Worldwide cover";
+"upsell_carousel_worldwide_title" = "Всемирное покрытие";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_worldwide_subtitle" = "1700+ server locations in 63 countries";
 
 /* Home upsell carousel card title */
-"upsell_carousel_faster_browsing_title" = "Faster browsing";
+"upsell_carousel_faster_browsing_title" = "Более быстрый просмотр";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Browse at even higher speeds (up to 10 Gbps)";
+"upsell_carousel_faster_browsing_subtitle" = "Просматривайте веб-страницы на еще более высоких скоростях (до 10 Гбит/с).";
 
 /* Home upsell carousel card title */
-"upsell_carousel_streaming_title" = "Streaming";
+"upsell_carousel_streaming_title" = "Трансляция";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_streaming_subtitle" = "Watch your favorite movies and TV shows";
+"upsell_carousel_streaming_subtitle" = "Смотрите свои любимые фильмы и телепрограммы";
 
 /* Home upsell carousel card title */
 "upsell_carousel_netshield_title" = "NetShield";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_netshield_subtitle" = "Block ads, malware, and trackers";
+"upsell_carousel_netshield_subtitle" = "Блокировать рекламу, вредоносные программы и трекеры";
 
 /* Home upsell carousel card title */
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Add another layer of encryption to your VPN connection";
+"upsell_carousel_secure_core_subtitle" = "Добавьте ещё один уровень шифрования к VPN-подключению";
 
 /* Home upsell carousel card title */
-"upsell_carousel_p2p_title" = "P2P support";
+"upsell_carousel_p2p_title" = "Поддержка P2P";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_p2p_subtitle" = "Download files through BitTorrent and other file sharing protocols";
+"upsell_carousel_p2p_subtitle" = "Скачивайте файлы через BitTorrent и другие протоколы обмена файлами";
 
 /* Home upsell carousel card title */
 "upsell_carousel_devices_title" = "Protect 10 devices";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_devices_subtitle" = "Security and privacy on all your devices";
+"upsell_carousel_devices_subtitle" = "Безопасность и конфиденциальность на всех ваших устройствах";
 
 /* Home upsell carousel card title */
-"upsell_carousel_tor_title" = "Tor over VPN";
+"upsell_carousel_tor_title" = "Tor через VPN";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Use the Tor network over your VPN connection for extra privacy";
+"upsell_carousel_tor_subtitle" = "Используйте сеть Tor через VPN-подключение для дополнительной приватности";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "And much more...";

@@ -853,7 +853,7 @@
 "_upgrade_unavailable_body" = "Não é possível fazer upgrade sua assinatura do Proton VPN a partir do aplicativo. Visite account.protonvpn.com para atualizar.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Your Proton VPN subscription cannot be upgraded from the TestFlight version of the app, please visit account.protonvpn.com to upgrade.";
+"_upgrade_unavailable_on_testflight" = "Não é possível fazer upgrade sua assinatura do Proton VPN a partir do aplicativo TestFlight. Visite account.protonvpn.com para atualizar.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Limpar cache do aplicativo";
@@ -1728,7 +1728,7 @@
 "_connection_card_connecting_to" = "Conectando com...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "Conectando com %@.";
+"_connection_card_accessibility_connecting_to" = "Conectando a %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "Você foi conectado pela última vez a %@.";
@@ -1874,7 +1874,7 @@
 "_connection_details_ipview_ip_my" = "Meu IP";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_vpn" = "IP do VPN";
+"_connection_details_ipview_ip_vpn" = "IP VPN";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_unavailable" = "Indisponível";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Os servidores estão na Cingapura, mas parecerá que você está na Tailândia.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Os servidores estão localizados fisicamente em %1$@, mas você parece estar navegando em %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1904,7 +1904,7 @@
 "_connection_details_feature_description_secure_core" = "Sua atividade é criptografada através de 2 servidores de VPN altamente seguros.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_streaming" = "Transmitindo";
+"_connection_details_feature_title_streaming" = "Streaming";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_description_streaming" = "Esse servidor está otimizado para reprodução de TV e filme.";
@@ -2006,16 +2006,16 @@
 "_settings_app_version" = "Versão do aplicativo: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_on" = "Ativar";
+"_settings_netshield_on" = "Ligado";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "Desativar";
+"_settings_netshield_off" = "Desligado";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_on" = "Ativado";
+"_settings_killswitch_on" = "Ligado";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Desativado";
+"_settings_killswitch_off" = "Desligado";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_auto" = "Automático";
@@ -2060,7 +2060,7 @@
 "_settings_protocol_description_openvpn_tcp" = "Estabelecido, bem testado e seguro. OpenVPN é confiável em condições de rede ruins, mas pode não ser tão rápido quanto outros protocolos.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_ikev2" = "";
+"_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
 "_settings_protocol_tag_recommended" = "RECOMENDADO";
@@ -2237,7 +2237,7 @@
 "modals_new_upsell_moderate_nat_subtitle" = "Melhore o desempenho de jogos on-line e videochamadas com NAT tipo 2.";
 
 /* Title of Netshield upsell screen */
-"modals_new_upsell_netshield_title" = "Desfrute a navegação sem anúncios";
+"modals_new_upsell_netshield_title" = "Aproveite a navegação sem anúncios";
 
 /* Subtitle of Netshield upsell screen */
 "modals_new_upsell_netshield_subtitle" = "Bloqueie anúncios, rastreadores e malware com o NetShield.";
@@ -2264,7 +2264,7 @@
 "modals_new_upsell_country_title" = "Quer conectar a um país específico?";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Desbloqueie a seleção de países com VPN Plus.";
+"modals_new_upsell_country_subtitle" = "Desbloqueie a  seleção de países  com a VPN Plus.";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "Desbloqueie perfis com VPN Plus.";
@@ -2459,7 +2459,7 @@
 "welcome_upgrade_title_plus" = "Boas-vindas ao VPN Plus";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_title_unlimited" = "Boas-vindas à Proton Unlimited";
+"welcome_upgrade_title_unlimited" = "Boas-vindas ao Proton Unlimited";
 
 /* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
 "welcome_upgrade_title_fallback" = "Parabéns!";
@@ -2489,25 +2489,25 @@
 "welcome_to_proton_banner_title" = "VPN sem registros certificada";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle" = "Sua atividade VPN é protegida pelas leis de privacidade suíças. Nunca rastrearemos você online nem compartilharemos suas informações com terceiros.";
+"welcome_to_proton_banner_subtitle" = "Sua atividade de VPN é protegida pelas leis de privacidade suiças. Nunca rastreamos você on-line nem compartilhamos seus dados com terceiros.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle_redesign" = "Nunca registraremos sua atividade na Internet nem compartilharemos suas informações com terceiros.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Compartilhar estatísticas de uso anônimas";
+"onboarding_get_started_statistics_toggle_title" = "Compartilhar estatísticas anônimas de uso";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
-"onboarding_get_started_statistics_toggle_subtitle" = "Os dados de uso nos ajudam a contornar bloqueios de VPN e a melhorar o desempenho do aplicativo.";
+"onboarding_get_started_statistics_toggle_subtitle" = "Dados de uso nos ajudam a superar bloqueios de VPN e a melhorar o aplicativo.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Compartilhar relatórios de falhas anônimos";
+"onboarding_get_started_crashes_toggle_title" = "Compartilhar relatórios de erros anônimos";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Os relatórios de falhas nos ajudam a corrigir erros, detectar firewalls e evitar bloqueios de VPN.";
+"onboarding_get_started_crashes_toggle_subtitle" = "Os relatórios de erros nos ajudam a corrigir erros, detectar firewalls e evitar bloqueios de VPN.";
 
 /* Title of paid plans list. */
-"upsell_plans_list_title" = "Atualize sua privacidade";
+"upsell_plans_list_title" = "Aumente sua privacidade";
 
 /* Subtitle of paid plans list. */
 "upsell_plans_list_subtitle" = "Obtenha recursos avançados de privacidade e maior velocidade com VPN Plus.";
@@ -2732,7 +2732,7 @@
 "_connection_error_title" = "Erro de conexão";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.";
+"_connection_error_unexpected_protocol" = "A conexão que você escolheu usa um protocolo (%@) que não é mais suportado por este aplicativo. Escolha uma conexão diferente.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_certificate_authentication" = "Ocorreu um problema de autenticação com o servidor: %@";
@@ -2768,7 +2768,7 @@
 "_connection_error_tunnel_connection_tunnel_start" = "o túnel não pôde ser estabelecido. (%@)";
 
 /* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "the server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_tunnel_connection_unknown_server" = "o servidor que você escolheu não está mais disponível. Escolha um servidor diferente.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
 "_connection_error_local_agent" = "Ocorreu um erro inesperado ao conectar: %@";
@@ -2783,25 +2783,25 @@
 "_connection_error_local_agent_server_certificate" = "não foi possível autenticar a conexão.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We were unable to connect to the server, because the original connection information was missing.";
+"_connection_error_intent_missing" = "Não conseguimos conectar ao servidor porque as informações de conexão originais estavam faltando.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_preparation" = "Ocorreu um problema ao preparar a conexão: %@";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server.";
+"_connection_error_server_missing" = "O servidor que você escolheu não está mais disponível. Escolha um servidor diferente.";
 
 /* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again.";
+"_connection_error_timeout" = "Encontramos um erro ao tentar conectar: ​​o servidor não respondeu a tempo. Tente novamente.";
 
 /* Error message: we tried to message the connection provider, but they didn't respond in time. */
 "_provider_message_error_no_data_received" = "Nenhum dado foi recebido do provedor de conexão.";
 
 /* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "An error occurred when trying to decode the response from the connection provider.";
+"_provider_message_error_decoding_error" = "Ocorreu um erro ao tentar descodificar a resposta do provedor de conexão.";
 
 /* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "An error occurred when trying to send a message to the connection provider.";
+"_provider_message_error_sending_error" = "Ocorreu um erro ao tentar enviar uma mensagem para o provedor de conexão.";
 
 /* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
 "_provider_message_error_unknown_request" = "O provedor de conexão recebeu uma solicitação desconhecida.";
