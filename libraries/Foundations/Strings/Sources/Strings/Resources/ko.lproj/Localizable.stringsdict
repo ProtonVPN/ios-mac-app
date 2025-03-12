@@ -56,7 +56,7 @@
     <key>modals_upsell_all_countries_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@num_countries@에서 %#@num_servers@에 접근</string>
+      <string>Access over %#@num_servers@ in %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -116,7 +116,7 @@
     <key>subscription_upgrade_option2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>동시에 최대 %#@num_devices@개까지 연결하세요</string>
+      <string>Connect up to %#@num_devices@ at the same time</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -130,7 +130,7 @@
     <key>maximum_device_plan_limit_part_2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string> 동시에 최대 %#@num_devices@개의 기기에서 연결하세요.</string>
+      <string> to get up to %#@num_devices@ connected at the same time.</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -273,7 +273,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d시간</string>
+        <string>%d 시간</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -296,7 +296,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d시간</string>
+        <string>%d 시간</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -310,7 +310,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d시간</string>
+        <string>%d 시간</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -333,7 +333,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d초</string>
+        <string>%d 초</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -361,7 +361,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d초</string>
+        <string>%d 초</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -398,7 +398,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>무료 서버 지역 (%d개)</string>
+        <string>무료 서버 지역 (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

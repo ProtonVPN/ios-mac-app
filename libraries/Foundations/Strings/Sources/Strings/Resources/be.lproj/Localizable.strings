@@ -1272,9 +1272,9 @@
 
 "_troubleshoot_item_antivirus_description" = "Часова адключыце або выдаліце антывірус.";
 
-"_troubleshoot_item_proxy_title" = "Канфлікт з проксі-серверам/міжсеткавым экранам";
+"_troubleshoot_item_proxy_title" = "Канфлікт з проксі або міжсеткавым экранам";
 
-"_troubleshoot_item_proxy_description" = "Адключыце ўсе проксі-серверы, міжсеткавыя экраны або звярніцеся да свайго сеткавага адміністратара.";
+"_troubleshoot_item_proxy_description" = "Адключыце ўсе проксі, міжсеткавыя экраны або звярніцеся да свайго сеткавага адміністратара.";
 
 "_troubleshoot_item_proton_title" = "Proton не працуе";
 
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Фізічна серверы размяшчаюцца ў Сінгапуры, але будзе выглядаць быццам вы праглядаеце сайты з Тайланда.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Фізічна серверы размяшчаюцца ў краіне %1$@, але будзе выглядаць быццам вы праглядаеце сайты з краіны %2$@";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2165,7 +2165,7 @@
 "modals_get_plus" = "Палепшыць";
 
 /* Dismiss upsell screen button title */
-"modals_upsell_stay_free" = "Не зараз";
+"modals_upsell_stay_free" = "Не цяпер";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Пры паляпшэнні да Plus";
@@ -2732,7 +2732,7 @@
 "_connection_error_title" = "Памылка падключэння";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "Выбранае вамі падключэнне выкарыстоўвае пратакол (%@), які больш не падтрымліваецца праграмай. Выберыце іншае падключэнне.";
+"_connection_error_unexpected_protocol" = "Выбранае вамі падключэнне выкарыстоўвае пратакол (%@), які больш не падтрымліваецца гэтай праграмай. Выберыце іншае падключэнне.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
 "_connection_error_certificate_authentication" = "Адбылася памылка аўтэнтыфікацыі з серверам: %@";
@@ -2750,7 +2750,7 @@
 "_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Сертыфікат недаступны на прыладзе.";
 
 /* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Сертыфікат пратэрмінаваны на прыладзе.";
+"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Тэрмін дзеяння сертыфіката на прыладзе мінуў.";
 
 /* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
 "_connection_error_certificate_authentication_rate_limited" = "немагчыма абнавіць вашы ўліковыя даныя ў цяперашні момант.";
@@ -2792,7 +2792,7 @@
 "_connection_error_server_missing" = "Выбраны вамі сервер больш недаступны. Выберыце іншы сервер.";
 
 /* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "Узнікла праблема пры спробе падключэння: у цяперашні час сервер не адказвае. Паспрабуйце яшчэ раз.";
+"_connection_error_timeout" = "Узнікла памылка пры спробе падключэння: у цяперашні час сервер не адказвае своечасова. Паспрабуйце яшчэ раз.";
 
 /* Error message: we tried to message the connection provider, but they didn't respond in time. */
 "_provider_message_error_no_data_received" = "Не атрыманы даныя ад пастаўшчыка падключэння.";

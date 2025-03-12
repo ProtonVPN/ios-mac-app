@@ -71,7 +71,7 @@
 "_quit_warning" = "Dengan keluar dari aplikasi, koneksi VPN yang sedang aktif akan terputus. Apakah Anda ingin melanjutkan?";
 
 /* Common word */
-"_enabled" = "Diaktifkan";
+"_enabled" = "Aktif";
 
 /* Common word */
 "_disabled" = "Dinonaktifkan";
@@ -243,7 +243,7 @@
 "_test_servers" = "Server TEST";
 
 /* MacOS: connecting overlay */
-"_initializing_connection" = "Memulai Sambungan...";
+"_initializing_connection" = "Memulai Koneksi...";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Berhasil Terhubung";
@@ -355,7 +355,7 @@
 "_reset_password" = "Atur Ulang Kata Sandi";
 
 /* MacOS: button in login screen */
-"_common_issues" = "Masalah pada saat masuk secara umum";
+"_common_issues" = "Masalah sign-in umum";
 
 /* MacOS: button in login screen */
 "_forgot_username" = "Lupa Nama Pengguna";
@@ -856,7 +856,7 @@
 "_upgrade_unavailable_on_testflight" = "Langganan Proton VPN Anda tidak dapat ditingkatkan dari dalam aplikasi versi TestFlight. Silakan kunjungi account.protonvpn.com untuk meningkatkan langganan.";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Bersihkan data aplikasi";
+"_delete_application_data_popup_title" = "Bersihkan data aplilkasi";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_body" = "Seluruh data Proton VPN akan dihapus dan aplikasi akan ditutup. Apakah Anda ingin melanjutkan?";
@@ -1151,7 +1151,7 @@
 "_widget" = "Widget iOS";
 
 /* Menu point in settings screen */
-"_usage_statistics" = "Statistik penggunaan";
+"_usage_statistics" = "Statistik pemakaian";
 
 /* iOS widget: text for not-logged-in user */
 "_log_in_to_use_widget" = "Silakan masuk untuk memulai";
@@ -1272,7 +1272,7 @@
 
 "_troubleshoot_item_antivirus_description" = "Nonaktifkan atau hapus perangkat lunak antivirus Anda untuk sementara waktu.";
 
-"_troubleshoot_item_proxy_title" = "Halangan Proxy/Firewall";
+"_troubleshoot_item_proxy_title" = "Gangguan Proxy/Firewall";
 
 "_troubleshoot_item_proxy_description" = "Nonaktifkan seluruh proxy atau firewall yang aktif, atau hubungi pengelola jaringan Anda.";
 
@@ -1351,7 +1351,7 @@
 
 "_quick_settings_netShield_description" = "Jelajahi internet tanpa iklan dan malware.";
 
-"_quick_settings_killSwitch_description" = "Menonaktifkan internet Anda sepenuhnya apabila koneksi VPN terputus untuk mencegah kebocoran IP.";
+"_quick_settings_killSwitch_description" = "Menonaktifkan internet pada saat koneksi VPN terputus untuk mencegah kebocoran IP.";
 
 "_quick_settings_secureCore_note" = "Secure Core dapat menurunkan kecepatan VPN";
 
@@ -1456,7 +1456,7 @@
 
 "_delinquent_title" = "Akun VPN Anda memiliki faktur yang tertunggak";
 
-"_delinquent_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan-tagihan ini dilunasi.";
+"_delinquent_description" = "Anda akan dapat mengakses fitur premium lagi setelah ini dibayar.";
 
 "_delinquent_reconnection_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi. Untuk saat ini, kami akan menghubungkan Anda ke server Free tercepat yang tersedia.";
 
@@ -1469,15 +1469,15 @@
 
 "_reconnect_title" = "Kami menghubungkan kembali ke server paling cepat yang tersedia.";
 
-"_subscription_expired_title" = "Paket langganan VPN anda telah berakhir";
+"_subscription_expired_title" = "Paket langganan VPN Anda telah berakhir";
 
-"_subscription_expired_description" = "Langganan anda telah diturunkan.";
+"_subscription_expired_description" = "Paket langganan Anda telah diturunkan.";
 
 "_subscription_expired_reconnection_description" = "Langganan anda telah diturunkan, sehingga kami menghubungkan kembali ke server paling cepat yang masih tersedia.";
 
-"_subscription_upgrade_title" = "Tingkatkan kembali untuk menikmati semua fitur:";
+"_subscription_upgrade_title" = "Tingkatkan kembali untuk menikmati seluruh fitur berikut:";
 
-"_subscription_upgrade_option3" = "Fitur lanjutan: Netshield, Secure Core, Tor, P2P";
+"_subscription_upgrade_option3" = "Fitur lanjutan: NetShield, Secure Core, Tor, P2P";
 
 "_tier_free" = "Gratis";
 
@@ -1511,15 +1511,15 @@
 
 "_feature_free_servers_description" = "Keamanan dan privasi untuk semua. Server Gratis kami tidak memiliki batasan data, dan kami tidak akan pernah dengan sengaja memperlambat laju penjelajahan internet Anda.";
 
-"_feature_smart_routing_description" = "Teknologi ini memungkinkan Proton VPN untuk menyediakan kecepatan dan keamanan yang lebih tinggi di negara yang masih berkembang.";
+"_feature_smart_routing_description" = "Teknologi ini memungkinkan Proton VPN untuk menyediakan layanan yang lebih cepat dan lebih aman pada negara dengan pembatasan internet yang ketat.";
 
 "_feature_streaming_description" = "Server PLUS memungkinkan Anda untuk mengakses berbagai layanan aliran video (Netflix, Disney+, dll) di manapun Anda berada.";
 
-"_feature_p2p_description" = "Server-server berikut memberikan performa terbaik dalam hal BitTorrent dan file sharing.";
+"_feature_p2p_description" = "Server-server berikut menawarkan performa terbaik dalam hal BitTorrent dan file-sharing.";
 
 "_feature_tor_description" = "Alihkan lalu lintas internet Anda melalui jaringan Tor. Lebih lambat, namun lebih privat.";
 
-"_performance_load_description" = "Server dengan beban yang tinggi akan memberikan koneksi yang lebih lambat dibanding server dengan beban yang rendah.";
+"_performance_load_description" = "Server dengan muatan yang tinggi akan lebih lambat dibanding server dengan muatan yang rendah.";
 
 "_performance_load_low" = "Rendah";
 
@@ -1554,7 +1554,7 @@
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Pelajari lebih lanjut";
 
-"_action_requires_reconnect" = "Koneksi internet Anda harus disambungkan ulang agar perubahan ini dapat diterapkan";
+"_action_requires_reconnect" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini";
 
 "_local_agent_server_error_title" = "Kesalahan server";
 
@@ -1571,7 +1571,7 @@
 "_loading_connection_info_for" = "Memuat informasi koneksi untuk %@";
 
 /* Shown on the Welcome screen as the screen headline */
-"_welcome_headline" = "Lindungi diri Anda saat daring";
+"_welcome_headline" = "Lindungi diri Anda saat online";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.";
@@ -1582,7 +1582,7 @@
 
 "login_fetch_vpn_data" = "Mengatur akses VPN Anda";
 
-"login_summary_button" = "Mulai menggunakan Proton VPN";
+"login_summary_button" = "Mulai gunakan Proton VPN";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Nonaktifkan kill switch";
@@ -1667,10 +1667,10 @@
 "two_factor_authentication" = "Autentikasi dua-faktor";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Kode dua faktor";
+"two_factor_code" = "Kode dua-faktor";
 
 /* Title for the button to switch to entering two-factor code */
-"use_two_factor_code" = "Gunakan kode dua faktor";
+"use_two_factor_code" = "Gunakan kode dua-faktor";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Kode pemulihan";
@@ -1767,7 +1767,7 @@
 "_home_recents_plus_server" = "Server tersedia dengan VPN Plus";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_server_under_maintenance" = "Server dalam pemeliharaan";
+"_home_recents_server_under_maintenance" = "Server sedang dalam pemeliharaan";
 
 /* Title of the "Random" recent connection item */
 "home_recents_random_server_title" = "Negara acak";
@@ -1785,7 +1785,7 @@
 "_action_disconnect" = "Putuskan";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
-"_connection_card_action_cancel" = "Batalkan";
+"_connection_card_action_cancel" = "Batal";
 
 /* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
 "_show_connection_details_button_hint" = "Tampilkan rincian koneksi";
@@ -1818,7 +1818,7 @@
 "connection_status_loading" = "Memuat";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
-"upsell_get_plus" = "Dapatkan Plus";
+"upsell_get_plus" = "Pilih Plus";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "Situs iklan menggunakan cookie dan pelacak untuk mengincar Anda.";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Server yang melayani Anda secara fisik terletak di Singapura, namun Anda akan terlihat seolah-olah Anda sedang berselancar dari Thailand.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Server yang melayani Anda secara fisik terletak di %1$@, namun Anda akan terlihat seolah-olah Anda sedang menjelajah dari %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1952,7 +1952,7 @@
 "_settings_section_title_general" = "Umum";
 
 /* Title of the 'Support' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_support" = "Layanan Dukungan";
+"_settings_section_title_support" = "Dukungan";
 
 /* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_improve_proton" = "Tingkatkan Proton";
@@ -1976,13 +1976,13 @@
 "_settings_title_theme" = "Tema";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
-"_settings_title_beta_access" = "Akses beta";
+"_settings_title_beta_access" = "Akses Beta";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Pusat dukungan";
+"_settings_title_support_center" = "Pusat bantuan";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "Laporkan masalah";
@@ -2009,13 +2009,13 @@
 "_settings_netshield_on" = "Aktif";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "Nonaktif";
+"_settings_netshield_off" = "Nonaktifkan";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_on" = "Aktif";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Nonaktif";
+"_settings_killswitch_off" = "Nonaktifkan";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_auto" = "Otomatis";
@@ -2072,13 +2072,13 @@
 "_settings_protocol_footer" = "Protokol VPN menentukan bagaimana data antara server VPN dan perangkat Anda akan saling berpindah. **[Pelajari lebih lanjut](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_title" = "Koneksi VPN Aktif";
+"_settings_protocol_alert_title" = "Sambungan VPN Aktif";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_body" = "Dengan mengubah protokol, sesi VPN Anda saat ini akan berakhir.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "Batalkan";
+"_settings_protocol_alert_button_cancel" = "Batal";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_continue" = "Lanjutkan";
@@ -2093,7 +2093,7 @@
 "search_title" = "Pencarian";
 
 /* Title of the Search screen infographic */
-"search_subtitle" = "Cari lokasi apapun";
+"search_subtitle" = "Cari lokasi apa pun";
 
 /* Section header in search */
 "search_countries" = "Negara";
@@ -2219,7 +2219,7 @@
 "modals_upsell_secure_core_route" = "Alihkan lalu lintas jaringan Anda melalui berbagai server ultra aman di Swiss, Swedia, dan Islandia";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Terapkan lapisan perlindungan tambahan pada koneksi VPN Anda";
+"modals_upsell_secure_core_layer" = "Tambahkan lapisan enkripsi tambahan ke koneksi VPN Anda";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Lindungi diri Anda dari serangan berbasis jaringan";
@@ -2231,7 +2231,7 @@
 "modals_new_upsell_vpn_accelerator_subtitle" = "Buka server yang lebih cepat dan tidak terlalu ramai dengan kecepatan hingga 10 Gbps.";
 
 /* Subtitle of the Customization scren */
-"modals_new_upsell_customization_subtitle" = "Akses perangkat melalui Local Area Network (LAN) Anda dengan VPN Plus.";
+"modals_new_upsell_customization_subtitle" = "Akses perangkat yang terdapat pada jaringan lokal (LAN) Anda dengan VPN Plus.";
 
 /* Subtitle of Moderate NAT upsell screens */
 "modals_new_upsell_moderate_nat_subtitle" = "Tingkatkan performa game online dan panggilan video dengan NAT tipe 2.";
@@ -2249,7 +2249,7 @@
 "modals_new_upsell_secure_core_title" = "Gandakan perlindungan Anda";
 
 /* Subtitle of Secure Core upsell screen */
-"modals_new_upsell_secure_core_subtitle" = "Tambah lapisan enkripsi lainnya pada koneksi VPN Anda dengan SecureCore.";
+"modals_new_upsell_secure_core_subtitle" = "Terapkan enkripsi berlapis pada koneksi VPN Anda dengan Secure Core.";
 
 /* The bold portion of the subtitle of the Secure Core upsell screen */
 "modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
@@ -2270,7 +2270,7 @@
 "modals_new_upsell_profiles_subtitle" = "Akses profil dengan VPN Plus.";
 
 /* Title of the Secure Core discouragement screen */
-"modals_discourage_secure_core_title" = "Catatan mengenai kecepatan...";
+"modals_discourage_secure_core_title" = "Secarik catatan mengenai kecepatan...";
 
 /* Subtitle of the Secure Core discouragement screen */
 "modals_discourage_secure_core_subtitle" = "Secure Core menawarkan tingkat keamanan dan privasi tertinggi, namun dapat menurunkan kecepatan internet Anda. Apabila Anda membutuhkan performa yang lebih, Anda dapat menonaktifkan Secure Core.";
@@ -2535,7 +2535,7 @@
 
 "onboarding_crash_reports_description" = "Laporan crash membantu kami dalam memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
 
-"onboarding_footer" = "Statistik ini tidak mengandung alamat IP Anda dan tidak dapat digunakan untuk mengenali diri Anda. Kami tidak akan pernah membagikan statistik ini kepada pihak ketiga manapun.";
+"onboarding_footer" = "Statistik ini tidak mengandung alamat IP Anda dan tidak dapat digunakan untuk mengenali diri Anda. Kami tidak akan pernah membagikan statistik ini kepada pihak ketiga.";
 
 "onboarding_footer_learn_more" = "Pelajari lebih lanjut";
 
@@ -2582,7 +2582,7 @@
 "_br_2_button_next" = "Hubungi kami";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Batalkan";
+"_br_2_button_cancel" = "Batal";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Kirim laporan";
@@ -2597,10 +2597,10 @@
 "_br_3_username" = "Nama pengguna";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Kirim log error";
+"_br_3_logs_field" = "Kirimkan log error";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Log merupakan berkas yang merekam berbagai tindakan yang memicu terjadinya error. Kami hanya akan menggunakan berkas log Anda untuk membantu para pakar kami dalam memperbaiki bug.";
+"_br_3_logs_description" = "Log merupakan berkas yang merekam berbagai tindakan yang memicu terjadinya suatu error. Kami hanya akan menggunakan berkas log Anda untuk membantu para teknisi kami dalam menumpas bug yang ada.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
 "_br_3_logs_disabled" = "Log error membantu kami dalam menumpas masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log error, kami mungkin tidak akan dapat menganalisa masalah Anda secara menyeluruh.";
@@ -2609,10 +2609,10 @@
 "_br_success_title" = "Terima kasih atas tanggapan Anda";
 
 /* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "Kami akan menghubungi Anda kembali sesegera mungkin.";
+"_br_success_subtitle" = "Kami akan kembali menghubungi Anda sesegera mungkin.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Paham";
+"_br_success_button" = "Mengerti";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Laporan Anda tidak terkirim";
@@ -2621,7 +2621,7 @@
 "_br_failure_button_retry" = "Coba lagi";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Troubleshoot";
+"_br_failure_button_troubleshoot" = "Penyelesaian Masalah";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Perbarui Proton VPN";
@@ -2717,7 +2717,7 @@
 "upsell_carousel_devices_subtitle" = "Keamanan dan privasi pada semua perangkat Anda";
 
 /* Home upsell carousel card title */
-"upsell_carousel_tor_title" = "Tor melalui VPN";
+"upsell_carousel_tor_title" = "Tor via VPN";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_tor_subtitle" = "Gunakan jaringan Tor melalui koneksi VPN Anda untuk privasi tambahan";
@@ -2774,19 +2774,19 @@
 "_connection_error_local_agent" = "Terdapat kesalahan yang tidak terduga pada saat menghubungkan: %@";
 
 /* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "the device could not establish a connection. (%@)";
+"_connection_error_local_agent_failed_establishing_connection" = "perangkat tidak dapat mengukuhkan koneksi. (%@)";
 
 /* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
 "_connection_error_local_agent_remote_error" = "layanan jarak jauh tidak menerima koneksi. (%@)";
 
 /* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "we could not authenticate the connection.";
+"_connection_error_local_agent_server_certificate" = "kami tidak dapat mengautentikasi koneksi.";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
 "_connection_error_intent_missing" = "Kami tidak dapat menghubungkan ke server, karena informasi koneksi asli hilang.";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "There was a problem preparing the connection: %@";
+"_connection_error_preparation" = "Terdapat masalah dalam menyiapkan koneksi: %@";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
 "_connection_error_server_missing" = "Server yang Anda pilih sudah tidak lagi tersedia. Silakan pilih server yang berbeda.";
@@ -2795,7 +2795,7 @@
 "_connection_error_timeout" = "Kami mengalami kesalahan menghubungkan: server tidak membalas dalam waktu tertentu. Silakan coba lagi.";
 
 /* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "No data was received from the connection provider.";
+"_provider_message_error_no_data_received" = "Tidak ada data yang diterima dari penyedia koneksi.";
 
 /* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
 "_provider_message_error_decoding_error" = "Terjadi kesalahan mendekode response dari penyedia koneksi.";
@@ -2804,10 +2804,10 @@
 "_provider_message_error_sending_error" = "Terjadi kesalahan mengirim pesan ke penyedia koneksi.";
 
 /* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "The connection provider received an unknown request.";
+"_provider_message_error_unknown_request" = "Penyedia koneksi menerima permintaan yang tidak dikenal.";
 
 /* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "The connection provider returned an unknown response.";
+"_provider_message_error_unknown_response" = "Penyedia koneksi memberikan respons yang tidak dikenal.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "The connection provider encountered an error: %@";
+"_provider_message_error_remote_error" = "Penyedia koneksi mengalami kesalahan: %@";

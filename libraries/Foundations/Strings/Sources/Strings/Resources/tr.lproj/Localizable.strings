@@ -715,7 +715,7 @@
 "_error_decode" = "Sınıftaki arşivlenmiş verilerin kodu çözülemedi: %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak kullanım dışı bırakıldı";
+"_error_email_verification_disabled" = "E-posta doğrulaması geçici olarak kullanımdan kaldırıldı";
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton aygıtınızla iletişim kuramadı. Lütfen bir süre sonra yeniden deneyin.";
@@ -903,7 +903,7 @@
 "_always_on_vpn" = "Hep açık VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Hep açık VPN, kesilen bir güvenli VPN bağlantısını çabuk ve otomatik olarak yeniden kurar. Güvenliğiniz için bu özellik hep açıktır.";
+"_always_on_vpn_tooltip_ios" = "Her zaman açık VPN güvenli bir VPN bağlantısını hızlı ve otomatik olarak yeniden kurar. Bu özellik güvenliğiniz için her zaman açıktır.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_auto_connect" = "Otomatik bağlantı";
@@ -1165,7 +1165,7 @@
 "_report_logs" = "VPN günlüğü kayıtları";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Açıldığında, istemci tarafı VPN günlüğü kayıtlarınız bu bildirime eklenir";
+"_report_logs_description" = "İstemci tarafı VPN günlüğü kayıtlarınızı bu bildirime ekler";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Hata bildirimi iletisi";
@@ -1246,9 +1246,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Sorun giderme";
 
-"_troubleshoot_item_alt_title" = "Alternatif yönlendirmeye izin ver";
+"_troubleshoot_item_alt_title" = "Alternatif yöneltme kullanılabilsin";
 
-"_troubleshoot_item_alt_description" = "Proton sitelerinin engellenmesi durumunda bu ayar uygulamanın Proton'a ulaşmak için alternatif ağ yönlendirmesini denemesini sağlar; bu, güvenlik duvarlarını veya ağ sorunlarını atlamak için yararlı olabilir. Daha fazla güvenilirlik için bu ayarı açık tutmanızı öneririz. \nAyrıntılı bilgi alın";
+"_troubleshoot_item_alt_description" = "Proton sitelerine erişimin engellenmiş olması durumunda, uygulama Proton ağına ulaşmak için alternatif ağ yöneltmesi kullanmayı dener. Güvenlik duvarlarını veya ağ sorunlarını aşmakta yararlı olabilir. Bağlantı güvenilirliğini artırmak için bu seçeneği açık tutmanız önerilir. \nAyrıntılı bilgi alın";
 
 "_troubleshoot_item_alt_link1" = "Ayrıntılı bilgi alın";
 
@@ -1330,9 +1330,9 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Kötü amaçlı yazılımları, reklamları ve izleyicileri engelleyin";
 
-"_netshield_alert_reconnect_description_on" = "NetShield kipine geçmek için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
+"_netshield_alert_reconnect_description_on" = "NetShield kullanmak için bağlantınız yeniden başlatılacak.\nNot: Bazı siteler yüklenmezse, NetShield özelliğini kapatmayı deneyin.";
 
-"_netshield_alert_reconnect_description_off" = "NetShield kipine geçmek için bağlantınız yeniden başlatılacak.";
+"_netshield_alert_reconnect_description_off" = "NetShield kullanmak için bağlantınız yeniden başlatılacak.";
 
 "_netshield_alert_upgrade_description" = "NetShield, reklamları ve etkinlik izleyicileri engelleyerek gizliliğinizi artırır.";
 
@@ -1405,7 +1405,7 @@
 "_smart_protocol_reconnect_modal_title" = "Yeniden bağlantı kurulması gerekli";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_body" = "Smart Protocol kipine geçmek için bağlantınız yeniden başlatılacak.";
+"_smart_protocol_reconnect_modal_body" = "Smart Protocol kullanmak için bağlantınız yeniden başlatılacak.";
 
 /* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
 "_sysex_description_1" = "Mac bilgisayarınızda Proton VPN kullanabilmek için **özel VPN iletişim kurallarını** açmalısınız.";
@@ -1562,7 +1562,7 @@
 
 "_local_agent_policy_violation_error_title" = "İlkeye aykırı kullanım";
 
-"_local_agent_policy_violation_error_message" = "Sunucuyla bağlantı kurmanıza izin verilmiyor. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
+"_local_agent_policy_violation_error_message" = "Sunucuyla bağlantı kurma izniniz yok. Başka bir sunucu seçin ya da tarifenizi yükseltin.";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Bağlantı bilgileri yükleniyor";
@@ -1582,7 +1582,7 @@
 
 "login_fetch_vpn_data" = "VPN erişiminiz yapılandırılıyor";
 
-"login_summary_button" = "Proton VPN kullanmaya başlayın";
+"login_summary_button" = "Proton VPN ile başla";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Bağlantı kesici özelliğini kapat";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Sunucular fiziksel olarak Singapore konumunda bulunuyor ancak siz Thailand konumundan geziniyor gibi görüneceksiniz.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Sunucular fiziksel olarak %1$@ konumunda bulunuyor ancak siz %2$@ konumundan geziniyor gibi görüneceksiniz.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2054,7 +2054,7 @@
 "_settings_protocol_description_wireguard_tls" = "VPN bağlantınızı sansür uygulamalarından gizleyerek VPN engellemelerini aşar. Bu iletişim kuralı DPİ (derin paket inceleme) uygulamalarına karşı dirençlidir ancak diğer iletişim kuralları kadar hızlı olmayabilir. Stealth, Proton VPN uygulamasına özel bir iletişim kuralıdır.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Yerleşik, iyi sınanmış ve güvenli. OpenVPN diğer iletişim kurallarından daha fazla pil harcayabilir.";
+"_settings_protocol_description_openvpn_udp" = "Oturmuş, iyi sınanmış ve güvenli. OpenVPN diğer iletişim kurallarından daha fazla pil harcayabilir.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_tcp" = "Oturmuş, iyi sınanmış ve güvenli. OpenVPN zayıf ağ koşullarında güvenilirdir ancak diğer iletişim kuralları kadar hızlı olmayabilir.";

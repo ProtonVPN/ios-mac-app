@@ -152,7 +152,7 @@
 
 "_turn_on" = "オンにする";
 
-"_not_now" = "また今度";
+"_not_now" = "後で";
 
 "_allow" = "許可";
 
@@ -337,7 +337,7 @@
 "_login" = "サインイン";
 
 /* iOS: Login button in several places */
-"_log_in" = "サインイン";
+"_log_in" = "ログイン";
 
 /* MacOS: label in login and settings screens */
 "_remember_login" = "サインインを保持";
@@ -486,7 +486,7 @@
 "_via_country" = "%@ 経由";
 
 /* Used for SecureCore connection labels. */
-"_via_secure_core" = "secure Core経由";
+"_via_secure_core" = "Secure Coreを経由";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "経由国";
@@ -1396,7 +1396,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "スマート";
 
 /* Description for Smart Protocol in Settings */
 "_smart_protocol_description" = "スマートプロトコルを有効化することで、最適な接続を実現するプロトコルとポートが自動的に選択されます。";
@@ -1454,7 +1454,7 @@
 
 "_upgrade_again" = "再度アップグレード";
 
-"_delinquent_title" = "VPN アカウントに未払いの請求書があります";
+"_delinquent_title" = "VPN アカウントに未払いの支払いがあります";
 
 "_delinquent_description" = "未払いの請求が支払われると、再度プレミアム機能を利用することができます。";
 
@@ -1491,7 +1491,7 @@
 
 "_performance_title" = "パフォーマンス";
 
-"_smart_routing_title" = "Smart Routing";
+"_smart_routing_title" = "スマートルーティング";
 
 "_streaming_title" = "ストリーミング";
 
@@ -1544,7 +1544,7 @@
 /* Gateways info modals text (both iOS and macOS) */
 "_gateways_modal_text" = "VPNゲートウェイは、専用サーバーを通じて企業のデータやサービスへの制御されたアクセスを提供するセキュアな接続です。";
 
-"_vpn_accelerator_title" = "VPN Accelerator";
+"_vpn_accelerator_title" = "VPN アクセラレーター";
 
 "_vpn_accelerator_change_title" = "VPN Accelerator を変更";
 
@@ -1698,7 +1698,7 @@
 "_settings_tab" = "設定";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_header" = "保護されていません";
+"_home_unprotected_header" = "あなたは保護されていません";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_label" = "あなたは%@から保護されていない状態で閲覧しています。";
@@ -1713,22 +1713,22 @@
 "_connection_card_accessibility_fastest_sc" = "利用可能な最速のセキュアコアの国";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
-"_connection_card_default_connection" = "既定の接続先";
+"_connection_card_default_connection" = "デフォルト接続";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "安全に閲覧：";
+"_connection_card_safely_browsing_from" = "安全なブラウジング";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
-"_connection_card_last_connected_to" = "最後に接続した場所";
+"_connection_card_last_connected_to" = "最後の接続";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "読み込み中…";
+"_connection_card_loading" = "読み込み中...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
-"_connection_card_connecting_to" = "接続中...";
+"_connection_card_connecting_to" = "接続中：...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "%@に接続しています。";
+"_connection_card_accessibility_connecting_to" = "%@ に接続中.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "あなたは最後に%@に接続していました。";
@@ -1746,16 +1746,16 @@
 "home_default_connection_fastest_name" = "最速の国";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_description" = "あなたの場所に基づいた最適なサーバー";
+"home_default_connection_fastest_description" = "あなたの所在地に基づいた最適なサーバー";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_name" = "直近";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_description" = "あなたが直近で使用した接続先";
+"home_default_connection_most_recent_description" = "最近使用した接続";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
-"_home_recents_upsell_section" = "VPN Plusを発見";
+"_home_recents_upsell_section" = "VPN プラスを発見する";
 
 /* The section of recent connections in the Home tab. [Redesign_2023] */
 "_home_recents_recent_section" = "最近";
@@ -1764,10 +1764,10 @@
 "_home_recents_options_button_help" = "アクション";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_plus_server" = "サーバーはVPN Plusで利用可能";
+"_home_recents_plus_server" = "VPN Plusでサーバーが利用可能";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_server_under_maintenance" = "サーバーはメンテナンス中";
+"_home_recents_server_under_maintenance" = "サーバーはメンテナンス中です";
 
 /* Title of the "Random" recent connection item */
 "home_recents_random_server_title" = "ランダムな国";
@@ -1797,19 +1797,19 @@
 "_action_home_unpin" = "ピン留め解除";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
-"home_fastest_connection_selection_description" = "自動選択";
+"home_fastest_connection_selection_description" = "から自動選択";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
 "home_fastest_connection_additional_country_count" = "+%@";
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
-"_secure_core_via_country" = "%@経由";
+"_secure_core_via_country" = "%@ 経由";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
 "connection_status_unprotected" = "あなたは保護されていません";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
-"connection_status_protecting" = "デジタルの個人情報を保護しています";
+"connection_status_protecting" = "デジタルアイデンティティを保護する";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
 "connection_status_protected" = "保護されています";
@@ -1818,7 +1818,7 @@
 "connection_status_loading" = "読み込み中";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
-"upsell_get_plus" = "Plusを入手";
+"upsell_get_plus" = "PLUS を入手";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "広告ウェブサイトは、Cookie とトラッカーを使用してあなたをターゲットします。";
@@ -1853,7 +1853,7 @@
 "_connection_details_title" = "接続の詳細";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "接続しました";
+"_connection_details_connected_for" = "接続時間";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
 "_connection_details_country" = "国名";
@@ -1865,7 +1865,7 @@
 "_connection_details_server" = "サーバー";
 
 /* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
-"_connection_details_server_load" = "サーバー読み込み";
+"_connection_details_server_load" = "サーバー負荷";
 
 /* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
 "_connection_details_protocol" = "プロトコル";
@@ -1874,10 +1874,10 @@
 "_connection_details_ipview_ip_my" = "自分のIP";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_vpn" = "VPN IP";
+"_connection_details_ipview_ip_vpn" = "VPN の IP";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_unavailable" = "利用できません";
+"_connection_details_ipview_ip_unavailable" = "使用不可";
 
 /* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_tor" = "Tor";
@@ -1892,10 +1892,10 @@
 "_connection_details_feature_description_p2p" = "ピアツーピアファイル共有はこのサーバーで有効になっています。";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_smart_routing" = "Smart Routing";
+"_connection_details_feature_title_smart_routing" = "スマートルーティング";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "サーバーは物理的にはシンガポールに位置していますが、タイから閲覧しているように見えます。";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "サーバーは物理的に %1$@ にありますが、%2$@ から参照しているように見えます。";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1922,7 +1922,7 @@
 "_alert_protocol_deprecated_body_macos" = "このプロファイルは、時代遅れでサポートされなくなったプロトコルを使用しています。 [更新] をクリックして、デフォルトのスマート プロトコルの使用に切り替えます。 もっと詳しく知る";
 
 /* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
-"_alert_protocol_deprecated_link_text" = "もっと詳しく";
+"_alert_protocol_deprecated_link_text" = "もっと詳しく知る";
 
 /* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
 "_alert_protocol_deprecated_body_ios" = "このプロファイルは、時代遅れでサポートされなくなったプロトコルを使用しています。 [更新] をクリックして、デフォルトのスマート プロトコルの使用に切り替えます。";
@@ -1931,7 +1931,7 @@
 "_alert_protocol_deprecated_enable_smart" = "更新";
 
 /* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
-"_alert_protocol_deprecated_learn_more" = "もっと詳しく";
+"_alert_protocol_deprecated_learn_more" = "より詳しく";
 
 /* Text for the 'Close' action of the deprecated protocol alert. */
 "_alert_protocol_deprecated_close" = "閉じる";
@@ -1955,7 +1955,7 @@
 "_settings_section_title_support" = "サポート";
 
 /* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_improve_proton" = "Protonを改善";
+"_settings_section_title_improve_proton" = "Proton を改善する";
 
 /* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
@@ -1967,22 +1967,22 @@
 "_settings_title_protocol" = "プロトコル";
 
 /* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
-"_settings_title_vpn_accelerator" = "VPN Accelerator";
+"_settings_title_vpn_accelerator" = "VPN アクセラレーター";
 
 /* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_advanced" = "高度な設定";
+"_settings_title_advanced" = "詳細設定";
 
 /* Title of the Theme cell in the Settings tab [Redesign_2023] */
 "_settings_title_theme" = "テーマ";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
-"_settings_title_beta_access" = "ベータアクセス";
+"_settings_title_beta_access" = "ベータ版アクセス";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "ウィジェット";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "サポートセンター";
+"_settings_title_support_center" = "ヘルプ センター";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "問題を報告";
@@ -1991,13 +1991,13 @@
 "_settings_title_debug_logs" = "デバッグログ";
 
 /* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
-"_settings_title_censorship" = "検閲と戦うためにご協力ください";
+"_settings_title_censorship" = "検閲への対抗を助ける";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
-"_settings_title_rate" = "Proton VPNを評価";
+"_settings_title_rate" = "Proton VPN を評価";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_restore_default_settings" = "既定の設定を復元";
+"_settings_title_restore_default_settings" = "デフォルト設定を復元する";
 
 /* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
 "_settings_title_sign_out" = "サインアウト";
@@ -2006,13 +2006,13 @@
 "_settings_app_version" = "アプリバージョン: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_on" = "オン";
+"_settings_netshield_on" = "有効";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_off" = "オフ";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_on" = "オン";
+"_settings_killswitch_on" = "有効";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_off" = "オフ";
@@ -2036,7 +2036,7 @@
 "_settings_theme_label_light" = "ライト";
 
 /* UDP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_udp" = "速度(UDP)";
+"_settings_protocol_section_title_udp" = "スピード(UDP)";
 
 /* TCP protocols section header in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_section_title_tcp" = "信頼性(TCP)";
@@ -2051,13 +2051,13 @@
 "_settings_protocol_description_wireguard_tcp" = "高速、安全、そして効率的。WireGuardは検出やブロックが困難です。";
 
 /* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tls" = "検閲者からVPN接続を隠すことでVPNブロックを克服します。このプロトコルはDPI(ディープパケットインスペクション)に耐性がありますが、他のプロトコルほど速くない場合があります。ステルスはProton VPN専用です。";
+"_settings_protocol_description_wireguard_tls" = "VPN 接続を検閲から隠すことで、VPN ブロックを回避します。このプロトコルは DPI (ディープ パケット インスペクション) に耐性がありますが、他のプロトコルほど高速ではない可能性があります。ステルスは Proton VPN 専用です。";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "確立され、十分にテストされ、安全です。OpenVPNは他のプロトコルに比べてバッテリー効率が低いです。";
+"_settings_protocol_description_openvpn_udp" = "確立され、十分にテストされ、安全です。 OpenVPN は、他のプロトコルに比べてバッテリー効率が低くなります。";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_tcp" = "確立され、十分にテストされ、安全です。OpenVPNはネットワーク環境が悪い場合でも信頼性がありますが、他のプロトコルほど速くないかもしれません。";
+"_settings_protocol_description_openvpn_tcp" = "確立され、十分にテストされ、安全です。 OpenVPN はネットワーク状態が悪い場合でも信頼性がありますが、他のプロトコルほど高速ではない可能性があります。";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_ikev2" = "高速、安全、そして安定ーしかし検閲者にとって検出およびブロックが容易です。";
@@ -2072,16 +2072,16 @@
 "_settings_protocol_footer" = "VPNプロトコルは、VPNサーバーとデバイス間でデータがどのように移動するかを決定します。**[より詳しく](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_title" = "VPN接続アクティブ";
+"_settings_protocol_alert_title" = "VPN 接続が有効です";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "プロトコルを変更すると現在のVPNセッションは終了します。";
+"_settings_protocol_alert_body" = "プロトコルを切り替えると現在の VPN セッションが切断されます。";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "キャンセル";
+"_settings_protocol_alert_button_cancel" = "取消";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_continue" = "続ける";
+"_settings_protocol_alert_button_continue" = "続行";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "不正なネットワークインターフェイス";
@@ -2111,7 +2111,7 @@
 "search_servers" = "サーバー";
 
 /* Sample servers the user can search for */
-"search_servers_sample" = "JP#50、CA#3、IT#14...";
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
 
 /* Section header in search */
 "search_us_regions" = "アメリカ合衆国の地域";
@@ -2309,28 +2309,28 @@
 "maximum_device_limit" = "接続するには他のデバイスの接続を解除してください。";
 
 /* Title of streaming upsell modal */
-"upsell_streaming_title" = "4K画質でストリーミング";
+"upsell_streaming_title" = "4Kでストリーミング";
 
 /* Subtitle of streaming upsell modal */
-"upsell_streaming_subtitle" = "世界中のどこからでもお気に入りの映画やTV番組を楽しむ。";
+"upsell_streaming_subtitle" = "世界中どこからでもお気に入りの映画やテレビ番組を楽しめます。";
 
 /* Title of p2p support upsell modal */
 "upsell_p2pSupport_title" = "ピアツーピア(P2P)通信のダウンロードとファイル共有をアンロック";
 
 /* Subtitle of p2p support upsell modal */
-"upsell_p2pSupport_subtitle" = "IPアドレスを隠している最中でもアップロードとダウンロードのスピードを向上。";
+"upsell_p2pSupport_subtitle" = "あなたのIPアドレスを隠したままアップロードとダウンロード速度が向上します。";
 
 /* Title of devices upsell modal */
-"upsell_devices_title" = "一度に 10 台のデバイス保護";
+"upsell_devices_title" = "一度に10台のデバイスを保護";
 
 /* Subtitle of devices upsell modal */
 "upsell_devices_subtitle" = "8 つの異なるプラットフォームでProton VPNが利用可能。";
 
 /* Title of torOverVPN upsell modal */
-"upsell_torOverVPN_title" = "ワンタップでTorネットワークへアクセス";
+"upsell_torOverVPN_title" = "Torネットワークへワンタップでアクセス";
 
 /* Subtitle of torOverVPN upsell modal */
-"upsell_torOverVPN_subtitle" = "通常のブラウザで隠しサービスやオニオンサイトに接続します。";
+"upsell_torOverVPN_subtitle" = "普段使っているブラウザで、隠れたサービスやオニオンサイトに接続できます。";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "さらに高速なブラウジング(最大10Gbps)";
@@ -2363,13 +2363,13 @@
 "upsell_customization_profiles_bold" = "プロファイル";
 
 /* Feature of Customization upsell modal */
-"upsell_customization_quick_connect" = "クイック接続でプロファイルに素早くアクセス";
+"upsell_customization_quick_connect" = "クイック接続 を使用すると、プロファイルにすばやくアクセスできます。";
 
 /* Bold part of the feature of Customization upsell modal */
 "upsell_customization_quick_connect_bold" = "クイック接続";
 
 /* Title of Profiles upsell modal */
-"upsell_profiles_title" = "よく使う接続先に素早くアクセス";
+"upsell_profiles_title" = "頻繁に利用するコネクションに素早くアクセス";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "VPN Plusでプロファイルをアンロック";
@@ -2495,16 +2495,16 @@
 "welcome_to_proton_banner_subtitle_redesign" = "私たちはインターネット活動のログを収集せず、あなたの情報を第三者に共有することは決してありません。";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "匿名の使用統計を共有する";
+"onboarding_get_started_statistics_toggle_title" = "匿名の使用統計を共有";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
-"onboarding_get_started_statistics_toggle_subtitle" = "使用データは、VPNブロックを克服し、アプリのパフォーマンスを向上させるのに役立ちます。";
+"onboarding_get_started_statistics_toggle_subtitle" = "使用状況データは VPN 検閲に打ち勝ち、アプリのパフォーマンスを改善するために使用されます。";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "匿名のクラッシュレポートを共有する";
+"onboarding_get_started_crashes_toggle_title" = "匿名のクラッシュレポートを共有";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "クラッシュレポートは、バグの修正、ファイアウォールの検出、VPNブロックの回避に役立ちます。";
+"onboarding_get_started_crashes_toggle_subtitle" = "クラッシュレポートはバグを修正し、ファイアウォールを検出し、VPN 検閲を回避するために使用されます。";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "プライバシーをアップグレードする";
@@ -2681,10 +2681,10 @@
 "upsell_carousel_worldwide_subtitle" = "63 の国々に 1700 以上のサーバーを所有";
 
 /* Home upsell carousel card title */
-"upsell_carousel_faster_browsing_title" = "高速ブラウジング";
+"upsell_carousel_faster_browsing_title" = "高速なブラウジング";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "より高速な速度(最大 10 Gbps)でブラウジング";
+"upsell_carousel_faster_browsing_subtitle" = "さらに高速なブラウジング(最大10Gbps)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "ストリーミング";
@@ -2696,31 +2696,31 @@
 "upsell_carousel_netshield_title" = "NetShield";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_netshield_subtitle" = "広告やマルウェア、トラッカーをブロック";
+"upsell_carousel_netshield_subtitle" = "マルウェア、広告、トラッカーをブロック";
 
 /* Home upsell carousel card title */
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "VPN接続にもう1段階の暗号化を追加";
+"upsell_carousel_secure_core_subtitle" = "VPN接続にもう1つの暗号化レイヤーを追加する";
 
 /* Home upsell carousel card title */
-"upsell_carousel_p2p_title" = "P2Pサポート";
+"upsell_carousel_p2p_title" = "P2P対応";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_p2p_subtitle" = "BitTorrentや他のファイル共有プロトコルを通じたファイルダウンロード";
+"upsell_carousel_p2p_subtitle" = "BitTorrentやその他のファイル共有プロトコルでファイルをダウンロードする";
 
 /* Home upsell carousel card title */
 "upsell_carousel_devices_title" = "10 台のデバイス保護";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_devices_subtitle" = "すべてのデバイスでのセキュリティとプライバシー";
+"upsell_carousel_devices_subtitle" = "すべてのデバイスにセキュリティとプライバシー";
 
 /* Home upsell carousel card title */
-"upsell_carousel_tor_title" = "VPN経由のTor";
+"upsell_carousel_tor_title" = "VPN経由Tor";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "VPN接続を介してTorネットワークを使用し、プライバシーを強化する";
+"upsell_carousel_tor_subtitle" = "VPN接続にTorネットワークを使用することで、プライバシーをさらに守ることができます";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "そしてさらに多くのことが…";

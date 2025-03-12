@@ -1728,7 +1728,7 @@
 "_connection_card_connecting_to" = "Verbinden mit...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "Verbinde mit %@.";
+"_connection_card_accessibility_connecting_to" = "Mit %@ verbinden.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "Du warst zuletzt mit %@ verbunden.";
@@ -1758,7 +1758,7 @@
 "_home_recents_upsell_section" = "Entdecke VPN Plus";
 
 /* The section of recent connections in the Home tab. [Redesign_2023] */
-"_home_recents_recent_section" = "Aktuelles";
+"_home_recents_recent_section" = "Neueste";
 
 /* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
 "_home_recents_options_button_help" = "Aktionen";
@@ -1853,13 +1853,13 @@
 "_connection_details_title" = "Verbindungsdetails";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "Verbunden für";
+"_connection_details_connected_for" = "Verbunden seit";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
 "_connection_details_country" = "Land";
 
 /* Connection details screen: City (macOS and iOS) [Redesign_2023] */
-"_connection_details_city" = "Ort";
+"_connection_details_city" = "Stadt";
 
 /* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
 "_connection_details_server" = "Server";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Die Server befinden sich in Singapur, aber es scheint, als würdest du von Thailand aus surfen.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Die Server befinden sich physisch in %1$@, aber es wird so aussehen, als würdest du von %2$@ surfen.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1982,10 +1982,10 @@
 "_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Hilfecenter";
+"_settings_title_support_center" = "Hilfezentrum";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
-"_settings_title_report_issue" = "Ein Problem melden";
+"_settings_title_report_issue" = "Problem melden";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
 "_settings_title_debug_logs" = "Debug-Protokolle";
@@ -2075,7 +2075,7 @@
 "_settings_protocol_alert_title" = "VPN‐Verbindung aktiv";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "Ein Wechsel des Protokolls beendet deine aktuelle VPN-Sitzung.";
+"_settings_protocol_alert_body" = "Das Ändern des Protokolls wird deine aktuelle VPN-Sitzung beenden.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_cancel" = "Abbrechen";
@@ -2501,10 +2501,10 @@
 "onboarding_get_started_statistics_toggle_subtitle" = "Nutzungsdaten helfen uns, VPN-Sperren zu überwinden und die Leistung der App zu verbessern.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Anonyme Absturzberichte teilen";
+"onboarding_get_started_crashes_toggle_title" = "Anonyme Absturzmeldungen teilen";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Absturzberichte helfen uns Fehler zu beheben, Firewalls zu erkennen und VPN-Sperren zu vermeiden.";
+"onboarding_get_started_crashes_toggle_subtitle" = "Absturzberichte helfen uns, Fehler zu beheben, Firewalls zu erkennen und VPN-Sperren zu vermeiden.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Verbessere deine Privatsphäre";
@@ -2513,7 +2513,7 @@
 "upsell_plans_list_subtitle" = "Hol dir erweiterte Datenschutzfunktionen und höhere Geschwindigkeit mit VPN Plus.";
 
 /* Header of paid plans list where there are more than 1 plan option to pick from. */
-"upsell_plans_list_section_header" = "Wähle dein Abonnement";
+"upsell_plans_list_section_header" = "Wähle dein Abonnement aus";
 
 /* Main Button of paid plans list allowing user to start payments process. */
 "upsell_plans_list_validate_button" = "VPN Plus holen";
@@ -2684,7 +2684,7 @@
 "upsell_carousel_faster_browsing_title" = "Schneller surfen";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Surfen mit noch höherer Geschwindigkeit (bis zu 10 Gbit/s)";
+"upsell_carousel_faster_browsing_subtitle" = "Surfe mit noch höherer Geschwindigkeit (bis zu 10 Gbit/s)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Streaming";
@@ -2723,7 +2723,7 @@
 "upsell_carousel_tor_subtitle" = "Verwende das Tor-Netzwerk über deine VPN-Verbindung für mehr Privatsphäre";
 
 /* Home upsell carousel card title */
-"upsell_carousel_more_title" = "Und vieles mehr …";
+"upsell_carousel_more_title" = "Und vieles mehr…";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Schalte noch mehr Leistungs- und Datenschutzfunktionen frei";

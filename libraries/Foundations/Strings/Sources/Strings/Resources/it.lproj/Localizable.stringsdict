@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Proteggi %d dispositivo</string>
+        <string>Proteggi fino a %d dispositivi</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -68,7 +68,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d paesi</string>
+        <string>%d Paesi</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -95,7 +95,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d paese</string>
+        <string>%d paesi</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -106,7 +106,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d server sicuro</string>
+        <string>Più di %d server sicuri</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -313,13 +313,13 @@ fermati</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ora</string>
+        <string>%d h</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ore</string>
+        <string>%d h</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -340,13 +340,13 @@ fermati</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ora</string>
+        <string>%d h</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ore</string>
+        <string>%d h</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -356,13 +356,13 @@ fermati</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ora</string>
+        <string>%d h</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ore</string>
+        <string>%d h</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>

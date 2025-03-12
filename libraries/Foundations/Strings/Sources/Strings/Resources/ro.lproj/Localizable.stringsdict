@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>un dispozitiv</string>
+        <string>Un dispozitiv</string>
         <key>few</key>
         <string>%d dispozitive</string>
         <key>other</key>
@@ -58,15 +58,15 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Protejați până la %d dispozitiv</string>
+        <string>Protejați maxim %d dispozitiv</string>
         <key>few</key>
-        <string>Protejați până la %d dispozitive</string>
+        <string>Protejați maxim %d dispozitive</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Protejați până la %d de dispozitive</string>
+        <string>Protejați maxim %d de dispozitive</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -107,7 +107,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d de țări</string>
+        <string>%d țară</string>
         <key>few</key>
         <string>%d țări</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -120,7 +120,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>Peste %d de servere securizate</string>
+        <string>Peste %d server securizat</string>
         <key>few</key>
         <string>Peste %d servere securizate</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -254,7 +254,7 @@
         <key>few</key>
         <string>%d țări</string>
         <key>other</key>
-        <string>%d țară</string>
+        <string>%d de țări</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -286,13 +286,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>reclamă
-blocată</string>
+        <string>Reclame
+blocate</string>
         <key>few</key>
-        <string>reclame
+        <string>Reclame
 blocate</string>
         <key>other</key>
-        <string>de reclame
+        <string>Reclame
 blocate</string>
       </dict>
     </dict>
@@ -307,14 +307,14 @@ blocate</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>instrument de urmărire
-blocat</string>
+        <string>Urmăritori
+blocați</string>
         <key>few</key>
-        <string>instrument de urmărire
-blocat</string>
+        <string>Urmăritori
+blocați</string>
         <key>other</key>
-        <string>de instrumente de urmărire
-blocate</string>
+        <string>Urmăritori
+blocați</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

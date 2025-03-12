@@ -74,7 +74,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d کشور</string>
+        <string>%d کشورها</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -176,7 +176,7 @@
         <key>one</key>
         <string>%d کشور</string>
         <key>other</key>
-        <string>%d کشور</string>
+        <string>%d کشورها</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -224,7 +224,7 @@
         <key>one</key>
         <string>%d کشور</string>
         <key>other</key>
-        <string>%d کشور</string>
+        <string>%d کشورها</string>
       </dict>
     </dict>
     <key>_plans_connections</key>

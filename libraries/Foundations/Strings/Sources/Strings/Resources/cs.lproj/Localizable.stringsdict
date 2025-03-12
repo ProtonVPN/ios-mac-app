@@ -88,18 +88,18 @@
         <key>few</key>
         <string>%d země</string>
         <key>many</key>
-        <string>%d zemí</string>
+        <string>%d země</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d zemí</string>
+        <string>%d země</string>
       </dict>
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d bezpečný server</string>
+        <string>%d bezpečných serverů</string>
         <key>few</key>
         <string>%d bezpečné servery</string>
         <key>many</key>
@@ -119,7 +119,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d zemi</string>
+        <string>%d zemích</string>
         <key>few</key>
         <string>%d zemích</string>
         <key>many</key>
@@ -134,7 +134,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ bezpečný server</string>
+        <string>%d+ bezpečných serverů</string>
         <key>few</key>
         <string>%d+ bezpečné servery</string>
         <key>many</key>
@@ -282,7 +282,7 @@
         <key>few</key>
         <string>%d země</string>
         <key>many</key>
-        <string>%d zemí</string>
+        <string>%d země</string>
         <key>other</key>
         <string>%d zemí</string>
       </dict>
@@ -547,17 +547,17 @@ zastaveno</string>
       <key>STEPS</key>
       <dict>
         <key>one</key>
-        <string>z %d</string>
+        <string>ze %d</string>
         <key>few</key>
         <string>ze %d</string>
         <key>many</key>
-        <string>z %d</string>
+        <string>ze %d</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>z %d</string>
+        <string>ze %d</string>
       </dict>
       <key>STEP</key>
       <dict>
@@ -582,17 +582,17 @@ zastaveno</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Umístění serverů Free (%d)</string>
+        <string>Umístění Free serverů (%d)</string>
         <key>few</key>
-        <string>Umístění serverů Free (%d)</string>
+        <string>Umístění Free serverů (%d)</string>
         <key>many</key>
-        <string>Umístění serverů Free (%d)</string>
+        <string>Umístění Free serverů (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Umístění serverů Free (%d)</string>
+        <string>Umístění Free serverů (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

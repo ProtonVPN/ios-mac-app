@@ -183,7 +183,7 @@
 "_clear_application_data" = "Rensa applikationsdata";
 
 /* Main mac app menu item */
-"_system_extension_tutorial_menu_item" = "Guide för systemtillägg";
+"_system_extension_tutorial_menu_item" = "Handledning för systemtillägg";
 
 /* MacOS: connecting overlay */
 "_preparing_connection" = "Kontrollerar servertillgänglighet";
@@ -912,7 +912,7 @@
 "_auto_connect_tooltip" = "När du startar appen är du ansluten till den valda profilen";
 
 /* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Snabbanslut-knappen kommer ansluta dig till den valda profilen";
+"_quick_connect_tooltip" = "Knappen ”Snabbanslut” kommer ansluta dig till den valda profilen";
 
 /* MacOS: Settings -> General: name of field. */
 "_start_minimized" = "Starta minimerad";
@@ -1065,7 +1065,7 @@
 "_plans_footer" = "När du har bekräftat ditt köp av ett betalt paket kommer ditt iTunes-konto att debiteras det belopp som visas, vilket inkluderar momser och ytterligare plattformsavgifter (som inte debiteras av Proton direkt). Efter köpet kommer du automatiskt att uppgraderas till det valda paketet under en 1-årsperiod, varefter du kan förnya eller avbryta, antingen online eller via vår iOS-app.";
 
 /* Per year. Appended to plan price. */
-"_per_year_short" = "/ år";
+"_per_year_short" = "/år";
 
 /* iOS plan feature */
 "_feature_server_count" = "Anslut till servrar i";
@@ -1420,7 +1420,7 @@
 "_sysex_description_4" = "För att fortsätta, klicka på **Öppna säkerhetspreferenser** och följ sedan videoinstruktionerna på denna skärm.";
 
 /* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Konfigurera Proton VPN";
+"_sysex_set_up_proton_vpn" = "Ställ in Proton VPN";
 
 /* Default action in the system extension wizard in mac. Pre-macOS Ventura */
 "_sysex_open_system_settings" = "Öppna systeminställningar";
@@ -1725,7 +1725,7 @@
 "_connection_card_loading" = "Laddar in …";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
-"_connection_card_connecting_to" = "Ansluter till …";
+"_connection_card_connecting_to" = "Ansluter till...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_connecting_to" = "Ansluter till %@.";
@@ -1767,7 +1767,7 @@
 "_home_recents_plus_server" = "Server tillgänglig med VPN Plus";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_server_under_maintenance" = "Server underhålls";
+"_home_recents_server_under_maintenance" = "Server under underhåll";
 
 /* Title of the "Random" recent connection item */
 "home_recents_random_server_title" = "Slumpmässigt land";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Servrarna är fysiskt placerade i Singapore men det kommer att se ut som att du surfar från Thailand.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Servrarna är fysiskt placerade i %1$@, men du ser ut att surfa från %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2021,19 +2021,19 @@
 "_settings_theme_value_auto" = "Auto";
 
 /* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_dark" = "Mörkt";
+"_settings_theme_value_dark" = "Mörk";
 
 /* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_light" = "Ljust";
+"_settings_theme_value_light" = "Ljus";
 
 /* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
 "_settings_theme_label_auto" = "Auto*";
 
 /* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_dark" = "Mörkt";
+"_settings_theme_label_dark" = "Mörk";
 
 /* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_light" = "Ljust";
+"_settings_theme_label_light" = "Ljus";
 
 /* UDP protocols section header in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_section_title_udp" = "Hastighet (UDP)";
@@ -2054,10 +2054,10 @@
 "_settings_protocol_description_wireguard_tls" = "Övervinner VPN-blockeringar genom att dölja din VPN-anslutning från censureringar. Detta protokoll är DPI-beständigt (deep packet inspection) men kanske inte är lika snabbt som andra protokoll. Stealth är exklusivt för Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Etablerat, välbeprövat och säkert. OpenVPN är mindre batterieffektivt än vissa andra protokoll.";
+"_settings_protocol_description_openvpn_udp" = "Etablerad, väl beprövad och säker. OpenVPN är mindre batterieffektivt än vissa andra protokoll.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_tcp" = "Etablerat, välbeprövat och säkert. OpenVPN är pålitligt i dåliga nätverksförhållanden, men kanske inte är lika snabba som andra protokoll.";
+"_settings_protocol_description_openvpn_tcp" = "Etablerad, väl beprövad och säker. OpenVPN är pålitligt i dåliga nätverksförhållanden, men kanske inte är lika snabba som andra protokoll.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_ikev2" = "Snabbt, säkert och stabilt—men enklare för censurerare att upptäcka och blockera.";
@@ -2231,7 +2231,7 @@
 "modals_new_upsell_vpn_accelerator_subtitle" = "Lås upp snabbare och mindre belastade servrar med hastigheter på upp till 10 Gbps.";
 
 /* Subtitle of the Customization scren */
-"modals_new_upsell_customization_subtitle" = "Nå enheter på ditt lokala nätverk (LAN) med VPN Plus.";
+"modals_new_upsell_customization_subtitle" = "Kom åt enheter på ditt lokala nätverk (LAN) med VPN Plus.";
 
 /* Subtitle of Moderate NAT upsell screens */
 "modals_new_upsell_moderate_nat_subtitle" = "Förbättra onlinespels- och videosamtalsprestanda med NAT typ 2.";
@@ -2315,7 +2315,7 @@
 "upsell_streaming_subtitle" = "Njut av dina favoritfilmer och TV-program från var som helst i världen.";
 
 /* Title of p2p support upsell modal */
-"upsell_p2pSupport_title" = "Få tillgång till peer-to-peer-nedladdningar (P2P) och fildelning";
+"upsell_p2pSupport_title" = "Lås upp peer-to-peer-nedladdningar (P2P) och fildelning";
 
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Förbättra dina uppladdnings- och nedladdningshastigheter samtidigt som du döljer din IP-adress.";
@@ -2336,7 +2336,7 @@
 "upsell_vpn_accelerator_title" = "Surfa med ännu högre hastigheter (upp till 10 Gbps)";
 
 /* Feature of VPN Accelerator upsell modal */
-"upsell_vpn_accelerator_faster_servers" = "Åtkomst till snabbare och mindre belastade servrar.";
+"upsell_vpn_accelerator_faster_servers" = "Åtkomst till snabbare, mindre belastade servrar.";
 
 /* Feature of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_increase_connection_speeds" = "Öka anslutningshastigheterna med upp till 400 %% med VPN Accelerator.";
@@ -2369,7 +2369,7 @@
 "upsell_customization_quick_connect_bold" = "Snabbanslut";
 
 /* Title of Profiles upsell modal */
-"upsell_profiles_title" = "Få snabb åtkomst till dina vanligaste anslutningar";
+"upsell_profiles_title" = "Få snabb åtkomst till dina frekventa anslutningar";
 
 /* Subtitle of Profiles upsell modal */
 "upsell_profiles_subtitle" = "Lås upp profiler med VPN Plus";
@@ -2384,10 +2384,10 @@
 "upsell_profiles_feature_location" = "Spara din föredragna server, ort eller land.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_protocols" = "Välj anpassade protokoll och premium VPN-funktioner.";
+"upsell_profiles_feature_protocols" = "Ställ in anpassade protokoll och premium VPN-funktioner.";
 
 /* Feature of Profiles upsell modal */
-"upsell_profiles_feature_auto_connect" = "Konfigurera autoanslutning för ännu snabbare åtkomst.";
+"upsell_profiles_feature_auto_connect" = "Ställ in automatisk anslutning för ännu snabbare åtkomst.";
 
 /* Feature of Countries upsell modal */
 "upsell_countries_any_location" = "Välj valfri plats";
@@ -2411,13 +2411,13 @@
 "upsell_country_feature_title" = "Vill du välja ett specifikt land?";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Lås upp landsval med VPN Plus";
+"upsell_country_feature_subtitle" = "Lås upp val av länder med VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "landsval";
 
 /* Title of the "What's new" screen */
-"modals_whats_new" = "Vad är nytt";
+"modals_whats_new" = "Vad som är nytt";
 
 /* Button Title of the "What's new" screen */
 "modals_whats_new_button_title" = "Ta en titt";
@@ -2441,7 +2441,7 @@
 "modals_whats_new_gateways_subtitle" = "Du kan nu komma åt din organisations dedikerade servrar från huvudnavigationen.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
-"upsell_specific_location_subtitle" = "Få obegränsade byten med VPN Plus";
+"upsell_specific_location_subtitle" = "Få obegränsade ändringar med VPN Plus";
 
 /* Displayed when the user clicks "Change server" after they've just changed it. */
 "upsell_specific_location_subtitle2" = "Med Proton Free kan du byta server några gånger i timmen. Skaffa obegränsade serverändringar med VPN Plus.";
@@ -2483,10 +2483,10 @@
 "welcome_to_proton_title" = "Välkommen till Proton VPN";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
-"welcome_to_proton_subtitle" = "Surfa privat, kom åt blockerat innehåll och njut av digital frihet.";
+"welcome_to_proton_subtitle" = "Surfa privat, åtkomst till blockerat innehåll och njut av digital frihet.";
 
 /* Welcome to Proton screen shown during onboarding. Banner title label. */
-"welcome_to_proton_banner_title" = "Certifierat loggningslös VPN";
+"welcome_to_proton_banner_title" = "Certifierat VPN utan loggning";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
 "welcome_to_proton_banner_subtitle" = "Din VPN-aktivitet skyddas av schweiziska integritetslagar. Vi kommer aldrig att spåra dig online eller dela din information med tredje part.";

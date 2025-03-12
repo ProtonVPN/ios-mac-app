@@ -50,7 +50,7 @@
         <key>one</key>
         <string>%d+ новый сервер</string>
         <key>few</key>
-        <string>%d+ новых сервера</string>
+        <string>%d+ новых серверов</string>
         <key>many</key>
         <string>%d+ новых серверов</string>
         <key>other</key>
@@ -64,7 +64,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Защитите до %d устройства</string>
+        <string>Защитите до %d устройств</string>
         <key>few</key>
         <string>Защитите до %d устройств</string>
         <key>many</key>
@@ -80,11 +80,11 @@
     <key>modals_upsell_all_countries_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Получите доступ к %#@num_servers@ в %#@num_countries@</string>
+      <string>Доступ через %#@num_servers@ к %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d страна</string>
+        <string>%d стран</string>
         <key>few</key>
         <string>%d страны</string>
         <key>many</key>
@@ -99,7 +99,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d защищённый сервер</string>
+        <string>%d защищенных серверов</string>
         <key>few</key>
         <string>%d защищённых сервера</string>
         <key>many</key>
@@ -109,7 +109,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d защищённых серверов</string>
+        <string>%d защищенных серверов</string>
       </dict>
     </dict>
     <key>modals_new_upsell_all_countries_subtitle</key>
@@ -284,7 +284,7 @@
         <key>many</key>
         <string>%d стран</string>
         <key>other</key>
-        <string>%d страны</string>
+        <string>%d стран</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -300,11 +300,11 @@
         <key>one</key>
         <string>%d подключение</string>
         <key>few</key>
-        <string>%d подключения</string>
+        <string>%d подключений</string>
         <key>many</key>
-        <string>%d подключений</string>
+        <string>%d подключения</string>
         <key>other</key>
-        <string>%d подключений</string>
+        <string>%d подключения</string>
       </dict>
     </dict>
     <key>_netshield_stats_ads_blocked</key>
@@ -389,17 +389,17 @@
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>few</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>many</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -409,32 +409,32 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>few</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>many</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>few</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>many</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -444,17 +444,17 @@
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>few</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>many</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d ч.</string>
+        <string>%d ч</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -464,32 +464,32 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>few</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>many</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
         <key>few</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
         <key>many</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -499,17 +499,17 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>few</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>many</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d мин.</string>
+        <string>%d мин</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -519,17 +519,17 @@
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
         <key>few</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
         <key>many</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d сек.</string>
+        <string>%d с</string>
       </dict>
     </dict>
     <key>_step_of</key>

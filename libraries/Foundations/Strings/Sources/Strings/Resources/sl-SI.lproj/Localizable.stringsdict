@@ -19,7 +19,7 @@
         <key>few</key>
         <string>%d naprav</string>
         <key>other</key>
-        <string>%d naprav</string>
+        <string>%d napravi</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -64,7 +64,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Zaščitite do %d napravo</string>
+        <string>Zaščitite do %d naprav</string>
         <key>two</key>
         <string>Zaščitite do %d napravi</string>
         <key>few</key>
@@ -99,7 +99,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d varen strežnik</string>
+        <string>%d varni strežniki</string>
         <key>two</key>
         <string>%d varna strežnika</string>
         <key>few</key>
@@ -134,7 +134,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d varen strežnik</string>
+        <string>%d+ varni strežniki</string>
         <key>two</key>
         <string>%d+ varna strežnika</string>
         <key>few</key>
@@ -222,7 +222,7 @@
         <key>two</key>
         <string>%d držav</string>
         <key>few</key>
-        <string>%d držav</string>
+        <string>%d države</string>
         <key>other</key>
         <string>%d države</string>
       </dict>
@@ -397,17 +397,17 @@ ustavljeni</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>two</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>few</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d h</string>
+        <string>%d ura</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -417,32 +417,32 @@ ustavljeni</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>two</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>few</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>two</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>few</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d h</string>
+        <string>%d ura</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -452,17 +452,17 @@ ustavljeni</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>two</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>few</key>
-        <string>%d h</string>
+        <string>%d ura</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d h</string>
+        <string>%d ura</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -472,32 +472,32 @@ ustavljeni</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>two</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>few</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
         <key>two</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
         <key>few</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -507,17 +507,17 @@ ustavljeni</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>two</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>few</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min.</string>
+        <string>%d minut</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -527,17 +527,17 @@ ustavljeni</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
         <key>two</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
         <key>few</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sek.</string>
+        <string>%d sek</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -562,7 +562,7 @@ ustavljeni</string>
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>Korak %d</string>
+        <string>Koraka %d</string>
         <key>two</key>
         <string>Koraka %d</string>
         <key>few</key>
@@ -572,7 +572,7 @@ ustavljeni</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Korakov %d</string>
+        <string>Koraka %d</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>
@@ -582,7 +582,7 @@ ustavljeni</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Lokacije brezplačnega strežnika (%d)</string>
+        <string>Lokacije brezplačnih strežnikov (%d)</string>
         <key>two</key>
         <string>Lokacije brezplačnih strežnikov (%d)</string>
         <key>few</key>

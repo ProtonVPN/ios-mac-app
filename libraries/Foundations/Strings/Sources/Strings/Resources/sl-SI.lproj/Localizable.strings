@@ -1544,7 +1544,7 @@
 /* Gateways info modals text (both iOS and macOS) */
 "_gateways_modal_text" = "Prehod VPN je varna povezava, ki omogoča nadzorovan dostop do podatkov in storitev vašega podjetja prek namenskih strežnikov.";
 
-"_vpn_accelerator_title" = "VPN Accelerator";
+"_vpn_accelerator_title" = "VPN pospeševalnik";
 
 "_vpn_accelerator_change_title" = "Spremenite pospeševalnik VPN";
 
@@ -1692,13 +1692,13 @@
 "_home_tab" = "Začetek";
 
 /* Countries tab in bottom menu [Redesign_2023] */
-"_countries_tab" = "Countries";
+"_countries_tab" = "Države";
 
 /* Settings tab in bottom menu [Redesign_2023] */
 "_settings_tab" = "Nastavitve";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_header" = "You are unprotected";
+"_home_unprotected_header" = "Ste nezaščiteni";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
@@ -1722,13 +1722,13 @@
 "_connection_card_last_connected_to" = "Nazadnje povezan z";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "Loading...";
+"_connection_card_loading" = "Nalaganje ...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Povezovanje z ...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "Connecting to %@.";
+"_connection_card_accessibility_connecting_to" = "Povezovanje z %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
@@ -1737,7 +1737,7 @@
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
-"_connection_card_accessibility_loading" = "Loading";
+"_connection_card_accessibility_loading" = "Nalaganje";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
 "home_default_connection_title" = "Select your default connection";
@@ -1746,28 +1746,28 @@
 "home_default_connection_fastest_name" = "Fastest Country";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_description" = "The best server based on your location";
+"home_default_connection_fastest_description" = "Najboljši strežnik glede na vašo lokacijo";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_name" = "Most Recent";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_description" = "Your most recently used connection";
+"home_default_connection_most_recent_description" = "Vaša nazadnje uporabljena povezava";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
 "_home_recents_upsell_section" = "Odkrijte VPN Plus";
 
 /* The section of recent connections in the Home tab. [Redesign_2023] */
-"_home_recents_recent_section" = "Recents";
+"_home_recents_recent_section" = "Nedavne";
 
 /* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
 "_home_recents_options_button_help" = "Dejanja";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_plus_server" = "Server available with VPN Plus";
+"_home_recents_plus_server" = "Strežnik je na voljo z VPN Plus";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_server_under_maintenance" = "Server under maintenance";
+"_home_recents_server_under_maintenance" = "Poteka vzdrževanje strežnika";
 
 /* Title of the "Random" recent connection item */
 "home_recents_random_server_title" = "Random Country";
@@ -1782,13 +1782,13 @@
 "_action_remove" = "Odstrani";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
-"_action_disconnect" = "Disconnect";
+"_action_disconnect" = "Prekini";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
 "_connection_card_action_cancel" = "Prekliči";
 
 /* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
-"_show_connection_details_button_hint" = "Show connection details";
+"_show_connection_details_button_hint" = "Prikaži podrobnosti povezave";
 
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
 "_action_home_pin" = "Pripni";
@@ -1806,16 +1806,16 @@
 "_secure_core_via_country" = "preko %@";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
-"connection_status_unprotected" = "You are unprotected";
+"connection_status_unprotected" = "Ste nezaščiteni";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
-"connection_status_protecting" = "Protecting your digital identity";
+"connection_status_protecting" = "Zaščita vaše digitalne identitete";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
-"connection_status_protected" = "Protected";
+"connection_status_protected" = "Zaščiteni";
 
 /* Connection status title while VPN status is unknown */
-"connection_status_loading" = "Loading";
+"connection_status_loading" = "Nalaganje";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
 "upsell_get_plus" = "Pridobite Plus";
@@ -1883,31 +1883,31 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "You can connect to .onion sites with your regular browser.";
+"_connection_details_feature_description_tor" = "S spletnimi mesti .onion se lahko povežete z običajnim brskalnikom.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
 
 /* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_p2p" = "Peer-to-peer file sharing is enabled on this server.";
+"_connection_details_feature_description_p2p" = "V tem strežniku je omogočena izmenjava datotek peer-to-peer (P2P).";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Servers are physically located in Singapore, but you’ll appear to be browsing from Thailand.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Strežniki se fizično nahajajo v %1$@, vendar bo videti, kot da brskate iz %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
+"_connection_details_feature_description_secure_core" = "Vaše dejavnosti so šifrirane za 2 visoko zavarovanima strežnikoma VPN.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Pretakanje";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "This server is optimized for TV and movie playback.";
+"_connection_details_feature_description_streaming" = "Ta strežnik je optimiziran za predvajanje televizije in filmov.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "Funkcije";
@@ -1946,7 +1946,7 @@
 "_settings_section_title_features" = "Funkcije";
 
 /* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_connection" = "Connection";
+"_settings_section_title_connection" = "Povezava";
 
 /* Title of the 'General' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_general" = "Splošno";
@@ -1961,13 +1961,13 @@
 "_settings_title_netshield" = "NetShield";
 
 /* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
-"_settings_title_kill_switch" = "Kill Switch";
+"_settings_title_kill_switch" = "Stikalo za izklop";
 
 /* Title of the Protocol cell in the Settings tab [Redesign_2023] */
 "_settings_title_protocol" = "Protokol";
 
 /* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
-"_settings_title_vpn_accelerator" = "VPN Accelerator";
+"_settings_title_vpn_accelerator" = "VPN pospeševalnik";
 
 /* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_advanced" = "Napredne nastavitve";
@@ -1988,22 +1988,22 @@
 "_settings_title_report_issue" = "Prijavi težavo";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
-"_settings_title_debug_logs" = "Debug logs";
+"_settings_title_debug_logs" = "Dnevniki odpravljanja napak";
 
 /* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
-"_settings_title_censorship" = "Help us fight censorship";
+"_settings_title_censorship" = "Pomagajte nam v boju proti cenzuri";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
 "_settings_title_rate" = "Ocenite Proton VPN";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_restore_default_settings" = "Restore default settings";
+"_settings_title_restore_default_settings" = "Obnovi privzete nastavitve";
 
 /* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
 "_settings_title_sign_out" = "Odjavi se";
 
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
-"_settings_app_version" = "App Version: %@";
+"_settings_app_version" = "Različica aplikacije: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Vključeno";
@@ -2039,13 +2039,13 @@
 "_settings_protocol_section_title_udp" = "Hitrost (UDP)";
 
 /* TCP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_tcp" = "Reliability (TCP)";
+"_settings_protocol_section_title_tcp" = "Zanesljivost (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Auto-selects the best protocol for your connection.";
+"_settings_protocol_description_smart" = "Samodejno izbere najboljši protokol za vašo povezavo.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_udp" = "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.";
+"_settings_protocol_description_wireguard_udp" = "Hitro, varno in učinkovito. WireGuard je bolj učinkovit pri porabi baterije kot drugi protokoli.";
 
 /* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_tcp" = "Fast, secure, and efficient. WireGuard is difficult to detect and block.";
@@ -2054,10 +2054,10 @@
 "_settings_protocol_description_wireguard_tls" = "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Established, well-tested, and secure. OpenVPN is less battery-efficient than some other protocols.";
+"_settings_protocol_description_openvpn_udp" = "Uveljavljeno, dobro preizkušeno in varno. OpenVPN je manj učinkovit pri porabi baterije kot nekateri drugi protokoli.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_tcp" = "Established, well-tested, and secure. OpenVPN is reliable in poor network conditions, but may not be as fast as other protocols.";
+"_settings_protocol_description_openvpn_tcp" = "Uveljavljeno, dobro preizkušeno in varno. OpenVPN je zanesljiv v slabih omrežnih pogojih, vendar morda ni tako hiter kot drugi protokoli.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
@@ -2075,7 +2075,7 @@
 "_settings_protocol_alert_title" = "Povezava VPN je aktivna";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "Changing protocols will end your current VPN session.";
+"_settings_protocol_alert_body" = "Spreminjanje protokolov bo končalo vašo trenutno sejo VPN.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_cancel" = "Prekliči";
@@ -2312,13 +2312,13 @@
 "upsell_streaming_title" = "Pretakajte v 4K";
 
 /* Subtitle of streaming upsell modal */
-"upsell_streaming_subtitle" = "Enjoy your favorite movies and TV shows from anywhere in the world.";
+"upsell_streaming_subtitle" = "Uživajte v svojih najljubših filmih in serijah kjer koli na svetu.";
 
 /* Title of p2p support upsell modal */
-"upsell_p2pSupport_title" = "Unlock peer-to-peer (P2P) downloads and file sharing";
+"upsell_p2pSupport_title" = "Odklenite prenose enakovrednih (P2P) in skupno rabo datotek";
 
 /* Subtitle of p2p support upsell modal */
-"upsell_p2pSupport_subtitle" = "Improve your upload and download speeds while hiding your IP address.";
+"upsell_p2pSupport_subtitle" = "Izboljšajte hitrost nalaganja in prenosa, medtem ko skrivate svoj naslov IP.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Protect 10 devices at once";
@@ -2327,10 +2327,10 @@
 "upsell_devices_subtitle" = "Proton VPN is available on 8 different platforms.";
 
 /* Title of torOverVPN upsell modal */
-"upsell_torOverVPN_title" = "Access the Tor network in one tap";
+"upsell_torOverVPN_title" = "Dostopajte do omrežja Tor z enim dotikom";
 
 /* Subtitle of torOverVPN upsell modal */
-"upsell_torOverVPN_subtitle" = "Connect to hidden services and onion sites with your regular browser.";
+"upsell_torOverVPN_subtitle" = "Povežite se s skritimi storitvami in Tor spletnimi mesti z običajnim brskalnikom.​";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Brskajte pri še višjih hitrostih (do 10 Gb/s)";
@@ -2423,13 +2423,13 @@
 "modals_whats_new_button_title" = "Poglej";
 
 /* Title of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_title" = "New look, same protection";
+"modals_whats_new_redesign_title" = "Nov videz, enaka zaščita";
 
 /* Subtitle of redesign related content of the "What's new" screen */
 "modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
 
 /* Title of recents related content of the "What's new" screen */
-"modals_whats_new_recents_title" = "Introducing Recents";
+"modals_whats_new_recents_title" = "Predstavljamo nedavno";
 
 /* Subtitle of recents related content of the "What's new" screen */
 "modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
@@ -2495,16 +2495,16 @@
 "welcome_to_proton_banner_subtitle_redesign" = "We’ll never log your internet activity or share your information with third parties.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Share anonymous usage statistics";
+"onboarding_get_started_statistics_toggle_title" = "Delite anonimne podatke o uporabi";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
-"onboarding_get_started_statistics_toggle_subtitle" = "Usage data helps us overcome VPN blocks and improve app performance.";
+"onboarding_get_started_statistics_toggle_subtitle" = "Podatki o uporabi nam pomagajo premagati blokade VPN in izboljšati delovanje aplikacije.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Share anonymous crash reports";
+"onboarding_get_started_crashes_toggle_title" = "Delite anonimna poročila o zrušitvah";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+"onboarding_get_started_crashes_toggle_subtitle" = "Poročila o zrušitvah nam pomagajo odpraviti napake, zaznati požarne zidove in se izogniti blokadam VPN.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "Nadgradite svojo zasebnost";
@@ -2546,7 +2546,7 @@
 "free_connections_modal_description" = "Brezplačen Proton vas samodejno poveže z najhitrejšim razpoložljivim strežnikom. To bo običajno najbližji strežnik vaši lokaciji.";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_servers_description" = "Proton Free automatically connects you to the fastest available free server from our %@ free countries. This will normally be the closest server to your location.";
+"free_connections_modal_servers_description" = "Proton Free vas samodejno poveže z najhitrejšim razpoložljivim brezplačnim strežnikom iz %@ prostih držav. To bo običajno najbližji strežnik vaši lokaciji.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "Zagotovite si svetovno pokritost z VPN Plus";
@@ -2684,43 +2684,43 @@
 "upsell_carousel_faster_browsing_title" = "Hitrejše brskanje";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Browse at even higher speeds (up to 10 Gbps)";
+"upsell_carousel_faster_browsing_subtitle" = "Brskajte pri še višjih hitrostih (do 10 Gb/s)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Pretakanje";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_streaming_subtitle" = "Watch your favorite movies and TV shows";
+"upsell_carousel_streaming_subtitle" = "Glejte svoje najljubše filme in serije";
 
 /* Home upsell carousel card title */
 "upsell_carousel_netshield_title" = "NetShield";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_netshield_subtitle" = "Block ads, malware, and trackers";
+"upsell_carousel_netshield_subtitle" = "Blokirajte oglase, zlonamerno programsko opremo in sledilnike";
 
 /* Home upsell carousel card title */
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Add another layer of encryption to your VPN connection";
+"upsell_carousel_secure_core_subtitle" = "Dodajte še eno plast šifriranja svoji VPN povezavi";
 
 /* Home upsell carousel card title */
 "upsell_carousel_p2p_title" = "Podpora za P2P";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_p2p_subtitle" = "Download files through BitTorrent and other file sharing protocols";
+"upsell_carousel_p2p_subtitle" = "​Prenesite datoteke prek BitTorrenta in drugih protokolov za skupno rabo datotek";
 
 /* Home upsell carousel card title */
 "upsell_carousel_devices_title" = "Protect 10 devices";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_devices_subtitle" = "Security and privacy on all your devices";
+"upsell_carousel_devices_subtitle" = "Varnost in zasebnost na vseh vaših napravah";
 
 /* Home upsell carousel card title */
 "upsell_carousel_tor_title" = "Tor preko VPN";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Use the Tor network over your VPN connection for extra privacy";
+"upsell_carousel_tor_subtitle" = "Za dodatno zasebnost uporabite omrežje Tor prek povezave VPN";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "In veliko več …";

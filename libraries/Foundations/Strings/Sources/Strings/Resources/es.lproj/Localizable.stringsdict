@@ -91,11 +91,11 @@
     <key>modals_new_upsell_all_countries_subtitle</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Desbloquea %#@num_servers@ en %#@num_countries@ con VPN Plus.</string>
+      <string>Accede a %#@num_servers@ en %#@num_countries@ con VPN Plus.</string>
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d país</string>
+        <string>%d países</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -383,13 +383,13 @@ detenidos</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d s</string>
+        <string>%d seg</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d s</string>
+        <string>%d seg</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -415,13 +415,13 @@ detenidos</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d s</string>
+        <string>%d seg</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d s</string>
+        <string>%d seg</string>
       </dict>
     </dict>
     <key>_step_of</key>

@@ -106,7 +106,7 @@
 "_vpn_protocol_not_supported_text" = "پروتکل VPN برای اتصالی که شما انتخاب کردید در دسترس نیست. برای اتصال، سرور یا پروتکل دیگری را امتحان کنید.";
 
 /* iOS: button in settings screen */
-"_log_out" = "خروج از حساب";
+"_log_out" = "خروج";
 
 /* iOS: Logout alert */
 "_log_out_warning" = "Signing out will end your VPN session.";
@@ -150,7 +150,7 @@
 /* Text addressing to contact costumer support on several sites of the app */
 "_contact_our_support" = "با تیم پشتیبانی ما تماس بگیرید";
 
-"_turn_on" = "روشن";
+"_turn_on" = "روشن کردن";
 
 "_not_now" = "الان نه";
 
@@ -203,7 +203,7 @@
 "_connecting_vpn" = "درحال اتصال به %@";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
-"_connecting_to" = "درحال اتصال به %@";
+"_connecting_to" = "در حال اتصال به %@";
 
 "_reconnecting_to" = "اتصال دوباره به %@";
 
@@ -243,7 +243,7 @@
 "_test_servers" = "سرورهای آزمایشی";
 
 /* MacOS: connecting overlay */
-"_initializing_connection" = "در حال آماده‌سازی ارتباط...";
+"_initializing_connection" = "در حال راه‌اندازی اتصال...";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "با موفقیت وصل شدید";
@@ -337,7 +337,7 @@
 "_login" = "ورود";
 
 /* iOS: Login button in several places */
-"_log_in" = "ورود به حساب";
+"_log_in" = "ورود";
 
 /* MacOS: label in login and settings screens */
 "_remember_login" = "Remember sign in";
@@ -429,7 +429,7 @@
 "_resend_success" = "کد جدید درخواست شد";
 
 /* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "شرایط و قوانین";
+"_terms_and_conditions" = "شرایط و ضوابط";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
 "_terms_and_conditions_disclaimer" = "By using Proton VPN, you agree to our\n%@ and %@";
@@ -483,7 +483,7 @@
 "_premium_description" = "سرور ویژه";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "از طریق %@";
+"_via_country" = "via %@";
 
 /* Used for SecureCore connection labels. */
 "_via_secure_core" = "via Secure Core";
@@ -554,7 +554,7 @@
 "_recommended" = "توصیه شده";
 
 /* iOS: table header section in profiles screen */
-"_my_profiles" = "پروفایل من";
+"_my_profiles" = "پروفایل های من";
 
 /* Button */
 "_save_as_profile" = "ذخیره‌ی به عنوان پروفایل";
@@ -894,7 +894,7 @@
 "_manage_subscription_on_web" = "اشتراک خود را از طریق داشبورد تحت وب مدیریت کنید";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "سوئیچ کشتار";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "تمام ترافیک شبکه را به هنگام قطع تونل VPN مسدود میکند.";
@@ -1003,7 +1003,7 @@
 "_activate_widget_step_3" = "ابزارک Proton VPN را به لیست ابزارک های فعال اضافه کنید.";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "گزارش اشکال";
+"_report_bug" = "گزارش یک اشکال";
 
 "_allow_lan_title" = "اجازهٔ اتصال به شبکه‌های LAN";
 
@@ -1219,7 +1219,7 @@
 "_menu_show_all" = "نمایش همه";
 
 /* Main mac app menu item */
-"_menu_logout" = "خروج از حساب";
+"_menu_logout" = "خروج";
 
 /* Main mac app menu item */
 "_menu_quit" = "خروج از Proton VPN";
@@ -1505,7 +1505,7 @@
 
 "_streaming_servers_note" = "توجه: خدمات مکان را خاموش کنید و حافظهٔ پنهان برنامه‌های پخش آنلاین را پاک‌سازی کنید تا مطمئن شوید محتوای جدید ظاهر می‌شود.";
 
-"_streaming_servers_extra" = "و موارد دیگر";
+"_streaming_servers_extra" = "و بیشتر";
 
 "_feature_free_servers" = "سرورهای رایگان";
 
@@ -1544,7 +1544,7 @@
 /* Gateways info modals text (both iOS and macOS) */
 "_gateways_modal_text" = "یک دروازهٔ VPN اتصالی امن است که دسترسی کنترل شده به اطلاعات و سرویس‌های کمپانی‌تان را از طریق سرورهای اختصاصی فراهم می‌کند";
 
-"_vpn_accelerator_title" = "VPN Accelerator";
+"_vpn_accelerator_title" = "شتاب دهنده VPN";
 
 "_vpn_accelerator_change_title" = "تغییر VPN Accelerator";
 
@@ -1574,7 +1574,7 @@
 "_welcome_headline" = "از خودتان هنگام آنلاین بودن محافظت کنید";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN پرسرعت سوئیسی که بوسیله رمزگذاری ارتباط اینترنت شما از حریم خصوصیتان محافظت میکند.";
+"_welcome_body" = "VPN پرسرعت سوئیسی که بوسیله رمزگذاری ارتباط اینترنت شما از حریم خصوصیتان محافظت می کند.";
 
 "_force_upgrade_title" = "ارتقاء برنامه لازم است";
 
@@ -1676,7 +1676,7 @@
 "recovery_code" = "کد بازیابی";
 
 /* Title for the button to switch to entering recovery code */
-"use_recovery_code" = "استفاده از کد بازیابی";
+"use_recovery_code" = "از کد بازیابی استفاده کنید";
 
 /* Button to confirm two-factor or recovery code in login */
 "authenticate" = "احراز هویت";
@@ -1689,16 +1689,16 @@
 
 /* Home tab in bottom menu */
 /* Home tab in bottom menu [Redesign_2023] */
-"_home_tab" = "Home";
+"_home_tab" = "خانه";
 
 /* Countries tab in bottom menu [Redesign_2023] */
-"_countries_tab" = "Countries";
+"_countries_tab" = "کشورها";
 
 /* Settings tab in bottom menu [Redesign_2023] */
-"_settings_tab" = "Settings";
+"_settings_tab" = "تنظیمات";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_header" = "You are unprotected";
+"_home_unprotected_header" = "شما محافظت نشده‌اید";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
@@ -1713,22 +1713,22 @@
 "_connection_card_accessibility_fastest_sc" = "The fastest secure core country available";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
-"_connection_card_default_connection" = "Default connection";
+"_connection_card_default_connection" = "اتصال پیش‌فرض";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "Browsing safely from";
+"_connection_card_safely_browsing_from" = "به‌طور ایمن مرور می‌کنید از";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
-"_connection_card_last_connected_to" = "Last connected to";
+"_connection_card_last_connected_to" = "آخرین اتصال به";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "Loading...";
+"_connection_card_loading" = "در حال بارگیری...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
-"_connection_card_connecting_to" = "Connecting to...";
+"_connection_card_connecting_to" = "در حال اتصال به...";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_connecting_to" = "Connecting to %@.";
+"_connection_card_accessibility_connecting_to" = "در حال اتصال به %@.";
 
 /* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
@@ -1737,16 +1737,16 @@
 "_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
-"_connection_card_accessibility_loading" = "Loading";
+"_connection_card_accessibility_loading" = "بارگذاری";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
-"home_default_connection_title" = "Select your default connection";
+"home_default_connection_title" = "اتصال پیش‌فرض خود را انتخاب کنید";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_name" = "Fastest Country";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_description" = "The best server based on your location";
+"home_default_connection_fastest_description" = "بهترین سرور بر اساس مکان شما";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_name" = "Most Recent";
@@ -1758,67 +1758,67 @@
 "_home_recents_upsell_section" = "Discover VPN Plus";
 
 /* The section of recent connections in the Home tab. [Redesign_2023] */
-"_home_recents_recent_section" = "Recents";
+"_home_recents_recent_section" = "موارد اخیر";
 
 /* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
-"_home_recents_options_button_help" = "Actions";
+"_home_recents_options_button_help" = "اقدامات";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_plus_server" = "Server available with VPN Plus";
+"_home_recents_plus_server" = "سرور با VPN Plus در دسترس است";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_server_under_maintenance" = "Server under maintenance";
+"_home_recents_server_under_maintenance" = "سرور در دست تعمیر است";
 
 /* Title of the "Random" recent connection item */
 "home_recents_random_server_title" = "Random Country";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
-"_action_help" = "Help";
+"_action_help" = "راهنما";
 
 /* For buttons which have an action that connects to a server. [Redesign_2023] */
-"_action_connect" = "Connect";
+"_action_connect" = "اتصال";
 
 /* For buttons which have an action that removes an item. [Redesign_2023] */
-"_action_remove" = "Remove";
+"_action_remove" = "حذف";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
-"_action_disconnect" = "Disconnect";
+"_action_disconnect" = "قطع ارتباط";
 
 /* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
-"_connection_card_action_cancel" = "Cancel";
+"_connection_card_action_cancel" = "لغو";
 
 /* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
-"_show_connection_details_button_hint" = "Show connection details";
+"_show_connection_details_button_hint" = "نمایش جزئیات اتصال";
 
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
-"_action_home_pin" = "Pin";
+"_action_home_pin" = "پین";
 
 /* Home screen: unpin this connection from the recents view. [Redesign_2023] */
-"_action_home_unpin" = "Unpin";
+"_action_home_unpin" = "حذف پین";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
-"home_fastest_connection_selection_description" = "Auto-selected from";
+"home_fastest_connection_selection_description" = "به‌طور خودکار انتخاب شده از";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
 "home_fastest_connection_additional_country_count" = "+%@";
 
 /* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
-"_secure_core_via_country" = "via %@";
+"_secure_core_via_country" = "از طریق %@";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
-"connection_status_unprotected" = "You are unprotected";
+"connection_status_unprotected" = "شما محافظت نشده‌اید";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
-"connection_status_protecting" = "Protecting your digital identity";
+"connection_status_protecting" = "از هویت دیجیتالی‌تان محافظت می‌کند";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
-"connection_status_protected" = "Protected";
+"connection_status_protected" = "محافظت شده";
 
 /* Connection status title while VPN status is unknown */
-"connection_status_loading" = "Loading";
+"connection_status_loading" = "بارگذاری";
 
 /* Button title when user is on lower tier than the server requires [Redesign_2023] */
-"upsell_get_plus" = "Get Plus";
+"upsell_get_plus" = "دریافت پلاس";
 
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
 "netshield_stats_hint_ads" = "سايت‌های تبلیغاتی از کوکی‌ها و ردیاب‌ها برای هدف گرفتن شما استفاده می‌کنند.";
@@ -1850,34 +1850,34 @@
 "_netshield_stats_blocked_E" = "%@ E";
 
 /* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
-"_connection_details_title" = "Connection details";
+"_connection_details_title" = "جزئیات اتصال";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "Connected for";
+"_connection_details_connected_for" = "متصل به مدت";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
-"_connection_details_country" = "Country";
+"_connection_details_country" = "کشور";
 
 /* Connection details screen: City (macOS and iOS) [Redesign_2023] */
-"_connection_details_city" = "City";
+"_connection_details_city" = "شهر";
 
 /* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
-"_connection_details_server" = "Server";
+"_connection_details_server" = "سرور";
 
 /* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
-"_connection_details_server_load" = "Server load";
+"_connection_details_server_load" = "بار سرور";
 
 /* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
-"_connection_details_protocol" = "Protocol";
+"_connection_details_protocol" = "پروتکل";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_my" = "My IP";
+"_connection_details_ipview_ip_my" = "IP من";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_vpn" = "VPN IP";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_unavailable" = "Unavailable";
+"_connection_details_ipview_ip_unavailable" = "غیرقابل دسترس";
 
 /* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_tor" = "Tor";
@@ -1894,8 +1894,8 @@
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
-/* Connection details screen: Smart routing description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_smart_routing" = "Servers are physically located in Singapore, but you’ll appear to be browsing from Thailand.";
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -1904,16 +1904,16 @@
 "_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_title_streaming" = "Streaming";
+"_connection_details_feature_title_streaming" = "پخش آنلاین";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_description_streaming" = "This server is optimized for TV and movie playback.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
-"_connection_details_features_title" = "Features";
+"_connection_details_features_title" = "امکانات";
 
 /* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
-"_connection_details_info_button" = "Info";
+"_connection_details_info_button" = "اطلاعات";
 
 /* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
 "_alert_protocol_deprecated_title" = "Protocol Unavailable";
@@ -1937,25 +1937,25 @@
 "_alert_protocol_deprecated_close" = "بستن";
 
 /* Title at the top of the Settings tab [Redesign_2023] */
-"_settings_title" = "Settings";
+"_settings_title" = "تنظیمات";
 
 /* Title of the 'Account' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_account" = "Account";
+"_settings_section_title_account" = "حساب";
 
 /* Title of the 'Features' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_features" = "Features";
+"_settings_section_title_features" = "امکانات";
 
 /* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_connection" = "Connection";
+"_settings_section_title_connection" = "اتصال";
 
 /* Title of the 'General' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_general" = "General";
+"_settings_section_title_general" = "عمومی";
 
 /* Title of the 'Support' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_support" = "Support";
+"_settings_section_title_support" = "پشتیبانی";
 
 /* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_improve_proton" = "Improve Proton";
+"_settings_section_title_improve_proton" = "بهبود بخشیدن به Proton";
 
 /* Title of the NetShield cell in the Settings tab [Redesign_2023] */
 "_settings_title_netshield" = "NetShield";
@@ -1964,88 +1964,88 @@
 "_settings_title_kill_switch" = "Kill Switch";
 
 /* Title of the Protocol cell in the Settings tab [Redesign_2023] */
-"_settings_title_protocol" = "Protocol";
+"_settings_title_protocol" = "پروتکل";
 
 /* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
-"_settings_title_vpn_accelerator" = "VPN Accelerator";
+"_settings_title_vpn_accelerator" = "شتاب دهنده VPN";
 
 /* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_advanced" = "Advanced settings";
+"_settings_title_advanced" = "تنظیمات پیشرفته";
 
 /* Title of the Theme cell in the Settings tab [Redesign_2023] */
-"_settings_title_theme" = "Theme";
+"_settings_title_theme" = "ظاهر";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
-"_settings_title_beta_access" = "Beta access";
+"_settings_title_beta_access" = "دسترسی بتا";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Support center";
+"_settings_title_support_center" = "مرکز پشتیبانی";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
-"_settings_title_report_issue" = "Report an issue";
+"_settings_title_report_issue" = "گزارش یک اشکال";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
-"_settings_title_debug_logs" = "Debug logs";
+"_settings_title_debug_logs" = "لاگ‌های اشکال‌یابی";
 
 /* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
-"_settings_title_censorship" = "Help us fight censorship";
+"_settings_title_censorship" = "به ما برای مبارزه با سانسور کمک کنید";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
 "_settings_title_rate" = "Rate Proton VPN";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_restore_default_settings" = "Restore default settings";
+"_settings_title_restore_default_settings" = "بازگردانی به تنظیمات پیش‌فرض‌";
 
 /* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
-"_settings_title_sign_out" = "Sign out";
+"_settings_title_sign_out" = "خروج";
 
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "App Version: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_on" = "On";
+"_settings_netshield_on" = "روشن";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "Off";
+"_settings_netshield_off" = "خاموش";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_on" = "On";
+"_settings_killswitch_on" = "روشن";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Off";
+"_settings_killswitch_off" = "خاموش";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_auto" = "Auto";
+"_settings_theme_value_auto" = "خودکار";
 
 /* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_dark" = "Dark";
+"_settings_theme_value_dark" = "تاریک";
 
 /* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
-"_settings_theme_value_light" = "Light";
+"_settings_theme_value_light" = "روشن";
 
 /* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
-"_settings_theme_label_auto" = "Auto*";
+"_settings_theme_label_auto" = "خودکار*";
 
 /* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_dark" = "Dark";
+"_settings_theme_label_dark" = "تاریک";
 
 /* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
-"_settings_theme_label_light" = "Light";
+"_settings_theme_label_light" = "روشن";
 
 /* UDP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_udp" = "Speed (UDP)";
+"_settings_protocol_section_title_udp" = "سرعت (UDP)";
 
 /* TCP protocols section header in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_section_title_tcp" = "Reliability (TCP)";
+"_settings_protocol_section_title_tcp" = "پایداری (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Auto-selects the best protocol for your connection.";
+"_settings_protocol_description_smart" = "به‌طور خودکار بهترین پروتکل را برای اتصالتان انتخاب می‌کند.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_udp" = "Fast, secure, and efficient. WireGuard is more battery-efficient than other protocols.";
+"_settings_protocol_description_wireguard_udp" = "سریع، امن و مؤثر. WireGuard نسبت به سایر پروتکل‌ها در مصرف باتری به‌صرفه‌تر است.";
 
 /* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_tcp" = "Fast, secure, and efficient. WireGuard is difficult to detect and block.";
@@ -2054,10 +2054,10 @@
 "_settings_protocol_description_wireguard_tls" = "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Established, well-tested, and secure. OpenVPN is less battery-efficient than some other protocols.";
+"_settings_protocol_description_openvpn_udp" = "پا بر جا، آزمایش شده و امن. OpenVPN در مصرف باتری به خوبی بعضی پروتکل‌های دیگر عمل نمی‌کند.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_tcp" = "Established, well-tested, and secure. OpenVPN is reliable in poor network conditions, but may not be as fast as other protocols.";
+"_settings_protocol_description_openvpn_tcp" = "پا بر جا، آزمایش شده و امن. OpenVPN در شرایط نابه‌سامان شبکه‌ای قابل اطمینان است، ولی به سرعت پروتکل‌های دیگر نمی‌رسد.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
@@ -2066,22 +2066,22 @@
 "_settings_protocol_tag_recommended" = "RECOMMENDED";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
-"_settings_protocol_tag_new" = "NEW";
+"_settings_protocol_tag_new" = "جدید";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
 "_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_title" = "VPN Connection Active";
+"_settings_protocol_alert_title" = "اتصال VPN برقرار است";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "Changing protocols will end your current VPN session.";
+"_settings_protocol_alert_body" = "تغییر دادن پروتکل ها، نشست جاری VPN شما را پایان میبخشد.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "Cancel";
+"_settings_protocol_alert_button_cancel" = "لغو";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_continue" = "Continue";
+"_settings_protocol_alert_button_continue" = "ادامه";
 
 /* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
 "_bad_interface_ip_range_alert_title" = "Bad Network Interface";
@@ -2174,7 +2174,7 @@
 "modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
 
 /* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "امکان عبور ترافیک از پورت‌های غیر استاندارد";
+"modals_upsell_safe_mode_title" = "اجازه دادن به عبور ترافیک از پورت های غیر استاندارد";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "به تجربه بازی کردن خود بهبود ببخشید";
@@ -2201,7 +2201,7 @@
 "modals_upsell_all_countries_feature_netshield" = "مسدود کردن تبلیغات و بدافزارها با NetShield";
 
 /* Title of the NetShield upsell screen */
-"modals_upsell_net_shield_title" = "با NetShield از وبگردی بدون تبلیغات لذت ببرید";
+"modals_upsell_net_shield_title" = "با NetShield از وبگردی بدون تبلیغات لذا ببرید";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_ads" = "مسدود کردن تبلیغات و ردیاب‌ها";
@@ -2213,7 +2213,7 @@
 "modals_upsell_net_shield_highSpeed" = "با بالاترین سرعت وبگردی کنید";
 
 /* Title of the Secure Core upsell screen */
-"modals_upsell_secure_core_title" = "با Secure Core رمزنگاری را دوبرابر کنید";
+"modals_upsell_secure_core_title" = "با Secure Core دو بار رمزنگاری کنید";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_route" = "ارتباط از طریق سرورهای فوق امن در سوییس، سوئد و ایسلند";
@@ -2261,10 +2261,10 @@
 "modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
 
 /* Title of Country upsell screen */
-"modals_new_upsell_country_title" = "Want to connect to a specific country?";
+"modals_new_upsell_country_title" = "می‌خواهید به یک کشور خاص متصل شوید؟";
 
 /* Subtitle of Country upsell screen */
-"modals_new_upsell_country_subtitle" = "Unlock country selection with VPN Plus.";
+"modals_new_upsell_country_subtitle" = "قفل گشایی انتخاب کشور با VPN Plus.";
 
 /* Subtitle of Profiles upsell screen */
 "modals_new_upsell_profiles_subtitle" = "Unlock profiles with VPN Plus.";
@@ -2309,16 +2309,16 @@
 "maximum_device_limit" = "لطفا ارتباط دستگاه دیگری را قطع کنید تا این دستگاه متصل شود.";
 
 /* Title of streaming upsell modal */
-"upsell_streaming_title" = "Stream in 4K";
+"upsell_streaming_title" = "پخش جریانی در 4K";
 
 /* Subtitle of streaming upsell modal */
-"upsell_streaming_subtitle" = "Enjoy your favorite movies and TV shows from anywhere in the world.";
+"upsell_streaming_subtitle" = "از فیلم‌ها و برنامه‌های تلویزیونی مورد علاقه‌تان در سراسر جهان لذت ببرید.";
 
 /* Title of p2p support upsell modal */
-"upsell_p2pSupport_title" = "Unlock peer-to-peer (P2P) downloads and file sharing";
+"upsell_p2pSupport_title" = "اشتراک‌گذاری فایل و بارگیری‌های همتا به همتا (P2P) را قفل‌گشایی کنید";
 
 /* Subtitle of p2p support upsell modal */
-"upsell_p2pSupport_subtitle" = "Improve your upload and download speeds while hiding your IP address.";
+"upsell_p2pSupport_subtitle" = "سرعت‌های بارگذاری و بارگیری‌تان را همراه با مخفی‌سازی نشانی IP تان بهبود ببخشید.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Protect 10 devices at once";
@@ -2327,10 +2327,10 @@
 "upsell_devices_subtitle" = "Proton VPN is available on 8 different platforms.";
 
 /* Title of torOverVPN upsell modal */
-"upsell_torOverVPN_title" = "Access the Tor network in one tap";
+"upsell_torOverVPN_title" = "با یک کلیک به شبکه Tor دسترسی یابید";
 
 /* Subtitle of torOverVPN upsell modal */
-"upsell_torOverVPN_subtitle" = "Connect to hidden services and onion sites with your regular browser.";
+"upsell_torOverVPN_subtitle" = "به سرویس‌های مخفی و سایت‌های onion با مرورگر معمولی‌تان وصل شوید.";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "مرور وب تا حتی سرعت‌های بیشتر (تا ۱۰ گیگابیت بر ثانیه)";
@@ -2411,7 +2411,7 @@
 "upsell_country_feature_title" = "می‌خواهید یک کشور مدنظر را انتخاب کنید؟";
 
 /* Feature of Country upsell modal */
-"upsell_country_feature_subtitle" = "Unlock country selection with VPN Plus";
+"upsell_country_feature_subtitle" = "قفل گشایی انتخاب کشور با VPN Plus";
 
 /* Bold part of the feature of Country upsell modal */
 "upsell_country_feature_subtitle_bold" = "country selection";
@@ -2423,7 +2423,7 @@
 "modals_whats_new_button_title" = "Take a look";
 
 /* Title of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_title" = "New look, same protection";
+"modals_whats_new_redesign_title" = "نمای تازه، همان محافظت";
 
 /* Subtitle of redesign related content of the "What's new" screen */
 "modals_whats_new_redesign_subtitle" = "We refreshed our designs and moved some things around to make the app easier to use.";
@@ -2495,16 +2495,16 @@
 "welcome_to_proton_banner_subtitle_redesign" = "We’ll never log your internet activity or share your information with third parties.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
-"onboarding_get_started_statistics_toggle_title" = "Share anonymous usage statistics";
+"onboarding_get_started_statistics_toggle_title" = "آمارهای استفاده به‌طور ناشناس در اشتراک بگذارید";
 
 /* Onboarding Get Started screen. Statistics Toggle subtitle. */
-"onboarding_get_started_statistics_toggle_subtitle" = "Usage data helps us overcome VPN blocks and improve app performance.";
+"onboarding_get_started_statistics_toggle_subtitle" = "داده‌های استفاده در غلبه بر مسدود سازی‌های VPN و بهبود یابی عملکرد برنامه به ما کمک می‌کند.";
 
 /* Onboarding Get Started screen. Crashes Toggle title. */
-"onboarding_get_started_crashes_toggle_title" = "Share anonymous crash reports";
+"onboarding_get_started_crashes_toggle_title" = "گزارش‌های فروپاشی را به‌طور ناشناس در اشتراک بگذارید";
 
 /* Onboarding Get Started screen. Crashes Toggle subtitle. */
-"onboarding_get_started_crashes_toggle_subtitle" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+"onboarding_get_started_crashes_toggle_subtitle" = "گزارش‌های فروپاشی به ما کمک می‌کند تا اشکالات را رفع کنیم، دیوارهای آتش را شناسایی کنیم و از مسدود شدن VPN جلوگیری کنیم.";
 
 /* Title of paid plans list. */
 "upsell_plans_list_title" = "حريم خصوصی خود را ارتقا دهید";
@@ -2546,7 +2546,7 @@
 "free_connections_modal_description" = "Proton رایگان، به‌طور خودکار شما را به سریع‌ترین سرور در دسترس وصل می‌کند. این معمولاً نزدیک‌ترین سرور به مکان شما خواهد بود.";
 
 /* Modal that lists countries in which servers are available to free users: Description */
-"free_connections_modal_servers_description" = "Proton Free automatically connects you to the fastest available free server from our %@ free countries. This will normally be the closest server to your location.";
+"free_connections_modal_servers_description" = "Proton Free به‌طور خودکار شما را به سریع‌ترین سرور رایگان در دسترس از %@ کشور رایگان ما وصل می‌کند. این به‌طور معمول نزدیک‌ترین سرور به مکان شما است.";
 
 /* Modal that lists countries in which servers are available to free users: banner with CTA */
 "free_connections_modal_banner" = "با VPN Plus پوشش جهانی بگیرید";
@@ -2582,7 +2582,7 @@
 "_br_2_button_next" = "تماس با ما";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "لغو";
+"_br_2_button_cancel" = "انصراف";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "ارسال گزارش";
@@ -2594,22 +2594,22 @@
 "_br_3_email" = "ایمیل";
 
 /* ReportBug 3rd step (form) username field name */
-"_br_3_username" = "نام‌کاربری";
+"_br_3_username" = "نام کاربری";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "ارسال لاگ‌های خطا";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Log یا ثبت وقایع فایلی است که اقداماتی که شما انجام داده اید که باعث وقوع یک خطا شده است را به ما نشان می دهد. تنها زمانی از آنها استفاده میکنیم که به مهندسین‌مان کمک کنیم تا مشکلات را رفع کنند.";
+"_br_3_logs_description" = "لاگ نوعی فایل است، که به ما اقدامات شما را که منجر به خطا شده است نشان می‌دهد. ما از آن‌ها تنها جهت کمک به مهندسین خود برای رفع اشکالات استفاده خواهیم کرد.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "ثبت وقایع خطاها به ما کمک میکنند ریشه مشکلات را شناسایی کنیم. اگر آنها را ضمیمه نکنید، ما قادر به بررسی کامل مشکلات نخواهیم بود.";
+"_br_3_logs_disabled" = "لاگ‌های خطا به ما در پیدا کردن علت اشکال کمک می‌کنند. اگر آن‌ها را پیوست نکنید، ممکن است ما قادر به رسیدگی کامل به اشکال نباشیم.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "از بازخوردتان سپاس‌گزاریم";
 
 /* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "در سریع ترین زمان ممکن به شما پاسخ خواهیم داد.";
+"_br_success_subtitle" = "در سریع‌ترین زمان ممکن به شما پاسخ خواهیم داد.";
 
 /* ReportBug success window: button */
 "_br_success_button" = "فهمیدم";
@@ -2621,7 +2621,7 @@
 "_br_failure_button_retry" = "تلاش دوباره";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "عیب یابی";
+"_br_failure_button_troubleshoot" = "عیب‌یابی";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "به‌روزرسانی Proton VPN";
@@ -2648,7 +2648,7 @@
 "_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message_link_text" = "اطلاعات بیشتر";
+"_ike_deprecation_alert_message_link_text" = "بیشتر بدانید";
 
 /* Button title for 'Continue with IKEv2' */
 "_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
@@ -2675,52 +2675,52 @@
 "_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.";
 
 /* Home upsell carousel card title */
-"upsell_carousel_worldwide_title" = "Worldwide cover";
+"upsell_carousel_worldwide_title" = "پوشش جهانی";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_worldwide_subtitle" = "1700+ server locations in 63 countries";
 
 /* Home upsell carousel card title */
-"upsell_carousel_faster_browsing_title" = "Faster browsing";
+"upsell_carousel_faster_browsing_title" = "مرور کردن سریع";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Browse at even higher speeds (up to 10 Gbps)";
+"upsell_carousel_faster_browsing_subtitle" = "مرور وب تا حتی سرعت‌های بیشتر (تا ۱۰ گیگابیت بر ثانیه)";
 
 /* Home upsell carousel card title */
-"upsell_carousel_streaming_title" = "Streaming";
+"upsell_carousel_streaming_title" = "پخش آنلاین";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_streaming_subtitle" = "Watch your favorite movies and TV shows";
+"upsell_carousel_streaming_subtitle" = "فیلم‌ها و برنامه‌های تلویزیونی مورد علاقه‌تان را تماشا کنید";
 
 /* Home upsell carousel card title */
 "upsell_carousel_netshield_title" = "NetShield";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_netshield_subtitle" = "Block ads, malware, and trackers";
+"upsell_carousel_netshield_subtitle" = "تبلیغات، بدافزارها و ردیاب‌ها را مسدود کنید";
 
 /* Home upsell carousel card title */
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Add another layer of encryption to your VPN connection";
+"upsell_carousel_secure_core_subtitle" = "اضافه کردن یک لایه دیگر رمزنگاری به ارتباط VPN شما";
 
 /* Home upsell carousel card title */
-"upsell_carousel_p2p_title" = "P2P support";
+"upsell_carousel_p2p_title" = "پشتیبانی از P2P";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_p2p_subtitle" = "Download files through BitTorrent and other file sharing protocols";
+"upsell_carousel_p2p_subtitle" = "از طریق BitTorrent و پروتکل‌های اشتراک گذاری فایل دیگر بارگیری کنید";
 
 /* Home upsell carousel card title */
 "upsell_carousel_devices_title" = "Protect 10 devices";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_devices_subtitle" = "Security and privacy on all your devices";
+"upsell_carousel_devices_subtitle" = "امنیت و حریم خصوصی در تمامی دستگاه‌هایتان";
 
 /* Home upsell carousel card title */
-"upsell_carousel_tor_title" = "Tor over VPN";
+"upsell_carousel_tor_title" = "Tor بر روی VPN";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Use the Tor network over your VPN connection for extra privacy";
+"upsell_carousel_tor_subtitle" = "از شبکه‌ی Tor روی اتصال VPN تان برای حریم خصوصی بیشتر استفاده کنید";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "And much more...";
