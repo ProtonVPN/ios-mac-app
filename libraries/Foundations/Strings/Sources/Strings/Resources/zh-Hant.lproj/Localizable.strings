@@ -2399,9 +2399,6 @@
 "upsell_countries_geoblocked_content" = "存取地理封鎖內容";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "連接至%d國家";
-
-/* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "更高的 VPN 速度";
 
 /* Feature of Country upsell modal */

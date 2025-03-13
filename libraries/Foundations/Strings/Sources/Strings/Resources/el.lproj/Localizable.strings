@@ -2399,9 +2399,6 @@
 "upsell_countries_geoblocked_content" = "Πρόσβαση σε γεωγραφικά μπλοκαρισμένο περιεχόμενο";
 
 /* Feature of Country upsell modal */
-"upsell_countries_connect_to" = "Συνδεθείτε σε %d χώρες";
-
-/* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Ακόμα υψηλότερη ταχύτητα VPN";
 
 /* Feature of Country upsell modal */
