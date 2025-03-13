@@ -102,6 +102,9 @@ public struct SessionService: DependencyKey {
             sessionCookie: { networking.sessionCookie }
         )
     }()
+
+    // You'll have to make sure that the test using it will provide a mock Networking value
+    public static let testValue: SessionService = liveValue
 }
 
 extension SessionService {

@@ -18,9 +18,9 @@
 
 import Foundation
 
-struct UserSettingsResponse: Codable {
+public struct UserSettingsResponse: Codable {
     let code: Int
-    let userSettings: UserSettings
+    public let userSettings: UserSettings
 }
 
 public struct UserSettings: Codable {

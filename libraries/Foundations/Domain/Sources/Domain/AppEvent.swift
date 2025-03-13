@@ -61,8 +61,10 @@ public enum AppEvent: String {
     case telemetryCrashReports
     /// The user's IP (outside of the VPN) has changed.
     case userIp
-    /// The content in the profile settings has changed.
+    /// The visible content in the profile settings has changed.
     case profileContentChanged
+    /// The content on disk of profiles settings has changed.
+    case profileStorageChanged
     /// The user's NAT type setting changed.
     case natType
     /// The user's safe mode setting changed.

@@ -71,7 +71,7 @@ public final class ProfileManager {
         self.propertiesManager = propertiesManager
         self.profileStorage = profileStorage
 
-        AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
+        AppEvent.profileStorageChanged.subscribe(self, selector: #selector(profilesChanged))
         // VPNAPPL-2075 - refresh UI on server list update
         // NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)), name: serverStorage.contentChanged, object: nil)
         refreshProfiles()

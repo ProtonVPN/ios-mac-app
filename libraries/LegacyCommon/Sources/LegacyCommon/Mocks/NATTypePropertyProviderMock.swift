@@ -23,9 +23,11 @@ import Domain
 import VPNShared
 
 public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
-    public static var natTypeNotification: Notification.Name = NSNotification.Name("")
-
-    public var natType: NATType = .default
+    public var natType: NATType = .default {
+        didSet {
+            AppEvent.natType.post(natType)
+        }
+    }
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         if tier.isFreeTier {

@@ -24,20 +24,30 @@ import Foundation
 import VPNShared
 import Dependencies
 
-private enum AnnouncementManagerKey: TestDependencyKey {
-    static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()
-    static let previewValue: any AnnouncementManager = AnnouncementManagerImplementation()
-    static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
+public enum AnnouncementManagerKey: DependencyKey {
+    public static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()
 }
 
-private enum AnnouncementStorageKey: TestDependencyKey {
-    static let liveValue: any AnnouncementStorage = {
+#if DEBUG
+extension AnnouncementManagerKey: TestDependencyKey {
+    public static let previewValue: any AnnouncementManager = AnnouncementManagerImplementation()
+    public static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
+}
+#endif
+
+public enum AnnouncementStorageKey: DependencyKey {
+    public static let liveValue: any AnnouncementStorage = {
         @Dependency(\.defaultsProvider) var provider
         return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
     }()
-    static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
-    static let testValue: any AnnouncementStorage = AnnouncementStorageMock()
 }
+
+#if DEBUG
+extension AnnouncementStorageKey: TestDependencyKey {
+    public static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
+    public static let testValue: any AnnouncementStorage = AnnouncementStorageMock()
+}
+#endif
 
 public extension DependencyValues {
     var announcementManager: AnnouncementManager {

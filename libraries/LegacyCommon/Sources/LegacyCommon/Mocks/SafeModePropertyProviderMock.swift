@@ -18,11 +18,14 @@
 
 #if DEBUG
 import Foundation
+import Domain
 
 public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
-    public static var safeModeNotification: Notification.Name = Notification.Name("")
-
-    public var safeMode: Bool? = false
+    public var safeMode: Bool? = false {
+        didSet {
+            AppEvent.safeMode.post(safeMode)
+        }
+    }
 
     public var isUserEligibleForSafeModeChange: Bool = true
 

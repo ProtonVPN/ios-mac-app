@@ -60,7 +60,9 @@ public final class NetworkingMock {
     public init() { }
 
     func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
-        if let delegate = delegate {
+        if let requestCallback {
+            completion(requestCallback(route))
+        } else if let delegate = delegate {
             completion(delegate.handleMockNetworkingRequest(route))
         } else {
             completion(.success(try! JSONEncoder().encode(["key": "value"])))

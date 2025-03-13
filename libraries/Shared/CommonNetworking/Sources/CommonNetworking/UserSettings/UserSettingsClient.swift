@@ -23,7 +23,7 @@ import Domain
 
 @DependencyClient
 public struct UserSettingsClient: Sendable {
-    public internal(set) var fetchUserSettings: @Sendable () async throws -> UserSettings
+    public internal(set) var fetchUserSettings: @Sendable () async throws -> UserSettingsResponse
 }
 
 extension UserSettingsClient: DependencyKey {
@@ -40,7 +40,7 @@ extension UserSettingsClient: DependencyKey {
     #if DEBUG
     public static let testValue: UserSettingsClient = {
         UserSettingsClient {
-            .init(password: .init(mode: .singlePassword), twoFactor: .init(type: .otp))
+            .init(code: 1000, userSettings: .init(password: .init(mode: .singlePassword), twoFactor: .init(type: .disabled)))
         }
     }()
     #endif

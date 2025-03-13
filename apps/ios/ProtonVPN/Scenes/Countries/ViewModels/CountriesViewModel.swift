@@ -142,7 +142,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-    @Dependency(\.announcementManager) var announcementManager
+
+    @Dependency(\.announcementManager) private var announcementManager
+    @Dependency(\.serverRepository) private var repository
 
     var delegate: CountriesVMDelegate?
 
@@ -311,7 +313,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     internal func setStateOf(type: ServerType) {
-        @Dependency(\.serverRepository) var repository
         let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
         switch type {
         case .standard, .p2p, .tor, .unspecified:

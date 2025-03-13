@@ -28,6 +28,7 @@ import Search
 @testable import ProtonVPN
 import IssueReporting
 import Announcement
+import ProtonCoreFeatureFlags
 
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!
@@ -81,7 +82,45 @@ final class CountriesViewModelTests: XCTestCase {
         }
     }
 
-    func testConnectionProtocolChangedUpdatesCountryItems() {
+    func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToTrue() throws {
+        try XCTSkipIf(!FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS))
+
+        // Start off with smart protocol enabled and all protocols supported
+        mockPropertiesManager.connectionProtocol = .smartProtocol
+        serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
+
+        let sut = makeViewModel()
+
+        // All server groups provide at least one supported protocol
+        XCTAssertEqual(sut.numberOfSections(), 2) // gateways, all locations
+        XCTAssertEqual(sut.numberOfRows(in: 0), 1) // dev
+        assert(sut.cellModel(for: 0, in: 0), isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: false)
+        XCTAssertEqual(sut.numberOfRows(in: 1), 3) // sweden, switzerland
+        assert(sut.cellModel(for: 1, in: 1), isServerGroupOfKind: .country(code: "SE"), isUnderMaintenance: false)
+        assert(sut.cellModel(for: 2, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: false)
+
+        // Now let's update our protocol to WireGuard UDP
+        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
+        withMockedRepository {
+            AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.udp))
+        }
+
+        // Switzerland should be placed under maintenance (it only supports ike)
+        assert(sut.cellModel(for: 2, in: 1), isServerGroupOfKind: .country(code: "CH"), isUnderMaintenance: true)
+
+        // Finally, let's try changing our protocol to Stealth
+        mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
+        withMockedRepository {
+            AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.tls))
+        }
+
+        // Dev gateway should be placed under maintenance as well - it doesn't support stealth
+        assert(sut.cellModel(for: 0, in: 0), isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: true)
+    }
+
+    func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToFalse() throws {
+        try XCTSkipIf(FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS))
+
         // Start off with smart protocol enabled and all protocols supported
         mockPropertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
@@ -99,7 +138,7 @@ final class CountriesViewModelTests: XCTestCase {
         // Now let's update our protocol to WireGuard UDP
         mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.udp))
         withMockedRepository {
-            NotificationCenter.default.post(name: PropertiesManagerMock.vpnProtocolNotification, object: nil)
+            AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.udp))
         }
 
         // Switzerland should be placed under maintenance (it only supports ike)
@@ -108,7 +147,7 @@ final class CountriesViewModelTests: XCTestCase {
         // Finally, let's try changing our protocol to Stealth
         mockPropertiesManager.connectionProtocol = .vpnProtocol(.wireGuard(.tls))
         withMockedRepository {
-            NotificationCenter.default.post(name: PropertiesManagerMock.vpnProtocolNotification, object: nil)
+            AppEvent.vpnProtocol.post(VpnProtocol.wireGuard(.tls))
         }
 
         // Dev gateway should be placed under maintenance as well - it doesn't support stealth

@@ -88,7 +88,7 @@ public final class ProfileStorage {
         }
         storeInMemory(profiles, storageKey: storageKey)
         DispatchQueue.main.async {
-            AppEvent.profileContentChanged.post(profiles)
+            AppEvent.profileStorageChanged.post(profiles)
         }
     }
     

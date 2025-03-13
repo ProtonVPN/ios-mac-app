@@ -46,7 +46,10 @@ let package = Package(
         ),
         .target(
             name: "CommonNetworkingTestSupport",
-            dependencies: ["CommonNetworking"]
+            dependencies: [
+                "CommonNetworking",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ]
         ),
     ]
 )

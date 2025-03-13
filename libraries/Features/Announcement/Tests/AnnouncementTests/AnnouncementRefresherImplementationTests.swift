@@ -53,17 +53,20 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 1
         expectationApiWasCalled.assertForOverFulfill = true
-        
-        let refresher = AnnouncementRefresherImplementation()
 
-        AnnouncementClient.testValue = AnnouncementClient {
-            expectationApiWasCalled.fulfill()
-            return .init(notifications: [])
+        withDependencies {
+            $0.announcementClient = .init {
+                expectationApiWasCalled.fulfill()
+                return .init(notifications: [])
+            }
+        } operation: {
+            let refresher = AnnouncementRefresherImplementation()
+
+            refresher.tryRefreshing()
+
+            wait(for: [expectationApiWasCalled], timeout: 1)
+            refresher.tryRefreshing()
         }
-        refresher.tryRefreshing()
-        
-        wait(for: [expectationApiWasCalled], timeout: 1)
-        refresher.tryRefreshing()
     }
     
     func testRefreshesAfterMinTimePassed() {

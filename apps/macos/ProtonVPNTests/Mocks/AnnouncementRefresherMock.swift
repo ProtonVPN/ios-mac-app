@@ -31,6 +31,10 @@ class AnnouncementRefresherMock: AnnouncementRefresher {
         tryRefreshingCalled?()
     }
 
+    func tryRefreshingAsync() async {
+        tryRefreshingCalled?()
+    }
+
     func clear() {
         clearCalled?()
     }

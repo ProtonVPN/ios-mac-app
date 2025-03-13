@@ -25,11 +25,9 @@ import VPNShared
 public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
     public var lastActiveNetShieldType: NetShieldType = .level1
 
-    public static var netShieldNotification: Notification.Name = Notification.Name("")
-
     public var netShieldType: NetShieldType = .off {
         didSet {
-            NotificationCenter.default.post(name: Self.netShieldNotification, object: self)
+            AppEvent.netShield.post(netShieldType)
         }
     }
 

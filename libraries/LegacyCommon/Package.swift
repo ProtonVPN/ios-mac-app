@@ -172,7 +172,8 @@ let package = Package(
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .core(module: "TestingToolkitUnitTestsCore"),
-                .core(module: "TestingToolkitUnitTestsFeatureFlag")
+                .core(module: "TestingToolkitUnitTestsFeatureFlag"),
+                .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking")
             ],
             resources: [
                 .copy("Resources/test_log_1.log"),

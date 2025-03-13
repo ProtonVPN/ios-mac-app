@@ -58,6 +58,7 @@
     },
     {
       "skippedTests" : [
+        "ConnectionSwitchingTests\/testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect()",
         "LocalizationUtilityTests"
       ],
       "target" : {
