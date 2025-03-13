@@ -567,7 +567,7 @@ extension CreateOrEditProfileViewModel {
                 continue
             }
             sections.append(SelectionSection(
-                title: CoreAppConstants.serverTierName(forTier: tier),
+                title: DomainConstants.serverTierName(forTier: tier),
                 cells: servers.map { server in
                     SelectionRow(
                         title: serverDescriptor(for: server),

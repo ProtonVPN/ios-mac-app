@@ -24,6 +24,7 @@ import Dependencies
 import VPNAppCore
 import LegacyCommon
 import Theme
+import Domain
 
 import Strings
 

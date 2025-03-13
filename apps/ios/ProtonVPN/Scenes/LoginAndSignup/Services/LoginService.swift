@@ -25,6 +25,7 @@ import LegacyCommon
 
 import CommonNetworking
 import VPNShared
+import VPNAppCore
 
 import Settings_iOS
 

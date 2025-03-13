@@ -22,10 +22,11 @@
 
 import UIKit
 import Dependencies
-import LegacyCommon
-import Strings
-
 import ProtonCoreFeatureFlags
+
+import LegacyCommon
+import VPNAppCore
+import Strings
 
 class ProfilesViewModel {
     typealias Factory = ProfileService

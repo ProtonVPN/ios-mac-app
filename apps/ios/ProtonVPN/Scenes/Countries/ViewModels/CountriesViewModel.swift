@@ -167,8 +167,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
 
-    func presentUpsell(forCountryFlag countryFlag: Image) {
-        alertService.push(alert: CountryUpsellAlert(countryFlag: countryFlag))
+    func presentUpsell(forCountryCode countryCode: String) {
+        alertService.push(alert: CountryUpsellAlert(countryCode: countryCode))
     }
 
     func presentFreeConnectionsInfo() {

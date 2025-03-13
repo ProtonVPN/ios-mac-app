@@ -18,12 +18,15 @@
 
 import Cocoa
 
+import Dependencies
+
 import LegacyCommon
 import VPNAppCore
 
 import Theme
 import Strings
 import Ergonomics
+import Domain
 
 final class SubuserMacAlertViewController: NSViewController {
     

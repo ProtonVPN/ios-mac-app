@@ -23,6 +23,8 @@
 import Foundation
 import AppKit
 
+import Dependencies
+
 import ProtonCoreLogin
 import ProtonCoreNetworking
 import ProtonCoreAuthentication
@@ -36,6 +38,7 @@ import VPNAppCore
 import VPNShared
 
 import Strings
+import Domain
 
 struct LoginViewModelError: Swift.Error {
     let localizedDescription: String

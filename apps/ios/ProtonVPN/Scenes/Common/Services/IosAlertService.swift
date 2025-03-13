@@ -231,17 +231,14 @@ extension IosAlertService: CoreAlertService {
             show(
                 alert: countryUpsell,
                 modalType: .country(
-                    countryFlag: countryUpsell.countryFlag,
-                    numberOfDevices: CoreAppConstants.maxDeviceCount,
+                    countryFlag: .flag(countryCode: countryUpsell.countryCode) ?? Image(),
+                    numberOfDevices: DomainConstants.maxDeviceCount,
                     numberOfCountries: repository.countryCount()
                 )
             )
             
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(welcomeScreenAlert: alert)
-
-        case is LocalAgentSystemErrorAlert:
-            showDefaultSystemAlert(alert)
 
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
@@ -274,7 +271,7 @@ extension IosAlertService: CoreAlertService {
         case let alert as UpgradeOperatingSystemAlert:
             showDefaultSystemAlert(alert)
 
-        case let alert as ConnectionPackageErrorAlert:
+        case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
         default:
@@ -301,16 +298,16 @@ extension IosAlertService: CoreAlertService {
         case is UserPlanDowngradedAlert:
             if let server = server {
                 viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
-                                                                numberOfDevices: CoreAppConstants.maxDeviceCount,
+                                                                numberOfDevices: DomainConstants.maxDeviceCount,
                                                               fromServer: server.from,
                                                               toServer: server.to)
             } else {
                 viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
-                                                  numberOfDevices: CoreAppConstants.maxDeviceCount)
+                                                  numberOfDevices: DomainConstants.maxDeviceCount)
             }
         case let alert as MaxSessionsAlert:
             if alert.accountTier.isFreeTier {
-                viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: CoreAppConstants.maxDeviceCount)
+                viewModel = .reachedDevicePlanLimit(planName: Localizable.plus, numberOfDevices: DomainConstants.maxDeviceCount)
             } else {
                 viewModel = .reachedDeviceLimit
             }

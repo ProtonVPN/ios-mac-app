@@ -699,11 +699,11 @@ public final class VpnManager: VpnManagerProtocol {
                 switch newState {
                 case .disconnecting:
                     self.quickReconnection = true
-                    self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
+                    self.connectionQueue.asyncAfter(deadline: .now() + DomainConstants.UpdateTime.quickReconnectTime) {
                         let newState = self.vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
                         switch newState {
                         case .connecting:
-                            self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+                            self.connectionQueue.asyncAfter(deadline: .now() + DomainConstants.UpdateTime.quickUpdateTime) {
                                 self.updateState(vpnManager)
                             }
                         default:

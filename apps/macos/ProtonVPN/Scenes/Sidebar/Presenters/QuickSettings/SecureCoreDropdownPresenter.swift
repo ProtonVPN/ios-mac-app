@@ -26,6 +26,7 @@ import AppKit
 import Theme
 import Strings
 import VPNAppCore
+import Domain
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     

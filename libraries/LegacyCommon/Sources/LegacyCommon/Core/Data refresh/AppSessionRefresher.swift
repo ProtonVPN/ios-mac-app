@@ -26,6 +26,7 @@ import Dependencies
 
 import Persistence
 import CommonNetworking
+import VPNAppCore
 
 import Domain
 import Ergonomics
@@ -200,5 +201,23 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     open func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         fatalError("This method should be overridden, but it is not")
+    }
+}
+
+fileprivate extension WelcomeScreenAlert.Plan {
+    init?(info: VpnDowngradeInfo) {
+        // Replace hardcoded string with a proper solution VPNAPPL-2142
+        if info.to.planName == "bundle2022" {
+            self = .unlimited
+        } else if info.to.maxTier.isPaidTier {
+            @Dependency(\.serverRepository) var repository
+            self = .plus(numberOfServers: repository.roundedServerCount,
+                         numberOfDevices: DomainConstants.maxDeviceCount,
+                         numberOfCountries: repository.countryCount())
+        } else if info.to.maxTier > info.from.maxTier {
+            self = .fallback
+        } else {
+            return nil
+        }
     }
 }

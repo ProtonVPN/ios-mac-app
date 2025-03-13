@@ -23,6 +23,7 @@
 import Foundation
 import Dependencies
 import LegacyCommon
+import VPNAppCore
 import Domain
 
 enum ProfilesSectionListCell {

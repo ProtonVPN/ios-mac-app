@@ -30,6 +30,7 @@ import ProtonCorePasswordChange
 import CommonNetworking
 import LegacyCommon
 import VPNShared
+import VPNAppCore
 
 import Strings
 import Domain
@@ -233,8 +234,10 @@ final class SettingsAccountViewModel {
             }, completion: { [weak self] result in
                 self?.controller.stopLoading()
                 switch result {
-                case .success: self?.handleAccountDeletionSuccess()
-                case .failure(let error): self?.handleAccountDeletionFailure(error)
+                case .success:
+                    self?.handleAccountDeletionSuccess()
+                case .failure(let error):
+                    self?.handleAccountDeletionFailure(error)
             }
             })
     }

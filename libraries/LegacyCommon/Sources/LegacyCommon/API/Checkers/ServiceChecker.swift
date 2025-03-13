@@ -22,8 +22,12 @@
 import Foundation
 import Dependencies
 import CommonNetworking
+import VPNAppCore
 
 class ServiceChecker {
+    // P2P (need to move to LocalAgent for this)
+    public static let defaultRefreshInterval: TimeInterval = 90
+
     private static let forwardedAddress = "127.0.0.3"
     
     private let trafficCheckerQueue = DispatchQueue(label: "ch.protonvpn.traffic")
@@ -36,7 +40,11 @@ class ServiceChecker {
     private var timer: Timer?
     private var p2pShown = false
     
-    init(networking: Networking, alertService: CoreAlertService, refreshInterval: TimeInterval) {
+    init(
+        networking: Networking,
+        alertService: CoreAlertService,
+        refreshInterval: TimeInterval = ServiceChecker.defaultRefreshInterval
+    ) {
         @Dependency(\.dohConfiguration) var doh
         self.networking = networking
         self.alertService = alertService

@@ -19,6 +19,8 @@
 import Foundation
 import Cocoa
 import LegacyCommon
+import VPNAppCore
+import Domain
 
 final class ProtocolDeprecatedViewController: WarningPopupViewController {
 
@@ -47,7 +49,7 @@ extension WarningPopupViewModel {
             title: alert.title!,
             description: alert.message!,
             linkDescription: alert.linkText,
-            url: ProtocolDeprecatedAlert.kbURLString,
+            url: VPNLink.protocolDeprecations.urlString,
             onConfirm: alert.enableSmartProtocol,
             confirmTitle: alert.confirmTitle,
             onCancel: nil,
@@ -60,7 +62,7 @@ extension WarningPopupViewModel {
             title: alert.title!,
             description: alert.message!,
             linkDescription: alert.linkText,
-            url: IkeDeprecatedAlert.kbURLString,
+            url: VPNLink.ikev2Deprecation.urlString,
             onConfirm: alert.enableSmartProtocol,
             confirmTitle: alert.confirmTitle,
             onCancel: alert.dismiss,

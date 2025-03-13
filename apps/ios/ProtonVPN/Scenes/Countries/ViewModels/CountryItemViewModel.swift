@@ -326,7 +326,7 @@ class CountryItemViewModel {
 
     func titleFor(section: Int) -> String {
         let tier = serverViewModels[section].tier
-        return CoreAppConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
+        return DomainConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
     }
 
     func isServerPlusOrAbove( for section: Int) -> Bool {
@@ -346,7 +346,7 @@ class CountryItemViewModel {
 
         if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
+            alertService.push(alert: CountryUpsellAlert(countryCode: countryCode))
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(countryName: countryName))

@@ -30,6 +30,7 @@ import Ergonomics
 import Localization
 import Persistence
 import LegacyCommon
+import VPNAppCore
 
 // Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value
 private let maximumSecureCoreServerCount = 512

@@ -21,8 +21,11 @@
 //
 
 import Cocoa
+import Dependencies
+
 import LegacyCommon
 import VPNAppCore
+
 import Ergonomics
 
 class FeatureRowView: NSView {

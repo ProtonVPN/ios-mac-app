@@ -24,6 +24,7 @@ import GoLibs
 
 import Domain
 import VPNShared
+import VPNAppCore
 
 @testable import LegacyCommon
 

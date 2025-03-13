@@ -24,6 +24,7 @@ import UIKit
 import Dependencies
 import ProtonCoreUIFoundations
 import LegacyCommon
+import VPNAppCore
 import Strings
 import Theme
 import Domain

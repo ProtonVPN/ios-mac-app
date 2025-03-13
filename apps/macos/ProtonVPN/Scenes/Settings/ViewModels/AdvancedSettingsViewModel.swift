@@ -22,6 +22,7 @@ import Dependencies
 
 import LegacyCommon
 import VPNShared
+import VPNAppCore
 
 import Domain
 import Strings

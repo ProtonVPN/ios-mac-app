@@ -15,6 +15,7 @@ import ProtonCoreForceUpgrade
 import ProtonCoreHumanVerification
 import CommonNetworking
 import LegacyCommon
+import VPNAppCore
 import Domain
 
 final class iOSNetworkingDelegate: NetworkingDelegate {

@@ -28,15 +28,16 @@ import Dependencies
 import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
 
-import Domain
-import Strings
-import Theme
-
 import Persistence
 
 import Search
 import LegacyCommon
+import VPNAppCore
 import Localization
+
+import Domain
+import Strings
+import Theme
 
 class ServerItemViewModel: ServerItemViewModelCore {
 

@@ -11,6 +11,8 @@ import LegacyCommon
 import ProtonCoreNetworking
 import ProtonCoreServices
 import CommonNetworking
+import VPNAppCore
+import Domain
 
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {

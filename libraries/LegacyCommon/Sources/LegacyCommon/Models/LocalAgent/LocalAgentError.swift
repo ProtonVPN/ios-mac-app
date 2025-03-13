@@ -22,12 +22,34 @@
 
 import Foundation
 import GoLibs
+import Domain
+import Strings
 
-enum LocalAgentErrorSystemError {
+enum LocalAgentErrorSystemError: AlertConvertibleError {
     case splitTcp
     case netshield
     case nonRandomizedNat
     case safeMode
+
+    var alert: Alert {
+        let title, message: String
+        switch self {
+        case .splitTcp:
+            title = Localizable.vpnAcceleratorTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.vpnAcceleratorTitle)
+        case .netshield:
+            title = Localizable.netshieldTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.netshieldTitle)
+        case .nonRandomizedNat:
+            title = Localizable.moderateNatTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.moderateNatTitle)
+        case .safeMode:
+            title = Localizable.nonStandardPortsTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.nonStandardPortsTitle)
+        }
+
+        return Alert(title: title, message: message)
+    }
 }
 
 enum LocalAgentError: Error {

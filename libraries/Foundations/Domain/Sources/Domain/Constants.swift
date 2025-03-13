@@ -22,6 +22,21 @@ public enum DomainConstants {
     public enum AppGroups {
         public static let main = "group.ch.protonmail.vpn"
     }
+
+    public static let maxDeviceCount: Int = 10
+
+    public enum WatershedEvent {
+        public static let telemetrySettingDefaultValue = Date(timeIntervalSince1970: 1_690_840_800) // 1st August 2023, 00:00:00
+    }
+
+    public enum Maintenance {
+        public static let defaultMaintenanceCheckTime: Int = 10 // Minutes
+    }
+        
+    public enum LogFiles {
+        // Name of the log file from WireGuard NE.
+        public static let wireGuard = "WireGuard.log"
+    }
 }
 
 public extension UserDefaults {
@@ -61,8 +76,10 @@ public enum VPNLink: String {
 
     case ping = "https://account.protonvpn.com/api/tests/ping"
     case protocolDeprecations = "https://protonvpn.com/blog/remove-vpn-protocols-apple"
-    case dedicatedIps = "https://protonvpn.com/support/dedicated-ips/"
+    case ikev2Deprecation = "https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios"
 
+    case dedicatedIps = "https://protonvpn.com/support/dedicated-ips/"
+    case t2ChipKnowledgeBase = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
 
     public var url: URL {
         URL(string: rawValue)!

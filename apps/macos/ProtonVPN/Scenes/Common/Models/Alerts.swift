@@ -76,8 +76,6 @@ public class IkeDeprecatedAlert: SystemAlert {
     public let enableSmartProtocol: () -> Void
     public var dismiss: (() -> Void)?
 
-    public static let kbURLString = "https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios"
-
     public init(enableSmartProtocolHandler: @escaping () -> Void, continueHandler: @escaping () -> Void) {
         self.enableSmartProtocol = enableSmartProtocolHandler
         self.dismiss = continueHandler

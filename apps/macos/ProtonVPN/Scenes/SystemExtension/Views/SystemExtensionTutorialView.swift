@@ -20,6 +20,8 @@ import AppKit
 import SwiftUI
 import AVKit
 
+import Dependencies
+
 import ProtonCoreUIFoundations
 
 import LegacyCommon

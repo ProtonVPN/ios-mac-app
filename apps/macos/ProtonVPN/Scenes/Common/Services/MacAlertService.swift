@@ -76,6 +76,23 @@ final class MacAlertService {
     
 }
 
+public final class NEKSOnT2Alert: SystemAlert {
+    public var title: String? = Localizable.neksT2Title
+    public var message: String? = Localizable.neksT2Description
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public let link = Localizable.neksT2Hyperlink
+    public let killSwitchOffAction: AlertAction
+    public let connectAnywayAction: AlertAction
+
+    public init(killSwitchOffHandler: @escaping () -> Void, connectAnywayHandler: @escaping () -> Void) {
+        self.killSwitchOffAction = AlertAction(title: Localizable.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
+        self.connectAnywayAction = AlertAction(title: Localizable.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
+    }
+}
+
 extension MacAlertService: CoreAlertService {
     
     func push(alert: SystemAlert) {
@@ -137,8 +154,8 @@ extension MacAlertService: CoreAlertService {
 
         case let alert as CountryUpsellAlert:
             let countryModal = ModalType.country(
-                countryFlag: alert.countryFlag,
-                numberOfDevices: CoreAppConstants.maxDeviceCount,
+                countryFlag: .flag(countryCode: alert.countryCode) ?? Image(),
+                numberOfDevices: DomainConstants.maxDeviceCount,
                 numberOfCountries: serverRepository.countryCount()
             )
             show(alert: alert, modalType: countryModal)
@@ -248,9 +265,6 @@ extension MacAlertService: CoreAlertService {
         case is ProtonUnreachableAlert:
             showDefaultSystemAlert(alert)
 
-        case is LocalAgentSystemErrorAlert:
-            showDefaultSystemAlert(alert)
-
         case is ProtocolNotAvailableForServerAlert:
             showDefaultSystemAlert(alert)
 
@@ -276,6 +290,9 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case let alert as UpgradeOperatingSystemAlert:
+            showDefaultSystemAlert(alert)
+
+        case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
         default:
@@ -314,8 +331,8 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: AppUpdateRequiredAlert) {
-        let supportAction = AlertAction(title: Localizable.updateRequiredSupport, style: .confirmative) {
-            linkOpener.open(.supportForm)
+        let supportAction = AlertAction(title: Localizable.updateRequiredSupport, style: .confirmative) { [weak self] in
+            self?.linkOpener.open(.supportForm)
         }
         let updateAction = AlertAction(title: Localizable.updateRequiredUpdate, style: .confirmative) {
             self.updateManager.startUpdate()

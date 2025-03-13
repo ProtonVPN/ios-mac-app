@@ -32,6 +32,7 @@ import CommonNetworking
 import Theme
 import Ergonomics
 import Strings
+import Domain
 
 class UserAccountUpdateViewController: NSViewController {
 
@@ -122,7 +123,7 @@ class UserAccountUpdateViewController: NSViewController {
 
         @Dependency(\.serverRepository) var repository
         feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(repository.countryCount())
-        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(CoreAppConstants.maxDeviceCount)
+        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(DomainConstants.maxDeviceCount)
         feature3Lbl.stringValue = Localizable.subscriptionUpgradeOption3
     }
 

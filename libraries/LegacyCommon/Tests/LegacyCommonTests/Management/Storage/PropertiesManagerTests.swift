@@ -22,13 +22,14 @@ import Dependencies
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
+import Domain
 
 class PropertiesManagerTests: XCTestCase {
 
     var sut: PropertiesManagerProtocol!
     private var userDefaults: UserDefaults!
 
-    static let watershed = CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
+    static let watershed = DomainConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
 
     override func invokeTest() {
         withDependencies { values in

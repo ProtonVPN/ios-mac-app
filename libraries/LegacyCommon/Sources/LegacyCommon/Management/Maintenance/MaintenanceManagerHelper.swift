@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNAppCore
 import Domain
 
 public protocol MaintenanceManagerHelperFactory {

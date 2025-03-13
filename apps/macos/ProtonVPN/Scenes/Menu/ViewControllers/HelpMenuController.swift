@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNAppCore
 import Strings
