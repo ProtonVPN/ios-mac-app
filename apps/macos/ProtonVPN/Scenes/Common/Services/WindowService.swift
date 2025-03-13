@@ -94,7 +94,6 @@ class WindowServiceImplementation: WindowService {
         & NetShieldPropertyProviderFactory
         & ProfileManagerFactory
         & VpnManagerFactory
-        & SafariServiceFactory
         & LogFileManagerFactory
         & BugReportCreatorFactory
         & DynamicBugReportManagerFactory
@@ -258,7 +257,6 @@ class WindowServiceImplementation: WindowService {
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
         let controller = SubuserMacAlertViewController()
         controller.role = alert.role
-        controller.safariServiceFactory = factory
         let windowController = SubuserAlertWindowController(viewController: controller)
         windowController.delegate = self
         activeWindowControllers.insert(windowController)

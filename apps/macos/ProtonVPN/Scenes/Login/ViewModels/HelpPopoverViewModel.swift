@@ -25,6 +25,7 @@ import LegacyCommon
 import VPNAppCore
 
 final class HelpPopoverViewModel {
+    @Dependency(\.linkOpener) var linkOpener
 
     private let navigationService: NavigationService
 
@@ -35,15 +36,15 @@ final class HelpPopoverViewModel {
     // MARK: - Actions
 
     func resetAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
+        linkOpener.open(.resetPassword)
     }
     
     func forgotAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
+        linkOpener.open(.forgotUsername)
     }
 
     func commonIssuesAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.loginProblems)
+        linkOpener.open(.loginProblems)
     }
 
     func reportBugAction() {

@@ -66,6 +66,7 @@ final class MacAlertService {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     @Dependency(\.sessionService) var sessionService
+    @Dependency(\.linkOpener) var linkOpener
 
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -314,7 +315,7 @@ extension MacAlertService: CoreAlertService {
     
     private func show(_ alert: AppUpdateRequiredAlert) {
         let supportAction = AlertAction(title: Localizable.updateRequiredSupport, style: .confirmative) {
-            SafariService().open(url: CoreAppConstants.ProtonVpnLinks.supportForm)
+            linkOpener.open(.supportForm)
         }
         let updateAction = AlertAction(title: Localizable.updateRequiredUpdate, style: .confirmative) {
             self.updateManager.startUpdate()
@@ -374,7 +375,7 @@ extension MacAlertService: CoreAlertService {
                     return
                 }
                 AppEvent.userEngagedWithUpsellAlert.post(modalSource)
-                SafariService.openLink(url: url)
+                linkOpener.open(url)
             }
         }
         
@@ -438,7 +439,7 @@ extension MacAlertService: CoreAlertService {
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
                     return
                 }
-                SafariService.openLink(url: url)
+                linkOpener.open(url)
             }
         }
         let upsellViewController = ModalsFactory.freeConnectionsViewController(countries: alert.countries, upgradeAction: upgradeAction)

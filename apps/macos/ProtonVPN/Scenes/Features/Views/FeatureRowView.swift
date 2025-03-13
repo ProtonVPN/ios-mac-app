@@ -53,6 +53,7 @@ class FeatureRowView: NSView {
 
     @IBAction private func didTapLearnMoreBtn(_ sender: Any) {
         guard let urlContact = viewModel.urlContact else { return }
-        SafariService().open(url: urlContact)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(urlContact)
     }
 }

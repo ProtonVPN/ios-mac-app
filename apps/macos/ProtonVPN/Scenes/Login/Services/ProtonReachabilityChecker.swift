@@ -46,7 +46,7 @@ final class URLSessionProtonReachabilityChecker: ProtonReachabilityChecker {
 
         checkInProgress = true
 
-        let task = session.dataTask(with: URL(string: CoreAppConstants.ProtonVpnLinks.ping)!) { [weak self] _, _, error in
+        let task = session.dataTask(with: VPNLink.ping.url) { [weak self] _, _, error in
             self?.checkInProgress = false
 
             if error != nil {

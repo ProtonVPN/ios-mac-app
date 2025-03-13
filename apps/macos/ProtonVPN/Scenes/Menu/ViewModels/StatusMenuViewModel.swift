@@ -39,7 +39,7 @@ protocol StatusMenuViewModelFactory {
 }
 
 final class StatusMenuViewModel {
-    
+
     typealias Factory = AppSessionManagerFactory
         & NavigationServiceFactory
         & VpnKeychainFactory
@@ -54,6 +54,7 @@ final class StatusMenuViewModel {
     @Dependency(\.profileAuthorizer) private var profileAuthorizer
     @Dependency(\.credentialsProvider) private var credentials
     @Dependency(\.serverChangeAuthorizer) private var serverChangeAuthorizer
+    @Dependency(\.linkOpener) var linkOpener
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -71,7 +72,7 @@ final class StatusMenuViewModel {
     var changeServerStateChanged: ((ServerChangeViewState) -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
     var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
-    
+
     var serverType: ServerType = .standard
     var standardCountries: [ServerGroupInfo]?
     var secureCoreCountries: [ServerGroupInfo]?
@@ -106,89 +107,89 @@ final class StatusMenuViewModel {
     private var profileManager: ProfileManager?
 
     private var notificationTokens: [NotificationToken] = []
-    
+
     init(factory: Factory) {
         self.factory = factory
         startObserving()
         wifiSecurityMonitor.startMonitoring()
         wifiSecurityMonitor.delegate = self
     }
-    
+
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
     }
-    
+
     var isConnected: Bool {
         return vpnGateway.connection == .connected
     }
-    
+
     var isStateStable: Bool {
         return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
     }
-    
+
     var profileListViewModel: StatusMenuProfilesListViewModel {
         return StatusMenuProfilesListViewModel(vpnGateway: vpnGateway, profileManager: factory.makeProfileManager())
     }
-    
+
     // MARK: - Connecting screen
     var isConnecting: Bool {
         return vpnGateway.connection == .connecting
     }
-    
+
     private var isReconnecting: Bool {
         return isConnecting && !propertiesManager.intentionallyDisconnected
     }
-    
+
     var connectingText: NSAttributedString {
         return NSAttributedString()
     }
-    
+
     var cancelButtonTitle: String {
         return Localizable.cancel
     }
-    
+
     func disconnectAction() {
         log.debug("Disconnect requested by clicking on Cancel", category: .connectionDisconnect, event: .trigger)
 
         isConnecting ? vpnGateway.stopConnecting(userInitiated: true) : vpnGateway.disconnect()
     }
-    
+
     // MARK: - Login section
     var loginDescription: NSAttributedString {
         return Localizable.openAppToLogIn.styled(font: .themeFont(.heading4))
     }
-    
+
     // MARK: - Header section
     var connectionLabel: NSAttributedString {
         return formConnectionLabel()
     }
-    
+
     var ipAddress: NSAttributedString {
         return formIpAddress()
     }
-    
+
     // MARK: - Secure core
     var secureCoreLabel: NSAttributedString {
         return Localizable.secureCore.styled()
     }
-    
+
     var upgradeForSecureCoreLabel: NSAttributedString {
         return Localizable.upgradeForSecureCore.styled(lineBreakMode: .byWordWrapping)
     }
-    
+
     var upgradeToPlusTitle: NSAttributedString {
         return Localizable.upgradeToPlus.styled([.interactive, .active])
     }
-    
+
     // MARK: - Quick action section - Outputs
     var killSwitchDescription: String? {
         return formKillSwitchDescription()
     }
-    
+
     var quickActionDescription: String? {
         return formQuickActionDescription()
     }
-    
+
     // MARK: - Quick action section - Inputs
     func quickConnectAction() {
         if isConnected {
@@ -209,7 +210,7 @@ final class StatusMenuViewModel {
     var unprotectedNetworkNotifications: Bool {
         return propertiesManager.unprotectedNetworkNotifications
     }
- 
+
     // MARK: - Connect section - Outputs
     func countryCount() -> Int {
         switch serverType {
@@ -219,18 +220,18 @@ final class StatusMenuViewModel {
             return secureCoreCountries?.count ?? 0
         }
     }
-    
+
     func countryViewModel(at index: IndexPath) -> StatusMenuCountryItemViewModel? {
         guard let countryGroup = ((serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item]) else {
             log.error("index.item: \(index.item), countryCount: \(countryCount())", category: .ui)
             return nil
         }
-        
+
         return StatusMenuCountryItemViewModel(countryGroup: countryGroup, type: serverType, vpnGateway: vpnGateway)
     }
-    
+
     // MARK: - Connect section - Inputs
-    
+
     func toggleSecureCore(_ state: ButtonState) {
         let applyNewStateToSecureCore: () -> Void = { [weak self] in
             self?.changeActiveServerType(state: state)
@@ -268,7 +269,7 @@ final class StatusMenuViewModel {
     }
 
     private func didTapLearnMore() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+        linkOpener.open(.learnMore)
     }
 
     private func changeActiveServerType(state: ButtonState) {
@@ -279,23 +280,23 @@ final class StatusMenuViewModel {
 
         vpnGateway.changeActiveServerType(state == .on ? .secureCore : .standard)
     }
-    
+
     // MARK: - Footer section - Inputs
     func upgradeAction() {
         Task {
             guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
-            SafariService.openLink(url: url)
+            linkOpener.open(url)
         }
     }
-    
+
     func showApplicationAction() {
         navService.showApplication()
     }
-    
+
     func quitApplicationAction() {
         NSApp.terminate(self)
     }
-    
+
     // MARK: - Private functions
     private func startObserving() {
         notificationTokens.append(
@@ -324,7 +325,7 @@ final class StatusMenuViewModel {
         guard shouldShowChangeServer else { return }
         changeServerStateChanged?(viewState)
     }
-    
+
     private func sessionChanged(data: SessionChanged.T) {
         if case .established(let vpnGateway) = data {
             if !isSessionEstablished {
@@ -334,10 +335,10 @@ final class StatusMenuViewModel {
         } else {
             sessionEnded()
         }
-        
+
         updateCountryList()
     }
-    
+
     private func presentDisconnectOnStateToggleWarning() {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
@@ -360,12 +361,12 @@ final class StatusMenuViewModel {
         let viewModel = WarningPopupViewModel(title: Localizable.unsecureWifiTitle,
                                               description: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
                                               linkDescription: Localizable.unsecureWifiLearnMore,
-                                              url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
+                                              url: VPNLink.unsecureWiFi.urlString,
                                               onConfirm: confirmationClosure)
 
         unsecureWiFiWarning?(viewModel)
     }
-    
+
     private func updateCountryList() {
         @Dependency(\.serverRepository) var repository
         // Filter out gateways, because we don't have "Connect to fastest server" for gateways
@@ -382,12 +383,12 @@ final class StatusMenuViewModel {
 
         contentChanged?()
     }
-    
+
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
-        
+
         serverType = propertiesManager.serverTypeToggle
-        
+
         profileManager = factory.makeProfileManager()
 
         updateCountryList()
@@ -413,7 +414,7 @@ final class StatusMenuViewModel {
 
         profileManager = nil
     }
-    
+
     @objc private func handleVpnChange() {
         serverType = propertiesManager.serverTypeToggle
         contentChanged?()
@@ -436,13 +437,13 @@ final class StatusMenuViewModel {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
         }
     }
-    
+
     @objc private func handleDataChange() {
         DispatchQueue.main.async { [weak self] in
             self?.updateCountryList()
         }
     }
-    
+
     private func formIpAddress() -> NSAttributedString {
         let ip = Localizable.ipValue(getCurrentIp() ?? Localizable.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.styled(font: .themeFont(.small), alignment: .left))
@@ -450,7 +451,7 @@ final class StatusMenuViewModel {
         attributedString.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 12), range: ipRange)
         return attributedString
     }
-    
+
     private func getCurrentIp() -> String? {
         if isConnected {
             return appStateManager.activeConnection()?.serverIp.exitIp
@@ -458,16 +459,16 @@ final class StatusMenuViewModel {
             return propertiesManager.userLocation?.ip
         }
     }
-    
+
     private func formConnectionLabel() -> NSAttributedString {
         if !isConnected {
             return Localizable.notConnected.styled(.danger)
         }
-        
+
         guard let server = appStateManager.activeConnection()?.server else {
             return Localizable.noDescriptionAvailable.styled()
         }
-        
+
         if server.isSecureCore {
             let font = NSFont.themeFont()
             let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
@@ -496,21 +497,21 @@ final class StatusMenuViewModel {
             return NSAttributedString.concatenate(flag, country, serverName)
         }
     }
-    
+
     private func formKillSwitchDescription() -> String? {
         guard isSessionEstablished else {
             return nil
         }
-        
+
         let description = propertiesManager.hasConnected ? Localizable.enabled.lowercased() : Localizable.disabled.lowercased()
         return Localizable.killSwitch + " " + description
     }
-    
+
     private func formQuickActionDescription() -> String? {
         guard isSessionEstablished else {
             return nil
         }
-        
+
         let description: String
         switch vpnGateway.connection {
         case .connected:

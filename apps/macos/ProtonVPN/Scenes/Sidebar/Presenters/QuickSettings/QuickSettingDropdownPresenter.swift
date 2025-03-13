@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNAppCore
 import Ergonomics
@@ -47,7 +48,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     }
     
     var learnLink: String {
-        return CoreAppConstants.ProtonVpnLinks.learnMore
+        return VPNLink.learnMore.urlString
     }
     
     let vpnGateway: VpnGatewayProtocol
@@ -100,7 +101,8 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     // MARK: - Actions
     
     @objc private func didTapLearnMore() {
-        SafariService().open(url: learnLink)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(learnLink)
     }
 
     var alert: UpsellAlert {

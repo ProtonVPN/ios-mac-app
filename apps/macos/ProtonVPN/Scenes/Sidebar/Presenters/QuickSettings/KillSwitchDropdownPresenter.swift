@@ -38,7 +38,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
     
     override var learnLink: String {
-        return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
+        return VPNLink.killSwitchSupport.urlString
     }
     
     override var title: String! {

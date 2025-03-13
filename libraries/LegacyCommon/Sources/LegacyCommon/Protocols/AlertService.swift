@@ -199,9 +199,8 @@ public final class UpgradeUnavailableAlert: SystemAlert {
         self.message = message ?? Localizable.upgradeUnavailableBody
 
         actions.append(AlertAction(title: Localizable.account, style: .confirmative) {
-            SafariService().open(
-                url: url?.absoluteString ?? CoreAppConstants.ProtonVpnLinks.accountDashboard
-            )
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(url ?? VPNLink.accountDashboard.url)
         })
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
     }
@@ -374,8 +373,6 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
     public let enableSmartProtocol: () -> Void
     public var dismiss: (() -> Void)?
 
-    public static let kbURLString = "https://protonvpn.com/blog/remove-vpn-protocols-apple"
-
     public init(enableSmartProtocolHandler: @escaping (() -> Void)) {
         self.enableSmartProtocol = enableSmartProtocolHandler
 
@@ -389,7 +386,10 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
         actions.append(AlertAction(
             title: Localizable.alertProtocolDeprecatedLearnMore,
             style: .secondary,
-            handler: { SafariService.openLink(url: URL(string: Self.kbURLString)!) }
+            handler: {
+                @Dependency(\.linkOpener) var linkOpener
+                linkOpener.open(.protocolDeprecations)
+            }
         ))
         #endif
         actions.append(AlertAction(
@@ -757,7 +757,8 @@ public final class DiscourageSecureCoreAlert: SystemAlert {
     public var onDontShowAgain: ((Bool) -> Void)?
     public var onActivate: (() -> Void)?
     public var onLearnMore: (() -> Void) = {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.learnMore)
     }
     public var dismiss: (() -> Void)?
 

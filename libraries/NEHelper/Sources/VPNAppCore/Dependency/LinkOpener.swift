@@ -1,10 +1,8 @@
 //
-//  SafariService.swift
+//  LinkOpener.swift
 //  VPNAppCore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of LegacyCommon.
 //
 //  VPNAppCore is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -25,33 +23,50 @@ import UIKit
 import Cocoa
 #endif
 
-public protocol SafariServiceProtocol {
-    func open(url: String)
-}
+import Dependencies
+import PMLogger
+import Domain
 
-public protocol SafariServiceFactory {
-    func makeSafariService() -> SafariServiceProtocol
-}
+public struct LinkOpener: DependencyKey {
+    public let open: (URL) -> Void
 
-public class SafariService: SafariServiceProtocol {
-    
-    // Old
-    public static func openLink(url: URL) {
+    public func open(_ link: VPNLink) {
+        open(link.url)
+    }
+
+    public func open(_ urlString: String) {
+        guard let url = URL(string: urlString) else {
+            log.assertionFailure("Invalid url: \(urlString)")
+            return
+        }
+
+        open(url)
+    }
+
+    public static var liveValue: LinkOpener = .init { url in
         #if canImport(UIKit)
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
         #elseif canImport(Cocoa)
         NSWorkspace.shared.open(url)
         #endif
     }
-    
-    // Use this one in new code
-    public func open(url: String) {
-        guard let url = URL(string: url) else {
-            return
-        }
-        SafariService.openLink(url: url)
+}
+
+#if DEBUG
+extension Notification.Name {
+    static let testLinkOpenerOpenedURL = Notification.Name("TestLinkOpenerOpenedURL")
+}
+
+extension LinkOpener: TestDependencyKey {
+    public static var testValue: LinkOpener = .init { url in
+        NotificationCenter.default.post(name: .testLinkOpenerOpenedURL, object: url)
     }
-    
-    public init() {
+}
+#endif
+
+extension DependencyValues {
+    public var linkOpener: LinkOpener {
+        get { self[LinkOpener.self] }
+        set { self[LinkOpener.self] = newValue }
     }
 }

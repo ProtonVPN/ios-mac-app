@@ -33,7 +33,7 @@ import Strings
 import Ergonomics
 
 final class AccountViewModel {
-    
+
     private(set) var username: String
     private(set) var planTitle: String?
     private(set) var maxTier: Int
@@ -44,7 +44,7 @@ final class AccountViewModel {
     private let authKeychain: AuthKeychainHandle
 
     var reloadNeeded: (() -> Void)?
-    
+
     init(vpnKeychain: VpnKeychainProtocol,
          propertiesManager: PropertiesManagerProtocol,
          authKeychain: AuthKeychainHandle) {
@@ -58,12 +58,14 @@ final class AccountViewModel {
 
         reload()
     }
-    
+
     func manageSubscriptionAction() {
         Task {
             @Dependency(\.sessionService) var sessionService
             guard let url = await sessionService.getPlanSession(mode: .manageSubscription) else { return }
-            SafariService.openLink(url: url)
+
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(url)
         }
     }
 

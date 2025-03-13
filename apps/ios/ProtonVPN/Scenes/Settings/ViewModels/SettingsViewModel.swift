@@ -322,7 +322,7 @@ final class SettingsViewModel {
                     }
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString))
         ]
     }
 
@@ -397,7 +397,7 @@ final class SettingsViewModel {
                         )
                 ).add(
                     link: Localizable.moderateNatExplanationLink,
-                    withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT
+                    withUrl: VPNLink.moderateNAT.urlString
                 )
             )
         ]
@@ -445,7 +445,7 @@ final class SettingsViewModel {
                     }
                 }
             }
-        ), .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))]
+        ), .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString))]
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
@@ -459,7 +459,7 @@ final class SettingsViewModel {
                     callback(self.propertiesManager.alternativeRouting)
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString))
         ]
     }
 

@@ -112,6 +112,7 @@ final class AnnouncementDetailViewController: NSViewController {
     }
 
     @IBAction private func didTapActionButton(_ sender: Any) {
-        SafariService().open(url: data.button.url)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(data.button.url)
     }
 }

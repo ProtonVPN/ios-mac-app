@@ -45,7 +45,6 @@ final class IosAlertService {
         WindowServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory &
-        SafariServiceFactory &
         PlanServiceFactory
 
     private let factory: Factory
@@ -54,7 +53,6 @@ final class IosAlertService {
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
-    private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
 
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = ModalsFactory()
@@ -457,7 +455,8 @@ extension IosAlertService: CoreAlertService {
             self?.windowService.dismissModal { }
         }
         announcement.urlRequested = { [weak self] url in
-            self?.safariService.open(url: url)
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(url)
 
             DispatchQueue.main.async {
                 AppEvent.userEngagedWithAnnouncement.post(alert.offerReference)
@@ -470,7 +469,6 @@ extension IosAlertService: CoreAlertService {
         let storyboard = UIStoryboard(name: "SubuserAlertViewController", bundle: Bundle.main)
         guard let controller = storyboard.instantiateInitialViewController() as? SubuserAlertViewController else { return }
         controller.role = alert.role
-        controller.safariServiceFactory = factory
         windowService.present(modal: controller)
     }
     

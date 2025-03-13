@@ -92,7 +92,8 @@ struct SystemExtensionTutorialView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 Button {
-                    SafariService().open(url: CoreAppConstants.ProtonVpnLinks.systemExtensionsInstallationHelp)
+                    @Dependency(\.linkOpener) var linkOpener
+                    linkOpener.open(.systemExtensionsInstallationHelp)
                 } label: {
                     Text(Localizable.needHelp)
                 }

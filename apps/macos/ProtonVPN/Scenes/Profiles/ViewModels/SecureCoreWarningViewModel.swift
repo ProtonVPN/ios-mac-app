@@ -27,14 +27,15 @@ import CommonNetworking
 final class SecureCoreWarningViewModel {
     @Dependency(\.sessionService)
     var sessionService: SessionService
+    @Dependency(\.linkOpener) var linkOpener
 
     func upgradeButtonPressed() async {
         guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
-        SafariService.openLink(url: url)
+        linkOpener.open(url)
     }
 
     func learnMoreButtonPressed() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+        linkOpener.open(.learnMore)
     }
 
     init() {}

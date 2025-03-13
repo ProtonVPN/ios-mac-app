@@ -325,7 +325,8 @@ final class LoginViewModel {
     }
     
     func keychainHelpAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.supportCommonIssues)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.supportCommonIssues)
     }
     
     func createAccountAction() {
@@ -335,7 +336,8 @@ final class LoginViewModel {
             self?.checkInProgress?(false)
 
             if reachable {
-                SafariService().open(url: CoreAppConstants.ProtonVpnLinks.signUp)
+                @Dependency(\.linkOpener) var linkOpener
+                linkOpener.open(.signUp)
             } else {
                 self?.alertService.push(alert: ProtonUnreachableAlert())
             }

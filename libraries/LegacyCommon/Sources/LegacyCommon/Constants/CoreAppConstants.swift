@@ -25,48 +25,6 @@ import Strings
 public class CoreAppConstants {
 
     public static let maxDeviceCount: Int = 10
-
-    public struct ProtonMailLinks {
-        public static let about = "https://protonmail.com/about"
-    }
-    
-    public struct ProtonVpnLinks {
-        public static let signUp = "https://account.protonvpn.com/signup"
-        public static let accountDashboard = "https://account.protonvpn.com/dashboard"
-        public static let learnMore = "https://protonvpn.com/support/secure-core-vpn"
-        public static let killSwitchSupport = "https://protonvpn.com/support/what-is-kill-switch"
-        public static let netshieldSupport = "https://protonvpn.com/support/netshield"
-        public static let support = "https://protonvpn.com/support"
-        public static let supportForm = "https://protonvpn.com/support-form"
-        public static let supportCommonIssues = "https://protonvpn.com/support/common-macos-issues-protonvpn"
-        public static let resetPassword = "https://account.protonvpn.com/reset-password"
-        public static let forgotUsername = "https://account.protonvpn.com/forgot-username"
-        public static let termsAndConditions = "https://protonvpn.com/terms-and-conditions"
-        public static let privacyPolicy = "https://protonvpn.com/privacy-policy"
-        public static let appstoreIosUrl = "http://itunes.apple.com/app/id1437005085"
-        public static let unsecureWiFiUrl = "https://protonvpn.com/blog/public-wifi-safety/"
-        public static let alternativeRouting = "http://protonmail.com/blog/anti-censorship-alternative-routing"
-        public static let vpnAccelerator = "https://protonvpn.com/support/how-to-use-vpn-accelerator/"
-        public static let assignVPNConnections = "https://protonvpn.com/support/assign-vpn-connection"
-        public static let moderateNAT = "https://protonvpn.com/support/moderate-nat"
-        public static let safeMode = "https://protonvpn.com/support/non-standard-ports"
-        public static let loginProblems = "https://protonvpn.com/support/login-problems"
-        public static let systemExtensionsInstallationHelp = "https://protonvpn.com/support/how-to-change-vpn-protocols/"
-
-        public static let learnMoreSmartRouting = "https://protonvpn.com/support/smart-routing"
-        public static let learnMoreStreaming = "https://protonvpn.com/support/streaming-guide/"
-        public static let learnMoreP2p = "https://protonvpn.com/support/bittorrent-vpn/"
-        public static let learnMoreTor = "https://protonvpn.com/support/tor-vpn/"
-        public static let learnMoreLoads = "https://protonvpn.com/support/server-load-percentages-and-colors-explained/"
-        public static let learnMoreTelemetry = "https://protonvpn.com/support/share-usage-statistics"
-
-        public static let ping = "https://account.protonvpn.com/api/tests/ping"
-    }
-    
-    public struct AttributionLinks {
-        public static let fontAwesome = "https://fontawesome.com/"
-        public static let fontAwesomeLicense = "https://creativecommons.org/licenses/by/4.0/"
-    }
     
     public static func serverTierName(forTier tier: Int) -> String {
         switch tier {

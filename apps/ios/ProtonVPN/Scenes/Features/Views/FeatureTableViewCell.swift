@@ -22,6 +22,8 @@
 
 import UIKit
 
+import Dependencies
+
 import ProtonCoreUIFoundations
 
 import LegacyCommon
@@ -89,6 +91,7 @@ class FeatureTableViewCell: UITableViewCell {
     
     @IBAction private func didTapLearnMore(_ sender: Any) {
         guard let urlContact = viewModel.urlContact else { return }
-        SafariService().open(url: urlContact)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(urlContact)
     }
 }

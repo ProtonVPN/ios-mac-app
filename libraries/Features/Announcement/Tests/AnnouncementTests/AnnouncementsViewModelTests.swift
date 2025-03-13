@@ -32,37 +32,35 @@ import Dependencies
 @testable import LegacyCommon
 
 class AnnouncementsViewModelTests: XCTestCase {
-
+//    private var manager: AnnouncementManager!
     private var viewModel: AnnouncementsViewModel!
-    private var safariService: SafariServiceMock!
     private var propertiesManager: PropertiesManagerMock!
 
     @Dependency(\.announcementStorage) var storage
 
     override func setUp() {
         super.setUp()
-
-        safariService = SafariServiceMock()
         propertiesManager = PropertiesManagerMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(propertiesManager: propertiesManager, safariService: safariService, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
-
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(propertiesManager: propertiesManager, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
         storage.store([])
     }
-    
+
+    // public func open(announcement: Announcement)
+
     func testTakesDataFromTheStorage() {
         XCTAssert(viewModel.items.isEmpty)
 
         storage.store([.mock])
-        
+
         XCTAssert(viewModel.items.count == 1)
     }
-    
+
     func testRefreshesView() {
         let expectationViewRefreshed = XCTestExpectation(description: "Views was asked to refresh itself")
         viewModel.refreshView = {
             expectationViewRefreshed.fulfill()
         }
-        
+
         @Dependency(\.announcementStorage) var storage
         storage.store([.mock])
 
@@ -72,15 +70,13 @@ class AnnouncementsViewModelTests: XCTestCase {
 
 fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
     public let propertiesManager: PropertiesManagerProtocol
-    public let safariService: SafariServiceProtocol
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
 
     @Dependency(\.announcementManager) var announcementManager: AnnouncementManager
 
-    init(propertiesManager: PropertiesManagerProtocol, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
+    init(propertiesManager: PropertiesManagerProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
         self.propertiesManager = propertiesManager
-        self.safariService = safariService
         self.coreAlertService = coreAlertService
         self.appInfo = appInfo
     }
@@ -91,10 +87,6 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManager
-    }
-    
-    func makeSafariService() -> SafariServiceProtocol {
-        return safariService
     }
 
     func makeCoreAlertService() -> CoreAlertService {

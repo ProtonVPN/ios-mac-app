@@ -44,7 +44,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var learnLink: String {
-        return CoreAppConstants.ProtonVpnLinks.learnMore
+        return VPNLink.learnMore.urlString
     }
     
     init( _ factory: Factory ) {

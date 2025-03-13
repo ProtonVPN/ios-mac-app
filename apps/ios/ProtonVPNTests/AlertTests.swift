@@ -145,10 +145,6 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
         return TroubleshootCoordinatorMock()
     }
 
-    func makeSafariService() -> SafariServiceProtocol {
-        return SafariService()
-    }
-
     func makePlanService() -> PlanService {
         return PlanServiceMock()
     }

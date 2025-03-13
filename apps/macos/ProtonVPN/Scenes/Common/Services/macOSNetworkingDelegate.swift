@@ -53,7 +53,7 @@ extension macOSNetworkingDelegate {
     }
 
     func getSupportURL() -> URL {
-        return URL(string: CoreAppConstants.ProtonVpnLinks.support)!
+        return VPNLink.support.url
     }
 }
 
