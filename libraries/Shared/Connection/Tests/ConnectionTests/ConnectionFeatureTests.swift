@@ -280,6 +280,7 @@ final class ConnectionFeatureTests: XCTestCase {
             try Task.checkCancellation()
             XCTFail("Preparation should have been cancelled")
             return .mock()
+        }, authorize: { _, _ in
         })
 
         store.exhaustivity = .off
@@ -434,6 +435,7 @@ final class ConnectionFeatureTests: XCTestCase {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: .seconds(1))
             throw preparationError
+        }, authorize: { _ in
         })
 
         store.exhaustivity = .off
@@ -451,6 +453,34 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.delegate.connectionFailed.preparation)
     }
 
+    @MainActor func testFeatureSendsDelegateActionWhenAuthorizerThrows() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        // Set up a failure that should happen during connection preparation
+        let preparationError = ConnectionError.unexpectedProtocol(.ike)
+        store.dependencies.connectionIntentResolver = .init(resolve: { _ in
+            XCTFail("Shouldn't get to preparation step, authorization should fail first")
+            return .mock()
+        }, authorize: { _ throws (ConnectionIntentResolutionError) in
+            throw ConnectionIntentResolutionError.specificCountryUnavailable(countryCode: "US")
+        })
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+        await store.receive { action in
+            guard case let .delegate(.intentResolution(_, error)) = action,
+                case let .specificCountryUnavailable(countryCode) = error,
+                countryCode == "US" else {
+                return false
+            }
+            return true
+        }
+    }
+
     @MainActor func testFeatureSendsDelegateActionWhenTunnelStartFails() async {
         let environment = ConnectionEnvironment.disconnected()
         let store = environment.createConnectionTestStore()
@@ -460,7 +490,6 @@ final class ConnectionFeatureTests: XCTestCase {
         environment.tunnelManager.tunnelStartErrorToThrow = tunnelStartError
 
         let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .ca)
-        let resolvedIntent = ServerConnectionIntent.mock(withSpecLocation: .fastest, server: .ca)
 
         store.exhaustivity = .off
         await store.send(.input(.onLaunch))
@@ -565,6 +594,7 @@ final class ConnectionFeatureTests: XCTestCase {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: .seconds(2))
             return .init(spec: intent.spec, server: intent.server, tunnelSettings: .mock, features: .mock)
+        }, authorize: { _, _ in
         })
 
         store.exhaustivity = .off

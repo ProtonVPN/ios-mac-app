@@ -83,6 +83,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         public enum Delegate: Sendable {
             case stateChanged(ConnectionState)
             case connectionFailed(ConnectionError)
+            case intentResolution(ConnectionPreparationIntent, failedWith: ConnectionIntentResolutionError)
         }
     }
 
@@ -106,6 +107,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
 
             case .input(.connect(let intent)):
+                do throws(ConnectionIntentResolutionError) {
+                    try intentResolver.authorize(intent)
+                } catch {
+                    return .send(.delegate(.intentResolution(intent, failedWith: error)))
+                }
+
                 switch state.coreConnectionState {
                 case .unknown:
                     // We're not ready to accept a connection request yet

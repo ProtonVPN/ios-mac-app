@@ -50,19 +50,15 @@ public struct LinkOpener: DependencyKey {
         NSWorkspace.shared.open(url)
         #endif
     }
-}
 
-#if DEBUG
-extension Notification.Name {
+    #if DEBUG
     static let testLinkOpenerOpenedURL = Notification.Name("TestLinkOpenerOpenedURL")
-}
 
-extension LinkOpener: TestDependencyKey {
     public static var testValue: LinkOpener = .init { url in
-        NotificationCenter.default.post(name: .testLinkOpenerOpenedURL, object: url)
+        NotificationCenter.default.post(name: Self.testLinkOpenerOpenedURL, object: url)
     }
+    #endif
 }
-#endif
 
 extension DependencyValues {
     public var linkOpener: LinkOpener {

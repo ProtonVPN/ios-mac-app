@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import IssueReporting
 
 public enum DomainConstants {
     public enum AppGroups {
@@ -45,7 +46,7 @@ public extension UserDefaults {
     }()
 }
 
-public enum VPNLink: String {
+public enum VPNLink: String, CaseIterable {
     case signUp = "https://account.protonvpn.com/signup"
     case accountDashboard = "https://account.protonvpn.com/dashboard"
     case learnMore = "https://protonvpn.com/support/secure-core-vpn"
@@ -82,7 +83,13 @@ public enum VPNLink: String {
     case t2ChipKnowledgeBase = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
 
     public var url: URL {
-        URL(string: rawValue)!
+        // All URLs get tested in URLTests
+        guard let url = URL(string: rawValue) else {
+            reportIssue("URL \(rawValue) is not a valid URL string!")
+            return URL(string: "https://proton.me")!
+        }
+
+        return url
     }
 
     public var urlString: String {

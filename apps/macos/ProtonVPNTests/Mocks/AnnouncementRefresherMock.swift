@@ -20,9 +20,6 @@ import Foundation
 import Announcement
 
 class AnnouncementRefresherMock: AnnouncementRefresher {
-    func tryRefreshingAsync() async {
-    }
-
     // Callbacks
     var tryRefreshingCalled: (() -> Void)?
     var clearCalled: (() -> Void)?

@@ -25,11 +25,11 @@ import CommonNetworking
 import VPNAppCore
 
 class ServiceChecker {
-    // P2P (need to move to LocalAgent for this)
+    // P2P (need to move to LocalAgent for this - VPNAPPL-2688)
     public static let defaultRefreshInterval: TimeInterval = 90
 
     private static let forwardedAddress = "127.0.0.3"
-    
+
     private let trafficCheckerQueue = DispatchQueue(label: "ch.protonvpn.traffic")
     private let networking: Networking
     private let alertService: CoreAlertService
@@ -39,7 +39,7 @@ class ServiceChecker {
 
     private var timer: Timer?
     private var p2pShown = false
-    
+
     init(
         networking: Networking,
         alertService: CoreAlertService,
@@ -50,35 +50,35 @@ class ServiceChecker {
         self.alertService = alertService
         self.doh = doh
         self.refreshInterval = refreshInterval
-        
+
         checkServices()
-        
+
         timer = Timer(timeInterval: refreshInterval, target: self, selector: #selector(checkServices), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
     }
-    
+
     deinit {
         stop()
     }
-    
+
     func stop() {
         timer?.invalidate()
         timer = nil
     }
-    
+
     @objc private func checkServices() {
         trafficCheckerQueue.async { [weak self] in
             guard let self = self else {
                 return
             }
-            
+
             if !self.p2pShown {
                 self.p2pBlocked()
                 self.trafficForwarded()
             }
         }
     }
-    
+
     private func p2pBlocked() {
         var urlRequest = URLRequest(url: URL(string: doh.statusHost + "/vpn_status")!)
         urlRequest.cachePolicy = .reloadIgnoringCacheData
@@ -98,7 +98,7 @@ class ServiceChecker {
             }
         }
     }
-    
+
     private func trafficForwarded() {
         let host = CFHostCreateWithName(nil, "dmca-protection.protonvpn.com" as CFString).takeRetainedValue()
 

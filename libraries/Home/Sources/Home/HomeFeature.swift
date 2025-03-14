@@ -291,6 +291,23 @@ public struct HomeFeature {
                     .send(.sharedProperties(.newConnectionState(connectionState))),
                     .send(.sharedProperties(.newConnectionStatus(status)))
                 )
+            case let .connection(.delegate(.intentResolution(intent, resolutionError))):
+                return .run { [pushAlert] send in
+                    let alert: SystemAlert
+                    switch resolutionError {
+                    case .secureCoreUnavailable:
+                        alert = SecureCoreUpsellAlert()
+                    case .specificCountryUnavailable(let countryCode):
+                        alert = CountryUpsellAlert(countryCode: countryCode)
+                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                        alert = ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
+                            Task { [intent, send] in
+                                await send(.connection(.input(.connect(intent))))
+                            }
+                        }
+                    }
+                    pushAlert(alert)
+                }
             case .connection:
                 return .none
             case .didDismissChangeServer:
