@@ -30,6 +30,7 @@ class ConnectionTestsBase: ProtonVPNUITests {
     let countrySearchRobot = CountrySearchRobot()
     let serverListRobot = ServerListRobot()
     let connectionDetailsRobot = ConnectionDetailsRobot()
+    fileprivate let okButtonId = "OK"
 
     override func setUp() {
         super.setUp()
@@ -49,6 +50,12 @@ class ConnectionTestsBase: ProtonVPNUITests {
             homeRobot.quickDisconnectViaQCButton()
         }
     }
+    
+    func closePopUpButtonIfNeeded() {
+        if homeRobot.button(okButtonId).exists() {
+            homeRobot.button(okButtonId).tap()
+        }
+    }
 
     @discardableResult
     func login(as userCredentials: Credentials) -> HomeRobot {
@@ -58,6 +65,7 @@ class ConnectionTestsBase: ProtonVPNUITests {
             .verify.loginScreenIsNotShown()
         homeRobot.verify.isOnHomeScreen()
         disconnectIfNeeded()
+        closePopUpButtonIfNeeded()
         connectionStatusRobot
             .verify.connectionStatusNotConnected()
         return homeRobot
