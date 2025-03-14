@@ -23,6 +23,7 @@ import Ergonomics
 
 public struct LogicalsClient: Sendable {
     public var fetchLogicals: @Sendable (TruncatedIp?, String?) async throws -> [VPNServer]
+    public var fetchLoads: @Sendable (TruncatedIp?) async throws -> [ContinuousServerProperties]
 }
 
 extension LogicalsClient: DependencyKey {
@@ -38,6 +39,11 @@ extension LogicalsClient: DependencyKey {
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)
                 return response.logicalServers.map { $0.vpnServer }
+            },
+            fetchLoads: { ip in
+                let request = VPNLoadsRequest(truncatedIP: ip)
+                let response: LoadsResponse = try await networking.perform(request: request)
+                return response.loads
             }
         )
     }
