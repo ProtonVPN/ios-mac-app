@@ -30,7 +30,7 @@ class ConnectionDetailsRobot: CoreElements {
 
     @discardableResult
     public func closeConnectionDetails() -> HomeRobot {
-        button("ic-cross").tap()
+        button("Close connection details screen").tap()
         return HomeRobot()
     }
 

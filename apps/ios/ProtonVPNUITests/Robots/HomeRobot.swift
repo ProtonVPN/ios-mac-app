@@ -25,6 +25,7 @@ fileprivate let showLoginButtonLabelText = Localizable.logIn
 fileprivate let showSignupButtonLabelText = "Create an account"
 fileprivate let upselModalId = "TitleLabel"
 fileprivate let connectionInfo = "connection_info"
+fileprivate let okButtonId = "OK"
 
 // HomeRobot class contains actions for Home view.
 
@@ -128,6 +129,9 @@ class HomeRobot: ConnectionBaseRobot {
             button(tabSettings)
                 .waitUntilExists(time: 30)
                 .checkExists(message: "Failed to check that user is logged in. Settings tab is not visible in 30 seconds")
+            if button(okButtonId).exists() {
+                button(okButtonId).tap()
+            }
             return HomeRobot()
         }
 
