@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 συσκευή</string>
+        <string>%d συσκευή</string>
         <key>other</key>
         <string>%d συσκευές</string>
       </dict>
@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Προστατέψτε έως και %d συσκευές</string>
+        <string>Προστατέψτε έως και %d συσκευή</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -313,7 +313,7 @@
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ώρες</string>
+        <string>%d ώρα</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -356,7 +356,7 @@
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d ώρες</string>
+        <string>%d ώρα</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -483,6 +483,22 @@
         <string>%d μήνες</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Σύνδεση προς %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d χώρες</string>
+        <key>one</key>
+        <string>%d χώρα</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -500,21 +516,4 @@
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

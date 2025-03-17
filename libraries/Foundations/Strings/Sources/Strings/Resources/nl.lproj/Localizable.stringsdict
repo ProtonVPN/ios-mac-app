@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 apparaat</string>
+        <string>%d apparaat</string>
         <key>other</key>
         <string>%d apparaten</string>
       </dict>
@@ -68,7 +68,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d landen</string>
+        <string>%d land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -79,7 +79,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d beveiligde servers</string>
+        <string>%d beveiligde server</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -101,12 +101,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d+ landen</string>
+        <string>%d+ land</string>
       </dict>
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d beveiligde servers</string>
+        <string>%d beveiligde server</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -448,7 +448,7 @@ gestopt</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Stap %d</string>
+        <string>%d stappen</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>
@@ -483,6 +483,22 @@ gestopt</string>
         <string>%d maanden</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Verbind met %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d landen</string>
+        <key>one</key>
+        <string>%d land</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -500,21 +516,4 @@ gestopt</string>
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

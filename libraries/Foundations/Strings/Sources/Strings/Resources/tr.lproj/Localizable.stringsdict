@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 aygıt</string>
+        <string>%d aygıt</string>
         <key>other</key>
         <string>%d aygıt</string>
       </dict>
@@ -79,13 +79,13 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d güvenli sunucuya</string>
+        <string>%d güvenli sunucu</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d güvenli sunucuya</string>
+        <string>%d güvenli sunucu</string>
       </dict>
     </dict>
     <key>modals_new_upsell_all_countries_subtitle</key>
@@ -174,9 +174,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d ülkenin</string>
+        <string>%d ülkede</string>
         <key>other</key>
-        <string>%d ülkenin</string>
+        <string>%d ülkede</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -483,6 +483,22 @@ izleyici</string>
         <string>%d ay</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@num_countries@ ile bağlantı kurun</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d ülke</string>
+        <key>one</key>
+        <string>%d ülke</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -500,21 +516,4 @@ izleyici</string>
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

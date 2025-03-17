@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 dispositivo</string>
+        <string>%d dispositivo</string>
         <key>other</key>
         <string>%d dispositivos</string>
       </dict>
@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Proteja até %d dispositivos</string>
+        <string>Proteja até %d dispositivo</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -68,7 +68,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d país</string>
+        <string>%d países</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -79,7 +79,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d servidores seguros</string>
+        <string>%d servidor seguro</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -483,6 +483,22 @@ parados</string>
         <string>%d messes</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Conectado a %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d países</string>
+        <key>one</key>
+        <string>%d país</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -500,21 +516,4 @@ parados</string>
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

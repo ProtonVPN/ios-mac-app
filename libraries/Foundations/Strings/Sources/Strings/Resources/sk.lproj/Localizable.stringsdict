@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 zariadenie</string>
+        <string>%d zariadenie</string>
         <key>few</key>
         <string>%d zariadenia</string>
         <key>many</key>
@@ -64,7 +64,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Ochráňte až %d zariadení</string>
+        <string>Ochráňte %d zariadenie</string>
         <key>few</key>
         <string>Ochráňte %d zariadenia</string>
         <key>many</key>
@@ -84,7 +84,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d krajín</string>
+        <string>%d krajina</string>
         <key>few</key>
         <string>%d krajiny</string>
         <key>many</key>
@@ -99,7 +99,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d zabezpečených serverov</string>
+        <string>%d zabezpečený server</string>
         <key>few</key>
         <string>%d zabezpečené servery</string>
         <key>many</key>
@@ -134,9 +134,9 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ bezpečných serverov</string>
-        <key>few</key>
         <string>%d+ bezpečný server</string>
+        <key>few</key>
+        <string>%d+ bezpečné servery</string>
         <key>many</key>
         <string>%d+ bezpečných serverov</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -611,6 +611,26 @@ zastavené</string>
         <string>%d mesiace</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Pripojiť k %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d krajinám</string>
+        <key>one</key>
+        <string>%d krajine</string>
+        <key>few</key>
+        <string>%d krajinám</string>
+        <key>many</key>
+        <string>%d krajinám</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -632,21 +652,4 @@ zastavené</string>
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

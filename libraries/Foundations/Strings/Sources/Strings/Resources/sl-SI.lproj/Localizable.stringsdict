@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>naprava</string>
+        <string>%d device</string>
         <key>two</key>
-        <string>%d napravi</string>
+        <string>%d devices</string>
         <key>few</key>
-        <string>%d naprav</string>
+        <string>%d devices</string>
         <key>other</key>
-        <string>%d napravi</string>
+        <string>%d devices</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -64,7 +64,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Zaščitite do %d naprav</string>
+        <string>Zaščitite do %d napravo</string>
         <key>two</key>
         <string>Zaščitite do %d napravi</string>
         <key>few</key>
@@ -99,7 +99,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d varni strežniki</string>
+        <string>%d varen strežnik</string>
         <key>two</key>
         <string>%d varna strežnika</string>
         <key>few</key>
@@ -134,7 +134,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ varni strežniki</string>
+        <string>%d varen strežnik</string>
         <key>two</key>
         <string>%d+ varna strežnika</string>
         <key>few</key>
@@ -562,7 +562,7 @@ ustavljeni</string>
       <key>STEP</key>
       <dict>
         <key>one</key>
-        <string>Koraka %d</string>
+        <string>Korak %d</string>
         <key>two</key>
         <string>Koraka %d</string>
         <key>few</key>
@@ -615,6 +615,26 @@ ustavljeni</string>
         <string>%d mesecev</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Connect to %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d countries</string>
+        <key>one</key>
+        <string>%d country</string>
+        <key>two</key>
+        <string>%d countries</string>
+        <key>few</key>
+        <string>%d countries</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -636,21 +656,4 @@ ustavljeni</string>
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

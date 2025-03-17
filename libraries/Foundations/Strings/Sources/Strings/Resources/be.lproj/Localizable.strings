@@ -40,6 +40,9 @@
 
 "_collapse_list_of_servers" = "Згарнуць спіс сервераў";
 
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
 /* Used as a title in alerts/modals */
 "_warning" = "Папярэджанне";
 
@@ -1706,11 +1709,20 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN адключаны. Падключыцеся да сервера для бяспечнага прагляду ў інтэрнэце.";
 
-/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
 "_connection_card_accessibility_fastest" = "Даступна найхутчэйшая краіна";
 
-/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Даступна найхутчэйшая краіна Secure Core";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "Двойчы націсніце, каб убачыць свой IP-адрас";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "Двойчы націсніце, каб схаваць свой IP-адрас";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "Закрыць экран з падрабязнымі звесткамі падключэння";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Прадвызначанае падключэнне";
@@ -1735,6 +1747,9 @@
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "Бяспечны прагляд старонак з %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "Вы бяспечна праглядаеце з краіны %1$@. Парадкавы нумар сервера %2$@, які выкарыстоўвае пратакол %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Загрузка";
