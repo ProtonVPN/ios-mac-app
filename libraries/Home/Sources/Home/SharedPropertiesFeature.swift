@@ -20,6 +20,8 @@ import ComposableArchitecture
 import ProtonCoreFeatureFlags
 import CommonNetworking
 import Connection
+import Ergonomics
+import Persistence
 import Foundation
 import Domain
 import VPNAppCore
@@ -82,6 +84,21 @@ public struct SharedPropertiesFeature {
                     longLivingConnectionStatusEffect
                 )
 
+            case .userLocation(.delegate(.userLocationChanged(let location))):
+                guard let truncatedIP = TruncatedIp(ip: location.ip) else {
+                    log.error("Failed to truncate user IP")
+                    return .none
+                }
+                return .run { send in
+                    @Dependency(\.logicalsClient) var client
+                    @Dependency(\.serverRepository) var repository
+                    let loads = try await client.fetchLoads(truncatedIP)
+                    log.debug("Fetched loads following location change", category: .api, metadata: ["serverCount": "\(loads.count)"])
+                    repository.upsert(loads: loads)
+                } catch: { error, _ in
+                    log.error("Failed to update loads following location change", category: .api, metadata: ["error": "\(error)"])
+                }
+
             case .userLocation(_):
                 return .none
 
@@ -91,6 +108,9 @@ public struct SharedPropertiesFeature {
 
             case .newConnectionState(let newValue):
                 state.$connectionState.withLock { $0 = newValue }
+                if newValue.is(\.disconnected) {
+                    return .send(.userLocation(.fetchUserLocation))
+                }
                 return .none
             }
         }

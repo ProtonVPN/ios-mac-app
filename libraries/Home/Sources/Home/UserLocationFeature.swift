@@ -56,8 +56,13 @@ public struct UserLocationFeature {
         case listen
         case fetchUserLocation
         case didBecomeActive(notification: Notification)
-        case userLocationChange(location: UserLocation?)
+        case userLocationFetched(location: UserLocation)
         case tearDown
+        case delegate(Delegate)
+
+        public enum Delegate {
+            case userLocationChanged(UserLocation)
+        }
     }
 
     private enum CancelID {
@@ -100,32 +105,25 @@ public struct UserLocationFeature {
                 return .run { send in
                     @Dependency(\.locationClient) var locationClient
                     let location = try await locationClient.fetchLocation()
-                    await send(.userLocationChange(location: location))
+                    await send(.userLocationFetched(location: location))
                 } catch: { error, _ in
                     log.error("User location retrieval failed: \(error.localizedDescription)")
                 }
 
-            case .userLocationChange(let location):
-                // Try preventing the whole map view because of possibly missing userLocation
-                // User location is changing very rarely and we can expect it prevails between app launches and even switching of users.
-                log.debug("User Location change response received")
-                var didUpdateUserDefaults = false
-                if let userCountry = location?.country.lowercased() {
-                    log.debug("Updating userCountry defaults")
-                    state.$userCountry.withLock { $0 = userCountry }
-                    didUpdateUserDefaults = true
+            case .userLocationFetched(let location):
+                let userIP = location.ip
+                let lowercasedUserCountry = location.country.lowercased()
+
+                if userIP == state.userIP && lowercasedUserCountry == state.userCountry?.lowercased() {
+                    log.debug("User Location unchanged from last fetch", category: .api)
+                    return .none
                 }
-                if let userIP = location?.ip ?? state.userIP {
-                    log.debug("Updating userIP defaults")
-                    state.$userIP.withLock { $0 = userIP }
-                    didUpdateUserDefaults = true
-                }
-                if didUpdateUserDefaults {
-                    state.$lastLocationRetrieval.withLock { $0 = Date.now }
-                } else {
-                    log.error("No updates to userCountry or userIP defaults")
-                }
-                return .none
+
+                log.debug("Updating user location defaults", category: .persistence)
+                state.$userCountry.withLock { $0 = lowercasedUserCountry }
+                state.$userIP.withLock { $0 = userIP }
+                state.$lastLocationRetrieval.withLock { $0 = Date.now }
+                return .send(.delegate(.userLocationChanged(location)))
 
             case .didBecomeActive(_):
                 let lastLocationRetrievalInterval = abs((state.lastLocationRetrieval ?? .now).timeIntervalSinceNow)
@@ -137,6 +135,9 @@ public struct UserLocationFeature {
                     .cancel(id: CancelID.didBecomeActive),
                     .cancel(id: CancelID.userLocationTimer)
                 )
+
+            case .delegate:
+                return .none
             }
         }
     }

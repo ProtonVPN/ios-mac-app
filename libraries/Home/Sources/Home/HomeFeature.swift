@@ -168,7 +168,7 @@ public struct HomeFeature {
                 return .send(.connect(spec))
             case .recents:
                 return .none
-            case .sharedProperties(.userLocation(.userLocationChange(_))):
+            case .sharedProperties(.userLocation(.userLocationFetched(_))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
                 return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
             case .sharedProperties(_):

@@ -26,21 +26,3 @@ struct LoadsResponse: Decodable {
         case loads = "logicalServers"
     }
 }
-
-extension ContinuousServerProperties: Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let serverID = try container.decode(String.self, forKey: .serverID)
-        let load = try container.decode(Int.self, forKey: .load)
-        let score = try container.decode(Double.self, forKey: .score)
-        let status = try container.decode(Int.self, forKey: .score)
-        self.init(serverId: serverID, load: load, score: score, status: status)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case serverID = "ID"
-        case load
-        case score
-        case status
-    }
-}
