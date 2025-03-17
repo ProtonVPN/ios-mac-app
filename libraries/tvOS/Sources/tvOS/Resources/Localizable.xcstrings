@@ -55,6 +55,12 @@
             "value" : " /mes"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /ماه"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -82,7 +88,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " / 月"
+            "value" : " /月"
           }
         },
         "ka" : {
@@ -136,7 +142,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " в месяц"
+            "value" : " /месяц"
           }
         },
         "sk" : {
@@ -221,6 +227,12 @@
             "value" : " /año"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /سال"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -248,7 +260,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " /年間"
+            "value" : " /年"
           }
         },
         "ka" : {
@@ -302,13 +314,19 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " в год"
+            "value" : " /год"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : " /rok"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /leto"
           }
         },
         "sv" : {
@@ -856,7 +874,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Παρουσιάστηκε σφάλμα."
+            "value" : "Προέκυψε κάποιο σφάλμα."
           }
         },
         "en" : {
@@ -1724,7 +1742,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "接続済み"
+            "value" : "接続完了"
           }
         },
         "ka" : {
@@ -1867,7 +1885,7 @@
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "در حال اتصال"
+            "value" : "درحال اتصال"
           }
         },
         "fi" : {
@@ -2071,7 +2089,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "接続に失敗しました"
+            "value" : "接続に失敗"
           }
         },
         "ka" : {
@@ -2245,7 +2263,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "私たちにご連絡ください"
+            "value" : "お問い合わせ"
           }
         },
         "ka" : {
@@ -2281,7 +2299,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fale conosco"
+            "value" : "Contate-nos"
           }
         },
         "pt-PT" : {
@@ -2299,7 +2317,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Связаться с нами"
+            "value" : "Свяжитесь с нами"
           }
         },
         "sk" : {
@@ -2329,7 +2347,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зв'яжіться з нами"
+            "value" : "Зв'язатися з нами"
           }
         },
         "zh-Hant" : {
@@ -2743,7 +2761,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Katkaise yhteys"
+            "value" : "Katkaise"
           }
         },
         "fr" : {
@@ -2857,7 +2875,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "中斷連線"
+            "value" : "斷線"
           }
         }
       }
@@ -3001,7 +3019,7 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odpájanie"
+            "value" : "Odpája sa"
           }
         },
         "sl" : {
@@ -3025,7 +3043,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Від'єднання"
+            "value" : "Роз'єднання"
           }
         },
         "zh-Hant" : {
@@ -3323,7 +3341,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O mais rápido"
+            "value" : "Mais rápido"
           }
         },
         "pt-PT" : {
@@ -3341,7 +3359,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Самый быстрый"
+            "value" : "Быстрейший"
           }
         },
         "sk" : {
@@ -3371,7 +3389,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Найшвидший"
+            "value" : "Найшвидші"
           }
         },
         "zh-Hant" : {
@@ -3584,7 +3602,7 @@
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "متوجه شدم"
+            "value" : "فهمیدم"
           }
         },
         "fi" : {
@@ -4175,7 +4193,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inkluderar premium VPN-skydd för din mobil och dator (anslut upp till 10 enheter samtidigt)"
+            "value" : "Inkluderar premium VPN-skydd för din mobil och stationära dator (anslut upp till 10 enheter samtidigt)"
           }
         },
         "tr" : {
@@ -4193,7 +4211,176 @@
       }
     },
     "Loading" : {
-
+      "localizations" : {
+        "be" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načítání"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wird geladen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φόρτωση"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cargando"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بارگذاری"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ladataan"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memuat"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み込み中"
+          }
+        },
+        "ka" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "იტვირთება"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로딩 중"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laster"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bezig met laden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ładowanie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A carregar"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se încarcă"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка"
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Načítavanie"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nalaganje"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laddar in"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükleniyor"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завантаження"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "載入中"
+          }
+        }
+      }
     },
     "Loading countries" : {
       "comment" : "Informative text when the app is downloading the country list.",
@@ -4333,7 +4520,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Läser in länder"
+            "value" : "Laddar länder"
           }
         },
         "tr" : {
@@ -4555,7 +4742,7 @@
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سیاست حفظ حریم خصوصی"
+            "value" : "حریم خصوصی"
           }
         },
         "fi" : {
@@ -4727,13 +4914,13 @@
         "fa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "خط مش سیاست حفظ اطلاعات و حریم خصوصی کاربران"
+            "value" : "سیاست حریم خصوصی"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tietosuojakäytäntö"
+            "value" : "tietosuojakäytännön"
           }
         },
         "fr" : {
@@ -4985,7 +5172,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Защищено"
+            "value" : "Защищена"
           }
         },
         "sk" : {
@@ -5021,7 +5208,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已受保護"
+            "value" : "受保護"
           }
         }
       }
@@ -5509,7 +5696,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schnellverbinden"
+            "value" : "Schnellverbindung"
           }
         },
         "el" : {
@@ -5689,7 +5876,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Προτεινόμενη"
+            "value" : "Προτεινόμενο"
           }
         },
         "en" : {
@@ -5719,7 +5906,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suositellut"
+            "value" : "Suositukset"
           }
         },
         "fr" : {
@@ -6847,7 +7034,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Αποσύνδεση;"
+            "value" : "Αποσύνδεση?"
           }
         },
         "en" : {
@@ -6868,10 +7055,16 @@
             "value" : "¿Cerrar sesión?"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خروج?"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kirjaudutaanko ulos?"
+            "value" : "Kirjaudu ulos?"
           }
         },
         "fr" : {
@@ -6931,13 +7124,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sair?"
+            "value" : "Sair da sessão?"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terminar a sessão?"
+            "value" : "Terminar sessão?"
           }
         },
         "ro" : {
@@ -6985,7 +7178,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "登出？"
+            "value" : "登出?"
           }
         }
       }
@@ -8507,6 +8700,12 @@
             "value" : "Mejore su privacidad"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حريم خصوصی خود را ارتقا دهید"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8534,7 +8733,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "あなたのプライバシーをアップグレード"
+            "value" : "プライバシーをアップグレードする"
           }
         },
         "ka" : {
@@ -8570,7 +8769,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Faça um upgrade na sua privacidade"
+            "value" : "Aumente sua privacidade"
           }
         },
         "pt-PT" : {
@@ -8588,13 +8787,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Повысьте вашу приватность"
+            "value" : "Улучшите свою конфиденциальность"
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Upgradujte svoje súkromie"
+            "value" : "Navýšte svoje súkromie"
           }
         },
         "sl" : {
@@ -8619,6 +8818,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вдоскональте свою приватність"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "升級您的隱私"
           }
         }
       }
@@ -9167,7 +9372,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "見られずに見る。"
+            "value" : "誰かに見られずに視聴する。"
           }
         },
         "ka" : {
@@ -9233,7 +9438,7 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Titta utan att bli tittad på."
+            "value" : "Titta utan att bli bevakad."
           }
         },
         "tr" : {
