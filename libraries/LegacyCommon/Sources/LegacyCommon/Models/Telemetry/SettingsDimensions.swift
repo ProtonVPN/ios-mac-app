@@ -23,14 +23,14 @@ public struct SettingsDimensions: Encodable {
     let appIcon: AppIcon
     let userTier: UserTier
     let widgetCount: WidgetCount
-    let firstWidgetSize: WidgetSize
+    let firstWidgetSize: WidgetSize?
     let isIPv6Enabled: Bool
 
     init(defaultConnectionType: DefaultConnectionType,
          appIcon: AppIcon,
          userTier: UserTier,
          widgetCount: WidgetCount,
-         firstWidgetSize: WidgetSize,
+         firstWidgetSize: WidgetSize?,
          isIPv6Enabled: Bool) {
         self.defaultConnectionType = defaultConnectionType
         self.appIcon = appIcon
