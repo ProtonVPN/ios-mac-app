@@ -40,6 +40,9 @@
 
 "_collapse_list_of_servers" = "Restrângere listă servere";
 
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
 /* Used as a title in alerts/modals */
 "_warning" = "Avertizare";
 
@@ -1706,11 +1709,20 @@
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "Nu există conexiune la VPN. Conectați-vă la un server pentru a naviga în siguranță pe internet.";
 
-/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents */
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
 "_connection_card_accessibility_fastest" = "Cea mai rapidă țară disponibilă";
 
-/* The hint htat the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "Cea mai rapidă țară cu Secure Core disponibilă";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "Atingeți de două ori pentru afișarea adresei IP";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "Atingeți de două ori pentru ascunderea adresei IP";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "Închidere ecran cu detaliile conexiunii";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Conexiune implicită";
@@ -1735,6 +1747,9 @@
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from" = "Navigați în siguranță din %@.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "Navigați în siguranță din %1$@, serverul %2$@ folosind %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Se încarcă";

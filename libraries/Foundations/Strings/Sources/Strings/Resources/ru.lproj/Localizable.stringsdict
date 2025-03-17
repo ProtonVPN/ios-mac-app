@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 устройство</string>
+        <string>%d device</string>
         <key>few</key>
-        <string>%d устройства</string>
+        <string>%d devices</string>
         <key>many</key>
-        <string>%d устройств</string>
+        <string>%d devices</string>
         <key>other</key>
-        <string>%d устройств</string>
+        <string>%d devices</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -64,7 +64,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Защитите до %d устройств</string>
+        <string>Защитите до %d устройства</string>
         <key>few</key>
         <string>Защитите до %d устройств</string>
         <key>many</key>
@@ -84,7 +84,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d стран</string>
+        <string>%d страна</string>
         <key>few</key>
         <string>%d страны</string>
         <key>many</key>
@@ -99,7 +99,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d защищенных серверов</string>
+        <string>%d защищённый сервер</string>
         <key>few</key>
         <string>%d защищённых сервера</string>
         <key>many</key>
@@ -607,6 +607,26 @@
         <string>%d месяца</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Connect to %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d countries</string>
+        <key>one</key>
+        <string>%d country</string>
+        <key>few</key>
+        <string>%d countries</string>
+        <key>many</key>
+        <string>%d countries</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -628,21 +648,4 @@
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>

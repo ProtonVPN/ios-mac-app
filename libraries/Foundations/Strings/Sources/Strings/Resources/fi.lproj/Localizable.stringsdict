@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 laite</string>
+        <string>%d device</string>
         <key>other</key>
-        <string>%d laitetta</string>
+        <string>%d devices</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -52,7 +52,7 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Suojaa jopa %d laitetta</string>
+        <string>Suojaa jopa %d laite</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -126,9 +126,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d maasta</string>
+        <string>%d maa</string>
         <key>other</key>
-        <string>%d maasta</string>
+        <string>%d maata</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
@@ -174,9 +174,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d maasta</string>
+        <string>%d maa</string>
         <key>other</key>
-        <string>%d maasta</string>
+        <string>%d maa</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -222,9 +222,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d maasta</string>
+        <string>%d maa</string>
         <key>other</key>
-        <string>%d maasta</string>
+        <string>%d maa</string>
       </dict>
     </dict>
     <key>_plans_connections</key>
@@ -290,9 +290,9 @@ estetty</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d vuorokautta</string>
+        <string>%d päivää</string>
         <key>one</key>
-        <string>%d vuorokausi</string>
+        <string>%d päivä</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -306,9 +306,9 @@ estetty</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d vuorokautta</string>
+        <string>%d päivää</string>
         <key>one</key>
-        <string>%d vuorokausi</string>
+        <string>%d päivä</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -483,6 +483,22 @@ estetty</string>
         <string>%d kuukautta</string>
       </dict>
     </dict>
+    <key>upsell_countries_connect_to</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>Connect to %#@num_countries@</string>
+      <key>num_countries</key>
+      <dict>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>other</key>
+        <string>%d countries</string>
+        <key>one</key>
+        <string>%d country</string>
+      </dict>
+    </dict>
     <key>plan_duration_year</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -500,21 +516,4 @@ estetty</string>
       </dict>
     </dict>
   </dict>
-    <key>upsell_countries_connect_to</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>Connect to %#@num_countries@</string>
-        <key>num_countries</key>
-        <dict>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>other</key>
-            <string>%d countries</string>
-            <key>one</key>
-            <string>%d country</string>
-        </dict>
-    </dict>
-</dict>
 </plist>
