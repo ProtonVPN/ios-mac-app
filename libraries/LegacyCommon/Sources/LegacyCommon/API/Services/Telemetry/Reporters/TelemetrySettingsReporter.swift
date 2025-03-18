@@ -136,7 +136,7 @@ class TelemetrySettingsReporter {
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount {
-        if #available(iOS 18.0, *) {
+        if #available(iOS 18.0, macOS 15.0, *) {
             guard let count = try? await WidgetCenter.shared.currentConfigurations().count else {
                 return .zero
             }
@@ -156,7 +156,7 @@ class TelemetrySettingsReporter {
     }
 
     private func firstWidgetSize() async -> SettingsDimensions.WidgetSize? {
-        if #available(iOS 18.0, *) {
+        if #available(iOS 18.0, macOS 15.0, *) {
             guard let firstConfiguration = try? await WidgetCenter.shared.currentConfigurations().first else {
                 return nil
             }
