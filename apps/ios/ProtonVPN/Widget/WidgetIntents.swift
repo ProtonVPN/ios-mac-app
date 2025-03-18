@@ -59,7 +59,7 @@ internal struct ConnectToVPNIntent: AppIntent {
         let connectionSpec = recentIndex.map { getRecentConnection($0) } ?? getDefaultConnection()
 
         if let connectionSpec = connectionSpec {
-            try? await connectToVPN(connectionSpec)
+            try? await connectToVPN(connectionSpec, .vpnProtocol(connectionSpec.actualConnection.vpnProtocol))
         }
         return .result()
     }

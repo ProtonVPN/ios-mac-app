@@ -80,7 +80,6 @@
 		4CF2982A2A7D3B8E00DEB23F /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298112A7D3B8E00DEB23F /* it.lproj */; };
 		4CF2982B2A7D3B8E00DEB23F /* el.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298122A7D3B8E00DEB23F /* el.lproj */; };
 		4CF2982C2A7D3B8E00DEB23F /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298132A7D3B8E00DEB23F /* tr.lproj */; };
-		4CF2982D2A7D3B8E00DEB23F /* pt-PT.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298142A7D3B8E00DEB23F /* pt-PT.lproj */; };
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
 		4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4D2B908075002E40FD /* Ergonomics */; };
@@ -395,6 +394,7 @@
 		E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A026A6FE0C0083D61E /* Logger.swift */; };
 		E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */; };
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
+		EB0F23CF2D89781D00BC13E4 /* ConnectionInventory in Frameworks */ = {isa = PBXBuildFile; productRef = EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */; };
 		EBD352D22D7F020D0020EBB5 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = EB2FD53D2D3ABBAA003E609D /* SharedViews */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
@@ -576,7 +576,6 @@
 		4CF298112A7D3B8E00DEB23F /* it.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = it.lproj; sourceTree = "<group>"; };
 		4CF298122A7D3B8E00DEB23F /* el.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = el.lproj; sourceTree = "<group>"; };
 		4CF298132A7D3B8E00DEB23F /* tr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tr.lproj; sourceTree = "<group>"; };
-		4CF298142A7D3B8E00DEB23F /* pt-PT.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "pt-PT.lproj"; sourceTree = "<group>"; };
 		4CF298162A7D3B8E00DEB23F /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
 		570A00212C1706A6003317EC /* ProtonVPN-DEBUG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-DEBUG.entitlements"; sourceTree = "<group>"; };
 		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
@@ -1016,6 +1015,7 @@
 				ADFC97B82B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */,
 				E148AE5421C1684F007AB65A /* NetworkExtension.framework in Frameworks */,
+				EB0F23CF2D89781D00BC13E4 /* ConnectionInventory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2490,6 +2490,7 @@
 			packageProductDependencies = (
 				4C05E5692A71699D009102EB /* LegacyCommon */,
 				ADFC97B72B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
+				EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -4957,6 +4958,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
 			productName = XCTestDynamicOverlay;
+		};
+		EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ConnectionInventory;
 		};
 		EB2FD53D2D3ABBAA003E609D /* SharedViews */ = {
 			isa = XCSwiftPackageProductDependency;
