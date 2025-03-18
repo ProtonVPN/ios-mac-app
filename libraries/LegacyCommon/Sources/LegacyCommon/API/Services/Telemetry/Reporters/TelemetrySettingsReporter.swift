@@ -21,6 +21,7 @@ import Foundation
 import Dependencies
 
 import CommonNetworking
+import ConnectionInventory
 import Ergonomics
 import Timer
 import VPNShared
@@ -121,8 +122,17 @@ class TelemetrySettingsReporter {
     }
 
     private func defaultConnectionType() -> SettingsDimensions.DefaultConnectionType {
+        @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
 
-        return .fastest
+        let preference = try? defaultConnectionStorage.getPreference()
+        switch preference ?? .fastest {
+        case .fastest:
+            return .fastest
+        case .mostRecent:
+            return .lastConnection
+        case .recent:
+            return .recent
+        }
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount {
