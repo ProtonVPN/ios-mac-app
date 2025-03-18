@@ -69,12 +69,12 @@ class TelemetrySettingsReporter {
         stop()
     }
 
-    public func stop() {
+    // MARK: - Private
+
+    private func stop() {
         heartbeatTimer?.invalidate()
         heartbeatTimer = nil
     }
-
-    // MARK: - Private
 
     private func checkAndSendHeartbeat() {
 
