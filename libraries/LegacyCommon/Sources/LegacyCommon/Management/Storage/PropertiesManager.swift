@@ -485,7 +485,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
             Keys.alternativeRouting.rawValue: true,
             Keys.smartProtocol.rawValue: ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault,
             Keys.discourageSecureCore.rawValue: true,
-            Keys.showWhatsNewModal.rawValue: false
+            Keys.showWhatsNewModal.rawValue: true
         ])
     }
     
