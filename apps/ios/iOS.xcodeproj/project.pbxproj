@@ -395,6 +395,7 @@
 		E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */; };
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
 		EB0F23CF2D89781D00BC13E4 /* ConnectionInventory in Frameworks */ = {isa = PBXBuildFile; productRef = EB0F23CE2D89781D00BC13E4 /* ConnectionInventory */; };
+		EB3859552D8AE9E700B10A7E /* ProtonCoreUIFoundations in Frameworks */ = {isa = PBXBuildFile; productRef = EB3859542D8AE9E700B10A7E /* ProtonCoreUIFoundations */; };
 		EBD352D22D7F020D0020EBB5 /* SharedViews in Frameworks */ = {isa = PBXBuildFile; productRef = EB2FD53D2D3ABBAA003E609D /* SharedViews */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* NetShieldSelectionViewModel.swift */; };
@@ -1025,6 +1026,7 @@
 			files = (
 				EBD352D22D7F020D0020EBB5 /* SharedViews in Frameworks */,
 				E55CCA9E2D30121E00FD0AAD /* SwiftUI.framework in Frameworks */,
+				EB3859552D8AE9E700B10A7E /* ProtonCoreUIFoundations in Frameworks */,
 				E55CCABF2D3142ED00FD0AAD /* ConnectWidget in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2515,6 +2517,7 @@
 			packageProductDependencies = (
 				E55CCABE2D3142ED00FD0AAD /* ConnectWidget */,
 				EB2FD53D2D3ABBAA003E609D /* SharedViews */,
+				EB3859542D8AE9E700B10A7E /* ProtonCoreUIFoundations */,
 			);
 			productName = ConnectWidgetExtension;
 			productReference = E55CCA9A2D30121E00FD0AAD /* ConnectWidgetExtension.appex */;
@@ -4949,11 +4952,6 @@
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
 		};
-		E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
-			productName = XCTestDynamicOverlay;
-		};
 		E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
@@ -4966,6 +4964,10 @@
 		EB2FD53D2D3ABBAA003E609D /* SharedViews */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedViews;
+		};
+		EB3859542D8AE9E700B10A7E /* ProtonCoreUIFoundations */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCoreUIFoundations;
 		};
 		F348C9D527D8E54200622584 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
