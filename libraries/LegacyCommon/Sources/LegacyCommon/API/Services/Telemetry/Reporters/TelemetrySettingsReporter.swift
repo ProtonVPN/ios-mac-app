@@ -113,7 +113,7 @@ final class TelemetrySettingsReporter {
     // Dimention helpers
 
     private func userTier() -> SettingsDimensions.UserTier {
-        let cached = try? vpnKeychain.fetchCached()
+        let cached: CachedVpnCredentials? = vpnKeychain.fetchCached()
         let tier = cached?.maxTier ?? .freeTier
         if tier == .internalTier {
             return .internalTier
@@ -135,20 +135,24 @@ final class TelemetrySettingsReporter {
         }
     }
 
-    private func widgetCount() async -> SettingsDimensions.WidgetCount {
+    private func widgetCount() async -> SettingsDimensions.WidgetCount? {
         if #available(iOS 18.0, macOS 15.0, *) {
-            guard let count = try? await WidgetCenter.shared.currentConfigurations().count else {
-                return .zero
-            }
-            switch count {
-            case 0:
-                return .zero
-            case 1:
-                return .one
-            case 2...4:
-                return .twoToFour
-            default:
-                return .greaterOrEqualFive
+            do {
+                let configurations = try await WidgetCenter.shared.currentConfigurations()
+                let count = configurations.count
+                switch count {
+                case 0:
+                    return .zero
+                case 1:
+                    return .one
+                case 2...4:
+                    return .twoToFour
+                default:
+                    return .greaterOrEqualFive
+                }
+            } catch {
+                log.error("Error retrieving widget configurations: \(error)")
+                return nil
             }
         } else {
             return .zero
@@ -157,18 +161,23 @@ final class TelemetrySettingsReporter {
 
     private func firstWidgetSize() async -> SettingsDimensions.WidgetSize? {
         if #available(iOS 18.0, macOS 15.0, *) {
-            guard let firstConfiguration = try? await WidgetCenter.shared.currentConfigurations().first else {
-                return nil
-            }
-            switch firstConfiguration.family {
-            case .systemSmall:
-                return .small
-            case .systemMedium:
-                return .medium
-            case .systemLarge:
-                return .large
-            default:
-                // Unknown size
+            do {
+                let configurations = try await WidgetCenter.shared.currentConfigurations()
+                guard let firstConfiguration = configurations.first else {
+                    return nil
+                }
+                switch firstConfiguration.family {
+                case .systemSmall:
+                    return .small
+                case .systemMedium:
+                    return .medium
+                case .systemLarge:
+                    return .large
+                default:
+                    return nil
+                }
+            } catch {
+                log.error("Error retrieving widget configurations: \(error)")
                 return nil
             }
         } else {
