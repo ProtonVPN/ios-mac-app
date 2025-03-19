@@ -54,6 +54,8 @@ let package = Package(
         .package(path: "../NetShield"),
         .package(path: "../NEHelper"),
         .package(path: "../Settings"),
+        .package(path: "../Shared/ConnectionInventory"),
+
 
         // External dependencies
         .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
@@ -93,6 +95,7 @@ let package = Package(
                 "Modals",
                 "Settings",
                 "BugReport",
+                "ConnectionInventory",
 
                 // Todo: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),

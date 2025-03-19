@@ -131,6 +131,9 @@ open class Container: PropertiesToOverride {
                 try? await telemetryService?.onboardingEvent(.firstLaunch)
                 propertiesManager.isSubsequentLaunch = true
             }
+
+            // Start settingsHeartbeat scheduled telemetry report
+            self.telemetryService?.startSettingsHeartbeat()
         }
     }
 

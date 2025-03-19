@@ -25,6 +25,7 @@ import VPNAppCore
 import VPNShared
 
 import Ergonomics
+import Timer
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService
@@ -42,6 +43,7 @@ public protocol TelemetryService: AnyObject {
         newPlanName: String?,
         offerReference: String?
     ) async throws
+    func startSettingsHeartbeat()
 
     func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws
     func userInitiatedVPNChange(_ change: UserInitiatedVPNChange)
@@ -61,7 +63,7 @@ extension TelemetryService {
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 public class TelemetryServiceImplementation: TelemetryService {
-    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator
 
     private let factory: Factory
 
@@ -69,6 +71,7 @@ public class TelemetryServiceImplementation: TelemetryService {
 
     private var telemetryUpsellReporter: TelemetryUpsellReporter
     private var telemetryOnboardingReporter: TelemetryOnboardingReporter
+    private var telemetrySettingsReporter: TelemetrySettingsReporter
     private var telemetryConnectionStatusReporter: TelemetryConnectionStatusReporter
 
     private var telemetryEventScheduler: TelemetryEventScheduler
@@ -88,7 +91,10 @@ public class TelemetryServiceImplementation: TelemetryService {
                                                                      telemetryEventScheduler: telemetryEventScheduler)
         self.telemetryOnboardingReporter = await TelemetryOnboardingReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler)
         self.telemetryConnectionStatusReporter = await TelemetryConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
-
+        self.telemetrySettingsReporter = TelemetrySettingsReporter(
+            factory: factory,
+            telemetryEventScheduler: telemetryEventScheduler
+        )
         self.eventNotifier.telemetryService = self
     }
 
@@ -102,6 +108,10 @@ public class TelemetryServiceImplementation: TelemetryService {
 
     public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
         try await telemetryOnboardingReporter.onboardingEvent(event)
+    }
+
+    public func startSettingsHeartbeat() {
+        telemetrySettingsReporter.start()
     }
 
     public func upsellEvent(
