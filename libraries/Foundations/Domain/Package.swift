@@ -15,9 +15,12 @@ let package = Package(
         .library(name: "DomainTestSupport", targets: ["DomainTestSupport"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),
         .package(path: "../Strings"),
         .package(path: "../Ergonomics"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.0.2")),
         .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [
@@ -29,7 +32,10 @@ let package = Package(
                 "Ergonomics",
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "Collections", package: "swift-collections"),
+                .product(name: "Sharing", package: "swift-sharing"),
             ],
             resources: [.process("Resources")]
         ),

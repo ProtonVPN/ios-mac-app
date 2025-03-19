@@ -23,7 +23,7 @@ import Domain
 import Ergonomics
 import Strings
 import Theme
-import SharedViews
+import ConnectionInventory
 import Home
 
 @available(iOS 17.0, *)

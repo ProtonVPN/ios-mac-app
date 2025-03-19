@@ -60,6 +60,9 @@
          <FileRef
             location = "group:libraries/Shared/Persistence">
          </FileRef>
+         <FileRef
+            location = "group:libraries/Shared/ConnectionInventory">
+         </FileRef>
       </Group>
       <Group
          location = "container:"

@@ -17,17 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
+import Ergonomics
 import VPNAppCore
 import AppIntents
+import Domain
 
-public struct DisconnectFromVPN: AppIntent {
-    public static var title: LocalizedStringResource = "Disconnect from VPN"
+internal struct DisconnectFromVPNIntent: AppIntent {
+    static var title: LocalizedStringResource = "Disconnect from VPN"
 
-    public static var openAppWhenRun = false
+    static var openAppWhenRun = false
 
-    public init() { }
+    init() { }
 
-    public func perform() async throws -> some IntentResult {
+    func perform() async throws -> some IntentResult {
 
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
         try? await disconnectVPN()
@@ -35,16 +37,73 @@ public struct DisconnectFromVPN: AppIntent {
     }
 }
 
-public struct ConnectToVPN: AppIntent {
-    public static var title: LocalizedStringResource = "Connect to VPN"
+internal struct ConnectToVPNIntent: AppIntent {
 
-    public static var openAppWhenRun = false
+    static var title: LocalizedStringResource = "Connect to VPN"
 
-    public init() { }
+    static var openAppWhenRun = false
 
-    public func perform() async throws -> some IntentResult {
+    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+
+    init() {
+        recentIndex = nil
+    }
+
+    init(recentIndex: Int) {
+        self.recentIndex = recentIndex
+    }
+
+    func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN
-        try? await connectToVPN(.defaultFastest)
+
+        let connectionSpec = recentIndex.map { getRecentConnection($0) } ?? getDefaultConnection()
+
+        if let connectionSpec = connectionSpec {
+            try? await connectToVPN(connectionSpec, .vpnProtocol(connectionSpec.actualConnection.vpnProtocol))
+        }
+        return .result()
+    }
+
+    // MARK: - Private helpers:
+
+    @Dependencies.Dependency(\.recentsStorage) private var recentsStorage
+    @Dependencies.Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
+
+    private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
+
+        @Dependencies.Dependency(\.connectionInventory) var connectionInventory
+
+        return connectionInventory.recentConnectionList(
+            .fastest,
+            recentsStorage.readFromStorage(),
+            ConnectionSpec.defaultFastest
+        ).elements[safe: index]?.connection
+    }
+
+    private func getDefaultConnection() -> ConnectionSpec? {
+        let preference = try? defaultConnectionStorage.getPreference()
+        switch preference ?? .fastest {
+        case .fastest:
+            return .defaultFastest
+        case .mostRecent:
+            let recents = recentsStorage.readFromStorage()
+            return recents.elements.first?.connection ?? .defaultFastest
+        case .recent(let spec):
+            return spec
+        }
+    }
+}
+
+internal struct LoginIntent: AppIntent {
+    static var title: LocalizedStringResource = "Login"
+    static let openAppWhenRun = true
+
+    init() { }
+
+    func perform() async throws -> some IntentResult {
         return .result()
     }
 }
+
+// Private helpers:
+

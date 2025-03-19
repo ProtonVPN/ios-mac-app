@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
         .package(path: "../SharedViews"),
+        .package(path: "../Shared/ConnectionInventory"),
         ],
     targets: [
         .target(
@@ -30,7 +31,9 @@ let package = Package(
                 "Theme",
                 "Strings",
                 "SharedViews",
+                "ConnectionInventory",
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .product(name: "VPNShared", package: "NEHelper"),
             ],
             resources: [
                 .process("Resources")

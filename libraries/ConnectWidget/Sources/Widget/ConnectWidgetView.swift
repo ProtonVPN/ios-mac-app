@@ -83,6 +83,7 @@ private struct HeaderView: View {
                             IconProvider.lockFilled
                             Text(Localizable.connectionStatusProtected)
                                 .font(.body2(emphasised: true))
+                                .offset(y: 2)
                         }
                         .foregroundStyle(Color(.icon, .vpnGreen))
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -97,6 +98,7 @@ private struct HeaderView: View {
                         IconProvider.lockOpenFilled2
                         Text(Localizable.connectionStatusUnprotected)
                             .font(.body2(emphasised: true))
+                            .offset(y: 2)
                     }
                     .foregroundStyle(Color(.text, .danger))
                 case .signedOut:
@@ -116,14 +118,14 @@ private struct ServerInfoView: View {
     var body: some View {
         Group {
             if let location = entry.connectionSpec?.location {
-                HStack(alignment: .top, spacing: .themeSpacing8) {
+                HStack(alignment: .top, spacing: .themeSpacing12) {
                     if widgetFamily != .systemSmall {
                         FlagView(location: location, flagSize: .defaultSize)
                     }
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: .zero) {
                         if let headerText = location.headerText(locale: .current) {
                             Text(headerText)
-                                .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .caption(emphasised: true))
+                                .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
                                 .foregroundStyle(Color(.text, .normal))
                         }
                         if let subtext = location.subtext(locale: .current) {
@@ -172,25 +174,32 @@ private struct RecentsView: View {
                             .foregroundStyle(Color(.text, .weak))
                     }
                     LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
-                        ForEach(entry.recentServers.prefix(3), id: \.self) { recentConnection in
+                        ForEach(
+                            Array(entry.recentServers.prefix(3).enumerated()),
+                            id: \.offset
+                        ) { index, recentConnection in
                             let location = recentConnection.connection.location
-                            Button(intent: ConnectToVPNIntent()) { // TODO: VPNAPPL-2467 - Send the recentConnection as parameter to the AppIntent.
+                            Button(intent: ConnectToVPNIntent(recentIndex: index)) {
                                 VStack(alignment: .center) {
                                     if recentConnection.underMaintenance {
                                         IconProvider.wrench
+                                            .foregroundStyle(Color(.icon, .weak))
                                     } else {
-                                        FlagView(location: location, flagSize: .defaultSize)
+                                        FlagView(location: location, flagSize: .widgetRecentsSize)
                                     }
-                                    if let headerText = location.headerText(locale: .current) {
-                                        Text(headerText)
-                                            .themeFont(.caption(emphasised: true))
-                                            .foregroundStyle(Color(.text, .normal))
+                                    VStack(spacing: .themeSpacing2) {
+                                        if let headerText = location.headerText(locale: .current) {
+                                            Text(headerText)
+                                                .themeFont(.caption(emphasised: true))
+                                                .foregroundStyle(Color(.text, .normal))
+                                        }
+                                        if let subtext = location.subtext(locale: .current) {
+                                            Text(subtext)
+                                                .themeFont(.overline(emphasised: false))
+                                                .foregroundStyle(Color(.text, .weak))
+                                        }
                                     }
-                                    if let subtext = location.subtext(locale: .current) {
-                                        Text(subtext)
-                                            .themeFont(.overline(emphasised: false))
-                                            .foregroundStyle(Color(.text, .weak))
-                                    }
+
                                 }
                                 .frame(maxWidth: .infinity)
                             }
@@ -202,6 +211,7 @@ private struct RecentsView: View {
                         }
                     }
                 }
+                .lineSpacing(1)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
@@ -221,7 +231,7 @@ private struct ButtonsView : View {
             }
             .buttonStyle(SecondaryButtonStyle())
         case .protecting:
-            Button(intent: DisconnectFromVPNIntent()) { // TODO: VPNAPPL-2629 - define another app intent for cancellation.
+            Button(intent: DisconnectFromVPNIntent()) {
                 Text(Localizable.cancel)
             }
             .buttonStyle(SecondaryButtonStyle())

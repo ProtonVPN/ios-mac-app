@@ -18,6 +18,7 @@
 
 import Dependencies
 import AppIntents
+import Domain
 
 /// These intents are never actually used. They are only here in order to be able to invoke them from this package.
 /// The real implementation lives in the iOS app target.
@@ -35,7 +36,15 @@ public struct DisconnectFromVPNIntent: AppIntent {
 public struct ConnectToVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
 
-    public init() { }
+    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+
+    public init() {
+        recentIndex = nil
+    }
+
+    public init(recentIndex: Int) {
+        self.recentIndex = recentIndex
+    }
 
     public func perform() async throws -> some IntentResult {
         return .result()

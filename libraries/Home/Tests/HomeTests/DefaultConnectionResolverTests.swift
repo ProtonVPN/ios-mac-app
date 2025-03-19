@@ -20,8 +20,9 @@ import Foundation
 import XCTest
 import Collections
 import Dependencies
-import Domain
+@testable import Domain
 @testable import Home
+@testable import ConnectionInventory
 
 final class DefaultConnectionResolverTests: XCTestCase {
     typealias Sut = DefaultConnectionResolverImplementation

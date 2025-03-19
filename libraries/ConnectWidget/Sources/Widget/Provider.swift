@@ -18,83 +18,90 @@
 
 import WidgetKit
 import Domain
+import Dependencies
+import VPNShared
+import VPNAppCore
+import ConnectionInventory
+import OrderedCollections
+import AppIntents
+import ComposableArchitecture
 
 struct Provider: TimelineProvider {
+
+    @Dependency(\.authKeychain) var authKeychain
+    @Dependency(\.recentsStorage) var recentsStorage
+    @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
+    @Dependency(\.connectionInventory) var connectionInventory
+    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+
+    func recentConnectionList() -> [RecentConnection] {
+
+        let preference = try? defaultConnectionStorage.getPreference()
+
+        return connectionInventory.recentConnectionList(
+            preference ?? .fastest,
+            recentsStorage.readFromStorage(),
+            ConnectionSpec.defaultFastest
+        ).elements
+    }
+
     func placeholder(in context: Context) -> ConnectWidgetEntry {
-        .init(date: .now, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: [])
+        .init(date: .now,
+              connectionSpec: .defaultFastest,
+              protectionState: .protected,
+              recentServers: [])
     }
 
     func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
-        completion(ConnectWidgetEntry(date: .now, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: []))
+        completion(createTimelineEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        completion(
-            Timeline(
-                entries: [ // TODO: VPNAPPL-2630 - Remove temporary entries.
-                    ConnectWidgetEntry(date: .now, connectionSpec: nil, protectionState: .signedOut, recentServers: []),
-                    ConnectWidgetEntry(date: .now.addingTimeInterval(4), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: [.defaultFastest]),
-                    ConnectWidgetEntry(date: .now.addingTimeInterval(6), connectionSpec: .defaultFastest, protectionState: .unprotected, recentServers: []),
-                    ConnectWidgetEntry(
-                        date: .now.addingTimeInterval(8),
-                        connectionSpec: .init(location: .region(code: "US"), features: []),
-                        protectionState: .protecting,
-                        recentServers: []
-                    ),
-                    ConnectWidgetEntry(
-                        date: .now.addingTimeInterval(10),
-                        connectionSpec: .init(location: .region(code: "CH"), features: []),
-                        protectionState: .protected,
-                        recentServers: [.defaultFastest]
-                    ),
-                    ConnectWidgetEntry(
-                        date: .now.addingTimeInterval(12),
-                        connectionSpec: .init(
-                            location:
-                                    .exact(
-                                        .paid,
-                                        logicalID: "132",
-                                        number: 123,
-                                        subregion: "LA",
-                                        regionCode: "US"
-                                    ),
-                            features: []
-                        ),
-                        protectionState: .protected,
-                        recentServers: []
-                    ),
-                    ConnectWidgetEntry(
-                        date: .now.addingTimeInterval(14),
-                        connectionSpec: .init(
-                            location: .exact(.paid, logicalID: "132", number: 123, subregion: "LA", regionCode: "US"),
-                            features: []
-                        ),
-                        protectionState: .protected,
-                        recentServers: [
-                            .defaultFastest,
-                            .init(
-                                pinnedDate: nil,
-                                underMaintenance: false,
-                                connectionDate: Date(),
-                                connection: .init(
-                                    location: .exact(.paid, logicalID: "132", number: 332, subregion: "ZU", regionCode: "CH"),
-                                    features: []
-                                )
-                            ),
-                            .init(
-                                pinnedDate: nil,
-                                underMaintenance: true,
-                                connectionDate: Date(),
-                                connection: .init(
-                                    location: .exact(.paid, logicalID: "132", number: 332, subregion: "MI", regionCode: "IT"),
-                                    features: []
-                                )
-                            )
-                        ]
-                    )
-                         ],
-                policy: .never
-            )
-        ) // at least one entry here is needed, otherwise the widget fails to update for a new connection status
+        completion(Timeline(entries: [createTimelineEntry()], policy: .never))
+    }
+
+    private func connectionSpec() -> ConnectionSpec {
+        let preference = try? defaultConnectionStorage.getPreference()
+        switch preference ?? .fastest {
+        case .fastest:
+            return .defaultFastest
+        case .mostRecent:
+            let recents = recentsStorage.readFromStorage()
+            return recents.elements.first?.connection ?? .defaultFastest
+        case .recent(let spec):
+            return spec
+        }
+    }
+
+    private func createTimelineEntry() -> ConnectWidgetEntry {
+        let credentials: AuthCredentials? = authKeychain.fetch()
+
+        guard credentials?.userId != nil else {
+            return ConnectWidgetEntry(date: .now,
+                                       connectionSpec: nil,
+                                       protectionState: .signedOut,
+                                       recentServers: [])
+        }
+
+        let recents = recentConnectionList()
+
+        return ConnectWidgetEntry(date: .now,
+                                   connectionSpec: vpnConnectionStatus.spec ?? connectionSpec(),
+                                   protectionState: vpnConnectionStatus.protectionState,
+                                   recentServers: recents
+        )
+    }
+}
+
+private extension VPNConnectionStatus {
+    var protectionState: ConnectWidgetEntry.ProtectionState {
+        switch self {
+        case .resolving, .disconnected, .disconnecting:
+            return .unprotected
+        case .connecting:
+            return .protecting
+        case .connected:
+            return .protected
+        }
     }
 }
