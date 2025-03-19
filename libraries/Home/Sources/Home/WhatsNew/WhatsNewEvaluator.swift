@@ -24,7 +24,7 @@ import ComposableArchitecture
 @available(iOS 17.0, *)
 @DependencyClient
 struct WhatsNewEvaluatorClient {
-    var bundleShortVersionString: () -> String?
+    var bundleShortVersionString: () -> String = { "6.0.0" }
     var systemOSVersion: () -> String = { "" }
     var itemPresentationData: (_ for: WhatsNew.Item) -> WhatsNew.PresentationDataItem?
 }
@@ -54,7 +54,7 @@ extension WhatsNew {
             case .timeWindow(let startDate, let endDate):
                 return (startDate...endDate).contains(now)
             case .appVersions(let versions):
-                return evaluatorClient.bundleShortVersionString().map { versions.contains($0) } ?? true
+                return versions.contains(evaluatorClient.bundleShortVersionString())
             case .osVersion(let version):
                 let compareResult = evaluatorClient.systemOSVersion().compare(version, options: .numeric)
                 return (compareResult == .orderedSame || compareResult == .orderedDescending)
@@ -115,7 +115,7 @@ extension WhatsNew {
 @available(iOS 17.0, *)
 extension WhatsNewEvaluatorClient: DependencyKey {
     static let liveValue = WhatsNewEvaluatorClient {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     } systemOSVersion: {
         return UIDevice.current.systemVersion
     } itemPresentationData: { item in

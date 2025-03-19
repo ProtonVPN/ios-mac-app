@@ -39,6 +39,9 @@ struct WidgetAdoptionView: View {
 
     @State private var viewHeight: CGFloat = .zero
 
+    // We want to have simple boolean statements & SwiftUI view structure based on this property.
+    // We leverage `nonmutating set` feature since we do not need `isExpanded` a stored property
+    // and we'll base its behaviour on the `selectedDetent` binding.
     private var isExpanded: Bool {
         get {
             return selectedDetent == .large
@@ -60,25 +63,81 @@ struct WidgetAdoptionView: View {
             }
     }
 
+    private var titleView: some View {
+        HStack {
+            Text(Localizable.widgetAdoptionModalTitle)
+                .font(.body1(.semibold))
+                .padding(.vertical, .themeSpacing12)
+
+            Spacer()
+
+            Button {
+                primaryAction()
+            } label: {
+                Label("Close", systemImage: "xmark")
+                    .labelStyle(.iconOnly)
+            }
+            .frame(width: Self.closeIconSize, height: Self.closeIconSize)
+            .foregroundStyle(Color(.icon, .weak))
+        }
+        .padding(.vertical)
+    }
+
+    private var instructionsButton: some View {
+        Button {
+            withAnimation { isExpanded.toggle() }
+        } label: {
+            HStack {
+                Text(Localizable.widgetAdoptionModalInstructionsHeader)
+                    .font(.body2(emphasised: true))
+                    .foregroundStyle(Color(.text, .weak))
+                Spacer()
+                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                    .foregroundStyle(Color(.icon, .weak))
+            }
+        }
+        .padding(.vertical, .themeSpacing12)
+    }
+
+    private var instructionsView: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
+                Text(Localizable.widgetAdoptionModalInstruction1)
+                Text(Localizable.widgetAdoptionModalInstruction1Content)
+                    .padding(.leading, .themeSpacing12)
+            }
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(alignment: .top) {
+                Text(Localizable.widgetAdoptionModalInstruction2)
+                Text(Localizable.widgetAdoptionModalInstruction2Content)
+                    .padding(.leading, .themeSpacing12)
+            }
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(alignment: .top) {
+                Text(Localizable.widgetAdoptionModalInstruction3)
+                Text(Localizable.widgetAdoptionModalInstruction3Content)
+                    .padding(.leading, .themeSpacing12)
+            }
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.top, .themeSpacing8)
+        .padding(.bottom, .themeSpacing16)
+        .background(backgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .transition(.opacity)
+    }
+
     private var content: some View {
         VStack {
-            HStack {
-                Text(Localizable.widgetAdoptionModalTitle)
-                    .font(.body1(.semibold))
-                    .padding(.vertical, .themeSpacing12)
-
-                Spacer()
-
-                Button {
-                    primaryAction()
-                } label: {
-                    Label("Close", systemImage: "xmark")
-                        .labelStyle(.iconOnly)
-                }
-                .frame(width: Self.closeIconSize, height: Self.closeIconSize)
-                .foregroundStyle(Color(.icon, .weak))
-            }
-            .padding(.vertical)
+            titleView
 
             LottieView(animation: .widgetAdoption)
                 .playing(loopMode: .loop)
@@ -89,54 +148,10 @@ struct WidgetAdoptionView: View {
                 .font(.body2(emphasised: false))
                 .padding(.vertical, .themeSpacing12)
 
-            Button {
-                withAnimation { isExpanded.toggle() }
-            } label: {
-                HStack {
-                    Text(Localizable.widgetAdoptionModalInstructionsHeader)
-                        .font(.body2(emphasised: true))
-                        .foregroundStyle(Color(.text, .weak))
-                    Spacer()
-                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .foregroundStyle(Color(.icon, .weak))
-                }
-            }
-            .padding(.vertical, .themeSpacing12)
+            instructionsButton
 
             if isExpanded {
-                VStack(alignment: .leading) {
-                    HStack(alignment: .top) {
-                        Text(Localizable.widgetAdoptionModalInstruction1)
-                        Text(Localizable.widgetAdoptionModalInstruction1Content)
-                            .padding(.leading, .themeSpacing12)
-                    }
-                    .padding(.horizontal, .themeSpacing16)
-                    .padding(.vertical, .themeSpacing12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    HStack(alignment: .top) {
-                        Text(Localizable.widgetAdoptionModalInstruction2)
-                        Text(Localizable.widgetAdoptionModalInstruction2Content)
-                            .padding(.leading, .themeSpacing12)
-                    }
-                    .padding(.horizontal, .themeSpacing16)
-                    .padding(.vertical, .themeSpacing12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                    HStack(alignment: .top) {
-                        Text(Localizable.widgetAdoptionModalInstruction3)
-                        Text(Localizable.widgetAdoptionModalInstruction3Content)
-                            .padding(.leading, .themeSpacing12)
-                    }
-                    .padding(.horizontal, .themeSpacing16)
-                    .padding(.vertical, .themeSpacing12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .padding(.top, .themeSpacing8)
-                .padding(.bottom, .themeSpacing16)
-                .background(backgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .transition(.opacity)
+                instructionsView
             }
 
             Button(Localizable.widgetAdoptionModalInstructionButton) {
