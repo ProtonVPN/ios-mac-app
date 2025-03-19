@@ -123,15 +123,19 @@ final class TelemetrySettingsReporter {
 
     private func defaultConnectionType() -> SettingsDimensions.DefaultConnectionType {
         @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
-
-        let preference = try? defaultConnectionStorage.getPreference()
-        switch preference ?? .fastest {
-        case .fastest:
+        do {
+            let preference = try defaultConnectionStorage.getPreference()
+            switch preference ?? .fastest {
+            case .fastest:
+                return .fastest
+            case .mostRecent:
+                return .lastConnection
+            case .recent:
+                return .recent
+            }
+        } catch {
+            log.error("Error retrieving default connection preference: \(error)")
             return .fastest
-        case .mostRecent:
-            return .lastConnection
-        case .recent:
-            return .recent
         }
     }
 
