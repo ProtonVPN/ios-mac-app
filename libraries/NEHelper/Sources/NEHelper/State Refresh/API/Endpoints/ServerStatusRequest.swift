@@ -18,9 +18,9 @@
 
 import Foundation
 
-import Domain
-import LocalFeatureFlags
 import VPNShared
+
+import Domain
 
 public final class ServerStatusRequest: APIRequest {
     let params: Params
@@ -30,7 +30,7 @@ public final class ServerStatusRequest: APIRequest {
     var endpointUrl: String {
         var result = "vpn/v1/logicals/\(params.logicalId)/alternatives"
 
-        if LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries), let transport = params.transport {
+        if let transport = params.transport {
             result.append("?WithEntriesForProtocols=\(VpnProtocol.wireGuard(transport).apiDescription)")
         }
 
@@ -57,7 +57,7 @@ public final class ServerStatusRequest: APIRequest {
             case servers = "Servers"
         }
     }
-    
+
     public struct Server: Codable {
         public let entryIp: String
         public let exitIp: String
@@ -78,7 +78,7 @@ public final class ServerStatusRequest: APIRequest {
             case x25519PublicKey = "X25519PublicKey"
             case protocolEntries = "EntryPerProtocol"
         }
-        
+
         public var underMaintenance: Bool {
             status == 0
         }

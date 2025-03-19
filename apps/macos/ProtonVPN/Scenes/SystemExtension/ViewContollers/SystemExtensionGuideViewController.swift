@@ -19,7 +19,9 @@
 import AppKit
 import Combine
 import SwiftUI
+
 import LegacyCommon
+import Domain
 
 class SystemExtensionGuideViewController: NSViewController {
 
@@ -46,8 +48,7 @@ class SystemExtensionGuideViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default
-            .publisher(for: SystemExtensionManager.allExtensionsInstalled)
+        AppEvent.systemExtensionsAllInstalled.publisher
             .sink(receiveValue: { [weak self] _ in
                 self?.allExtensionsInstalled()
             })

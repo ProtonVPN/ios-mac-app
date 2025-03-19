@@ -20,11 +20,15 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Strings
+
 import Dependencies
+
 import Persistence
 import VPNAppCore
+
+import Strings
 import Ergonomics
+import Domain
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService
@@ -279,7 +283,7 @@ public final class SecureCoreToggleDisconnectAlert: SystemAlert {
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
@@ -295,7 +299,7 @@ public final class ChangeProtocolDisconnectAlert: SystemAlert {
     
     public init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: dismiss))
@@ -410,7 +414,7 @@ public final class ReconnectOnSettingsChangeAlert: SystemAlert {
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
@@ -427,7 +431,7 @@ public final class ReconnectOnActionAlert: SystemAlert {
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         title = actionTitle
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
@@ -443,7 +447,7 @@ public final class TurnOnKillSwitchAlert: SystemAlert {
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
@@ -462,7 +466,7 @@ public final class AllowLANConnectionsAlert: SystemAlert {
             message! += "\n\n" + Localizable.allowLanNote
         }
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
@@ -496,7 +500,7 @@ public class LogoutWarningAlert: SystemAlert {
     
     public init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.logout)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
         }))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
@@ -743,22 +747,6 @@ public final class VpnServerSubscriptionErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init() { }
-}
-
-public final class AnnouncementOfferAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public let data: OfferPanel
-    public let offerReference: String?
-
-    public init(data: OfferPanel, offerReference: String?) {
-        self.data = data
-        self.offerReference = offerReference
-    }
 }
 
 public final class DiscourageSecureCoreAlert: SystemAlert {

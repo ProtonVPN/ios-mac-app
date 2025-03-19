@@ -20,18 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import GSMessages
 import UIKit
-import LegacyCommon
-import BugReport
-import VPNShared
-import Strings
-import Dependencies
-import Modals_iOS
-import enum Domain.VPNFeatureFlagType
-import CommonNetworking
+import GSMessages
+
 import ComposableArchitecture
-import VPNAppCore
+import Dependencies
 
 import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery
@@ -39,6 +32,16 @@ import ProtonCorePasswordChange
 import ProtonCoreDataModel
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
+
+import LegacyCommon
+import CommonNetworking
+import VPNShared
+import VPNAppCore
+
+import BugReport
+import Strings
+import Modals_iOS
+import Domain
 
 // MARK: Country Service
 
@@ -138,8 +141,7 @@ final class NavigationService {
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
-    private lazy var sessionService = factory.makeSessionService()
-    private lazy var announcementManager = factory.makeAnnouncementManager()
+    @Dependency(\.announcementManager) var announcementManager
 
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService()
@@ -169,8 +171,7 @@ final class NavigationService {
     }
     
     func launched() {
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged(_:)),
-                                               name: appSessionManager.sessionChanged, object: nil)
+        AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
         NotificationCenter.default.addObserver(self, selector: #selector(refreshVpnManager(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         if let launchViewController = makeLaunchViewController() {
@@ -303,7 +304,6 @@ extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
         countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self)
-        countriesViewController.sessionService = sessionService
         countriesViewController.connectionBarViewController = makeConnectionBarViewController()
         
         return countriesViewController

@@ -24,9 +24,10 @@ import Cocoa
 
 import Dependencies
 
-import LegacyCommon
-import VPNAppCore
 import VPNShared
+import VPNAppCore
+import LegacyCommon
+import Announcement
 
 import Theme
 import Domain
@@ -45,16 +46,23 @@ protocol HeaderViewModelFactory {
 final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
-    
-    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
+
+    public typealias Factory = AppStateManagerFactory &
+        PropertiesManagerFactory &
+        CoreAlertServiceFactory &
+        ProfileManagerFactory &
+        NavigationServiceFactory &
+        VpnGatewayFactory &
+        AnnouncementsViewModelFactory
+
     private let factory: Factory
-    
+
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+    @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
 
     var contentChanged: (() -> Void)?
@@ -85,7 +93,7 @@ final class HeaderViewModel {
         lastChangeServerAvailableState = freshState
         return freshState
     }
-    
+
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
         didSet {
@@ -94,36 +102,36 @@ final class HeaderViewModel {
             }
         }
     }
-    
+
     init(factory: Factory, appStateManager: AppStateManager, navService: NavigationService) {
         self.factory = factory
         startObserving()
     }
-    
+
     var isConnected: Bool {
         return vpnGateway.connection == .connected
     }
-    
+
     var connectedCountryCode: String? {
         return appStateManager.activeConnection()?.server.countryCode
     }
-    
+
     var headerLabel: NSAttributedString {
         return formHeaderLabel()
     }
-    
+
     var ipLabel: NSAttributedString {
         return formIpLabel()
     }
-    
+
     var loadLabel: NSAttributedString? {
         return formLoadLabel()
     }
-    
+
     var loadLabelShort: NSAttributedString? {
         return formLoadLabel(short: true)
     }
-    
+
     var loadPercentage: Int? {
         return appStateManager.activeConnection()?.server.load
     }
@@ -147,14 +155,14 @@ final class HeaderViewModel {
             startBitrateStatistics()
         }
     }
-    
+
     func quickConnectAction() {
         if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.quick))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.quick))
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
             vpnGateway.quickConnect(trigger: .quick)
         }
@@ -173,16 +181,16 @@ final class HeaderViewModel {
             serverChangeTimer = nil
         }
     }
-    
+
     // MARK: - Announcements bell
-    
+
     var showAnnouncements: Bool {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return announcementManager.fetchCurrentAnnouncementsFromStorage().contains(where: { $0.knownType == .default })
     }
-    
+
     var hasUnreadAnnouncements: Bool {
         return announcementManager.hasUnreadAnnouncements
     }
@@ -207,18 +215,31 @@ final class HeaderViewModel {
     var announcementTooltip: String? {
         return announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
     }
-    
+
     // MARK: - Private functions
-    
+
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: .userIpNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: profileManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChangedNotification), name: ServerListUpdateNotification.name, object: nil)
+        let connectionChangedEvents: [AppEvent] = [
+            .activeServerTypeChanged,
+            .connectionStateChanged
+        ]
+        connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
+
+        let contentChangedEvents: [AppEvent] = [
+            .userIp,
+            .activeConnectionChanged,
+            .profileContentChanged
+        ]
+        contentChangedEvents.subscribe(self, selector: #selector(contentChangedNotification))
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(contentChangedNotification),
+            name: ServerListUpdateNotification.name,
+            object: nil
+        )
     }
-    
+
     @objc private func vpnConnectionChanged() {
         guard isVisible else {
             return
@@ -230,16 +251,16 @@ final class HeaderViewModel {
             statistics?.stopGathering()
             statistics = nil
         }
-        
+
         contentChanged?()
     }
-    
+
     @objc private func contentChangedNotification() {
         executeOnUIThread {
             self.contentChanged?()
         }
     }
-    
+
     private func formBitrateLabel(with bitrate: Bitrate) -> NSAttributedString {
         let downloadString = " \(rateString(for: bitrate.download))  ".styled(font: .themeFont(.small))
         let uploadString = " \(rateString(for: bitrate.upload))".styled(font: .themeFont(.small))
@@ -248,11 +269,11 @@ final class HeaderViewModel {
 
         return NSAttributedString.concatenate(downloadIcon, downloadString, uploadIcon, uploadString)
     }
-    
+
     private func startBitrateStatistics() {
         statistics?.stopGathering()
         statistics = nil
-        
+
         statistics = NetworkStatistics(with: 1.0) { [weak self] (bitrate) in
             guard let self = self else {
                 return
@@ -261,10 +282,10 @@ final class HeaderViewModel {
             self.delegate?.bitrateUpdated(with: self.formBitrateLabel(with: bitrate))
         }
     }
-    
+
     private func rateString(for rate: UInt32) -> String {
         let rateString: String
-        
+
         switch rate {
         case let rate where rate >= UInt32(pow(1024.0, 3)):
             rateString = "\(String(format: "%.1f", Double(rate) / pow(1024.0, 3))) GB/s"
@@ -275,15 +296,15 @@ final class HeaderViewModel {
         default:
             rateString = "\(String(format: "%.1f", Double(rate))) B/s"
         }
-        
+
         return rateString
     }
-    
+
     private func formHeaderLabel() -> NSAttributedString {
         if !isConnected {
             return Localizable.youAreNotConnected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
-        
+
         guard let server = appStateManager.activeConnection()?.server else {
             return Localizable.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
@@ -301,7 +322,7 @@ final class HeaderViewModel {
             return NSAttributedString.concatenate(country, serverName)
         }
     }
-    
+
     private func formIpLabel() -> NSAttributedString {
         let ip = Localizable.ipValue(getCurrentIp() ?? Localizable.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.styled(alignment: .left))
@@ -309,7 +330,7 @@ final class HeaderViewModel {
         attributedString.addAttribute(.font, value: NSFont.themeFont(bold: true), range: ipRange)
         return attributedString
     }
-    
+
     private func getCurrentIp() -> String? {
         if isConnected {
             return appStateManager.activeConnection()?.serverIp.exitIp
@@ -317,7 +338,7 @@ final class HeaderViewModel {
             return propertiesManager.userLocation?.ip
         }
     }
-    
+
     private func formLoadLabel(short: Bool = false) -> NSAttributedString? {
         guard let server = appStateManager.activeConnection()?.server else {
             return nil

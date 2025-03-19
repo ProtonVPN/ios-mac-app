@@ -32,7 +32,7 @@ extension VPNConnectionStatusPublisherKey: DependencyKey {
 
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default
-            .notifications(named: .AppStateManager.displayStateChange)
+            .notifications(named: AppEvent.appStateManagerStateChange.name)
             .map {
                 let appStateManager = Container.sharedContainer.makeAppStateManager()
 

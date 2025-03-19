@@ -26,6 +26,7 @@ import CommonNetworking
 import VPNAppCore
 import VPNShared
 import Dependencies
+import Ergonomics
 
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
@@ -93,11 +94,7 @@ open class Container: PropertiesToOverride {
 
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(self)
 
-    private lazy var announcementsViewModel: AnnouncementsViewModel = AnnouncementsViewModel(factory: self)
-
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
-    // Refreshes announcements from API
-    private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
@@ -357,24 +354,10 @@ extension Container: ServerTierCheckerFactory {
     }
 }
 
-// MARK: SessionServiceFactory
-extension Container: SessionServiceFactory {
-    public func makeSessionService() -> SessionService {
-        SessionServiceImplementation(factory: self)
-    }
-}
-
 // MARK: LogFileManagerFactory
 extension Container: LogFileManagerFactory {
     public func makeLogFileManager() -> LogFileManager {
         LogFileManagerImplementation()
-    }
-}
-
-// MARK: CoreApiServiceFactory
-extension Container: CoreApiServiceFactory {
-    public func makeCoreApiService() -> CoreApiService {
-        CoreApiServiceImplementation(networking: makeNetworking())
     }
 }
 
@@ -403,35 +386,6 @@ extension Container: ReportsApiServiceFactory {
 extension Container: SafariServiceFactory {
     public func makeSafariService() -> SafariServiceProtocol {
         SafariService()
-    }
-}
-
-// MARK: AnnouncementStorageFactory
-extension Container: AnnouncementStorageFactory {
-    public func makeAnnouncementStorage() -> AnnouncementStorage {
-        @Dependency(\.defaultsProvider) var provider
-        return AnnouncementStorageUserDefaults(userDefaults: provider.getDefaults(), keyNameProvider: nil)
-    }
-}
-
-// MARK: AnnouncementRefresherFactory
-extension Container: AnnouncementRefresherFactory {
-    public func makeAnnouncementRefresher() -> AnnouncementRefresher {
-        announcementRefresher
-    }
-}
-
-// MARK: - AnnouncementManagerFactory
-extension Container: AnnouncementManagerFactory {
-    public func makeAnnouncementManager() -> AnnouncementManager {
-        AnnouncementManagerImplementation(factory: self)
-    }
-}
-
-// MARK: AnnouncementsViewModelFactory
-extension Container: AnnouncementsViewModelFactory {
-    public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
-        announcementsViewModel
     }
 }
 

@@ -20,10 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Ergonomics
 import Foundation
 import UIKit
+
 import LegacyCommon
+
+import Ergonomics
+import Domain
 
 final class ConnectionBarViewModel {
     
@@ -38,14 +41,8 @@ final class ConnectionBarViewModel {
     init(appStateManager: AppStateManager) {
         self.appStateManager = appStateManager
 
-        NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange,
-                                               object: nil,
-                                               queue: nil,
-                                               using: updateState)
-        NotificationCenter.default.addObserver(forName: .AppStateManager.displayStateChange,
-                                               object: nil,
-                                               queue: nil,
-                                               using: updateDisplayState)
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState(_:)))
+        AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(updateDisplayState(_:)))
 
         self.updateDisplayState(with: appStateManager.displayState)
         self.updateState(with: appStateManager.state)
@@ -58,7 +55,7 @@ final class ConnectionBarViewModel {
         updateDisplayState(with: appStateManager.displayState)
     }
 
-    private func updateDisplayState(_ notification: Notification) {
+    @objc private func updateDisplayState(_ notification: Notification) {
         guard let displayState = notification.object as? AppDisplayState else {
             return
         }
@@ -83,7 +80,7 @@ final class ConnectionBarViewModel {
         updateState(with: appStateManager.state)
     }
     
-    private func updateState(_ notification: Notification) {
+    @objc private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }

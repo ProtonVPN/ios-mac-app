@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTestDynamicOverlay
+import IssueReporting
 import ExtensionIPC
 import CoreConnection
 
 extension TunnelMessageSender {
     public static let unimplemented: TunnelMessageSender = .init(send: { request in
         let requestErrorMessage = "Did not expect to send \(request) at this time"
-        XCTFail(requestErrorMessage)
+        reportIssue(requestErrorMessage)
         return .error(message: requestErrorMessage)
     })
 
@@ -36,7 +36,7 @@ extension TunnelMessageSender {
         return .init(send: { outgoingRequest in
             guard outgoingRequest == request else {
                 let requestErrorMessage = "Did not expect to send \(request) at this time"
-                XCTFail(requestErrorMessage)
+                reportIssue(requestErrorMessage)
                 return .error(message: requestErrorMessage)
             }
 

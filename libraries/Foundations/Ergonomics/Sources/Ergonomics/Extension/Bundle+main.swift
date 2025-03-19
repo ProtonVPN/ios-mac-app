@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 16.0, *)
 extension Bundle {
     public static var atlasSecret: String? {
         #if RELEASE

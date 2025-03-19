@@ -20,7 +20,7 @@
 import Foundation
 import NetworkExtension
 
-import XCTestDynamicOverlay
+import IssueReporting
 
 import ExtensionIPC
 import VPNShared
@@ -258,12 +258,12 @@ public class WireguardProviderMessageSenderMock: ProviderMessageSender {
 
     public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R : ProviderRequest {
         guard let request = message as? WireguardProviderRequest else {
-            XCTFail("\(self): received incorrect message type: \(message)")
+            reportIssue("\(self): received incorrect message type: \(message)")
             return
         }
 
         guard let response = wireguardRequestSent?(request) else {
-            XCTFail("\(self): request not handled: \(request)")
+            reportIssue("\(self): request not handled: \(request)")
             return
         }
 

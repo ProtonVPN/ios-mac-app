@@ -19,7 +19,7 @@
 #if DEBUG
 import Foundation
 
-import XCTestDynamicOverlay
+import IssueReporting
 
 import CommonNetworking
 import CommonNetworkingTestSupport
@@ -59,7 +59,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
         do {
             return try handleMockNetworkingRequestThrowingOnUnexpectedError(request)
         } catch {
-            XCTFail("Unexpected error occurred: \(error)")
+            reportIssue("Unexpected error occurred: \(error)")
             return .failure(error)
         }
     }

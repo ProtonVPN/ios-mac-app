@@ -22,6 +22,8 @@
 
 import Cocoa
 import LegacyCommon
+import VPNAppCore
+import Ergonomics
 
 class FeatureRowView: NSView {
     

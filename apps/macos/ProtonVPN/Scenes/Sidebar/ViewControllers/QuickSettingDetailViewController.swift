@@ -21,14 +21,15 @@
 //
 
 import Cocoa
+import SwiftUI
+
 import LegacyCommon
 import Modals_macOS
-import SwiftUI
-import LocalFeatureFlags
-import Theme
 import NetShield
 import NetShield_macOS
+
 import Strings
+import Theme
 
 protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
     var arrowIV: NSImageView! { get }
@@ -46,21 +47,21 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
-    
+
     @IBOutlet weak var arrowIV: NSImageView!
     @IBOutlet weak var arrowHorizontalConstraint: NSLayoutConstraint!
-    
+
     @IBOutlet weak var contentBox: NSBox!
-    
+
     @IBOutlet weak var dropdownTitle: NSTextField!
     @IBOutlet weak var dropdownDescription: NSTextField!
     @IBOutlet weak var dropdownLearnMore: InteractiveActionButton!
     @IBOutlet weak var dropdownUpgradeButton: PrimaryActionButton!
     @IBOutlet weak var dropdownBusinessUpsell: NSImageView!
     @IBOutlet weak var dropdownNote: NSTextField!
-    
+
     @IBOutlet weak var dropdownOptionsView: NSView!
-    
+
     @IBOutlet var noteTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeBottomConstraint: NSLayoutConstraint!
@@ -75,17 +76,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             setupNetShieldStatsContainer(presenter: netShieldPresenter)
         }
     }
-    
+
     let presenter: QuickSettingDropdownPresenterProtocol
 
     var netShieldStatsView = NSHostingView(rootView: NetShieldStatsView())
-    
+
     init(_ presenter: QuickSettingDropdownPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: QuickSettingDetailViewController.className(), bundle: nil)
         self.presenter.viewController = self
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -98,17 +99,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         netShieldStatsContainer.leadingAnchor.constraint(equalTo: netShieldStatsView.leadingAnchor).isActive = true
         netShieldStatsContainer.trailingAnchor.constraint(equalTo: netShieldStatsView.trailingAnchor).isActive = true
     }
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
-        
+
         dropdownTitle.setAccessibilityIdentifier("QSTitle")
         dropdownDescription.setAccessibilityIdentifier("QSDescription")
         dropdownUpgradeButton.setAccessibilityIdentifier("UpgradeButton")
         dropdownLearnMore.setAccessibilityIdentifier("LearnMoreButton")
         dropdownNote.setAccessibilityIdentifier("QSNote")
-        
+
         view.wantsLayer = true
         view.layer?.masksToBounds = false
 
@@ -124,7 +125,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         contentBox.fillColor = .color(.background)
 
         arrowIV.cell?.setAccessibilityElement(false)
-        
+
         dropdownUpgradeButton.title = Localizable.upgrade
         dropdownUpgradeButton.actionType = .confirmative
         dropdownUpgradeButton.fontSize = .paragraph
@@ -176,12 +177,12 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             }
             return view!
         }
-        
+
         self.upgradeTopConstraint.isActive = needsUpgrade
         self.upgradeBottomConstraint.isActive = needsUpgrade
-        
+
         self.noteTopConstraint.isActive = self.dropdownNote.attributedStringValue.length > 0
-        
+
         self.dropdownUpgradeButton.isHidden = !needsUpgrade
         self.dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
         self.dropdownOptionsView.fillVertically(withViews: views)

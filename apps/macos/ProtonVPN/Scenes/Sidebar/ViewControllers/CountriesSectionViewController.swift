@@ -177,8 +177,8 @@ final class CountriesSectionViewController: NSViewController {
                 self?.updateBadge()
             }
         })
-        let netShieldNotification = NetShieldPropertyProviderImplementation.netShieldNotification
-        notificationTokens.append(NotificationCenter.default.addObserver(for: netShieldNotification,
+
+        notificationTokens.append(NotificationCenter.default.addObserver(for: AppEvent.netShield.name,
                                                                          object: nil) { [weak self] level in
             DispatchQueue.main.async {
                 if (level.object as? NetShieldType) != .level2 {
@@ -449,7 +449,6 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         case .offerBanner(let viewModel):
             let cell = tableView.makeView(withIdentifier: Cell.offerBanner.identifier, owner: nil) as! OfferBannerView
             cell.updateView(withModel: viewModel)
-            cell.sessionService = self.viewModel.sessionService
             return cell
         }
     }

@@ -20,7 +20,7 @@
 import Foundation
 import enum NetworkExtension.NEVPNStatus
 import Dependencies
-import XCTestDynamicOverlay
+import IssueReporting
 import ExtensionIPC
 import let CoreConnection.log
 import struct CoreConnection.LogicalServerInfo
@@ -90,7 +90,7 @@ final class VPNSessionMock: VPNSession {
 
     func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response {
         guard let messageHandler else {
-            XCTFail("Unimplemented message handler")
+            reportIssue("Unimplemented message handler")
             return .error(message: "unimplemented message handler")
         }
         return messageHandler(self, message)
@@ -115,7 +115,7 @@ enum MessageHandler {
             return .ok(data: nil)
 
         default:
-            XCTFail("Unimplemented message handler for \(message)")
+            reportIssue("Unimplemented message handler for \(message)")
             return .error(message: "")
         }
     }

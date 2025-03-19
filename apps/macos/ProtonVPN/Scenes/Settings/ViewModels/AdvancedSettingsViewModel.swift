@@ -20,11 +20,11 @@ import Foundation
 
 import Dependencies
 
-import Domain
-import LocalFeatureFlags
-import Strings
 import LegacyCommon
 import VPNShared
+
+import Domain
+import Strings
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory
@@ -56,9 +56,14 @@ final class AdvancedSettingsViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
+
+        let events: [AppEvent] = [
+            .natType,
+            .featureFlags,
+            .safeMode
+        ]
+
+        events.subscribe(self, selector: #selector(settingsChanged))
     }
 
     deinit {
@@ -71,10 +76,6 @@ final class AdvancedSettingsViewModel {
 
     var isNATTypeFeatureEnabled: Bool {
         return featureFlags.moderateNAT
-    }
-
-    var isTelemetryFeatureEnabled: Bool {
-        LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
     }
 
     var usageData: Bool {
@@ -201,5 +202,5 @@ final class AdvancedSettingsViewModel {
 
     @objc private func settingsChanged() {
         reloadNeeded?()
-    } 
+    }
 }

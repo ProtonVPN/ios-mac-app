@@ -20,17 +20,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Ergonomics
 import Foundation
-import LegacyCommon
-import Modals
-import Modals_iOS
 import UIKit
-import ProtonCoreUIFoundations
-import Strings
+
 import Dependencies
+
+import ProtonCoreUIFoundations
+
+import LegacyCommon
 import Persistence
 import VPNAppCore
+import Modals
+import Modals_iOS
+import Announcement
+
+import Ergonomics
+import Strings
+import Domain
 
 final class IosAlertService {
         
@@ -40,8 +46,7 @@ final class IosAlertService {
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory &
         SafariServiceFactory &
-        PlanServiceFactory &
-        SessionServiceFactory
+        PlanServiceFactory
 
     private let factory: Factory
     
@@ -339,7 +344,7 @@ extension IosAlertService: CoreAlertService {
         }
         let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)
-            NotificationCenter.default.post(name: .userDismissedWelcomeScreen, object: nil)
+            AppEvent.userDismissedWelcomeScreen.post()
         })
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)
@@ -349,7 +354,6 @@ extension IosAlertService: CoreAlertService {
         let oneClickPayment: OneClickPayment
         do {
             oneClickPayment = try OneClickPayment(
-                sessionService: factory.makeSessionService(),
                 alertService: self,
                 planService: planService,
                 payments: planService.payments
@@ -367,7 +371,7 @@ extension IosAlertService: CoreAlertService {
             modalType: modalType,
             client: oneClickPayment.plansClient(
                 validationHandler: {
-                    NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: alert.modalSource)
+                    AppEvent.userEngagedWithUpsellAlert.post(alert.modalSource)
                 },
                 notNowHandler: { [weak self] in
                     self?.windowService.dismissModal(nil)
@@ -378,7 +382,7 @@ extension IosAlertService: CoreAlertService {
         self.oneClickPayment = oneClickPayment
 
         windowService.present(modal: viewController)
-        NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: alert.modalSource)
+        AppEvent.upsellAlertWasDisplayed.post(alert.modalSource)
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
@@ -446,7 +450,7 @@ extension IosAlertService: CoreAlertService {
             announcement = AnnouncementDetailViewController(legacyPanel)
             announcement.modalPresentationStyle = .fullScreen
         case .image(let imagePanel):
-            announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference, sessionService: factory.makeSessionService())
+            announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference)
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }
         announcement.cancelled = { [weak self] in
@@ -456,7 +460,7 @@ extension IosAlertService: CoreAlertService {
             self?.safariService.open(url: url)
 
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: alert.offerReference)
+                AppEvent.userEngagedWithAnnouncement.post(alert.offerReference)
             }
         }
         windowService.present(modal: announcement)

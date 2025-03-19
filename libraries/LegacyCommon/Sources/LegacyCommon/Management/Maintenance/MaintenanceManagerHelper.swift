@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Domain
 
 public protocol MaintenanceManagerHelperFactory {
     func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper
@@ -43,7 +44,8 @@ public class MaintenanceManagerHelper {
     
     public init(factory: Factory) {
         self.factory = factory
-        NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
+
+        AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
     }
     
     @objc func featureFlagsChanged() {

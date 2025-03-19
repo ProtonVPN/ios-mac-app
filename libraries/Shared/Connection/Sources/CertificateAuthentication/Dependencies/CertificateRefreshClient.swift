@@ -18,8 +18,12 @@
 
 import Foundation
 import Dependencies
+
 import ExtensionIPC
 import CoreConnection
+import CommonNetworking
+
+import Domain
 
 struct CertificateRefreshClientError: Error {
     let localizedDescription: String
@@ -70,7 +74,7 @@ extension CertificateRefreshClient {
             @Dependency(\.sessionService) var sessionService
             @Dependency(\.tunnelMessageSender) var messageSender
 
-            let selector = try await sessionService.selector()
+            let selector = try await sessionService.selector(.appContext(.wireGuardExtension))
             let cookie = sessionService.sessionCookie()
             let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: cookie)
             let response = try await messageSender.send(request)

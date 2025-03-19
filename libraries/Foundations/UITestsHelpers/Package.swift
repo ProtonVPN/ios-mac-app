@@ -19,7 +19,6 @@ let package = Package(
         .package(path: "../Strings"),
         .package(path: "../../Shared/Localization"),
         .package(url: "https://github.com/lachlanbell/SwiftOTP.git", .upToNextMinor(from: "2.0.3")),
-        .package(url: "https://github.com/ProtonMail/TrustKit", .upToNextMinor(from: "1.0.3"))
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

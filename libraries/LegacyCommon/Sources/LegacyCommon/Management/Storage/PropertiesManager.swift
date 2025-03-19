@@ -26,28 +26,17 @@ import Dependencies
 import ProtonCoreDataModel
 import ProtonCoreLogin
 
-import Domain
-import Ergonomics
+import CommonNetworking
 import VPNShared
 import VPNAppCore
+import Domain
+import Ergonomics
 
 public protocol PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol
 }
 
 public protocol PropertiesManagerProtocol: AnyObject {
-
-    static var activeConnectionChangedNotification: Notification.Name { get }
-    static var hasConnectedNotification: Notification.Name { get }
-    static var earlyAccessNotification: Notification.Name { get }
-    static var vpnProtocolNotification: Notification.Name { get }
-    static var killSwitchNotification: Notification.Name { get }
-    static var smartProtocolNotification: Notification.Name { get }
-    static var featureFlagsNotification: Notification.Name { get }
-    static var announcementsNotification: Notification.Name { get }
-    static var telemetryUsageDataNotification: Notification.Name { get }
-    static var telemetryCrashReportsNotification: Notification.Name { get }
-
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
     func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?)
@@ -266,18 +255,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         #endif
     }
 
-    public static let activeConnectionChangedNotification = Notification.Name("ActiveConnectionChangedNotification")
-    public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
-    public static let featureFlagsNotification = Notification.Name("FeatureFlags")
-    public static let announcementsNotification = Notification.Name("Announcements")
-    public static let earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
-    public static let vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
-    public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
-    public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
-
-    public static let telemetryUsageDataNotification = Notification.Name("TelemetryUsageDataChanged")
-    public static let telemetryCrashReportsNotification = Notification.Name("TelemetryCrashReportsChanged")
-
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
     public var userAccountRecovery: ProtonCoreDataModel.AccountRecovery?
@@ -333,7 +310,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
             }
         }
         storage.setUserValue(String(enabled), forKey: Keys.telemetryUsageData.rawValue)
-        NotificationCenter.default.post(name: Self.telemetryUsageDataNotification, object: enabled)
+        AppEvent.telemetryUsageData.post(enabled)
     }
     
     public func getTelemetryCrashReports() -> Bool {
@@ -356,7 +333,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     public func setTelemetryCrashReports(enabled: Bool) {
         storage.setUserValue(String(enabled), forKey: Keys.telemetryCrashReports.rawValue)
-        NotificationCenter.default.post(name: Self.telemetryCrashReportsNotification, object: enabled)
+        AppEvent.telemetryCrashReports.post(enabled)
     }
 
     public var isOnboardingInProgress: Bool = false
@@ -365,19 +342,16 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     public var isSubsequentLaunch: Bool
 
     // Use to do first time connecting stuff if needed
-    @BoolProperty(.connectOnDemand, notifyChangesWith: PropertiesManager.hasConnectedNotification)
+    @BoolProperty(.connectOnDemand, notifyChangesWith: .hasConnected)
     public var hasConnected: Bool
 
-    @Property(.lastIkeConnection,
-              notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
+    @Property(.lastIkeConnection, notifyChangesWith: .activeConnectionChanged)
     public var lastIkeConnection: ConnectionConfiguration?
 
-    @Property(.lastOpenVpnConnection,
-              notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
+    @Property(.lastOpenVpnConnection, notifyChangesWith: .activeConnectionChanged)
     public var lastOpenVpnConnection: ConnectionConfiguration?
 
-    @Property(.lastWireguardConnection,
-              notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
+    @Property(.lastWireguardConnection, notifyChangesWith: .activeConnectionChanged)
     public var lastWireguardConnection: ConnectionConfiguration?
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
@@ -410,7 +384,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     /// Distinguishes if kill switch should be disabled
     @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
 
-    @Property(.userLocation, notifyChangesWith: .userIpNotification)
+    @Property(.userLocation, notifyChangesWith: .userIp)
     public var userLocation: UserLocation?
 
     @BoolProperty(.userDataDisclaimerAgreed) public var userDataDisclaimerAgreed: Bool
@@ -435,7 +409,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @StringProperty(.connectedServerNameDoNotUse) public var connectedServerNameDoNotUse: String?
     #endif
 
-    @InitializedProperty(.vpnProtocol, notifyChangesWith: PropertiesManager.vpnProtocolNotification)
+    @InitializedProperty(.vpnProtocol, notifyChangesWith: .vpnProtocol)
     public var vpnProtocol: VpnProtocol
     
     @StringProperty(.lastAppVersion) private var _lastAppVersion: String?
@@ -446,8 +420,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     
     @DateProperty(.userAccountCreationDate) public var userAccountCreationDate
 
-    @InitializedProperty(.featureFlags,
-                         notifyChangesWith: PropertiesManager.featureFlagsNotification)
+    @InitializedProperty(.featureFlags, notifyChangesWith: .featureFlags)
     public var featureFlags: FeatureFlags
     
     public var maintenanceServerRefreshIntereval: Int {
@@ -467,7 +440,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.showWhatsNewModal) public var showWhatsNewModal: Bool
 
-    @BoolProperty(.killSwitch, notifyChangesWith: PropertiesManager.killSwitchNotification)
+    @BoolProperty(.killSwitch, notifyChangesWith: .killSwitch)
     public var killSwitch: Bool
 
     @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
@@ -482,7 +455,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    @BoolProperty(.smartProtocol, notifyChangesWith: PropertiesManager.smartProtocolNotification)
+    @BoolProperty(.smartProtocol, notifyChangesWith: .smartProtocol)
     public var smartProtocol: Bool
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
@@ -534,14 +507,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         userSettings = nil
     }
     
-    func postNotificationOnUIThread(_ name: NSNotification.Name,
-                                    object: Any?,
-                                    userInfo: [AnyHashable: Any]? = nil) {
-        executeOnUIThread {
-            NotificationCenter.default.post(name: name, object: object, userInfo: userInfo)
-        }
-    }
-    
     public func getValue(forKey key: String) -> Bool {
         return defaults.bool(forKey: key)
     }
@@ -585,7 +550,7 @@ public class Property<Value: Codable> {
     @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
-    let notification: Notification.Name?
+    let event: AppEvent?
 
     private var _wrappedValue = ConcurrentReaders<Value?>(nil)
     public var wrappedValue: Value? {
@@ -603,18 +568,16 @@ public class Property<Value: Codable> {
             _wrappedValue.update { $0 = newValue }
             try? storage.set(newValue, forKey: key.rawValue)
 
-            if let notification {
-                executeOnUIThread {
-                    NotificationCenter.default.post(name: notification, object: newValue)
-                }
+            if let event {
+                executeOnUIThread { event.post(newValue) }
             }
         }
     }
 
     init(_ key: PropertiesManager.Keys,
-         notifyChangesWith notification: Notification.Name? = nil) {
+         notifyChangesWith event: AppEvent? = nil) {
         self.key = key
-        self.notification = notification
+        self.event = event
     }
 }
 
@@ -624,7 +587,7 @@ public class InitializedProperty<Value: DefaultableProperty & Codable> {
     @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
-    let notification: Notification.Name?
+    let event: AppEvent?
 
     private var _wrappedValue: ConcurrentReaders<Value>?
     public var wrappedValue: Value {
@@ -652,18 +615,18 @@ public class InitializedProperty<Value: DefaultableProperty & Codable> {
 
             try? storage.set(newValue, forKey: key.rawValue)
 
-            if let notification {
+            if let event {
                 executeOnUIThread {
-                    NotificationCenter.default.post(name: notification, object: newValue)
+                    event.post(newValue)
                 }
             }
         }
     }
 
     init(_ key: PropertiesManager.Keys,
-         notifyChangesWith notification: Notification.Name? = nil) {
+         notifyChangesWith event: AppEvent? = nil) {
         self.key = key
-        self.notification = notification
+        self.event = event
     }
 }
 
@@ -672,7 +635,7 @@ public class BoolProperty {
     @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
-    let notification: Notification.Name?
+    let event: AppEvent?
 
     public var wrappedValue: Bool {
         get {
@@ -681,18 +644,18 @@ public class BoolProperty {
         }
         set {
             storage.setValue(newValue, forKey: key.rawValue)
-            if let notification {
+            if let event {
                 executeOnUIThread {
-                    NotificationCenter.default.post(name: notification, object: newValue)
+                    event.post(newValue)
                 }
             }
         }
     }
 
     init(_ key: PropertiesManager.Keys,
-         notifyChangesWith notification: Notification.Name? = nil) {
+         notifyChangesWith event: AppEvent? = nil) {
         self.key = key
-        self.notification = notification
+        self.event = event
     }
 }
 
@@ -701,7 +664,7 @@ public class StringProperty {
     @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
-    let notification: Notification.Name?
+    let event: AppEvent?
 
     public var wrappedValue: String? {
         get {
@@ -710,18 +673,18 @@ public class StringProperty {
         }
         set {
             storage.setValue(newValue, forKey: key.rawValue)
-            if let notification {
+            if let event {
                 executeOnUIThread {
-                    NotificationCenter.default.post(name: notification, object: newValue)
+                    event.post(newValue)
                 }
             }
         }
     }
 
     init(_ key: PropertiesManager.Keys,
-         notifyChangesWith notification: Notification.Name? = nil) {
+         notifyChangesWith event: AppEvent? = nil) {
         self.key = key
-        self.notification = notification
+        self.event = event
     }
 }
 
@@ -730,7 +693,7 @@ public class DateProperty {
     @Dependency(\.storage) var storage
 
     let key: PropertiesManager.Keys
-    let notification: Notification.Name?
+    let event: AppEvent?
 
     public var wrappedValue: Date? {
         get {
@@ -740,25 +703,25 @@ public class DateProperty {
         }
         set {
             storage.setValue(newValue?.timeIntervalSince1970, forKey: key.rawValue)
-            if let notification {
+            if let event {
                 executeOnUIThread {
-                    NotificationCenter.default.post(name: notification, object: newValue)
+                    event.post(newValue)
                 }
             }
         }
     }
 
     init(_ key: PropertiesManager.Keys,
-         notifyChangesWith notification: Notification.Name? = nil) {
+         notifyChangesWith event: AppEvent? = nil) {
         self.key = key
-        self.notification = notification
+        self.event = event
     }
 }
 
-extension ConnectionSpec: DefaultableProperty {
+extension ConnectionSpec: @retroactive DefaultableProperty {
 }
 
-extension SettingsStorageKey: DependencyKey {
+extension SettingsStorageKey: @retroactive DependencyKey {
     public static let liveValue: SettingsStorage = .init(
         getConnectionProtocol: {
             @Dependency(\.propertiesManager) var propertiesManager

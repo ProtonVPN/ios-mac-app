@@ -27,6 +27,7 @@ import SDWebImage
 import Strings
 import Timer
 import Ergonomics
+import Announcement
 
 class OfferBannerViewCell: UITableViewCell {
 

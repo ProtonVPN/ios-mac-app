@@ -30,9 +30,6 @@
             location = "group:libraries/Foundations/Ergonomics">
          </FileRef>
          <FileRef
-            location = "group:libraries/Foundations/LocalFeatureFlags">
-         </FileRef>
-         <FileRef
             location = "group:libraries/Foundations/PMLogger">
          </FileRef>
          <FileRef
@@ -109,6 +106,9 @@
          </FileRef>
          <FileRef
             location = "group:libraries/Settings">
+         </FileRef>
+         <FileRef
+            location = "group:libraries/Features/Announcement">
          </FileRef>
       </Group>
    </Group>

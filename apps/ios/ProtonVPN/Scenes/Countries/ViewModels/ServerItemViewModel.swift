@@ -47,7 +47,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     private let planService: PlanService
 
     var partnersIconsReceipts: [RequestReceipt] = []
-    
+
     var isConnected: Bool {
         if vpnGateway.connection == .connected,
            let activeServer = appStateManager.activeConnection()?.server,
@@ -57,7 +57,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
         return false
     }
-    
+
     var isConnecting: Bool {
         if let activeConnection = vpnGateway.lastConnectionRequest,
            vpnGateway.connection == .connecting,
@@ -68,30 +68,30 @@ class ServerItemViewModel: ServerItemViewModelCore {
         }
         return false
     }
-    
+
     var viaCountry: (name: String, code: String)? {
         return nil
     }
-    
+
     var connectedUiState: Bool {
         return isConnected || isConnecting
     }
-    
+
     fileprivate var canConnect: Bool {
         return !isUsersTierTooLow && !underMaintenance
     }
 
     var connectionChanged: (() -> Void)?
     var countryConnectionChanged: Notification.Name?
-    
+
     // MARK: First line in the TableCell
-    
+
     var description: String { return serverModel.logical.name }
 
     var city: String {
         return serverModel.logical.city ?? ""
     }
-    
+
     var loadColor: UIColor {
         if serverModel.logical.load > 90 {
             return .notificationErrorColor()
@@ -101,7 +101,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
             return .notificationOKColor()
         }
     }
-    
+
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
             return Theme.Asset.vpnSubscriptionBadge.image
@@ -111,7 +111,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
             return IconProvider.powerOff
         }
     }
-    
+
     var textInPlaceOfConnectIcon: String? {
         return isUsersTierTooLow ? Localizable.upgrade : nil
     }
@@ -139,10 +139,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
             startObserving()
         }
     }
-    
+
     func connectAction() {
         log.debug("Connect requested by clicking on Server item", category: .connectionConnect, event: .trigger)
-        
+
         if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
@@ -150,11 +150,11 @@ class ServerItemViewModel: ServerItemViewModelCore {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             planService.presentPlanSelection()
         } else if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.server))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
@@ -167,18 +167,17 @@ class ServerItemViewModel: ServerItemViewModelCore {
             }
             let legacyModel = ServerModel(server: server)
             log.debug("Will connect to \(legacyModel.logDescription)", category: .connectionConnect, event: .trigger)
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             vpnGateway.connectTo(server: legacyModel)
             connectionStatusService.presentStatusViewController()
         }
     }
-    
+
     // MARK: - Private functions
     fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
-    
+
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
             DispatchQueue.main.async {
@@ -190,14 +189,13 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
 // MARK: - SecureCoreServerItemViewModel subclass
 class SecureCoreServerItemViewModel: ServerItemViewModel {
-        
+
     override var viaCountry: (name: String, code: String)? {
         return isSecureCoreEnabled ? (serverModel.logical.entryCountry, serverModel.logical.entryCountryCode) : nil
     }
 
     override fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
 }
 
@@ -207,7 +205,6 @@ extension ServerItemViewModel: ServerViewModel {
     var isRedesign: Bool {
         FeatureFlagsRepository.shared.isRedesigniOSEnabled
     }
-    
 
     var connectButtonColor: UIColor {
         if isUsersTierTooLow {

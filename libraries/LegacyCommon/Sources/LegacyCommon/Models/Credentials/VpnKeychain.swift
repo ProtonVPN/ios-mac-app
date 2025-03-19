@@ -28,14 +28,11 @@ import VPNShared
 import VPNCrypto
 import VPNAppCore
 
+import Domain
+
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
 
 public protocol VpnKeychainProtocol {
-    
-    static var vpnCredentialsChanged: Notification.Name { get }
-    static var vpnPlanChanged: Notification.Name { get }
-    static var vpnUserDelinquent: Notification.Name { get }
-
     func fetch() throws -> VpnCredentials
     func fetchCached() throws -> CachedVpnCredentials
     func fetchOpenVpnPassword() throws -> Data
@@ -108,10 +105,6 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     private let appKeychain = Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
-    
-    public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
-    public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
-    public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
 
     /// Singleton implementation of the `VPNKeychain` ensures that the live value provided by `Dependencies` and the
     /// VPNKeychain in the legacy DependencyContainer share a single instance and do not duplicate their cached values.
@@ -183,11 +176,11 @@ public class VpnKeychain: VpnKeychainProtocol {
             DispatchQueue.main.async {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
                 if !currentCredentials.isDelinquent, vpnCredentials.isDelinquent {
-                    NotificationCenter.default.post(name: VpnKeychain.vpnUserDelinquent, object: downgradeInfo)
+                    AppEvent.userDelinquent.post(downgradeInfo)
                 }
 
                 if currentCredentials.maxTier != vpnCredentials.maxTier {
-                    NotificationCenter.default.post(name: VpnKeychain.vpnPlanChanged, object: downgradeInfo)
+                    AppEvent.planChanged.post(downgradeInfo)
                 }
             }
         }
@@ -209,7 +202,9 @@ public class VpnKeychain: VpnKeychainProtocol {
             log.error("Error occurred during OpenVPN password storage", category: .keychain, metadata: ["error": "\(error)"])
         }
         
-        DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: vpnCredentials) }
+        DispatchQueue.main.async {
+            AppEvent.credentialsChanged.post(vpnCredentials)
+        }
     }
     
     public func clear() {
@@ -220,7 +215,9 @@ public class VpnKeychain: VpnKeychainProtocol {
         do {
             try clearPassword(forKey: StorageKey.vpnServerPassword)
             try clearPassword(forKey: StorageKey.wireguardSettings)
-            DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: nil) }
+            DispatchQueue.main.async {
+                AppEvent.credentialsChanged.post()
+            }
         } catch { }
     }
     

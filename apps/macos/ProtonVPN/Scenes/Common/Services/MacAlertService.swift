@@ -21,21 +21,38 @@
 //
 
 import Foundation
-import Dependencies
-import Ergonomics
-import LegacyCommon
 import AppKit
+
+import Dependencies
+
+import LegacyCommon
+import VPNShared
+import VPNAppCore
+import CommonNetworking
+
 import Modals
 import Modals_macOS
-import VPNShared
+import Announcement
+
+import Ergonomics
 import Theme
 import Strings
-import VPNAppCore
+import Domain
 
 final class MacAlertService {
     @Dependency(\.serverRepository) var serverRepository
 
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    typealias Factory = UIAlertServiceFactory &
+        AppSessionManagerFactory &
+        WindowServiceFactory &
+        NotificationManagerFactory &
+        UpdateManagerFactory &
+        PropertiesManagerFactory &
+        TroubleshootViewModelFactory &
+        NavigationServiceFactory &
+        TelemetrySettingsFactory &
+        VpnKeychainFactory
+    
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -44,11 +61,12 @@ final class MacAlertService {
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var sessionService: SessionService = factory.makeSessionService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    
+
+    @Dependency(\.sessionService) var sessionService
+
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
     init(factory: Factory) {
@@ -355,12 +373,12 @@ extension MacAlertService: CoreAlertService {
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
                     return
                 }
-                NotificationCenter.default.post(name: .userEngagedWithUpsellAlert, object: modalSource)
+                AppEvent.userEngagedWithUpsellAlert.post(modalSource)
                 SafariService.openLink(url: url)
             }
         }
         
-        NotificationCenter.default.post(name: .upsellAlertWasDisplayed, object: modalSource)
+        AppEvent.upsellAlertWasDisplayed.post(modalSource)
 
         let upsellViewController = ModalsFactory.upsellViewController(
             modalType: modalType,
@@ -383,8 +401,7 @@ extension MacAlertService: CoreAlertService {
         case .image(let imagePanel):
             vc = AnnouncementImageViewController(
                 data: imagePanel,
-                offerReference: alert.offerReference,
-                sessionService: sessionService
+                offerReference: alert.offerReference
             )
         }
 

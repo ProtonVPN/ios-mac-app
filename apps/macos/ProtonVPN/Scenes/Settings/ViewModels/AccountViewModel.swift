@@ -21,9 +21,16 @@
 //
 
 import Foundation
+
+import Dependencies
+
 import LegacyCommon
 import VPNShared
+import VPNAppCore
+import CommonNetworking
+
 import Strings
+import Ergonomics
 
 final class AccountViewModel {
     
@@ -34,18 +41,15 @@ final class AccountViewModel {
 
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
-    private let sessionService: SessionService
     private let authKeychain: AuthKeychainHandle
 
     var reloadNeeded: (() -> Void)?
     
     init(vpnKeychain: VpnKeychainProtocol,
          propertiesManager: PropertiesManagerProtocol,
-         sessionService: SessionService,
          authKeychain: AuthKeychainHandle) {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
-        self.sessionService = sessionService
         self.authKeychain = authKeychain
 
         username = Localizable.unavailable
@@ -57,6 +61,7 @@ final class AccountViewModel {
     
     func manageSubscriptionAction() {
         Task {
+            @Dependency(\.sessionService) var sessionService
             let url = await sessionService.getPlanSession(mode: .manageSubscription)
             SafariService.openLink(url: url)
         }

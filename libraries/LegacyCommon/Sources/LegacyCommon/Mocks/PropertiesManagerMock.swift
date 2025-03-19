@@ -25,9 +25,11 @@ import Foundation
 import ProtonCoreDataModel
 import ProtonCoreLogin
 
-import Domain
 import VPNShared
 import VPNAppCore
+import CommonNetworking
+
+import Domain
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var isOnboardingInProgress: Bool = false
@@ -35,22 +37,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var showWhatsNewModal: Bool = false
 
     private let queue = DispatchQueue(label: "ch.proton.test.mock.sync.properties")
-
-    public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")
-    public static var killSwitchNotification: Notification.Name = Notification.Name("killSwitch")
-    public static var hasConnectedNotification: Notification.Name = Notification.Name("hasConnected")
-
-    public static var earlyAccessNotification: Notification.Name = Notification.Name("earlyAccess")
-    public static var vpnProtocolNotification: Notification.Name = Notification.Name("vpnProtocol")
-    public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("excludeLocalNetworks")
-    public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("vpnAccelerator")
-    public static var smartProtocolNotification: Notification.Name = Notification.Name("smartProtocol")
-    public static let featureFlagsNotification: Notification.Name = Notification.Name("featureFlags")
-    public static var announcementsNotification: Notification.Name = Notification.Name("announcements")
-
-    public static let telemetryUsageDataNotification: Notification.Name = Notification.Name("telemetryUsageData")
-
-    public static let telemetryCrashReportsNotification: Notification.Name = Notification.Name("telemetryCrashReports")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
@@ -66,7 +52,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var hasConnected: Bool = false {
         didSet {
             Task { @MainActor in
-                NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
+                AppEvent.hasConnected.post(hasConnected)
             }
         }
     }
@@ -103,7 +89,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var intentionallyDisconnected: Bool = false
     public var userLocation: UserLocation? {
         didSet {
-            NotificationCenter.default.post(name: .userIpNotification, object: userLocation)
+            AppEvent.userIp.post(userLocation)
         }
     }
     public var userDataDisclaimerAgreed: Bool = false
@@ -127,25 +113,25 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     public var vpnProtocol: VpnProtocol = .ike {
         didSet {
-            NotificationCenter.default.post(name: Self.vpnProtocolNotification, object: vpnProtocol)
+            AppEvent.vpnProtocol.post(vpnProtocol)
         }
     }
     public var apiEndpoint: String?
     public var lastAppVersion = "0.0.0"
     public var featureFlags: FeatureFlags = FeatureFlags() {
         didSet {
-            NotificationCenter.default.post(name: Self.featureFlagsNotification, object: featureFlags)
+            AppEvent.featureFlags.post(featureFlags)
         }
     }
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: Self.vpnAcceleratorNotification, object: vpnAcceleratorEnabled)
+            AppEvent.vpnAccelerator.post(vpnAcceleratorEnabled)
         }
     }
     public var killSwitch: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: Self.killSwitchNotification, object: killSwitch)
+            AppEvent.killSwitch.post(killSwitch)
         }
     }
     public var humanValidationFailed: Bool = false
@@ -156,7 +142,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     }
     public var smartProtocol: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: Self.smartProtocolNotification, object: smartProtocol)
+            AppEvent.smartProtocol.post(smartProtocol)
         }
     }
 
@@ -170,7 +156,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var userRole: UserRole = .noOrganization
     public var excludeLocalNetworks: Bool = true {
         didSet {
-            NotificationCenter.default.post(name: Self.excludeLocalNetworksNotification, object: excludeLocalNetworks)
+            AppEvent.excludeLocalNetworks.post(excludeLocalNetworks)
         }
     }
 
@@ -185,7 +171,9 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     var earlyAccess: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: Self.earlyAccessNotification, object: earlyAccess)
+            #if os(macOS)
+            AppEvent.earlyAccess.post(earlyAccess)
+            #endif
         }
     }
 
@@ -198,10 +186,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public func getTelemetryUsageData() -> Bool { return false }
     public func getTelemetryCrashReports() -> Bool { return true }
     public func setTelemetryUsageData(enabled: Bool) {
-        NotificationCenter.default.post(name: Self.telemetryUsageDataNotification, object: enabled)
+        AppEvent.telemetryUsageData.post(enabled)
     }
     public func setTelemetryCrashReports(enabled: Bool) {
-        NotificationCenter.default.post(name: Self.telemetryCrashReportsNotification, object: enabled)
+        AppEvent.telemetryCrashReports.post(enabled)
     }
 
     public var atlasSecret: String?

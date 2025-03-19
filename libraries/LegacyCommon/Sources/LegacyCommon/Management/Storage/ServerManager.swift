@@ -32,6 +32,10 @@ public struct ServerManager: DependencyKey {
         _ lastModifiedAt: String?
     ) -> Void
 
+    init(updateServers: @Sendable @escaping (_: [VPNServer], _: Bool, _: String?) -> Void) {
+        self.updateServers = updateServers
+    }
+
     public static let liveValue: ServerManager = ServerManager(
         updateServers: { servers, freeServersOnly, lastModified in
             @Dependency(\.serverRepository) var repository
@@ -78,6 +82,14 @@ extension ServerManager {
         updateServers(servers, freeServersOnly, lastModifiedAt)
     }
 }
+
+#if DEBUG
+extension ServerManager {
+    public static var noOp: ServerManager {
+        ServerManager { _, _, _ in () }
+    }
+}
+#endif
 
 extension DependencyValues {
     public var serverManager: ServerManager {

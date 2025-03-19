@@ -13,12 +13,12 @@ import Logging
 
 import WireGuardKit
 
-import Domain
-import ExtensionIPC
-import LocalFeatureFlags
-import Timer
 import VPNShared
 import NEHelper
+import ExtensionIPC
+
+import Domain
+import Timer
 import Ergonomics
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
@@ -49,12 +49,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         return tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
 
-
-    private var shouldStartServerRefreshOnWake: Bool {
-        isEnabled(VpnReconnectionFeatureFlag())
-        && self.connectedIpId != nil
-        && self.connectedLogicalId != nil
-    }
 
     override init() {
         AppContext.default = .wireGuardExtension
@@ -100,7 +94,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         apiService.delegate = self
         serverStatusRefreshManager.delegate = self
     }
-    
+
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited (processID: \(ProcessInfo().processIdentifier))")
     }
@@ -147,12 +141,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         }
 
         wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
-        if isEnabled(VpnReconnectionFeatureFlag()) {
-            serverStatusRefreshManager.updateConnectedIds(logicalId: connectedLogicalId, serverId: connectedIpId)
-            serverStatusRefreshManager.start { }
-        } else {
-            log.debug("Maintenance check disabled", category: .connection)
-        }
     }
 
     private lazy var adapter: WireGuardAdapter = {
@@ -337,7 +325,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         connectedLogicalId = tunnelProviderProtocol?.connectedLogicalId
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
-        setLocalFeatureFlagOverrides(tunnelProviderProtocol?.featureFlagOverrides)
         ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = tunnelProviderProtocol?.unleashFeatureFlagShouldForceConflictRefresh ?? false
 
         startTunnelWithStoredConfig(errorNotifier: errorNotifier,
@@ -465,11 +452,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         self.startTestingConnectivity()
         #endif
 
-        certificateRefreshManager.resume {
-            if self.shouldStartServerRefreshOnWake {
-                self.serverStatusRefreshManager.resume { }
-            }
-        }
+        certificateRefreshManager.resume { }
     }
 
     // MARK: - Logs
@@ -488,7 +471,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         // WG logger
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
     }
-    
+
     private func flushLogsToFile() {
         wg_log(.info, message: "Build info: \(appInfo.debugInfoString)")
         guard let path = FileManager.logTextFileURL?.path else { return }
@@ -549,7 +532,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
 #endif
-    
+
 }
 
 extension PacketTunnelProvider: ServerStatusRefreshDelegate {
@@ -572,6 +555,3 @@ extension WireGuardLogLevel {
         }
     }
 }
-
-// This lets us not depend on LocalFeatureFlags in VPNShared library
-extension VPNShared.VpnReconnectionFeatureFlag: FeatureFlag { }

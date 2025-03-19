@@ -23,6 +23,7 @@
 import Foundation
 import ServiceManagement
 import LegacyCommon
+import Domain
 
 extension PropertiesManagerProtocol {
     var earlyAccess: Bool {
@@ -32,7 +33,7 @@ extension PropertiesManagerProtocol {
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: PropertiesManager.earlyAccessNotification, object: newValue)
+                AppEvent.earlyAccess.post(newValue)
             }
         }
     }

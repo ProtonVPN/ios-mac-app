@@ -27,7 +27,6 @@ extension NETunnelProviderProtocol {
         case connectedServerIpIdKey = "PVPNServerIpID"
         case uidKey = "UID"
         case wgProtocolKey = "wg-protocol"
-        case featureFlagOverridesKey = "FeatureFlagOverrides"
         case forceConflictRefreshKey = "ShouldForceConflictRefresh"
     }
 
@@ -75,16 +74,6 @@ extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[.wgProtocolKey] = newValue
-        }
-    }
-
-    public var featureFlagOverrides: [String: [String: Bool]]? {
-        get {
-            providerConfiguration?[.featureFlagOverridesKey] as? [String: [String: Bool]]
-        }
-        set {
-            ensureProviderConfig()
-            providerConfiguration?[.featureFlagOverridesKey] = newValue
         }
     }
 

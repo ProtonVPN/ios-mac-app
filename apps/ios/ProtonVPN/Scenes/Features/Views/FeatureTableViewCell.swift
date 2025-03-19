@@ -21,8 +21,12 @@
 //
 
 import UIKit
-import LegacyCommon
+
 import ProtonCoreUIFoundations
+
+import LegacyCommon
+import VPNAppCore
+
 import Strings
 
 class FeatureTableViewCell: UITableViewCell {

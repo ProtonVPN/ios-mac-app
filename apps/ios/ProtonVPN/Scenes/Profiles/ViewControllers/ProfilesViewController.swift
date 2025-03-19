@@ -22,11 +22,15 @@
 
 import UIKit
 import GSMessages
-import LegacyCommon
+
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
+
+import LegacyCommon
+
 import Theme
 import Strings
-import ProtonCoreFeatureFlags
+import Domain
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()
@@ -111,10 +115,8 @@ final class ProfilesViewController: UIViewController {
     }
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChanged),
-                                               name: VpnKeychain.vpnCredentialsChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(contentChanged),
-                                               name: ProfileStorage.contentChanged, object: nil)
+        AppEvent.credentialsChanged.subscribe(self, selector: #selector(contentChanged))
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(contentChanged))
     }
     
     @objc private func contentChanged() {

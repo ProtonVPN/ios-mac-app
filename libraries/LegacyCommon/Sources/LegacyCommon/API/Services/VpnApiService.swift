@@ -29,12 +29,12 @@ import ProtonCoreAuthentication
 import ProtonCoreDataModel
 
 import CommonNetworking
-import Domain
-import Ergonomics
-import Persistence
-import LocalFeatureFlags
 import Localization
+import Persistence
 import VPNShared
+
+import Ergonomics
+import Domain
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -80,7 +80,7 @@ public class VpnApiService {
                   authKeychain: factory.makeAuthKeychainHandle())
     }
 
-    public func vpnProperties(isDisconnected: Bool, 
+    public func vpnProperties(isDisconnected: Bool,
                               lastKnownLocation: UserLocation?,
                               serversAccordingToTier: Bool) async throws -> VpnProperties {
 
@@ -255,7 +255,7 @@ public class VpnApiService {
     public func sessionsCount() async throws -> SessionsResponse {
         try await networking.perform(request: VPNSessionsCountRequest())
     }
-    
+
     public func loads(lastKnownIp: TruncatedIp?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
         let shortenedIp = lastKnownIp?.value
         networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
@@ -285,7 +285,7 @@ public class VpnApiService {
 
         }
     }
-    
+
     public func clientConfig(for shortenedIp: String?, completion: @escaping (Result<ClientConfig, Error>) -> Void) {
         let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn,
                                              ip: shortenedIp)
@@ -300,9 +300,6 @@ public class VpnApiService {
                     decoder.keyDecodingStrategy = .decapitaliseFirstLetter
                     let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
 
-                    if let overrides = clientConfigResponse.clientConfig.featureFlags.localOverrides {
-                        setLocalFeatureFlagOverrides(overrides)
-                    }
                     completion(.success(clientConfigResponse.clientConfig))
 
                 } catch {

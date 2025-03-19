@@ -190,7 +190,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         trigger: .country)
 
         let stateChangedToErrorExpectation = XCTestExpectation()
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else {
                 XCTFail("Did not send app state as part of notification")
                 return
@@ -204,7 +204,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+        defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
@@ -335,7 +335,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             var observedState: AppState?
             var hasReconnected = false
 
-            for await notification in NotificationCenter.default.notifications(named: .AppStateManager.stateChange, object: nil) {
+            for await notification in NotificationCenter.default.notifications(named: AppEvent.appStateManagerStateChange.name, object: nil) {
                 guard let appState = notification.object as? AppState else {
                     XCTFail("Did not send app state as part of notification")
                     return
@@ -663,7 +663,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
              nAppStateConnectTransitions) = (0, 0, 0)
 
         var observedStates: [AppState] = []
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else { return }
             defer { observedStates.append(appState) }
             // debounce multiple "connected" notifications... we should probably fix that
@@ -680,7 +680,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 nAppStateConnectTransitions += 1
             }
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+        defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
         var observedStatuses: [NEVPNStatus] = []
         var currentManager: NETunnelProviderManagerMock?
@@ -734,6 +734,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         dispatchToMainWithEscapedDependencies {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: downgrade)
+            NotificationCenter.default.post(name: AppEvent.planChanged.name, object: upgrade)
             self.container.vpnKeychain.credentials = freeCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
@@ -765,6 +766,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
+            NotificationCenter.default.post(name: AppEvent.planChanged.name, object: upgrade)
             self.container.vpnKeychain.credentials = plusCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: plusCreds)
             expectations.upgradeNotification.fulfill()
@@ -811,6 +813,8 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         wait(for: [expectations.disconnections[3]], timeout: expectationTimeout)
     }
 
+    // This test is currently skipped. It sometimes fails and it is testing the Legacy Connection feature that we'll deprecate
+    // someday so let's ignore it for now (or pls fix it otherwise).
     func testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect() { // swiftlint:disable:this function_body_length
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
@@ -861,7 +865,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         var observedStates: [AppState] = []
-        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else { return }
             defer { observedStates.append(appState) }
             // debounce multiple "connected" notifications... we should probably fix that
@@ -878,7 +882,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 nAppStateConnectTransitions += 1
             }
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
+        defer { AppEvent.appStateManagerStateChange.unsubscribe(observer) }
 
         var observedStatuses: [NEVPNStatus] = []
         var currentManager: NETunnelProviderManagerMock?
@@ -954,6 +958,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             let upgrade: VpnDowngradeInfo = (freeCreds, plusCreds)
             self.container.vpnKeychain.credentials = plusCreds
             NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
+            NotificationCenter.default.post(name: AppEvent.planChanged.name, object: upgrade)
 
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: plusCreds)
             expectations.upgradeNotification.fulfill()

@@ -18,7 +18,8 @@ let package = Package(
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(path: "../../../external/protoncore"), // GoLibs
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
@@ -27,6 +28,7 @@ let package = Package(
         .package(path: "../../Shared/ExtensionIPC"),
         .package(path: "../../Shared/Localization"),
         .package(path: "../../NEHelper"),
+        .package(path: "../CommonNetworking"),
     ],
     targets: [
         .target(
@@ -38,7 +40,6 @@ let package = Package(
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -46,6 +47,8 @@ let package = Package(
             dependencies: [
                 "CoreConnection",
                 "ExtensionIPC",
+                "CommonNetworking",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
                 .product(name: "VPNAppCore", package: "NEHelper"), // VpnAuthKeychain
             ]
@@ -54,6 +57,7 @@ let package = Package(
             name: "LocalAgent",
             dependencies: [
                 "CoreConnection",
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
             ]
         ),
@@ -63,6 +67,8 @@ let package = Package(
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -74,6 +80,7 @@ let package = Package(
                 "ExtensionManager",
                 "LocalAgent",
                 "Localization",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
             ]
         ),
@@ -85,6 +92,7 @@ let package = Package(
                 "Connection",
                 "CoreConnectionTestSupport",
                 "ConnectionTestSupport",
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
             ]
@@ -94,6 +102,7 @@ let package = Package(
             dependencies: [
                 "ExtensionManager",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -103,6 +112,7 @@ let package = Package(
                 "CoreConnectionTestSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -111,6 +121,7 @@ let package = Package(
                 "LocalAgent",
                 "Connection",
                 .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
     ]

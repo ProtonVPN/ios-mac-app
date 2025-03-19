@@ -21,11 +21,19 @@
 //
 
 import UIKit
-import LegacyCommon
-import Search
+
+import Dependencies
+
 import ProtonCoreUIFoundations
-import Strings
 import ProtonCoreFeatureFlags
+
+import CommonNetworking
+import LegacyCommon
+import Announcement
+import Search
+
+import Strings
+import Domain
 
 final class CountriesViewController: UIViewController {
     
@@ -41,7 +49,6 @@ final class CountriesViewController: UIViewController {
     var connectionBarViewController: ConnectionBarViewController?
 
     var coordinator: SearchCoordinator?
-    var sessionService: SessionService?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -66,8 +73,8 @@ final class CountriesViewController: UIViewController {
         setupSecureCoreBar()
         setupTableView()
         setupNavigationBar()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+
+        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -239,7 +246,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             viewModel.action()
 
         case .offerBanner(let viewModel):
-            guard let sessionService else { return }
+            @Dependency(\.sessionService) var sessionService
             Task {
                 await viewModel.action(sessionService)
             }

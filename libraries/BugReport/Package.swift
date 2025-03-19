@@ -16,18 +16,22 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.2.0")),
-        .package(url: "https://github.com/pointfreeco/swift-perception", .upToNextMajor(from: "1.3.4")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/pointfreeco/swift-identified-collections", .upToNextMajor(from: "1.1.1")),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1"))
     ],
     targets: [
         .target(
             name: "BugReport",
             dependencies: [
                 "Strings",
+                .product(name: "SwiftUINavigation", package: "swift-navigation"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "IdentifiedCollections", package: "swift-identified-collections"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SwiftNavigation", package: "swift-navigation"),
-                .product(name: "Perception", package: "swift-perception"),
             ],
             resources: [
                 .process("Resources")
@@ -35,7 +39,9 @@ let package = Package(
         ),
         .testTarget(
             name: "BugReportTests",
-            dependencies: ["BugReport"],
+            dependencies: [
+                "BugReport"
+            ],
             resources: [
                 .process("example1.json"),
             ]),

@@ -38,7 +38,6 @@ let package = Package(
         // Local packages
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
-        .package(path: "../Foundations/LocalFeatureFlags"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
@@ -57,11 +56,12 @@ let package = Package(
         .package(path: "../Settings"),
 
         // External dependencies
+        .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .github("ashleymills", repo: "Reachability.swift", exact: "5.1.0"),
         .github("kishikawakatsumi", repo: "KeychainAccess", exact: "4.2.2"),
         .github("pointfreeco", repo: "swift-clocks", .upToNextMajor(from: "1.0.5")),
-        .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .github("pointfreeco", repo: "swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .github("pointfreeco", repo: "swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .github("SDWebImage", repo: "SDWebImage", .upTo("5.16.0")),
         .github("ProtonMail", repo: "TrustKit", revision: "d107d7cc825f38ae2d6dc7c54af71d58145c3506"),
@@ -76,7 +76,6 @@ let package = Package(
                 "Domain",
                 "Connection",
                 "Ergonomics",
-                "LocalFeatureFlags",
                 "PMLogger",
                 "Strings",
                 "Theme",
@@ -124,6 +123,7 @@ let package = Package(
                 .core(module: "Telemetry"),
 
                 // External
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
@@ -164,13 +164,16 @@ let package = Package(
             name: "LegacyCommonTests",
             dependencies: [
                 "LegacyCommon",
+                "CommonNetworking",
                 .product(name: "Persistence", package: "Persistence"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
                 .product(name: "TimerMock", package: "Timer"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .core(module: "TestingToolkitUnitTestsCore"),
-                .core(module: "TestingToolkitUnitTestsFeatureFlag")
+                .core(module: "TestingToolkitUnitTestsFeatureFlag"),
+                .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking")
             ],
             resources: [
                 .copy("Resources/test_log_1.log"),

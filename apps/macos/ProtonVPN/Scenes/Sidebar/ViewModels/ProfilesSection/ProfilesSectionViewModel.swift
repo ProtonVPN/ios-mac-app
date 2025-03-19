@@ -23,6 +23,7 @@
 import Foundation
 import Dependencies
 import LegacyCommon
+import Domain
 
 enum ProfilesSectionListCell {
     case profile(ProfileItemViewModel)
@@ -51,19 +52,28 @@ class ProfilesSectionViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService, alertService: CoreAlertService, profileManager: ProfileManager, protocolChangeNotifications: [Notification.Name], sysexManager: SystemExtensionManager) {
+    init(
+        vpnGateway: VpnGatewayProtocol,
+        navService: NavigationService,
+        alertService: CoreAlertService,
+        profileManager: ProfileManager,
+        sysexManager: SystemExtensionManager
+    ) {
+
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.alertService = alertService
         self.profileManager = profileManager
         self.sysexManager = sysexManager
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: profileManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: VpnKeychain.vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
-        for notificationName in protocolChangeNotifications {
-            NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: notificationName, object: nil)
-        }
-        
+
+        let events: [AppEvent] = [
+            .profileContentChanged,
+            .planChanged,
+            .featureFlags,
+            .vpnProtocol,
+            .smartProtocol
+        ]
+        events.subscribe(self, selector: #selector(profilesChanged))
     }
     
     func cellHeight(forRow index: Int) -> CGFloat {

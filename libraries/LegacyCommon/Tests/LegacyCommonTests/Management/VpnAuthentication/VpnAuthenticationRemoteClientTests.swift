@@ -31,10 +31,9 @@ class VPNAuthenticationRemoteClientTests: XCTestCase {
 
     func testCertificateMismatchNotTestedWhenFeatureFlagIsOff() async { // swiftlint:disable:this function_body_length
         let authStorage = MockVpnAuthenticationStorage()
-        let sessionService = SessionServiceMock()
         let tunnelMock = WireguardProviderMessageSenderMock()
 
-        let sut = VpnAuthenticationRemoteClient(sessionService: sessionService, authenticationStorage: authStorage)
+        let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
         sut.setConnectionProvider(provider: tunnelMock)
 
         let certLoad = oneTimeExpectation(description: "Certificate should be requested after the old one is deleted")
@@ -74,10 +73,9 @@ class VPNAuthenticationRemoteClientTests: XCTestCase {
 
     func testCertificateIsDeletedAndRefreshedWhenMismatchedCertificateStoredInKeychain() async { // swiftlint:disable:this function_body_length
         let authStorage = MockVpnAuthenticationStorage()
-        let sessionService = SessionServiceMock()
         let tunnelMock = WireguardProviderMessageSenderMock()
 
-        let sut = VpnAuthenticationRemoteClient(sessionService: sessionService, authenticationStorage: authStorage)
+        let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
         sut.setConnectionProvider(provider: tunnelMock)
 
         let expectations = (
@@ -133,10 +131,9 @@ class VPNAuthenticationRemoteClientTests: XCTestCase {
 
     func testCertificateIsNotRefreshedWhenValidCertificateStoredInKeychain() async { // swiftlint:disable:this function_body_length
         let authStorage = MockVpnAuthenticationStorage()
-        let sessionService = SessionServiceMock()
         let tunnelMock = WireguardProviderMessageSenderMock()
 
-        let sut = VpnAuthenticationRemoteClient(sessionService: sessionService, authenticationStorage: authStorage)
+        let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
         sut.setConnectionProvider(provider: tunnelMock)
 
         let certLoad = oneTimeExpectation(description: "Certificate should be loaded from storage")
@@ -181,10 +178,9 @@ class VPNAuthenticationRemoteClientTests: XCTestCase {
 
     func testCertificateIsRefreshedWhenNoCertificateStoredInKeychain() async { // swiftlint:disable:this function_body_length
         let authStorage = MockVpnAuthenticationStorage()
-        let sessionService = SessionServiceMock()
         let tunnelMock = WireguardProviderMessageSenderMock()
 
-        let sut = VpnAuthenticationRemoteClient(sessionService: sessionService, authenticationStorage: authStorage)
+        let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
         sut.setConnectionProvider(provider: tunnelMock)
 
 

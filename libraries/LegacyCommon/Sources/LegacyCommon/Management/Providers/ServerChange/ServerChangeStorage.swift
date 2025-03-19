@@ -18,7 +18,7 @@
 
 import Foundation
 import Dependencies
-import XCTestDynamicOverlay
+import IssueReporting
 import NetworkExtension
 
 public class ServerChangeStorage: DependencyKey {

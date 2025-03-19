@@ -68,7 +68,7 @@ final class ProfileItemViewModel {
         }
         return false
     }
-    
+
     private var isConnecting: Bool {
         guard vpnGateway.connection == .connecting else { return false }
 
@@ -87,11 +87,11 @@ final class ProfileItemViewModel {
         }
         return false
     }
-    
+
     private var connectedUiState: Bool {
         return isConnected || isConnecting
     }
-    
+
     private var canConnect: Bool {
         return !underMaintenance
     }
@@ -101,9 +101,9 @@ final class ProfileItemViewModel {
     }
 
     var connectionChanged: (() -> Void)?
-    
+
     let connectedConnectIcon: Image = IconProvider.powerOff
-    
+
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
             return IconProvider.lock
@@ -115,27 +115,27 @@ final class ProfileItemViewModel {
             return IconProvider.powerOff
         }
     }
-    
+
     var imageInPlaceOfConnectIcon: UIImage? {
         return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
     }
-    
+
     var icon: ProfileIcon {
         return profile.profileIcon
     }
-    
+
     var name: NSAttributedString {
         return attributedName(forProfile: profile)
     }
-    
+
     var description: NSAttributedString {
         return attributedDescription(forProfile: profile)
     }
-    
+
     var connectButtonTitle: String {
         return underMaintenance ? Localizable.maintenance : Localizable.connect
     }
-    
+
     var alphaOfMainElements: CGFloat {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
@@ -156,7 +156,7 @@ final class ProfileItemViewModel {
         case .custom(let serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier // add unit tests
             self.underMaintenance = serverWrapper.server.underMaintenance
-           
+
         case .fastest(let countryCode): fallthrough
         case .random(let countryCode):
             guard let code = countryCode else {
@@ -187,10 +187,10 @@ final class ProfileItemViewModel {
             self.lowestServerTier = minTier
             self.underMaintenance = allServersUnderMaintenance
         }
-        
+
         startObserving()
     }
-    
+
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
 
@@ -211,26 +211,26 @@ final class ProfileItemViewModel {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert())
         } else if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.profile))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.profile))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(profile: profile)
             connectionStatusService.presentStatusViewController()
         }
     }
-    
+
     // MARK: Descriptors
     internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
         return profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
     }
-    
+
     internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
@@ -239,19 +239,18 @@ final class ProfileItemViewModel {
             return userProfileDescriptor(forProfile: profile)
         }
     }
-    
+
     // MARK: - Private functions
     fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
-    
+
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
             connectionChanged()
         }
     }
-    
+
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .system else {
             return Localizable.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
@@ -266,7 +265,7 @@ final class ProfileItemViewModel {
             return Localizable.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
     }
-    
+
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
             return Localizable.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
@@ -281,12 +280,12 @@ final class ProfileItemViewModel {
             return customServerDescriptor(forModel: sWrapper.server)
         }
     }
-    
+
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
         guard let countryCode = countryCode else {
             return description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
-        
+
         let buffer = "  ".attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let profileDescription = description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
@@ -299,10 +298,10 @@ final class ProfileItemViewModel {
             return NSAttributedString.concatenate(attributedCountryName, buffer, doubleArrow, buffer, profileDescription)
         }
     }
-    
+
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
         let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
-        
+
         if serverModel.isSecureCore {
             let entryCountry = (serverModel.entryCountry + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
             let exitCountry = ("  " + serverModel.exitCountry + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)

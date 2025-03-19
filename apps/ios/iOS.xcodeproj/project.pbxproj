@@ -46,6 +46,10 @@
 		4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
 		4C93F5792CDCD9B8006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F5782CDCD9B8006BFD77 /* Ergonomics */; };
 		4C9754FA2A6018040035A61B /* GSMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9754F92A6018040035A61B /* GSMessages */; };
+		4C9FF4882D64897C004DBF89 /* Announcement in Frameworks */ = {isa = PBXBuildFile; productRef = 4C9FF4872D64897C004DBF89 /* Announcement */; };
+		4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F542D6CDB200028C964 /* Ergonomics */; };
+		4CAC4F572D6CDB790028C964 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F562D6CDB790028C964 /* Ergonomics */; };
+		4CAC4F5C2D6DC5BC0028C964 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAC4F5B2D6DC5BC0028C964 /* ComposableArchitecture */; };
 		4CCB4C602A6ED15B002D4204 /* ProtonCoreCryptoGoInterface in Frameworks */ = {isa = PBXBuildFile; productRef = 4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */; };
 		4CD71C612AC73B16007979C0 /* SecureDeepLinkGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD71C602AC73B16007979C0 /* SecureDeepLinkGenerator.swift */; };
 		4CDC8AB62A74554B004F2537 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */; };
@@ -79,17 +83,21 @@
 		4CF2982D2A7D3B8E00DEB23F /* pt-PT.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298142A7D3B8E00DEB23F /* pt-PT.lproj */; };
 		4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298162A7D3B8E00DEB23F /* fr.lproj */; };
 		4CF298302A7D406A00DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
+		4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4D2B908075002E40FD /* Ergonomics */; };
+		4CF361FF2D6E21A60088CEB3 /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 4CF361FE2D6E21A60088CEB3 /* Perception */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57BC698A2B1F33CB0049485C /* ProtonCoreAccountRecovery in Frameworks */ = {isa = PBXBuildFile; productRef = 57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
+		66AC92B92D79AB3800124788 /* IssueReporting in Frameworks */ = {isa = PBXBuildFile; productRef = 66AC92B82D79AB3800124788 /* IssueReporting */; };
 		66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */; };
 		66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */; };
 		66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
 		66E34BB627ABEC45002FC827 /* SettingsAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB527ABEC45002FC827 /* SettingsAccountViewController.swift */; };
 		66E34BB827AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB727AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib */; };
 		66E34BBA27AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */; };
+		66FCA5812D79F99900F470C3 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 66FCA5802D79F99900F470C3 /* Sharing */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		770299A12CDCB84E00812C21 /* SubscriptionModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A02CDCB84100812C21 /* SubscriptionModalRobot.swift */; };
 		770299A42CDCBCAE00812C21 /* ModalRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770299A32CDCBCAC00812C21 /* ModalRobot.swift */; };
@@ -187,7 +195,6 @@
 		AD4770B72BBED3AF005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B62BBED3AF005575BC /* AppDependencies+Live.swift */; };
 		AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE492B907FDB002E40FD /* Localization */; };
 		AD51BE4C2B908075002E40FD /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4B2B908075002E40FD /* Domain */; };
-		AD51BE4E2B908075002E40FD /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4D2B908075002E40FD /* Ergonomics */; };
 		AD51BE502B908075002E40FD /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE4F2B908075002E40FD /* Persistence */; };
 		AD51BE522B9085C3002E40FD /* Strings in Frameworks */ = {isa = PBXBuildFile; productRef = AD51BE512B9085C3002E40FD /* Strings */; };
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
@@ -331,13 +338,13 @@
 		E531EB422A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB412A78F98D00E56D7D /* ProtonCoreTestingToolkitUITestsPaymentsUI */; };
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
+		E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = E53E5B292D4CF128002D88B2 /* CommonNetworking */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E55B1A642B922031001EF2C6 /* PMLogger */; };
 		E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5814EDB2B481F4D00ACF2A7 /* OfferBannerViewCell.xib */; };
 		E5814EDE2B481F4E00ACF2A7 /* OfferBannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5814EDC2B481F4D00ACF2A7 /* OfferBannerViewCell.swift */; };
 		E5867D812C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5867D802C4EC934009FB802 /* FeatureFlagsRepository+Redesign.swift */; };
 		E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E58974792A812A870017987D /* OHHTTPStubsSwift */; };
-		E59B7A002CAFE36200CE3515 /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */; };
 		E59B7A022CAFE38700CE3515 /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
@@ -892,14 +899,16 @@
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				4C8C31522A73BA24006AD628 /* Settings-iOS in Frameworks */,
 				8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */,
+				66FCA5812D79F99900F470C3 /* Sharing in Frameworks */,
 				4C8C31542A73BA36006AD628 /* ProtonCoreLoginUI in Frameworks */,
 				4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
 				E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */,
+				4CF361FF2D6E21A60088CEB3 /* Perception in Frameworks */,
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
 				ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */,
+				66AC92B92D79AB3800124788 /* IssueReporting in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
-				E59B7A002CAFE36200CE3515 /* XCTestDynamicOverlay in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
 				4C8C314C2A73BA1F006AD628 /* ConnectionDetails in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
@@ -907,8 +916,12 @@
 				E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */,
 				4C05E5682A716995009102EB /* LegacyCommon in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
+				4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
+				E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
+				4C9FF4882D64897C004DBF89 /* Announcement in Frameworks */,
+				4CAC4F5C2D6DC5BC0028C964 /* ComposableArchitecture in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -917,6 +930,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */,
 				E59B7A022CAFE38700CE3515 /* XCTestDynamicOverlay in Frameworks */,
 				AD51BE502B908075002E40FD /* Persistence in Frameworks */,
 				AD51BE4C2B908075002E40FD /* Domain in Frameworks */,
@@ -926,7 +940,6 @@
 				ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */,
 				AD51BE522B9085C3002E40FD /* Strings in Frameworks */,
 				ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */,
-				AD51BE4E2B908075002E40FD /* Ergonomics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,6 +991,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CAC4F572D6CDB790028C964 /* Ergonomics in Frameworks */,
 				E59C7A9129229A940034E56F /* NEHelper in Frameworks */,
 				D5EE41312AD9619800ECC064 /* WireGuardKit in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
@@ -2300,7 +2314,13 @@
 				8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */,
 				8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */,
 				8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */,
-				E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */,
+				E53E5B292D4CF128002D88B2 /* CommonNetworking */,
+				4C9FF4872D64897C004DBF89 /* Announcement */,
+				4CAC4F542D6CDB200028C964 /* Ergonomics */,
+				4CAC4F5B2D6DC5BC0028C964 /* ComposableArchitecture */,
+				4CF361FE2D6E21A60088CEB3 /* Perception */,
+				66AC92B82D79AB3800124788 /* IssueReporting */,
+				66FCA5802D79F99900F470C3 /* Sharing */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2435,6 +2455,7 @@
 			packageProductDependencies = (
 				2DC3E67F6A25A4AD4DFCF448 /* NEHelper */,
 				D5EE41302AD9619800ECC064 /* WireGuardKit */,
+				4CAC4F562D6CDB790028C964 /* Ergonomics */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -2577,6 +2598,8 @@
 				4C8C31612A73BB39006AD628 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */,
 				E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */,
+				4CF361FD2D6E21A60088CEB3 /* XCRemoteSwiftPackageReference "swift-perception" */,
+				66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -4372,6 +4395,22 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		4CF361FD2D6E21A60088CEB3 /* XCRemoteSwiftPackageReference "swift-perception" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-perception";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.5;
+			};
+		};
+		66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-sharing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.3;
+			};
+		};
 		ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonMail/TrustKit";
@@ -4488,6 +4527,23 @@
 			package = 4C9754F82A6018040035A61B /* XCRemoteSwiftPackageReference "GSMessages" */;
 			productName = GSMessages;
 		};
+		4C9FF4872D64897C004DBF89 /* Announcement */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Announcement;
+		};
+		4CAC4F542D6CDB200028C964 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
+		};
+		4CAC4F562D6CDB790028C964 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
+		};
+		4CAC4F5B2D6DC5BC0028C964 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CB776CB2A1F5E61004CA127 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
 		4CCB4C5F2A6ED15B002D4204 /* ProtonCoreCryptoGoInterface */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreCryptoGoInterface;
@@ -4520,9 +4576,24 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreHumanVerification;
 		};
+		4CF361FE2D6E21A60088CEB3 /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4CF361FD2D6E21A60088CEB3 /* XCRemoteSwiftPackageReference "swift-perception" */;
+			productName = Perception;
+		};
 		57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreAccountRecovery;
+		};
+		66AC92B82D79AB3800124788 /* IssueReporting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
+			productName = IssueReporting;
+		};
+		66FCA5802D79F99900F470C3 /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */;
+			productName = Sharing;
 		};
 		77E01AC82CC10AB40013F3D7 /* UITestsHelpers */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -4617,6 +4688,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-iOS";
 		};
+		E53E5B292D4CF128002D88B2 /* CommonNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CommonNetworking;
+		};
 		E55B1A642B922031001EF2C6 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
@@ -4625,11 +4700,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
-		};
-		E59B79FF2CAFE36200CE3515 /* XCTestDynamicOverlay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
-			productName = XCTestDynamicOverlay;
 		};
 		E59B7A012CAFE38700CE3515 /* XCTestDynamicOverlay */ = {
 			isa = XCSwiftPackageProductDependency;

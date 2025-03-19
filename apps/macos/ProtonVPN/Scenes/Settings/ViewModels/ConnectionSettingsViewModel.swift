@@ -88,10 +88,14 @@ final class ConnectionSettingsViewModel {
         self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
         selectedProtocol = propertiesManager.connectionProtocol
 
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: ExcludeLocalNetworks.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: VPNAccelerator.notificationName, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled), name: SystemExtensionManager.userCancelledTour, object: nil)
+        let settingsChangedEvents: [AppEvent] = [
+            .vpnProtocol,
+            .excludeLocalNetworks,
+            .vpnAccelerator
+        ]
+        settingsChangedEvents.subscribe(self, selector: #selector(settingsChanged))
+
+        AppEvent.systemExtensionTourCancelled.subscribe(self, selector: #selector(tourCancelled))
 
         checkSysexOrResetProtocol(selectedProtocol)
     }

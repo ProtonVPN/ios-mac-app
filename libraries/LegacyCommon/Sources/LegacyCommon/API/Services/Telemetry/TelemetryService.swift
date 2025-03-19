@@ -17,13 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LocalFeatureFlags
-import Ergonomics
+
 import Reachability
-import Ergonomics
-import VPNShared
+
 import CommonNetworking
 import VPNAppCore
+import VPNShared
+
+import Ergonomics
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService
@@ -79,7 +80,7 @@ public class TelemetryServiceImplementation: TelemetryService {
     ) async {
         self.factory = factory
         self.eventNotifier = eventNotifier
-        
+
         self.telemetryEventScheduler = await TelemetryEventScheduler(factory: factory, isBusiness: false)
         self.businessEventScheduler = await TelemetryEventScheduler(factory: factory, isBusiness: true)
 

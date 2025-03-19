@@ -21,12 +21,17 @@
 //
 
 import Cocoa
+
+import Dependencies
+
+import VPNAppCore
+import Persistence
 import LegacyCommon
+import CommonNetworking
+
 import Theme
 import Ergonomics
 import Strings
-import Dependencies
-import Persistence
 
 class UserAccountUpdateViewController: NSViewController {
 
@@ -61,13 +66,11 @@ class UserAccountUpdateViewController: NSViewController {
     @IBOutlet weak var toServerLbl: NSTextField!
 
     private let alert: UserAccountUpdateAlert
-    private let sessionService: SessionService
 
     var dismissCompletion: (() -> Void)?
     
-    init(alert: UserAccountUpdateAlert, sessionService: SessionService) {
+    init(alert: UserAccountUpdateAlert) {
         self.alert = alert
-        self.sessionService = sessionService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -167,6 +170,8 @@ class UserAccountUpdateViewController: NSViewController {
         alert.actions.first?.handler?()
 
         Task {
+            @Dependency(\.sessionService) var sessionService
+
             let url = await sessionService.getPlanSession(mode: .upgrade)
             SafariService.openLink(url: url)
         }

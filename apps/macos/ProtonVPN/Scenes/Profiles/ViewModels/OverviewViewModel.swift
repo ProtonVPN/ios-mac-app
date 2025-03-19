@@ -21,24 +21,31 @@
 //
 
 import Cocoa
+
+import Dependencies
+
 import LegacyCommon
+import CommonNetworking
+
+import Domain
 
 final class OverviewViewModel {
     
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
-    private let sessionService: SessionService
-    
+
+    @Dependency(\.sessionService)
+    private var sessionService: SessionService
+
     var contentChanged: (() -> Void)?
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
     
-    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, sessionService: SessionService) {
+    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
-        self.sessionService = sessionService
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
-                                               name: profileManager.contentChanged, object: nil)
+
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
     
     @objc private func profilesChanged() {
@@ -62,12 +69,12 @@ final class OverviewViewModel {
     }
     
     func cellModel(forIndex index: Int) -> OverviewItemViewModel {
-        return OverviewItemViewModel(profile: profileManager.allProfiles[index],
-                                     editProfile: editProfile,
-                                     profileManager: profileManager,
-                                     vpnGateway: vpnGateway,
-                                     userTier: userTier,
-                                     sessionService: sessionService
+        return OverviewItemViewModel(
+            profile: profileManager.allProfiles[index],
+            editProfile: editProfile,
+            profileManager: profileManager,
+            vpnGateway: vpnGateway,
+            userTier: userTier
         )
     }
     

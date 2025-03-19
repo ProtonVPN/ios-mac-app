@@ -50,7 +50,6 @@ public class MockDependencyContainer {
     }()
 
     public lazy var alertService = CoreAlertServiceDummy()
-    public lazy var coreApiService = CoreApiServiceMock()
     lazy var appSessionRefresher = { withDependencies {
         $0.serverRepository = self.serverRepository
     } operation: {
@@ -89,12 +88,10 @@ public class MockDependencyContainer {
         authKeychain: authKeychain
     )
 
-    public let sessionService = SessionServiceMock()
     public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
 
     #if os(iOS)
     public lazy var vpnAuthentication = VpnAuthenticationRemoteClient(
-        sessionService: sessionService,
         authenticationStorage: vpnAuthenticationStorage
     )
     #elseif os(macOS)
@@ -222,12 +219,6 @@ extension MockFactory: CountryCodeProviderFactory {
 extension MockFactory: CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService {
         container.alertService
-    }
-}
-
-extension MockFactory: CoreApiServiceFactory {
-    func makeCoreApiService() -> CoreApiService {
-        container.coreApiService
     }
 }
 

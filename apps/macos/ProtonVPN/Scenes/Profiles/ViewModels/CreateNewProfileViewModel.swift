@@ -24,14 +24,15 @@ import Cocoa
 
 import Dependencies
 
-import Domain
-import Strings
-import Theme
 import LegacyCommon
-import Localization
+import CommonNetworking
 import VPNShared
 import VPNAppCore
 import Persistence
+
+import Theme
+import Domain
+import Strings
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel
@@ -44,17 +45,16 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-    
+
     typealias Factory = CoreAlertServiceFactory &
         VpnKeychainFactory &
         PropertiesManagerFactory &
         AppStateManagerFactory &
         VpnGatewayFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory &
-        SessionServiceFactory
+        SystemExtensionManagerFactory
     private let factory: Factory
-    
+
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
 
     var menuContentChanged: ((MenuContentUpdate) -> Void)?
@@ -79,7 +79,7 @@ class CreateNewProfileViewModel {
     @Dependency(\.serverRepository) private var serverRepository
 
     let colorPickerViewModel = ColorPickerViewModel()
-    lazy var secureCoreWarningViewModel = SecureCoreWarningViewModel(sessionService: factory.makeSessionService())
+    lazy var secureCoreWarningViewModel = SecureCoreWarningViewModel()
 
     private var userTier: Int = .paidTier
     private var profileId: String?
@@ -105,7 +105,7 @@ class CreateNewProfileViewModel {
         if connectionProtocol == .vpnProtocol(.ike) {
             connectionProtocol = .smartProtocol
         }
-        
+
         return ModelState.default
             .updating(
                 serverType: defaultServerType,

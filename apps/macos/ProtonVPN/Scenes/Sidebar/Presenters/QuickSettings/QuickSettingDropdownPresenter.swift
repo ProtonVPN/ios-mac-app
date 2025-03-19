@@ -23,6 +23,8 @@
 import Cocoa
 import LegacyCommon
 import VPNAppCore
+import Ergonomics
+import Domain
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
     
@@ -60,7 +62,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         self.alertService = alertService
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnPlanChanged), name: VpnKeychain.vpnPlanChanged, object: nil)
+        AppEvent.planChanged.subscribe(self, selector: #selector(vpnPlanChanged))
     }
     
     var options: [QuickSettingsDropdownOptionPresenter] {

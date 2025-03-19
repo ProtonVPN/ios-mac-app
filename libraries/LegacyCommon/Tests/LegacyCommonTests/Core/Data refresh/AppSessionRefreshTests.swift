@@ -36,7 +36,6 @@ import CommonNetworkingTestSupport
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!
-    var coreApiService: CoreApiServiceMock!
     var propertiesManager: PropertiesManagerMock!
     var repositoryWrapper: ServerRepositoryWrapper!
     var networking: NetworkingMock!
@@ -55,7 +54,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     override func setUpWithError() throws {
         super.setUp()
         alertService = CoreAlertServiceDummy()
-        coreApiService = CoreApiServiceMock()
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
@@ -114,109 +112,117 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     }
 
     func testRefreshTimer() throws { // swiftlint:disable:this function_body_length
-        let expectations = (
-            updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
-            updateCredentials: XCTestExpectation(description: "update vpn credentials"),
-            displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
-        )
-        authKeychain.setMockUsername("user")
+        try withDependencies {
+            // This test triggers a possible purge of stale servers. It is flakey since it relies on starting an
+            // async Task and with the expectations in this test, if the purging is done, it makes the test fail.
+            // So let's explicitly provide a noOp serverManager that will not purge anything so we have servers
+            // explicitly set and not having undesired side effects in our back!
+            $0.serverManager = .noOp
+        } operation: {
+            let expectations = (
+                updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
+                updateCredentials: XCTestExpectation(description: "update vpn credentials"),
+                displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
+            )
+            authKeychain.setMockUsername("user")
 
-        var (nServerUpdates, nCredUpdates) = (0, 0)
+            var (nServerUpdates, nCredUpdates) = (0, 0)
 
-        repositoryWrapper.didUpdateLoads = { _ in
-            guard nServerUpdates < expectations.updateServers.count else {
-                XCTFail("Index out of range")
+            repositoryWrapper.didUpdateLoads = { _ in
+                guard nServerUpdates < expectations.updateServers.count else {
+                    XCTFail("Index out of range")
+                    return
+                }
+                expectations.updateServers[nServerUpdates].fulfill()
+                nServerUpdates += 1
+            }
+
+            vpnKeychain.didStoreCredentials = { _ in
+                expectations.updateCredentials.fulfill()
+                nCredUpdates += 1
+            }
+
+            alertService.alertAdded = { _ in
+                expectations.displayAlert.fulfill()
+            }
+
+            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "plus",
+                                                                               maxTier: .paidTier)
+
+            appSessionRefresher.loggedIn = true
+            appSessionRefreshTimer.startTimers()
+
+            networkingDelegate.apiServerLoads = [
+                .init(serverId: testData.server1.id, load: 10, score: 1.2345, status: 0),
+                .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 1),
+                .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 2),
+            ]
+            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "visionary",
+                                                                               maxTier: .paidTier)
+            timerFactory.runRepeatingTimers()
+            wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
+            XCTAssertNotNil(vpnKeychain.credentials)
+            XCTAssertEqual(vpnKeychain.credentials?.description, networkingDelegate.apiCredentials?.description)
+            try checkForSuccessfulServerUpdate()
+
+            networkingDelegate.apiServerLoads = [
+                .init(serverId: testData.server3.id, load: 10, score: 1.2345, status: 0),
+                .init(serverId: testData.server1.id, load: 20, score: 2.3456, status: 1),
+                .init(serverId: testData.server2.id, load: 30, score: 3.4567, status: 2),
+            ]
+            networkingDelegate.apiCredentials = nil
+
+            let message = "Your app is really, really old"
+            appSessionRefresher.loginError = ResponseError(
+                httpCode: 400,
+                responseCode: ApiErrorCode.apiVersionBad,
+                userFacingMessage: message,
+                underlyingError: nil
+            )
+
+            timerFactory.runRepeatingTimers()
+            wait(for: [expectations.updateServers[1], expectations.displayAlert], timeout: 10)
+            try checkForSuccessfulServerUpdate()
+
+            guard let alert = alertService.alerts.last as? AppUpdateRequiredAlert else {
+                XCTFail("Displayed wrong kind of alert during app info refresh")
                 return
             }
-            expectations.updateServers[nServerUpdates].fulfill()
-            nServerUpdates += 1
+
+            XCTAssertEqual(alert.message, message, "Should have displayed alert returned from API")
+
+            appSessionRefreshTimer.stopTimers()
+
+            for timer in timerFactory.repeatingTimers {
+                XCTAssertFalse(timer.isValid, "Should have stopped all timers")
+            }
+
+            // This part causes crash in tests that I was unable to debug.
+            // If zombies are enabled, following error logs can be found:
+            // * Class _NSZombie__NSJSONWriter is implemented in both ?? (0x600001f2f000) and ?? (0x600001fb1da0). One of the two will be used. Which one is undefined.
+            // * Class _NSZombie___NSConcreteURLComponents is implemented in both ?? (0x600005f688a0) and ?? (0x600005ffc390). One of the two will be used. Which one is undefined.
+            // * *** -[CFString release]: message sent to deallocated instance
+            //
+            // If you tried fixing this and failed, increase the counter :)
+            // Failed attempts: 1
+
+    //        appSessionRefresher.didAttemptLogin = {
+    //            XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
+    //        }
+    //        serverStorage.didUpdateServers = { _ in
+    //            XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
+    //        }
+    //        vpnKeychain.didStoreCredentials = { _ in
+    //            XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
+    //        }
+    //        appSessionRefreshTimer.start(now: true)
+    //        sleep(2) // give time to make sure API isn't being hit
+    //        appSessionRefreshTimer.stop()
         }
-
-        vpnKeychain.didStoreCredentials = { _ in
-            expectations.updateCredentials.fulfill()
-            nCredUpdates += 1
-        }
-
-        alertService.alertAdded = { _ in
-            expectations.displayAlert.fulfill()
-        }
-
-        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "plus",
-                                                                           maxTier: .paidTier)
-
-        appSessionRefresher.loggedIn = true
-        appSessionRefreshTimer.startTimers()
-
-        networkingDelegate.apiServerLoads = [
-            .init(serverId: testData.server1.id, load: 10, score: 1.2345, status: 0),
-            .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 1),
-            .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 2),
-        ]
-        networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "visionary",
-                                                                           maxTier: .paidTier)
-        timerFactory.runRepeatingTimers()
-        wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
-        XCTAssertNotNil(vpnKeychain.credentials)
-        XCTAssertEqual(vpnKeychain.credentials?.description, networkingDelegate.apiCredentials?.description)
-        try checkForSuccessfulServerUpdate()
-
-        networkingDelegate.apiServerLoads = [
-            .init(serverId: testData.server3.id, load: 10, score: 1.2345, status: 0),
-            .init(serverId: testData.server1.id, load: 20, score: 2.3456, status: 1),
-            .init(serverId: testData.server2.id, load: 30, score: 3.4567, status: 2),
-        ]
-        networkingDelegate.apiCredentials = nil
-
-        let message = "Your app is really, really old"
-        appSessionRefresher.loginError = ResponseError(
-            httpCode: 400,
-            responseCode: ApiErrorCode.apiVersionBad,
-            userFacingMessage: message,
-            underlyingError: nil
-        )
-
-        timerFactory.runRepeatingTimers()
-        wait(for: [expectations.updateServers[1], expectations.displayAlert], timeout: 10)
-        try checkForSuccessfulServerUpdate()
-
-        guard let alert = alertService.alerts.last as? AppUpdateRequiredAlert else {
-            XCTFail("Displayed wrong kind of alert during app info refresh")
-            return
-        }
-
-        XCTAssertEqual(alert.message, message, "Should have displayed alert returned from API")
-
-        appSessionRefreshTimer.stopTimers()
-
-        for timer in timerFactory.repeatingTimers {
-            XCTAssertFalse(timer.isValid, "Should have stopped all timers")
-        }
-
-        // This part causes crash in tests that I was unable to debug.
-        // If zombies are enabled, following error logs can be found:
-        // * Class _NSZombie__NSJSONWriter is implemented in both ?? (0x600001f2f000) and ?? (0x600001fb1da0). One of the two will be used. Which one is undefined.
-        // * Class _NSZombie___NSConcreteURLComponents is implemented in both ?? (0x600005f688a0) and ?? (0x600005ffc390). One of the two will be used. Which one is undefined.
-        // * *** -[CFString release]: message sent to deallocated instance
-        //
-        // If you tried fixing this and failed, increase the counter :)
-        // Failed attempts: 1
-
-//        appSessionRefresher.didAttemptLogin = {
-//            XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
-//        }
-//        serverStorage.didUpdateServers = { _ in
-//            XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
-//        }
-//        vpnKeychain.didStoreCredentials = { _ in
-//            XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
-//        }
-//        appSessionRefreshTimer.start(now: true)
-//        sleep(2) // give time to make sure API isn't being hit
-//        appSessionRefreshTimer.stop()
     }
 }
 
-extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, CoreApiServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
 
     func makeTimerFactory() -> TimerFactory {
         return timerFactory
@@ -224,10 +230,6 @@ extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory,
 
     func makeCoreAlertService() -> CoreAlertService {
         return alertService
-    }
-
-    func makeCoreApiService() -> CoreApiService {
-        return coreApiService
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {

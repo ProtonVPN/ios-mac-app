@@ -28,11 +28,13 @@ import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 
 import CommonNetworking
-import Domain
-import Ergonomics
 import LegacyCommon
 import VPNAppCore // UnauthKeychain
 import VPNShared
+import Announcement
+
+import Domain
+import Ergonomics
 
 enum SessionStatus {
     case notEstablished
@@ -64,7 +66,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         PropertiesManagerFactory &
                         VpnGatewayFactory &
                         CoreAlertServiceFactory &
-                        CoreApiServiceFactory &
                         NetworkingFactory &
                         AppSessionRefreshTimerFactory &
                         AnnouncementRefresherFactory &
@@ -398,10 +399,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
-            NotificationCenter.default.post(
-                name: .userCompletedUpsellAlertJourney,
-                object: (modalSource, downgradeInfo.to.planName)
-            )
+            AppEvent.userCompletedUpsellAlertJourney.post((modalSource, downgradeInfo.to.planName))
         }
 
         super.userPlanChanged(notification) // refreshes data

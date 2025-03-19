@@ -22,6 +22,7 @@
 
 import Foundation
 import LegacyCommon
+import Domain
 
 class StatusMenuProfilesListViewModel {
 
@@ -50,8 +51,7 @@ class StatusMenuProfilesListViewModel {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
-                                               name: profileManager.contentChanged, object: nil)
+        AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
     
     deinit {

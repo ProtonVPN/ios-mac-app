@@ -21,6 +21,9 @@ import NetworkExtension
 import VPNShared
 import XCTest
 import VPNSharedTesting
+import Dependencies
+import CommonNetworking
+import CommonNetworkingTestSupport
 
 @testable import LegacyCommon
 
@@ -48,16 +51,24 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
     }
 
     func testSessionExpiredMessage() {
-        mockProviderState.needNewSession = true
+        withDependencies {
+            let networkingMock = NetworkingMock()
+            networkingMock.requestCallback = { _ in
+                return Result { try JSONEncoder().encode(ForkSessionResponse.mock) }
+            }
+            $0.networking = CoreNetworkingWrapper(wrapped: networkingMock)
+        } operation: {
+            mockProviderState.needNewSession = true
 
-        populateExpectations(description: "Handle session expired in WireGuard extension",
-                             [.vpnConnection, .localAgentConnection, pushSelector, .certificateRefresh])
+            populateExpectations(description: "Handle session expired in WireGuard extension",
+                                 [.vpnConnection, .localAgentConnection, pushSelector, .certificateRefresh])
 
-        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
-        awaitExpectations()
+            awaitExpectations()
 
-        disconnectSynchronously()
+            disconnectSynchronously()
+        }
     }
 
     func testNeedingNewKeys() {

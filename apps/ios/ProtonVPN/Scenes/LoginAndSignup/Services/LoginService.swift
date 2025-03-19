@@ -61,7 +61,6 @@ final class CoreLoginService {
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
-        & CoreApiServiceFactory
         & SettingsServiceFactory
         & VpnApiServiceFactory
         & PushNotificationServiceFactory
@@ -74,7 +73,6 @@ final class CoreLoginService {
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
     private let doh: DoHVPN
-    private let coreApiService: CoreApiService
     private let settingsService: SettingsService
     private let pushNotificationService: PushNotificationServiceProtocol
 
@@ -91,7 +89,6 @@ final class CoreLoginService {
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
-        coreApiService = factory.makeCoreApiService()
         settingsService = factory.makeSettingsService()
         pushNotificationService = factory.makePushNotificationService()
     }
@@ -115,7 +112,8 @@ final class CoreLoginService {
             let authCredentials = AuthCredentials(data)
             Task { @MainActor [weak self] in
                 do {
-                    self?.propertiesManager.userSettings = try await self?.coreApiService.getUserSettings()
+                    @Dependency(\.userSettingsClient) var userSettingsClient
+                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings().userSettings
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
                     completion(.success(()))
                 } catch {

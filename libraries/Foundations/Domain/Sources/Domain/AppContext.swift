@@ -23,7 +23,6 @@ public enum AppContext: String {
     case mainApp
     case siriIntentHandler
     case wireGuardExtension
-    case openVpnExtension
 
     public var clientIdKey: String {
         switch self {
@@ -31,8 +30,6 @@ public enum AppContext: String {
             return "Id"
         case .wireGuardExtension:
             return "WireGuardId"
-        case .openVpnExtension:
-            return "OpenVpnId"
         }
     }
 

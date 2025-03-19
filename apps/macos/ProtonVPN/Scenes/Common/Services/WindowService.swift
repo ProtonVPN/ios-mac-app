@@ -21,14 +21,21 @@
 //
 
 import Cocoa
-import LegacyCommon
-import SwiftUI
-import BugReport
 import AppKit
-import PMLogger
-import Strings
-import Modals_macOS
+import SwiftUI
+
 import Dependencies
+
+import PMLogger
+
+import LegacyCommon
+import VPNAppCore
+import Modals_macOS
+import BugReport
+import Announcement
+
+import Ergonomics
+import Strings
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
@@ -92,7 +99,6 @@ class WindowServiceImplementation: WindowService {
         & BugReportCreatorFactory
         & DynamicBugReportManagerFactory
         & VpnKeychainFactory
-        & SessionServiceFactory
         & PropertiesManagerFactory
 
     private let factory: Factory

@@ -27,17 +27,17 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
-import CommonNetworking
-import Domain
-import Ergonomics
-import ExtensionIPC
-import Search
-import Review
-import protocol VPNAppCore.UnauthKeychainHandleFactory
-import protocol VPNAppCore.UnauthKeychainHandle
 import VPNShared
 import LegacyCommon
+import CommonNetworking
+import ExtensionIPC
 import VPNAppCore
+import Announcement
+
+import Domain
+import Ergonomics
+import Search
+import Review
 
 enum SessionStatus {
     
@@ -53,9 +53,6 @@ protocol AppSessionManager {
     var vpnGateway: VpnGatewayProtocol { get }
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
-    
-    var sessionChanged: Notification.Name { get }
-    var dataReloaded: Notification.Name { get }
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate() async throws -> Void
@@ -87,7 +84,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         ReviewFactory &
                         AuthKeychainHandleFactory &
                         UnauthKeychainHandleFactory &
-                        CoreApiServiceFactory &
                         UpdateCheckerFactory
 
     private let factory: Factory
@@ -109,10 +105,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
-    let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
-    let sessionRefreshed = Notification.Name("AppSessionManagerSessionRefreshed")
-    let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
-
     var sessionStatus: SessionStatus = .notEstablished
 
     private var refreshUserInfoTask: Task<Void, Error>?
@@ -123,7 +115,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         planService.delegate = self
 
-        NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil, using: updateState)
+        AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
     }
 
     // MARK: - Beginning of the login logic.
@@ -234,7 +226,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     @MainActor
-    func refreshVpnAuthCertificate() async throws -> Void {
+    func refreshVpnAuthCertificate() async throws {
         guard loggedIn else {
             log.info("Not refreshing vpn certificate - client not logged in")
             return
@@ -260,7 +252,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
                     // we just need to attempt to reconnect, since that will generate new keys for us.
                     executeOnUIThread {
-                        NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+                        AppEvent.needsReconnect.post()
                         continuation.resume()
                     }
                 case let .failure(error):
@@ -270,6 +262,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
 
+    // swiftlint:disable function_body_length
     private func retrievePropertiesAndLogIn() async throws {
         let appState = await appStateManager.stateThreadSafe
         let shouldRefreshServersAccordingToTier = await shouldRefreshServersAccordingToUserTier
@@ -358,7 +351,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // swiftlint:enable function_body_length
 
     private func resolveActiveSession() async throws {
-        await MainActor.run { NotificationCenter.default.post(Notification(name: self.sessionRefreshed, object: nil)) }
+        await MainActor.run { AppEvent.sessionManagerSessionRefreshed.post() }
 
         guard await appStateManager.stateThreadSafe.isConnected else {
             return // Success
@@ -390,7 +383,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 let user = try await self.vpnApiService.userInfo()
                 self.propertiesManager.userAccountRecovery = user.accountRecovery
                 await MainActor.run {
-                    NotificationCenter.default.post(name: self.dataReloaded, object: nil)
+                    AppEvent.sessionManagerDataReloaded.post()
                 }
             } catch {
                 log.error("Could not refresh User info", category: .api)
@@ -489,20 +482,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         if state == .established {
             loggedIn = true
             propertiesManager.hasConnected = true
-            postNotification(name: sessionChanged, object: vpnGateway)
+            DispatchQueue.main.async { [weak self] in AppEvent.sessionManagerSessionChanged.post(self?.vpnGateway) }
         } else if state == .notEstablished {
             // Clear auth token and vpn creds to ensure they won't be used
             logOutCleanup()
-            postNotification(name: sessionChanged, object: reason)
+            DispatchQueue.main.async { AppEvent.sessionManagerSessionChanged.post(reason) }
         }
         
         refreshTimer.startTimers()
-    }
-
-    private func postNotification(name: Notification.Name, object: Any?) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: name, object: object)
-        }
     }
 }
 
@@ -514,11 +501,11 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
             return
         }
         // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
-        NotificationCenter.default.post(name: .userCompletedUpsellAlertJourney, object: (modalSource, newPlanName))
+        AppEvent.userCompletedUpsellAlertJourney.post((modalSource, newPlanName))
         log.debug("Reloading data after plan purchase", category: .app)
         do {
             try await retrievePropertiesAndLogIn()
-            NotificationCenter.default.post(name: dataReloaded, object: nil)
+            AppEvent.sessionManagerDataReloaded.post()
         } catch {
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         }
@@ -527,7 +514,7 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
 
 // MARK: - Review
 extension AppSessionManagerImplementation {
-    private func updateState(_ notification: Notification) {
+    @objc private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }

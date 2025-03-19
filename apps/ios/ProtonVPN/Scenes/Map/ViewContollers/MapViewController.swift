@@ -22,8 +22,13 @@
 
 import CoreLocation
 import UIKit
-import LegacyCommon
+
 import ProtonCoreUIFoundations
+
+import LegacyCommon
+import Announcement
+
+import Domain
 import Strings
 
 final class MapViewController: UIViewController {
@@ -75,8 +80,8 @@ final class MapViewController: UIViewController {
         setupSecureCoreBar()
         addAnnotations()
         setConnection()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+
+        AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
     
     private func setupView() {

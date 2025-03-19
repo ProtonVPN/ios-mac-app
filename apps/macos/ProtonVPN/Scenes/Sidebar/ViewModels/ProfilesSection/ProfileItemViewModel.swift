@@ -21,10 +21,13 @@
 //
 
 import Cocoa
+
 import LegacyCommon
+import VPNAppCore
+
 import Modals_macOS
 import Strings
-import VPNAppCore
+import Domain
 
 class ProfileItemViewModel: AbstractProfileViewModel {
     
@@ -83,7 +86,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
                 return
             }
 
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to profile: \(self.profile.logDescription)", category: .connectionConnect, event: .trigger)
             self.vpnGateway.connectTo(profile: self.profile)
         }

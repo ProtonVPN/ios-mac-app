@@ -86,7 +86,7 @@ class CountryItemViewModel {
             return .freeTier
         }
     }
-    
+
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
         case .country:
@@ -108,7 +108,7 @@ class CountryItemViewModel {
 
         return activeServer.kind == serversGroup.kind
     }
-    
+
     private var isConnecting: Bool {
         if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             // If a connect button is ever added to gateway groups, this check will also need to verify that the last
@@ -117,13 +117,13 @@ class CountryItemViewModel {
         }
         return false
     }
-    
+
     private var connectedUiState: Bool {
         return isConnected || isConnecting
     }
-    
+
     var connectionChanged: (() -> Void)?
-    
+
     var countryCode: String {
         switch serversGroup.kind {
         case .country(let code):
@@ -132,7 +132,7 @@ class CountryItemViewModel {
             return ""
         }
     }
-    
+
     var countryName: String {
         switch serversGroup.kind {
         case .country(let code):
@@ -141,7 +141,7 @@ class CountryItemViewModel {
             return ""
         }
     }
-    
+
     var description: String {
         switch serversGroup.kind {
         case .country(let code):
@@ -150,7 +150,7 @@ class CountryItemViewModel {
             return name
         }
     }
-    
+
     var backgroundColor: UIColor {
         return .backgroundColor()
     }
@@ -158,23 +158,23 @@ class CountryItemViewModel {
     var torAvailable: Bool {
         serversGroup.featureUnion.contains(.tor)
     }
-    
+
     var p2pAvailable: Bool {
         serversGroup.featureUnion.contains(.p2p)
     }
-    
+
     var isSmartAvailable: Bool {
         serversGroup.supportsSmartRouting
     }
-    
+
     var streamingAvailable: Bool {
         return !streamingServices.isEmpty
     }
-    
+
     var isCurrentlyConnected: Bool {
         return isConnected || isConnecting
     }
-    
+
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
             return Theme.Asset.vpnSubscriptionBadge.image
@@ -192,7 +192,7 @@ class CountryItemViewModel {
     var textInPlaceOfConnectIcon: String? {
         return isUsersTierTooLow ? Localizable.upgrade : nil
     }
-    
+
     var alphaOfMainElements: CGFloat {
         if underMaintenance {
             return 0.25
@@ -204,15 +204,15 @@ class CountryItemViewModel {
 
         return 1.0
     }
-    
+
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
         return serverViewModels(for: servers.filter { $0.logical.tier.isFreeTier })
     }()
-    
+
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
         return serverViewModels(for: servers.filter { $0.logical.tier.isPaidTier })
     }()
-    
+
     private func serverViewModels(for servers: [ServerInfo]) -> [ServerItemViewModel] {
         return servers.map { (serverInfo) -> ServerItemViewModel in
             switch serverType {
@@ -240,7 +240,7 @@ class CountryItemViewModel {
             }
         }
     }
-    
+
     private lazy var serverViewModels = { () -> [(tier: Int, viewModels: [ServerItemViewModel])] in
         var serverTypes = [(tier: Int, viewModels: [ServerItemViewModel])]()
         if !freeServerViewModels.isEmpty {
@@ -249,7 +249,7 @@ class CountryItemViewModel {
         if !plusServerViewModels.isEmpty {
             serverTypes.append((tier: 2, viewModels: plusServerViewModels))
         }
-        
+
         serverTypes.sort(by: { (serverGroup1, serverGroup2) -> Bool in
             if userTier >= serverGroup1.tier && userTier >= serverGroup2.tier ||
                 userTier < serverGroup1.tier && userTier < serverGroup2.tier { // sort within available then non-available groups
@@ -258,7 +258,7 @@ class CountryItemViewModel {
                 return serverGroup1.tier < serverGroup2.tier
             }
         })
-        
+
         return serverTypes
     }()
 
@@ -319,11 +319,11 @@ class CountryItemViewModel {
     func serversCount(for section: Int) -> Int {
         return serverViewModels[section].viewModels.count
     }
-    
+
     func sectionsCount() -> Int {
         return serverViewModels.count
     }
-    
+
     func titleFor(section: Int) -> String {
         let tier = serverViewModels[section].tier
         return CoreAppConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
@@ -336,14 +336,14 @@ class CountryItemViewModel {
     func isServerFree( for section: Int) -> Bool {
         return serverViewModels[section].tier.isFreeTier
     }
-    
+
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
         return serverViewModels[section].viewModels[row]
     }
-    
+
     func connectAction() {
         log.debug("Connect requested by clicking on Country item", category: .connectionConnect, event: .trigger)
-        
+
         if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             alertService.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
@@ -351,35 +351,25 @@ class CountryItemViewModel {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(countryName: countryName))
         } else if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.country))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.country))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .country)
             connectionStatusService.presentStatusViewController()
         }
     }
-    
+
     // MARK: - Private functions
 
     fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(stateChanged),
-            name: VpnGateway.connectionChanged,
-            object: nil)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(stateChanged),
-            name: VpnGateway.connectionChanged,
-            object: nil
-        )
+        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
 
     @objc fileprivate func stateChanged() {
@@ -400,7 +390,7 @@ extension CountryItemViewModel: CountryViewModel {
         }
         return false
     }
-    
+
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
         let convertTier = { (tier: Int) -> ServerTier in

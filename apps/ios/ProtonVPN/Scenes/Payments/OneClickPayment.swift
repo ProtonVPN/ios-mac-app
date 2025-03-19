@@ -18,10 +18,13 @@
 
 import UIKit
 
+import Dependencies
+
 import Domain
 import Modals
 import Modals_iOS
 import LegacyCommon
+import CommonNetworking
 import Strings
 
 import ProtonCoreFeatureFlags
@@ -74,7 +77,6 @@ final class OneClickPayment {
     private var plansClientValue: PlansClient?
 
     init(
-        sessionService: SessionService,
         alertService: CoreAlertService,
         planService: PlanService,
         payments: Payments
@@ -85,6 +87,8 @@ final class OneClickPayment {
 
         let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
             Task {
+                @Dependency(\.sessionService) var sessionService
+
                 // Fetch a session login URL so the user can easily visit their account page.
                 let url = await sessionService.getPlanSession(mode: .upgrade)
                 alertService.push(
@@ -111,13 +115,7 @@ final class OneClickPayment {
         self.planService = planService
         self.payments = payments
 
-        // listen to notifications
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(userDidDismissWelcomeScreen),
-            name: .userDismissedWelcomeScreen,
-            object: nil
-        )
+        AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }
 
     @objc
@@ -153,7 +151,7 @@ final class OneClickPayment {
     }
 
     @MainActor
-    func validate(selectedPlan: PlanOption) async -> Void {
+    func validate(selectedPlan: PlanOption) async {
         let result = await self.buyPlan(planOption: selectedPlan)
         await self.buyPlanResultHandler(result)
     }
@@ -168,20 +166,16 @@ final class OneClickPayment {
             await planService.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
-            break
         case .planPurchaseProcessingInProgress(let plan):
             log.debug("Purchasing \(plan.protonName)", category: .iap)
-            break
         // a purchaseError, we don't dismiss the flow so user can retry (user can manually dismiss the flow)
         case let .purchaseError(error, _):
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
-            break
         // same, we don't dismiss the flow, we're displaying an alert (user can manually dismiss the flow)
         case let .apiMightBeBlocked(message, originalError, _):
             log.error("\(message)", category: .connection, metadata: ["error": "\(originalError)"])
             alertService.push(alert: PaymentAlert(message: message, isError: true))
-            break
         case .purchaseCancelled:
             break
         // renewal is not triggering the welcome screen immediately, so dismissing the flow after payment succeeds
@@ -237,10 +231,6 @@ final class OneClickPayment {
                                              finishCallback: $0.resume(returning:))
         }
     }
-}
- extension Notification.Name {
-     /// A user has been shown the welcome screen after an upsell and did interact with it.
-     static let userDismissedWelcomeScreen: Self = .init("UserDismissedWelcomeScreen")
 }
 
 enum OneClickPurchaseError: Error, LocalizedError {

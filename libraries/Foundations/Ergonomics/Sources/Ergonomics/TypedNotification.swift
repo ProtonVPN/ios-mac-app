@@ -18,7 +18,7 @@
 
 import Foundation
 
-import XCTestDynamicOverlay
+import IssueReporting
 import ConcurrencyExtras
 
 /// Automatically handles transferring a payload using `NotificationCenter`.

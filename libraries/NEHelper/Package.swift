@@ -23,7 +23,6 @@ let package = Package(
         .package(path: "../Foundations/Domain"),
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../NetShield"),
-        .package(path: "../Foundations/LocalFeatureFlags"),
         .package(path: "../Foundations/PMLogger"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Timer"),
@@ -35,7 +34,10 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
+        .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
+        .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.3.1")),
         .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.36.0"),
     ],
     targets: [
@@ -50,8 +52,12 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
-                .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
-                .product(name: "Dependencies", package: "swift-dependencies")
+                .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
+                .product(name: "CasePaths", package: "swift-case-paths"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                .product(name: "Sharing", package: "swift-sharing")
             ]
         ),
         .target(
@@ -62,7 +68,6 @@ let package = Package(
                 "VPNShared",
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
                 .core(module: "Utilities")
             ]
         ),
@@ -92,9 +97,12 @@ let package = Package(
         ),
         .target(
             name: "VPNSharedTesting",
-            dependencies: ["VPNShared",
-                           .core(module: "FeatureFlags"),
-                .product(name: "TimerMock", package: "Timer")]
+            dependencies: [
+                "VPNShared",
+                "VPNAppCore",
+                .core(module: "FeatureFlags"),
+                .product(name: "TimerMock", package: "Timer")
+            ]
         ),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),

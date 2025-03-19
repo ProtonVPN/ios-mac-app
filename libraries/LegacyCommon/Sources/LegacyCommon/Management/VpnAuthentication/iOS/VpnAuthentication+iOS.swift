@@ -24,35 +24,33 @@ import Domain
 import Ergonomics
 import ExtensionIPC
 import VPNShared
+import CommonNetworking
 
 #if os(iOS)
 public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     private var connectionProvider: ProviderMessageSender?
-    private let sessionService: SessionService
     private let authenticationStorage: VpnAuthenticationStorageSync
 
-    public typealias Factory = SessionServiceFactory &
+    public typealias Factory =
         VpnAuthenticationStorageFactory &
         SafeModePropertyProviderFactory
 
     public convenience init(_ factory: Factory) {
         self.init(
-            sessionService: factory.makeSessionService(),
             authenticationStorage: factory.makeVpnAuthenticationStorage()
         )
     }
 
     public init(
-        sessionService: SessionService,
         authenticationStorage: VpnAuthenticationStorageSync
     ) {
-        self.sessionService = sessionService
         self.authenticationStorage = authenticationStorage
 
-        NotificationCenter.default.addObserver(forName: VpnKeychain.vpnPlanChanged, object: nil, queue: nil,
-                                               using: userDowngradedPlanOrBecameDelinquent(_:))
-        NotificationCenter.default.addObserver(forName: VpnKeychain.vpnUserDelinquent, object: nil, queue: nil,
-                                               using: userDowngradedPlanOrBecameDelinquent(_:))
+        let events: [AppEvent] = [
+            .planChanged,
+            .userDelinquent
+        ]
+        events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
     }
 
     public func setConnectionProvider(provider: ProviderMessageSender?) {
@@ -179,10 +177,14 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
     /// may find that its session has expired, or that it does not have any session saved in its keychain. In such
     /// a case, it will reply to refresh requests with `.errorSessionExpired`, at which point it will be the
     /// main app's responsibility to (re)fork its session and send the selector to the extension.
-    private func pushSelectorToProvider(extensionContext: AppContext = .wireGuardExtension, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    private func pushSelectorToProvider(
+        extensionContext context: AppContext = .wireGuardExtension,
+        completionHandler: @escaping ((Result<(), Error>) -> Void)
+    ) {
         Task {
             do {
-                let selector = try await sessionService.getExtensionSessionSelector(extensionContext: extensionContext)
+                @Dependency(\.sessionService) var sessionService
+                let selector = try await sessionService.getExtensionSessionSelector(extensionContext: context)
                 pushToProvider(selector: selector, completionHandler: completionHandler)
             } catch {
                 log.error("Received error forking API session: \(error)", category: .userCert)
@@ -196,7 +198,8 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.
         // The network extension will always send requests from behind the tunnel (except when it can't, because of the
         // Apple's "killswitch").
-        let sessionId = sessionService.sessionCookie
+        @Dependency(\.sessionService) var sessionService
+        let sessionId = sessionService.sessionCookie()
         let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: sessionId)
 
         connectionProvider?.send(request, completion: { result in
@@ -248,7 +251,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
         })
     }
 
-    private func userDowngradedPlanOrBecameDelinquent(_ notification: Notification) {
+    @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: Notification) {
         log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
 
         var features: VPNConnectionFeatures?

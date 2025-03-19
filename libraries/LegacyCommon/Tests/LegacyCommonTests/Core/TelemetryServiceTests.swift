@@ -17,15 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LocalFeatureFlags
-import ProtonCoreNetworking
-import Dependencies
-import Ergonomics
-import VPNShared
 import XCTest
-@testable import LegacyCommon
+
+import Dependencies
+
+import ProtonCoreNetworking
+
+import VPNShared
 import CommonNetworking
 import CommonNetworkingTestSupport
+
+import Ergonomics
+@testable import LegacyCommon
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()
@@ -33,7 +36,7 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
         events.append(event)
         return TelemetryResponse(code: 1000)
     }
-    
+
     func flushEvents(events: [String : Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
         return TelemetryResponse(code: 1000)
     }
@@ -57,7 +60,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
     func makeAppStateManager() -> AppStateManager {
         return appStateManager
     }
-    
+
     func makeAuthKeychainHandle() -> AuthKeychainHandle {
         AuthKeychain.default
     }
@@ -100,12 +103,6 @@ class TelemetryServiceTests: XCTestCase {
 
     override static func setUp() {
         super.setUp()
-        setLocalFeatureFlagOverrides([
-            TelemetryFeature.telemetryOptIn.category: [
-                TelemetryFeature.telemetryOptIn.feature: true,
-                TelemetryFeature.useBuffer.feature: true
-            ]
-        ])
     }
 
     override func invokeTest() {
@@ -115,10 +112,6 @@ class TelemetryServiceTests: XCTestCase {
         } operation: {
             super.invokeTest()
         }
-    }
-
-    override static func tearDown() {
-        setLocalFeatureFlagOverrides(nil)
     }
 
     override func setUp() async throws {

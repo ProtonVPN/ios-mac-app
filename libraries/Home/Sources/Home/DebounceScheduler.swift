@@ -18,6 +18,7 @@
 
 import Dependencies
 import Combine
+import CombineSchedulers
 
 extension DependencyValues {
     public var debounceScheduler: AnySchedulerOf<UIScheduler> {

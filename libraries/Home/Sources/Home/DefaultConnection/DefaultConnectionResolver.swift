@@ -21,6 +21,7 @@ import Collections
 import Dependencies
 import DependenciesMacros
 import SharedViews
+import IssueReporting
 import Domain
 
 @DependencyClient
@@ -32,7 +33,7 @@ struct DefaultConnectionResolver: Sendable {
 
     var preferenceModels: @Sendable (
         _ recents: OrderedSet<RecentConnection>
-    ) -> [ConnectionPreferenceModel] = { _ in XCTFail("\(Self.self).preferenceModels"); return [] }
+    ) -> [ConnectionPreferenceModel] = { _ in reportIssue("\(Self.self).preferenceModels"); return [] }
 }
 
 extension DefaultConnectionResolver: DependencyKey {

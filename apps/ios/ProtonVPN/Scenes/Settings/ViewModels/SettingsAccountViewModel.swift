@@ -20,15 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LegacyCommon
 import UIKit
+
 import ProtonCoreAccountDeletion
 import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
-import VPNShared
-import Strings
+
 import CommonNetworking
+import LegacyCommon
+import VPNShared
+
+import Strings
+import Domain
 
 final class SettingsAccountViewModel {
     
@@ -59,9 +63,8 @@ final class SettingsAccountViewModel {
     
     init(factory: Factory) {
         self.factory = factory
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reload),
-                                               name: appSessionManager.dataReloaded, object: nil)
+
+        AppEvent.sessionManagerDataReloaded.subscribe(self, selector: #selector(reload))
     }
     
     var tableViewData: [TableViewSection] {

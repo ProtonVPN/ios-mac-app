@@ -24,6 +24,7 @@ import Cocoa
 import LegacyCommon
 import Theme
 import Strings
+import Domain
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
@@ -53,7 +54,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
     func connectAction() {
         if canConnect {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Profile in status menu selected. Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(profile: profile)
         }

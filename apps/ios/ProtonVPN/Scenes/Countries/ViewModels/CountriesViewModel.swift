@@ -35,6 +35,8 @@ import Search
 import LegacyCommon
 import ProtonCoreFeatureFlags
 import VPNAppCore
+import VPNShared
+import Announcement
 
 typealias Row = RowViewModel
 
@@ -127,7 +129,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & NetShieldPropertyProviderFactory
         & NATTypePropertyProviderFactory
         & SafeModePropertyProviderFactory
-        & AnnouncementManagerFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -141,7 +142,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+
+    @Dependency(\.announcementManager) private var announcementManager
+    @Dependency(\.serverRepository) private var repository
 
     var delegate: CountriesVMDelegate?
 
@@ -296,17 +299,20 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(activeServerTypeSet),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
-                                               name: VpnKeychain.vpnPlanChanged, object: nil)
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
+
+        let reloadEvents: [AppEvent] = [
+            .planChanged,
+            .vpnProtocol,
+            .smartProtocol
+        ]
+
+        reloadEvents.subscribe(self, selector: #selector(reloadContent))
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: ServerListUpdateNotification.name, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.vpnProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: PropertiesManager.smartProtocolNotification, object: nil)
     }
     
     internal func setStateOf(type: ServerType) {
-        @Dependency(\.serverRepository) var repository
         let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
         switch type {
         case .standard, .p2p, .tor, .unspecified:

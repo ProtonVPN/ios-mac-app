@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import LocalFeatureFlags
 import Foundation
+
 import CommonNetworking
 
 class TelemetryEventScheduler {
@@ -72,15 +72,6 @@ class TelemetryEventScheduler {
     ///
     /// If the buffer is empty, try to send the event to out API, if it fails, save it to the buffer.
     private func sendEvent(_ event: any TelemetryEvent) async throws {
-        guard LocalFeatureFlags.isEnabled(TelemetryFeature.useBuffer) else {
-            do {
-                let response = try await telemetryAPI.flushEvent(event: event.toJSONDictionary(), isBusiness: isBusiness)
-                log.info("Telemetry event sent with response code: \(response.code). Event: \(event)", category: .telemetry)
-            } catch {
-                log.debug("Failed to send a Telemetry event with error: \(error.localizedDescription). Didn't save to buffer because feature flag is disabled")
-            }
-            return
-        }
         guard await buffer.events.isEmpty else {
             try await scheduleEvent(event)
             await sendScheduledEvents()

@@ -17,10 +17,10 @@ let package = Package(
     dependencies: [
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
-        .package(path: "../Foundations/Localization"),
+        .package(path: "../Shared/Localization"),
         .package(path: "../NEHelper"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
-        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.2.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1"))
     ],
     targets: [
@@ -33,7 +33,6 @@ let package = Package(
                 "Localization",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "SwiftNavigation", package: "swift-navigation"),
                 .product(name: "Dependencies", package: "swift-dependencies")
             ]
         ),
@@ -41,6 +40,7 @@ let package = Package(
             name: "Settings-iOS",
             dependencies: [
                 "Settings",
+                .product(name: "SwiftNavigation", package: "swift-navigation"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             exclude: ["swiftgen.yml"],

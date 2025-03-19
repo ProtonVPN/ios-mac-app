@@ -21,12 +21,13 @@
 //
 
 import Cocoa
+
 import LegacyCommon
 import Strings
 
 final class ProfilesContainerViewController: NSViewController {
     
-    typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory & SessionServiceFactory
+    typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory
     private let factory: Factory
     
     @IBOutlet weak var profilesTabBarControllerViewContainer: NSView!
@@ -40,7 +41,7 @@ final class ProfilesContainerViewController: NSViewController {
     private var activeController: NSViewController?
     
     private lazy var overviewVC: OverviewViewController = { [unowned self] in
-        let viewModel = OverviewViewModel(vpnGateway: self.viewModel.vpnGateway, profileManager: factory.makeProfileManager(), sessionService: factory.makeSessionService())
+        let viewModel = OverviewViewModel(vpnGateway: self.viewModel.vpnGateway, profileManager: factory.makeProfileManager())
         self.setUpCallbacks(overview: viewModel)
         let viewController = OverviewViewController(viewModel: viewModel)
         return viewController

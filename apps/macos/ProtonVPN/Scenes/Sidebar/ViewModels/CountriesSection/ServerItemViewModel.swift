@@ -117,13 +117,13 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     func connectAction() {
         if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.server))
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))
             log.debug("Country server in main window clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
             guard let legacyServerModel else { return }
 
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             log.debug("Country server in main window clicked. Will connect to \(serverModel)", category: .connectionConnect, event: .trigger)
 
             vpnGateway.connectTo(server: legacyServerModel)

@@ -31,11 +31,10 @@ protocol UIAlertServiceFactory {
 
 class OsxUiAlertService: UIAlertService {
     
-    typealias Factory = WindowServiceFactory & NavigationServiceFactory & SessionServiceFactory
+    typealias Factory = WindowServiceFactory & NavigationServiceFactory
     
     private let factory: Factory
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    private lazy var sessionService: SessionService = factory.makeSessionService()
     
     private var windowService: WindowService
     private var currentAlerts = [SystemAlert]()
@@ -69,7 +68,7 @@ class OsxUiAlertService: UIAlertService {
         
         switch alert {
         case let userAccountUpdateAlert as UserAccountUpdateAlert:
-            let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert, sessionService: sessionService)
+            let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert)
             alert.dismiss = dismissCompletion(alert)
             modalVC = userUpdateVC
         case let expandableSystemAlert as ExpandableSystemAlert:

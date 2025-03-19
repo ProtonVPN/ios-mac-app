@@ -20,7 +20,7 @@ import Foundation
 
 import Dependencies
 import Ergonomics
-import XCTestDynamicOverlay
+import IssueReporting
 
 import ProtonCoreServices
 import ProtonCoreNetworking

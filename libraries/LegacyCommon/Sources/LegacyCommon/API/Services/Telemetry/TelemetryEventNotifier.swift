@@ -20,24 +20,7 @@ import Foundation
 import Combine
 import Reachability
 import VPNAppCore
-
-public extension Notification.Name {
-    /// A user initiated a change to the VPN configuration.
-    static let userInitiatedVPNChange: Self = .init("UserInitiatedVPNChange")
-    /// An upsell alert was displayed due to a user clicking on a feature reserved for paid users.
-    static let upsellAlertWasDisplayed: Self = .init("UpsellAlertWasDisplayed")
-    /// A user was displayed a announcement.
-    static let userWasDisplayedAnnouncement: Self = .init("UserWasDisplayedAnnouncement")
-    /// A user was redirected to a payment portal through a notification.
-    static let userEngagedWithAnnouncement: Self = .init("UserEngagedWithAnnouncement")
-    /// A user was upsold by clicking on a paid feature, and proceeded to the "Upgrade" step.
-    static let userEngagedWithUpsellAlert: Self = .init("UserEngagedWithUpsellAlert")
-    /// A user upgraded their plan - it's up to the TelemetryService to figure out if this was the result of an upsell.
-    ///
-    /// In the future it would be best to plumb the upsell result data through the payment portal so that we can know
-    /// for sure if we made the payment roundtrip thanks to the upsell modal.
-    static let userCompletedUpsellAlertJourney: Self = .init("UserCompletedUpsellAlertJourney")
-}
+import Domain
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
@@ -56,43 +39,36 @@ public class TelemetryEventNotifier {
             .sink(receiveValue: reachabilityChanged)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: VpnGateway.connectionChanged)
+        AppEvent.connectionStateChanged.publisher
             .compactMap { $0.object as? ConnectionStatus }
             .removeDuplicates()
             .sink(receiveValue: vpnGatewayConnectionChanged)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: .userInitiatedVPNChange)
+        AppEvent.userInitiatedVPNChange.publisher
             .sink(receiveValue: userInitiatedVPNChange)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: .upsellAlertWasDisplayed)
+        AppEvent.upsellAlertWasDisplayed.publisher
             .compactMap { $0.object as? UpsellModalSource }
             .sink(receiveValue: upsellDisplayed)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: .userEngagedWithUpsellAlert)
+        AppEvent.userEngagedWithUpsellAlert.publisher
             .compactMap { $0.object as? UpsellModalSource }
             .sink(receiveValue: upsellEngaged)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: .userCompletedUpsellAlertJourney)
+        AppEvent.userCompletedUpsellAlertJourney.publisher
             .sink(receiveValue: upsellCompleted)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: .userEngagedWithAnnouncement)
+        AppEvent.userEngagedWithAnnouncement.publisher
             .map { $0.object as? String }
             .sink(receiveValue: announcementEngaged)
             .store(in: &cancellables)
 
-        NotificationCenter.default
-            .publisher(for: .userWasDisplayedAnnouncement)
+        AppEvent.userWasDisplayedAnnouncement.publisher
             .map { $0.object as? String }
             .sink(receiveValue: announcementDisplayed)
             .store(in: &cancellables)
@@ -116,7 +92,7 @@ public class TelemetryEventNotifier {
     }
 
     private func userInitiatedVPNChange(_ notification: Notification) {
-        guard notification.name == .userInitiatedVPNChange,
+        guard let event = AppEvent(notification.name), event == .userInitiatedVPNChange,
               let change = notification.object as? UserInitiatedVPNChange else {
             return
         }

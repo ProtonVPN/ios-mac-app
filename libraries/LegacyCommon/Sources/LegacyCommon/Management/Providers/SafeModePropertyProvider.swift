@@ -20,12 +20,11 @@ import Foundation
 import Dependencies
 import Ergonomics
 import VPNShared
+import Domain
 
 public protocol SafeModePropertyProvider: FeaturePropertyProvider {
     /// Current Safe Mdde
     var safeMode: Bool? { get set }
-
-    static var safeModeNotification: Notification.Name { get }
 }
 
 public protocol SafeModePropertyProviderFactory {
@@ -33,8 +32,6 @@ public protocol SafeModePropertyProviderFactory {
 }
 
 public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
-    public static let safeModeNotification: Notification.Name = Notification.Name("SafeModeChanged")
-
     private let key = "SafeMode"
 
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
@@ -58,7 +55,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
             @Dependency(\.defaultsProvider) var provider
             provider.getDefaults().setUserValue(newValue, forKey: key)
             executeOnUIThread {
-                NotificationCenter.default.post(name: type(of: self).safeModeNotification, object: newValue, userInfo: nil)
+                AppEvent.safeMode.post(newValue)
             }
         }
     }

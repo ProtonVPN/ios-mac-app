@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LegacyCommon
+import Announcement
 
 class AnnouncementRefresherMock: AnnouncementRefresher {
 
@@ -28,6 +28,10 @@ class AnnouncementRefresherMock: AnnouncementRefresher {
     // AnnouncementRefresher
 
     func tryRefreshing() {
+        tryRefreshingCalled?()
+    }
+
+    func tryRefreshingAsync() async {
         tryRefreshingCalled?()
     }
 

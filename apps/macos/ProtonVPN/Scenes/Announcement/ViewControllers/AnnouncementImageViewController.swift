@@ -17,9 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
+
+import Dependencies
+
 import LegacyCommon
+import CommonNetworking
+import VPNAppCore
+import Announcement
+
 import Ergonomics
 import Strings
+import Domain
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!
@@ -30,16 +38,14 @@ final class AnnouncementImageViewController: NSViewController {
 
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?
-    private let sessionService: SessionService
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(data: OfferPanel.ImagePanel, offerReference: String?, sessionService: SessionService) {
+    init(data: OfferPanel.ImagePanel, offerReference: String?) {
         self.data = data
         self.offerReference = offerReference
-        self.sessionService = sessionService
         super.init(nibName: NSNib.Name(String(describing: AnnouncementImageViewController.self)), bundle: nil)
     }
 
@@ -104,7 +110,7 @@ final class AnnouncementImageViewController: NSViewController {
 
     func didPresentOffer() {
         DispatchQueue.main.async { [offerReference] in
-            NotificationCenter.default.post(name: .userWasDisplayedAnnouncement, object: offerReference)
+            AppEvent.userWasDisplayedAnnouncement.post(offerReference)
         }
     }
 
@@ -115,7 +121,7 @@ final class AnnouncementImageViewController: NSViewController {
         }
 
         DispatchQueue.main.async { [offerReference] in
-            NotificationCenter.default.post(name: .userEngagedWithAnnouncement, object: offerReference)
+            AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {
@@ -126,6 +132,7 @@ final class AnnouncementImageViewController: NSViewController {
         actionButton.isEnabled = false
 
         Task { [weak actionButton, weak view] in
+            @Dependency(\.sessionService) var sessionService
             // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
             let url = await sessionService.getUpgradePlanSession(url: data.button.url)
             actionButton?.isEnabled = true

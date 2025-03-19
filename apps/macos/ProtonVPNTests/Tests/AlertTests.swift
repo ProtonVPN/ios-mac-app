@@ -29,7 +29,6 @@ import ProtonCoreNetworking
 fileprivate let navigationService = NavigationService(DependencyContainer())
 fileprivate let windowService = WindowServiceMock()
 fileprivate let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
-fileprivate let sessionService = SessionServiceMock()
 fileprivate let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
@@ -168,10 +167,6 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     func makeWindowService() -> WindowService {
         return windowService
     }
-
-    func makeSessionService() -> SessionService {
-        return sessionService
-    }
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
@@ -185,10 +180,6 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
 
     func makeNavigationService() -> NavigationService {
         return navigationService
-    }
-
-    func makeSessionService() -> SessionService {
-        return sessionService
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {

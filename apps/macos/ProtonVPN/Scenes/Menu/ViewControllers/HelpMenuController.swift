@@ -22,6 +22,7 @@
 
 import Cocoa
 import LegacyCommon
+import VPNAppCore
 import Strings
 
 class HelpMenuController: NSObject {

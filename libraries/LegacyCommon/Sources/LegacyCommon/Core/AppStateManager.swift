@@ -63,13 +63,6 @@ public protocol AppStateManager {
     func activeConnection() -> ConnectionConfiguration?
 }
 
-public extension Notification.Name {
-    struct AppStateManager {
-        public static var stateChange: Notification.Name = Notification.Name("AppStateManagerStateChange")
-        public static var displayStateChange: Notification.Name = Notification.Name("AppStateManagerDisplayStateChange")
-    }
-}
-
 public extension AppStateManager {
     @MainActor var stateThreadSafe: AppState { get { self.state } }
 }
@@ -108,8 +101,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
 
             DispatchQueue.main.async { [displayState] in
-                NotificationCenter.default.post(name: .AppStateManager.displayStateChange,
-                                                object: displayState)
+                AppEvent.appStateManagerDisplayStateChange.post(displayState)
             }
         }
     }
@@ -236,7 +228,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     public func cancelConnectionAttempt(completion: @escaping () -> Void) {
-        NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
         state = .aborted(userInitiated: true)
         attemptingConnection = false
         cancelTimeout()
@@ -440,8 +432,8 @@ public class AppStateManagerImplementation: AppStateManager {
                 self?.computeDisplayState(with: localAgentConnectedState)
             }
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged), name: type(of: propertiesManager).hasConnectedNotification, object: nil)
+
+        AppEvent.killSwitch.subscribe(self, selector: #selector(killSwitchChanged))
     }
 
     private func vpnStateChanged() {
@@ -593,7 +585,7 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func notifyObservers() {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .AppStateManager.stateChange, object: self.state)
+            AppEvent.appStateManagerStateChange.post(self.state)
         }
     }
     

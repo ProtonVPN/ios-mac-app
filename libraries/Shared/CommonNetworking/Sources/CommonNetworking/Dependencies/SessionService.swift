@@ -1,0 +1,157 @@
+//
+//  Created on 20/06/2024.
+//
+//  Copyright (c) 2024 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+import Dependencies
+import Domain
+import IssueReporting
+
+public enum PlanSession {
+    case upgrade
+    case manageSubscription
+
+    var queryItems: [URLQueryItem] {
+        switch self {
+        case .upgrade:
+            return [.actionQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
+        case .manageSubscription:
+            return [.actionQueryItem, .fullscreenQueryItem, .redirectQueryItem]
+        }
+    }
+
+    func path(accountHost: URL, selector: String?) -> URL {
+        guard var components = URLComponents(url: accountHost, resolvingAgainstBaseURL: false) else {
+            return accountHost
+        }
+
+        guard let selector else {
+            components.path = "/dashboard"
+            return components.url ?? accountHost
+        }
+
+        components.path = "/lite"
+        components.fragment = "selector=\(selector)"
+        components.queryItems = queryItems
+
+        return components.url ?? accountHost
+    }
+}
+
+/// This dependency is used to "fork" the current session in other contexts, such as a web browser or network extension.
+///
+/// This allows the other contexts to access current session data without needing to log in.
+///
+/// - Warning: It is *very* important to make sure that you are providing the correct context to `SessionService`.
+public struct SessionService: DependencyKey {
+    public enum SelectorContext {
+        case webLogin
+        case appContext(AppContext)
+
+        public var clientId: String {
+            switch self {
+            case .webLogin:
+                return "web-account-lite"
+            case let .appContext(context):
+                @Dependency(\.appInfo) var appInfo
+                return appInfo.clientId(forContext: context)
+            }
+        }
+    }
+
+    public var selector: (SelectorContext) async throws -> String
+    public var sessionCookie: () -> HTTPCookie?
+
+    public init(
+        selector: @escaping (SelectorContext) async throws -> String,
+        sessionCookie: @escaping () -> HTTPCookie?
+    ) {
+        self.selector = selector
+        self.sessionCookie = sessionCookie
+    }
+
+    public static let liveValue: SessionService = {
+        @Dependency(\.networking) var networking
+
+        return SessionService(
+            selector: { context in
+                let forkRequest = ForkSessionRequest(
+                    useCase: .getSelector(
+                        clientId: context.clientId,
+                        independent: false
+                    )
+                )
+
+                let response: ForkSessionResponse = try await networking.perform(request: forkRequest)
+                return response.selector
+            },
+            sessionCookie: { networking.sessionCookie }
+        )
+    }()
+
+    // You'll have to make sure that the test using it will provide a mock Networking value
+    public static let testValue: SessionService = liveValue
+}
+
+extension SessionService {
+    public func getPlanSession(mode: PlanSession) async -> URL {
+        @Dependency(\.networking) var networking
+        let accountHost = URL(string: networking.apiService.dohInterface.getAccountHost())!
+        do {
+
+            let selector = try await selector(.webLogin)
+            return mode.path(accountHost: accountHost, selector: selector)
+        } catch {
+            log.error(
+                "Failed to fork session, using default account url",
+                category: .app, metadata: ["error": "\(error)"]
+            )
+            return mode.path(accountHost: accountHost, selector: nil)
+        }
+    }
+
+    public func getUpgradePlanSession(url: String) async -> String {
+        do {
+            let selector = try await selector(.webLogin)
+            return url + "#selector=" + selector
+        } catch {
+            log.error(
+                "Failed to fork session, using default account url",
+                category: .app, metadata: ["error": "\(error)"]
+            )
+            return url
+        }
+    }
+
+    public func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
+        try await selector(.appContext(extensionContext))
+    }
+}
+
+extension DependencyValues {
+    public var sessionService: SessionService {
+        get { self[SessionService.self] }
+        set { self[SessionService.self] = newValue }
+    }
+}
+
+fileprivate extension URLQueryItem {
+    static let actionQueryItem = URLQueryItem(name: "action", value: "subscribe-account")
+    static let fullscreenQueryItem = URLQueryItem(name: "fullscreen", value: "off")
+    static let redirectQueryItem = URLQueryItem(name: "redirect", value: "protonvpn://refresh")
+    static let typeQueryItem = URLQueryItem(name: "type", value: "upgrade")
+}

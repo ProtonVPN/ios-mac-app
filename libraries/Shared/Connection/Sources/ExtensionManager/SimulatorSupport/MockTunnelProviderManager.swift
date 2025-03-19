@@ -23,7 +23,7 @@ import class NetworkExtension.NETunnelProviderManager
 import class NetworkExtension.NETunnelProviderProtocol
 import class NetworkExtension.NEOnDemandRule
 
-import XCTestDynamicOverlay
+import IssueReporting
 
 final class MockTunnelProviderManager: TunnelProviderManager {
 
@@ -66,10 +66,10 @@ final class MockTunnelProviderManager: TunnelProviderManager {
             break
 
         case .requiresLoad:
-            XCTFail("Manager requires load before it can be saved")
+            reportIssue("Manager requires load before it can be saved")
 
         case .ready:
-            XCTFail("Redundant save")
+            reportIssue("Redundant save")
         }
 
         state = .requiresLoad

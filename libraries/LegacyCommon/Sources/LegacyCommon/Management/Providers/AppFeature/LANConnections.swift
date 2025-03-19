@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Domain
 
 /// Controls whether traffic destined for local networks will be excluded from the tunnel
 public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
@@ -39,6 +40,7 @@ public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
 }
 
 extension ExcludeLocalNetworks: ProvidableFeature {
+    public static let event: AppEvent? = .excludeLocalNetworks
 
     public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 
@@ -64,6 +66,4 @@ extension ExcludeLocalNetworks: ProvidableFeature {
     }
 
     public static var storageKey: String { "excludeLocalNetworks" }
-
-    public static let notificationName: Notification.Name? = Notification.Name("ch.protonvpn.feature.excludelocalnetworks.changed")
 }
