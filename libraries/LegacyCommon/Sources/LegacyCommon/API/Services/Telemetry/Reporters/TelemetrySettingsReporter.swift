@@ -27,7 +27,7 @@ import Timer
 import VPNShared
 import WidgetKit
 
-class TelemetrySettingsReporter {
+final class TelemetrySettingsReporter {
     public typealias Factory = PropertiesManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator & VpnKeychainFactory
 
     private let factory: Factory
@@ -44,7 +44,7 @@ class TelemetrySettingsReporter {
 
     // MARK: - Initialization
 
-    init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) async {
+    init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
         self.factory = factory
 
         self.telemetryEventScheduler = telemetryEventScheduler
