@@ -71,7 +71,6 @@ extension NETunnelProviderSession: VPNSession {
         try startVPNTunnel()
     }
 
-    @available(iOS 16.0, *)
     public func fetchLastDisconnectError() async -> Error? {
         // For some reason, the native async alternative returns `Void`
         // return try await fetchLastDisconnectError()

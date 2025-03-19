@@ -32,8 +32,7 @@ import Dependencies
 @testable import LegacyCommon
 
 class AnnouncementsViewModelTests: XCTestCase {
-    
-//    private var manager: AnnouncementManager!
+
     private var viewModel: AnnouncementsViewModel!
     private var safariService: SafariServiceMock!
     private var propertiesManager: PropertiesManagerMock!
@@ -42,17 +41,13 @@ class AnnouncementsViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
-        //storage = AnnouncementStorageMock()
-//        manager = AnnouncementManagerImplementation()
+
         safariService = SafariServiceMock()
         propertiesManager = PropertiesManagerMock()
         viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(propertiesManager: propertiesManager, safariService: safariService, coreAlertService: CoreAlertServiceDummy(), appInfo: AppInfoImplementation()))
 
         storage.store([])
     }
-    
-    // public func open(announcement: Announcement)
     
     func testTakesDataFromTheStorage() {
         XCTAssert(viewModel.items.isEmpty)
@@ -76,7 +71,6 @@ class AnnouncementsViewModelTests: XCTestCase {
 }
 
 fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
-//    public let announcementManager: AnnouncementManager
     public let propertiesManager: PropertiesManagerProtocol
     public let safariService: SafariServiceProtocol
     public let coreAlertService: CoreAlertService

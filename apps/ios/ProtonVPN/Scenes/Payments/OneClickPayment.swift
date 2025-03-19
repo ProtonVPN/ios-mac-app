@@ -90,7 +90,10 @@ final class OneClickPayment {
                 @Dependency(\.sessionService) var sessionService
 
                 // Fetch a session login URL so the user can easily visit their account page.
-                let url = await sessionService.getPlanSession(mode: .upgrade)
+                guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
+                    assert(false, "Couldn't retrieve plan session URL")
+                    return
+                }
                 alertService.push(
                     alert: UpgradeUnavailableAlert(
                         message: localizedReason,

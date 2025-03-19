@@ -18,9 +18,6 @@
 
 import SwiftUI
 import Theme
-//import Strings
-//import ProtonCoreUIFoundations
-//import Modals
 
 struct AnnouncementBannerView: View {
 

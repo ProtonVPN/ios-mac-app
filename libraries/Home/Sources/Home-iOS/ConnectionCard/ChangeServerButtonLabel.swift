@@ -22,7 +22,6 @@ import ComposableArchitecture
 import Home
 import Strings
 
-@available(iOS 16.0, *)
 struct ChangeServerButtonLabel: View {
     let sendAction: HomeConnectionCardFeature.ActionSender
     let changeServerAllowedDate: Date

@@ -24,7 +24,6 @@ import Home
 import VPNAppCore
 import Strings
 
-@available(iOS 16.0, *)
 struct ChangeServerModal: View {
     var store: StoreOf<ChangeServerFeature>
 
