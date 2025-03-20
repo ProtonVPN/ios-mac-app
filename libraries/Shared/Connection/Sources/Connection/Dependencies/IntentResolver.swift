@@ -31,7 +31,7 @@ public enum ConnectionIntentResolutionError: Error, Equatable {
     case secureCoreUnavailable
 }
 
-struct ConnectionIntentResolver: DependencyKey {
+struct ConnectionIntentResolver: DependencyKey, Sendable {
     let resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
     let authorize: @Sendable (ConnectionPreparationIntent) throws (ConnectionIntentResolutionError) -> ()
 

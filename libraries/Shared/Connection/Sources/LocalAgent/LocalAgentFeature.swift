@@ -230,14 +230,7 @@ extension LocalAgentConnectionError: ProtonVPNError {
     public static let errorDomain = "LocalAgentConnectionErrorDomain"
 
     public var errorDescription: String? {
-        switch self {
-        case .failedToEstablishConnection(let connectionError):
-            return Localizable.connectionErrorLocalAgentFailedEstablishingConnection(String(describing: connectionError))
-        case .agentError(let agentError):
-            return Localizable.connectionErrorLocalAgentRemoteError(String(describing: agentError))
-        case .serverCertificateError:
-            return Localizable.connectionErrorLocalAgentServerCertificate
-        }
+        includeCode(inside: Localizable.connectionErrorLocalAgent)
     }
 
     public var charCode: FourCharCode {
@@ -251,21 +244,15 @@ extension LocalAgentConnectionError: ProtonVPNError {
         }
     }
 
-    public var errorUserInfo: [String : Any] {
-        var result: [String: Any] = [
-            NSLocalizedDescriptionKey: errorDescription ?? "unknown error",
-        ]
-
+    public var underlyingError: Error? {
         switch self {
         case .failedToEstablishConnection(let connectionError):
-            result[NSUnderlyingErrorKey] = connectionError
+            return connectionError
         case .agentError(let agentError):
-            result[NSUnderlyingErrorKey] = agentError
+            return agentError
         default:
-            break
+            return nil
         }
-
-        return result
     }
 }
 

@@ -39,7 +39,7 @@ import Strings
 import Domain
 
 final class IosAlertService {
-        
+
     typealias Factory = UIAlertServiceFactory &
         AppSessionManagerFactory &
         WindowServiceFactory &
@@ -48,7 +48,7 @@ final class IosAlertService {
         PlanServiceFactory
 
     private let factory: Factory
-    
+
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
@@ -82,64 +82,64 @@ extension IosAlertService: CoreAlertService {
         switch alert {
         case is AccountDeletionErrorAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is AccountDeletionWarningAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
-            
+
         case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
             show(cannotAccessVpnCredentialsAlert)
 
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is P2pForwardedAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
-            
+
         case is UpgradeUnavailableAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is VpnNetworkUnreachableAlert:
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
-            
+
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is ChangeProtocolDisconnectAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
 
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let reportBugAlert as ReportBugAlert:
             show(reportBugAlert)
 
         case is MITMAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
             show(connectionTroubleshootingAlert)
-            
+
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
 
@@ -148,13 +148,13 @@ extension IosAlertService: CoreAlertService {
 
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let alert as UserAccountUpdateAlert:
             displayUserUpdateAlert(alert: alert)
 
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is ReconnectOnActionAlert:
             showDefaultSystemAlert(alert)
 
@@ -163,28 +163,28 @@ extension IosAlertService: CoreAlertService {
 
         case is VpnServerSubscriptionErrorAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is AllowLANConnectionsAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is TurnOnKillSwitchAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
 
         case let announcementOfferAlert as AnnouncementOfferAlert:
             show(announcementOfferAlert)
-            
+
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
-            
+
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
 
         case let discourageAlert as DiscourageSecureCoreAlert:
             show(discourageAlert)
-            
+
         case let safeModeUpsell as SafeModeUpsellAlert:
             show(alert: safeModeUpsell, modalType: .safeMode)
 
@@ -236,7 +236,7 @@ extension IosAlertService: CoreAlertService {
                     numberOfCountries: repository.countryCount()
                 )
             )
-            
+
         case let alert as WelcomeScreenAlert:
             showWelcomeScreen(welcomeScreenAlert: alert)
 
@@ -389,19 +389,19 @@ extension IosAlertService: CoreAlertService {
         alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: { [weak self] in
             self?.appSessionManager.logOut(force: true, reason: nil)
         }))
-        
+
         uiAlertService.displayAlert(alert)
     }
-    
+
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
         appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
     }
-    
+
     private func show(_ alert: RefreshTokenExpiredAlert) {
         appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
-    
+
     private func show(_ alert: MaintenanceAlert) {
         switch alert.type {
         case .alert:
@@ -410,26 +410,26 @@ extension IosAlertService: CoreAlertService {
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
         }
     }
-    
+
     private func show(_ alert: ReportBugAlert) {
         settingsService.presentReportBug()
     }
-    
+
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
         self.uiAlertService.displayAlert(alert)
     }
-    
+
     private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {
         uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
     }
-    
+
     private func show(_ alert: ConnectionTroubleshootingAlert) {
         factory.makeTroubleshootCoordinator().start()
     }
- 
+
     private func show(_ alert: VpnServerOnMaintenanceAlert ) {
         showNotificationStyleAlert(message: alert.title ?? "", type: .success)
     }
@@ -451,7 +451,7 @@ extension IosAlertService: CoreAlertService {
         announcement.cancelled = { [weak self] in
             self?.windowService.dismissModal { }
         }
-        announcement.urlRequested = { [weak self] url in
+        announcement.urlRequested = { url in
             @Dependency(\.linkOpener) var linkOpener
             linkOpener.open(url)
 
@@ -468,7 +468,7 @@ extension IosAlertService: CoreAlertService {
         controller.role = alert.role
         windowService.present(modal: controller)
     }
-    
+
     private func show(_ alert: FreeConnectionsAlert) {
         let upgradeAction: (() -> Void) = { [weak self] in
             self?.windowService.dismissModal {

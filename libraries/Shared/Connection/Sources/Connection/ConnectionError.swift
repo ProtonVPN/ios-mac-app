@@ -73,21 +73,26 @@ extension ConnectionError: ProtonVPNError {
     public var errorDescription: String? {
         switch self {
         case .unexpectedProtocol(let vpnProtocol):
-            return Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription)
+            return Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
         case .certAuth(let certAuthError):
-            return Localizable.connectionErrorCertificateAuthentication(certAuthError.errorDescription ?? "unknown error")
+            return certAuthError.errorDescription
         case .tunnel(let tunnelError):
-            return Localizable.connectionErrorTunnelConnection(tunnelError.errorDescription ?? "unknown error")
+            return tunnelError.errorDescription
         case .agent(let agentError):
-            return Localizable.connectionErrorLocalAgent(agentError.errorDescription ?? "unknown error")
+            return agentError.errorDescription
         case .preparation(let wrapped):
-            return Localizable.connectionErrorPreparation(String(describing: wrapped.wrapped))
+            if let protonVpnError = wrapped.wrapped as? ProtonVPNError {
+                return protonVpnError.errorDescription
+            } else {
+                let error = wrapped.wrapped as NSError
+                return Localizable.connectionErrorPreparation("\(error.domain) 0x\(String(error.code, radix: 16))")
+            }
         case .intentMissing:
-            return Localizable.connectionErrorIntentMissing
+            return includeCode(inside: Localizable.connectionErrorIntentMissing)
         case .serverMissing:
-            return Localizable.connectionErrorServerMissing
+            return includeCode(inside: Localizable.connectionErrorServerMissing)
         case .timeout:
-            return Localizable.connectionErrorTimeout
+            return includeCode(inside: Localizable.connectionErrorTimeout)
         }
     }
 
@@ -126,25 +131,19 @@ extension ConnectionError: ProtonVPNError {
         }
     }
 
-    public var errorUserInfo: [String : Any] {
-        var result: [String: Any] = [
-            NSLocalizedDescriptionKey: errorDescription ?? "unknown error"
-        ]
-
+    public var underlyingError: Error? {
         switch self {
         case .tunnel(let tunnelError):
-            result[NSUnderlyingErrorKey] = tunnelError
+            return tunnelError
         case .certAuth(let certAuthError):
-            result[NSUnderlyingErrorKey] = certAuthError
+            return certAuthError
         case .agent(let agentError):
-            result[NSUnderlyingErrorKey] = agentError
+            return agentError
         case .preparation(let wrapped):
-            result[NSUnderlyingErrorKey] = wrapped.wrapped
+            return wrapped.wrapped
         default:
-            break
+            return nil
         }
-
-        return result
     }
 }
 

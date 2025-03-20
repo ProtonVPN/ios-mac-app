@@ -472,7 +472,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
         await store.receive { action in
-            guard case let .delegate(.intentResolution(_, error)) = action,
+            guard case let .delegate(.intentResolutionFailed(_, error)) = action,
                 case let .specificCountryUnavailable(countryCode) = error,
                 countryCode == "US" else {
                 return false

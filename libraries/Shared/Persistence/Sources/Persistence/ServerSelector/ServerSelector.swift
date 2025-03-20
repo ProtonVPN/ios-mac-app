@@ -16,6 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
 import Domain
 import Ergonomics
 import Dependencies
@@ -31,7 +33,7 @@ public struct ServerSelector: Sendable {
         self.select = select
     }
 
-    public enum ServerSelectionError: Error, Equatable {
+    public enum ServerSelectionError: ProtonVPNError, Equatable {
         case noLogical(LogicalResolutionFailureReason)
         case noEndpoints(EndpointResolutionFailureReason)
 
@@ -40,11 +42,73 @@ public struct ServerSelector: Sendable {
             case featuresNotSupported(Set<ConnectionSpec.Feature>)
             case protocolNotSupported(ProtocolSupport)
             case maintenance
+
+            var charCode: FourCharCode {
+                switch self {
+                case .featuresNotSupported:
+                    return "LFNS"
+                case .locationNotFound:
+                    return "LLNF"
+                case .protocolNotSupported:
+                    return "LPNS"
+                case .maintenance:
+                    return "LMNT"
+                }
+            }
+
+            var userInfo: [String: Any] {
+                switch self {
+                case let .featuresNotSupported(features):
+                    return ["features": features]
+                case let .locationNotFound(location):
+                    return ["location": location]
+                case let .protocolNotSupported(unsupportedProtocol):
+                    return ["protocol": unsupportedProtocol]
+                case .maintenance:
+                    return [:]
+                }
+            }
         }
 
         public enum EndpointResolutionFailureReason: Equatable {
             case protocolNotSupported(ProtocolSupport)
             case maintenance
+
+            var charCode: FourCharCode {
+                switch self {
+                case .protocolNotSupported:
+                    return "EPNS"
+                case .maintenance:
+                    return "EMNT"
+                }
+            }
+
+            var userInfo: [String: Any] {
+                switch self {
+                case let .protocolNotSupported(unsupportedProtocol):
+                    return ["protocol": unsupportedProtocol]
+                case .maintenance:
+                    return [:]
+                }
+            }
+        }
+
+        public var charCode: FourCharCode {
+            switch self {
+            case let .noEndpoints(reason):
+                return reason.charCode
+            case let .noLogical(reason):
+                return reason.charCode
+            }
+        }
+
+        public var extraUserInfo: [String: Any]? {
+            switch self {
+            case let .noEndpoints(reason):
+                return reason.userInfo
+            case let .noLogical(reason):
+                return reason.userInfo
+            }
         }
     }
 }

@@ -89,7 +89,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
-        #if FREQUENT_AUTH_CERT_REFRESH
+        #if DEBUG
         CertificateConstants.certificateDuration = "30 minutes"
         #endif
 

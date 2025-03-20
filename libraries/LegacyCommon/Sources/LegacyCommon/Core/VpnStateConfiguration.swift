@@ -57,8 +57,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private let appGroup: String
 
     public typealias Factory = IkeProtocolFactoryCreator &
-        WireguardProtocolFactoryCreator &
-        PropertiesManagerFactory
+    WireguardProtocolFactoryCreator &
+    PropertiesManagerFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(ikeProtocolFactory: factory.makeIkeProtocolFactory(),
@@ -83,13 +83,6 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         case .invalid:
             return .invalid
         case .disconnected:
-            if let error = lastError() {
-                switch error {
-                case CommonVpnError.tlsServerVerification, CommonVpnError.tlsInitialisation:
-                    return .error(error)
-                default: break
-                }
-            }
             return .disconnected
         case .connecting:
             return .connecting(ServerDescriptor(username: username, address: serverAddress))
@@ -283,23 +276,6 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             return VpnStateConfigurationInfo(state: VpnState.error(error),
                                              hasConnected: self.propertiesManager.hasConnected,
                                              connection: connection)
-        }
-    }
-
-    private func lastError() -> Error? {
-        let defaults = UserDefaults(suiteName: appGroup)
-        let errorKey = "TunnelKitLastError"
-        guard let lastError = defaults?.object(forKey: errorKey) as? String else {
-            return nil
-        }
-
-        switch lastError {
-        case "tlsServerVerification":
-            return CommonVpnError.tlsServerVerification
-        case "tlsInitialization":
-            return CommonVpnError.tlsInitialisation
-        default:
-            return NSError(code: 0, localizedDescription: lastError)
         }
     }
 }

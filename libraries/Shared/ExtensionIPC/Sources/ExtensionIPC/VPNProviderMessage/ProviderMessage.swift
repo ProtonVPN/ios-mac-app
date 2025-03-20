@@ -59,20 +59,7 @@ extension ProviderMessageError: ProtonVPNError {
     public static let errorDomain = "ProviderMessageErrorDomain"
 
     public var errorDescription: String? {
-        switch self {
-        case .noDataReceived:
-            return Localizable.providerMessageErrorNoDataReceived
-        case .decodingError:
-            return Localizable.providerMessageErrorDecodingError
-        case .sendingError:
-            return Localizable.providerMessageErrorSendingError
-        case .unknownRequest:
-            return Localizable.providerMessageErrorUnknownRequest
-        case .unknownResponse:
-            return Localizable.providerMessageErrorUnknownResponse
-        case .remoteError(let message):
-            return Localizable.providerMessageErrorRemoteError(message)
-        }
+        return includeCode(inside: Localizable.providerMessageError)
     }
 
     public var charCode: FourCharCode {

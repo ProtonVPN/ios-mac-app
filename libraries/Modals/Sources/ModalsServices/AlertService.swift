@@ -27,7 +27,9 @@ import SwiftNavigation
 import Logging
 import protocol Foundation.LocalizedError
 import struct Domain.Alert
+import protocol Domain.ProtonVPNError
 import protocol Domain.AlertConvertibleError
+import enum Strings.Localizable
 
 package let log = Logging.Logger(label: "ProtonVPN.Modals.Logger")
 
@@ -51,17 +53,19 @@ extension AlertService {
         return AlertService {
             return stream
         } feed: { error in
-            log.error("Alerting user to error: \(String(describing: error))")
+            if let protonVpnError = error as? ProtonVPNError {
+                log.error("Alerting user to error: \(protonVpnError.debugDescription)")
+            } else {
+                log.error("Alerting user to error: \(String(describing: error))")
+            }
 
             let alert: Alert
             if let alertConvertibleError = error as? AlertConvertibleError {
                 alert = alertConvertibleError.alert
             } else if let localizedError = error as? LocalizedError {
                 alert = Alert(localizedError: localizedError)
-            } else if type(of: error) is NSError.Type {
-                alert = Alert(title: "Error", message: (error as NSError).localizedDescription)
             } else {
-                alert = Alert(title: "Error", message: "\(error)")
+                alert = Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
             }
             subject.send(alert)
         } finish: {

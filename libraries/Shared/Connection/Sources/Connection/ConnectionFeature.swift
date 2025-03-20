@@ -83,7 +83,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         public enum Delegate: Sendable {
             case stateChanged(ConnectionState)
             case connectionFailed(ConnectionError)
-            case intentResolution(ConnectionPreparationIntent, failedWith: ConnectionIntentResolutionError)
+            case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
         }
     }
 
@@ -110,7 +110,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 do throws(ConnectionIntentResolutionError) {
                     try intentResolver.authorize(intent)
                 } catch {
-                    return .send(.delegate(.intentResolution(intent, failedWith: error)))
+                    return .send(.delegate(.intentResolutionFailed(intent, with: error)))
                 }
 
                 switch state.coreConnectionState {

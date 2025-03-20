@@ -291,7 +291,7 @@ public struct HomeFeature {
                     .send(.sharedProperties(.newConnectionState(connectionState))),
                     .send(.sharedProperties(.newConnectionStatus(status)))
                 )
-            case let .connection(.delegate(.intentResolution(intent, resolutionError))):
+            case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 return .run { [pushAlert] send in
                     let alert: SystemAlert
                     switch resolutionError {

@@ -524,7 +524,7 @@ public class AppStateManagerImplementation: AppStateManager {
     // swiftlint:enable cyclomatic_complexity
 
     private func connectionFailed() {
-        state = .error(NSError(code: 0, localizedDescription: "connectionFailed"))
+        state = .error(CommonVpnError.connectionFailed)
         notifyObservers()
     }
 

@@ -57,7 +57,7 @@ final class iOSUpdateManager: UpdateChecker {
 
         var description: String { rawValue }
 
-        var errorUserInfo: [String : Any] {
+        var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: description]
         }
 

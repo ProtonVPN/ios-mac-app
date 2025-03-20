@@ -21,38 +21,71 @@
 
 import Foundation
 import Strings
+import Domain
 
-public class NetworkError {
-    
-    private static let requestTimedOut = NSError(code: NetworkErrorCode.timedOut,
-                                                 localizedDescription: Localizable.neRequestTimedOut)
-    private static let cannotConnectToHost = NSError(code: NetworkErrorCode.cannotConnectToHost,
-                                                     localizedDescription: Localizable.neUnableToConnectToHost)
-    private static let networkConnectionLost = NSError(code: NetworkErrorCode.networkConnectionLost,
-                                                       localizedDescription: Localizable.neNetworkConnectionLost)
-    private static let notConnectedToInternet = NSError(code: NetworkErrorCode.notConnectedToInternet,
-                                                        localizedDescription: Localizable.neNotConnectedToTheInternet)
-    private static let tls = NSError(code: NetworkErrorCode.tls,
-                                     localizedDescription: Localizable.errorMitmDescription)
-    
-    public static func error(forCode code: Int) -> NSError {
-        let error: NSError
-        switch code {
-        case NetworkErrorCode.timedOut:
-            error = requestTimedOut
-        case NetworkErrorCode.cannotConnectToHost:
-            error = cannotConnectToHost
-        case NetworkErrorCode.networkConnectionLost:
-            error = networkConnectionLost
-        case NetworkErrorCode.notConnectedToInternet:
-            error = notConnectedToInternet
-        case NetworkErrorCode.tls:
-            error = tls
-        default:
-            // FUTURETODO::fix error
-            error = NSError(code: code, localizedDescription: Localizable.neCouldntReachServer)
+public enum NetworkError: Int, CustomNSError {
+    public static let errorDomain = "NetworkErrorDomain"
+
+    case requestTimedOut
+    case cannotConnectToHost
+    case networkConnectionLost
+    case notConnectedToInternet
+    case tls
+
+    public var errorCode: Int {
+        rawValue
+    }
+
+    public var rawValue: Int {
+        switch self {
+        case .requestTimedOut:
+            return NetworkErrorCode.timedOut
+        case .cannotConnectToHost:
+            return NetworkErrorCode.cannotConnectToHost
+        case .networkConnectionLost:
+            return NetworkErrorCode.networkConnectionLost
+        case .notConnectedToInternet:
+            return NetworkErrorCode.notConnectedToInternet
+        case .tls:
+            return NetworkErrorCode.tls
         }
-        return error
+    }
+
+    public init?(rawValue: Int) {
+        switch rawValue {
+        case NetworkErrorCode.timedOut:
+            self = .requestTimedOut
+        case NetworkErrorCode.cannotConnectToHost:
+            self = .cannotConnectToHost
+        case NetworkErrorCode.networkConnectionLost:
+            self = .networkConnectionLost
+        case NetworkErrorCode.notConnectedToInternet:
+            self = .notConnectedToInternet
+        case NetworkErrorCode.tls:
+            self = .tls
+        default:
+            log.assertionFailure("Encountered unknown network code \(rawValue)")
+            return nil
+        }
+    }
+
+    public var localizedDescription: String {
+        switch self {
+        case .requestTimedOut:
+            return Localizable.neRequestTimedOut
+        case .cannotConnectToHost:
+            return Localizable.neUnableToConnectToHost
+        case .networkConnectionLost:
+            return Localizable.neNetworkConnectionLost
+        case .notConnectedToInternet:
+            return Localizable.neNotConnectedToTheInternet
+        case .tls:
+            return Localizable.errorMitmDescription
+        }
+    }
+
+    public var errorUserInfo: [String: Any] {
+        [NSLocalizedDescriptionKey: localizedDescription]
     }
 }
 
@@ -106,7 +139,7 @@ extension Error {
             return false
         }
     }
-    
+
     public var isTlsError: Bool {
         let nsError = self as NSError
         switch nsError.code {
@@ -116,7 +149,7 @@ extension Error {
             return false
         }
     }
-    
+
 }
 
 extension NSError {

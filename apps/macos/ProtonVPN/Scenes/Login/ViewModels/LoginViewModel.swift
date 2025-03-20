@@ -281,15 +281,21 @@ final class LoginViewModel {
         case let .generic(_, _, originalError):
             // if the error is a response error and the underlying error is a network or TLS error convert it to the app network error
             // this is needed so the basic error handling logic shows an alert that offers troubleshooting to the users
-            if let responseError = originalError as? ResponseError, let underlyingError = responseError.underlyingError, underlyingError.isNetworkError || underlyingError.isTlsError {
-                handleError(error: NetworkError.error(forCode: underlyingError.code))
+            if let responseError = originalError as? ResponseError,
+               let underlyingError = responseError.underlyingError,
+               underlyingError.isNetworkError || underlyingError.isTlsError,
+               let networkError = NetworkError(rawValue: underlyingError.code) {
+                handleError(error: networkError)
                 return
             }
-
-            // otherwise just convert the login error to a classic error with the error code and the user facing error message
-            handleError(error: NSError(code: error.bestShotAtReasonableErrorCode, localizedDescription: error.userFacingMessageInLogin))
+            fallthrough
         default:
-            handleError(error: NSError(code: error.bestShotAtReasonableErrorCode, localizedDescription: error.userFacingMessageInLogin))
+            // otherwise just convert the login error to a classic error with the error code and the user facing error message
+            handleError(error: NSError(
+                domain: "LoginErrorDomain",
+                code: error.bestShotAtReasonableErrorCode,
+                localizedDescription: error.userFacingMessageInLogin
+            ))
         }
     }
 
