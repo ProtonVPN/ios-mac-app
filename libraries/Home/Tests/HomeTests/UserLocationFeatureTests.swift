@@ -20,6 +20,7 @@ import XCTest
 import ComposableArchitecture
 import Domain
 import DomainTestSupport
+import Ergonomics
 @testable import Home
 
 @MainActor
@@ -43,13 +44,14 @@ final class UserLocationFeatureTests: XCTestCase {
         // `_printChanges()` onto `UserLocationFeature`), but for some reason `TestStore` thinks it does.
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
-             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-             $0.$lastLocationRetrieval.withLock { $0 = now }
-         }
+            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
+            $0.$lastLocationRetrieval.withLock { $0 = now }
+        }
 
+        await store.receive(\.userLocationFetchStarted)
         // TCA BUG: the following action is where our expected shared state changes SHOULD be asserted.
-        await store.receive(\.fetchUserLocationFinished.success) // {
+        await store.receive(\.userLocationFetchFinished.success) // {
         //     $0.$userIP.withLock { $0 = UserLocation.poland.ip }
         //     $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
         //     $0.$lastLocationRetrieval.withLock { $0 = now }
@@ -79,13 +81,15 @@ final class UserLocationFeatureTests: XCTestCase {
         // `_printChanges()` onto `UserLocationFeature`), but for some reason `TestStore` thinks it does.
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
-             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-             $0.$lastLocationRetrieval.withLock { $0 = now }
-         }
+            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
+            $0.$lastLocationRetrieval.withLock { $0 = now }
+        }
+
+        await store.receive(\.userLocationFetchStarted)
 
         // TCA BUG: the following action is where our expected shared state changes SHOULD be asserted.
-        await store.receive(\.fetchUserLocationFinished.success) // {
+        await store.receive(\.userLocationFetchFinished.success) // {
         //     $0.$userIP.withLock { $0 = UserLocation.poland.ip }
         //     $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
         //     $0.$lastLocationRetrieval.withLock { $0 = now }
@@ -94,14 +98,13 @@ final class UserLocationFeatureTests: XCTestCase {
         await store.receive(\.delegate.userLocationChanged)
 
         store.dependencies.date = .constant(nextRefreshDate)
-        await clock.advance(by: .seconds(60*60))
+        await clock.advance(by: .hours(1))
 
-        await store.receive(\.requestUserLocationFetch)
         await store.receive(\.fetchUserLocation)
-        await store.receive(\.fetchUserLocationFinished.success)
+        await store.receive(\.userLocationFetchStarted)
+        await store.receive(\.userLocationFetchFinished.success)
         await store.send(.tearDown)
     }
-
 
     func testSkipsFetchingLocationOnIntervalPassingWhenNotDisconnected() async {
         @Shared(.connectionState) var connectionState = .disconnected
@@ -123,13 +126,15 @@ final class UserLocationFeatureTests: XCTestCase {
         // `_printChanges()` onto `UserLocationFeature`), but for some reason `TestStore` thinks it does.
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
-             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-             $0.$lastLocationRetrieval.withLock { $0 = now }
-         }
+            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
+            $0.$lastLocationRetrieval.withLock { $0 = now }
+        }
+
+        await store.receive(\.userLocationFetchStarted)
 
         // TCA BUG: the following action is where our expected shared state changes SHOULD be asserted.
-        await store.receive(\.fetchUserLocationFinished.success) // {
+        await store.receive(\.userLocationFetchFinished.success) // {
         //     $0.$userIP.withLock { $0 = UserLocation.poland.ip }
         //     $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
         //     $0.$lastLocationRetrieval.withLock { $0 = now }
@@ -139,11 +144,11 @@ final class UserLocationFeatureTests: XCTestCase {
 
         $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, server: .mock))) }
         store.dependencies.date = .constant(nextRefreshDate)
-        await clock.advance(by: .seconds(60*60))
+        await clock.advance(by: .hours(1))
 
-        await store.receive(\.requestUserLocationFetch)
         await store.receive(\.fetchUserLocation)
-        await store.receive(\.fetchUserLocationFinished.failure.incorrectVPNState)
+        await store.receive(\.userLocationFetchStarted)
+        await store.receive(\.userLocationFetchFinished.failure.incorrectVPNState)
         await store.send(.tearDown)
     }
 
@@ -167,13 +172,15 @@ final class UserLocationFeatureTests: XCTestCase {
         // `_printChanges()` onto `UserLocationFeature`), but for some reason `TestStore` thinks it does.
         // If this test fails in the future, try removing this state assertion closure and uncommented the next one.
         await store.receive(\.fetchUserLocation) {
-             $0.$userIP.withLock { $0 = UserLocation.poland.ip }
-             $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
-             $0.$lastLocationRetrieval.withLock { $0 = now }
-         }
+            $0.$userIP.withLock { $0 = UserLocation.poland.ip }
+            $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
+            $0.$lastLocationRetrieval.withLock { $0 = now }
+        }
+
+        await store.receive(\.userLocationFetchStarted)
 
         // TCA BUG: the following action is where our expected shared state changes SHOULD be asserted.
-        await store.receive(\.fetchUserLocationFinished.success) // {
+        await store.receive(\.userLocationFetchFinished.success) // {
         //     $0.$userIP.withLock { $0 = UserLocation.poland.ip }
         //     $0.$userCountry.withLock { $0 = UserLocation.poland.country.lowercased() }
         //     $0.$lastLocationRetrieval.withLock { $0 = now }
@@ -183,11 +190,11 @@ final class UserLocationFeatureTests: XCTestCase {
 
         $connectionState.withLock { $0 = .connecting(.unresolved(.init(spec: .defaultFastest, server: .mock))) }
         store.dependencies.date = .constant(halfwayThroughRefreshInterval)
-        await clock.advance(by: .seconds(60*30))
+        await clock.advance(by: .minutes(30))
 
         await store.send(.didBecomeActive(notification: Notification(name: didBecomeActiveNotification)))
-        await store.receive(\.requestUserLocationFetch)
-        await store.receive(\.fetchUserLocationFinished.failure.cooldown)
+        await store.receive(\.fetchUserLocation)
+        await store.receive(\.userLocationFetchFinished.failure.cooldown)
         await store.send(.tearDown)
     }
 }

@@ -24,8 +24,8 @@ import Ergonomics
 
 @DependencyClient
 public struct LogicalsClient: Sendable {
-    public var fetchLogicals: @Sendable (TruncatedIp?, String?) async throws -> [VPNServer]
-    public var fetchLoads: @Sendable (UserLocation?) async throws -> [ContinuousServerProperties]
+    public internal(set) var fetchLogicals: @Sendable (_ ip: TruncatedIp?, _ countryCode: String?) async throws -> [VPNServer]
+    public internal(set) var fetchLoads: @Sendable (_ location: UserLocation?) async throws -> [ContinuousServerProperties]
 }
 
 extension LogicalsClient: DependencyKey {

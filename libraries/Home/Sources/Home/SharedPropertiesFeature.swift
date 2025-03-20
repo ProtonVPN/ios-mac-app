@@ -94,7 +94,7 @@ public struct SharedPropertiesFeature {
 
             case .refreshServerLoads(let location):
                 return .run { send in
-                    let loads = try await logicalsClient.fetchLoads(location)
+                    let loads = try await logicalsClient.fetchLoads(location: location)
                     log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
                     repository.upsert(loads: loads)
                 } catch: { error, _ in
@@ -113,7 +113,7 @@ public struct SharedPropertiesFeature {
                 if newValue.is(\.disconnected) {
                     // User location will be fetched if it hasn't already been done recently
                     // e.g. if we were connected while the long living effect timer was ticking.
-                    return .send(.userLocation(.requestUserLocationFetch))
+                    return .send(.userLocation(.fetchUserLocation))
                 }
                 return .none
             }

@@ -20,6 +20,7 @@ import XCTest
 import ComposableArchitecture
 import Domain
 import Ergonomics
+@testable import CommonNetworking
 @testable import Home
 
 @MainActor
@@ -68,6 +69,6 @@ final class SharedPropertiesFeatureTests: XCTestCase {
 
         await store.send(.listen)
         await store.send(.newConnectionState(.disconnected))
-        await store.receive(\.userLocation.requestUserLocationFetch)
+        await store.receive(\.userLocation.fetchUserLocation)
     }
 }

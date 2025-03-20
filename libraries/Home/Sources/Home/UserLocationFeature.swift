@@ -60,10 +60,10 @@ public struct UserLocationFeature {
         case listen
         case didBecomeActive(notification: Notification)
         /// Fetch user location if we haven't recently done so already
-        case requestUserLocationFetch
-        /// Fetch user location immediately, unless VPN is active
         case fetchUserLocation
-        case fetchUserLocationFinished(Result<UserLocation, LocationFetchFailure>)
+        /// Fetch user location immediately, unless VPN is active
+        case userLocationFetchStarted
+        case userLocationFetchFinished(Result<UserLocation, LocationFetchFailure>)
         case tearDown
         case delegate(Delegate)
 
@@ -92,11 +92,11 @@ public struct UserLocationFeature {
     private let longLivingUserLocationTimerEffect: Effect<Action> = .timer(
         interval: .seconds(Self.locationCooldownInterval)
     ) { send in
-        send(.requestUserLocationFetch)
+        send(.fetchUserLocation)
     }.cancellable(id: CancelID.userLocationTimer)
 
     public var body: some Reducer<State, Action> {
-         Reduce { state, action in
+        Reduce { state, action in
             switch action {
             case .listen:
                 return .merge(
@@ -105,36 +105,36 @@ public struct UserLocationFeature {
                     longLivingUserLocationTimerEffect
                 )
 
-            case .requestUserLocationFetch:
+            case .fetchUserLocation:
                 guard let lastLocationRetrieval = state.lastLocationRetrieval else {
                     // We've not fetched user location yet, let's do it immediately
-                    return .send(.fetchUserLocation)
+                    return .send(.userLocationFetchStarted)
                 }
 
                 let nextRetrievalDate = lastLocationRetrieval.addingTimeInterval(Self.locationCooldownInterval)
                 let isLocationCooldownPassed = date.now >= nextRetrievalDate
                 if isLocationCooldownPassed {
-                    return .send(.fetchUserLocation)
+                    return .send(.userLocationFetchStarted)
                 } else {
-                    return .send(.fetchUserLocationFinished(.failure(.cooldown(nextRetrievalDate))))
+                    return .send(.userLocationFetchFinished(.failure(.cooldown(nextRetrievalDate))))
                 }
 
-            case .fetchUserLocation:
+            case .userLocationFetchStarted:
                 let connectionState = state.connectionState
                 return .run { send in
                     // UserLocation cannot be fetched while connected
                     guard connectionState.is(\.disconnected) else {
-                        return await send(.fetchUserLocationFinished(.failure(.incorrectVPNState(connectionState))))
+                        return await send(.userLocationFetchFinished(.failure(.incorrectVPNState(connectionState))))
                     }
 
-                    log.debug("Explicit User Location retrieval attempt", category: .api)
+                    log.info("Explicit User Location retrieval attempt", category: .api)
                     @Dependency(\.locationClient) var locationClient
                     let result = await Result { try await locationClient.fetchLocation() }
                         .mapError { LocationFetchFailure.network($0) }
-                    await send(.fetchUserLocationFinished(result))
+                    await send(.userLocationFetchFinished(result))
                 }.cancellable(id: CancelID.userLocation, cancelInFlight: true)
 
-            case .fetchUserLocationFinished(.success(let location)):
+            case .userLocationFetchFinished(.success(let location)):
                 let userIP = location.ip
                 let lowercasedUserCountry = location.country.lowercased()
 
@@ -149,12 +149,12 @@ public struct UserLocationFeature {
                 state.$lastLocationRetrieval.withLock { $0 = date.now }
                 return .send(.delegate(.userLocationChanged(location)))
 
-            case .fetchUserLocationFinished(.failure(let error)):
-                log.debug("User location request failed", category: .api, metadata: ["error": "\(error)"])
-                 return .none
+            case .userLocationFetchFinished(.failure(let error)):
+                log.error("User location request failed", category: .api, metadata: ["error": "\(error)"])
+                return .none
 
             case .didBecomeActive(_):
-                return .send(.requestUserLocationFetch)
+                return .send(.fetchUserLocation)
 
             case .tearDown:
                 return .merge(
@@ -176,6 +176,6 @@ public struct UserLocationFeature {
         /// User location can only be reliably fetched in the `disconnected` state
         case incorrectVPNState(ConnectionState)
         /// Network request failed
-        case network(Error)
+        case network(any Error)
     }
 }
