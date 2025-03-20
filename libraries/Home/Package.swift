@@ -32,6 +32,7 @@ let package = Package(
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
+        .package(path: "../Foundations/Domain"),
         .package(path: "../Shared/CommonNetworking"),
         .package(path: "../NEHelper"),
         .package(path: "../SharedViews"),
@@ -93,6 +94,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 "Theme",
+                .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
             ]

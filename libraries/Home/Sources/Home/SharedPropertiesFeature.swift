@@ -28,6 +28,9 @@ import VPNAppCore
 
 @Reducer
 public struct SharedPropertiesFeature {
+    @Dependency(\.logicalsClient) var logicalsClient
+    @Dependency(\.serverRepository) var repository
+
     @ObservableState
     public struct State: Equatable {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
@@ -43,6 +46,8 @@ public struct SharedPropertiesFeature {
         // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
         case newConnectionStatus(VPNConnectionStatus)
         case newConnectionState(ConnectionState)
+
+        case refreshServerLoads(UserLocation)
     }
 
     private enum CancelId {
@@ -85,18 +90,15 @@ public struct SharedPropertiesFeature {
                 )
 
             case .userLocation(.delegate(.userLocationChanged(let location))):
-                guard let truncatedIP = TruncatedIp(ip: location.ip) else {
-                    log.error("Failed to truncate user IP")
-                    return .none
-                }
+                return .send(.refreshServerLoads(location))
+
+            case .refreshServerLoads(let location):
                 return .run { send in
-                    @Dependency(\.logicalsClient) var client
-                    @Dependency(\.serverRepository) var repository
-                    let loads = try await client.fetchLoads(truncatedIP)
-                    log.debug("Fetched loads following location change", category: .api, metadata: ["serverCount": "\(loads.count)"])
+                    let loads = try await logicalsClient.fetchLoads(location)
+                    log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
                     repository.upsert(loads: loads)
                 } catch: { error, _ in
-                    log.error("Failed to update loads following location change", category: .api, metadata: ["error": "\(error)"])
+                    log.error("Failed to update loads", category: .api, metadata: ["error": "\(error)"])
                 }
 
             case .userLocation(_):
@@ -109,7 +111,9 @@ public struct SharedPropertiesFeature {
             case .newConnectionState(let newValue):
                 state.$connectionState.withLock { $0 = newValue }
                 if newValue.is(\.disconnected) {
-                    return .send(.userLocation(.fetchUserLocation))
+                    // User location will be fetched if it hasn't already been done recently
+                    // e.g. if we were connected while the long living effect timer was ticking.
+                    return .send(.userLocation(.requestUserLocationFetch))
                 }
                 return .none
             }

@@ -167,35 +167,59 @@ extension VPNConnectionActual {
             vpnProtocol: vpnProtocol,
             natType: natType,
             safeMode: safeMode,
-            server: Server(
-                logical: Logical(
-                    id: serverModelId,
-                    name: serverName,
-                    domain: "",
-                    load: 50,
-                    entryCountryCode: entryCountry ?? country,
-                    exitCountryCode: country,
-                    tier: 2,
-                    score: 1,
-                    status: 1,
-                    feature: .zero,
-                    city: city,
-                    hostCountry: nil,
-                    translatedCity: city,
-                    latitude: coordinates.latitude,
-                    longitude: coordinates.longitude,
-                    gatewayName: nil
-                ),
-                endpoint: ServerEndpoint(
-                    id: "server-endpoint-id-1",
-                    entryIp: nil,
-                    exitIp: serverExitIP,
-                    domain: "",
-                    status: 1,
-                    label: nil,
-                    x25519PublicKey: nil,
-                    protocolEntries: nil
-                )
+            server: Server.mock(
+                serverModelId: serverModelId,
+                serverExitIP: serverExitIP,
+                feature: feature,
+                serverName: serverName,
+                country: country,
+                entryCountry: entryCountry,
+                city: city,
+                coordinates: coordinates
+            )
+        )
+    }
+}
+
+extension Server {
+    public static func mock(
+        serverModelId: String = "server-model-id-1",
+        serverExitIP: String = "188.12.32.12",
+        feature: ServerFeature = [],
+        serverName: String = "SRV#12",
+        country: String = "CH",
+        entryCountry: String? = nil,
+        city: String? = "Bern",
+        coordinates: CLLocationCoordinate2D = .init(latitude: 46.948076, longitude: 7.459652)
+    ) -> Server {
+        Server(
+            logical: Logical(
+                id: serverModelId,
+                name: serverName,
+                domain: "",
+                load: 50,
+                entryCountryCode: entryCountry ?? country,
+                exitCountryCode: country,
+                tier: 2,
+                score: 1,
+                status: 1,
+                feature: .zero,
+                city: city,
+                hostCountry: nil,
+                translatedCity: city,
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude,
+                gatewayName: nil
+            ),
+            endpoint: ServerEndpoint(
+                id: "server-endpoint-id-1",
+                entryIp: nil,
+                exitIp: serverExitIP,
+                domain: "",
+                status: 1,
+                label: nil,
+                x25519PublicKey: nil,
+                protocolEntries: nil
             )
         )
     }
