@@ -78,6 +78,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "Home",
+                "Announcement",
                 .product(name: "Modals-iOS", package: "Modals"),
                 .product(name: "NetShield-iOS", package: "NetShield"),
                 .product(name: "ConnectionDetails-iOS", package: "ConnectionDetails"),

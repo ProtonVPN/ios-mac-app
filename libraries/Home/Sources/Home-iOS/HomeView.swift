@@ -22,6 +22,7 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 
+import Announcement
 import Home
 import Strings
 import Theme
@@ -138,12 +139,10 @@ public struct HomeView: View {
                                 .padding(.bottom, .themeSpacing12)
                                 .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
                                 .background(trackConnectionViewHeight())
-//                            store.announcementBanner.ac
-                            AnnouncementBannerView(offerBanner: store.offerBanner)
-
-                            .padding(.horizontal, .themeSpacing16)
-                            .padding(.bottom, .themeSpacing8)
-                            .padding(.top, .themeSpacing16)
+                            AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
+                                .padding(.horizontal, .themeSpacing16)
+                                .padding(.bottom, .themeSpacing8)
+                                .padding(.top, .themeSpacing16)
 
                             RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
 

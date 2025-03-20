@@ -16,59 +16,85 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+
 import SwiftUI
+
 import Theme
 import Announcement
+import Strings
+import Home
 
 public struct AnnouncementBannerView: View {
 
-    let offerBanner: OfferBannerViewModel
+    let store: StoreOf<AnnouncementBannerFeature>
+
+    public init(store: StoreOf<AnnouncementBannerFeature>) {
+        self.store = store
+    }
 
     let colors = [
         Theme.Asset.offerBannerGradientRight.swiftUIColor,
         Theme.Asset.offerBannerGradientLeft.swiftUIColor
     ]
 
-    public init(announcement: Announcement) {
-        self.announcement = announcement
+    static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.dateTimeStyle = .named
+        formatter.unitsStyle = .full
+        return formatter
+    }()
+
+    public func timeLeftString(endTime: Date) -> String? {
+        let timeLeft = endTime.timeIntervalSinceNow
+        guard timeLeft >= 0 else { return nil }
+        let string = Self.relativeDateTimeFormatter.localizedString(fromTimeInterval: timeLeft)
+        return Localizable.offerEnding(string)
     }
 
     public var body: some View {
-        if let url = URL(string: offerBanner.imageURL) {
-            ZStack(alignment: .topTrailing) {
-                Link(destination: url) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        AsyncImage(url: URL(string: imageURLString)) {
-                            $0.resizable().scaledToFit()
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        Text(offerBanner.timeLeftString())
+        guard case .banner(let model) = store.state else {
+            return Color.clear
+                .frame(width: 0, height: 0)
+                .hidden()
+        }
+        return ZStack(alignment: .topTrailing) {
+            Button {
+                store.send(.didTapBanner)
+            } label: {
+                VStack(alignment: .leading, spacing: 0) {
+                    AsyncImage(url: model.imageURL) {
+                        $0.resizable().scaledToFit()
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    if let timeLeft = timeLeftString(endTime: model.endTime) {
+                        Text(timeLeft)
                             .themeFont(.caption(emphasised: false))
                             .foregroundStyle(Color(.text, .weak))
                     }
-                    .padding(.horizontal, .themeSpacing16)
-                    .padding(.vertical, .themeSpacing12)
-                    .background(Color(.background, .weak))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: .themeRadius8)
-                            .stroke(
-                                LinearGradient(
-                                    colors: colors,
-                                    startPoint: .leading,
-                                    endPoint: .trailing),
-                                lineWidth: 1)
-                    )
-                    .cornerRadius(.themeRadius8)
                 }
-                Button {
-                    print("close")
-                } label: {
-                    Theme.Asset.dismissButton.swiftUIImage
-                }
-                .buttonStyle(StaticButtonStyle())
-                .offset(x: 12, y: -12)
+                .padding(.horizontal, .themeSpacing16)
+                .padding(.vertical, .themeSpacing12)
+                .background(Color(.background, .weak))
+                .overlay(
+                    RoundedRectangle(cornerRadius: .themeRadius8)
+                        .stroke(
+                            LinearGradient(
+                                colors: colors,
+                                startPoint: .leading,
+                                endPoint: .trailing),
+                            lineWidth: 1)
+                )
+                .cornerRadius(.themeRadius8)
             }
+            Button {
+                store.send(.didTapDismiss)
+            } label: {
+                Theme.Asset.dismissButton.swiftUIImage
+            }
+            .buttonStyle(StaticButtonStyle())
+            .offset(x: 12, y: -12)
         }
     }
 }
@@ -79,14 +105,3 @@ struct StaticButtonStyle: ButtonStyle {
     }
 }
 
-#if DEBUG
-@available(iOS 17, *)
-#Preview(traits: .sizeThatFitsLayout) {
-    let actionURLString = "https://account.volta.proton.black/lite?action=subscribe-account&coupon=TRYVPNPLUS2024&currency=CHF&disablePlanSelection=1&fullscreen=auto&hideClose=1&plan=vpn2024&redirect=protonvpn%3A%2F%2Frefresh-account&ref=ios-apr-1-modal&start=checkout"
-    let imageURLString = "https://download.protonvpn.net/download/resources/promo/free-to-paid/en-mobile-banner@2x.png"
-    return AnnouncementBannerView(actionURLString: actionURLString,
-                                  imageURLString: imageURLString)
-    .padding()
-    .preferredColorScheme(.dark)
-}
-#endif

@@ -67,8 +67,7 @@ public struct HomeFeature {
         public var connectionCard: HomeConnectionCardFeature.State
         package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
-
-        public var offerBanner: OfferBannerViewModel?
+        package var announcementBanner: AnnouncementBannerFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -86,6 +85,7 @@ public struct HomeFeature {
             self.recents = .init()
             self.map = .init()
             self.connection = .initialState
+            self.announcementBanner = .noBanner
         }
     }
 
@@ -116,6 +116,7 @@ public struct HomeFeature {
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
         case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
+        case announcementBanner(AnnouncementBannerFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -153,15 +154,17 @@ public struct HomeFeature {
         Scope(state: \.recents, action: \.recents) {
             RecentsFeature()
         }
+        Scope(state: \.announcementBanner, action: \.announcementBanner) {
+            AnnouncementBannerFeature()
+        }
         Reduce { state, action in
             switch action {
             case .onStart:
-
                 @Dependency(\.announcementManager) var announcementManager
-                state.offerBanner = announcementManager.offerBannerViewModel { announcement in
-                    print("dismiss")
+                if let banner = announcementManager.fetchCurrentOfferBannerFromStorage(),
+                   let model = AnnouncementBannerFeature.State.Model.init(announcement: banner) {
+                    state.announcementBanner = .banner(model)
                 }
-
                 return .concatenate(
                     .send(.connection(.input(.onLaunch))),
                     .merge(
@@ -301,6 +304,8 @@ public struct HomeFeature {
                     state.shouldPushAlert = false
                     pushAlert(AllCountriesUpsellAlert())
                 }
+                return .none
+            case .announcementBanner:
                 return .none
             }
         }
