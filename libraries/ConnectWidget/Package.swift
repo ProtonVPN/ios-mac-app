@@ -16,7 +16,7 @@ let package = Package(
             targets: ["ConnectWidget"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.17.1")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),

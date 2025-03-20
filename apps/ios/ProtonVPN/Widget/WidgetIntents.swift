@@ -27,8 +27,6 @@ internal struct DisconnectFromVPNIntent: AppIntent {
 
     static var openAppWhenRun = false
 
-    init() { }
-
     func perform() async throws -> some IntentResult {
 
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
@@ -59,7 +57,7 @@ internal struct ConnectToVPNIntent: AppIntent {
         let connectionSpec = recentIndex.map { getRecentConnection($0) } ?? getDefaultConnection()
 
         if let connectionSpec = connectionSpec {
-            try? await connectToVPN(connectionSpec, .vpnProtocol(connectionSpec.actualConnection.vpnProtocol))
+            try? await connectToVPN(connectionSpec, defaultConnectionStorage.getDefaultProtocol())
         }
         return .result()
     }
@@ -98,12 +96,7 @@ internal struct LoginIntent: AppIntent {
     static var title: LocalizedStringResource = "Login"
     static let openAppWhenRun = true
 
-    init() { }
-
     func perform() async throws -> some IntentResult {
         return .result()
     }
 }
-
-// Private helpers:
-

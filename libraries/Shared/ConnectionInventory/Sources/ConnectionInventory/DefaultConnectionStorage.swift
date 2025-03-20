@@ -27,20 +27,41 @@ import Domain
 public struct DefaultConnectionPreferenceStorage: DependencyKey {
     @DependencyEndpoint public var set: (_ preference: DefaultConnectionPreference) throws -> Void
     public var getPreference: () throws -> DefaultConnectionPreference?
+    public var getDefaultProtocol: () throws -> ConnectionProtocol
 
-    private static let storageKeyPrefix = "DefaultConnectionPreference"
+    enum StorageKeys: String {
+        /// Defined here
+        case defaultConnection = "DefaultConnectionPreference"
+        /// Also defined in PropertiesManager.Keys
+        case smartProtocol = "smartProtocol"
+        /// Also defined in PropertiesManager.Keys
+        case vpnProtocol = "VpnProtocol"
+    }
 }
 
 extension DefaultConnectionPreferenceStorage {
-
     public static let liveValue: DefaultConnectionPreferenceStorage = {
         @Dependency(\.storage) var storage
+        @Dependency(\.defaultsProvider) var defaultsProvider
+
         return .init(
             set: {
-                try storage.setForUser($0, forKey: storageKeyPrefix)
+                try storage.setForUser($0, forKey: StorageKeys.defaultConnection.rawValue)
                 WidgetCenter.shared.reloadAllTimelines()
             },
-            getPreference: { try storage.getForUser(DefaultConnectionPreference.self, forKey: storageKeyPrefix) }
+            getPreference: {
+                try storage.getForUser(DefaultConnectionPreference.self, forKey: StorageKeys.defaultConnection.rawValue)
+            },
+            getDefaultProtocol: {
+                let smartProtocol = defaultsProvider.getDefaults().bool(forKey: StorageKeys.smartProtocol.rawValue)
+                let vpnProtocol = try? storage.get(VpnProtocol.self, forKey: StorageKeys.vpnProtocol.rawValue)
+
+                if let vpnProtocol {
+                    return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
+                }
+
+                return .smartProtocol
+            }
         )
     }()
 }
