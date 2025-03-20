@@ -22,22 +22,24 @@ import Theme
 import Strings
 
 public struct ConnectWidget: Widget {
-    let kind: String = "ConnectWidget"
+    static let kind: String = "ConnectWidget"
+    let enabled: Bool
 
-    public init() { }
+    public init() {
+        self.enabled = true
+    }
+    public init(enabled: Bool = true) {
+        self.enabled = enabled
+    }
 
     public var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in
             ConnectWidgetView(entry: entry)
                 .environment(\.colorScheme, .dark)
         }
         .configurationDisplayName("Proton VPN")
         .description(Localizable.widgetTrayDescription)
-#if DEBUG // Disable widget in prod before we finish working on it
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-#else
-        .supportedFamilies([])
-#endif
+        .supportedFamilies(enabled ? [.systemSmall, .systemMedium, .systemLarge] : [])
 
     }
 }

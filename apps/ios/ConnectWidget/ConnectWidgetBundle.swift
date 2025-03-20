@@ -22,6 +22,10 @@ import ConnectWidget
 @main
 struct ConnectWidgetBundle: WidgetBundle {
     var body: some Widget {
+#if DEBUG
         ConnectWidget()
+        #else
+        ConnectWidget(enabled: false)
+#endif
     }
 }
