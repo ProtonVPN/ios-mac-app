@@ -54,7 +54,7 @@ extension OrderedSet<RecentConnection> {
         ]).first
     }
 
-    mutating func updateList(with spec: ConnectionSpec) {
+    public mutating func updateList(with spec: ConnectionSpec) {
         var oldRecent: RecentConnection?
         if let index = index(for: spec) {
             oldRecent = remove(at: index)
@@ -72,11 +72,11 @@ extension OrderedSet<RecentConnection> {
         self = sanitized()
     }
 
-    mutating func unpin(recent: RecentConnection) {
+    public mutating func unpin(recent: RecentConnection) {
         updatePin(recent: recent, pinnedDate: nil)
     }
 
-    mutating func pin(recent: RecentConnection, pinnedDate: Date) {
+    public mutating func pin(recent: RecentConnection, pinnedDate: Date) {
         updatePin(recent: recent, pinnedDate: pinnedDate)
     }
 

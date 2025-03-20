@@ -17,7 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
-        .package(path: "../Shared/Localization"),
+        .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
@@ -30,7 +30,7 @@ let package = Package(
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 "Theme",
-                "Localization",
+                "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies")

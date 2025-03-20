@@ -21,13 +21,13 @@ import Dependencies
 import OrderedCollections
 
 public struct RecentsStorage {
-    var readFromStorage: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
-    var saveToStorage: (OrderedSet<RecentConnection>) -> Void = { _ in unimplemented() }
+    public internal(set) var readFromStorage: () -> OrderedSet<RecentConnection> = { unimplemented(placeholder: []) }
+    public internal(set) var saveToStorage: (OrderedSet<RecentConnection>) -> Void = { _ in unimplemented() }
 }
 
 extension RecentsStorage: DependencyKey {
     public static var liveValue: RecentsStorage = {
-        return RecentsStorage(
+        RecentsStorage(
             readFromStorage: RecentsStorageImplementation.readFromStorage,
             saveToStorage: RecentsStorageImplementation.saveToStorage
         )

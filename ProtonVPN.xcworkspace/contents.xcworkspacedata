@@ -60,6 +60,9 @@
          <FileRef
             location = "group:libraries/Shared/Persistence">
          </FileRef>
+         <FileRef
+            location = "group:libraries/Shared/ConnectionInventory">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
@@ -80,6 +83,9 @@
       <Group
          location = "container:"
          name = "Features">
+         <FileRef
+            location = "group:libraries/ConnectWidget">
+         </FileRef>
          <FileRef
             location = "group:libraries/NetShield">
          </FileRef>

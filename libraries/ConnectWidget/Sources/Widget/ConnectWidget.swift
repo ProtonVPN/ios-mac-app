@@ -1,0 +1,49 @@
+//
+//  Created on 2025-01-09.
+//
+//  Copyright (c) 2025 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import WidgetKit
+import SwiftUI
+import Theme
+import Strings
+
+public struct ConnectWidget: Widget {
+    let kind: String = "ConnectWidget"
+
+    public init() { }
+
+    public var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            ConnectWidgetView(entry: entry)
+                .environment(\.colorScheme, .dark)
+        }
+        .configurationDisplayName("Proton VPN")
+        .description(Localizable.widgetTrayDescription)
+#if DEBUG // Disable widget in prod before we finish working on it
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+#else
+        .supportedFamilies([])
+#endif
+
+    }
+}
+
+#Preview(as: .systemSmall) {
+    ConnectWidget()
+} timeline: {
+    ConnectWidgetEntry(date: .now, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: [])
+}

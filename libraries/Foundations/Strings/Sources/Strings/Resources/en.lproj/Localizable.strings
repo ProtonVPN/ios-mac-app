@@ -2698,3 +2698,14 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "The connection provider encountered an error: %@";
+
+// MARK: Widget
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+
+/* Recents section title */
+"widget_recents_title" = "Recents";
+
+/* Recents section description */
+"widget_recents_description" = "View your connection history here.";

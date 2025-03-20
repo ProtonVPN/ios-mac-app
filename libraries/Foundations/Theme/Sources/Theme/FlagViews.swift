@@ -97,6 +97,17 @@ public struct FlagSizes {
             folder: ""
         )
     }
+
+    public static var widgetRecentsSize: Self {
+        Self(
+            frame: CGSize(width: 24, height: 16),
+            simpleFlag: CGSize(width: 24, height: 16),
+            scTopFlag: CGSize(width: 18, height: 12),
+            scBottomFlag: CGSize(width: 15, height: 10),
+            cornerRadius: .themeRadius4,
+            folder: "Flags/"
+        )
+    }
 }
 
 public struct SimpleFlagView: View {
