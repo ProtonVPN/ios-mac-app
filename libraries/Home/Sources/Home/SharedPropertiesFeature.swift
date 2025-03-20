@@ -20,12 +20,17 @@ import ComposableArchitecture
 import ProtonCoreFeatureFlags
 import CommonNetworking
 import Connection
+import Ergonomics
+import Persistence
 import Foundation
 import Domain
 import VPNAppCore
 
 @Reducer
 public struct SharedPropertiesFeature {
+    @Dependency(\.logicalsClient) var logicalsClient
+    @Dependency(\.serverRepository) var repository
+
     @ObservableState
     public struct State: Equatable {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
@@ -41,6 +46,8 @@ public struct SharedPropertiesFeature {
         // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
         case newConnectionStatus(VPNConnectionStatus)
         case newConnectionState(ConnectionState)
+
+        case refreshServerLoads(UserLocation)
     }
 
     private enum CancelId {
@@ -82,6 +89,18 @@ public struct SharedPropertiesFeature {
                     longLivingConnectionStatusEffect
                 )
 
+            case .userLocation(.delegate(.userLocationChanged(let location))):
+                return .send(.refreshServerLoads(location))
+
+            case .refreshServerLoads(let location):
+                return .run { send in
+                    let loads = try await logicalsClient.fetchLoads(location: location)
+                    log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
+                    repository.upsert(loads: loads)
+                } catch: { error, _ in
+                    log.error("Failed to update loads", category: .api, metadata: ["error": "\(error)"])
+                }
+
             case .userLocation(_):
                 return .none
 
@@ -91,6 +110,11 @@ public struct SharedPropertiesFeature {
 
             case .newConnectionState(let newValue):
                 state.$connectionState.withLock { $0 = newValue }
+                if newValue.is(\.disconnected) {
+                    // User location will be fetched if it hasn't already been done recently
+                    // e.g. if we were connected while the long living effect timer was ticking.
+                    return .send(.userLocation(.fetchUserLocation))
+                }
                 return .none
             }
         }

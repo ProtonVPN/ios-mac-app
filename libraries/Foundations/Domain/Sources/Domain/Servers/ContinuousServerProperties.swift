@@ -38,3 +38,12 @@ public struct ContinuousServerProperties: CustomStringConvertible {
         self.status = status
     }
 }
+
+extension ContinuousServerProperties: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case serverId = "ID"
+        case load
+        case score
+        case status
+    }
+}

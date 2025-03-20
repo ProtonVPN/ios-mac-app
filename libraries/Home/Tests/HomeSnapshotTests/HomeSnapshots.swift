@@ -109,6 +109,7 @@ extension ProtectionState {
         case .protecting: return "Protecting"
         case .protected: return "Protected"
         case .protectedSecureCore: return "ProtectedSecureCore"
+        case .resolving: return "Loading"
         }
     }
 }
@@ -118,7 +119,7 @@ extension VPNConnectionStatus {
         switch self {
         case .disconnected: return "Disconnected"
         case .connecting: return "Connecting"
-        case .loadingConnectionInfo: return "LoadingConnectionInfo"
+        case .resolving: return "Loading"
         case .disconnecting: return "Disconnecting"
         case .connected: return "Connected"
         }

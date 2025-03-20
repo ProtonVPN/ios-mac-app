@@ -257,8 +257,7 @@ public class VpnApiService {
     }
 
     public func loads(lastKnownIp: TruncatedIp?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
-        let shortenedIp = lastKnownIp?.value
-        networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNLoadsRequest(truncatedIP: lastKnownIp)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let loadsJson = response.jsonArray(key: "LogicalServers") else {

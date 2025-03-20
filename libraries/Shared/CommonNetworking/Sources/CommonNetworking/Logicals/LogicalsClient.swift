@@ -18,11 +18,14 @@
 
 import Foundation
 import Dependencies
+import DependenciesMacros
 import Domain
 import Ergonomics
 
+@DependencyClient
 public struct LogicalsClient: Sendable {
-    public var fetchLogicals: @Sendable (TruncatedIp?, String?) async throws -> [VPNServer]
+    public internal(set) var fetchLogicals: @Sendable (_ ip: TruncatedIp?, _ countryCode: String?) async throws -> [VPNServer]
+    public internal(set) var fetchLoads: @Sendable (_ location: UserLocation?) async throws -> [ContinuousServerProperties]
 }
 
 extension LogicalsClient: DependencyKey {
@@ -38,6 +41,12 @@ extension LogicalsClient: DependencyKey {
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)
                 return response.logicalServers.map { $0.vpnServer }
+            },
+            fetchLoads: { location in
+                let truncatedIP = location.flatMap { TruncatedIp(ip: $0.ip) }
+                let request = VPNLoadsRequest(truncatedIP: truncatedIP)
+                let response: LoadsResponse = try await networking.perform(request: request)
+                return response.loads
             }
         )
     }
