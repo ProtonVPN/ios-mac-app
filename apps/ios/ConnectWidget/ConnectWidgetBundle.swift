@@ -24,7 +24,7 @@ struct ConnectWidgetBundle: WidgetBundle {
     var body: some Widget {
 #if DEBUG
         ConnectWidget()
-        #else
+#else
         ConnectWidget(enabled: false)
 #endif
     }
