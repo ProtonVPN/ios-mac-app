@@ -42,6 +42,7 @@ let package = Package(
         .package(path: "../Modals"),
         .package(path: "../NetShield"),
         .package(path: "../ConnectionDetails"),
+        .package(path: "../Announcement"),
     ],
     targets: [
         .target(
@@ -53,6 +54,7 @@ let package = Package(
                 "SharedViews",
                 "NetShield",
                 "Ergonomics",
+                "Announcement",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 "ConnectionInventory",
@@ -76,6 +78,7 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "Home",
+                .product(name: "Modals-iOS", package: "Modals"),
                 .product(name: "NetShield-iOS", package: "NetShield"),
                 .product(name: "ConnectionDetails-iOS", package: "ConnectionDetails"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

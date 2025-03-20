@@ -18,28 +18,32 @@
 
 import SwiftUI
 import Theme
+import Announcement
 
-struct AnnouncementBannerView: View {
+public struct AnnouncementBannerView: View {
 
-    let actionURLString: String
-    let imageURLString: String
+    let offerBanner: OfferBannerViewModel
 
     let colors = [
         Theme.Asset.offerBannerGradientRight.swiftUIColor,
         Theme.Asset.offerBannerGradientLeft.swiftUIColor
     ]
 
-    var body: some View {
-        if let url = URL(string: actionURLString) {
+    public init(announcement: Announcement) {
+        self.announcement = announcement
+    }
+
+    public var body: some View {
+        if let url = URL(string: offerBanner.imageURL) {
             ZStack(alignment: .topTrailing) {
                 Link(destination: url) {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0) {
                         AsyncImage(url: URL(string: imageURLString)) {
                             $0.resizable().scaledToFit()
                         } placeholder: {
                             ProgressView()
                         }
-                        Text("6 days 22 hours left")
+                        Text(offerBanner.timeLeftString())
                             .themeFont(.caption(emphasised: false))
                             .foregroundStyle(Color(.text, .weak))
                     }
@@ -74,3 +78,15 @@ struct StaticButtonStyle: ButtonStyle {
         configuration.label
     }
 }
+
+#if DEBUG
+@available(iOS 17, *)
+#Preview(traits: .sizeThatFitsLayout) {
+    let actionURLString = "https://account.volta.proton.black/lite?action=subscribe-account&coupon=TRYVPNPLUS2024&currency=CHF&disablePlanSelection=1&fullscreen=auto&hideClose=1&plan=vpn2024&redirect=protonvpn%3A%2F%2Frefresh-account&ref=ios-apr-1-modal&start=checkout"
+    let imageURLString = "https://download.protonvpn.net/download/resources/promo/free-to-paid/en-mobile-banner@2x.png"
+    return AnnouncementBannerView(actionURLString: actionURLString,
+                                  imageURLString: imageURLString)
+    .padding()
+    .preferredColorScheme(.dark)
+}
+#endif

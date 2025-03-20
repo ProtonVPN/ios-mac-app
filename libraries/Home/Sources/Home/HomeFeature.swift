@@ -24,6 +24,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Announcement
 import ConnectionDetails
 import Connection
 import ModalsServices
@@ -57,7 +58,7 @@ public struct HomeFeature {
 
     @ObservableState
     public struct State: Equatable {
-        /// For simplicity's sake, let's immplement Connection as a child feature of Home.
+        /// For simplicity's sake, let's implement Connection as a child feature of Home.
         /// In the future, when we add a sibling feature (like countries, settings or profiles),
         /// we will have to have a parent App feature.  Connection can be moved
         public var connection: ConnectionFeature.State
@@ -66,6 +67,8 @@ public struct HomeFeature {
         public var connectionCard: HomeConnectionCardFeature.State
         package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
+
+        public var offerBanner: OfferBannerViewModel?
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -153,6 +156,12 @@ public struct HomeFeature {
         Reduce { state, action in
             switch action {
             case .onStart:
+
+                @Dependency(\.announcementManager) var announcementManager
+                state.offerBanner = announcementManager.offerBannerViewModel { announcement in
+                    print("dismiss")
+                }
+
                 return .concatenate(
                     .send(.connection(.input(.onLaunch))),
                     .merge(

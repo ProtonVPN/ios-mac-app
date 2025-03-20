@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct Offer: Codable {
+public struct Offer: Codable, Equatable {
     public let label: String?
     public let icon: String?
     public let panel: OfferPanel?

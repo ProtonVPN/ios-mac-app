@@ -27,7 +27,7 @@ import Strings
 import Theme
 import Ergonomics
 import VPNAppCore
-import Modals
+import Modals_iOS
 import ConnectionDetails
 import ConnectionDetails_iOS
 import SharedViews
@@ -138,6 +138,12 @@ public struct HomeView: View {
                                 .padding(.bottom, .themeSpacing12)
                                 .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
                                 .background(trackConnectionViewHeight())
+//                            store.announcementBanner.ac
+                            AnnouncementBannerView(offerBanner: store.offerBanner)
+
+                            .padding(.horizontal, .themeSpacing16)
+                            .padding(.bottom, .themeSpacing8)
+                            .padding(.top, .themeSpacing16)
 
                             RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
 
