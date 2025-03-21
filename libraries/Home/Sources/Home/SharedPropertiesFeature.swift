@@ -16,13 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
 import ComposableArchitecture
+
 import ProtonCoreFeatureFlags
+
 import CommonNetworking
 import Connection
 import Ergonomics
 import Persistence
-import Foundation
+import Announcement
 import Domain
 import VPNAppCore
 
@@ -35,6 +39,7 @@ public struct SharedPropertiesFeature {
     public struct State: Equatable {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
+        @Shared(.announcementBanner) var announcementBanner: Announcement?
 
         var userLocation: UserLocationFeature.State = .init()
     }
@@ -46,12 +51,14 @@ public struct SharedPropertiesFeature {
         // TODO: Rename those two actions below (& others if necessary) (VPNAPPL-2678)
         case newConnectionStatus(VPNConnectionStatus)
         case newConnectionState(ConnectionState)
+        case newAnnouncementBanner(Notification)
 
         case refreshServerLoads(UserLocation)
     }
 
     private enum CancelId {
         case watchConnectionStatus
+        case watchAnnouncementBanner
     }
 
     private static let connectionStatusStream: AsyncStream<VPNConnectionStatus> = {
@@ -77,6 +84,13 @@ public struct SharedPropertiesFeature {
     }
     .cancellable(id: CancelId.watchConnectionStatus)
 
+    private let longLivingAnnouncementBannerEffect: Effect<Action> = .publisher {
+        AppEvent.announcementStorageContent
+            .publisher
+            .receive(on: UIScheduler.shared)
+            .map(Action.newAnnouncementBanner)
+    }.cancellable(id: CancelId.watchAnnouncementBanner)
+
     public var body: some Reducer<State, Action> {
         Scope(state: \.userLocation, action: \.userLocation) {
             UserLocationFeature()
@@ -86,7 +100,8 @@ public struct SharedPropertiesFeature {
             case .listen:
                 return .merge(
                     .send(.userLocation(.listen)),
-                    longLivingConnectionStatusEffect
+                    longLivingConnectionStatusEffect,
+                    longLivingAnnouncementBannerEffect
                 )
 
             case .userLocation(.delegate(.userLocationChanged(let location))):
@@ -115,6 +130,10 @@ public struct SharedPropertiesFeature {
                     // e.g. if we were connected while the long living effect timer was ticking.
                     return .send(.userLocation(.fetchUserLocation))
                 }
+                return .none
+            case .newAnnouncementBanner:
+                @Dependency(\.announcementManager) var announcementManager
+                state.$announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
                 return .none
             }
         }

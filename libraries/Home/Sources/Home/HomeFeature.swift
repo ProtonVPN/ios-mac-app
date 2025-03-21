@@ -71,6 +71,7 @@ public struct HomeFeature {
 
         fileprivate var shouldPushAlert: Bool = false
 
+        @SharedReader(.announcementBanner) var announcement: Announcement?
         @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
@@ -105,6 +106,8 @@ public struct HomeFeature {
         case changeServer
         case didDismissChangeServer
         case disconnect
+
+        case fetchCurrentOfferBannerFromStorage(Announcement?)
 
         case incomingAlert(Alert)
 
@@ -160,25 +163,29 @@ public struct HomeFeature {
         Reduce { state, action in
             switch action {
             case .onStart:
-                @Dependency(\.announcementManager) var announcementManager
-                if let banner = announcementManager.fetchCurrentOfferBannerFromStorage(),
-                   let model = AnnouncementBannerFeature.State.Model.init(announcement: banner) {
-                    state.announcementBanner = .banner(model)
-                }
-                return .concatenate(
+                return .merge(
                     .send(.connection(.input(.onLaunch))),
-                    .merge(
-                        .run { send in
-                            for await alert in await alertService.alerts() {
-                                await send(.incomingAlert(alert))
-                            }
+                    .publisher {
+                        state.$announcement.publisher
+                            .map(Action.fetchCurrentOfferBannerFromStorage)
+                    },
+                    .run { send in
+                        for await alert in await alertService.alerts() {
+                            await send(.incomingAlert(alert))
                         }
-                    )
+                    }
                 )
                 .cancellable(id: CancelID.connectionState)
             case .recents(.delegate(.connect(let spec))):
                 return .send(.connect(spec))
             case .recents:
+                return .none
+            case .fetchCurrentOfferBannerFromStorage:
+                @Dependency(\.announcementManager) var announcementManager
+                if let banner = announcementManager.fetchCurrentOfferBannerFromStorage(),
+                   let model = AnnouncementBannerFeature.State.Model.init(announcement: banner) {
+                    state.announcementBanner = .banner(model)
+                }
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm

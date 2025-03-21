@@ -91,7 +91,7 @@ final class OneClickPayment {
 
                 // Fetch a session login URL so the user can easily visit their account page.
                 guard let url = await sessionService.getPlanSession(mode: .upgrade) else {
-                    assert(false, "Couldn't retrieve plan session URL")
+                    log.assertionFailure("Couldn't retrieve plan session URL")
                     return
                 }
                 alertService.push(
