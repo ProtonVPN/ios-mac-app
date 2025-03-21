@@ -16,9 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-
 import SwiftUI
+
+import ComposableArchitecture
+import SDWebImageSwiftUI
 
 import Theme
 import Announcement
@@ -52,6 +53,8 @@ public struct AnnouncementBannerView: View {
         return Localizable.offerEnding(string)
     }
 
+    @State var showBanner = false
+
     public var body: some View {
         guard case .banner(let model) = store.state else {
             return Color.clear
@@ -63,11 +66,9 @@ public struct AnnouncementBannerView: View {
                 store.send(.didTapBanner)
             } label: {
                 VStack(alignment: .leading, spacing: 0) {
-                    AsyncImage(url: model.imageURL) {
-                        $0.resizable().scaledToFit()
-                    } placeholder: {
-                        ProgressView()
-                    }
+
+                    WebImage(url: model.imageURL)
+                        .resizable().scaledToFit()
                     if let timeLeft = timeLeftString(endTime: model.endTime) {
                         Text(timeLeft)
                             .themeFont(.caption(emphasised: false))
@@ -95,6 +96,15 @@ public struct AnnouncementBannerView: View {
             }
             .buttonStyle(StaticButtonStyle())
             .offset(x: 12, y: -12)
+        }
+        .opacity(showBanner ? 1 : 0)
+        .task {
+            if await ImageCache().containsImageForKey(forKey: model.imageURL.absoluteString) {
+                self.showBanner = true
+                return
+            }
+            await ImageCache().prefetchURLs([model.imageURL])
+            self.showBanner = await ImageCache().containsImageForKey(forKey: model.imageURL.absoluteString)
         }
     }
 }

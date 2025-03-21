@@ -131,10 +131,14 @@ public struct SharedPropertiesFeature {
                     return .send(.userLocation(.fetchUserLocation))
                 }
                 return .none
+                
             case .newAnnouncementBanner:
                 @Dependency(\.announcementManager) var announcementManager
                 state.$announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
-                return .none
+                return .run { send in
+                    let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
+                    await FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
+                }
             }
         }
     }

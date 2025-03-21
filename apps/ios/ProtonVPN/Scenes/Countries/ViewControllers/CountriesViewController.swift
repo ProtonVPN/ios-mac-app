@@ -79,7 +79,9 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupAnnouncements()
+        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+            setupAnnouncements()
+        }
     }
     
     private func setupView() {

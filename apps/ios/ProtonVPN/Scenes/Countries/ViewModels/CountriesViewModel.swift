@@ -468,6 +468,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     private var offerBannerCellModel: RowViewModel? {
+        // Disable banner in countries tab when redesign is enabled
+        guard !FeatureFlagsRepository.shared.isRedesigniOSEnabled else { return nil }
         let dismiss: (Announcement) -> Void = { [weak self] offerBanner in
             self?.announcementManager.markAsRead(announcement: offerBanner)
             self?.reloadContent()

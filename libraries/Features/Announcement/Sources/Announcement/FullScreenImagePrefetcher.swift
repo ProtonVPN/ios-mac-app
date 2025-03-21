@@ -61,8 +61,9 @@ public protocol ImageCacheProtocol {
     func prefetchURLs(_ urls: [URL]) async
 }
 
-struct ImageCache: ImageCacheProtocol {
-    func containsImageForKey(forKey key: String) async -> Bool {
+public struct ImageCache: ImageCacheProtocol {
+    public init() { }
+    public func containsImageForKey(forKey key: String) async -> Bool {
         await withCheckedContinuation { continuation in
             SDImageCache.shared.containsImage(forKey: key, cacheType: .all) { cacheType in
                 continuation.resume(returning: cacheType != .none)
@@ -70,7 +71,7 @@ struct ImageCache: ImageCacheProtocol {
         }
     }
 
-    func prefetchURLs(_ urls: [URL]) async {
+    public func prefetchURLs(_ urls: [URL]) async {
         await withCheckedContinuation { continuation in
             SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
                 log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")

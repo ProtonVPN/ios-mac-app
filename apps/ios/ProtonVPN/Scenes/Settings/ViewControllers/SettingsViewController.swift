@@ -83,7 +83,6 @@ final class SettingsViewController: UIViewController {
         
         setupTableView()
         tableView.reloadData()
-        setupAnnouncements()
     }
     
     private func setupView() {
