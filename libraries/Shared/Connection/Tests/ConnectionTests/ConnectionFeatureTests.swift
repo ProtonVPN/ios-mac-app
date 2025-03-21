@@ -268,6 +268,43 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(stateChange(to: \.connected))
     }
 
+    @MainActor func testDisconnectDuringPreparationCancelsConnection() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+        let expectedResolvedIntent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock)
+
+        store.dependencies.connectionIntentResolver = .init(resolve: { intent in
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: .seconds(2))
+            try Task.checkCancellation()
+            XCTFail("Preparation should have been cancelled")
+            return .mock()
+        })
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(preparationIntent)))
+        await store.receive(\.prepare)
+        await store.receive(stateChange(to: \.connecting.unresolved)) {
+            $0.connectionState = .connecting(.unresolved(preparationIntent))
+        }
+
+        await environment.clock.advance(by: .seconds(1))
+
+        await store.send(.input(.disconnect))
+
+        await environment.clock.advance(by: .seconds(1))
+
+        // await store.receive(\.finishedPreparing.failure)
+        await store.receive(stateChange(to: \.disconnected)) {
+            $0.connectionState = .disconnected
+        }
+    }
+
     @MainActor func testDisconnectImmediatelyFollowingPreparationResultsInDisconnection() async {
         let environment = ConnectionEnvironment.disconnected()
         let store = environment.createConnectionTestStore()

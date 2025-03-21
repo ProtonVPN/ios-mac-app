@@ -49,7 +49,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         return tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
 
-
     override init() {
         AppContext.default = .wireGuardExtension
 

@@ -135,7 +135,17 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.core(.localAgent(.setFeatures(agentFeatures))))
 
             case .input(.disconnect):
-                return .send(.core(.disconnect(.userIntent)))
+                let internalDisconnectOrStateChangeEffect: Effect<Action>
+                if state.coreConnectionState.is(\.disconnected) {
+                    log.debug("Internal state is already disconnected, updating external state", category: .connection)
+                    internalDisconnectOrStateChangeEffect = updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+                } else {
+                    internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
+                }
+                return .merge(
+                    .cancel(id: CancelID.preparation),
+                    internalDisconnectOrStateChangeEffect
+                )
 
             case .input(.onLogout):
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
