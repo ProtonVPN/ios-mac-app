@@ -31,7 +31,7 @@ extension NETunnelProviderSession: VPNSession {
     static let maxRetries = 5
     static let retryInterval = Duration.seconds(1)
 
-    func send(_ messageData: Data) async throws -> Data {
+    private func send(_ messageData: Data) async throws -> Data {
         // From documentation: "If this method can’t start sending the message it throws an error. If an error occurs
         // while sending the message or returning the result, `nil` should be sent to the response handler as
         // notification." If we encounter an xpc error, try sleeping for a second and then trying again - the extension
@@ -47,6 +47,7 @@ extension NETunnelProviderSession: VPNSession {
                     continuation.resume(throwing: error)
                 }
             }
+            try Task.checkCancellation()
 
             if let data {
                 return data
@@ -61,7 +62,6 @@ extension NETunnelProviderSession: VPNSession {
     public func send(
         _ message: WireguardProviderRequest
     ) async throws -> WireguardProviderRequest.Response {
-        // TODO: retries
         log.debug("Sending provider message: \(message)", category: .ipc)
         let data = try await send(message.asData)
         return try WireguardProviderRequest.Response.decode(data: data)

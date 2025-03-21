@@ -93,8 +93,7 @@ final class ExtensionManagerFeatureTests: XCTestCase {
         mockManager.connection.connectedServer = previouslyConnectedServer
         let now = Date.now
 
-        let disconnected = ExtensionFeature.State.disconnected(nil)
-        let store = TestStore(initialState: disconnected) {
+        let store = TestStore(initialState: .unknown) {
             ExtensionFeature()
         } withDependencies: {
             $0.tunnelManager = mockManager

@@ -54,15 +54,18 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         public internal(set) var tunnel: ExtensionFeature.State
         public internal(set) var localAgent: LocalAgentFeature.State
         public internal(set) var certAuth: CertificateAuthenticationFeature.State
+        public internal(set) var shouldDisconnectWhenAllowed: Bool
 
         package init(
             tunnelState: ExtensionFeature.State = .unknown,
             certAuthState: CertificateAuthenticationFeature.State = .idle,
-            localAgentState: LocalAgentFeature.State = .disconnected(nil)
+            localAgentState: LocalAgentFeature.State = .disconnected(nil),
+            shouldDisconnectWhenAllowed: Bool = false
         ) {
             self.tunnel = tunnelState
             self.certAuth = certAuthState
             self.localAgent = localAgentState
+            self.shouldDisconnectWhenAllowed = shouldDisconnectWhenAllowed
         }
     }
 
@@ -182,14 +185,20 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
 
         case .tunnel(.connectionFinished(.success(let tunnelResponse))):
+            // The network extension has been configured and launched (possibly during a previous run of the app).
+            // It has replied with the id of the logical and endpoint that it believes it is connected to, and we have
+            // confirmed that a server with such ids exists in our server database.
             log.info(
                 "Tunnel connection finished",
                 category: .connection,
                 metadata: ["date": "\(tunnelResponse.connectionDate)", "logical": "\(tunnelResponse.logicalInfo)"]
             )
-            // The network extension has been configured and launched (possibly during a previous run of the app).
-            // It has replied with the id of the logical and endpoint that it believes it is connected to, and we have
-            // confirmed that a server with such ids exists in our server database.
+            // It's now safe to continue disconnecting
+            if state.shouldDisconnectWhenAllowed {
+                state.shouldDisconnectWhenAllowed = false
+                log.info("Proceeding with delayed disconnection request", category: .connection)
+                return .send(.disconnect(.userIntent))
+            }
             if !state.localAgent.is(\.disconnected) {
                 log.assertionFailure("Local agent wasn't disconnected when tunnel connection finished")
             }
@@ -230,6 +239,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
 
         case .tunnel(.tunnelStatusChanged(.disconnected)):
+            state.shouldDisconnectWhenAllowed = false
             if case .disconnected = state.localAgent { return .none }
             // Now that we're fully disconnected, let's cancel the timeout
             return .cancel(id: CancelID.connectionTimeout)
@@ -357,4 +367,10 @@ extension CoreConnectionFeature.State {
         certAuthState: .idle,
         localAgentState: .disconnected(nil)
     )
+
+    /// Network extension behaviour is undefined (at least to us) if we invoke `stopTunnel` before the tunnel enters
+    /// either `.connected` or `disconnected` states following the call to `startTunnel `
+    package var isInteractionAllowed: Bool {
+        return tunnel.isInteractionAllowed
+    }
 }

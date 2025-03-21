@@ -132,7 +132,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                     let result = await Result { TunnelConnectionResponse(
                         logicalInfo: try await tunnelManager.connectedServer,
                         connectionDate: try await tunnelManager.session.connectedDate ?? date.now
-                    ) }
+                    )}
                     return await send(.connectionFinished(result))
                 }
 
@@ -204,7 +204,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 log.error("Last disconnect error: \(error)", category: .connection)
             }
         } catch: { error, send in
-            log.error("Failed to determined last disconnect error \(error)", category: .connection)
+            log.error("Failed to determine last disconnect error \(error)", category: .connection)
         }
     }
 }
@@ -288,5 +288,30 @@ public struct TunnelConnectionResponse: Equatable, Sendable {
     package init(logicalInfo: LogicalServerInfo, connectionDate: Date) {
         self.logicalInfo = logicalInfo
         self.connectionDate = connectionDate
+    }
+}
+
+extension ExtensionFeature.State {
+    /// The network extension process has a mind of its own. If we've previously invoked `startTunnel`, and we invoke
+    /// `stopTunnel` before waiting for the extension to actually transition to `.connected` or `.disconnected`, we
+    /// may get unexpected results. For now, the parent feature should delay disconnection until this feature is ready
+    /// to accept such events.
+    package var isInteractionAllowed: Bool {
+        switch self {
+        case .connected, .disconnected:
+            return true
+
+        case .connecting:
+            // Technically, the network extension could be ready for interaction in this state. Currently, the
+            // extension enters this state when we receive a `NEVPNStatusDidChange.connecting` notification, but we
+            // don't leave it for `.connected` after we receive `NEVPNStatusDidChange.connected`, until we also
+            // complete an ipc round trip to determine what server we are connected to. As a result, we will take
+            // slightly longer to cancel our connection.
+            // This could be improved by storing the last `NEVPNStatus` received in our state.
+            return false
+
+        case .unknown, .preparingConnection, .disconnecting:
+            return false
+        }
     }
 }
