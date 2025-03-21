@@ -21,6 +21,10 @@ import Ergonomics
 import VPNAppCore
 import AppIntents
 import Domain
+import UIKit
+import Connection
+import ComposableArchitecture
+import WidgetKit
 
 internal struct DisconnectFromVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Disconnect from VPN"
@@ -39,7 +43,7 @@ internal struct ConnectToVPNIntent: AppIntent {
 
     static var title: LocalizedStringResource = "Connect to VPN"
 
-    static var openAppWhenRun = false
+    static var openAppWhenRun = true
 
     @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
@@ -53,12 +57,41 @@ internal struct ConnectToVPNIntent: AppIntent {
 
     func perform() async throws -> some IntentResult {
         @Dependencies.Dependency(\.connectToVPN) var connectToVPN
+        @SharedReader(.connectionState) var connectionState: ConnectionState
 
-        let connectionSpec = recentIndex.map { getRecentConnection($0) } ?? getDefaultConnection()
-
-        if let connectionSpec = connectionSpec {
-            try? await connectToVPN(connectionSpec, defaultConnectionStorage.getDefaultProtocol())
+        guard let spec = recentIndex.flatMap(getRecentConnection) ?? getDefaultConnection() else {
+            return .result()
         }
+
+        // Wait until the connection state is not .resolving
+        _ = await $connectionState.publisher.values.first { state in
+            if case .resolving = state { return false }
+            return true
+        }
+
+        // Trigger connection
+        try? await connectToVPN(spec, defaultConnectionStorage.getDefaultProtocol())
+
+        // Wait until the state changes and matches the connection spec for either `connected` or `disconnecting` states
+        let state = await $connectionState.publisher.values
+            .first { state in
+                switch state {
+                case .connected(let intent, _, _, _):
+                    return intent.spec == spec
+                case .disconnecting(let intent, _):
+                    return intent.spec == spec
+                default:
+                    return false
+                }
+            }
+
+        // If connected, close the application.
+        if case .connected = state {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            }
+        }
+
         return .result()
     }
 
