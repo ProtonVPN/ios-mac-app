@@ -79,6 +79,10 @@ final class VPNSessionMock: VPNSession {
     }
 
     func stopTunnel() {
+        connectionTask?.cancel()
+        if status == .disconnected {
+            return
+        }
         disconnectionTask = Task {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: .seconds(1))

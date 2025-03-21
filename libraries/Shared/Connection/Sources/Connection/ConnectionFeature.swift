@@ -142,7 +142,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .prepare(let intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
-                assert(state.coreConnectionState.is(\.disconnected))
+                assert(state.coreConnectionState, is: \.disconnected)
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(intent))),
@@ -153,7 +153,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
 
             case .finishedPreparing(.success(let resolvedIntent)):
-                assert(state.coreConnectionState.is(\.disconnected))
+                assert(state.coreConnectionState, is: \.disconnected)
                 state.currentIntent = resolvedIntent
                 do {
                     try intentStorage.set(resolvedIntent)
@@ -184,7 +184,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .core(.delegate(.stateChanged(_, .disconnected(nil)))):
                 if let reconnectionIntent = state.queuedIntent {
-                    assert(state.connectionState.is(\.connecting))
+                    assert(state.connectionState, is: \.connecting)
                     log.info("Disconnected, proceeding with reconnection to \(reconnectionIntent.server)")
                     state.queuedIntent = nil
                     return .send(.prepare(reconnectionIntent))
@@ -216,7 +216,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     if let reconnectionIntent = queuedIntent {
                         return .connecting(.unresolved(reconnectionIntent))
                     }
-                    assert(!oldState.is(\.disconnected))
+                    assert(oldState, isNot: \.disconnected)
                     return .disconnecting(intent, intent.server)
                 }
 
@@ -263,6 +263,24 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
         state.connectionState = newValue
         return .send(.delegate(.stateChanged(newValue)))
+    }
+
+    private func assert<T: CasePathable>(_ value: T, isNot unexpectedValue: PartialCaseKeyPath<T>) {
+        if value.is(unexpectedValue) {
+            // VPNAPPL-2696 - Visibility of failed assertions could be improved by invoking `assertionFailure` when not running tests
+            let message = "Assertion failed: \(value) is \(unexpectedValue)"
+            log.error("\(message)", category: .connection)
+            reportIssue(message)
+        }
+    }
+
+    private func assert<T: CasePathable>(_ value: T, is expectedValue: PartialCaseKeyPath<T>) {
+        if !value.is(expectedValue) {
+            // VPNAPPL-2696 - Visibility of failed assertions could be improved by invoking `assertionFailure` when not running tests
+            let message = "Assertion failed: \(value) is not \(expectedValue)"
+            log.error("\(message)", category: .connection)
+            reportIssue(message)
+        }
     }
 }
 

@@ -153,16 +153,17 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             assert(CoreConnectionState(connectionFeatureState: state).is(\.disconnected))
             clearErrorsFromPreviousAttempts(state: &state)
 
-            return .run { send in
-                await send(.tunnel(.connect(intent)))
+            return .concatenate(
+                .send(.tunnel(.connect(intent))),
+                .run { send in
+                    try await clock.sleep(for: Self.defaultConnectionTimeout)
+                    try Task.checkCancellation()
 
-                try await clock.sleep(for: Self.defaultConnectionTimeout)
-                try Task.checkCancellation()
-
-                await send(.disconnect(.connectionFailure(.timeout)))
-            } catch: { error, _ in
-                log.info("Timeout task cancellation error: \(error)")
-            }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
+                    await send(.disconnect(.connectionFailure(.timeout)))
+                } catch: { error, _ in
+                    log.error("Timeout task cancellation error: \(error)")
+                }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
+            )
 
         case .disconnect(.connectionFailure(let error)):
             // Disconnection initiated due to an error

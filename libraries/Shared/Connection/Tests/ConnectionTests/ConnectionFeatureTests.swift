@@ -268,6 +268,47 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(stateChange(to: \.connected))
     }
 
+    @MainActor func testDisconnectImmediatelyFollowingPreparationResultsInDisconnection() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+        let expectedResolvedIntent = ServerConnectionIntent(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock)
+
+        store.dependencies.connectionIntentResolver = .init(resolve: { intent in
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: .seconds(1))
+            return .init(spec: intent.spec, server: intent.server, tunnelSettings: .mock, features: .mock)
+        })
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(preparationIntent)))
+        await store.receive(\.prepare)
+        await store.receive(stateChange(to: \.connecting.unresolved)) {
+            $0.connectionState = .connecting(.unresolved(preparationIntent))
+        }
+
+        await environment.clock.advance(by: .seconds(1))
+
+        await store.receive(\.finishedPreparing.success)
+        await store.receive(stateChange(to: \.connecting.resolved)) {
+            $0.connectionState = .connecting(.resolved(expectedResolvedIntent, .mock))
+        }
+        await store.receive(\.core.connect)
+        await store.receive(\.core.tunnel.connect)
+
+        // The preceding 4 actions happen immediately following one another
+        // Now is the first instance where it's possible to send a disconnection request
+        await store.send(.input(.disconnect))
+
+        await store.receive(stateChange(to: \.disconnecting))
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.disconnected))
+    }
+
     @MainActor func testConnectionStateResolvesToDisconnected() async {
         let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
         let mockManager = MockTunnelManager(connection: mockVPNSession)
