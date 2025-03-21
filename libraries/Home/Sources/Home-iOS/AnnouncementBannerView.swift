@@ -94,6 +94,7 @@ struct AnnouncementBannerView: View {
             .buttonStyle(StaticButtonStyle())
             .offset(x: 12, y: -12)
         }
+        .frame(maxHeight: showBanner ? .infinity : 0)
         .opacity(showBanner ? 1 : 0)
         .task {
             if await ImageCache().containsImageForKey(forKey: model.imageURL.absoluteString) {

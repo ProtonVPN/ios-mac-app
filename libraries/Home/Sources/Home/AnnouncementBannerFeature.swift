@@ -27,6 +27,8 @@ import VPNAppCore
 @Reducer
 public struct AnnouncementBannerFeature {
 
+    @SharedReader(.announcementBanner) var announcementBanner: Announcement?
+
     @ObservableState
     public enum State: Equatable {
         case noBanner
@@ -58,22 +60,44 @@ public struct AnnouncementBannerFeature {
 
     @CasePathable
     public enum Action {
+        case onStart
+
         case didTapDismiss
         case didTapBanner
+
+        case fetchCurrentOfferBannerFromStorage(Announcement?)
+    }
+
+    enum CancelID {
+        case announcementBanner
     }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
-            guard case .banner(let model) = state else {
-                return .none
-            }
             switch action {
+            case .onStart:
+                return .publisher {
+                    $announcementBanner.publisher
+                        .map(Action.fetchCurrentOfferBannerFromStorage)
+                }
+                .cancellable(id: CancelID.announcementBanner)
+            case .fetchCurrentOfferBannerFromStorage:
+                @Dependency(\.announcementManager) var announcementManager
+                if let banner = announcementManager.fetchCurrentOfferBannerFromStorage(),
+                   let model = AnnouncementBannerFeature.State.Model(announcement: banner) {
+                    state = .banner(model)
+                }
+                return .none
             case .didTapDismiss:
+                guard case .banner(let model) = state else { return .none }
+
                 @Dependency(\.announcementManager) var announcementManager
                 announcementManager.markAsRead(notificationID: model.notificationID)
                 state = .noBanner
                 return .none
             case .didTapBanner:
+                guard case .banner(let model) = state else { return .none }
+
                 return .run { _ in
                     @Dependency(\.sessionService) var sessionService
                     let url = await sessionService.getUpgradePlanSession(url: model.buttonURL.absoluteString)

@@ -36,10 +36,9 @@ public struct SharedPropertiesFeature {
     @Dependency(\.serverRepository) var repository
 
     @ObservableState
-    public struct State {
+    public struct State: Equatable {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
-        @Shared(.announcementBanner) var announcementBanner: Announcement?
 
         var userLocation: UserLocationFeature.State = .init()
     }
@@ -133,11 +132,13 @@ public struct SharedPropertiesFeature {
                 return .none
                 
             case .newAnnouncementBanner:
-                @Dependency(\.announcementManager) var announcementManager
-                state.$announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
                 return .run { send in
+                    @Dependency(\.announcementManager) var announcementManager
+                    @Shared(.announcementBanner) var announcementBanner: Announcement?
+
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
                     await FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
+                    $announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
                 }
             }
         }

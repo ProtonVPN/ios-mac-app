@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct OfferFeature: Codable, Equatable {
+public struct OfferFeature: Codable {
     public let iconURL: String
     public let text: String
 }

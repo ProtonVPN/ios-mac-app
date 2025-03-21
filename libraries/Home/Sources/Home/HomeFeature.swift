@@ -71,7 +71,6 @@ public struct HomeFeature {
 
         fileprivate var shouldPushAlert: Bool = false
 
-        @SharedReader(.announcementBanner) var announcement: Announcement?
         @SharedReader(.connectionState) var connectionState: ConnectionState
         @SharedReader(.vpnConnectionStatus)
         public var vpnConnectionStatus: VPNConnectionStatus
@@ -106,8 +105,6 @@ public struct HomeFeature {
         case changeServer
         case didDismissChangeServer
         case disconnect
-
-        case fetchCurrentOfferBannerFromStorage(Announcement?)
 
         case incomingAlert(Alert)
 
@@ -164,11 +161,8 @@ public struct HomeFeature {
             switch action {
             case .onStart:
                 return .merge(
+                    .send(.announcementBanner(.onStart)),
                     .send(.connection(.input(.onLaunch))),
-                    .publisher {
-                        state.$announcement.publisher
-                            .map(Action.fetchCurrentOfferBannerFromStorage)
-                    },
                     .run { send in
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
@@ -179,13 +173,6 @@ public struct HomeFeature {
             case .recents(.delegate(.connect(let spec))):
                 return .send(.connect(spec))
             case .recents:
-                return .none
-            case .fetchCurrentOfferBannerFromStorage:
-                @Dependency(\.announcementManager) var announcementManager
-                if let banner = announcementManager.fetchCurrentOfferBannerFromStorage(),
-                   let model = AnnouncementBannerFeature.State.Model.init(announcement: banner) {
-                    state.announcementBanner = .banner(model)
-                }
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
