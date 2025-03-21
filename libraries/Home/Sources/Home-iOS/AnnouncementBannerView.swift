@@ -26,7 +26,7 @@ import Announcement
 import Strings
 import Home
 
-public struct AnnouncementBannerView: View {
+struct AnnouncementBannerView: View {
 
     let store: StoreOf<AnnouncementBannerFeature>
 
@@ -34,42 +34,39 @@ public struct AnnouncementBannerView: View {
         self.store = store
     }
 
-    let colors = [
+    private let colors = [
         Theme.Asset.offerBannerGradientRight.swiftUIColor,
         Theme.Asset.offerBannerGradientLeft.swiftUIColor
     ]
 
-    static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
+    private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
         formatter.dateTimeStyle = .named
         formatter.unitsStyle = .full
         return formatter
     }()
 
-    public func timeLeftString(endTime: Date) -> String? {
+    private func timeLeftString(endTime: Date) -> String? {
         let timeLeft = endTime.timeIntervalSinceNow
         guard timeLeft >= 0 else { return nil }
         let string = Self.relativeDateTimeFormatter.localizedString(fromTimeInterval: timeLeft)
         return Localizable.offerEnding(string)
     }
 
-    @State var showBanner = false
+    @State private var showBanner = false
 
-    public var body: some View {
+    var body: some View {
         guard case .banner(let model) = store.state else {
-            return Color.clear
-                .frame(width: 0, height: 0)
-                .hidden()
+            return EmptyView()
         }
         return ZStack(alignment: .topTrailing) {
             Button {
                 store.send(.didTapBanner)
             } label: {
                 VStack(alignment: .leading, spacing: 0) {
-
                     WebImage(url: model.imageURL)
                         .resizable().scaledToFit()
-                    if let timeLeft = timeLeftString(endTime: model.endTime) {
+                    if model.showCountdown, let timeLeft = timeLeftString(endTime: model.endTime) {
                         Text(timeLeft)
                             .themeFont(.caption(emphasised: false))
                             .foregroundStyle(Color(.text, .weak))
@@ -90,7 +87,7 @@ public struct AnnouncementBannerView: View {
                 .cornerRadius(.themeRadius8)
             }
             Button {
-                store.send(.didTapDismiss)
+                store.send(.didTapDismiss, animation: .default)
             } label: {
                 Theme.Asset.dismissButton.swiftUIImage
             }

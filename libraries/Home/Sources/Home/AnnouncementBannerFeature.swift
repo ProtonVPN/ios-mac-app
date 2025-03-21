@@ -36,21 +36,22 @@ public struct AnnouncementBannerFeature {
             public var imageURL: URL
             public var buttonURL: URL
             public var endTime: Date
-//            public var showCountdown: Bool
+            public var showCountdown: Bool
             public var offerReference: String?
-            public var announcement: Announcement
+            public var notificationID: String
 
             public init?(announcement: Announcement) {
-                self.announcement = announcement
-                guard let buttonString = announcement.offer?.panel?.button.url,
-                    let buttonURL = URL(string: buttonString),
-                let imageURL = announcement.offer?.panel?.fullScreenImage?.firstURL else {
+                guard let panel = announcement.offer?.panel,
+                    let buttonURL = URL(string: panel.button.url),
+                let imageURL = panel.fullScreenImage?.firstURL else {
                     return nil
                 }
                 self.buttonURL = buttonURL
                 self.imageURL = imageURL
                 self.offerReference = announcement.reference
                 self.endTime = announcement.endTime
+                self.showCountdown = panel.showCountdown ?? false
+                self.notificationID = announcement.notificationID
             }
         }
     }
@@ -69,7 +70,7 @@ public struct AnnouncementBannerFeature {
             switch action {
             case .didTapDismiss:
                 @Dependency(\.announcementManager) var announcementManager
-                announcementManager.markAsRead(announcement: model.announcement)
+                announcementManager.markAsRead(notificationID: model.notificationID)
                 state = .noBanner
                 return .none
             case .didTapBanner:

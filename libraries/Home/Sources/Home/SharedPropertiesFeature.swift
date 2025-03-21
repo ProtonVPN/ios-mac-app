@@ -36,7 +36,7 @@ public struct SharedPropertiesFeature {
     @Dependency(\.serverRepository) var repository
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State {
         @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
         @Shared(.connectionState) var connectionState: ConnectionState
         @Shared(.announcementBanner) var announcementBanner: Announcement?

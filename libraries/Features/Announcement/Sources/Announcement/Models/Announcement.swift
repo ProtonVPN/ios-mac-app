@@ -23,7 +23,7 @@
 import Foundation
 
 /// API calls this thing Notification
-public struct Announcement: Codable, Equatable {
+public struct Announcement: Codable {
     
     public let notificationID: String
     public let startTime: Date

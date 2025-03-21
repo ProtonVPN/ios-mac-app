@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct OfferPanel: Codable, Equatable {
+public struct OfferPanel: Codable {
     public let fullScreenImage: FullScreenImage?
     public let button: OfferButton
     public let incentive: String?

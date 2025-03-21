@@ -57,7 +57,7 @@ public struct HomeFeature {
     }
 
     @ObservableState
-    public struct State: Equatable {
+    public struct State {
         /// For simplicity's sake, let's implement Connection as a child feature of Home.
         /// In the future, when we add a sibling feature (like countries, settings or profiles),
         /// we will have to have a parent App feature.  Connection can be moved
