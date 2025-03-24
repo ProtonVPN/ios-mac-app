@@ -24,6 +24,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Announcement
 import ConnectionDetails
 import Connection
 import ModalsServices
@@ -56,8 +57,8 @@ public struct HomeFeature {
     }
 
     @ObservableState
-    public struct State: Equatable {
-        /// For simplicity's sake, let's immplement Connection as a child feature of Home.
+    public struct State {
+        /// For simplicity's sake, let's implement Connection as a child feature of Home.
         /// In the future, when we add a sibling feature (like countries, settings or profiles),
         /// we will have to have a parent App feature.  Connection can be moved
         public var connection: ConnectionFeature.State
@@ -66,6 +67,7 @@ public struct HomeFeature {
         public var connectionCard: HomeConnectionCardFeature.State
         package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
+        package var announcementBanner: AnnouncementBannerFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -83,6 +85,7 @@ public struct HomeFeature {
             self.recents = .init()
             self.map = .init()
             self.connection = .initialState
+            self.announcementBanner = .noBanner
         }
     }
 
@@ -113,6 +116,7 @@ public struct HomeFeature {
         case sharedProperties(SharedPropertiesFeature.Action)
         case connectionDetails(ConnectionScreenFeature.Action)
         case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
+        case announcementBanner(AnnouncementBannerFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -150,18 +154,20 @@ public struct HomeFeature {
         Scope(state: \.recents, action: \.recents) {
             RecentsFeature()
         }
+        Scope(state: \.announcementBanner, action: \.announcementBanner) {
+            AnnouncementBannerFeature()
+        }
         Reduce { state, action in
             switch action {
             case .onStart:
-                return .concatenate(
+                return .merge(
+                    .send(.announcementBanner(.onStart)),
                     .send(.connection(.input(.onLaunch))),
-                    .merge(
-                        .run { send in
-                            for await alert in await alertService.alerts() {
-                                await send(.incomingAlert(alert))
-                            }
+                    .run { send in
+                        for await alert in await alertService.alerts() {
+                            await send(.incomingAlert(alert))
                         }
-                    )
+                    }
                 )
                 .cancellable(id: CancelID.connectionState)
             case .recents(.delegate(.connect(let spec))):
@@ -292,6 +298,8 @@ public struct HomeFeature {
                     state.shouldPushAlert = false
                     pushAlert(AllCountriesUpsellAlert())
                 }
+                return .none
+            case .announcementBanner:
                 return .none
             }
         }

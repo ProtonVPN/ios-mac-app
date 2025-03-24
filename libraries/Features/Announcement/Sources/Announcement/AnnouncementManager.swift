@@ -67,6 +67,7 @@ public protocol AnnouncementManager {
     func fetchCurrentOfferBannerFromStorage() -> Announcement?
     func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel?
     func markAsRead(announcement: Announcement)
+    func markAsRead(notificationID: String)
     func shouldShowAnnouncementsIcon() -> Bool
 }
 
@@ -134,15 +135,18 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         guard let announcement else { return false }
         return !announcement.wasRead
     }
-    
+
     public func markAsRead(announcement: Announcement) {
-        var announcements = announcementStorage.fetch()
-        if let index = announcements.firstIndex(where: { $0.notificationID == announcement.notificationID }) {
-            announcements[index].isRead = true
-        }
-        announcementStorage.store(announcements)
+        markAsRead(notificationID: announcement.notificationID)
     }
-    
+
+    public func markAsRead(notificationID: String) {
+        var announcements = announcementStorage.fetch()
+        if let index = announcements.firstIndex(where: { $0.notificationID == notificationID }) {
+            announcements[index].isRead = true
+            announcementStorage.store(announcements)
+        }
+    }
 }
 
 // MARK: - Mocks

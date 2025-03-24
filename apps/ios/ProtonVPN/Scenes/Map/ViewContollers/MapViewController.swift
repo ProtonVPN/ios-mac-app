@@ -107,8 +107,6 @@ final class MapViewController: UIViewController {
             scrollView.zoom(to: initialMoveAndZoomFrame, animated: false)
             initialMoveAndZoomDone = true
         }
-
-        setupAnnouncements()
     }
     
     private func setupSecureCoreBar() {

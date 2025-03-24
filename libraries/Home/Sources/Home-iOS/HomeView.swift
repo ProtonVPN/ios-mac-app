@@ -22,12 +22,13 @@ import SwiftUI
 import ComposableArchitecture
 import Dependencies
 
+import Announcement
 import Home
 import Strings
 import Theme
 import Ergonomics
 import VPNAppCore
-import Modals
+import Modals_iOS
 import ConnectionDetails
 import ConnectionDetails_iOS
 import SharedViews
@@ -133,11 +134,18 @@ public struct HomeView: View {
                             .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
                         }
                         VStack(spacing: 0) {
-                            HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
-                                .padding(.horizontal, .themeSpacing16)
-                                .padding(.bottom, .themeSpacing12)
-                                .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
-                                .background(trackConnectionViewHeight())
+                            VStack(alignment: .leading, spacing: 0) {
+                                HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
+                                    .padding(.horizontal, .themeSpacing16)
+                                    .padding(.bottom, .themeSpacing12)
+                                    .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
+                                    .background(trackConnectionViewHeight())
+                                AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
+                                    .padding(.horizontal, .themeSpacing16)
+                                    .padding(.bottom, .themeSpacing8)
+                                    .padding(.top, .themeSpacing16)
+                                    .frame(width: min(proxy.size.width, Constants.maxAnnouncementBannerWidth))
+                            }
 
                             RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
 

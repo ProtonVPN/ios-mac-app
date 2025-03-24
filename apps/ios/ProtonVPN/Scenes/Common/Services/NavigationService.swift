@@ -277,10 +277,6 @@ final class NavigationService {
 
         tabBarController.setViewControllers(tabViewControllers, animated: false)
         tabBarController.setupView()
-        
-        if isRedesign, announcementManager.hasUnreadAnnouncements {
-            tabBarController.selectedIndex = 1
-        }
 
         windowService.show(viewController: tabBarController)
     }

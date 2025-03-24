@@ -29,6 +29,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
+        .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -42,6 +43,7 @@ let package = Package(
         .package(path: "../Modals"),
         .package(path: "../NetShield"),
         .package(path: "../ConnectionDetails"),
+        .package(path: "../Announcement"),
     ],
     targets: [
         .target(
@@ -53,6 +55,7 @@ let package = Package(
                 "SharedViews",
                 "NetShield",
                 "Ergonomics",
+                "Announcement",
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 "ConnectionInventory",
@@ -76,9 +79,12 @@ let package = Package(
             name: "Home-iOS",
             dependencies: [
                 "Home",
+                "Announcement",
+                .product(name: "Modals-iOS", package: "Modals"),
                 .product(name: "NetShield-iOS", package: "NetShield"),
                 .product(name: "ConnectionDetails-iOS", package: "ConnectionDetails"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SDWebImageSwiftUI", package: "SDWebImageSwiftUI"),
             ]
         ),
         .target(

@@ -84,6 +84,7 @@ final class AnnouncementButtonViewModel {
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        await FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
+        @Dependency(\.imagePrefetcher) var imagePrefetcher
+        await imagePrefetcher.prefetchURLs(urls)
     }
 }

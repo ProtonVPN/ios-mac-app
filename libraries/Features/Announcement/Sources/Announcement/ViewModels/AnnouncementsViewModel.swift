@@ -71,7 +71,6 @@ public class AnnouncementsViewModel {
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
-    private lazy var imageCache: ImageCacheFactory = ImageCacheFactory()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
     // Data
@@ -102,7 +101,9 @@ public class AnnouncementsViewModel {
             return
         }
         Task {
-            guard await announcement.isImagePrefetched(imageCache: imageCache) else { return }
+            @Dependency(\.imagePrefetcher) var imagePrefetcher
+            guard let fullScreenImage = announcement.fullScreenImage else { return }
+            await imagePrefetcher.isImagePrefetched(fullScreenImage)
             openAnnouncement(announcement: announcement)
         }
     }

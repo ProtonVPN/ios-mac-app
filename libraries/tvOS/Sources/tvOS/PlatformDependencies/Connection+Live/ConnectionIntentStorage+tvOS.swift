@@ -21,7 +21,7 @@ import Dependencies
 import Domain
 import Connection
 import VPNAppCore
-import NEHelper
+import VPNShared
 
 extension ConnectionIntentStorage: DependencyKey {
     public static let liveValue: ConnectionIntentStorage = .init(

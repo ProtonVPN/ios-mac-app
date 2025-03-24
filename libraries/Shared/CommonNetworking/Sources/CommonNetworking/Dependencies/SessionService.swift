@@ -108,11 +108,13 @@ public struct SessionService: DependencyKey {
 }
 
 extension SessionService {
-    public func getPlanSession(mode: PlanSession) async -> URL {
+    public func getPlanSession(mode: PlanSession) async -> URL? {
         @Dependency(\.networking) var networking
-        let accountHost = URL(string: networking.apiService.dohInterface.getAccountHost())!
+        guard let accountHost = URL(string: networking.apiService.dohInterface.getAccountHost()) else {
+            log.error("Failed to fork session, invalid Account Host URL", category: .app)
+            return nil
+        }
         do {
-
             let selector = try await selector(.webLogin)
             return mode.path(accountHost: accountHost, selector: selector)
         } catch {

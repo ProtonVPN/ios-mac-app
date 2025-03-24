@@ -157,6 +157,7 @@ struct AnnouncementManagerMock: AnnouncementManager {
     func fetchCurrentOfferBannerFromStorage() -> Announcement? { nil }
     func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
     func markAsRead(announcement: Announcement) { }
+    func markAsRead(notificationID: String) { }
     func shouldShowAnnouncementsIcon() -> Bool { false }
 }
 

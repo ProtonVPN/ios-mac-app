@@ -19,65 +19,49 @@
 import Foundation
 import SDWebImage
 
-public struct FullScreenImagePrefetcher {
-    let imageCache: ImageCacheProtocol
+import Dependencies
+import DependenciesMacros
 
-    public typealias Factory = ImageCacheFactoryProtocol
+@DependencyClient
+public struct ImagePrefetcher {
+    public var isImagePrefetched: (FullScreenImage) async -> Bool = { _ in reportIssue("\(Self.self).isImagePrefetched"); return false }
+    public var containsImageForKey: (String) async -> Bool = { _ in reportIssue("\(Self.self).containsImageForKey"); return false }
+    public var prefetchURLs: ([URL]) async -> Void
+}
 
-    public init(_ factory: Factory) {
-        imageCache = factory.makeImageCache()
-    }
-
-    public func isImagePrefetched(fullScreenImage: FullScreenImage) async -> Bool {
+extension ImagePrefetcher: DependencyKey {
+    public static let liveValue = ImagePrefetcher { fullScreenImage in
         guard let urlString = fullScreenImage.source.first?.url else {
             return false
         }
-        return await imageCache.containsImageForKey(forKey: urlString)
-    }
-
-    public func prefetchImages(urls: [URL]) async {
-        guard !urls.isEmpty else {
-//            log.debug("No URLs to prefetch")
-            return
+        return await withCheckedContinuation { continuation in
+            SDImageCache.shared.containsImage(forKey: urlString, cacheType: .all) { cacheType in
+                continuation.resume(returning: cacheType != .none)
+            }
         }
-//        log.debug("Prefetching urls: \(urls)")
-        await imageCache.prefetchURLs(urls)
-    }
-}
-
-public protocol ImageCacheFactoryProtocol {
-    func makeImageCache() -> ImageCacheProtocol
-}
-
-public struct ImageCacheFactory: ImageCacheFactoryProtocol {
-
-    public init() { }
-
-    public func makeImageCache() -> ImageCacheProtocol {
-        ImageCache()
-    }
-}
-
-public protocol ImageCacheProtocol {
-    func containsImageForKey(forKey key: String) async -> Bool
-    func prefetchURLs(_ urls: [URL]) async
-}
-
-struct ImageCache: ImageCacheProtocol {
-    func containsImageForKey(forKey key: String) async -> Bool {
+    } containsImageForKey: { key in
         await withCheckedContinuation { continuation in
             SDImageCache.shared.containsImage(forKey: key, cacheType: .all) { cacheType in
                 continuation.resume(returning: cacheType != .none)
             }
         }
-    }
-
-    func prefetchURLs(_ urls: [URL]) async {
+    } prefetchURLs: { urls in
         await withCheckedContinuation { continuation in
             SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
                 log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
                 continuation.resume()
             })
         }
+    }
+
+    #if DEBUG
+    public static var testValue: ImagePrefetcher = Self()
+    #endif
+}
+
+extension DependencyValues {
+    public var imagePrefetcher: ImagePrefetcher {
+        get { self[ImagePrefetcher.self] }
+        set { self[ImagePrefetcher.self] = newValue }
     }
 }

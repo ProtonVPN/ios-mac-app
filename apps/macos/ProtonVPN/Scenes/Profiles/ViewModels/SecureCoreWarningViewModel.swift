@@ -29,7 +29,7 @@ final class SecureCoreWarningViewModel {
     var sessionService: SessionService
 
     func upgradeButtonPressed() async {
-        let url = await sessionService.getPlanSession(mode: .upgrade)
+        guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
         SafariService.openLink(url: url)
     }
 

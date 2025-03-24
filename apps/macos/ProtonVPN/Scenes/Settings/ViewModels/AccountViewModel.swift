@@ -62,7 +62,7 @@ final class AccountViewModel {
     func manageSubscriptionAction() {
         Task {
             @Dependency(\.sessionService) var sessionService
-            let url = await sessionService.getPlanSession(mode: .manageSubscription)
+            guard let url = await sessionService.getPlanSession(mode: .manageSubscription) else { return }
             SafariService.openLink(url: url)
         }
     }
