@@ -24,7 +24,6 @@ import Domain
 import UIKit
 import Connection
 import ComposableArchitecture
-import WidgetKit
 import AsyncAlgorithms
 
 internal struct DisconnectFromVPNIntent: AppIntent {
