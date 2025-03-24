@@ -135,45 +135,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.core(.localAgent(.setFeatures(agentFeatures))))
 
             case .input(.disconnect):
-                let internalDisconnectOrStateChangeEffect: Effect<Action>
-                switch state.coreConnectionState {
-                case .unknown:
-                    state.core.shouldDisconnectWhenAllowed = true
-                    internalDisconnectOrStateChangeEffect = .none
-
-                case .starting, .connecting:
-                    if state.core.isInteractionAllowed {
-                        internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
-                    } else {
-                        log.debug("Delaying disconnection request until internally ready to disconnect", category: .connection)
-                        state.core.shouldDisconnectWhenAllowed = true
-                        internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                            .disconnecting(intent, intent.server)
-                        }
-                    }
-
-                case .connected:
-                    internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
-
-                case .disconnecting:
-                    if state.reconnectionIntent != nil {
-                        log.debug("Cancelling reconnection intent following disconnection intent from user", category: .connection)
-                        state.reconnectionIntent = nil
-                    } else {
-                        log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
-                    }
-                    internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                        .disconnecting(intent, intent.server)
-                    }
-
-                case .disconnected:
-                    log.info("Ignoring disconnection intent, already internally disconnected.", category: .connection)
-                    internalDisconnectOrStateChangeEffect = updateStateSendingEffectIfNecessary(&state, to: .disconnected)
-                }
-                return .merge(
-                    .cancel(id: CancelID.preparation),
-                    internalDisconnectOrStateChangeEffect
-                )
+                return handleUserDisconnectionRequest(&state)
 
             case .input(.onLogout):
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
@@ -241,6 +203,8 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .core(.delegate(.stateChanged(let oldState, .starting))):
                 if oldState.is(\.unknown) {
+                    // Since the previous state is unknown, we're figuring out the actual connection state at app startup.
+                    // Let's skip the `connecting` while we continue to determine whether we're connected
                     log.debug("Ignoring state transition to starting since we are resolving from unknown", category: .connection)
                     return .none
                 }
@@ -250,6 +214,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .core(.delegate(.stateChanged(_, .connecting))):
                 if state.connectionState.is(\.resolving) {
+                    // Since the user facing state has not yet been resolved, let's skip the `connecting` state
                     log.debug("Ignoring state transition to connecting since we are resolving from unknown", category: .connection)
                     return .none
                 }
@@ -281,6 +246,51 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .none
             }
         }
+    }
+
+    /// Determine whether it is safe to disconnect. If so, proceed with internal disconnection logic. Otherwise, delay
+    /// the disconnection request until the network extension state is stable and can be disconnected.
+    private func handleUserDisconnectionRequest(_ state: inout State) -> Effect<Action> {
+        let internalDisconnectOrStateChangeEffect: Effect<Action>
+        switch state.coreConnectionState {
+        case .unknown:
+            state.core.shouldDisconnectWhenAllowed = true
+            internalDisconnectOrStateChangeEffect = .none
+            log.debug("Delyaing disconnection request until internal state has been resolved", category: .connection)
+
+        case .starting, .connecting:
+            if state.core.isInteractionAllowed {
+                internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
+            } else {
+                log.debug("Delaying disconnection request until internally ready to disconnect", category: .connection)
+                state.core.shouldDisconnectWhenAllowed = true
+                internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                    .disconnecting(intent, intent.server)
+                }
+            }
+
+        case .connected:
+            internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
+
+        case .disconnecting:
+            if state.reconnectionIntent != nil {
+                log.debug("Cancelling reconnection intent following disconnection intent from user", category: .connection)
+                state.reconnectionIntent = nil
+            } else {
+                log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
+            }
+            internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                .disconnecting(intent, intent.server)
+            }
+
+        case .disconnected:
+            log.info("Ignoring disconnection intent, already internally disconnected.", category: .connection)
+            internalDisconnectOrStateChangeEffect = updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+        }
+        return .merge(
+            .cancel(id: CancelID.preparation),
+            internalDisconnectOrStateChangeEffect
+        )
     }
 
     private func updateStateWithStoredIntentOrDisconnect(
