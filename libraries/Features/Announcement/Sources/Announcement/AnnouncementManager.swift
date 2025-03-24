@@ -144,10 +144,9 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         var announcements = announcementStorage.fetch()
         if let index = announcements.firstIndex(where: { $0.notificationID == notificationID }) {
             announcements[index].isRead = true
+            announcementStorage.store(announcements)
         }
-        announcementStorage.store(announcements)
     }
-
 }
 
 // MARK: - Mocks

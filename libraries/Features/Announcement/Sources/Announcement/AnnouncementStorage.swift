@@ -54,7 +54,7 @@ extension Container: AnnouncementStorageFactory {
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 
-    static var decoder: JSONDecoder = {
+    static let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return decoder

@@ -34,6 +34,9 @@ import VPNAppCore
 public struct SharedPropertiesFeature {
     @Dependency(\.logicalsClient) var logicalsClient
     @Dependency(\.serverRepository) var repository
+    @Dependency(\.announcementManager) var announcementManager
+    @Dependency(\.imagePrefetcher) var imagePrefetcher
+    @Shared(.announcementBanner) var announcementBanner: Announcement?
 
     @ObservableState
     public struct State: Equatable {
@@ -133,11 +136,7 @@ public struct SharedPropertiesFeature {
                 
             case .newAnnouncementBanner:
                 return .run { send in
-                    @Dependency(\.announcementManager) var announcementManager
-                    @Shared(.announcementBanner) var announcementBanner: Announcement?
-
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
-                    @Dependency(\.imagePrefetcher) var imagePrefetcher
                     await imagePrefetcher.prefetchURLs(urls)
                     $announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
                 }

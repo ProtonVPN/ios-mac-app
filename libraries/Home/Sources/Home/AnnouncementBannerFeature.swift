@@ -35,17 +35,17 @@ public struct AnnouncementBannerFeature {
         case banner(Model)
 
         public struct Model: Equatable {
-            public var imageURL: URL
-            public var buttonURL: URL
-            public var endTime: Date
-            public var showCountdown: Bool
-            public var offerReference: String?
-            public var notificationID: String
+            public private(set) var imageURL: URL
+            public private(set) var buttonURL: URL
+            public private(set) var endTime: Date
+            public private(set) var showCountdown: Bool
+            public private(set) var offerReference: String?
+            public private(set) var notificationID: String
 
             public init?(announcement: Announcement) {
                 guard let panel = announcement.offer?.panel,
-                    let buttonURL = URL(string: panel.button.url),
-                let imageURL = panel.fullScreenImage?.firstURL else {
+                      let buttonURL = URL(string: panel.button.url),
+                      let imageURL = panel.fullScreenImage?.firstURL else {
                     return nil
                 }
                 self.buttonURL = buttonURL
@@ -68,7 +68,7 @@ public struct AnnouncementBannerFeature {
         case fetchCurrentOfferBannerFromStorage(Announcement?)
     }
 
-    enum CancelID {
+    private enum CancelID {
         case announcementBanner
     }
 
@@ -81,10 +81,9 @@ public struct AnnouncementBannerFeature {
                         .map(Action.fetchCurrentOfferBannerFromStorage)
                 }
                 .cancellable(id: CancelID.announcementBanner)
-            case .fetchCurrentOfferBannerFromStorage:
-                @Dependency(\.announcementManager) var announcementManager
-                if let banner = announcementManager.fetchCurrentOfferBannerFromStorage(),
-                   let model = AnnouncementBannerFeature.State.Model(announcement: banner) {
+            case .fetchCurrentOfferBannerFromStorage(let announcement):
+                if let announcement,
+                   let model = AnnouncementBannerFeature.State.Model(announcement: announcement) {
                     state = .banner(model)
                 }
                 return .none
