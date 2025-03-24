@@ -205,7 +205,7 @@ final class NavigationService {
     }
 
     func showInitialModals() {
-        guard propertiesManager.showWhatsNewModal else {
+        guard propertiesManager.showWhatsNewModal, FeatureFlagsRepository.shared.isRedesigniOSEnabled else {
             return
         }
         propertiesManager.showWhatsNewModal = false
