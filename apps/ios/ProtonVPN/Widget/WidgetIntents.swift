@@ -25,6 +25,7 @@ import UIKit
 import Connection
 import ComposableArchitecture
 import WidgetKit
+import AsyncAlgorithms
 
 internal struct DisconnectFromVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Disconnect from VPN"
@@ -42,8 +43,9 @@ internal struct DisconnectFromVPNIntent: AppIntent {
 internal struct ConnectToVPNIntent: AppIntent {
 
     static var title: LocalizedStringResource = "Connect to VPN"
-
     static var openAppWhenRun = true
+
+    private static let timeOut = 20 // 20 Seconds
 
     @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
@@ -64,33 +66,40 @@ internal struct ConnectToVPNIntent: AppIntent {
         }
 
         // Wait until the connection state is not .resolving
-        _ = await $connectionState.publisher.values.first { state in
-            if case .resolving = state { return false }
+        guard let _ = try? await $connectionState.when(willMatch: {
+            if case .resolving = $0 { return false }
             return true
+        }, every: .milliseconds(20), deadline: .seconds(Self.timeOut), operation: { _ in
+            //no-op
+        }) else {
+            log.debug("The connectionState hasn’t been changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget connection intent.")
+            return .result()
         }
 
         // Trigger connection
-        try? await connectToVPN(spec, defaultConnectionStorage.getDefaultProtocol())
+        do {
+            try await connectToVPN(spec, defaultConnectionStorage.getDefaultProtocol())
+        } catch {
+            log.error("Failed to connect to VPN from widget with error: \(error)")
+        }
 
-        // Wait until the state changes and matches the connection spec for either `connected` or `disconnecting` states
-        let state = await $connectionState.publisher.values
-            .first { state in
-                switch state {
-                case .connected(let intent, _, _, _):
-                    return intent.spec == spec
-                case .disconnecting(let intent, _):
-                    return intent.spec == spec
-                default:
-                    return false
+        try? await $connectionState.when(willMatch: { state in
+            switch state {
+            case .connected(let intent, _, _, _):
+                return intent.spec == spec
+            case .disconnecting(let intent, _):
+                return intent.spec == spec
+            default:
+                return false
+            }
+        }, every: .milliseconds(20), deadline: .seconds(Self.timeOut), operation: { state in
+            if case .connected = state {
+                // VPN connection established, now suspending the app.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                 }
             }
-
-        // If connected, close the application.
-        if case .connected = state {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-            }
-        }
+        })
 
         return .result()
     }
@@ -131,5 +140,42 @@ internal struct LoginIntent: AppIntent {
 
     func perform() async throws -> some IntentResult {
         return .result()
+    }
+}
+
+// MARK: - Private helpers
+
+fileprivate struct SharedReaderTimeoutError: Error {}
+
+extension SharedReader {
+    /// Regularly checks when the underlying value satisfies the provided matching condition.
+    /// When the value matches (i.e. the matcher returns true), the `operation` closure is executed once with the matched value, and the function returns.
+    /// If the deadline passes, the function throws a timeout error.
+    /// - Parameters:
+    ///   - matcher: A closure that compares the new value and returns true when it matches.
+    ///   - interval: The interval at which we check if the deadline has passed.
+    ///   - clock: The clock on which we base time calculations.
+    ///   - deadlineDuration: The deadline after which the check times out.
+    ///   - operation: The operation to perform when a match occurs, receiving the matched value.
+    fileprivate func when<C: Clock>(
+        willMatch matcher: @escaping (Value) -> Bool,
+        every interval: C.Duration,
+        on clock: C = ContinuousClock(),
+        deadline deadlineDuration: C.Duration,
+        operation: @escaping (Value) async throws -> Void
+    ) async throws where C.Duration: Hashable {
+        let combinedSequence = combineLatest(publisher.values, clock.timer(interval: interval))
+        let deadline = clock.now.advanced(by: deadlineDuration)
+
+        for await (newValue, _) in combinedSequence {
+            try Task.checkCancellation()
+            guard clock.now < deadline else {
+                throw SharedReaderTimeoutError()
+            }
+            if matcher(newValue) {
+                try await operation(newValue)
+                return
+            }
+        }
     }
 }
