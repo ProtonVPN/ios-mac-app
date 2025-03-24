@@ -83,7 +83,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         guard canUseProfile else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             Task {
-                let url = await sessionService.getPlanSession(mode: .upgrade)
+                guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
                 SafariService.openLink(url: url)
             }
             completion()

@@ -172,7 +172,7 @@ class UserAccountUpdateViewController: NSViewController {
         Task {
             @Dependency(\.sessionService) var sessionService
 
-            let url = await sessionService.getPlanSession(mode: .upgrade)
+            guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
             SafariService.openLink(url: url)
         }
 

@@ -111,6 +111,7 @@ extension SessionService {
     public func getPlanSession(mode: PlanSession) async -> URL? {
         @Dependency(\.networking) var networking
         guard let accountHost = URL(string: networking.apiService.dohInterface.getAccountHost()) else {
+            log.error("Failed to fork session, invalid Account Host URL", category: .app)
             return nil
         }
         do {

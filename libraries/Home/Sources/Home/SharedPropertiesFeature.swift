@@ -137,7 +137,8 @@ public struct SharedPropertiesFeature {
                     @Shared(.announcementBanner) var announcementBanner: Announcement?
 
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
-                    await FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
+                    @Dependency(\.imagePrefetcher) var imagePrefetcher
+                    await imagePrefetcher.prefetchURLs(urls)
                     $announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
                 }
             }

@@ -97,12 +97,13 @@ struct AnnouncementBannerView: View {
         .frame(maxHeight: showBanner ? .infinity : 0)
         .opacity(showBanner ? 1 : 0)
         .task {
-            if await ImageCache().containsImageForKey(forKey: model.imageURL.absoluteString) {
+            @Dependency(\.imagePrefetcher) var imagePrefetcher
+            if await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString) {
                 self.showBanner = true
                 return
             }
-            await ImageCache().prefetchURLs([model.imageURL])
-            self.showBanner = await ImageCache().containsImageForKey(forKey: model.imageURL.absoluteString)
+            await imagePrefetcher.prefetchURLs([model.imageURL])
+            self.showBanner = await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString)
         }
     }
 }
@@ -112,4 +113,3 @@ struct StaticButtonStyle: ButtonStyle {
         configuration.label
     }
 }
-
