@@ -33,7 +33,7 @@ public enum ConnectionIntentResolutionError: Error, Equatable {
 
 struct ConnectionIntentResolver: DependencyKey, Sendable {
     let resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
-    let authorize: @Sendable (ConnectionPreparationIntent) throws (ConnectionIntentResolutionError) -> ()
+    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws (ConnectionIntentResolutionError) -> ()
 
     static let liveValue: ConnectionIntentResolver = .init { intent in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
@@ -62,9 +62,7 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
             tunnelSettings: tunnelSettings,
             features: features
         )
-    } authorize: { intent throws (ConnectionIntentResolutionError) in
-        @SharedReader(.userTier) var userTier: Int
-
+    } authorize: { intent, userTier throws (ConnectionIntentResolutionError) in
         // Paid users can always change servers.
         guard userTier.isFreeTier else { return }
 

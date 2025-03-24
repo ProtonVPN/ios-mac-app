@@ -37,10 +37,23 @@ class AppFeatureSnapshotTests: XCTestCase {
 
     func upsell(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(
-            userTier: .init(value: 0),
             welcome: .init(destination: .upsell(.loading)),
             networking: .authenticated(.auth(uid: "")))
-        ) { AppFeature() }
+        ) {
+            AppFeature()
+        } withDependencies: {
+            $0.networking = VPNNetworkingMock()
+            $0.continuousClock = TestClock()
+            $0.paymentsClient = .init(
+                startObserving: unimplemented(),
+                getOptions: { [ ] },
+                attemptPurchase: { _ in .purchaseCancelled }
+            )
+
+            $0.defaultAppStorage = .testValue()
+            @Shared(.userTier) var userTier: Int?
+            $userTier.withLock { $0 = .freeTier }
+        }
 
         let appView = AppView(store: store)
             .frame(.rect(width: 1920, height: 1080))
@@ -57,14 +70,20 @@ class AppFeatureSnapshotTests: XCTestCase {
     }
 
     func app(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: AppFeature.State(networking: .authenticated(.unauth(uid: "")))) {
+        let store = Store(initialState: AppFeature.State(
+            networking: .authenticated(.unauth(uid: "")))
+        ) {
             AppFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
             $0.continuousClock = TestClock()
-            $0.paymentsClient = .init(startObserving: unimplemented(),
-                                      getOptions: { [ ] },
-                                      attemptPurchase: { _ in .purchaseCancelled } )
+            $0.paymentsClient = .init(
+                startObserving: unimplemented(),
+                getOptions: { [ ] },
+                attemptPurchase: { _ in .purchaseCancelled }
+            )
+
+            $0.defaultAppStorage = .testValue()
         }
 
         let appView = AppView(store: store)
@@ -84,3 +103,4 @@ class AppFeatureSnapshotTests: XCTestCase {
         assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "6 AcquiringSession " + trait.name)
     }
 }
+

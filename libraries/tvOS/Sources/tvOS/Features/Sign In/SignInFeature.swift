@@ -67,7 +67,7 @@ struct SignInFeature {
                 if remainingAttempts <= 0 {
                     return .merge(
                         .cancel(id: CancelID.timer),
-                        .run { send in await send(.signInFinished(.failure(.authenticationAttemptsExhausted)))}
+                        .send(.signInFinished(.failure(.authenticationAttemptsExhausted)))
                     )
                 }
 
@@ -77,7 +77,8 @@ struct SignInFeature {
             case .codeFetchingFinished(.success(let response)):
                 state.authentication = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
                 return .run { send in
-                    try? await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
+                    try await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
+                    try Task.checkCancellation()
                     await send(.pollServer)
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
@@ -89,13 +90,14 @@ struct SignInFeature {
 
             case .authenticationFinished(.success(.authenticated(let response))):
                 let credentials = AuthCredentials(from: response)
-                return .run { send in await send(.signInFinished(.success(credentials))) }
+                return .send(.signInFinished(.success(credentials)))
 
             case .authenticationFinished(.success(.invalidSelector)):
                 // Parent session has not yet authenticated this selector
                 // a.k.a. user has not typed in code in browser
                 return .run { send in
-                    try? await clock.sleep(for: pollConfiguration.period)
+                    try await clock.sleep(for: pollConfiguration.period)
+                    try Task.checkCancellation()
                     await send(.pollServer)
                 }
 

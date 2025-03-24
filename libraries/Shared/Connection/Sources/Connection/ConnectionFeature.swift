@@ -36,6 +36,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     public init() { }
 
     public struct State: Equatable, Sendable {
+        @SharedReader(.userTier) public var userTier: Int?
         public internal(set) var currentIntent: ServerConnectionIntent?
         public internal(set) var reconnectionIntent: ConnectionPreparationIntent?
         var connectionState: ConnectionState
@@ -108,7 +109,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .input(.connect(let intent)):
                 do throws(ConnectionIntentResolutionError) {
-                    try intentResolver.authorize(intent)
+                    try intentResolver.authorize(intent, state.userTier ?? .freeTier)
                 } catch {
                     return .send(.delegate(.intentResolutionFailed(intent, with: error)))
                 }

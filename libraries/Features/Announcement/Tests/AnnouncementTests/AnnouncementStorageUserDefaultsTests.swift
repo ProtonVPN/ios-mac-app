@@ -23,6 +23,7 @@
 import XCTest
 
 import Domain
+import DomainTestSupport
 @testable import Announcement
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
@@ -33,9 +34,7 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        userDefaults = UserDefaults(suiteName: #file)
-        userDefaults.removePersistentDomain(forName: #file)
-        
+        userDefaults = .testValue()
         storage = AnnouncementStorageUserDefaults(userDefaults: userDefaults, keyNameProvider: StaticKeyNameProvider())
     }
     

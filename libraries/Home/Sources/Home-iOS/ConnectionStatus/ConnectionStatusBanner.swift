@@ -34,7 +34,7 @@ struct ConnectionStatusBanner: View {
         WithPerceptionTracking {
             switch store.protectionState {
             case .protected(let netShield), .protectedSecureCore(let netShield):
-                if store.userTier.isFreeTier {
+                if (store.userTier ?? .freeTier).isFreeTier {
                     ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
                 } else if store.netShieldLevel == .level2 {
                     NetShieldStatsView(viewModel: netShield)

@@ -38,9 +38,9 @@ public extension SharedKey where Self == AppStorageKey<Date?> {
     }
 }
 
-public extension SharedKey where Self == AppStorageKey<Int>.Default {
+public extension SharedKey where Self == AppStorageKey<Int?> {
     static var userTier: Self {
-        Self[.appStorage("userTier"), default: 0]
+        .appStorage("userTier")
     }
 }
 

@@ -51,11 +51,12 @@ public struct HomeView: View {
     @State private var viewHeight: CGFloat = .zero
     @State private var connectionViewHeight: CGFloat = .zero
 
-    @SharedReader(.userTier) private var userTier: Int
+    @SharedReader(.userTier) private var userTier: Int?
 
     private var mapHeight: CGFloat {
         let hasRecents = !store.recents.recentConnectionList.isEmpty
-        let recentPeek: CGFloat = (hasRecents || userTier.isFreeTier) ? .themeSpacing64 : 0
+        let isFree = (userTier ?? .freeTier).isFreeTier
+        let recentPeek: CGFloat = (hasRecents || isFree) ? .themeSpacing64 : 0
         return max(0, viewHeight - (connectionViewHeight + recentPeek))
     }
 

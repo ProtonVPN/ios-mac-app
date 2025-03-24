@@ -92,6 +92,7 @@ let package = Package(
                 "Connection",
                 "CoreConnectionTestSupport",
                 "ConnectionTestSupport",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),

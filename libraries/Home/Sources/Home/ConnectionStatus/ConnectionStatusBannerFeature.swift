@@ -36,7 +36,7 @@ public struct ConnectionStatusBannerFeature {
         @SharedReader(.netShieldLevel) public var netShieldLevel: NetShieldType
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userIP) public var userIP: String?
-        @SharedReader(.userTier) public var userTier: Int
+        @SharedReader(.userTier) public var userTier: Int?
 
         public internal(set) var upsellMode: UpsellMode = .netshield
     }

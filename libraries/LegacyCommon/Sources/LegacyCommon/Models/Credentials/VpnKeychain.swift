@@ -22,7 +22,6 @@
 import Foundation
 import KeychainAccess
 import Logging
-import Dependencies
 
 import VPNShared
 import VPNCrypto

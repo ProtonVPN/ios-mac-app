@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Review
+import DomainTestSupport
 
 final class ExtensionsTests: XCTestCase {
     private var userDefaults: UserDefaults!
@@ -25,8 +26,7 @@ final class ExtensionsTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        userDefaults = UserDefaults(suiteName: #file)
-        userDefaults.removePersistentDomain(forName: #file)
+        userDefaults = .testValue()
     }
 
     func testStoringDateInUserDefaults() {

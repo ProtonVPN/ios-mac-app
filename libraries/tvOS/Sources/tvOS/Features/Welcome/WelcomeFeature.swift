@@ -73,10 +73,10 @@ struct WelcomeFeature {
                 return .none
             case .destination(.presented(.signIn(.codeFetchingFinished(.failure(let error))))):
                 // Since we don't retry fetching the sign-in code, let's pop back to the welcome screen
-                return .run { send in
-                    await send(.destination(.dismiss))
-                    await alertService.feed(error)
-                }
+                return .concatenate(
+                    .send(.destination(.dismiss)),
+                    .run { _ in await alertService.feed(error) }
+                )
             case .destination(.presented(.codeExpired(.generateNewCode))):
                 state.destination = .signIn(.init(authentication: .loadingSignInCode))
                 return .none

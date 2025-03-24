@@ -72,6 +72,7 @@ final class ConnectionFeatureTests: XCTestCase {
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
             localAgentState: .disconnected(nil)
         )
+
         let initialState = ConnectionFeature.State(
             currentIntent: initialIntent,
             queuedIntent: nil,
@@ -79,6 +80,7 @@ final class ConnectionFeatureTests: XCTestCase {
             shouldRegisterServerChangeOnConnection: false,
             core: coreState
         )
+        initialState.$userTier = SharedReader(value: .paidTier)
 
         let store = TestStore(initialState: initialState) {
             ConnectionFeature()
@@ -96,6 +98,7 @@ final class ConnectionFeatureTests: XCTestCase {
                 portSelectionExpectation.fulfill()
                 return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
             }
+            $0.defaultAppStorage = .testValue()
         }
 
         await store.send(.input(.onLaunch))
@@ -209,6 +212,7 @@ final class ConnectionFeatureTests: XCTestCase {
             certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
             localAgentState: .disconnected(nil)
         )
+
         let initialState = ConnectionFeature.State(
             currentIntent: initialIntent,
             queuedIntent: nil,
@@ -216,6 +220,7 @@ final class ConnectionFeatureTests: XCTestCase {
             shouldRegisterServerChangeOnConnection: false,
             core: coreState
         )
+        initialState.$userTier = SharedReader(value: .paidTier)
 
         let store = TestStore(initialState: initialState) {
             ConnectionFeature()
@@ -233,6 +238,7 @@ final class ConnectionFeatureTests: XCTestCase {
                 portSelectionExpectation.fulfill()
                 return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
             }
+            $0.defaultAppStorage = .testValue()
         }
 
         // Let's skip repeating assertions we've covered in previous tests
@@ -435,7 +441,7 @@ final class ConnectionFeatureTests: XCTestCase {
             @Dependency(\.continuousClock) var clock
             try await clock.sleep(for: .seconds(1))
             throw preparationError
-        }, authorize: { _ in
+        }, authorize: { _, _ in
         })
 
         store.exhaustivity = .off
@@ -462,7 +468,7 @@ final class ConnectionFeatureTests: XCTestCase {
         store.dependencies.connectionIntentResolver = .init(resolve: { _ in
             XCTFail("Shouldn't get to preparation step, authorization should fail first")
             return .mock()
-        }, authorize: { _ throws (ConnectionIntentResolutionError) in
+        }, authorize: { _, _ throws (ConnectionIntentResolutionError) in
             throw ConnectionIntentResolutionError.specificCountryUnavailable(countryCode: "US")
         })
 

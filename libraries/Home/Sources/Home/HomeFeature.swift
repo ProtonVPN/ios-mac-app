@@ -46,7 +46,7 @@ public struct HomeFeature {
     @Dependency(\.date) private var date
     @Dependency(\.alertService) private var alertService
 
-    @SharedReader(.userTier) private var userTier: Int
+    @SharedReader(.userTier) private var userTier: Int?
 
     @Reducer(state: .equatable)
     public enum Destination {

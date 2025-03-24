@@ -50,7 +50,7 @@ class SettingsFeatureSnapshotTests: XCTestCase {
         @Shared(.userDisplayName) var userDisplayName: String?
         $userDisplayName.withLock { $0 = "test user" }
         @Shared(.userTier) var userTier: Int?
-        $userTier.withLock { $0 = 2 }
+        $userTier.withLock { $0 = .paidTier }
 
         let appView = NavigationStack {
             AppView(store: store)
