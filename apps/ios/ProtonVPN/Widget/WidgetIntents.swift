@@ -82,6 +82,7 @@ internal struct ConnectToVPNIntent: AppIntent {
             log.error("Failed to connect to VPN from widget with error: \(error)")
         }
 
+        // Wait until the connection state either goes into .connected or .disconnecting.
         try? await $connectionState.when(willMatch: { state in
             switch state {
             case .connected(let intent, _, _, _):
