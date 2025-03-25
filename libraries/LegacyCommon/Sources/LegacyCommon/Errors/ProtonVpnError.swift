@@ -25,7 +25,7 @@ import Domain
 
 // The errors happend locally
 public enum CommonVpnError: FourCharCode, ProtonVPNError {
-    public static var errorDomain = "CommonVpnErrorDomain"
+    public static let errorDomain = "CommonVpnErrorDomain"
 
     case fetchSession = "FTSN"
 

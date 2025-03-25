@@ -18,14 +18,7 @@
 
 import Foundation
 import CommonNetworking
-
-public enum UserInitiatedVPNChange {
-    case connect
-    case disconnect(ConnectionDimensions.VPNTrigger)
-    case abort
-    case settingsChange
-    case logout
-}
+import Domain
 
 protocol TelemetryTimer {
     func updateConnectionStarted(_ date: Date?)
@@ -230,10 +223,10 @@ class TelemetryConnectionStatusReporter {
         }
     }
 
-    private func vpnTrigger(eventType: ConnectionEvent.Event) -> ConnectionDimensions.VPNTrigger {
+    private func vpnTrigger(eventType: ConnectionEvent.Event) -> UserInitiatedVPNChange.VPNTrigger {
         let lastConnectionTrigger = propertiesManager.lastConnectionRequest?.trigger
 
-        let newConnection: () -> ConnectionDimensions.VPNTrigger = { [weak self] in
+        let newConnection: () -> UserInitiatedVPNChange.VPNTrigger = { [weak self] in
             if self?.previousConnectionStatus == .connected,
                case .vpnDisconnection = eventType {
                 return .newConnection

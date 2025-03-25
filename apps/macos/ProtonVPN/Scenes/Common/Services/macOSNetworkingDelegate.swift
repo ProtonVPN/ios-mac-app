@@ -11,6 +11,8 @@ import LegacyCommon
 import ProtonCoreNetworking
 import ProtonCoreServices
 import CommonNetworking
+import VPNAppCore
+import Domain
 
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {
@@ -53,7 +55,7 @@ extension macOSNetworkingDelegate {
     }
 
     func getSupportURL() -> URL {
-        return URL(string: CoreAppConstants.ProtonVpnLinks.support)!
+        return VPNLink.support.url
     }
 }
 

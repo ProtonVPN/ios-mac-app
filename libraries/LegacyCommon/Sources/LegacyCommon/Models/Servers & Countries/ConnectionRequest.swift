@@ -81,9 +81,9 @@ public struct ConnectionRequest: Identifiable {
     public let safeMode: Bool?
     public let profileId: String?
     public let profileName: String?
-    public let trigger: ConnectionDimensions.VPNTrigger?
+    public let trigger: UserInitiatedVPNChange.VPNTrigger?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, profileName: String?, trigger: ConnectionDimensions.VPNTrigger?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, profileName: String?, trigger: UserInitiatedVPNChange.VPNTrigger?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
@@ -153,7 +153,7 @@ extension ConnectionRequest: Codable {
         }
 
         safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
-        trigger = try container.decodeIfPresent(ConnectionDimensions.VPNTrigger.self, forKey: .trigger)
+        trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
     }
 }
 

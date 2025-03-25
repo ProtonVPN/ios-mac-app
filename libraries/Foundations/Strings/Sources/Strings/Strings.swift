@@ -297,73 +297,39 @@ public enum Localizable {
   public static var connectionDetailsServerLoad: String { return Localizable.tr("Localizable", "_connection_details_server_load", fallback: "Server load") }
   /// Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsTitle: String { return Localizable.tr("Localizable", "_connection_details_title", fallback: "Connection details") }
-  /// Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string.
+  /// Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorCertificateAuthentication(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_certificate_authentication", String(describing: p1), fallback: "An issue occurred authenticating with the server: %@")
+    return Localizable.tr("Localizable", "_connection_error_certificate_authentication", String(describing: p1), fallback: "An issue occurred authenticating with the server. (Error %@)")
   }
-  /// Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why.
-  public static func connectionErrorCertificateAuthenticationIpcMessage(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_certificate_authentication_ipc_message", String(describing: p1), fallback: "a protocol error occurred. (%@)")
+  /// Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func connectionErrorIntentMissing(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_error_intent_missing", String(describing: p1), fallback: "We were unable to connect to the server. (Error %@).")
   }
-  /// Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized.
-  public static func connectionErrorCertificateAuthenticationKeyGenerationFailed(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_certificate_authentication_key_generation_failed", String(describing: p1), fallback: "we were unable to generate your encryption keys. (%@)")
-  }
-  /// Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later.
-  public static var connectionErrorCertificateAuthenticationRateLimited: String { return Localizable.tr("Localizable", "_connection_error_certificate_authentication_rate_limited", fallback: "it is not possible to refresh your credentials right now.") }
-  /// Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized.
-  public static func connectionErrorCertificateAuthenticationUnexpected(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_certificate_authentication_unexpected", String(describing: p1), fallback: "an unexpected credential error occurred. (%@)")
-  }
-  /// Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string.
-  public static func connectionErrorCertificateAuthenticationWontRefresh(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_certificate_authentication_wont_refresh", String(describing: p1), fallback: "we couldn't refresh your credentials. (%@)")
-  }
-  /// Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired.
-  public static var connectionErrorCertificateAuthenticationWontRefreshCertExpired: String { return Localizable.tr("Localizable", "_connection_error_certificate_authentication_wont_refresh_cert_expired", fallback: "The certificate on the device has expired.") }
-  /// Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing.
-  public static var connectionErrorCertificateAuthenticationWontRefreshCertMissing: String { return Localizable.tr("Localizable", "_connection_error_certificate_authentication_wont_refresh_cert_missing", fallback: "The certificate is not available on the device.") }
-  /// Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing.
-  public static var connectionErrorCertificateAuthenticationWontRefreshKeysMissing: String { return Localizable.tr("Localizable", "_connection_error_certificate_authentication_wont_refresh_keys_missing", fallback: "The keys are not available on the device.") }
-  /// Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection.
-  public static var connectionErrorIntentMissing: String { return Localizable.tr("Localizable", "_connection_error_intent_missing", fallback: "We were unable to connect to the server, because the original connection information was missing.") }
-  /// Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string.
+  /// Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorLocalAgent(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_local_agent", String(describing: p1), fallback: "An unexpected error occurred while connecting: %@")
   }
-  /// Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established.
-  public static func connectionErrorLocalAgentFailedEstablishingConnection(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_local_agent_failed_establishing_connection", String(describing: p1), fallback: "the device could not establish a connection. (%@)")
-  }
-  /// Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error.
-  public static func connectionErrorLocalAgentRemoteError(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_local_agent_remote_error", String(describing: p1), fallback: "the remote service did not accept the connection. (%@)")
-  }
-  /// Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate.
-  public static var connectionErrorLocalAgentServerCertificate: String { return Localizable.tr("Localizable", "_connection_error_local_agent_server_certificate", fallback: "we could not authenticate the connection.") }
-  /// Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string.
+  /// Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorPreparation(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_preparation", String(describing: p1), fallback: "There was a problem preparing the connection: %@")
+    return Localizable.tr("Localizable", "_connection_error_preparation", String(describing: p1), fallback: "There was a problem preparing the connection (Error %@)")
   }
-  /// Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance.
-  public static var connectionErrorServerMissing: String { return Localizable.tr("Localizable", "_connection_error_server_missing", fallback: "The server you have chosen is no longer available. Please choose a different server.") }
-  /// Error message: we tried to connect, but something took too long and we weren't able to
-  public static var connectionErrorTimeout: String { return Localizable.tr("Localizable", "_connection_error_timeout", fallback: "We encountered an error when trying to connect: the server did not respond in time. Please try again.") }
+  /// Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func connectionErrorServerMissing(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_error_server_missing", String(describing: p1), fallback: "The server you have chosen is no longer available. Please choose a different server. (Error %@)")
+  }
+  /// Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func connectionErrorTimeout(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_error_timeout", String(describing: p1), fallback: "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)")
+  }
   /// Error alert title: a connection error has occurred.
   public static var connectionErrorTitle: String { return Localizable.tr("Localizable", "_connection_error_title", fallback: "Connection Error") }
-  /// Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string.
+  /// Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorTunnelConnection(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_tunnel_connection", String(describing: p1), fallback: "There was an issue starting the VPN: %@")
+    return Localizable.tr("Localizable", "_connection_error_tunnel_connection", String(describing: p1), fallback: "There was an issue starting the VPN. (Error %@)")
   }
-  /// Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized.
-  public static func connectionErrorTunnelConnectionTunnelStart(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_tunnel_connection_tunnel_start", String(describing: p1), fallback: "the tunnel could not be established. (%@)")
-  }
-  /// Similar to _connection_error_server_missing, can occur in a different part of the connection process.
-  public static var connectionErrorTunnelConnectionUnknownServer: String { return Localizable.tr("Localizable", "_connection_error_tunnel_connection_unknown_server", fallback: "the server you have chosen is no longer available. Please choose a different server.") }
-  /// Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string.
-  public static func connectionErrorUnexpectedProtocol(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_connection_error_unexpected_protocol", String(describing: p1), fallback: "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection.")
+  /// Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func connectionErrorUnexpectedProtocol(_ p1: Any, _ p2: Any) -> String {
+    return Localizable.tr("Localizable", "_connection_error_unexpected_protocol", String(describing: p1), String(describing: p2), fallback: "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)")
   }
   /// Connection error translation. iOS quick connect widget: text shown on error.
   public static var connectionFailed: String { return Localizable.tr("Localizable", "_connection_failed", fallback: "Connection Failed") }
@@ -600,6 +566,12 @@ public enum Localizable {
   public static var gatewaysModalTitle: String { return Localizable.tr("Localizable", "_gateways_modal_title", fallback: "What's a gateway?") }
   /// MacOS: General tab in setting window
   public static var general: String { return Localizable.tr("Localizable", "_general", fallback: "General") }
+  /// Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func genericErrorDescription(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_generic_error_description", String(describing: p1), fallback: "The operation could not be completed. (Error %@)")
+  }
+  /// Error message: Catch-all error alert title.
+  public static var genericErrorTitle: String { return Localizable.tr("Localizable", "_generic_error_title", fallback: "Error") }
   /// %@ is a plan name e.g. Get Plus Plan
   public static func getPlan(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_get_plan", String(describing: p1), fallback: "Get %@ Plan")
@@ -1082,20 +1054,10 @@ public enum Localizable {
   }
   /// Protocol
   public static var `protocol`: String { return Localizable.tr("Localizable", "_protocol", fallback: "Protocol") }
-  /// Error message: we tried sending a message to the connection provider, but the message was in the wrong format.
-  public static var providerMessageErrorDecodingError: String { return Localizable.tr("Localizable", "_provider_message_error_decoding_error", fallback: "An error occurred when trying to decode the response from the connection provider.") }
-  /// Error message: we tried to message the connection provider, but they didn't respond in time.
-  public static var providerMessageErrorNoDataReceived: String { return Localizable.tr("Localizable", "_provider_message_error_no_data_received", fallback: "No data was received from the connection provider.") }
-  /// Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized.
-  public static func providerMessageErrorRemoteError(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_provider_message_error_remote_error", String(describing: p1), fallback: "The connection provider encountered an error: %@")
+  /// Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func providerMessageError(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_provider_message_error", String(describing: p1), fallback: "There was a problem with the connection. (Error %@)")
   }
-  /// Error message: we tried sending a message to the connection provider, but encountered an issue in the process.
-  public static var providerMessageErrorSendingError: String { return Localizable.tr("Localizable", "_provider_message_error_sending_error", fallback: "An error occurred when trying to send a message to the connection provider.") }
-  /// Error message: we tried sending a message to the connection provider, but it didn't recognize the request.
-  public static var providerMessageErrorUnknownRequest: String { return Localizable.tr("Localizable", "_provider_message_error_unknown_request", fallback: "The connection provider received an unknown request.") }
-  /// Error message: we tried sending a message to the connection provider, but we didn't recognize the response.
-  public static var providerMessageErrorUnknownResponse: String { return Localizable.tr("Localizable", "_provider_message_error_unknown_response", fallback: "The connection provider returned an unknown response.") }
   /// %@ is an IP address e.g. Public IP: 123.45.67.890
   public static func publicIp(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_public_ip", String(describing: p1), fallback: "Public IP: %@")

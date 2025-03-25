@@ -16,13 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 import Dependencies
-import Domain
+import ComposableArchitecture
 import CoreConnection
 import VPNShared
+import Domain
 
-struct ConnectionIntentResolver: DependencyKey {
-    private(set) var resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
+/// Duplicates logic in `ConnectionAuthorizer` in `LegacyCommon` for now, but can add more resolution errors later.
+@CasePathable
+public enum ConnectionIntentResolutionError: Error, Equatable {
+    case serverChangeUnavailable(until: Date, duration: TimeInterval, exhaustedSkips: Bool)
+    case specificCountryUnavailable(countryCode: String)
+    case secureCoreUnavailable
+}
+
+struct ConnectionIntentResolver: DependencyKey, Sendable {
+    let resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
+    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws (ConnectionIntentResolutionError) -> ()
 
     static let liveValue: ConnectionIntentResolver = .init { intent in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
@@ -51,6 +62,32 @@ struct ConnectionIntentResolver: DependencyKey {
             tunnelSettings: tunnelSettings,
             features: features
         )
+    } authorize: { intent, userTier throws (ConnectionIntentResolutionError) in
+        // Paid users can always change servers.
+        guard userTier.isFreeTier else { return }
+
+        @Dependency(\.serverChangeAuthorizer) var changeAuthorizer
+
+        switch intent.spec.location {
+            // Free users can always connect to the fastest server.
+        case .fastest:
+            return
+
+            // Free users can choose a random server a fixed number of times in a given interval.
+        case .random:
+            switch changeAuthorizer.serverChangeAvailability() {
+            case .available:
+                return
+            case let .unavailable(date, duration, exhaustedSkips):
+                throw .serverChangeUnavailable(until: date, duration: duration, exhaustedSkips: exhaustedSkips)
+            }
+
+            // Free users aren't allowed to choose an exact server.
+        case .region(let code), .exact(_, _, _, _, let code):
+            throw .specificCountryUnavailable(countryCode: code)
+        case .secureCore:
+            throw .secureCoreUnavailable
+        }
     }
 
     // TODO: Implement a testing client that performs no network requests but can give similar behaviour (VPNAPPL-2678)

@@ -26,6 +26,7 @@ import VPNShared
 
 import Ergonomics
 import Timer
+import Domain
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService

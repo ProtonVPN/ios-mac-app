@@ -385,13 +385,6 @@ extension Container: ReportsApiServiceFactory {
     }
 }
 
-// MARK: SafariServiceFactory
-extension Container: SafariServiceFactory {
-    public func makeSafariService() -> SafariServiceProtocol {
-        SafariService()
-    }
-}
-
 // MARK: ReportBugViewModelFactory
 extension Container: ReportBugViewModelFactory {
     public func makeReportBugViewModel() -> ReportBugViewModel {

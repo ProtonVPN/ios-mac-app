@@ -27,6 +27,7 @@ import VPNSharedTesting
 import CommonNetworkingTestSupport
 
 class AppStateManagerImplementationTests: XCTestCase {
+    static let emptyError = NSError(domain: "ProtonVPNError", code: -1)
 
     let serverDescriptor = ServerDescriptor(username: "", address: "")
     let timerFactory = TimerFactoryMock()
@@ -181,7 +182,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     }
     
     func initialError() {
-        vpnManager.state = .error(NSError(code: 0, localizedDescription: ""))
+        vpnManager.state = .error(Self.emptyError)
 
         let state = self.appStateManager.state
         if case AppState.disconnected = state {} else {
@@ -192,7 +193,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     }
     
     func subsequentError() {
-        vpnManager.state = .error(NSError(code: 0, localizedDescription: ""))
+        vpnManager.state = .error(Self.emptyError)
 
         let state = self.appStateManager.state
         if case AppState.error(_) = state {} else {

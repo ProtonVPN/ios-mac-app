@@ -23,11 +23,12 @@
 import CoreLocation
 import UIKit
 
-import Domain
-import Strings
-
 import LegacyCommon
 import Localization
+import VPNAppCore
+
+import Domain
+import Strings
 
 class CountryAnnotationViewModel: AnnotationViewModel {
 

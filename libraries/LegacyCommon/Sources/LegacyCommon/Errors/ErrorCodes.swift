@@ -52,7 +52,6 @@ public class ErrorCode {
 }
 
 public enum NetworkErrorCode {
-
     public static let timedOut = NSURLErrorTimedOut
     public static let cannotFindHost = NSURLErrorCannotFindHost
     public static let cannotConnectToHost = NSURLErrorCannotConnectToHost

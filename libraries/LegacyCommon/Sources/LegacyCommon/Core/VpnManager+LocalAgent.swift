@@ -267,7 +267,7 @@ extension VpnManager: LocalAgentDelegate {
             reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
             disconnect { }
-            guard let credentials = try? vpnKeychain.fetchCached() else {
+            guard let credentials = vpnKeychain.fetchCached() else {
                 log.error("Cannot show max session alert because getting credentials failed", category: .localAgent, event: .error)
                 return
             }
@@ -295,7 +295,7 @@ extension VpnManager: LocalAgentDelegate {
             reconnectWithNewKeyAndCertificate()
         case let .systemError(error):
             log.error("Local agent reported system error for \(error), the setting will be reverted, showing alert to the user", category: .localAgent, event: .error)
-            alertService?.push(alert: LocalAgentSystemErrorAlert(error: error))
+            alertService?.push(alert: DomainErrorAlert(alert: error.alert))
         }
     }
     // swiftlint:enable cyclomatic_complexity

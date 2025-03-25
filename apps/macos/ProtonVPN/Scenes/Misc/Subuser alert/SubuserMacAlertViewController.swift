@@ -18,12 +18,15 @@
 
 import Cocoa
 
+import Dependencies
+
 import LegacyCommon
 import VPNAppCore
 
 import Theme
 import Strings
 import Ergonomics
+import Domain
 
 final class SubuserMacAlertViewController: NSViewController {
     
@@ -35,8 +38,6 @@ final class SubuserMacAlertViewController: NSViewController {
     @IBOutlet private weak var assignConnectionsButton: PrimaryActionButton!
     @IBOutlet private weak var loginButton: CancellationButton!
     
-    public var safariServiceFactory: SafariServiceFactory?
-    private lazy var safariService = safariServiceFactory?.makeSafariService()
     var role: UserRole = .noOrganization
     
     required init?(coder: NSCoder) {
@@ -91,7 +92,8 @@ final class SubuserMacAlertViewController: NSViewController {
     // MARK: - Actions
     
     @IBAction private func assignConnectionsTapped(_ sender: NSButton) {
-        safariService?.open(url: CoreAppConstants.ProtonVpnLinks.assignVPNConnections)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.assignVPNConnections)
     }
     
     @IBAction func loginTapped(_ sender: NSButton) {

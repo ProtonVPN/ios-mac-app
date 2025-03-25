@@ -18,10 +18,14 @@
 
 import Foundation
 import NetworkExtension
-import VPNShared
 import XCTest
-import VPNSharedTesting
+
 import Dependencies
+
+import VPNShared
+import VPNSharedTesting
+import VPNAppCore
+
 import CommonNetworking
 import CommonNetworkingTestSupport
 

@@ -19,6 +19,7 @@
 import Cocoa
 import LegacyCommon
 import Theme
+import Domain
 
 final class NET2WarningPopupViewController: WarningPopupViewController {
     override func viewDidLoad() {
@@ -47,7 +48,7 @@ extension WarningPopupViewModel {
                   title: alert.title!,
                   description: alert.message!,
                   linkDescription: alert.link,
-                  url: NEKSOnT2Alert.t2kbUrlString,
+                  url: VPNLink.t2ChipKnowledgeBase.urlString,
                   onConfirm: alert.killSwitchOffAction.handler!,
                   confirmTitle: alert.killSwitchOffAction.title,
                   onCancel: alert.connectAnywayAction.handler!,

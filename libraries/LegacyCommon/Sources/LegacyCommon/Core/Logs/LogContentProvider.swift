@@ -16,11 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Connection
-import Dependencies
 import Foundation
-import PMLogger
+import Dependencies
 import ProtonCoreFeatureFlags
+import Connection
+import PMLogger
+import Domain
 
 public protocol LogContentProviderFactory {
     func makeLogContentProvider() -> LogContentProvider
@@ -55,7 +56,7 @@ public class IOSLogContentProvider: LogContentProvider {
         case .wireguard:
             guard FeatureFlagsRepository.shared.isConnectionFeatureEnabled else {
                 let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
-                return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(CoreAppConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
+                return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(DomainConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
             }
 
             @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider

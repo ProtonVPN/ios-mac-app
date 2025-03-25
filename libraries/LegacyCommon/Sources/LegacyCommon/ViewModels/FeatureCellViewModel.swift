@@ -28,6 +28,7 @@ import UIKit
 import AppKit
 #endif
 import Strings
+import Domain
 
 public protocol FeatureCellViewModel {
     var icon: Icon { get }
@@ -35,7 +36,7 @@ public protocol FeatureCellViewModel {
     var sectionTitle: String? { get }
     var description: String { get }
     var footer: String? { get }
-    var urlContact: String? { get }
+    var urlContact: VPNLink? { get }
     var displayLoads: Bool { get }
 }
 
@@ -58,7 +59,7 @@ public struct SmartRoutingFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.featureSmartRoutingDescription
     public let footer: String? = Localizable.learnMore
-    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreSmartRouting
+    public let urlContact: VPNLink? = .learnMoreSmartRouting
     public init () { }
 }
 
@@ -68,7 +69,7 @@ public struct StreamingFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.featureStreamingDescription
     public let footer: String? = Localizable.learnMore
-    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreStreaming
+    public let urlContact: VPNLink? = .learnMoreStreaming
     public init () { }
 }
 
@@ -78,7 +79,7 @@ public struct P2PFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.featureP2pDescription
     public let footer: String? = Localizable.learnMore
-    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreP2p
+    public let urlContact: VPNLink? = .learnMoreP2p
     public init () { }
 }
 
@@ -88,7 +89,7 @@ public struct TorFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.featureTorDescription
     public let footer: String? = Localizable.learnMore
-    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreTor
+    public let urlContact: VPNLink? = .learnMoreTor
     public init () { }
 }
 
@@ -98,7 +99,7 @@ public struct LoadPerformanceFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.performanceLoadDescription
     public let footer: String? = Localizable.learnMore
-    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreLoads
+    public let urlContact: VPNLink? = .learnMoreLoads
     public let displayLoads: Bool = true
     public init () { }
 }
@@ -109,7 +110,7 @@ public struct FreeServersFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.featureFreeServersDescription
     public let footer: String? = nil
-    public let urlContact: String? = nil
+    public let urlContact: VPNLink? = nil
     public init () { }
 }
 
@@ -119,7 +120,7 @@ public struct ServerFeatureViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String
     public let footer: String? = nil
-    public let urlContact: String? = nil
+    public let urlContact: VPNLink? = nil
     public init (sectionTitle: String? = nil, title: String, description: String, icon: Icon) {
         self.sectionTitle = sectionTitle
         self.title = title
@@ -134,6 +135,6 @@ public struct GatewayFeatureCellViewModel: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = Localizable.gatewaysModalText
     public let footer: String? = nil
-    public let urlContact: String? = "https://protonvpn.com/support/dedicated-ips/"
+    public let urlContact: VPNLink? = .dedicatedIps
     public init () { }
 }

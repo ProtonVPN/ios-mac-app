@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import Domain
 
 public struct ClientConfig {
     public let featureFlags: FeatureFlags
@@ -50,7 +51,7 @@ public struct ClientConfig {
     public init() {
         self.init(
             featureFlags: FeatureFlags(),
-            serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime,
+            serverRefreshInterval: DomainConstants.Maintenance.defaultMaintenanceCheckTime,
             wireGuardConfig: WireguardConfig(),
             smartProtocolConfig: SmartProtocolConfig(),
             ratingSettings: RatingSettings(),

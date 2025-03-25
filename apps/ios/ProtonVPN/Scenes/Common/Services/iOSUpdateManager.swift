@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
 import VPNAppCore
 import LegacyCommon
@@ -56,7 +57,7 @@ final class iOSUpdateManager: UpdateChecker {
 
         var description: String { rawValue }
 
-        var errorUserInfo: [String : Any] {
+        var errorUserInfo: [String: Any] {
             [NSLocalizedDescriptionKey: description]
         }
 
@@ -176,6 +177,8 @@ final class iOSUpdateManager: UpdateChecker {
         guard let infoPlist = Bundle.main.infoDictionary, let identifier = infoPlist["AppStoreID"] as? String else {
             return
         }
-        SafariService().open(url: "itms-apps://itunes.apple.com/app/id\(identifier)?mt=8")
+
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open("itms-apps://itunes.apple.com/app/id\(identifier)?mt=8")
     }
 }

@@ -36,6 +36,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     public init() { }
 
     public struct State: Equatable, Sendable {
+        @SharedReader(.userTier) public var userTier: Int?
         public internal(set) var currentIntent: ServerConnectionIntent?
         public internal(set) var reconnectionIntent: ConnectionPreparationIntent?
         var connectionState: ConnectionState
@@ -83,6 +84,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         public enum Delegate: Sendable {
             case stateChanged(ConnectionState)
             case connectionFailed(ConnectionError)
+            case intentResolutionFailed(ConnectionPreparationIntent, with: ConnectionIntentResolutionError)
         }
     }
 
@@ -106,6 +108,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
 
             case .input(.connect(let intent)):
+                do throws(ConnectionIntentResolutionError) {
+                    try intentResolver.authorize(intent, state.userTier ?? .freeTier)
+                } catch {
+                    return .send(.delegate(.intentResolutionFailed(intent, with: error)))
+                }
+
                 switch state.coreConnectionState {
                 case .unknown:
                     // We're not ready to accept a connection request yet

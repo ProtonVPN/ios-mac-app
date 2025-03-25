@@ -21,9 +21,10 @@
 //
 
 import XCTest
-import LegacyCommon
-import VPNShared
 import ProtonCoreNetworking
+import VPNShared
+import VPNAppCore
+import LegacyCommon
 @testable import ProtonVPN
 
 fileprivate let navigationService = NavigationService(DependencyContainer())

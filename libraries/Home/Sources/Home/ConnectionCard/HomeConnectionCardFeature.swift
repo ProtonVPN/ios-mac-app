@@ -29,20 +29,22 @@ public struct HomeConnectionCardFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.userTier) public var userTier: Int
+        @SharedReader(.userTier) public var userTier: Int?
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
         @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference
 
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
+                guard let userTier else { return true }
+
                 return userTier.isFreeTier
             }
             return false
         }
 
         package var headerModel: ConnectionCardHeaderModel {
-            ConnectionCardHeaderModel(connectionStatus: vpnConnectionStatus, userTier: userTier)
+            ConnectionCardHeaderModel(connectionStatus: vpnConnectionStatus, userTier: userTier ?? .freeTier)
         }
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?

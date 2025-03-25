@@ -21,6 +21,7 @@ import Foundation
 import Domain
 import VPNShared
 import VPNAppCore
+import Domain
 
 public struct ConnectionDimensions: Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
@@ -28,7 +29,7 @@ public struct ConnectionDimensions: Encodable {
     let outcome: Outcome
     let userTier: UserTier
     let vpnStatus: VPNStatus // This refers to whether a vpn connection is already ongoing when the connection action is triggered
-    let vpnTrigger: VPNTrigger
+    let vpnTrigger: UserInitiatedVPNChange.VPNTrigger
     let networkType: NetworkType
     let serverFeatures: ServerFeature // ordered comma-separated list
     let vpnCountry: String // ['CHE', 'FRA', 'NLD', ... ]
@@ -42,7 +43,7 @@ public struct ConnectionDimensions: Encodable {
     init(outcome: Outcome,
          userTier: UserTier,
          vpnStatus: VPNStatus,
-         vpnTrigger: VPNTrigger,
+         vpnTrigger: UserInitiatedVPNChange.VPNTrigger,
          networkType: NetworkType,
          serverFeatures: ServerFeature,
          vpnCountry: String,
@@ -134,19 +135,6 @@ public struct ConnectionDimensions: Encodable {
         case free
         case `internal`
         case nonPaid = "non-paid"
-    }
-
-    public enum VPNTrigger: String, Codable {
-        case quick
-        case country
-        case city
-        case server
-        case profile
-        case map
-        case tray
-        case widget
-        case auto
-        case newConnection = "new_connection"
     }
 
     public enum NetworkType: String, Encodable {

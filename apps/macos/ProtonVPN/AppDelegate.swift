@@ -197,7 +197,7 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     private func setupDebugHelpers() {
-        #if FREQUENT_AUTH_CERT_REFRESH
+        #if DEBUG
         CertificateConstants.certificateDuration = "30 minutes"
         #endif
     }

@@ -19,16 +19,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Ergonomics
 import Foundation
-import Reachability
-import Domain
-import Timer
-import CommonNetworking
-import VPNShared
 #if canImport(AppKit)
 import AppKit
 #endif
+
+import Reachability
+
+import Timer
+import CommonNetworking
+import VPNShared
+import VPNAppCore
+import Ergonomics
+import Domain
 
 public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager
@@ -490,7 +493,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
             serviceChecker?.stop()
             if let alertService = alertService {
-                serviceChecker = ServiceChecker(networking: networking, alertService: alertService, refreshInterval: CoreAppConstants.UpdateTime.p2pBlockedRefreshTime)
+                serviceChecker = ServiceChecker(networking: networking, alertService: alertService)
             }
             attemptingConnection = false
             state = .connected(descriptor)
@@ -521,7 +524,7 @@ public class AppStateManagerImplementation: AppStateManager {
     // swiftlint:enable cyclomatic_complexity
 
     private func connectionFailed() {
-        state = .error(NSError(code: 0, localizedDescription: "connectionFailed"))
+        state = .error(CommonVpnError.connectionFailed)
         notifyObservers()
     }
 

@@ -65,7 +65,7 @@ public struct RecentsSectionView: View {
     }
 
     @ViewBuilder private var content: some View {
-        if store.userTier.isFreeTier {
+        if (store.userTier ?? .freeTier).isFreeTier {
             sectionTitleView(title: Localizable.homeRecentsUpsellSection)
             UpsellCarousel(sendAction: { _ = store.send($0) })
         } else if !store.recentConnectionList.isEmpty {

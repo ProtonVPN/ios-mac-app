@@ -20,16 +20,42 @@ import Foundation
 import CasePaths
 import GoLibs
 import let CoreConnection.log
+import Domain
+import Strings
 
-public enum LocalAgentErrorSystemError {
-    case splitTcp
-    case netshield
-    case nonRandomizedNat
-    case safeMode
+public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConvertibleError {
+    public static let errorDomain = "LocalAgentSystemErrorDomain"
+
+    case splitTcp = "LAST"
+    case netshield = "LANS"
+    case nonRandomizedNat = "LANN"
+    case safeMode = "LASM"
+
+    public var alert: Alert {
+        let title, message: String
+        switch self {
+        case .splitTcp:
+            title = Localizable.vpnAcceleratorTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.vpnAcceleratorTitle)
+        case .netshield:
+            title = Localizable.netshieldTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.netshieldTitle)
+        case .nonRandomizedNat:
+            title = Localizable.moderateNatTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.moderateNatTitle)
+        case .safeMode:
+            title = Localizable.nonStandardPortsTitle
+            message = Localizable.vpnFeatureCannotBeSetError(Localizable.nonStandardPortsTitle)
+        }
+
+        return Alert(title: title, message: message)
+    }
 }
 
 @CasePathable
-public enum LocalAgentError: Error {
+public enum LocalAgentError: ProtonVPNError {
+    public static var errorDomain: String { "LocalAgentRemoteError" }
+
     case restrictedServer
     case certificateExpired
     case certificateRevoked
@@ -51,6 +77,64 @@ public enum LocalAgentError: Error {
     case serverSessionDoesNotMatch
     case systemError(LocalAgentErrorSystemError)
     case unknown(code: Int)
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .restrictedServer:
+            return "LRXS"
+        case .certificateExpired:
+            return "LCRX"
+        case .certificateRevoked:
+            return "LCRV"
+        case .maxSessionsUnknown:
+            return "LMSU"
+        case .maxSessionsFree:
+            return "LMSF"
+        case .maxSessionsBasic:
+            return "LMSB"
+        case .maxSessionsPlus:
+            return "LMS+"
+        case .maxSessionsVisionary:
+            return "LMSV"
+        case .maxSessionsPro:
+            return "LMSP"
+        case .keyUsedMultipleTimes:
+            return "LKMT"
+        case .serverError:
+            return "LSRV"
+        case .policyViolationLowPlan:
+            return "LPVL"
+        case .policyViolationDelinquent:
+            return "LPVD"
+        case .userTorrentNotAllowed:
+            return "LTRN"
+        case .userBadBehavior:
+            return "LUBB"
+        case .guestSession:
+            return "LGSX"
+        case .badCertificateSignature:
+            return "LBCS"
+        case .certificateNotProvided:
+            return "LCNP"
+        case .serverSessionDoesNotMatch:
+            return "LSNM"
+        case .systemError(let systemError):
+            return "LSER"
+        case .unknown:
+            return "LUNK"
+        }
+    }
+
+    public var underlyingError: Error? {
+        switch self {
+        case .systemError(let error):
+            return error
+        case .unknown(let code):
+            return NSError(domain: Self.errorDomain, code: code)
+        default:
+            return nil
+        }
+    }
 }
 
 extension LocalAgentError {

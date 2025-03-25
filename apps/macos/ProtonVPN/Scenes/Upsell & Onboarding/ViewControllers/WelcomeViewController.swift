@@ -22,6 +22,8 @@
 
 import Cocoa
 
+import Dependencies
+
 import LegacyCommon
 import VPNAppCore
 
@@ -115,7 +117,8 @@ class WelcomeViewController: NSViewController {
     }
 
     @objc func learnMoreClicked() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMoreTelemetry)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.learnMoreTelemetry)
     }
 
     override func viewWillAppear() {

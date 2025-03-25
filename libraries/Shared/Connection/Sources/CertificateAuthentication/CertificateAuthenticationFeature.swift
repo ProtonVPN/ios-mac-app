@@ -179,21 +179,6 @@ public enum CertificateLoadingResult: Sendable, Equatable {
     case certificateExpired
 }
 
-extension CertificateLoadingResult: LocalizedStringConvertible {
-    public var localizedDescription: String {
-        switch self {
-        case .loaded:
-            return "Keys and certificate are available."
-        case .keysMissing:
-            return Localizable.connectionErrorCertificateAuthenticationWontRefreshKeysMissing
-        case .certificateMissing:
-            return Localizable.connectionErrorCertificateAuthenticationWontRefreshCertMissing
-        case .certificateExpired:
-            return Localizable.connectionErrorCertificateAuthenticationWontRefreshCertExpired
-        }
-    }
-}
-
 @CasePathable
 public enum CertificateRefreshResult: Sendable {
     case ok // happy path
@@ -256,32 +241,30 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     }
 
     public var errorDescription: String? {
+        includeCode(inside: Localizable.connectionErrorCertificateAuthentication)
+    }
+
+    public var underlyingError: Error? {
         switch self {
-        case .keyGenerationFailed(let keyError):
-            return Localizable.connectionErrorCertificateAuthenticationKeyGenerationFailed(String(describing: keyError))
-        case .wontRefresh(let result):
-            return Localizable.connectionErrorCertificateAuthenticationWontRefresh(result.localizedDescription)
-        case .refreshWasRateLimited:
-            return Localizable.connectionErrorCertificateAuthenticationRateLimited
-        case .ipc(let message):
-            return Localizable.connectionErrorCertificateAuthenticationIpcMessage(message)
-        case .unexpected(let error):
-            return Localizable.connectionErrorCertificateAuthenticationUnexpected(String(describing: error))
+        case let .keyGenerationFailed(error), let .unexpected(error):
+            return error
+        default:
+            return nil
         }
     }
 
-    public var errorUserInfo: [String : Any] {
-        var result: [String: Any] = [
-            NSLocalizedDescriptionKey: errorDescription ?? "unknown error",
-        ]
+    public var extraUserInfo: [String: Any]? {
+        var result: [String: Any] = [:]
 
         switch self {
-        case .keyGenerationFailed(let keyError):
-            result[NSUnderlyingErrorKey] = keyError
-        case .unexpected(let error):
-            result[NSUnderlyingErrorKey] = error
+        case .wontRefresh(let loadingResult):
+            result["WontRefresh"] = loadingResult
+        case .ipc(let message):
+            result["IPCMessage"] = message
+        case .refreshWasRateLimited(let retryAfter):
+            result["RetryAfter"] = "\(optional: retryAfter)"
         default:
-            break
+            return nil
         }
 
         return result

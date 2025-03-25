@@ -1,5 +1,5 @@
 //
-//  NSError+Extension.swift
+//  AppConstants.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,16 +20,16 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
+import Domain
 
-extension NSError {
-    
-    public class var protonVpnErrorDomain: String {
-        return "ch.protonvpn.error"
+/// Everything in this extension should go away once LegacyCommon is no longer needed.
+public extension DomainConstants {
+    enum UpdateTime {
+        public static let quickUpdateTime: TimeInterval = 3.0
+        public static let quickReconnectTime: TimeInterval = 0.5
     }
-    
-    public convenience init(domain: String? = nil, code: Int, localizedDescription: String) {
-        let errorDomain = domain != nil ? domain! : NSError.protonVpnErrorDomain
-        let userInfo: [String: String] = [NSLocalizedDescriptionKey: localizedDescription]
-        self.init(domain: errorDomain, code: code, userInfo: userInfo)
-    }
+
+    // Pause between reconnection with another protocol
+    static let protocolChangeDelay: Int = 1 // seconds
 }

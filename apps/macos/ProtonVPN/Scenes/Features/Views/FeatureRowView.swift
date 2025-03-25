@@ -21,8 +21,11 @@
 //
 
 import Cocoa
+import Dependencies
+
 import LegacyCommon
 import VPNAppCore
+
 import Ergonomics
 
 class FeatureRowView: NSView {
@@ -53,6 +56,7 @@ class FeatureRowView: NSView {
 
     @IBAction private func didTapLearnMoreBtn(_ sender: Any) {
         guard let urlContact = viewModel.urlContact else { return }
-        SafariService().open(url: urlContact)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(urlContact)
     }
 }

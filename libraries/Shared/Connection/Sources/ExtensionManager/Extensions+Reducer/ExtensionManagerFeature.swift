@@ -267,27 +267,16 @@ extension TunnelConnectionError: ProtonVPNError {
     }
 
     public var errorDescription: String? {
-        switch self {
-        case .tunnelStartFailed(let startingError):
-            return Localizable.connectionErrorTunnelConnectionTunnelStart(String(describing: startingError))
-        case .unknownServer:
-            return Localizable.connectionErrorTunnelConnectionUnknownServer
-        }
+        includeCode(inside: Localizable.connectionErrorTunnelConnection)
     }
 
-    public var errorUserInfo: [String : Any] {
-        var result: [String: Any] = [
-            NSLocalizedDescriptionKey: errorDescription ?? "unknown error",
-        ]
-
+    public var underlyingError: Error? {
         switch self {
         case .tunnelStartFailed(let error):
-            result[NSUnderlyingErrorKey] = error
+            return error
         default:
-            break
+            return nil
         }
-
-        return result
     }
 }
 

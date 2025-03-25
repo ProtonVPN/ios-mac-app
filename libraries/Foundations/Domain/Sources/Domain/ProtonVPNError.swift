@@ -18,12 +18,16 @@
 
 import Foundation
 
-public protocol ProtonVPNError: LocalizedError, CustomNSError {
+public protocol ProtonVPNError: LocalizedError, CustomNSError, CustomStringConvertible, CustomDebugStringConvertible {
     /// A 4-character code uniquely representing the error across the codebase.
     ///
     /// - Invariant: the string **must** be 4 characters long or it may cause a runtime error.
     /// - Example: an enum case like ".connectionFailed" could be represented as "CNFL".
     var charCode: FourCharCode { get }
+
+    var underlyingError: Error? { get }
+
+    var extraUserInfo: [String: Any]? { get }
 }
 
 public extension ProtonVPNError {
@@ -31,12 +35,56 @@ public extension ProtonVPNError {
         "ProtonVPNErrorDomain"
     }
 
-    var errorUserInfo: [String : Any] {
-        [NSLocalizedDescriptionKey: errorDescription ?? "\(Self.errorDomain) \(String(describing: errorCode))"]
+    var extraUserInfo: [String: Any]? { nil }
+    var underlyingError: Error? { nil }
+
+    var errorUserInfo: [String: Any] {
+        var result: [String: Any] = [NSLocalizedDescriptionKey: errorDescription ?? description]
+        if let underlyingError {
+            result[NSUnderlyingErrorKey] = underlyingError
+        }
+        if let extraUserInfo {
+            result = result.merging(extraUserInfo, uniquingKeysWith: { _, rhs in rhs })
+        }
+        return result
     }
 
     var errorCode: Int {
         Int(charCode)
+    }
+
+    var errorCodeString: String {
+        "0x\(String(charCode, radix: 16))"
+    }
+
+    func includeCode(inside localizationClosure: (String) -> String) -> String {
+        localizationClosure(errorCodeString)
+    }
+
+    var description: String {
+        "\(Self.errorDomain) \(errorCodeString)"
+    }
+
+    var debugDescription: String {
+        var result = "\(Self.errorDomain) \(charCode.debugDescription)"
+
+        var userInfo = errorUserInfo
+        userInfo.removeValue(forKey: NSLocalizedDescriptionKey)
+        let underlyingError = userInfo.removeValue(forKey: NSUnderlyingErrorKey)
+
+        if !userInfo.isEmpty {
+            result += ", userInfo: \(userInfo as AnyObject)"
+        }
+
+        if let underlyingError {
+            if let protonVpnError = underlyingError as? ProtonVPNError {
+                result += " (\(protonVpnError.debugDescription))"
+            } else {
+                result += " (\(String(describing: underlyingError)))"
+            }
+        }
+
+        return result
     }
 }
 
@@ -57,5 +105,17 @@ extension FourCharCode: @retroactive ExpressibleByStringLiteral {
         }
 
         self = result
+    }
+}
+
+extension FourCharCode: @retroactive CustomDebugStringConvertible {
+    public var debugDescription: String {
+        let data = withUnsafeBytes(of: self) { valueBuffer in
+            guard let valuePointer = valueBuffer.baseAddress else {
+                return Data()
+            }
+            return Data(bytes: valuePointer, count: MemoryLayout<FourCharCode>.size)
+        }
+        return String(data: data, encoding: .ascii) ?? String(describing: self)
     }
 }

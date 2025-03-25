@@ -46,7 +46,7 @@ public struct HomeFeature {
     @Dependency(\.date) private var date
     @Dependency(\.alertService) private var alertService
 
-    @SharedReader(.userTier) private var userTier: Int
+    @SharedReader(.userTier) private var userTier: Int?
 
     @Reducer(state: .equatable)
     public enum Destination {
@@ -57,7 +57,7 @@ public struct HomeFeature {
     }
 
     @ObservableState
-    public struct State {
+    public struct State: Equatable {
         /// For simplicity's sake, let's implement Connection as a child feature of Home.
         /// In the future, when we add a sibling feature (like countries, settings or profiles),
         /// we will have to have a parent App feature.  Connection can be moved
@@ -282,7 +282,7 @@ public struct HomeFeature {
             case .connection(.delegate(.connectionFailed(let error))):
                 return .run { _ in await alertService.feed(error) }
             case .incomingAlert(let alert):
-                pushAlert(alert.toSystemAlert)
+                pushAlert(DomainErrorAlert(alert: alert))
                 return .none
             case .connection(.delegate(.stateChanged(let connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
@@ -291,6 +291,23 @@ public struct HomeFeature {
                     .send(.sharedProperties(.newConnectionState(connectionState))),
                     .send(.sharedProperties(.newConnectionStatus(status)))
                 )
+            case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
+                return .run { [pushAlert] send in
+                    let alert: SystemAlert
+                    switch resolutionError {
+                    case .secureCoreUnavailable:
+                        alert = SecureCoreUpsellAlert()
+                    case .specificCountryUnavailable(let countryCode):
+                        alert = CountryUpsellAlert(countryCode: countryCode)
+                    case let .serverChangeUnavailable(until, duration, exhaustedSkips):
+                        alert = ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
+                            Task { [intent, send] in
+                                await send(.connection(.input(.connect(intent))))
+                            }
+                        }
+                    }
+                    pushAlert(alert)
+                }
             case .connection:
                 return .none
             case .didDismissChangeServer:
@@ -304,15 +321,6 @@ public struct HomeFeature {
             }
         }
         .ifLet(\.$destination, action: \.destination)
-    }
-}
-
-fileprivate extension Alert {
-    var toSystemAlert: any SystemAlert {
-        let alert = ConnectionPackageErrorAlert()
-        alert.title = String(localized: title)
-        alert.message = String(localized: message)
-        return alert
     }
 }
 

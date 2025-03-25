@@ -286,7 +286,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     public func getTelemetryUsageData() -> Bool {
         let usageDataDefault = { [weak self] in
             guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
-            if userAccountCreationDate < CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue {
+            if userAccountCreationDate < DomainConstants.WatershedEvent.telemetrySettingDefaultValue {
                 return false
             }
             return true // default value for usage data if the user didn't previously selected one
@@ -316,7 +316,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     public func getTelemetryCrashReports() -> Bool {
         let crashReportsDefault = { [weak self] in
             guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
-            if userAccountCreationDate < CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue {
+            if userAccountCreationDate < DomainConstants.WatershedEvent.telemetrySettingDefaultValue {
                 return false
             }
             return true // default value for crash reports if the user didn't previously selected one
@@ -428,7 +428,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
             if storage.contains(Keys.maintenanceServerRefreshIntereval.rawValue) {
                 return defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
             } else {
-                return CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
+                return DomainConstants.Maintenance.defaultMaintenanceCheckTime
             }
         }
         set {
@@ -533,11 +533,7 @@ extension DependencyValues {
     }
 }
 
-public enum UserRole: Int, Codable, DefaultableProperty {
-    case noOrganization = 0
-    case organizationMember = 1
-    case organizationAdmin = 2
-
+extension UserRole: DefaultableProperty {
     public init() {
         self = .noOrganization
     }

@@ -116,7 +116,7 @@ final class NetShieldSelectionViewModel {
         let attributedFeatureDescription = Localizable.netshieldFeatureDescription
             .attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
         let cellText = NSMutableAttributedString(attributedString: attributedFeatureDescription)
-            .add(link: Localizable.netshieldFeatureDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.netshieldSupport)
+            .add(link: Localizable.netshieldFeatureDescriptionAltLink, withUrl: VPNLink.netshieldSupport.urlString)
         return .attributedTooltip(text: cellText)
     }
 

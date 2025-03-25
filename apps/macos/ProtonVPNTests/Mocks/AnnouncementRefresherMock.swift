@@ -20,7 +20,6 @@ import Foundation
 import Announcement
 
 class AnnouncementRefresherMock: AnnouncementRefresher {
-
     // Callbacks
     var tryRefreshingCalled: (() -> Void)?
     var clearCalled: (() -> Void)?

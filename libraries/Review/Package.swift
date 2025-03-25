@@ -12,13 +12,16 @@ let package = Package(
             name: "Review",
             targets: ["Review"]),
     ],
-    dependencies: [],
+    dependencies: [.package(path: "../Foundations/Domain")],
     targets: [
         .target(
             name: "Review",
             dependencies: []),
         .testTarget(
             name: "ReviewTests",
-            dependencies: ["Review"]),
+            dependencies: [
+                "Review",
+                .product(name: "DomainTestSupport", package: "Domain"),
+            ]),
     ]
 )

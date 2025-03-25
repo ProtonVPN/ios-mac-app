@@ -23,11 +23,13 @@ import Foundation
 
 import Dependencies
 
-import Domain
+import ProtonCoreFeatureFlags
+
 import VPNShared
 import VPNAppCore
 
-import ProtonCoreFeatureFlags
+import Domain
+import Strings
 
 public enum ConnectionStatus {
     
@@ -65,9 +67,9 @@ public protocol VpnGatewayProtocol: AnyObject {
     func userTier() throws -> Int
     func changeActiveServerType(_ serverType: ServerType)
     func autoConnect()
-    func quickConnect(trigger: ConnectionDimensions.VPNTrigger)
-    func quickConnectConnectionRequest(trigger: ConnectionDimensions.VPNTrigger) -> ConnectionRequest
-    func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: ConnectionDimensions.VPNTrigger)
+    func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger)
+    func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest
+    func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger)
     func connectTo(country countryCode: String, city: String)
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
@@ -271,11 +273,11 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
     
-    public func quickConnect(trigger: ConnectionDimensions.VPNTrigger) {
+    public func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {
         connect(with: quickConnectConnectionRequest(trigger: trigger))
     }
     
-    public func quickConnectConnectionRequest(trigger: ConnectionDimensions.VPNTrigger) -> ConnectionRequest {
+    public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
         let defaultQCConnectionRequest = ConnectionRequest(
             serverType: serverTypeToggle,
             connectionType: .fastest,
@@ -306,7 +308,7 @@ public class VpnGateway: VpnGatewayProtocol {
         )
     }
     
-    public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: ConnectionDimensions.VPNTrigger = .country) {
+    public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
         
         connect(with: connectionRequest)
@@ -353,7 +355,7 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public func reconnect(with connectionProtocol: ConnectionProtocol) {
         disconnect {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(CoreAppConstants.protocolChangeDelay), execute: { // Delay enhances reconnection success rate
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(DomainConstants.protocolChangeDelay), execute: { // Delay enhances reconnection success rate
                 let connectionRequest = self.lastConnectionRequest?.withChanged(connectionProtocol: connectionProtocol)
                 self.connect(with: connectionRequest)
             })
@@ -385,11 +387,8 @@ public class VpnGateway: VpnGatewayProtocol {
 
         log.error("An error occured while connecting: \(error.localizedDescription)")
 
-        let alert = ConnectionPackageErrorAlert()
-        alert.title = "Error"
-        alert.message = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
-
-        pushAlert(alert)
+        let alert = Domain.Alert(title: Localizable.errorUnknownTitle, message: error.localizedDescription)
+        pushAlert(DomainErrorAlert(alert: alert))
     }
 
     private var shouldUseNewConnect: Bool {
@@ -434,7 +433,7 @@ public class VpnGateway: VpnGatewayProtocol {
         @Dependency(\.connectionAuthorizer) var authorizer
         switch authorizer.authorize(request: requestWithUpdatedServerType) {
         case .failure(.specificCountryUnavailable(let countryCode)):
-            alertService?.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
+            alertService?.push(alert: CountryUpsellAlert(countryCode: countryCode))
             log.info("User is not authorized to connect to specific countries (\(countryCode))")
             return
         case .failure(let .serverChangeUnavailable(date, duration, longSkip)):

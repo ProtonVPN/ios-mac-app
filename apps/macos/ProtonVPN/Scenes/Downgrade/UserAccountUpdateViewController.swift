@@ -32,6 +32,7 @@ import CommonNetworking
 import Theme
 import Ergonomics
 import Strings
+import Domain
 
 class UserAccountUpdateViewController: NSViewController {
 
@@ -40,21 +41,21 @@ class UserAccountUpdateViewController: NSViewController {
     @IBOutlet weak var titleLbl: NSTextField!
     @IBOutlet weak var descriptionLbl: NSTextField!
     @IBOutlet weak var offsetView: NSView!
-    
+
     @IBOutlet weak var featuresTitleLbl: NSTextField!
-    
+
     @IBOutlet weak var primaryActionBtn: NSButton!
     @IBOutlet weak var secondActionBtn: NSButton!
-    
+
     @IBOutlet weak var feature1View: NSView!
     @IBOutlet weak var feature1Lbl: NSTextField!
-    
+
     @IBOutlet weak var feature2View: NSView!
     @IBOutlet weak var feature2Lbl: NSTextField!
-    
+
     @IBOutlet weak var feature3View: NSView!
     @IBOutlet weak var feature3Lbl: NSTextField!
-    
+
     @IBOutlet weak var fromServerTitleLbl: NSTextField!
     @IBOutlet weak var fromServerIV: NSImageView!
     @IBOutlet weak var fromServerLbl: NSTextField!
@@ -68,16 +69,16 @@ class UserAccountUpdateViewController: NSViewController {
     private let alert: UserAccountUpdateAlert
 
     var dismissCompletion: (() -> Void)?
-    
+
     init(alert: UserAccountUpdateAlert) {
         self.alert = alert
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - View Cycle
 
     override func viewDidLoad() {
@@ -100,7 +101,7 @@ class UserAccountUpdateViewController: NSViewController {
 
         titleLbl.stringValue = alert.title ?? ""
         descriptionLbl.stringValue = alert.message ?? ""
-        
+
         setupFeatures()
         setupActions()
         setupServers()
@@ -112,7 +113,7 @@ class UserAccountUpdateViewController: NSViewController {
     }
 
     // MARK: - Private
-    
+
     private func setupFeatures() {
         feature1View.isHidden = !alert.displayFeatures
         feature2View.isHidden = !alert.displayFeatures
@@ -122,38 +123,38 @@ class UserAccountUpdateViewController: NSViewController {
 
         @Dependency(\.serverRepository) var repository
         feature1Lbl.stringValue = Localizable.subscriptionUpgradeOption1(repository.countryCount())
-        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(CoreAppConstants.maxDeviceCount)
+        feature2Lbl.stringValue = Localizable.subscriptionUpgradeOption2(DomainConstants.maxDeviceCount)
         feature3Lbl.stringValue = Localizable.subscriptionUpgradeOption3
     }
-    
+
     private func setupActions() {
         primaryActionBtn.isHidden = true
         secondActionBtn.isHidden = true
-        
+
         if let mainAction = alert.actions.first {
             primaryActionBtn.title = mainAction.title.capitalized
             primaryActionBtn.isHidden = false
         }
-        
+
         if let secondAction = alert.actions.last {
             secondActionBtn.title = secondAction.title.capitalized
             secondActionBtn.isHidden = false
         }
     }
-    
+
     private func setupServers() {
         offsetView.isHidden = true
         serversView.isHidden = true
         guard let reconnectInfo = alert.reconnectInfo else {
             return
         }
-        
+
         offsetView.isHidden = false
         serversView.isHidden = false
         setServerHeader(reconnectInfo.fromServer, Localizable.fromServerTitle, fromServerIV, fromServerLbl, fromServerTitleLbl)
         setServerHeader(reconnectInfo.toServer, Localizable.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
-    
+
     private func setServerHeader( _ server: ReconnectInfo.Server,
                                   _ header: String,
                                   _ flagIV: NSImageView,
@@ -163,23 +164,24 @@ class UserAccountUpdateViewController: NSViewController {
         flagIV.image = server.image
         serverHeader.stringValue = header
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func didTapPrimaryAction(_ sender: Any) {
         alert.actions.first?.handler?()
 
         Task {
             @Dependency(\.sessionService) var sessionService
+            @Dependency(\.linkOpener) var linkOpener
 
             guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
-            SafariService.openLink(url: url)
+            linkOpener.open(url)
         }
 
         dismissCompletion?()
         dismiss(nil)
     }
-    
+
     @IBAction func didTapSecondAction(_ sender: Any) {
         alert.actions.last?.handler?()
         dismissCompletion?()

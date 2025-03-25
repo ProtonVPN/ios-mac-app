@@ -159,6 +159,28 @@ public enum AppEvent: String {
     }
 }
 
+/// Posted as a subcase of the `userInitiatedVPNChange` case in `AppEvent`. Used for telemetry.
+public enum UserInitiatedVPNChange {
+    public enum VPNTrigger: String, Codable {
+        case quick
+        case country
+        case city
+        case server
+        case profile
+        case map
+        case tray
+        case widget
+        case auto
+        case newConnection = "new_connection"
+    }
+
+    case connect
+    case disconnect(VPNTrigger)
+    case abort
+    case settingsChange
+    case logout
+}
+
 public extension AppEvent {
     init?(_ name: Notification.Name) {
         guard let value = Self(rawValue: name.rawValue) else { return nil }

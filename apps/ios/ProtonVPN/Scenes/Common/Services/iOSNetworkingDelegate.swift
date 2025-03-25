@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import LegacyCommon
 import GoLibs
 import ProtonCoreDataModel
 import ProtonCoreNetworking
@@ -15,6 +14,9 @@ import ProtonCoreServices
 import ProtonCoreForceUpgrade
 import ProtonCoreHumanVerification
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
+import Domain
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
@@ -65,7 +67,7 @@ extension iOSNetworkingDelegate {
     }
 
     func getSupportURL() -> URL {
-        return URL(string: CoreAppConstants.ProtonVpnLinks.support)!
+        return VPNLink.support.url
     }
 }
 

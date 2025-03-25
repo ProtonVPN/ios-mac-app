@@ -20,6 +20,7 @@ import Foundation
 import ProtonCoreAPIClient
 import BugReport
 import VPNShared
+import VPNAppCore
 
 #if os(iOS) || os(tvOS)
 import UIKit

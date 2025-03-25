@@ -66,8 +66,8 @@ extension ConnectToVPNKey: DependencyKey {
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
 
-        @SharedReader(.userTier) var userTier: Int
-        let server = try serverSelector.select(spec, userTier, acceptableProtocols)
+        @SharedReader(.userTier) var userTier: Int?
+        let server = try serverSelector.select(spec, userTier ?? .freeTier, acceptableProtocols)
         log.info("Server selected: \(server)", category: .connection)
 
         if Task.isCancelled { throw ConnectionError.cancelled }

@@ -34,8 +34,15 @@ extension String {
     }
 }
 
-for argument in CommandLine.arguments[1...] {
-    guard let codeValue = FourCharCode(argument), let string = String(charCode: codeValue) else {
+for var argument in CommandLine.arguments[1...] {
+    var hex = false
+
+    if argument.hasPrefix("0x") {
+        hex = true
+        argument.removeFirst(2)
+    }
+
+    guard let codeValue = FourCharCode(argument, radix: hex ? 16 : 10), let string = String(charCode: codeValue) else {
         print("Unrecognized or unknown value \(argument)")
         continue
     }

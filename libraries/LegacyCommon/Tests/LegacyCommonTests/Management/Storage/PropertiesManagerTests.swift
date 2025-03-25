@@ -22,13 +22,15 @@ import Dependencies
 import VPNShared
 import VPNSharedTesting
 @testable import LegacyCommon
+import Domain
+import DomainTestSupport
 
 class PropertiesManagerTests: XCTestCase {
 
     var sut: PropertiesManagerProtocol!
     private var userDefaults: UserDefaults!
 
-    static let watershed = CoreAppConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
+    static let watershed = DomainConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
 
     override func invokeTest() {
         withDependencies { values in
@@ -37,8 +39,8 @@ class PropertiesManagerTests: XCTestCase {
             let keychain = MockAuthKeychain()
             keychain.setMockUsername("user")
             values.authKeychain = keychain
-            userDefaults = UserDefaults(suiteName: #file)
-            userDefaults.removePersistentDomain(forName: #file)
+            values.defaultAppStorage = .testValue()
+            userDefaults = values.defaultAppStorage
             userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
             values.defaultsProvider = DefaultsProvider(
                 getDefaults: { [self] in userDefaults }

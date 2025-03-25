@@ -35,7 +35,7 @@ public struct ConnectionInfoBuilder {
     public let server: Server?
     public var location: ConnectionSpec.Location { intent.location }
     @Dependency(\.locale) private var locale
-    @SharedReader(.userTier) private var userTier: Int
+    @SharedReader(.userTier) private var userTier: Int?
 
     public init(intent: ConnectionSpec, server: Server?, withServerNumber: Bool) {
         self.intent = intent
@@ -86,7 +86,7 @@ public struct ConnectionInfoBuilder {
                 showP2P: shouldShow(feature: .p2p)
             )
             return .textual(model)
-        } else if case .fastest = location, userTier.isFreeTier && server == nil {
+        } else if case .fastest = location, userTier?.isFreeTier == true && server == nil {
             return .freeServerSelectionDisclaimer(additionalFreeCountryCount: Constants.additionalFreeCountryCount)
         } else {
             return .none

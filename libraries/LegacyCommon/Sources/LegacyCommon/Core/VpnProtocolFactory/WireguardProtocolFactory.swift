@@ -106,7 +106,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "WireGuard"])
             return nil
         }
-        return sharedFolderURL.appendingPathComponent(CoreAppConstants.LogFiles.wireGuard)
+        return sharedFolderURL.appendingPathComponent(DomainConstants.LogFiles.wireGuard)
     }
 
     /// Tries to flush logs to a logfile. Call handler with true if flush succeeded or false otherwise.

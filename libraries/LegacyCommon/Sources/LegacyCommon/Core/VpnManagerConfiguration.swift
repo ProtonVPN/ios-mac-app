@@ -13,6 +13,7 @@ import Dependencies
 
 import Domain
 import VPNShared
+import VPNAppCore
 
 public enum VpnManagerClientConfiguration {
     case iOSClient

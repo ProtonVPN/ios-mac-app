@@ -49,7 +49,7 @@ public struct RecentsFeature {
         }
 
         @SharedReader(.userTier)
-        public var userTier: Int
+        public var userTier: Int?
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage

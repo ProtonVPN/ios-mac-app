@@ -24,8 +24,10 @@ import AppKit
 import Foundation
 import Dependencies
 import LegacyCommon
+import VPNAppCore
 import Theme
 import Strings
+import Domain
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
@@ -38,7 +40,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
     
     override var learnLink: String {
-        return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
+        return VPNLink.killSwitchSupport.urlString
     }
     
     override var title: String! {

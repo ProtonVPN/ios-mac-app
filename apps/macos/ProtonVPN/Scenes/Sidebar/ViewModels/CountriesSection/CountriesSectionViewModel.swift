@@ -211,7 +211,7 @@ class CountriesSectionViewModel {
     }
 
     func displayCountryUpsell(countryCode: String) {
-        alertService.push(alert: CountryUpsellAlert(countryFlag: .flag(countryCode: countryCode)!))
+        alertService.push(alert: CountryUpsellAlert(countryCode: countryCode))
     }
 
     func cellsForGroup(of kind: ServerGroupInfo.Kind) -> [CellModel] {

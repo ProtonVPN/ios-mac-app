@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Dependencies
 import LegacyCommon
 import VPNAppCore
 import Strings
@@ -97,7 +98,8 @@ class HelpMenuController: NSObject {
     }
 
     @objc private func helpItemAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.support)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.support)
     }
 
     @objc private func clearApplicationDataItemAction() {

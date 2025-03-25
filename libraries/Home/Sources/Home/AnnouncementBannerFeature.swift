@@ -101,7 +101,8 @@ public struct AnnouncementBannerFeature {
                     @Dependency(\.sessionService) var sessionService
                     let url = await sessionService.getUpgradePlanSession(url: model.buttonURL.absoluteString)
                     await MainActor.run {
-                        SafariService().open(url: url)
+                        @Dependency(\.linkOpener) var linkOpener
+                        linkOpener.open(url)
                     }
                     AppEvent.userWasDisplayedAnnouncement.post(model.offerReference)
                     AppEvent.userEngagedWithAnnouncement.post(model.offerReference)

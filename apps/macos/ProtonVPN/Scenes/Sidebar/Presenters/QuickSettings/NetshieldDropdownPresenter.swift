@@ -54,7 +54,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var learnLink: String {
-        return CoreAppConstants.ProtonVpnLinks.netshieldSupport
+        return VPNLink.netshieldSupport.urlString
     }
 
     override var alert: UpsellAlert {

@@ -25,6 +25,7 @@ import LegacyCommon
 
 import CommonNetworking
 import VPNShared
+import VPNAppCore
 
 import Settings_iOS
 
@@ -198,7 +199,7 @@ final class CoreLoginService {
         // if it is networking or tls error convert it to the vpncore
         // to get a localized error message from the project's translations
         if underlyingError.isNetworkError || underlyingError.isTlsError {
-            return NetworkError.error(forCode: underlyingError.code)
+            return NetworkError(rawValue: underlyingError.code) ?? underlyingError
         }
 
         return underlyingError

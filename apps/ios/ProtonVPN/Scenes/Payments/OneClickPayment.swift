@@ -20,15 +20,17 @@ import UIKit
 
 import Dependencies
 
-import Domain
+import ProtonCoreFeatureFlags
+import ProtonCorePayments
+
 import Modals
 import Modals_iOS
 import LegacyCommon
 import CommonNetworking
-import Strings
+import VPNAppCore
 
-import ProtonCoreFeatureFlags
-import ProtonCorePayments
+import Strings
+import Domain
 
 final class OneClickPayment {
     typealias Factory = PlanServiceFactory & CoreAlertServiceFactory

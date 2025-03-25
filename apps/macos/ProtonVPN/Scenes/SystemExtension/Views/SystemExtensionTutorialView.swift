@@ -20,6 +20,8 @@ import AppKit
 import SwiftUI
 import AVKit
 
+import Dependencies
+
 import ProtonCoreUIFoundations
 
 import LegacyCommon
@@ -92,7 +94,8 @@ struct SystemExtensionTutorialView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
                 Button {
-                    SafariService().open(url: CoreAppConstants.ProtonVpnLinks.systemExtensionsInstallationHelp)
+                    @Dependency(\.linkOpener) var linkOpener
+                    linkOpener.open(.systemExtensionsInstallationHelp)
                 } label: {
                     Text(Localizable.needHelp)
                 }

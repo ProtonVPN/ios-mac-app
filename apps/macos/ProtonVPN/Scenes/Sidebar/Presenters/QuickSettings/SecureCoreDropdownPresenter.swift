@@ -26,6 +26,7 @@ import AppKit
 import Theme
 import Strings
 import VPNAppCore
+import Domain
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
@@ -44,7 +45,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var learnLink: String {
-        return CoreAppConstants.ProtonVpnLinks.learnMore
+        return VPNLink.learnMore.urlString
     }
     
     init( _ factory: Factory ) {

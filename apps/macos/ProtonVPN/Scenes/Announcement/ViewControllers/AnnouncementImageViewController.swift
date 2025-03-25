@@ -124,8 +124,10 @@ final class AnnouncementImageViewController: NSViewController {
             AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }
 
+        @Dependency(\.linkOpener) var linkOpener
+
         guard data.button.behaviors?.contains(.autoLogin) == true else {
-            SafariService().open(url: data.button.url)
+            linkOpener.open(data.button.url)
             return
         }
 
@@ -136,7 +138,7 @@ final class AnnouncementImageViewController: NSViewController {
             // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
             let url = await sessionService.getUpgradePlanSession(url: data.button.url)
             actionButton?.isEnabled = true
-            SafariService().open(url: url)
+            linkOpener.open(url)
             view?.window?.close()
         }
     }

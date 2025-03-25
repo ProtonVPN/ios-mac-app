@@ -26,8 +26,22 @@ import SwiftUI
 @testable import LocalAgent
 import Ergonomics
 
-class SettingsFeatureSnapshotTests: XCTestCase {
-    
+final class SettingsFeatureSnapshotTests: XCTestCase {
+    static let precision: Float = 0.999
+    static let perceptualPrecision: Float = 0.999
+
+    func snap<T: View>(_ view: T, caseName: String, trait: UIUserInterfaceStyle) {
+        assertSnapshot(
+            of: view,
+            as: .image(
+                precision: Self.precision,
+                perceptualPrecision: Self.perceptualPrecision,
+                traits: trait.collection
+            ),
+            testName: "\(caseName) \(trait.name)"
+        )
+    }
+
     func testLightSettings() {
         settings(trait: .light)
     }
@@ -37,9 +51,13 @@ class SettingsFeatureSnapshotTests: XCTestCase {
     }
 
     func settings(trait: UIUserInterfaceStyle) {
-        let store = Store(initialState: AppFeature.State(main: .init(currentTab: .settings,
-                                                                     mainBackground: .clear),
-                                                         networking: .authenticated(.auth(uid: "")))) {
+        let store = Store(initialState: AppFeature.State(
+            main: .init(
+                currentTab: .settings,
+                mainBackground: .clear
+            ),
+            networking: .authenticated(.auth(uid: ""))
+        )) {
             AppFeature()
         } withDependencies: {
             $0.networking = VPNNetworkingMock()
@@ -50,7 +68,7 @@ class SettingsFeatureSnapshotTests: XCTestCase {
         @Shared(.userDisplayName) var userDisplayName: String?
         $userDisplayName.withLock { $0 = "test user" }
         @Shared(.userTier) var userTier: Int?
-        $userTier.withLock { $0 = 2 }
+        $userTier.withLock { $0 = .paidTier }
 
         let appView = NavigationStack {
             AppView(store: store)
@@ -58,14 +76,14 @@ class SettingsFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
 
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "1 List " + trait.name)
+        snap(appView, caseName: "1 List", trait: trait)
         store.send(.main(.settings(.showDrillDown(.contactUs))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "2 ContactUs " + trait.name)
+        snap(appView, caseName: "2 ContactUs", trait: trait)
         store.send(.main(.settings(.showDrillDown(.supportCenter))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "3 SupportCenter " + trait.name)
+        snap(appView, caseName: "3 SupportCenter", trait: trait)
         store.send(.main(.settings(.showDrillDown(.privacyPolicy))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 PrivacyPolicy " + trait.name)
+        snap(appView, caseName: "4 PrivacyPolicy", trait: trait)
         store.send(.main(.settings(.showDrillDown(.eula))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "5 EULA " + trait.name)
+        snap(appView, caseName: "5 EULA", trait: trait)
     }
 }

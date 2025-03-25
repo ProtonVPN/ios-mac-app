@@ -64,11 +64,10 @@ public final class AnnouncementOfferAlert: SystemAlert {
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
     
-    public typealias Factory = SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
+    public typealias Factory = CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
     private let factory: Factory
 
     @Dependency(\.announcementManager) var announcementManager
-    private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()

@@ -19,9 +19,12 @@
 import Foundation
 import UIKit
 
+import Dependencies
+
 import VPNAppCore
 import LegacyCommon
 import Theme
+import Domain
 
 import Strings
 
@@ -35,8 +38,6 @@ class SubuserAlertViewController: UIViewController {
     @IBOutlet private weak var loginButton: ProtonButton!
 
     var role: UserRole = .noOrganization
-    
-    public var safariServiceFactory: SafariServiceFactory?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +83,8 @@ class SubuserAlertViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction private func assignConnectionsTapped() {
-        safariServiceFactory?.makeSafariService().open(url: CoreAppConstants.ProtonVpnLinks.assignVPNConnections)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.assignVPNConnections)
     }
     
     @IBAction private func loginTapped() {
