@@ -23,14 +23,8 @@ import Strings
 
 public struct ConnectWidget: Widget {
     static let kind: String = "ConnectWidget"
-    let enabled: Bool
 
-    public init() {
-        self.enabled = true
-    }
-    public init(enabled: Bool = true) {
-        self.enabled = enabled
-    }
+    public init() { }
 
     public var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in
@@ -39,7 +33,7 @@ public struct ConnectWidget: Widget {
         }
         .configurationDisplayName("Proton VPN")
         .description(Localizable.widgetTrayDescription)
-        .supportedFamilies(enabled ? [.systemSmall, .systemMedium, .systemLarge] : [])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
 
     }
 }
