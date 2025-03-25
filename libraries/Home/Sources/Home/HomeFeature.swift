@@ -170,8 +170,8 @@ public struct HomeFeature {
                     }
                 )
                 .cancellable(id: CancelID.connectionState)
-            case .recents(.delegate(.connect(let spec))):
-                return .send(.connect(spec, .recent))
+            case .recents(.delegate(.connect(let spec, let pinned))):
+                return .send(.connect(spec, pinned ? .pin : .recent))
             case .recents:
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):

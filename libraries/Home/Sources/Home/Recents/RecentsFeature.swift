@@ -71,7 +71,7 @@ public struct RecentsFeature {
 
         @CasePathable
         public enum Delegate: Equatable {
-            case connect(ConnectionSpec)
+            case connect(ConnectionSpec, Bool)
         }
     }
 
