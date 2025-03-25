@@ -86,7 +86,7 @@ struct Provider: TimelineProvider {
         let recents = recentConnectionList()
 
         return ConnectWidgetEntry(date: .now,
-                                   connectionSpec: vpnConnectionStatus.spec ?? connectionSpec(),
+                                   connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
                                    protectionState: vpnConnectionStatus.protectionState,
                                    recentServers: recents
         )
@@ -102,6 +102,15 @@ private extension VPNConnectionStatus {
             return .protecting
         case .connected:
             return .protected
+        }
+    }
+
+    var connectionSpec: ConnectionSpec? {
+        switch self {
+        case .resolving, .disconnected, .disconnecting:
+            return nil
+        case .connecting, .connected:
+            return self.spec
         }
     }
 }

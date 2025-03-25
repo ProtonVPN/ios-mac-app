@@ -35,6 +35,7 @@ public struct DisconnectFromVPNIntent: AppIntent {
 
 public struct ConnectToVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
+    public static var openAppWhenRun: Bool = true
 
     @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
