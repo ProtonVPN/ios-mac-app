@@ -26,6 +26,7 @@ import ComposableArchitecture
 @testable import LocalAgent
 @testable import ExtensionManager
 @testable import CoreConnection
+import ConnectionTestSupport
 import Domain
 import VPNSharedTesting
 
@@ -34,9 +35,9 @@ final class AppConnectionIntegrationTests: XCTestCase {
     @MainActor
     func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async throws {
         let clock = TestClock()
-        let mockVPNSession = VPNSessionMock(status: .connecting)
+        let mockVPNSession = VPNSessionMock(status: .connected)
         let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
-        let tunnelConnectionResponse = TunnelConnectionResponse(logicalInfo: .init(logicalServer: .mock), connectionDate: Date())
+
         let state = AppFeature.State(
             main: .init(
                 currentTab: .settings,
@@ -48,18 +49,18 @@ final class AppConnectionIntegrationTests: XCTestCase {
                     alert: SettingsFeature.signOutAlert,
                     isLoading: false
                 ),
-                connection: .initialState,
+                connection: .connected,
                 userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
             ),
             networking: .authenticated(.auth(uid: "sessionID"))
         )
 
         let store = TestStore(initialState: state) {
-            AppFeature()
+            AppFeature()._printChanges()
         } withDependencies: {
             $0.continuousClock = clock
             $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
-            $0.localAgent = LocalAgentMock(state: .disconnected)
+            $0.localAgent = LocalAgentMock(state: .connected)
             $0.networking = VPNNetworkingMock()
             $0.authKeychain = MockAuthKeychain()
             $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
@@ -78,9 +79,11 @@ final class AppConnectionIntegrationTests: XCTestCase {
         await store.send(\.main.settings.alert.presented.signOut) {
             $0.shouldSignOutAfterDisconnecting = true
         }
+
         await store.receive(\.main.connection.input.disconnect)
 
         await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
+
         await store.receive(\.main.connection.delegate.stateChanged.disconnected) {
             $0.shouldSignOutAfterDisconnecting = false
         }

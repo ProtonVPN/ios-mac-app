@@ -22,7 +22,7 @@ import Domain
 import Ergonomics
 import SwiftUI
 import ComposableArchitecture
-import XCTestDynamicOverlay
+import IssueReporting
 
 public struct LogicalsRefresher {
     public var refreshLogicals: () async throws -> Void

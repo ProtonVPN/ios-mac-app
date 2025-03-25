@@ -119,6 +119,16 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .tunnelStatusChanged(.connected):
+                if state.is(\.connected) {
+                    // When testing, we sometimes want to start off a test case with already `connected` state.
+                    // But we need to subscribe to state changes, and `startObservingStateChanges` yields an initial
+                    // value. We need to ignore it in this case. We could in the future remove this check by separating
+                    // no longer yielding an initial value when subscribing to state changes, and instead only doing so
+                    // on a separate `onLaunch` action.
+                    // But it's fine to exit early here if we are already connected either way.
+                    log.warning("Received tunnel connected status while already connected", category: .connection)
+                    return .none
+                }
                 // When we receive this event, it means the extension has called the completion handler on
                 // `PacketTunnelProvider`'s `startTunnel` method, so technically we are 'connected' at this point.
                 // But before we can actually start (re)connecting local agent, we need to know the details of the

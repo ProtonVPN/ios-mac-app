@@ -19,7 +19,7 @@
 import XCTest
 import ComposableArchitecture
 import struct Ergonomics.GenericError
-import XCTestDynamicOverlay
+import IssueReporting
 @testable import tvOS
 
 final class SignInFeatureTests: XCTestCase {
