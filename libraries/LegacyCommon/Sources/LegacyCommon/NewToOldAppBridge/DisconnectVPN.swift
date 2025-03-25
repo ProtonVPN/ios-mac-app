@@ -32,10 +32,11 @@ extension DisconnectVPNKey: DependencyKey {
         }
     }()
 
-    public static let newDisconnect: @Sendable () async throws -> Void = {
+    public static let newDisconnect: @Sendable (VPNTrigger) async throws -> Void = { trigger in
         @Dependency(\.connectionBridge) var bridge
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(trigger))
         bridge.push(intent: .disconnect)
 
         // let's wait a bit to be disconnected, but no more than 3 seconds
@@ -47,7 +48,7 @@ extension DisconnectVPNKey: DependencyKey {
     }
 
     /// Bridges new disconnection dependency with the legacy connection layer
-    public static let legacyDisconnect: @Sendable () async throws -> Void = {
+    public static let legacyDisconnect: @Sendable (VPNTrigger) async throws -> Void = { trigger in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateDisconnect()
 

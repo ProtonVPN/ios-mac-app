@@ -315,7 +315,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func connectTo(country countryCode: String, city: String) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .city)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .countriesCity)
 
         connect(with: connectionRequest)
     }
@@ -374,7 +374,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         Task {
             do {
-                try await connect(spec, request.connectionProtocol)
+                try await connect(spec, request.connectionProtocol, request.trigger)
             } catch {
                 await handleNewConnectError(error)
             }

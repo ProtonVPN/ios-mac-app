@@ -127,8 +127,9 @@ public enum AppEvent: String {
     case testEvent
     #endif
 
+    private static let notificationSuffix: String = "VPNAppNotification"
     public var name: Notification.Name {
-        .init(self.rawValue + "VPNAppNotification") // Make sure we de-unique from other common names
+        .init(self.rawValue + Self.notificationSuffix) // Make sure we de-unique from other common names
     }
 
     public var publisher: NotificationCenter.Publisher {
@@ -183,7 +184,11 @@ public enum UserInitiatedVPNChange {
 
 public extension AppEvent {
     init?(_ name: Notification.Name) {
-        guard let value = Self(rawValue: name.rawValue) else { return nil }
+        let rawValue = name.rawValue.hasSuffix(Self.notificationSuffix) ?
+            String(name.rawValue.dropLast(Self.notificationSuffix.count)) :
+            name.rawValue
+
+        guard let value = Self(rawValue: rawValue) else { return nil }
         self = value
     }
 }

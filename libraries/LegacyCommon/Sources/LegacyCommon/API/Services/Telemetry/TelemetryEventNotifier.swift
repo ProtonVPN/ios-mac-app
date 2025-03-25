@@ -21,6 +21,9 @@ import Combine
 import Reachability
 import VPNAppCore
 import Domain
+import Connection
+import ComposableArchitecture
+import ProtonCoreFeatureFlags
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
@@ -34,16 +37,27 @@ public class TelemetryEventNotifier {
     }
 
     private func startObserving() {
+
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+
         NotificationCenter.default
             .publisher(for: .reachabilityChanged)
             .sink(receiveValue: reachabilityChanged)
             .store(in: &cancellables)
 
-        AppEvent.connectionStateChanged.publisher
-            .compactMap { $0.object as? ConnectionStatus }
-            .removeDuplicates()
-            .sink(receiveValue: vpnGatewayConnectionChanged)
-            .store(in: &cancellables)
+        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+            $connectionState.publisher
+                .removeDuplicates()
+                .sink(receiveValue: connectionStateChanged)
+                .store(in: &cancellables)
+
+        } else {
+            AppEvent.connectionStateChanged.publisher
+                .compactMap { $0.object as? ConnectionStatus }
+                .removeDuplicates()
+                .sink(receiveValue: vpnGatewayConnectionChanged)
+                .store(in: &cancellables)
+        }
 
         AppEvent.userInitiatedVPNChange.publisher
             .sink(receiveValue: userInitiatedVPNChange)
@@ -105,6 +119,16 @@ public class TelemetryEventNotifier {
                 try await telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
             } catch {
                 log.debug("No telemetry event triggered for connection change: \(connectionStatus), error: \(error)", category: .telemetry)
+            }
+        }
+    }
+
+    private func connectionStateChanged(_ connectionState: ConnectionState) {
+        Task {
+            do {
+                try await telemetryService?.connectionStateChanged(connectionState)
+            } catch {
+                log.debug("No telemetry event triggered for connection change: \(connectionState), error: \(error)", category: .telemetry)
             }
         }
     }

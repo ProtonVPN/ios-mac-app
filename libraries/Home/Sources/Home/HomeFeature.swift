@@ -181,7 +181,7 @@ public struct HomeFeature {
                 return .none
             case let .connect(spec):
                 return .run { send in
-                    try await connectToVPN(spec, nil)
+                    try await connectToVPN(spec, nil, .connectionCard) // TODO: Fix correct trigger
                     await send(.recents(.connectionEstablished(spec)))
                 } catch: { error, _ in
                     log.error("Error connecting to VPN: \(error)")
@@ -202,7 +202,7 @@ public struct HomeFeature {
 
             case .disconnect:
                 return .run { _ in
-                    try await disconnectVPN()
+                    try await disconnectVPN(.connectionCard)
                 } catch: { error, _ in
                     log.error("Error disconnecting from VPN: \(error)")
                     await alertService.feed(error)

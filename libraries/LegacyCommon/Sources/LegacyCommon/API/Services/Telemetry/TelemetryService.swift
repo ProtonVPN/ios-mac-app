@@ -23,6 +23,7 @@ import Reachability
 import CommonNetworking
 import VPNAppCore
 import VPNShared
+import Connection
 
 import Ergonomics
 import Timer
@@ -47,6 +48,7 @@ public protocol TelemetryService: AnyObject {
     func startSettingsHeartbeat()
 
     func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws
+    func connectionStateChanged(_ connectionState: ConnectionState) async throws
     func userInitiatedVPNChange(_ change: UserInitiatedVPNChange)
     func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType)
 }
@@ -131,5 +133,11 @@ public class TelemetryServiceImplementation: TelemetryService {
 
     public func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws {
         try await telemetryConnectionStatusReporter.vpnGatewayConnectionChanged(connectionStatus)
+    }
+
+    public func connectionStateChanged(_ connectionState: Connection.ConnectionState) async throws {
+        try await
+            telemetryConnectionStatusReporter
+            .connectionStateChanged(connectionState)
     }
 }
