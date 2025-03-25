@@ -130,7 +130,7 @@ struct WidgetAdoptionView: View {
         }
         .padding(.top, .themeSpacing8)
         .padding(.bottom, .themeSpacing16)
-        .background(backgroundColor)
+        .background(Color(.background, .weak))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .transition(.opacity)
     }
@@ -160,10 +160,6 @@ struct WidgetAdoptionView: View {
             .buttonStyle(PrimaryButtonStyle())
         }
         .padding(.horizontal, .themeSpacing16)
-    }
-
-    private var backgroundColor: Color {
-        Color(red: 41/255, green: 39/255, blue: 51/255)
     }
 }
 
