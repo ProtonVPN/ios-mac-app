@@ -21,15 +21,21 @@ import ProtonCoreUIFoundations
 import ComposableArchitecture
 import Home
 import Strings
+import Ergonomics
 
 struct ChangeServerButtonLabel: View {
     let sendAction: HomeConnectionCardFeature.ActionSender
     let changeServerAllowedDate: Date
 
+    var updateSchedule: DateSequence {
+        // add 2 to end date to allow UI to render once at 0:00, and once afterwards
+        DateSequence(end: changeServerAllowedDate.addingTimeInterval(2), step: 1)
+    }
+
     @Dependency(\.date) var date
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { timeline in
+        TimelineView(.explicit(updateSchedule)) { timeline in
             Button {
                 sendAction(.delegate(.changeServerButtonTapped))
             } label: {
