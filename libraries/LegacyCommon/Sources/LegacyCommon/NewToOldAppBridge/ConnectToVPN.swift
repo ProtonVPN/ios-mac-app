@@ -52,7 +52,7 @@ extension ConnectToVPNKey: DependencyKey {
     static let newConnect: @Sendable (
         ConnectionSpec,
         ConnectionProtocol?,
-        VPNTrigger?
+        UserInitiatedVPNChange.VPNTrigger?
     ) async throws -> Void = {
         spec,
         specifiedProtocol,
