@@ -42,49 +42,66 @@ public class TelemetryEventNotifier {
 
         NotificationCenter.default
             .publisher(for: .reachabilityChanged)
-            .sink(receiveValue: reachabilityChanged)
+            .sink { [weak self] notification in
+                self?.reachabilityChanged(notification)
+            }
             .store(in: &cancellables)
 
         if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
             $connectionState.publisher
                 .removeDuplicates()
-                .sink(receiveValue: connectionStateChanged)
+                .sink { [weak self] state in
+                    self?.connectionStateChanged(state)
+                }
                 .store(in: &cancellables)
-
         } else {
             AppEvent.connectionStateChanged.publisher
                 .compactMap { $0.object as? ConnectionStatus }
                 .removeDuplicates()
-                .sink(receiveValue: vpnGatewayConnectionChanged)
+                .sink { [weak self] status in
+                    self?.vpnGatewayConnectionChanged(status)
+                }
                 .store(in: &cancellables)
         }
 
         AppEvent.userInitiatedVPNChange.publisher
-            .sink(receiveValue: userInitiatedVPNChange)
+            .sink { [weak self] value in
+                self?.userInitiatedVPNChange(value)
+            }
             .store(in: &cancellables)
 
         AppEvent.upsellAlertWasDisplayed.publisher
             .compactMap { $0.object as? UpsellModalSource }
-            .sink(receiveValue: upsellDisplayed)
+            .sink { [weak self] source in
+                self?.upsellDisplayed(source)
+            }
             .store(in: &cancellables)
 
         AppEvent.userEngagedWithUpsellAlert.publisher
             .compactMap { $0.object as? UpsellModalSource }
-            .sink(receiveValue: upsellEngaged)
+            .sink { [weak self] source in
+                self?.upsellEngaged(source)
+            }
             .store(in: &cancellables)
 
         AppEvent.userCompletedUpsellAlertJourney.publisher
-            .sink(receiveValue: upsellCompleted)
+            .sink { [weak self] value in
+                self?.upsellCompleted(value)
+            }
             .store(in: &cancellables)
 
         AppEvent.userEngagedWithAnnouncement.publisher
             .map { $0.object as? String }
-            .sink(receiveValue: announcementEngaged)
+            .sink { [weak self] value in
+                self?.announcementEngaged(value)
+            }
             .store(in: &cancellables)
 
         AppEvent.userWasDisplayedAnnouncement.publisher
             .map { $0.object as? String }
-            .sink(receiveValue: announcementDisplayed)
+            .sink { [weak self] value in
+                self?.announcementDisplayed(value)
+            }
             .store(in: &cancellables)
     }
 

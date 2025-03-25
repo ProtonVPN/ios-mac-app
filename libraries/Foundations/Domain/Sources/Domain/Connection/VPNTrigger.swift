@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+/// This enum primarily belongs to the Telemetry domain. However, the connectToVPN and disconnectVPN dependencies utilize this enum to transmit the appropriate trigger to telemetry. Therefore, we will maintain this enum in Domain.
 public enum VPNTrigger: String, Codable, Sendable {
     case quick
     case connectionCard = "connection_card"
