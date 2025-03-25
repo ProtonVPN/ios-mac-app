@@ -192,7 +192,7 @@ public struct HomeView: View {
                 store.send(.connectionStatus(.stickToTop(scrollOffset < protectionStatusStickToTopThreshold)))
             }
             lastScrollOffset = scrollOffset
-            
+
             updateConnectionStatusZIndex(scrollOffset)
         }
     }

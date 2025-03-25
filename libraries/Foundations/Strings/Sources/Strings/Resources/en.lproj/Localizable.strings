@@ -2661,3 +2661,9 @@
 
 /* Recents section description */
 "widget_recents_description" = "View your connection history here.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Widgets are back";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
