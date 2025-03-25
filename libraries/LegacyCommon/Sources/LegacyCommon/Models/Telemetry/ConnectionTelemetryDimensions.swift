@@ -25,7 +25,6 @@ import Domain
 
 public struct ConnectionDimensions: Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
-    public typealias VPNTrigger = Domain.VPNTrigger
 
     let outcome: Outcome
     let userTier: UserTier

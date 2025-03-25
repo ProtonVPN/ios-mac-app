@@ -163,20 +163,9 @@ public enum AppEvent: String {
 
 /// Posted as a subcase of the `userInitiatedVPNChange` case in `AppEvent`. Used for telemetry.
 public enum UserInitiatedVPNChange {
-    public enum VPNTrigger: String, Codable {
-        case quick
-        case country
-        case city
-        case server
-        case profile
-        case map
-        case tray
-        case widget
-        case auto
-        case newConnection = "new_connection"
-    }
+    public typealias VPNTrigger = Domain.VPNTrigger
 
-    case connect
+    case connect(VPNTrigger?)
     case disconnect(VPNTrigger)
     case abort
     case settingsChange
