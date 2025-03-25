@@ -28,7 +28,7 @@ extension UIUserInterfaceStyle {
         case .unspecified:
             return "unspecified"
         @unknown default:
-            return "unknown"
+            return "unknown \(self)"
         }
     }
 

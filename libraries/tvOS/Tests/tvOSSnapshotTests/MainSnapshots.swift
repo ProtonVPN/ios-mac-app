@@ -30,6 +30,20 @@ import PersistenceTestSupport
 import DomainTestSupport
 
 final class MainFeatureSnapshotTests: XCTestCase {
+    static let precision: Float = 0.999
+    static let perceptualPrecision: Float = 0.999
+
+    func snap<T: View>(_ view: T, caseName: String, trait: UIUserInterfaceStyle) {
+        assertSnapshot(
+            of: view,
+            as: .image(
+                precision: Self.precision,
+                perceptualPrecision: Self.perceptualPrecision,
+                traits: trait.collection
+            ),
+            testName: "\(caseName) \(trait.name)"
+        )
+    }
 
     func testLightMainLoading() {
         mainLoading(trait: .light)
@@ -64,7 +78,7 @@ final class MainFeatureSnapshotTests: XCTestCase {
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
 
-        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Loading " + trait.name)
+        snap(mainView, caseName: "1 Loading", trait: trait)
     }
 
     func mainLoaded(trait: UIUserInterfaceStyle) {
@@ -90,14 +104,14 @@ final class MainFeatureSnapshotTests: XCTestCase {
         @Shared(.connectionState) var connectionState: ConnectionState
         
         $connectionState.withLock { $0 = .disconnected }
-        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "1 Disconnected " + trait.name)
+        snap(mainView, caseName: "1 Disconnected", trait: trait)
 
         let connectionPreparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .ca)
         $connectionState.withLock { $0 = .connecting(.unresolved(connectionPreparationIntent)) }
-        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "2 Connecting " + trait.name)
+        snap(mainView, caseName: "2 Connecting", trait: trait)
 
         let connectionIntent = ServerConnectionIntent(spec: .defaultFastest, server: .ca, tunnelSettings: .mock, features: .defaultFeatures)
         $connectionState.withLock { $0 = .connected(connectionIntent, .ca, .now, nil) }
-        assertSnapshot(of: mainView, as: .image(traits: trait.collection), testName: "3 Connected " + trait.name)
+        snap(mainView, caseName: "3 Connected", trait: trait)
     }
 }

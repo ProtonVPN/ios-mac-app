@@ -23,7 +23,21 @@ import ComposableArchitecture
 import SwiftUI
 @testable import CommonNetworking
 
-class AppFeatureSnapshotTests: XCTestCase {
+final class AppFeatureSnapshotTests: XCTestCase {
+    static let precision: Float = 0.999
+    static let perceptualPrecision: Float = 0.999
+
+    func snap<T: View>(_ view: T, caseName: String, trait: UIUserInterfaceStyle) {
+        assertSnapshot(
+            of: view,
+            as: .image(
+                precision: Self.precision,
+                perceptualPrecision: Self.perceptualPrecision,
+                traits: trait.collection
+            ),
+            testName: "\(caseName) \(trait.name)"
+        )
+    }
 
     func testLightApp() {
         app(trait: .light)
@@ -50,7 +64,6 @@ class AppFeatureSnapshotTests: XCTestCase {
                 attemptPurchase: { _ in .purchaseCancelled }
             )
 
-            $0.defaultAppStorage = .testValue()
             @Shared(.userTier) var userTier: Int?
             $userTier.withLock { $0 = .freeTier }
         }
@@ -58,15 +71,23 @@ class AppFeatureSnapshotTests: XCTestCase {
         let appView = AppView(store: store)
             .frame(.rect(width: 1920, height: 1080))
 
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "7 Upsell Loading " + trait.name)
+        snap(appView, caseName: "7 Upsell Loading", trait: trait)
 
-        store.send(.upsell(.finishedLoadingProducts(.success(
-            [
-                PlanIAPTuple(planOption: .init(duration: .oneMonth, price: .init(amount: 2, currency: "USD",locale: .init(identifier: "en_US"))), iap: .freePlan),
-                PlanIAPTuple(planOption: .init(duration: .oneYear, price: .init(amount: 12, currency: "USD",locale: .init(identifier: "en_US"))), iap: .freePlan)
-            ]
-        ))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "8 Upsell Loaded " + trait.name)
+        store.send(.upsell(.finishedLoadingProducts(.success([
+            PlanIAPTuple(
+                planOption: .init(
+                    duration: .oneMonth, price: .init(amount: 2, currency: "USD", locale: .en_US)
+                ),
+                iap: .freePlan
+            ),
+            PlanIAPTuple(
+                planOption: .init(
+                    duration: .oneYear, price: .init(amount: 12, currency: "USD", locale: .en_US)
+                ),
+                iap: .freePlan
+            )
+        ]))))
+        snap(appView, caseName: "8 Upsell Loaded", trait: trait)
     }
 
     func app(trait: UIUserInterfaceStyle) {
@@ -82,25 +103,26 @@ class AppFeatureSnapshotTests: XCTestCase {
                 getOptions: { [ ] },
                 attemptPurchase: { _ in .purchaseCancelled }
             )
-
-            $0.defaultAppStorage = .testValue()
         }
 
         let appView = AppView(store: store)
             .frame(.rect(width: 1920, height: 1080))
 
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "1 Welcome " + trait.name)
+        snap(appView, caseName: "1 Welcome", trait: trait)
         store.send(.welcome(.showCreateAccount))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "2 CreateAccount " + trait.name)
+        snap(appView, caseName: "2 CreateAccount", trait: trait)
         store.send(.welcome(.showSignIn))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "3 SignInRetrievingCode " + trait.name)
+        snap(appView, caseName: "3 SignInRetrievingCode", trait: trait)
         store.send(.welcome(.destination(.presented(.signIn(.codeFetchingFinished(.success(SignInCode(selector: "", userCode: "1234ABCD"))))))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "4 SignInWithCode " + trait.name)
+        snap(appView, caseName: "4 SignInWithCode", trait: trait)
         store.send(.welcome(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "5 CodeExpired " + trait.name)
+        snap(appView, caseName: "5 CodeExpired", trait: trait)
 
         store.send(.networking(.startAcquiringSession))
-        assertSnapshot(of: appView, as: .image(traits: trait.collection), testName: "6 AcquiringSession " + trait.name)
+        snap(appView, caseName: "6 AcquiringSession", trait: trait)
     }
 }
 
+fileprivate extension Locale {
+    static let en_US: Self = .init(identifier: "en_US")
+}
