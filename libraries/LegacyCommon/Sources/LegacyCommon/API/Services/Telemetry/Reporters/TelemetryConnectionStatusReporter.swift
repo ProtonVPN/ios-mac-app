@@ -421,10 +421,15 @@ class TelemetryConnectionStatusReporter {
     }
 
     private func shouldResetUserInitiatedVPNChange(for event: ConnectionEvent.Event?) -> Bool {
+        // We need to keep the trigger for connected when the state is connecting.
+        if previousConnectionState.is(\.connecting) {
+            return false
+        }
+        // When userInitiatedVPNChange is .settingsChange and the event is .vpnDisconnection,
+        // we want to keep the existing value.
         if case .settingsChange = userInitiatedVPNChange,
            case .vpnDisconnection = event {
-            // When userInitiatedVPNChange is .settingsChange and the event is .vpnDisconnection,
-            // we want to keep the existing value.
+
             return false
         }
         // In all other cases, the userInitiatedVPNChange should be reset.

@@ -79,9 +79,9 @@ extension ConnectToVPNKey: DependencyKey {
 
         if Task.isCancelled { throw ConnectionError.cancelled }
 
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
+
         @Dependency(\.connectionBridge) var bridge
         bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server, connectionProtocol: specifiedProtocol)))
-
-        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
     }
 }
