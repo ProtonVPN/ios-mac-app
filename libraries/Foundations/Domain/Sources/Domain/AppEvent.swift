@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import IssueReporting
 
 /// A set of in-app events that can happen asynchronously, posted and subscribed by many different components.
 ///
@@ -188,7 +189,10 @@ public extension AppEvent {
             String(name.rawValue.dropLast(Self.notificationSuffix.count)) :
             name.rawValue
 
-        guard let value = Self(rawValue: rawValue) else { return nil }
+        guard let value = Self(rawValue: rawValue) else {
+            reportIssue("Expected AppEvent object with rawValue: \(rawValue), got nil")
+            return nil
+        }
         self = value
     }
 }
