@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "接続プロバイダにエラーが発生しました: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "VPNに接続しているかどうかを確認し、お気に入りの接続にすばやくアクセスできます。";
+
+/* Recents section title */
+"widget_recents_title" = "最近";
+
+/* Recents section description */
+"widget_recents_description" = "ここに接続履歴を表示します。";

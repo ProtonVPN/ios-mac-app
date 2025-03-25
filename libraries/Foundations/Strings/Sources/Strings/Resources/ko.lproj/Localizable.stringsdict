@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d개 기기</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -116,7 +116,7 @@
     <key>subscription_upgrade_option2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect up to %#@num_devices@ at the same time</string>
+      <string>동시에 최대 %#@num_devices@ 개까지 연결하세요</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -418,7 +418,7 @@
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>%#@num_countries@ 에 연결</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -426,7 +426,7 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d개 국가</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

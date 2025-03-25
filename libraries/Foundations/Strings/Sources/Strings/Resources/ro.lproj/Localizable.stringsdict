@@ -58,15 +58,15 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Protejați maxim %d dispozitiv</string>
+        <string>Protejați până la %d dispozitiv</string>
         <key>few</key>
-        <string>Protejați maxim %d dispozitive</string>
+        <string>Protejați până la %d dispozitive</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Protejați maxim %d de dispozitive</string>
+        <string>Protejați până la %d de dispozitive</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -107,7 +107,7 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d țară</string>
+        <string>%d de țări</string>
         <key>few</key>
         <string>%d țări</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -120,7 +120,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>Peste %d server securizat</string>
+        <string>Peste %d de servere securizate</string>
         <key>few</key>
         <string>Peste %d servere securizate</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -286,8 +286,8 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Reclame
-blocate</string>
+        <string>Reclamă
+blocată</string>
         <key>few</key>
         <string>Reclame
 blocate</string>
@@ -307,8 +307,8 @@ blocate</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Urmăritori
-blocați</string>
+        <string>Urmăritor
+blocat</string>
         <key>few</key>
         <string>Urmăritori
 blocați</string>

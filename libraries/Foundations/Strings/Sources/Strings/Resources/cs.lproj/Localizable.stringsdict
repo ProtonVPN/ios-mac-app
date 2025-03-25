@@ -582,17 +582,17 @@ zastaveny</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Umístění Free serverů (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
         <key>few</key>
-        <string>Umístění Free serverů (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
         <key>many</key>
-        <string>Umístění Free serverů (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Umístění Free serverů (%d)</string>
+        <string>Umístění serverů Free (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>
@@ -626,13 +626,13 @@ zastaveny</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d zemím</string>
+        <string>%d zemí</string>
         <key>one</key>
-        <string>%d zemi</string>
+        <string>%d země</string>
         <key>few</key>
-        <string>%d zemím</string>
+        <string>%d země</string>
         <key>many</key>
-        <string>%d zemím</string>
+        <string>%d zemí</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

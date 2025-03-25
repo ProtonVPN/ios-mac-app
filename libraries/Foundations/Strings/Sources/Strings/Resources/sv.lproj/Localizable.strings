@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Anslutningsleverantören stötte på ett fel: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Kontrollera om du är ansluten till VPN och få snabb åtkomst till dina favoritanslutningar.";
+
+/* Recents section title */
+"widget_recents_title" = "Senaste";
+
+/* Recents section description */
+"widget_recents_description" = "Visa din anslutningshistorik här.";

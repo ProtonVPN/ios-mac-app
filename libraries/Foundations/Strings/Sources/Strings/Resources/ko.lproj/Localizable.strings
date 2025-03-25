@@ -1716,13 +1716,13 @@
 "_connection_card_accessibility_fastest_sc" = "빠른 속도의 Secure Core 국가 사용 가능";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "IP 주소를 보려면 더블 탭하기";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
+"_connection_details_accessibility_ipView_hideAddress" = "IP 주소를 숨기려면 더블 탭하기";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
-"_connection_details_accessibility_close" = "Close connection details screen";
+"_connection_details_accessibility_close" = "연결 상세 정보 화면 닫기";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "기본 연결";
@@ -1749,7 +1749,7 @@
 "_connection_card_accessibility_browsing_from" = "%@(에)서 안전 안전하게 브라우징 중입니다.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+"_connection_card_accessibility_browsing_from_fullDetails" = "%3$@을(를) 사용하여 %1$@ 서버 %2$@(에)서 안전하게 탐색하고 있습니다.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "로딩 중";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "연결 제공자로부터 오류가 발생했습니다: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "VPN에 연결되어 있는지 확인하고 좋아하는 연결에 빠르게 접근하세요.";
+
+/* Recents section title */
+"widget_recents_title" = "최근";
+
+/* Recents section description */
+"widget_recents_description" = "여기서 연결 기록을 확인하세요.";

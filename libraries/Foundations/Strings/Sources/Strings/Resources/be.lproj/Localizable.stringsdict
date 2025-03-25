@@ -88,13 +88,13 @@
         <key>few</key>
         <string>%d краінах</string>
         <key>many</key>
-        <string>%d краіны</string>
+        <string>%d краінах</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d краіны</string>
+        <string>%d краінах</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -162,9 +162,9 @@
         <key>few</key>
         <string>%d краінах</string>
         <key>many</key>
-        <string>%d краін</string>
+        <string>%d краінах</string>
         <key>other</key>
-        <string>%d краін</string>
+        <string>%d краінах</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
@@ -178,13 +178,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d прылады</string>
+        <string>%d прыладу</string>
         <key>few</key>
-        <string>%d прылад</string>
+        <string>%d прыладах</string>
         <key>many</key>
-        <string>%d прылады</string>
+        <string>%d прыладах</string>
         <key>other</key>
-        <string>%d прылады</string>
+        <string>%d прыладах</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
@@ -198,13 +198,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d прылады</string>
+        <string>%d прыладу</string>
         <key>few</key>
-        <string>%d прылады</string>
+        <string>%d прыладах</string>
         <key>many</key>
-        <string>%d прылад</string>
+        <string>%d прыладах</string>
         <key>other</key>
-        <string>%d прылады</string>
+        <string>%d прыладах</string>
       </dict>
     </dict>
     <key>search_upsell_title</key>
@@ -222,7 +222,7 @@
         <key>few</key>
         <string>%d краінах</string>
         <key>many</key>
-        <string>%d краіны</string>
+        <string>%d краінах</string>
         <key>other</key>
         <string>%d краінах</string>
       </dict>
@@ -354,7 +354,7 @@
 сачэння
 спынены</string>
         <key>other</key>
-        <string>праграмы
+        <string>праграм
 сачэння
 спынены</string>
       </dict>
@@ -401,17 +401,17 @@
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d гадз</string>
+        <string>%d гадзіна</string>
         <key>few</key>
-        <string>%d гадз</string>
+        <string>%d гадзіны</string>
         <key>many</key>
-        <string>%d гадз</string>
+        <string>%d гадзін</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d гадз</string>
+        <string>%d гадзін</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -421,32 +421,32 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d хв</string>
+        <string>%d хвіліна</string>
         <key>few</key>
-        <string>%d хв</string>
+        <string>%d хвіліны</string>
         <key>many</key>
-        <string>%d хв</string>
+        <string>%d хвілін</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d хв</string>
+        <string>%d хвілін</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d гадз</string>
+        <string>%d гадзіна</string>
         <key>few</key>
-        <string>%d гадз</string>
+        <string>%d гадзіны</string>
         <key>many</key>
-        <string>%d гадз</string>
+        <string>%d гадзін</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d гадз</string>
+        <string>%d гадзін</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -456,17 +456,17 @@
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d гадз</string>
+        <string>%d гадзіна</string>
         <key>few</key>
-        <string>%d гадз</string>
+        <string>%d гадзіны</string>
         <key>many</key>
-        <string>%d гадз</string>
+        <string>%d гадзін</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d гадз</string>
+        <string>%d гадзін</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -476,32 +476,32 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d хв</string>
+        <string>%d хвіліна</string>
         <key>few</key>
-        <string>%d хв</string>
+        <string>%d хвіліны</string>
         <key>many</key>
-        <string>%d хв</string>
+        <string>%d хвілін</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d хв</string>
+        <string>%d хвілін</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d сек</string>
+        <string>%d секунда</string>
         <key>few</key>
-        <string>%d сек</string>
+        <string>%d секунды</string>
         <key>many</key>
-        <string>%d сек</string>
+        <string>%d секунд</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d сек</string>
+        <string>%d секунд</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -511,17 +511,17 @@
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d хв</string>
+        <string>%d хвіліна</string>
         <key>few</key>
-        <string>%d хв</string>
+        <string>%d хвіліны</string>
         <key>many</key>
-        <string>%d хв</string>
+        <string>%d хвілін</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d хв</string>
+        <string>%d хвілін</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -531,17 +531,17 @@
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d сек</string>
+        <string>%d секунда</string>
         <key>few</key>
-        <string>%d сек</string>
+        <string>%d секунды</string>
         <key>many</key>
-        <string>%d сек</string>
+        <string>%d секунд</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d сек</string>
+        <string>%d секунд</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -586,17 +586,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Размяшчэнні сервераў Free (%d)</string>
+        <string>Размяшчэнні бясплатных сервераў (%d)</string>
         <key>few</key>
-        <string>Размяшчэнні сервераў Free (%d)</string>
+        <string>Размяшчэнні бясплатных сервераў (%d)</string>
         <key>many</key>
-        <string>Размяшчэнні сервераў Free (%d)</string>
+        <string>Размяшчэнні бясплатных сервераў (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Размяшчэнні сервераў Free (%d)</string>
+        <string>Размяшчэнні бясплатных сервераў (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>

@@ -1898,31 +1898,31 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "You can connect to .onion sites with your regular browser.";
+"_connection_details_feature_description_tor" = "شما می‌توانید به سایت‌های onion با مرورگر معمولیتون وصل بشید.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
 
 /* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_p2p" = "Peer-to-peer file sharing is enabled on this server.";
+"_connection_details_feature_description_p2p" = "روی این سرور، اشتراک‌گذاری فایل از نوع Peer-to-peer فعال است.";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
 /* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
-"_connection_details_feature_description_smart_routing" = "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.";
+"_connection_details_feature_description_smart_routing" = "سرورهای فیزیکی در %1$@ قرار دارند ولی شما با %2$@ در حال مرور اینترنت هستید.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Your activity is encrypted behind 2 high-security VPN servers.";
+"_connection_details_feature_description_secure_core" = "فعالیت‌های شما توسط ۲ سرور فوق امن VPN رمزنگاری شده است.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "پخش آنلاین";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "This server is optimized for TV and movie playback.";
+"_connection_details_feature_description_streaming" = "این سرور برای تلویزیون و پخش فیلم بهینه‌سازی شده است.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "امکانات";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "The connection provider encountered an error: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+
+/* Recents section title */
+"widget_recents_title" = "Recents";
+
+/* Recents section description */
+"widget_recents_description" = "View your connection history here.";
