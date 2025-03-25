@@ -35,9 +35,13 @@ final class VPNSessionMock: VPNSession {
         }
     }
 
-    var startupDuration: Duration = .seconds(0) // Time taken to enter the `.connecting` state
-    var connectionDuration: Duration = .seconds(1)
+    /// Time taken to enter the `.connecting` state. If `nil`, the transition should be performed manually
+    var startupDuration: Duration? = .seconds(0)
+    /// Time taken to enter the `.connected` state. If `nil`, the transition needs to be performed manually
+    var connectionDuration: Duration? = .seconds(1)
     var connectionTask: Task<Void, Error>?
+    /// Time taken to enter the `.disconnected` state. If `nil`, the transition needs to be performed manually
+    var disconnectionDuration: Duration? = .seconds(1)
     var disconnectionTask: Task<Void, Error>?
     var lastDisconnectError: Error?
     var messageHandler: ((VPNSessionMock, WireguardProviderRequest) -> WireguardProviderRequest.Response)?
@@ -56,11 +60,13 @@ final class VPNSessionMock: VPNSession {
     func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
 
     func startTunnel() throws {
+        guard let startupDuration else { return }
         let shouldTransitionToConnectingImmediately = startupDuration == .zero
         if shouldTransitionToConnectingImmediately {
             self.status = .connecting
         }
 
+        guard let connectionDuration else { return }
         connectionTask = Task {
             @Dependency(\.continuousClock) var clock
             if !shouldTransitionToConnectingImmediately {
@@ -79,9 +85,14 @@ final class VPNSessionMock: VPNSession {
     }
 
     func stopTunnel() {
+        guard let disconnectionDuration else { return }
+        connectionTask?.cancel()
+        if status == .disconnected {
+            return
+        }
         disconnectionTask = Task {
             @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: .seconds(1))
+            try await clock.sleep(for: disconnectionDuration)
             status = .disconnected
         }
     }

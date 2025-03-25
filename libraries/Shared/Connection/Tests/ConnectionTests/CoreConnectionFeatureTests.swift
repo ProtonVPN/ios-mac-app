@@ -23,6 +23,7 @@ import ComposableArchitecture
 
 import Domain
 import DomainTestSupport
+import Ergonomics
 import VPNShared
 import VPNSharedTesting
 

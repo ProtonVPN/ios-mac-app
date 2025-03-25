@@ -32,6 +32,7 @@ final class MockTunnelManager: TunnelManager {
     var tunnelStartErrorToThrow: Error?
     var tunnelStartDuration: Duration = .seconds(0)
     var session: VPNSession { connection }
+    var didStopTunnelCallback: (() -> Void)?
 
     var connection: VPNSessionMock
 
@@ -51,6 +52,7 @@ final class MockTunnelManager: TunnelManager {
     }
 
     func stopTunnel() async throws {
+        didStopTunnelCallback?()
         connection.stopTunnel()
     }
 

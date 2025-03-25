@@ -106,7 +106,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection feature is in the 'disconnecting' state, now let's send a connection request
         await store.send(.input(.connect(reconnectionPreparationIntent))) {
-            $0.queuedIntent = reconnectionPreparationIntent
+            $0.reconnectionIntent = reconnectionPreparationIntent
             $0.connectionState = .connecting(.unresolved(reconnectionPreparationIntent))
         }
         await store.receive(stateChange(to: \.connecting.unresolved))
@@ -116,7 +116,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.core.tunnel = .disconnected(nil)
         }
         await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected)) {
-            $0.queuedIntent = nil
+            $0.reconnectionIntent = nil
         }
 
         // Now that we are fully disconnected, the queued connection attempts should immediately start
@@ -243,7 +243,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Connection feature is in the 'connected' state, now let's send a connection request
         await store.send(.input(.connect(reconnectionPreparationIntent))) {
-            $0.queuedIntent = reconnectionPreparationIntent
+            $0.reconnectionIntent = reconnectionPreparationIntent
         }
         await store.receive(\.core.disconnect)
         await mockClock.advance(by: .seconds(1))
@@ -266,6 +266,108 @@ final class ConnectionFeatureTests: XCTestCase {
         await mockClock.advance(by: .seconds(1)) // Give LocalAgent time to connect
         await store.receive(coreStateChange(from: \.connecting, to: \.connected))
         await store.receive(stateChange(to: \.connected))
+    }
+
+    @MainActor func testDisconnectDuringPreparationCancelsConnection() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+
+        store.dependencies.connectionIntentResolver = .init(resolve: { intent in
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: .seconds(2))
+            try Task.checkCancellation()
+            XCTFail("Preparation should have been cancelled")
+            return .mock()
+        })
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(preparationIntent)))
+        await store.receive(\.prepare)
+        await store.receive(stateChange(to: \.connecting.unresolved)) {
+            $0.connectionState = .connecting(.unresolved(preparationIntent))
+        }
+
+        await environment.clock.advance(by: .seconds(1))
+
+        await store.send(.input(.disconnect))
+
+        await environment.clock.advance(by: .seconds(1))
+
+        await store.receive(stateChange(to: \.disconnected)) {
+            $0.connectionState = .disconnected
+        }
+    }
+
+    @MainActor func testFeatureDelaysInternalDisconnectWhenStartingTunnelUntilTunnelStartSucceeds() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+        store.exhaustivity = .off
+
+        // Let's manually model what tunnel state transitions.
+        environment.vpnSession.startupDuration = nil
+        environment.vpnSession.connectionDuration = nil
+        environment.vpnSession.disconnectionDuration = nil
+
+        // Let's make sure tunnel stop is not called too early
+        environment.tunnelManager.didStopTunnelCallback = { XCTFail("Tunnel was stopped too early") }
+
+        let server = Server.mock
+        let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+        let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        // Connection
+        await store.send(.input(.connect(preparationIntent)))
+
+        await store.receive(\.core.tunnel.connect) {
+            $0.core.tunnel = .preparingConnection(connectedLogicalServer)
+        }
+
+        await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
+        await store.receive(\.core.tunnel.tunnelStartRequestFinished.success)
+
+        environment.vpnSession.status = .connecting // Sends a `NEVPNStatusDidChange` notification
+        await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
+            $0.core.tunnel = .connecting(connectedLogicalServer)
+        }
+
+        // The extension has started, but must not be interrupted until it is connected.
+        // If the user cancels the connection, we *must not* send a `tunnel.disconnect` action until the tunnel is
+        // either in the `connected` or `disconnected` state
+
+        await store.send(.input(.disconnect))
+        await store.receive(stateChange(to: \.disconnecting))
+
+        let tunnelStopInvoked = XCTestExpectation(description: "Tunnel stop should have been requested")
+        environment.tunnelManager.didStopTunnelCallback = { tunnelStopInvoked.fulfill() }
+        environment.vpnSession.status = .connected // Sends a `NEVPNStatusDidChange` notification
+
+        await store.receive(\.core.tunnel.tunnelStatusChanged.connected)
+        await store.receive(\.core.tunnel.connectionFinished.success)
+        await store.receive(coreStateChange(from: \.starting, to: \.connecting))
+
+        // Finally, the tunnel is ready to be stopped, and we should proceed with the disconnection
+        await store.receive(\.core.disconnect)
+        await store.receive(\.core.localAgent.disconnect)
+        await store.receive(\.core.tunnel.disconnect)
+        await store.receive(coreStateChange(from: \.connecting, to: \.disconnecting))
+
+        await fulfillment(of: [tunnelStopInvoked], timeout: 0)
+        environment.vpnSession.status = .disconnected
+        await store.receive(\.core.tunnel.tunnelStatusChanged.disconnected)
+        await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected))
+        await store.receive(stateChange(to: \.disconnected))
+        await store.send(.stopObserving)
     }
 
     @MainActor func testConnectionStateResolvesToDisconnected() async {

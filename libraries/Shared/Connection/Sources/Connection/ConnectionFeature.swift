@@ -37,7 +37,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
     public struct State: Equatable, Sendable {
         public internal(set) var currentIntent: ServerConnectionIntent?
-        public internal(set) var queuedIntent: ConnectionPreparationIntent?
+        public internal(set) var reconnectionIntent: ConnectionPreparationIntent?
         var connectionState: ConnectionState
         var shouldRegisterServerChangeOnConnection: Bool
         var core: CoreConnectionFeature.State
@@ -50,7 +50,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             core: CoreConnectionFeature.State
         ) {
             self.currentIntent = currentIntent
-            self.queuedIntent = queuedIntent
+            self.reconnectionIntent = queuedIntent
             self.connectionState = connectionState
             self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
             self.core = core
@@ -114,14 +114,14 @@ public struct ConnectionFeature: Reducer, Sendable {
 
                 case .disconnecting:
                     // Save the reconnection intent for once the disconnection process is finished
-                    state.queuedIntent = intent
+                    state.reconnectionIntent = intent
                     // Disconnection could take some time (updating tunnel managers)
                     // Let's override user-facing state from disconnecting straight to connecting instead of waiting
                     let maskedConnectionState = ConnectionState.connecting(.unresolved(intent))
                     return updateStateSendingEffectIfNecessary(&state, to: maskedConnectionState)
 
                 case .starting, .connecting, .connected:
-                    state.queuedIntent = intent
+                    state.reconnectionIntent = intent
                     return .send(.core(.disconnect(.userIntent)))
 
                 case .disconnected:
@@ -135,14 +135,14 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .send(.core(.localAgent(.setFeatures(agentFeatures))))
 
             case .input(.disconnect):
-                return .send(.core(.disconnect(.userIntent)))
+                return handleUserDisconnectionRequest(&state)
 
             case .input(.onLogout):
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
             case .prepare(let intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
-                assert(state.coreConnectionState.is(\.disconnected))
+                assert(state.coreConnectionState, is: \.disconnected)
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(intent))),
@@ -153,7 +153,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
 
             case .finishedPreparing(.success(let resolvedIntent)):
-                assert(state.coreConnectionState.is(\.disconnected))
+                assert(state.coreConnectionState, is: \.disconnected)
                 state.currentIntent = resolvedIntent
                 do {
                     try intentStorage.set(resolvedIntent)
@@ -183,10 +183,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
 
             case .core(.delegate(.stateChanged(_, .disconnected(nil)))):
-                if let reconnectionIntent = state.queuedIntent {
-                    assert(state.connectionState.is(\.connecting))
+                if let reconnectionIntent = state.reconnectionIntent {
+                    assert(state.connectionState, is: \.connecting)
                     log.info("Disconnected, proceeding with reconnection to \(reconnectionIntent.server)")
-                    state.queuedIntent = nil
+                    state.reconnectionIntent = nil
                     return .send(.prepare(reconnectionIntent))
                 } else {
                     return .send(.delegate(.stateChanged(.disconnected)))
@@ -203,7 +203,19 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .core(.delegate(.stateChanged(let oldState, .starting))):
                 if oldState.is(\.unknown) {
-                    log.debug("Ignoring state transition to connecting since we are resolving from unknown")
+                    // Since the previous state is unknown, we're figuring out the actual connection state at app startup.
+                    // Let's skip the `connecting` while we continue to determine whether we're connected
+                    log.debug("Ignoring state transition to starting since we are resolving from unknown", category: .connection)
+                    return .none
+                }
+                return updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                    return .connecting(.resolved(intent, intent.server))
+                }
+
+            case .core(.delegate(.stateChanged(_, .connecting))):
+                if state.connectionState.is(\.resolving) {
+                    // Since the user facing state has not yet been resolved, let's skip the `connecting` state
+                    log.debug("Ignoring state transition to connecting since we are resolving from unknown", category: .connection)
                     return .none
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
@@ -211,12 +223,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 }
 
             case .core(.delegate(.stateChanged(let oldState, .disconnecting))):
-                let queuedIntent = state.queuedIntent
+                let queuedIntent = state.reconnectionIntent
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
                     if let reconnectionIntent = queuedIntent {
                         return .connecting(.unresolved(reconnectionIntent))
                     }
-                    assert(!oldState.is(\.disconnected))
+                    assert(oldState, isNot: \.disconnected)
                     return .disconnecting(intent, intent.server)
                 }
 
@@ -234,6 +246,51 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .none
             }
         }
+    }
+
+    /// Determine whether it is safe to disconnect. If so, proceed with internal disconnection logic. Otherwise, delay
+    /// the disconnection request until the network extension state is stable and can be disconnected.
+    private func handleUserDisconnectionRequest(_ state: inout State) -> Effect<Action> {
+        let internalDisconnectOrStateChangeEffect: Effect<Action>
+        switch state.coreConnectionState {
+        case .unknown:
+            state.core.shouldDisconnectWhenAllowed = true
+            internalDisconnectOrStateChangeEffect = .none
+            log.debug("Delyaing disconnection request until internal state has been resolved", category: .connection)
+
+        case .starting, .connecting:
+            if state.core.isInteractionAllowed {
+                internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
+            } else {
+                log.debug("Delaying disconnection request until internally ready to disconnect", category: .connection)
+                state.core.shouldDisconnectWhenAllowed = true
+                internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                    .disconnecting(intent, intent.server)
+                }
+            }
+
+        case .connected:
+            internalDisconnectOrStateChangeEffect = .send(.core(.disconnect(.userIntent)))
+
+        case .disconnecting:
+            if state.reconnectionIntent != nil {
+                log.debug("Cancelling reconnection intent following disconnection intent from user", category: .connection)
+                state.reconnectionIntent = nil
+            } else {
+                log.debug("Ignoring disconnection intent, already internally disconnected.", category: .connection)
+            }
+            internalDisconnectOrStateChangeEffect = updateStateWithStoredIntentOrDisconnect(&state) { intent in
+                .disconnecting(intent, intent.server)
+            }
+
+        case .disconnected:
+            log.info("Ignoring disconnection intent, already internally disconnected.", category: .connection)
+            internalDisconnectOrStateChangeEffect = updateStateSendingEffectIfNecessary(&state, to: .disconnected)
+        }
+        return .merge(
+            .cancel(id: CancelID.preparation),
+            internalDisconnectOrStateChangeEffect
+        )
     }
 
     private func updateStateWithStoredIntentOrDisconnect(
@@ -263,6 +320,38 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
         state.connectionState = newValue
         return .send(.delegate(.stateChanged(newValue)))
+    }
+
+    private func assert<T: CasePathable>(
+        _ value: T,
+        isNot unexpectedValue: PartialCaseKeyPath<T>,
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
+    ) {
+        if value.is(unexpectedValue) {
+            // VPNAPPL-2696 - Visibility of failed assertions could be improved by invoking `assertionFailure` when not running tests
+            let message = "Assertion failed: \(value) is \(unexpectedValue)"
+            log.error("\(message)", category: .connection)
+            reportIssue(message, fileID: fileID, filePath: filePath, line: line, column: column)
+        }
+    }
+
+    private func assert<T: CasePathable>(
+        _ value: T,
+        is expectedValue: PartialCaseKeyPath<T>,
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
+    ) {
+        if !value.is(expectedValue) {
+            // VPNAPPL-2696 - Visibility of failed assertions could be improved by invoking `assertionFailure` when not running tests
+            let message = "Assertion failed: \(value) is not \(expectedValue)"
+            log.error("\(message)", category: .connection)
+            reportIssue(message, fileID: fileID, filePath: filePath, line: line, column: column)
+        }
     }
 }
 

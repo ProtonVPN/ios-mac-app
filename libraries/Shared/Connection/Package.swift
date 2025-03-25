@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
-        .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport"]),
+        .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport", "ConnectionTestSupport"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
