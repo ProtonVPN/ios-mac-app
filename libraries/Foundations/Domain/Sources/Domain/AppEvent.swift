@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import IssueReporting
 
 /// A set of in-app events that can happen asynchronously, posted and subscribed by many different components.
 ///
@@ -127,8 +128,9 @@ public enum AppEvent: String {
     case testEvent
     #endif
 
+    private static let notificationSuffix: String = "VPNAppNotification"
     public var name: Notification.Name {
-        .init(self.rawValue + "VPNAppNotification") // Make sure we de-unique from other common names
+        .init(self.rawValue + Self.notificationSuffix) // Make sure we de-unique from other common names
     }
 
     public var publisher: NotificationCenter.Publisher {
@@ -161,10 +163,23 @@ public enum AppEvent: String {
 
 /// Posted as a subcase of the `userInitiatedVPNChange` case in `AppEvent`. Used for telemetry.
 public enum UserInitiatedVPNChange {
-    public enum VPNTrigger: String, Codable {
+    public enum VPNTrigger: String, Codable, Sendable {
         case quick
+        case connectionCard = "connection_card"
+        case changeServer = "change_server"
+        case recent
+        case pin
+        case countriesCountry = "countries_country"
+        case countriesState = "countries_state"
+        case countriesCity = "countries_city"
+        case countriesServer = "countries_server"
+        case searchCountry = "search_country"
+        case searchState = "search_state"
+        case searchCity = "search_city"
+        case searchServer = "search_server"
+        case gatewaysGateway = "gateways_gateway"
+        case gatewaysServer = "gateways_server"
         case country
-        case city
         case server
         case profile
         case map
@@ -172,9 +187,11 @@ public enum UserInitiatedVPNChange {
         case widget
         case auto
         case newConnection = "new_connection"
+        case `exit`
+        case signout
     }
 
-    case connect
+    case connect(VPNTrigger?)
     case disconnect(VPNTrigger)
     case abort
     case settingsChange
@@ -183,7 +200,14 @@ public enum UserInitiatedVPNChange {
 
 public extension AppEvent {
     init?(_ name: Notification.Name) {
-        guard let value = Self(rawValue: name.rawValue) else { return nil }
+        let rawValue = name.rawValue.hasSuffix(Self.notificationSuffix) ?
+            String(name.rawValue.dropLast(Self.notificationSuffix.count)) :
+            name.rawValue
+
+        guard let value = Self(rawValue: rawValue) else {
+            reportIssue("Expected AppEvent object with rawValue: \(rawValue), got nil")
+            return nil
+        }
         self = value
     }
 }

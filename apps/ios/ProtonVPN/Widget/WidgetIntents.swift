@@ -34,7 +34,7 @@ internal struct DisconnectFromVPNIntent: AppIntent {
     func perform() async throws -> some IntentResult {
 
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
-        try? await disconnectVPN()
+        try? await disconnectVPN(.widget)
         return .result()
     }
 }
@@ -77,7 +77,7 @@ internal struct ConnectToVPNIntent: AppIntent {
 
         // Trigger connection
         do {
-            try await connectToVPN(spec, defaultConnectionStorage.getDefaultProtocol())
+            try await connectToVPN(spec, defaultConnectionStorage.getDefaultProtocol(), .widget)
         } catch {
             log.error("Failed to connect to VPN from widget with error: \(error)")
         }

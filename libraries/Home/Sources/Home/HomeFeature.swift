@@ -101,10 +101,10 @@ public struct HomeFeature {
 
         /// Connect to a given connection specification. Bump it to the top of the
         /// list, if it isn't already pinned.
-        case connect(ConnectionSpec)
+        case connect(ConnectionSpec, UserInitiatedVPNChange.VPNTrigger)
         case changeServer
         case didDismissChangeServer
-        case disconnect
+        case disconnect(UserInitiatedVPNChange.VPNTrigger)
 
         case incomingAlert(Alert)
 
@@ -170,8 +170,8 @@ public struct HomeFeature {
                     }
                 )
                 .cancellable(id: CancelID.connectionState)
-            case .recents(.delegate(.connect(let spec))):
-                return .send(.connect(spec))
+            case .recents(.delegate(.connect(let spec, let pinned))):
+                return .send(.connect(spec, pinned ? .pin : .recent))
             case .recents:
                 return .none
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
@@ -179,9 +179,9 @@ public struct HomeFeature {
                 return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
             case .sharedProperties(_):
                 return .none
-            case let .connect(spec):
+            case let .connect(spec, trigger):
                 return .run { send in
-                    try await connectToVPN(spec, nil)
+                    try await connectToVPN(spec, nil, trigger)
                     await send(.recents(.connectionEstablished(spec)))
                 } catch: { error, _ in
                     log.error("Error connecting to VPN: \(error)")
@@ -196,13 +196,12 @@ public struct HomeFeature {
                 }
                 let randomConnectionSpec = ConnectionSpec(location: .random, features: .init())
                 return .concatenate([
-                    .send(.disconnect),
-                    .send(.connect(randomConnectionSpec)),
+                    .send(.connect(randomConnectionSpec, .changeServer)),
                 ])
 
-            case .disconnect:
+            case let .disconnect(trigger):
                 return .run { _ in
-                    try await disconnectVPN()
+                    try await disconnectVPN(trigger)
                 } catch: { error, _ in
                     log.error("Error disconnecting from VPN: \(error)")
                     await alertService.feed(error)
@@ -217,10 +216,10 @@ public struct HomeFeature {
             case .connectionCard(.delegate(let action)):
                 switch action {
                 case .connect(let spec):
-                    return .send(.connect(spec))
+                    return .send(.connect(spec, .connectionCard))
                 case .disconnect:
                     return .merge(
-                        .send(.disconnect),
+                        .send(.disconnect(.connectionCard)),
                         .cancel(id: CancelID.connectTask)
                     )
                 case .tapAction:

@@ -70,7 +70,7 @@ struct RecentRowItemView: View {
 
     public var body: some View {
         Button {
-            _ = sendAction(.delegate(.connect(item.connection)))
+            _ = sendAction(.delegate(.connect(item.connection, isPinned: item.pinned)))
         } label: {
             ZStack(alignment: .bottom) {
                 content
@@ -80,7 +80,7 @@ struct RecentRowItemView: View {
         .accessibilityElement()
         .accessibilityLabel(item.connection.location.accessibilityText(locale: locale))
         .accessibilityAction(named: Localizable.actionConnect) {
-            _ = sendAction(.delegate(.connect(item.connection)))
+            _ = sendAction(.delegate(.connect(item.connection, isPinned: item.pinned)))
         }
         .accessibilityAction(named: Localizable.actionRemove) {
             _ = sendAction(.remove(item))

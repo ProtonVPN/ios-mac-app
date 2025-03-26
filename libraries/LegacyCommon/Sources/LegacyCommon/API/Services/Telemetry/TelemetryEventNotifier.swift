@@ -21,6 +21,9 @@ import Combine
 import Reachability
 import VPNAppCore
 import Domain
+import Connection
+import ComposableArchitecture
+import ProtonCoreFeatureFlags
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
@@ -34,43 +37,71 @@ public class TelemetryEventNotifier {
     }
 
     private func startObserving() {
+
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+
         NotificationCenter.default
             .publisher(for: .reachabilityChanged)
-            .sink(receiveValue: reachabilityChanged)
+            .sink { [weak self] notification in
+                self?.reachabilityChanged(notification)
+            }
             .store(in: &cancellables)
 
-        AppEvent.connectionStateChanged.publisher
-            .compactMap { $0.object as? ConnectionStatus }
-            .removeDuplicates()
-            .sink(receiveValue: vpnGatewayConnectionChanged)
-            .store(in: &cancellables)
+        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+            $connectionState.publisher
+                .removeDuplicates()
+                .sink { [weak self] state in
+                    self?.connectionStateChanged(state)
+                }
+                .store(in: &cancellables)
+        } else {
+            AppEvent.connectionStateChanged.publisher
+                .compactMap { $0.object as? ConnectionStatus }
+                .removeDuplicates()
+                .sink { [weak self] status in
+                    self?.vpnGatewayConnectionChanged(status)
+                }
+                .store(in: &cancellables)
+        }
 
         AppEvent.userInitiatedVPNChange.publisher
-            .sink(receiveValue: userInitiatedVPNChange)
+            .sink { [weak self] value in
+                self?.userInitiatedVPNChange(value)
+            }
             .store(in: &cancellables)
 
         AppEvent.upsellAlertWasDisplayed.publisher
             .compactMap { $0.object as? UpsellModalSource }
-            .sink(receiveValue: upsellDisplayed)
+            .sink { [weak self] source in
+                self?.upsellDisplayed(source)
+            }
             .store(in: &cancellables)
 
         AppEvent.userEngagedWithUpsellAlert.publisher
             .compactMap { $0.object as? UpsellModalSource }
-            .sink(receiveValue: upsellEngaged)
+            .sink { [weak self] source in
+                self?.upsellEngaged(source)
+            }
             .store(in: &cancellables)
 
         AppEvent.userCompletedUpsellAlertJourney.publisher
-            .sink(receiveValue: upsellCompleted)
+            .sink { [weak self] value in
+                self?.upsellCompleted(value)
+            }
             .store(in: &cancellables)
 
         AppEvent.userEngagedWithAnnouncement.publisher
             .map { $0.object as? String }
-            .sink(receiveValue: announcementEngaged)
+            .sink { [weak self] value in
+                self?.announcementEngaged(value)
+            }
             .store(in: &cancellables)
 
         AppEvent.userWasDisplayedAnnouncement.publisher
             .map { $0.object as? String }
-            .sink(receiveValue: announcementDisplayed)
+            .sink { [weak self] value in
+                self?.announcementDisplayed(value)
+            }
             .store(in: &cancellables)
     }
 
@@ -105,6 +136,16 @@ public class TelemetryEventNotifier {
                 try await telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
             } catch {
                 log.debug("No telemetry event triggered for connection change: \(connectionStatus), error: \(error)", category: .telemetry)
+            }
+        }
+    }
+
+    private func connectionStateChanged(_ connectionState: ConnectionState) {
+        Task {
+            do {
+                try await telemetryService?.connectionStateChanged(connectionState)
+            } catch {
+                log.debug("No telemetry event triggered for connection change: \(connectionState), error: \(error)", category: .telemetry)
             }
         }
     }

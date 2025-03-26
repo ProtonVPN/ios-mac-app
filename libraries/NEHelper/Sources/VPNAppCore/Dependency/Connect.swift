@@ -22,12 +22,16 @@ import Domain
 extension DependencyValues {
     /// ATM it's neither async nor throws, but the plan is to return only after connection is made and also to throw exceptions
     /// so user can be presented with an error from UI, and not from the depths of VPN connection related code.
-    public var connectToVPN: @Sendable (ConnectionSpec, ConnectionProtocol?) async throws -> Void {
+    public var connectToVPN: @Sendable (ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?) async throws -> Void {
         get { self[ConnectToVPNKey.self] }
         set { self[ConnectToVPNKey.self] = newValue }
     }
 }
 
 public enum ConnectToVPNKey: TestDependencyKey {
-    public static let testValue: @Sendable (ConnectionSpec, ConnectionProtocol?) async throws -> Void = { _, _ in }
+    public static let testValue: @Sendable (ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?) async throws -> Void = {
+        _,
+        _,
+        _ in
+    }
 }

@@ -49,7 +49,14 @@ extension ConnectToVPNKey: DependencyKey {
     }()
 
     @available(iOS 16, *)
-    static let newConnect: @Sendable (ConnectionSpec, ConnectionProtocol?) async throws -> Void = { spec, specifiedProtocol in
+    static let newConnect: @Sendable (
+        ConnectionSpec,
+        ConnectionProtocol?,
+        UserInitiatedVPNChange.VPNTrigger?
+    ) async throws -> Void = {
+        spec,
+        specifiedProtocol,
+        trigger in
         // First, let's try to resolve the server we want to connect to.
         // This way we can avoid disconnecting if we are already connected and can't resolve the target server
         @Dependency(\.serverSelector) var serverSelector
@@ -71,6 +78,8 @@ extension ConnectToVPNKey: DependencyKey {
         log.info("Server selected: \(server)", category: .connection)
 
         if Task.isCancelled { throw ConnectionError.cancelled }
+
+        AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
 
         @Dependency(\.connectionBridge) var bridge
         bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server, connectionProtocol: specifiedProtocol)))

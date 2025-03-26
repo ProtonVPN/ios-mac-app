@@ -66,14 +66,14 @@ extension SettingsClient: DependencyKey {
         },
         disconnect: {
             @Dependency(\.disconnectVPN) var disconnect
-            try await disconnect()
+            try await disconnect(.auto)
         },
         reconnect: { featureChanges in
             @Dependency(\.connectionIntentStorage) var storage
             let lastIntent = try storage.getConnectionIntent()
 
             @Dependency(\.connectToVPN) var connect
-            try await connect(lastIntent.spec, nil)
+            try await connect(lastIntent.spec, nil, .auto) // Caused by feature change
         },
         update: { agentFeatures in
             @Dependency(\.connectionBridge) var bridge
