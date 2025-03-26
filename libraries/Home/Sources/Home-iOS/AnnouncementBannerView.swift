@@ -56,10 +56,15 @@ struct AnnouncementBannerView: View {
     @State private var showBanner = false
 
     var body: some View {
-        guard case .banner(let model) = store.state else {
-            return EmptyView()
+        if case .banner(let model) = store.state {
+            content(model: model)
+        } else {
+            EmptyView()
         }
-        return ZStack(alignment: .topTrailing) {
+    }
+
+    private func content(model: AnnouncementBannerFeature.State.Model) -> some View {
+        ZStack(alignment: .topTrailing) {
             Button {
                 store.send(.didTapBanner)
             } label: {
