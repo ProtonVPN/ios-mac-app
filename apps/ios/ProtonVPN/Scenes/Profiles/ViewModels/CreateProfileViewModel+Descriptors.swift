@@ -189,7 +189,7 @@ extension CreateOrEditProfileViewModel {
 
     private func embeddedCountryFlag(countryCode: String) -> NSAttributedString {
         let image = UIImage.flag(countryCode: countryCode)
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             let size = CGSize(width: 18, height: 12)
             return embeddedImageIcon(
                 image: roundedCroppedImage(image: image, targetSize: size, cornerRadius: 2.4), // The corner radius value is proportionally aligned with the flags in the country list.

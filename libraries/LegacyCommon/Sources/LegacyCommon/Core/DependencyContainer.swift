@@ -296,7 +296,7 @@ extension Container: VpnStateConfigurationFactory {
 
 extension Container: VpnManagerFactory {
     private var shouldUseNoOpManager: Bool {
-        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+        FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
     public func makeVpnManager() -> VpnManagerProtocol {

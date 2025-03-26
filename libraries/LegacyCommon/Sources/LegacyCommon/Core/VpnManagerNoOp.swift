@@ -86,6 +86,7 @@ public final class NoOpVpnManager: VpnManagerProtocol {
     }
 
     public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
+        queue.async(execute: completion)
     }
 
     public var prepareManagersTask: Task<(), Never>?

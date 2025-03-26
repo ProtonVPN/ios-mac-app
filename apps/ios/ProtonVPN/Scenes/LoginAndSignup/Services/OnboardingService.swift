@@ -75,7 +75,7 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func welcomeToProtonViewController() -> UIViewController {
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             return modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
                 let getStartedVC = self.onboardingGetStartedViewController()
                 self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
@@ -88,7 +88,7 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func onboardingGetStartedViewController() -> UIViewController {
-        assert(FeatureFlagsRepository.shared.isRedesigniOSEnabled)
+        assert(FeatureFlagsRepository.isRedesigniOSEnabled)
 
         return modalsFactory.modalViewController(modalType: .onboardingGetStarted) {
             self.postOnboardingAction()

@@ -55,11 +55,17 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// Redesign flag for iOS
     case redesigniOS = "IOSRedesignedUI"
 
+    /// KillSwitch for iOS Redesign UI.
+    case redesigniOSKillSwitch = "IOSRedesignedUIKillSwitch"
+
     /// Plutonium flag for macOS
     case plutoniumMacOS = "Plutonium"
     
     /// Use ConnectionFeature reducer from ConnectionPackage
     case useConnectionFeature = "UseConnectionFeature"
+
+    /// KillSwitch for ConnectionFeature reducer usage.
+    case useConnectionFeatureKillSwitch = "UseConnectionFeatureKillSwitch"
 
     /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
     case timestampedLogicals = "TimestampedLogicals"

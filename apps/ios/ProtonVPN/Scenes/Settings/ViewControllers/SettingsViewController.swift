@@ -57,7 +57,7 @@ final class SettingsViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
         } else {
             tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 4)
@@ -69,7 +69,7 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             connectionBarContainerView.removeFromSuperview()
         } else {
             setupConnectionBar()

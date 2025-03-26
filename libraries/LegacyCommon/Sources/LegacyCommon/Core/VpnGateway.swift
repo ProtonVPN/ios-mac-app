@@ -392,7 +392,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     private var shouldUseNewConnect: Bool {
-        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+        FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
     public func connect(with request: ConnectionRequest?) {

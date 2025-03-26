@@ -66,7 +66,7 @@ final class SettingsAccountViewController: UIViewController {
         
         view.addSubview(tableView)
         tableView.centerXInSuperview()
-        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if !FeatureFlagsRepository.isRedesigniOSEnabled {
             view.addSubview(connectionBarContainerView)
             connectionBarContainerView.centerXInSuperview()
 

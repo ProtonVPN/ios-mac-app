@@ -49,7 +49,7 @@ final class ProfilesViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.windowTerminal, tag: 2)
         } else {
             tabBarItem = UITabBarItem(title: Localizable.profiles, image: IconProvider.bookmark, tag: 3)
@@ -61,7 +61,7 @@ final class ProfilesViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             connectionBarContainerView.removeFromSuperview()
         } else {
             setupConnectionBar()

@@ -205,7 +205,7 @@ final class NavigationService {
     }
 
     func showInitialModals() {
-        guard propertiesManager.showWhatsNewModal, FeatureFlagsRepository.shared.isRedesigniOSEnabled else {
+        guard propertiesManager.showWhatsNewModal, FeatureFlagsRepository.isRedesigniOSEnabled else {
             return
         }
         propertiesManager.showWhatsNewModal = false
@@ -249,7 +249,7 @@ final class NavigationService {
         
         var tabViewControllers = [UIViewController]()
 
-        let isRedesign = FeatureFlagsRepository.shared.isRedesigniOSEnabled
+        let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
 
         if #available(iOS 17, *), isRedesign {
             @Dependency(\.credentialsProvider) var credentials
@@ -501,7 +501,7 @@ extension NavigationService: ConnectionStatusService {
     }
     
     func presentStatusViewController() {
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             switchTab(index: 0) // Switch to Home tab which included new connection status view.
         } else {
             guard let viewController = makeStatusViewController() else {

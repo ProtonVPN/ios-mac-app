@@ -263,7 +263,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
             showFeatureIcons: showFeatureIcons,
-            isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled
+            isRedesign: FeatureFlagsRepository.isRedesigniOSEnabled
         )
     }
     
@@ -380,7 +380,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         let banner = offerBannerCellModel ?? upsellBanner
 
-        let isRedesign = FeatureFlagsRepository.shared.isRedesigniOSEnabled
+        let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
 
         let fastest = RowViewModel.profile(FastestConnectionViewModel(
             serverOffering: ServerOffering.fastest(nil),
@@ -391,7 +391,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             netShieldPropertyProvider: netShieldPropertyProvider,
             natTypePropertyProvider: natTypePropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
-            isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled,
+            isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))
         
@@ -469,7 +469,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     private var offerBannerCellModel: RowViewModel? {
         // Disable banner in countries tab when redesign is enabled
-        guard !FeatureFlagsRepository.shared.isRedesigniOSEnabled else { return nil }
+        guard !FeatureFlagsRepository.isRedesigniOSEnabled else { return nil }
         let dismiss: (Announcement) -> Void = { [weak self] offerBanner in
             self?.announcementManager.markAsRead(announcement: offerBanner)
             self?.reloadContent()

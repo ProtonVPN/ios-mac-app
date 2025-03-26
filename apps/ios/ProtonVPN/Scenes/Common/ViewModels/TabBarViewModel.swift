@@ -91,7 +91,7 @@ class TabBarViewModel {
     }
 
     @objc func stateChanged() {
-        guard !FeatureFlagsRepository.shared.isRedesigniOSEnabled else { return }
+        guard !FeatureFlagsRepository.isRedesigniOSEnabled else { return }
         DispatchQueue.main.async { [weak self] in
             switch self?.appStateManager.displayState {
             case .connected:

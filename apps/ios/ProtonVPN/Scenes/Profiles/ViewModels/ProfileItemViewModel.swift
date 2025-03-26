@@ -53,7 +53,7 @@ final class ProfileItemViewModel {
     var isConnected: Bool {
         guard vpnGateway.connection == .connected else { return false }
 
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             return propertiesManager.lastConnectionIntent == ConnectionSpec(
                 connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                                                              withDefaultNATType: natTypePropertyProvider.natType,
@@ -72,7 +72,7 @@ final class ProfileItemViewModel {
     private var isConnecting: Bool {
         guard vpnGateway.connection == .connecting else { return false }
 
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             return propertiesManager.lastConnectionIntent == ConnectionSpec(
                 connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                                                              withDefaultNATType: natTypePropertyProvider.natType,

@@ -47,7 +47,7 @@ public class TelemetryEventNotifier {
             }
             .store(in: &cancellables)
 
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             $connectionState.publisher
                 .removeDuplicates()
                 .sink { [weak self] state in

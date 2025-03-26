@@ -204,7 +204,7 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 
 extension ServerItemViewModel: ServerViewModel {
     var isRedesign: Bool {
-        FeatureFlagsRepository.shared.isRedesigniOSEnabled
+        FeatureFlagsRepository.isRedesigniOSEnabled
     }
 
     var connectButtonColor: UIColor {

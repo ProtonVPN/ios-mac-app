@@ -37,7 +37,7 @@ extension ConnectToVPNKey: DependencyKey {
     }
 
     private static var isEnabled: Bool {
-        FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+        FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
     public static let liveValue = {
