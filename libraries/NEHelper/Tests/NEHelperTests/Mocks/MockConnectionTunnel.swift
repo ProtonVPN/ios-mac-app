@@ -82,7 +82,7 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
 
     var stateChangeCallback: ((NWTCPConnectionState) -> ())?
 
-    func write(_ data: Data, completionHandler: @escaping (Error?) -> Void) {
+    func write(_ data: Data) async throws {
         guard !closedForWriting else {
             XCTFail("Attempted to write after closing socket")
             return
@@ -93,44 +93,31 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
             return
         }
 
-        do {
-            guard let dataWriteCallback = factory?.dataWriteCallback else {
-                XCTFail("No dataWriteCallback was set")
-                return
-            }
-
-            try dataWriteCallback(self, data)
-        } catch {
-            completionHandler(error)
+        guard let dataWriteCallback = factory?.dataWriteCallback else {
+            XCTFail("No dataWriteCallback was set")
             return
         }
 
-        completionHandler(nil)
+        try dataWriteCallback(self, data)
     }
 
-    func readMinimumLength(_ minimumLength: Int, maximumLength: Int, completionHandler: @escaping (Data?, Error?) -> Void) {
+    func readMinimumLength(_ minimumLength: Int, maximumLength: Int) async throws -> Data? {
         guard state == .connected else {
             XCTFail("Attempted to read from socket that wasn't connected")
-            return
+            return nil
         }
 
 
-        let dataToRead: Data
-        do {
-            guard let dataReadCallback = factory?.dataReadCallback else {
-                XCTFail("No dataReadCallback was set")
-                return
-            }
-
-            dataToRead = try dataReadCallback(self)
-            XCTAssertLessThan(minimumLength, dataToRead.count, "Data present is not sufficient for minimum length of socket read")
-            XCTAssertLessThan(dataToRead.count, maximumLength, "Data present is greater than maximum specified in \(#function)")
-        } catch {
-            completionHandler(nil, error)
-            return
+        guard let dataReadCallback = factory?.dataReadCallback else {
+            XCTFail("No dataReadCallback was set")
+            return nil
         }
 
-        completionHandler(dataToRead, nil)
+        let dataToRead = try dataReadCallback(self)
+        XCTAssertLessThan(minimumLength, dataToRead.count, "Data present is not sufficient for minimum length of socket read")
+        XCTAssertLessThan(dataToRead.count, maximumLength, "Data present is greater than maximum specified in \(#function)")
+
+        return dataToRead
     }
 
     func writeClose() {

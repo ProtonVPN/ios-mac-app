@@ -110,8 +110,8 @@ extension NEPacketTunnelProvider: NWTCPConnectionAuthenticationDelegate {
 public protocol ConnectionTunnel {
     var state: NWTCPConnectionState { get }
 
-    func write(_: Data, completionHandler: @escaping (Error?) -> Void)
-    func readMinimumLength(_: Int, maximumLength: Int, completionHandler: @escaping (Data?, Error?) -> Void)
+    func write(_: Data) async throws
+    func readMinimumLength(_: Int, maximumLength: Int) async throws -> Data?
     func writeClose()
     func cancel()
 
@@ -124,6 +124,30 @@ public protocol ConnectionTunnel {
 /// Note: adding `.initial` to the options passed to `observe` means that the callback will immediately be invoked with
 /// `state`'s initial value.
 extension NWTCPConnection: ConnectionTunnel {
+    public func write(_ data: Data) async throws {
+        return try await withUnsafeThrowingContinuation { c in
+            self.write(data) { error in
+                if let error {
+                    c.resume(throwing: error)
+                    return
+                }
+                c.resume(returning: ())
+            }
+        }
+    }
+
+    public func readMinimumLength(_ minimum: Int, maximumLength: Int) async throws -> Data? {
+        return try await withUnsafeThrowingContinuation { c in
+            self.readMinimumLength(minimum, maximumLength: maximumLength) { data, error in
+                if let error {
+                    c.resume(throwing: error)
+                    return
+                }
+                c.resume(returning: data)
+            }
+        }
+    }
+
     public func observeStateChange(withCallback stateChangeCallback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
         observe(\.state, options: [.initial, .new]) { _, _ in stateChangeCallback(self.state) }
     }
@@ -238,7 +262,7 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
 /// A wrapper class around NWTCPConnection for generating HTTP requests and receiving responses.
 class NWTCPDataTask: DataTaskProtocol {
     /// The maximum size we will accept for a server response, in bytes.
-    private static let maximumResponseSize = 8192
+    private static let maximumResponseSize = 65536
 
     /// The HTTP request we're making.
     let request: URLRequest
@@ -347,11 +371,13 @@ class NWTCPDataTask: DataTaskProtocol {
                 return
             }
 
-            Self.sendRequest(to: url,
-                             data: requestData,
-                             over: connection,
-                             uuid: self.taskId,
-                             completionHandler: self.completionHandler)
+            Self.sendRequest(
+                to: url,
+                data: requestData,
+                over: connection,
+                uuid: self.taskId,
+                completionHandler: self.completionHandler
+            )
         }
 
         // Look for changes in the NWTCPConnection's state, adding a timeout if we stay waiting in
@@ -398,8 +424,10 @@ class NWTCPDataTask: DataTaskProtocol {
                             userInfo: userInfo
                         )) )
                     }
-                default:
-                    break
+                case .invalid:
+                    log.error("Connection state invalidated", category: .net, metadata: ["id": "\(self.taskId)"])
+                @unknown default:
+                    log.error("Unknown connection state \(state.rawValue)", category: .net, metadata: ["id": "\(self.taskId)"])
                 }
             }
         }
@@ -431,37 +459,53 @@ class NWTCPDataTask: DataTaskProtocol {
         return provider.createTunnel(hostname: host, port: "\(port)", useTLS: useTLS)
     }
 
-    private static func sendRequest(to url: URL,
-                                    data: Data,
-                                    over connection: ConnectionTunnel,
-                                    uuid: UUID,
-                                    completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
-        // When the connection is ready, go ahead and send the request/process the response.
-        connection.write(data) { error in
-            if let error = error {
-                completionHandler(nil, nil, error)
-                return
+    private static func requestHelper(
+        url: URL,
+        connection: ConnectionTunnel,
+        uuid: UUID
+    ) async throws -> (HTTPURLResponse?, Data?) {
+        var data = Data()
+        var i = 0
+
+        while connection.state == .connected {
+            do {
+                guard let chunk = try await connection.readMinimumLength(1, maximumLength: Self.maximumResponseSize) else {
+                    log.debug("Reached EOF, stopping read loop.", category: .net, metadata: ["id": "\(uuid)"])
+                    break
+                }
+                data += chunk
+                i += 1
+                log.debug(
+                    "Received \(chunk.count)/\(data.count) bytes on read \(i).",
+                    category: .net, metadata: ["id": "\(uuid)"]
+                )
+            } catch POSIXError.ENOTCONN {
+                // An unfortunate error case - connection.state rarely gets updated fast enough for us to know whether
+                // or not to try to read again.
+                log.debug("Stopping, not connected.", category: .net, metadata: ["id": "\(uuid)"])
+                break
             }
-            connection.writeClose()
+        }
 
-            connection.readMinimumLength(1, maximumLength: Self.maximumResponseSize) { responseData, error in
-                if let error = error {
-                    log.debug("Received error. State: \(connection.state)", category: .net, metadata: ["id": "\(uuid)"])
-                    completionHandler(nil, nil, error)
-                    return
-                }
-                guard let responseData = responseData else {
-                    // no message available on stream.
-                    completionHandler(nil, nil, POSIXError(.ENODATA))
-                    return
-                }
+        return try HTTPURLResponse.parse(responseFromURL: url, data: data)
+    }
 
-                do {
-                    let (response, body) = try HTTPURLResponse.parse(responseFromURL: url, data: responseData)
-                    completionHandler(body, response, nil)
-                } catch {
-                    completionHandler(nil, nil, error)
-                }
+    private static func sendRequest(
+        to url: URL,
+        data: Data,
+        over connection: ConnectionTunnel,
+        uuid: UUID,
+        completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)
+    ) {
+        Task.detached {
+            do {
+                try await connection.write(data)
+                connection.writeClose()
+
+                let (response, body) = try await requestHelper(url: url, connection: connection, uuid: uuid)
+                completionHandler(body, response, nil)
+            } catch {
+                completionHandler(nil, nil, error)
             }
         }
     }
