@@ -3323,7 +3323,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -4449,8 +4448,11 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ConnectWidgetExtensionProfile.entitlements;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ConnectWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ConnectWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ConnectWidget;
 				PRODUCT_NAME = ConnectWidgetExtension;
 			};
