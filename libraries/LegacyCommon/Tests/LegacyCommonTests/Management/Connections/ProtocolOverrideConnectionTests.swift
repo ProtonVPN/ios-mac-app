@@ -24,6 +24,9 @@ import Dependencies
 
 import Domain
 import VPNShared
+
+import ProtonCoreTestingToolkitUnitTestsFeatureFlag
+
 @testable import LegacyCommon
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
@@ -44,6 +47,12 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         let servers = container.networkingDelegate.apiServerList.map { VPNServer(legacyModel: $0) }
 
         repository.upsert(servers: servers)
+    }
+
+    override func invokeTest() {
+        withFeatureFlags([.asyncVPNManager, .redesignKillSwitch, .connectionKillSwitch]) {
+            super.invokeTest()
+        }
     }
 
     // Disabled because IKEv2 is not supported on iOS (VPNAPPL-1843)
