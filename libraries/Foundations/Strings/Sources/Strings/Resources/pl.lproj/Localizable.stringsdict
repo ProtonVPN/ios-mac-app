@@ -13,11 +13,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d urządzenie</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d urządzenia</string>
         <key>many</key>
-        <string>%d devices</string>
+        <string>%d urządzeń</string>
         <key>other</key>
         <string>%d devices</string>
       </dict>
@@ -66,15 +66,15 @@
         <key>one</key>
         <string>Ochrona do %d urządzenia</string>
         <key>few</key>
-        <string>Ochrona do %d urządzenia</string>
+        <string>Ochrona do %d urządzeń</string>
         <key>many</key>
-        <string>Ochrona do %d urządzenia</string>
+        <string>Ochrona do %d urządzeń</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Ochrona do %d urządzenia</string>
+        <string>Ochrona do %d urządzeń</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -99,17 +99,17 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d bezpiecznego serwera</string>
+        <string>%d bezpieczny serwer</string>
         <key>few</key>
-        <string>%d bezpiecznego serwera</string>
+        <string>%d bezpieczne serwery</string>
         <key>many</key>
-        <string>%d bezpiecznego serwera</string>
+        <string>%d bezpiecznych serwerów</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d bezpiecznego serwera</string>
+        <string>%d bezpiecznych serwerów</string>
       </dict>
     </dict>
     <key>modals_new_upsell_all_countries_subtitle</key>
@@ -121,15 +121,15 @@
         <key>one</key>
         <string>%d kraju</string>
         <key>few</key>
-        <string>%d krajach</string>
+        <string>%d kraje</string>
         <key>many</key>
-        <string>%d krajach</string>
+        <string>%d krajów</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d krajach</string>
+        <string>%d krajów</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -160,11 +160,11 @@
         <key>one</key>
         <string>%d kraju</string>
         <key>few</key>
-        <string>%d krajach</string>
+        <string>%d kraje</string>
         <key>many</key>
-        <string>%d krajach</string>
+        <string>%d krajów</string>
         <key>other</key>
-        <string>%d krajach</string>
+        <string>%d krajów</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
@@ -178,13 +178,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d urządzenia</string>
+        <string>%d urządzenie</string>
         <key>few</key>
-        <string>%d urządzeń</string>
+        <string>%d urządzenia</string>
         <key>many</key>
-        <string>%d urządzenia</string>
+        <string>%d urządzeń</string>
         <key>other</key>
-        <string>%d urządzenia</string>
+        <string>%d urządzeń</string>
       </dict>
     </dict>
     <key>maximum_device_plan_limit_part_2</key>
@@ -198,13 +198,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d urządzenia</string>
+        <string>%d urządzenie</string>
         <key>few</key>
-        <string>%d urządzeń</string>
+        <string>%d urządzenia</string>
         <key>many</key>
-        <string>%d urządzenia</string>
+        <string>%d urządzeń</string>
         <key>other</key>
-        <string>%d urządzenia</string>
+        <string>%d urządzeń</string>
       </dict>
     </dict>
     <key>search_upsell_title</key>
@@ -218,9 +218,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d kraju</string>
+        <string>%d kraj</string>
         <key>few</key>
-        <string>%d krajów</string>
+        <string>%d kraje</string>
         <key>many</key>
         <string>%d krajów</string>
         <key>other</key>
@@ -366,13 +366,13 @@ elementów śledzących</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dnia</string>
+        <string>%d dni</string>
         <key>one</key>
         <string>%d dzień</string>
         <key>few</key>
         <string>%d dni</string>
         <key>many</key>
-        <string>%d dnia</string>
+        <string>%d dni</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -386,28 +386,28 @@ elementów śledzących</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dnia</string>
+        <string>%d dni</string>
         <key>one</key>
         <string>%d dzień</string>
         <key>few</key>
         <string>%d dni</string>
         <key>many</key>
-        <string>%d dnia</string>
+        <string>%d dni</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d godz.</string>
+        <string>%d godzina</string>
         <key>few</key>
-        <string>%d godz.</string>
+        <string>%d godziny</string>
         <key>many</key>
-        <string>%d godz.</string>
+        <string>%d godzin</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d godz.</string>
+        <string>%d godzin</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -417,32 +417,32 @@ elementów śledzących</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d minuta</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d minuty</string>
         <key>many</key>
-        <string>%d min</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d minut</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d godz.</string>
+        <string>%d godzina</string>
         <key>few</key>
-        <string>%d godz.</string>
+        <string>%d godziny</string>
         <key>many</key>
-        <string>%d godz.</string>
+        <string>%d godzin</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d godz.</string>
+        <string>%d godzin</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -452,17 +452,17 @@ elementów śledzących</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d godz.</string>
+        <string>%d godzina</string>
         <key>few</key>
-        <string>%d godz.</string>
+        <string>%d godziny</string>
         <key>many</key>
-        <string>%d godz.</string>
+        <string>%d godzin</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d godz.</string>
+        <string>%d godzin</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -472,32 +472,32 @@ elementów śledzących</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d minuta</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d minuty</string>
         <key>many</key>
-        <string>%d min</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d minut</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sek.</string>
+        <string>%d sekunda</string>
         <key>few</key>
-        <string>%d sek.</string>
+        <string>%d sekundy</string>
         <key>many</key>
-        <string>%d sek.</string>
+        <string>%d sekund</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sek.</string>
+        <string>%d sekund</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -507,17 +507,17 @@ elementów śledzących</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d minuta</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d minuty</string>
         <key>many</key>
-        <string>%d min</string>
+        <string>%d minut</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d minuty</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -527,17 +527,17 @@ elementów śledzących</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d sek.</string>
+        <string>%d sekunda</string>
         <key>few</key>
-        <string>%d sek.</string>
+        <string>%d sekundy</string>
         <key>many</key>
-        <string>%d sek.</string>
+        <string>%d sekund</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d sek.</string>
+        <string>%d sekund</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -582,17 +582,17 @@ elementów śledzących</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Lokalizacje planu Free (%d)</string>
+        <string>Lokalizacje darmowego serwera (%d)</string>
         <key>few</key>
-        <string>Lokalizacje planu Free (%d)</string>
+        <string>Lokalizacje darmowych serwerów (%d)</string>
         <key>many</key>
-        <string>Lokalizacje planu Free (%d)</string>
+        <string>Lokalizacje darmowych serwerów (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Lokalizacje planu Free (%d)</string>
+        <string>Lokalizacje darmowych serwerów (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>
@@ -610,15 +610,15 @@ elementów śledzących</string>
         <key>few</key>
         <string>%d miesiące</string>
         <key>many</key>
-        <string>%d miesiący</string>
+        <string>%d miesięcy</string>
         <key>other</key>
-        <string>%d miesięca</string>
+        <string>%d miesięcy</string>
       </dict>
     </dict>
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>Połącz się z %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -652,7 +652,7 @@ elementów śledzących</string>
         <key>many</key>
         <string>%d lat</string>
         <key>other</key>
-        <string>%d roku</string>
+        <string>%d lat</string>
       </dict>
     </dict>
   </dict>

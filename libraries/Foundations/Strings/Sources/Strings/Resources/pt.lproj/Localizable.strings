@@ -1716,13 +1716,13 @@
 "_connection_card_accessibility_fastest_sc" = "O país Secure Core mais rápido disponível";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "Toque duas vezes para mostrar o seu endereço IP";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
+"_connection_details_accessibility_ipView_hideAddress" = "Toque duas vezes para ocultar o seu endereço IP";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
-"_connection_details_accessibility_close" = "Close connection details screen";
+"_connection_details_accessibility_close" = "Fechar a tela de detalhes da conexão";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Ligação predefinida";
@@ -1749,7 +1749,7 @@
 "_connection_card_accessibility_browsing_from" = "Está a navegar com segurança a partir de %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+"_connection_card_accessibility_browsing_from_fullDetails" = "Navega de forma segura a partir do servidor %1$@ %2$@ utilizando %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "A carregar";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "O provedor de conexão encontrou um erro: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Verifique se está ligado à VPN e tenha acesso rápido às suas ligações favoritas.";
+
+/* Recents section title */
+"widget_recents_title" = "Recentes";
+
+/* Recents section description */
+"widget_recents_description" = "Veja aqui o seu histórico de ligação.";

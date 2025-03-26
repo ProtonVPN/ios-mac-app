@@ -1916,7 +1916,7 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Tu actividad se encripta en 2 servidores VPN de alta seguridad.";
+"_connection_details_feature_description_secure_core" = "Tu actividad se cifra en 2 servidores VPN de alta seguridad.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Streaming";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "El proveedor de conexión ha encontrado un error: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Comprueba si estás conectado a la VPN y consigue un acceso rápido a tus conexiones favoritas.";
+
+/* Recents section title */
+"widget_recents_title" = "Recientes";
+
+/* Recents section description */
+"widget_recents_description" = "Consulta aquí el historial de conexiones.";

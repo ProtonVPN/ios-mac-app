@@ -2609,7 +2609,7 @@
 "_br_3_username" = "Utilizator";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Trimitere jurnale erori";
+"_br_3_logs_field" = "Trimitere jurnale de erori";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Un jurnal este un tip de fișier care ne arată acțiunile pe care le-ați întreprins care au dus la o eroare. Le vom folosi doar pentru a ajuta inginerii noștri să remedieze erorile.";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Furnizorul conexiunii a întâmpinat o eroare: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Verificați dacă aveți conexiune la VPN și obțineți acces rapid la conexiunile favorite.";
+
+/* Recents section title */
+"widget_recents_title" = "Recente";
+
+/* Recents section description */
+"widget_recents_description" = "Aici vedeți istoricul conexiunilor.";

@@ -997,10 +997,10 @@
 "_activate_widget" = "Aktywuj widżet";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Aby wyświetlić widżety, przejdź z ekranu początkowego do skrajnie lewego ekranu.";
+"_activate_widget_step_1" = "Aby uzyskać dostęp do widżetów, przesuń palcem w lewo na ekranie początkowym.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Przewiń do dołu ekranu i kliknij przycisk Edycja.";
+"_activate_widget_step_2" = "Przewiń w dół ekranu i kliknij przycisk edycji.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Dodaj widżet aplikacji Proton VPN do listy aktywnych widżetów.";
@@ -1716,10 +1716,10 @@
 "_connection_card_accessibility_fastest_sc" = "Najszybszy dostępny kraj Secure Core";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "Kliknij dwukrotnie, aby pokazać adres IP";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
+"_connection_details_accessibility_ipView_hideAddress" = "Kliknij dwukrotnie, aby ukryć adres IP";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
 "_connection_details_accessibility_close" = "Close connection details screen";
@@ -1728,10 +1728,10 @@
 "_connection_card_default_connection" = "Domyślne połączenie";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "Przeglądasz Internet z";
+"_connection_card_safely_browsing_from" = "Przeglądasz bezpiecznie Internet z";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
-"_connection_card_last_connected_to" = "Ostatnie połączenie";
+"_connection_card_last_connected_to" = "Ostatnie połączenie z";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
 "_connection_card_loading" = "Ładowanie…";
@@ -1898,7 +1898,7 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "Możesz połączyć się ze stronami onion za pomocą normalnej przeglądarki.";
+"_connection_details_feature_description_tor" = "Możesz połączyć się ze stronami .onion za pomocą zwykłej przeglądarki.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
@@ -2732,7 +2732,7 @@
 "upsell_carousel_tor_title" = "Tor przez VPN";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Korzystaj z sieci Tor za pomocą połączenia VPN zapewniającego dodatkową prywatność";
+"upsell_carousel_tor_subtitle" = "Korzystaj z sieci Tor za pośrednictwem połączenia VPN zapewniającego dodatkową prywatność";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "I wiele więcej...";
@@ -2747,13 +2747,13 @@
 "_connection_error_unexpected_protocol" = "Wybrane połączenie używa protokołu (%@), który nie jest już obsługiwany przez tę aplikację. Wybierz inne połączenie.";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "Wystąpił błąd podczas uwierzytelniania na serwerze: %@";
+"_connection_error_certificate_authentication" = "Wystąpił błąd podczas uwierzytelniania z serwerem: %@";
 
 /* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
 "_connection_error_certificate_authentication_key_generation_failed" = "nie mogliśmy wygenerować kluczy szyfrowania. (%@)";
 
 /* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "nie mogliśmy odświeżyć twoich danych uwierzytelniających. (%@)";
+"_connection_error_certificate_authentication_wont_refresh" = "nie mogliśmy odświeżyć danych uwierzytelniających. (%@)";
 
 /* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
 "_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Klucze nie są dostępne na urządzeniu.";
@@ -2765,7 +2765,7 @@
 "_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Certyfikat na tym urządzeniu wygasł.";
 
 /* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "nie jest możliwe odświeżenie twoich danych uwierzytelniających w tym momencie.";
+"_connection_error_certificate_authentication_rate_limited" = "nie jest możliwe odświeżenie danych uwierzytelniających.";
 
 /* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
 "_connection_error_certificate_authentication_ipc_message" = "wystąpił błąd protokołu. (%@)";
@@ -2774,13 +2774,13 @@
 "_connection_error_certificate_authentication_unexpected" = "wystąpił nieoczekiwany błąd danych uwierzytelniających. (%@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "Wystąpił problem z uruchomieniem VPN: %@";
+"_connection_error_tunnel_connection" = "Wystąpił problem z uruchomieniem usługi VPN: %@";
 
 /* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
 "_connection_error_tunnel_connection_tunnel_start" = "tunel nie mógł zostać ustanowiony. (%@)";
 
 /* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "wybrany serwer nie jest już dostępny. Wybierz inny serwer.";
+"_connection_error_tunnel_connection_unknown_server" = "serwer nie jest już dostępny. Wybierz inny serwer.";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
 "_connection_error_local_agent" = "Podczas połączenia wystąpił nieoczekiwany błąd: %@";
@@ -2816,10 +2816,19 @@
 "_provider_message_error_sending_error" = "Wystąpił błąd podczas próby wysłania wiadomości do dostawcy połączenia.";
 
 /* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "Dostawca połączeń otrzymał nieznane żądanie.";
+"_provider_message_error_unknown_request" = "Dostawca połączenia otrzymał nieznane żądanie.";
 
 /* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
 "_provider_message_error_unknown_response" = "Dostawca połączenia zwrócił nieznaną odpowiedź.";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Dostawca połączenia napotkał błąd: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+
+/* Recents section title */
+"widget_recents_title" = "Recents";
+
+/* Recents section description */
+"widget_recents_description" = "View your connection history here.";

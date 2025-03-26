@@ -1000,7 +1000,7 @@
 "_activate_widget_step_1" = "Dari layar beranda, geser ke layar paling kiri untuk mengakses widget Anda.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Gulir sampai bawah dan sentuh tombol sunting.";
+"_activate_widget_step_2" = "Gulir sampai bawah dan ketuk tombol sunting.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Tambahkan widget Proton VPN ke dalam daftar widget yang aktif.";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Penyedia koneksi mengalami kesalahan: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Periksa apakah Anda sedang terhubung ke VPN dan dapatkan akses kilat ke koneksi favorit Anda.";
+
+/* Recents section title */
+"widget_recents_title" = "Terkini";
+
+/* Recents section description */
+"widget_recents_description" = "Lihat riwayat koneksi Anda di sini.";

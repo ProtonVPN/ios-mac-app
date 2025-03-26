@@ -255,7 +255,7 @@
 "_failed" = "n'a pas abouti";
 
 /* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "La connexion n'a pas abouti.";
+"_connection_failed" = "Échec de la connexion.";
 
 /* iOS status view */
 "_security" = "Sécurité";
@@ -997,13 +997,13 @@
 "_activate_widget" = "Activer le widget";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Depuis votre écran d'accueil ou votre écran verrouillé, balayez vers la droite à partir du côté gauche de l’écran pour accéder à vos widgets.";
+"_activate_widget_step_1" = "Depuis votre écran d'accueil, balayez vers l'écran le plus à gauche pour accéder à vos widgets.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "Faites défiler jusqu'en bas et appuyez sur le bouton d'édition.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Ajouter le widget Proton VPN à la liste des widgets actifs.";
+"_activate_widget_step_3" = "Ajoutez le widget Proton VPN à la liste des widgets actifs.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Signaler un bug";
@@ -1707,7 +1707,7 @@
 "_home_unprotected_accessibility_label" = "Vous naviguez sans protection depuis %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_hint" = "Le VPN est déconnecté. Connectez-vous à un serveur pour naviguer sur internet en sécurité.";
+"_home_unprotected_accessibility_hint" = "Le VPN est déconnecté. Connectez-vous à un serveur pour naviguer sur internet en toute sécurité.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
 "_connection_card_accessibility_fastest" = "Le pays le plus rapide disponible";
@@ -1716,7 +1716,7 @@
 "_connection_card_accessibility_fastest_sc" = "Le pays Secure Core le plus rapide disponible";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "Appuyez deux fois pour afficher votre adresse IP.";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_hideAddress" = "Appuyez deux fois pour masquer votre adresse IP.";
@@ -1728,10 +1728,10 @@
 "_connection_card_default_connection" = "Connexion par défaut";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "Navigation en toute sécurité depuis :";
+"_connection_card_safely_browsing_from" = "Navigation en toute sécurité depuis :";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
-"_connection_card_last_connected_to" = "Dernière connexion :";
+"_connection_card_last_connected_to" = "Dernière connexion :";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
 "_connection_card_loading" = "Chargement...";
@@ -1755,7 +1755,7 @@
 "_connection_card_accessibility_loading" = "Chargement";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
-"home_default_connection_title" = "Sélectionnez votre connexion par défaut";
+"home_default_connection_title" = "Sélectionnez votre connexion par défaut.";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_name" = "Pays le plus rapide";
@@ -1770,7 +1770,7 @@
 "home_default_connection_most_recent_description" = "Votre connexion récente la plus utilisée";
 
 /* The section of upsell carousel in the Home tab. [Redesign_2023] */
-"_home_recents_upsell_section" = "Découvrez VPN Plus";
+"_home_recents_upsell_section" = "Découvrez VPN Plus";
 
 /* The section of recent connections in the Home tab. [Redesign_2023] */
 "_home_recents_recent_section" = "Connexions récentes";
@@ -1779,7 +1779,7 @@
 "_home_recents_options_button_help" = "Actions";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_plus_server" = "Serveur disponible avec VPN Plus";
+"_home_recents_plus_server" = "Serveur disponible avec VPN Plus";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Le serveur est en maintenance.";
@@ -1812,7 +1812,7 @@
 "_action_home_unpin" = "Désépingler";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
-"home_fastest_connection_selection_description" = "Sélection automatique depuis";
+"home_fastest_connection_selection_description" = "Sélection automatique parmi";
 
 /* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
 "home_fastest_connection_additional_country_count" = "+%@";
@@ -1898,7 +1898,7 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "Vous pouvez vous connecter à des sites en « .onion » avec votre navigateur habituel.";
+"_connection_details_feature_description_tor" = "Vous pouvez vous connecter à des sites cachés avec votre navigateur habituel.";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
@@ -1916,7 +1916,7 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Votre activité est chiffrée en passant par 2 serveurs VPN hautement sécurisés.";
+"_connection_details_feature_description_secure_core" = "Votre activité est chiffrée en passant par 2 serveurs VPN hautement sécurisés.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Streaming";
@@ -1982,7 +1982,7 @@
 "_settings_title_protocol" = "Protocole";
 
 /* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
-"_settings_title_vpn_accelerator" = "VPN Accelerator";
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
 
 /* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_advanced" = "Paramètres avancés";
@@ -1997,7 +1997,7 @@
 "_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Service d'assistance";
+"_settings_title_support_center" = "Espace Aide & Support";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
 "_settings_title_report_issue" = "Signaler un problème";
@@ -2009,7 +2009,7 @@
 "_settings_title_censorship" = "Aidez-nous à combattre la censure.";
 
 /* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
-"_settings_title_rate" = "Noter Proton VPN";
+"_settings_title_rate" = "Noter Proton VPN";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
 "_settings_title_restore_default_settings" = "Restaurer les paramètres par défaut";
@@ -2066,16 +2066,16 @@
 "_settings_protocol_description_wireguard_tcp" = "Rapide, sécurisé et efficace. WireGuard est difficile à détecter et à bloquer.";
 
 /* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tls" = "Contourne les blocages VPN en dissimulant votre connexion VPN aux autorités de contrôle. Ce protocole résiste à l'inspection approfondie des paquets (DPI), mais peut ne pas être aussi rapide que d'autres protocoles. Stealth est un protocole réservé à Proton VPN.";
+"_settings_protocol_description_wireguard_tls" = "Contourne les blocages VPN en dissimulant votre connexion VPN aux autorités de contrôle. Ce protocole résiste à l'inspection approfondie des paquets (DPI), mais peut ne pas être aussi rapide que d'autres protocoles. Stealth est un protocole réservé à Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Reconnu, éprouvé et sécurisé. OpenVPN sollicite davantage votre batterie que d'autres protocoles.";
+"_settings_protocol_description_openvpn_udp" = "Éprouvé, rigoureusement testé et sécurisé. OpenVPN sollicite davantage votre batterie que d'autres protocoles.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_tcp" = "Éprouvé, rigoureusement testé et sécurisé. OpenVPN est un protocole fiable dans de mauvaises conditions de réseau, mais il peut ne pas être aussi rapide que d'autres protocoles.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_ikev2" = "Rapide, sécurisé et stable, mais plus facile à détecter et à bloquer pour les censeurs.";
+"_settings_protocol_description_ikev2" = "Rapide, sécurisé et stable, mais plus facile à détecter et à bloquer pour les autorités de contrôle.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
 "_settings_protocol_tag_recommended" = "RECOMMANDÉ";
@@ -2696,7 +2696,7 @@
 "upsell_carousel_faster_browsing_title" = "Navigation plus rapide";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Naviguez à des vitesses encore plus élevées (jusqu'à 10 Gbit/s).";
+"upsell_carousel_faster_browsing_subtitle" = "Naviguez à des vitesses encore plus élevées (jusqu'à 10 Gbits/s).";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Streaming";
@@ -2723,7 +2723,7 @@
 "upsell_carousel_p2p_subtitle" = "Téléchargez des fichiers depuis BitTorrent ou d'autres protocoles de partage de fichiers.";
 
 /* Home upsell carousel card title */
-"upsell_carousel_devices_title" = "Protection de 10 appareils";
+"upsell_carousel_devices_title" = "Protégez 10 appareils";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_devices_subtitle" = "Sécurité et respect de la vie privée sur tous vos appareils";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Le fournisseur de connexion a rencontré une erreur : %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Vérifiez si vous êtes connecté au VPN et accédez rapidement à vos connexions préférées.";
+
+/* Recents section title */
+"widget_recents_title" = "Connexions récentes";
+
+/* Recents section description */
+"widget_recents_description" = "Voir votre historique de connexion.";

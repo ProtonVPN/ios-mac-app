@@ -255,7 +255,7 @@
 "_failed" = "mislukt";
 
 /* Connection error translation. iOS quick connect widget: text shown on error. */
-"_connection_failed" = "Verbinding Mislukt";
+"_connection_failed" = "Verbinding mislukt";
 
 /* iOS status view */
 "_security" = "Beveiliging";
@@ -994,13 +994,13 @@
 "_wireguard_logs" = "WireGuard Logboeken";
 
 /* iOS widget help screen: title */
-"_activate_widget" = "Activeer Widget";
+"_activate_widget" = "Widget activeren";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Veeg naar het meest linkse scherm vanaf uw thuisscherm om uw widgets te beheren.";
+"_activate_widget_step_1" = "Veeg naar het meest linkse scherm vanaf uw beginscherm om uw widgets te beheren.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Schuif helemaal naar beneden en klik op de knop bewerken.";
+"_activate_widget_step_2" = "Scroll helemaal naar beneden en klik op de knop Bewerken.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Voeg de Proton VPN-widget toe aan de lijst met actieve widgets.";
@@ -1151,7 +1151,7 @@
 "_extensions" = "Extensies";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS-Widget";
+"_widget" = "iOS-widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Gebruiksstatistieken";
@@ -1704,10 +1704,10 @@
 "_home_unprotected_header" = "U bent niet beschermd";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_label" = "U surft onbeveiligd van %@.";
+"_home_unprotected_accessibility_label" = "U surft onbeveiligd vanaf %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_hint" = "De VPN-verbinding is verbroken. Maak verbinding met een server om veilig door het internet te surfen.";
+"_home_unprotected_accessibility_hint" = "De VPN-verbinding is verbroken. Maak verbinding met een server om veilig te internetten.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
 "_connection_card_accessibility_fastest" = "Het snelste beschikbaar land";
@@ -1734,7 +1734,7 @@
 "_connection_card_last_connected_to" = "Laatst verbonden met";
 
 /* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
-"_connection_card_loading" = "Laden";
+"_connection_card_loading" = "Bezig met laden...";
 
 /* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
 "_connection_card_connecting_to" = "Verbinding maken met…...";
@@ -1755,16 +1755,16 @@
 "_connection_card_accessibility_loading" = "Laden";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
-"home_default_connection_title" = "Selecteer uw standaard verbinding";
+"home_default_connection_title" = "Selecteer uw standaardverbinding";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Snelste Land";
+"home_default_connection_fastest_name" = "Snelste land";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "De beste server op basis van uw locatie";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_name" = "Meest Recent";
+"home_default_connection_most_recent_name" = "Meest recent";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_description" = "Uw meest recente verbinding";
@@ -1785,7 +1785,7 @@
 "_home_recents_server_under_maintenance" = "Servers in onderhoud";
 
 /* Title of the "Random" recent connection item */
-"home_recents_random_server_title" = "Willekeurig Land";
+"home_recents_random_server_title" = "Willekeurig land";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Help";
@@ -1803,7 +1803,7 @@
 "_connection_card_action_cancel" = "Annuleren";
 
 /* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
-"_show_connection_details_button_hint" = "Weergeven connectie details";
+"_show_connection_details_button_hint" = "Verbindingsgegevens tonen";
 
 /* Home screen: pin this connection in the recents view. [Redesign_2023] */
 "_action_home_pin" = "Vastmaken";
@@ -1916,13 +1916,13 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Uw activiteit is versleuteld achter 2 high-security VPN-servers.";
+"_connection_details_feature_description_secure_core" = "Uw activiteit is versleuteld achter twee high-security VPN-servers.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Streaming";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "Deze server is geoptimaliseerd voor het afspelen van TV en film.";
+"_connection_details_feature_description_streaming" = "Deze server is geoptimaliseerd voor het afspelen van series en films.";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "Functies";
@@ -1961,7 +1961,7 @@
 "_settings_section_title_features" = "Functies";
 
 /* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
-"_settings_section_title_connection" = "Connectie";
+"_settings_section_title_connection" = "Verbinding";
 
 /* Title of the 'General' section in the Settings tab [Redesign_2023] */
 "_settings_section_title_general" = "Algemeen";
@@ -1976,7 +1976,7 @@
 "_settings_title_netshield" = "NetShield";
 
 /* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
-"_settings_title_kill_switch" = "Kill switch";
+"_settings_title_kill_switch" = "IP-beveiliging";
 
 /* Title of the Protocol cell in the Settings tab [Redesign_2023] */
 "_settings_title_protocol" = "Protocol";
@@ -1997,10 +1997,10 @@
 "_settings_title_widget" = "Widget";
 
 /* Title of the Support Center cell in the Settings tab [Redesign_2023] */
-"_settings_title_support_center" = "Helpdesk";
+"_settings_title_support_center" = "Helpcentrum";
 
 /* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
-"_settings_title_report_issue" = "Meld een probleem";
+"_settings_title_report_issue" = "Een probleem melden";
 
 /* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
 "_settings_title_debug_logs" = "Foutopsporingslogboek";
@@ -2018,7 +2018,7 @@
 "_settings_title_sign_out" = "Afmelden";
 
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
-"_settings_app_version" = "App versie: %@";
+"_settings_app_version" = "App-versie: %@";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Aan";
@@ -2060,7 +2060,7 @@
 "_settings_protocol_description_smart" = "Selecteert automatisch het beste protocol voor uw verbinding.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_udp" = "Snel, veilig en efficiënt. WireGuard is batterij-efficiënter dan andere protocollen.";
+"_settings_protocol_description_wireguard_udp" = "Snel, veilig en efficiënt. WireGuard is energiezuiniger dan andere protocollen.";
 
 /* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_tcp" = "Snel, veilig en efficiënt. WireGuard is moeilijk te detecteren en te blokkeren.";
@@ -2069,7 +2069,7 @@
 "_settings_protocol_description_wireguard_tls" = "Negeert VPN-blokkades door uw VPN-verbinding te verbergen voor censoren. Dit protocol is bestand tegen DPI (Deep Packet Inspection), maar is niet altijd even snel als andere protocollen. Stealth is exclusief voor Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_openvpn_udp" = "Gevestigd, goed getest en veilig. OpenVPN is minder batterij-efficiënt dan sommige andere protocollen.";
+"_settings_protocol_description_openvpn_udp" = "Gevestigd, goed getest en veilig. OpenVPN is minder energiezuinig dan sommige andere protocollen.";
 
 /* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_tcp" = "Gevestigd, goed getest en veilig. OpenVPN is betrouwbaar bij slechte netwerkomstandigheden, maar is mogelijk niet zo snel als andere protocollen.";
@@ -2093,7 +2093,7 @@
 "_settings_protocol_alert_body" = "Het wijzigen van protocollen zal uw huidige VPN-sessie beëindigen.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_button_cancel" = "Annuleer";
+"_settings_protocol_alert_button_cancel" = "Annuleren";
 
 /* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_continue" = "Doorgaan";
@@ -2696,7 +2696,7 @@
 "upsell_carousel_faster_browsing_title" = "Sneller browsen";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Browse aan nog hogere snelheden (tot 10 Gbps)";
+"upsell_carousel_faster_browsing_subtitle" = "Browse met nog hogere snelheden (tot 10 Gbps)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Streamen";
@@ -2732,7 +2732,7 @@
 "upsell_carousel_tor_title" = "Tor via VPN";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_tor_subtitle" = "Gebruik het Tor netwerk via uw VPN-verbinding voor extra privacy";
+"upsell_carousel_tor_subtitle" = "Gebruik het Tor-netwerk via uw VPN-verbinding voor extra privacy";
 
 /* Home upsell carousel card title */
 "upsell_carousel_more_title" = "En nog veel meer...";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "De netwerkprovider ondervond een fout: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Controleer of u bent verbonden met VPN en krijg snel toegang tot uw favoriete verbindingen.";
+
+/* Recents section title */
+"widget_recents_title" = "Recente";
+
+/* Recents section description */
+"widget_recents_description" = "Bekijk hier uw verbindingsgeschiedenis.";

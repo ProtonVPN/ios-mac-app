@@ -1794,7 +1794,7 @@
 "_action_connect" = "Conectar";
 
 /* For buttons which have an action that removes an item. [Redesign_2023] */
-"_action_remove" = "Eliminar";
+"_action_remove" = "Borrar";
 
 /* For buttons which have an action that disconnects from a server. [Redesign_2023] */
 "_action_disconnect" = "Desconectar";
@@ -2090,7 +2090,7 @@
 "_settings_protocol_alert_title" = "Conexión VPN activa";
 
 /* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
-"_settings_protocol_alert_body" = "Al cambiar de protocolos finalizará tu sesión de VPN actual.";
+"_settings_protocol_alert_body" = "Al cambiar de protocolos finalizará su sesión de VPN actual.";
 
 /* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_button_cancel" = "Cancelar";
@@ -2504,7 +2504,7 @@
 "welcome_to_proton_banner_subtitle" = "Su actividad de VPN está protegida por las leyes de privacidad suizas. Nunca le rastrearemos en línea ni compartiremos su información con terceros.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle_redesign" = "Nunca registraremos su actividad en línea o compartiremos su información con terceros.";
+"welcome_to_proton_banner_subtitle_redesign" = "Nunca registraremos su actividad online ni compartiremos su información con terceros.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
 "onboarding_get_started_statistics_toggle_title" = "Compartir estadísticas de uso anónimo";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "El proveedor de conexión encontró un error: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Compruebe si está conectado a la VPN y consiga un acceso rápido a sus conexiones favoritas.";
+
+/* Recents section title */
+"widget_recents_title" = "Recientes";
+
+/* Recents section description */
+"widget_recents_description" = "Consulte aquí el historial de conexiones.";

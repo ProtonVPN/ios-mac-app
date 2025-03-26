@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Poskytovatel připojení vrátil chybu: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Zkontrolujte, zda jste připojeni k VPN a získejte rychlý přístup ke svým oblíbeným připojením.";
+
+/* Recents section title */
+"widget_recents_title" = "Nedávné";
+
+/* Recents section description */
+"widget_recents_description" = "Zde zobrazíte historii připojení.";

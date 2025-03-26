@@ -37,9 +37,9 @@
         <key>few</key>
         <string>%d країнах</string>
         <key>many</key>
-        <string>%d країн</string>
+        <string>%d країнах</string>
         <key>other</key>
-        <string>%d країні</string>
+        <string>%d країнах</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -66,7 +66,7 @@
         <key>one</key>
         <string>Захистіть %d пристрій</string>
         <key>few</key>
-        <string>Захистіть до %d пристроїв</string>
+        <string>Захистіть до %d пристрої</string>
         <key>many</key>
         <string>Захистіть до %d пристроїв</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -321,7 +321,7 @@
         <string>Оголошення
 заблоковано</string>
         <key>few</key>
-        <string>Оголошення
+        <string>Оголошень
 заблоковано</string>
         <key>many</key>
         <string>Оголошень
@@ -342,17 +342,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Зупинені
-вистежувачі</string>
+        <string>Зупинений
+вистежувач</string>
         <key>few</key>
         <string>Зупинені
 вистежувачі</string>
         <key>many</key>
-        <string>Зупинені
-вистежувачі</string>
+        <string>Зупинених
+вистежувачів</string>
         <key>other</key>
-        <string>Зупинені
-вистежувачі</string>
+        <string>Зупинених
+вистежувачів</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

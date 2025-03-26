@@ -997,7 +997,7 @@
 "_activate_widget" = "Widget aktivieren";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Swipe von deinem Homescreen aus nach links, um auf deine Widgets zuzugreifen.";
+"_activate_widget_step_1" = "Wische von deinem Homescreen aus nach links, um auf deine Widgets zuzugreifen.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "Scrolle ganz nach unten und tippe auf die Bearbeiten‐Schaltfläche.";
@@ -1707,7 +1707,7 @@
 "_home_unprotected_accessibility_label" = "Du surft ungeschützt von %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_hint" = "Die VPN-Verbindung ist unterbrochen. Stelle eine Verbindung zu einem Server her, um sicher im Internet zu surfen.";
+"_home_unprotected_accessibility_hint" = "Die VPN-Verbindung ist getrennt. Stelle eine Verbindung zu einem Server her, um sicher im Internet zu surfen.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
 "_connection_card_accessibility_fastest" = "Das schnellste verfügbare Land";
@@ -1916,7 +1916,7 @@
 "_connection_details_feature_title_secure_core" = "Secure Core";
 
 /* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_secure_core" = "Deine Aktivitäten werden hinter 2 hochsicheren VPN-Servern verschlüsselt.";
+"_connection_details_feature_description_secure_core" = "Deine Aktivitäten werden mit zwei hochsicheren VPN-Servern verschlüsselt.";
 
 /* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_streaming" = "Streaming";
@@ -2012,7 +2012,7 @@
 "_settings_title_rate" = "Proton VPN bewerten";
 
 /* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
-"_settings_title_restore_default_settings" = "Standardeneinstellungen wiederherstellen";
+"_settings_title_restore_default_settings" = "Standardeinstellungen wiederherstellen";
 
 /* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
 "_settings_title_sign_out" = "Abmelden";
@@ -2075,7 +2075,7 @@
 "_settings_protocol_description_openvpn_tcp" = "Bewährt, gut getestet und sicher. OpenVPN ist bei schlechten Netzwerkbedingungen zuverlässig, aber möglicherweise nicht so schnell wie andere Protokolle.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_ikev2" = "Schnell, sicher und stabil - aber leichter für Zensoren zu erkennen und zu blockieren.";
+"_settings_protocol_description_ikev2" = "Schnell, sicher und stabil – aber leichter für Zensoren zu erkennen und zu blockieren.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
 "_settings_protocol_tag_recommended" = "EMPFOHLEN";
@@ -2438,7 +2438,7 @@
 "modals_whats_new_redesign_title" = "Neues Aussehen, gleicher Schutz";
 
 /* Subtitle of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_subtitle" = "Wir haben unser Design aktualisiert und einige Dinge umgestellt, um die App benutzerfreundlicher zu machen.";
+"modals_whats_new_redesign_subtitle" = "Wir haben unser Design überarbeitet und einige Dinge umgestellt, um die App benutzerfreundlicher zu gestalten.";
 
 /* Title of recents related content of the "What's new" screen */
 "modals_whats_new_recents_title" = "Einführung von kürzlich Verwendeten";
@@ -2702,7 +2702,7 @@
 "upsell_carousel_streaming_title" = "Streaming";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_streaming_subtitle" = "Schau dir deine Lieblingsfilme und Fernsehsendungen an";
+"upsell_carousel_streaming_subtitle" = "Schau dir deine Lieblingsfilme und -serien an";
 
 /* Home upsell carousel card title */
 "upsell_carousel_netshield_title" = "NetShield";
@@ -2726,7 +2726,7 @@
 "upsell_carousel_devices_title" = "Schütze 10 Geräte";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_devices_subtitle" = "Sicherheit und Datenschutz auf all deinen Geräten";
+"upsell_carousel_devices_subtitle" = "Sicherheit und Privatsphäre auf all deinen Geräten";
 
 /* Home upsell carousel card title */
 "upsell_carousel_tor_title" = "Tor über VPN";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Der Verbindungsanbieter ist auf einen Fehler gestoßen: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Prüfe, ob du mit einem VPN verbunden bist und erhalte schnellen Zugriff auf deine bevorzugten Verbindungen.";
+
+/* Recents section title */
+"widget_recents_title" = "Neueste";
+
+/* Recents section description */
+"widget_recents_description" = "Hier kannst du deinen Verbindungsverlauf einsehen.";

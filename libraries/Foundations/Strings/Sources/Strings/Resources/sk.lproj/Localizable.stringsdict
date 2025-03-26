@@ -362,7 +362,7 @@ zastavené</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dni</string>
+        <string>%d dní</string>
         <key>one</key>
         <string>%d deň</string>
         <key>few</key>
@@ -382,7 +382,7 @@ zastavené</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d dni</string>
+        <string>%d dní</string>
         <key>one</key>
         <string>%d deň</string>
         <key>few</key>
@@ -393,17 +393,17 @@ zastavené</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>few</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>many</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
       </dict>
     </dict>
     <key>_session_length_hours_and_minutes</key>
@@ -413,32 +413,32 @@ zastavené</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>many</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>few</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>many</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
       </dict>
     </dict>
     <key>_session_length_hours</key>
@@ -448,17 +448,17 @@ zastavené</string>
       <key>HOURS</key>
       <dict>
         <key>one</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>few</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>many</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d h</string>
+        <string>%d hod.</string>
       </dict>
     </dict>
     <key>_session_length_minutes_and_seconds</key>
@@ -468,32 +468,32 @@ zastavené</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>many</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d s</string>
+        <string>%d sek</string>
         <key>few</key>
-        <string>%d s</string>
+        <string>%d sek</string>
         <key>many</key>
-        <string>%d s</string>
+        <string>%d sek</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d s</string>
+        <string>%d sek</string>
       </dict>
     </dict>
     <key>_session_length_minutes</key>
@@ -503,17 +503,17 @@ zastavené</string>
       <key>MINUTES</key>
       <dict>
         <key>one</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>few</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>many</key>
-        <string>%d min</string>
+        <string>%d min.</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d min</string>
+        <string>%d min.</string>
       </dict>
     </dict>
     <key>_session_length_seconds</key>
@@ -523,17 +523,17 @@ zastavené</string>
       <key>SECONDS</key>
       <dict>
         <key>one</key>
-        <string>%d s</string>
+        <string>%d sek</string>
         <key>few</key>
-        <string>%d s</string>
+        <string>%d sek</string>
         <key>many</key>
-        <string>%d s</string>
+        <string>%d sek</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d s</string>
+        <string>%d sek</string>
       </dict>
     </dict>
     <key>_step_of</key>
@@ -578,17 +578,17 @@ zastavené</string>
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Umiestnenia bezplatných serverov (%d)</string>
+        <string>Bezplatné umiestnenie servera (%d)</string>
         <key>few</key>
-        <string>Umiestnenia bezplatných serverov (%d)</string>
+        <string>Bezplatné umiestnenia serverov (%d)</string>
         <key>many</key>
-        <string>Umiestnenia bezplatných serverov (%d)</string>
+        <string>Bezplatné umiestnenia serverov (%d)</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Umiestnenia bezplatných serverov (%d)</string>
+        <string>Bezplatné umiestnenia serverov (%d)</string>
       </dict>
     </dict>
     <key>plan_duration_month</key>
@@ -622,13 +622,13 @@ zastavené</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d krajinám</string>
+        <string>%d krajín</string>
         <key>one</key>
-        <string>%d krajine</string>
+        <string>%d krajina</string>
         <key>few</key>
-        <string>%d krajinám</string>
+        <string>%d krajiny</string>
         <key>many</key>
-        <string>%d krajinám</string>
+        <string>%d krajín</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

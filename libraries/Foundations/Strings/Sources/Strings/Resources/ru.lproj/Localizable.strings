@@ -1000,7 +1000,7 @@
 "_activate_widget_step_1" = "Смахните вправо на экране «Домой», экране блокировки или в программе «Центр уведомлений», чтобы получить доступ к виджетам.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку \"Изменить\".";
+"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку «Изменить».";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Добавить виджет Proton VPN в список активных виджетов.";
@@ -1151,13 +1151,13 @@
 "_extensions" = "Расширения";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS виджет";
+"_widget" = "Виджет для iOS";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Статистика использования";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Пожалуйста, войдите, чтобы начать";
+"_log_in_to_use_widget" = "Войдите, чтобы начать";
 
 "_vpnstatus_not_loggedin" = "Вы не вошли в Proton VPN. Откройте приложение Proton VPN и войдите.";
 
@@ -1707,7 +1707,7 @@
 "_home_unprotected_accessibility_label" = "You are browsing unprotected from %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_hint" = "VPN отключена. Подключитесь к серверу, чтобы безопасно просматривать интернет.";
+"_home_unprotected_accessibility_hint" = "VPN отключена. Подключитесь к серверу, чтобы работать в Интернете безопасно.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
 "_connection_card_accessibility_fastest" = "The fastest country available";
@@ -1755,7 +1755,7 @@
 "_connection_card_accessibility_loading" = "Загрузка";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
-"home_default_connection_title" = "Выберите ваше подключение по умолчанию";
+"home_default_connection_title" = "Выберите подключение по умолчанию";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_name" = "Fastest Country";
@@ -1991,7 +1991,7 @@
 "_settings_title_theme" = "Тема";
 
 /* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
-"_settings_title_beta_access" = "Бета доступ";
+"_settings_title_beta_access" = "Бета-доступ";
 
 /* Title of the Widget cell in the Settings tab [Redesign_2023] */
 "_settings_title_widget" = "Виджет";
@@ -2024,13 +2024,13 @@
 "_settings_netshield_on" = "Включён";
 
 /* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
-"_settings_netshield_off" = "Выключено";
+"_settings_netshield_off" = "Выключен";
 
 /* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
 "_settings_killswitch_on" = "Включён";
 
 /* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
-"_settings_killswitch_off" = "Выключено";
+"_settings_killswitch_off" = "Выключен";
 
 /* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
 "_settings_theme_value_auto" = "По умолчанию";
@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Ошибка провайдера подключения: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+
+/* Recents section title */
+"widget_recents_title" = "Recents";
+
+/* Recents section description */
+"widget_recents_description" = "View your connection history here.";

@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "У пастаўшчыка падключэння ўзнікла памылка: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Праверце, ці падключаны вы да VPN і атрымайце хуткі доступ да вашых улюблёных злучэнняў.";
+
+/* Recents section title */
+"widget_recents_title" = "Нядаўнія";
+
+/* Recents section description */
+"widget_recents_description" = "Паглядзець сваю гісторыю падключэнняў.";

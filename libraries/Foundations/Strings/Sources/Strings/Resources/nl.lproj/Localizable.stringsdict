@@ -95,13 +95,13 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d+ landen</string>
+        <string>%d+ land</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d+ land</string>
+        <string>%d+ landen</string>
       </dict>
       <key>num_servers</key>
       <dict>

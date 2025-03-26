@@ -2823,3 +2823,12 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
 "_provider_message_error_remote_error" = "Ο πάροχος σύνδεσης αντιμετώπισε σφάλμα: %@";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Ελέγξτε αν είστε συνδεδεμένοι στο VPN και αποκτήστε γρήγορη πρόσβαση στις αγαπημένες σας συνδέσεις.";
+
+/* Recents section title */
+"widget_recents_title" = "Πρόσφατες";
+
+/* Recents section description */
+"widget_recents_description" = "Δείτε το ιστορικό σύνδεσής σας εδώ.";
