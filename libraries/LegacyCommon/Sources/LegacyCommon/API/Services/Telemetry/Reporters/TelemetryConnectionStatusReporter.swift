@@ -383,11 +383,11 @@ class TelemetryConnectionStatusReporter {
         case .connecting(let intent):
             switch intent {
             case .resolved:
-                if previousConnectionStatus == .connecting {
+                if case .connecting(.unresolved) = previousConnectionState {
                     return .success
                 }
             case .unresolved:
-                if previousConnectionStatus == .disconnected {
+                if previousConnectionState == .disconnected {
                     return .success
                 }
             }
