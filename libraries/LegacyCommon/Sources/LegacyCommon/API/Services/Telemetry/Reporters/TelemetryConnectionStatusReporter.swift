@@ -307,15 +307,15 @@ class TelemetryConnectionStatusReporter {
             return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
             switch previousConnectionState {
-            case .connected, .disconnecting:
+            case .connected:
                 return .vpnDisconnection(sessionLength: try timer.connectionDuration)
             case .connecting:
                 return .vpnConnection(timeToConnection: try timer.timeConnecting)
             case .disconnected:
                 log.debug("Ignoring disconnected event, was previously disconnected.")
                 return nil
-            case .resolving:
-                // Ignoring resolving state
+            case .resolving, .disconnecting:
+                // Ignoring resolving and disconnecting states
                 return nil
             }
         case .connecting:
