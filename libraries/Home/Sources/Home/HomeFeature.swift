@@ -196,7 +196,6 @@ public struct HomeFeature {
                 }
                 let randomConnectionSpec = ConnectionSpec(location: .random, features: .init())
                 return .concatenate([
-                    .send(.disconnect(.changeServer)),
                     .send(.connect(randomConnectionSpec, .changeServer)),
                 ])
 

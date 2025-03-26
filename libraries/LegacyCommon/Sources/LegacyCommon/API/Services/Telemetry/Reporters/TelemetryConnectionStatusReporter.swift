@@ -130,11 +130,13 @@ class TelemetryConnectionStatusReporter {
             timer.markFinishedConnecting()
             eventType = try connectionEventType(state: connectionState)
         case .connecting(let intent):
-            if case .resolved(let resolvedConnectionIntent, _) = intent {
+            switch intent {
+            case .resolved(let resolvedConnectionIntent, _):
                 connection = resolvedConnectionIntent
+            case .unresolved:
+                timer.markConnectionStopped()
+                timer.markStartedConnecting()
             }
-            timer.markConnectionStopped()
-            timer.markStartedConnecting()
             eventType = try connectionEventType(state: connectionState)
         case .disconnected:
             connection = previousConnectionIntent
@@ -305,12 +307,15 @@ class TelemetryConnectionStatusReporter {
             return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
             switch previousConnectionState {
-            case .connected:
+            case .connected, .disconnecting:
                 return .vpnDisconnection(sessionLength: try timer.connectionDuration)
             case .connecting:
                 return .vpnConnection(timeToConnection: try timer.timeConnecting)
-            default:
-                // Ignoring disconnected event, was previously disconnected
+            case .disconnected:
+                log.debug("Ignoring disconnected event, was previously disconnected.")
+                return nil
+            case .resolving:
+                // Ignoring resolving state
                 return nil
             }
         case .connecting:
@@ -375,8 +380,8 @@ class TelemetryConnectionStatusReporter {
             }
         case .connected:
             return .success
-        case .connecting:
-            if previousConnectionStatus == .connected {
+        case .connecting(let intent):
+            if case .resolved = intent, previousConnectionStatus == .connecting {
                 return .success
             }
             return .failure
