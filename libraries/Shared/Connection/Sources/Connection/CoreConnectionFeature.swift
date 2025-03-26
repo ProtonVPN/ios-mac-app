@@ -303,18 +303,18 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .none:
             return .none
 
-        case .disconnect:
+        case .disconnect(.immediately):
             return .merge(
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.localAgent(.disconnect(.agentError(error)))),
                 .send(.tunnel(.disconnect(nil)))
             )
-
-        case .reconnect(.withNewKeysAndCertificate):
-            return .concatenate(
-                .send(.localAgent(.disconnect(nil))),
+        case .disconnect(.withNewKeys):
+            return .merge(
+                .cancel(id: CancelID.connectionTimeout),
                 .send(.certAuth(.regenerateKeys)),
-                .send(.certAuth(.loadAuthenticationData))
+                .send(.localAgent(.disconnect(.agentError(error)))),
+                .send(.tunnel(.disconnect(nil)))
             )
 
         case .reconnect(.withNewCertificate):

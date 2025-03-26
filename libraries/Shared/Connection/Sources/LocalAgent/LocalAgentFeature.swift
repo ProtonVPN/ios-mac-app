@@ -257,13 +257,26 @@ extension LocalAgentConnectionError: ProtonVPNError {
 }
 
 package enum LocalAgentErrorResolutionStrategy {
-    case none // do nothing, error might resolve itself or doesn't warrant a response
-    case disconnect
+    /// Do nothing, error might resolve itself or doesn't warrant a response
+    case none
+    case disconnect(DisconnectionStrategy)
     case reconnect(ReconnectionStrategy)
 
+    package enum DisconnectionStrategy {
+        /// Just disconnect
+        case immediately
+        /// Delete authentication data (keys & certificate), then disconnect
+        case withNewKeys
+    }
+
     package enum ReconnectionStrategy {
-        case withNewKeysAndCertificate
+        /// Reconnecting after regenerating keys requires a tunnel reconnection as well.
+        /// For simplicity, we have removed this strategy in favour of disconnecting when we encounter such errors.
+        // case withNewKeysAndCertificate
+
+        /// Disconnect from local agent, request a new certificate and attempt to reconnect
         case withNewCertificate
+        /// Just reconnect, reusing our existing certificate
         case withExistingCertificate
     }
 }
@@ -286,7 +299,10 @@ extension LocalAgentError {
             return .reconnect(.withExistingCertificate)
 
         case .badCertificateSignature, .certificateRevoked, .keyUsedMultipleTimes, .serverSessionDoesNotMatch:
-            return .reconnect(.withNewKeysAndCertificate)
+            // For now, it's too complicated to restart the whole connection process after regenerating keys,
+            // since we would have to tear down the tunnel and reconfigure it with the new private key.
+            // return .reconnect(.withNewKeysAndCertificate)
+            return .disconnect(.withNewKeys)
 
         case .maxSessionsUnknown,
                 .maxSessionsFree,
@@ -301,7 +317,7 @@ extension LocalAgentError {
                 .userBadBehavior,
                 .guestSession:
             // The error shown on disconnection is customised through its implementation of AlertConvertibleError
-            return .disconnect
+            return .disconnect(.immediately)
 
         case .unknown:
             return .none
