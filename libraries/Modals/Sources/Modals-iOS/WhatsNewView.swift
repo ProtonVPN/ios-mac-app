@@ -81,26 +81,29 @@ public struct WhatsNewView: View {
         }
     }
 
-    private var recentsTextContentView: some View {
+    private func textSection(title: String, subtitle: String) -> some View {
         VStack(alignment: .leading, spacing: .themeSpacing2) {
-            Text(Localizable.modalsWhatsNewRecentsTitle)
+            Text(title)
                 .themeFont(.body1(.bold))
-
-            Text(Localizable.modalsWhatsNewRecentsSubtitle)
+            Text(subtitle)
                 .themeFont(.body2(emphasised: false))
                 .foregroundColor(Color(.text, .weak))
         }
     }
 
-    private var gatewaysTextContentView: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing2) {
-            Text(Localizable.modalsWhatsNewGatewaysTitle)
-                .themeFont(.body1(.bold))
+    private var recentsTextContentView: some View {
+        textSection(title: Localizable.modalsWhatsNewRecentsTitle,
+                    subtitle: Localizable.modalsWhatsNewRecentsSubtitle)
+    }
 
-            Text(Localizable.modalsWhatsNewGatewaysSubtitle)
-                .themeFont(.body2(emphasised: false))
-                .foregroundColor(Color(.text, .weak))
-        }
+    private var gatewaysTextContentView: some View {
+        textSection(title: Localizable.modalsWhatsNewGatewaysTitle,
+                    subtitle: Localizable.modalsWhatsNewGatewaysSubtitle)
+    }
+
+    private var widgetTextContentView: some View {
+        textSection(title: Localizable.widgetWhatsNewTitle,
+                    subtitle: Localizable.widgetWhatsNewSubtitle)
     }
 
     @ViewBuilder
@@ -115,11 +118,18 @@ public struct WhatsNewView: View {
             recentsTextContentView
             gatewaysTextContentView
         }
+        widgetTextContentView
     }
 }
 
-struct WhatsNewView_Previews: PreviewProvider {
-    static var previews: some View {
-        WhatsNewView(variant: .plus)
-    }
+#Preview("Free") {
+    WhatsNewView(variant: .free)
+}
+
+#Preview("Plus") {
+    WhatsNewView(variant: .plus)
+}
+
+#Preview("Business") {
+    WhatsNewView(variant: .business)
 }

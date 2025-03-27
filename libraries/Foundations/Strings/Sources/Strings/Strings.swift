@@ -2209,6 +2209,10 @@ public enum Localizable {
   public static var widgetRecentsTitle: String { return Localizable.tr("Localizable", "widget_recents_title", fallback: "Recents") }
   /// Text that appears as subtitle to the widget when user is creating it
   public static var widgetTrayDescription: String { return Localizable.tr("Localizable", "widget_tray_description", fallback: "Check if you’re connected to VPN and get quick access to your favorite connections.") }
+  /// What's new screen section subtitle
+  public static var widgetWhatsNewSubtitle: String { return Localizable.tr("Localizable", "widget_whats_new_subtitle", fallback: "You can now view and manage your VPN connection without leaving the Home Screen.") }
+  /// What's new screen section title
+  public static var widgetWhatsNewTitle: String { return Localizable.tr("Localizable", "widget_whats_new_title", fallback: "Widgets are back") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
