@@ -46,7 +46,7 @@ final class TabBarController: UITabBarController {
 
         delegate = self
         setupView()
-        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if !FeatureFlagsRepository.isRedesigniOSEnabled {
             setupQuickConnectView()
         }
     }

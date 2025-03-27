@@ -54,7 +54,7 @@ public class IOSLogContentProvider: LogContentProvider {
             return OSLogContent()
 
         case .wireguard:
-            guard FeatureFlagsRepository.shared.isConnectionFeatureEnabled else {
+            guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
                 let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
                 return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(DomainConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
             }

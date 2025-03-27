@@ -398,7 +398,7 @@ class TelemetryConnectionStatusReporter {
     private func vpnTrigger(eventType: ConnectionEvent.Event) -> UserInitiatedVPNChange.VPNTrigger {
 
         let newConnection: () -> UserInitiatedVPNChange.VPNTrigger = { [weak self] in
-            if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+            if FeatureFlagsRepository.isConnectionFeatureEnabled {
                 if case .connected = self?.previousConnectionState,
                    case .vpnDisconnection = eventType {
                     return .newConnection

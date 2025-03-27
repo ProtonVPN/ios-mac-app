@@ -280,7 +280,7 @@ class CountryItemViewModel {
                 alertService: self.alertService,
                 vpnGateway: self.vpnGateway,
                 connectionStatusService: self.connectionStatusService,
-                isRedesign: FeatureFlagsRepository.shared.isRedesigniOSEnabled
+                isRedesign: FeatureFlagsRepository.isRedesigniOSEnabled
             )
         }.sorted(by: { $0.cityName < $1.cityName })
     }()

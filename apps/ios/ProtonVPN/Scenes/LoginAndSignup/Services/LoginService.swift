@@ -300,7 +300,6 @@ extension CoreLoginService: LoginService {
         }
     }
 
-
 #if !RELEASE
     private func showAppDebugConfiguration() {
         let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in

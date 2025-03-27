@@ -767,7 +767,7 @@ final class SettingsViewModel {
     }
 
     func isActive() -> Bool {
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             return settingsClient.isActive()
         } else {
             return !appStateManager.state.isSafeToEnd
@@ -777,7 +777,7 @@ final class SettingsViewModel {
     private func getProtocolChangeAvailability(
         for connectionProtocol: ConnectionProtocol
     ) -> ProtocolChangeAvailability {
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             return settingsClient.protocolChangeAvailability(connectionProtocol)
         } else {
             guard let activeConnection = appStateManager.activeConnection() else {
@@ -795,7 +795,7 @@ final class SettingsViewModel {
         for featureChange: ConnectionFeatureChange,
         completion: @escaping (VpnFeatureChangeState) -> Void
     ) {
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             completion(settingsClient.featureChangeAvailability(featureChange))
         } else {
             vpnStateConfiguration.getInfo { info in
@@ -806,7 +806,7 @@ final class SettingsViewModel {
     }
 
     private func requestDisconnect(completionHandler: (@MainActor () -> Void)? = nil) {
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             Task {
                 do {
                     try await settingsClient.disconnect()
@@ -826,7 +826,7 @@ final class SettingsViewModel {
     }
 
     private func apply(agentFeatureChange: ConnectionFeatureChange.AgentFeature) {
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             DispatchQueue.main.async {
                 self.settingsClient.update(Set([agentFeatureChange]))
             }
@@ -847,7 +847,7 @@ final class SettingsViewModel {
     private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
-        if FeatureFlagsRepository.shared.isConnectionFeatureEnabled {
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
             if case .connectionProtocol(let connectionProtocol) = tunnelFeatureChange {
                 propertiesManager.connectionProtocol = connectionProtocol
             }

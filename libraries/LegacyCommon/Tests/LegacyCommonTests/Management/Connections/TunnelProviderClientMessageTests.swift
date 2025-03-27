@@ -29,6 +29,8 @@ import VPNAppCore
 import CommonNetworking
 import CommonNetworkingTestSupport
 
+import ProtonCoreTestingToolkitUnitTestsFeatureFlag
+
 @testable import LegacyCommon
 
 class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
@@ -52,6 +54,12 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
             self.fulfillExpectationCategory(self.pushSelector)
         }
         #endif
+    }
+
+    override func invokeTest() {
+        withFeatureFlags([.asyncVPNManager, .redesignKillSwitch, .connectionKillSwitch]) {
+            super.invokeTest()
+        }
     }
 
     func testSessionExpiredMessage() {

@@ -20,14 +20,18 @@ import ProtonCoreFeatureFlags
 import Domain
 
 extension FeatureFlagsRepository {
-    var isRedesigniOSEnabled: Bool {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS), #available(iOS 17, *) {
+    static let isRedesigniOSEnabled: Bool = {
+        if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
             return true
         }
         return false
-    }
+    }()
 
-    var isConnectionFeatureEnabled: Bool {
-        return isRedesigniOSEnabled && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+    static let isConnectionFeatureEnabled: Bool = {
+        !isFlagEnabled(.useConnectionFeatureKillSwitch) || isFlagEnabled(.useConnectionFeature) && isRedesigniOSEnabled
+    }()
+
+    private static func isFlagEnabled(_ flag: VPNFeatureFlagType) -> Bool {
+        FeatureFlagsRepository.shared.isEnabled(flag)
     }
 }

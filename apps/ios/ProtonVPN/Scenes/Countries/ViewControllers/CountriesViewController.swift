@@ -52,7 +52,7 @@ final class CountriesViewController: UIViewController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 1)
         } else {
             tabBarItem = UITabBarItem(title: Localizable.countries, image: IconProvider.earth, tag: 0)
@@ -65,7 +65,7 @@ final class CountriesViewController: UIViewController {
         super.viewDidLoad()
         viewModel.delegate = self
         setupView()
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             connectionBarContainerView.removeFromSuperview()
         } else {
             setupConnectionBar()
@@ -79,7 +79,7 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if !FeatureFlagsRepository.isRedesigniOSEnabled {
             setupAnnouncements()
         }
     }

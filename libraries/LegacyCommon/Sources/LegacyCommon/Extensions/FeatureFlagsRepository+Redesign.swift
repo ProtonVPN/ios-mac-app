@@ -22,18 +22,22 @@ import Domain
 extension FeatureFlagsRepository {
     @available(tvOS, unavailable)
     @available(macOS, unavailable)
-    public var isRedesigniOSEnabled: Bool {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS), #available(iOS 17, *) {
+    public static let isRedesigniOSEnabled: Bool = {
+        if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
             return true
         }
         return false
-    }
+    }()
 
-    public var isConnectionFeatureEnabled: Bool {
+    public static let isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
-        return isRedesigniOSEnabled && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.useConnectionFeature)
+        return !isFlagEnabled(.useConnectionFeatureKillSwitch) || isFlagEnabled(.useConnectionFeature) && isRedesigniOSEnabled
         #else
         return false
         #endif
+    }()
+
+    private static func isFlagEnabled(_ flag: VPNFeatureFlagType) -> Bool {
+        FeatureFlagsRepository.shared.isEnabled(flag)
     }
 }

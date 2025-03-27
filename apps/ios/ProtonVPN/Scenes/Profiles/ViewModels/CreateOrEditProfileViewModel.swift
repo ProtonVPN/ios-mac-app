@@ -128,7 +128,7 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(countryCell)
         cells.append(serverCell)
         cells.append(protocolCell)
-        if (!FeatureFlagsRepository.shared.isRedesigniOSEnabled) {
+        if (!FeatureFlagsRepository.isRedesigniOSEnabled) {
             cells.append(quickConnectCell)
             cells.append(footerCell)
         }

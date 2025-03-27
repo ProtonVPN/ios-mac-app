@@ -35,6 +35,10 @@ final class CountriesViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOSKillSwitch, true)
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.useConnectionFeatureKillSwitch, true)
+
         mockPropertiesManager = PropertiesManagerMock()
         mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
     }

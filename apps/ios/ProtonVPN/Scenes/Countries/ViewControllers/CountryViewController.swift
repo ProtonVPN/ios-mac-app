@@ -37,7 +37,7 @@ final class CountryViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
-        if FeatureFlagsRepository.shared.isRedesigniOSEnabled {
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
             connectionBarContainerView.removeFromSuperview()
         } else {
             setupConnectionBar()

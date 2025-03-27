@@ -402,7 +402,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         @Dependency(\.settingsClient) var settingsClient
 
-        let isConnectionFeatureEnabled = FeatureFlagsRepository.shared.isConnectionFeatureEnabled
+        let isConnectionFeatureEnabled = FeatureFlagsRepository.isConnectionFeatureEnabled
 
         if isConnectionFeatureEnabled {
             if !settingsClient.isActive() {

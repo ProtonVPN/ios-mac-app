@@ -39,6 +39,12 @@ public extension ProtonCoreFeatureFlags.FeatureFlag {
     static var asyncVPNManager: Self {
         VPNFeatureFlagType.asyncVPNManager.featureFlag
     }
+    static var redesignKillSwitch: Self {
+        VPNFeatureFlagType.redesigniOSKillSwitch.featureFlag
+    }
+    static var connectionKillSwitch: Self {
+        VPNFeatureFlagType.useConnectionFeatureKillSwitch.featureFlag
+    }
 }
 
 public extension VPNFeatureFlagType {

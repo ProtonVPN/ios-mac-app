@@ -44,7 +44,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     }
 
     override func invokeTest() {
-        withFeatureFlags([.asyncVPNManager]) {
+        withFeatureFlags([.asyncVPNManager, .redesignKillSwitch, .connectionKillSwitch]) {
             super.invokeTest()
         }
     }
