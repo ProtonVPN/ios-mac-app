@@ -50,6 +50,7 @@ public struct CertificateAuthenticationFeature: Reducer {
 
     @CasePathable
     public enum Action: Sendable {
+        /// Delete keys (and certificate if it exists), then regenerate keys
         case regenerateKeys
         case purgeCertificate
         case clearEverything
