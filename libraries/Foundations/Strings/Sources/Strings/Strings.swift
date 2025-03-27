@@ -1733,6 +1733,20 @@ public enum Localizable {
   public static var wgksKsOff: String { return Localizable.tr("Localizable", "_wgks_ks_off", fallback: "Disable kill switch") }
   /// iOS: 1. Menu point in settings screen. 2. Widget description screen title.
   public static var widget: String { return Localizable.tr("Localizable", "_widget", fallback: "iOS Widget") }
+  /// Widget adoption modal 1st instruction content.
+  public static var widgetAdoptionModalInstruction1: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_1", fallback: "Press and hold anywhere on your Home Screen") }
+  /// Widget adoption modal 2nd instruction content.
+  public static var widgetAdoptionModalInstruction2: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_2", fallback: "Press the Edit button, then select Add Widget") }
+  /// Widget adoption modal 3rd instruction content.
+  public static var widgetAdoptionModalInstruction3: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_3", fallback: "Select or search for Proton VPN") }
+  /// Widget adoption modal CTA.
+  public static var widgetAdoptionModalInstructionButton: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_button", fallback: "Got it") }
+  /// Widget adoption modal instructions header.
+  public static var widgetAdoptionModalInstructionsHeader: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instructions_header", fallback: "How to add the Proton VPN widget") }
+  /// Widget adoption modal subtitle.
+  public static var widgetAdoptionModalSubtitle: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_subtitle", fallback: "Check if you’re connected to VPN and access your default and favorite connections from the home screen.") }
+  /// Widget adoption modal title.
+  public static var widgetAdoptionModalTitle: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_title", fallback: "Try the Proton VPN widget") }
   /// iOS Settings -> Protocol: WireGuard option
   public static var wireguard: String { return Localizable.tr("Localizable", "_wireguard", fallback: "WireGuard") }
   /// iOS Settings: WireGuard logs row

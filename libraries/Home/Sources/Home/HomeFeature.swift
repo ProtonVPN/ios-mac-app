@@ -45,6 +45,7 @@ public struct HomeFeature {
     @Dependency(\.pushAlert) private var pushAlert
     @Dependency(\.date) private var date
     @Dependency(\.alertService) private var alertService
+    @Dependency(\.continuousClock) private var clock
 
     @SharedReader(.userTier) private var userTier: Int?
 
@@ -54,6 +55,7 @@ public struct HomeFeature {
         case connectionDetails(ConnectionScreenFeature)
         case freeConnectionsInfo(FreeConnectionInfoFeature)
         case defaultConnection(DefaultConnectionFeature)
+        case whatsNew(WhatsNewPresenterFeature)
     }
 
     @ObservableState
@@ -68,6 +70,7 @@ public struct HomeFeature {
         package var sharedProperties: SharedPropertiesFeature.State
         package var connectionStatus: ConnectionStatusFeature.State
         package var announcementBanner: AnnouncementBannerFeature.State
+        package var whatsNewChecker: WhatsNewCheckerFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -86,6 +89,7 @@ public struct HomeFeature {
             self.map = .init()
             self.connection = .initialState
             self.announcementBanner = .noBanner
+            self.whatsNewChecker = .init()
         }
     }
 
@@ -118,6 +122,9 @@ public struct HomeFeature {
         case freeConnectionsInfo(FreeConnectionInfoFeature.Action)
         case announcementBanner(AnnouncementBannerFeature.Action)
 
+        case whatsNewChecker(WhatsNewCheckerFeature.Action)
+        case whatsNewPresenter(WhatsNewPresenterFeature.Action)
+
         /// Start bug report flow
         case helpButtonPressed
 
@@ -125,6 +132,8 @@ public struct HomeFeature {
     }
 
     private static let shouldUseConnectionFeature: Bool = FeatureFlagsRepository.isConnectionFeatureEnabled
+
+    private static let whatsNewPresentationDelay: Duration = .seconds(3)
 
     public init() {}
 
@@ -154,12 +163,20 @@ public struct HomeFeature {
         Scope(state: \.announcementBanner, action: \.announcementBanner) {
             AnnouncementBannerFeature()
         }
+        Scope(state: \.whatsNewChecker, action: \.whatsNewChecker) {
+            WhatsNewCheckerFeature()
+        }
         Reduce { state, action in
             switch action {
             case .onStart:
                 return .merge(
                     .send(.announcementBanner(.onStart)),
                     .send(.connection(.input(.onLaunch))),
+                    .run { send in
+                        await send(.whatsNewChecker(.register))
+                        try await clock.sleep(for: Self.whatsNewPresentationDelay)
+                        await send(.whatsNewChecker(.check))
+                    },
                     .run { send in
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
@@ -267,6 +284,9 @@ public struct HomeFeature {
             case .destination(.presented(.defaultConnection(.preferenceSelected))):
                 state.destination = nil
                 return .none
+            case .destination(.presented(.whatsNew(.dismissItem))):
+                state.destination = nil
+                return .none
             case .destination(_):
                 return .none
             case .map:
@@ -277,6 +297,11 @@ public struct HomeFeature {
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case .connection(.delegate(.connectionFailed(let error))):
                 return .run { _ in await alertService.feed(error) }
+            case .whatsNewChecker(.show(let items)):
+                state.destination = .whatsNew(.init(item: items[0]))
+                return .none
+            case .whatsNewChecker(_), .whatsNewPresenter(_):
+                return .none
             case .incomingAlert(let alert):
                 pushAlert(DomainErrorAlert(alert: alert))
                 return .none

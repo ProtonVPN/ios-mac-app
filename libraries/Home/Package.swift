@@ -31,6 +31,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
+        .package(url: "https://github.com/airbnb/lottie-ios", .upToNextMajor(from: "4.0.0")),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -57,6 +58,7 @@ let package = Package(
                 "NetShield",
                 "Ergonomics",
                 "Announcement",
+                .product(name: "Lottie", package: "lottie-ios"),
                 .product(name: "Modals", package: "Modals"),
                 .product(name: "ModalsServices", package: "Modals"),
                 "ConnectionInventory",
@@ -73,7 +75,8 @@ let package = Package(
             ],
             exclude: ["swiftgen.yml"],
             resources: [
-                .process("Resources/BlankMap-World.svg")
+                .process("Resources/BlankMap-World.svg"),
+                .process("Resources/widget-ios-v3.json")
             ]
         ),
         .target(
@@ -104,6 +107,14 @@ let package = Package(
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "OrderedCollections", package: "swift-collections"),
+            ]
+        ),
+        .testTarget(
+            name: "HomeiOSTests",
+            dependencies: [
+                "Home",
+                "Home-iOS",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),
         .testTarget(
