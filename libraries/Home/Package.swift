@@ -76,7 +76,7 @@ let package = Package(
             exclude: ["swiftgen.yml"],
             resources: [
                 .process("Resources/BlankMap-World.svg"),
-                .process("Resources/widget-ios-v3.json")
+                .process("Resources/widget-ios-v4.json")
             ]
         ),
         .target(

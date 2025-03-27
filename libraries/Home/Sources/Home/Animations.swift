@@ -19,5 +19,5 @@
 import Lottie
 
 extension LottieAnimation {
-    public static let widgetAdoption: LottieAnimation = .named("widget-ios-v3", bundle: .module)!
+    public static let widgetAdoption: LottieAnimation = .named("widget-ios-v4", bundle: .module)!
 }

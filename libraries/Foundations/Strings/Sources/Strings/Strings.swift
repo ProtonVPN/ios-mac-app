@@ -1736,9 +1736,9 @@ public enum Localizable {
   /// Widget adoption modal 1st instruction content.
   public static var widgetAdoptionModalInstruction1: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_1", fallback: "Press and hold anywhere on your Home Screen") }
   /// Widget adoption modal 2nd instruction content.
-  public static var widgetAdoptionModalInstruction2: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_2", fallback: "Press the Edit button, then select Add Widget") }
+  public static var widgetAdoptionModalInstruction2: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_2", fallback: "Press the **Edit** button, then select **Add Widget**") }
   /// Widget adoption modal 3rd instruction content.
-  public static var widgetAdoptionModalInstruction3: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_3", fallback: "Select or search for Proton VPN") }
+  public static var widgetAdoptionModalInstruction3: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_3", fallback: "Select or search for **Proton VPN**") }
   /// Widget adoption modal CTA.
   public static var widgetAdoptionModalInstructionButton: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_button", fallback: "Got it") }
   /// Widget adoption modal instructions header.

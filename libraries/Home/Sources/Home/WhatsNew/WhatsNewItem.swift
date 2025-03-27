@@ -43,7 +43,7 @@ public enum WhatsNew {
 
         public static let widgetAdoption = Self.init(
             id: "widgetAdoption",
-            rules: [.osVersion("18.0")],
+            rules: [.osVersion("17.0")],
             delayBeforeFirstPresentation: .init(day: 2),
             presentationAmount: 1,
             delayBetweenPresentations: nil

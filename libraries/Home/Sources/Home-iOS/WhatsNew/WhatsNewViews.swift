@@ -24,37 +24,24 @@ import Home
 
 @available(iOS 17.0, *)
 struct WhatsNewViewContainer: View {
-    fileprivate struct Context {
-        private(set) var detents: Set<PresentationDetent> = [.height(.zero), .large]
-        var selectedDetent: PresentationDetent = .height(.zero) {
-            didSet {
-                if selectedDetent != .large {
-                    detents = [selectedDetent, .large]
-                }
-            }
-        }
-    }
-
     let store: StoreOf<WhatsNewPresenterFeature>
-
-    @State private var context = Context()
 
     var body: some View {
         store.item
-            .viewBody(with: $context) {
+            .viewBody {
                 store.send(.dismissItem)
             }
             .presentationDragIndicator(.visible)
-            .presentationDetents(context.detents, selection: $context.selectedDetent)
+            .presentationDetents([.large])
     }
 }
 
 @available(iOS 17.0, *)
 private extension WhatsNew.Item {
-    func viewBody(with context: Binding<WhatsNewViewContainer.Context>, primaryAction: @escaping () -> Void) -> some View {
+    func viewBody(primaryAction: @escaping () -> Void) -> some View {
         switch self {
         case .widgetAdoption:
-            WidgetAdoptionView(selectedDetent: context.selectedDetent, primaryAction: primaryAction)
+            WidgetAdoptionView(primaryAction: primaryAction)
         default:
             fatalError("Missing viewBody implementation for \(self)")
         }

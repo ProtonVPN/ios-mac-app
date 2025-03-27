@@ -25,51 +25,32 @@ import Strings
 
 @available(iOS 17, *)
 struct WidgetAdoptionView: View {
-    @Binding var selectedDetent: PresentationDetent
 
     let primaryAction: () -> Void
 
-    init(selectedDetent: Binding<PresentationDetent>, primaryAction: @escaping () -> Void) {
-        self._selectedDetent = selectedDetent
+    init(primaryAction: @escaping () -> Void) {
         self.primaryAction = primaryAction
     }
 
     private static let lottieAnimationViewHeight: CGFloat = 192.0
     private static let closeIconSize: CGFloat = 40.0
 
-    @State private var viewHeight: CGFloat = .zero
-
-    // We want to have simple boolean statements & SwiftUI view structure based on this property.
-    // We leverage `nonmutating set` feature since we do not need `isExpanded` a stored property
-    // and we'll base its behaviour on the `selectedDetent` binding.
-    private var isExpanded: Bool {
-        get {
-            return selectedDetent == .large
-        }
-        nonmutating set {
-            selectedDetent = newValue ? .large : .height(viewHeight)
-        }
-    }
+    private let instructionsFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
 
     var body: some View {
         content
-            .readHeight()
-            .onPreferenceChange(HeightPreferenceKey.self) { height in
-                guard selectedDetent != .large else { return }
-                height.map {
-                    viewHeight = $0
-                    selectedDetent = .height($0)
-                }
-            }
     }
 
     private var titleView: some View {
-        HStack {
+        HStack(alignment: .center) {
             Text(Localizable.widgetAdoptionModalTitle)
                 .font(.body1(.semibold))
-                .padding(.vertical, .themeSpacing12)
 
-            Spacer()
+            Spacer(minLength: 0)
 
             Button {
                 primaryAction()
@@ -78,117 +59,72 @@ struct WidgetAdoptionView: View {
                     .labelStyle(.iconOnly)
             }
             .frame(width: Self.closeIconSize, height: Self.closeIconSize)
+            .padding(.vertical, .themeSpacing8)
             .foregroundStyle(Color(.icon, .weak))
         }
-        .padding(.vertical)
+        .padding(.top, .themeSpacing24)
     }
 
-    private var instructionsButton: some View {
-        Button {
-            withAnimation { isExpanded.toggle() }
-        } label: {
-            HStack {
-                Text(Localizable.widgetAdoptionModalInstructionsHeader)
-                    .font(.body2(emphasised: true))
-                    .foregroundStyle(Color(.text, .weak))
-                Spacer()
-                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .foregroundStyle(Color(.icon, .weak))
-            }
+    private var instructionsHeader: some View {
+        Text(Localizable.widgetAdoptionModalInstructionsHeader)
+            .font(.body2(emphasised: true))
+            .foregroundStyle(Color(.text, .weak))
+            .padding(.vertical, .themeSpacing12)
+    }
+
+    private func instructionView(sequence: UInt, text: String) -> some View {
+        HStack(alignment: .top, spacing: .themeSpacing12) {
+            Text(instructionsFormatter.string(for: sequence)!)
+                .themeFont(.body3(emphasised: false))
+            Text(LocalizedStringKey(text))
+                .themeFont(.body2(emphasised: false))
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.vertical, .themeSpacing12)
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(.horizontal, .themeSpacing16)
     }
 
     private var instructionsView: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                Text(Localizable.widgetAdoptionModalInstruction1)
-                Text(Localizable.widgetAdoptionModalInstruction1Content)
-                    .padding(.leading, .themeSpacing12)
+            instructionsHeader
+            VStack(alignment: .leading, spacing: .themeSpacing24) {
+                instructionView(sequence: 1, text: Localizable.widgetAdoptionModalInstruction1)
+                instructionView(sequence: 2, text: Localizable.widgetAdoptionModalInstruction2)
+                instructionView(sequence: 3, text: Localizable.widgetAdoptionModalInstruction3)
             }
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.vertical, .themeSpacing12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            HStack(alignment: .top) {
-                Text(Localizable.widgetAdoptionModalInstruction2)
-                Text(Localizable.widgetAdoptionModalInstruction2Content)
-                    .padding(.leading, .themeSpacing12)
-            }
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.vertical, .themeSpacing12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            HStack(alignment: .top) {
-                Text(Localizable.widgetAdoptionModalInstruction3)
-                Text(Localizable.widgetAdoptionModalInstruction3Content)
-                    .padding(.leading, .themeSpacing12)
-            }
-            .padding(.horizontal, .themeSpacing16)
-            .padding(.vertical, .themeSpacing12)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, .themeSpacing24)
+            .background(Color(.background, .weak))
+            .clipShape(RoundedRectangle(cornerRadius: .themeRadius16))
+            .transition(.opacity)
         }
-        .padding(.top, .themeSpacing8)
-        .padding(.bottom, .themeSpacing16)
-        .background(Color(.background, .weak))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .transition(.opacity)
     }
 
     private var content: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             titleView
+            ScrollView() {
+                VStack(alignment: .leading, spacing: .themeSpacing24) {
+                    LottieView(animation: .widgetAdoption)
+                        .playing(loopMode: .loop)
+                        .frame(height: Self.lottieAnimationViewHeight)
+                        .background(Color(.background, .weak))
+                        .clipShape(RoundedRectangle(cornerRadius: .themeRadius16))
 
-            LottieView(animation: .widgetAdoption)
-                .playing(loopMode: .loop)
-                .frame(height: Self.lottieAnimationViewHeight)
-                .padding(.vertical, .themeSpacing12)
+                    Text(Localizable.widgetAdoptionModalSubtitle)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .font(.body2(emphasised: false))
 
-            Text(Localizable.widgetAdoptionModalSubtitle)
-                .font(.body2(emphasised: false))
-                .padding(.vertical, .themeSpacing12)
-
-            instructionsButton
-
-            if isExpanded {
-                instructionsView
+                    instructionsView
+                }
             }
 
             Button(Localizable.widgetAdoptionModalInstructionButton) {
                 primaryAction()
             }
             .buttonStyle(PrimaryButtonStyle())
+            .padding(.vertical, .themeSpacing16)
         }
         .padding(.horizontal, .themeSpacing16)
-    }
-}
-
-// MARK: - Sizing information helpers
-
-private struct HeightPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat?
-
-    static func reduce(value: inout CGFloat?, nextValue: () -> CGFloat?) {
-        guard let nextValue = nextValue() else { return }
-        value = nextValue
-    }
-}
-
-private struct ReadHeightModifier: ViewModifier {
-    private var sizeView: some View {
-        GeometryReader { geometry in
-            Color.clear.preference(key: HeightPreferenceKey.self, value: geometry.size.height)
-        }
-    }
-
-    func body(content: Content) -> some View {
-        content.background(sizeView)
-    }
-}
-
-private extension View {
-    func readHeight() -> some View {
-        self.modifier(ReadHeightModifier())
     }
 }
 
@@ -196,12 +132,9 @@ private extension View {
 
 @available(iOS 17.0, *)
 #Preview {
-    @Previewable
-    @State var selectedDetent: PresentationDetent = .medium
-
     Text("Preview Background").sheet(isPresented: .constant(true)) {
-        WidgetAdoptionView(selectedDetent: $selectedDetent, primaryAction: {})
-            .presentationDetents([.medium, .large], selection: $selectedDetent)
+        WidgetAdoptionView(primaryAction: {})
+            .presentationDetents([.large])
             .presentationDragIndicator(.visible)
     }
 }
