@@ -128,6 +128,7 @@ public struct DebugConfigurationFeature {
 
     public enum Action: BindableAction {
         case userDefaultsTapped
+        case keychainTapped
         case useAndContinueButtonTapped
         case displayKillAppConfirmationAlert
         case fetchAtlasSecretButtonTapped
@@ -152,6 +153,9 @@ public struct DebugConfigurationFeature {
             switch action {
             case .userDefaultsTapped:
                 state.destination = .userDefaults(.init(alert: nil, content: .none))
+
+            case .keychainTapped:
+                state.destination = .keychain(.init(alert: nil, content: .none))
 
             case .atlasSecretResponseReceived(let result):
                 switch result {
@@ -271,6 +275,8 @@ public struct DebugConfigurationFeature {
                 state.destination = nil
             case .destination(.presented(.userDefaults)):
                 break
+            case .destination(.presented(.keychain)):
+                break
             case .destination(.dismiss):
                 state.destination = nil
             }
@@ -302,6 +308,7 @@ extension DebugConfigurationFeature {
     @Reducer
     public enum Destination {
         case userDefaults(UserDefaultsDebugFeature)
+        case keychain(KeychainDebugFeature)
         case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
     }
 }

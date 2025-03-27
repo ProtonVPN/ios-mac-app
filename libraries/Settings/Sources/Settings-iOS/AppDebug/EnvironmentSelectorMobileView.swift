@@ -117,6 +117,16 @@ public struct EnvironmentSelectorMobileView: View {
         }
     }
 
+    private var keychainCell: some View {
+        SettingsCell(
+            icon: .init(systemName: "key"),
+            content: .standard(title: "Keychain", value: nil),
+            accessory: .disclosure
+        ) {
+            store.send(.keychainTapped)
+        }
+    }
+
     func sendActionButton(title: String, action: DebugConfigurationFeature.Action) -> some View {
         HStack {
             Spacer()
@@ -153,12 +163,14 @@ public struct EnvironmentSelectorMobileView: View {
                     changeEnvironmentSection
                     featureOverridesSection
                     userDefaultsCell
+                    keychainCell
                     bottomButtonsSection
                 }
                 .padding(.top, .themeSpacing16)
                 .frame(maxWidth: Theme.Constants.readableContentWidth)
                 .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
                 .navigationDestination(item: $store.scope(state: \.destination?.userDefaults, action: \.destination.userDefaults)) { UserDefaultsDebugView(store: $0) }
+                .navigationDestination(item: $store.scope(state: \.destination?.keychain, action: \.destination.keychain)) { KeychainDebugView(store: $0) }
             }
         }
     }
