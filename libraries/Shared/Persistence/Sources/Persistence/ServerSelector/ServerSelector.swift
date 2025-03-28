@@ -245,6 +245,9 @@ extension ConnectionSpec {
         case .region(let code):
             return [.exitCountryCode(code)]
 
+        case .gateway(let name):
+            return [.kind(.gateway(name: name))]
+
         case .exact(_, let logicalID, let number, let subRegion, let region):
             return logicalID.map { [.logicalID($0)] } ?? [
                 Self.regionFilter(region: region, number: number),

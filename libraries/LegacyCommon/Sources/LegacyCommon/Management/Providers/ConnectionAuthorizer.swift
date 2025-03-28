@@ -43,6 +43,7 @@ extension ConnectionAuthorizer: DependencyKey {
             switch request.connectionType {
             case .fastest:
                 return .success
+
             case .random:
                 guard credentials.tier.isFreeTier else {
                     return .success
@@ -58,12 +59,21 @@ extension ConnectionAuthorizer: DependencyKey {
                         exhaustedSkips: exhaustedSkips
                     ))
                 }
+
             case .city(let countryCode, _), .country(let countryCode, _):
                 guard credentials.tier.isFreeTier else {
                     return .success
                 }
 
                 return .failure(.specificCountryUnavailable(countryCode: countryCode))
+
+            case .gateway(let name):
+                guard credentials.tier.isFreeTier else {
+                    return .success
+                }
+
+                log.assertionFailure("Free user requested connection to a gateway.", category: .connectionConnect)
+                return .failure(.specificCountryUnavailable(countryCode: name))
             }
         }
     )

@@ -141,8 +141,8 @@ final class CountryItemViewModel {
         } else {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
             let serverType = ServerType.standard
-            log.debug("Connect requested by selecting country in the list. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .country)
+            log.debug("Connect requested by selecting country in the list. Will connect to \(serversGroup.kind) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(serverGroup: serversGroup.kind, ofType: serverType, trigger: .country)
         }
     }
     

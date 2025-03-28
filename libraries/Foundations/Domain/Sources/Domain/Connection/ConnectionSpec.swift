@@ -46,6 +46,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         case region(code: String)
         case exact(Server, logicalID: String?, number: Int?, subregion: String?, regionCode: String)
         case secureCore(SecureCoreSpec)
+        case gateway(name: String)
     }
 
     public enum Feature: Equatable, Hashable, CustomStringConvertible, Identifiable, Codable, Sendable {

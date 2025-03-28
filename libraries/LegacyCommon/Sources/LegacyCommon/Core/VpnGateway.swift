@@ -69,7 +69,7 @@ public protocol VpnGatewayProtocol: AnyObject {
     func autoConnect()
     func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger)
     func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest
-    func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger)
+    func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger)
     func connectTo(country countryCode: String, city: String)
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
@@ -308,9 +308,15 @@ public class VpnGateway: VpnGatewayProtocol {
         )
     }
     
-    public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
-        
+    public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
+        let connectionType: ConnectionRequestType
+        switch serverGroup {
+        case .country(let code):
+            connectionType = .country(code, .fastest)
+        case .gateway(let name):
+            connectionType = .gateway(name: name)
+        }
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
         connect(with: connectionRequest)
     }
 

@@ -354,7 +354,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 RowViewModel.serverGroup(countryCellModel(
                     serversGroup: $0,
                     serversFilter: gatewaysServersFilter,
-                    showCountryConnectButton: false,
+                    showCountryConnectButton: true,
                     showFeatureIcons: false
                 ))
             }

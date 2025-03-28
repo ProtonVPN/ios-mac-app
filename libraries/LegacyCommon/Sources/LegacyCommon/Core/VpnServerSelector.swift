@@ -162,6 +162,9 @@ extension ConnectionRequest {
         case .country(let countryCode, .fastest), .country(let countryCode, .random):
             return [.kind(.country(code: countryCode))] // inherently excludes gateways
 
+        case .gateway(let name):
+            return [.kind(.gateway(name: name))]
+
         case .country(_, .server(let model)):
             if serverType == .secureCore {
                 // We don’t need to find the exact server. Instead, we should focus on finding the best one based on the entryCountryCode and exitCountryCode.
@@ -189,6 +192,9 @@ extension ConnectionRequest {
             case .server:
                 return .fastest
             }
+
+        case .gateway:
+            return .fastest
 
         case .city(_, _):
             return .fastest

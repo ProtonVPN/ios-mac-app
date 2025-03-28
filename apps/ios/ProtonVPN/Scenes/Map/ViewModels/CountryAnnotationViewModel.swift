@@ -204,7 +204,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             } else {
                 AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
                 log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-                vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .map)
+                vpnGateway.connectTo(serverGroup: .country(code: countryCode), ofType: serverType, trigger: .map)
                 connectionStatusService.presentStatusViewController()
             }
         }
