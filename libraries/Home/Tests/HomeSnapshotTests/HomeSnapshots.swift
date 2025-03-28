@@ -28,6 +28,7 @@ import Ergonomics
 @testable import Home
 @testable import Home_iOS
 import SwiftUI
+import IssueReporting
 
 @Suite("Home")
 struct SwiftTestingTests {
@@ -87,10 +88,45 @@ struct SwiftTestingTests {
                             protectionState.shortDescription(),
                             vpnConnectionStatus.shortDescription()].joined(separator: "-")
 
-            assertSnapshot(of: appView, as: .image, testName: testName)
+            self.assertSnapshot(of: appView, as: .image, testName: testName)
         }
     }
+
+    private func assertSnapshot<Value, Format>(
+        of value: @autoclosure () throws -> Value,
+        as snapshotting: Snapshotting<Value, Format>,
+        named name: String? = nil,
+        record recording: Bool? = nil,
+        timeout: TimeInterval = 5,
+        fileID: StaticString = #fileID,
+        file filePath: StaticString = #filePath,
+        testName: String = #function,
+        line: UInt = #line,
+        column: UInt = #column
+    ) {
+        var snapshotDirectory: String?
+        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+            snapshotDirectory = "\(projectDir)/libraries/Home/Tests/HomeSnapshotTests/__Snapshots__/HomeSnapshots"
+        }
+
+        let failure = verifySnapshot(
+            of: try value(),
+            as: snapshotting,
+            named: name,
+            record: recording,
+            snapshotDirectory: snapshotDirectory,
+            timeout: timeout,
+            fileID: fileID,
+            file: filePath,
+            testName: testName,
+            line: line,
+            column: column
+        )
+        guard let message = failure else { return }
+        reportIssue(message, fileID: fileID, filePath: filePath, line: line, column: column)
+    }
 }
+
 
 infix operator |=|
 

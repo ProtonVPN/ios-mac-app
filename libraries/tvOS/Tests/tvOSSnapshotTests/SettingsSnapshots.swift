@@ -26,22 +26,7 @@ import SwiftUI
 @testable import LocalAgent
 import Ergonomics
 
-final class SettingsFeatureSnapshotTests: XCTestCase {
-    static let precision: Float = 0.999
-    static let perceptualPrecision: Float = 0.999
-
-    func snap<T: View>(_ view: T, caseName: String, trait: UIUserInterfaceStyle) {
-        assertSnapshot(
-            of: view,
-            as: .image(
-                precision: Self.precision,
-                perceptualPrecision: Self.perceptualPrecision,
-                traits: trait.collection
-            ),
-            testName: "\(caseName) \(trait.name)"
-        )
-    }
-
+final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {
     func testLightSettings() {
         settings(trait: .light)
     }
