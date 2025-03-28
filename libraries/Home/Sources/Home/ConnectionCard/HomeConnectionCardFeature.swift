@@ -79,6 +79,8 @@ public struct HomeConnectionCardFeature {
         }
 
         public var presentedServer: Server? {
+            // Ignore the server object on vpnConnectionStatus when the connection is `disconnecting`,
+            // as the `disconnecting` state should be the same as the `disconnected` state.
             if case .disconnecting = vpnConnectionStatus {
                 return nil
             }
