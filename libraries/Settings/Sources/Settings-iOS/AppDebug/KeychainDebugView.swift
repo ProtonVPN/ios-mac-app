@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if DEBUG
 import SwiftUI
 import Theme
 import ComposableArchitecture
@@ -124,3 +125,4 @@ struct KeychainDebugView: View {
             .onTapGesture { UIPasteboard.general.string = value }
     }
 }
+#endif
