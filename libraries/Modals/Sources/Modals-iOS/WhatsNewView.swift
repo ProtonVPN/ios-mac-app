@@ -82,7 +82,7 @@ public struct WhatsNewView: View {
     }
 
     private func textSection(title: String, subtitle: String) -> some View {
-        VStack(alignment: .leading, spacing: .themeSpacing2) {
+        VStack(alignment: .leading, spacing: .themeSpacing4) {
             Text(title)
                 .themeFont(.body1(.bold))
             Text(subtitle)
@@ -108,17 +108,19 @@ public struct WhatsNewView: View {
 
     @ViewBuilder
     private var textContentView: some View {
-        switch variant {
-        case .free:
-            freePlanTextContentView
-        case .plus:
-            freePlanTextContentView
-            recentsTextContentView
-        case .business:
-            recentsTextContentView
-            gatewaysTextContentView
+        VStack(alignment: .leading, spacing: .themeSpacing24) {
+            switch variant {
+            case .free:
+                freePlanTextContentView
+            case .plus:
+                freePlanTextContentView
+                recentsTextContentView
+            case .business:
+                recentsTextContentView
+                gatewaysTextContentView
+            }
+            widgetTextContentView
         }
-        widgetTextContentView
     }
 }
 
