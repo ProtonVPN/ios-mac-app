@@ -77,12 +77,12 @@ struct HomeConnectionCardView: View {
 
     @ViewBuilder
     private var connectionButton: some View {
-        let isDisconnected = store.vpnConnectionStatus.is(\.disconnected)
+        let showingConnectButton = store.vpnConnectionStatus.showingConnectButton
         let buttonContent = model.buttonText(for: store.vpnConnectionStatus)
         Button {
             withAnimation(.linear) {
                 switch store.vpnConnectionStatus {
-                case .disconnected:
+                case .disconnected, .disconnecting:
                     store.send(.delegate(.connect(store.presentedSpec)))
                 case .connected:
                     store.send(.delegate(.disconnect))
@@ -90,20 +90,18 @@ struct HomeConnectionCardView: View {
                     store.send(.delegate(.disconnect))
                 case .resolving:
                     store.send(.delegate(.disconnect))
-                case .disconnecting(let connectionSpec, _):
-                    store.send(.delegate(.connect(connectionSpec)))
                     break
                 }
             }
         } label: {
             Text(buttonContent)
         }
-        .buttonStyle(ConnectButtonStyle(isDisconnected: isDisconnected))
+        .buttonStyle(ConnectButtonStyle(isConnect: showingConnectButton))
         .accessibilityElement()
         .accessibilityAddTraits(.isButton)
         .accessibilityLabel(buttonContent)
         .accessibilityIdentifier(
-            isDisconnected ? AccessibilityIdentifiers.buttonConnect : AccessibilityIdentifiers.buttonDisconnect
+            showingConnectButton ? AccessibilityIdentifiers.buttonConnect : AccessibilityIdentifiers.buttonDisconnect
         )
     }
 
@@ -185,6 +183,15 @@ fileprivate extension VPNConnectionStatus {
     var connectionStatusAvailable: Bool {
         guard case .connected = self else { return false }
         return true
+    }
+
+    var showingConnectButton: Bool {
+        switch self {
+        case .disconnected, .disconnecting:
+            return true
+        default:
+            return false
+        }
     }
 }
 
