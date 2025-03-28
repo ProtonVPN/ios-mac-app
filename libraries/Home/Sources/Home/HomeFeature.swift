@@ -124,14 +124,7 @@ public struct HomeFeature {
         case destination(PresentationAction<Destination.Action>)
     }
 
-    private static let ffRepository = FeatureFlagsRepository.shared
-
-    private static var shouldUseConnectionFeature: Bool {
-        (!ffRepository.isEnabled(VPNFeatureFlagType.useConnectionFeatureKillSwitch) ||
-        ffRepository.isEnabled(VPNFeatureFlagType.useConnectionFeature)) &&
-        (!ffRepository.isEnabled(VPNFeatureFlagType.redesigniOSKillSwitch) ||
-        ffRepository.isEnabled(VPNFeatureFlagType.redesigniOS))
-    }
+    private static let shouldUseConnectionFeature: Bool = FeatureFlagsRepository.isConnectionFeatureEnabled
 
     public init() {}
 

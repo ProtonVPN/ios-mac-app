@@ -26,6 +26,7 @@ import Persistence
 import LegacyCommon
 import Search
 @testable import ProtonVPN
+import VPNSharedTesting
 import IssueReporting
 import Announcement
 import ProtonCoreFeatureFlags
@@ -36,8 +37,8 @@ final class CountriesViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOSKillSwitch, true)
-        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.useConnectionFeatureKillSwitch, true)
+        FeatureFlagsRepository.shared.setFlagOverride(TestFeatureFlagType.redesigniOSKillSwitch, true)
+        FeatureFlagsRepository.shared.setFlagOverride(TestFeatureFlagType.useConnectionFeatureKillSwitch, true)
 
         mockPropertiesManager = PropertiesManagerMock()
         mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
@@ -87,7 +88,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToTrue() throws {
-        try XCTSkipIf(!FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS))
+        try XCTSkipIf(!FeatureFlagsRepository.shared.isEnabled(TestFeatureFlagType.redesigniOS))
 
         // Start off with smart protocol enabled and all protocols supported
         mockPropertiesManager.connectionProtocol = .smartProtocol
@@ -123,7 +124,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToFalse() throws {
-        try XCTSkipIf(FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.redesigniOS))
+        try XCTSkipIf(FeatureFlagsRepository.shared.isEnabled(TestFeatureFlagType.redesigniOS))
 
         // Start off with smart protocol enabled and all protocols supported
         mockPropertiesManager.connectionProtocol = .smartProtocol
