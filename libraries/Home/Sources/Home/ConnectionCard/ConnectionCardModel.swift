@@ -47,11 +47,11 @@ package struct ConnectionCardModel {
 
     package func buttonText(for vpnConnectionStatus: VPNConnectionStatus) -> String {
         switch vpnConnectionStatus {
-        case .disconnected:
+        case .disconnected, .disconnecting:
             return Localizable.actionConnect
         case .connected:
             return Localizable.actionDisconnect
-        case .connecting, .disconnecting, .resolving:
+        case .connecting, .resolving:
             return Localizable.connectionCardActionCancel
         }
     }

@@ -90,7 +90,8 @@ struct HomeConnectionCardView: View {
                     store.send(.delegate(.disconnect))
                 case .resolving:
                     store.send(.delegate(.disconnect))
-                case .disconnecting:
+                case .disconnecting(let connectionSpec, _):
+                    store.send(.delegate(.connect(connectionSpec)))
                     break
                 }
             }
@@ -131,7 +132,7 @@ struct HomeConnectionCardView: View {
                     intent: store.presentedSpec,
                     underMaintenance: false,
                     isPinned: false,
-                    server: store.vpnConnectionStatus.server,
+                    server: store.presentedServer,
                     withServerNumber: (store.userTier ?? .freeTier).isFreeTier,
                     isConnected: false,
                     images: .coreImages
