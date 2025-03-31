@@ -81,7 +81,7 @@ class TelemetryEventScheduler {
             let response = try await telemetryAPI.flushEvent(event: event.toJSONDictionary(), isBusiness: isBusiness)
             log.info("Telemetry event sent with response code: \(response.code). Event: \(event)", category: .telemetry)
         } catch {
-            log.warning("Failed to send telemetry event, saving to storage: \(event)", category: .telemetry)
+            log.warning("Failed to send telemetry event: \(event) with error: \(error), saving to storage.", category: .telemetry)
             try await scheduleEvent(event)
         }
     }

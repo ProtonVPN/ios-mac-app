@@ -24,14 +24,14 @@ public struct SettingsDimensions: Encodable {
     let userTier: UserTier
     let widgetCount: WidgetCount?
     let firstWidgetSize: WidgetSize?
-    let isIPv6Enabled: Bool
+    let isIPv6Enabled: IsIPv6Enabled
 
     init(defaultConnectionType: DefaultConnectionType,
          appIcon: AppIcon,
          userTier: UserTier,
          widgetCount: WidgetCount?,
          firstWidgetSize: WidgetSize?,
-         isIPv6Enabled: Bool) {
+         isIPv6Enabled: IsIPv6Enabled) {
         self.defaultConnectionType = defaultConnectionType
         self.appIcon = appIcon
         self.userTier = userTier
@@ -93,6 +93,11 @@ public struct SettingsDimensions: Encodable {
         case small
         case medium
         case large
+    }
+
+    public enum IsIPv6Enabled: String, Encodable {
+        case `true`
+        case `false`
     }
 
 }

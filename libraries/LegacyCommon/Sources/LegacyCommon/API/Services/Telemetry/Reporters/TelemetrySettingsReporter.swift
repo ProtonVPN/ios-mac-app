@@ -103,7 +103,7 @@ final class TelemetrySettingsReporter {
             userTier: userTier(),
             widgetCount: await widgetCount(),
             firstWidgetSize: await firstWidgetSize(),
-            isIPv6Enabled: false
+            isIPv6Enabled: .false
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
