@@ -33,7 +33,7 @@ public struct ConnectionStatusBannerFeature {
     @ObservableState
     public struct State: Equatable {
         @SharedReader(.protectionState) public var protectionState: ProtectionState
-        @SharedReader(.netShieldLevel) public var netShieldLevel: NetShieldType
+        @SharedReader(.netShieldLevel) public var netShieldLevel: NetShieldType?
         @SharedReader(.userCountry) public var userCountry: String?
         @SharedReader(.userIP) public var userIP: String?
         @SharedReader(.userTier) public var userTier: Int?
