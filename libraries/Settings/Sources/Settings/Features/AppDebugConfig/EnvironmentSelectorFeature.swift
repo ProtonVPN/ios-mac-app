@@ -23,6 +23,7 @@ import Theme
 
 import ProtonCoreFeatureFlags // Needed to create a manual override type
 
+#if DEBUG
 @Reducer
 public struct DebugConfigurationFeature {
     static let reasonableAtlasSecretLength = 64
@@ -128,6 +129,7 @@ public struct DebugConfigurationFeature {
 
     public enum Action: BindableAction {
         case userDefaultsTapped
+        case keychainTapped
         case useAndContinueButtonTapped
         case displayKillAppConfirmationAlert
         case fetchAtlasSecretButtonTapped
@@ -152,6 +154,9 @@ public struct DebugConfigurationFeature {
             switch action {
             case .userDefaultsTapped:
                 state.destination = .userDefaults(.init(alert: nil, content: .none))
+
+            case .keychainTapped:
+                state.destination = .keychain(.init(alert: nil, content: .none))
 
             case .atlasSecretResponseReceived(let result):
                 switch result {
@@ -271,6 +276,8 @@ public struct DebugConfigurationFeature {
                 state.destination = nil
             case .destination(.presented(.userDefaults)):
                 break
+            case .destination(.presented(.keychain)):
+                break
             case .destination(.dismiss):
                 state.destination = nil
             }
@@ -287,6 +294,18 @@ public struct DebugConfigurationFeature {
     }
 }
 
+extension DebugConfigurationFeature {
+    @Reducer
+    public enum Destination {
+        case userDefaults(UserDefaultsDebugFeature)
+        case keychain(KeychainDebugFeature)
+        case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
+    }
+}
+
+extension DebugConfigurationFeature.Destination.State: Equatable { }
+#endif
+
 /// This struct is so that we can use `FeatureFlagsRepository` with
 /// dynamically-specified feature flag names. (Most feature flags are usually
 /// cases on an enum, but users want to specify the strings manually.)
@@ -294,16 +313,6 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
     public init?(rawValue: String) {
         self.rawValue = rawValue
     }
-    
+
     public var rawValue: String
 }
-
-extension DebugConfigurationFeature {
-    @Reducer
-    public enum Destination {
-        case userDefaults(UserDefaultsDebugFeature)
-        case alert(AlertState<DebugConfigurationFeature.Action.Alert>)
-    }
-}
-
-extension DebugConfigurationFeature.Destination.State: Equatable { }

@@ -71,7 +71,9 @@ struct SettingsCell: View {
 
     private var iconView: some View {
         icon
-            .resizable().frame(.square(iconRadius * content.iconRadiusMultiplier))
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(.square(iconRadius * content.iconRadiusMultiplier))
             .foregroundColor(Color(.icon, .normal))
             .padding(.vertical, iconVerticalPadding)
             .padding(.leading, .themeSpacing16)
