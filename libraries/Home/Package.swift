@@ -30,6 +30,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
         .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.3")),
         .package(url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git", from: "3.0.0"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(path: "../../external/protoncore"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -112,6 +113,7 @@ let package = Package(
                 "Home-iOS",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         )
     ]

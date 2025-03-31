@@ -29,22 +29,7 @@ import struct Ergonomics.GenericError
 import PersistenceTestSupport
 import DomainTestSupport
 
-final class MainFeatureSnapshotTests: XCTestCase {
-    static let precision: Float = 0.999
-    static let perceptualPrecision: Float = 0.999
-
-    func snap<T: View>(_ view: T, caseName: String, trait: UIUserInterfaceStyle) {
-        assertSnapshot(
-            of: view,
-            as: .image(
-                precision: Self.precision,
-                perceptualPrecision: Self.perceptualPrecision,
-                traits: trait.collection
-            ),
-            testName: "\(caseName) \(trait.name)"
-        )
-    }
-
+final class MainFeatureSnapshotTests: TVSnapshotTestCase {
     func testLightMainLoading() {
         mainLoading(trait: .light)
     }
