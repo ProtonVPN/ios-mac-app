@@ -65,7 +65,7 @@ public struct HomeConnectionCardFeature {
 
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
-            case .disconnected, .resolving(.none, _):
+            case .disconnected, .disconnecting, .resolving(.none, _):
                 @Dependency(\.defaultConnectionResolver) var resolver
                 return resolver.connectionSpec(
                     preference: defaultConnectionPreference,
@@ -73,10 +73,18 @@ public struct HomeConnectionCardFeature {
                 )
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),
-                    .resolving(.some(let connectionSpec), _),
-                    .disconnecting(let connectionSpec, _):
+                    .resolving(.some(let connectionSpec), _):
                 return connectionSpec
             }
+        }
+
+        public var presentedServer: Server? {
+            // Ignore the server object on vpnConnectionStatus when the connection is `disconnecting`,
+            // as the `disconnecting` state should look the same as the `disconnected` state.
+            if case .disconnecting = vpnConnectionStatus {
+                return nil
+            }
+            return vpnConnectionStatus.server
         }
 
         public init() {

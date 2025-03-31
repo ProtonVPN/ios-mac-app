@@ -21,12 +21,12 @@ import Theme
 
 struct ConnectButtonStyle: ButtonStyle {
 
-    var isDisconnected = true
+    var isConnect = true
 
     func makeBody(configuration: Configuration) -> some View {
         let style: AppTheme.Style
 
-        switch (isDisconnected, configuration.isPressed) {
+        switch (isConnect, configuration.isPressed) {
         case (false, false):
             /* Button reads "disconnect" or "cancel" */
             style = [.interactive, .weak]
