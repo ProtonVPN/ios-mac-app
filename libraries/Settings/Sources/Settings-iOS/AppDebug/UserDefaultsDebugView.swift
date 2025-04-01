@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
 import SwiftUI
 import ComposableArchitecture
 import Settings
@@ -92,4 +91,3 @@ struct UserDefaultsDebugView: View {
         }
     }
 }
-#endif

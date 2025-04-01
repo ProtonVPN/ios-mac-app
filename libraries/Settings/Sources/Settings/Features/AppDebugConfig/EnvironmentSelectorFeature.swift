@@ -23,7 +23,6 @@ import Theme
 
 import ProtonCoreFeatureFlags // Needed to create a manual override type
 
-#if DEBUG
 @Reducer
 public struct DebugConfigurationFeature {
     static let reasonableAtlasSecretLength = 64
@@ -294,6 +293,17 @@ public struct DebugConfigurationFeature {
     }
 }
 
+/// This struct is so that we can use `FeatureFlagsRepository` with
+/// dynamically-specified feature flag names. (Most feature flags are usually
+/// cases on an enum, but users want to specify the strings manually.)
+public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
+    public init?(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    public var rawValue: String
+}
+
 extension DebugConfigurationFeature {
     @Reducer
     public enum Destination {
@@ -304,15 +314,3 @@ extension DebugConfigurationFeature {
 }
 
 extension DebugConfigurationFeature.Destination.State: Equatable { }
-#endif
-
-/// This struct is so that we can use `FeatureFlagsRepository` with
-/// dynamically-specified feature flag names. (Most feature flags are usually
-/// cases on an enum, but users want to specify the strings manually.)
-public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
-    public init?(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public var rawValue: String
-}
