@@ -212,7 +212,7 @@ extension ConnectionSpec {
             break
         case .region(code: let code):
             return code
-        case .gateway(let name):
+        case .gateway(_):
             return nil
         case .exact(_, _, _, _, let regionCode):
             return regionCode

@@ -192,7 +192,7 @@ final class SettingsViewModel {
 
     private func sessionEnded() {
         AppEvent.connectionStateChanged.unsubscribe(self)
-        if let profileManager {
+        if profileManager != nil {
             AppEvent.profileContentChanged.unsubscribe(self)
         }
 

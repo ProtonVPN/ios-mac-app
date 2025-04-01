@@ -102,7 +102,7 @@ public class AnnouncementsViewModel {
         Task {
             @Dependency(\.imagePrefetcher) var imagePrefetcher
             guard let fullScreenImage = announcement.fullScreenImage else { return }
-            await imagePrefetcher.isImagePrefetched(fullScreenImage)
+            _ = await imagePrefetcher.isImagePrefetched(fullScreenImage)
             openAnnouncement(announcement: announcement)
         }
     }
