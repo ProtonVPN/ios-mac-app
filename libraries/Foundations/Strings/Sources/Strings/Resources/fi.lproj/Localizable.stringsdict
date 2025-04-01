@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d laite</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d laitetta</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -494,9 +494,9 @@ estetty</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d maata</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d maa</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

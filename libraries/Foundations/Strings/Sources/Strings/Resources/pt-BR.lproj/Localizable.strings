@@ -2740,89 +2740,41 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Desbloqueie recursos avançados de desempenho e privacidade";
 
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Erro";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "A operação não pôde ser completada. (Erro %@)";
+
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Erro de conexão";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "A conexão que você escolheu usa um protocolo (%@) que não é mais suportado por este aplicativo. Escolha uma conexão diferente.";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "A conexão que você escolheu usa um protocolo (%@) que não é mais suportado por essa aplicação. Por favor, escolha outra conexão. (Erro %@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "Ocorreu um problema de autenticação com o servidor: %@";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "Um problema ocorreu na autenticação com o servidor. (Erro %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
-"_connection_error_certificate_authentication_key_generation_failed" = "não conseguimos gerar suas chaves de criptografia. (%@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "Houve um problema na inicialização da VPN. (Error %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "não foi possível atualizar suas credenciais. (%@)";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
-"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "As chaves não estão disponíveis no dispositivo.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
-"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "O certificado não está disponível no dispositivo.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "O certificado do dispositivo expirou.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "não é possível atualizar suas credenciais agora.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
-"_connection_error_certificate_authentication_ipc_message" = "ocorreu um erro de protocolo. (%@)";
-
-/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_certificate_authentication_unexpected" = "ocorreu um erro de credencial inesperado. (%@)";
-
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "Ocorreu um problema ao iniciar a VPN: %@";
-
-/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_tunnel_connection_tunnel_start" = "o túnel não pôde ser estabelecido. (%@)";
-
-/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "o servidor que você escolheu não está mais disponível. Escolha um servidor diferente.";
-
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "Ocorreu um erro inesperado ao conectar: %@";
 
-/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "o dispositivo não pôde estabelecer uma conexão. (%@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "Não foi possível conectar com o servidor. (Error %@).";
 
-/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
-"_connection_error_local_agent_remote_error" = "o serviço remoto não aceitou a conexão. (%@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "Houve um problema com a preparação da conexão. (Erro %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "não foi possível autenticar a conexão.";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "O servidor que você escolheu não está mais disponível. Por favor, escolha um servidor diferente. (Erro %@)";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Não conseguimos conectar ao servidor porque as informações de conexão originais estavam faltando.";
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "Encontramos um erro na tentativa de conexão: o servidor não respondeu a tempo. Por favor, tente novamente. (Erro %@)";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Ocorreu um problema ao preparar a conexão: %@";
-
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "O servidor que você escolheu não está mais disponível. Escolha um servidor diferente.";
-
-/* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "Encontramos um erro ao tentar conectar: ​​o servidor não respondeu a tempo. Tente novamente.";
-
-/* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "Nenhum dado foi recebido do provedor de conexão.";
-
-/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "Ocorreu um erro ao tentar descodificar a resposta do provedor de conexão.";
-
-/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "Ocorreu um erro ao tentar enviar uma mensagem para o provedor de conexão.";
-
-/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "O provedor de conexão recebeu uma solicitação desconhecida.";
-
-/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "O provedor de conexão retornou uma resposta desconhecida.";
-
-/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "O provedor de conexão encontrou um erro: %@";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "Houve um problema com a conexão. (Erro %@)";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Verifique se você está conectado à VPN e tenha acesso rápido às suas conexões favoritas.";
@@ -2832,3 +2784,9 @@
 
 /* Recents section description */
 "widget_recents_description" = "Ver seu histórico de conexão aqui.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Os widgets estão de volta";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Agora você pode visualizar e gerenciar sua conexão VPN sem sair da tela inicial.";

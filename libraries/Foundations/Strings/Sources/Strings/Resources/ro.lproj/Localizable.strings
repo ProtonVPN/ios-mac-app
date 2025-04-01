@@ -1003,7 +1003,7 @@
 "_activate_widget_step_2" = "Derulați în jos, până la capăt și apăsați butonul de editare.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Adăugați widget-ul Proton VPN la lista de widget-uri active.";
+"_activate_widget_step_3" = "Adăugați componenta de interfață Proton VPN în lista celor active.";
 
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Raportare o problemă";
@@ -2740,89 +2740,41 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Deblocați și mai multă performanță și funcții de confidențialitate";
 
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Eroare";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "Operația nu a putut fi finalizată. (Eroare %@)";
+
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Eroare de conexiune";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "Conexiunea pe care ați ales-o folosește un protocol (%@) care nu mai este acceptat de această aplicație. Alegeți o altă conexiune.";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "Conexiunea pe care ați ales-o folosește un protocol (%@) care nu mai este acceptat de această aplicație. Alegeți o altă conexiune. (Eroare %@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "A apărut o eroare la autentificarea pe server: %@";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "A apărut o eroare la autentificarea pe server. (Eroare %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
-"_connection_error_certificate_authentication_key_generation_failed" = "nu s-au putut genera cheile de criptare. (%@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "A apărut o eroare la pornirea VPN-ului. (Eroare %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "nu s-au putut împrospăta acreditările: (%@)";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
-"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Cheile nu sunt disponibile pe dispozitiv.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
-"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Certificatul nu este disponibil pe dispozitiv.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Certificatul de pe dispozitiv a expirat.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "nu este posibilă împrospătarea acreditărilor în acest moment.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
-"_connection_error_certificate_authentication_ipc_message" = "a apărut o eroare de protocol. (%@)";
-
-/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_certificate_authentication_unexpected" = "a apărut o eroare neașteptată cu acreditările. (%@)";
-
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "A apărut o eroare la pornirea VPN-ului: %@";
-
-/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_tunnel_connection_tunnel_start" = "tunelul nu a putut fi stabilit. (%@)";
-
-/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "serverul pe care l-ați ales nu mai este disponibil. Alegeți altul.";
-
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "A apărut o eroare neașteptată la conectare: %@";
 
-/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "dispozitivul nu a putut stabili conexiunea. (%@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "Nu s-a putut efectua conexiunea la server. (Eroare %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
-"_connection_error_local_agent_remote_error" = "serviciul de la distanță nu a acceptat conexiune. (%@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "A apărut o problemă la pregătirea conexiunii:. (Eroare %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "conexiunea nu s-a putut autentifica.";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "Serverul pe care l-ați ales nu mai este disponibil. Alegeți altul. (Eroare %@)";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Nu s-a putut conecta la server, deoarece informația conexiunii originale lipsește.";
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "A apărut o eroare la încercarea de conectare: serverul nu a răspuns la timp. Reîncercați. (Eroare %@)";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "A apărut o problemă la pregătirea conexiunii: %@";
-
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Serverul pe care l-ați ales nu mai este disponibil. Alegeți altul.";
-
-/* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "A apărut o eroare la încercarea de conectare: serverul nu a răspuns la timp. Reîncercați.";
-
-/* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "Nu s-au obținut date de la furnizorul conexiunii.";
-
-/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "A apărut o eroare la încercarea de decodificare a răspunsului de la furnizorul conexiunii.";
-
-/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "A apărut o eroare la încercarea de trimitere a mesajului către furnizorul conexiunii.";
-
-/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "Furnizorul conexiunii a primit o solicitare necunoscută.";
-
-/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "Furnizorul conexiunii a returnat un răspuns necunoscut.";
-
-/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "Furnizorul conexiunii a întâmpinat o eroare: %@";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "A apărut o problemă cu conexiunea. (Eroare %@)";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Verificați dacă aveți conexiune la VPN și obțineți acces rapid la conexiunile favorite.";
@@ -2832,3 +2784,9 @@
 
 /* Recents section description */
 "widget_recents_description" = "Aici vedeți istoricul conexiunilor.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Componentele de interfață au revenit";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Acum vă puteți vedea și gestiona conexiunea la VPN fără a părăsi ecranul principal.";
