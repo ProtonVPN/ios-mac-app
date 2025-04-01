@@ -2740,89 +2740,41 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "향상된 성능과 프리미엄 기능을 잠금 해제하세요";
 
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "오류";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "이 작업을 완료하지 못했습니다. (오류 %@)";
+
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "연결 오류";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "선택한 연결이 이 응용 프로그램에서 더 이상 지원하지 않는 프로토콜(%@)을 사용합니다. 다른 연결을 선택하세요.";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "선택한 연결이 이 애플리케이션에서 더 이상 지원되지 않는 프로토콜 (%@)을 사용합니다. 다른 연결을 선택해 주세요. (오류 %@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "서버를 인증하는데 오류가 발생했습니다: %@";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "이 서버를 인증하는 도중에 문제가 발생했습니다. (오류 %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
-"_connection_error_certificate_authentication_key_generation_failed" = "사용자의 암호화 키를 생성하는데 오류가 발생했습니다. (%@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "VPN을 시작하는 도중 문제가 발생했습니다. (오류 %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "자격 증명을 새로고침하지 못했습니다. (%@)";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
-"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "키가 이 기기에서 지원되지 않습니다.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
-"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "인증서가 이 기기에서 지원되지 않습니다.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "이 기기상의 인증서가 만료되었습니다.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "자격 증명을 지금 바로 새로고침할 수 없습니다.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
-"_connection_error_certificate_authentication_ipc_message" = "프로토콜 오류가 발생했습니다. (%@)";
-
-/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_certificate_authentication_unexpected" = "예기치 못한 자격 증명 오류가 발생했습니다. (%@)";
-
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "VPN을 시작하는데 문제가 발생했습니다: %@";
-
-/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_tunnel_connection_tunnel_start" = "터널을 만들 수 없습니다. (%@)";
-
-/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "선택한 서버를 더 이상 사용할 수 없어요. 다른 서버를 선택해 주세요.";
-
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "연결 도중 알 수 없는 오류가 발생했습니다: %@";
 
-/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "기기가 연결을 설정할 수 없습니다. (%@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "서버에 연결하는데 실패했습니다. (오류 %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
-"_connection_error_local_agent_remote_error" = "리모트 서비스가 연결을 허용하지 않습니다. (%@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "연결을 준비하는데 실패했습니다. (오류 %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "연결을 인증할 수 없습니다.";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "선택한 서버는 더 이상 사용할 수 없습니다. 다른 서버를 선택해 주세요. (오류 %@)";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "기존 연결 정보가 상실되어 서버로의 연결이 불가능합니다.";
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "연결을 시도하는 중에 오류를 감지했습니다: 서버가 재시간에 응답하지 않았습니다. 나중에 다시 시도하세요. (오류 %@)";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "연결 준비 중 오류가 발생했습니다: %@";
-
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "선택한 서버를 더 이상 사용할 수 없어요. 다른 서버를 선택해 주세요.";
-
-/* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "연결 시도 중 오류가 발생했습니다: 서버가 재시간에 응답하지 않았습니다. 나중에 다시 시도하세요.";
-
-/* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "연결 제공자로 부터 데이터 수신 받은 것이 없습니다.";
-
-/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "연결 제공자로 부터 응답을 해독 시도하는 도중 오류가 발생했습니다.";
-
-/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "연결 제공자로 메시지를 전송 시도하는 도중 오류가 발생했습니다.";
-
-/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "연결 제공자가 알 수 없는 요청을 수신받았습니다.";
-
-/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "연결 제고자가 알 수 없는 응답을 회신했습니다.";
-
-/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "연결 제공자로부터 오류가 발생했습니다: %@";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "연결 도중 문제가 발생했습니다. (오류 %@)";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "VPN에 연결되어 있는지 확인하고 좋아하는 연결에 빠르게 접근하세요.";
@@ -2832,3 +2784,9 @@
 
 /* Recents section description */
 "widget_recents_description" = "여기서 연결 기록을 확인하세요.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "위젯이 돌아왔어요";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "이제 홈 화면에서 떠나지 않고도 VPN을 확인 및 관리할 수 있어요.";

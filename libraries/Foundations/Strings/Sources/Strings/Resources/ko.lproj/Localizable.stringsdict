@@ -222,7 +222,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>광고가 차단됨</string>
+        <string>차단된 광고</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -236,7 +236,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>트래커가 멈춤</string>
+        <string>멈춘 트래커</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

@@ -2740,95 +2740,53 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Разблакіруйце пашыраную прадукцыйнасць і функцыі прыватнасці";
 
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Памылка";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "Аперацыю не ўдалося завяршыць (памылка: %@).";
+
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Памылка падключэння";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "Выбранае вамі падключэнне выкарыстоўвае пратакол (%@), які больш не падтрымліваецца гэтай праграмай. Выберыце іншае падключэнне.";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "Выбранае вамі падключэнне выкарыстоўвае пратакол (%@), які больш не падтрымліваецца гэтай праграмай. Выберыце іншае падключэнне (памылка: %@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "Адбылася памылка аўтэнтыфікацыі з серверам: %@";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "Узнікла праблема пры аўтэнтыфікацыі з серверам (памылка: %@).";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
-"_connection_error_certificate_authentication_key_generation_failed" = "немагчыма згенерыраваць вашы ключы шыфравання. (%@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "Узнікла праблема пры запуску VPN (памылка: %@).";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "немагчыма абнавіць вашы ўліковыя даныя. (%@)";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
-"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Ключы недаступны на прыладзе.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
-"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Сертыфікат недаступны на прыладзе.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Тэрмін дзеяння сертыфіката на прыладзе мінуў.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "немагчыма абнавіць вашы ўліковыя даныя ў цяперашні момант.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
-"_connection_error_certificate_authentication_ipc_message" = "адбылася памылка пратакола. (%@)";
-
-/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_certificate_authentication_unexpected" = "адбылася нечаканая памылка ўліковых даных. (%@)";
-
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "Узнікла праблема пры запуску VPN: %@";
-
-/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_tunnel_connection_tunnel_start" = "немагчыма ўсталяваць тунэль. (%@)";
-
-/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "выбраны вамі сервер больш недаступны. Выберыце іншы сервер.";
-
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "Адбылася нечаканая памылка падчас падключэння: %@";
 
-/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "прылада не змагла ўсталяваць падключэнне. (%@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "Мы не змаглі падключыцца да сервера (памылка: %@).";
 
-/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
-"_connection_error_local_agent_remote_error" = "аддалены сэрвіс не прыняў падключэнне. (%@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "Узнікла праблема пры падрыхтоўцы падключэння (памылка: %@).";
 
-/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "немагчыма аўтэнтыфікаваць падключэнне.";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "Выбраны вамі сервер больш недаступны. Выберыце іншы сервер (памылка: %@).";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Немагчыма падключыцца да сервера, бо адсутнічаюць звесткі арыгінальнага падключэння.";
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "Узнікла памылка пры спробе падключэння: у цяперашні час сервер не адказвае своечасова. Паспрабуйце яшчэ раз (памылка: %@).";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Узнікла праблема пры падрыхтоўцы падключэння: %@";
-
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Выбраны вамі сервер больш недаступны. Выберыце іншы сервер.";
-
-/* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "Узнікла памылка пры спробе падключэння: у цяперашні час сервер не адказвае своечасова. Паспрабуйце яшчэ раз.";
-
-/* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "Не атрыманы даныя ад пастаўшчыка падключэння.";
-
-/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "Адбылася памылка пры спробе дэкадзіраваць адказ ад пастаўшчыка падключэння.";
-
-/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "Адбылася памылка пры спробе адправіць паведамленне пастаўшчыку падключэння.";
-
-/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "Пастаўшчык падключэння атрымаў невядомы запыт.";
-
-/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "Пастаўшчык падключэння вярнуў невядомы адказ.";
-
-/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "У пастаўшчыка падключэння ўзнікла памылка: %@";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "Узнікла праблема пры падключэннем (памылка: %@).";
 
 /* Text that appears as subtitle to the widget when user is creating it */
-"widget_tray_description" = "Праверце, ці падключаны вы да VPN і атрымайце хуткі доступ да вашых улюблёных злучэнняў.";
+"widget_tray_description" = "Праверце, ці падключаны вы да VPN і атрымайце хуткі доступ да вашых абраных падключэнняў.";
 
 /* Recents section title */
 "widget_recents_title" = "Нядаўнія";
 
 /* Recents section description */
 "widget_recents_description" = "Паглядзець сваю гісторыю падключэнняў.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Віджэты вярнуліся";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Цяпер вы можаце праглядаць і кіраваць сваім падключэннем па VPN не пакідаючы галоўны экран.";

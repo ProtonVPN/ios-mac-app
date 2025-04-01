@@ -2740,89 +2740,41 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Ontgrendel geavanceerde prestatie- en privacyfuncties";
 
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Fout";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "De bewerking kon niet worden voltooid. (Fout %@)";
+
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Verbindingsfout";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "De verbinding die u heeft gekozen gebruikt een protocol (%@) dat niet langer wordt ondersteund door deze applicatie. Kies een andere verbinding.";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "De verbinding die u heeft gekozen gebruikt een protocol (%@) dat niet langer wordt ondersteund door deze applicatie. Kies een andere verbinding. (Fout%@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "Er is een probleem opgetreden tijdens de authenticatie met de server: %@";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "Er is een probleem opgetreden tijdens de authenticatie met de server: (Fout %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
-"_connection_error_certificate_authentication_key_generation_failed" = "we konden uw encryptiesleutels niet genereren. (%@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "Er was een probleem met het starten van de VPN. (Fout %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "we konden uw gegevens niet vernieuwen. (%@)";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
-"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "De sleutels zijn niet beschikbaar op het apparaat.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
-"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Het certificaat is niet beschikbaar op het apparaat.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Het certificaat op het apparaat is verlopen.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "het is momenteel niet mogelijk om uw gegevens te vernieuwen.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
-"_connection_error_certificate_authentication_ipc_message" = "er is een protocolfout opgetreden. (%@)";
-
-/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_certificate_authentication_unexpected" = "er is een onverwachte aanmeldfout opgetreden. (%@)";
-
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "Er was een probleem met het starten van de VPN: %@";
-
-/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_tunnel_connection_tunnel_start" = "de tunnel kon niet worden opgezet. (%@)";
-
-/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "de server die u hebt gekozen is niet meer beschikbaar. Kies een andere server.";
-
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "Er is een onverwachte fout opgetreden tijdens het verbinden: %@";
 
-/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "het apparaat kon geen verbinding maken. (%@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "We kunnen geen verbinding maken met de server. (Fout %@).";
 
-/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
-"_connection_error_local_agent_remote_error" = "de externe service accepteerde de verbinding niet. (%@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "Er is een fout opgetreden bij het opzetten van de verbinding (Fout %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "we konden de verbinding niet authenticeren.";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "De server die u hebt gekozen is niet meer beschikbaar. Kies een andere server. (Fout %@)";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "We konden geen verbinding maken met de server, omdat de originele verbinding informatie ontbrak.";
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "Er is een fout opgetreden bij het verbinden: de server heeft niet op tijd gereageerd. Probeer het opnieuw. (Fout %@)";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Er is een fout opgetreden bij het opzetten van de verbinding: %@";
-
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "De server die u hebt gekozen is niet meer beschikbaar. Kies een andere server.";
-
-/* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "Er is een fout opgetreden tijdens het verbinden: de server heeft niet op tijd gereageerd. Probeer opnieuw.";
-
-/* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "Er zijn geen gegevens ontvangen van de connectie provider.";
-
-/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "Er is een fout opgetreden bij het decoderen van het antwoord van de netwerkprovider.";
-
-/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "Er is een fout opgetreden bij het versturen van een bericht naar de connector provider.";
-
-/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "De netwerkprovider heeft een onbekende aanvraag ontvangen.";
-
-/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "De netwerkprovider gaf een onbekend antwoord terug.";
-
-/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "De netwerkprovider ondervond een fout: %@";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "Er was een probleem met de verbinding. (Fout %@)";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Controleer of u bent verbonden met VPN en krijg snel toegang tot uw favoriete verbindingen.";
@@ -2832,3 +2784,9 @@
 
 /* Recents section description */
 "widget_recents_description" = "Bekijk hier uw verbindingsgeschiedenis.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Widgets zijn terug";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "U kunt nu uw VPN bekijken en beheren zonder het startscherm te verlaten.";

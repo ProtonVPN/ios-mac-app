@@ -2740,89 +2740,41 @@
 /* Home upsell carousel card subtitle */
 "upsell_carousel_more_subtitle" = "Akses performa tingkat lanjut dan berbagai fitur privasi";
 
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Kesalahan";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "Tindakan ini tidak dapat dirampungkan. (Kesalahan %@)";
+
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Kesalahan Koneksi";
 
-/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The name of that protocol is included in the string. */
-"_connection_error_unexpected_protocol" = "Koneksi yang Anda pilih menggunakan protokol (%@) yang tidak lagi didukung oleh aplikasi ini. Silakan pilih koneksi yang berbeda.";
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "Koneksi yang Anda pilih menggunakan protokol tertentu (%@) yang sudah tidak lagi didukung oleh aplikasi ini. Silakan pilih koneksi yang berbeda. (Kesalahan %@)";
 
-/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_certificate_authentication" = "Terdapat masalah dalam mengautentikasi dengan server: %@";
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "Terdapat kesalahan pada saat mengautentikasi dengan server. (Kesalahan %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an error while generating encryption keys. That error is included in the second part of the string, and may not be localized. */
-"_connection_error_certificate_authentication_key_generation_failed" = "kami tidak dapat menghasilkan kunci enkripsi Anda. (%@)";
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "Terdapat kesalahan pada saat memulai VPN. (Kesalahan %@)";
 
-/* Sub-case of error message _connection_error_certificate_authentication: the application encountered an issue while refreshing credentials. The description of this error is included in the second part of the string. */
-"_connection_error_certificate_authentication_wont_refresh" = "kami tidak dapat memuat ulang kredensial Anda. (%@)";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the keys are missing. */
-"_connection_error_certificate_authentication_wont_refresh_keys_missing" = "Kunci ini tidak tersedia pada perangkat.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is missing. */
-"_connection_error_certificate_authentication_wont_refresh_cert_missing" = "Sertifikat ini tidak tersedia pada perangkat.";
-
-/* Part of error sub-case of _connection_error_certificate_authentication_wont_refresh: the certificate is available on the device, but has expired. */
-"_connection_error_certificate_authentication_wont_refresh_cert_expired" = "Sertifikat pada perangkat ini telah kedaluwarsa.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the server told us we need to stop asking to refresh our certificate, and try again later. */
-"_connection_error_certificate_authentication_rate_limited" = "kredensial Anda tidak dapat dimuat ulang untuk saat ini.";
-
-/* Sub-case of error message _connection_error_certificate_authentication: the service (extension) we use to authenticate with the VPN failed to refresh the credentials, and has sent us a message explaining why. */
-"_connection_error_certificate_authentication_ipc_message" = "terdapat kesalahan protokol. (%@)";
-
-/* Sub-case of error message _connection_error_certificate_authentication: an unexpected error occurred, and its description is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_certificate_authentication_unexpected" = "terdapat kesalahan kredensial yang tidak diketahui. (%@)";
-
-/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_tunnel_connection" = "Terdapat kesalahan dalam memulai VPN: %@";
-
-/* Sub-case of _connection_error_tunnel_connection: the connection couldn't be started due to a specific error, which is included in the second half of the text. That description may or may not be localized. */
-"_connection_error_tunnel_connection_tunnel_start" = "terowongan VPN tidak dapat dikukuhkan. (%@)";
-
-/* Similar to _connection_error_server_missing, can occur in a different part of the connection process. */
-"_connection_error_tunnel_connection_unknown_server" = "server yang Anda pilih sudah tidak lagi tersedia. Silakan pilih server yang berbeda.";
-
-/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. There are a number of sub-errors that can occur which are included in the second part of the string. */
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "Terdapat kesalahan yang tidak terduga pada saat menghubungkan: %@";
 
-/* Sub-case of _connection_error_local_agent: the connection with the remote agent couldn't be established. */
-"_connection_error_local_agent_failed_establishing_connection" = "perangkat tidak dapat mengukuhkan koneksi. (%@)";
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "Kami tidak dapat terhubung ke server. (Kesalahan %@).";
 
-/* Sub-case of _connection_error_local_agent: the remote agent accepted the connection, but sent us an error. */
-"_connection_error_local_agent_remote_error" = "layanan jarak jauh tidak menerima koneksi. (%@)";
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "Terdapat kesalahan pada saat menyiapkan koneksi (Kesalahan %@)";
 
-/* Sub-case of _connection_error_local_agent: the remote agent was using an unexpected or invalid certificate. */
-"_connection_error_local_agent_server_certificate" = "kami tidak dapat mengautentikasi koneksi.";
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "Server yang Anda pilih sudah tidak lagi tersedia. Silakan pilih server yang berbeda. (Kesalahan %@)";
 
-/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. */
-"_connection_error_intent_missing" = "Kami tidak dapat menghubungkan ke server, karena informasi koneksi asli hilang.";
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "Kami menemui kesalahan pada saat mencoba untuk terhubung: Server yang dituju tidak memberikan balasan. Silakan coba lagi. (Kesalahan %@)";
 
-/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. */
-"_connection_error_preparation" = "Terdapat masalah dalam menyiapkan koneksi: %@";
-
-/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. */
-"_connection_error_server_missing" = "Server yang Anda pilih sudah tidak lagi tersedia. Silakan pilih server yang berbeda.";
-
-/* Error message: we tried to connect, but something took too long and we weren't able to  */
-"_connection_error_timeout" = "Kami mengalami kesalahan menghubungkan: server tidak membalas dalam waktu tertentu. Silakan coba lagi.";
-
-/* Error message: we tried to message the connection provider, but they didn't respond in time. */
-"_provider_message_error_no_data_received" = "Tidak ada data yang diterima dari penyedia koneksi.";
-
-/* Error message: we tried sending a message to the connection provider, but the message was in the wrong format. */
-"_provider_message_error_decoding_error" = "Terjadi kesalahan mendekode response dari penyedia koneksi.";
-
-/* Error message: we tried sending a message to the connection provider, but encountered an issue in the process. */
-"_provider_message_error_sending_error" = "Terjadi kesalahan mengirim pesan ke penyedia koneksi.";
-
-/* Error message: we tried sending a message to the connection provider, but it didn't recognize the request. */
-"_provider_message_error_unknown_request" = "Penyedia koneksi menerima permintaan yang tidak dikenal.";
-
-/* Error message: we tried sending a message to the connection provider, but we didn't recognize the response. */
-"_provider_message_error_unknown_response" = "Penyedia koneksi memberikan respons yang tidak dikenal.";
-
-/* Error message: we tried sending a message to the connection provider, but it responded with an error message which is included in the second half of the string. That error message may not be localized. */
-"_provider_message_error_remote_error" = "Penyedia koneksi mengalami kesalahan: %@";
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "Terdapat kesalahan dengan koneksi. (Kesalahan %@)";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Periksa apakah Anda sedang terhubung ke VPN dan dapatkan akses kilat ke koneksi favorit Anda.";
@@ -2832,3 +2784,9 @@
 
 /* Recents section description */
 "widget_recents_description" = "Lihat riwayat koneksi Anda di sini.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Widget kembali hadir";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Anda kini dapat melihat dan mengelola koneksi VPN Anda tanpa harus meninggalkan layar Beranda.";
