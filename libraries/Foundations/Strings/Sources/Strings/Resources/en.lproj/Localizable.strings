@@ -2667,3 +2667,23 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Got it";

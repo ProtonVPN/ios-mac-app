@@ -38,6 +38,10 @@ import Domain
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
+    public init(store: StoreOf<HomeFeature>) {
+        self.store = store
+    }
+
     private static let bottomGradientHeight: CGFloat = 100
 
     // Sticky ProtectionStatus functionality on scroll.
@@ -60,11 +64,7 @@ public struct HomeView: View {
         return max(0, viewHeight - (connectionViewHeight + recentPeek))
     }
 
-    public init(store: StoreOf<HomeFeature>) {
-        self.store = store
-    }
-
-    @Namespace var topID
+    @Namespace private var topID
 
     @State private var connectionStatusZIndex = ZIndex.enabledConnectionStatus
 
@@ -80,33 +80,43 @@ public struct HomeView: View {
 
     public var body: some View {
         content
-        .sheet(item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)) { store in
-            WithPerceptionTracking {
-                ConnectionScreenView(store: store)
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
+            .sheet(
+                item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
+            ) { store in
+                WithPerceptionTracking {
+                    ConnectionScreenView(store: store)
+                        .presentationDetents([.large])
+                        .presentationDragIndicator(.visible)
+                }
             }
-        }
-        .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
-            store.send(.didDismissChangeServer)
-        }) { store in
-            WithPerceptionTracking {
-                ChangeServerModal(store: store)
+            .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
+                store.send(.didDismissChangeServer)
+            }) { store in
+                WithPerceptionTracking {
+                    ChangeServerModal(store: store)
+                }
             }
-        }
-        .sheet(item: $store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)) { store in
-            WithPerceptionTracking {
-                DefaultConnectionSheet(store: store)
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium, .large])
+            .sheet(
+                item: $store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)
+            ) { store in
+                WithPerceptionTracking {
+                    DefaultConnectionSheet(store: store)
+                        .presentationDragIndicator(.visible)
+                        .presentationDetents([.medium, .large])
+                }
             }
-        }
-        .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
-            WithPerceptionTracking {
-                FreeConnectionInfoModal(store: store)
+            .sheet(
+                item: $store.scope(state: \.destination?.whatsNew, action: \.destination.whatsNew)
+            ) { store in
+                WithPerceptionTracking {
+                    WhatsNewViewContainer(store: store)
+                }
             }
-        }
-
+            .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
+                WithPerceptionTracking {
+                    FreeConnectionInfoModal(store: store)
+                }
+            }
     }
 
     private var content: some View {
