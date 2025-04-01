@@ -24,7 +24,7 @@ import protocol Foundation.LocalizedError
 
 import ComposableArchitecture
 
-extension ConnectToVPNKey: DependencyKey {
+extension ConnectToVPNKey: @retroactive DependencyKey {
     enum ConnectionError: LocalizedError {
         case cancelled
 

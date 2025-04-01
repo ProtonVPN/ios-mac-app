@@ -14,7 +14,7 @@ import VPNShared
 import Strings
 import Domain
 
-extension VpnProtocol: DefaultableProperty {
+extension VpnProtocol: @retroactive DefaultableProperty {
     public init() {
         self = .defaultValue
     }

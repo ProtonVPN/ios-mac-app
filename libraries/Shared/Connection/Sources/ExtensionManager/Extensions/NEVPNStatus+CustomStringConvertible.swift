@@ -19,7 +19,7 @@
 import Foundation
 import enum NetworkExtension.NEVPNStatus
 
-extension NEVPNStatus: CustomStringConvertible {
+extension NEVPNStatus: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .disconnecting:

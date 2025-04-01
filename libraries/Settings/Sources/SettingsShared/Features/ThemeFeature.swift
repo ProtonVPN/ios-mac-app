@@ -24,7 +24,7 @@ import Localization
 import Strings
 import Theme
 
-extension ColorScheme: LocalizedStringConvertible {
+extension ColorScheme: @retroactive LocalizedStringConvertible {
     public var localizedDescription: String {
         switch self {
         case .auto: return Localizable.settingsThemeValueAuto

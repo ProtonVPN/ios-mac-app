@@ -24,13 +24,13 @@ import struct Domain.VPNConnectionFeatures
 import struct VPNShared.VpnCertificate
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
-extension Domain.Server: CustomDumpStringConvertible {
+extension Domain.Server: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
         return "Server(name: \(logical.name))"
     }
 }
 
-extension Domain.VPNConnectionFeatures: CustomDumpStringConvertible {
+extension Domain.VPNConnectionFeatures: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
         return "VPNConnectionFeatures"
     }
@@ -42,7 +42,7 @@ extension VPNKeys: CustomDumpStringConvertible {
     }
 }
 
-extension VpnCertificate: CustomDumpStringConvertible {
+extension VpnCertificate: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
         return "VPNCertificate(validUntil: \(validUntil))"
     }

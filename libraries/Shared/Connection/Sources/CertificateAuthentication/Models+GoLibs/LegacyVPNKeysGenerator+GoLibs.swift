@@ -34,7 +34,7 @@ import CoreConnection
 // These implementations are copied over from LegacyCommon and should be superceded by the new implementations defined
 // in this package when we are ready to refactor VpnAuthenticationKeychain.
 
-extension VPNShared.VPNKeysGenerator: DependencyKey {
+extension VPNShared.VPNKeysGenerator: @retroactive DependencyKey {
     private static var commonImplementation: VPNShared.VPNKeysGenerator {
         return .init(generateKeys: {
             var error: NSError?

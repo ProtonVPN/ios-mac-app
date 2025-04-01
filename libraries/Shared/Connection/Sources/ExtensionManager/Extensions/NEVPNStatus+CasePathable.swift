@@ -20,7 +20,7 @@ import Foundation
 import enum NetworkExtension.NEVPNStatus
 import CasePaths
 
-extension NEVPNStatus: CasePathable {
+extension NEVPNStatus: @retroactive CasePathable {
     public struct AllCasePaths {
         public var disconnecting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(

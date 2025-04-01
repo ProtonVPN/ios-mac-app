@@ -24,7 +24,7 @@ import Dependencies
 
 import struct CommonNetworking.CryptoService
 
-extension CryptoService: DependencyKey {
+extension CryptoService: @retroactive DependencyKey {
     public static var liveValue: CryptoService {
         return CryptoService(updateTime: { serverTime in
             CryptoUpdateTime(serverTime)

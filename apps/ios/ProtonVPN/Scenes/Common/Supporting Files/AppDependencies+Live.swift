@@ -30,11 +30,11 @@ import Ergonomics
 
 // MARK: Live implementations of app dependencies
 
-extension DatabaseConfigurationKey: DependencyKey {
+extension DatabaseConfigurationKey: @retroactive DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
 }
 
-extension AppInfoKey: DependencyKey {
+extension AppInfoKey: @retroactive DependencyKey {
     public static let liveValue: AppInfo = AppInfoImplementation(context: .mainApp)
 }
 
@@ -42,11 +42,11 @@ import CommonNetworking
 import ProtonCoreChallenge
 import ProtonCoreFoundations
 
-extension ChallengeParametersProviderKey: DependencyKey {
+extension ChallengeParametersProviderKey: @retroactive DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
 }
 
-extension DoHConfigurationKey: DependencyKey {
+extension DoHConfigurationKey: @retroactive DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 

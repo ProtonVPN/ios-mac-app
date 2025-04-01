@@ -28,8 +28,7 @@ private let appStateManager: AppStateManager = Container.sharedContainer.makeApp
 
 @available(macOS 13, *)
 @available(tvOS, unavailable)
-extension VPNConnectionStatusPublisherKey: DependencyKey {
-
+extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
         return NotificationCenter.default
             .notifications(named: AppEvent.appStateManagerStateChange.name)
@@ -60,7 +59,7 @@ extension VPNConnectionStatusPublisherKey: DependencyKey {
 @available(macOS 13, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
-extension VPNConnectionStatusKey: DependencyKey {
+extension VPNConnectionStatusKey: @retroactive DependencyKey {
     public static var liveValue: @Sendable () async -> VPNConnectionStatus = {
         let appStateManager = Container.sharedContainer.makeAppStateManager()
         let propertyManager = Container.sharedContainer.makePropertiesManager()
