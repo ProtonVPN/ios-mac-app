@@ -52,24 +52,57 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// Async VPNManager
     case asyncVPNManager = "AsyncVPNManager"
 
-    /// Redesign flag for iOS
-    case redesigniOS = "IOSRedesignedUI"
-
-    /// KillSwitch for iOS Redesign UI.
-    case redesigniOSKillSwitch = "IOSRedesignedUIKillSwitch"
-
     /// Plutonium flag for macOS
     case plutoniumMacOS = "Plutonium"
-    
-    /// Use ConnectionFeature reducer from ConnectionPackage
-    case useConnectionFeature = "UseConnectionFeature"
-
-    /// KillSwitch for ConnectionFeature reducer usage.
-    case useConnectionFeatureKillSwitch = "UseConnectionFeatureKillSwitch"
 
     /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
     case timestampedLogicals = "TimestampedLogicals"
 
     /// Allow Sandbox purchases on TestFlight builds.
     case allowSandboxPurchases = "AllowSandboxPurchases"
+}
+
+/// These features are guarded by an additional condition, such as reliance on another flag or an OS version check.
+private enum PrivateFeatureFlag: String, FeatureFlagTypeProtocol {
+    /// Redesign flag for iOS
+    case redesigniOS = "IOSRedesignedUI"
+
+    /// KillSwitch for iOS Redesign UI.
+    case redesigniOSKillSwitch = "IOSRedesignedUIKillSwitch"
+
+    /// Use ConnectionFeature reducer from ConnectionPackage
+    case useConnectionFeature = "UseConnectionFeature"
+
+    /// KillSwitch for ConnectionFeature reducer usage.
+    case useConnectionFeatureKillSwitch = "UseConnectionFeatureKillSwitch"
+}
+
+extension FeatureFlagsRepository {
+    @available(tvOS, unavailable)
+    @available(macOS, unavailable)
+
+    public static let isRedesigniOSEnabled: Bool = {
+        if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
+            return true
+        }
+        return false
+    }()
+
+    public static let isConnectionFeatureEnabled: Bool = {
+        #if os(iOS)
+        guard isRedesigniOSEnabled else {
+            // ConnectionFeature requires redesign to function since the feature currently lives as a child of the
+            // HomeFeature. In addition, parts of the legacy UI (Connection Status, old Map) are not hooked up to
+            // the new connection layer.
+            return false
+        }
+        return !isFlagEnabled(.useConnectionFeatureKillSwitch) || isFlagEnabled(.useConnectionFeature)
+        #else
+        return false
+        #endif
+    }()
+
+    private static func isFlagEnabled(_ flag: PrivateFeatureFlag) -> Bool {
+        FeatureFlagsRepository.shared.isEnabled(flag)
+    }
 }
