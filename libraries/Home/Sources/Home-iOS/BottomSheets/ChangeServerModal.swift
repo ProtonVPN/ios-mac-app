@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import Modals
+import ModalsShared
 import Theme
 import ComposableArchitecture
-import Home
+import HomeShared
 import VPNAppCore
 import Strings
 

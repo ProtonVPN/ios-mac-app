@@ -18,7 +18,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import Settings
+import SettingsShared
 
 struct UserDefaultsDebugView: View {
     @Binding public var store: StoreOf<UserDefaultsDebugFeature>

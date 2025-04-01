@@ -30,7 +30,7 @@ import PMLogger
 
 import LegacyCommon
 import VPNAppCore
-import Modals_macOS
+import Modals
 import BugReport
 import Announcement
 

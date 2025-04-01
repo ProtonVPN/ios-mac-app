@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import Modals
+import ModalsShared
 
 class CountryCellView: NSCollectionViewItem {
 

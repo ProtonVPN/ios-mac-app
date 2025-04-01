@@ -24,7 +24,6 @@ import ProtonCoreFeatureFlags
 import ProtonCorePayments
 
 import Modals
-import Modals_iOS
 import LegacyCommon
 import CommonNetworking
 import VPNAppCore

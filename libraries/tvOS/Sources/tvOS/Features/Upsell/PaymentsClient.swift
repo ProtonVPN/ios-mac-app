@@ -20,7 +20,7 @@ import Foundation
 import Dependencies
 import StoreKit
 import ProtonCorePayments
-import Modals // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 
 struct PlanIAPTuple: Identifiable, Equatable {
     let planOption: PlanOption

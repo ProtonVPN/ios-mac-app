@@ -24,7 +24,7 @@ import SDWebImageSwiftUI
 import Theme
 import Announcement
 import Strings
-import Home
+import HomeShared
 
 struct AnnouncementBannerView: View {
 

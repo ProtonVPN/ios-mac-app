@@ -20,8 +20,7 @@ import Foundation
 import ComposableArchitecture
 import Dependencies
 import Ergonomics
-import Modals // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
-import ModalsServices
+import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import enum ProtonCorePayments.ProcessCompletionResult
 import enum ProtonCorePayments.PurchaseResult
 

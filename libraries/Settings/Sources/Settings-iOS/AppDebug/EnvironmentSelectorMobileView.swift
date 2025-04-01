@@ -22,7 +22,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import Settings
+import SettingsShared
 import Theme
 
 public struct EnvironmentSelectorMobileView: View {

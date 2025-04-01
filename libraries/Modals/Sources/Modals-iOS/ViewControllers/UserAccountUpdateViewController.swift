@@ -21,7 +21,7 @@
 //
 
 import UIKit
-import Modals
+import ModalsShared
 import Theme
 
 class UserAccountUpdateViewController: UIViewController {

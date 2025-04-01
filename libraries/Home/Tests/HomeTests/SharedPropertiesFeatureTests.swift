@@ -21,7 +21,7 @@ import ComposableArchitecture
 import Domain
 import Ergonomics
 @testable import CommonNetworking
-@testable import Home
+@testable import HomeShared
 
 @MainActor
 final class SharedPropertiesFeatureTests: XCTestCase {

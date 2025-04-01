@@ -18,7 +18,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import Home
+import HomeShared
 import Strings
 import ProtonCoreUIFoundations
 import SharedViews

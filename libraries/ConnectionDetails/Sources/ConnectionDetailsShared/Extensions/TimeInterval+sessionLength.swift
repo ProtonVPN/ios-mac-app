@@ -19,10 +19,10 @@
 import Foundation
 import Strings
 
-extension TimeInterval {
+public extension TimeInterval {
 
     /// VPN session length text (with translation)
-    public var sessionLengthText: String {
+    var sessionLengthText: String {
         let time = -self
 
         switch time {

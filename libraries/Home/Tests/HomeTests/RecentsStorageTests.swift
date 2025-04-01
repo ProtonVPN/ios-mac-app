@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-@testable import Home
+@testable import HomeShared
 @testable import ConnectionInventory
 import Domain
 import Dependencies

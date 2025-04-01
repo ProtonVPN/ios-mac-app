@@ -22,7 +22,7 @@ import XCTest
 import Domain
 import ConnectionInventory
 
-@testable import Home
+@testable import HomeShared
 
 class ConnectionInventoryTests: XCTestCase {
 

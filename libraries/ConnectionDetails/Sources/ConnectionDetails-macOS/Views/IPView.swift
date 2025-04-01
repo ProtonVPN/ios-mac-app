@@ -18,7 +18,7 @@
 
 import SwiftUI
 import Theme
-import ConnectionDetails
+import ConnectionDetailsShared
 import ComposableArchitecture
 import Strings
 import ProtonCoreUIFoundations

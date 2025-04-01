@@ -17,13 +17,7 @@ let package = Package(
             targets: ["Modals"]),
         .library(
             name: "ModalsServices",
-            targets: ["ModalsServices"]),
-        .library(
-            name: "Modals-macOS",
-            targets: ["Modals-macOS"]),
-        .library(
-            name: "Modals-iOS",
-            targets: ["Modals-iOS"])
+            targets: ["ModalsServices"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
@@ -31,6 +25,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
+        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.0")),
         .package(path: "../Foundations/Strings"),
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Ergonomics"),
@@ -42,12 +37,18 @@ let package = Package(
         .target(
             name: "Modals",
             dependencies: [
+                .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "Modals-macOS", condition: .when(platforms: [.macOS]))
+            ]
+        ),
+        .target(
+            name: "ModalsShared",
+            dependencies: [
                 "Overture",
                 "Strings",
                 "Theme",
-                .target(name: "ModalsServices"),
-                .product(name: "Dependencies", package: "swift-dependencies"),
-                .core(module: "UIFoundations")
+                .core(module: "UIFoundations"),
+                .product(name: "CombineSchedulers", package: "combine-schedulers"),
             ],
             resources: [
                 .process("Resources/Media.xcassets")
@@ -66,21 +67,21 @@ let package = Package(
         ),
         .target(
             name: "Modals-iOS",
-            dependencies: ["Modals", "Theme", "Ergonomics", "SharedViews"],
+            dependencies: ["ModalsShared", "ModalsServices", "SharedViews"],
             resources: [
                 .process("Resources")
             ]
         ),
         .target(
             name: "Modals-macOS",
-            dependencies: ["Modals", "Theme", "Ergonomics", "SharedViews"],
+            dependencies: ["ModalsShared", "ModalsServices", "SharedViews"],
             resources: [
                 .process("Resources")
             ]
         ),
         .testTarget(
             name: "ModalsTests",
-            dependencies: ["Modals", "Overture", "Theme"]
+            dependencies: ["ModalsShared", "ModalsServices", "Overture", "Theme"]
         )
     ]
 )

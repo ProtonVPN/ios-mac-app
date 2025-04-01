@@ -21,7 +21,7 @@ import ComposableArchitecture
 import Domain
 import DomainTestSupport
 import Ergonomics
-@testable import Home
+@testable import HomeShared
 
 @MainActor
 final class UserLocationFeatureTests: XCTestCase {

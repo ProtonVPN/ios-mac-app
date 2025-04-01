@@ -19,7 +19,6 @@
 import SwiftUI
 import ConnectionDetails
 import ComposableArchitecture
-import ConnectionDetails_iOS
 
 struct ContentView: View {
     var body: some View {

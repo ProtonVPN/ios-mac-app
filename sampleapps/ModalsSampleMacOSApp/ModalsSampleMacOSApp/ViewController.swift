@@ -18,7 +18,6 @@
 
 import Cocoa
 import Modals
-import Modals_macOS
 
 class ViewController: NSViewController {
 

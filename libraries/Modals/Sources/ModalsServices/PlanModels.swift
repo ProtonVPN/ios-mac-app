@@ -72,7 +72,7 @@ public struct PlanOption: Hashable {
         self.duration = duration
         self.price = price
     }
-    
+
     public func discount(comparedTo plan: PlanOption) -> Int? {
         let pricePerMonthMine: Double = pricePerMonth
         let pricePerMonthTheirs: Double = plan.pricePerMonth

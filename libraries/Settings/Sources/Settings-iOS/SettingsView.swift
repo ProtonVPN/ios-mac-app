@@ -22,7 +22,7 @@ import ComposableArchitecture
 import SwiftNavigation
 
 import Localization
-import Settings
+import SettingsShared
 import Strings
 import Theme
 import ProtonCoreUIFoundations

@@ -19,11 +19,11 @@
 import SwiftUI
 import Strings
 import ProtonCoreUIFoundations
-import Home
+import HomeShared
 import Dependencies
 import VPNAppCore
 import ComposableArchitecture
-import NetShield_iOS
+import NetShield
 
 struct ConnectionStatusUpsell: View {
 

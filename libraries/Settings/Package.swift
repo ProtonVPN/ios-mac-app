@@ -11,8 +11,6 @@ let package = Package(
     ],
     products: [
         .library(name: "Settings", targets: ["Settings"]),
-        .library(name: "Settings-iOS", targets: ["Settings-iOS"]),
-        .library(name: "Settings-macOS", targets: ["Settings-macOS"])
     ],
     dependencies: [
         .package(path: "../../external/protoncore"),
@@ -27,28 +25,30 @@ let package = Package(
         .target(
             name: "Settings",
             dependencies: [
+                .target(name: "Settings-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "Settings-macOS", condition: .when(platforms: [.macOS])),
+            ]
+        ),
+        .target(
+            name: "SettingsShared",
+            dependencies: [
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 "Theme",
                 "Strings",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Dependencies", package: "swift-dependencies")
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "SwiftNavigation", package: "swift-navigation"),
             ]
         ),
         .target(
             name: "Settings-iOS",
-            dependencies: [
-                "Settings",
-                .product(name: "SwiftNavigation", package: "swift-navigation"),
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-            ],
-            exclude: ["swiftgen.yml"],
-            resources: [.process("Resources")]
+            dependencies: ["SettingsShared", .product(name: "SwiftNavigation", package: "swift-navigation"),]
         ),
         .target(
             name: "Settings-macOS",
-            dependencies: ["Settings"]
+            dependencies: ["SettingsShared"]
         ),
         .testTarget(name: "SettingsTests", dependencies: ["Settings"])
     ]

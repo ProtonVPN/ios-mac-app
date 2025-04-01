@@ -27,7 +27,6 @@ import ProtonCorePaymentsUI
 import LegacyCommon
 import UIKit
 import VPNShared
-import Modals_iOS
 import Modals
 import CommonNetworking
 import VPNAppCore

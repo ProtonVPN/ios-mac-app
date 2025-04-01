@@ -18,7 +18,8 @@
 
 import SwiftUI
 import Strings
-import Modals
+import ModalsShared
+import ModalsServices
 
 private enum Constants {
     static let planOptionViewRowHeight: CGFloat = 64

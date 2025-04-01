@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import Modals
+import ModalsShared
 import Overture
 import Strings
 import Theme
@@ -62,7 +62,7 @@ class FreeConnectionsViewController: UIViewController {
         bannerChevronView.image = UIImage(systemName: "chevron.right")
         bannerChevronView.tintColor = .color(.text, .weak)
 
-        bannerImageView.image = Modals.Asset.worldwideCoverage.image
+        bannerImageView.image = ModalsShared.Asset.worldwideCoverage.image
 
         roundedBackgroundView.backgroundColor = .color(.background, .weak)
         roundedBackgroundView.layer.cornerRadius = .themeRadius12

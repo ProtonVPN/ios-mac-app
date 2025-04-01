@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-import Home
+import HomeShared
 import Lottie
 import SharedViews
 import Strings

@@ -20,7 +20,7 @@ import SwiftUI
 import Theme
 import Strings
 import ProtonCoreUIFoundations
-import Modals
+import ModalsShared
 
 struct BannerView: View {
     let useAlternateWording: Bool

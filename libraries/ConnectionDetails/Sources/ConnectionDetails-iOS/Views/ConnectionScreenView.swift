@@ -24,7 +24,7 @@ import ProtonCoreUIFoundations
 
 import Domain
 import Strings
-import ConnectionDetails
+import ConnectionDetailsShared
 import Persistence
 import SharedViews
 import VPNAppCore

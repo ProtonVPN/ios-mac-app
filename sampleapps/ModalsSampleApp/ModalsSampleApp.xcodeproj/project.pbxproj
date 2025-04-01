@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E5BBE32427B6BA69007CFFF4 /* ModalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BBE32327B6BA68007CFFF4 /* ModalTableViewCell.swift */; };
-		E5C2983E27BD4B0100A0FCC3 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5C2983D27BD4B0100A0FCC3 /* Modals-iOS */; };
 		E5DCC12627BD3EA7002AE350 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E5DCC12527BD3EA7002AE350 /* Modals */; };
 		E5DD64BF27B54E9100A282F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD64BE27B54E9100A282F2 /* AppDelegate.swift */; };
 		E5DD64C127B54E9100A282F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD64C027B54E9100A282F2 /* SceneDelegate.swift */; };
@@ -48,7 +47,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C2983E27BD4B0100A0FCC3 /* Modals-iOS in Frameworks */,
 				E5DCC12627BD3EA7002AE350 /* Modals in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +128,6 @@
 			name = ModalsSampleApp;
 			packageProductDependencies = (
 				E5DCC12527BD3EA7002AE350 /* Modals */,
-				E5C2983D27BD4B0100A0FCC3 /* Modals-iOS */,
 			);
 			productName = ModalsSampleApp;
 			productReference = E5DD64BB27B54E9100A282F2 /* ModalsSampleApp.app */;
@@ -509,10 +506,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E5C2983D27BD4B0100A0FCC3 /* Modals-iOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Modals-iOS";
-		};
 		E5DCC12527BD3EA7002AE350 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;

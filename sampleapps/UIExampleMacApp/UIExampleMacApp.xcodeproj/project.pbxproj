@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5794B092D96E35000EDCCD2 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5794B082D96E35000EDCCD2 /* ConnectionDetails */; };
 		E992C6AB2A29C48D00EFB73E /* UIExampleMacAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992C6AA2A29C48D00EFB73E /* UIExampleMacAppApp.swift */; };
 		E992C6AD2A29C48D00EFB73E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992C6AC2A29C48D00EFB73E /* ContentView.swift */; };
 		E992C6AF2A29C48F00EFB73E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E992C6AE2A29C48F00EFB73E /* Assets.xcassets */; };
 		E992C6B22A29C48F00EFB73E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E992C6B12A29C48F00EFB73E /* Preview Assets.xcassets */; };
-		E992C6BC2A29D05400EFB73E /* ConnectionDetails-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E992C6BB2A29D05400EFB73E /* ConnectionDetails-macOS */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E992C6BC2A29D05400EFB73E /* ConnectionDetails-macOS in Frameworks */,
+				E5794B092D96E35000EDCCD2 /* ConnectionDetails in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +102,7 @@
 			);
 			name = UIExampleMacApp;
 			packageProductDependencies = (
-				E992C6BB2A29D05400EFB73E /* ConnectionDetails-macOS */,
+				E5794B082D96E35000EDCCD2 /* ConnectionDetails */,
 			);
 			productName = UIExampleMacApp;
 			productReference = E992C6A72A29C48D00EFB73E /* UIExampleMacApp.app */;
@@ -366,9 +366,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E992C6BB2A29D05400EFB73E /* ConnectionDetails-macOS */ = {
+		E5794B082D96E35000EDCCD2 /* ConnectionDetails */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = "ConnectionDetails-macOS";
+			productName = ConnectionDetails;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

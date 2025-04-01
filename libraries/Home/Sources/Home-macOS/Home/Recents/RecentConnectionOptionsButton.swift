@@ -24,7 +24,7 @@ import Domain
 import Strings
 import Theme
 import VPNAppCore
-import Home
+import HomeShared
 
 struct RecentConnectionOptionsButton: View {
     let item: RecentConnection

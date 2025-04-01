@@ -23,7 +23,7 @@ import ComposableArchitecture
 import Dependencies
 
 import Domain
-import Home
+import HomeShared
 import Strings
 import Theme
 import Ergonomics

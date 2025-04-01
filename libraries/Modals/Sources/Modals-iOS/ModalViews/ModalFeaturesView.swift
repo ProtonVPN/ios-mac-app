@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import Modals
+import ModalsShared
 
 struct ModalFeaturesView: View {
     struct FeatureItem: Identifiable {

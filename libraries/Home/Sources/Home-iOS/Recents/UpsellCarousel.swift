@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import Home
+import HomeShared
 import Strings
 import Theme
 
@@ -93,7 +93,7 @@ fileprivate struct UpsellBanner: View {
 fileprivate struct BannerModel {
     let title: String
     let subtitle: String
-    let image: Home.ImageAsset
+    let image: HomeShared.ImageAsset
 
     init(type: BannerType) {
         switch type {

@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import Modals
+import ModalsShared
 import Strings
 import Ergonomics
 
@@ -88,7 +88,7 @@ final class FreeConnectionsViewController: NSViewController {
         roundedBackgroundView.layer?.cornerRadius = 8
         DarkAppearance { roundedBackgroundView.layer?.backgroundColor = .cgColor(.background, [.weak]) }
 
-        bannerImageView.image = Modals.Asset.worldwideCoverage.image
+        bannerImageView.image = ModalsShared.Asset.worldwideCoverage.image
         bannerChevronView.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
     }
 

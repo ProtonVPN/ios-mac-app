@@ -20,7 +20,7 @@ import SwiftUI
 import Theme
 import ComposableArchitecture
 import Strings
-import ConnectionDetails
+import ConnectionDetailsShared
 import ProtonCoreUIFoundations
 import Domain
 

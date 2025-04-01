@@ -32,7 +32,6 @@ import LegacyCommon
 import VPNAppCore
 import VPNShared
 import NetShield
-import NetShield_iOS
 
 import Theme
 import Domain

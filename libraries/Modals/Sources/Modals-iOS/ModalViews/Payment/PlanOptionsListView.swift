@@ -20,7 +20,8 @@ import SwiftUI
 import CombineSchedulers
 import SharedViews
 import Strings
-import Modals
+import ModalsShared
+import ModalsServices
 
 @MainActor
 struct PlanOptionsListView: View {

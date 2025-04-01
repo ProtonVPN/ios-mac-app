@@ -18,14 +18,14 @@
 
 import ComposableArchitecture
 import Combine
-import Home
-import Theme
+import HomeShared
 import SwiftUI
 import Strings
 import VPNShared
 import ProtonCoreUIFoundations
-import NetShield_iOS
+import NetShield
 import VPNAppCore
+import Theme
 
 import Dependencies
 import Localization

@@ -22,7 +22,7 @@
 
 import Cocoa
 import SwiftUI
-import Modals
+import ModalsShared
 import Ergonomics
 import Strings
 import Theme

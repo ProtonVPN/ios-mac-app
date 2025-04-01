@@ -30,7 +30,7 @@ import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
 import ProtonCorePasswordChange
 
-import Modals_iOS
+import Modals
 import LegacyCommon
 import VPNAppCore
 

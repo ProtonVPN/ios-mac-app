@@ -27,7 +27,6 @@ import LegacyCommon
 import Persistence
 import VPNShared
 import Modals
-import Modals_iOS
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService

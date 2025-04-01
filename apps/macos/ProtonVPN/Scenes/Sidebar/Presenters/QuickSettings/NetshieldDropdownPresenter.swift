@@ -29,8 +29,7 @@ import Domain
 import Ergonomics
 import Strings
 import NetShield
-import NetShield_macOS
-import Modals_macOS
+import Modals
 import LegacyCommon
 import VPNShared
 import VPNAppCore

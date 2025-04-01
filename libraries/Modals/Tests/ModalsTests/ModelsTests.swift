@@ -17,7 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-@testable import Modals
+@testable import ModalsServices
+@testable import ModalsShared
 
 final class ModelsTests: XCTestCase {
     func testDiscourageSecureCoreFeature() {

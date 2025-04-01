@@ -19,7 +19,6 @@
 import XCTest
 @testable import ModalsSampleMacOSApp
 import Modals
-import Modals_macOS
 
 class ModalsSampleMacOSAppTests: XCTestCase {
 

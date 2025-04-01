@@ -19,7 +19,7 @@
 import Foundation
 
 import Domain
-import Home
+import HomeShared
 import VPNShared
 
 // Todo: Snapshot testing for both macOS and iOS, for the Home view

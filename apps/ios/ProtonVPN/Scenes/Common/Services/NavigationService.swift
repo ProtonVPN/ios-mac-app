@@ -40,7 +40,7 @@ import VPNAppCore
 
 import BugReport
 import Strings
-import Modals_iOS
+import Modals
 import Domain
 
 // MARK: Country Service

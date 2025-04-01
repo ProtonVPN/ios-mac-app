@@ -20,7 +20,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import Home
+import HomeShared
 
 @available(iOS 17.0, *)
 struct WhatsNewViewContainer: View {

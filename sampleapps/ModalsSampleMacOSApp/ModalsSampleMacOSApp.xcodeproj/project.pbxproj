@@ -13,7 +13,6 @@
 		E50EDDD927BD0CD9009601C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50EDDD727BD0CD9009601C8 /* Main.storyboard */; };
 		E50EDDE427BD0CD9009601C8 /* ModalsSampleMacOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50EDDE327BD0CD9009601C8 /* ModalsSampleMacOSAppTests.swift */; };
 		E50EDE0827BD3AF2009601C8 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E50EDE0727BD3AF2009601C8 /* Modals */; };
-		E5C2983C27BD4AF400A0FCC3 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5C2983B27BD4AF400A0FCC3 /* Modals-macOS */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +41,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5C2983C27BD4AF400A0FCC3 /* Modals-macOS in Frameworks */,
 				E50EDE0827BD3AF2009601C8 /* Modals in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,7 +119,6 @@
 			name = ModalsSampleMacOSApp;
 			packageProductDependencies = (
 				E50EDE0727BD3AF2009601C8 /* Modals */,
-				E5C2983B27BD4AF400A0FCC3 /* Modals-macOS */,
 			);
 			productName = ModalsSampleMacOSApp;
 			productReference = E50EDDCE27BD0CD8009601C8 /* ModalsSampleMacOSApp.app */;
@@ -485,10 +482,6 @@
 		E50EDE0727BD3AF2009601C8 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;
-		};
-		E5C2983B27BD4AF400A0FCC3 /* Modals-macOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Modals-macOS";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

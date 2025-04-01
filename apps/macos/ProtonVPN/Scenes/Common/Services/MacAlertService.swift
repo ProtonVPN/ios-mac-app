@@ -31,7 +31,6 @@ import VPNAppCore
 import CommonNetworking
 
 import Modals
-import Modals_macOS
 import Announcement
 
 import Ergonomics

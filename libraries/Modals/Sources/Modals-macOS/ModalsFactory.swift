@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Modals
+import ModalsShared
 import AppKit
 import SwiftUI
 
@@ -46,7 +46,7 @@ public struct ModalsFactory {
         return discourageSecureCoreViewController
     }
 
-    static public func freeConnectionsViewController(countries: [(String, Modals.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
+    static public func freeConnectionsViewController(countries: [(String, ModalsShared.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
         let controller = FreeConnectionsViewController()
         controller.onBannerPress = upgradeAction
         controller.countries = countries

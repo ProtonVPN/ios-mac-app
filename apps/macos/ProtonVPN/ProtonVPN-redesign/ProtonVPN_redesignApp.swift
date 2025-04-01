@@ -22,7 +22,6 @@
 import SwiftUI
 import Theme
 import Home
-import Home_macOS
 import LegacyCommon
 import Logging
 import ComposableArchitecture

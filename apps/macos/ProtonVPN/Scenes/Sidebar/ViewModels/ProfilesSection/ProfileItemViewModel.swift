@@ -25,7 +25,6 @@ import Cocoa
 import LegacyCommon
 import VPNAppCore
 
-import Modals_macOS
 import Strings
 import Domain
 
