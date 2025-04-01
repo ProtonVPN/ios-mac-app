@@ -360,8 +360,9 @@ class CountryItemViewModel {
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
-            log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .country)
+            let serverKind = serversGroup.kind
+            log.debug("Will connect to \(serverKind) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(serverGroup: serverKind, ofType: serverType, trigger: .country)
             connectionStatusService.presentStatusViewController()
         }
     }
@@ -410,7 +411,7 @@ extension CountryItemViewModel: CountryViewModel {
         case .country(let countryCode):
             return UIImage.flag(countryCode: countryCode)
         case .gateway:
-            return Theme.Asset.gatewayFlag.image
+            return Theme.Asset.Flags.gateway.image
         }
     }
 

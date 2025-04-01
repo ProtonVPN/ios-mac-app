@@ -680,7 +680,7 @@ class CountriesSectionViewModel {
 
         return ServerSection(
             header: gatewaysSectionHeader,
-            cells: cells(for: gateways, showConnectButton: false)
+            cells: cells(for: gateways, showConnectButton: true)
         )
     }
 

@@ -54,7 +54,7 @@ public struct ConnectionInfoBuilder {
                 return countryName + " #\(number)"
             }
             return countryName
-        case .random:
+        case .random, .gateway:
             if withServerNumber, let sequence = server.logical.serverNameComponents.sequence {
                 return "#\(sequence)"
             }

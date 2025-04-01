@@ -160,6 +160,7 @@ extension ConnectionRequest: Codable {
 public enum ConnectionRequestType {
     case fastest
     case random
+    case gateway(name: String)
     case country(String, CountryConnectionRequestType)
     case city(country: String, city: String)
 }
@@ -177,6 +178,7 @@ extension ConnectionRequestType: Codable {
         case countryCode
         case countryConnectionRequestType
         case city
+        case gatewayName
     }
     
     public init(from decoder: Decoder) throws {
@@ -195,6 +197,9 @@ extension ConnectionRequestType: Codable {
             let countryCode = try container.decode(String.self, forKey: .countryCode)
             let city = try container.decode(String.self, forKey: .city)
             self = .city(country: countryCode, city: city)
+        case 4:
+            let name = try container.decode(String.self, forKey: .gatewayName)
+            self = .gateway(name: name)
         default:
             throw CodingError.unknownValue
         }
@@ -215,6 +220,9 @@ extension ConnectionRequestType: Codable {
             try container.encode(3, forKey: .rawValue)
             try container.encode(countryCode, forKey: .countryCode)
             try container.encode(city, forKey: .city)
+        case let .gateway(name: name):
+            try container.encode(4, forKey: .rawValue)
+            try container.encode(name, forKey: .gatewayName)
         }
     }
 }

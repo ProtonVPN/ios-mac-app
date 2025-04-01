@@ -60,6 +60,9 @@ public extension ConnectionSpec.Location {
                 .secureCore(.fastestHop(let code)),
                 .secureCore(.hop(let code, _)):
             return regionName(locale: locale, code: code)
+
+        case .gateway(let name):
+            return name
         }
     }
 
@@ -84,6 +87,10 @@ public extension ConnectionSpec.Location {
             return Localizable.viaSecureCore
         case .secureCore(.hop(_, let via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))
+
+        case .gateway:
+            // Similarly to fastest/random/region, we're not specifying an exact server. Leave subtext blank.
+            return nil
         }
     }
 }

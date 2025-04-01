@@ -29,6 +29,7 @@ public enum Flag: Equatable {
     case fastest
     case mostRecent
     case random
+    case gateway
     case country(code: String)
 
     public var imageName: String {
@@ -42,6 +43,9 @@ public enum Flag: Equatable {
 
         case .random:
             return "Random"
+
+        case .gateway:
+            return "Gateway"
 
         case .country(let code):
             return code

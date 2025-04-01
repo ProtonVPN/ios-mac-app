@@ -87,7 +87,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
             vpnGateway.quickConnect(trigger: .auto)
             return
         }
-        vpnGateway.connectTo(country: countryCode, ofType: .unspecified, trigger: .country)
+        vpnGateway.connectTo(serverGroup: .country(code: countryCode), ofType: .unspecified, trigger: .country)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             guard self.vpnGateway.connection == .connected else { return }
             self.vpnGateway.quickConnect(trigger: .country)

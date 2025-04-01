@@ -82,6 +82,10 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
                 throw .serverChangeUnavailable(until: date, duration: duration, exhaustedSkips: exhaustedSkips)
             }
 
+        case .gateway(let name):
+            log.assertionFailure("Free user requested connection to gateway", category: .connection)
+            throw .specificCountryUnavailable(countryCode: name)
+
             // Free users aren't allowed to choose an exact server.
         case .region(let code), .exact(_, _, _, _, let code):
             throw .specificCountryUnavailable(countryCode: code)

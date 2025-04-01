@@ -29,6 +29,8 @@ extension ConnectionSpec {
             location = connectionRequest.serverType == .secureCore ? .secureCore(.fastest) : .fastest
         case .random:
             location = connectionRequest.serverType == .secureCore ? .secureCore(.random) : .random
+        case .gateway(let name):
+            location = .gateway(name: name)
         case .country(let country, let type):
             switch type {
             case .fastest:

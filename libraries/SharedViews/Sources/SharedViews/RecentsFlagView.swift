@@ -101,6 +101,9 @@ extension ConnectionSpec.Location {
         case .fastest:
             return .standard(.fastest)
 
+        case .gateway:
+            return .standard(.gateway)
+
         case .region(let regionCode), .exact(_, _, _, _, let regionCode):
             return .standard(.country(code: regionCode))
 

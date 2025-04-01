@@ -228,6 +228,9 @@ fileprivate extension ConnectionSpec {
         case .region(let code):
             return .country(code, .fastest)
 
+        case .gateway(let name):
+            return .gateway(name: name)
+
         case .exact(_, _, let number, let subregion, let regionCode):
             if let number {
                 @Dependency(\.serverRepository) var serverRepository
