@@ -25,7 +25,7 @@ import Domain
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 
 extension DefaultsProvider: @retroactive DependencyKey {
-    public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults } )
+    public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults })
 }
 
 extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {

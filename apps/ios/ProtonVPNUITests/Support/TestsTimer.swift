@@ -19,8 +19,8 @@
 import Foundation
 
 final class TestsTimer {
-    private var startTime: Date? = nil
-    private var endTime: Date? = nil
+    private var startTime: Date?
+    private var endTime: Date?
     
     func StartTimer() {
         startTime = Date()

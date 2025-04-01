@@ -61,7 +61,6 @@ class SettingsRobot: CoreElements {
         return self
     }
 
-
     @discardableResult
     func turnModerateNatOn() -> SettingsRobot {
         if let intValue = (swittch(moderateNatSwitch).value() as? String).flatMap({ Int($0) }), intValue == 0 {

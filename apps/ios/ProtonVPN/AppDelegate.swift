@@ -414,7 +414,8 @@ extension AppDelegate {
         let center = NotificationCenter.default
         tokens.append(
             center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
-                switch (notification.object as? Bool) {
+                let boolValue = notification.object as? Bool
+                switch boolValue {
                 case true:
                     self?.enableExternalLogging()
                 case false:

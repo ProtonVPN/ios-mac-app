@@ -25,10 +25,6 @@ class NetShieldStatsTableViewCell: UITableViewCell {
     @IBOutlet private var trackersStatView: NetShieldStatsItemView!
     @IBOutlet private var dataStatView: NetShieldStatsItemView!
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()

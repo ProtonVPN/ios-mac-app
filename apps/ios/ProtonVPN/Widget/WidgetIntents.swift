@@ -69,7 +69,7 @@ internal struct ConnectToVPNIntent: AppIntent {
             if case .resolving = $0 { return false }
             return true
         }, every: .milliseconds(20), deadline: .seconds(Self.timeOut), operation: { _ in
-            //no-op
+            // no-op
         }) else {
             log.error("The connectionState hasn’t been changed from `resolving` in \(Self.timeOut) seconds. Skipping the widget connection intent.")
             return .result()

@@ -128,7 +128,7 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(countryCell)
         cells.append(serverCell)
         cells.append(protocolCell)
-        if (!FeatureFlagsRepository.isRedesigniOSEnabled) {
+        if !FeatureFlagsRepository.isRedesigniOSEnabled {
             cells.append(quickConnectCell)
             cells.append(footerCell)
         }
@@ -451,7 +451,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private func pushProtocolViewController() {
         let supportedProtocols = ConnectionProtocol.allCases
-            .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0)}
+            .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0) }
 
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol,
                                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
@@ -591,8 +591,7 @@ extension CreateOrEditProfileViewModel {
                     }
                     if let object = row.object as? ServerInfo,
                        case let .custom(serverWrapper) = selectedOffering,
-                       object.logical.id == serverWrapper.server.id
-                    {
+                       object.logical.id == serverWrapper.server.id {
                         selectedIndex = IndexPath(row: rowIndex, section: sectionIndex)
                         break outer
                     }

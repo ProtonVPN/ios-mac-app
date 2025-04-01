@@ -108,7 +108,7 @@ final class CoreLoginService {
     }
 
     private func finishFlow() -> WorkBeforeFlow {
-        WorkBeforeFlow(stepName: Localizable.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping @MainActor (Result<Void, Error>) -> Void) -> Void in
+        WorkBeforeFlow(stepName: Localizable.loginFetchVpnData) { [weak self] data, completion in
             // attempt to use the login data to log in the app
             let authCredentials = AuthCredentials(data)
             Task { @MainActor [weak self] in
@@ -169,7 +169,7 @@ final class CoreLoginService {
         }
         #endif
         
-        let loginResultCompletion = { [weak self] (result: LoginAndSignupResult) -> Void in
+        let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result)
         }
         let customization = LoginCustomizationOptions(username: nil,

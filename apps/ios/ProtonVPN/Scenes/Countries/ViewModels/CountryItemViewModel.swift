@@ -392,7 +392,6 @@ extension CountryItemViewModel: CountryViewModel {
         return false
     }
 
-
     func getServers() -> [ServerTier: [ServerViewModel]] {
         let convertTier = { (tier: Int) -> ServerTier in
             tier.isFreeTier ? .free : .plus

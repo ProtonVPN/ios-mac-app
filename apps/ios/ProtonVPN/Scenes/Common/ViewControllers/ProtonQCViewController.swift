@@ -32,9 +32,5 @@ class ProtonQCViewController: UIViewController {
         tabBarItem = UITabBarItem(title: Localizable.quickConnect, image: nil, tag: 2)
         tabBarItem.accessibilityIdentifier = "Quick Connect"
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
+
 }
