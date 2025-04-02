@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Home
+import HomeShared
 import Domain
 import SwiftUI
 import Strings

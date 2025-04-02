@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import ModalsSampleApp
-@testable import Modals_iOS
 @testable import Modals
 
 final class ModalsSampleAppTests: XCTestCase {

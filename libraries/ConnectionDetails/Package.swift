@@ -12,16 +12,9 @@ let package = Package(
     ],
 
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "ConnectionDetails",
             targets: ["ConnectionDetails"]),
-        .library(
-            name: "ConnectionDetails-iOS",
-            targets: ["ConnectionDetails-iOS"]),
-        .library(
-            name: "ConnectionDetails-macOS",
-            targets: ["ConnectionDetails-macOS"]),
     ],
     dependencies: [
         // Local
@@ -41,10 +34,18 @@ let package = Package(
         .target(
             name: "ConnectionDetails",
             dependencies: [
+                .target(name: "ConnectionDetails-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "ConnectionDetails-macOS", condition: .when(platforms: [.macOS])),
+            ]
+        ),
+        .target(
+            name: "ConnectionDetailsShared",
+            dependencies: [
                 "Localization",
                 "Persistence",
                 "Strings",
                 "SharedViews",
+                "Theme",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
@@ -55,22 +56,14 @@ let package = Package(
         .target(
             name: "ConnectionDetails-iOS",
             dependencies: [
-                "ConnectionDetails",
-                "Persistence",
-                "SharedViews",
-                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
-                .product(name: "Theme", package: "Theme"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+                "ConnectionDetailsShared",
             ],
             resources: []
         ),
         .target(
             name: "ConnectionDetails-macOS",
             dependencies: [
-                "ConnectionDetails",
-                .product(name: "Theme", package: "Theme"),
+                "ConnectionDetailsShared"
             ],
             resources: []
         ),

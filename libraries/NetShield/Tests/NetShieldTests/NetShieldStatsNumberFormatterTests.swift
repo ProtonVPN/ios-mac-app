@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-@testable import NetShield
+@testable import NetShieldShared
 
 final class NetShieldStatsNumberFormatterTests: XCTestCase {
 

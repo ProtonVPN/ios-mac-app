@@ -23,7 +23,7 @@ import ComposableArchitecture
 import Dependencies
 
 import Domain
-import Home
+import HomeShared
 import Theme
 import Strings
 import VPNAppCore

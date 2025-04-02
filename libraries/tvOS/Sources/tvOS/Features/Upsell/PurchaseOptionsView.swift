@@ -18,7 +18,7 @@
 
 import SwiftUI
 import Strings
-import Modals // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import struct StoreKit.Product
 
 struct PurchaseOptionsView: View {

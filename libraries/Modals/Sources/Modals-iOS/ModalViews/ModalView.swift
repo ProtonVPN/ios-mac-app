@@ -20,7 +20,7 @@ import SwiftUI
 import SharedViews
 import Strings
 import Theme
-import Modals
+import ModalsShared
 
 struct ModalView: View {
     private static let maxContentWidth: CGFloat = 480

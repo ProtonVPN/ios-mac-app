@@ -18,7 +18,7 @@
 
 import Foundation
 import UIKit
-import Modals
+import ModalsShared
 
 class CountryCellView: UICollectionViewCell {
 

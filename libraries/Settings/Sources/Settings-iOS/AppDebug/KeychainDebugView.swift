@@ -19,7 +19,7 @@
 import SwiftUI
 import Theme
 import ComposableArchitecture
-import Settings
+import SettingsShared
 
 struct KeychainDebugView: View {
     @Binding var store: StoreOf<KeychainDebugFeature>

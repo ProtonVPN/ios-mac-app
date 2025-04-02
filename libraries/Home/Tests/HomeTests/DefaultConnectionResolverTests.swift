@@ -21,7 +21,7 @@ import XCTest
 import Collections
 import Dependencies
 @testable import Domain
-@testable import Home
+@testable import HomeShared
 @testable import ConnectionInventory
 
 final class DefaultConnectionResolverTests: XCTestCase {

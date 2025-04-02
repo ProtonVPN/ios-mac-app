@@ -23,7 +23,7 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 
 import Domain
-import Home
+import HomeShared
 import VPNAppCore
 import Strings
 import Theme

@@ -21,7 +21,6 @@
 import SwiftUI
 import Home
 import Theme
-import Home_macOS
 import ConnectionDetails_macOS
 import ConnectionDetails
 import ComposableArchitecture

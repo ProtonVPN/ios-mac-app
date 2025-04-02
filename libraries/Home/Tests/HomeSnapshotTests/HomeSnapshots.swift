@@ -24,9 +24,9 @@ import SnapshotTesting
 import ComposableArchitecture
 import VPNAppCore
 import Domain
+import DomainTestSupport
 import Ergonomics
-@testable import Home
-@testable import Home_iOS
+@testable import HomeShared
 import SwiftUI
 import IssueReporting
 

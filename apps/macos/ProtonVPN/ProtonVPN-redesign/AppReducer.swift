@@ -21,7 +21,6 @@
 import Foundation
 import ComposableArchitecture
 import Home
-import Home_macOS
 import VPNAppCore
 
 struct AppReducer: Reducer {

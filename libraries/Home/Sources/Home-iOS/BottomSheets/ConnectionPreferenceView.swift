@@ -22,7 +22,7 @@ import Theme
 import SharedViews
 import Domain
 import Ergonomics
-import Home
+import HomeShared
 import ConnectionInventory
 
 struct ConnectionPreferenceView: View {

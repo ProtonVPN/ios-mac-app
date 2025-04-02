@@ -19,8 +19,8 @@
 import SwiftUI
 import ComposableArchitecture
 import Localization
-import Home
-import NetShield_iOS
+import HomeShared
+import NetShield
 
 struct ConnectionStatusBanner: View {
 

@@ -22,8 +22,7 @@ import ProtonCoreUIFoundations
 import SwiftUI
 import Domain
 import Home
-import Home_iOS
-import Settings_iOS
+import Settings
 import Dependencies
 import ComposableArchitecture
 import NEHelper

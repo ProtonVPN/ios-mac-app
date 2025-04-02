@@ -31,7 +31,6 @@ import LegacyCommon
 import Persistence
 import VPNAppCore
 import Modals
-import Modals_iOS
 import Announcement
 
 import Ergonomics

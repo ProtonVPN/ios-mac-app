@@ -17,7 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
-import Modals
+import ModalsShared
+import ModalsServices
 
 public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]

@@ -23,14 +23,13 @@ import ComposableArchitecture
 import Dependencies
 
 import Announcement
-import Home
+import HomeShared
 import Strings
 import Theme
 import Ergonomics
 import VPNAppCore
-import Modals_iOS
+import Modals
 import ConnectionDetails
-import ConnectionDetails_iOS
 import SharedViews
 import Domain
 

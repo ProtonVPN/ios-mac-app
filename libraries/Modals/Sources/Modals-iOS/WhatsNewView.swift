@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-import Modals
+import ModalsShared
 import SharedViews
 import Strings
 

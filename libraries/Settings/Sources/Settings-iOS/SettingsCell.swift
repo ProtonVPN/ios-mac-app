@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-import Settings
+import SettingsShared
 import Theme
 import ProtonCoreUIFoundations
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F348C9CB27D75FD500622584 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = F348C9CA27D75FD500622584 /* Modals */; };
-		F348C9CD27D75FD500622584 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = F348C9CC27D75FD500622584 /* Modals-iOS */; };
 		F348C9CF27D7AC3700622584 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9CE27D7AC3700622584 /* Storage.swift */; };
 		F34EB51B27D1412000BC2E34 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34EB51A27D1412000BC2E34 /* Models.swift */; };
 		F37F73E827CF7B8700F1C621 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F73E727CF7B8700F1C621 /* AppDelegate.swift */; };
@@ -49,7 +48,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F348C9CD27D75FD500622584 /* Modals-iOS in Frameworks */,
 				F348C9CB27D75FD500622584 /* Modals in Frameworks */,
 				F37F741927CF7BD800F1C621 /* Search in Frameworks */,
 			);
@@ -125,7 +123,6 @@
 			packageProductDependencies = (
 				F37F741827CF7BD800F1C621 /* Search */,
 				F348C9CA27D75FD500622584 /* Modals */,
-				F348C9CC27D75FD500622584 /* Modals-iOS */,
 			);
 			productName = SearchSampleApp;
 			productReference = F37F73E427CF7B8700F1C621 /* SearchSampleApp.app */;
@@ -499,10 +496,6 @@
 		F348C9CA27D75FD500622584 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;
-		};
-		F348C9CC27D75FD500622584 /* Modals-iOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "Modals-iOS";
 		};
 		F37F741827CF7BD800F1C621 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;

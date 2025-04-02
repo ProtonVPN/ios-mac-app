@@ -24,9 +24,7 @@ import Cocoa
 import SwiftUI
 
 import LegacyCommon
-import Modals_macOS
 import NetShield
-import NetShield_macOS
 
 import Strings
 import Theme

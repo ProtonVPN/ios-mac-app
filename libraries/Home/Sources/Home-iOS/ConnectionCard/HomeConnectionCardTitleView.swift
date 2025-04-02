@@ -19,7 +19,7 @@
 import SwiftUI
 import Strings
 import Ergonomics
-import Home
+import HomeShared
 import Theme
 import VPNAppCore
 import Dependencies

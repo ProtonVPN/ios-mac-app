@@ -15,12 +15,6 @@ let package = Package(
         .library(
             name: "NetShield",
             targets: ["NetShield"]),
-        .library(
-            name: "NetShield-macOS",
-            targets: ["NetShield-macOS"]),
-        .library(
-            name: "NetShield-iOS",
-            targets: ["NetShield-iOS"])
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
@@ -31,22 +25,25 @@ let package = Package(
         .target(
             name: "NetShield",
             dependencies: [
-                "Ergonomics",
-                "Strings",
-                "Theme",
+                .target(name: "NetShield-iOS", condition: .when(platforms: [.iOS])),
+                .target(name: "NetShield-macOS", condition: .when(platforms: [.macOS])),
             ]
         ),
         .target(
+            name: "NetShieldShared",
+            dependencies: ["Strings", "Theme", "Ergonomics"]
+        ),
+        .target(
             name: "NetShield-iOS",
-            dependencies: ["NetShield", "Theme", "Ergonomics"]
+            dependencies: ["NetShieldShared"]
         ),
         .target(
             name: "NetShield-macOS",
-            dependencies: ["NetShield", "Theme", "Ergonomics"]
+            dependencies: ["NetShieldShared"]
         ),
         .testTarget(
             name: "NetShieldTests",
-            dependencies: ["NetShield", "Theme"]
+            dependencies: ["NetShield"]
         )
     ]
 )

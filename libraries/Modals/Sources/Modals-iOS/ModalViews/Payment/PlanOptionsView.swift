@@ -17,7 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import Modals
+import ModalsShared
+import ModalsServices
 
 struct PlanOptionsView: View {
     private static let imagePadding: EdgeInsets = EdgeInsets(top: 0, leading: 52, bottom: 24, trailing: 52)

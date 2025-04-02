@@ -24,7 +24,7 @@ import Ergonomics
 import Strings
 import Theme
 import ConnectionInventory
-import Home
+import HomeShared
 
 @available(iOS 17.0, *)
 struct DefaultConnectionSheet: View {

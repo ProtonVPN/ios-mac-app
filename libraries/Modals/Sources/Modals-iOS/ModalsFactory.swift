@@ -1,4 +1,4 @@
-import Modals
+import ModalsShared
 import UIKit
 import SwiftUI
 
@@ -69,7 +69,7 @@ public final class ModalsFactory {
         return userAccountUpdateViewController
     }
 
-    public func freeConnectionsViewController(countries: [(String, Modals.Image?)], upgradeAction: (() -> Void)?) -> UIViewController {
+    public func freeConnectionsViewController(countries: [(String, ModalsShared.Image?)], upgradeAction: (() -> Void)?) -> UIViewController {
         let controller = freeConnectionsViewStoryboard.instantiate(controllerType: FreeConnectionsViewController.self)
         controller.onBannerPress = upgradeAction
         controller.countries = countries

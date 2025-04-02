@@ -18,7 +18,6 @@
 
 import UIKit
 import Modals
-import Modals_iOS
 import Search
 
 final class ViewController: UIViewController {

@@ -21,7 +21,7 @@ import SwiftUI
 import ComposableArchitecture
 
 import Domain
-import Settings
+import SettingsShared
 import Strings
 import Theme
 import VPNShared

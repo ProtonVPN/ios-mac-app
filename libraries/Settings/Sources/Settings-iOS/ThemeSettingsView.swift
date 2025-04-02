@@ -20,7 +20,7 @@ import SwiftUI
 
 import ComposableArchitecture
 
-import Settings
+import SettingsShared
 import Strings
 import Theme
 

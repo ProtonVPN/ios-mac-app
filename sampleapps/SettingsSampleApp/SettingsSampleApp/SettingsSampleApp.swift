@@ -21,7 +21,6 @@ import SwiftUI
 import ComposableArchitecture
 
 import Settings
-import Settings_iOS
 import VPNAppCore
 
 @main

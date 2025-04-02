@@ -18,7 +18,7 @@
 
 import Foundation
 import AppKit
-import Modals
+import ModalsShared
 import Theme
 import SwiftUI
 

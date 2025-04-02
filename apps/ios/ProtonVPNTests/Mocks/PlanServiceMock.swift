@@ -23,7 +23,6 @@
 import Foundation
 import LegacyCommon
 import Modals
-import Modals_iOS
 import ProtonCorePayments
 import VPNAppCore
 

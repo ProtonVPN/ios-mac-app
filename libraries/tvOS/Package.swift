@@ -36,7 +36,6 @@ let package = Package(
                 "CommonNetworking",
                 "Connection",
                 "Persistence",
-                "Modals",
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

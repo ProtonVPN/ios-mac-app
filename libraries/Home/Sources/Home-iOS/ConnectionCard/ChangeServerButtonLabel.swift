@@ -19,7 +19,7 @@
 import SwiftUI
 import ProtonCoreUIFoundations
 import ComposableArchitecture
-import Home
+import HomeShared
 import Strings
 import Ergonomics
 

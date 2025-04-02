@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Modals
-import Modals_iOS
 import UIKit
 
 final class ViewController: UITableViewController {

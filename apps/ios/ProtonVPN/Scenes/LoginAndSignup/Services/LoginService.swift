@@ -27,7 +27,7 @@ import CommonNetworking
 import VPNShared
 import VPNAppCore
 
-import Settings_iOS
+import Settings
 
 import Strings
 
