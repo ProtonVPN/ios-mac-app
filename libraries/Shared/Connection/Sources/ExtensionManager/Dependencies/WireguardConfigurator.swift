@@ -56,9 +56,13 @@ extension ManagerConfigurator {
 
         let server = connectionIntent.server
 
+        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {
+            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
+        }
+
         protocolConfiguration.connectedLogicalId = server.logical.id
         protocolConfiguration.connectedServerIpId = server.endpoint.id
-        protocolConfiguration.serverAddress = server.endpoint.entryIp
+        protocolConfiguration.serverAddress = entryIP
         protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
 
         @Dependency(\.connectionConfiguration) var connectionConfiguration
@@ -71,10 +75,6 @@ extension ManagerConfigurator {
         protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
         protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
 #endif
-
-        guard let entryIP = server.endpoint.entryIp(using: .wireGuard(connectionIntent.tunnelSettings.transport)) else {
-            throw WireguardConfiguratorError.entryUnavailableForTransport(connectionIntent.tunnelSettings.transport)
-        }
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
