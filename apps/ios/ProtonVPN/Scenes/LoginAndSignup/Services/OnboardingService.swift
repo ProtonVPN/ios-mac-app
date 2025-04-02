@@ -113,7 +113,10 @@ extension OnboardingModuleService: OnboardingService {
                 payments: planService.payments
             )
         } catch {
-            log.error("Unexpected payments error: \(error)")
+            log.error("Encountered payments error: \(error)")
+            self.windowService.dismissModal {
+                self.onboardingCoordinatorDidFinish()
+            }
             return
         }
 
