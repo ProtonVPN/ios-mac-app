@@ -128,8 +128,7 @@ private extension FeatureFlags {
             wireGuardTls: true,
             enforceDeprecatedProtocols: true,
             unsafeLanWarnings: true,
-            mismatchedCertificateRecovery: true,
-            localOverrides: nil
+            mismatchedCertificateRecovery: true
         )
     }
 }
