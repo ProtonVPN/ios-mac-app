@@ -23,6 +23,7 @@ import ComposableArchitecture
 
 import Domain
 import DomainTestSupport
+import Ergonomics
 import VPNShared
 import VPNSharedTesting
 
@@ -626,6 +627,52 @@ final class ConnectionFeatureTests: XCTestCase {
             // Assert that the second effect finished, not the first
             $0.connectionState = .connecting(.resolved(expectedResolvedIntent, .ca))
         }
+    }
+
+    /// Tests that after failing to connect, the next successful connection attempt transitions through all expected states.
+    @MainActor func testFeatureStateTransitionsOnSecondConnectionAfterFirstFailedConnection() async throws {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        // Set up a failure that should happen during tunnel start
+        let entryUnavailableError = WireguardConfiguratorError.entryUnavailableForTransport(.udp)
+        environment.tunnelManager.tunnelStartErrorToThrow = ConnectionError.tunnel(.tunnelStartFailed(entryUnavailableError))
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+        await store.receive(\.prepare)
+        await store.receive(stateChange(to: \.connecting.unresolved))
+
+        await store.receive(\.finishedPreparing.success)
+        await store.receive(stateChange(to: \.connecting.resolved))
+
+        await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
+        await store.receive(coreStateChange(from: \.starting, to: \.disconnected))
+
+        await store.receive(stateChange(to: \.disconnected))
+        await store.receive(\.delegate.connectionFailed.tunnel.tunnelStartFailed)
+
+        // This time, connection should succeed
+        environment.tunnelManager.tunnelStartErrorToThrow = nil
+
+        await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+        await store.receive(\.prepare)
+        await store.receive(stateChange(to: \.connecting.unresolved))
+
+        await store.receive(\.finishedPreparing.success)
+        await store.receive(stateChange(to: \.connecting.resolved))
+
+        await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
+
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(coreStateChange(from: \.starting, to: \.connecting))
+
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(coreStateChange(from: \.connecting, to: \.connected))
+        await store.receive(stateChange(to: \.connected))
     }
 
     private func stateChange(
