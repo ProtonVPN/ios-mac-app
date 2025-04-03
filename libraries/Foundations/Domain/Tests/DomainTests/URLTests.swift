@@ -23,7 +23,7 @@ final class URLTests: XCTestCase {
     func testAllURLs() {
         for link in VPNLink.allCases {
             // Need to use link.url somehow so compiler doesn't optimize it away
-            XCTAssert(link.url.absoluteString == link.rawValue)
+            XCTAssert(link.url.absoluteString == link.urlString)
         }
     }
 }
