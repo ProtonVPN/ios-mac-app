@@ -294,8 +294,7 @@ extension FeatureFlags {
         wireGuardTls: false,
         enforceDeprecatedProtocols: false,
         unsafeLanWarnings: false,
-        mismatchedCertificateRecovery: false,
-        localOverrides: nil
+        mismatchedCertificateRecovery: false
     )
     public static let allEnabled: Self = .init(
         smartReconnect: true,
@@ -313,8 +312,7 @@ extension FeatureFlags {
         wireGuardTls: true,
         enforceDeprecatedProtocols: true,
         unsafeLanWarnings: true,
-        mismatchedCertificateRecovery: true,
-        localOverrides: nil
+        mismatchedCertificateRecovery: true
     )
 
     public static let wireGuardTlsDisabled: Self = .allEnabled
