@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "Τώρα μπορείτε να προβάλετε και να διαχειριστείτε τη σύνδεσή σας VPN χωρίς να βγείτε από την Αρχική Οθόνη.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Δοκιμάστε το Proton VPN widget";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Ελέγξτε αν είστε συνδεδεμένοι στο VPN και ότι έχετε πρόσβαση στις προεπιλεγμένες και αγαπημένες συνδέσεις σας από την αρχική οθόνη.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Πώς να προσθέσετε το Proton VPN widget";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Πατήστε παρατεταμένα οπουδήποτε στην Αρχική Οθόνη";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Πατήστε το κουμπί **Επεξεργασία** και, στη συνέχεια, επιλέξτε **Προσθήκη Widget**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Επιλέξτε ή αναζητήστε το **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Το κατάλαβα";

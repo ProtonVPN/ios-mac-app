@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "Artık ana ekrandan ayrılmadan VPN bağlantınızı görüntüleyebilir ve yönetebilirsiniz.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Proton VPN araç takımını deneyin";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "VPN bağlantınızın durumunu görün, ana ekrandan varsayılan ve sık kullandığınız bağlantılara erişin.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Proton VPN araç takımı nasıl eklenir";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Ana ekranınızda herhangi bir yere basılı tutun";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "**Düzenle** düğmesine basın, ardından **Araç Takımı Ekle** öğesini seçin";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "**Proton VPN** ögesini seçin ya da arayın";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Anladım";

@@ -1722,7 +1722,7 @@
 "_connection_details_accessibility_ipView_hideAddress" = "Kliknij dwukrotnie, aby ukryć adres IP";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
-"_connection_details_accessibility_close" = "Close connection details screen";
+"_connection_details_accessibility_close" = "Zamknij szczegóły połączenia";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Domyślne połączenie";
@@ -1749,7 +1749,7 @@
 "_connection_card_accessibility_browsing_from" = "Przeglądasz bezpiecznie Internet z %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+"_connection_card_accessibility_browsing_from_fullDetails" = "Przeglądasz bezpiecznie Internet z %1$@, serwer %2$@ za pomocą protokołu %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Ładowanie";
@@ -2075,7 +2075,7 @@
 "_settings_protocol_description_openvpn_tcp" = "Sprawdzony, przetestowany i bezpieczny. Protokół OpenVPN jest niezawodny, ale może nie być tak szybki, jak inne protokoły.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
+"_settings_protocol_description_ikev2" = "Szybki, bezpieczny i stabilny, ale łatwiejszy do wykrycia i zablokowania.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
 "_settings_protocol_tag_recommended" = "ZALECANY";
@@ -2084,7 +2084,7 @@
 "_settings_protocol_tag_new" = "NOWY";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
-"_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+"_settings_protocol_footer" = "Protokół VPN określa sposób przesyłania danych między serwerem VPN a urządzeniem. **[Dowiedz się więcej](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_title" = "Połączenie VPN jest aktywne";
@@ -2741,52 +2741,73 @@
 "upsell_carousel_more_subtitle" = "Odblokuj zaawansowane funkcje wydajności i prywatności";
 
 /* Error message: Catch-all error alert title. */
-"_generic_error_title" = "Error";
+"_generic_error_title" = "Błąd";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "The operation could not be completed. (Error %@)";
+"_generic_error_description" = "Operacja nie mogła zostać zakończona. (Błąd %@)";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Błąd połączenia";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
+"_connection_error_unexpected_protocol" = "Wybrane połączenie używa protokołu %@, który nie jest już obsługiwany przez tę aplikację. Wybierz inne połączenie. (Błąd %@)";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server. (Error %@)";
+"_connection_error_certificate_authentication" = "Wystąpił błąd podczas uwierzytelniania z serwerem. (Błąd %@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN. (Error %@)";
+"_connection_error_tunnel_connection" = "Wystąpił problem z uruchomieniem usługi VPN (Błąd %@)";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "Podczas połączenia wystąpił nieoczekiwany błąd: %@";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "We were unable to connect to the server. (Error %@).";
+"_connection_error_intent_missing" = "Nie można połączyć się z serwerem. (Błąd %@)";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "There was a problem preparing the connection (Error %@)";
+"_connection_error_preparation" = "Wystąpił problem z nawiązaniem połączenia (Błąd %@)";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
+"_connection_error_server_missing" = "Wybrany serwer nie jest już dostępny. Wybierz inny serwer. (Błąd %@)";
 
 /* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)";
+"_connection_error_timeout" = "Wystąpił błąd podczas połączenia: serwer nie odpowiada. Spróbuj ponownie. (Błąd %@)";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "There was a problem with the connection. (Error %@)";
+"_provider_message_error" = "Wystąpił problem z połączeniem. (Błąd %@)";
 
 /* Text that appears as subtitle to the widget when user is creating it */
-"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+"widget_tray_description" = "Sprawdź status połączenia i uzyskaj dostęp do ulubionych połączeń VPN.";
 
 /* Recents section title */
-"widget_recents_title" = "Recents";
+"widget_recents_title" = "Ostatnie";
 
 /* Recents section description */
-"widget_recents_description" = "View your connection history here.";
+"widget_recents_description" = "Sprawdź historię połączeń.";
 
 /* What's new screen section title */
-"widget_whats_new_title" = "Widgets are back";
+"widget_whats_new_title" = "Widżety powróciły";
 
 /* What's new screen section subtitle */
-"widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+"widget_whats_new_subtitle" = "Możesz zarządzać usługą VPN bez opuszczania ekranu głównego.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Wypróbuj widżet Proton VPN";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Sprawdź status połączenia i uzyskaj dostęp do ulubionych połączeń VPN z ekranu głównego.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Jak dodać widżet Proton VPN";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Przytrzymaj dowolne miejsce na ekranie głównym";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Kliknij przycisk **Edytuj**, a następnie **Dodaj widżet**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Wybierz **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Ok";

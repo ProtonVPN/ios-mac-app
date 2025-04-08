@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "ホームスクリーンから直接、VPN接続を確認・管理することができるようになりました。";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "ProtonVPNウィジェットを試す";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "VPNに接続しているかどうかを確認し、ホーム画面からデフォルトとお気に入りの接続にアクセスします。";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "ProtonVPNウィジェットを追加する方法";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "ホーム画面上の任意の場所を長押しします";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "**編集** ボタンを押し、 **ウィジェットを追加** を選択します";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "**Proton VPN** を選択または検索します";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "分かりました";

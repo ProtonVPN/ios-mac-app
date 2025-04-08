@@ -2774,7 +2774,7 @@
 "_connection_error_timeout" = "Узнікла памылка пры спробе падключэння: у цяперашні час сервер не адказвае своечасова. Паспрабуйце яшчэ раз (памылка: %@).";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "Узнікла праблема пры падключэннем (памылка: %@).";
+"_provider_message_error" = "Узнікла праблема з падключэннем (памылка: %@).";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Праверце, ці падключаны вы да VPN і атрымайце хуткі доступ да вашых абраных падключэнняў.";
@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "Цяпер вы можаце праглядаць і кіраваць сваім падключэннем па VPN не пакідаючы галоўны экран.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Паспрабуйце віджэт Proton VPN";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Праверце, ці падключаны вы да VPN, каб атрымаць доступ да прадвызначаных і абраных падключэнняў з галоўнага экрана.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Як дадаць віджэт Proton VPN";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Націсніце і ўтрымлівайце ў любым месцы на галоўным экране";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Націсніце кнопку **Рэдагаваць**, а потым выберыце **Дадаць віджэт**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Выберыце або знайдзіце **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Зразумела";
