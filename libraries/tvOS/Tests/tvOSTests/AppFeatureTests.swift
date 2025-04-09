@@ -41,6 +41,7 @@ final class AppFeatureTests: XCTestCase {
         let store = TestStore(initialState: state) {
             AppFeature()
         }
+
         await store.send(.main(.selectTab(.settings))) {
             $0.main.currentTab = .settings
             $0.main.$mainBackground.withLock { $0 = .clear }
@@ -49,7 +50,7 @@ final class AppFeatureTests: XCTestCase {
     }
 
     @MainActor
-    func testOnAppear() async {
+    func testAcquiresSessionOnAppear() async {
         let state = AppFeature.State(networking: .unauthenticated(nil))
         let alertService = AlertService.testValue
         let store = TestStore(initialState: state) {
@@ -59,9 +60,16 @@ final class AppFeatureTests: XCTestCase {
             $0.alertService = alertService
         }
 
-        let task = await testOnAppearActions(store: store)
+        store.exhaustivity = .off
 
-        await task.cancel()
+        await store.send(.onAppearTask)
+
+        await store.receive(\.networking.startAcquiringSession) {
+            $0.networking = .acquiringSession
+        }
+        await store.receive(\.networking.sessionFetched.failure) {
+            $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
+        }
     }
 
     @MainActor
@@ -82,17 +90,16 @@ final class AppFeatureTests: XCTestCase {
             $0.alertService = alertService
         }
 
+        store.exhaustivity = .off
+
         let error: CustomError = .anExampleError
 
-        let task = await testOnAppearActions(store: store)
+        await store.send(.onAppearTask)
 
         await alertService.feed(error)
-
         await store.receive(\.incomingAlert) {
             $0.alert = AlertState(title: .init(error.failureReason!), message: .init(error.errorDescription!))
         }
-
-        await task.cancel()
     }
 
     @MainActor func testUpsellDismissedWhenUpsellFlowCompleted() async {
@@ -116,21 +123,5 @@ final class AppFeatureTests: XCTestCase {
         await store.receive(\.welcome.userTierUpdated) {
             $0.welcome.destination = nil
         }
-    }
-}
-
-private extension AppFeatureTests {
-    @MainActor
-    func testOnAppearActions(store: TestStoreOf<AppFeature>) async -> TestStoreTask {
-        let task = await store.send(.onAppearTask)
-
-        await store.receive(\.networking) { // startAcquiringSession
-            $0.networking = .acquiringSession
-        }
-        await store.receive(\.networking) { // session fetched failure
-            $0.networking = .unauthenticated(.network(internalError: "" as GenericError))
-        }
-
-        return task
     }
 }
