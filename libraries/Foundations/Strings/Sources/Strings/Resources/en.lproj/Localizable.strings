@@ -2653,6 +2653,9 @@
 
 // MARK: Widget
 
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Unprotected";
+
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
 
@@ -2667,6 +2670,7 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+
 /* Widget adoption modal title. */
 "_widgetAdoption_modal_title" = "Try the Proton VPN widget";
 

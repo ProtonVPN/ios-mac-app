@@ -2223,6 +2223,8 @@ public enum Localizable {
   public static var widgetRecentsTitle: String { return Localizable.tr("Localizable", "widget_recents_title", fallback: "Recents") }
   /// Text that appears as subtitle to the widget when user is creating it
   public static var widgetTrayDescription: String { return Localizable.tr("Localizable", "widget_tray_description", fallback: "Check if you’re connected to VPN and get quick access to your favorite connections.") }
+  /// The connection status text for widget when unprotected.
+  public static var widgetUnprotectedHeader: String { return Localizable.tr("Localizable", "widget_unprotected_header", fallback: "Unprotected") }
   /// What's new screen section subtitle
   public static var widgetWhatsNewSubtitle: String { return Localizable.tr("Localizable", "widget_whats_new_subtitle", fallback: "You can now view and manage your VPN connection without leaving the Home Screen.") }
   /// What's new screen section title

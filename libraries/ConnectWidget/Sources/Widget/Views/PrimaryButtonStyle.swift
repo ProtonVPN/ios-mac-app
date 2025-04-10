@@ -33,6 +33,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .frame(height: 40)
             .background(Color(.background, .interactive))
             .clipRectangle(cornerRadius: .radius12)
+            .opacity(configuration.isPressed ? 0.5 : 1)
     }
 }
 
