@@ -226,7 +226,7 @@ public enum Localizable {
   /// The hint that the screen reader will provide to voiceover users for the fastest connection item in recents
   public static var connectionCardAccessibilityFastest: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest", fallback: "The fastest country available") }
   /// The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled
-  public static var connectionCardAccessibilityFastestSc: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest_sc", fallback: "The fastest secure core country available") }
+  public static var connectionCardAccessibilityFastestSc: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest_sc", fallback: "The fastest Secure Core country available") }
   /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
   public static func connectionCardAccessibilityLastConnectedTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_last_connected_to", String(describing: p1), fallback: "You were last connected to %@.")
