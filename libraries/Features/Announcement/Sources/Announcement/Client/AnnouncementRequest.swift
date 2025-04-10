@@ -52,7 +52,16 @@ final class AnnouncementRequest {
 #if canImport(UIKit)
         let size = UIScreen.main.sizeInPixels()
 #elseif canImport(AppKit)
-        let size = NSScreen.availableSizeInPixels()
+        let size: CGSize
+        if Thread.isMainThread {
+            size = MainActor.assumeIsolated {
+                return NSScreen.availableSizeInPixels()
+            }
+        } else {
+            size = DispatchQueue.main.sync {
+                 return NSScreen.availableSizeInPixels()
+            }
+        }
 #endif
         return size
     }
@@ -99,7 +108,7 @@ extension UIScreen {
 }
 
 #elseif canImport(AppKit)
-
+@MainActor
 extension NSScreen {
     public static func availableSizeInPixels() -> CGSize {
         guard let screen = NSScreen.main else {
