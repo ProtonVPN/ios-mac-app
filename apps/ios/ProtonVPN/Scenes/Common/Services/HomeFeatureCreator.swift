@@ -55,6 +55,7 @@ enum HomeFeatureCreator {
         // Those should be called once
         homeStore.send(.onStart)
         homeStore.send(.sharedProperties(.listen))
+        homeStore.send(.map(.observeConnectionState))
 
         // Embed a UINavigationController to prevent layout and sizing issues that arise when using NavigationStack directly within a UIHostingController.
         let navigationController = UINavigationController(rootViewController: hostingController)

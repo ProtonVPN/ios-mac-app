@@ -42,7 +42,7 @@ public struct HomeMapView: View {
 
     public var body: some View {
         ZStack {
-            MapRenderView(country: store.highlightedCountryCode)
+            SVGView.map
             MapPin(mode: .constant(store.pinMode))
                 .scaleEffect(1 / mapScale()) // pin scales together with the map, so we need to counter it to preserve the original size
                 .offset(store.pinOffset)
@@ -51,14 +51,11 @@ public struct HomeMapView: View {
         .frame(width: mapBounds.width, height: mapBounds.height)
         .scaleEffect(mapScale())
         .offset(mapOffset())
-        .onAppear {
-            store.send(.onAppear)
-        }
     }
 
     private func mapOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let node = SVGView.idleMapView.node(code: code) else {
+              let node = SVGView.mapSVG.node(code: code) else {
             return .zero
         }
 
@@ -69,7 +66,7 @@ public struct HomeMapView: View {
 
     private func mapScale() -> CGFloat {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let node = SVGView.idleMapView.node(code: code) else {
+              let node = SVGView.mapSVG.node(code: code) else {
             return wholeMapScale()
         }
         let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the horizontal padding
