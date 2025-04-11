@@ -46,12 +46,11 @@ public struct AlertService: DependencyKey {
 extension AlertService {
     public static let live: AlertService = {
         let subject = CurrentValueSubject<Alert?, Never>(nil)
-        // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
-        // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
-        let stream = subject.compactMap { $0 }.values.eraseToStream()
 
         return AlertService {
-            return stream
+            // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
+            // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
+            return subject.compactMap { $0 }.values.eraseToStream()
         } feed: { error in
             if let protonVpnError = error as? ProtonVPNError {
                 log.error("Alerting user to error: \(protonVpnError.debugDescription)")

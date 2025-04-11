@@ -357,6 +357,10 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         if oldValue == newValue {
             return effects
         }
+        if oldValue.is(\.disconnected.some) && newValue.is(\.disconnected.none) {
+            // Let's not report a core state change when clearing errors.
+            return effects
+        }
         return .concatenate(.send(.delegate(.stateChanged(oldValue, newValue))), effects)
     }
 }
