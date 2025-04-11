@@ -18,7 +18,6 @@
 
 import Foundation
 
-@available(iOS 17.0, *)
 public enum WhatsNew {
     public struct Item: Identifiable {
         public let id: String
@@ -57,10 +56,8 @@ public enum WhatsNew {
     }
 }
 
-@available(iOS 17.0, *)
 extension WhatsNew.Item: Equatable {}
 
-@available(iOS 17.0, *)
 extension WhatsNew.Item: CaseIterable {
     public static var allCases: [WhatsNew.Item] {
         return [.widgetAdoption]

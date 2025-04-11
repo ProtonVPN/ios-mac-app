@@ -21,7 +21,6 @@ import HomeShared
 import Strings
 import Theme
 
-@available(iOS 17.0, *)
 struct UpsellCarousel: View {
 
     @State private var scrollViewWidth: CGFloat = .zero
@@ -50,12 +49,22 @@ struct UpsellCarousel: View {
                 }
             }
         }
-        .contentMargins(.horizontal, contentMargins, for: .scrollContent)
-        .scrollClipDisabled() // for iPad
+        .withMarginsForIPad(margins: contentMargins)
         .padding(.vertical, .themeSpacing8)
         .padding(.horizontal, .themeSpacing16)
         .overlay { GeometryReader { Color.clear.preference(key: CarouselWidthPreferenceKey.self, value: $0.size.width) } }
         .onPreferenceChange(CarouselWidthPreferenceKey.self) { scrollViewWidth = $0 }
+    }
+}
+
+extension View {
+    func withMarginsForIPad(margins: CGFloat) -> some View {
+        guard #available(iOS 17.0, *) else {
+            return self
+        }
+        return self
+            .contentMargins(.horizontal, margins, for: .scrollContent)
+            .scrollClipDisabled()
     }
 }
 
@@ -139,7 +148,6 @@ fileprivate struct BannerModel {
 
 fileprivate struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey { }
 
-@available(iOS 17.0, *)
 #Preview {
     UpsellCarousel { _ in }
 }
