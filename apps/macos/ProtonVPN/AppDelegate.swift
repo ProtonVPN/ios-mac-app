@@ -24,6 +24,7 @@
 import Cocoa
 import AppKit
 import ServiceManagement
+import NetworkExtension
 
 // Third-party dependencies
 import Dependencies
@@ -165,6 +166,7 @@ extension AppDelegate: NSApplicationDelegate {
             self.registerForTelemetryChanges()
 
             self.container.applicationDidFinishLaunching()
+            self.setupTransparentProxy()
         }
 
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
@@ -445,5 +447,55 @@ extension AppDelegate {
                 }
             }
         )
+    }
+
+    private func setupTransparentProxy() {
+        let transparentProxyExtensionDescription = "ProtonVPN Split Tunnel"
+
+        NETransparentProxyManager.loadAllFromPreferences { managers, error in
+            if let error = error {
+                log.error("Error loading preferences: \(error)")
+                return
+            }
+
+            if let existingManager = managers?.first(where: { $0.localizedDescription == transparentProxyExtensionDescription }) {
+                log.info("Existing manager found. Trying to start tunnel...")
+                do {
+                    try existingManager.connection.startVPNTunnel()
+                    log.info("Tunnel started")
+                } catch {
+                    log.error("Failed to start tunnel: \(error)")
+                }
+            } else {
+                // No manager found, so create a new one
+                log.info("No existing manager found. Creating a new one...")
+                let newManager = NETransparentProxyManager()
+                let config = NETunnelProviderProtocol()
+                config.providerBundleIdentifier = "ch.protonvpn.mac.Transparent-Proxy"
+                config.serverAddress = "127.0.0.1"
+                newManager.protocolConfiguration = config
+                newManager.localizedDescription = transparentProxyExtensionDescription
+                newManager.isEnabled = true
+                newManager.saveToPreferences { error in
+                    if let error = error {
+                        log.error("Failed to save new manager: \(error)")
+                    } else {
+                        log.info("New manager saved successfully. Trying to start tunnel...")
+                        NETransparentProxyManager.loadAllFromPreferences { managers, error in
+                            if let manager = managers?.first(where: { $0.localizedDescription == transparentProxyExtensionDescription }) {
+                                do {
+                                    try manager.connection.startVPNTunnel()
+                                    log.info("Tunnel started")
+                                } catch {
+                                    log.error("Failed to start tunnel on new manager: \(error)")
+                                }
+                            } else {
+                                log.error("No manager found after saving: \(error?.localizedDescription ?? "Unknown error")")
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
