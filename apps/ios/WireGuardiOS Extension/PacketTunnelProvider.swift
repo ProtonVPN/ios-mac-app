@@ -380,6 +380,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         case .flushLogsToFile:
             wg_log(.info, message: "Handle message: flushLogsToFile")
             flushLogsToFile()
+            completionHandler?(.ok(data: nil))
         case let .setApiSelector(selector, sessionCookie):
             wg_log(.info, message: "Handle message: setApiSelector")
             certificateRefreshManager.newSession(withSelector: selector, sessionCookie: sessionCookie) { result in
