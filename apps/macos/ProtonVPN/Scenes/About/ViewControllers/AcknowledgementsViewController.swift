@@ -37,11 +37,7 @@ class AcknowledgementsViewController: NSViewController {
     required init() {
         super.init(nibName: NSNib.Name("Acknowledgements"), bundle: nil)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
         setupComponents()

@@ -51,7 +51,6 @@ import Ergonomics
 import PMLogger
 import Timer
 
-
 #if !REDESIGN
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
@@ -281,7 +280,7 @@ extension AppDelegate: NSApplicationDelegate {
         // The sysex tour will be shown if the sysex is not installed. If the installation fails or is skipped/cancelled by the user, we will revert to IKE.
         container.makeSystemExtensionManager().installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
             switch result {
-            case .success(let success):
+            case .success:
                 // Switch away from ike to smart protocol if success.
                 if self.propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
                     self.propertiesManager.connectionProtocol = .smartProtocol
@@ -435,7 +434,8 @@ extension AppDelegate {
         let center = NotificationCenter.default
         tokens.append(
             center.addObserver(for: AppEvent.telemetryCrashReports.name, object: nil) { [weak self] notification in
-                switch (notification.object as? Bool) {
+                let boolValue = notification.object as? Bool
+                switch boolValue {
                 case true:
                     self?.enableExternalLogging()
                 case false:

@@ -38,7 +38,6 @@ final class AccountViewModel {
     private(set) var planTitle: String?
     private(set) var maxTier: Int
 
-
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let authKeychain: AuthKeychainHandle

@@ -85,11 +85,7 @@ class ExpandableContentPopupViewController: NSViewController {
         hiddenContentHeightConstraint.constant = 0
         expandableLbl.alphaValue = 0
     }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-    }
-    
+
     // MARK: - Private
     @objc private func didPressActionBtn() {
         if animating { return }

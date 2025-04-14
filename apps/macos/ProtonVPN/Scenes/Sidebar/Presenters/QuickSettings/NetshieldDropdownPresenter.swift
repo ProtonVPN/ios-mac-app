@@ -108,7 +108,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
 
     private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {
         @Dependency(\.credentialsProvider) var credentialsProvider
-        let credentials = credentialsProvider.credentials
+        _ = credentialsProvider.credentials
 
         return QuickSettingNetshieldOption(
             level: level,
