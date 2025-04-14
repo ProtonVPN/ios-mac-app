@@ -105,7 +105,8 @@ public struct VpnProperties {
             conversationToolbarActions: nil,
             messageToolbarActions: nil,
             listToolbarActions: nil,
-            referralProgram: nil
+            referralProgram: nil,
+            edmOptOut: nil
         )
     }
 }

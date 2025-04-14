@@ -164,6 +164,9 @@ final class OneClickPayment {
     private func buyPlanResultHandler(_ result: PurchaseResult) async {
         // calling `completionHandler()` should dismiss the flow but we should do it only under certain conditions:
         switch result {
+        case .planAlreadyPurchased(let error):
+            log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
+            alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
         // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
         case .purchasedPlan(let plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)

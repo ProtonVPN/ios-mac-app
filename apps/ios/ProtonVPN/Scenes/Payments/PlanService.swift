@@ -135,6 +135,8 @@ final class CorePlanService: PlanService {
         paymentsUI = createPaymentsUI(onlyPlusPlan: true)
         paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             switch response {
+            case .planAlreadyPurchased(let error):
+                log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
             case let .purchasedPlan(accountPlan: plan):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion()
@@ -173,6 +175,8 @@ final class CorePlanService: PlanService {
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellModalSource?) {
         switch response {
+        case .planAlreadyPurchased(let error):
+            log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             Task { [weak self] in

@@ -35,14 +35,11 @@ class MainMeasurements: ProtonVPNUITests {
     
     override class func setUp() {
         super.setUp()
-        
-        let lokiEndpoint = ObfuscatedConstants.lokiDomain + "loki/api/v1/push"
-        
+
         MeasurementConfig
             .setBundle(Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!)
             .setProduct("VPN")
             .setEnvironment("prod")
-            .setLokiEndpoint(lokiEndpoint)
             .setLokiCertificate(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK"] ?? "invalid")
             .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK_PRIVATE_KEY"] ?? "invalid")
     }

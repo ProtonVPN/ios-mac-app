@@ -383,11 +383,7 @@ extension AppDelegate {
     // Typically set the environment only if telemetry is allowed
     private func enableExternalLogging() {
         @Dependency(\.dohConfiguration) var doh
-        if doh.defaultHost.contains(PMLog.ExternalLogEnvironment.black.rawValue) {
-            PMLog.setExternalLoggingEnvironment(.black)
-        } else {
-            PMLog.setExternalLoggingEnvironment(.production)
-        }
+        PMLog.setExternalLoggerHost(doh.defaultHost)
     }
 
     private func disableExternalLogging() {
