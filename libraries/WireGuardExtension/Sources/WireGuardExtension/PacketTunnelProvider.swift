@@ -322,6 +322,7 @@ private extension WireGuardPacketTunnelProvider {
             }
         case .flushLogsToFile:
             flushLogsToFile()
+            completionHandler?(.ok(data: nil))
         case let .setApiSelector(selector, sessionCookie):
             certificateRefreshManager.newSession(withSelector: selector, sessionCookie: sessionCookie) { result in
                 switch result {
