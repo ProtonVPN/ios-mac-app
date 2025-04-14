@@ -118,7 +118,6 @@ let package = Package(
             name: "HomeSnapshotTests",
             dependencies: [
                 "Home",
-                "Home-iOS",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

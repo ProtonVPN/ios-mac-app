@@ -138,6 +138,10 @@ struct UpsellFeature {
                 log.assertionFailure("Unsupported result: \(PurchaseResult.toppedUpCredits)")
                 return .none
 
+            case .finishedPurchasing(.planAlreadyPurchased(let error)):
+                log.error("Plan already purchased", category: .iap, metadata: ["error": "\(error)"])
+                return .none
+
             case .pollTierUpdate(let remainingAttempts):
                 guard remainingAttempts > 0 else {
                     // Purchase went through, but tier has not been updated on BE in sufficient time

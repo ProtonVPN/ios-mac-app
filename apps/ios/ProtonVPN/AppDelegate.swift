@@ -99,8 +99,7 @@ extension AppDelegate: UIApplicationDelegate {
         FeatureFlagsRepository.shared.resetOverrides()
 
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
-//      Safety measure to not accidentally switch on the redesign before it's ready
-//      FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.redesigniOS, true)
+        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.easyDeviceMigrationDisabled, true)
 
         // Next, properly set the feature flag overrides in the repository.
         for (name, value) in propertiesManager.featureFlagOverrides ?? [:] {
@@ -354,11 +353,7 @@ extension AppDelegate {
     // Typically set the environment only if telemetry is allowed
     private func enableExternalLogging() {
         @Dependency(\.dohConfiguration) var doh
-        if doh.defaultHost.contains(PMLog.ExternalLogEnvironment.black.rawValue) {
-            PMLog.setExternalLoggingEnvironment(.black)
-        } else {
-            PMLog.setExternalLoggingEnvironment(.production)
-        }
+        PMLog.setExternalLoggerHost(doh.defaultHost)
     }
 
     private func disableExternalLogging() {

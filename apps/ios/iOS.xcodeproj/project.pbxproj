@@ -174,7 +174,6 @@
 		79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */; };
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
 		80C4A4E42BCFBBFC00DA1A80 /* MetricsCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */; };
-		80C4A4E62BCFBC2D00DA1A80 /* LokiApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E52BCFBC2D00DA1A80 /* LokiApiClient.swift */; };
 		80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */; };
 		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
@@ -361,7 +360,6 @@
 		E5BE14942BBE99A00093F30F /* OneClickPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BE14932BBE99A00093F30F /* OneClickPayment.swift */; };
 		E5C384642D96AA98003494D5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = E5C384632D96AA98003494D5 /* Settings */; };
 		E5C3847C2D96B9D5003494D5 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E5C3847B2D96B9D5003494D5 /* Modals */; };
-		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5E39ED42D96DFED006E4978 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = E5E39ED32D96DFED006E4978 /* Home */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
@@ -674,7 +672,6 @@
 		79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewController.swift; sourceTree = "<group>"; };
 		79FF145420C41EE200BA3623 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsCodable.swift; sourceTree = "<group>"; };
-		80C4A4E52BCFBC2D00DA1A80 /* LokiApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LokiApiClient.swift; sourceTree = "<group>"; };
 		80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsTimer.swift; sourceTree = "<group>"; };
 		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-iOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
@@ -829,7 +826,6 @@
 		E5B2F4BB2D37D7FD000D4F10 /* WidgetIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetIntents.swift; sourceTree = "<group>"; };
 		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
 		E5BE14932BBE99A00093F30F /* OneClickPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPayment.swift; sourceTree = "<group>"; };
-		E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuarkCommands+Async.swift"; sourceTree = "<group>"; };
 		E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
 		E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
@@ -1457,9 +1453,7 @@
 				776B11B42CECA3910012D2D8 /* UIElement+extension.swift */,
 				776B11B22CECA1520012D2D8 /* XCUIElement+tapAndClearText.swift */,
 				77E01ACA2CC112BB0013F3D7 /* BF22Users.swift */,
-				E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */,
 				80C4A4E32BCFBBFC00DA1A80 /* MetricsCodable.swift */,
-				80C4A4E52BCFBC2D00DA1A80 /* LokiApiClient.swift */,
 				80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */,
 			);
 			path = Support;
@@ -3117,7 +3111,6 @@
 				770AD2DE2CEDF024000FFB38 /* CountriesConnectionTests.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
-				80C4A4E62BCFBC2D00DA1A80 /* LokiApiClient.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
@@ -3130,7 +3123,6 @@
 				B2FCF5442940E91300EAC786 /* TokenRefreshTests.swift in Sources */,
 				776B11B52CECA3980012D2D8 /* UIElement+extension.swift in Sources */,
 				F377836C26E644BC00392958 /* ProfileConnectionTests.swift in Sources */,
-				E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */,
 				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
 				7745A9442D009E79003A78E2 /* ConnectionDetailsRobot.swift in Sources */,
 				67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */,
