@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "이제 홈 화면에서 떠나지 않고도 VPN을 확인 및 관리할 수 있어요.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Proton VPN 위젯을 사용해 보세요";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "VPN에 연결되어 있는지 여부를 확인 및 홈 화면에서 기본 및 즐겨찾는 연결에 접근하세요.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Proton VPN 위젯을 추가하는 방법";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "홈 화면의 아무 곳이나 길게 누르세요.";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "**편집** 버튼을 누른 다음 **위젯 추가**를 선택하세요.";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "**Proton VPN**을 선택하거나 검색하세요.";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "확인";

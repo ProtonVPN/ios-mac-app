@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "Vous pouvez désormais visualiser et gérer votre connexion VPN sans quitter l'écran d'accueil.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Essayez le widget Proton VPN";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Vérifiez si vous êtes connecté au VPN et accédez à vos connexions par défaut et préférées depuis l'écran d'accueil.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Comment ajouter le widget Proton VPN";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Appuyez longuement n’importe où sur votre écran d’accueil.";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Appuyez sur le bouton **Modifier**, puis sélectionnez **Ajouter un widget**.";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Sélectionner ou rechercher **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "J'ai compris";

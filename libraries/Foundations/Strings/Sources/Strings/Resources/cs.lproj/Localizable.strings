@@ -784,7 +784,7 @@
 "_reconnect_on_settings_change_body" = "Pro použití této změny je třeba připojení restartovat.";
 
 /* Under maintenance alert */
-"_country_servers_under_maintenance" = "%@ serverů, na kterých probíhá údržba";
+"_country_servers_under_maintenance" = "Probíhá údržba serverů v %@";
 
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Profilový(é) server(y) pod údržbou";
@@ -1296,7 +1296,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "dat\nuloženo";
+"_netshield_stats_data_saved" = "ušetřených\ndat";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Chraňte se před reklamou, malware a sledovacími prvky na webových stránkách a v aplikacích. Pokud se stránky nenačítají, zkuste vypnout NetShield.\nDalší informace";
@@ -1844,7 +1844,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Přibližný počet reklam, sledovacích prvků a malware, který NetShield zablokoval.";
 
-"_netshield_stats_data_saved" = "dat\nuloženo";
+"_netshield_stats_data_saved" = "ušetřených\ndat";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
@@ -1868,7 +1868,7 @@
 "_connection_details_title" = "Detaily připojení";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
-"_connection_details_connected_for" = "Připojeno k";
+"_connection_details_connected_for" = "Připojeno";
 
 /* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
 "_connection_details_country" = "Země";
@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "Připojení VPN nyní můžete zobrazit a spravovat, aniž byste opustili domovskou obrazovku.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Zkuste widget Proton VPN";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Zkontrolujte, zda jste připojeni k VPN a získejte přístup ke svým výchozím a oblíbeným připojením z domovské obrazovky.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Jak přidat widget Proton VPN";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Stiskněte a podržte prst kdekoli na domovské obrazovce";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Stiskněte tlačítko **Upravit** a poté vyberte **Přidat widget**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Vyberte nebo vyhledejte **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Rozumím";

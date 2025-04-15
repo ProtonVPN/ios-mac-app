@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d urządzenie</string>
-        <key>few</key>
         <string>%d urządzenia</string>
+        <key>few</key>
+        <string>%d urządzeń</string>
         <key>many</key>
         <string>%d urządzeń</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d urządzeń</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -626,13 +626,13 @@ elementów śledzących</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d krajach</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d kraju</string>
         <key>few</key>
-        <string>%d countries</string>
+        <string>%d krajach</string>
         <key>many</key>
-        <string>%d countries</string>
+        <string>%d krajach</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

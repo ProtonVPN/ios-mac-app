@@ -2790,3 +2790,24 @@
 
 /* What's new screen section subtitle */
 "widget_whats_new_subtitle" = "Du kan nu visa och hantera din VPN-anslutning utan att lämna startskärmen.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Prova Proton VPN-widgeten";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Hur man lägger till Proton VPN-widgeten";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Tryck och håll var som helst på din startskärm";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Tryck på knappen **Redigera** och välj sedan **Lägg till widget**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Välj eller sök efter **Proton VPN**";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Jag förstår";
