@@ -61,6 +61,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case disconnected(LocalAgentConnectionError?)
     }
 
+    @DebugDescription
     @CasePathable
     public enum Action: Sendable {
         case startObservingEvents
@@ -73,6 +74,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case disconnect(LocalAgentConnectionError?)
         case delegate(DelegateAction)
 
+        @DebugDescription
         @CasePathable
         public enum DelegateAction: Sendable {
             case errorReceived(LocalAgentError)
@@ -430,5 +432,41 @@ public extension Effect {
             },
             catch: handler
         )
+    }
+}
+
+extension LocalAgentFeature.Action: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .startObservingEvents:
+            ".startObservingEvents"
+        case .startNetShieldStatsObservation:
+            ".startNetShieldStatsObservation"
+        case .stopAllObservations:
+            ".stopAllObservations"
+        case let .setFeatures(features):
+            ".setFeatures(\(features))"
+        case let .event(localAgentEvent):
+            ".event(\(localAgentEvent.debugDescription))"
+        case let .connect(serverEndpoint, vpnAuthenticationData, vpnConnectionFeatures):
+            ".connect(\(serverEndpoint), \(vpnAuthenticationData), \(vpnConnectionFeatures))"
+        case let .disconnect(localAgentConnectionError):
+            ".disconnect(\(String(describing: localAgentConnectionError)))"
+        case let .delegate(delegateAction):
+            ".delegate(\(delegateAction.debugDescription))"
+        case .didBecomeActive:
+            ".didBecomeActive"
+        }
+    }
+}
+
+extension LocalAgentFeature.Action.DelegateAction: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case let .errorReceived(localAgentError):
+            ".errorReceived(\(localAgentError))"
+        case let .connectionFailed(error):
+            ".connectionFailed(\(error))"
+        }
     }
 }

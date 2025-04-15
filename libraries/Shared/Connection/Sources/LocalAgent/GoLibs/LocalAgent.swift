@@ -39,6 +39,7 @@ protocol LocalAgent {
     func retrieveNetShieldStats()
 }
 
+@DebugDescription
 @CasePathable
 public enum LocalAgentEvent: Sendable {
     case error(LocalAgentError)
@@ -70,6 +71,23 @@ package extension NetShieldType {
             false
         case .level2:
             true
+        }
+    }
+}
+
+extension LocalAgentEvent: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .error(let localAgentError):
+            return ".error(\(localAgentError))"
+        case .state(let localAgentState):
+            return ".state(\(localAgentState))"
+        case .features(let features):
+            return ".features(\(features))"
+        case .connectionDetails(let connectionDetailsMessage):
+            return ".connectionDetails(\(connectionDetailsMessage))"
+        case .stats(let featureStatisticsMessage):
+            return ".stats(\(featureStatisticsMessage))"
         }
     }
 }
