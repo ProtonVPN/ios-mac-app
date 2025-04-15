@@ -273,6 +273,18 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
             return effectToResolve(error: error)
 
+        case .localAgent(.delegate(.certificateRefreshRequired(let reason))):
+            let currentCertificateExpiry = state.certAuth.loaded?.certificate.validUntil
+            log.info(
+                "Local Agent needs to be reconnected with a refreshed certificate",
+                category: .connection,
+                metadata: ["reason": "\(reason)", "certificateExpires": "\(optional: currentCertificateExpiry)"]
+            )
+            return .concatenate(
+                .send(.localAgent(.disconnect(nil))),
+                .send(.certAuth(.loadAuthenticationData))
+            )
+
         case .tunnel:
             return .none
 

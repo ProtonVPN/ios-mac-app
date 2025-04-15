@@ -69,20 +69,36 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     func set(features: LocalAgentFeatures) {
-        connection?.setFeatures(features)
+        guard let connection else {
+            log.error("Failed to set Local Agent features: connection is nil")
+            reportIssue("Failed to set Local Agent features: connection is nil")
+            return
+        }
+        connection.setFeatures(features)
     }
 
     func retrieveNetShieldStats() {
-        connection?.sendGetStatus(true)
+        guard let connection else {
+            log.error("Failed to fetch Netshield Stats: connection is nil")
+            reportIssue("Failed to fetch Netshield Stats: connection is nil")
+            return
+        }
+        connection.sendGetStatus(true)
     }
 
     func disconnect() {
+        assert(connection != nil)
         connection?.close()
     }
 }
 
 extension LocalAgentImplementation: LocalAgentClientDelegate {
     func didReceive(event: LocalAgentEvent) {
-        streamContinuation?.yield(event)
+        guard let streamContinuation else {
+            log.error("Event ignored: stream continuation is nil")
+            reportIssue("Event ignored: stream continuation is nil")
+            return
+        }
+        streamContinuation.yield(event)
     }
 }
