@@ -31,6 +31,8 @@ public struct ConnectWidgetView : View {
 
     let entry: ConnectWidgetEntry
 
+    @Environment(\.widgetFamily) var widgetFamily
+
     public var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {
@@ -42,7 +44,9 @@ public struct ConnectWidgetView : View {
                     ServerInfoView(entry: entry)
                     VStack(spacing: .themeSpacing16) {
                         ButtonsView(entry: entry)
-                        RecentsView(entry: entry, geometry: geometry)
+                        if (widgetFamily == .systemLarge) {
+                            RecentsView(entry: entry, geometry: geometry)
+                        }
                     }
                 }
             }
@@ -50,10 +54,12 @@ public struct ConnectWidgetView : View {
             .containerBackground(for: .widget) {
                 ZStack {
                     Color(.background)
-                    linearGradient(for: entry)
+                    LinearGradient.forProtectionState(entry.protectionState)
                 }
+                .environment(\.colorScheme, .dark) // we need both colorScheme overrides because of the `containerBackground(for: .widget)`
             }
         }
+        .environment(\.colorScheme, .dark) // we need both colorScheme overrides because of the `containerBackground(for: .widget)`
     }
 }
 
@@ -96,7 +102,7 @@ private struct HeaderView: View {
                 case .unprotected:
                     Group {
                         IconProvider.lockOpenFilled2
-                        Text(Localizable.connectionStatusUnprotected)
+                        Text(Localizable.widgetUnprotectedHeader)
                             .font(.body2(emphasised: true))
                             .offset(y: 2)
                     }
@@ -148,72 +154,81 @@ private struct RecentsView: View {
     @Environment(\.widgetFamily) var widgetFamily
     let entry: ConnectWidgetEntry
     let geometry: GeometryProxy
+    var itemWidth: CGFloat {
+        (geometry.size.width - 2 * .themeSpacing8) / 3
+    }
+
+    private var emptyRecentsView: some View {
+        HStack(alignment: .center) {
+            VStack {
+                Text(Localizable.widgetRecentsTitle)
+                    .themeFont(.caption(emphasised: true))
+                Text(Localizable.widgetRecentsDescription)
+                    .themeFont(.caption(emphasised: false))
+            }
+            .foregroundStyle(Color(.text, .weak))
+            .frame(maxWidth: .infinity)
+        }
+        .frame(height: Self.recentsHeight)
+        .background(Color(.background, .weak))
+        .clipRectangle(cornerRadius: .radius12)
+    }
+
+    private func recentItem(index: Int, recentConnection: RecentConnection) -> some View {
+        let location = recentConnection.connection.location
+        return Button(intent: ConnectToVPNIntent(recentIndex: index)) {
+            VStack(alignment: .center, spacing: .themeSpacing8) {
+                if recentConnection.underMaintenance {
+                    IconProvider.wrench
+                        .foregroundStyle(Color(.icon, .weak))
+                } else {
+                    FlagView(location: location, flagSize: .widgetRecentsSize)
+                }
+                VStack(spacing: .themeSpacing2) {
+                    if let headerText = location.headerText(locale: .current) {
+                        Text(headerText)
+                            .themeFont(.caption(emphasised: true))
+                            .foregroundStyle(Color(.text, .normal))
+                    }
+                    if let subtext = location.subtext(locale: .current) {
+                        Text(subtext)
+                            .themeFont(.overline(emphasised: false))
+                            .foregroundStyle(Color(.text, .weak))
+                            .lineLimit(1)
+                    }
+                }
+                .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, .themeSpacing8)
+            .frame(width: itemWidth, height: Self.recentsHeight)
+            .background(Color(.background, .weak))
+            .clipRectangle(cornerRadius: .radius12)
+        }
+        .buttonStyle(PlainPressedButtonStyle())
+    }
+
+    private var populatedRecentsView: some View {
+        VStack(alignment: .leading, spacing: .themeSpacing12) {
+            Text(Localizable.widgetRecentsTitle)
+                .themeFont(.caption(emphasised: false))
+                .foregroundStyle(Color(.text, .weak))
+
+            LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
+                ForEach(Array(entry.recentServers.prefix(3).enumerated()),
+                        id: \.offset,
+                        content: recentItem)
+            }
+            .frame(height: Self.recentsHeight)
+        }
+        .lineSpacing(1)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
 
     var body: some View {
-        let itemWidth = (geometry.size.width - 2 * .themeSpacing8) / 3
-        if (widgetFamily == .systemLarge) {
-            if entry.recentServers.isEmpty {
-                HStack(alignment: .center) {
-                    VStack {
-                        Text(Localizable.widgetRecentsTitle)
-                            .themeFont(.caption(emphasised: true))
-                        Text(Localizable.widgetRecentsDescription)
-                            .themeFont(.caption(emphasised: false))
-                    }
-                    .foregroundStyle(Color(.text, .weak))
-                    .frame(maxWidth: .infinity)
-                }
-                .frame(height: Self.recentsHeight)
-                .background(Color(.background, .weak))
-                .clipRectangle(cornerRadius: .radius12)
-            } else {
-                VStack(alignment: .leading, spacing: .themeSpacing12) {
-                    if widgetFamily == .systemLarge {
-                        Text(Localizable.widgetRecentsTitle)
-                            .themeFont(.caption(emphasised: false))
-                            .foregroundStyle(Color(.text, .weak))
-                    }
-                    LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
-                        ForEach(
-                            Array(entry.recentServers.prefix(3).enumerated()),
-                            id: \.offset
-                        ) { index, recentConnection in
-                            let location = recentConnection.connection.location
-                            Button(intent: ConnectToVPNIntent(recentIndex: index)) {
-                                VStack(alignment: .center) {
-                                    if recentConnection.underMaintenance {
-                                        IconProvider.wrench
-                                            .foregroundStyle(Color(.icon, .weak))
-                                    } else {
-                                        FlagView(location: location, flagSize: .widgetRecentsSize)
-                                    }
-                                    VStack(spacing: .themeSpacing2) {
-                                        if let headerText = location.headerText(locale: .current) {
-                                            Text(headerText)
-                                                .themeFont(.caption(emphasised: true))
-                                                .foregroundStyle(Color(.text, .normal))
-                                        }
-                                        if let subtext = location.subtext(locale: .current) {
-                                            Text(subtext)
-                                                .themeFont(.overline(emphasised: false))
-                                                .foregroundStyle(Color(.text, .weak))
-                                        }
-                                    }
-
-                                }
-                                .frame(maxWidth: .infinity)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .padding(.themeSpacing8)
-                            .frame(width: itemWidth, height: Self.recentsHeight, alignment: .leading)
-                            .background(Color(.background, [.interactive, .weak]))
-                            .clipRectangle(cornerRadius: .radius12)
-                        }
-                    }
-                }
-                .lineSpacing(1)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
+        if entry.recentServers.isEmpty {
+            emptyRecentsView
+        } else {
+            populatedRecentsView
         }
     }
 }
@@ -244,28 +259,4 @@ private struct ButtonsView : View {
             EmptyView()
         }
     }
-}
-
-// MARK: - Private helpers
-
-private func linearGradient(for entry: ConnectWidgetEntry) -> LinearGradient {
-    let startColor: Color
-    switch entry.protectionState {
-    case .signedOut:
-        return .linearGradient(stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
-                                       .init(color: Color(.loggedOutGradientStop), location: 0.7)],
-                               startPoint: .topTrailing,
-                               endPoint: .bottomLeading)
-    case .protected:
-        startColor = Color(.icon, .vpnGreen)
-    case .unprotected:
-        startColor = Color(.background, .danger)
-    case .protecting:
-        startColor = .white
-    }
-
-    return .linearGradient(stops: [.init(color: startColor.opacity(0.5), location: 0),
-                                   .init(color: .clear, location: 1)],
-                           startPoint: .top,
-                           endPoint: .center)
 }

@@ -29,7 +29,6 @@ public struct ConnectWidget: Widget {
     public var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in
             ConnectWidgetView(entry: entry)
-                .environment(\.colorScheme, .dark)
         }
         .configurationDisplayName("Proton VPN")
         .description(Localizable.widgetTrayDescription)
