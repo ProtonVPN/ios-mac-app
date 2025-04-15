@@ -33,13 +33,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d країні</string>
+        <string>%d країна</string>
         <key>few</key>
-        <string>%d країнах</string>
+        <string>%d країни</string>
         <key>many</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
         <key>other</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -64,17 +64,17 @@
       <key>VARIABLE</key>
       <dict>
         <key>one</key>
-        <string>Захистіть %d пристрій</string>
+        <string>Захист %d пристрою</string>
         <key>few</key>
-        <string>Захистіть до %d пристрої</string>
+        <string>Захист до %d пристроїв</string>
         <key>many</key>
-        <string>Захистіть до %d пристроїв</string>
+        <string>Захист до %d пристроїв</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Захистіть до %d пристроїв</string>
+        <string>Захист до %d пристроїв</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_title</key>
@@ -84,24 +84,24 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d країні</string>
+        <string>%d країна</string>
         <key>few</key>
-        <string>%d країнах</string>
+        <string>%d країни</string>
         <key>many</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
       </dict>
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d захищеного сервера</string>
+        <string>%d захищений сервер</string>
         <key>few</key>
-        <string>%d захищених серверів</string>
+        <string>%d захищені сервери</string>
         <key>many</key>
         <string>%d захищених серверів</string>
         <key>NSStringFormatSpecTypeKey</key>
@@ -119,17 +119,17 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d країні</string>
+        <string>%d країна</string>
         <key>few</key>
-        <string>%d країнах</string>
+        <string>%d країни</string>
         <key>many</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -158,13 +158,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d країні</string>
+        <string>%d країна</string>
         <key>few</key>
-        <string>%d країнах</string>
+        <string>%d країни</string>
         <key>many</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
         <key>other</key>
-        <string>%d країнах</string>
+        <string>%d країн</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option2</key>
@@ -218,9 +218,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d країни</string>
+        <string>%d країна</string>
         <key>few</key>
-        <string>%d країн</string>
+        <string>%d країни</string>
         <key>many</key>
         <string>%d країн</string>
         <key>other</key>
@@ -318,17 +318,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Оголошення
-заблоковано</string>
+        <string>Заблоковані
+оголошення</string>
         <key>few</key>
-        <string>Оголошень
-заблоковано</string>
+        <string>Заблоковані
+оголошення</string>
         <key>many</key>
-        <string>Оголошень
-заблоковано</string>
+        <string>Заблоковані
+оголошення</string>
         <key>other</key>
-        <string>Оголошень
-заблоковано</string>
+        <string>Заблоковані
+оголошення</string>
       </dict>
     </dict>
     <key>_netshield_stats_trackers_stopped</key>
@@ -342,17 +342,17 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Зупинений
-вистежувач</string>
+        <string>Зупинені
+вистежувачі</string>
         <key>few</key>
         <string>Зупинені
 вистежувачі</string>
         <key>many</key>
-        <string>Зупинених
-вистежувачів</string>
+        <string>Зупинені
+вистежувачі</string>
         <key>other</key>
-        <string>Зупинених
-вистежувачів</string>
+        <string>Зупинені
+вистежувачі</string>
       </dict>
     </dict>
     <key>_session_length_days</key>

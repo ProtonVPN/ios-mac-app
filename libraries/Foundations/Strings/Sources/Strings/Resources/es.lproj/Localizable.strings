@@ -1429,7 +1429,7 @@
 "_sysex_open_system_settings" = "Abrir los ajustes del sistema";
 
 /* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Abrir los ajustes de seguridad";
+"_sysex_open_security_preferences" = "Abrir las preferencias de seguridad";
 
 "_sysex_settings_description" = "Proton VPN requiere cargar una extensión del sistema para aprovechar el protocolo inteligente, OpenVPN y WireGuard.";
 
@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "El país más rápido disponible";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "El país Secure Core más rápido disponible";
+"_connection_card_accessibility_fastest_sc" = "El país con Secure Core más rápido disponible";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Doble toque para mostrar su dirección IP";
@@ -2776,6 +2776,9 @@
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Se ha producido un problema con la conexión (Error %@)";
 
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Sin protección";
+
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Comprueba si estás conectado a la VPN y consigue un acceso rápido a tus conexiones favoritas.";
 
@@ -2792,7 +2795,7 @@
 "widget_whats_new_subtitle" = "Ahora puedes ver y administrar tu conexión VPN sin salir de la pantalla de inicio.";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "Pruebe el widget de Proton VPN";
+"_widgetAdoption_modal_title" = "Prueba el widget de Proton VPN";
 
 /* Widget adoption modal subtitle. */
 "_widgetAdoption_modal_subtitle" = "Compruebe si está conectado a la VPN y acceda a sus conexiones predeterminadas y favoritas desde la pantalla de inicio.";
