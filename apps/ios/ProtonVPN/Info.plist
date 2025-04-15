@@ -90,8 +90,12 @@
 			<false/>
 		</dict>
 	</dict>
-    <key>NSUserNotificationsUsageDescription</key>
-    <string>We need to send you notifications to alert you about changes in your account</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>We need to send you notifications to alert you about changes in your account.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app uses Face ID to protect sensitive data.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to scan QR codes.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
