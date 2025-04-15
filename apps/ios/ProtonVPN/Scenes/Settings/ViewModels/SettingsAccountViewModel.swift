@@ -238,7 +238,7 @@ final class SettingsAccountViewModel {
                     self?.handleAccountDeletionSuccess()
                 case .failure(let error):
                     self?.handleAccountDeletionFailure(error)
-            }
+                }
             })
     }
     

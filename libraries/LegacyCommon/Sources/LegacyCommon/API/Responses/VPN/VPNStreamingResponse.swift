@@ -25,7 +25,7 @@ import VPNShared
 
 public typealias StreamingDictServices = [String: [String: [VpnStreamingOption]]]
 
-extension StreamingDictServices: DefaultableProperty { }
+extension StreamingDictServices: @retroactive DefaultableProperty { }
 
 public struct VPNStreamingResponse: Codable {
     public let code: Int

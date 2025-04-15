@@ -23,7 +23,7 @@ class SignupTests: ProtonVPNUITests {
     }
 
     /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
-    func testSignUpWithExternalAccount() throws  {
+    func testSignUpWithExternalAccount() throws {
         let randomData = getRandomData(emailPostfix: "mail.com")
         let randomEmail = randomData.email
         let randomPassword = randomData.password

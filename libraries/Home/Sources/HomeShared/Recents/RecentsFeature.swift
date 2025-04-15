@@ -154,7 +154,7 @@ public struct RecentsFeature {
                 return .none
 
             case let .remove(recent):
-                withAnimation {
+                _ = withAnimation {
                     state.$recents.withLock { $0.remove(recent) }
                 }
                 recentsStorage.saveToStorage(state.recents)

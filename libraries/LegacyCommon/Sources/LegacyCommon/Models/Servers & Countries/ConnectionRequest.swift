@@ -27,7 +27,7 @@ import Strings
 import VPNShared
 import VPNAppCore
 
-extension ConnectionProtocol: CustomStringConvertible {
+extension ConnectionProtocol: @retroactive CustomStringConvertible {
 
     public static let deprecatedProtocols: [Self] = VpnProtocol.deprecatedProtocols.map(vpnProtocol)
 

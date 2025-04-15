@@ -118,7 +118,7 @@ public enum LocalAgentError: ProtonVPNError {
             return "LCNP"
         case .serverSessionDoesNotMatch:
             return "LSNM"
-        case .systemError(let systemError):
+        case .systemError(_):
             return "LSER"
         case .unknown:
             return "LUNK"

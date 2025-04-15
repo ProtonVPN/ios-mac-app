@@ -89,7 +89,7 @@ final class SettingsViewModel {
 
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
-    private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol? = nil
+    private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol?
     private let isAccountRecoveryEnabled: Bool
 
     var pushHandler: ((UIViewController) -> Void)?
@@ -192,7 +192,7 @@ final class SettingsViewModel {
 
     private func sessionEnded() {
         AppEvent.connectionStateChanged.unsubscribe(self)
-        if let profileManager {
+        if profileManager != nil {
             AppEvent.profileContentChanged.unsubscribe(self)
         }
 
@@ -418,34 +418,43 @@ final class SettingsViewModel {
     private var safeModeSection: [TableViewCellModel] {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
-        return [.upsellableToggle(
-            title: Localizable.nonStandardPortsTitle,
-            state: { [unowned self] in self.safeModeState },
-            upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
-            handler: { [unowned self] (toggleOn, callback) in
-                let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
-                let newSafeMode = !currentSafeMode
+        return [
+            .upsellableToggle(
+                title: Localizable.nonStandardPortsTitle,
+                state: { [unowned self] in self.safeModeState },
+                upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
+                handler: { [unowned self] (toggleOn, callback) in
+                    let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
+                    let newSafeMode = !currentSafeMode
 
-                self.vpnStateConfiguration.getInfo { info in
-                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                    case .withConnectionUpdate:
-                        self.safeModePropertyProvider.safeMode = newSafeMode
-                        self.vpnManager.set(safeMode: newSafeMode)
-                        callback(toggleOn)
-                    case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
+                    self.vpnStateConfiguration.getInfo { info in
+                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                        case .withConnectionUpdate:
+                            self.safeModePropertyProvider.safeMode = newSafeMode
+                            self.vpnManager.set(safeMode: newSafeMode)
+                            callback(toggleOn)
+                        case .withReconnect:
+                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: Localizable.nonStandardPortsChangeTitle, confirmHandler: {
+                                self.safeModePropertyProvider.safeMode = newSafeMode
+                                callback(toggleOn)
+                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
+                                self.vpnGateway.retryConnection()
+                            }))
+                        case .immediate:
                             self.safeModePropertyProvider.safeMode = newSafeMode
                             callback(toggleOn)
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                            self.vpnGateway.retryConnection()
-                        }))
-                    case .immediate:
-                        self.safeModePropertyProvider.safeMode = newSafeMode
-                        callback(toggleOn)
+                        }
                     }
                 }
-            }
-        ), .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString))]
+            ),
+            .attributedTooltip(
+                text: NSMutableAttributedString(
+                    attributedString: Localizable.nonStandardPortsExplanation.attributed(
+                        withColor: UIColor.weakTextColor(),
+                        fontSize: 13))
+                .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
+            )
+        ]
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {

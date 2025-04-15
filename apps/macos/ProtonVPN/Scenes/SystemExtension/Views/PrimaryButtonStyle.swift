@@ -44,4 +44,3 @@ struct PrimaryButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 }
-

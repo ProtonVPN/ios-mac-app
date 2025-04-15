@@ -22,7 +22,7 @@ import Dependencies
 import Sharing
 import VPNAppCore
 
-extension SettingsClient: DependencyKey {
+extension SettingsClient: @retroactive DependencyKey {
     public static let liveValue = SettingsClient(
         isActive: {
             @Shared(.connectionState) var connectionState

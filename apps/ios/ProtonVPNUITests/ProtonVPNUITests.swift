@@ -74,7 +74,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         logoutIfNeeded()
 
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-        let identifiers = ["Allow","Not Now"]
+        let identifiers = ["Allow", "Not Now"]
         addUIMonitor(elementQueryToTap: springboard.buttons, identifiers: identifiers)
 
         continueAfterFailure = false

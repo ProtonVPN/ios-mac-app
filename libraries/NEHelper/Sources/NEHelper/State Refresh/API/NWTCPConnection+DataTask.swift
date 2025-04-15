@@ -42,7 +42,7 @@ extension NEPacketTunnelProvider: ConnectionTunnelFactory {
 }
 
 #if DEBUG
-extension NEPacketTunnelProvider: NWTCPConnectionAuthenticationDelegate {
+extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
     public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
         return true
     }
@@ -511,7 +511,7 @@ class NWTCPDataTask: DataTaskProtocol {
     }
 }
 
-extension NWTCPConnectionState: CustomStringConvertible {
+extension NWTCPConnectionState: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
         case .cancelled: return "cancelled"

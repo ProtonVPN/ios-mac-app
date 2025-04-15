@@ -226,7 +226,7 @@ extension NetworkingMock: APIServiceDelegate {
         return nil
     }
     public var locale: String {
-        return NSLocale.current.languageCode ?? "en_US"
+        return NSLocale.current.language.languageCode?.identifier ?? "en_US"
     }
     public var appVersion: String {
         return "UNIT TESTS APP VERSION"

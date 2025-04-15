@@ -147,7 +147,7 @@ fileprivate extension Range {
     }
 }
 
-extension IPv4Address: Comparable {
+extension IPv4Address: @retroactive Comparable {
     public static func < (lhs: IPv4Address, rhs: IPv4Address) -> Bool {
         lhs.rawValue.withUnsafeBytes { lhsBytes in
             rhs.rawValue.withUnsafeBytes { rhsBytes in
@@ -174,7 +174,7 @@ extension IPv4Address {
     }
 }
 
-extension IPv6Address: Comparable {
+extension IPv6Address: @retroactive Comparable {
     public static func < (lhs: IPv6Address, rhs: IPv6Address) -> Bool {
         lhs.rawValue.withUnsafeBytes { lhsBytes in
             rhs.rawValue.withUnsafeBytes { rhsBytes in

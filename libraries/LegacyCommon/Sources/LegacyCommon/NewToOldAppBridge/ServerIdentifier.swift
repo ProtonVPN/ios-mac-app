@@ -24,7 +24,7 @@ import Persistence
 
 import Connection
 
-extension ServerIdentifier: DependencyKey {
+extension ServerIdentifier: @retroactive DependencyKey {
     public static let liveValue: ServerIdentifier = ServerIdentifier(
         fullServerInfo: { logicalServerInfo in
             @Dependency(\.serverRepository) var repository

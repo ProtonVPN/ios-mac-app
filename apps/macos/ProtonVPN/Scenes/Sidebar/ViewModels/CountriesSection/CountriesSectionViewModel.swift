@@ -658,7 +658,7 @@ class CountriesSectionViewModel {
 
     /// Includes upsell banner
     private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
-        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { _ in true } )
+        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { _ in true })
         return ServerSection(
             header: allLocationsHeader(locationCount: cellModels.count),
             cells: [offerBannerCellModel].compactMap { $0 } + cellModels
@@ -667,7 +667,7 @@ class CountriesSectionViewModel {
 
     /// Includes upsell banner
     private func plusLocationsSection(for groups: [ServerGroupInfo], minTier: Int) -> ServerSection {
-        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { $0 >= minTier } )
+        let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { $0 >= minTier })
         return ServerSection(
             header: plusLocationsHeader(locationCount: cellModels.count),
             cells: [upsellBanner] + cellModels

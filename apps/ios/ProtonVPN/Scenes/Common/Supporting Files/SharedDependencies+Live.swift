@@ -24,11 +24,11 @@ import Domain
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 
-extension DefaultsProvider: DependencyKey {
-    public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults } )
+extension DefaultsProvider: @retroactive DependencyKey {
+    public static let liveValue: DefaultsProvider = DefaultsProvider(getDefaults: { .domainUserDefaults })
 }
 
-extension VPNAuthenticationStorageConfigKey: DependencyKey {
+extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
     public static let liveValue: String = {
         let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         return "\(accessGroup)prt.ProtonVPN"

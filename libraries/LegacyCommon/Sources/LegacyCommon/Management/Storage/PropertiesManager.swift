@@ -533,7 +533,7 @@ extension DependencyValues {
     }
 }
 
-extension UserRole: DefaultableProperty {
+extension UserRole: @retroactive DefaultableProperty {
     public init() {
         self = .noOrganization
     }

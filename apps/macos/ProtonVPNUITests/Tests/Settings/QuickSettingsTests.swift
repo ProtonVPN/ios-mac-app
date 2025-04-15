@@ -22,11 +22,7 @@ import XCTest
 class QuickSettingsTests: ProtonVPNUITests {
     
     private let quickSettingsRobot = QuickSettingsRobot()
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
+        
     func testOpenQuickSettingsDropdown() {
         
         logoutIfNeeded()

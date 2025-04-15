@@ -21,7 +21,7 @@ import ComposableArchitecture
 import VPNAppCore
 import Domain
 
-extension ConnectionIntentStorage: DependencyKey {
+extension ConnectionIntentStorage: @retroactive DependencyKey {
     public static let liveValue = ConnectionIntentStorage(getConnectionIntent: {
         @Dependency(\.storage) var storage
         do {

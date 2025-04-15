@@ -26,9 +26,9 @@ extension XCUIElement {
     @discardableResult
     func tapAndClearText() -> XCUIElement {
         if let stringValue = self.value as? String {
-            //tap at the right corner of the input
+            // tap at the right corner of the input
             let lowerRightCorner = self.coordinate(
-                withNormalizedOffset: CGVectorMake(0.9, 0.9)
+                withNormalizedOffset: CGVector(dx: 0.9, dy: 0.9)
             )
             lowerRightCorner.tap()
 

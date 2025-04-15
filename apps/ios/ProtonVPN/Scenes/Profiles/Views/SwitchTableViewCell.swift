@@ -52,7 +52,7 @@ final class SwitchTableViewCell: UITableViewCell {
         upsellImageView.isUserInteractionEnabled = true
         upsellImageView.addGestureRecognizer(tapRecognizer)
 
-        let update = { (on: Bool) -> Void in
+        let update = { on in
             self.switchControl.setOn(on, animated: true)
         }
 

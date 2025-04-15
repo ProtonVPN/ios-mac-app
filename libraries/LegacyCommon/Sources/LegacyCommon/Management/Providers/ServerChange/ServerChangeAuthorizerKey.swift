@@ -20,7 +20,7 @@ import Foundation
 import Dependencies
 import VPNAppCore
 
-extension ServerChangeAuthorizer: DependencyKey {
+extension ServerChangeAuthorizer: @retroactive DependencyKey {
     public static var liveValue: ServerChangeAuthorizer = {
         let authorizer = ServerChangeAuthorizerImplementation()
         return ServerChangeAuthorizer(

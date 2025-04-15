@@ -55,7 +55,7 @@ protocol AppSessionManager {
     var loggedIn: Bool { get }
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
-    func refreshVpnAuthCertificate() async throws -> Void
+    func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
     

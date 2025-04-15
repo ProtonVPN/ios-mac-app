@@ -23,7 +23,7 @@ import Domain
 // In an ideal world, ``VPNConnectionFeaturesProvider`` being defined in ``Connection``, its implementation
 // would also being defined there. But for the moment, it's defined here and we'll leverage
 // ``AppFeaturePropertyProvider`` and others to manage the features.
-extension ConnectionFeatureProvider: DependencyKey {
+extension ConnectionFeatureProvider: @retroactive DependencyKey {
     public static let liveValue: ConnectionFeatureProvider = .init(
         connectionFeatures: {
             @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider

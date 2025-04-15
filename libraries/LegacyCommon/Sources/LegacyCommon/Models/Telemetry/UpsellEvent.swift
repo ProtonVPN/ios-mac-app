@@ -116,7 +116,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
     }
 }
 
-extension UpsellModalSource: Encodable {
+extension UpsellModalSource: @retroactive Encodable {
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {

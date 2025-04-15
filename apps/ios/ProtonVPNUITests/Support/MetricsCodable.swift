@@ -72,8 +72,7 @@ struct LokiCodable: Codable {
             value = stringVal
         } else if let doubleVal = try? container.decode(Double.self) {
             value = doubleVal
-        }
-        else {
+        } else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unsupported type")
         }
     }

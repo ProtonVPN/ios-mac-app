@@ -26,7 +26,7 @@ import Domain
 // Protocol and port selection should ideally be implemented in the `Connection` package.
 // Due to time constraints, let's reuse the legacy implementations until this is e.g. required on tvOS
 // or we want to deprecate LegacyCommon.
-extension SmartPortSelectorBridge: DependencyKey {
+extension SmartPortSelectorBridge: @retroactive DependencyKey {
     public static let liveValue = SmartPortSelectorBridge(select: { endpoint, connectionProtocol in
         @Dependency(\.propertiesManager) var propertiesManager
         let resolver = AvailabilityCheckerResolverImplementation(wireguardConfig: propertiesManager.wireguardConfig)

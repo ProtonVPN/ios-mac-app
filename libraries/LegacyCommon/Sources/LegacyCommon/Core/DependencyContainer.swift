@@ -495,6 +495,6 @@ extension Container: CountryCodeProviderFactory {
     }
 }
 
-extension VPNNetworkingKey: DependencyKey {
+extension VPNNetworkingKey: @retroactive DependencyKey {
     public static let liveValue: VPNNetworking = CoreNetworkingWrapper(wrapped: Container.sharedContainer.networking)
 }

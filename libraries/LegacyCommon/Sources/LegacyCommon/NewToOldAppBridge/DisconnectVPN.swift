@@ -22,7 +22,7 @@ import ProtonCoreFeatureFlags
 import Domain
 import VPNAppCore
 
-extension DisconnectVPNKey: DependencyKey {
+extension DisconnectVPNKey: @retroactive DependencyKey {
     public static let liveValue = {
         let isEnabled = FeatureFlagsRepository.isConnectionFeatureEnabled
         if isEnabled, #available(iOS 16, *) {

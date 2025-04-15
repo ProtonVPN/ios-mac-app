@@ -20,7 +20,7 @@ import Foundation
 import Dependencies
 import VPNAppCore
 
-extension PushAlertKey: DependencyKey {
+extension PushAlertKey: @retroactive DependencyKey {
     public static let liveValue: @Sendable (SystemAlert) -> Void = { alert in
         let alertService = Container.sharedContainer.makeCoreAlertService()
         alertService.push(alert: alert)
