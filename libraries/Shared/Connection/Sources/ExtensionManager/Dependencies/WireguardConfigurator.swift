@@ -69,7 +69,7 @@ extension ManagerConfigurator {
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         @Dependency(\.date) var date
-        protocolConfiguration.username = connectionConfiguration.username
+        protocolConfiguration.username = nil // Only required for IKEv2.
 
 #if os(iOS)
         protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
