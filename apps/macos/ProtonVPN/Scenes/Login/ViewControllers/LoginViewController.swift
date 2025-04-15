@@ -74,7 +74,7 @@ final class LoginViewController: NSViewController {
         return view
     }()
 
-    #if !RELEASE
+    #if DEBUG
     private lazy var environmentSelectionView: NSHostingView<EnvironmentSelectorDesktopView> = {
         let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
             guard let `self` = self else { return }
@@ -325,7 +325,7 @@ final class LoginViewController: NSViewController {
         }
     }
 
-#if !RELEASE
+#if DEBUG
     private func presentEnvironmentSelectionScreen() {
         onboardingView.isHidden = true
         logoImage.isHidden = true
@@ -378,7 +378,7 @@ final class LoginViewController: NSViewController {
             signInWithSSOButtonAction()
             presentOnboardingScreen(withErrorDescription: errorMessage, warningType: .info)
         } else {
-        #if !RELEASE
+        #if DEBUG
             guard let errorMessage, !CommandLine.arguments.contains("-SkipEnvironmentSelection") else {
                 // If we're on DEBUG or STAGING, present environment selection screen before proceeding to login.
                 presentEnvironmentSelectionScreen()
@@ -401,7 +401,7 @@ final class LoginViewController: NSViewController {
         twoFactorView.isHidden = true
         loadingView.isHidden = true
 
-    #if !RELEASE
+    #if DEBUG
         // This occludes the username text field, which upsets UI tests. Since we don't need it anymore, remove it from
         // the current view.
         environmentSelectionView.removeFromSuperview()

@@ -121,11 +121,9 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var connectedServerNameDoNotUse: String? { get set }
     #endif
 
-    #if !RELEASE
     var atlasSecret: String? { get set }
     var atlasSecretFetchURLString: String? { get set }
     var featureFlagOverrides: [String: Bool]? { get set }
-    #endif
 
     func logoutCleanup()
     
@@ -248,11 +246,9 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
         case didShowDeprecationWarningForOSVersion = "DidShowDeprecationWarningForOSVersion"
 
-        #if !RELEASE
         case atlasSecret = "AtlasSecret"
         case atlasSecretFetchURL = "AtlasSecretFetchURL"
         case featureFlagOverrides = "FeatureFlagOverrides"
-        #endif
     }
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
@@ -465,11 +461,9 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @StringProperty(.didShowDeprecationWarningForOSVersion) public var didShowDeprecationWarningForOSVersion: String?
 
-    #if !RELEASE
     @StringProperty(.atlasSecret) public var atlasSecret: String?
     @StringProperty(.atlasSecretFetchURL) public var atlasSecretFetchURLString: String?
     @Property(.featureFlagOverrides) public var featureFlagOverrides: [String: Bool]?
-    #endif
 
     @Dependency(\.storage) var storage
 
@@ -737,21 +731,12 @@ extension SettingsStorageKey: @retroactive DependencyKey {
         },
         getEnvironment: {
             @Dependency(\.propertiesManager) var propertiesManager
-            #if RELEASE
-            return .init(
-                apiEndpoint: "",
-                atlasSecret: "",
-                atlasSecretFetchURLString: "",
-                featureFlagOverrides: [:]
-            )
-            #else
             return .init(
                 apiEndpoint: propertiesManager.apiEndpoint ?? Bundle.dynamicDomain ?? "",
                 atlasSecret: propertiesManager.atlasSecret ?? Bundle.atlasSecret ?? "",
                 atlasSecretFetchURLString: propertiesManager.atlasSecretFetchURLString ?? "",
                 featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:]
             )
-            #endif
         },
         setEnvironment: {
             @Dependency(\.propertiesManager) var propertiesManager

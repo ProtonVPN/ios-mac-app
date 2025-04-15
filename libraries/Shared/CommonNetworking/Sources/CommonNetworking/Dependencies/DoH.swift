@@ -23,6 +23,7 @@
 import Foundation
 import Dependencies
 import ProtonCoreDoh
+import Logging
 
 import Domain
 
@@ -32,18 +33,29 @@ public class DoHVPN: DoH, ServerConfig {
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
-        #if RELEASE
+        if let customHost {
+            #if !DEBUG
+            // Only allow custom hosts using a domain we control.
+            let url = URL(string: customHost)
+            guard url?.host()?.hasSuffix("proton.black") == true else {
+                return liveURL
+            }
+            #endif
+            log.debug("Allowing host \(customHost)...")
+            return customHost
+        }
+
         return liveURL
-        #else // Note: set for both Staging and Debug
-        return customHost ?? liveURL
-        #endif
     }
+
     public var captchaHost: String {
         return defaultHost
     }
+
     public var apiHost: String {
         return customApiHost
     }
+
     public var statusHost: String {
         return "http://protonstatus.com"
     }
@@ -94,6 +106,11 @@ public class DoHVPN: DoH, ServerConfig {
 
     public let atlasSecret: String?
 
+    private var atlasHeader: [String: String] {
+        guard let atlasSecret, isAtlasRequest else { return [:] }
+        return ["x-atlas-secret": atlasSecret]
+    }
+
     public var isAtlasRequest: Bool {
         return defaultHost != liveURL
     }
@@ -119,6 +136,21 @@ public class DoHVPN: DoH, ServerConfig {
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(stateChanged))
 
         status = alternativeRouting ? .on : .off
+    }
+
+    public override func getHumanVerificationV3Headers() -> [String: String] {
+        super.getHumanVerificationV3Headers()
+            .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
+    }
+
+    public override func getAccountHeaders() -> [String : String] {
+        super.getAccountHeaders()
+            .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
+    }
+
+    public override func getCaptchaHeaders() -> [String : String] {
+        super.getCaptchaHeaders()
+            .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
     @objc private func stateChanged(notification: Notification) {

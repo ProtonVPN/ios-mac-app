@@ -121,7 +121,7 @@ public final class CoreNetworking: Networking {
         @Dependency(\.dohConfiguration) var doh
         @Dependency(\.challengeParametersProvider) var challengeParametersProvider
 
-        #if !RELEASE
+        #if DEBUG
         log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
         #endif
 
