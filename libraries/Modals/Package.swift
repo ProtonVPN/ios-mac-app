@@ -74,7 +74,7 @@ let package = Package(
         ),
         .target(
             name: "Modals-macOS",
-            dependencies: ["ModalsShared", "ModalsServices", "SharedViews"],
+            dependencies: ["ModalsShared", "ModalsServices", "SharedViews", "Ergonomics"],
             resources: [
                 .process("Resources")
             ]
