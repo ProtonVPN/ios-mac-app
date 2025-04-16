@@ -324,6 +324,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         connectedLogicalId = tunnelProviderProtocol?.connectedLogicalId
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
+        ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = tunnelProviderProtocol?.unleashFeatureFlagShouldForceConflictRefresh ?? false
 
         startTunnelWithStoredConfig(errorNotifier: errorNotifier,
                                     newVpnCertificateFeatures: nil,

@@ -77,6 +77,16 @@ extension NETunnelProviderProtocol {
         }
     }
 
+    public var unleashFeatureFlagShouldForceConflictRefresh: Bool {
+        get {
+            (providerConfiguration?[.forceConflictRefreshKey] as? Bool) ?? false
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[.forceConflictRefreshKey] = newValue
+        }
+    }
+
     // MARK: - 
 
     public func backupCustomSettings() -> [String: Any] {

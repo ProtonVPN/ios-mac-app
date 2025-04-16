@@ -27,11 +27,13 @@ struct CertificateRefreshRequest: APIRequest {
         let mode: String
         let duration: String?
         let features: VPNConnectionFeatures?
+        let renew: Bool
 
         static func withPublicKey(
             _ publicKey: String,
             deviceName: String?,
-            features: VPNConnectionFeatures?
+            features: VPNConnectionFeatures?,
+            evictAnyPreviousKeys: Bool
         ) -> Self {
             Self(
                 clientPublicKey: publicKey,
@@ -39,7 +41,8 @@ struct CertificateRefreshRequest: APIRequest {
                 deviceName: deviceName ?? "",
                 mode: "session",
                 duration: CertificateConstants.certificateDuration,
-                features: features
+                features: features,
+                renew: evictAnyPreviousKeys
             )
         }
     }
