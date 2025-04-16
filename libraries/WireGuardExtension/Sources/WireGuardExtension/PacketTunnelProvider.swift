@@ -90,7 +90,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
         #if DEBUG
-        CertificateConstants.certificateDuration = "30 minutes"
+        CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly" : "app"))
