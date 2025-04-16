@@ -23,8 +23,10 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
+import enum Domain.VpnProtocol
 import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
+import protocol Localization.LocalizedStringConvertible
 
 import CoreConnection
 
@@ -113,6 +115,7 @@ extension ManagerConfigurator {
                 switch operation {
                 case .connection(let connectionIntent):
                     manager.vpnProtocolConfiguration = try configuration(with: connectionIntent)
+                    manager.localizedDescription = configurationTitle(for: connectionIntent)
                     manager.isOnDemandEnabled = true
                     manager.isEnabled = true
 
@@ -122,6 +125,17 @@ extension ManagerConfigurator {
                 }
             }
         )
+    }
+
+    private static func configurationTitle(for intent: ServerConnectionIntent) -> String {
+#if DEBUG
+        let serverName = intent.server.logical.name
+        let transport = intent.tunnelSettings.transport
+        let connectionProtocol = VpnProtocol.wireGuard(transport).localizedDescription
+        return "\(serverName) - \(connectionProtocol)"
+#else
+        return "Proton VPN"
+#endif
     }
 }
 

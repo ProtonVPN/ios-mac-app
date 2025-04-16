@@ -67,6 +67,7 @@ let package = Package(
                 "CoreConnection",
                 "Domain",
                 "ExtensionIPC",
+                "Localization",
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
