@@ -21,48 +21,6 @@ import SVGView
 import SwiftUI
 import Domain
 
-/// Optimization: render the map to an image to avoid expensive re-rendering of the `SVGView`
-/// whenever it is occluded by the pin animation or recents/protection status bottom sheet
-@available(iOS 17.0, *)
-struct MapRenderView: View {
-    var country: String?
-
-    @State var svg: SVGNode
-    @State var svgView: SVGView
-
-    init(country: String?) {
-        self.country = country
-        let svg = SVGView.idleMapSVG
-        self.svg = svg
-        self.svgView = SVGView(svg: svg)
-    }
-
-    var body: some View {
-        svgView
-            .onChange(of: country) { oldState, newState in
-                log.debug("Rendering map (focused on: \(optional: newState)")
-                updateWith(code: oldState, highlighted: false)
-                updateWith(code: newState, highlighted: true)
-            }
-    }
-
-    private func updateWith(code: String?, highlighted: Bool) {
-        guard let code = code?.lowercased(),
-              let node = svg.node(code: code) else { return }
-
-        guard let codes = CountriesCoordinates.disputedCountries[code] else {
-            // Easy, just (un)highlight the country
-            node.fill(highlighted: highlighted)
-            return
-        }
-        // We have some disputed territories, just (un)hide them all
-        node.borders(hidden: highlighted)
-        codes
-            .compactMap(svg.node(code:))
-            .forEach { $0.borders(hidden: highlighted) }
-    }
-}
-
 extension SVGView {
 
     private static let xmlMap: XMLElement = {
@@ -87,12 +45,27 @@ extension SVGView {
         return node
     }
 
-    fileprivate static let idleMapSVG = makeSVG()
+    static let mapSVG = makeSVG()
 
-    /// Optimization: cache the disconnected map view in memory
-    static let idleMapView: SVGView = SVGView(svg: idleMapSVG)
+    static let map = SVGView(svg: mapSVG)
 
-    static let mapBounds: CGRect = idleMapSVG.bounds()
+    static let mapBounds: CGRect = mapSVG.bounds()
+
+    static func updateWith(code: String?, highlighted: Bool) {
+        guard let code = code?.lowercased(),
+              let node = mapSVG.node(code: code) else { return }
+
+        guard let codes = CountriesCoordinates.disputedCountries[code] else {
+            // Easy, just (un)highlight the country
+            node.fill(highlighted: highlighted)
+            return
+        }
+        // We have some disputed territories, just (un)hide them all
+        node.borders(hidden: highlighted)
+        codes
+            .compactMap(mapSVG.node(code:))
+            .forEach { $0.borders(hidden: highlighted) }
+    }
 }
 
 extension SVGNode {

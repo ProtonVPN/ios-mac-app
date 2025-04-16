@@ -138,7 +138,6 @@ public struct HomeMapFeature {
     public enum Action: Equatable {
         case observeConnectionState
         case connectionStateUpdated(VPNConnectionStatus)
-        case onAppear
         case newMapState(MapState)
         case newPinOffset(CGSize)
     }
@@ -166,9 +165,6 @@ public struct HomeMapFeature {
                 }
                 .cancellable(id: CancelId.connectionState)
 
-            case .onAppear:
-                return .send(.observeConnectionState)
-
             case .connectionStateUpdated(let connectionStatus):
                 let mapState = MapState(connectionStatus)
                 let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
@@ -192,7 +188,10 @@ public struct HomeMapFeature {
             case .newMapState(let mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
+                SVGView.updateWith(code: state.highlightedCountryCode, highlighted: false)
                 state.highlightedCountryCode = mapState.code ?? state.userCountry
+                SVGView.updateWith(code: state.highlightedCountryCode, highlighted: true)
+
                 return .none
 
             case .newPinOffset(let offset):
