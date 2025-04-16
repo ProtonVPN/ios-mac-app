@@ -103,16 +103,14 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .loadingFromStorageFinished(let failureReason):
                 guard case .loading(let shouldRefresh) = state else {
-                    assertionFailure("We were expecting a loading state, but got: \(state)")
+                    reportIssue("We were expecting a loading state, but got: \(state)")
                     return .none
                 }
                 if case .keysMissing = failureReason {
-                    do {
-                        let keys = try keysGenerator.generateKeys()
-                        authenticationStorage.store(keys: keys)
-                    } catch {
-                        return finishWithError(&state, .keyGenerationFailed(error))
-                    }
+                    // It wouldn't do us any good to regenerate keys here.
+                    // We would need to also restart the tunnel with the new private key.
+                    log.error("Keys should have been generated prior to starting the tunnel.")
+                    return finishWithError(&state, .wontRefresh(.keysMissing))
                 }
                 if shouldRefresh {
                     return .send(.refreshCertificate)
@@ -154,8 +152,8 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return .send(.loadingFinished(.failure(refreshError)))
 
             case .refreshFinished(.success(.requiresNewKeys)):
-                assertionFailure("Should have generated keys while fetching stored certificate")
-                return .none
+                authenticationStorage.deleteKeys() // Makes sure keys are regenerated during the next connection attempt
+                return finishWithError(&state, .wontRefresh(.keysMissing))
 
             case .refreshFinished(.failure(let error)), .selectorPushingFinished(.failure(let error)):
                 return finishWithError(&state, .unexpected(error))

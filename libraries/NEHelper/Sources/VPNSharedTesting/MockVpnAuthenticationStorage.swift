@@ -25,6 +25,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
     public var keysStored: ((VpnKeys) -> ())?
     public var certDeleted: (() -> Void)?
+    public var keysDeleted: (() -> Void)?
 
     public var keys: VpnKeys?
     public var cert: VpnCertificate?
@@ -35,6 +36,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public func deleteKeys() {
         keys = nil
         deleteCertificate()
+        keysDeleted?()
     }
 
     public func deleteCertificate() {
