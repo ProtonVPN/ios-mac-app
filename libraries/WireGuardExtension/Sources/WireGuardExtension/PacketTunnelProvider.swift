@@ -108,7 +108,6 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
             connectedLogicalId = tunnelProviderProtocol?.connectedLogicalId
             connectedIpId = tunnelProviderProtocol?.connectedServerIpId
-            ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = tunnelProviderProtocol?.unleashFeatureFlagShouldForceConflictRefresh ?? false
 
             startTunnelWithStoredConfig(
                 errorNotifier: errorNotifier,

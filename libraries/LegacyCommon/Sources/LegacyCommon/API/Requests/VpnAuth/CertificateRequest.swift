@@ -58,7 +58,8 @@ final class CertificateRequest: Request {
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
-            "Mode": "session"
+            "Mode": "session",
+            "Renew": true // Prevents 409 conflict errors
         ] as [String: Any]
         
         // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times
@@ -68,11 +69,6 @@ final class CertificateRequest: Request {
         
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
-        }
-
-        // Prevents 409 conflict errors
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew) {
-            params["Renew"] = true
         }
         
         return params

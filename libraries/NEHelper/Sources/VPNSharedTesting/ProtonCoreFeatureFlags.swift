@@ -27,9 +27,6 @@ public extension ProtonCoreFeatureFlags.FeatureFlag {
     static var sentryExcludeMetadata: Self {
         VPNFeatureFlagType.sentryExcludeMetadata.featureFlag
     }
-    static var certificateRefreshForceRenew: Self {
-        VPNFeatureFlagType.certificateRefreshForceRenew.featureFlag
-    }
     static var noDefaultToIke: Self {
         VPNFeatureFlagType.noDefaultToIke.featureFlag
     }

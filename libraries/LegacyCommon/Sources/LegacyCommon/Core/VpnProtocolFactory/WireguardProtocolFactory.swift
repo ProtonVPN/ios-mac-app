@@ -68,13 +68,6 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.serverAddress = configuration.entryServerAddress
         protocolConfiguration.connectedLogicalId = configuration.serverId
         protocolConfiguration.connectedServerIpId = configuration.ipId
-
-        // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
-        // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew, reloadValue: true) {
-            protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
-        }
-
         return protocolConfiguration
     }
     
