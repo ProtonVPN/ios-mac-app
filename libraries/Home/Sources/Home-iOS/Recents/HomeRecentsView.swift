@@ -32,7 +32,6 @@ import SharedViews
 import ProtonCoreUIFoundations
 import OrderedCollections
 
-@available(iOS 17, *)
 public struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>
 
@@ -81,8 +80,10 @@ public struct RecentsSectionView: View {
     }
 
     public var body: some View {
-        content
-            .task { store.send(.watchConnectionStatus) }
+        WithPerceptionTracking {
+            content
+                .task { store.send(.watchConnectionStatus) }
+        }
     }
 }
 

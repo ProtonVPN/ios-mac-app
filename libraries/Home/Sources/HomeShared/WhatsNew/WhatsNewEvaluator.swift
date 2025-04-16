@@ -21,7 +21,6 @@ import UIKit
 
 import ComposableArchitecture
 
-@available(iOS 17.0, *)
 @DependencyClient
 struct WhatsNewEvaluatorClient {
     var bundleShortVersionString: () -> String = { "6.0.0" }
@@ -29,7 +28,6 @@ struct WhatsNewEvaluatorClient {
     var itemPresentationData: (_ for: WhatsNew.Item) -> WhatsNew.PresentationDataItem?
 }
 
-@available(iOS 17.0, *)
 extension WhatsNew {
     /// Evaluates WhatsNew.Rule for WhatsNew.Item.
     /// Entry point is ``evalutate(items:)`` it returns items that should be presented.
@@ -88,7 +86,6 @@ extension WhatsNew {
     }
 }
 
-@available(iOS 17.0, *)
 extension WhatsNew {
     struct PresentationData: Codable {
         static let storagePathComponent: String = "whatsnew.json"
@@ -112,7 +109,6 @@ extension WhatsNew {
     }
 }
 
-@available(iOS 17.0, *)
 extension WhatsNewEvaluatorClient: DependencyKey {
     static let liveValue = WhatsNewEvaluatorClient {
         return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -135,7 +131,6 @@ extension WhatsNewEvaluatorClient: DependencyKey {
     }
 }
 
-@available(iOS 17.0, *)
 extension DependencyValues {
     var evaluatorClient: WhatsNewEvaluatorClient {
         get { self[WhatsNewEvaluatorClient.self] }
@@ -143,7 +138,6 @@ extension DependencyValues {
     }
 }
 
-@available(iOS 17.0, *)
 extension SharedKey where Self == FileStorageKey<WhatsNew.PresentationData?> {
     static var whatsNew: Self {
         .fileStorage(.documentsDirectory.appending(component: WhatsNew.PresentationData.storagePathComponent))

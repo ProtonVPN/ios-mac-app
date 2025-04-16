@@ -20,13 +20,11 @@ import HomeShared
 
 public typealias ImageAsset = HomeShared.ImageAsset
 public typealias HomeAsset = HomeShared.HomeAsset
-@available(iOS 17, *)
 public typealias HomeFeature = HomeShared.HomeFeature
 
 #if canImport(Home_iOS)
 import Home_iOS
 
-@available(iOS 17, *)
 public typealias HomeView = Home_iOS.HomeView
 
 #endif

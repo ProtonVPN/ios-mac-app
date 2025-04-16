@@ -24,7 +24,6 @@ import Strings
 import SharedViews
 import ProtonCoreUIFoundations
 
-@available(iOS 17, *)
 struct RecentRowItemView: View {
     static let itemCellHeight: CGFloat = .themeSpacing64
 

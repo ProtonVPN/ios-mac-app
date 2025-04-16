@@ -33,7 +33,6 @@ import ConnectionDetails
 import SharedViews
 import Domain
 
-@available(iOS 17, *)
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
 
@@ -78,6 +77,12 @@ public struct HomeView: View {
     }
 
     public var body: some View {
+        WithPerceptionTracking {
+            contentWithSheets
+        }
+    }
+
+    private var contentWithSheets: some View {
         content
             .sheet(
                 item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
@@ -133,52 +138,54 @@ public struct HomeView: View {
                     .zIndex(connectionStatusZIndex.rawValue)
 
                 ScrollViewReader { scrollViewProxy in
-                    ScrollView(showsIndicators: false) {
-                        ZStack(alignment: .bottom) {
-                            Spacer().frame(height: mapHeight) // Leave transparent space for the map
-                                .id(topID)
-                                .background(trackScrollPosition())
-                            LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
-                                           startPoint: .top,
-                                           endPoint: .bottom)
-                            .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
-                        }
-                        VStack(spacing: 0) {
-                            VStack(alignment: .leading, spacing: 0) {
-                                HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
-                                    .padding(.horizontal, .themeSpacing16)
-                                    .padding(.bottom, .themeSpacing12)
-                                    .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
-                                    .background(trackConnectionViewHeight())
-                                AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
-                                    .padding(.horizontal, .themeSpacing16)
-                                    .padding(.bottom, .themeSpacing8)
-                                    .padding(.top, .themeSpacing16)
-                                    .frame(width: min(proxy.size.width, Constants.maxAnnouncementBannerWidth))
+                    WithPerceptionTracking {
+                        ScrollView(showsIndicators: false) {
+                            ZStack(alignment: .bottom) {
+                                Spacer().frame(height: mapHeight) // Leave transparent space for the map
+                                    .id(topID)
+                                    .background(trackScrollPosition())
+                                LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
+                                               startPoint: .top,
+                                               endPoint: .bottom)
+                                .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
                             }
+                            VStack(spacing: 0) {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    HomeConnectionCardView(store: store.scope(state: \.connectionCard, action: \.connectionCard))
+                                        .padding(.horizontal, .themeSpacing16)
+                                        .padding(.bottom, .themeSpacing12)
+                                        .frame(width: min(proxy.size.width, Constants.maxHomeContentWidth))
+                                        .background(trackConnectionViewHeight())
+                                    AnnouncementBannerView(store: store.scope(state: \.announcementBanner, action: \.announcementBanner))
+                                        .padding(.horizontal, .themeSpacing16)
+                                        .padding(.bottom, .themeSpacing8)
+                                        .padding(.top, .themeSpacing16)
+                                        .frame(width: min(proxy.size.width, Constants.maxAnnouncementBannerWidth))
+                                }
 
-                            RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
+                                RecentsSectionView(store: store.scope(state: \.recents, action: \.recents))
 
-                            Color(.background) // needed to take all the available horizontal space for the background
-                                .frame(height: 0)
+                                Color(.background) // needed to take all the available horizontal space for the background
+                                    .frame(height: 0)
+                            }
+                            .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
                         }
-                        .background(Color(.background).padding(.bottom, -(proxy.size.height * 2))) // Extends the background color well below the scroll view content.
-                    }
-                    .frame(width: proxy.size.width)
-                    .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
-                        if case .connecting = vpnConnectionStatus {
-                            scrollViewProxy.scrollTo(topID)
+                        .frame(width: proxy.size.width)
+                        .onChange(of: store.vpnConnectionStatus) { vpnConnectionStatus in
+                            if case .connecting = vpnConnectionStatus {
+                                scrollViewProxy.scrollTo(topID)
+                            }
                         }
+                        .onAppear {
+                            viewHeight = proxy.size.height
+                        }
+                        .onChange(of: proxy.size.height) { height in
+                            guard shouldUpdateViewHeight else { return }
+                            viewHeight = height
+                            shouldUpdateViewHeight = false
+                        }
+                        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in shouldUpdateViewHeight = true }
                     }
-                    .onAppear {
-                        viewHeight = proxy.size.height
-                    }
-                    .onChange(of: proxy.size.height) {
-                        guard shouldUpdateViewHeight else { return }
-                        viewHeight = proxy.size.height
-                        shouldUpdateViewHeight = false
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in shouldUpdateViewHeight = true }
                 }
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
             }

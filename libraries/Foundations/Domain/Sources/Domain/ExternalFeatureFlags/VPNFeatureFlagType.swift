@@ -82,7 +82,7 @@ extension FeatureFlagsRepository {
     @available(macOS, unavailable)
 
     public static let isRedesigniOSEnabled: Bool = {
-        if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
+        if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS) {
             return true
         }
         return false
