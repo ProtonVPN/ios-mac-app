@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Узнікла праблема з падключэннем (памылка: %@).";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Не абаронена";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Праверце, ці падключаны вы да VPN і атрымайце хуткі доступ да вашых абраных падключэнняў.";

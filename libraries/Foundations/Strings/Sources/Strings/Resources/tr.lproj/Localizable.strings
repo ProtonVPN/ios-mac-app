@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Bağlantı ile ilgili bir sorun çıktı. (Hata %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Korumasız";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "VPN bağlantınızın olup olmadığını denetleyin ve sık kullandığınız bağlantılara hızlıca erişin.";

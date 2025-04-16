@@ -1,6 +1,7 @@
-/* Bundle name */
-"CFBundleName" = "$(PRODUCT_NAME)";
+"NSHumanReadableCopyright" = "Prawa autorskie © 2025 Proton Technologies AG. Wszelkie prawa zastrzeżone.";
 
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "Prawo autorskie © 2019 Proton Technologies AG. Wszelkie prawa zastrzeżone.";
+"NSCameraUsageDescription" = "Aplikacja używa aparatu do skanowania kodów QR.";
 
+"NSFaceIDUsageDescription" = "Aplikacja używa Face ID do ochrony poufnych danych.";
+
+"NSUserNotificationsUsageDescription" = "Musimy wysyłać powiadomienia o zmianach na koncie.";
