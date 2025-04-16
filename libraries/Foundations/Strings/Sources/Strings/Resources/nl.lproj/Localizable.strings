@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "Het snelste beschikbaar land";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "Het snelste beveiligde beschikbaar core land";
+"_connection_card_accessibility_fastest_sc" = "Het snelste Secure Core-land beschikbaar";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dubbeltik om uw IP-adres zichtbaar te maken";
@@ -2776,6 +2776,9 @@
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Er was een probleem met de verbinding. (Fout %@)";
 
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Unprotected";
+
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Controleer of u bent verbonden met VPN en krijg snel toegang tot uw favoriete verbindingen.";
 
@@ -2801,7 +2804,7 @@
 "_widgetAdoption_modal_instructions_header" = "Hoe de Proton VPN widget toevoegen";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "Houd overal ingedrukt op je startscherm";
+"_widgetAdoption_modal_instruction_1" = "Houd overal ingedrukt op uw startscherm";
 
 /* Widget adoption modal 2nd instruction content. */
 "_widgetAdoption_modal_instruction_2" = "Druk op de knop **Bewerken** en selecteer **Widget toevoegen**";

@@ -1296,7 +1296,7 @@
 "_troubleshoot_item_other_link3" = "Twitter";
 
 /* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
-"_netshield_stats_data_saved" = "Заощаджено\nданих";
+"_netshield_stats_data_saved" = "Заощаджені\nдані";
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Захистіться від реклами, зловмисних програм і елементів стеження на вебсайтах і в програмах. Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield.\nДокладніше";
@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "The fastest country available";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "The fastest secure core country available";
+"_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
@@ -1844,7 +1844,7 @@
 /* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
 "netshield_stats_hint_data" = "Орієнтовний розмір рекламних оголошень, елементів стеження та зловмисних програм, заблокованих NetShield.";
 
-"_netshield_stats_data_saved" = "Заощаджено\nданих";
+"_netshield_stats_data_saved" = "Заощаджені\nдані";
 
 /* The count of trackers/ads blocked in thousands */
 "_netshield_stats_blocked_K" = "%@ K";
@@ -1889,7 +1889,7 @@
 "_connection_details_ipview_ip_my" = "Моя IP-адреса";
 
 /* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
-"_connection_details_ipview_ip_vpn" = "VPN IP";
+"_connection_details_ipview_ip_vpn" = "IP-адреса VPN";
 
 /* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
 "_connection_details_ipview_ip_unavailable" = "Недоступно";
@@ -2075,16 +2075,16 @@
 "_settings_protocol_description_openvpn_tcp" = "Налагоджений, перевірений і безпечний. OpenVPN надійний в поганих умовах мережі, але може бути не таким швидким, як інші протоколи.";
 
 /* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_ikev2" = "Швидко, безпечно й стабільно, але цензорам легше виявляти та блокувати.";
+"_settings_protocol_description_ikev2" = "Швидкий, безпечний і стабільний, але його простіше виявляти й блокувати.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
 "_settings_protocol_tag_recommended" = "РЕКОМЕНДОВАНО";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
-"_settings_protocol_tag_new" = "НОВА";
+"_settings_protocol_tag_new" = "НОВИЙ";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
-"_settings_protocol_footer" = "Протокол VPN визначає, як дані переміщуються між VPN-сервером і вашим пристроєм. **[Дізнатися більше](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+"_settings_protocol_footer" = "Протокол VPN визначає спосіб обміну даними між VPN-сервером і вашим пристроєм. **[Докладніше](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_title" = "VPN-з'єднання активне";
@@ -2240,7 +2240,7 @@
 "modals_upsell_secure_core_attacks" = "Захистіться від мережевих атак";
 
 /* Title of the VPN Accelerator screen */
-"modals_new_upsell_vpn_accelerator_title" = "Користуйтеся інтернетом зі ще вищою швидкістю";
+"modals_new_upsell_vpn_accelerator_title" = "Користуйтеся інтернетом з більшою швидкістю";
 
 /* Subtitle of the VPN Accelerator screen */
 "modals_new_upsell_vpn_accelerator_subtitle" = "Розблокуйте швидші, менш навантажені сервери зі швидкістю до 10 Гбіт/с.";
@@ -2336,7 +2336,7 @@
 "upsell_p2pSupport_subtitle" = "Вдоскональте швидкість завантаження, водночас приховуючи свою IP-адресу.";
 
 /* Title of devices upsell modal */
-"upsell_devices_title" = "Захистіть 10 пристроїв одночасно";
+"upsell_devices_title" = "Захист 10 пристроїв одночасно";
 
 /* Subtitle of devices upsell modal */
 "upsell_devices_subtitle" = "Proton VPN доступна для 8 різних платформ.";
@@ -2492,7 +2492,7 @@
 "welcome_upgrade_subtitle_fallback" = "Ви оновили свій тарифний план. Оцініть переваги розширених функцій безпеки й продуктивності нового рівня.";
 
 /* Welcome to Proton screen shown during onboarding. Title label. */
-"welcome_to_proton_title" = "Ласкаво просимо до Proton VPN";
+"welcome_to_proton_title" = "Вітаємо у Proton VPN";
 
 /* Welcome to Proton screen shown during onboarding. Subtitle label. */
 "welcome_to_proton_subtitle" = "Приватний перегляд, доступ до заблокованого вмісту і задоволення від цифрової свободи.";
@@ -2696,7 +2696,7 @@
 "upsell_carousel_faster_browsing_title" = "Швидший інтернет";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_faster_browsing_subtitle" = "Користуйтеся інтернетом на ще вищій швидкості (10 Гбіт/с)";
+"upsell_carousel_faster_browsing_subtitle" = "Користуйтеся інтернетом з більшою швидкістю (10 Гбіт/с)";
 
 /* Home upsell carousel card title */
 "upsell_carousel_streaming_title" = "Потокова трансляція";
@@ -2775,6 +2775,9 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "There was a problem with the connection. (Error %@)";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Unprotected";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";

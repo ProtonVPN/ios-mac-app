@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "Najrýchlejšia dostupná krajina";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "Najrýchlejšia dostupná krajina s bezpečným jadrom";
+"_connection_card_accessibility_fastest_sc" = "Najrýchlejšia dostupná krajina so Secure Core";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dvojitým ťuknutím zobrazíte svoju IP adresu";
@@ -2776,6 +2776,9 @@
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Nastal problém s pripojením. (Chyba %@)";
 
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Nechránené";
+
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Skontrolujte, či máte pripojenie k VPN, a získajte rýchly prístup k obľúbeným pripojeniam.";
 
@@ -2792,22 +2795,22 @@
 "widget_whats_new_subtitle" = "Pripojenie VPN teraz môžete zobraziť a spravovať bez toho, aby ste opustili domovskú obrazovku.";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
+"_widgetAdoption_modal_title" = "Vyskúšajte widget Proton VPN";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+"_widgetAdoption_modal_subtitle" = "Skontrolujte, či máte pripojenie k VPN a získajte prístup k predvoleným a obľúbeným pripojeniam z domovskej obrazovky.";
 
 /* Widget adoption modal instructions header. */
-"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
+"_widgetAdoption_modal_instructions_header" = "Ako pridať widget Proton VPN";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
+"_widgetAdoption_modal_instruction_1" = "Stlačte a podržte kdekoľvek na Domovskej obrazovke";
 
 /* Widget adoption modal 2nd instruction content. */
-"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
+"_widgetAdoption_modal_instruction_2" = "Stlačte tlačidlo **Upraviť** a vyberte položku **Pridať widget**.";
 
 /* Widget adoption modal 3rd instruction content. */
-"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+"_widgetAdoption_modal_instruction_3" = "Vyberte alebo vyhľadajte **Proton VPN**";
 
 /* Widget adoption modal CTA. */
-"_widgetAdoption_modal_instruction_button" = "Got it";
+"_widgetAdoption_modal_instruction_button" = "Rozumiem";

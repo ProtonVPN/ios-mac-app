@@ -40,7 +40,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d+ novos servidor</string>
+        <string>%d+ novo servidor</string>
         <key>other</key>
         <string>%d+ novos servidores</string>
       </dict>
@@ -68,13 +68,13 @@
       <key>num_countries</key>
       <dict>
         <key>one</key>
-        <string>%d países</string>
+        <string>%d país</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d país</string>
+        <string>%d países</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -101,7 +101,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d país</string>
+        <string>%d países</string>
       </dict>
       <key>num_servers</key>
       <dict>
@@ -112,7 +112,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d servidor seguro</string>
+        <string>%d servidores seguros</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
@@ -176,7 +176,7 @@
         <key>one</key>
         <string>%d país</string>
         <key>other</key>
-        <string>%d país</string>
+        <string>%d países</string>
       </dict>
     </dict>
     <key>_vpnauth_too_many_certs_retry_after</key>
@@ -486,7 +486,7 @@ parados</string>
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Conectado a %#@num_countries@</string>
+      <string>Conectar a %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>

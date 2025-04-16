@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "El país más rápido disponible";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "El país Secure Core más rápido disponible";
+"_connection_card_accessibility_fastest_sc" = "El país con Secure Core más rápido disponible";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Doble toque para mostrar su dirección IP";
@@ -2775,6 +2775,9 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Ocurrió un problema con la conexión. (Error %@)";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Sin protección";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Compruebe si está conectado a la VPN y consiga un acceso rápido a sus conexiones favoritas.";

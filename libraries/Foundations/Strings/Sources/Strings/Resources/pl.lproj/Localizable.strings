@@ -2776,6 +2776,9 @@
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Wystąpił problem z połączeniem. (Błąd %@)";
 
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Niechroniony";
+
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Sprawdź status połączenia i uzyskaj dostęp do ulubionych połączeń VPN.";
 

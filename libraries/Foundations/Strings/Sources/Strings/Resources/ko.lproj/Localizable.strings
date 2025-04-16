@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "빠른 속도의 국가 사용 가능";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "빠른 속도의 Secure Core 국가 사용 가능";
+"_connection_card_accessibility_fastest_sc" = "사용 가능한 가장 빠른 Secure Core 국가";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "IP 주소를 보려면 더블 탭하기";
@@ -2775,6 +2775,9 @@
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "연결 도중 문제가 발생했습니다. (오류 %@)";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Unprotected";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "VPN에 연결되어 있는지 확인하고 좋아하는 연결에 빠르게 접근하세요.";

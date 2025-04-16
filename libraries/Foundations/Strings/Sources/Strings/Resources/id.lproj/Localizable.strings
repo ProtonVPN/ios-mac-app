@@ -2776,6 +2776,9 @@
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Terdapat kesalahan dengan koneksi. (Kesalahan %@)";
 
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Unprotected";
+
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Periksa apakah Anda sedang terhubung ke VPN dan dapatkan akses kilat ke koneksi favorit Anda.";
 
