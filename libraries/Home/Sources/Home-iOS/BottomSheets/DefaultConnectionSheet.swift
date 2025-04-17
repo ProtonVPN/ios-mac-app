@@ -27,11 +27,13 @@ import ConnectionInventory
 import HomeShared
 
 extension View {
+    @ViewBuilder
     func padSafeArea() -> some View {
-        guard #available(iOS 17.0, *) else {
-            return self
+        if #available(iOS 17.0, *) {
+            self.safeAreaPadding(.vertical)
+        } else {
+            self
         }
-        return self.safeAreaPadding(.vertical)
     }
 }
 

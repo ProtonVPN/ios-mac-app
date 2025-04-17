@@ -66,12 +66,11 @@ public struct MapPin: View {
 }
 
 extension View {
+    @ViewBuilder
     func withPhaseAnimation(reduceMotion: Bool) -> some View {
-        guard #available(iOS 17.0, *) else {
-            return self
-        }
-        return self
-            .phaseAnimator(AnimationPhase.allCases) { content, phase in
+        if #available(iOS 17.0, *) {
+            self
+                .phaseAnimator(AnimationPhase.allCases) { content, phase in
                 content
                     .scaleEffect(phase.scaleEffect)
                     .rotationEffect(phase.rotationEffect)
@@ -79,6 +78,9 @@ extension View {
                 guard !reduceMotion else { return nil }
                 return $0.animation
             }
+        } else {
+            self
+        }
     }
 }
 
