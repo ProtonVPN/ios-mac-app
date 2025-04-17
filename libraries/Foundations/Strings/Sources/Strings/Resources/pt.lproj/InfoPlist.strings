@@ -1,6 +1,7 @@
-/* Bundle name */
-"CFBundleName" = "vpncore";
+"NSHumanReadableCopyright" = "Copyright Â© 2025 Proton Technologies AG. Todos os direitos reservados.";
 
-/* Copyright (human-readable) */
-"NSHumanReadableCopyright" = "Copyright © 2021 Proton Technologies AG. All rights reserved.";
+"NSCameraUsageDescription" = "Esta aplicação utiliza a câmara para ler códigos QR.";
 
+"NSFaceIDUsageDescription" = "Esta aplicação utiliza o Face ID para proteger dados confidenciais.";
+
+"NSUserNotificationsUsageDescription" = "Precisamos de lhe enviar notificações com alertas sobre alterações na sua conta.";

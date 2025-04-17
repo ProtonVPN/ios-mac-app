@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Παρουσιάστηκε πρόβλημα με τη σύνδεση. (Σφάλμα %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Μη προστατευμένο";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Ελέγξτε αν είστε συνδεδεμένοι στο VPN και αποκτήστε γρήγορη πρόσβαση στις αγαπημένες σας συνδέσεις.";

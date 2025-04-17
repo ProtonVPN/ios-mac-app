@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Terdapat kesalahan dengan koneksi. (Kesalahan %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Tidak terlindung";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Periksa apakah Anda sedang terhubung ke VPN dan dapatkan akses kilat ke koneksi favorit Anda.";

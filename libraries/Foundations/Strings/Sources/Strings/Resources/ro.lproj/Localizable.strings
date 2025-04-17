@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "A apărut o problemă cu conexiunea. (Eroare %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Neprotejată";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Verificați dacă aveți conexiune la VPN și obțineți acces rapid la conexiunile favorite.";

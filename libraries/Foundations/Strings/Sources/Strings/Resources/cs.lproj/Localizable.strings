@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Při připojení došlo k problému. (Chyba %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Nechráněno";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Zkontrolujte, zda jste připojeni k VPN a získejte rychlý přístup ke svým oblíbeným připojením.";

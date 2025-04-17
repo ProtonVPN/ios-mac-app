@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Es gab ein Problem mit der Verbindung. (Fehler %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Ungeschützt";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Prüfe, ob du mit einem VPN verbunden bist und erhalte schnellen Zugriff auf deine bevorzugten Verbindungen.";
