@@ -23,8 +23,10 @@ import enum NetworkExtension.NEVPNStatus
 import Dependencies
 
 import ExtensionIPC
+import VPNShared
 import struct Domain.ServerConnectionIntent
 import struct CoreConnection.LogicalServerInfo
+import let CoreConnection.log
 
 @available(iOS 16, *)
 final class MockTunnelManager: TunnelManager {
@@ -33,6 +35,7 @@ final class MockTunnelManager: TunnelManager {
     var tunnelStartDuration: Duration = .seconds(0)
     var session: VPNSession { connection }
     var didStopTunnelCallback: (() -> Void)?
+    var shouldGenerateKeysIfMissing: Bool = false
 
     var connection: VPNSessionMock
 
@@ -46,6 +49,13 @@ final class MockTunnelManager: TunnelManager {
         if let tunnelStartErrorToThrow {
             throw tunnelStartErrorToThrow
         }
+
+        if shouldGenerateKeysIfMissing {
+            // The real implementation configures the wireguard tunnel configuration with the user's private key.
+            // It generates one if it's not present in the keychain. Let's do that same in this mock.
+            try generateKeysIfNecessary()
+        }
+
         let server = intent.server
         connection.connectedServer = .init(logicalID: server.logical.id, serverID: server.endpoint.id)
         try connection.startTunnel()
@@ -76,5 +86,16 @@ final class MockTunnelManager: TunnelManager {
     }
 
     func removeManagers() async throws { }
+
+    private func generateKeysIfNecessary() throws {
+        @Dependency(\.vpnAuthenticationStorage) var keychain
+        @Dependency(\.vpnKeysGenerator) var generator
+        if keychain.getStoredKeys() == nil {
+            log.info("VPN auth storage doesn't contain keys", category: .connection)
+            let keys = try generator.generateKeys()
+            keychain.store(keys: keys)
+            log.info("Generated new keys", category: .connection, metadata: ["keys": "\(keys)"])
+        }
+    }
 }
 #endif
