@@ -23,6 +23,7 @@
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.ch.protonmail.vpn</string>
+		<string>group.me.proton.protoncore.account</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
