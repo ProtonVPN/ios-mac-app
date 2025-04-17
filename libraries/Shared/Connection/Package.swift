@@ -103,6 +103,9 @@ let package = Package(
             name: "ExtensionManagerTests",
             dependencies: [
                 "ExtensionManager",
+                "CoreConnectionTestSupport",
+                .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
