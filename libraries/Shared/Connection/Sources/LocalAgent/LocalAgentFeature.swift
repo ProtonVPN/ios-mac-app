@@ -59,10 +59,17 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
         @CasePathable
         public enum DelegateAction: Sendable {
-            case certificateRefreshRequired
-            case keyRegenerationRequired
+            case certificateRefreshRequired(CertificateRefreshReason)
             case errorReceived(LocalAgentError)
             case connectionFailed(Error)
+
+            /// A subset of `LocalAgentState` error states for which the appropriate resolution
+            /// is reconnecting with a new certificate
+            @CasePathable public enum CertificateRefreshReason: Sendable {
+                case hardJailed
+                case softJailed
+                case clientCertificateError
+            }
         }
     }
 
@@ -163,8 +170,14 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 // If we do enter this state, let's disconnect, since we are most likely connecting to the wrong server
                 return .send(.disconnect(.serverCertificateError))
 
-            case .event(.state(.softJailed)), .event(.state(.hardJailed)), .event(.state(.clientCertificateError)):
-                return .send(.delegate(.certificateRefreshRequired))
+            case .event(.state(.softJailed)):
+                return .send(.delegate(.certificateRefreshRequired(.softJailed)))
+
+            case .event(.state(.hardJailed)):
+                return .send(.delegate(.certificateRefreshRequired(.hardJailed)))
+
+            case .event(.state(.clientCertificateError)):
+                return .send(.delegate(.certificateRefreshRequired(.clientCertificateError)))
 
             case .event(.state(.invalid)):
                 log.assertionFailure("LocalAgent entered invalid/unknown state")
