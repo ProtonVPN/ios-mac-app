@@ -51,4 +51,6 @@ public protocol TunnelProviderManager {
     var onDemandRules: [NEOnDemandRule]? { get set }
     var isOnDemandEnabled: Bool { get set }
     var isEnabled: Bool { get set }
+    /// The localized title of the configuration as it appears in iOS VPN settings
+    var localizedDescription: String? { get set }
 }

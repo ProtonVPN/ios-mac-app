@@ -29,6 +29,7 @@ final class MockTunnelProviderManager: TunnelProviderManager {
 
     var loadFromPreferencesBlock: (() -> Void)?
     var saveToPreferencesBlock: (() -> Void)?
+    var localizedDescription: String?
 
     var state: MockProviderState
 
