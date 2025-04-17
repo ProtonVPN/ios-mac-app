@@ -71,6 +71,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
+        // Don't remove this FF until we fix the root cause! (VPNAPPL-2766)
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew, reloadValue: true) {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }

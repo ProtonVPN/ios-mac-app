@@ -148,6 +148,108 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
     }
 
+    /// Tests how we handle an edge case where the API refuses to refresh our certificate due to key conflict.
+    /// We have to purge our locally stored keys and interrupt the connetion process (since the tunnel will need to
+    /// be reconnected with a new private key).
+    @MainActor func testDisconnectsWithErrorWhenCertificateAuthenticationFailsDueToKeyConflict() async {
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let mockManager = MockTunnelManager()
+        let localAgent = LocalAgentMock(state: .disconnected)
+        let mockClock = TestClock()
+        let mockStorage = MockVpnAuthenticationStorage()
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        mockStorage.keys = mockKeys
+        mockStorage.cert = nil
+
+        mockManager.connection = VPNSessionMock(
+            status: .disconnected,
+            connectedDate: nil,
+            lastDisconnectError: nil
+        )
+
+        let server = Server.mock
+        let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+        let disconnected = CoreConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+
+        let store = TestStore(initialState: disconnected) {
+            CoreConnectionFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.localAgent = localAgent
+            $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.certificateRefreshClient = .init(
+                refreshCertificate: { .requiresNewKeys }, // Simulate a 409 error (VPNAPPL-2757)
+                pushSelector: { unimplemented("Unexpected session fork + selector push") }
+            )
+        }
+
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
+
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+
+        // Connection
+
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+
+        await store.send(.connect(intent))
+        await store.receive(\.tunnel.connect) {
+            $0.tunnel = .preparingConnection(connectedLogicalServer)
+        }
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
+
+        await store.receive(\.tunnel.tunnelStartRequestFinished.success)
+        await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
+            $0.tunnel = .connecting(connectedLogicalServer)
+        }
+
+        await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
+        await store.receive(\.tunnel.tunnelStatusChanged.connected)
+        await store.receive(\.tunnel.connectionFinished.success) {
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+        }
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
+
+        await store.receive(\.certAuth.loadAuthenticationData) {
+            $0.certAuth = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.certAuth.loadFromStorage)
+        await store.receive(\.certAuth.loadingFromStorageFinished.certificateMissing)
+        await store.receive(\.certAuth.refreshCertificate)
+        await store.receive(\.certAuth.refreshFinished.success.requiresNewKeys) {
+            $0.certAuth = .failed(.wontRefresh(.keysMissing))
+        }
+        await store.receive(\.certAuth.loadingFinished.failure)
+
+        await store.receive(\.disconnect.connectionFailure.certAuth.unexpected)
+        await store.receive(\.delegate.error.certAuth.unexpected)
+        await store.receive(\.localAgent.disconnect)
+        await store.receive(\.tunnel.disconnect) {
+            $0.tunnel = .disconnecting(nil)
+        }
+
+        await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+
+        await mockClock.advance(by: .seconds(1))
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
+            $0.tunnel = .disconnected(nil)
+        }
+        await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
+
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopAllObservations)
+    }
+
     @MainActor func testDisconnectsWithErrorWhenUnrecoverableLocalAgentErrorReceived() async {
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))

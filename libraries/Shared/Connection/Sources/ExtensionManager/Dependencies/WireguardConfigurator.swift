@@ -24,11 +24,13 @@ import class NetworkExtension.NETunnelProviderProtocol
 import Dependencies
 
 import enum Domain.VpnProtocol
+import enum Domain.VPNFeatureFlagType
 import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
 import protocol Localization.LocalizedStringConvertible
 
 import CoreConnection
+import ProtonCoreFeatureFlags
 
 public struct ConnectionConfiguration {
     /// Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
@@ -77,6 +79,13 @@ extension ManagerConfigurator {
         protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
         protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
 #endif
+
+        // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
+        // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
+        // Don't remove this FF until we fix the root cause! (VPNAPPL-2766)
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew, reloadValue: true) {
+            protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
+        }
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
