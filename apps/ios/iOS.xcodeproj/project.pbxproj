@@ -121,7 +121,6 @@
 		791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791C54F4214A777500C6F337 /* ConnectionBarViewModel.swift */; };
 		791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */; };
 		791DE5E1208DDA3000A29EA5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791DE5E0208DDA3000A29EA5 /* MapViewController.swift */; };
-		791DE5E4208DDA3000A29EA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791DE5E2208DDA3000A29EA5 /* Main.storyboard */; };
 		791DE5E9208DDA3200A29EA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791DE5E7208DDA3200A29EA5 /* LaunchScreen.storyboard */; };
 		791DE612208E098300A29EA5 /* ProtonQCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791DE611208E098300A29EA5 /* ProtonQCViewController.swift */; };
 		791DE617208E0E5500A29EA5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791DE616208E0E5500A29EA5 /* TabBarController.swift */; };
@@ -147,7 +146,6 @@
 		7950441D211850710022ED35 /* ColorPickerItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7950441C211850710022ED35 /* ColorPickerItem.xib */; };
 		796BD1D121144D49003D6B8D /* ServersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796BD1D021144D49003D6B8D /* ServersHeaderView.swift */; };
 		796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 796BD1D221144D63003D6B8D /* ServersHeaderView.xib */; };
-		796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796BD1D421146B68003D6B8D /* Profiles.storyboard */; };
 		7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7980ECD520F70C0800D5432B /* TabBarViewModel.swift */; };
 		79848BAC20D1B9DC00EF6F9F /* CountriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */; };
 		79848BB020D2011500EF6F9F /* CountryAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAF20D2011500EF6F9F /* CountryAnnotationViewModel.swift */; };
@@ -368,6 +366,8 @@
 		E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D02A73AF1D00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */; };
+		E5FE544A2DB7AEE800AFB78C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FE54492DB7AEE800AFB78C /* Main.storyboard */; };
+		E5FE54562DB7B4F500AFB78C /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -614,7 +614,6 @@
 		791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProtonVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		791DE5E0208DDA3000A29EA5 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		791DE5E3208DDA3000A29EA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		791DE5E8208DDA3200A29EA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		791DE5EA208DDA3200A29EA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -643,7 +642,6 @@
 		7950441C211850710022ED35 /* ColorPickerItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerItem.xib; sourceTree = "<group>"; };
 		796BD1D021144D49003D6B8D /* ServersHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServersHeaderView.swift; sourceTree = "<group>"; };
 		796BD1D221144D63003D6B8D /* ServersHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServersHeaderView.xib; sourceTree = "<group>"; };
-		796BD1D521146B68003D6B8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ProtonVPN/Storyboards/Base.lproj/Profiles.storyboard; sourceTree = "<group>"; };
 		7980ECD520F70C0800D5432B /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesViewModel.swift; sourceTree = "<group>"; };
 		79848BAF20D2011500EF6F9F /* CountryAnnotationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModel.swift; sourceTree = "<group>"; };
@@ -831,6 +829,8 @@
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E5FD25C92A73ADC500D9BDC0 /* country-names.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "country-names.plist"; sourceTree = "<group>"; };
 		E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = "<group>"; };
+		E5FE54492DB7AEE800AFB78C /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E93F769227C788740033B88F /* WGLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGLogFormatter.swift; sourceTree = "<group>"; };
 		E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuardiOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1597,7 +1597,7 @@
 			children = (
 				F3BC5348278598A5009E49B4 /* LoginAndSignup */,
 				F3F36CE026DFAAA4008AD48B /* Payments */,
-				791DE5E2208DDA3000A29EA5 /* Main.storyboard */,
+				E5FE54492DB7AEE800AFB78C /* Main.storyboard */,
 				D5BCDC7B25303825004BAEE8 /* Announcements */,
 				F36ECC8B2611C5DF0089B898 /* Common */,
 				D50342602472C82A005F6B90 /* ConnectionBar */,
@@ -1967,7 +1967,7 @@
 		F36ECCAA2611C6CD0089B898 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
-				796BD1D421146B68003D6B8D /* Profiles.storyboard */,
+				E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */,
 				F36ECCAB2611C6DA0089B898 /* ViewControllers */,
 				F36ECCAC2611C6EC0089B898 /* ViewModels */,
 				F36ECCAD2611C7050089B898 /* Views */,
@@ -2713,7 +2713,7 @@
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
 				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
 				42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */,
-				796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */,
+				E5FE54562DB7B4F500AFB78C /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				4CF298232A7D3B8E00DEB23F /* de.lproj in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
@@ -2736,7 +2736,7 @@
 				E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
-				791DE5E4208DDA3000A29EA5 /* Main.storyboard in Resources */,
+				E5FE544A2DB7AEE800AFB78C /* Main.storyboard in Resources */,
 				D596B86A2A79330500CF6E30 /* ImageSubtitleImageTableViewCell.xib in Resources */,
 				E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */,
 				ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */,
@@ -3236,28 +3236,12 @@
 			name = Common.storyboard;
 			sourceTree = "<group>";
 		};
-		791DE5E2208DDA3000A29EA5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				791DE5E3208DDA3000A29EA5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		791DE5E7208DDA3200A29EA5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				791DE5E8208DDA3200A29EA5 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		796BD1D421146B68003D6B8D /* Profiles.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				796BD1D521146B68003D6B8D /* Base */,
-			);
-			name = Profiles.storyboard;
 			sourceTree = "<group>";
 		};
 		7995FAAA209080E70030E1EB /* Countries.storyboard */ = {
