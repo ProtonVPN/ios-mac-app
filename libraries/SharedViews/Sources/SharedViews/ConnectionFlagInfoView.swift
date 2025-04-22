@@ -103,13 +103,14 @@ public struct ConnectionFlagInfoView: View {
                     .padding(.horizontal, .themeSpacing12)
             }
 
-            if #available(iOS 16.0, macOS 13.0, *), let detailAction {
+            if let detailAction {
                 Button(action: {
                     showDetail = true
                 }, label: {
                     images
                         .threeDotsHorizontal
                         .foregroundStyle(Color(.icon))
+                        .frame(.square(.themeSpacing64))
                 })
                 .popover(isPresented: self.$showDetail, attachmentAnchor: .point(.topLeading)) {
                     RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
@@ -120,7 +121,6 @@ public struct ConnectionFlagInfoView: View {
                     .presentationDragIndicator(.visible)
                 }.background(Color(.background)) // Sets background of the three dots button
             }
-
         }
         .contentShape(Rectangle())
         .frame(maxWidth: .infinity)
