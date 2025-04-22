@@ -3424,7 +3424,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Генерувати новий код"
+            "value" : "Згенерувати новий код"
           }
         }
       }
@@ -5172,7 +5172,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Proton VPN для Apple TV доступна у всіх платних тарифних планах. Ви можете перевірити й керувати своєю передплатою на нашому вебсайті."
+            "value" : "Proton VPN для Apple TV доступна у всіх платних тарифних планах. Ви можете перевірити свою передплату й керувати нею на нашому вебсайті."
           }
         }
       }
@@ -5941,6 +5941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Çözümleniyor"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вирішення"
           }
         }
       }
