@@ -4,6 +4,11 @@
 # attributes. It prompts the user for the release notes and then creates a new release according to the options.
 #
 # Usage: release.sh -t <train> -c <channel> [-f <forced-version>] [-l | -n | -v <version> | <reference>]
+#
+
+SCRIPT_DIR=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+REPO_PATH=$(cd "${SCRIPT_DIR}/../.." && pwd) # script is in Integration/Scripts
+MYSELF=$0
 
 EDITOR=${EDITOR:-$(which nano)}
 RELEASE_NOTES_TEMPLATE=release-notes.md
@@ -13,7 +18,7 @@ NOMINATION_ATTR="Nominated-By"
 MINT_SILENT="-s"
 
 function usage() {
-    echo "Usage: $0 -t <train> -c <channel> [-S -f <forced-version>] [-l | -n | -v <version> | <reference>]"
+    echo "Usage: $MYSELF -t <train> -c <channel> [-S -f <forced-version>] [-l | -n | -v <version> | <reference>]"
     echo ""
     echo "-t <train>: one of the supported trains for this repo."
     echo "-c <channel>: specify if the new release(s) is/are for alpha, beta, production, or all. See below."
@@ -30,7 +35,7 @@ function usage() {
     echo "-c @all: creates an alpha build from develop, and checks for nominations for beta and production."
 }
 
-if [ -n "$(git status --porcelain)" ]; then
+if [ "$SKIP_CLEAN_CHECK" != "true" ] && [ -n "$(git status --porcelain)" ]; then
     echo "Error: your repository is not clean. Make sure you've stashed or committed any unstaged changes and try again."
     exit 2
 fi
@@ -62,12 +67,15 @@ function error_cant_specify_this_with_all() {
 function fetch() {
     [ -z "$SKIP_SYNC" ] || return 0
 
-    git fetch origin "+refs/notes/*:refs/notes/*" "+refs/tags/${LHC_TRAIN}/*:refs/tags/${LHC_TRAIN}/*"
+    echo "Fetching from remote..."
+    git fetch origin "+refs/notes/*:refs/notes/*" "+refs/tags/${LHC_TRAIN}/*:refs/tags/${LHC_TRAIN}/*" 2> /dev/null
 }
 
 function make_release_notes() {
-    git checkout "$REFERENCE"
-    mint run $MINT_SILENT git-lhc describe \
+    echo "Checking out $REFERENCE..."
+    git checkout "$REFERENCE" 2> /dev/null
+
+    mint run -m "${REPO_PATH}/Mintfile" $MINT_SILENT git-lhc describe \
         --channel "$LHC_RELEASE_CHANNEL" \
         --train "$LHC_TRAIN" \
         --show head \
@@ -90,7 +98,7 @@ function make_release_notes() {
 function make_release() {
     [ -n "$SKIP_SYNC" ] || PUSH="--push"
 
-    mint run $MINT_SILENT git-lhc new \
+    mint run -m "${REPO_PATH}/Mintfile" $MINT_SILENT git-lhc new \
         --channel "$LHC_RELEASE_CHANNEL" \
         --train "$LHC_TRAIN" \
         --release-notes "${OUTPUT_DIRECTORY}/${RELEASE_NOTES_TEMPLATE}" $PUSH $FORCED_VERSION
@@ -129,7 +137,7 @@ function resolve_reference() {
             IFS=$'\n'
             for tag in $(git tag | grep "^${LHC_TRAIN}\/\d\d*\.\d\d*\.\d\d*\-${CANDIDATE_FILTER}" | sort -rV | head -n $MAX_TAG_DEPTH); do
                 local attr_value
-                if ! attr_value=$(mint run $MINT_SILENT git-lhc attr get --train "$LHC_TRAIN" "$NOMINATION_ATTR" "$tag") ; then
+                if ! attr_value=$(mint run -m "${REPO_PATH}/Mintfile" $MINT_SILENT git-lhc attr get --train "$LHC_TRAIN" "$NOMINATION_ATTR" "$tag") ; then
                     continue
                 fi
 
@@ -145,9 +153,9 @@ function resolve_reference() {
                     break
                 fi
 
-                NOTE_COMMIT=$(mint run $MINT_SILENT git-lhc attr log --train "$LHC_TRAIN" "$NOMINATION_ATTR" "$tag" | grep "^[0-9a-f][0-9a-f]*" | head -n 1 | cut -d " " -f 1)
-                if [ -z "$NOTE_COMMIT" ] || ! git verify-commit "$NOTE_COMMIT"; then
+                if ! "${SCRIPT_DIR}/nominate.sh" verify -T undefined -S -t "$LHC_TRAIN" -a "$NOMINATION_ATTR" "$tag" > /dev/null; then
                      echo "Warning: invalid or missing signature for nomination: $attr_value, please confirm with nominator."
+                     echo "Deploy will likely fail if you choose to proceed!"
                 fi
 
                 REFERENCE="$tag"
