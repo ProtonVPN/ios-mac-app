@@ -52,8 +52,12 @@ extension SVGView {
     static let mapBounds: CGRect = mapSVG.bounds()
 
     static func updateWith(code: String?, highlighted: Bool) {
-        guard let code = code?.lowercased(),
-              let node = mapSVG.node(code: code) else { return }
+        guard let code = code?.lowercased() else { return }
+
+        guard let node = mapSVG.countryNode(code: code) else {
+            assertionFailure("couldn't find country node")
+            return
+        }
 
         guard let codes = CountriesCoordinates.disputedCountries[code] else {
             // Easy, just (un)highlight the country
@@ -63,7 +67,7 @@ extension SVGView {
         // We have some disputed territories, just (un)hide them all
         node.borders(hidden: highlighted)
         codes
-            .compactMap(mapSVG.node(code:))
+            .compactMap(mapSVG.countryNode(code:))
             .forEach { $0.borders(hidden: highlighted) }
     }
 }
@@ -76,9 +80,20 @@ extension SVGNode {
         "gb": "uk",
     ]
 
-    func node(code: String) -> SVGNode? {
+    func countryNode(code: String) -> SVGNode? {
         [
-            code + "x", // add "x" so that by default we only consider mainland of each country
+            code,
+            code + "x",
+            Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
+        ]
+            .lazy
+            .compactMap { $0.flatMap { self.getNode(byId: $0) } }
+            .first
+    }
+
+    func mainlandNode(code: String) -> SVGNode? {
+        [
+            code + "x", // add "x" for mainland only
             code,
             Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
@@ -92,10 +107,12 @@ extension SVGNode {
 
         if let path = self as? SVGPath {
             path.fill = fillColor
-        } else {
-            (self as? SVGGroup)?.contents
-                .compactMap { $0 as? SVGPath }
-                .forEach { $0.fill = fillColor }
+        } else if let group = self as? SVGGroup {
+            group
+                .contents
+                .forEach {
+                    $0.fill(highlighted: highlighted)
+                }
         }
     }
 
@@ -108,11 +125,5 @@ extension SVGNode {
                 .compactMap { $0 as? SVGPath }
                 .forEach { $0.stroke = stroke }
         }
-    }
-}
-
-extension SVGView {
-    func node(code: String) -> SVGNode? {
-        svg?.node(code: code)
     }
 }

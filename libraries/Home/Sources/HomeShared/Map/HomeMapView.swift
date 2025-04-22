@@ -56,7 +56,7 @@ public struct HomeMapView: View {
 
     private func mapOffset() -> CGSize {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let node = SVGView.mapSVG.node(code: code) else {
+              let node = SVGView.mapSVG.mainlandNode(code: code) else {
             return .zero
         }
 
@@ -67,7 +67,7 @@ public struct HomeMapView: View {
 
     private func mapScale() -> CGFloat {
         guard let code = (store.mapState.code ?? store.userCountry)?.lowercased(),
-              let node = SVGView.mapSVG.node(code: code) else {
+              let node = SVGView.mapSVG.mainlandNode(code: code) else {
             return wholeMapScale()
         }
         let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the horizontal padding
