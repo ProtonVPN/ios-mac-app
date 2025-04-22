@@ -63,7 +63,7 @@ struct RecentRowItemView: View {
                 sendAction(.remove(item))
             }
         }
-        .padding(.horizontal, .themeSpacing16)
+        .padding(.leading, .themeSpacing16)
         .frame(maxWidth: .infinity, minHeight: Self.itemCellHeight)
     }
 
