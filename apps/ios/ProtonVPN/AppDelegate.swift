@@ -28,6 +28,9 @@ import Foundation
 import Dependencies
 import TrustKit
 
+import Connection
+import Sharing
+
 // Core dependencies
 import ProtonCoreAccountRecovery
 import ProtonCoreCryptoVPNPatchedGoImplementation
@@ -238,6 +241,8 @@ extension AppDelegate: UIApplicationDelegate {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
+        switchToHomeIfConnecting()
+
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
@@ -345,6 +350,16 @@ fileprivate extension AppDelegate {
     private func adjustGlobalProtocolIfNecessary() {
         if propertiesManager.connectionProtocol.isDeprecated {
             propertiesManager.connectionProtocol = .smartProtocol
+        }
+    }
+
+    private func switchToHomeIfConnecting() {
+        @SharedReader(.connectionState) var connectionState: ConnectionState
+        switch connectionState {
+        case .connecting, .resolving:
+            container.makeNavigationService().presentStatusViewController()
+        default:
+            break
         }
     }
 }
