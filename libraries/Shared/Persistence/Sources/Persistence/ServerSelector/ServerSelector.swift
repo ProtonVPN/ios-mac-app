@@ -18,9 +18,11 @@
 
 import Foundation
 
+import IssueReporting
+import Dependencies
+
 import Domain
 import Ergonomics
-import Dependencies
 
 public struct ServerSelector: Sendable {
     public internal(set) var select: @Sendable (
@@ -120,22 +122,30 @@ extension ServerSelector: DependencyKey {
         let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
         let baseFilters = spec.locationFilters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
 
-        let additionalFilters: [VPNServerFilter] = [
-            .features(spec.serverFeatureFilter),
-            .supports(protocol: acceptableProtocols),
-            .isNotUnderMaintenance
+        var servers = repository.getServers(filteredBy: baseFilters, orderedBy: spec.order)
+
+        guard !servers.isEmpty else {
+            throw ServerSelectionError.noLogical(.locationNotFound(spec.location))
+        }
+
+        let steps: [(VPNServerFilter, ServerSelectionError.LogicalResolutionFailureReason)] = [
+            (.features(spec.serverFeatureFilter), .featuresNotSupported(spec.features)),
+            (.supports(protocol: acceptableProtocols), .protocolNotSupported(acceptableProtocols)),
+            (.isNotUnderMaintenance, .maintenance)
         ]
 
-        let allFilters = baseFilters + additionalFilters
-        let server = repository.getFirstServer(filteredBy: allFilters, orderedBy: spec.order)
+        for (filter, reason) in steps {
+            servers = servers.filter(filter)
+            guard !servers.isEmpty else {
+                throw .noLogical(reason)
+            }
+        }
 
-        guard let server else {
-            let resolutionFailureReason = Self.logicalResolutionFailureReason(
-                spec: spec,
-                acceptableProtocols: acceptableProtocols,
-                baseFilters: baseFilters
-            )
-            throw ServerSelectionError.noLogical(resolutionFailureReason)
+        let logical = servers.first!.logical
+        guard let server = repository.getFirstServer(filteredBy: [.logicalID(logical.id)], orderedBy: spec.order) else {
+            reportIssue("Inconsistent DB: the logical with id \(logical.id) should exist. (Filter: \(spec))")
+            log.assertionFailure("No logical exists with id \(logical.id), spec: \(spec)")
+            throw ServerSelectionError.noLogical(.maintenance)
         }
 
         let endpointsSupportingProtocol = server.endpoints.filter { $0.supports(protocolSet: acceptableProtocols) }
@@ -150,35 +160,30 @@ extension ServerSelector: DependencyKey {
 
         return Server(logical: server.logical, endpoint: endpoint)
     })
+}
 
-    private static func logicalResolutionFailureReason(
-        spec: ConnectionSpec,
-        acceptableProtocols: ProtocolSupport,
-        baseFilters: [VPNServerFilter]
-    ) -> ServerSelectionError.LogicalResolutionFailureReason {
-        @Dependency(\.serverRepository) var repository
-        let servers = repository.getServers(filteredBy: baseFilters, orderedBy: .none)
-        if servers.isEmpty {
-            return .locationNotFound(spec.location)
-        }
+extension Array<ServerInfo> {
+    func filter(_ filter: VPNServerFilter) -> Self {
+        self.filter(filter.allows(_:))
+    }
+}
 
-        let serversSupportingFeatures = servers.filter { $0.logical.satisfies(spec.serverFeatureFilter) }
-        if serversSupportingFeatures.isEmpty {
-            return .featuresNotSupported(spec.features)
+extension VPNServerFilter {
+    func allows(_ info: ServerInfo) -> Bool {
+        switch self {
+        case .features(let filter):
+            let hasAllRequiredFeatures = info.logical.feature.intersection(filter.required) == filter.required
+            let hasNoExcludedFeatures = info.logical.feature.intersection(filter.excluded).isEmpty
+            return hasAllRequiredFeatures && hasNoExcludedFeatures
+        case .supports(let vpnProtocol):
+            return info.protocolSupport.contains(vpnProtocol)
+        case .isNotUnderMaintenance:
+            return !info.logical.isUnderMaintenance
+        default:
+            reportIssue("The filter \(self) should either be used through GRDB or have an explicit case defined.")
+            log.assertionFailure("Unexpected filter \(self)")
+            return false
         }
-
-        let serversSupportingProtocol = serversSupportingFeatures
-            .filter { !$0.protocolSupport.isDisjoint(with: acceptableProtocols) }
-        if serversSupportingProtocol.isEmpty {
-            return .protocolNotSupported(acceptableProtocols)
-        }
-
-        let serversWithoutMaintenance = serversSupportingProtocol.filter { !$0.logical.isUnderMaintenance }
-        if serversWithoutMaintenance.isEmpty {
-            return .maintenance
-        }
-        log.assertionFailure("Unexpected logical resolution failure reason")
-        return .maintenance
     }
 }
 
