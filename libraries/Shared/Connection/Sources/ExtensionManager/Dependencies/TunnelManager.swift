@@ -88,6 +88,12 @@ final class PacketTunnelManager: TunnelManager {
         try await configurator.configure(&manager, for: operation)
         try await manager.saveToPreferences()
         try await manager.loadFromPreferences()
+
+        if #unavailable(iOS 17) {
+            // This is needed to let the loading complete, there seems to be a race in older versions of the
+            // NetworkExtension framework. I know it's terrible but it's a system API. Sad!
+            try await Task.sleep(for: .milliseconds(250))
+        }
         cachedLoadedManager = manager
         return manager
     }
