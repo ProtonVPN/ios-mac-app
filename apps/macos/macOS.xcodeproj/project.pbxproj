@@ -309,6 +309,7 @@
 		E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
 		EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		EBB751CD2DA7D4C900F79994 /* ProtonVPN Plutonium.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = EBB751D52DA94CD800F79994 /* PlutoniumExtension */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
 		EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */; };
@@ -1058,6 +1059,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */,
 				EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2734,6 +2736,7 @@
 			);
 			name = "ProtonVPN Plutonium";
 			packageProductDependencies = (
+				EBB751D52DA94CD800F79994 /* PlutoniumExtension */,
 			);
 			productName = "ProtonVPN Plutonium";
 			productReference = EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */;
@@ -5097,6 +5100,10 @@
 		E9D2553328E5B77500DEFFB5 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		EBB751D52DA94CD800F79994 /* PlutoniumExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlutoniumExtension;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
