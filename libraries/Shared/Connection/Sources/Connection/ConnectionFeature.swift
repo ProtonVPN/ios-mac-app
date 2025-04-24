@@ -140,7 +140,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                 if !state.coreConnectionState.is(\.connected) {
                     log.warning("Setting connection features while not connected", category: .connection)
                 }
-                return .send(.core(.localAgent(.setFeatures(agentFeatures))))
+                return .concatenate(
+                    .send(.core(.localAgent(.setFeatures(agentFeatures)))),
+                    .send(.core(.certAuth(.refreshCertificate)))
+                )
 
             case .input(.disconnect):
                 return handleUserDisconnectionRequest(&state)
