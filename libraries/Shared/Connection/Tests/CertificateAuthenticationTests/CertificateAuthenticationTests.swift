@@ -19,9 +19,10 @@
 import Foundation
 import XCTest
 import ComposableArchitecture
+import struct Domain.VPNConnectionFeatures
 import VPNShared
 import VPNSharedTesting
-import CoreConnection
+@testable import CoreConnection
 import CoreConnectionTestSupport
 @testable import CertificateAuthentication
 
@@ -90,7 +91,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadingFinished.success)
     }
 
-    @MainActor func testRefreshesMissingOrExpiredCertificate() async {
+    @MainActor func testRefreshesMissingOrExpiredCertificateWithFeatures() async {
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -100,14 +101,21 @@ final class CertificateAuthenticationTests: XCTestCase {
         storageMock.keys = mockKeys
         storageMock.cert = nil
 
+        let expectedFeatures = VPNConnectionFeatures(netshield: .level1, vpnAccelerator: false, bouncing: nil, natType: .strictNAT, safeMode: nil)
+        let certRefreshRequested = XCTestExpectation(description: "Feature should request refresh using the client")
+
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
             $0.vpnAuthenticationStorage = storageMock
+            $0.connectionFeatureProvider.connectionFeatures = { expectedFeatures }
             $0.certificateRefreshClient = .init(
-                refreshCertificate: {
+                refreshCertificate: { features in
+                    certRefreshRequested.fulfill()
+                    XCTAssertEqual(features, expectedFeatures, "Certificate should be refreshed with current features")
                     storageMock.cert = mockCertificate
+                    storageMock.features = features
                     return .ok
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
@@ -128,6 +136,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0 = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
         }
         await store.receive(\.loadingFinished.success)
+        await fulfillment(of: [certRefreshRequested], timeout: 0)
     }
 
     @MainActor func testEntersFailedStateIfExtensionLiesAboutRefreshingCertificate() async {
@@ -142,7 +151,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = storageMock
             $0.certificateRefreshClient = .init(
-                refreshCertificate: { .ok }, // Extension responds with .ok but doesn't actually update the certificate
+                refreshCertificate: { _ in .ok }, // Extension responds with .ok but doesn't actually update the certificate
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }
@@ -178,7 +187,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = storageMock
             $0.certificateRefreshClient = .init(
-                refreshCertificate: { .requiresNewKeys }, // Extension responds with .ok but doesn't actually update the certificate
+                refreshCertificate: { _ in .requiresNewKeys }, // Extension responds with .ok but doesn't actually update the certificate
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }

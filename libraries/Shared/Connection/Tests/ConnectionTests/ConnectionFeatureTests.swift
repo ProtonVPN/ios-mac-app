@@ -27,7 +27,7 @@ import Ergonomics
 import VPNShared
 import VPNSharedTesting
 
-import CoreConnection
+@testable import CoreConnection
 import CoreConnectionTestSupport
 @testable import ExtensionManager
 @testable import CertificateAuthentication
@@ -89,7 +89,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
-            $0.certificateRefreshClient = .init(refreshCertificate: { .ok }, pushSelector: { })
+            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: { })
             $0.vpnAuthenticationStorage = mockStorage
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -229,7 +229,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
-            $0.certificateRefreshClient = .init(refreshCertificate: { .ok }, pushSelector: { })
+            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: { })
             $0.vpnAuthenticationStorage = mockStorage
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -523,7 +523,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         // Set up a failure to occur while refreshing our certificate
         let certRefreshResult = CertificateRefreshResult.ipcError(message: "No data received")
-        store.dependencies.certificateRefreshClient.refreshCertificate = { certRefreshResult }
+        store.dependencies.certificateRefreshClient.refreshCertificate = { _ in certRefreshResult }
 
         store.exhaustivity = .off
         await store.send(.input(.onLaunch))

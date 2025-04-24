@@ -27,11 +27,13 @@ import Localization
 import Ergonomics
 import Strings
 import struct Domain.Server
+import struct Domain.VPNConnectionFeatures
 import protocol Domain.ProtonVPNError
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {
     @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+    @Dependency(\.connectionFeatureProvider) var featureProvider
     @Dependency(\.vpnKeysGenerator) var keysGenerator
     @Dependency(\.sessionService) var sessionService
     @Dependency(\.certificateRefreshClient) var refreshClient
@@ -43,7 +45,8 @@ public struct CertificateAuthenticationFeature: Reducer {
     @dynamicMemberLookup
     public enum State: Equatable, Sendable {
         case idle
-        case loading(shouldRefreshIfNecessary: Bool) // Flag prevents infinite recursion
+        /// `shouldRefreshIfNecessary` prevents us from retrying certificate refresh infinitely.
+        case loading(shouldRefreshIfNecessary: Bool)
         case loaded(FullAuthenticationData)
         case failed(CertificateAuthenticationError)
     }
@@ -118,8 +121,10 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return finishWithError(&state, .wontRefresh(failureReason))
 
             case .refreshCertificate:
+                let features = featureProvider.connectionFeatures()
                 return .run { send in
-                    await send(.refreshFinished(Result { try await refreshClient.refreshCertificate() }))
+                    let refreshResult = await Result { try await refreshClient.refreshCertificate(features) }
+                    return await send(.refreshFinished(refreshResult))
                 }
 
             case .refreshFinished(.success(.ok)):
