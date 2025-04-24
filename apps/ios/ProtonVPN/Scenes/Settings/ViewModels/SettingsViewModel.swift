@@ -121,10 +121,8 @@ final class SettingsViewModel {
         if let connectionSection = connectionSection {
             sections.append(connectionSection)
         }
-        if #unavailable(iOS 18) {
-            sections.append(extensionsSection)
-        }
 
+        sections.append(extensionsSection)
         sections.append(usageStatisticsSection)
         sections.append(logSection)
         sections.append(bottomSection)

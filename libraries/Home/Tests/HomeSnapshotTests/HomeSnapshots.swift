@@ -27,6 +27,7 @@ import Domain
 import DomainTestSupport
 import Ergonomics
 @testable import HomeShared
+@testable import Home
 import SwiftUI
 import IssueReporting
 

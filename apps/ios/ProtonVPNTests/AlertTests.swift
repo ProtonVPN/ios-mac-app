@@ -175,7 +175,7 @@ fileprivate class SettingsServiceMock: SettingsService {
                                                crashReportsOn: { true })
     }
     
-    func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {
+    func makeExtensionsSettingsViewController() -> UIViewController {
         let viewModel = WidgetSettingsViewModel()
         return WidgetSettingsViewController(viewModel: viewModel)
     }
