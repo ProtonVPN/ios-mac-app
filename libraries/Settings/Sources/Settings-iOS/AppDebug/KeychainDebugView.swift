@@ -21,7 +21,6 @@ import Domain
 import Theme
 import ComposableArchitecture
 import SettingsShared
-import Localization
 
 struct KeychainDebugView: View {
     @Binding var store: StoreOf<KeychainDebugFeature>
@@ -121,8 +120,9 @@ struct KeychainDebugView: View {
 
     @ViewBuilder private func featuresCell(features: VPNConnectionFeatures?) -> some View {
         if let features {
-            VStack {
+            VStack(alignment: .leading) {
                 Text("Certificate Features")
+                Divider()
                 FeaturesView(features: features)
             }
 

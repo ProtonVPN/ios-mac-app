@@ -91,21 +91,54 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return .none
 
             case .loadAuthenticationData:
-                if case .loaded(let data) = state, data.certificate.refreshTime > date.now {
-                    return .send(.loadingFinished(.success(data)))
+                // First, let's see if we have a certificate cached in memory
+                guard case .loaded(let data) = state else {
+                    log.debug("State doesn't contain cached certificate, reloading from storage", category: .connection)
+                    state = .loading(shouldRefreshIfNecessary: true)
+                    return .send(.loadFromStorage)
                 }
-                state = .loading(shouldRefreshIfNecessary: true)
-                return .send(.loadFromStorage)
+
+                // We already cached a certificate. It should be up-to-date, `refreshTime` has passed
+                guard date.now < data.certificate.refreshTime else {
+                    log.debug("Cached certificate should be refreshed, reloading from storage", category: .connection)
+                    state = .loading(shouldRefreshIfNecessary: true)
+                    return .send(.loadFromStorage)
+                }
+
+                // Our cached certificate is most likely up-to-date. Let's see if its features are still correct
+                let currentFeatures = featureProvider.connectionFeatures()
+                guard data.features == currentFeatures else {
+                    log.debug(
+                        "Current features have evolved from stored features. Certificate needs refresh",
+                        category: .connection,
+                        metadata: ["storedFeatures": "\(optional: data.features)", "currentFeatures": "\(currentFeatures)"]
+                    )
+                    state = .loading(shouldRefreshIfNecessary: true)
+                    return .send(.loadFromStorage)
+                }
+
+                log.debug("Cached certificate still valid and with up-to-date features", category: .connection)
+                return .send(.loadingFinished(.success(data)))
 
             case .loadFromStorage:
                 return .send(.loadingFromStorageFinished(authenticationStorage.loadAuthenticationData()))
 
             case .loadingFromStorageFinished(.loaded(let data)):
+                let storedFeatures = data.features
+                let currentFeatures = featureProvider.connectionFeatures()
+                guard storedFeatures == currentFeatures else {
+                    log.info(
+                        "Current features have evolved from stored features. Certificate needs refresh",
+                        category: .connection,
+                        metadata: ["storedFeatures": "\(optional: storedFeatures)", "currentFeatures": "\(currentFeatures)"]
+                    )
+                    return .send(.refreshCertificate)
+                }
                 state = .loaded(data)
                 return .send(.loadingFinished(.success(data)))
 
             case .loadingFromStorageFinished(let failureReason):
-                guard case .loading(let shouldRefresh) = state else {
+                guard case .loading(let isAllowedToRefresh) = state else {
                     reportIssue("We were expecting a loading state, but got: \(state)")
                     return .none
                 }
@@ -115,7 +148,8 @@ public struct CertificateAuthenticationFeature: Reducer {
                     log.error("Keys should have been generated prior to starting the tunnel.")
                     return finishWithError(&state, .wontRefresh(.keysMissing))
                 }
-                if shouldRefresh {
+
+                if isAllowedToRefresh {
                     return .send(.refreshCertificate)
                 }
                 return finishWithError(&state, .wontRefresh(failureReason))

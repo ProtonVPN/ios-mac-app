@@ -17,15 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import struct Domain.VPNConnectionFeatures
 import struct VPNShared.VpnCertificate
 
 public struct FullAuthenticationData: Equatable, Sendable {
     public let keys: VPNKeys
     public let certificate: VpnCertificate
+    public let features: VPNConnectionFeatures?
 
-    public init(keys: VPNKeys, certificate: VpnCertificate) {
+    public init(keys: VPNKeys, certificate: VpnCertificate, features: VPNConnectionFeatures?) {
         self.keys = keys
         self.certificate = certificate
+        self.features = features
     }
 
     /// Returns a subset of data necessary to authenticate a LocalAgent connection

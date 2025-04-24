@@ -70,7 +70,7 @@ final class ConnectionFeatureTests: XCTestCase {
 
         let coreState = CoreConnectionFeature.State.init(
             tunnelState: .disconnecting(nil),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
             localAgentState: .disconnected(nil)
         )
 
@@ -210,7 +210,7 @@ final class ConnectionFeatureTests: XCTestCase {
         // It's not a problem, since we always start from the resolving state when running in the app.
         let coreState = CoreConnectionFeature.State.init(
             tunnelState: .connecting(initialServerInfo),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
             localAgentState: .disconnected(nil)
         )
 
@@ -410,6 +410,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         mockStorage.keys = keys
         mockStorage.cert = certificate
+        mockStorage.features = .mock
 
         let store = TestStore(initialState: .initialState) {
             ConnectionFeature()
@@ -418,6 +419,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
             $0.localAgent = mockAgent
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
             $0.vpnAuthenticationStorage = mockStorage
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })

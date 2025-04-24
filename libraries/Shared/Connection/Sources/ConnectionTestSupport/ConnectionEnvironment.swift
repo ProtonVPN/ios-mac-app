@@ -79,7 +79,7 @@ public final class ConnectionEnvironment {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         mockStorage.keys = keys
         mockStorage.cert = certificate
-
+        mockStorage.features = .mock
 
         return ConnectionEnvironment(
             startDate: now,
