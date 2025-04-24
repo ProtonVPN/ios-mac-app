@@ -112,7 +112,7 @@ public struct ConnectionFlagInfoView: View {
                         .foregroundStyle(Color(.icon))
                         .frame(.square(.themeSpacing64))
                 })
-                .popover(isPresented: self.$showDetail, attachmentAnchor: .point(.topLeading)) {
+                .sheet(isPresented: self.$showDetail) {
                     RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
                         showDetail = false
                         detailAction(action)
