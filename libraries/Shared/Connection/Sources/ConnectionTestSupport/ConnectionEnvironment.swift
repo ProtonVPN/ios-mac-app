@@ -79,7 +79,7 @@ public final class ConnectionEnvironment {
         let keys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         mockStorage.keys = keys
         mockStorage.cert = certificate
-
+        mockStorage.features = .mock
 
         return ConnectionEnvironment(
             startDate: now,
@@ -109,7 +109,7 @@ public final class ConnectionEnvironment {
             $0.date = .constant(startDate)
             $0.continuousClock = clock
             $0.tunnelManager = tunnelManager
-            $0.certificateRefreshClient = .init(refreshCertificate: { .ok }, pushSelector: { })
+            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: { })
             $0.vpnAuthenticationStorage = vpnAuthStorage
             $0.localAgent = localAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })

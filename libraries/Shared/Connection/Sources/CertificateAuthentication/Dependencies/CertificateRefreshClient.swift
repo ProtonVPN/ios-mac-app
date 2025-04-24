@@ -34,7 +34,7 @@ struct CertificateRefreshClientError: Error {
 }
 
 struct CertificateRefreshClient: DependencyKey {
-    var refreshCertificate: () async throws -> CertificateRefreshResult
+    var refreshCertificate: (VPNConnectionFeatures) async throws -> CertificateRefreshResult
     var pushSelector: () async throws -> Void
 }
 
@@ -47,10 +47,10 @@ extension DependencyValues {
 
 extension CertificateRefreshClient {
     public static let liveValue: CertificateRefreshClient = .init(
-        refreshCertificate: {
+        refreshCertificate: { features in
             @Dependency(\.tunnelMessageSender) var messageSender
 
-            let request = WireguardProviderRequest.refreshCertificate(features: nil)
+            let request = WireguardProviderRequest.refreshCertificate(features: features)
             let response = try await messageSender.send(request)
 
             switch response {

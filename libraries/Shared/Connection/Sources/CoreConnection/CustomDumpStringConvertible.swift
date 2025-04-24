@@ -32,7 +32,7 @@ extension Domain.Server: @retroactive CustomDumpStringConvertible {
 
 extension Domain.VPNConnectionFeatures: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "VPNConnectionFeatures"
+        return "VPNConnectionFeatures(netShield: \(self.netshield), vpnAccelerator: \(self.vpnAccelerator), natType: \(self.natType)"
     }
 }
 

@@ -19,7 +19,7 @@
 #if os(tvOS)
 import Domain
 import Dependencies
-import Connection
+import CoreConnection
 
 extension ConnectionFeatureProvider: DependencyKey {
     public static let liveValue: ConnectionFeatureProvider = .init(

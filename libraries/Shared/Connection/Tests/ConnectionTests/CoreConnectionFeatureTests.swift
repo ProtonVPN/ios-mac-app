@@ -27,7 +27,7 @@ import Ergonomics
 import VPNShared
 import VPNSharedTesting
 
-import CoreConnection
+@testable import CoreConnection
 import CoreConnectionTestSupport
 import ConnectionTestSupport
 @testable import ExtensionManager
@@ -48,8 +48,10 @@ final class CoreConnectionFeatureTests: XCTestCase {
         let mockStorage = MockVpnAuthenticationStorage()
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let features = VPNConnectionFeatures.mock
         mockStorage.keys = mockKeys
         mockStorage.cert = mockCertificate
+        mockStorage.features = features
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -58,7 +60,6 @@ final class CoreConnectionFeatureTests: XCTestCase {
         )
 
         let server = Server.mock
-        let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
@@ -73,6 +74,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
             $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
         }
 
         await store.send(.startObserving)
@@ -108,7 +110,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadFromStorage)
         await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
-            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features))
         }
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
@@ -186,7 +188,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.vpnAuthenticationStorage = mockStorage
             $0.certificateRefreshClient = .init(
-                refreshCertificate: { .requiresNewKeys }, // Simulate a 409 error (VPNAPPL-2757)
+                refreshCertificate: { _ in .requiresNewKeys }, // Simulate a 409 error (VPNAPPL-2757)
                 pushSelector: { unimplemented("Unexpected session fork + selector push") }
             )
         }
@@ -259,8 +261,10 @@ final class CoreConnectionFeatureTests: XCTestCase {
         let mockStorage = MockVpnAuthenticationStorage()
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let features = VPNConnectionFeatures.mock
         mockStorage.keys = mockKeys
         mockStorage.cert = mockCertificate
+        mockStorage.features = features
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -269,7 +273,6 @@ final class CoreConnectionFeatureTests: XCTestCase {
         )
 
         let server = Server.mock
-        let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
@@ -284,6 +287,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
             $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
         }
 
         await store.send(.startObserving)
@@ -319,7 +323,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadFromStorage)
         await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
-            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features))
         }
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)
@@ -363,7 +367,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         // Ensure that the final state post-disconnection contains the error so that it can be shown in the UI
         let disconnectedWithPolicyViolationDelinquent: CoreConnectionFeature.State = .init(
             tunnelState: .disconnected(nil),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
             localAgentState: .disconnected(.agentError(.policyViolationDelinquent))
         )
         XCTAssertEqual(store.state, disconnectedWithPolicyViolationDelinquent)
@@ -381,8 +385,10 @@ final class CoreConnectionFeatureTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
         let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: dayAfterTomorrow, refreshTime: dayAfterTomorrow)
+        let features = VPNConnectionFeatures.mock
         mockStorage.keys = mockKeys
         mockStorage.cert = mockCertificate
+        mockStorage.features = features
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -391,13 +397,12 @@ final class CoreConnectionFeatureTests: XCTestCase {
         )
 
         let server = Server.mock
-        let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = CoreConnectionFeature.State.init(
             tunnelState: .disconnected(nil),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
             localAgentState: .disconnected(nil)
         )
 
@@ -410,9 +415,11 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
             $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { features }
             $0.certificateRefreshClient = .init(
-                refreshCertificate: {
+                refreshCertificate: { features in
                     mockStorage.cert = refreshedCertificate
+                    mockStorage.features = features
                     return .ok
                 },
                 pushSelector: { }
@@ -483,7 +490,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadFromStorage)
         await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
-            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate))
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate, features: features))
         }
         await store.receive(\.certAuth.loadingFinished.success)
 
@@ -508,7 +515,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
         let connectedWithRefreshedCertificate: CoreConnectionFeature.State = .init(
             tunnelState: .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now)),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate, features: features)),
             localAgentState: .connected(nil)
         )
         XCTAssertEqual(store.state, connectedWithRefreshedCertificate)
@@ -533,8 +540,10 @@ final class CoreConnectionFeatureTests: XCTestCase {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
         let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: dayAfterTomorrow, refreshTime: dayAfterTomorrow)
+        let features = VPNConnectionFeatures.mock
         mockStorage.keys = mockKeys
         mockStorage.cert = mockCertificate
+        mockStorage.features = features
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -543,13 +552,12 @@ final class CoreConnectionFeatureTests: XCTestCase {
         )
 
         let server = Server.mock
-        let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = CoreConnectionFeature.State.init(
             tunnelState: .disconnected(nil),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
             localAgentState: .disconnected(nil)
         )
 
@@ -562,9 +570,11 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
             $0.localAgent = mockAgent
             $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { features }
             $0.certificateRefreshClient = .init(
-                refreshCertificate: {
+                refreshCertificate: { features in
                     mockStorage.cert = refreshedCertificate
+                    mockStorage.features = features
                     return .ok
                 },
                 pushSelector: { }
@@ -635,7 +645,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadFromStorage)
         await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
-            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate))
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate, features: features))
         }
         await store.receive(\.certAuth.loadingFinished.success)
 
@@ -660,7 +670,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
         let connectedWithRefreshedCertificate: CoreConnectionFeature.State = .init(
             tunnelState: .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now)),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate, features: features)),
             localAgentState: .connected(nil)
         )
         XCTAssertEqual(store.state, connectedWithRefreshedCertificate)
@@ -683,8 +693,10 @@ final class CoreConnectionFeatureTests: XCTestCase {
         let mockStorage = MockVpnAuthenticationStorage()
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let features = VPNConnectionFeatures.mock
         mockStorage.keys = mockKeys
         mockStorage.cert = mockCertificate
+        mockStorage.features = features
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -693,13 +705,12 @@ final class CoreConnectionFeatureTests: XCTestCase {
         )
 
         let server = Server.mock
-        let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
         let disconnected = CoreConnectionFeature.State.init(
             tunnelState: .disconnected(nil),
-            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate)),
+            certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
             localAgentState: .disconnected(nil)
         )
 
@@ -707,6 +718,8 @@ final class CoreConnectionFeatureTests: XCTestCase {
             CoreConnectionFeature()
         } withDependencies: {
             $0.date = .constant(now)
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { features }
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -777,8 +790,10 @@ final class CoreConnectionFeatureTests: XCTestCase {
         let mockStorage = MockVpnAuthenticationStorage()
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let features = VPNConnectionFeatures.mock
         mockStorage.keys = mockKeys
         mockStorage.cert = mockCertificate
+        mockStorage.features = features
 
         mockManager.connection = VPNSessionMock(
             status: .disconnected,
@@ -787,7 +802,6 @@ final class CoreConnectionFeatureTests: XCTestCase {
         )
 
         let server = Server.mock
-        let features = VPNConnectionFeatures.mock
         let tunnelSettings = TunnelSettings.mock
         let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
@@ -799,10 +813,11 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
-            $0.certificateRefreshClient = .init(refreshCertificate: { .ok }, pushSelector: { })
+            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: { })
             $0.vpnAuthenticationStorage = mockStorage
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
         }
 
         await store.send(.startObserving)
@@ -838,7 +853,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.certAuth.loadFromStorage)
         await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
-            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate))
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features))
         }
         await store.receive(\.certAuth.loadingFinished.success)
         await store.receive(\.localAgent.connect)

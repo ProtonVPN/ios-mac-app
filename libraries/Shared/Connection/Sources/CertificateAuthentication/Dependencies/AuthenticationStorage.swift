@@ -37,7 +37,8 @@ extension VpnAuthenticationStorageSync {
 
         return .loaded(FullAuthenticationData(
             keys: .init(fromLegacyKeys: keys),
-            certificate: certificate
+            certificate: certificate,
+            features: getStoredCertificateFeatures()
         ))
     }
 }

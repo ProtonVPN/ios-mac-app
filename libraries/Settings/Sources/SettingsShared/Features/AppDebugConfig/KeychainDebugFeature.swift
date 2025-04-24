@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Domain
 import Ergonomics
 import VPNShared
 
@@ -30,10 +31,6 @@ public struct KeychainDebugFeature {
     public struct State: Equatable {
         @Presents package var alert: AlertState<Action.Alert>?
         package var content: Content
-
-        //        package init(alert: AlertState<Action.Alert>? = nil) {
-        //            self.alert = alert
-        //        }
     }
 
     package init() { }
@@ -63,6 +60,7 @@ public struct KeychainDebugFeature {
                 return .run { send in
                     let keysValue = authStorage.getStoredKeys()
                     let certificateValue = authStorage.getStoredCertificate()
+                    let features = authStorage.getStoredCertificateFeatures()
 
                     let keys = keysValue.map { value in
                         State.AuthKeychainData.Keys(
@@ -73,7 +71,8 @@ public struct KeychainDebugFeature {
                     let certificate = certificateValue.map { value in
                         State.AuthKeychainData.Certificate(
                             pem: value.certificate,
-                            expiry: value.validUntil
+                            expiry: value.validUntil,
+                            features: features
                         )
                     }
 
@@ -163,6 +162,7 @@ extension KeychainDebugFeature.State {
         public struct Certificate: Equatable, Sendable {
             public let pem: String
             public let expiry: Date
+            public let features: VPNConnectionFeatures?
         }
     }
 }
