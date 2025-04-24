@@ -17,9 +17,11 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Domain
 import Theme
 import ComposableArchitecture
 import SettingsShared
+import Localization
 
 struct KeychainDebugView: View {
     @Binding var store: StoreOf<KeychainDebugFeature>
@@ -103,10 +105,30 @@ struct KeychainDebugView: View {
 
                 Text("Expiry")
                 copyableText(certificate.expiry.formatted())
+
+                Divider()
+
+                featuresCell(features: certificate.features)
             }
         } else {
             HStack {
                 Text("No Certificate")
+                Spacer()
+                Image(systemName: "nosign")
+            }
+        }
+    }
+
+    @ViewBuilder private func featuresCell(features: VPNConnectionFeatures?) -> some View {
+        if let features {
+            VStack {
+                Text("Certificate Features")
+                FeaturesView(features: features)
+            }
+
+        } else {
+            HStack {
+                Text("Features")
                 Spacer()
                 Image(systemName: "nosign")
             }
@@ -123,4 +145,31 @@ struct KeychainDebugView: View {
         Text(value)
             .onTapGesture { UIPasteboard.general.string = value }
     }
+}
+
+struct FeaturesView: View {
+    private let features: VPNConnectionFeatures
+
+    init(features: VPNConnectionFeatures) {
+        self.features = features
+    }
+
+    var body: some View {
+        VStack {
+            row(key: "NetShield", value: "\(optional: NetShieldType(rawValue: features.netshield.rawValue))")
+            row(key: "VPN Accelerator", value: "\(features.vpnAccelerator)")
+            row(key: "Moderate NAT", value: "\(optional: NATType(rawValue: features.natType.rawValue))")
+            row(key: "Bouncing", value: "\(optional: features.bouncing)")
+            row(key: "Safe Mode", value: "\(optional: features.safeMode)")
+        }
+    }
+
+    private func row(key: String, value: String) -> some View {
+        HStack {
+            Text(key)
+            Spacer()
+            Text(value)
+        }
+    }
+
 }
