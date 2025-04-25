@@ -9,14 +9,16 @@ JIRA_TRAILER=Jira-Id
 # Can be any train, since they all store at the same attrs reference.
 # If this ever changes in the future, issue-hashes.txt should include the train name.
 LHC_TRAIN=ios
+SPRINT_STARTED_ATTR=Sprint-Started
 RELEASE_NOTES_ATTR=Release-Notes
+STORY_POINTS_ATTR=Story-Points
 
 # Other environment variables required:
 # - PIPELINE_ACCESS_TOKEN: a project access token for your GitLab repository
 # - JIRA_API_TOKEN: a read-only API access token for your Jira project
 # - JIRA_API_URL: the API url for your Jira organization
-# - JIRA_NEW_RELEASE_WEBHOOK: a webhook for creating releases (with associated issues) in Jira
-# - JIRA_SHIP_RELEASE_WEBHOOK: a webhook for marking releases as shipped in Jira
+# - JIRA_RELEASE_WEBHOOK: a webhook for updating releases in Jira
+# - JIRA_RELEASE_WEBHOOK_TOKEN: the secret used for updating releases in Jira
 
 ISSUE_HASHES=""
 MILESTONE_ID=""
@@ -47,7 +49,7 @@ function fetch_data() {
     REQUEST_DATA="
 {
     \"expand\": [\"names\"],
-    \"fields\": [\"summary\", \"$SPRINT_FIELD\", \"$RELEASE_NOTES_FIELD\", \"$STORY_POINTS_FIELD\"],
+    \"fields\": [\"summary\", \"components\", \"$SPRINT_FIELD\", \"$RELEASE_NOTES_FIELD\", \"$STORY_POINTS_FIELD\"],
     \"fieldsByKeys\": true,
     \"properties\": [],
     \"issueIdsOrKeys\": [${ISSUE_LIST%?}]
@@ -104,6 +106,7 @@ function update_commit() {
     local issue_json
     issue_json=$(jq -r <<<"$ISSUES_JSON" ".issues[] | select(.key == \"${task_id}\")")
 
+    local components=$(jq -r <<<"$issue_json" ".fields.components[].name")
     local notes=$(jq -r <<<"$issue_json" ".fields.$RELEASE_NOTES_FIELD | select(. != null and .version == 1) | .content[].content[].text")
     local points=$(jq -r <<<"$issue_json" ".fields.$STORY_POINTS_FIELD")
 
@@ -114,7 +117,15 @@ function update_commit() {
         TOTAL_STORY_POINTS=$(echo "$TOTAL_STORY_POINTS + $points" | bc)
     fi
 
-    update_commit_attribute "$commit_hash" "$task_id" "Release-Notes" "$notes"
+    if [ -n "$components" ] && ! grep "^All$" <<< "$components" > /dev/null; then
+        IFS=$'\n'
+        for component in $components; do
+            update_commit_attribute "$commit_hash" "$task_id" "$RELEASE_NOTES_ATTR-$component" "$notes"
+        done
+    else
+        update_commit_attribute "$commit_hash" "$task_id" "$RELEASE_NOTES_ATTR" "$notes"
+    fi
+
     update_commit_attribute "$commit_hash" "$task_id" "Story-Points" "$points"
 }
 
@@ -265,11 +276,11 @@ function update_active_sprint() {
 
     if [ -n "$sprint_started_hash" ]; then
         local old_sprint_started
-        old_sprint_started=$(mint run -s git-lhc attr get --train $LHC_TRAIN Sprint-Started $sprint_started_hash || true)
+        old_sprint_started=$(mint run -s git-lhc attr get --train $LHC_TRAIN $SPRINT_STARTED_ATTR $sprint_started_hash || true)
 
         if [ "$old_sprint_started" != "$SPRINT_NAME" ]; then
-            echo "Adding Sprint-Started attribute..."
-            mint run -s git-lhc attr add --train $LHC_TRAIN --force "Sprint-Started=$SPRINT_NAME" $sprint_started_hash
+            echo "Adding $SPRINT_STARTED_ATTR attribute..."
+            mint run -s git-lhc attr add --train $LHC_TRAIN --force "$SPRINT_STARTED_ATTR=$SPRINT_NAME" $sprint_started_hash
         fi
     fi
 }
@@ -277,20 +288,21 @@ function update_active_sprint() {
 function update_release() {
     local channel="$1"
     local release_name="$2"
-    local release_issues="$3"
-    local jira_webhook_url
+    local build_name="$3"
+    local release_issues="$4"
 
-    case "$channel" in
-        "beta") jira_webhook_url=$JIRA_NEW_RELEASE_WEBHOOK ;;
-        "production") jira_webhook_url=$JIRA_SHIP_RELEASE_WEBHOOK ;;
-        *) return 0 ;; # Don't do anything for alpha builds, beta/prod are enough
-    esac
+    # This script submits the following fields in every release webhook request:
+    # - issues: a list of the issue IDs contained in the release
+    # - releaseChannel: one of 'alpha,' 'beta,' or 'production'
+    # - releaseName: looks like 'iOS 4.2.0'
+    # - buildName: looks like 'iOS 4.2.0-alpha.3 (1521315.2504201620)'
 
-    # Send the request. JIRA_WEBHOOK_URL is defined in each Jira automation.
     echo "Updating tasks in Jira..."
-    echo curl -X POST -H 'Content-type: application/json' \
-        --data "{\"releaseName\":\"$release_name\",\"issues\":[$release_issues]}" \
-        $jira_webhook_url
+    curl -X POST \
+        -H 'Content-type: application/json' \
+        -H "X-Automation-Webhook-Token: $JIRA_RELEASE_WEBHOOK_TOKEN" \
+        --data "{\"releaseName\":\"$release_name\",\"releaseChannel\":\"$channel\",\"buildName\":\"$build_name\",\"issues\":[$release_issues]}" \
+        "$JIRA_RELEASE_WEBHOOK"
 }
 
 if [ "$#" -eq 0 ]; then
@@ -299,19 +311,33 @@ else
     for arg in "$@"; do
         [ -f "$arg" ] || (echo "No such file $arg. Aborting." && exit 1)
 
+        # issue-hashes.txt is a special file containing information about a release, including its name, short version,
+        # long version, and build number in the first line, and all of the issues addressed in the release.
+        # The values on the first line are separated by the pipe character (|).
+        FIELD_TRAIN_DISPLAY_NAME=1
+        FIELD_TRAIN_NAME=2
+        FIELD_CHANNEL=3
+        FIELD_SHORT_VERSION=4
+        FIELD_VERSION=5
+        FIELD_BUILD_NUMBER=6
+
         # Remove the first line from each file, since it contains the train information which we don't care about
-        ISSUE_HASHES+=$(sed "1d" < "$arg" | grep "$JIRA_PROJECT")
+        THESE_ISSUES=$(sed "1d" < "$arg" | grep "$JIRA_PROJECT")
+        ISSUE_HASHES+=$THESE_ISSUES
         ISSUE_HASHES+=$'\n'
 
         if [ -n "$CI_COMMIT_TAG" ]; then
             train_info=$(head -n 1 "$arg")
-            channel=$(cut -d ':' -f 1 <<<"$train_info")
-            release_name=$(sed "s/^${channel}: //" <<<"$train_info")
+            channel=$(cut -d '|' -f $FIELD_CHANNEL <<<"$train_info")
+            release_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME,$FIELD_SHORT_VERSION <<<"$train_info" | tr '|' ' ')
+            build_name=$(cut -d '|' -f $FIELD_TRAIN_DISPLAY_NAME,$FIELD_VERSION,$FIELD_BUILD_NUMBER <<<"$train_info" | tr '|' ' ')
 
-            release_issues=$(cut -d ' ' -f 2 < "$arg" | sort | uniq | tr '\n' ',')
+            LHC_TRAIN=$(cut -d '|' -f $FIELD_TRAIN_NAME <<<"$train_info")
+
+            release_issues=$(cut -d ' ' -f 2 <<< "$THESE_ISSUES" | sort | uniq | awk '{ printf "\"%s\",",$1 }')
             release_issues=${release_issues%?} # remove trailing comma
 
-            update_release "$channel" "$release_name" "$release_issues"
+            update_release "$channel" "$release_name" "$build_name" "$release_issues"
         fi
     done
 
