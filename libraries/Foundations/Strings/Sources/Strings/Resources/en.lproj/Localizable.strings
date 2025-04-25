@@ -2807,6 +2807,15 @@
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Got it";
 
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Make the move to privacy";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Create account";
+
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Advanced VPN customization";
 

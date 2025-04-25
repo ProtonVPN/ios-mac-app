@@ -181,6 +181,7 @@
 		80C4A4E82BCFBC4200DA1A80 /* TestsTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4E72BCFBC4200DA1A80 /* TestsTimer.swift */; };
 		80C4A4EB2BCFBCDA00DA1A80 /* MainMeasurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */; };
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
+		8B24D7AF2DC108FE008A1666 /* NewAccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B24D7AE2DC108FE008A1666 /* NewAccountCardView.swift */; };
 		8B7F179F2BD7A6A600C6B8D9 /* ProtonCoreNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7F179E2BD7A6A600C6B8D9 /* ProtonCoreNetworking */; };
 		8B930CEE2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */; };
 		8BAA73B72BD131FA00187E26 /* ProtonCorePasswordChange in Frameworks */ = {isa = PBXBuildFile; productRef = 8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */; };
@@ -686,6 +687,7 @@
 		80C4A4EA2BCFBCDA00DA1A80 /* MainMeasurements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMeasurements.swift; sourceTree = "<group>"; };
 		80C4A4EC2BCFBDA900DA1A80 /* ProtonVPN-iOS-SLI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-SLI-All.xctestplan"; sourceTree = "<group>"; };
 		8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
+		8B24D7AE2DC108FE008A1666 /* NewAccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountCardView.swift; sourceTree = "<group>"; };
 		8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Extension.swift"; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
@@ -2127,6 +2129,7 @@
 				793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */,
 				E1D187E82301A20700C5F492 /* VpnProtocol.xib */,
 				E13EDF6621F0A14400030CE7 /* WidgetSettings.xib */,
+				8B24D7AE2DC108FE008A1666 /* NewAccountCardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2941,6 +2944,7 @@
 				E1EB9E7622FF096A009E704F /* LogSelectionViewController.swift in Sources */,
 				E14EE2DD217F1EE8004AF568 /* ConnectionView.swift in Sources */,
 				D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */,
+				8B24D7AF2DC108FE008A1666 /* NewAccountCardView.swift in Sources */,
 				E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */,
 				D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
 				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,

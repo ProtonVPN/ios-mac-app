@@ -50,6 +50,8 @@ protocol LoginService: AnyObject {
 
     func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void)
     func showWelcome(initialError: String?, withOverlayViewController: UIViewController?)
+    func presentLoginFlow(over viewController: UIViewController)
+    func presentSignUpFlow(over viewController: UIViewController)
 }
 
 // MARK: CoreLoginService
@@ -94,15 +96,16 @@ final class CoreLoginService {
         self.pushNotificationService = factory.makePushNotificationService()
     }
 
-    private func makeLoginInterface() -> LoginAndSignupInterface {
+    private func makeLoginInterface(isCloseButtonAvailable: Bool = false) -> LoginAndSignupInterface {
         let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
         let signupAvailability = SignupAvailability.available(parameters: signupParameters)
+
         let login = LoginAndSignup(
             appName: "Proton VPN",
             clientApp: .vpn,
             apiService: networking.apiService,
             minimumAccountType: AccountType.username,
-            isCloseButtonAvailable: false,
+            isCloseButtonAvailable: isCloseButtonAvailable,
             paymentsAvailability: PaymentsAvailability.notAvailable,
             signupAvailability: signupAvailability
         )
@@ -116,7 +119,7 @@ final class CoreLoginService {
             Task { @MainActor [weak self] in
                 do {
                     @Dependency(\.userSettingsClient) var userSettingsClient
-                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings().userSettings
+                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials)
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
                     completion(.success(()))
                 } catch {
@@ -146,6 +149,7 @@ final class CoreLoginService {
         switch result {
         case .dismissed:
             windowService.dismissModal(nil)
+            // TODO: Login screen can be dismissed when signing in from a guest user
             loginInterface = makeLoginInterface()
             show(initialError: nil, withOverlayViewController: nil)
         case .loginStateChanged(.loginFinished):
@@ -182,7 +186,11 @@ final class CoreLoginService {
             initialError: initialError,
             helpDecorator: helpDecorator
         )
-        let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
+        let variant: WelcomeScreenVariant = if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.credentialLessDisabled, reloadValue: true) {
+            .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
+        } else {
+            .vpnV2(WelcomeScreenTexts(body: Localizable.welcomeBody))
+        }
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
             variant: variant,
             customization: customization,
@@ -305,6 +313,38 @@ extension CoreLoginService: LoginService {
                 self.show(initialError: initialError, withOverlayViewController: overlayViewController)
             #endif
         }
+    }
+
+    func presentLoginFlow(over viewController: UIViewController) {
+        let setup = setupLoginInterface()
+        loginInterface.presentLoginFlow(
+            over: viewController,
+            customization: setup.customization,
+            updateBlock: setup.completion
+        )
+    }
+
+    func presentSignUpFlow(over viewController: UIViewController) {
+        let setup = setupLoginInterface()
+        loginInterface.presentSignupFlow(
+            over: viewController,
+            customization: setup.customization,
+            updateBlock: setup.completion
+        )
+    }
+
+    private func setupLoginInterface() -> (completion: (LoginAndSignupResult) -> Void, customization: LoginCustomizationOptions) {
+        let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
+            self?.processLoginResult(result: result)
+        }
+        let customization = LoginCustomizationOptions(
+            performBeforeFlow: finishFlow(),
+            customErrorPresenter: self,
+            helpDecorator: helpDecorator
+        )
+
+        loginInterface = makeLoginInterface(isCloseButtonAvailable: true)
+        return (loginResultCompletion, customization)
     }
 
     #if DEBUG

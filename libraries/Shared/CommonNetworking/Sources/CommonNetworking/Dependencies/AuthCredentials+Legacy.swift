@@ -19,7 +19,8 @@ public extension AuthCredentials {
             sessionId: sessionId,
             userId: userId,
             scopes: auth.scopes,
-            mailboxPassword: auth.mailboxPassword
+            mailboxPassword: auth.mailboxPassword,
+            isCredentialLess: auth.isCredentialLess
         )
     }
 
@@ -31,7 +32,8 @@ public extension AuthCredentials {
             sessionId: credential.UID,
             userId: credential.userID,
             scopes: credential.scopes,
-            mailboxPassword: credential.mailboxPassword
+            mailboxPassword: credential.mailboxPassword,
+            isCredentialLess: credential.isCredentialLess
         )
     }
 }
@@ -45,7 +47,8 @@ public extension Credential {
             userName: credentials.username,
             userID: credentials.userId ?? "",
             scopes: credentials.scopes,
-            mailboxPassword: credentials.mailboxPassword
+            mailboxPassword: credentials.mailboxPassword,
+            isCredentialLess: credentials.isCredentialLess
         )
     }
 }

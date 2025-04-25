@@ -328,14 +328,10 @@ public class VpnApiService {
     }
 
     public func userInfo() async throws -> User {
-        try await withCheckedThrowingContinuation { continuation in
-            Authenticator(api: networking.apiService).getUserInfo(completion: continuation.resume(with:))
-        }
+        try await Authenticator(api: networking.apiService).getUserInfo()
     }
 
     public func userAddresses() async throws -> [Address] {
-        try await withCheckedThrowingContinuation { continuation in
-            Authenticator(api: networking.apiService).getAddresses(completion: continuation.resume(with:))
-        }
+        try await Authenticator(api: networking.apiService).getAddresses()
     }
 }

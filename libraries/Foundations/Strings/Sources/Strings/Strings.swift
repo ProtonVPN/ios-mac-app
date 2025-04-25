@@ -369,6 +369,8 @@ public enum Localizable {
   }
   /// MacOS: button in login screen
   public static var createAccount: String { return Localizable.tr("Localizable", "_create_account", fallback: "Create Account") }
+  /// iOS: Action account button on settings account section in guest mode
+  public static var createAccountSettingsTitle: String { return Localizable.tr("Localizable", "_create_account_settings_title", fallback: "Create account") }
   /// MacOS: Buttons in several places; iOS: profile creation screen title
   public static var createNewProfile: String { return Localizable.tr("Localizable", "_create_new_profile", fallback: "Create Profile") }
   /// Create Profile
@@ -792,6 +794,8 @@ public enum Localizable {
   public static var maintenanceOnServerDetectedTitle: String { return Localizable.tr("Localizable", "_maintenance_on_server_detected_title", fallback: "The VPN server is on maintenance") }
   /// Profile create/change form
   public static var makeDefaultProfile: String { return Localizable.tr("Localizable", "_make_default_profile", fallback: "Make Default Profile") }
+  /// iOS: Settings account section card title for guest mode
+  public static var makeTheMoveToPrivacy: String { return Localizable.tr("Localizable", "_make_the_move_to_privacy", fallback: "Make the move to privacy") }
   /// MacOS: button in profiles tab in main window
   public static var manageProfiles: String { return Localizable.tr("Localizable", "_manage_profiles", fallback: "Manage Profiles") }
   /// MacOS: Settings -> Account. Button leading to web interface.
@@ -1388,6 +1392,8 @@ public enum Localizable {
   public static var settingsNetshieldOff: String { return Localizable.tr("Localizable", "_settings_netshield_off", fallback: "Off") }
   /// Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023]
   public static var settingsNetshieldOn: String { return Localizable.tr("Localizable", "_settings_netshield_on", fallback: "On") }
+  /// iOS: Settings account section card description for guest mode
+  public static var settingsNewAccountCardDescription: String { return Localizable.tr("Localizable", "_settings_new_account_card_description", fallback: "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.") }
   /// Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023]
   public static var settingsProtocolAlertBody: String { return Localizable.tr("Localizable", "_settings_protocol_alert_body", fallback: "Changing protocols will end your current VPN session.") }
   /// Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023]

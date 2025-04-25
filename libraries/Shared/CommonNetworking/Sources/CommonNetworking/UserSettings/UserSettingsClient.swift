@@ -20,26 +20,36 @@ import Dependencies
 import DependenciesMacros
 import Domain
 import Foundation
+import ProtonCoreAuthentication
+import ProtonCoreNetworking
+import ProtonCoreServices
+import VPNShared
 
 @DependencyClient
 public struct UserSettingsClient: Sendable {
-    public internal(set) var fetchUserSettings: @Sendable () async throws -> UserSettingsResponse
+    /// AuthCredentials need to be sent due to fetchUserSettings at login not having the most up-to-date credentials. Specially
+    /// for credential-less, where the `isCredentialLess` is still false.
+    public internal(set) var fetchUserSettings: @Sendable (AuthCredentials?) async throws -> UserSettings
 }
 
 extension UserSettingsClient: DependencyKey {
     public static let liveValue: UserSettingsClient = {
         @Dependency(\.networking) var networking
         return UserSettingsClient(
-            fetchUserSettings: {
-                let request = UserSettingsRequest()
-                return try await networking.perform(request: request)
+            fetchUserSettings: { authCredentials in
+                guard let authCredentials else { return .default }
+                let credential = Credential(authCredentials)
+                return try await Authenticator(api: networking.apiService).getUserSettings(credential)
             }
         )
     }()
 
     #if DEBUG
-        public static let testValue: UserSettingsClient = UserSettingsClient {
-            .init(code: 1000, userSettings: .init(password: .init(mode: .singlePassword), twoFactor: .init(type: .disabled)))
+        public static let testValue: UserSettingsClient = UserSettingsClient { _ in
+            .init(
+                password: .init(mode: .singlePassword),
+                _2FA: .init(enabled: .both, registeredKeys: [])
+            )
         }
     #endif
 }

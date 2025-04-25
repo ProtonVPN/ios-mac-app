@@ -37,6 +37,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public let scopes: [String]
 
     public var mailboxPassword: String = ""
+    public var isCredentialLess: Bool = false
 
     override public var description: String {
         "Username: \(username)\n" +
@@ -48,7 +49,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
             "Mailbox Password: \(mailboxPassword)\n"
     }
 
-    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?) {
+    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?, isCredentialLess: Bool = false) {
         self.cacheVersion = version ?? Self.VERSION
         self.username = username
         self.accessToken = accessToken
@@ -57,6 +58,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         self.userId = userId
         self.scopes = scopes
         self.mailboxPassword = mailboxPassword ?? ""
+        self.isCredentialLess = isCredentialLess
         super.init()
     }
 
@@ -83,6 +85,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         static let userId = "staticUserId"
         static let scopes = "scopes"
         static let mailboxPassword = "mailboxPassword"
+        static let isCredentialLess = "isCredentialLess"
     }
 
     public required convenience init(coder aDecoder: NSCoder) {
@@ -90,6 +93,11 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         if let scopesData = aDecoder.decodeObject(forKey: CoderKey.scopes) as? Data,
            let unarchivedScopes = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self, NSString.self], from: scopesData) {
             scopes = unarchivedScopes as? [String] ?? []
+        }
+
+        var isCredentialLess = false
+        if aDecoder.containsValue(forKey: CoderKey.isCredentialLess) {
+            isCredentialLess = aDecoder.decodeBool(forKey: CoderKey.isCredentialLess)
         }
 
         self.init(
@@ -100,7 +108,8 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
             sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
             userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
             scopes: scopes,
-            mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?
+            mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?,
+            isCredentialLess: isCredentialLess
         )
     }
 
@@ -120,5 +129,6 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
         self.scopes = try container.decode([String].self, forKey: .scopes)
         self.mailboxPassword = try container.decodeIfPresent(String.self, forKey: .mailboxPassword) ?? ""
+        self.isCredentialLess = try container.decodeIfPresent(Bool.self, forKey: .isCredentialLess) ?? false
     }
 }

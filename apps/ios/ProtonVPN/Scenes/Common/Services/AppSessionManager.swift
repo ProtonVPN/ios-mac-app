@@ -136,7 +136,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             do {
                 do {
                     @Dependency(\.userSettingsClient) var userSettingsClient
-                    propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings().userSettings
+                    propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(nil)
                 } catch {
                     log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
                 }

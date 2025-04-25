@@ -24,6 +24,7 @@
 
     import ProtonCoreDataModel
     import ProtonCoreLogin
+    import ProtonCoreServices
 
     import CommonNetworking
     import VPNAppCore
