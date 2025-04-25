@@ -74,35 +74,53 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let active = !propertiesManager.secureCoreToggle
         let text = Localizable.secureCore + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.lock
-        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: false), selectCallback: {
-            self.vpnGateway.changeActiveServerType(.standard)
-            self.displayReconnectionFeedback()
-        })
+        return QuickSettingGenericOption(
+            text,
+            icon: icon,
+            active: active,
+            requiresUpdate: requiresUpdate(secureCore: false),
+            selectCallback: { dissmissCallback in
+                self.vpnGateway.changeActiveServerType(.standard)
+                self.displayReconnectionFeedback()
+                dissmissCallback()
+            }
+        )
     }
     
     private var secureCoreOn: QuickSettingGenericOption {
         let active = propertiesManager.secureCoreToggle
         let text = Localizable.secureCore + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.locks
-        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: true), selectCallback: {
-            guard !self.requiresUpdate(secureCore: true) else {
-                self.presentUpsellAlert()
-                return
+        return QuickSettingGenericOption(
+            text,
+            icon: icon,
+            active: active,
+            requiresUpdate: requiresUpdate(secureCore: true),
+            selectCallback: { dismissCallback in
+                guard !self.requiresUpdate(secureCore: true) else {
+                    self.presentUpsellAlert()
+                    dismissCallback()
+                    return
+                }
+                let onActivate = { [weak self] in
+                    self?.vpnGateway.changeActiveServerType(.secureCore)
+                    self?.displayReconnectionFeedback()
+                    dismissCallback()
+                }
+                guard self.propertiesManager.discourageSecureCore == false else {
+                    self.presentDiscourageSecureCoreAlert(
+                        onDontShowAgain: { dontShow in
+                            self.propertiesManager.discourageSecureCore = !dontShow
+                            dismissCallback()
+                        },
+                        onActivate: onActivate,
+                        onDismiss: dismissCallback
+                    )
+                    return
+                }
+                onActivate()
             }
-            let onActivate = { [weak self] in
-                self?.vpnGateway.changeActiveServerType(.secureCore)
-                self?.displayReconnectionFeedback()
-            }
-            guard self.propertiesManager.discourageSecureCore == false else {
-                self.presentDiscourageSecureCoreAlert(onDontShowAgain: { dontShow in
-                    self.propertiesManager.discourageSecureCore = !dontShow
-                },  
-                                                      onActivate: onActivate,
-                                                      onDismiss: nil)
-                return
-            }
-            onActivate()
-        })
+        )
     }
     
     private func requiresUpdate(secureCore isOn: Bool) -> Bool {

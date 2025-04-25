@@ -24,25 +24,25 @@ import Cocoa
 import LegacyCommon
 import Strings
 
-class SettingsWindowController: WindowController {
-    
+final class SettingsWindowController: WindowController {
+
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: SettingsContainerViewController) {
         let window = NSWindow(contentViewController: viewController)
+        window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         super.init(window: window)
-        
         setupWindow()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
         guard let window = window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = Localizable.preferences
         window.titlebarAppearsTransparent = true

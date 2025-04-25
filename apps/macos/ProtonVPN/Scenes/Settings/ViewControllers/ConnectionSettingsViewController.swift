@@ -41,7 +41,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var plutoniumView: SettingsClickableView!
     @IBOutlet private weak var dnsLeakProtectionView: SettingsTickboxView!
     @IBOutlet private weak var allowLANView: SettingsTickboxView!
-
     private var viewModel: ConnectionSettingsViewModel
     
     required init?(coder: NSCoder) {

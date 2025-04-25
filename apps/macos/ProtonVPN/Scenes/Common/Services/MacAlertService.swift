@@ -294,6 +294,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as HermesAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

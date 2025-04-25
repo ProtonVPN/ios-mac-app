@@ -26,10 +26,10 @@ import AppKit
 import Strings
 import VPNAppCore
 
-class PopUpViewModel: NSObject {
-    
+final class PopUpViewModel: NSObject {
+
     let inAppLinkManager: InAppLinkManager?
-    
+
     var title: String {
         // Don't show a title if the the description is using the alert's title
         if attributedDescription.string == alert.title {
@@ -56,7 +56,9 @@ class PopUpViewModel: NSObject {
     var updateInterface: (() -> Void)?
     var dismissViewController: (() -> Void)?
     var dismissCompletion: (() -> Void)?
-    
+
+    let joinedTitleAndMessage: Bool
+
     private var alert: SystemAlert
     private var onConfirm: (() -> Void)? {
         return action(0)?.handler
@@ -66,15 +68,20 @@ class PopUpViewModel: NSObject {
     }
     
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
-        self.init(alert: alert,
-                  attributedDescription: (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural),
-                  inAppLinkManager: inAppLinkManager)
+        let attributedDescription: NSAttributedString
+        if alert.joinedTitleAndMessage, let title = alert.title, let message = alert.message {
+            attributedDescription = [title, message].styled(alignment: .natural)
+        } else {
+            attributedDescription = (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)
+        }
+        self.init(alert: alert, attributedDescription: attributedDescription, inAppLinkManager: inAppLinkManager)
     }
     
     init(alert: SystemAlert, attributedDescription: NSAttributedString, inAppLinkManager: InAppLinkManager? = nil) {
         self.alert = alert
         self.attributedDescription = attributedDescription
         self.inAppLinkManager = inAppLinkManager
+        self.joinedTitleAndMessage = alert.joinedTitleAndMessage
     }
     
     func confirm() {

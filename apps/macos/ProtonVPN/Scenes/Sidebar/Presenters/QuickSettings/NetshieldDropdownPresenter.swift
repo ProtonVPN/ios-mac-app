@@ -59,10 +59,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     override var alert: UpsellAlert {
         NetShieldUpsellAlert()
     }
-    
+
     init( _ factory: Factory ) {
         self.factory = factory
-        super.init( factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
+        super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
         netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
 
         addNetShieldObservers()
@@ -119,6 +119,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             isActive: netShieldPropertyProvider.netShieldType == level,
             currentUserTier: credentialsProvider.tier,
             currentPlanName: credentialsProvider.planName,
+            onPotentialHermesConflict: { [weak self] confirmHandler in
+                let hermesAlert = HermesNotificationType.enableNetShield.systemAlert(confirmHandler)
+                self?.alertService.push(alert: hermesAlert)
+            },
             openUpgradeLink: presentUpsellAlert
         )
     }

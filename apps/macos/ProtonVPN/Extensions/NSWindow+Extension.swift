@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import SwiftUI
 
 extension NSWindow {
     
@@ -68,8 +69,13 @@ extension NSWindow {
     }
 
     func centerWindowOnScreen() {
+        centerWindow(in: screen)
+    }
+
+    func centerWindow(in screen: NSScreen? = NSScreen.main) {
+        let screen = screen ?? self.screen
         guard let visibleFrame = screen?.visibleFrame,
-              let size = contentView?.frame.size else {
+              let size = viewSize else {
             return
         }
         var x = visibleFrame.size.width / 2 - size.width / 2
@@ -78,5 +84,18 @@ extension NSWindow {
         y += visibleFrame.origin.y
         x += visibleFrame.origin.x
         setFrameOrigin(NSPoint(x: x, y: y))
+    }
+}
+
+private extension NSWindow {
+    var viewSize: CGSize? {
+        let contentViewSize = contentView?.frame.size
+        if contentViewSize != .zero {
+            return contentViewSize
+        }
+        if let hostingController = contentViewController as? ExplicitlySizedHostingController {
+            return hostingController.viewSize
+        }
+        return contentViewController?.preferredContentSize
     }
 }

@@ -37,7 +37,7 @@ class QuickSettingsDropdownOption: NSView {
     @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
     
     var action: SuccessCallback?
-    
+
     private var state: State = .blocked(business: false)
     private var isHovered: Bool = false
 

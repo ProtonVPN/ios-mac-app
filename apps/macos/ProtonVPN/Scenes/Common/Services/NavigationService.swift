@@ -60,6 +60,7 @@ class NavigationService {
         & LogFileManagerFactory
         & NATTypePropertyProviderFactory
         & SafeModePropertyProviderFactory
+        & NetShieldPropertyProviderFactory
         & ProtonReachabilityCheckerFactory
         & NetworkingFactory
         & AuthKeychainHandleFactory

@@ -18,7 +18,7 @@
 
 import Foundation
 
-import Dependencies
+import ComposableArchitecture
 
 import LegacyCommon
 import VPNShared
@@ -31,6 +31,7 @@ final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory
         & NATTypePropertyProviderFactory
         & SafeModePropertyProviderFactory
+        & NetShieldPropertyProviderFactory
         & CoreAlertServiceFactory
         & VpnStateConfigurationFactory
         & VpnGatewayFactory
@@ -47,13 +48,17 @@ final class AdvancedSettingsViewModel {
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
+    @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
+    @Dependency(\.hermesClient) private var hermesClient
 
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
     }
 
     var reloadNeeded: (() -> Void)?
+
+    lazy var hermesViewModel = HermesViewModel(factory: factory)
 
     init(factory: Factory) {
         self.factory = factory
@@ -115,6 +120,18 @@ final class AdvancedSettingsViewModel {
 
     var safeMode: Bool {
         return safeModePropertyProvider.safeMode ?? true
+    }
+
+    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
+        let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
+        switch authorizer() {
+        case .success:
+            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+        case .failure(.featureDisabled):
+            return .disabled
+        case .failure(.requiresUpgrade):
+            return .upsell
+        }
     }
 
     // MARK: - Upsell Modals

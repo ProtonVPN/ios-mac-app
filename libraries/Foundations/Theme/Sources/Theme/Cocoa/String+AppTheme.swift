@@ -22,7 +22,15 @@ import Foundation
 import AppKit
 
 public extension String {
-    func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil, textColor: NSColor? = nil) -> NSAttributedString {
+    func styled(
+        _ style: AppTheme.Style = .normal,
+        context: AppTheme.Context = .text,
+        font: NSFont = .themeFont(),
+        hover: Bool = false,
+        alignment: NSTextAlignment = .center,
+        lineBreakMode: NSLineBreakMode? = nil,
+        textColor: NSColor? = nil
+    ) -> NSAttributedString {
         var style = style
         if hover {
             style.insert(.hovered)
@@ -45,10 +53,46 @@ public extension String {
     }
 }
 
+public extension RandomAccessCollection where Element == String {
+    func styled(
+        _ style: AppTheme.Style = .normal,
+        context: AppTheme.Context = .text,
+        font: NSFont = .themeFont(),
+        hover: Bool = false,
+        alignment: NSTextAlignment = .center,
+        lineBreakMode: NSLineBreakMode? = nil,
+        textColor: NSColor? = nil
+    ) -> NSAttributedString {
+        let mutableAttributedString = NSMutableAttributedString()
+        if count == 2 {
+            mutableAttributedString.append(
+                first!.styled(.strong, context: context, font: .themeFont(.paragraph, bold: true), hover: hover, alignment: alignment, lineBreakMode: lineBreakMode, textColor: textColor)
+            )
+            mutableAttributedString.append(.init(string: "\n\n"))
+            mutableAttributedString.append(
+                last!.styled(style, context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode, textColor: textColor)
+            )
+        } else {
+            for element in self {
+                mutableAttributedString.append(
+                    element.styled(style,
+                        context: context,
+                        font: font,
+                        hover: hover,
+                        alignment: alignment,
+                        lineBreakMode: lineBreakMode,
+                        textColor: textColor
+                    )
+                )
+            }
+        }
+        return mutableAttributedString
+    }
+}
+
 public extension CustomStyleContext {
     func style(_ text: String, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         text.styled(self.customStyle(context: context), context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode)
     }
 }
-
 #endif

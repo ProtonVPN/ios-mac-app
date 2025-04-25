@@ -28,6 +28,8 @@ final class SettingsContainerViewModel {
     typealias Factory = PropertiesManagerFactory
         & ConnectionSettingsViewModel.Factory
         & AdvancedSettingsViewModel.Factory
+        & NetShieldPropertyProviderFactory
+
     private let factory: Factory
     
     init(factory: Factory) {
