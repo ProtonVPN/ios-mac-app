@@ -1732,13 +1732,15 @@ public enum Localizable {
   /// Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below
   public static var wgksKsOff: String { return Localizable.tr("Localizable", "_wgks_ks_off", fallback: "Disable kill switch") }
   /// iOS: 1. Menu point in settings screen. 2. Widget description screen title.
-  public static var widget: String { return Localizable.tr("Localizable", "_widget", fallback: "iOS Widget") }
+  public static var widget: String { return Localizable.tr("Localizable", "_widget", fallback: "Widget") }
   /// Widget adoption modal 1st instruction content.
   public static var widgetAdoptionModalInstruction1: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_1", fallback: "Press and hold anywhere on your Home Screen") }
   /// Widget adoption modal 2nd instruction content.
   public static var widgetAdoptionModalInstruction2: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_2", fallback: "Press the **Edit** button, then select **Add Widget**") }
   /// Widget adoption modal 3rd instruction content.
   public static var widgetAdoptionModalInstruction3: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_3", fallback: "Select or search for **Proton VPN**") }
+  /// Widget adoption modal 4th instruction content.
+  public static var widgetAdoptionModalInstruction4: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_4", fallback: "Choose your favorite widget from the carousel, then press **Add Widget** to confirm") }
   /// Widget adoption modal CTA.
   public static var widgetAdoptionModalInstructionButton: String { return Localizable.tr("Localizable", "_widgetAdoption_modal_instruction_button", fallback: "Got it") }
   /// Widget adoption modal instructions header.

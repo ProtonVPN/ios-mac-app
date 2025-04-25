@@ -34,12 +34,6 @@ struct WidgetAdoptionView: View {
     private static let lottieAnimationViewHeight: CGFloat = 192.0
     private static let closeIconSize: CGFloat = 40.0
 
-    private let instructionsFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        return formatter
-    }()
-
     var body: some View {
         content
     }
@@ -64,40 +58,6 @@ struct WidgetAdoptionView: View {
         .padding(.top, .themeSpacing24)
     }
 
-    private var instructionsHeader: some View {
-        Text(Localizable.widgetAdoptionModalInstructionsHeader)
-            .font(.body2(emphasised: true))
-            .foregroundStyle(Color(.text, .weak))
-            .padding(.vertical, .themeSpacing12)
-    }
-
-    private func instructionView(sequence: UInt, text: String) -> some View {
-        HStack(alignment: .top, spacing: .themeSpacing12) {
-            Text(instructionsFormatter.string(for: sequence)!)
-                .themeFont(.body3(emphasised: false))
-            Text(LocalizedStringKey(text))
-                .themeFont(.body2(emphasised: false))
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .padding(.horizontal, .themeSpacing16)
-    }
-
-    private var instructionsView: some View {
-        VStack(alignment: .leading) {
-            instructionsHeader
-            VStack(alignment: .leading, spacing: .themeSpacing24) {
-                instructionView(sequence: 1, text: Localizable.widgetAdoptionModalInstruction1)
-                instructionView(sequence: 2, text: Localizable.widgetAdoptionModalInstruction2)
-                instructionView(sequence: 3, text: Localizable.widgetAdoptionModalInstruction3)
-            }
-            .padding(.vertical, .themeSpacing24)
-            .background(Color(.background, .weak))
-            .clipShape(RoundedRectangle(cornerRadius: .themeRadius16))
-            .transition(.opacity)
-        }
-    }
-
     private var content: some View {
         VStack(alignment: .leading, spacing: 0) {
             titleView
@@ -113,7 +73,7 @@ struct WidgetAdoptionView: View {
                         .fixedSize(horizontal: false, vertical: true)
                         .font(.body2(emphasised: false))
 
-                    instructionsView
+                    WidgetInstructionsView(backgroundColor: Color(.background, .weak))
                 }
             }
 

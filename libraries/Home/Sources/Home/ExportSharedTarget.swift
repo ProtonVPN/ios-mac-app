@@ -26,6 +26,7 @@ public typealias HomeFeature = HomeShared.HomeFeature
 import Home_iOS
 
 public typealias HomeView = Home_iOS.HomeView
+public typealias WidgetSettingsView = Home_iOS.WidgetSettingsView
 
 #endif
 

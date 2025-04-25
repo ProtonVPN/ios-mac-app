@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import SwiftUI
 import UIKit
 import GSMessages
 
@@ -42,6 +43,7 @@ import BugReport
 import Strings
 import Modals
 import Domain
+import Home
 
 // MARK: Country Service
 
@@ -69,7 +71,7 @@ protocol ProfileService {
 protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
-    func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
+    func makeExtensionsSettingsViewController() -> UIViewController
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
@@ -377,8 +379,14 @@ extension NavigationService: SettingsService {
         return SettingsAccountViewController(viewModel: SettingsAccountViewModel(factory: factory), connectionBar: connectionBar)
     }
     
-    func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {
-        return WidgetSettingsViewController(viewModel: WidgetSettingsViewModel())
+    func makeExtensionsSettingsViewController() -> UIViewController {
+        if #available(iOS 17.0, *) {
+            let controller = UIHostingController(rootView: WidgetSettingsView())
+            controller.navigationItem.title = Localizable.widget
+            return controller
+        } else { // iOS 16
+            return WidgetSettingsViewController(viewModel: WidgetSettingsViewModel())
+        }
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
