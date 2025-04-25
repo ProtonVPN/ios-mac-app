@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "LocalAgent", targets: ["LocalAgent"]),
         .library(name: "Connection", targets: ["Connection"]),
         .library(name: "CoreConnection", targets: ["CoreConnection"]),
+        .library(name: "Hermes", targets: ["Hermes"]),
         .library(name: "ConnectionTestSupport", targets: ["CoreConnectionTestSupport", "ConnectionTestSupport"]),
     ],
     dependencies: [
@@ -93,6 +94,12 @@ let package = Package(
                 .product(name: "VPNAppCore", package: "NEHelper"),
             ]
         ),
+        .target(
+            name: "Hermes",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
         .target(name: "CoreConnectionTestSupport", dependencies: ["CoreConnection"]),
         .target(name: "ConnectionTestSupport", dependencies: ["Connection", "CoreConnectionTestSupport"]),
         .testTarget(
@@ -132,6 +139,15 @@ let package = Package(
             name: "LocalAgentTests",
             dependencies: [
                 "LocalAgent",
+                "Connection",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .testTarget(
+            name: "HermesTests",
+            dependencies: [
+                "Hermes",
                 "Connection",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

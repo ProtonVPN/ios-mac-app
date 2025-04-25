@@ -100,6 +100,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         super.init(factory: factory)
         self.propertiesManager.restoreStartOnBootStatus()
 
+        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: public log in interface (completion handlers)
@@ -416,5 +417,32 @@ struct SessionChanged: TypedNotification {
     enum SessionChangeData {
         case established(gateway: VpnGatewayProtocol)
         case lost(reason: String?)
+    }
+}
+
+// MARK: - Hermes
+
+import Hermes
+
+private extension WireguardConfig {
+    func refreshConfig() -> WireguardConfig {
+        @Dependency(\.hermesClient) var hermesClient
+        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+        var hermesResolvers: [HermesResolver] = [.proton]
+        if hermesIsEnabled {
+            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
+        }
+        return .init(
+            defaultUdpPorts: defaultUdpPorts,
+            defaultTcpPorts: defaultTcpPorts,
+            defaultTlsPorts: defaultTlsPorts,
+            dns: hermesResolvers.map(\.location)
+        )
+    }
+}
+
+extension AppSessionManagerImplementation {
+    @objc private func updateWiregardConfig(_ notification: Notification) {
+        propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
     }
 }

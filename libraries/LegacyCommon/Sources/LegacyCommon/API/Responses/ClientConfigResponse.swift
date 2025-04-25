@@ -21,6 +21,8 @@
 //
 
 import Foundation
+import Dependencies
+import Hermes
 
 struct ClientConfigResponse {
     enum PortType {
@@ -55,9 +57,21 @@ extension ClientConfigResponse: Decodable {
         let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?[PortType.UDP],
                                                           wireguardPorts?[PortType.TCP],
                                                           wireguardPorts?[PortType.TLS] ?? wireguardPorts?[PortType.TCP])
-        let wireguardConfig = WireguardConfig(defaultUdpPorts: wireguardUdp,
-                                              defaultTcpPorts: wireguardTcp,
-                                              defaultTlsPorts: wireguardTls)
+
+        @Dependency(\.hermesClient) var hermesClient
+
+        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+        var hermesResolvers: [HermesResolver] = [.proton]
+        if hermesIsEnabled {
+            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
+        }
+
+        let wireguardConfig = WireguardConfig(
+            defaultUdpPorts: wireguardUdp,
+            defaultTcpPorts: wireguardTcp,
+            defaultTlsPorts: wireguardTls,
+            dns: hermesResolvers.map(\.location)
+        )
 
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
         let ratingSettings = try container.decodeIfPresent(RatingSettings.self, forKey: .ratingSettings) ?? RatingSettings()

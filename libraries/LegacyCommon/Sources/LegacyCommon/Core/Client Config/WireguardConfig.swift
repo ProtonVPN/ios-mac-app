@@ -29,9 +29,8 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let defaultTcpPorts: [Int]
     public let defaultTlsPorts: [Int]
 
-    public var dns: String {
-        return "10.2.0.1"
-    }
+    public let dnsServers: [String]
+
     public var address: String {
         return "10.2.0.2/32"
     }
@@ -42,14 +41,20 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
         return 25
     }
 
-    init(defaultUdpPorts: [Int]? = nil, defaultTcpPorts: [Int]? = nil, defaultTlsPorts: [Int]? = nil) {
+    public init(
+        defaultUdpPorts: [Int]? = nil,
+        defaultTcpPorts: [Int]? = nil,
+        defaultTlsPorts: [Int]? = nil,
+        dns: [String]
+    ) {
         self.defaultUdpPorts = defaultUdpPorts.unwrappedOr(defaultValue: [51820])
         self.defaultTcpPorts = defaultTcpPorts.unwrappedOr(defaultValue: [443])
         self.defaultTlsPorts = defaultTlsPorts.unwrappedOr(defaultValue: [443])
+        self.dnsServers = dns
     }
 
     public init() {
-        self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
+        self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil, dns: [])
     }
 }
 
@@ -98,7 +103,7 @@ extension StoredWireguardConfig {
             output.append("PrivateKey = \(clientPrivateKey)\n")
         }
         output.append("Address = \(wireguardConfig.address)\n")
-        output.append("DNS = \(wireguardConfig.dns)\n")
+        output.append("DNS = \(wireguardConfig.dnsServers.joined(separator: ","))\n")
 
         output.append("\n[Peer]\n")
         if let serverPublicKey = serverPublicKey {

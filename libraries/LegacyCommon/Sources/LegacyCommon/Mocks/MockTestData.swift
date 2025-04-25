@@ -255,7 +255,7 @@ public struct MockTestData {
     public var defaultClientConfig = ClientConfig(
         featureFlags: .allEnabled,
         serverRefreshInterval: 2 * 60,
-        wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433]),
+        wireGuardConfig: .init(defaultUdpPorts: [12345, 65432], defaultTcpPorts: [12346, 65433], dns: ["10.2.0.1"]),
         smartProtocolConfig: .init(),
         ratingSettings: .init(),
         serverChangeConfig: ServerChangeConfig()
