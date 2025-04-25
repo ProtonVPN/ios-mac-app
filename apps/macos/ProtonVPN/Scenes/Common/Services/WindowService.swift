@@ -58,6 +58,7 @@ protocol WindowService: WindowControllerDelegate {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
+    func openPlutoniumWindow()
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
     
@@ -241,6 +242,13 @@ class WindowServiceImplementation: WindowService {
 
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
+        activeWindowControllers.insert(windowController)
+        windowController.showWindow(self)
+    }
+
+    func openPlutoniumWindow() {
+        NSApp.setActivationPolicy(.regular)
+        let windowController = PlutoniumWindowController(viewController: .plutonium())
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }

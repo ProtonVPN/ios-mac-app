@@ -46,6 +46,7 @@ final class ConnectionSettingsViewModel {
         & VpnStateConfigurationFactory
         & AuthKeychainHandleFactory
         & AppStateManagerFactory
+        & NavigationServiceFactory
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
@@ -60,6 +61,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var navService: NavigationService = factory.makeNavigationService()
 
     var selectedProtocol: ConnectionProtocol {
         didSet {
@@ -513,4 +515,9 @@ final class ConnectionSettingsViewModel {
         let enabled = profile.accessTier <= userTier
         return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
     }
+
+    func showPlutoniumSettings() {
+        navService.showPlutonium()
+    }
+
 }

@@ -1492,6 +1492,62 @@
 
 "_action_requires_reconnect" = "Your connection needs to be restarted to apply this change";
 
+// MARK: Plutonium
+
+/* Settings page row title */
+"_plutonium_title" = "${PLUTONIUM}";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Enter a valid IPv4 address";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Address already added";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Add";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "All apps";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "None";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "No apps selected";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Exclude mode";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Include mode";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Excluded apps";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Protected apps";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "${_plutonium_customize_connection}";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "${_plutonium_exclude_mode_description}";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "${_plutonium_include_mode_description}";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "${_plutonium_exclude_mode_apps}";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "${_plutonium_include_mode_apps}";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "${_plutonium_exclude_mode_ips}";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "${_plutonium_include_mode_ips}";
+
 // MARK: Local agent
 
 "_local_agent_server_error_title" = "Server error";

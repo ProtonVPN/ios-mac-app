@@ -100,6 +100,8 @@ extension AppDelegate: NSApplicationDelegate {
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
 
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.plutoniumMacOS, false)
+
         setupCoreIntegration()
         setupLogsForApp()
 

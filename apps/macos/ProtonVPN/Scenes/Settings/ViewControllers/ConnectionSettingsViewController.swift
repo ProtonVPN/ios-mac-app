@@ -25,6 +25,7 @@ import Domain
 import Ergonomics
 import Strings
 import LegacyCommon
+import ProtonCoreFeatureFlags
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     
@@ -37,6 +38,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var protocolView: SettingsDropDownView!
 
     @IBOutlet private weak var vpnAcceleratorView: SettingsTickboxView!
+    @IBOutlet private weak var plutoniumView: SettingsClickableView!
     @IBOutlet private weak var dnsLeakProtectionView: SettingsTickboxView!
     @IBOutlet private weak var allowLANView: SettingsTickboxView!
 
@@ -122,6 +124,17 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         refreshPendingEnablement()
     }
     
+    private func setupPlutoniumItem() {
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
+            plutoniumView.isHidden = true
+        }
+        let model = SettingsClickableView.ViewModel(
+            labelText: Localizable.plutoniumTitle,
+            state: .available(enabled: true, interactive: true)
+        )
+        plutoniumView.setupItem(model: model, delegate: self)
+    }
+
     private func setupVpnAcceleratorItem() {
         let featureState = viewModel.displayState(for: VPNAccelerator.self)
         vpnAcceleratorView.isHidden = featureState == .disabled
@@ -168,6 +181,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupAutoConnectItem()
         setupQuickConnectItem()
         setupVpnAcceleratorItem()
+        setupPlutoniumItem()
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAllowLANItem()
@@ -201,6 +215,12 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
                 self?.setupProtocolItem()
             }
         }
+    }
+}
+
+extension ConnectionSettingsViewController: ClickableViewDelegate {
+    func tapped(_ view: SettingsClickableView) {
+        viewModel.showPlutoniumSettings()
     }
 }
 

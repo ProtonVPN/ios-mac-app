@@ -192,12 +192,6 @@ fileprivate extension CGSize {
     }
 }
 
-fileprivate extension View {
-    func frame(_ frame: CGSize) -> some View {
-        self.frame(width: frame.width, height: frame.height)
-    }
-}
-
 fileprivate extension StrokeStyle {
     static let countdown: Self = .init(lineWidth: 10, lineCap: .square, lineJoin: .miter)
     static let checkmark: Self = .init(lineWidth: 2.5, lineCap: .round, lineJoin: .round)

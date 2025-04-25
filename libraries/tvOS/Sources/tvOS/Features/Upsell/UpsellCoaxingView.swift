@@ -37,9 +37,7 @@ struct UpsellCoaxingView: View {
             Spacer()
                 .frame(height: 72)
             UpsellFeatureListView()
-                .themeBorder(color: Color(.border),
-                             lineWidth: 1,
-                             cornerRadius: .radius32)
+                .themeBorder(cornerRadius: .radius32)
         }
     }
 }

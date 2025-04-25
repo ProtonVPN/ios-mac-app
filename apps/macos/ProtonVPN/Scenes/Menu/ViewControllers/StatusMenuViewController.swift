@@ -159,7 +159,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     private func setupCountryCollection() {
         countryClipView.postsBoundsChangedNotifications = true
-        countryScrollView.backgroundColor = .color(.background, .transparent)
+        countryScrollView.backgroundColor = .clear
         NotificationCenter.default.addObserver(self, selector: #selector(countriesScrolled), name: NSView.boundsDidChangeNotification, object: countryClipView)
         
         let nib = NSNib(nibNamed: NSNib.Name("StatusMenuCountryViewItem"), bundle: nil)

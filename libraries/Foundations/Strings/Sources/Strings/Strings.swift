@@ -1014,6 +1014,42 @@ public enum Localizable {
   public static var plusPlanFeatures: String { return Localizable.tr("Localizable", "_plus_plan_features", fallback: "Plus Servers\nSecure Core\nTor Servers") }
   /// Section header in search
   public static var plusServers: String { return Localizable.tr("Localizable", "_plus_servers", fallback: "Plus Servers") }
+  /// Button title for adding IP to the list
+  public static var plutoniumAddButton: String { return Localizable.tr("Localizable", "_plutonium_add_button", fallback: "Add") }
+  /// IP entry validation error
+  public static var plutoniumAddressExists: String { return Localizable.tr("Localizable", "_plutonium_address_exists", fallback: "Address already added") }
+  /// Header title of all available apps section
+  public static var plutoniumAllApps: String { return Localizable.tr("Localizable", "_plutonium_all_apps", fallback: "All apps") }
+  /// Plutonium feature description
+  public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "Customize your connection by deciding which apps and IP addresses are protected by VPN.") }
+  /// Title of the plutonium feature operation mode
+  public static var plutoniumExcludeMode: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode", fallback: "Exclude mode") }
+  /// Description of the included apps list
+  public static var plutoniumExcludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_apps", fallback: "These apps connect without VPN protection.") }
+  /// Description of the plutonium feature operation mode
+  public static var plutoniumExcludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_description", fallback: "Allow selected apps and IP addresses to connect without VPN protection.") }
+  /// Header of the excluded ips list
+  public static var plutoniumExcludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_ips", fallback: "Excluded IP addresses") }
+  /// Header of the excluded apps list
+  public static var plutoniumExclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_exclusion_list_apps", fallback: "Excluded apps") }
+  /// Title of the plutonium feature operation mode
+  public static var plutoniumIncludeMode: String { return Localizable.tr("Localizable", "_plutonium_include_mode", fallback: "Include mode") }
+  /// Description of the included apps list
+  public static var plutoniumIncludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_apps", fallback: "Only these apps are protected by VPN.") }
+  /// Description of the plutonium feature operation mode
+  public static var plutoniumIncludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_include_mode_description", fallback: "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.") }
+  /// Header of the included ips list
+  public static var plutoniumIncludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_ips", fallback: "Protected IP addresses") }
+  /// Header of the excluded apps list
+  public static var plutoniumInclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_inclusion_list_apps", fallback: "Protected apps") }
+  /// Description when user didn't include any apps in the list
+  public static var plutoniumNoApps: String { return Localizable.tr("Localizable", "_plutonium_no_apps", fallback: "No apps selected") }
+  /// Empty list title, appears when no elements are present
+  public static var plutoniumNone: String { return Localizable.tr("Localizable", "_plutonium_none", fallback: "None") }
+  /// Settings page row title
+  public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "${PLUTONIUM}") }
+  /// IP entry validation error
+  public static var plutoniumValidationError: String { return Localizable.tr("Localizable", "_plutonium_validation_error", fallback: "Enter a valid IPv4 address") }
   /// MacOS: Settings screen title
   public static var preferences: String { return Localizable.tr("Localizable", "_preferences", fallback: "Preferences") }
   /// Description shown together with server info icon
@@ -1352,6 +1388,8 @@ public enum Localizable {
   public static var settingsTitleNetshield: String { return Localizable.tr("Localizable", "_settings_title_netshield", fallback: "NetShield") }
   /// Title of the Protocol cell in the Settings tab [Redesign_2023]
   public static var settingsTitleProtocol: String { return Localizable.tr("Localizable", "_settings_title_protocol", fallback: "Protocol") }
+  /// Title of the "Sign in to another device" cell in the Settings tab
+  public static var settingsTitleQrCodeSignIn: String { return Localizable.tr("Localizable", "_settings_title_qr_code_sign_in", fallback: "Sign in to another device") }
   /// Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023]
   public static var settingsTitleRate: String { return Localizable.tr("Localizable", "_settings_title_rate", fallback: "Rate Proton VPN") }
   /// Title of the Report an Issue cell in the Settings tab [Redesign_2023]
@@ -1368,8 +1406,6 @@ public enum Localizable {
   public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
   /// Title of the Widget cell in the Settings tab [Redesign_2023]
   public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
-  /// Title of the Sign in to another device cell in the Settings tab
-  public static var settingsTitleQrCodeSignIn: String { return Localizable.tr("Localizable", "_settings_title_qr_code_sign_in", fallback: "Sign in to another device") }
   /// iOS: title of the screen after successfull purchase
   public static var setupComplete: String { return Localizable.tr("Localizable", "_setup_complete", fallback: "Setup Complete") }
   /// iOS: title of the screen after successfull purchase
@@ -1980,6 +2016,10 @@ public enum Localizable {
   /// Plural format key: "%#@plan_duration_year@"
   public static func planDurationYear(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "plan_duration_year", p1, fallback: "Plural format key: \"%#@plan_duration_year@\"")
+  }
+  /// Plural format key: "%#@plutonium_others@"
+  public static func plutoniumOthers(_ p1: Int) -> String {
+    return Localizable.tr("Localizable", "plutonium_others", p1, fallback: "Plural format key: \"%#@plutonium_others@\"")
   }
   /// Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable
   public static var protonWebsiteUnreachable: String { return Localizable.tr("Localizable", "proton_website_unreachable", fallback: "The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.") }

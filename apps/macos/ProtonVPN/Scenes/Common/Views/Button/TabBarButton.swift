@@ -86,9 +86,8 @@ class TabBarButton: NSButton {
         super.draw(dirtyRect)
         
         wantsLayer = true
-        DarkAppearance {
-            layer?.backgroundColor = .cgColor(.background, .transparent)
-        }
+
+        layer?.backgroundColor = .clear
     }
     
     private func setupAttributedTitle() {
