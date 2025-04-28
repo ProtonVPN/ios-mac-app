@@ -21,8 +21,8 @@ import Foundation
 #if canImport(AppKit)
 import AppKit
 
-public extension String {
-    func styled(
+extension String {
+    public func styled(
         _ style: AppTheme.Style = .normal,
         context: AppTheme.Context = .text,
         font: NSFont = .themeFont(),
@@ -53,8 +53,8 @@ public extension String {
     }
 }
 
-public extension RandomAccessCollection where Element == String {
-    func styled(
+extension Collection where Element == String {
+    public func styled(
         _ style: AppTheme.Style = .normal,
         context: AppTheme.Context = .text,
         font: NSFont = .themeFont(),
@@ -64,29 +64,35 @@ public extension RandomAccessCollection where Element == String {
         textColor: NSColor? = nil
     ) -> NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
-        if count == 2 {
+        for element in self {
             mutableAttributedString.append(
-                first!.styled(.strong, context: context, font: .themeFont(.paragraph, bold: true), hover: hover, alignment: alignment, lineBreakMode: lineBreakMode, textColor: textColor)
-            )
-            mutableAttributedString.append(.init(string: "\n\n"))
-            mutableAttributedString.append(
-                last!.styled(style, context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode, textColor: textColor)
-            )
-        } else {
-            for element in self {
-                mutableAttributedString.append(
-                    element.styled(style,
-                        context: context,
-                        font: font,
-                        hover: hover,
-                        alignment: alignment,
-                        lineBreakMode: lineBreakMode,
-                        textColor: textColor
-                    )
+                element.styled(style,
+                    context: context,
+                    font: font,
+                    hover: hover,
+                    alignment: alignment,
+                    lineBreakMode: lineBreakMode,
+                    textColor: textColor
                 )
-            }
+            )
         }
         return mutableAttributedString
+    }
+}
+
+extension RandomAccessCollection where Element: NSAttributedString {
+    public func joined() -> NSAttributedString {
+        let joinedString = NSMutableAttributedString()
+        for element in self {
+            joinedString.append(element)
+        }
+        return joinedString
+    }
+}
+
+extension NSAttributedString {
+    public static func lineSeparator(count: Int = 1) -> NSAttributedString {
+        return .init(string: String(repeating: "\n", count: count))
     }
 }
 

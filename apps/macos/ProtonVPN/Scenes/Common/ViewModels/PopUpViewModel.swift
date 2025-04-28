@@ -66,11 +66,15 @@ final class PopUpViewModel: NSObject {
     private var onCancel: (() -> Void)? {
         return action(1)?.handler
     }
-    
+
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
         let attributedDescription: NSAttributedString
         if alert.joinedTitleAndMessage, let title = alert.title, let message = alert.message {
-            attributedDescription = [title, message].styled(alignment: .natural)
+            attributedDescription = [
+                title.styled(.strong, font: .themeFont(.paragraph, bold: true), alignment: .natural),
+                .lineSeparator(count: 2),
+                message.styled(alignment: .natural)
+            ].joined()
         } else {
             attributedDescription = (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)
         }

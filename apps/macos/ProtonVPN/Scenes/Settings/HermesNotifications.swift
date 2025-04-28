@@ -39,7 +39,7 @@ extension HermesNotificationType {
     ) -> any SystemAlert {
         switch self {
         case .enableHermes, .enableNetShield:
-            return HermesAlert(type: self, confirmHandler: actionHandler, cancelHandler: cancelHandler)
+            return HermesSettingsViewAlert(type: self, confirmHandler: actionHandler, cancelHandler: cancelHandler)
         case .reconnectNecessary:
             return ReconnectOnActionAlert(actionTitle: "Change Settings", confirmHandler: actionHandler, cancelHandler: cancelHandler)
         }
@@ -75,7 +75,7 @@ private extension HermesNotificationType {
 }
 
 // Ideally, this would be private...
-final class HermesAlert: SystemAlert {
+final class HermesSettingsViewAlert: SystemAlert {
     typealias ActionHandler = () -> Void
 
     var title: String?
@@ -94,10 +94,7 @@ final class HermesAlert: SystemAlert {
         self.title = type.title
         self.message = type.message
         self.actions = [
-            AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-                //AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-                confirmHandler()
-            }),
+            AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler),
             AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler)
         ]
     }

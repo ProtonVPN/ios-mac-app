@@ -52,6 +52,12 @@ extension HermesTestContainer: VpnStateConfigurationFactory {
     }
 }
 
+extension HermesTestContainer: VpnGatewayFactory {
+    func makeVpnGateway() -> any VpnGatewayProtocol {
+        vpnGateway
+    }
+}
+
 @available(macOS 14.0, *)
 final class HermesViewModelTests: XCTestCase {
     var cancellables: Set<AnyCancellable> = []

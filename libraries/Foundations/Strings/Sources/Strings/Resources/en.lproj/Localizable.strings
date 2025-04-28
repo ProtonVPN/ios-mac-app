@@ -2771,3 +2771,63 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Got it";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "${HERMES}";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "${HERMES}";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "${HERMES}";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "${HERMES}";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "${HERMES}";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "${HERMES}";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "${HERMES}";
+
+/* Hermes Entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "${HERMES}";
+
+/* Hermes Entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "${HERMES}";
+
+/* Hermes Entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "${HERMES}";
+
+/* Hermes Entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "${HERMES}";
+
+/* Hermes Entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "${HERMES}";
+
+/* Hermes Entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "${HERMES}";
+
+/* Hermes Entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "${HERMES}";
+
+/* Hermes Entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "${HERMES}";
+
+/* Hermes Entities Form validation "Already Added" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_alreadyAdded" = "${HERMES}";
+
+/* Hermes Entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "${HERMES}";
+
+/* Hermes Entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "${HERMES}";
+
+/* Hermes Entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "${HERMES}";
+
+/* Hermes Entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "${HERMES}";

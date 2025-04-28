@@ -18,10 +18,13 @@
 
 import SwiftUI
 
+import Strings
 import Theme
 
 struct HermesUpsellView: ExplicitlySizedView {
     static let viewSize: CGSize = .init(width: 520, height: 444)
+
+    private static let contentPadding: EdgeInsets = EdgeInsets(top: 36, leading: 60, bottom: 64, trailing: 60)
 
     let upgradeAction: () -> Void
 
@@ -31,19 +34,19 @@ struct HermesUpsellView: ExplicitlySizedView {
                 Asset.hermesSplashScreen.swiftUIImage
                     .frame(width: 320, height: 180)
 
-                Text("Advanced VPN customization")
+                Text(Localizable.hermesUpsellTitle)
                     .themeFont(.title1(emphasised: true))
                     .foregroundStyle(Color(.text, .normal))
 
-                Text("Connect using Hermes with VPN Plus.")
+                Text(Localizable.hermesUpsellDescription)
                     .themeFont(.title2(emphasised: false))
                     .foregroundStyle(Color(.text, .weak))
             }
 
-            Button("Upgrade", action: upgradeAction)
+            Button(Localizable.hermesUpsellButton, action: upgradeAction)
                 .buttonStyle(PrimaryButtonStyle())
         }
-        .padding(EdgeInsets(top: 36, leading: 60, bottom: 64, trailing: 60))
+        .padding(Self.contentPadding)
         .frame(width: Self.viewSize.width, height: Self.viewSize.height)
         .background(Color(red: 22 / 255, green: 20 / 255, blue: 28 / 255))
         .background(linearGradientBackground)

@@ -23,12 +23,12 @@ import Domain
 import Hermes
 import LegacyCommon
 import Sharing
+import Strings
 import Theme
 
 struct HermesView: ExplicitlySizedView {
     static let viewSize: CGSize = .init(width: 752, height: 600)
 
-    // TODO: Fix build issues and put back as @Bindable
     let viewModel: HermesViewModel
 
     @State private var resolverLocation: String = ""
@@ -42,15 +42,25 @@ struct HermesView: ExplicitlySizedView {
         }
     }
 
+    #if DEBUG && false
+    private enum HitTesting {
+        case none
+        case inProgress
+        case result(Bool)
+    }
+
+    @State private var hitTest: HitTesting = .none
+    #endif
+
     var body: some View {
         VStack(alignment: .leading) {
             HermesSectionView {
                 HStack {
                     VStack(alignment: .leading, spacing: .zero) {
-                        Text("Hermes")
+                        Text(Localizable.hermesFeatureTitle)
                             .themeFont(.title3(emphasised: true))
                             .foregroundStyle(Color.white)
-                        Text("Connect to VPN with a self-hosted or third-party Hermes system. Learn more...")
+                        Text(Localizable.hermesFeatureDescription)
                             .themeFont(.body(emphasised: false))
                             .foregroundStyle(Color(.text, .weak))
                     }
@@ -88,13 +98,13 @@ struct HermesView: ExplicitlySizedView {
     private var resolversContent: some View {
         let resolvers = viewModel.activeHermesResolvers
 
-        Text("Servers (\(resolvers.count))")
+        Text(Localizable.hermesEntitiesHeader + "(" + String(resolvers.count) + ")")
             .themeFont(.callout(emphasised: false))
             .foregroundStyle(Color(.text, .weak))
             .padding(.top, 24.0)
 
         VStack(alignment: .leading, spacing: 8.0) {
-            Text("Add new Hermes Resolver")
+            Text(Localizable.hermesEntitiesFormHeader)
                 .themeFont(.title3(emphasised: true))
                 .foregroundStyle(Color(.text, .normal))
 
@@ -102,7 +112,7 @@ struct HermesView: ExplicitlySizedView {
 
             locationValidationView
 
-            Text("If your custom Hermes Resolver doesn’t work, the standard Proton Hermes Resolver will be used.")
+            Text(Localizable.hermesEntitiesFootnote)
                 .themeFont(.callout(emphasised: false))
                 .foregroundStyle(Color(.text, .hint))
 
@@ -111,7 +121,7 @@ struct HermesView: ExplicitlySizedView {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 16.0)
         .padding(.vertical, 24.0)
-        .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 12.0, style: .continuous))
+        .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: 12.0, style: .continuous))
         .onChange(of: resolverLocation) { newValue in
             resolverLocationValidation = viewModel.validate(location: newValue)
         }
@@ -119,27 +129,30 @@ struct HermesView: ExplicitlySizedView {
 
     private var locationInputView: some View {
         HStack {
-            TextField("192.0.2.0", text: $resolverLocation)
+            TextField(Localizable.hermesEntitiesFormPlaceholder, text: $resolverLocation)
                 .onSubmit { submitResolverLocation() }
                 .focused($locationTextFieldIsFocused)
+                .controlSize(.large)
                 .overlay(locationTextFieldIsFocused ? resolverLocationOverlay : nil)
                 .textFieldStyle(.roundedBorder)
                 .frame(maxWidth: .infinity)
 
-            Button("Add") {
+            Button(Localizable.hermesEntitiesFormAddButton) {
                 submitResolverLocation()
             }
             .disabled(resolverLocationValidation == .empty)
-            .buttonStyle(PrimaryButtonStyle(size: .init(width: 58.0, height: 32.0)))
+            .buttonStyle(
+                PrimaryButtonStyle(size: .init(width: 58.0, height: 32.0), font: .themeFont(.body(emphasised: true)))
+            )
         }
     }
 
     private var resolverLocationOverlay: some View {
         switch resolverLocationValidation {
         case .empty, .valid:
-            return RoundedRectangle(cornerRadius: 16).stroke(Color.purple)
+            return RoundedRectangle(cornerRadius: 8).stroke(Color.purple)
         case .invalid, .duplicate, .unexpectedError:
-            return RoundedRectangle(cornerRadius: 16).stroke(Color.red)
+            return RoundedRectangle(cornerRadius: 8).stroke(Color.red)
         }
     }
 
@@ -155,19 +168,19 @@ struct HermesView: ExplicitlySizedView {
     private var locationValidationView: some View {
         switch resolverLocationValidation {
         case .valid, .empty:
-            Text("Enter the server’s IPv4 address")
+            Text(Localizable.hermesEntitiesFormValidationEnterAddress)
                 .themeFont(.callout(emphasised: false))
                 .foregroundStyle(Color(.text, .weak))
         case .invalid:
-            Text("Enter a valid IPv4 address")
+            Text(Localizable.hermesEntitiesFormValidationEnterValidAddress)
                 .themeFont(.callout(emphasised: false))
                 .foregroundStyle(Color.red)
         case .duplicate:
-            Text("Server already added")
+            Text(Localizable.hermesEntitiesFormValidationDuplicate)
                 .themeFont(.callout(emphasised: false))
                 .foregroundStyle(Color.red)
         case .unexpectedError:
-            Text("An unexpected error occured")
+            Text(Localizable.hermesEntitiesFormValidationUnexpectedError)
                 .themeFont(.callout(emphasised: false))
                 .foregroundStyle(Color.red)
         }
@@ -182,7 +195,7 @@ struct HermesView: ExplicitlySizedView {
                 cell(forResolver: resolver, isSingleResolver: singleResolver)
                     .frame(height: 40.0)
                     .listRowSeparator(.hidden)
-                    .help("Double click to copy")
+                    .help(Localizable.hermesEntitiesCopyAction)
                     .onTapGesture(count: 2) {
                         setPasteboard(to: resolver.location)
                     }
@@ -210,10 +223,11 @@ struct HermesView: ExplicitlySizedView {
             }
 
             Text(resolver.location)
+                .themeFont(.body(emphasised: false))
 
             Spacer()
 
-            #if DEBUG
+            #if DEBUG && FALSE
             testerView(with: resolver.location)
             #endif
 
@@ -228,15 +242,10 @@ struct HermesView: ExplicitlySizedView {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
 
-    private enum HitTesting {
-        case none
-        case inProgress
-        case result(Bool)
-    }
-
-    @State private var hitTest: HitTesting = .none
-
+#if DEBUG && FALSE
+private extension HermesView {
     @ViewBuilder
     private func testerView(with location: String) -> some View {
         switch hitTest {
@@ -269,6 +278,7 @@ struct HermesView: ExplicitlySizedView {
         }
     }
 }
+#endif
 
 private struct HermesSectionView<Content: View>: View {
     let content: Content
@@ -300,7 +310,7 @@ final class HermesWindow: NSWindow {
         let hostingViewController = ExplicitlySizedHostingController(rootView: hermesView)
         contentViewController = hostingViewController
 
-        title = "Hermes Feature" // TODO: Localize
+        title = Localizable.hermesFeatureWindowTitle
         titlebarAppearsTransparent = true
         appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)

@@ -294,7 +294,7 @@ extension MacAlertService: CoreAlertService {
         case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
-        case let alert as HermesAlert:
+        case let alert as HermesSettingsViewAlert:
             showDefaultSystemAlert(alert)
 
         default:
