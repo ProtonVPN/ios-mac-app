@@ -1,36 +1,17 @@
-/* (No Comment) */
-"1l8xNj" = "接続解除";
+"1l8xNj" = "Disconnect";
 
-/* (No Comment) */
-"2LMbbw" = "接続状態";
+"8tZ81X" = "Connect to Proton VPN";
 
-/* (No Comment) */
-"8tZ81X" = "Proton VPN に接続する";
+"Ya0ZRy" = "Quick Connect";
 
-/* (No Comment) */
-"cQ4Mju" = "Proton VPN から切断する";
+"cQ4Mju" = "Disconnect from Proton VPN";
 
-/* (No Comment) */
-"hIcJsr" = "Proton VPN の接続状態を取得";
+"jf696t" = "Connect to Proton VPN";
 
-/* (No Comment) */
-"jf696t" = "Proton VPN に接続する";
+"ksQcRb" = "Disconnect from Proton VPN";
 
-/* (No Comment) */
-"JOCERT" = "Proton VPN の接続状態を取得";
+"2LMbbw" = "Get Proton VPN Connection Status";
 
-/* (No Comment) */
-"ksQcRb" = "Proton VPN から切断する";
+"ujOFps" = "Status";
 
-/* (No Comment) */
-"NzUfmp" = "${status}";
-
-/* (No Comment) */
-"ujOFps" = "状態";
-
-/* (No Comment) */
-"Ya0ZRy" = "クイック接続";
-
-/* (No Comment) */
-"ZqjXZN" = "${status}";
-
+"hIcJsr" = "Get Proton VPN Connection Status";

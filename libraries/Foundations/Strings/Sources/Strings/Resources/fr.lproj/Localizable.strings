@@ -1151,7 +1151,7 @@
 "_extensions" = "Extensions";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Widget iOS";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Statistiques d'utilisation";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Sélectionner ou rechercher **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Choisissez votre widget préféré dans le carrousel, puis appuyez sur **Ajouter un widget** pour confirmer.";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "J'ai compris";

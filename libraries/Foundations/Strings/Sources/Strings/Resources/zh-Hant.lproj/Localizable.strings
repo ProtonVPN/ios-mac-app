@@ -856,7 +856,7 @@
 "_upgrade_unavailable_body" = "您的 Proton VPN 訂購授權未能在應用程式內升級，請造訪 account.protonvpn.com 以進行升級。";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Your Proton VPN subscription cannot be upgraded from the TestFlight version of the app, please visit account.protonvpn.com to upgrade.";
+"_upgrade_unavailable_on_testflight" = "您的 Proton VPN 訂購授權未能在 應用程式 的 TestFlight 版本升級，請造訪 account.protonvpn.com 進行升級。";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "清除應用程式資料";
@@ -1151,7 +1151,7 @@
 "_extensions" = "附加元件";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS 小工具";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "使用統計資料";
@@ -1785,7 +1785,7 @@
 "_home_recents_server_under_maintenance" = "伺服器維護中";
 
 /* Title of the "Random" recent connection item */
-"home_recents_random_server_title" = "Random Country";
+"home_recents_random_server_title" = "隨機國家";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "幫助";
@@ -2078,7 +2078,7 @@
 "_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
-"_settings_protocol_tag_recommended" = "RECOMMENDED";
+"_settings_protocol_tag_recommended" = "建議";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
 "_settings_protocol_tag_new" = "新版本";
@@ -2447,7 +2447,7 @@
 "modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
 
 /* Title of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_title" = "Gateways have moved";
+"modals_whats_new_gateways_title" = "閘道已移動";
 
 /* Subtitle of gateways related content of the "What's new" screen */
 "modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
@@ -2654,7 +2654,7 @@
 "_password_changed_successfully" = "Password changed successfully";
 
 /* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
-"_ike_deprecation_alert_title" = "Enable IKEv2?";
+"_ike_deprecation_alert_title" = "啟用 IKEv2 嗎？";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
@@ -2741,13 +2741,13 @@
 "upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";
 
 /* Error message: Catch-all error alert title. */
-"_generic_error_title" = "Error";
+"_generic_error_title" = "錯誤";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_generic_error_description" = "The operation could not be completed. (Error %@)";
 
 /* Error alert title: a connection error has occurred. */
-"_connection_error_title" = "Connection Error";
+"_connection_error_title" = "連線錯誤";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Got it";

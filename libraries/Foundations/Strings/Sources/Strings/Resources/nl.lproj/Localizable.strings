@@ -1151,7 +1151,7 @@
 "_extensions" = "Extensies";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS-widget";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Gebruiksstatistieken";
@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Er was een probleem met de verbinding. (Fout %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Onbeschermd";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Controleer of u bent verbonden met VPN en krijg snel toegang tot uw favoriete verbindingen.";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Selecteer of zoek naar **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Kies uw favoriete widget uit de carrousel en druk vervolgens op **Widget toevoegen** om te bevestigen.";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Begrepen";

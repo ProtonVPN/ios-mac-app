@@ -172,7 +172,7 @@
 "_change_server" = "Змінити сервер";
 
 /* Used in many places in MacOS app */
-"_secure_core" = "Secure Core";
+"_secure_core" = "Secure Core увімкнено";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -648,7 +648,7 @@
 "_feature" = "Функція";
 
 /* Profile create/change form */
-"_use_secure_core" = "Secure Core";
+"_use_secure_core" = "Secure Core увімкнено";
 
 /* Profile create/change form */
 "_select_country" = "Вибір країни";
@@ -856,7 +856,7 @@
 "_upgrade_unavailable_body" = "Вашу передплату Proton VPN неможливо змінити в програмі. Для цього перейдіть на account.protonvpn.com.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Your Proton VPN subscription cannot be upgraded from the TestFlight version of the app, please visit account.protonvpn.com to upgrade.";
+"_upgrade_unavailable_on_testflight" = "Вашу передплату Proton VPN неможливо змінити у версії програми TestFlight. Для цього перейдіть на account.protonvpn.com.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Очистити дані програми";
@@ -1151,7 +1151,7 @@
 "_extensions" = "Розширення";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS віджет";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Статистика використання";
@@ -1710,19 +1710,19 @@
 "_home_unprotected_accessibility_hint" = "VPN від'єднано. Під'єднайтеся до сервера, щоб безпечно користуватися інтернетом.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
-"_connection_card_accessibility_fastest" = "The fastest country available";
+"_connection_card_accessibility_fastest" = "Найшвидша доступна країна";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
+"_connection_card_accessibility_fastest_sc" = "Найшвидша доступна країна Secure Core";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "Торкніться двічі, щоб показати свою IP-адресу";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
+"_connection_details_accessibility_ipView_hideAddress" = "Торкніться двічі, щоб сховати свою IP-адресу";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
-"_connection_details_accessibility_close" = "Close connection details screen";
+"_connection_details_accessibility_close" = "Закрити екран з подробицями з'єднання";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Типове з'єднання";
@@ -1749,7 +1749,7 @@
 "_connection_card_accessibility_browsing_from" = "Ви безпечно користуєтеся інтернетом із %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+"_connection_card_accessibility_browsing_from_fullDetails" = "Ваше з'єднання захищене сервером %2$@ (%1$@) за протоколом %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Завантаження";
@@ -1758,7 +1758,7 @@
 "home_default_connection_title" = "Виберіть типове з'єднання";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Fastest Country";
+"home_default_connection_fastest_name" = "Найшвидша країна";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Найкращий сервер на основі вашого розташування";
@@ -1785,7 +1785,7 @@
 "_home_recents_server_under_maintenance" = "Сервер обслуговується";
 
 /* Title of the "Random" recent connection item */
-"home_recents_random_server_title" = "Random Country";
+"home_recents_random_server_title" = "Випадкова країна";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Допомога";
@@ -2339,7 +2339,7 @@
 "upsell_devices_title" = "Захист 10 пристроїв одночасно";
 
 /* Subtitle of devices upsell modal */
-"upsell_devices_subtitle" = "Proton VPN доступна для 8 різних платформ.";
+"upsell_devices_subtitle" = "Proton VPN можна використовувати на 8 різних платформах.";
 
 /* Title of torOverVPN upsell modal */
 "upsell_torOverVPN_title" = "Доступ до мережі Tor одним дотиком";
@@ -2684,7 +2684,7 @@
 "_operating_system_out_of_date_alert_title" = "Оновіть своє програмне забезпечення";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
-"_operating_system_out_of_date_alert_description" = "Доступна нова версія Proton VPN. Щоб встановити її, вам спершу необхідно оновити свій пристрій до %1$@ %2$@ або новіше.";
+"_operating_system_out_of_date_alert_description" = "Доступна нова версія Proton VPN. Щоб встановити її, вам спершу необхідно оновити свій пристрій до %1$@ %2$@ або новішої версії.";
 
 /* Home upsell carousel card title */
 "upsell_carousel_worldwide_title" = "Світове покриття";
@@ -2741,76 +2741,79 @@
 "upsell_carousel_more_subtitle" = "Отримайте доступ до розширених функцій швидкодії та приватності";
 
 /* Error message: Catch-all error alert title. */
-"_generic_error_title" = "Error";
+"_generic_error_title" = "Помилка";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "The operation could not be completed. (Error %@)";
+"_generic_error_description" = "Не вдалося завершити операцію. (Помилка %@)";
 
 /* Error alert title: a connection error has occurred. */
-"_connection_error_title" = "Connection Error";
+"_connection_error_title" = "Помилка з'єднання";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
+"_connection_error_unexpected_protocol" = "Для вибраного з'єднання використовується протокол (%@), який більше не підтримується цією програмою. Виберіть інше з'єднання. (Помилка %@)";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server. (Error %@)";
+"_connection_error_certificate_authentication" = "Виникла проблема під час автентифікації на сервері. (Помилка %@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN. (Error %@)";
+"_connection_error_tunnel_connection" = "Виникла проблема із запуском VPN. (Помилка %@)";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting: %@";
+"_connection_error_local_agent" = "Під час з'єднання сталася неочікувана помилка: %@";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "We were unable to connect to the server. (Error %@).";
+"_connection_error_intent_missing" = "Не вдалося з'єднатися із сервером. (Помилка %@).";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "There was a problem preparing the connection (Error %@)";
+"_connection_error_preparation" = "Виникла проблема під час підготовки з'єднання. (Помилка %@)";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
+"_connection_error_server_missing" = "Вибраний сервер більше не доступний. Виберіть інший сервер. (Помилка %@)";
 
 /* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)";
+"_connection_error_timeout" = "Під час спроби з'єднатися сталася помилка: сервер не відповів вчасно. Спробуйте ще раз. (Помилка %@)";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "There was a problem with the connection. (Error %@)";
+"_provider_message_error" = "Виникла проблема зі з'єднанням. (Помилка %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Незахищено";
 
 /* Text that appears as subtitle to the widget when user is creating it */
-"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+"widget_tray_description" = "Перевірте стан з'єднання з VPN та отримайте швидкий доступ до улюблених з'єднань.";
 
 /* Recents section title */
-"widget_recents_title" = "Recents";
+"widget_recents_title" = "Нещодавні";
 
 /* Recents section description */
-"widget_recents_description" = "View your connection history here.";
+"widget_recents_description" = "Тут можна переглянути історію з'єднань.";
 
 /* What's new screen section title */
-"widget_whats_new_title" = "Widgets are back";
+"widget_whats_new_title" = "Віджети знову доступні";
 
 /* What's new screen section subtitle */
-"widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+"widget_whats_new_subtitle" = "Тепер ви можете переглядати й керувати VPN-з'єднанням безпосередньо з головного екрана.";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
+"_widgetAdoption_modal_title" = "Спробуйте віджет Proton VPN";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+"_widgetAdoption_modal_subtitle" = "Перевірте стан з'єднання з VPN та отримайте доступ до типових і улюблених з'єднань з головного екрана.";
 
 /* Widget adoption modal instructions header. */
-"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
+"_widgetAdoption_modal_instructions_header" = "Як додати віджет Proton VPN";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
+"_widgetAdoption_modal_instruction_1" = "Натисніть і утримуйте будь-де на головному екрані";
 
 /* Widget adoption modal 2nd instruction content. */
-"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
+"_widgetAdoption_modal_instruction_2" = "Натисніть кнопку **Змінити**, а потім виберіть **Додати віджет**.";
 
 /* Widget adoption modal 3rd instruction content. */
-"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+"_widgetAdoption_modal_instruction_3" = "Виберіть або знайдіть **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
 
 /* Widget adoption modal CTA. */
-"_widgetAdoption_modal_instruction_button" = "Got it";
+"_widgetAdoption_modal_instruction_button" = "Зрозуміло";

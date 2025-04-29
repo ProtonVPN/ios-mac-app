@@ -1151,7 +1151,7 @@
 "_extensions" = "Uzantılar";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS araç takımı";
+"_widget" = "Pencere Öğesi";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Kullanım istatistikleri";
@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "Kullanılabilecek en hızlı ülke";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "Mevcut en hızlı Secure Core ülkesi";
+"_connection_card_accessibility_fastest_sc" = "Kullanılabilecek en hızlı Secure Core ülkesi";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "IP adresinizi görüntülemek için çift tıklayın";
@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "Bağlantı ile ilgili bir sorun çıktı. (Hata %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Korumasız";
+"widget_unprotected_header" = "Korunmuyor";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "VPN bağlantınızın olup olmadığını denetleyin ve sık kullandığınız bağlantılara hızlıca erişin.";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "**Proton VPN** ögesini seçin ya da arayın";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Karuselden favori widget'ınızı seçin, ardından onaylamak için **Pencere Öğesi Ekle** düğmesine basın";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Anladım";

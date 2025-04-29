@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d naprava</string>
         <key>two</key>
         <string>%d devices</string>
         <key>few</key>
@@ -628,7 +628,7 @@ ustavljenih</string>
         <key>other</key>
         <string>%d countries</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d država</string>
         <key>two</key>
         <string>%d countries</string>
         <key>few</key>

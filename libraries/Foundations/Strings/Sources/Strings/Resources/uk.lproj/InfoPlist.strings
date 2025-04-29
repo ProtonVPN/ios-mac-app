@@ -1,7 +1,7 @@
-"NSHumanReadableCopyright" = "Copyright Â© 2025 Proton Technologies AG. All rights reserved.";
+"NSHumanReadableCopyright" = "Авторське право © 2025 Proton Technologies AG. Всі права захищено.";
 
-"NSCameraUsageDescription" = "This app uses the camera to scan QR codes.";
+"NSCameraUsageDescription" = "Ця програма використовує камеру для сканування QR-кодів.";
 
-"NSFaceIDUsageDescription" = "This app uses Face ID to protect sensitive data.";
+"NSFaceIDUsageDescription" = "Ця програма використовує Face ID для захисту конфіденційних даних.";
 
-"NSUserNotificationsUsageDescription" = "We need to send you notifications to alert you about changes in your account.";
+"NSUserNotificationsUsageDescription" = "Нам потрібно надсилати вам сповіщення, щоб повідомляти про зміни у вашому обліковому записі.";

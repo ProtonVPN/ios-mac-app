@@ -1,7 +1,7 @@
-"NSHumanReadableCopyright" = "Copyright Â© 2025 Proton Technologies AG. All rights reserved.";
+"NSHumanReadableCopyright" = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 
 "NSCameraUsageDescription" = "This app uses the camera to scan QR codes.";
 
-"NSFaceIDUsageDescription" = "This app uses Face ID to protect sensitive data.";
+"NSFaceIDUsageDescription" = "Ta applikacija uporablja Face ID za zaščito občutljivih podatkov.";
 
 "NSUserNotificationsUsageDescription" = "We need to send you notifications to alert you about changes in your account.";

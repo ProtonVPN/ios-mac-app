@@ -1,7 +1,7 @@
 "NSHumanReadableCopyright" = "Telif Hakkı © 2025 Proton Technologies AG. Tüm hakları saklıdır.";
 
-"NSCameraUsageDescription" = "Bu uygulama QR kodlarını taramak için kamerayı kullanır.";
+"NSCameraUsageDescription" = "Bu uygulama, kare kodları taramak için kamerayı kullanır.";
 
-"NSFaceIDUsageDescription" = "Bu uygulama hassas verileri korumak için Face ID kullanır.";
+"NSFaceIDUsageDescription" = "Bu uygulama önemli verileri korumak için Face ID kullanır.";
 
-"NSUserNotificationsUsageDescription" = "Hesabınızdaki değişiklikler hakkında sizi uyarmak için size bildirim göndermemiz gerekiyor.";
+"NSUserNotificationsUsageDescription" = "Sizi hesabınızdaki değişikliklerle ilgili uyarmak için bildirim göndermemiz gerekiyor.";

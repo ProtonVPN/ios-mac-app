@@ -1,0 +1,36 @@
+/* Class = "UILabel"; text = "Label"; ObjectID = "2pk-oe-F9k"; */
+
+"2pk-oe-F9k.text" = "Etikett";
+
+/* Class = "UILabel"; text = "CREATE NEW PROFILE"; ObjectID = "EEL-5z-u8K"; */
+"EEL-5z-u8K.text" = "SKAPA NY PROFIL";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Nwg-Ka-w8D"; */
+"Nwg-Ka-w8D.text" = "Etikett";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "TOb-sx-KL6"; */
+"TOb-sx-KL6.text" = "Status";
+
+/* Class = "UIBarButtonItem"; title = "Account"; ObjectID = "TyT-Tu-jya"; */
+"TyT-Tu-jya.title" = "Konto";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "UAc-dg-fCP"; */
+"UAc-dg-fCP.text" = "Etikett";
+
+/* Class = "UILabel"; text = "USE SECURE CORE"; ObjectID = "UZF-8E-T8i"; */
+"UZF-8E-T8i.text" = "ANVÄND SECURE CORE";
+
+/* Class = "UINavigationItem"; title = "ProtonVPN"; ObjectID = "Wh4-tZ-Tb9"; */
+"Wh4-tZ-Tb9.title" = "ProtonVPN";
+
+/* Class = "UILabel"; text = "ProtonQuickConnect"; ObjectID = "hW7-bO-L6F"; */
+"hW7-bO-L6F.text" = "ProtonQuickConnect";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "hjD-Nv-We8"; */
+"hjD-Nv-We8.text" = "Status";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mJ4-40-UNM"; */
+"mJ4-40-UNM.text" = "Etikett";
+
+/* Class = "UIBarButtonItem"; title = "Help"; ObjectID = "zPX-HF-zvQ"; */
+"zPX-HF-zvQ.title" = "Hjälp";

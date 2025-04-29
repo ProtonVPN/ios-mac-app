@@ -1151,7 +1151,7 @@
 "_extensions" = "Utökningar";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS-widget";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Användningsstatistik";
@@ -1713,7 +1713,7 @@
 "_connection_card_accessibility_fastest" = "Det snabbaste tillgängliga landet";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
+"_connection_card_accessibility_fastest_sc" = "Det snabbaste tillgängliga Secure Core-landet";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Dubbeltryck för att visa din IP-adress";
@@ -2744,7 +2744,7 @@
 "_generic_error_title" = "Fel";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "The operation could not be completed. (Error %@)";
+"_generic_error_description" = "Åtgärden kunde inte slutföras. (Fel %@)";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Anslutningsfel";
@@ -2798,7 +2798,7 @@
 "_widgetAdoption_modal_title" = "Prova Proton VPN-widgeten";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+"_widgetAdoption_modal_subtitle" = "Kontrollera om du är ansluten till VPN och kom åt dina standard- och favoritanslutningar från startskärmen.";
 
 /* Widget adoption modal instructions header. */
 "_widgetAdoption_modal_instructions_header" = "Hur man lägger till Proton VPN-widgeten";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Välj eller sök efter **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Välj din favoritwidget från karusellen och tryck sedan på **Lägg till widget** för att bekräfta";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Jag förstår";

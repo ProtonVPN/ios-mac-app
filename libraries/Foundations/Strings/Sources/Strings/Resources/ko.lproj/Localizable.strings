@@ -1151,7 +1151,7 @@
 "_extensions" = "확장 프로그램";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS 위젯";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "사용 통계";
@@ -2777,7 +2777,7 @@
 "_provider_message_error" = "연결 도중 문제가 발생했습니다. (오류 %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "보호되지 않음";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "VPN에 연결되어 있는지 확인하고 좋아하는 연결에 빠르게 접근하세요.";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "**Proton VPN**을 선택하거나 검색하세요.";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "확인";

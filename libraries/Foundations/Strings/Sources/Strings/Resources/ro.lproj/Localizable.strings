@@ -115,7 +115,7 @@
 "_log_out_warning" = "Deconectarea va încheia sesiunea VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Deconectându-vă din aplicație veți deconecta conexiunea VPN activă. Doriți să continuați?";
+"_log_out_warning_long" = "Deconectându-vă din aplicație veți opri conexiunea VPN activă. Continuați?";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Modificarea protocoalelor va încheia sesiunea curentă de VPN.";
@@ -1151,7 +1151,7 @@
 "_extensions" = "Extensii";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Widget iOS";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Statistici de utilizare";
@@ -2573,7 +2573,7 @@
 "_wrong_country_banner_subtitle" = "Schimbați planul abonamentului pentru alege orice server";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Nu e țara pe care ați vrut-o? Alegeți alt plan cu plată pentru a alege orice server.";
+"_wrong_country_banner_text" = "Nu e țara dorită? Treceți la un plan cu plată și puteți alege orice server.";
 
 /* ReportBugwindow title */
 "_br_window_title" = "Raportare o problemă";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Selectați sau căutați **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Alegeți widget-ul (componenta de interfață) preferat din carusel, apoi apăsați pe **Adăugare widget** pentru a confirma.";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Am înțeles";

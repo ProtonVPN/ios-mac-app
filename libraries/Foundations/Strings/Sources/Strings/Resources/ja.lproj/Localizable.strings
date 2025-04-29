@@ -1151,7 +1151,7 @@
 "_extensions" = "拡張機能";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS ウィジェット";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "使用統計";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "**Proton VPN** を選択または検索します";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "分かりました";

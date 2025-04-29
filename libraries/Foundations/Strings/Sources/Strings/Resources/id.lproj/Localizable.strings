@@ -1151,7 +1151,7 @@
 "_extensions" = "Ekstensi";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Widget iOS";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Statistik pemakaian";
@@ -2345,7 +2345,7 @@
 "upsell_torOverVPN_title" = "Akses jaringan Tor dengan sekali ketuk";
 
 /* Subtitle of torOverVPN upsell modal */
-"upsell_torOverVPN_subtitle" = "Hubungkan ke berbagai layanan tersembunyi dan situs onion melalui peramban biasa Anda.";
+"upsell_torOverVPN_subtitle" = "Hubungkan diri Anda ke layanan tersembunyi dan situs onion melalui browser yang biasa Anda gunakan.";
 
 /* Title of VPN Accelerator upsell modal */
 "upsell_vpn_accelerator_title" = "Jelajahi internet pada kecepatan yang bahkan lebih tinggi lagi (10 Gbps)";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Pilih atau cari **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Pilih widget favorit Anda dari carousel, lalu tekan **Tambahkan Widget** untuk konfirmasi";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Mengerti";
