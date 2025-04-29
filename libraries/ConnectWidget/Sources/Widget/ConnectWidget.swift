@@ -33,7 +33,6 @@ public struct ConnectWidget: Widget {
         .configurationDisplayName("Proton VPN")
         .description(Localizable.widgetTrayDescription)
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-
     }
 }
 
