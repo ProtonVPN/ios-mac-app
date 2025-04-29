@@ -33,7 +33,7 @@ public enum HermesResolverLocationValidator {
         if isValidTLS(location) {
             return .tls
         }
-        if isValidIPv4(location) || isValidIPv6(location) {
+        if isValidIPv4(location) {
             return .classic
         }
         return nil
@@ -56,7 +56,9 @@ public enum HermesResolverLocationValidator {
         location.components(separatedBy: ".").count == 4 && IPv4Address(location) != nil
     }
 
+    #if FALSE
     private static func isValidIPv6(_ location: String) -> Bool {
         IPv6Address(location) != nil
     }
+    #endif
 }
