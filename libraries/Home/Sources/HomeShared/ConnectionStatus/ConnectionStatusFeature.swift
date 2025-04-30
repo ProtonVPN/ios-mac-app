@@ -139,18 +139,11 @@ public struct ConnectionStatusFeature {
                 let code = state.userCountry
                 let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
                 let userIP = state.userIP ?? ""
-                let netShieldModel = state.protectionState.netShieldModel
-                return .run { send in
-                    // Determine protection state and fetch NetShield stats if necessary
-                    // (awaiting for a `ProtectionState` here is not ideal; let's implement a dedicated client for this in the future)
-                    let protectionState = await status.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
-                    await send(.newProtectionState(protectionState))
-                }
-                .debounce(
-                    id: IDs.protectionState,
-                    for: .milliseconds(Self.statusDebounceIntervalInMilliseconds),
-                    scheduler: UIScheduler.shared
-                )
+                let netShieldModel: NetShieldModel = state.protectionState.netShieldModel ?? .zero(enabled: false)
+                // Defaulting to disabled stats `ProtectionState` here is not ideal
+                // Let's add a `pending` NetShield state in case of no previous stats, displaying e.g. "-" for each statistic
+                let protectionState = status.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
+                return .send(.newProtectionState(protectionState))
 
             case .newProtectionState(let protectionState):
                 // let's check that we're not already masking location twice with same data
