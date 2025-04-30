@@ -32,8 +32,19 @@ public struct ConnectWidgetView : View {
     let entry: ConnectWidgetEntry
 
     @Environment(\.widgetFamily) var widgetFamily
+    @Environment(\.widgetRenderingMode) var renderingMode
 
     public var body: some View {
+        if case .accented = renderingMode {
+            content
+                .luminanceToAlpha()
+        } else {
+            content
+        }
+    }
+
+    @ViewBuilder
+    var content: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {
                 if entry.protectionState == .signedOut {
