@@ -29,6 +29,7 @@ final class LocalAgentMock: LocalAgent {
     @Dependency(\.continuousClock) var clock
 
     private(set) var netShieldType: NetShieldType = .off
+    var netShieldStatsBehaviour: NetShieldStatsBehaviour = .random
 
     private var state: LocalAgentState {
         didSet {
@@ -41,6 +42,8 @@ final class LocalAgentMock: LocalAgent {
     var connectionErrorToThrow: Error?
     var disconnectionTask: Task<Void, Error>?
     var disconnectionDuration: Duration = .milliseconds(250)
+
+    var didRequestStats: (() -> Void)?
 
     var streamTuple: (stream: AsyncStream<LocalAgentEvent>, continuation: AsyncStream<LocalAgentEvent>.Continuation)?
 
@@ -79,6 +82,24 @@ final class LocalAgentMock: LocalAgent {
         }
     }
 
+    /// Simulate receiving an `event` - yielding the corresponding value in the `AsyncStream`
+    /// and handling explicitly if necessary
+    func simulate(event: LocalAgentEvent) {
+        // Special handling of events
+        switch event {
+        case .state(let state):
+            self.state = state
+            // assigning to state already yields the value - no need to yield here
+
+        case .features(let features):
+            self.netShieldType = features.netshield
+            streamTuple?.continuation.yield(event)
+
+        default:
+            streamTuple?.continuation.yield(event)
+        }
+    }
+
     func disconnect() {
         disconnectionTask = Task {
             try await clock.sleep(for: disconnectionDuration)
@@ -89,16 +110,31 @@ final class LocalAgentMock: LocalAgent {
     }
 
     func retrieveNetShieldStats() {
-        let netshieldStats = FeatureStatisticsMessage.NetShieldStats(
-            malwareBlocked: .random(in: 0...100),
-            adsBlocked: .random(in: 0...100),
-            trackersBlocked: .random(in: 0...100),
-            bytesSaved: .random(in: 0...100)
-        )
-        let message = FeatureStatisticsMessage(netShield: netshieldStats)
+        didRequestStats?()
+        let message = FeatureStatisticsMessage(netShield: netShieldStatsBehaviour.value)
         streamTuple?.continuation.yield(.stats(message))
     }
 
     func set(features: LocalAgentFeatures) { }
+}
+
+enum NetShieldStatsBehaviour {
+    case random
+    case constant(FeatureStatisticsMessage.NetShieldStats)
+
+    var value: FeatureStatisticsMessage.NetShieldStats {
+        switch self {
+        case .random:
+            return FeatureStatisticsMessage.NetShieldStats(
+                malwareBlocked: .random(in: 0...100),
+                adsBlocked: .random(in: 0...100),
+                trackersBlocked: .random(in: 0...100),
+                bytesSaved: .random(in: 0...100)
+            )
+        case .constant(let value):
+            return value
+        }
+
+    }
 }
 #endif

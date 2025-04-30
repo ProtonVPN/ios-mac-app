@@ -18,6 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../external/protoncore"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.1.0")),
     ],
@@ -27,6 +28,7 @@ let package = Package(
         .target(
             name: "Ergonomics",
             dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
             ]
