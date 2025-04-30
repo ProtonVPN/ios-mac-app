@@ -68,10 +68,13 @@ public struct StatModel: Equatable {
         self.help = help
         self.isEnabled = isEnabled
     }
+
+    package static let emptyAds: StatModel = .ads(value: "-", count: 0, isEnabled: false)
+    package static let emptyTrackers: StatModel = .trackers(value: "-", count: 0, isEnabled: false)
+    package static let emptyData: StatModel = .data(value: "-", isEnabled: false)
 }
 
 extension NetShieldModel {
-
     private static let formatter = NetShieldStatsNumberFormatter()
     private static let byteCountFormatter = {
         let formatter = ByteCountFormatter()
@@ -79,30 +82,44 @@ extension NetShieldModel {
         return formatter
     }()
 
-    public var trackers: StatModel {
-        StatModel(
-            value: Self.formatter.string(from: trackersCount),
-            title: Localizable.netshieldStatsTrackersStopped(trackersCount).replacingOccurrences(of: "\n", with: " "),
-            help: Localizable.netshieldStatsHintTrackers,
-            isEnabled: enabled
-        )
+    public var ads: StatModel {
+        .ads(value: Self.formatter.string(from: adsCount), count: adsCount, isEnabled: enabled)
     }
 
-    public var ads: StatModel {
-        StatModel(
-            value: Self.formatter.string(from: adsCount),
-            title: Localizable.netshieldStatsAdsBlocked(adsCount).replacingOccurrences(of: "\n", with: " "),
-            help: Localizable.netshieldStatsHintAds,
-            isEnabled: enabled
-        )
+    public var trackers: StatModel {
+        .trackers(value: Self.formatter.string(from: trackersCount), count: trackersCount, isEnabled: enabled)
     }
 
     public var data: StatModel {
+        .data(value: Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved)), isEnabled: enabled)
+    }
+}
+
+extension StatModel {
+    public static func trackers(value: String, count: Int, isEnabled: Bool) -> StatModel {
         StatModel(
-            value: Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved)),
+            value: value,
+            title: Localizable.netshieldStatsTrackersStopped(count).replacingOccurrences(of: "\n", with: " "),
+            help: Localizable.netshieldStatsHintTrackers,
+            isEnabled: isEnabled
+        )
+    }
+
+    public static func ads(value: String, count: Int, isEnabled: Bool) -> StatModel {
+        StatModel(
+            value: value,
+            title: Localizable.netshieldStatsAdsBlocked(count).replacingOccurrences(of: "\n", with: " "),
+            help: Localizable.netshieldStatsHintAds,
+            isEnabled: isEnabled
+        )
+    }
+
+    public static func data(value: String, isEnabled: Bool) -> StatModel {
+        StatModel(
+            value: value,
             title: Localizable.netshieldStatsDataSaved.replacingOccurrences(of: "\n", with: " "),
             help: Localizable.netshieldStatsHintData,
-            isEnabled: enabled
+            isEnabled: isEnabled
         )
     }
 }
