@@ -1151,7 +1151,7 @@
 "_extensions" = "Razširitve";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "pripomoček za iOS";
+"_widget" = "Gradnik";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Statistika uporabe";
@@ -1758,7 +1758,7 @@
 "home_default_connection_title" = "Select your default connection";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Fastest Country";
+"home_default_connection_fastest_name" = "Najhitrejša država";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Najboljši strežnik glede na vašo lokacijo";
@@ -1785,7 +1785,7 @@
 "_home_recents_server_under_maintenance" = "Poteka vzdrževanje strežnika";
 
 /* Title of the "Random" recent connection item */
-"home_recents_random_server_title" = "Random Country";
+"home_recents_random_server_title" = "Naključna država";
 
 /* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
 "_action_help" = "Pomoč";
@@ -2723,7 +2723,7 @@
 "upsell_carousel_p2p_subtitle" = "​Prenesite datoteke prek BitTorrenta in drugih protokolov za skupno rabo datotek";
 
 /* Home upsell carousel card title */
-"upsell_carousel_devices_title" = "Protect 10 devices";
+"upsell_carousel_devices_title" = "Zaščitite 10 naprav";
 
 /* Home upsell carousel card subtitle */
 "upsell_carousel_devices_subtitle" = "Varnost in zasebnost na vseh vaših napravah";
@@ -2738,10 +2738,10 @@
 "upsell_carousel_more_title" = "In veliko več …";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_more_subtitle" = "Unlock advanced performance and privacy features";
+"upsell_carousel_more_subtitle" = "Odklenite napredne zmogljivosti in funkcije zasebnosti";
 
 /* Error message: Catch-all error alert title. */
-"_generic_error_title" = "Error";
+"_generic_error_title" = "Napaka";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_generic_error_description" = "The operation could not be completed. (Error %@)";
@@ -2783,10 +2783,10 @@
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
 
 /* Recents section title */
-"widget_recents_title" = "Recents";
+"widget_recents_title" = "Nedavni";
 
 /* Recents section description */
-"widget_recents_description" = "View your connection history here.";
+"widget_recents_description" = "Ogled zgodovine povezav je na voljo tukaj.";
 
 /* What's new screen section title */
 "widget_whats_new_title" = "Widgets are back";
@@ -2812,5 +2812,8 @@
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
 
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
+
 /* Widget adoption modal CTA. */
-"_widgetAdoption_modal_instruction_button" = "Got it";
+"_widgetAdoption_modal_instruction_button" = "Razumem";

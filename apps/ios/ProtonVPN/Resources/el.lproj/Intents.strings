@@ -1,36 +1,17 @@
-/* (No Comment) */
 "1l8xNj" = "Αποσύνδεση";
 
-/* (No Comment) */
-"2LMbbw" = "Κατάσταση Σύνδεσης";
-
-/* (No Comment) */
 "8tZ81X" = "Σύνδεση στο Proton VPN";
 
-/* (No Comment) */
-"cQ4Mju" = "Αποσυνδεθείτε από το Proton VPN";
-
-/* (No Comment) */
-"hIcJsr" = "Λάβετε την κατάσταση σύνδεσης του Proton VPN";
-
-/* (No Comment) */
-"jf696t" = "Σύνδεση στο Proton VPN";
-
-/* (No Comment) */
-"JOCERT" = "Λάβετε την κατάσταση σύνδεσης του Proton VPN";
-
-/* (No Comment) */
-"ksQcRb" = "Αποσύνδεση απο το Proton VPN";
-
-/* (No Comment) */
-"NzUfmp" = "${status}";
-
-/* (No Comment) */
-"ujOFps" = "Κατάσταση";
-
-/* (No Comment) */
 "Ya0ZRy" = "Γρήγορη Σύνδεση";
 
-/* (No Comment) */
-"ZqjXZN" = "${status}";
+"cQ4Mju" = "Αποσύνδεση από το Proton VPN";
 
+"jf696t" = "Σύνδεση στο Proton VPN";
+
+"ksQcRb" = "Αποσύνδεση από το Proton VPN";
+
+"2LMbbw" = "Λήψη της Κατάστασης Σύνδεσης Proton VPN";
+
+"ujOFps" = "Κατάσταση";
+
+"hIcJsr" = "Λήψη της Κατάστασης Σύνδεσης Proton VPN";

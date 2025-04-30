@@ -1151,7 +1151,7 @@
 "_extensions" = "Utvidelser";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS-widget";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Bruksstatistikk";
@@ -1713,16 +1713,16 @@
 "_connection_card_accessibility_fastest" = "Det raskeste landet som er tilgjengelig";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
+"_connection_card_accessibility_fastest_sc" = "Det raskeste Secure Core-landet som er tilgjengelig";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "Dobbelttrykk for å vise IP-adressen din";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
+"_connection_details_accessibility_ipView_hideAddress" = "Dobbelttrykk for å skjule IP-adressen din";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
-"_connection_details_accessibility_close" = "Close connection details screen";
+"_connection_details_accessibility_close" = "Lukk skjermbildet med tilkoblingsdetaljer";
 
 /* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
 "_connection_card_default_connection" = "Standard forbindelse";
@@ -1749,7 +1749,7 @@
 "_connection_card_accessibility_browsing_from" = "Du surfer sikkert fra %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+"_connection_card_accessibility_browsing_from_fullDetails" = "Du surfer trygt fra %1$@ tjener %2$@ ved hjelp av %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Laster";
@@ -2741,76 +2741,79 @@
 "upsell_carousel_more_subtitle" = "Lås opp avanserte ytelses- og personvernfunksjoner";
 
 /* Error message: Catch-all error alert title. */
-"_generic_error_title" = "Error";
+"_generic_error_title" = "Feil";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "The operation could not be completed. (Error %@)";
+"_generic_error_description" = "Operasjonen kunne ikke fullføres. (Feil %@)";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Tilkoblingsfeil";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
+"_connection_error_unexpected_protocol" = "Tilkoblingen du har valgt bruker en protokoll (%@) som ikke lenger støttes av denne applikasjonen. Velg en annen tilkobling. (Feil %@)";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server. (Error %@)";
+"_connection_error_certificate_authentication" = "Det oppstod et problem med autentisering med tjeneren. (Feil %@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN. (Error %@)";
+"_connection_error_tunnel_connection" = "Det oppstod et problem med å starte VPN-et. (Feil %@)";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_local_agent" = "Det oppstod en uventet feil under tilkobling: %@";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "We were unable to connect to the server. (Error %@).";
+"_connection_error_intent_missing" = "Vi kunne ikke koble til tjeneren. (Feil %@).";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "There was a problem preparing the connection (Error %@)";
+"_connection_error_preparation" = "Det oppstod et problem med å klargjøre tilkoblingen (Feil %@)";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
+"_connection_error_server_missing" = "Tjeneren du har valgt er ikke lenger tilgjengelig. Velg en annen tjener. (Feil %@)";
 
 /* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)";
+"_connection_error_timeout" = "Vi oppdaget en feil da vi prøvde å koble til: tjeneren svarte ikke i tide. Prøv igjen. (Feil %@)";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "There was a problem with the connection. (Error %@)";
+"_provider_message_error" = "Det oppstod et problem med tilkoblingen. (Feil %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Ubeskyttet";
 
 /* Text that appears as subtitle to the widget when user is creating it */
-"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+"widget_tray_description" = "Sjekk om du er koblet til VPN, og få rask tilgang til favorittilkoblingene dine.";
 
 /* Recents section title */
-"widget_recents_title" = "Recents";
+"widget_recents_title" = "Nylige";
 
 /* Recents section description */
-"widget_recents_description" = "View your connection history here.";
+"widget_recents_description" = "Se tilkoblingsloggen din her.";
 
 /* What's new screen section title */
-"widget_whats_new_title" = "Widgets are back";
+"widget_whats_new_title" = "Widgets er tilbake";
 
 /* What's new screen section subtitle */
-"widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+"widget_whats_new_subtitle" = "Du kan nå se og administrere VPN-tilkoblingen din uten å forlate startskjermen.";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
+"_widgetAdoption_modal_title" = "Prøv Proton VPN-widgeten";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+"_widgetAdoption_modal_subtitle" = "Sjekk om du er koblet til VPN og få tilgang til standard- og favoritttilkoblingene dine fra startskjermen.";
 
 /* Widget adoption modal instructions header. */
-"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
+"_widgetAdoption_modal_instructions_header" = "Slik legger du til Proton VPN-widgeten";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
+"_widgetAdoption_modal_instruction_1" = "Trykk og hold hvor som helst på startskjermen";
 
 /* Widget adoption modal 2nd instruction content. */
-"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
+"_widgetAdoption_modal_instruction_2" = "Trykk på **Rediger**-knappen, og velg deretter **Legg til widget**";
 
 /* Widget adoption modal 3rd instruction content. */
-"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+"_widgetAdoption_modal_instruction_3" = "Velg eller søk etter **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Velg favorittwidgeten din fra karusellen, og trykk deretter på **Legg til widget** for å bekrefte.";
 
 /* Widget adoption modal CTA. */
-"_widgetAdoption_modal_instruction_button" = "Got it";
+"_widgetAdoption_modal_instruction_button" = "Skjønner";

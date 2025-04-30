@@ -1151,7 +1151,7 @@
 "_extensions" = "Rozšíření";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS widget";
+"_widget" = "Widget";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Statistiky o používání";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Vyberte nebo vyhledejte **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Vyberte svůj oblíbený widget z kruhu a potvrďte stisknutím tlačítka **Přidat widget**";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Rozumím";

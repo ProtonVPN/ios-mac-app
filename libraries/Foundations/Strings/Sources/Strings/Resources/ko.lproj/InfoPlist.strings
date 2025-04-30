@@ -1,7 +1,7 @@
-"NSHumanReadableCopyright" = "Copyright Â© 2025 Proton Technologies AG. All rights reserved.";
+"NSHumanReadableCopyright" = "Copyright © 2025 Proton Technologies AG. 모든 권리 보유.";
 
-"NSCameraUsageDescription" = "This app uses the camera to scan QR codes.";
+"NSCameraUsageDescription" = "이 앱은 QR 코드 스캔을 위해 카메라를 사용합니다.";
 
-"NSFaceIDUsageDescription" = "This app uses Face ID to protect sensitive data.";
+"NSFaceIDUsageDescription" = "이 앱은 민감한 데이터를 보호하기 위해 Face ID를 사용합니다.";
 
-"NSUserNotificationsUsageDescription" = "We need to send you notifications to alert you about changes in your account.";
+"NSUserNotificationsUsageDescription" = "회원님 계정 변경 사항을 알려드리기 위해 알림이 필요합니다.";

@@ -1151,7 +1151,7 @@
 "_extensions" = "Пашырэнні";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Віджэт iOS";
+"_widget" = "Віджэт";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Статыстыка выкарыстання";
@@ -2798,7 +2798,7 @@
 "_widgetAdoption_modal_title" = "Паспрабуйце віджэт Proton VPN";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "Праверце, ці падключаны вы да VPN, каб атрымаць доступ да прадвызначаных і абраных падключэнняў з галоўнага экрана.";
+"_widgetAdoption_modal_subtitle" = "Праверце сваё падключэнне да VPN, каб атрымаць доступ да прадвызначаных і абраных падключэнняў з галоўнага экрана.";
 
 /* Widget adoption modal instructions header. */
 "_widgetAdoption_modal_instructions_header" = "Як дадаць віджэт Proton VPN";
@@ -2811,6 +2811,9 @@
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Выберыце або знайдзіце **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Выберыце свой абраны віджэт з каруселі, а потым націсніце **Дадаць віджэт** для пацвярджэння.";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Зразумела";

@@ -13,9 +13,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d enhet</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d enheter</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -106,7 +106,7 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>%d+ sikre tjenere</string>
+        <string>%d+ sikker tjener</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
@@ -486,7 +486,7 @@ stoppet</string>
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>Koble til %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -494,9 +494,9 @@ stoppet</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d land</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d land</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
