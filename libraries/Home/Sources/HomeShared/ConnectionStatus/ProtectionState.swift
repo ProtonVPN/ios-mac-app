@@ -58,15 +58,22 @@ public enum ProtectionState: Equatable {
 }
 
 extension VPNConnectionStatus {
-    func protectionState(country: String, ip: String, netShieldModel: NetShieldModel) -> ProtectionState {
+    func protectionState(country: String, ip: String, netShieldModel: NetShieldModel? = nil) async -> ProtectionState {
         switch self {
         case .disconnected:
             return .unprotected
         case .connected(let spec, _):
-            if case .secureCore = spec.location {
-                return .protectedSecureCore(netShield: netShieldModel)
+            let stats: NetShieldModel
+            if let netShieldModel {
+                stats = netShieldModel.copy(enabled: true)
+            } else {
+                @Dependency(\.netShieldStatsProvider) var provider
+                stats = await provider.getStats().copy(enabled: true)
             }
-            return .protected(netShield: netShieldModel)
+            if case .secureCore = spec.location {
+                return .protectedSecureCore(netShield: stats)
+            }
+            return .protected(netShield: stats)
         case .connecting:
             return .protecting(country: country, ip: ip)
         case .resolving:
