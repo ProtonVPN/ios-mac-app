@@ -167,7 +167,7 @@ public struct ConnectionStatusFeature {
                     state.$protectionState.withLock { $0 = protectionState } // store the new state
                     return .send(.startLocationMasking)
                 } else {
-                    withOptionalAnimation(protectionState.shouldAnimateChange ? .default : nil) {
+                    withOptionalAnimation(shouldAnimate: protectionState.shouldAnimateChange) {
                         state.$protectionState.withLock { $0 = protectionState }
                     }
                     state.startingProtectionState = .unprotected // reset startingProtectionState
