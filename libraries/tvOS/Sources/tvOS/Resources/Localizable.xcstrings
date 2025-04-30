@@ -471,6 +471,12 @@
             "value" : "%@/mesiac"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mesec"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8794,6 +8800,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Používate Proton Free?"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uporabljate Proton Free?"
           }
         },
         "sv" : {
