@@ -35,7 +35,7 @@ let didBecomeActiveNotification: NSNotification.Name = {
 #if canImport(UIKit)
     return UIApplication.didBecomeActiveNotification
 #elseif canImport(AppKit)
-    return NSApplicationDidBecomeActiveNotification
+    return NSApplication.didBecomeActiveNotification
 #else
     fatalError("Unsupported platform")
 #endif

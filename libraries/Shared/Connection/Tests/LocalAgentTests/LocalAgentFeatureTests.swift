@@ -70,7 +70,7 @@ final class LocalAgentFeatureTests: XCTestCase {
             deviceCountry: "CH"
         )
 
-        localAgentMock.streamTuple?.continuation.yield(.connectionDetails(mockConnectionDetails))
+        localAgentMock.simulate(event: .connectionDetails(mockConnectionDetails))
         await store.receive(\.event.connectionDetails) {
             $0 = .connected(mockConnectionDetails)
         }
@@ -109,6 +109,75 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         client.delegate?.didReceive(event: .state(.connecting))
         await store.receive(\.event.state.connecting)
+
+        await store.send(.stopAllObservations)
+    }
+
+    @MainActor func testFetchesNetShieldStatsWhenConnectedOnDidBecomeActive() async {
+        let featuresWithNetShieldStatsEnabled = VPNConnectionFeatures(
+            netshield: .level2,
+            vpnAccelerator: true,
+            bouncing: nil,
+            natType: .moderateNAT,
+            safeMode: nil
+        )
+
+        let statsMessage = FeatureStatisticsMessage.NetShieldStats(
+            malwareBlocked: 2,
+            adsBlocked: 16,
+            trackersBlocked: 16,
+            bytesSaved: 64
+        )
+
+        let connectionDetails = ConnectionDetailsMessage(
+            exitIp: IPv4Address("1.2.3.4")!,
+            deviceIp: IPv4Address("5.6.7.8")!,
+            deviceCountry: "CH"
+        )
+
+        let clock = TestClock()
+        let localAgent = LocalAgentMock(state: .connected)
+        localAgent.netShieldStatsBehaviour = .constant(statsMessage)
+        localAgent.didRequestStats = { XCTFail("Requested NetShield stats too early") }
+
+        let store = TestStore(initialState: .connecting) {
+            LocalAgentFeature()
+        } withDependencies: {
+            $0.continuousClock = clock
+            $0.localAgent = localAgent
+            $0.date = .constant(.now)
+        }
+
+        await store.send(.startObservingEvents)
+
+        // Simulate app coming into foreground. Alternatively, we could mock a notification center and post a notification.
+        await store.send(.didBecomeActive)
+        // We are still connecting, so stats should not be requested
+
+
+        // Let's pretend we finished connecting
+        localAgent.simulate(event: .state(.connected))
+        await store.receive(\.event.state.connected) {
+            $0 = .connected(nil)
+        }
+
+        await store.send(.didBecomeActive)
+        XCTAssertEqual(localAgent.netShieldType, .off)
+        // We're connected, but NetShield is disabled, so we shouldn't request stats yet
+
+
+        // Now, we're simulating that the Go library has set NetShield level correctly and received confirmation from the server
+        localAgent.simulate(event: .features(featuresWithNetShieldStatsEnabled))
+        await store.receive(\.event.features)
+        XCTAssertEqual(localAgent.netShieldType, .level2) // Sanity check
+
+        let statsRequested = XCTestExpectation(description: "NetShield stats should be requested after App becomes active")
+        localAgent.didRequestStats = { statsRequested.fulfill() }
+
+        // This, time, all conditions are met and we should actually request some stats
+        await store.send(.didBecomeActive)
+        await fulfillment(of: [statsRequested], timeout: 0)
+        await store.receive(\.event.stats)
 
         await store.send(.stopAllObservations)
     }

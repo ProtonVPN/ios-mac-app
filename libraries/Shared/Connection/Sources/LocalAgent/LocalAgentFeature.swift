@@ -27,6 +27,22 @@ import Domain
 import Strings
 import Ergonomics
 
+#if canImport(UIKit)
+import class UIKit.UIApplication
+#elseif canImport(AppKit)
+import class AppKit.NSApplication
+#endif
+
+let didBecomeActiveNotification: NSNotification.Name = {
+#if canImport(UIKit)
+    return UIApplication.didBecomeActiveNotification
+#elseif canImport(AppKit)
+    return NSApplication.didBecomeActiveNotification
+#else
+    fatalError("Unsupported platform")
+#endif
+}()
+
 @available(iOS 16, *)
 public struct LocalAgentFeature: Reducer, Sendable {
     static let netShieldTimerInterval: Duration = .seconds(60)
@@ -53,6 +69,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case stopAllObservations
         case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
         case event(LocalAgentEvent)
+        case didBecomeActive
         case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures)
         case disconnect(LocalAgentConnectionError?)
         case delegate(DelegateAction)
@@ -75,6 +92,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
     private enum CancelIDs {
         case eventObservation
+        case didBecomeActiveObservation
         case netshieldStatsObservation
     }
 
@@ -82,17 +100,15 @@ public struct LocalAgentFeature: Reducer, Sendable {
         Reduce { state, action in
             switch action {
             case .startObservingEvents:
-                // TODO: (nit) Use new .listen TCA helper!
-                return .run { send in
-                    for await event in self.localAgent.createEventStream() {
-                        await send(.event(event))
-                    }
-                }
-                .cancellable(id: CancelIDs.eventObservation)
+                return .merge(
+                    longLivingEventObservationEffect,
+                    longLivingDidBecomeActiveEffect
+                )
 
             case .stopAllObservations:
                 return .merge(
                     .cancel(id: CancelIDs.eventObservation),
+                    .cancel(id: CancelIDs.didBecomeActiveObservation),
                     .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
 
@@ -191,15 +207,30 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .send(.delegate(.errorReceived(error)))
 
             case .event(.features(let features)):
-                log.info("Features received: \(features)")
+                log.info("Features received: \(features)", category: .localAgent)
                 return .none
 
             case .event(.stats(let stats)):
-                log.debug("Feature statistics received: \(stats)")
+                log.debug("Feature statistics received: \(stats)", category: .localAgent)
                 return .none
 
             case .delegate:
                 return .none // Delegate actions to be handled by parent
+
+            case .didBecomeActive:
+                guard case .connected = state else {
+                    log.debug("Skipping NetShield Stats retrieval", category: .localAgent, metadata: ["state": "\(state)"])
+                    return .none
+                }
+                let netShieldLevel = localAgent.netShieldType
+                guard netShieldLevel == .level2 else {
+                    log.debug("Skipping NetShield Stats retrieval", category: .localAgent, metadata: ["netShieldLevel": "\(netShieldLevel)"])
+                    return .none
+                }
+                return .run { _ in
+                    log.debug("Explicit NetShield Stats retrieval request", category: .localAgent)
+                    localAgent.retrieveNetShieldStats()
+                }
 
             case .startNetShieldStatsObservation:
                 return .timer(interval: Self.netShieldTimerInterval, tolerance: Self.netShieldTimerTolerance) { _ in
@@ -209,6 +240,21 @@ public struct LocalAgentFeature: Reducer, Sendable {
             }
         }
     }
+
+    private var longLivingEventObservationEffect: Effect<Action> {
+        return .listen(
+            to: localAgent.createEventStream(),
+            reinjecting: { Action.event($0) }
+        ).cancellable(id: CancelIDs.eventObservation)
+    }
+
+    private let longLivingDidBecomeActiveEffect: Effect<Action> = .publisher {
+        NotificationCenter.default
+            .publisher(for: didBecomeActiveNotification)
+            .debounce(for: 1.0, scheduler: UIScheduler.shared)
+            .receive(on: UIScheduler.shared)
+            .map { _ in Action.didBecomeActive }
+    }.cancellable(id: CancelIDs.didBecomeActiveObservation)
 }
 
 @CasePathable

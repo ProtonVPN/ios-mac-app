@@ -24,6 +24,7 @@ import IssueReporting
 import ExtensionIPC
 import let CoreConnection.log
 import struct CoreConnection.LogicalServerInfo
+import VPNShared
 
 @available(iOS 16, *)
 final class VPNSessionMock: VPNSession {
@@ -115,11 +116,14 @@ enum MessageHandler {
         case .getCurrentLogicalAndServerId:
             return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
 
-        case .refreshCertificate:
+        case .refreshCertificate(let features):
             @Dependency(\.date) var date
-            @Dependency(\.vpnAuthenticationStorage) var storage
+            @Dependency(\.vpnAuthenticationStorage) var keychain
             let tomorrow = date.now.addingTimeInterval(.days(1))
-            storage.store(.init(certificate: "abcd", validUntil: tomorrow, refreshTime: tomorrow))
+            let cert = VpnCertificate(certificate: "abcd", validUntil: tomorrow, refreshTime: tomorrow)
+            let certWithFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
+            keychain.store(certWithFeatures)
+
             return .ok(data: nil)
 
         case .setApiSelector:
