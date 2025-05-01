@@ -69,9 +69,9 @@ public struct StatModel: Equatable {
         self.isEnabled = isEnabled
     }
 
-    package static let emptyAds: StatModel = .ads(value: "-", count: 0, isEnabled: false)
-    package static let emptyTrackers: StatModel = .trackers(value: "-", count: 0, isEnabled: false)
-    package static let emptyData: StatModel = .data(value: "-", isEnabled: false)
+    package static let emptyAds: StatModel = .ads(value: "–", count: 0, isEnabled: true)
+    package static let emptyTrackers: StatModel = .trackers(value: "–", count: 0, isEnabled: true)
+    package static let emptyData: StatModel = .data(value: "–", isEnabled: true)
 }
 
 extension NetShieldModel {
