@@ -182,6 +182,7 @@ class CountriesSectionViewModel {
         reloadConnectionEvents.subscribe(self, selector: #selector(reloadDataOnChange))
 
         let updateSettingsEvents: [AppEvent] = [
+            .activeServerTypeChanged,
             .netShield,
             .killSwitch,
             .vpnAccelerator,
