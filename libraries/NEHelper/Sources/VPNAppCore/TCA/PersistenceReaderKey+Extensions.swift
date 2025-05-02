@@ -54,3 +54,14 @@ public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
         return Self[.appStorage(key, store: .domainUserDefaults), default: nil]
     }
 }
+
+public extension SharedKey where Self == AppStorageKey<Bool>.Default {
+    static var secureCoreToggle: Self {
+        @Dependency(\.authKeychain) var authKeychain
+        if authKeychain.username == nil {
+            log.warning("No username available. SecureCoreToggle key will use no user identifier.")
+        }
+        let key = "SecureCoreToggle" + (authKeychain.username?.lowercased() ?? "")
+        return Self[.appStorage(key, store: .domainUserDefaults), default: false]
+    }
+}

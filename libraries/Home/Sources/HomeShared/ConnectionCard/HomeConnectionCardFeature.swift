@@ -33,6 +33,7 @@ public struct HomeConnectionCardFeature {
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.recents) public var recents: OrderedSet<RecentConnection>
         @SharedReader(.defaultConnectionPreference) var defaultConnectionPreference: DefaultConnectionPreference
+        @SharedReader(.secureCoreToggle) var secureCoreToggle: Bool
 
         public var showChangeServerButton: Bool {
             if case .connected = vpnConnectionStatus {
@@ -49,27 +50,14 @@ public struct HomeConnectionCardFeature {
 
         public var serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability?
 
-        // Improve this? With an @SharedReader with an overwrite defaultsStorage like this:
-        // static var secureCoreToggle: Self {
-        //     return withDependencies {
-        //         $0.defaultAppStorage = UserDefaults(suiteName: "group.ch.protonmail.vpn")!
-        //     } operation: {
-        //         return PersistenceKeyDefault(.appStorage("SecureCoreToggle"), false)
-        //     }
-        // }
-        // --> it doesn't seem to update when Toggle is toggled on/off
-        private let secureCoreUserDefaultsStorage = UserDefaults(suiteName: "group.ch.protonmail.vpn")!
-        private var secureCoreToggle: Bool {
-            secureCoreUserDefaultsStorage.bool(forKey: "SecureCoreToggle")
-        }
-
         public var presentedSpec: ConnectionSpec {
             switch vpnConnectionStatus {
             case .disconnected, .disconnecting, .resolving(.none, _):
                 @Dependency(\.defaultConnectionResolver) var resolver
                 return resolver.connectionSpec(
                     preference: defaultConnectionPreference,
-                    recents: recents
+                    recents: recents,
+                    secureCore: secureCoreToggle
                 )
             case .connected(let connectionSpec, _),
                     .connecting(let connectionSpec, _),

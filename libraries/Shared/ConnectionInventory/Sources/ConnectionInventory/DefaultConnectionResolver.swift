@@ -27,8 +27,9 @@ import Domain
 public struct DefaultConnectionResolver: Sendable {
     public internal(set) var connectionSpec: (
         _ preference: DefaultConnectionPreference,
-        _ recents: OrderedSet<RecentConnection>
-    ) -> ConnectionSpec = { _, _ in .defaultFastest }
+        _ recents: OrderedSet<RecentConnection>,
+        _ secureCore: Bool
+    ) -> ConnectionSpec = { _, _, _ in .defaultFastest }
 
     public internal(set) var preferenceModels: @Sendable (
         _ recents: OrderedSet<RecentConnection>
@@ -37,7 +38,7 @@ public struct DefaultConnectionResolver: Sendable {
 
 extension DefaultConnectionResolver: DependencyKey {
     public static let liveValue = DefaultConnectionResolver(
-        connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:),
+        connectionSpec: DefaultConnectionResolverImplementation.connectionSpec(for:recents:secureCore:),
         preferenceModels: DefaultConnectionResolverImplementation.preferenceModels(for:)
     )
     public static let testValue = liveValue
@@ -46,20 +47,20 @@ extension DefaultConnectionResolver: DependencyKey {
 enum DefaultConnectionResolverImplementation {
     static func connectionSpec(
         for preference: DefaultConnectionPreference,
-        recents: OrderedSet<RecentConnection>
+        recents: OrderedSet<RecentConnection>,
+        secureCore: Bool
     ) -> ConnectionSpec {
-        // Fastest overall connection doesn't take secure core into account.
-        // Check `DefaultConnectionPreference.fastest` docs for reasoning.
-        let fastestNonSecureCore = ConnectionSpec(location: .fastest, features: [])
+
+        let fastest = ConnectionSpec(location: secureCore ? .secureCore(.fastest) : .fastest, features: [])
 
         switch preference {
         case .fastest:
-            return fastestNonSecureCore
+            return fastest
 
         case .mostRecent:
             guard let mostRecent = recents.mostRecent else {
                 log.info("No recent connections, returning fastest", metadata: ["preference": "\(preference)"])
-                return fastestNonSecureCore
+                return fastest
             }
             return mostRecent.connection
 

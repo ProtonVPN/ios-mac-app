@@ -31,6 +31,7 @@ import VPNShared
 import VPNAppCore
 import Domain
 import Ergonomics
+import ComposableArchitecture
 
 public protocol PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol
@@ -180,7 +181,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case lastConnectionRequest = "LastConnectionRequest"
         case lastUserAccountPlan = "LastUserAccountPlan"
         case quickConnectProfile = "QuickConnect_"
-        case secureCoreToggle = "SecureCoreToggle"
         case intentionallyDisconnected = "IntentionallyDisconnected"
 
         case userRole = "userRole"
@@ -369,7 +369,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         storage.setValue(quickConnect, forKey: Keys.quickConnectProfile.rawValue + username)
     }
 
-    @BoolProperty(.secureCoreToggle) public var secureCoreToggle: Bool
+    @Shared(.secureCoreToggle) public var secureCoreToggle: Bool
 
     public var serverTypeToggle: ServerType {
         return secureCoreToggle ? .secureCore : .standard
@@ -485,7 +485,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     
     public func logoutCleanup() {
         hasConnected = false
-        secureCoreToggle = false
+        $secureCoreToggle.withLock { $0 = false }
         discourageSecureCore = true
         lastIkeConnection = nil
         lastOpenVpnConnection = nil

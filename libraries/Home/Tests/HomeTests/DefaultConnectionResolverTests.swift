@@ -36,13 +36,23 @@ final class DefaultConnectionResolverTests: XCTestCase {
         let recents: OrderedSet<RecentConnection> = [mostRecentConnection, olderRecentConnection]
         XCTAssertEqual(recents.mostRecent, mostRecentConnection) // sanity check
 
-        let resolvedSpec = Sut.connectionSpec(for: .mostRecent, recents: recents)
+        let resolvedSpec = Sut.connectionSpec(for: .mostRecent, recents: recents, secureCore: false)
         XCTAssertEqual(resolvedSpec, mostRecentConnection.connection)
     }
 
     func testResolverReturnsSpecificRecentConnectionWhenPrefenceIsSpecific() {
-        let resolvedSpec = Sut.connectionSpec(for: .recent(.poland), recents: [])
+        let resolvedSpec = Sut.connectionSpec(for: .recent(.poland), recents: [], secureCore: false)
         XCTAssertEqual(resolvedSpec, .poland)
+    }
+
+    func testResolverReturnsSecureCoreFastestWhenPrefenceIsFastestAndSecureCoreIsOn() {
+        let resolvedSpec = Sut.connectionSpec(for: .fastest, recents: [], secureCore: true)
+        XCTAssertEqual(resolvedSpec, .fastestSecureCore)
+    }
+
+    func testResolverReturnsNormalFastestWhenPrefenceIsFastestAndSecureCoreIsOff() {
+        let resolvedSpec = Sut.connectionSpec(for: .fastest, recents: [], secureCore: false)
+        XCTAssertEqual(resolvedSpec, .fastest)
     }
 
     // MARK: Preference Options
