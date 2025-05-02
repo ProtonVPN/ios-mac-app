@@ -102,7 +102,6 @@ extension AppDelegate: UIApplicationDelegate {
         FeatureFlagsRepository.shared.resetOverrides()
 
         FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.dynamicPlan, true)
-        FeatureFlagsRepository.shared.setFlagOverride(CoreFeatureFlagType.easyDeviceMigrationDisabled, true)
 
         // Next, properly set the feature flag overrides in the repository.
         for (name, value) in propertiesManager.featureFlagOverrides ?? [:] {

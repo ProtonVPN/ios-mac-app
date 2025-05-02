@@ -1368,6 +1368,8 @@ public enum Localizable {
   public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
   /// Title of the Widget cell in the Settings tab [Redesign_2023]
   public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
+  /// Title of the Sign in to another device cell in the Settings tab
+  public static var settingsTitleQrCodeSignIn: String { return Localizable.tr("Localizable", "_settings_title_qr_code_sign_in", fallback: "Sign in to another device") }
   /// iOS: title of the screen after successfull purchase
   public static var setupComplete: String { return Localizable.tr("Localizable", "_setup_complete", fallback: "Setup Complete") }
   /// iOS: title of the screen after successfull purchase
