@@ -28,12 +28,14 @@ import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
+import ProtonCoreLoginUI
 
 import CommonNetworking
 import VPNShared
 import LegacyCommon
 import VPNAppCore
 import Settings
+import SwiftUI
 
 import Domain
 import Strings
@@ -220,14 +222,28 @@ final class SettingsViewModel {
             self?.pushSettingsAccountViewController()
         }
 
+        var cells: [TableViewCellModel]
         if isAccountRecoveryEnabled && shouldShowAccountRecovery {
             let accountRecoveryCell = TableViewCellModel.pushKeyValue(key: AccountRecoveryModule.settingsItem, value: accountRecoveryStateText, icon: accountRecoveryImage) { [weak self] in
                 self?.pushAccountRecoveryViewController()
             }
-            return TableViewSection(title: Localizable.account, cells: [cell, accountRecoveryCell])
+            cells = [cell, accountRecoveryCell]
         } else {
-            return TableViewSection(title: Localizable.account, cells: [cell])
+            cells = [cell]
         }
+
+        let qrLoginOptedOut = propertiesManager.userInfo?.edmOptOut == 1
+        let qrLoginFeatureDisabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.easyDeviceMigrationDisabled)
+
+        if !qrLoginFeatureDisabled && !qrLoginOptedOut {
+            let qrCodeSignInCell = TableViewCellModel.pushStandard(title: Localizable.settingsTitleQrCodeSignIn) { [weak self] in
+                self?.pushSignInToAnotherDeviceViewController()
+            }
+
+            cells.append(qrCodeSignInCell)
+        }
+
+        return TableViewSection(title: Localizable.account, cells: cells)
     }
 
     private var accountRecoveryStatus: AccountRecovery? {
@@ -632,6 +648,31 @@ final class SettingsViewModel {
         pushHandler(accountViewController)
     }
 
+    private func pushSignInToAnotherDeviceViewController() {
+        Task { @MainActor in
+            guard let pushHandler = pushHandler else {
+                return
+            }
+
+            let passphrase: String = authKeychain.fetch()?.mailboxPassword ?? ""
+            let email = authKeychain.username ?? Localizable.unavailable
+            let apiService = networking.apiService
+
+            let qrCodeInstructionsView = ScanQRCodeInstructionsView(
+                viewModel: .init(dependencies:
+                        .init(passphrase: passphrase,
+                              userEmail: email,
+                              apiService: apiService)))
+            let hostingController = ShowingNavigationBarUIHostingController(
+                rootView: AnyView(qrCodeInstructionsView)
+            )
+
+            hostingController.hidesBottomBarWhenPushed = true
+
+            pushHandler(hostingController)
+        }
+    }
+
     private func pushAccountRecoveryViewController() {
         assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
         guard let pushHandler = pushHandler else { return }
@@ -877,5 +918,12 @@ final class SettingsViewModel {
                 vpnGateway.reconnect(with: value)
             }
         }
+    }
+}
+
+class ShowingNavigationBarUIHostingController: UIHostingController<AnyView> {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
     }
 }
