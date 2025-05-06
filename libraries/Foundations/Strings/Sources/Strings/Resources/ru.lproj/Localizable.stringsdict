@@ -13,13 +13,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d device</string>
+        <string>%d устройство</string>
         <key>few</key>
-        <string>%d devices</string>
+        <string>%d устройства</string>
         <key>many</key>
-        <string>%d devices</string>
+        <string>%d устройств</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d устройств</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -610,7 +610,7 @@
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>Подключиться к %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -618,13 +618,13 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d стран</string>
         <key>one</key>
-        <string>%d country</string>
+        <string>%d страна</string>
         <key>few</key>
-        <string>%d countries</string>
+        <string>%d страны</string>
         <key>many</key>
-        <string>%d countries</string>
+        <string>%d стран</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

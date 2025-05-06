@@ -618,7 +618,7 @@ ustavljenih</string>
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>Povežite se z %#@num_countries@</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -626,13 +626,13 @@ ustavljenih</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d držav</string>
         <key>one</key>
         <string>%d država</string>
         <key>two</key>
-        <string>%d countries</string>
+        <string>%d državi</string>
         <key>few</key>
-        <string>%d countries</string>
+        <string>%d držav</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>

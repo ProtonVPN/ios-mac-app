@@ -2020,6 +2020,9 @@
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "Verzia aplikácie: %@";
 
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "Prihlásiť sa do iného zariadenia";
+
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Zap.";
 
@@ -2813,7 +2816,7 @@
 "_widgetAdoption_modal_instruction_3" = "Vyberte alebo vyhľadajte **Proton VPN**";
 
 /* Widget adoption modal 4th instruction content. */
-"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
+"_widgetAdoption_modal_instruction_4" = "Vyberte si svoj obľúbený widget z ponuky a potom stlačte **Pridať widget** na potvrdenie.";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Rozumiem";

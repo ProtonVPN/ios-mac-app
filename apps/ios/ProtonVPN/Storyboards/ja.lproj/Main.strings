@@ -1,24 +1,24 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "2pk-oe-F9k"; */
 
-"2pk-oe-F9k.text" = "Label";
+"2pk-oe-F9k.text" = "ラベル";
 
 /* Class = "UILabel"; text = "CREATE NEW PROFILE"; ObjectID = "EEL-5z-u8K"; */
-"EEL-5z-u8K.text" = "CREATE NEW PROFILE";
+"EEL-5z-u8K.text" = "新規プロファイルを作成";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Nwg-Ka-w8D"; */
-"Nwg-Ka-w8D.text" = "Label";
+"Nwg-Ka-w8D.text" = "ラベル";
 
 /* Class = "UILabel"; text = "Status"; ObjectID = "TOb-sx-KL6"; */
-"TOb-sx-KL6.text" = "Status";
+"TOb-sx-KL6.text" = "状態";
 
 /* Class = "UIBarButtonItem"; title = "Account"; ObjectID = "TyT-Tu-jya"; */
-"TyT-Tu-jya.title" = "Account";
+"TyT-Tu-jya.title" = "アカウント";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "UAc-dg-fCP"; */
-"UAc-dg-fCP.text" = "Label";
+"UAc-dg-fCP.text" = "ラベル";
 
 /* Class = "UILabel"; text = "USE SECURE CORE"; ObjectID = "UZF-8E-T8i"; */
-"UZF-8E-T8i.text" = "USE SECURE CORE";
+"UZF-8E-T8i.text" = "SECURE COREを使用";
 
 /* Class = "UINavigationItem"; title = "ProtonVPN"; ObjectID = "Wh4-tZ-Tb9"; */
 "Wh4-tZ-Tb9.title" = "ProtonVPN";
@@ -27,10 +27,10 @@
 "hW7-bO-L6F.text" = "ProtonQuickConnect";
 
 /* Class = "UILabel"; text = "Status"; ObjectID = "hjD-Nv-We8"; */
-"hjD-Nv-We8.text" = "Status";
+"hjD-Nv-We8.text" = "状態";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "mJ4-40-UNM"; */
-"mJ4-40-UNM.text" = "Label";
+"mJ4-40-UNM.text" = "ラベル";
 
 /* Class = "UIBarButtonItem"; title = "Help"; ObjectID = "zPX-HF-zvQ"; */
-"zPX-HF-zvQ.title" = "Help";
+"zPX-HF-zvQ.title" = "ヘルプ";

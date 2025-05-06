@@ -1151,7 +1151,7 @@
 "_extensions" = "Uzantılar";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Pencere Öğesi";
+"_widget" = "Araç takımı";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Kullanım istatistikleri";
@@ -2020,6 +2020,9 @@
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "Uygulama sürümü: %@";
 
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "Sign in to another device";
+
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Açık";
 
@@ -2813,7 +2816,7 @@
 "_widgetAdoption_modal_instruction_3" = "**Proton VPN** ögesini seçin ya da arayın";
 
 /* Widget adoption modal 4th instruction content. */
-"_widgetAdoption_modal_instruction_4" = "Karuselden favori widget'ınızı seçin, ardından onaylamak için **Pencere Öğesi Ekle** düğmesine basın";
+"_widgetAdoption_modal_instruction_4" = "Kaydırıcıdan araç takımını seçin. Ardından onaylamak için **Araç takımı ekle** üzerine basın";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Anladım";
