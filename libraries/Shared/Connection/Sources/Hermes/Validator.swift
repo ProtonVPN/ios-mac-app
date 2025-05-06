@@ -27,38 +27,10 @@ public enum HermesResolverLocationValidator {
     }
 
     public static func isValid(_ location: String) -> Transport? {
-        if isValidHTTPS(location) {
-            return .doh
-        }
-        if isValidTLS(location) {
-            return .tls
-        }
-        if isValidIPv4(location) {
-            return .classic
-        }
-        return nil
-    }
-
-    // A valid TLS resolver as a string can be also seen as a valid classic Hermes IPv4 Resolver
-    // So for now, let's validate the scheme as `tls` but in the future, we might want to check if TLS is available
-    // for this IP address & if not, consider the IP as a classic one
-    private static func isValidTLS(_ location: String) -> Bool {
-        guard let url = URL(string: location) else { return false }
-        return url.scheme == "tls" && url.host() != nil
-    }
-
-    private static func isValidHTTPS(_ location: String) -> Bool {
-        guard let url = URL(string: location) else { return false }
-        return url.scheme == "https" && url.host() != nil
+        return isValidIPv4(location) ? .classic : nil
     }
 
     private static func isValidIPv4(_ location: String) -> Bool {
         location.components(separatedBy: ".").count == 4 && IPv4Address(location) != nil
     }
-
-    #if FALSE
-    private static func isValidIPv6(_ location: String) -> Bool {
-        IPv6Address(location) != nil
-    }
-    #endif
 }

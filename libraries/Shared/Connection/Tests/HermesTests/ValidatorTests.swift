@@ -75,7 +75,7 @@ func ipv6Validation() {
     }
 }
 
-@Test
+@Test(.disabled())
 func httpsValidation() {
     #expect(HermesResolverLocationValidator.isValid("https://") == nil)
     #expect(HermesResolverLocationValidator.isValid("https:/1.1.1.1") == nil)
@@ -86,7 +86,7 @@ func httpsValidation() {
     #expect(HermesResolverLocationValidator.isValid("https://dns.google/dns-query") == .doh)
 }
 
-@Test
+@Test(.disabled())
 func tlsValidation() {
     #expect(HermesResolverLocationValidator.isValid("tls://") == nil)
     #expect(HermesResolverLocationValidator.isValid("tls:/1.1.1.1") == nil)

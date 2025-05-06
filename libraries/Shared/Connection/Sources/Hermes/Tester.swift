@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if DEBUG
+#if DEBUG && FALSE
 private import Network
 private import Dispatch
 
@@ -31,7 +31,9 @@ public enum HermesResolverTester {
             let endpointHost = NWEndpoint.Host.ipv4(ipAddress)
             let connection = NWConnection(to: .hostPort(host: endpointHost, port: .init(rawValue: 53)!), using: .udp)
             connection.stateUpdateHandler = { newState in
-                // This is wrong... for now.
+                // TODO: VPNAPPL-2802
+                // This is actually not doing the desired effect yet... it seems that it always transition to ready no
+                // matter if the endpoint host is valid or not.
                 switch newState {
                 case .ready:
                     continuation.resume(returning: true)
