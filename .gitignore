@@ -33,6 +33,7 @@ output/
 
 # Obfuscated constants
 **/ObfuscatedConstants.swift
+*.strings.env
 
 # Configuration
 .gitconfig
