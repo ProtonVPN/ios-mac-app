@@ -239,17 +239,17 @@ public enum TunnelConnectionError: Error, Equatable {
     case tunnelStartFailed(Error)
     /// The server is unknown or is no longer in the server list.
     case unknownServer
+    /// The tunnel is in the incorrect state because it was prematurely disconnected
+    case tunnelAborted
 
     public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
-        switch (lhs, rhs) {
-        case (.tunnelStartFailed, .tunnelStartFailed):
-            return true
-
-        case (.unknownServer, .unknownServer):
-            return true
-
-        default:
-            return false
+        switch lhs {
+        case .tunnelStartFailed:
+            return rhs.is(\.tunnelStartFailed)
+        case .unknownServer:
+            return rhs.is(\.unknownServer)
+        case .tunnelAborted:
+            return rhs.is(\.tunnelAborted)
         }
     }
 }
@@ -263,6 +263,8 @@ extension TunnelConnectionError: ProtonVPNError {
             return "TNST"
         case .unknownServer:
             return "UNKS"
+        case .tunnelAborted:
+            return "TNAB"
         }
     }
 

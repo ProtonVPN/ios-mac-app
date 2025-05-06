@@ -208,7 +208,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .certAuth(.loadingFinished(.success(let authData))):
             guard case .connected(let tunnelConnectionInfo) = state.tunnel else {
                 log.error("Finished loading auth data but tunnel is not connected")
-                return .none
+                return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             }
             guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
                 log.error("Detected connection to unknown server, disconnecting", category: .connection)
