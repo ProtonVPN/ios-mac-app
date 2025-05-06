@@ -8,4 +8,5 @@
 	tag = 2.1.2
 [submodule "external/wireguard-apple"]
 	path = external/wireguard-apple
-	url = https://github.com/ProtonVPN/wireguard-apple.git
+	url = ../wireguard-apple
+	branch = release/ios
