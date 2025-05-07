@@ -1272,6 +1272,12 @@
             "value" : "Dostupné s Proton VPN Plus"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Na voljo s storitvijo Proton VPN Plus"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3415,6 +3421,12 @@
             "value" : "Vygenerovať nový kód"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ustvari novo kodo"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4361,6 +4373,12 @@
             "value" : "Načítavanie krajín"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nalaganje držav"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5161,6 +5179,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN pre Apple TV je k dispozícii vo všetkých platených plánoch. Svoje predplatné si môžete skontrolovať a spravovať na našej webovej stránke."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN za Apple TV je na voljo v vseh plačljivih paketih. Svojo naročnino lahko preverite in upravljate na naši spletni strani."
           }
         },
         "sv" : {
@@ -7722,6 +7746,12 @@
             "value" : "Vyskytol sa problém.\nSkontrolujte svoje sieťové pripojenie, prosím"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prišlo je do težave.\nPreverite svojo omrežje povezavo."
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9706,6 +9736,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Platnosť overovacieho kódu uplynula"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaša koda za preverjanje je potekla"
           }
         },
         "sv" : {
