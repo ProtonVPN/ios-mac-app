@@ -22,6 +22,8 @@ import DependenciesMacros
 import Collections
 import Domain
 
+import ComposableArchitecture
+
 @DependencyClient
 public struct ConnectionInventory: Sendable {
     /// A list of recents, assuming that we show one of the items in another place, namely, the connection card.
@@ -57,7 +59,13 @@ extension ConnectionInventory: DependencyKey {
     public static var liveValue: Self = ConnectionInventory(
         recentConnectionList: { preference, recents, currentConnection in
             @Dependency(\.defaultConnectionResolver) var resolver
-            let defaultConnectionSpec = resolver.connectionSpec(preference: preference, recents: recents)
+            @SharedReader(.secureCoreToggle) var secureCore
+
+            let defaultConnectionSpec = resolver.connectionSpec(
+                preference: preference,
+                recents: recents,
+                secureCore: secureCore
+            )
             return recents.filter {
                 shouldIncludeInRecents(
                     recentConnection: $0,
