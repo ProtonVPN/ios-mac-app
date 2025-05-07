@@ -18,6 +18,7 @@
 
 import Foundation
 
+import Dependencies
 import ComposableArchitecture
 
 import LegacyCommon

@@ -22,6 +22,7 @@ import Dependencies
 import Domain
 import Hermes
 import LegacyCommon
+import ProtonCoreUIFoundations
 import Sharing
 import Strings
 import Theme
@@ -41,16 +42,6 @@ struct HermesView: ExplicitlySizedView {
             viewModel.setIsEnabled(newValue)
         }
     }
-
-    #if DEBUG && false
-    private enum HitTesting {
-        case none
-        case inProgress
-        case result(Bool)
-    }
-
-    @State private var hitTest: HitTesting = .none
-    #endif
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -88,22 +79,22 @@ struct HermesView: ExplicitlySizedView {
             resolverLocationValidation = .valid
         }
         .animation(.bouncy, value: isEnabledBinding.wrappedValue)
-        .padding(.vertical, 24.0)
+        .padding(.vertical, .themeSpacing24)
         .padding(.horizontal, 40.0)
         .frame(width: Self.viewSize.width, height: Self.viewSize.height, alignment: .top)
-        .background(Color(red: 22 / 255, green: 20 / 255, blue: 28 / 255))
+        .background(Color(.background, .normal))
     }
 
     @ViewBuilder
     private var resolversContent: some View {
         let resolvers = viewModel.activeHermesResolvers
 
-        Text(Localizable.hermesEntitiesHeader + "(" + String(resolvers.count) + ")")
+        Text(Localizable.hermesEntitiesHeader(resolvers.count))
             .themeFont(.callout(emphasised: false))
             .foregroundStyle(Color(.text, .weak))
-            .padding(.top, 24.0)
+            .padding(.top, .themeSpacing24)
 
-        VStack(alignment: .leading, spacing: 8.0) {
+        VStack(alignment: .leading, spacing: .themeSpacing16) {
             Text(Localizable.hermesEntitiesFormHeader)
                 .themeFont(.title3(emphasised: true))
                 .foregroundStyle(Color(.text, .normal))
@@ -119,9 +110,9 @@ struct HermesView: ExplicitlySizedView {
             resolversListView
         }
         .frame(maxWidth: .infinity)
-        .padding(.horizontal, 16.0)
-        .padding(.vertical, 24.0)
-        .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: 12.0, style: .continuous))
+        .padding(.horizontal, .themeSpacing16)
+        .padding(.vertical, .themeSpacing24)
+        .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: .themeSpacing12, style: .continuous))
         .onChange(of: resolverLocation) { newValue in
             resolverLocationValidation = viewModel.validate(location: newValue)
         }
@@ -150,9 +141,9 @@ struct HermesView: ExplicitlySizedView {
     private var resolverLocationOverlay: some View {
         switch resolverLocationValidation {
         case .empty, .valid:
-            return RoundedRectangle(cornerRadius: 8).stroke(Color.purple)
+            return RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.purple)
         case .invalid, .duplicate, .unexpectedError:
-            return RoundedRectangle(cornerRadius: 8).stroke(Color.red)
+            return RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.red)
         }
     }
 
@@ -227,10 +218,6 @@ struct HermesView: ExplicitlySizedView {
 
             Spacer()
 
-            #if DEBUG && FALSE
-            testerView(with: resolver.location)
-            #endif
-
             Button(role: .destructive) {
                 _ = viewModel.removeResolver(resolver)
             } label: {
@@ -244,42 +231,6 @@ struct HermesView: ExplicitlySizedView {
     }
 }
 
-#if DEBUG && FALSE
-private extension HermesView {
-    @ViewBuilder
-    private func testerView(with location: String) -> some View {
-        switch hitTest {
-        case .none:
-            Button {
-                Task {
-                    await MainActor.run { hitTest = .inProgress }
-                    let result = await viewModel.tlsHitTest(location)
-                    await MainActor.run { hitTest = .result(result) }
-                }
-            } label: {
-                Label("Test", systemImage: "network")
-                    .foregroundStyle(.primary)
-                    .labelStyle(.iconOnly)
-            }
-        case .inProgress:
-            ProgressView()
-        case .result(let succeeded):
-            Group {
-                if succeeded {
-                    Color.green
-                } else {
-                    Color.red
-                }
-            }
-            .task {
-                try? await Task.sleep(for: .seconds(2))
-                hitTest = .none
-            }
-        }
-    }
-}
-#endif
-
 private struct HermesSectionView<Content: View>: View {
     let content: Content
 
@@ -290,9 +241,9 @@ private struct HermesSectionView<Content: View>: View {
     var body: some View {
         content
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16.0)
-            .padding(.vertical, 24.0)
-            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 12.0, style: .continuous))
+            .padding(.horizontal, .themeSpacing24)
+            .padding(.vertical, .themeSpacing24)
+            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: .themeSpacing12, style: .continuous))
     }
 }
 

@@ -20,6 +20,7 @@ import AppKit
 import Combine
 import Observation
 
+import CommonNetworking
 import Domain
 import Hermes
 import LegacyCommon
@@ -28,8 +29,6 @@ import VPNAppCore
 import Dependencies
 import Sharing
 
-// TODO: This class used to be Observable, but Observable requires a recent macOS
-// & @Perceptible causes build issues
 final class HermesViewModel {
     public typealias Factory = CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
@@ -44,6 +43,10 @@ final class HermesViewModel {
         case valid
     }
 
+    enum Error: Swift.Error {
+        case upsellError
+    }
+
     private struct State: Equatable {
         let enabled: Bool
         let resolvers: [HermesResolver]
@@ -54,6 +57,8 @@ final class HermesViewModel {
     @SharedReader var isEnabled: Bool
 
     @Dependency(\.hermesClient) private var hermesClient
+    @Dependency(\.sessionService) private var sessionService: SessionService
+    @Dependency(\.linkOpener) private var linkOpener
 
     private let alertService: any CoreAlertService
     private let vpnStateConfiguration: any VpnStateConfiguration
@@ -155,17 +160,15 @@ final class HermesViewModel {
         hermesClient.reorderResolvers(source, destination)
     }
 
-    #if DEBUG
-    func tlsHitTest(_ location: String) async -> Bool {
-        return await HermesResolverTester.hitTest(location)
-    }
-    #endif
-
     func showAlert(
         _ type: HermesNotificationType,
         actionHandler: @escaping HermesAlertActionHandler,
         cancelHandler: HermesAlertActionHandler? = nil
     ) {
         alertService.push(alert: type.systemAlert(actionHandler, cancelHandler: cancelHandler))
+    }
+
+    func upsellButtonTapped() {
+        alertService.push(alert: HermesUpsellAlert())
     }
 }

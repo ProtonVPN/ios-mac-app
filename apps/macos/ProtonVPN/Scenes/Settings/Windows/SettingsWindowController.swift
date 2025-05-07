@@ -25,14 +25,13 @@ import LegacyCommon
 import Strings
 
 final class SettingsWindowController: WindowController {
-
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
     required init(viewController: SettingsContainerViewController) {
         let window = NSWindow(contentViewController: viewController)
-        window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
+        window.styleMask = [.titled, .closable, .miniaturizable]
         super.init(window: window)
         setupWindow()
         monitorsKeyEvents = true
@@ -42,8 +41,6 @@ final class SettingsWindowController: WindowController {
         guard let window = window else {
             return
         }
-
-        window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = Localizable.preferences
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)

@@ -190,13 +190,7 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
         case safeModeView:
             viewModel.showSafeModeUpsell()
         case hermesView:
-            let window = HermesUpsellWindow {
-                // TODO: Retrieve the upsell link & open it.
-            }
-            let controller = NSWindowController(window: window)
-            window.centerWindow(in: self.view.window?.screen)
-            controller.showWindow(nil)
-            self.hermesChildWindowController = controller
+            viewModel.hermesViewModel.upsellButtonTapped()
         default:
             break
         }

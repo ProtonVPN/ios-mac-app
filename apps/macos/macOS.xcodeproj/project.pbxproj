@@ -84,7 +84,6 @@
 		5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
 		5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */; };
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
-		663552122DB7BE350012B712 /* HermesUpsellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552112DB7BE350012B712 /* HermesUpsellView.swift */; };
 		663552142DB7D41E0012B712 /* HermesNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552132DB7D4160012B712 /* HermesNotifications.swift */; };
 		663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552152DB7D48F0012B712 /* HermesDefinitions.swift */; };
 		664F8E8B2DA0243000C8F3EF /* HermesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F8E8A2DA0242800C8F3EF /* HermesView.swift */; };
@@ -630,7 +629,6 @@
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
-		663552112DB7BE350012B712 /* HermesUpsellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesUpsellView.swift; sourceTree = "<group>"; };
 		663552132DB7D4160012B712 /* HermesNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesNotifications.swift; sourceTree = "<group>"; };
 		663552152DB7D48F0012B712 /* HermesDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesDefinitions.swift; sourceTree = "<group>"; };
 		664F8E8A2DA0242800C8F3EF /* HermesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesView.swift; sourceTree = "<group>"; };
@@ -2044,7 +2042,6 @@
 			children = (
 				663552152DB7D48F0012B712 /* HermesDefinitions.swift */,
 				663552132DB7D4160012B712 /* HermesNotifications.swift */,
-				663552112DB7BE350012B712 /* HermesUpsellView.swift */,
 				66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */,
 				664F8E8A2DA0242800C8F3EF /* HermesView.swift */,
 				F36ECE0B2611DC740089B898 /* ViewControllers */,
@@ -3519,7 +3516,6 @@
 				E565986C2820FEDD004F2240 /* WarningView.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
-				663552122DB7BE350012B712 /* HermesUpsellView.swift in Sources */,
 				EE35FC431F1CD2DA00CFE26F /* SidebarTabBarView.swift in Sources */,
 				42710D9C264929A000D70B92 /* StreamOptionCVItemViewModel.swift in Sources */,
 				E15DE7D22029EA6F00BFA78D /* PassThroughView.swift in Sources */,

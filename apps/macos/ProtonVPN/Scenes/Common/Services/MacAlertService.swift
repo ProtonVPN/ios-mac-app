@@ -159,6 +159,9 @@ extension MacAlertService: CoreAlertService {
             )
             show(alert: alert, modalType: countryModal)
 
+        case let alert as HermesUpsellAlert:
+            show(alert: alert, modalType: .hermes)
+
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
 
@@ -394,7 +397,7 @@ extension MacAlertService: CoreAlertService {
                     return
                 }
                 AppEvent.userEngagedWithUpsellAlert.post(modalSource)
-                linkOpener.open(url)
+                self?.linkOpener.open(url)
             }
         }
         

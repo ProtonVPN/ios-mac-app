@@ -42,6 +42,7 @@ public enum ModalType {
     case profiles
     case cantSkip(before: Date, totalDuration: TimeInterval, longSkip: Bool)
     case subscription
+    case hermes
 
     public func modalModel(legacy: Bool = false) -> ModalModel {
         ModalModel(
@@ -135,6 +136,10 @@ public extension ModalType {
             Asset.tor.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+        case .hermes:
+            Asset.hermes.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
     }
 
@@ -160,7 +165,7 @@ public extension ModalType {
 
     var hasNewUpsellScreen: Bool {
         switch self {
-        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN:
+        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN, .hermes:
             return true
         case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
             return false
@@ -253,6 +258,8 @@ private extension ModalType {
             return Localizable.upsellDevicesTitle
         case .torOverVPN:
             return Localizable.upsellTorOverVPNTitle
+        case .hermes:
+            return Localizable.hermesUpsellTitle
         }
     }
 
@@ -328,6 +335,8 @@ private extension ModalType {
             return .init(text: Localizable.upsellDevicesSubtitle)
         case .torOverVPN:
             return .init(text: Localizable.upsellTorOverVPNSubtitle)
+        case .hermes:
+            return .init(text: Localizable.hermesUpsellDescription)
         }
     }
 
@@ -388,6 +397,8 @@ private extension ModalType {
         case .subscription:
             return []
         case .streaming, .p2pSupport, .devices, .torOverVPN:
+            return []
+        case .hermes:
             return []
         }
     }

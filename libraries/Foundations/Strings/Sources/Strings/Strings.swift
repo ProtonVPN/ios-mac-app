@@ -586,42 +586,54 @@ public enum Localizable {
   public static var gotIt: String { return Localizable.tr("Localizable", "_got_it", fallback: "Got it!") }
   /// Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page.
   public static var help: String { return Localizable.tr("Localizable", "_help", fallback: "Help") }
-  /// Hermes Entities double click to copy within dedicated Hermes Settings view
-  public static var hermesEntitiesCopyAction: String { return Localizable.tr("Localizable", "_hermes_entities_copyAction", fallback: "${HERMES}") }
-  /// Hermes Entities footnote within dedicated Hermes Settings view
-  public static var hermesEntitiesFootnote: String { return Localizable.tr("Localizable", "_hermes_entities_footnote", fallback: "${HERMES}") }
-  /// Hermes Entities Form main button title within dedicated Hermes Settings view
-  public static var hermesEntitiesFormAddButton: String { return Localizable.tr("Localizable", "_hermes_entities_form_addButton", fallback: "${HERMES}") }
-  /// Hermes Entities Form description within dedicated Hermes Settings view
-  public static var hermesEntitiesFormDescription: String { return Localizable.tr("Localizable", "_hermes_entities_form_description", fallback: "${HERMES}") }
-  /// Hermes Entities Form header within dedicated Hermes Settings view
-  public static var hermesEntitiesFormHeader: String { return Localizable.tr("Localizable", "_hermes_entities_form_header", fallback: "${HERMES}") }
-  /// Hermes Entities Form placeholder within dedicated Hermes Settings view
-  public static var hermesEntitiesFormPlaceholder: String { return Localizable.tr("Localizable", "_hermes_entities_form_placeholder", fallback: "${HERMES}") }
-  /// Hermes Entities Form validation "Already Added" message within dedicated Hermes Settings view
-  public static var hermesEntitiesFormValidationAlreadyAdded: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_alreadyAdded", fallback: "${HERMES}") }
-  /// Hermes Entities Form validation "Duplicate" message within dedicated Hermes Settings view
-  public static var hermesEntitiesFormValidationDuplicate: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_duplicate", fallback: "${HERMES}") }
-  /// Hermes Entities Form validation "Enter Address" message within dedicated Hermes Settings view
-  public static var hermesEntitiesFormValidationEnterAddress: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_enterAddress", fallback: "${HERMES}") }
-  /// Hermes Entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view
-  public static var hermesEntitiesFormValidationEnterValidAddress: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_enterValidAddress", fallback: "${HERMES}") }
-  /// Hermes Entities Form validation "Unexpected Error" message within dedicated Hermes Settings view
-  public static var hermesEntitiesFormValidationUnexpectedError: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_unexpectedError", fallback: "${HERMES}") }
-  /// Hermes Entities header within dedicated Hermes Settings view
-  public static var hermesEntitiesHeader: String { return Localizable.tr("Localizable", "_hermes_entities_header", fallback: "${HERMES}") }
+  /// Hermes apply changes notification window title
+  public static var hermesApplyChangesDescription: String { return Localizable.tr("Localizable", "_hermes_applyChanges_description", fallback: "Your connection needs to be restarted to apply this change.") }
+  /// Hermes apply changes notification window title
+  public static var hermesApplyChangesWindowTitle: String { return Localizable.tr("Localizable", "_hermes_applyChanges_windowTitle", fallback: "Change settings") }
+  /// Hermes conflict notification description within alert when enabling Hermes
+  public static var hermesConflictHermesOnDescription: String { return Localizable.tr("Localizable", "_hermes_conflict_hermesOn_description", fallback: "This will disable NetShield.") }
+  /// Hermes conflict notification title within alert when enabling Hermes
+  public static var hermesConflictHermesOnTitle: String { return Localizable.tr("Localizable", "_hermes_conflict_hermesOn_title", fallback: "Enables ${HERMES}?") }
+  /// Hermes conflict notification description within alert when enabling NetShield
+  public static var hermesConflictNetshieldOnDescription: String { return Localizable.tr("Localizable", "_hermes_conflict_netshieldOn_description", fallback: "This will disable ${HERMES}.") }
+  /// Hermes conflict notification title within alert when enabling NetShield
+  public static var hermesConflictNetshieldOnTitle: String { return Localizable.tr("Localizable", "_hermes_conflict_netshieldOn_title", fallback: "Enable NetShield?") }
+  /// Hermes entities double click to copy within dedicated Hermes Settings view
+  public static var hermesEntitiesCopyAction: String { return Localizable.tr("Localizable", "_hermes_entities_copyAction", fallback: "Double click to copy") }
+  /// Hermes entities footnote within dedicated Hermes Settings view
+  public static var hermesEntitiesFootnote: String { return Localizable.tr("Localizable", "_hermes_entities_footnote", fallback: "If your custom ${HERMES_ENTITY} doesn’t work, the standard VPN ${HERMES_TECHNOLOGY} will be used.") }
+  /// Hermes entities Form main button title within dedicated Hermes Settings view
+  public static var hermesEntitiesFormAddButton: String { return Localizable.tr("Localizable", "_hermes_entities_form_addButton", fallback: "Add") }
+  /// Hermes entities Form description within dedicated Hermes Settings view
+  public static var hermesEntitiesFormDescription: String { return Localizable.tr("Localizable", "_hermes_entities_form_description", fallback: "Enter the server’s IPv4 address") }
+  /// Hermes entities Form header within dedicated Hermes Settings view
+  public static var hermesEntitiesFormHeader: String { return Localizable.tr("Localizable", "_hermes_entities_form_header", fallback: "Add new ${HERMES_ENTITY_CAPITALIZED}") }
+  /// Hermes entities Form placeholder within dedicated Hermes Settings view
+  public static var hermesEntitiesFormPlaceholder: String { return Localizable.tr("Localizable", "_hermes_entities_form_placeholder", fallback: "192.0.2.0") }
+  /// Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view
+  public static var hermesEntitiesFormValidationDuplicate: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_duplicate", fallback: "Server already added") }
+  /// Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view
+  public static var hermesEntitiesFormValidationEnterAddress: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_enterAddress", fallback: "Enter an IPv4 address") }
+  /// Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view
+  public static var hermesEntitiesFormValidationEnterValidAddress: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_enterValidAddress", fallback: "Enter a valid IPv4 address") }
+  /// Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view
+  public static var hermesEntitiesFormValidationUnexpectedError: String { return Localizable.tr("Localizable", "_hermes_entities_form_validation_unexpectedError", fallback: "An unexpected error occurred.") }
+  /// Hermes entities header within dedicated Hermes Settings view
+  public static func hermesEntitiesHeader(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_hermes_entities_header", String(describing: p1), fallback: "Servers (%@)")
+  }
   /// Hermes Feature Description within dedicated Hermes Settings view
-  public static var hermesFeatureDescription: String { return Localizable.tr("Localizable", "_hermes_feature_description", fallback: "${HERMES}") }
+  public static var hermesFeatureDescription: String { return Localizable.tr("Localizable", "_hermes_feature_description", fallback: "Connect to VPN with a ${HERMES_DESCRIPTION}") }
   /// Hermes Feature Title within app settings screens
   public static var hermesFeatureTitle: String { return Localizable.tr("Localizable", "_hermes_feature_title", fallback: "${HERMES}") }
   /// Hermes Feature Window Title within dedicated Hermes Settings view
-  public static var hermesFeatureWindowTitle: String { return Localizable.tr("Localizable", "_hermes_feature_windowTitle", fallback: "${HERMES}") }
+  public static var hermesFeatureWindowTitle: String { return Localizable.tr("Localizable", "_hermes_feature_windowTitle", fallback: "Preferences") }
   /// Hermes Feature Upsell button content within dedicated upsell screen
-  public static var hermesUpsellButton: String { return Localizable.tr("Localizable", "_hermes_upsell_button", fallback: "${HERMES}") }
+  public static var hermesUpsellButton: String { return Localizable.tr("Localizable", "_hermes_upsell_button", fallback: "Upgrade") }
   /// Hermes Feature Upsell description within dedicated upsell screen
-  public static var hermesUpsellDescription: String { return Localizable.tr("Localizable", "_hermes_upsell_description", fallback: "${HERMES}") }
+  public static var hermesUpsellDescription: String { return Localizable.tr("Localizable", "_hermes_upsell_description", fallback: "Connect using a ${HERMES_CUSTOM_ENTITY} with VPN Plus.") }
   /// Hermes Feature Upsell title within dedicated upsell screen
-  public static var hermesUpsellTitle: String { return Localizable.tr("Localizable", "_hermes_upsell_title", fallback: "${HERMES}") }
+  public static var hermesUpsellTitle: String { return Localizable.tr("Localizable", "_hermes_upsell_title", fallback: "Advanced VPN customization") }
   /// Show/hide password switch
   public static var hide: String { return Localizable.tr("Localizable", "_hide", fallback: "HIDE") }
   /// Value of speed in _speed

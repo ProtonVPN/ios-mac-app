@@ -41,35 +41,35 @@ extension HermesNotificationType {
         case .enableHermes, .enableNetShield:
             return HermesSettingsViewAlert(type: self, confirmHandler: actionHandler, cancelHandler: cancelHandler)
         case .reconnectNecessary:
-            return ReconnectOnActionAlert(actionTitle: "Change Settings", confirmHandler: actionHandler, cancelHandler: cancelHandler)
+            return ReconnectOnActionAlert(
+                actionTitle: Localizable.hermesApplyChangesWindowTitle,
+                confirmHandler: actionHandler,
+                cancelHandler: cancelHandler
+            )
         }
     }
 }
 
 private extension HermesNotificationType {
-    var leadingIconView: some View {
-        Color.green
-    }
-
     var title: String? {
         switch self {
         case .enableHermes:
-            return "Enable Hermes?"
+            return Localizable.hermesConflictHermesOnTitle
         case .reconnectNecessary:
             return nil
         case .enableNetShield:
-            return "Enable NetShield?"
+            return Localizable.hermesConflictNetshieldOnTitle
         }
     }
 
     var message: String {
         switch self {
         case .enableHermes:
-            return "This will disable NetShield."
+            return Localizable.hermesConflictHermesOnDescription
         case .reconnectNecessary:
-            return "Your connection needs to be restarted to apply this change."
+            return Localizable.hermesApplyChangesDescription
         case .enableNetShield:
-            return "This will disable Hermes."
+            return Localizable.hermesConflictNetshieldOnDescription
         }
     }
 }

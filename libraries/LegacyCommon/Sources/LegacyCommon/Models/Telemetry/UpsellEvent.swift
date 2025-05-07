@@ -139,6 +139,7 @@ extension UpsellModalSource: @retroactive Encodable {
         case .maxConnections: try container.encode("max_connections")
         case .tor: try container.encode("tor")
         case .devices: try container.encode("devices")
+        case .hermes: try container.encode("hermes")
         }
     }
 }

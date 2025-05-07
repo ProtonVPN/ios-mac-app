@@ -79,10 +79,10 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
             icon: icon,
             active: active,
             requiresUpdate: requiresUpdate(secureCore: false),
-            selectCallback: { dissmissCallback in
+            selectCallback: { dismissCallback in
                 self.vpnGateway.changeActiveServerType(.standard)
                 self.displayReconnectionFeedback()
-                dissmissCallback()
+                dismissCallback()
             }
         )
     }
