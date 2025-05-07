@@ -1151,7 +1151,7 @@
 "_extensions" = "확장 프로그램";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Widget";
+"_widget" = "위젯";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "사용 통계";
@@ -2020,6 +2020,9 @@
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "앱 버전: %@";
 
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "다른 기기에서 로그인";
+
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "켜짐";
 
@@ -2813,7 +2816,7 @@
 "_widgetAdoption_modal_instruction_3" = "**Proton VPN**을 선택하거나 검색하세요.";
 
 /* Widget adoption modal 4th instruction content. */
-"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
+"_widgetAdoption_modal_instruction_4" = "위젯 선택 화면에서 가장 마음에 드는 위젯 선택 후, **위젯 추가**를 눌러 확정하세요.";
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "확인";

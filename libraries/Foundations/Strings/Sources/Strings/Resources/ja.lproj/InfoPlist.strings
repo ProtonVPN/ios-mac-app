@@ -1,7 +1,7 @@
-"NSHumanReadableCopyright" = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+"NSHumanReadableCopyright" = "Copyright ©️ 2025 Proton Technologies AG. All rights reserved.";
 
-"NSCameraUsageDescription" = "This app uses the camera to scan QR codes.";
+"NSCameraUsageDescription" = "このアプリは、カメラを使用してQRコードをスキャンします。";
 
-"NSFaceIDUsageDescription" = "This app uses Face ID to protect sensitive data.";
+"NSFaceIDUsageDescription" = "このアプリは、機密データを保護するためにFace IDを使用します。";
 
-"NSUserNotificationsUsageDescription" = "We need to send you notifications to alert you about changes in your account.";
+"NSUserNotificationsUsageDescription" = "アカウントの変更について通知を送信する必要があります。";

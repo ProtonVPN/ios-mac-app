@@ -1716,10 +1716,10 @@
 "_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_showAddress" = "Double tap to show your IP address";
+"_connection_details_accessibility_ipView_showAddress" = "Dvakrat se dotaknite, da pokažete svoj naslov IP";
 
 /* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
-"_connection_details_accessibility_ipView_hideAddress" = "Double tap to hide your IP address";
+"_connection_details_accessibility_ipView_hideAddress" = "Dvakrat se dotaknite, da skrijete svoj IP naslov";
 
 /* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
 "_connection_details_accessibility_close" = "Close connection details screen";
@@ -1746,7 +1746,7 @@
 "_connection_card_accessibility_last_connected_to" = "You were last connected to %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from" = "You are safely browsing from %@.";
+"_connection_card_accessibility_browsing_from" = "Varno brskate iz države %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
 "_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
@@ -1755,7 +1755,7 @@
 "_connection_card_accessibility_loading" = "Nalaganje";
 
 /* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
-"home_default_connection_title" = "Select your default connection";
+"home_default_connection_title" = "Izberite svojo privzeto povezavo";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_name" = "Najhitrejša država";
@@ -1764,7 +1764,7 @@
 "home_default_connection_fastest_description" = "Najboljši strežnik glede na vašo lokacijo";
 
 /* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_most_recent_name" = "Most Recent";
+"home_default_connection_most_recent_name" = "Najnovejši";
 
 /* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_most_recent_description" = "Vaša nazadnje uporabljena povezava";
@@ -2020,6 +2020,9 @@
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "Različica aplikacije: %@";
 
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "Prijava v drugo napravo";
+
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Vključeno";
 
@@ -2066,7 +2069,7 @@
 "_settings_protocol_description_wireguard_tcp" = "Fast, secure, and efficient. WireGuard is difficult to detect and block.";
 
 /* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tls" = "Overcomes VPN blocks by hiding your VPN connection from censors. This protocol is DPI (deep packet inspection) resistant, but may not be as fast as other protocols. Stealth is exclusive to Proton VPN.";
+"_settings_protocol_description_wireguard_tls" = "Zaobide blokade VPN tako, da skrije vašo VPN povezavo pred regulatorji. Ta protokol je odporen na globoko pregledovanje paketov (DPI), vendar morda ni tako hiter kot drugi protokoli. Stealth je protokol, ki je na voljo izključno za Proton VPN.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_udp" = "Uveljavljeno, dobro preizkušeno in varno. OpenVPN je manj učinkovit pri porabi baterije kot nekateri drugi protokoli.";
@@ -2078,13 +2081,13 @@
 "_settings_protocol_description_ikev2" = "Fast, secure, and stable—but easier for censors to detect and block.";
 
 /* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
-"_settings_protocol_tag_recommended" = "RECOMMENDED";
+"_settings_protocol_tag_recommended" = "PRIPOROČENO";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
 "_settings_protocol_tag_new" = "NOVO";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
-"_settings_protocol_footer" = "A VPN protocol determines how data moves between a VPN server and your device. **[Learn more](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+"_settings_protocol_footer" = "Protokol VPN določa način premikanja podatkov med strežnikom VPN in vašo napravo. **[Izvedi več](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
 
 /* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
 "_settings_protocol_alert_title" = "Povezava VPN je aktivna";
@@ -2336,7 +2339,7 @@
 "upsell_p2pSupport_subtitle" = "Izboljšajte hitrost nalaganja in prenosa, medtem ko skrivate svoj naslov IP.";
 
 /* Title of devices upsell modal */
-"upsell_devices_title" = "Protect 10 devices at once";
+"upsell_devices_title" = "Zaščitite 10 naprav hkrati";
 
 /* Subtitle of devices upsell modal */
 "upsell_devices_subtitle" = "Proton VPN is available on 8 different platforms.";
@@ -2447,7 +2450,7 @@
 "modals_whats_new_recents_subtitle" = "It’s now even easier to reconnect to your favorite servers. View your most recent connections on the home screen, or pin them for quick access.";
 
 /* Title of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_title" = "Gateways have moved";
+"modals_whats_new_gateways_title" = "Prehodi so bili premaknjeni";
 
 /* Subtitle of gateways related content of the "What's new" screen */
 "modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
@@ -2456,7 +2459,7 @@
 "upsell_specific_location_subtitle" = "Pridobite neomejene spremembe z VPN Plus";
 
 /* Displayed when the user clicks "Change server" after they've just changed it. */
-"upsell_specific_location_subtitle2" = "With Proton Free, you can change servers a few times per hour. Get unlimited server changes with VPN Plus.";
+"upsell_specific_location_subtitle2" = "S Proton Free lahko spremenite strežnike nekajkrat na uro. Z VPN Plus pa dobite neomejene spremembe strežnikov.";
 
 /* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
 "upsell_specific_location_title" = "Dosegli ste trenutno največje število brezplačnih sprememb strežnika.";
@@ -2654,16 +2657,16 @@
 "_password_changed_successfully" = "Geslo je bilo uspešno spremenjeno";
 
 /* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
-"_ike_deprecation_alert_title" = "Enable IKEv2?";
+"_ike_deprecation_alert_title" = "Omogoči IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more";
+"_ike_deprecation_alert_message" = "Ta protokol bo kmalu odstranjen. Razmislite o prehodu na protokol Smart. Izvedi več";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Več informacij";
 
 /* Button title for 'Continue with IKEv2' */
-"_ike_deprecation_alert_continue_button_title" = "Continue with IKEv2";
+"_ike_deprecation_alert_continue_button_title" = "Nadaljuj z IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
 "_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";
@@ -2690,7 +2693,7 @@
 "upsell_carousel_worldwide_title" = "Pokritost po vsem svetu";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_worldwide_subtitle" = "1700+ server locations in 63 countries";
+"upsell_carousel_worldwide_subtitle" = "1700+ lokacij strežnikov v 63 državah";
 
 /* Home upsell carousel card title */
 "upsell_carousel_faster_browsing_title" = "Hitrejše brskanje";
@@ -2747,7 +2750,7 @@
 "_generic_error_description" = "The operation could not be completed. (Error %@)";
 
 /* Error alert title: a connection error has occurred. */
-"_connection_error_title" = "Connection Error";
+"_connection_error_title" = "Napaka povezave";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
@@ -2765,19 +2768,19 @@
 "_connection_error_intent_missing" = "We were unable to connect to the server. (Error %@).";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_preparation" = "There was a problem preparing the connection (Error %@)";
+"_connection_error_preparation" = "Pri pripravi na povezavo je prišlo do težave (napaka %@)";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
 
 /* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)";
+"_connection_error_timeout" = "Pri poskusu povezave je prišlo do napake: strežnik ni pravočasno odgovoril. Poskusite znova. (Napaka %@)";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_provider_message_error" = "There was a problem with the connection. (Error %@)";
+"_provider_message_error" = "Prišlo je do težave s povezavo. (Napaka %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Nezaščiteno";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
@@ -2789,28 +2792,28 @@
 "widget_recents_description" = "Ogled zgodovine povezav je na voljo tukaj.";
 
 /* What's new screen section title */
-"widget_whats_new_title" = "Widgets are back";
+"widget_whats_new_title" = "Gradniki so nazaj";
 
 /* What's new screen section subtitle */
-"widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+"widget_whats_new_subtitle" = "Zdaj si lahko ogledate in upravljate svojo povezavo VPN, ne da bi zapustili začetni zaslon.";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
+"_widgetAdoption_modal_title" = "Preizkusite gradnik Proton VPN";
 
 /* Widget adoption modal subtitle. */
 "_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
 
 /* Widget adoption modal instructions header. */
-"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
+"_widgetAdoption_modal_instructions_header" = "Kako dodam gradnik Proton VPN?";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
+"_widgetAdoption_modal_instruction_1" = "Pritisnite in pridržite kjer koli na začetnem zaslonu.";
 
 /* Widget adoption modal 2nd instruction content. */
 "_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
 
 /* Widget adoption modal 3rd instruction content. */
-"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+"_widgetAdoption_modal_instruction_3" = "Izberite ali poiščite **Proton VPN**";
 
 /* Widget adoption modal 4th instruction content. */
 "_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";

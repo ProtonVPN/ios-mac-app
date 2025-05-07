@@ -106,13 +106,13 @@
       <key>num_servers</key>
       <dict>
         <key>one</key>
-        <string>Plus de %d serveur sécurisé</string>
+        <string>%d serveur sécurisé</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Plus de %d serveur sécurisé</string>
+        <string>Plus de %d serveurs sécurisés</string>
       </dict>
     </dict>
     <key>subscription_upgrade_option1</key>
@@ -206,9 +206,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>+ de %d pays</string>
+        <string>%d pays</string>
         <key>other</key>
-        <string>+ de %d pays</string>
+        <string>Plus de %d pays</string>
       </dict>
     </dict>
     <key>_countries_count</key>
