@@ -79,6 +79,16 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect(trigger))
 
         @Dependency(\.connectionBridge) var bridge
-        await bridge.push(intent: .connect(ConnectionPreparationIntent(spec: spec, server: server, connectionProtocol: specifiedProtocol)))
+        await bridge
+            .push(
+                intent: 
+                        .connect(
+                            ConnectionPreparationIntent(
+                                spec: spec,
+                                server: server,
+                                connectionProtocol: specifiedProtocol
+                            )
+                        )
+            )
     }
 }
