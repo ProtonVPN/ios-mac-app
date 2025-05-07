@@ -66,6 +66,9 @@
          <FileRef
             location = "group:libraries/Shared/ConnectionInventory">
          </FileRef>
+         <FileRef
+            location = "group:libraries/Shared/WidgetIntents">
+         </FileRef>
       </Group>
       <Group
          location = "container:"
