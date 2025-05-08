@@ -24,6 +24,10 @@ import UIKit
 import Cocoa
 #endif
 
+#if canImport(SystemExtensions)
+import SystemExtensions
+#endif
+
 import Dependencies
 import Domain
 import Strings
@@ -72,7 +76,7 @@ extension SystemAlert {
     public static var className: String {
         return String(describing: self)
     }
-    
+
     public var className: String {
         return String(describing: type(of: self))
     }
@@ -643,42 +647,6 @@ public final class NetShieldRequiresUpgradeAlert: SystemAlert {
     }
 }
 
-public final class SysexEnabledAlert: SystemAlert {
-    public var title: String? = Localizable.sysexEnabledTitle
-    public var message: String? = Localizable.sysexEnabledDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-
-    public init() { }
-}
-
-public final class SysexInstallingErrorAlert: SystemAlert {
-    public var title: String? = Localizable.sysexCannotEnable
-    public var message: String? = Localizable.sysexErrorDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-
-    public init() {
-        actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
-    }
-}
-
-public final class SystemExtensionTourAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    public var cancelHandler: () -> Void
-
-    public init(cancelHandler: @escaping() -> Void) {
-        self.cancelHandler = cancelHandler
-        self.dismiss = cancelHandler
-    }
-}
-
 public final class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
     public var title: String? = Localizable.vpnauthCertfailTitle
     public var message: String? = Localizable.vpnauthCertfailDescription
@@ -897,3 +865,59 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
         actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
     }
 }
+
+#if canImport(SystemExtensions)
+public final class SysexEnabledAlert: SystemAlert {
+    public var title: String? = Localizable.sysexEnabledTitle
+    public var message: String? = Localizable.sysexEnabledDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}
+
+public final class SysexInstallingErrorAlert: SystemAlert {
+    public var title: String? = Localizable.sysexCannotEnable
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init?(error: Error) {
+        guard let sysexError = error as? OSSystemExtensionError else {
+            return nil
+        }
+
+        let subcase: String
+        switch sysexError.code {
+        case .unsupportedParentBundleLocation:
+            subcase = Localizable.sysexErrorDescriptionSubcaseBadLocation
+        case .forbiddenBySystemPolicy:
+            subcase = Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
+        case .authorizationRequired:
+            subcase = Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
+        default:
+            subcase = Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
+        }
+
+        self.message = Localizable.sysexErrorDescription(subcase)
+
+        actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+    }
+}
+
+public final class SystemExtensionTourAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    public var cancelHandler: () -> Void
+
+    public init(cancelHandler: @escaping() -> Void) {
+        self.cancelHandler = cancelHandler
+        self.dismiss = cancelHandler
+    }
+}
+#endif

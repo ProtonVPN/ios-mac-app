@@ -1352,6 +1352,8 @@ public enum Localizable {
   public static var settingsTitleNetshield: String { return Localizable.tr("Localizable", "_settings_title_netshield", fallback: "NetShield") }
   /// Title of the Protocol cell in the Settings tab [Redesign_2023]
   public static var settingsTitleProtocol: String { return Localizable.tr("Localizable", "_settings_title_protocol", fallback: "Protocol") }
+  /// Title of the "Sign in to another device" cell in the Settings tab
+  public static var settingsTitleQrCodeSignIn: String { return Localizable.tr("Localizable", "_settings_title_qr_code_sign_in", fallback: "Sign in to another device") }
   /// Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023]
   public static var settingsTitleRate: String { return Localizable.tr("Localizable", "_settings_title_rate", fallback: "Rate Proton VPN") }
   /// Title of the Report an Issue cell in the Settings tab [Redesign_2023]
@@ -1368,8 +1370,6 @@ public enum Localizable {
   public static var settingsTitleVpnAccelerator: String { return Localizable.tr("Localizable", "_settings_title_vpn_accelerator", fallback: "VPN Accelerator") }
   /// Title of the Widget cell in the Settings tab [Redesign_2023]
   public static var settingsTitleWidget: String { return Localizable.tr("Localizable", "_settings_title_widget", fallback: "Widget") }
-  /// Title of the Sign in to another device cell in the Settings tab
-  public static var settingsTitleQrCodeSignIn: String { return Localizable.tr("Localizable", "_settings_title_qr_code_sign_in", fallback: "Sign in to another device") }
   /// iOS: title of the screen after successfull purchase
   public static var setupComplete: String { return Localizable.tr("Localizable", "_setup_complete", fallback: "Setup Complete") }
   /// iOS: title of the screen after successfull purchase
@@ -1473,7 +1473,7 @@ public enum Localizable {
   public static var switchSideButtonOff: String { return Localizable.tr("Localizable", "_switch_side_button_off", fallback: "OFF") }
   /// ON
   public static var switchSideButtonOn: String { return Localizable.tr("Localizable", "_switch_side_button_on", fallback: "ON") }
-  /// Cannot enable System Extension
+  /// The app was unable to enable system extensions on the device, which are required for connecting using WireGuard.
   public static var sysexCannotEnable: String { return Localizable.tr("Localizable", "_sysex_cannot_enable", fallback: "Cannot enable System Extension") }
   /// Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen."
   public static var sysexDescription1: String { return Localizable.tr("Localizable", "_sysex_description_1", fallback: "To use Proton VPN, you’ll need to enable **custom VPN protocols** on your Mac.") }
@@ -1487,9 +1487,20 @@ public enum Localizable {
   public static var sysexEnabledDescription: String { return Localizable.tr("Localizable", "_sysex_enabled_description", fallback: "Configuration completed. Now you can browse the internet faster with the best VPN technologies.") }
   /// Configuration completed
   public static var sysexEnabledTitle: String { return Localizable.tr("Localizable", "_sysex_enabled_title", fallback: "Configuration completed") }
-  /// An error occurred while installing System Extension.
-  /// Reinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.
-  public static var sysexErrorDescription: String { return Localizable.tr("Localizable", "_sysex_error_description", fallback: "An error occurred while installing System Extension.\nReinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.") }
+  /// This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred.
+  public static func sysexErrorDescription(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_sysex_error_description", String(describing: p1), fallback: "An error occurred while enabling System Extensions: %@")
+  }
+  /// This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt.
+  public static var sysexErrorDescriptionSubcaseAuthorizationRequired: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_authorization_required", fallback: "your authorization is required to continue.") }
+  /// This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder.
+  public static var sysexErrorDescriptionSubcaseBadLocation: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_bad_location", fallback: "please make sure the application is correctly installed in the /Applications folder.") }
+  /// This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD".
+  public static func sysexErrorDescriptionSubcaseDefault(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_sysex_error_description_subcase_default", String(describing: p1), fallback: "please contact our support. (Error %@)")
+  }
+  /// This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type.
+  public static var sysexErrorDescriptionSubcaseForbiddenBySystemPolicy: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_forbidden_by_system_policy", fallback: "the current system policy prohibits activating extensions on your device.") }
   /// Default action in the system extension wizard in mac. macOS Ventura
   public static var sysexOpenSecurityPreferences: String { return Localizable.tr("Localizable", "_sysex_open_security_preferences", fallback: "Open Security Preferences") }
   /// Default action in the system extension wizard in mac. Pre-macOS Ventura

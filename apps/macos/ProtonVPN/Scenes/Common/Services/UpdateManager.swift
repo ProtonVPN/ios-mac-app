@@ -37,7 +37,6 @@ final class UpdateManager: NSObject {
     private static let updateChillInterval: TimeInterval = .hours(1)
     private static let feedURLString = "https://protonvpn.com/download/macos/updates/v4/sparkle.xml"
 
-
     public typealias Factory = PropertiesManagerFactory
     private let factory: Factory
     
