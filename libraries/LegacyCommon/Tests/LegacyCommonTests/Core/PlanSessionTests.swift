@@ -31,7 +31,7 @@ class PlanSessionTests: XCTestCase {
     func testManageSubscriptionWithSelector() {
         let sut = PlanSession.manageSubscription
         let path = sut.path(accountHost: URL(string: "https://myHost.com")!, selector: "selectorValue")
-        XCTAssertEqual(path.absoluteString, "https://myHost.com/lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=selectorValue")
+        XCTAssertEqual(path.absoluteString, "https://myHost.com/lite?action=subscribe-account&app=vpn&fullscreen=off&redirect=protonvpn://refresh#selector=selectorValue")
     }
 
     func testUpgradeSubscriptionWithoutSelector() {
@@ -43,6 +43,6 @@ class PlanSessionTests: XCTestCase {
     func testUpgradeSubscriptionWithSelector() {
         let sut = PlanSession.upgrade
         let path = sut.path(accountHost: URL(string: "https://myHost.com")!, selector: "selectorValue")
-        XCTAssertEqual(path.absoluteString, "https://myHost.com/lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh&type=upgrade#selector=selectorValue")
+        XCTAssertEqual(path.absoluteString, "https://myHost.com/lite?action=subscribe-account&app=vpn&fullscreen=off&redirect=protonvpn://refresh&type=upgrade#selector=selectorValue")
     }
 }
