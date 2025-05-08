@@ -123,6 +123,7 @@ extension ServerSelector: DependencyKey {
         let baseFilters = spec.locationFilters + [tierFilter, spec.serverTierFilter].compactMap { $0 }
 
         var servers = repository.getServers(filteredBy: baseFilters, orderedBy: spec.order)
+        log.debug("Got \(servers.count) servers with \(baseFilters.map(\.description).joined())...")
 
         guard !servers.isEmpty else {
             throw ServerSelectionError.noLogical(.locationNotFound(spec.location))
@@ -135,8 +136,12 @@ extension ServerSelector: DependencyKey {
         ]
 
         for (filter, reason) in steps {
+            let oldServers = servers
+            log.debug("Applying filter \(filter) to \(servers.count) servers...")
+
             servers = servers.filter(filter)
             guard !servers.isEmpty else {
+                log.debug("No logicals remaining - servers were \(oldServers)")
                 throw .noLogical(reason)
             }
         }
@@ -150,11 +155,13 @@ extension ServerSelector: DependencyKey {
 
         let endpointsSupportingProtocol = server.endpoints.filter { $0.supports(protocolSet: acceptableProtocols) }
         if endpointsSupportingProtocol.isEmpty {
+            log.debug("No endpoint supported protocol set. Logical: \(logical)")
             throw ServerSelectionError.noEndpoints(.protocolNotSupported(acceptableProtocols))
         }
 
         let availableEndpoints = endpointsSupportingProtocol.filter { !$0.isUnderMaintenance }
         guard let endpoint = availableEndpoints.randomElement() else {
+            log.debug("No endpoint not under maintenance. Logical: \(logical)")
             throw ServerSelectionError.noEndpoints(.maintenance)
         }
 
