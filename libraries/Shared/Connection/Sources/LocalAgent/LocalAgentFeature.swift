@@ -76,17 +76,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
         @CasePathable
         public enum DelegateAction: Sendable {
-            case certificateRefreshRequired(CertificateRefreshReason)
             case errorReceived(LocalAgentError)
             case connectionFailed(Error)
-
-            /// A subset of `LocalAgentState` error states for which the appropriate resolution
-            /// is reconnecting with a new certificate
-            @CasePathable public enum CertificateRefreshReason: Sendable {
-                case hardJailed
-                case softJailed
-                case clientCertificateError
-            }
         }
     }
 
@@ -184,16 +175,18 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 // It's unclear when we enter this state, intuitively this should happen in the scenario described
                 // above: `case .event(.state(.connectionError)):`, but it does not.
                 // If we do enter this state, let's disconnect, since we are most likely connecting to the wrong server
-                return .send(.disconnect(.serverCertificateError))
+                // return .send(.disconnect(.serverCertificateError))
+                state = .connecting
+                return .none
 
             case .event(.state(.softJailed)):
-                return .send(.delegate(.certificateRefreshRequired(.softJailed)))
+                return .none
 
             case .event(.state(.hardJailed)):
-                return .send(.delegate(.certificateRefreshRequired(.hardJailed)))
+                return .none
 
             case .event(.state(.clientCertificateError)):
-                return .send(.delegate(.certificateRefreshRequired(.clientCertificateError)))
+                return .none
 
             case .event(.state(.invalid)):
                 log.assertionFailure("LocalAgent entered invalid/unknown state")
@@ -342,6 +335,8 @@ package enum LocalAgentErrorResolutionStrategy {
 
 extension LocalAgentError {
 
+    /// Defines the appropriate way to handle each error.
+    /// See documentation for each error case for context.
     package var resolutionStrategy: LocalAgentErrorResolutionStrategy {
         switch self {
         case .systemError:
@@ -352,15 +347,20 @@ extension LocalAgentError {
             // Restricted server, unable to verify the certificate yet: Wait or try another server
             return .none
 
-        case .certificateExpired, .certificateNotProvided:
-            // If the certificate is expired or missing, we will detect this and refresh it, there is no need to
-            // explicitly regenerate it
-            return .reconnect(.withExistingCertificate)
+        case .certificateExpired:
+            return .reconnect(.withNewCertificate)
+
+        case .certificateNotProvided,
+                .userTorrentNotAllowed,
+                .guestSession:
+            log.warning("Unexpected error reported by local agent", category: .localAgent, metadata: ["error": "\(self)"])
+            return .none
 
         case .badCertificateSignature, .certificateRevoked, .keyUsedMultipleTimes, .serverSessionDoesNotMatch:
             // For now, it's too complicated to restart the whole connection process after regenerating keys,
             // since we would have to tear down the tunnel and reconfigure it with the new private key.
             // return .reconnect(.withNewKeysAndCertificate)
+            // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             return .disconnect(.withNewKeys)
 
         case .maxSessionsUnknown,
@@ -372,10 +372,9 @@ extension LocalAgentError {
                 .serverError,
                 .policyViolationLowPlan,
                 .policyViolationDelinquent,
-                .userTorrentNotAllowed,
-                .userBadBehavior,
-                .guestSession:
+                .userBadBehavior:
             // The error shown on disconnection is customised through its implementation of AlertConvertibleError
+            // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             return .disconnect(.immediately)
 
         case .unknown:

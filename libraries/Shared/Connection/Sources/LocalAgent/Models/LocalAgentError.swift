@@ -56,25 +56,52 @@ public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConve
 public enum LocalAgentError: ProtonVPNError {
     public static var errorDomain: String { "LocalAgentRemoteError" }
 
-    case restrictedServer
-    case certificateExpired
-    case certificateRevoked
-    case maxSessionsUnknown
-    case maxSessionsFree
-    case maxSessionsBasic
-    case maxSessionsPlus
-    case maxSessionsVisionary
-    case maxSessionsPro
-    case keyUsedMultipleTimes
-    case serverError
-    case policyViolationLowPlan
-    case policyViolationDelinquent
-    case userTorrentNotAllowed
-    case userBadBehavior
+    /// Unexpected: only seen with legacy username 'guest'
     case guestSession
+    /// Certificate has expired: renew it, and try to reconnect
+    case certificateExpired
+    /// Certificate has been revoked: regenerate keys, request a certificate and try to reconnect
+    case certificateRevoked
+    /// Regenerate keys and try to reconnect
+    case keyUsedMultipleTimes
+    /// Restricted server, unable to verify the certificate yet - wait or try another server
+    case restrictedServer
+    /// Regenerate keys and try to reconnect
     case badCertificateSignature
+    /// Unexpected: try to reconnect with existing certificate
     case certificateNotProvided
+
+    /// Disconnect, or upgrade plan
+    case maxSessionsUnknown
+    /// Disconnect, or upgrade plan
+    case maxSessionsFree
+    /// Disconnect, or upgrade plan
+    case maxSessionsBasic
+    /// Disconnect, or upgrade plan
+    case maxSessionsPlus
+    /// Disconnect, or upgrade plan
+    case maxSessionsVisionary
+    /// Disconnect, or upgrade plan
+    case maxSessionsPro
+
+    /// Disconnect and try another server
+    case serverError
+
+    /// Try another server or upgrade plan
+    case policyViolationLowPlan
+    /// Try another server, disable features or upgrade plan
+    case policyViolationDelinquent
+
+    /// Unexpected
+    case userTorrentNotAllowed
+
+    /// Bad user behaviour
+    case userBadBehavior
+
+    /// Use the correct ed25519/x25519 key
     case serverSessionDoesNotMatch
+
+    /// Feature could not be set - try again or on another server
     case systemError(LocalAgentErrorSystemError)
     case unknown(code: Int)
 

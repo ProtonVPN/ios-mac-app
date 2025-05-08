@@ -273,18 +273,6 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
             return effectToResolve(error: error)
 
-        case .localAgent(.delegate(.certificateRefreshRequired(let reason))):
-            let currentCertificateExpiry = state.certAuth.loaded?.certificate.validUntil
-            log.info(
-                "Local Agent needs to be reconnected with a refreshed certificate",
-                category: .connection,
-                metadata: ["reason": "\(reason)", "certificateExpires": "\(optional: currentCertificateExpiry)"]
-            )
-            return .concatenate(
-                .send(.localAgent(.disconnect(nil))),
-                .send(.certAuth(.loadAuthenticationData))
-            )
-
         case .tunnel:
             return .none
 
@@ -324,7 +312,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .disconnect(.withNewKeys):
             return .merge(
                 .cancel(id: CancelID.connectionTimeout),
-                .send(.certAuth(.regenerateKeys)),
+                .send(.certAuth(.regenerateKeys)), // also removes the certificate
                 .send(.localAgent(.disconnect(.agentError(error)))),
                 .send(.tunnel(.disconnect(nil)))
             )
@@ -332,14 +320,13 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .reconnect(.withNewCertificate):
             return .concatenate(
                 .send(.localAgent(.disconnect(nil))),
-                .send(.certAuth(.purgeCertificate)), // In case it's not just expired
-                .send(.certAuth(.loadAuthenticationData))
+                .send(.certAuth(.loadAuthenticationData)) // will refresh our certificate
             )
 
         case .reconnect(.withExistingCertificate):
             return .concatenate(
                 .send(.localAgent(.disconnect(nil))),
-                .send(.certAuth(.loadAuthenticationData))
+                .send(.certAuth(.loadAuthenticationData)) // *may* refresh our certificate
             )
         }
     }
