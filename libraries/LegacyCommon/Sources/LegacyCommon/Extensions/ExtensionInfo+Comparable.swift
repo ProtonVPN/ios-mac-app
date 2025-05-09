@@ -45,19 +45,22 @@ extension ExtensionInfo: Equatable, Comparable {
             return versionComparison
         }
 
-        // Versions are the same, lets check build numbers
-        guard let thisBuild = Int(self.build) else {
-            return .orderedAscending
+        let thisBuildComponents = self.build.split(separator: ".")
+        let otherBuildComponents = other.build.split(separator: ".")
+
+        guard thisBuildComponents.count == otherBuildComponents.count else {
+            return thisBuildComponents.count < otherBuildComponents.count ? .orderedAscending : .orderedDescending
         }
 
-        guard let otherBuild = Int(other.build) else {
-            return .orderedDescending
+        for (thisComponent, otherComponent) in zip(thisBuildComponents, otherBuildComponents) {
+            guard let thisInt = Int(String(thisComponent)), let otherInt = Int(String(otherComponent)) else {
+                return .orderedAscending
+            }
+
+            guard thisInt != otherInt else { continue }
+            return thisInt < otherInt ? .orderedAscending : .orderedDescending
         }
 
-        guard thisBuild != otherBuild else {
-            return .orderedSame
-        }
-
-        return thisBuild < otherBuild ? .orderedAscending : .orderedDescending
+        return .orderedSame
     }
 }
