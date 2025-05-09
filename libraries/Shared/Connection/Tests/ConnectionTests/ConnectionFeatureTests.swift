@@ -677,6 +677,62 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(stateChange(to: \.connected))
     }
 
+    @MainActor func testConnectionTimesOutIfNeverUnjailedByRestrictedServer() async throws {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+        environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+        await store.receive(stateChange(to: \.connecting.unresolved))
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.connecting.resolved))
+        await environment.clock.advance(by: .seconds(1))
+
+        // When connecting to a restricted server, we are hardjailed and must wait until it can verify our certificate
+        // has not been revoked
+        await store.receive(\.core.localAgent.event.error.restrictedServer)
+        await environment.clock.advance(by: .seconds(28))
+
+        // The server failed to authenticate us in time, so we should time out
+        await store.receive(\.delegate.connectionFailed.timeout)
+        await store.receive(stateChange(to: \.disconnecting))
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.disconnected))
+    }
+
+    @MainActor func testConnectionSucceedsOnceUnjailedByRestrictedServer() async throws {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        // Set up local agent to take longer to connect than the timeout limit of 30 seconds
+        environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+        await store.receive(stateChange(to: \.connecting.unresolved))
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.connecting.resolved))
+        await environment.clock.advance(by: .seconds(1))
+
+        // When connecting to a restricted server, we are hardjailed and must wait until it can verify our certificate
+        // has not been revoked
+        await store.receive(\.core.localAgent.event.error.restrictedServer)
+        await environment.clock.advance(by: .seconds(13))
+        environment.localAgent.simulate(event: .state(.connected))
+
+        await store.receive(stateChange(to: \.connected))
+
+        // Let's fast forward to when we would have timed out, had the server not unjailed us
+        await environment.clock.advance(by: .seconds(15))
+    }
+
     private func stateChange(
         to expectedState: PartialCaseKeyPath<ConnectionState>,
         strict: Bool = true

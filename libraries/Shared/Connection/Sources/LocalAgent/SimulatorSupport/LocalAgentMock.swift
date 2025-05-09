@@ -40,6 +40,7 @@ final class LocalAgentMock: LocalAgent {
     var connectionTask: Task<Void, Error>?
     var connectionDuration: Duration = .milliseconds(500)
     var connectionErrorToThrow: Error?
+    var connectionResult: ConnectionResult = .success
     var disconnectionTask: Task<Void, Error>?
     var disconnectionDuration: Duration = .milliseconds(250)
 
@@ -73,12 +74,16 @@ final class LocalAgentMock: LocalAgent {
 
         state = .connecting
 
-        connectionTask = Task {
+        connectionTask = Task { [weak self] in
             try await clock.sleep(for: connectionDuration)
             try Task.checkCancellation()
             log.debug("LocalAgentMock finished connecting")
-            self.state = .connected
-            self.netShieldType = configuration.features.netshield
+
+            self?.state = connectionResult.state
+            self?.netShieldType = configuration.features.netshield
+            if let error = connectionResult.error {
+                self?.simulate(event: .error(error))
+            }
         }
     }
 
@@ -136,5 +141,13 @@ enum NetShieldStatsBehaviour {
         }
 
     }
+}
+
+/// Use this to model what state `LocalAgentMock` should enter once it finishes connecting to the server
+struct ConnectionResult {
+    let state: LocalAgentState
+    let error: LocalAgentError?
+
+    static let success = ConnectionResult(state: .connected, error: nil)
 }
 #endif

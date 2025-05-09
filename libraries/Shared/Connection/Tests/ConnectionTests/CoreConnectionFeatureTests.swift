@@ -497,6 +497,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
     @MainActor func testRefreshesCertificateWhenLocalAgentReceivesCertificateExpiredErrorEvent() async {
         let now = Date.now
+        let laterToday = now.addingTimeInterval(.hours(12))
         let tomorrow = now.addingTimeInterval(.days(1))
         let dayAfterTomorrow = tomorrow.addingTimeInterval(.days(1))
 
@@ -591,9 +592,16 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
         // Certificate expiration
 
+        // Let's first make sure that we don't disconnect from LA and refresh our certificate if it's still valid
+        store.dependencies.date = .constant(laterToday) // certificate doesn't expire until tomorrow
+        await store.send(.localAgent(.event(.error(.certificateExpired))))
+        await store.receive(\.localAgent.delegate.errorReceived.certificateExpired)
+        // We received the error, but should ignore it to avoid entering a disconnect/reconnect loop with the same cert
+
+        // Let's fast forward until our certificate has actually expired
         store.dependencies.date = .constant(tomorrow.addingTimeInterval(.minutes(1)))
 
-        await store.send(.localAgent(.event(.error(.certificateExpired)))) // Subscription ran out
+        await store.send(.localAgent(.event(.error(.certificateExpired))))
         await store.receive(\.localAgent.delegate.errorReceived.certificateExpired)
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnecting(nil)
