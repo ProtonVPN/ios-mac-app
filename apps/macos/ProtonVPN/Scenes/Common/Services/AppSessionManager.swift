@@ -319,6 +319,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func logoutRoutine(reason: String?) {
+        guard sessionStatus != .notEstablished else {
+            return
+        }
         sessionStatus = .notEstablished
         post(notification: SessionChanged(data: .lost(reason: reason)))
         logOutCleanup()
