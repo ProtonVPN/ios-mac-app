@@ -255,6 +255,69 @@ class SystemExtensionManagerTests: XCTestCase {
     }
 }
 
+class ExtensionInfoComparisonTests: XCTestCase {
+    func info(_ version: String, _ buildNumber: String) -> ExtensionInfo {
+        ExtensionInfo(version: version, build: buildNumber, bundleId: "me.proton.jetpack")
+    }
+
+    func testEquals() {
+        let info1 = info("1.2.3", "202030.1210311620")
+        let info2 = info("1.2.3", "202030.1210311620")
+
+        XCTAssertEqual(info1.compare(to: info2), .orderedSame)
+    }
+
+    func testLessThan() {
+        do {
+            let info1 = info("1.2.3", "1210311620")
+            let info2 = info("1.2.4", "1210311620")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1234567.1210311620")
+            let info2 = info("1.2.4", "1210311620")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1234568.1210311620")
+            let info2 = info("1.2.4", "1234567.1210311622")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1210311620")
+            let info2 = info("1.2.3", "1210311621")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1234567.1210311620")
+            let info2 = info("1.2.3", "1234567.1210311621")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1234567.1210311620")
+            let info2 = info("1.2.3", "1234568.1210311620")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1234567.1210311622")
+            let info2 = info("1.2.3", "1234568.1210311620")
+            XCTAssertLessThan(info1, info2)
+        }
+
+        do {
+            let info1 = info("1.2.3", "1234567")
+            let info2 = info("1.2.3", "1234567.1210311620")
+            XCTAssertLessThan(info1, info2)
+        }
+    }
+}
+
 extension SystemExtensionManagerTests: SystemExtensionManager.Factory {
     func makeCoreAlertService() -> CoreAlertService {
         return alertService
