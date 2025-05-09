@@ -117,7 +117,11 @@ public struct CertificateAuthenticationFeature: Reducer {
                     return .send(.loadFromStorage)
                 }
 
-                log.debug("Cached certificate still valid and with up-to-date features", category: .connection)
+                log.debug("Cached certificate still valid and with up-to-date features", category: .connection, metadata: [
+                    "now": "\(date.now)",
+                    "refreshTime": "\(data.certificate.refreshTime)",
+                    "validUntil": "\(data.certificate.validUntil)"
+                ])
                 return .send(.loadingFinished(.success(data)))
 
             case .loadFromStorage:

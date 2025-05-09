@@ -211,6 +211,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             }
             guard let server = serverIdentifier.fullServerInfo(tunnelConnectionInfo.logicalInfo) else {
+                // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
                 log.error("Detected connection to unknown server, disconnecting", category: .connection)
                 return .send(.disconnect(.connectionFailure(.serverMissing)))
             }
@@ -253,7 +254,10 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // An error occurred while creating the local agent connection
             // This is likely due to a problem with our keys/certificate. Let's disconnect
             let connectionError = ConnectionError.agent(.failedToEstablishConnection(error))
-            return .send(.disconnect(.connectionFailure(connectionError)))
+            return .merge(
+                .send(.certAuth(.regenerateKeys)), // also removes the certificate
+                .send(.disconnect(.connectionFailure(connectionError)))
+            )
 
         case .localAgent(.event(.state(.disconnected))):
             guard case .disconnected = state.tunnel else { return .none }
@@ -266,6 +270,17 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
         case .localAgent(.delegate(.errorReceived(let error))):
             // We've received a local agent error
+            @Dependency(\.date) var date
+            if case .reconnect(.withNewCertificate) = error.resolutionStrategy, case .loaded(let data) = state.certAuth, date.now < data.certificate.validUntil {
+                // LA seems to sometimes return a certExpired error when connecting to restricted servers, even when
+                // our certificate is still valid. If our loaded certificate is still valid, let's ignore this error
+                log.info(
+                    "Ignoring certExpired error from LocalAgent, certificate is still valid",
+                    category: .connection,
+                    metadata: ["validUntil": "\(data.certificate.validUntil)", "refreshTime": "\(data.certificate.refreshTime)"]
+                )
+                return .none
+            }
             log.info(
                 "Handling LocalAgent error",
                 category: .connection,
@@ -314,7 +329,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.certAuth(.regenerateKeys)), // also removes the certificate
                 .send(.localAgent(.disconnect(.agentError(error)))),
-                .send(.tunnel(.disconnect(nil)))
+                .send(.tunnel(.disconnect(nil))) // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             )
 
         case .reconnect(.withNewCertificate):
