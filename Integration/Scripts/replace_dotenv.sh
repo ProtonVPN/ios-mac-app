@@ -60,11 +60,11 @@ function cmd_replace() {
 }
 
 if [ ! -x "$(command -v envsubst)" ]; then
-    die unavailable "The program 'envsubst' is not installed. Please run 'brew install gettext'."
+    die unavailable "The program 'envsubst' is not installed. Please run 'brew install gettext'"
 fi
 
 if [ ! -x "$(command -v sponge)" ]; then
-    die unavailable "The program 'sponge' is not installed. Please run 'brew install moreutils'."
+    die unavailable "The program 'sponge' is not installed. Please run 'brew install moreutils'"
 fi
 
 while getopts ":he:" arg; do
@@ -78,5 +78,9 @@ done
 shift $(($OPTIND - 1))
 
 REPLACE+=("$@")
+
+if [ ${#REPLACE[@]} -eq 0 ] || [ ${#DOTENVS[@]} -eq 0 ]; then
+    die usage "must specify at least one dotenv file and one source file"
+fi
 
 cmd_replace
