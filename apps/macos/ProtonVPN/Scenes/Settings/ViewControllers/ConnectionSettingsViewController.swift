@@ -127,6 +127,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     private func setupPlutoniumItem() {
         if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
             plutoniumView.isHidden = true
+            return
         }
         let model = SettingsClickableView.ViewModel(
             labelText: Localizable.plutoniumTitle,

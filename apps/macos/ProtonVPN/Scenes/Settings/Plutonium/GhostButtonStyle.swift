@@ -20,14 +20,6 @@ import SwiftUI
 
 import Theme
 
-struct IPEntryLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.title
-            .font(.callout(emphasised: false))
-            .foregroundStyle(.red)
-    }
-}
-
 struct GhostButtonStyle: ButtonStyle {
 
     @State var isHovered: Bool = false

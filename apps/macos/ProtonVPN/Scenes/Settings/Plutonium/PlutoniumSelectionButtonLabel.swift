@@ -31,29 +31,29 @@ struct PlutoniumSelectionButtonLabel: View {
     }
 
     let listType: ListType
+    let mode: PlutoniumFeatureToggle.Mode
 
     @State var appsRendered: Set<String> = []
     @State var ipsRendered: Set<String> = []
 
-    @Perception.Bindable public var store: StoreOf<PlutoniumFeature>
+    @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+    @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
     var apps: [PlutoniumApp] {
-        guard case .enabled(let mode) = store.feature else { return [] }
         switch mode {
         case .exclusion:
-            return store.exclusionActivated.apps
+            return exclusionActivated.apps
         case .inclusion:
-            return store.inclusionActivated.apps
+            return inclusionActivated.apps
         }
     }
 
     var ips: [String] {
-        guard case .enabled(let mode) = store.feature else { return [] }
         switch mode {
         case .exclusion:
-            return store.exclusionActivated.ips
+            return exclusionActivated.ips
         case .inclusion:
-            return store.inclusionActivated.ips
+            return inclusionActivated.ips
         }
     }
 
@@ -76,8 +76,6 @@ struct PlutoniumSelectionButtonLabel: View {
     }
 
     var title: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
-
         switch listType {
         case .apps:
             switch mode {
@@ -96,40 +94,35 @@ struct PlutoniumSelectionButtonLabel: View {
         }
     }
 
-    public init(store: StoreOf<PlutoniumFeature>, listType: ListType) {
-        self.store = store
+    public init(mode: PlutoniumFeatureToggle.Mode, listType: ListType) {
+        self.mode = mode
         self.listType = listType
     }
 
     @ViewBuilder
-    var forEachView: some View {
-        switch store.feature {
-        case .disabled:
-            EmptyView()
-        case .enabled(let mode):
-            LazyHStack(spacing: .themeSpacing8) {
-                switch listType {
-                case .apps:
-                    switch mode {
-                    case .exclusion:
-                        ForEach(store.exclusionActivated.apps) { item in
-                            smallAppView(item: item)
-                        }
-                    case .inclusion:
-                        ForEach(store.inclusionActivated.apps) { item in
-                            smallAppView(item: item)
-                        }
+    var activatedListPeek: some View {
+        LazyHStack(spacing: .themeSpacing8) {
+            switch listType {
+            case .apps:
+                switch mode {
+                case .exclusion:
+                    ForEach(exclusionActivated.apps) { item in
+                        smallAppView(item: item)
                     }
-                case .ips:
-                    switch mode {
-                    case .exclusion:
-                        ForEach(store.exclusionActivated.ips, id: \.self) { item in
-                            smallIPView(item: item)
-                        }
-                    case .inclusion:
-                        ForEach(store.inclusionActivated.ips, id: \.self) { item in
-                            smallIPView(item: item)
-                        }
+                case .inclusion:
+                    ForEach(inclusionActivated.apps) { item in
+                        smallAppView(item: item)
+                    }
+                }
+            case .ips:
+                switch mode {
+                case .exclusion:
+                    ForEach(exclusionActivated.ips, id: \.self) { item in
+                        smallIPView(item: item)
+                    }
+                case .inclusion:
+                    ForEach(inclusionActivated.ips, id: \.self) { item in
+                        smallIPView(item: item)
                     }
                 }
             }
@@ -145,7 +138,7 @@ struct PlutoniumSelectionButtonLabel: View {
                         .foregroundStyle(Color(.text))
                     HStack(spacing: .themeSpacing8) {
                         ScrollView(.horizontal) {
-                            forEachView
+                            activatedListPeek
                             if itemsCount == 0 {
                                 Text(Localizable.plutoniumNone)
                                     .themeFont(.callout(emphasised: false))

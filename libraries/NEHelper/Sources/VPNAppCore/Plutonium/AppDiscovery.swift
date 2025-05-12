@@ -23,6 +23,8 @@ import SwiftUI
 
 import Ergonomics
 
+import Dependencies
+
 public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
 
     public var id: String { bundleIdentifier }
@@ -37,6 +39,11 @@ public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
         NSWorkspace.shared.icon(application: bundleIdentifier)
     }
 
+    public init(bundleIdentifier: String, title: String) {
+        self.bundleIdentifier = bundleIdentifier
+        self.title = title
+    }
+
     init?(url: URL) {
         guard let bundleIdentifier = Bundle(url: url)?.bundleIdentifier else { return nil }
         self.bundleIdentifier = bundleIdentifier
@@ -47,7 +54,6 @@ public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
 // MARK: - App Icons
 
 extension NSWorkspace {
-
     func icon(application: String) -> Image {
         guard let path = urlForApplication(withBundleIdentifier: application) else {
             return Image(nsImage: icon(for: .application))
@@ -57,13 +63,12 @@ extension NSWorkspace {
 }
 
 public extension FileManager {
-    static func enumerateAppsFolder() -> [PlutoniumApp] {
-        let fileManager = FileManager.default
-        let applicationsURLs = fileManager.urls(for: .applicationDirectory, in: .allDomainsMask)
+    func enumerateAppsFolder() -> [PlutoniumApp] {
+        let applicationsURLs = urls(for: .applicationDirectory, in: .allDomainsMask)
         var apps = [PlutoniumApp]()
         for applicationsURL in applicationsURLs {
             do {
-                let contents = try fileManager.contentsOfDirectory(at: applicationsURL,
+                let contents = try contentsOfDirectory(at: applicationsURL,
                                                                    includingPropertiesForKeys: nil,
                                                                    options: .skipsSubdirectoryDescendants)
                 let urls = contents
@@ -72,11 +77,30 @@ public extension FileManager {
 
                 apps.append(contentsOf: urls)
             } catch {
-                log.debug("Couldn't enumerate apps folder: \(applicationsURL), with error: \(error.localizedDescription)")
+                log.debug("Couldn't enumerate apps folder: \(applicationsURL), with error: \(error)")
             }
         }
 
         return apps.uniques(by: \.bundleIdentifier).sorted { $0.title < $1.title }
+    }
+}
+
+public struct AppsProvider {
+    public var enumerateAppsFolder: () -> [PlutoniumApp]
+}
+
+extension AppsProvider: DependencyKey {
+    public static let liveValue: AppsProvider = .init(enumerateAppsFolder: FileManager.default.enumerateAppsFolder)
+
+    public static var testValue: AppsProvider = .init {
+        [.init(bundleIdentifier: "test_bundle_id", title: "Huzza!")]
+    }
+}
+
+extension DependencyValues {
+    public var appsProvider: AppsProvider {
+        get { self[AppsProvider.self] }
+        set { self[AppsProvider.self] = newValue }
     }
 }
 

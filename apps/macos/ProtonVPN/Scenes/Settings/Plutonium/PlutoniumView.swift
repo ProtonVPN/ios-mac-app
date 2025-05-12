@@ -81,19 +81,21 @@ public struct PlutoniumView: View {
         }
     }
 
+    private func isOnBinding() -> Binding<Bool> {
+        .init(
+            get: {
+                if case .enabled = store.feature { return true }
+                return false
+            }, set: {
+                store.send(.toggleModeClicked($0))
+            })
+    }
+
     private var configView: some View {
         HStack(alignment: .top, spacing: .themeSpacing8) {
             modesSelector
             Spacer()
-            let isOn: Binding<Bool> = .init(
-                get: {
-                    if case .enabled = store.feature { return true }
-                    return false
-                }, set: {
-                    store.send(.toggleModeClicked($0))
-                })
-            Toggle(isOn: isOn,
-                   label: { EmptyView() })
+            Toggle(isOn: isOnBinding(), label: { EmptyView() })
                 .toggleStyle(ThemeToggleStyle())
         }
         .padding(.vertical, .themeSpacing24)
@@ -107,7 +109,7 @@ public struct PlutoniumView: View {
             Button {
                 appsSheet.toggle()
             } label: {
-                PlutoniumSelectionButtonLabel(store: store, listType: .apps)
+                PlutoniumSelectionButtonLabel(mode: store.feature.mode, listType: .apps)
             }
 
             Divider()
@@ -115,12 +117,21 @@ public struct PlutoniumView: View {
             Button {
                 ipsSheet.toggle()
             } label: {
-                PlutoniumSelectionButtonLabel(store: store, listType: .ips)
+                PlutoniumSelectionButtonLabel(mode: store.feature.mode, listType: .ips)
             }
         }
         .buttonStyle(.plain)
         .background(Color(.background, .transparent))
         .themeBorder(style: .weak, cornerRadius: .radius12)
+    }
+
+    private func selectionBinding() -> Binding<PlutoniumFeatureToggle.Mode> {
+        .init(
+            get: {
+                store.feature.mode
+            }, set: {
+                store.send(.modeSelectionClicked($0))
+            })
     }
 
     private var modesSelector: some View {
@@ -138,13 +149,7 @@ public struct PlutoniumView: View {
             }
             if case .enabled = store.feature {
                 Spacer().frame(height: .themeSpacing24)
-                let selection: Binding<PlutoniumFeatureToggle.Mode> = .init(
-                    get: {
-                        store.feature.mode
-                    }, set: {
-                        store.send(.modeSelectionClicked($0))
-                    })
-                Picker("", selection: selection) {
+                Picker("", selection: selectionBinding()) {
                     pickerContent()
                 }
                 .pickerStyle(.inline)
@@ -162,7 +167,7 @@ public struct PlutoniumView: View {
         }
     }
 
-    private var appsHeaderSubtitle: String? {
+    private var appsHeaderSubtitle: String {
         guard case .enabled(let mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:

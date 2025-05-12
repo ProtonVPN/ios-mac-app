@@ -28,7 +28,7 @@ public struct PlutoniumFeature {
 
     @ObservableState
     public struct State {
-        enum ValidationError: String {
+        enum ValidationError: Error {
             case alreadyExists
             case invalidIP
         }
@@ -45,20 +45,20 @@ public struct PlutoniumFeature {
 
         @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
         @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
-        @Shared(.exclusionActivated)  var exclusionActivated: PlutoniumActivated
+        @Shared(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
         @Shared(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
         @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
-        @Shared(.exclusionActivatedApplied)  var exclusionActivatedApplied: PlutoniumActivated
+        @Shared(.exclusionActivatedApplied) var exclusionActivatedApplied: PlutoniumActivated
 
         var requiresReconnection: Bool {
-            guard feature == featureApplied else {
-                return true // if the whole feature enables/disables, reconnect
-            }
             if case .disabled = feature {
                 if case .disabled = featureApplied {
                     return false // if feature was disabled and is still disabled, don't reconnect
                 }
+            }
+            guard feature == featureApplied else {
+                return true // if the whole feature enables/disables, reconnect
             }
             switch feature {
             case .disabled(let mode), .enabled(let mode): // compare only the currently selected mode
@@ -72,32 +72,6 @@ public struct PlutoniumFeature {
         }
 
         var discoveredApps: [PlutoniumApp] = []
-
-        var remainingApps: [PlutoniumApp] { // UI display
-            discoveredApps.filter {
-                !activatedApps.contains($0)
-            }
-        }
-
-        var activatedApps: [PlutoniumApp] { // UI display
-            guard case .enabled(let mode) = feature else { return [] }
-            switch mode {
-            case .inclusion:
-                return inclusionActivated.apps
-            case .exclusion:
-                return exclusionActivated.apps
-            }
-        }
-
-        var activatedIPs: [String] { // UI display
-            guard case .enabled(let mode) = feature else { return [] }
-            switch mode {
-            case .inclusion:
-                return inclusionActivated.ips
-            case .exclusion:
-                return exclusionActivated.ips
-            }
-        }
 
         var ipEntry: String = ""
 
@@ -154,7 +128,8 @@ public struct PlutoniumFeature {
                 }
                 return .none
             case .onAppear:
-                state.discoveredApps = FileManager.enumerateAppsFolder()
+                @Dependency(\.appsProvider) var appsProvider
+                state.discoveredApps = appsProvider.enumerateAppsFolder()
 
                 // Save the configuration when changes apply
                 state.$featureApplied.withLock { $0 = state.feature }
@@ -175,6 +150,7 @@ extension PlutoniumFeature.State {
     mutating func perform(operation: Operation, entry: Entry) {
         switch feature {
         case .disabled:
+            log.error("Modifying Plutonium feature while it is disabled is not allowed.")
             return
         case .enabled(let mode):
             switch mode {
@@ -197,7 +173,9 @@ extension PlutoniumActivated {
         case .app(let entry):
             switch operation {
             case .add:
-                apps.append(entry)
+                if !apps.contains(entry) {
+                    apps.append(entry)
+                }
             case .remove:
                 apps.removeAll { $0 == entry }
             }

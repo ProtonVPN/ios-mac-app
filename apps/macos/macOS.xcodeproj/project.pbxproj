@@ -267,6 +267,7 @@
 		E5DA73C72DCBACD50057B273 /* SecondaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73C62DCBACC60057B273 /* SecondaryButtonStyle.swift */; };
 		E5DA73C92DCCCADF0057B273 /* GhostButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73C82DCCCADF0057B273 /* GhostButtonStyle.swift */; };
 		E5DA73CB2DCCF4F50057B273 /* Pointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73CA2DCCF4F20057B273 /* Pointer.swift */; };
+		E5DA73D42DD23A970057B273 /* PlutoniumFeatureState+UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73D32DD23A8B0057B273 /* PlutoniumFeatureState+UIExtension.swift */; };
 		E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF62A4C363700B09111 /* ComposableArchitecture */; };
 		E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF82A4C365000B09111 /* ConnectionDetails */; };
 		E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48D002A4C37F000B09111 /* PMLogger */; };
@@ -817,6 +818,7 @@
 		E5DA73C62DCBACC60057B273 /* SecondaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButtonStyle.swift; sourceTree = "<group>"; };
 		E5DA73C82DCCCADF0057B273 /* GhostButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostButtonStyle.swift; sourceTree = "<group>"; };
 		E5DA73CA2DCCF4F20057B273 /* Pointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pointer.swift; sourceTree = "<group>"; };
+		E5DA73D32DD23A8B0057B273 /* PlutoniumFeatureState+UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlutoniumFeatureState+UIExtension.swift"; sourceTree = "<group>"; };
 		E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		E5E75A4B2DA019260093001C /* SettingsClickableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClickableView.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
@@ -1528,6 +1530,7 @@
 				E5DA73C42DCB880D0057B273 /* PlutoniumSelectionButtonLabel.swift */,
 				E5DA73C02DC4D1930057B273 /* ThemeToggleStyle.swift */,
 				E57E4C9F2DBBD00600E24BF7 /* PlutoniumFeature.swift */,
+				E5DA73D32DD23A8B0057B273 /* PlutoniumFeatureState+UIExtension.swift */,
 			);
 			path = Plutonium;
 			sourceTree = "<group>";
@@ -3285,6 +3288,7 @@
 				42BEF95626317F29009180A7 /* FeatureRowView.swift in Sources */,
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
 				42BEF97026319ADC009180A7 /* StreamingServicesOverlayViewController.swift in Sources */,
+				E5DA73D42DD23A970057B273 /* PlutoniumFeatureState+UIExtension.swift in Sources */,
 				E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */,
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
 				EE5CF76E1F4DDB750002BBF3 /* ProfilesMenuController.swift in Sources */,
@@ -3638,7 +3642,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
@@ -3959,7 +3962,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
@@ -4723,7 +4725,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
@@ -4773,7 +4774,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APS_ENVIRONMENT = production;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
