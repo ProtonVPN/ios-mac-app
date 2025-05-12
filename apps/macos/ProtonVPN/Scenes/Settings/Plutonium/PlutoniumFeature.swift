@@ -47,6 +47,30 @@ public struct PlutoniumFeature {
         @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
         @Shared(.exclusionActivated)  var exclusionActivated: PlutoniumActivated
 
+        @Shared(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
+        @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
+        @Shared(.exclusionActivatedApplied)  var exclusionActivatedApplied: PlutoniumActivated
+
+        var requiresReconnection: Bool {
+            guard feature == featureApplied else {
+                return true // if the whole feature enables/disables, reconnect
+            }
+            if case .disabled = feature {
+                if case .disabled = featureApplied {
+                    return false // if feature was disabled and is still disabled, don't reconnect
+                }
+            }
+            switch feature {
+            case .disabled(let mode), .enabled(let mode): // compare only the currently selected mode
+                switch mode {
+                case .exclusion:
+                    return exclusionActivated != exclusionActivatedApplied
+                case .inclusion:
+                    return inclusionActivated != inclusionActivatedApplied
+                }
+            }
+        }
+
         var discoveredApps: [PlutoniumApp] = []
 
         var remainingApps: [PlutoniumApp] { // UI display
@@ -131,6 +155,11 @@ public struct PlutoniumFeature {
                 return .none
             case .onAppear:
                 state.discoveredApps = FileManager.enumerateAppsFolder()
+
+                // Save the configuration when changes apply
+                state.$featureApplied.withLock { $0 = state.feature }
+                state.$inclusionActivatedApplied.withLock { $0 = state.inclusionActivated }
+                state.$exclusionActivatedApplied.withLock { $0 = state.exclusionActivated }
                 return .none
             case .modeSelectionClicked(let mode):
                 state.$feature.withLock {

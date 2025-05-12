@@ -49,6 +49,18 @@ public struct PlutoniumView: View {
                 if case .enabled = store.feature {
                     listsView
                 }
+                if store.requiresReconnection {
+                    HStack(spacing: .themeSpacing8) {
+                        IconProvider
+                            .infoCircle
+                            .resizable()
+                            .frame(.square(.themeSpacing16))
+                        Text(Localizable.plutoniumReconnectionNotice)
+                            .themeFont(.callout(emphasised: false))
+                        Spacer()
+                    }
+                    .foregroundStyle(Color(.text, .hint))
+                }
                 Spacer(minLength: 0)
             }
             .frame(width: Constants.readableContentWidth)

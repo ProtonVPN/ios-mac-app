@@ -23,7 +23,7 @@ import SwiftUI
 
 import Ergonomics
 
-public struct PlutoniumApp: Identifiable, Hashable, Codable {
+public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
 
     public var id: String { bundleIdentifier }
 

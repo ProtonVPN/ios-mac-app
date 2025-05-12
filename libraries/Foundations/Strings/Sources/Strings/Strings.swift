@@ -1021,31 +1021,33 @@ public enum Localizable {
   /// Header title of all available apps section
   public static var plutoniumAllApps: String { return Localizable.tr("Localizable", "_plutonium_all_apps", fallback: "All apps") }
   /// Plutonium feature description
-  public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "Customize your connection by deciding which apps and IP addresses are protected by VPN.") }
+  public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "${_plutonium_customize_connection}") }
   /// Title of the plutonium feature operation mode
   public static var plutoniumExcludeMode: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode", fallback: "Exclude mode") }
   /// Description of the included apps list
-  public static var plutoniumExcludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_apps", fallback: "These apps connect without VPN protection.") }
+  public static var plutoniumExcludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_apps", fallback: "${_plutonium_exclude_mode_apps}") }
   /// Description of the plutonium feature operation mode
-  public static var plutoniumExcludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_description", fallback: "Allow selected apps and IP addresses to connect without VPN protection.") }
+  public static var plutoniumExcludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_description", fallback: "${_plutonium_exclude_mode_description}") }
   /// Header of the excluded ips list
-  public static var plutoniumExcludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_ips", fallback: "Excluded IP addresses") }
+  public static var plutoniumExcludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_ips", fallback: "${_plutonium_exclude_mode_ips}") }
   /// Header of the excluded apps list
   public static var plutoniumExclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_exclusion_list_apps", fallback: "Excluded apps") }
   /// Title of the plutonium feature operation mode
   public static var plutoniumIncludeMode: String { return Localizable.tr("Localizable", "_plutonium_include_mode", fallback: "Include mode") }
   /// Description of the included apps list
-  public static var plutoniumIncludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_apps", fallback: "Only these apps are protected by VPN.") }
+  public static var plutoniumIncludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_apps", fallback: "${_plutonium_include_mode_apps}") }
   /// Description of the plutonium feature operation mode
-  public static var plutoniumIncludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_include_mode_description", fallback: "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.") }
+  public static var plutoniumIncludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_include_mode_description", fallback: "${_plutonium_include_mode_description}") }
   /// Header of the included ips list
-  public static var plutoniumIncludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_ips", fallback: "Protected IP addresses") }
+  public static var plutoniumIncludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_ips", fallback: "${_plutonium_include_mode_ips}") }
   /// Header of the excluded apps list
   public static var plutoniumInclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_inclusion_list_apps", fallback: "Protected apps") }
   /// Description when user didn't include any apps in the list
   public static var plutoniumNoApps: String { return Localizable.tr("Localizable", "_plutonium_no_apps", fallback: "No apps selected") }
   /// Empty list title, appears when no elements are present
   public static var plutoniumNone: String { return Localizable.tr("Localizable", "_plutonium_none", fallback: "None") }
+  /// Text appears when user makes any configuration changes that require reconnection
+  public static var plutoniumReconnectionNotice: String { return Localizable.tr("Localizable", "_plutonium_reconnection_notice", fallback: "Changes apply when you reconnect") }
   /// Settings page row title
   public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "${PLUTONIUM}") }
   /// IP entry validation error
