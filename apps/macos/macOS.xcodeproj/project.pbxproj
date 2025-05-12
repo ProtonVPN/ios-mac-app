@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -307,6 +307,9 @@
 		E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
 		E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
+		EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
+		EBB751CD2DA7D4C900F79994 /* ProtonVPN Plutonium.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = EBB751D52DA94CD800F79994 /* PlutoniumExtension */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
 		EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */; };
@@ -496,6 +499,13 @@
 			remoteGlobalIDString = E93C4F1526A1C1F30006680C;
 			remoteInfo = "ProtonVPN WireGuard";
 		};
+		EBB751CB2DA7D4C900F79994 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EBB751C32DA7D4C800F79994;
+			remoteInfo = "ProtonVPN Plutonium";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -518,6 +528,17 @@
 			files = (
 			);
 			name = "Copy Network Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB751CE2DA7D4C900F79994 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EBB751CD2DA7D4C900F79994 /* ProtonVPN Plutonium.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EE8CA7AE1F06F8BB00BA829F /* Copy Starter */ = {
@@ -814,6 +835,7 @@
 		E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../../macos/ProtonVPN/Scenes/ReportBug/Colors+BugReport.swift"; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CABasicAnimation+Pulse.swift"; path = "../../macos/ProtonVPN/CABasicAnimation+Pulse.swift"; sourceTree = "<group>"; };
+		EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ProtonVPN Plutonium.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
 		EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCoreCircleButton.swift; sourceTree = "<group>"; };
 		EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesSectionViewModel.swift; sourceTree = "<group>"; };
@@ -978,6 +1000,20 @@
 		F3F48B1C2806D76500E0B814 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BannerView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Views/BannerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EBB751C32DA7D4C800F79994 /* ProtonVPN Plutonium */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "ProtonVPN Plutonium"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		D5911703229F9574005829DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -1016,6 +1052,15 @@
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
 				D5EE412F2AD9539A00ECC064 /* WireGuardKit in Frameworks */,
 				E9D2553428E5B77500DEFFB5 /* PMLogger in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB751C12DA7D4C800F79994 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */,
+				EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1676,6 +1721,7 @@
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
 				E5C00F092A15FC6E0030076F /* ProtonVPNmac-redesign-UITests */,
+				EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */,
 				EED534821EEC112000013607 /* Products */,
 				7461E535C10E886FBC226611 /* Frameworks */,
 			);
@@ -1690,6 +1736,7 @@
 				D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */,
 				E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */,
 				E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */,
+				EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2672,6 +2719,29 @@
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
 			productType = "com.apple.product-type.system-extension";
 		};
+		EBB751C32DA7D4C800F79994 /* ProtonVPN Plutonium */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN Plutonium" */;
+			buildPhases = (
+				EBB751C02DA7D4C800F79994 /* Sources */,
+				EBB751C12DA7D4C800F79994 /* Frameworks */,
+				EBB751C22DA7D4C800F79994 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */,
+			);
+			name = "ProtonVPN Plutonium";
+			packageProductDependencies = (
+				EBB751D52DA94CD800F79994 /* PlutoniumExtension */,
+			);
+			productName = "ProtonVPN Plutonium";
+			productReference = EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		EEB404C61F77F639006CF513 /* ProtonVPNStarter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEB404D61F77F639006CF513 /* Build configuration list for PBXNativeTarget "ProtonVPNStarter" */;
@@ -2700,11 +2770,13 @@
 				E17DE11E21FF387D008CCC13 /* Copy Network Helper */,
 				D5479534228D9BDB00639216 /* Run SwiftLint Script */,
 				42EF09E7257A713F00E2EDCA /* Embed System Extensions */,
+				EBB751CE2DA7D4C900F79994 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				E976592626A856EA00E0983B /* PBXTargetDependency */,
+				EBB751CC2DA7D4C900F79994 /* PBXTargetDependency */,
 			);
 			name = "ProtonVPN-mac";
 			packageProductDependencies = (
@@ -2742,7 +2814,7 @@
 		EED534791EEC112000013607 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
@@ -2760,6 +2832,9 @@
 					};
 					E93C4F1026A1C1450006680C = {
 						CreatedOnToolsVersion = 12.5.1;
+					};
+					EBB751C32DA7D4C800F79994 = {
+						CreatedOnToolsVersion = 16.2;
 					};
 					EEB404C61F77F639006CF513 = {
 						CreatedOnToolsVersion = 9.0;
@@ -2858,6 +2933,7 @@
 				EED534801EEC112000013607 /* ProtonVPN-mac */,
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
 				E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */,
+				EBB751C32DA7D4C800F79994 /* ProtonVPN Plutonium */,
 				E93C4F1026A1C1450006680C /* WireGuardGoBridgemacOS */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */,
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
@@ -2898,6 +2974,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93D023626A1C90A0098520D /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB751C22DA7D4C800F79994 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3100,6 +3183,13 @@
 				E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */,
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 				FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBB751C02DA7D4C800F79994 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3411,6 +3501,11 @@
 			isa = PBXTargetDependency;
 			target = E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */;
 			targetProxy = E976592526A856EA00E0983B /* PBXContainerItemProxy */;
+		};
+		EBB751CC2DA7D4C900F79994 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EBB751C32DA7D4C800F79994 /* ProtonVPN Plutonium */;
+			targetProxy = EBB751CB2DA7D4C900F79994 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -4235,6 +4330,159 @@
 			};
 			name = Staging;
 		};
+		EBB751CF2DA7D4C900F79994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN Plutonium/ProtonVPN_Plutonium.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProtonVPN Plutonium";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.Transparent-Proxy";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		EBB751D02DA7D4C900F79994 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN Plutonium/ProtonVPN_Plutonium.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProtonVPN Plutonium";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.Transparent-Proxy";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EBB751D12DA7D4C900F79994 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN Plutonium/ProtonVPN_Plutonium.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProtonVPN Plutonium";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.Transparent-Proxy";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Profile;
+		};
+		EBB751D22DA7D4C900F79994 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN Plutonium/ProtonVPN_Plutonium.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ProtonVPN Plutonium";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.Transparent-Proxy";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Staging;
+		};
 		EEB404D41F77F639006CF513 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4568,6 +4816,17 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN Plutonium" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBB751CF2DA7D4C900F79994 /* Debug */,
+				EBB751D02DA7D4C900F79994 /* Release */,
+				EBB751D12DA7D4C900F79994 /* Profile */,
+				EBB751D22DA7D4C900F79994 /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		EEB404D61F77F639006CF513 /* Build configuration list for PBXNativeTarget "ProtonVPNStarter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4841,6 +5100,10 @@
 		E9D2553328E5B77500DEFFB5 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
+		};
+		EBB751D52DA94CD800F79994 /* PlutoniumExtension */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlutoniumExtension;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
