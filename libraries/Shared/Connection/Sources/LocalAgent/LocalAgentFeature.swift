@@ -161,6 +161,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .event(.state(.connectionError)):
+                // Errors reported by the LA server, which are not known to the Go library.
+
                 // We enter this state when attempting to connect to a different server than the one the tunnel is
                 // established with:
                 // `tls: failed to verify certificate: x509: certificate is valid for node-abc.net, not node-xyz.net`
@@ -175,18 +177,25 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 // It's unclear when we enter this state, intuitively this should happen in the scenario described
                 // above: `case .event(.state(.connectionError)):`, but it does not.
                 // If we do enter this state, let's disconnect, since we are most likely connecting to the wrong server
-                // return .send(.disconnect(.serverCertificateError))
-                state = .connecting
-                return .none
+                return .send(.disconnect(.serverCertificateError))
 
             case .event(.state(.softJailed)):
+                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
                 return .none
 
             case .event(.state(.hardJailed)):
+                // This state is always accompanied by a more specific error event.
+                // Let's handle it in response to the event instead, since it's not clear from the state alone how best to handle it
+                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
                 return .none
 
-            case .event(.state(.clientCertificateError)):
-                return .none
+            case .event(.state(.clientCertificateExpired)):
+                log.error("LA entered `clientCertificateExpired` state, sending `certificateExpired` to handle it.")
+                return .send(.delegate(.errorReceived(.certificateExpired)))
+
+            case .event(.state(.clientCertificateUnknownCA)):
+                log.error("LA entered `clientCertificateUnknownCA` state, sending `certificateExpired` to handle it.")
+                return .send(.delegate(.errorReceived(.certificateExpired)))
 
             case .event(.state(.invalid)):
                 log.assertionFailure("LocalAgent entered invalid/unknown state")

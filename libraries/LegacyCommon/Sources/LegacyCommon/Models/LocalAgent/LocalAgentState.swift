@@ -31,8 +31,23 @@ enum LocalAgentState {
     case connectionError
     case serverUnreachable
     case serverCertificateError
-    case clientCertificateError
+    case clientCertificateExpired
+    case clientCertificateUnknownCA
     case disconnected
+
+    // If true, we cannot recover from this state without reconnecting.
+    var isTerminalErrorState: Bool {
+        switch self {
+        case .serverCertificateError:
+            return true
+        case .clientCertificateExpired:
+            return true
+        case .clientCertificateUnknownCA:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 extension LocalAgentState {
@@ -57,12 +72,16 @@ extension LocalAgentState {
             return .hardJailed
         case consts.stateServerUnreachable:
             return .serverUnreachable
-        case consts.stateServerCertificateError, consts.stateClientCertificateUnknownCA:
+        case consts.stateServerCertificateError:
             return .serverCertificateError
         case consts.stateClientCertificateExpiredError:
-            return .clientCertificateError
+            return .clientCertificateExpired
+        case consts.stateClientCertificateUnknownCA:
+            return .clientCertificateUnknownCA
         case consts.stateSoftJailed:
             return .softJailed
+        case consts.stateWaitingForNetwork:
+            return .connecting
         default:
             log.error("Trying to parse unknown local agent state \(string)", category: .localAgent)
             return nil
