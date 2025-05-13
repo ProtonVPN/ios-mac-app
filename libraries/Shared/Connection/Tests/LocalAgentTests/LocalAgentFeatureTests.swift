@@ -56,7 +56,14 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.send(.connect(server, .empty, defaultFeatures))
         await store.receive(\.startNetShieldStatsObservation)
         await store.receive(\.event.state.connecting) {
-            $0 = .connecting
+            $0 = .connecting(nil)
+        }
+
+        // When connecting to restricted servers, we may receive connection details while still hardjailed.
+        // Let's check we don't prematurely transition to the connected state.
+        let connectionDetails = ConnectionDetailsMessage(exitIp: IPV4Address("1.2.3.4")!, deviceIp: nil, deviceCountry: nil)
+        await store.send(.event(.connectionDetails(connectionDetails))) {
+            $0 = .connecting(connectionDetails)
         }
 
         await mockClock.advance(by: .milliseconds(500))
@@ -92,7 +99,7 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         await fulfillment(of: [clientDelegateSet])
 
-        let store = TestStore(initialState: .connecting) {
+        let store = TestStore(initialState: .connecting(nil)) {
             LocalAgentFeature()
         } withDependencies: {
             $0.localAgent = agent
@@ -140,7 +147,7 @@ final class LocalAgentFeatureTests: XCTestCase {
         localAgent.netShieldStatsBehaviour = .constant(statsMessage)
         localAgent.didRequestStats = { XCTFail("Requested NetShield stats too early") }
 
-        let store = TestStore(initialState: .connecting) {
+        let store = TestStore(initialState: .connecting(nil)) {
             LocalAgentFeature()
         } withDependencies: {
             $0.continuousClock = clock

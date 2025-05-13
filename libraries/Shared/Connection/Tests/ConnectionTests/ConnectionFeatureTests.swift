@@ -154,7 +154,7 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(\.core.localAgent.connect)
         await store.receive(\.core.localAgent.startNetShieldStatsObservation)
         await store.receive(\.core.localAgent.event.state.connecting) {
-            $0.core.localAgent = .connecting
+            $0.core.localAgent = .connecting(nil)
         }
 
         await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
