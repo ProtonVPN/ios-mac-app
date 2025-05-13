@@ -19,7 +19,7 @@
 import SwiftUI
 
 extension View {
-    func pointer() -> some View {
+    func linkPointer() -> some View {
         if #available(macOS 15.0, *) {
             return self.pointerStyle(.link)
         } else {

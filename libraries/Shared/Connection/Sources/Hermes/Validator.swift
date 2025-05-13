@@ -17,7 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-private import Network
+import Ergonomics
 
 public enum HermesResolverLocationValidator {
     public enum Transport {
@@ -27,10 +27,6 @@ public enum HermesResolverLocationValidator {
     }
 
     public static func isValid(_ location: String) -> Transport? {
-        return isValidIPv4(location) ? .classic : nil
-    }
-
-    private static func isValidIPv4(_ location: String) -> Bool {
-        location.components(separatedBy: ".").count == 4 && IPv4Address(location) != nil
+        IPV4Validator(location: location) == .valid ? .classic : nil
     }
 }

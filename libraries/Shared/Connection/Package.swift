@@ -97,6 +97,7 @@ let package = Package(
         .target(
             name: "Hermes",
             dependencies: [
+                "Ergonomics",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

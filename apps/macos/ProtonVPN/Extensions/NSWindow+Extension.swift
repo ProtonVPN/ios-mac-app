@@ -85,6 +85,17 @@ extension NSWindow {
         x += visibleFrame.origin.x
         setFrameOrigin(NSPoint(x: x, y: y))
     }
+
+    // Sizes the window according to a known content size.
+    func positionWindow(size: CGSize) {
+        guard let visibleFrame = screen?.visibleFrame else {
+            return
+        }
+        let freeHeight = max(0, visibleFrame.height - size.height)
+        let freeWidth = max(0, visibleFrame.width - size.width)
+        setFrameOrigin(.init(x: freeWidth / 2,
+                             y: size.height + freeHeight / 2))
+    }
 }
 
 private extension NSWindow {

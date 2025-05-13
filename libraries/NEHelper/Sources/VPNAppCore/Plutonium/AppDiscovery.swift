@@ -44,10 +44,14 @@ public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
         self.title = title
     }
 
-    init?(url: URL) {
+    public init?(url: URL) {
         guard let bundleIdentifier = Bundle(url: url)?.bundleIdentifier else { return nil }
         self.bundleIdentifier = bundleIdentifier
         self.title = url.deletingPathExtension().lastPathComponent
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.hashValue == rhs.hashValue
     }
 }
 
@@ -69,8 +73,8 @@ public extension FileManager {
         for applicationsURL in applicationsURLs {
             do {
                 let contents = try contentsOfDirectory(at: applicationsURL,
-                                                                   includingPropertiesForKeys: nil,
-                                                                   options: .skipsSubdirectoryDescendants)
+                                                       includingPropertiesForKeys: nil,
+                                                       options: .skipsSubdirectoryDescendants)
                 let urls = contents
                     .compactMap(PlutoniumApp.init(url:))
                     .uniqued

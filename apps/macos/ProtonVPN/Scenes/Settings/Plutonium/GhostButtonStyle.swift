@@ -32,7 +32,7 @@ struct GhostButtonStyle: ButtonStyle {
             .foregroundColor(Color(.text, isEnabled ? [] : [.hint]))
             .background(backgroundColor(isPressed: configuration.isPressed))
             .cornerRadius(.themeRadius8)
-            .pointer()
+            .linkPointer()
             .onHover { isHovered = $0 }
     }
 

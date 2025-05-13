@@ -60,7 +60,7 @@ struct HermesView: ExplicitlySizedView {
 
                     Toggle(isOn: isEnabledBinding) { EmptyView() }
                         .onSubmit { isEnabledBinding.wrappedValue = !isEnabledBinding.wrappedValue }
-                        .toggleStyle(.switch)
+                        .toggleStyle(ThemeToggleStyle())
                 }
             }
 
@@ -132,9 +132,7 @@ struct HermesView: ExplicitlySizedView {
                 submitResolverLocation()
             }
             .disabled(resolverLocationValidation == .empty)
-            .buttonStyle(
-                PrimaryButtonStyle(size: .init(width: 58.0, height: 32.0), font: .themeFont(.body(emphasised: true)))
-            )
+            .buttonStyle(ThemeButtonStyle(padding: .small, style: .primary))
         }
     }
 
