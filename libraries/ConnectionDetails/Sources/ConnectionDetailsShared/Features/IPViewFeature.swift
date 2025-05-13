@@ -35,13 +35,13 @@ public struct IPViewFeature {
                 return String(describing: connectionDetailsIP)
             }
             return server.endpoint.exitIp
-
         }
+
         public var localIpHidden = true
 
         @SharedReader(.userIP) public var userIP: String?
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
-        @SharedReader(.connectionState) var connectionState: ConnectionState
+        @SharedReader(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) private var connectionState: ConnectionState
 
         public init() { }
 
