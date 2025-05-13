@@ -195,6 +195,7 @@ class CountriesSectionViewModel {
             .featureFlags,
             .planChanged,
             .userDelinquent,
+            .announcementStorageContent
         ]
         reloadDataEvents.subscribe(self, selector: #selector(reloadDataOnChange))
 
