@@ -17,46 +17,47 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(SystemExtensions)
-    import Domain
-    import SystemExtensions
+import SystemExtensions
+import Domain
 
-    extension OSSystemExtensionError.Code: @retroactive ProtonVPNError {
-        public static var errorDomain: String {
-            "ProtonVPNSystemExtensionErrorDomain"
-        }
+@available(macOS 13, iOS 18.4, *)
+extension OSSystemExtensionError.Code: @retroactive ProtonVPNError {
+    public static var errorDomain: String {
+        "ProtonVPNSystemExtensionErrorDomain"
+    }
 
-        public var charCode: FourCharCode {
-            switch self {
-            case .authorizationRequired:
-                return "SXAR"
-            case .codeSignatureInvalid:
-                return "SXCS"
-            case .duplicateExtensionIdentifer:
-                return "SXDI"
-            case .extensionMissingIdentifier:
-                return "SXMI"
-            case .extensionNotFound:
-                return "SXNF"
-            case .forbiddenBySystemPolicy:
-                return "SXSP"
-            case .missingEntitlement:
-                return "SXME"
-            case .requestCanceled:
-                return "SXRC"
-            case .requestSuperseded:
-                return "SXRS"
-            case .unknownExtensionCategory:
-                return "SXEC"
-            case .unsupportedParentBundleLocation:
-                return "SXBL"
-            case .validationFailed:
-                return "SXVF"
-            case .unknown:
-                return "SXUK"
-            @unknown default:
-                return "SXDF"
-            }
+    public var charCode: FourCharCode {
+        switch self {
+        case .authorizationRequired:
+            return "SXAR"
+        case .codeSignatureInvalid:
+            return "SXCS"
+        case .duplicateExtensionIdentifer:
+            return "SXDI"
+        case .extensionMissingIdentifier:
+            return "SXMI"
+        case .extensionNotFound:
+            return "SXNF"
+        case .forbiddenBySystemPolicy:
+            return "SXSP"
+        case .missingEntitlement:
+            return "SXME"
+        case .requestCanceled:
+            return "SXRC"
+        case .requestSuperseded:
+            return "SXRS"
+        case .unknownExtensionCategory:
+            return "SXEC"
+        case .unsupportedParentBundleLocation:
+            return "SXBL"
+        case .validationFailed:
+            return "SXVF"
+        case .unknown:
+            return "SXUK"
+        @unknown default:
+            return "SXDF"
         }
     }
+}
 
 #endif

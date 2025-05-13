@@ -986,6 +986,7 @@ public final class TwoFactorAuthenticationRequiredAlert: SystemAlert {
         public init() {}
     }
 
+    @available(macOS 13, iOS 18.4, *)
     public final class SysexInstallingErrorAlert: SystemAlert {
         public var title: String? = Localizable.sysexCannotEnable
         public var message: String?
