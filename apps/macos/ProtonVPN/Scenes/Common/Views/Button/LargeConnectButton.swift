@@ -44,10 +44,8 @@ class LargeConnectButton: HoverDetectionButton {
         super.viewWillDraw()
         
         wantsLayer = true
-        layer?.borderWidth = 2
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         DarkAppearance {
-            layer?.borderColor = self.cgColor(.border)
             layer?.backgroundColor = self.cgColor(.background)
         }
         

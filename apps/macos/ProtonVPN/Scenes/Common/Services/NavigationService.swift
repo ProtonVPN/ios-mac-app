@@ -208,6 +208,11 @@ class NavigationService {
         showLogIn()
     }
 
+    func showPlutonium() {
+        windowService.closeIfPresent(windowController: PlutoniumWindowController.self)
+        windowService.openPlutoniumWindow()
+    }
+
     func showReportBug() {
         windowService.closeIfPresent(windowController: ReportBugWindowController.self)
         let viewModel = factory.makeReportBugViewModel()

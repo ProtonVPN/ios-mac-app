@@ -123,8 +123,7 @@ struct HomeConnectionCardView: View {
         }
         .padding(.themeSpacing8)
         .background(Color(.background, .weak))
-        .themeBorder(color: Color(.border),
-                     lineWidth: 1,
+        .themeBorder(style: [],
                      cornerRadius: .radius12)
     }
 

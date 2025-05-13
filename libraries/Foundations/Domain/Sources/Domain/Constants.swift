@@ -74,6 +74,7 @@ public enum VPNLink: String, CaseIterable {
     case learnMoreTor = "https://protonvpn.com/support/tor-vpn"
     case learnMoreLoads = "https://protonvpn.com/support/server-load-percentages-and-colors-explained"
     case learnMoreTelemetry = "https://protonvpn.com/support/share-usage-statistics"
+    case learnMorePlutonium = "https://protonvpn.com/support/protonvpn-plutonium#macos"
 
     case ping = "https://account.protonvpn.com/api/tests/ping"
     case protocolDeprecations = "https://protonvpn.com/blog/remove-vpn-protocols-apple"

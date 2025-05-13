@@ -96,10 +96,10 @@ class MapView: NSView {
         
         DarkAppearance {
             mapView.layer?.backgroundColor = .cgColor(.background)
-            activeConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
+            activeConnectionsLayer.fillColor = .clear
             activeConnectionsLayer.strokeColor = .cgColor(.icon, .interactive)
 
-            inactiveConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
+            inactiveConnectionsLayer.fillColor = .clear
             inactiveConnectionsLayer.strokeColor = .cgColor(.icon, [.interactive, .weak])
         }
         

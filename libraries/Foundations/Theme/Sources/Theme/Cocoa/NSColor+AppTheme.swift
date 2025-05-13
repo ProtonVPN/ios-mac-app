@@ -196,10 +196,6 @@ public extension AppTheme.Context {
     }
 
     func color(style: AppTheme.Style) -> NSColor {
-        guard style != .transparent else {
-            return .clear
-        }
-
         var color: NSColor
 
         if self == .text {

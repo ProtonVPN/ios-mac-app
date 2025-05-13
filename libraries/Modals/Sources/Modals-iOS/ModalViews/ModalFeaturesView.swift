@@ -50,9 +50,7 @@ struct ModalFeaturesView: View {
         }
         .padding(.vertical, .themeSpacing16)
         .padding(.horizontal, .themeSpacing24)
-        .themeBorder(color: Color(.border),
-                     lineWidth: 1,
-                     cornerRadius: .radius12)
+        .themeBorder(cornerRadius: .radius12)
     }
 }
 

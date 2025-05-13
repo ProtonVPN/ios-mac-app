@@ -20,13 +20,13 @@
 import SwiftUI
 
 extension View {
-    public func themeBorder(color: Color,
-                            lineWidth: CGFloat,
+    public func themeBorder(style: AppTheme.Style = .weak,
+                            lineWidth: CGFloat = 1,
                             cornerRadius: AppTheme.CornerRadius) -> some View {
         let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
         return self
             .clipShape(rectangle)
-            .overlay(rectangle.stroke(color, lineWidth: lineWidth))
+            .overlay(rectangle.stroke(Color(.border, style), lineWidth: lineWidth))
     }
 
     public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
@@ -35,6 +35,10 @@ extension View {
     }
 
     public func frame(_ size: AppTheme.IconSize) -> some View {
+        return frame(width: size.width, height: size.height)
+    }
+
+    public func frame(_ size: CGSize) -> some View {
         return frame(width: size.width, height: size.height)
     }
 }

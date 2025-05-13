@@ -78,8 +78,7 @@ struct ChangeServerButtonStyle: ButtonStyle {
             .foregroundColor(isActive
                         ? Color(.text)
                         : Color(.text, .hint))
-            .themeBorder(color: Color(.border, .strong),
-                         lineWidth: 1,
+            .themeBorder(style: .strong,
                          cornerRadius: .radius8)
     }
 }

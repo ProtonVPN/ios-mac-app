@@ -158,7 +158,7 @@ struct HomeConnectionCardView: View {
         }
         .accessibilityElement(children: .contain)
         .background(Color(.background, .weak))
-        .themeBorder(color: Color(.border, .strong), lineWidth: 1, cornerRadius: .radius16)
+        .themeBorder(style: .strong, cornerRadius: .radius16)
     }
 
     public var body: some View {

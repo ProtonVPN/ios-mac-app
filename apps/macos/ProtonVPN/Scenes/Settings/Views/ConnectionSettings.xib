@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,6 +11,7 @@
                 <outlet property="allowLANView" destination="J4X-wa-j7j" id="ld8-et-BGO"/>
                 <outlet property="autoConnectView" destination="ebY-r7-unO" id="rli-h2-egF"/>
                 <outlet property="dnsLeakProtectionView" destination="6Da-Ut-fXw" id="NWQ-q8-MUi"/>
+                <outlet property="plutoniumView" destination="hwi-PQ-ia8" id="FKW-DL-ZgF"/>
                 <outlet property="protocolView" destination="MAN-k2-pDp" id="4Ml-hz-coW"/>
                 <outlet property="quickConnectView" destination="n39-Af-5V1" id="KAM-bJ-MXx"/>
                 <outlet property="view" destination="XBX-SA-q2x" id="Ukw-Ua-dco"/>
@@ -23,12 +24,12 @@
             <rect key="frame" x="0.0" y="0.0" width="500" height="448"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hW-yr-SCJ">
-                    <rect key="frame" x="0.0" y="108" width="500" height="340"/>
+                    <rect key="frame" x="0.0" y="58" width="500" height="390"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="ebY-r7-unO" userLabel="Auto connect" customClass="SettingsDropDownView" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="280" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="330" width="500" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="koN-do-dR6" userLabel="Auto Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="koN-do-dR6" userLabel="Auto Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="118" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Auto connect label" id="13C-XK-goH">
                                         <font key="font" metaFont="system"/>
@@ -56,13 +57,9 @@
                                 </imageView>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kkM-EL-YsG" userLabel="Auto Connect List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="247" y="11" width="215" height="26"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="P9T-Fy-A8w"/>
-                                        <constraint firstAttribute="width" constant="208" id="V9D-6e-W7w"/>
-                                    </constraints>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="cU2-Kb-GiS" id="X1a-l1-XBY">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" metaFont="message"/>
                                         <menu key="menu" id="rpP-BX-LMw">
                                             <items>
                                                 <menuItem title="Item 1" state="on" id="cU2-Kb-GiS"/>
@@ -71,6 +68,10 @@
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="P9T-Fy-A8w"/>
+                                        <constraint firstAttribute="width" constant="208" id="V9D-6e-W7w"/>
+                                    </constraints>
                                 </popUpButton>
                             </subviews>
                             <constraints>
@@ -93,9 +94,9 @@
                             </connections>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n39-Af-5V1" userLabel="Quick connect" customClass="SettingsDropDownView" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="230" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="280" width="500" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oot-M1-Qpj" userLabel="Quick Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oot-M1-Qpj" userLabel="Quick Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="124" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Quick connect label" id="h1y-BH-smf">
                                         <font key="font" metaFont="system"/>
@@ -123,12 +124,9 @@
                                 </imageView>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VNa-Jv-QSm" userLabel="Quick Connect List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="247" y="11" width="215" height="26"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="lnY-bw-U92"/>
-                                    </constraints>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="u45-MI-gPc" id="kba-uk-uh5">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" metaFont="message"/>
                                         <menu key="menu" id="u3b-bv-wFm">
                                             <items>
                                                 <menuItem title="Item 1" state="on" id="u45-MI-gPc"/>
@@ -137,6 +135,9 @@
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="lnY-bw-U92"/>
+                                    </constraints>
                                 </popUpButton>
                             </subviews>
                             <constraints>
@@ -157,9 +158,9 @@
                             </connections>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="MAN-k2-pDp" userLabel="Protocol" customClass="SettingsDropDownView" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="230" width="500" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VyN-C7-RJs" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VyN-C7-RJs" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="55" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol" id="Dmg-Oo-SnH">
                                         <font key="font" metaFont="system"/>
@@ -187,12 +188,9 @@
                                 </imageView>
                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNh-jH-qdA" userLabel="Protocol List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="247" y="11" width="215" height="26"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="rVX-A7-qQl"/>
-                                    </constraints>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="CZp-ll-ce2" id="Z1F-GZ-Mi1">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" metaFont="message"/>
                                         <menu key="menu" id="eRe-zh-kmG">
                                             <items>
                                                 <menuItem title="Item 1" state="on" id="CZp-ll-ce2"/>
@@ -201,6 +199,9 @@
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="rVX-A7-qQl"/>
+                                    </constraints>
                                 </popUpButton>
                                 <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="kmf-hU-xTU">
                                     <rect key="frame" x="227" y="18" width="15" height="15"/>
@@ -231,10 +232,56 @@
                                 <outlet property="separator" destination="hhN-6A-ZEd" id="xCp-fp-2Kc"/>
                             </connections>
                         </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hwi-PQ-ia8" customClass="SettingsClickableView" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
+                            <subviews>
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MuG-ao-j3a" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="65" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Plutonium" id="ZbE-U0-Ccf">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ovL-0f-34H" customClass="HoverableButtonImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="421" y="13" width="39" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="38.75" id="CSK-4x-DC2"/>
+                                        <constraint firstAttribute="height" constant="24" id="I1f-2X-svK"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="u6B-Ix-rWw"/>
+                                </imageView>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="gMd-cr-ffq">
+                                    <rect key="frame" x="42" y="0.0" width="418" height="1"/>
+                                    <view key="contentView" id="Dep-up-fhJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="418" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="ZQv-mF-seM"/>
+                                    </constraints>
+                                </box>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="gMd-cr-ffq" secondAttribute="bottom" id="BgZ-Au-ro4"/>
+                                <constraint firstItem="gMd-cr-ffq" firstAttribute="trailing" secondItem="ovL-0f-34H" secondAttribute="trailing" id="J75-ib-TID"/>
+                                <constraint firstAttribute="trailing" secondItem="ovL-0f-34H" secondAttribute="trailing" constant="40" id="KKa-3V-t3h"/>
+                                <constraint firstItem="MuG-ao-j3a" firstAttribute="centerY" secondItem="hwi-PQ-ia8" secondAttribute="centerY" id="QLt-BJ-cAy"/>
+                                <constraint firstItem="gMd-cr-ffq" firstAttribute="leading" secondItem="MuG-ao-j3a" secondAttribute="leading" id="QaK-Xv-QW5"/>
+                                <constraint firstItem="ovL-0f-34H" firstAttribute="centerY" secondItem="hwi-PQ-ia8" secondAttribute="centerY" id="UCb-gy-LBw"/>
+                                <constraint firstAttribute="height" constant="50" id="ekC-oc-ed4"/>
+                                <constraint firstItem="MuG-ao-j3a" firstAttribute="leading" secondItem="hwi-PQ-ia8" secondAttribute="leading" constant="42" id="jBf-19-ApA"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="label" destination="MuG-ao-j3a" id="9sM-Oh-v1E"/>
+                                <outlet property="separator" destination="gMd-cr-ffq" id="67T-ze-lC0"/>
+                                <outlet property="upsellImageView" destination="ovL-0f-34H" id="bLB-51-AwY"/>
+                            </connections>
+                        </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="4Ov-kj-b9p" userLabel="Vpn Accelerator" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="130" width="500" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cCQ-Z4-WdI" userLabel="VPN Accelerator Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cCQ-Z4-WdI" userLabel="VPN Accelerator Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="101" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Vpn Accelerator" id="cFl-N4-cwa">
                                         <font key="font" metaFont="system"/>
@@ -299,7 +346,7 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="J4X-wa-j7j" userLabel="Allow LAN" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="80" width="500" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-UF-TQq" userLabel="AllowLAN Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-UF-TQq" userLabel="AllowLAN Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="74" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Allow LAN_" id="brK-0S-3mw">
                                         <font key="font" metaFont="system"/>
@@ -364,7 +411,7 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Da-Ut-fXw" userLabel="DNS leak" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="30" width="500" height="50"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNa-CH-077" userLabel="Dns Leak Protection Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNa-CH-077" userLabel="Dns Leak Protection Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="158" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="DNS leak protection label" id="k8P-Nc-kCR">
                                         <font key="font" metaFont="system"/>
@@ -445,8 +492,10 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>

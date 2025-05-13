@@ -42,9 +42,7 @@ class ExpandMapButton: HoverDetectionButton {
         super.init(coder: coder)
         
         wantsLayer = true
-        DarkAppearance {
-            layer?.backgroundColor = .cgColor(.background, .transparent)
-        }
+        layer?.backgroundColor = .clear
     }
     
     override func draw(_ dirtyRect: NSRect) {

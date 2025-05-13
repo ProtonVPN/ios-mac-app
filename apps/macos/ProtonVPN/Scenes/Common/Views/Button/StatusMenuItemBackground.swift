@@ -35,16 +35,13 @@ class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
     
     override func viewWillDraw() {
         super.viewWillDraw()
-        
-        let style: AppTheme.Style
-        if isHovered {
-            style = .weak
-        } else {
-            style = .transparent
-        }
 
         DarkAppearance {
-            layer?.backgroundColor = .cgColor(.background, style)
+            if isHovered {
+                layer?.backgroundColor = .cgColor(.background, .weak)
+            } else {
+                layer?.backgroundColor = .clear
+            }
         }
     }
 }
