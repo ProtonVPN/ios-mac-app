@@ -19,6 +19,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/combine-schedulers", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-custom-dump", .upToNextMajor(from: "1.3.0")),
+        .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(path: "../../../external/protoncore"), // GoLibs
         .package(path: "../../Foundations/Domain"),
@@ -40,6 +43,8 @@ let package = Package(
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNShared", package: "NEHelper"),
+                // Required for CustomDumpStringConvertible.
+                .product(name: "CustomDump", package: "swift-custom-dump"),
             ]
         ),
         .target(
@@ -57,6 +62,9 @@ let package = Package(
             name: "LocalAgent",
             dependencies: [
                 "CoreConnection",
+                .product(name: "Clocks", package: "swift-clocks"),
+                .product(name: "CombineSchedulers", package: "combine-schedulers"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
             ]

@@ -19,6 +19,7 @@
 import Foundation
 import ComposableArchitecture
 import VPNAppCore
+import Connection
 import Strings
 
 @Reducer
@@ -27,12 +28,20 @@ public struct IPViewFeature {
     @ObservableState
     public struct State: Equatable {
         public var vpnIp: String? {
-            vpnConnectionStatus.actual?.server.endpoint.exitIp
+            guard case .connected(_, let server, _, let connectionDetailsMessage) = connectionState else {
+                return nil
+            }
+            if let connectionDetailsIP = connectionDetailsMessage?.exitIp {
+                return String(describing: connectionDetailsIP)
+            }
+            return server.endpoint.exitIp
         }
+
         public var localIpHidden = true
 
         @SharedReader(.userIP) public var userIP: String?
-        @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.connectionState) private var connectionState: ConnectionState
 
         public init() { }
 

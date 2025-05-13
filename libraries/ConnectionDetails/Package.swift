@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../Foundations/Strings"),
         .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
+        .package(path: "../Shared/Connection"),
         .package(path: "../SharedViews"),
         .package(path: "../NEHelper"),
         .package(path: "../../external/protoncore"),
@@ -43,6 +44,7 @@ let package = Package(
             dependencies: [
                 "Localization",
                 "Persistence",
+                "Connection",
                 "Strings",
                 "SharedViews",
                 "Theme",
