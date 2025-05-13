@@ -1295,6 +1295,12 @@
             "state" : "translated",
             "value" : "Доступно з Proton VPN Plus"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適用於 Proton VPN Plus"
+          }
         }
       }
     },
@@ -3444,6 +3450,12 @@
             "state" : "translated",
             "value" : "Згенерувати новий код"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "產生新的代碼"
+          }
         }
       }
     },
@@ -4395,6 +4407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завантаження країн"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在載入國家"
           }
         }
       }
