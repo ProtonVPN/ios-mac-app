@@ -86,7 +86,16 @@ class CreateNewProfileViewModel {
     private var state: ModelState {
         didSet {
             if oldValue.connectionProtocol != state.connectionProtocol {
-                checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
+                checkSystemExtensionOrResetProtocol(
+                    newProtocol: state.connectionProtocol,
+                    shouldStartTour: false
+                ) { result in
+                    if let error = result.error,
+                       case let .installationError(installError) = error,
+                       let alert = SysexInstallingErrorAlert(error: installError) {
+                        self.alertService.push(alert: alert)
+                    }
+                }
             }
             if let contentUpdate = oldValue.menuContentUpdate(forNewValue: state) {
                 menuContentChanged?(contentUpdate)
@@ -372,7 +381,11 @@ class CreateNewProfileViewModel {
 
     // MARK: System extensions
 
-    private func checkSystemExtensionOrResetProtocol(newProtocol: ConnectionProtocol?, shouldStartTour: Bool) {
+    private func checkSystemExtensionOrResetProtocol(
+        newProtocol: ConnectionProtocol?,
+        shouldStartTour: Bool,
+        completionHandler: ((SystemExtensionResult) -> Void)? = nil
+    ) {
         guard newProtocol?.requiresSystemExtension == true else {
             return
         }
@@ -391,15 +404,13 @@ class CreateNewProfileViewModel {
                 guard let `self` else { return }
 
                 self.protocolPending?(false)
-                switch result {
-                case .failure(let error):
-                    // In the future, we should tell the user when we're setting the protocol because
-                    // we aren't in the /Applications folder.
+
+                if let error = result.error {
                     log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
                     resetProtocol()
-                case .success:
-                    break
                 }
+
+                completionHandler?(result)
             }
         }
     }

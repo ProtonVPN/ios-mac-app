@@ -72,21 +72,29 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         self.factory = factory
     }
     
-    func change(toProtocol vpnProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void) {
+    func change(
+        toProtocol vpnProtocol: VpnProtocol,
+        userInitiated: Bool,
+        completion: @escaping (Result<(), Error>) -> Void
+    ) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            set(vpnProtocol: vpnProtocol,
+            set(
+                vpnProtocol: vpnProtocol,
                 userInitiated: userInitiated,
                 and: .doNothing,
-                completion: completion)
+                completion: completion
+            )
             return
         }
 
         guard appStateManager.activeConnection()?.server.supports(vpnProtocol: vpnProtocol) != false else {
             let alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
-                self?.set(vpnProtocol: vpnProtocol,
-                          userInitiated: true,
-                          and: .disconnect,
-                          completion: completion)
+                self?.set(
+                    vpnProtocol: vpnProtocol,
+                    userInitiated: true,
+                    and: .disconnect,
+                    completion: completion
+                )
             }, cancelHandler: {
                 completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
             })
@@ -95,19 +103,23 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         }
 
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: { [weak self] in
-            self?.set(vpnProtocol: vpnProtocol,
-                      userInitiated: userInitiated,
-                      and: .reconnect,
-                      completion: completion)
+            self?.set(
+                vpnProtocol: vpnProtocol,
+                userInitiated: userInitiated,
+                and: .reconnect,
+                completion: completion
+            )
         }, cancelHandler: {
             completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
         }))
     }
     
-    private func set(vpnProtocol: VpnProtocol,
-                     userInitiated: Bool,
-                     and then: ProtocolSwitchAction,
-                     completion: @escaping (Result<(), Error>) -> Void) {
+    private func set(
+        vpnProtocol: VpnProtocol,
+        userInitiated: Bool,
+        and then: ProtocolSwitchAction,
+        completion: @escaping (Result<(), Error>) -> Void
+    ) {
         let performSwitchAction = { [weak self] in
             switch then {
             case .reconnect:
@@ -128,14 +140,20 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { [weak self] result in
             switch result {
             case .success:
-                self.propertiesManager.vpnProtocol = vpnProtocol
+                self?.propertiesManager.vpnProtocol = vpnProtocol
                 performSwitchAction()
                 completion(.success)
             case .failure(let error):
-                log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)", category: .connectionConnect)
+                log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
+                          category: .connectionConnect)
+
+                if case let .installationError(installError) = error,
+                   let alert = SysexInstallingErrorAlert(error: installError) {
+                    self?.alertService.push(alert: alert)
+                }
                 completion(.failure(error))
             }
         }

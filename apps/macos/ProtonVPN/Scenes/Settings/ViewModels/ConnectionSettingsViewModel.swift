@@ -31,6 +31,13 @@ import LegacyCommon
 import VPNShared
 import VPNAppCore
 
+enum ConnectionSettingsError: FourCharCode, ProtonVPNError {
+    static let errorDomain: String = "ConnectionSettingsErrorDomain"
+
+    case autoConnectRange = "CSAR"
+    case quickConnectRange = "CSQR"
+}
+
 final class ConnectionSettingsViewModel {
     @Dependency(\.profileAuthorizer) var profileAuthorizer
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
@@ -210,7 +217,7 @@ final class ConnectionSettingsViewModel {
     
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
-            throw NSError()
+            throw ConnectionSettingsError.autoConnectRange
         }
         
         if index > 0 {
@@ -225,7 +232,7 @@ final class ConnectionSettingsViewModel {
     
     func setQuickConnect(_ index: Int) throws {
         guard index < quickConnectItemCount else {
-            throw NSError()
+            throw ConnectionSettingsError.quickConnectRange
         }
         
         let selectedProfile = profileManager.allProfiles[index]
@@ -272,23 +279,34 @@ final class ConnectionSettingsViewModel {
                 }
                 completion(result)
             }
-            if transportProtocol == .ike { // Show IKEv2 deprecation warning
-                self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
-                    self.confirmEnableSmartProtocol(completion)
-                }, continueHandler: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")
-                    self.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
-                }))
-            } else {
-                self.vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true, completion: changeCompletionHandler)
+
+            guard transportProtocol == .ike else {
+                self.vpnProtocolChangeManager.change(
+                    toProtocol: transportProtocol,
+                    userInitiated: true,
+                    completion: changeCompletionHandler
+                )
+                return
             }
+
+            // Show IKEv2 deprecation warning
+            self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
+                self.confirmEnableSmartProtocol(completion)
+            }, continueHandler: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")
+                self.vpnProtocolChangeManager.change(
+                    toProtocol: transportProtocol,
+                    userInitiated: true,
+                    completion: changeCompletionHandler
+                )
+            }))
         }
     }
         
@@ -359,6 +377,10 @@ final class ConnectionSettingsViewModel {
                     completion(.success)
                 }
             case let .failure(error):
+                if case let .installationError(installError) = error,
+                   let alert = SysexInstallingErrorAlert(error: installError) {
+                    self?.alertService.push(alert: alert)
+                }
                 completion(.failure(error))
             }
 
@@ -373,7 +395,7 @@ final class ConnectionSettingsViewModel {
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }
             self.sysexPending = false
-            if case .failure = result {
+            if case .failure(let error) = result {
                 self.selectedProtocol = .vpnProtocol(.ike)
             }
         }

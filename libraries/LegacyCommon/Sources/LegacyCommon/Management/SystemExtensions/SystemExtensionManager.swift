@@ -223,8 +223,10 @@ public class SystemExtensionManager: NSObject {
     ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
     ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
     ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
-    public func installOrUpdateExtensionsIfNeeded(shouldStartTour: Bool,
-                                                  actionHandler: @escaping (SystemExtensionResult) -> Void) {
+    public func installOrUpdateExtensionsIfNeeded(
+        shouldStartTour: Bool,
+        actionHandler: @escaping (SystemExtensionResult) -> Void
+    ) {
         var didRequireUserApproval = false
 
         submitInstallationRequests(userActionRequiredHandler: { [unowned self] _ in
@@ -257,7 +259,7 @@ public class SystemExtensionManager: NSObject {
                     SentryHelper.shared?.log(error: internalError)
                 }
             }
-            
+
             DispatchQueue.main.async {
                 actionHandler(result)
                 if case .success(.installed) = result {
