@@ -76,17 +76,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
         @CasePathable
         public enum DelegateAction: Sendable {
-            case certificateRefreshRequired(CertificateRefreshReason)
             case errorReceived(LocalAgentError)
             case connectionFailed(Error)
-
-            /// A subset of `LocalAgentState` error states for which the appropriate resolution
-            /// is reconnecting with a new certificate
-            @CasePathable public enum CertificateRefreshReason: Sendable {
-                case hardJailed
-                case softJailed
-                case clientCertificateError
-            }
         }
     }
 
@@ -170,6 +161,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .event(.state(.connectionError)):
+                // Errors reported by the LA server, which are not known to the Go library.
+
                 // We enter this state when attempting to connect to a different server than the one the tunnel is
                 // established with:
                 // `tls: failed to verify certificate: x509: certificate is valid for node-abc.net, not node-xyz.net`
@@ -187,13 +180,22 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .send(.disconnect(.serverCertificateError))
 
             case .event(.state(.softJailed)):
-                return .send(.delegate(.certificateRefreshRequired(.softJailed)))
+                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
+                return .none
 
             case .event(.state(.hardJailed)):
-                return .send(.delegate(.certificateRefreshRequired(.hardJailed)))
+                // This state is always accompanied by a more specific error event.
+                // Let's handle it in response to the event instead, since it's not clear from the state alone how best to handle it
+                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
+                return .none
 
-            case .event(.state(.clientCertificateError)):
-                return .send(.delegate(.certificateRefreshRequired(.clientCertificateError)))
+            case .event(.state(.clientCertificateExpired)):
+                log.error("LA entered `clientCertificateExpired` state, sending `certificateExpired` to handle it.")
+                return .send(.delegate(.errorReceived(.certificateExpired)))
+
+            case .event(.state(.clientCertificateUnknownCA)):
+                log.error("LA entered `clientCertificateUnknownCA` state, sending `certificateExpired` to handle it.")
+                return .send(.delegate(.errorReceived(.certificateExpired)))
 
             case .event(.state(.invalid)):
                 log.assertionFailure("LocalAgent entered invalid/unknown state")
@@ -342,6 +344,8 @@ package enum LocalAgentErrorResolutionStrategy {
 
 extension LocalAgentError {
 
+    /// Defines the appropriate way to handle each error.
+    /// See documentation for each error case for context.
     package var resolutionStrategy: LocalAgentErrorResolutionStrategy {
         switch self {
         case .systemError:
@@ -352,15 +356,20 @@ extension LocalAgentError {
             // Restricted server, unable to verify the certificate yet: Wait or try another server
             return .none
 
-        case .certificateExpired, .certificateNotProvided:
-            // If the certificate is expired or missing, we will detect this and refresh it, there is no need to
-            // explicitly regenerate it
-            return .reconnect(.withExistingCertificate)
+        case .certificateExpired:
+            return .reconnect(.withNewCertificate)
+
+        case .certificateNotProvided,
+                .userTorrentNotAllowed,
+                .guestSession:
+            log.warning("Unexpected error reported by local agent", category: .localAgent, metadata: ["error": "\(self)"])
+            return .none
 
         case .badCertificateSignature, .certificateRevoked, .keyUsedMultipleTimes, .serverSessionDoesNotMatch:
             // For now, it's too complicated to restart the whole connection process after regenerating keys,
             // since we would have to tear down the tunnel and reconfigure it with the new private key.
             // return .reconnect(.withNewKeysAndCertificate)
+            // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             return .disconnect(.withNewKeys)
 
         case .maxSessionsUnknown,
@@ -372,10 +381,9 @@ extension LocalAgentError {
                 .serverError,
                 .policyViolationLowPlan,
                 .policyViolationDelinquent,
-                .userTorrentNotAllowed,
-                .userBadBehavior,
-                .guestSession:
+                .userBadBehavior:
             // The error shown on disconnection is customised through its implementation of AlertConvertibleError
+            // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             return .disconnect(.immediately)
 
         case .unknown:

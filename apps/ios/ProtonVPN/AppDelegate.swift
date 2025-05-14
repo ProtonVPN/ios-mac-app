@@ -162,7 +162,7 @@ extension AppDelegate: UIApplicationDelegate {
 
     private func setupDebugHelpers() {
         #if DEBUG
-        CertificateConstants.certificateDuration = "30 minutes"
+        CertificateConstants.certificateDuration = "10 minutes"
         #endif
     }
 

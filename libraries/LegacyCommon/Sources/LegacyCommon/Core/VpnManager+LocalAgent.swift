@@ -306,7 +306,7 @@ extension VpnManager: LocalAgentDelegate {
         isLocalAgentConnected = state == .connected
 
         switch state {
-        case .clientCertificateError:
+        case .clientCertificateExpired:
             // Because the local agent shared library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
             // Instead use this state as the certificate expired error
             didReceiveError(error: LocalAgentError.certificateExpired)
