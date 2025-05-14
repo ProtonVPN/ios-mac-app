@@ -36,6 +36,7 @@ import LegacyCommon
 import VPNAppCore
 import Settings
 import SwiftUI
+import LocalAuthentication
 
 import Domain
 import Strings
@@ -234,8 +235,15 @@ final class SettingsViewModel {
 
         let qrLoginOptedOut = propertiesManager.userInfo?.edmOptOut == 1
         let qrLoginFeatureDisabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.easyDeviceMigrationDisabled)
+        let isDeviceSecured: Bool = {
+            #if targetEnvironment(simulator)
+            return true
+            #else
+            return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+            #endif
+        }()
 
-        if !qrLoginFeatureDisabled && !qrLoginOptedOut {
+        if !qrLoginFeatureDisabled && !qrLoginOptedOut && isDeviceSecured {
             let qrCodeSignInCell = TableViewCellModel.pushStandard(title: Localizable.settingsTitleQrCodeSignIn) { [weak self] in
                 self?.pushSignInToAnotherDeviceViewController()
             }
@@ -924,6 +932,6 @@ final class SettingsViewModel {
 class ShowingNavigationBarUIHostingController: UIHostingController<AnyView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }
