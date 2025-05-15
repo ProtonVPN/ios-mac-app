@@ -61,7 +61,7 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         // When connecting to restricted servers, we may receive connection details while still hardjailed.
         // Let's check we don't prematurely transition to the connected state.
-        let connectionDetails = ConnectionDetailsMessage(exitIp: IPV4Address("1.2.3.4")!, deviceIp: nil, deviceCountry: nil)
+        let connectionDetails = ConnectionDetailsMessage(exitIp: IPv4Address("1.2.3.4")!, deviceIp: nil, deviceCountry: nil)
         await store.send(.event(.connectionDetails(connectionDetails))) {
             $0 = .connecting(connectionDetails)
         }
