@@ -39,7 +39,7 @@ class TelemetryConnectionStatusReporter {
         let localizedDescription: String
     }
 
-    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory & TelemetrySettingsFactory
+    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory
 
     private let factory: Factory
 
