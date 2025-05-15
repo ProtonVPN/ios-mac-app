@@ -25,8 +25,9 @@ git config --local user.name $GIT_CI_USERNAME
 # Change origin to use ssh as the backend
 git remote rm origin && git remote add origin "git@${CI_SERVER_HOST}:${CI_PROJECT_PATH}.git"
 
-# Don't fetch secrets unless we're cloning the whole repository, i.e., for a build
-if [ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]; then
+# Don't fetch secrets unless we're cloning the whole repository, i.e., for a build, or if we're trying to upload
+# localizations
+if ([ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]) || [ -n "$I18N_SYNC_CROWDIN_PROJECT" ]; then
     echo "Cloning secrets..."
     # Download obfuscated constants
     "$CREDENTIALS" cleanup
@@ -36,16 +37,20 @@ if [ "$GIT_STRATEGY" != "none" ] && [ "$GIT_SUBMODULE_STRATEGY" != "none" ]; the
     "$CREDENTIALS" checkout -- .
 fi
 
-# Install allowlist of macros, or Xcode gets very fussy and cryptic with builds
-cat "$MACROS_ALLOWLIST_PATH"
-rm -f "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)" || true
-mkdir -p "$MACROS_ALLOWLIST_INSTALL_DIR" || true
-cp "$MACROS_ALLOWLIST_PATH" "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)"
+if [ "$SKIP_MACROS_SETUP" != "true" ]; then
+    # Install allowlist of macros, or Xcode gets very fussy and cryptic with builds
+    cat "$MACROS_ALLOWLIST_PATH"
+    rm -f "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)" || true
+    mkdir -p "$MACROS_ALLOWLIST_INSTALL_DIR" || true
+    cp "$MACROS_ALLOWLIST_PATH" "${MACROS_ALLOWLIST_INSTALL_DIR}/$(basename $MACROS_ALLOWLIST_PATH)"
+fi
 
-# Check if 'mint bootstrap' is already running
-while pgrep -f "mint bootstrap" > /dev/null; do
-    echo "Another instance of 'mint bootstrap' is running. Waiting..."
-    sleep 5
-done
+if [ "$SKIP_MINT_BOOTSTRAP" != "true" ]; then
+    # Check if 'mint bootstrap' is already running
+    while pgrep -f "mint bootstrap" > /dev/null; do
+        echo "Another instance of 'mint bootstrap' is running. Waiting..."
+        sleep 5
+    done
 
-mint bootstrap --verbose --link --overwrite=y
+    mint bootstrap --verbose --link --overwrite=y
+fi
