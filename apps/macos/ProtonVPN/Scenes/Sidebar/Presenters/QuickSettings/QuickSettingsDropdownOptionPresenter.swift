@@ -29,6 +29,8 @@ import Strings
 import VPNShared
 import LegacyCommon
 
+import Dependencies
+
 protocol QuickSettingsDropdownOptionPresenter: AnyObject {
     var title: String! { get }
     var icon: NSImage! { get }
@@ -38,18 +40,25 @@ protocol QuickSettingsDropdownOptionPresenter: AnyObject {
     /// B2B users should see a "business" badge for disabled features, but no upsell modals.
     var requiresBusinessUpdate: Bool! { get }
     
-    var selectCallback: SuccessCallback? { get }
+    var selectCallback: SuccessConfirmationCallback { get }
 }
 
 class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
     let title: String!
     let active: Bool!
-    var icon: NSImage! = AppTheme.Icon.brandTor
-    var requiresUpdate: Bool!
-    var requiresBusinessUpdate: Bool!
-    var selectCallback: (() -> Void)?
-    
-    init( _ title: String, icon: NSImage, active: Bool, requiresUpdate: Bool = false, requiresBusinessUpdate: Bool = false, selectCallback: SuccessCallback? = nil ) {
+    let icon: NSImage!
+    let requiresUpdate: Bool!
+    let requiresBusinessUpdate: Bool!
+    let selectCallback: SuccessConfirmationCallback
+
+    init(
+        _ title: String,
+        icon: NSImage = AppTheme.Icon.brandTor,
+        active: Bool,
+        requiresUpdate: Bool = false,
+        requiresBusinessUpdate: Bool = false,
+        selectCallback: @escaping SuccessConfirmationCallback
+    ) {
         self.title = title
         self.active = active
         self.icon = icon
@@ -69,6 +78,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         isActive: Bool,
         currentUserTier: Int,
         currentPlanName planName: String,
+        onPotentialHermesConflict: @escaping (@escaping () -> Void) -> Void,
         openUpgradeLink: @escaping () -> Void
     ) {
         var netShieldPropertyProvider = netShieldPropertyProvider
@@ -93,30 +103,46 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             icon = AppTheme.Icon.shield
         }
 
+        func changeNetShieldLevel(_ newLevel: NetShieldType) {
+            vpnStateConfiguration.getInfo { info in
+                switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                case .withConnectionUpdate:
+                    netShieldPropertyProvider.netShieldType = newLevel
+                    vpnManager.set(netShieldType: newLevel)
+                case .withReconnect:
+                    netShieldPropertyProvider.netShieldType = newLevel
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
+                    vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
+                case .immediate:
+                    netShieldPropertyProvider.netShieldType = newLevel
+                }
+            }
+        }
+
         super.init(
             text,
             icon: icon,
             active: isActive,
             requiresUpdate: level.isUserTierTooLow(currentUserTier),
             requiresBusinessUpdate: level != .off && planName.isBusinessWithoutNetShield,
-            selectCallback: {
+            selectCallback: { dismissCallback in
+                @Dependency(\.hermesClient) var hermesClient
+
                 guard !level.isUserTierTooLow(currentUserTier) else {
                     openUpgradeLink()
+                    dismissCallback()
                     return
                 }
 
-                vpnStateConfiguration.getInfo { info in
-                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                    case .withConnectionUpdate:
-                        netShieldPropertyProvider.netShieldType = level
-                        vpnManager.set(netShieldType: level)
-                    case .withReconnect:
-                        netShieldPropertyProvider.netShieldType = level
-                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                        vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
-                    case .immediate:
-                        netShieldPropertyProvider.netShieldType = level
+                if level != .off, hermesClient.isEnabled().wrappedValue {
+                    onPotentialHermesConflict {
+                        changeNetShieldLevel(level)
+                        hermesClient.setIsEnabled(false)
+                        dismissCallback()
                     }
+                } else {
+                    changeNetShieldLevel(level)
+                    dismissCallback()
                 }
             }
         )

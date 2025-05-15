@@ -21,8 +21,16 @@ import Foundation
 #if canImport(AppKit)
 import AppKit
 
-public extension String {
-    func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil, textColor: NSColor? = nil) -> NSAttributedString {
+extension String {
+    public func styled(
+        _ style: AppTheme.Style = .normal,
+        context: AppTheme.Context = .text,
+        font: NSFont = .themeFont(),
+        hover: Bool = false,
+        alignment: NSTextAlignment = .center,
+        lineBreakMode: NSLineBreakMode? = nil,
+        textColor: NSColor? = nil
+    ) -> NSAttributedString {
         var style = style
         if hover {
             style.insert(.hovered)
@@ -45,10 +53,52 @@ public extension String {
     }
 }
 
+extension Collection where Element == String {
+    public func styled(
+        _ style: AppTheme.Style = .normal,
+        context: AppTheme.Context = .text,
+        font: NSFont = .themeFont(),
+        hover: Bool = false,
+        alignment: NSTextAlignment = .center,
+        lineBreakMode: NSLineBreakMode? = nil,
+        textColor: NSColor? = nil
+    ) -> NSAttributedString {
+        let mutableAttributedString = NSMutableAttributedString()
+        for element in self {
+            mutableAttributedString.append(
+                element.styled(style,
+                    context: context,
+                    font: font,
+                    hover: hover,
+                    alignment: alignment,
+                    lineBreakMode: lineBreakMode,
+                    textColor: textColor
+                )
+            )
+        }
+        return mutableAttributedString
+    }
+}
+
+extension RandomAccessCollection where Element: NSAttributedString {
+    public func joined() -> NSAttributedString {
+        let joinedString = NSMutableAttributedString()
+        for element in self {
+            joinedString.append(element)
+        }
+        return joinedString
+    }
+}
+
+extension NSAttributedString {
+    public static func lineSeparator(count: Int = 1) -> NSAttributedString {
+        return .init(string: String(repeating: "\n", count: count))
+    }
+}
+
 public extension CustomStyleContext {
     func style(_ text: String, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         text.styled(self.customStyle(context: context), context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode)
     }
 }
-
 #endif

@@ -1,7 +1,7 @@
 xcassets:
-  inputs: Sources/Modals/Resources/Media.xcassets
+  inputs: Sources/ModalsShared/Resources/Media.xcassets
   outputs:
     templateName: swift5
-    output: Sources/Modals/Assets/Assets.swift
+    output: Sources/ModalsShared/Assets/Assets.swift
     params:
       publicAccess: true

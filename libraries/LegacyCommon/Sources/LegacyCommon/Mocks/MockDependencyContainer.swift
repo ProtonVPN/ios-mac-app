@@ -31,7 +31,7 @@ import CommonNetworkingTestSupport
 import VPNShared
 import VPNSharedTesting
 
-public class MockDependencyContainer {
+open class MockDependencyContainer {
 
     @Dependency(\.serverRepository) var serverRepository
     public static let appGroup = "test"

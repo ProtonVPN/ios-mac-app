@@ -74,12 +74,13 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.switchOff
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { dismissCallback in
             self.propertiesManager.killSwitch = false
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 self.vpnGateway.retryConnection()
             }
+            dismissCallback()
         })
     }
     
@@ -106,9 +107,10 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             self.alertService.push(alert: TurnOnKillSwitchAlert(confirmHandler: connect, cancelHandler: nil))
         }
 
-        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: { dismissCallback in
             guard self.modelIdChecker.isT2Mac else {
                 connectAfterLocalNetworkWarning()
+                dismissCallback()
                 return
             }
 
@@ -118,11 +120,13 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
                 killSwitchOffHandler: {
                     log.info("User has disabled Kill Switch after receiving T2 warning",
                              category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                    dismissCallback()
                 },
                 connectAnywayHandler: {
                     log.info("User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
                              category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                     connectAfterLocalNetworkWarning()
+                    dismissCallback()
                 })
             )
         })

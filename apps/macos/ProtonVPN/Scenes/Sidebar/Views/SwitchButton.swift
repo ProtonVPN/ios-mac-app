@@ -66,7 +66,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
     var isOn: Bool {
         return currentButtonState == .on
     }
-    
+
     var buttonWidth: Int!
     var buttonHeight: Int!
     var knobPadding: Int!
@@ -229,7 +229,15 @@ class SwitchButton: NSView, CAAnimationDelegate {
         
         return knobView
     }
-    
+
+    override func hitTest(_ point: NSPoint) -> NSView? {
+        let hitView = super.hitTest(point)
+        if hitView === buttonView {
+            return self
+        }
+        return hitView
+    }
+
     private func setInnerColor() {
         DarkAppearance {
             self.innerView?.layer?.backgroundColor = self.cgColor(.background)
