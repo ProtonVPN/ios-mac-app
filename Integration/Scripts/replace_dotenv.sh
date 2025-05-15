@@ -42,19 +42,23 @@ function cmd_replace() {
 
         # envsubst wants a single argument containing all of the variables
         # we want to replace in shell-format, e.g., '$FOO $BAR $FIZZ $BUZZ'.
-        # Each line looks like 'export VALUE=value', so we set the field
-        # separator to be either a space or an equals sign and print the second
-        # item of each line, preceded by a $ and ending with a space.
-        VARS+=$(awk -F ' |\=' '{printf "$"$2" " }' < "$dotenv")
+        # Each line (that isn't an empty line or a comment) looks like
+        # 'export VALUE=value', so we set the field separator to be either a
+        # space or an equals sign and print the second item of each line,
+        # preceded by a $ and ending with a space.
+        VARS+=$(grep -v '^\(#\|\s*$\)' < "$dotenv" | awk -F ' |\=' '{printf "$"$2" " }')
 
         source "$dotenv"
     done
 
+    echo "Will replace these values:"
+    echo "$VARS" | tr " " "\n"
     for file in "${REPLACE[@]}"; do
         if [ ! -f "$file" ]; then
             die dataerr "source file '$file' not found"
         fi
 
+        echo "Replacing strings in ${file}..."
         envsubst "$VARS" < "$file" | sponge "$file"
     done
 }

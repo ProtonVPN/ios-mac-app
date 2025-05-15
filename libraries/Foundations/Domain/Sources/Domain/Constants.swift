@@ -33,7 +33,7 @@ public enum DomainConstants {
     public enum Maintenance {
         public static let defaultMaintenanceCheckTime: Int = 10 // Minutes
     }
-        
+
     public enum LogFiles {
         // Name of the log file from WireGuard NE.
         public static let wireGuard = "WireGuard.log"
