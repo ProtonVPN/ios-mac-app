@@ -28,9 +28,9 @@ public enum PlanSession {
     var queryItems: [URLQueryItem] {
         switch self {
         case .upgrade:
-            return [.actionQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
+            return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
         case .manageSubscription:
-            return [.actionQueryItem, .fullscreenQueryItem, .redirectQueryItem]
+            return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem]
         }
     }
 
@@ -156,4 +156,5 @@ fileprivate extension URLQueryItem {
     static let fullscreenQueryItem = URLQueryItem(name: "fullscreen", value: "off")
     static let redirectQueryItem = URLQueryItem(name: "redirect", value: "protonvpn://refresh")
     static let typeQueryItem = URLQueryItem(name: "type", value: "upgrade")
+    static let appQueryItem = URLQueryItem(name: "app", value: "vpn")
 }
