@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
-        .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
+        .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
@@ -44,10 +44,10 @@ let package = Package(
         .target(
             name: "ModalsShared",
             dependencies: [
-                "Overture",
                 "Strings",
                 "Theme",
                 .core(module: "UIFoundations"),
+                .product(name: "Overture", package: "swift-overture"),
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
             ],
             resources: [
@@ -81,7 +81,12 @@ let package = Package(
         ),
         .testTarget(
             name: "ModalsTests",
-            dependencies: ["ModalsShared", "ModalsServices", "Overture", "Theme"]
+            dependencies: [
+                "ModalsShared",
+                "ModalsServices",
+                "Theme",
+                .product(name: "Overture", package: "swift-overture"),
+            ]
         )
     ]
 )

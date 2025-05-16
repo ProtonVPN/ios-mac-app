@@ -57,9 +57,9 @@ final class PlanOptionsListViewModel: ObservableObject {
     func onAppear() async {
         isLoading = true
         do {
-            plans = try await client.retrievePlans()
+            plans = try await client.retrievePlans().sorted { $0.pricePerMonth < $1.pricePerMonth }
             selectedPlan = plans.first
-            mostExpensivePlan = plans.sorted { $0.pricePerMonth > $1.pricePerMonth }.first
+            mostExpensivePlan = plans.first
             isLoading = false
         } catch {
             // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message

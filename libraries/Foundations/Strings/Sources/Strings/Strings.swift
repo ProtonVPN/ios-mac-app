@@ -2252,8 +2252,6 @@ public enum Localizable {
   public static var upsellP2pSupportTitle: String { return Localizable.tr("Localizable", "upsell_p2pSupport_title", fallback: "Unlock peer-to-peer (P2P) downloads and file sharing") }
   /// Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
   public static var upsellPlansListOptionAmountPerMonth: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerMonth", fallback: " /month") }
-  /// Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
-  public static var upsellPlansListOptionAmountPerYear: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerYear", fallback: " /year") }
   /// Header of paid plans list where there are more than 1 plan option to pick from.
   public static var upsellPlansListSectionHeader: String { return Localizable.tr("Localizable", "upsell_plans_list_section_header", fallback: "Select your plan") }
   /// Subtitle of paid plans list.
