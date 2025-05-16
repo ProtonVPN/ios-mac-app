@@ -20,6 +20,8 @@ import Foundation
 import AppKit
 import LegacyCommon
 import Theme
+import Sharing
+import Perception
 
 protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)
@@ -28,15 +30,19 @@ protocol TickboxViewDelegate: AnyObject {
 
 class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
+    typealias ActionHandler = () -> Void
+
     struct ViewModel {
         let labelText: String
         let state: PaidFeatureDisplayState
         let toolTip: String?
+        let liveSource: SharedReader<Bool>?
 
-        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil) {
+        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: SharedReader<Bool>? = nil) {
             self.labelText = labelText
             self.state = state
             self.toolTip = toolTip
+            self.liveSource = liveSource
         }
 
         init(labelText: String, buttonState: Bool, buttonEnabled: Bool = true, toolTip: String? = nil) {
@@ -60,11 +66,15 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     private var model: ViewModel?
 
+    private var observationToken: Any?
+
     static let infoIcon = AppTheme.Icon.infoCircleFilled.colored(.hint)
 
     var isOn: Bool {
         switchButton.currentButtonState == .on
     }
+
+    var didTapHandler: ActionHandler?
 
     override func accessibilityRole() -> NSAccessibility.Role? {
         .checkBox
@@ -123,6 +133,13 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
             switchButton.enabled = isInteractive
             switchButton.setState(isOn ? .on : .off)
         }
+
+        if let liveSource = model.liveSource {
+            observationToken = observe { [weak self] in
+                let isOn = liveSource.wrappedValue
+                self?.switchButton.setState(isOn ? .on : .off)
+            }
+        }
     }
 
     private func upsellImageViewTapped() {
@@ -131,5 +148,12 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     func switchButtonClicked(_ button: NSButton) {
         delegate?.toggleTickbox(self, to: isOn ? .on : .off)
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        let hitView = hitTest(event.locationInWindow)
+        if hitView !== switchButton {
+            didTapHandler?()
+        }
     }
 }

@@ -35,6 +35,7 @@ import VPNShared // AuthKeychain
 import VPNAppCore // UnauthKeychain
 
 public typealias SuccessCallback = (() -> Void)
+public typealias SuccessConfirmationCallback = (@escaping SuccessCallback) -> Void
 public typealias GenericCallback<T> = ((T) -> Void)
 public typealias ErrorCallback = GenericCallback<Error>
 

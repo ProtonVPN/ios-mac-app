@@ -70,6 +70,8 @@ public enum AppEvent: String {
     case natType
     /// The user's safe mode setting changed.
     case safeMode
+    /// The Hermes settings changed.
+    case hermes
 
     // MARK: API-Driven
     /// New announcements are available.

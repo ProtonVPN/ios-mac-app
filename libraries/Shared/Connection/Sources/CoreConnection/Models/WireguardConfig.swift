@@ -29,9 +29,8 @@ public struct WireguardConfig: Codable, Equatable {
     public let defaultTcpPorts: [Int]
     public let defaultTlsPorts: [Int]
 
-    public var dns: String {
-        return "10.2.0.1"
-    }
+    public let dns: String
+
     public var address: String {
         return "10.2.0.2/32"
     }
@@ -42,14 +41,15 @@ public struct WireguardConfig: Codable, Equatable {
         return 25
     }
 
-    init(defaultUdpPorts: [Int]? = nil, defaultTcpPorts: [Int]? = nil, defaultTlsPorts: [Int]? = nil) {
+    init(defaultUdpPorts: [Int]? = nil, defaultTcpPorts: [Int]? = nil, defaultTlsPorts: [Int]? = nil, dns: String) {
         self.defaultUdpPorts = defaultUdpPorts.unwrappedOr(defaultValue: [51820])
         self.defaultTcpPorts = defaultTcpPorts.unwrappedOr(defaultValue: [443])
         self.defaultTlsPorts = defaultTlsPorts.unwrappedOr(defaultValue: [443])
+        self.dns = dns
     }
 
     public init() {
-        self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
+        self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil, dns: "")
     }
 
     public func defaultPorts(for transport: WireGuardTransport) -> [Int] {

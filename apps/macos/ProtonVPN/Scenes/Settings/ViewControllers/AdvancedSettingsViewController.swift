@@ -20,6 +20,9 @@ import Cocoa
 import LegacyCommon
 import Ergonomics
 import Strings
+import Theme
+import ComposableArchitecture
+import Hermes
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
 
@@ -28,6 +31,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     @IBOutlet private weak var safeModeView: SettingsTickboxView!
     @IBOutlet private weak var usageDataView: SettingsTickboxView!
     @IBOutlet private weak var crashReportsView: SettingsTickboxView!
+    @IBOutlet private weak var hermesView: SettingsTickboxView!
 
     private var viewModel: AdvancedSettingsViewModel
 
@@ -39,6 +43,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("AdvancedSettings"), bundle: nil)
     }
+
+    private var hermesChildWindowController: NSWindowController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,6 +117,34 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         safeModeView.setupItem(model: model, delegate: self)
     }
 
+    private func setupHermesItem() {
+        @Dependency(\.hermesClient) var hermesClient
+
+        let featureState: PaidFeatureDisplayState = viewModel.displayState(for: HermesFeature.self)
+
+        let model = SettingsTickboxView.ViewModel(
+            labelText: "Hermes Feature",
+            state: featureState,
+            toolTip: "Set a Hermes Resolver",
+            liveSource: hermesClient.isEnabled()
+        )
+        hermesView.setupItem(model: model, delegate: self)
+
+        if case .available = featureState {
+            hermesView.didTapHandler = { [weak self] in
+                self?.didTapHermesView(self)
+            }
+        }
+    }
+
+    @objc private func didTapHermesView(_ sender: Any?) {
+        let window = HermesWindow(viewModel: viewModel.hermesViewModel)
+        let controller = NSWindowController(window: window)
+        window.centerWindow(in: self.view.window?.screen)
+        controller.showWindow(self)
+        self.hermesChildWindowController = controller
+    }
+
     // MARK: - ReloadableViewController
 
     func reloadView() {
@@ -120,6 +154,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         setupSafeModeItem()
         setupUsageDataTypeItem()
         setupCrashReportsTypeItem()
+        setupHermesItem()
     }
 }
 
@@ -141,6 +176,8 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
             viewModel.usageData = value == .on
         case crashReportsView:
             viewModel.crashReports = value == .on
+        case hermesView:
+            viewModel.hermesViewModel.setIsEnabled(value == .on)
         default:
             break
         }
@@ -152,6 +189,8 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
             viewModel.showNATUpsell()
         case safeModeView:
             viewModel.showSafeModeUpsell()
+        case hermesView:
+            viewModel.hermesViewModel.upsellButtonTapped()
         default:
             break
         }

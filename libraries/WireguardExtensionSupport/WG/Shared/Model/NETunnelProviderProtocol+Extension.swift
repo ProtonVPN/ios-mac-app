@@ -37,7 +37,6 @@ extension NETunnelProviderProtocol {
         }
     }
 
-
     #if os(macOS)
     func asTunnelConfiguration(called name: String? = nil) -> TunnelConfiguration? {
         if let data = Keychain.loadWgConfig() {

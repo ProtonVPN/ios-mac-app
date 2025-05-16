@@ -61,6 +61,7 @@ public enum UpsellModalSource {
     case promoOffer
     case downgrade
     case maxConnections
+    case hermes
 }
 
 public final class AllCountriesUpsellAlert: UpsellAlert {
@@ -98,7 +99,6 @@ public final class TorUpsellAlert: UpsellAlert {
 public final class CustomizationUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .allowLan }
 }
-
 
 public final class ProfilesUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource { .profiles }
@@ -150,6 +150,10 @@ public final class ConnectionCooldownAlert: UpsellAlert {
         actions.first(where: { $0.style == .confirmative })?
             .handler?()
     }
+}
+
+public final class HermesUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .hermes }
 }
 
 public final class WelcomeScreenAlert: UpsellAlert {

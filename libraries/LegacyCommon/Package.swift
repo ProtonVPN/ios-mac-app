@@ -56,7 +56,6 @@ let package = Package(
         .package(path: "../Settings"),
         .package(path: "../Shared/ConnectionInventory"),
 
-
         // External dependencies
         .github("pointfreeco", repo: "xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .github("apple", repo: "swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
@@ -84,6 +83,8 @@ let package = Package(
                 "Timer",
                 .product(name: "Persistence", package: "Persistence"),
                 "Localization",
+
+                .product(name: "Hermes", package: "Connection"),
 
                 "ExtensionIPC",
                 "CommonNetworking",

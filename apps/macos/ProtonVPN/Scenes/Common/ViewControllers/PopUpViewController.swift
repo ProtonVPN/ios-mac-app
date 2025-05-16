@@ -94,14 +94,23 @@ class PopUpViewController: NSViewController {
         }
         
         // HACK: Because the text view is inside a scroll view, it doesn't resize correctly. To address this, the text view is aligned to the text field, which forces the resizing of the dialog.
-        popUpDescription.attributedStringValue = viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white)
+
+        let attributedDescription: NSAttributedString
+        if viewModel.joinedTitleAndMessage {
+            attributedDescription = viewModel.attributedDescription
+        } else {
+            attributedDescription = viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white)
+        }
+
+        popUpDescription.attributedStringValue = attributedDescription
         DarkAppearance {
             popUpDescription.layer?.backgroundColor = .cgColor(.background, .weak)
             popUpDescriptionTextView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
         popUpDescriptionTextView.delegate = viewModel
-        
-        popUpDescriptionTextView.textStorage?.setAttributedString(viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white))
+
+
+        popUpDescriptionTextView.textStorage?.setAttributedString(attributedDescription)
     }
     
     private func setupFooterSection() {

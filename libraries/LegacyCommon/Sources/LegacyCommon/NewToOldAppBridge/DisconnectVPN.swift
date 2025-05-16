@@ -37,7 +37,7 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(trigger))
-        bridge.push(intent: .disconnect)
+        await bridge.push(intent: .disconnect)
 
         // let's wait a bit to be disconnected, but no more than 3 seconds
         // if it throws a `SharedReaderTimeoutError`, we'll discard it, thus `try?` below

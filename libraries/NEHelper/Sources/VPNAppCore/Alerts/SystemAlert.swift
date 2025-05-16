@@ -35,9 +35,14 @@ import Strings
 public protocol SystemAlert: AnyObject {
     var title: String? { get set }
     var message: String? { get set }
+    var joinedTitleAndMessage: Bool { get }
     var actions: [AlertAction] { get set }
     var isError: Bool { get }
     var dismiss: (() -> Void)? { get set }
+}
+
+public extension SystemAlert {
+    var joinedTitleAndMessage: Bool { false }
 }
 
 public enum PrimaryActionType {

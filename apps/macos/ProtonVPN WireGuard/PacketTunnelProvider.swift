@@ -27,10 +27,7 @@ import WireGuardKit
 import PMLogger
 import NEHelper
 
-class PacketTunnelProvider: NEPacketTunnelProvider {
-    override init() {
-        super.init()
-    }
+final class PacketTunnelProvider: NEPacketTunnelProvider {
 
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")

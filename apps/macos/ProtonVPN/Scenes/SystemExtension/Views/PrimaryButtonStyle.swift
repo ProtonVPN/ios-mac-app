@@ -21,7 +21,17 @@ import Theme
 
 struct PrimaryButtonStyle: ButtonStyle {
 
-    @State var isHovered = false
+    private static let labelSize: CGSize = .init(width: 235, height: 46)
+
+    let size: CGSize
+    let font: Font
+
+    @State private var isHovered = false
+
+    init(size: CGSize = Self.labelSize, font: Font = .system(size: 16)) {
+        self.size = size
+        self.font = font
+    }
 
     func backgroundColor(isPressed: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
@@ -37,10 +47,12 @@ struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .foregroundColor(.init(NSColor.color(.text)))
-            .font(.system(size: 16))
-            .frame(width: 235, height: 46)
-            .background(RoundedRectangle(cornerRadius: .themeRadius8)
-                .fill(backgroundColor(isPressed: configuration.isPressed)))
+            .font(font)
+            .frame(width: size.width, height: size.height)
+            .background(
+                RoundedRectangle(cornerRadius: .themeRadius8)
+                    .fill(backgroundColor(isPressed: configuration.isPressed))
+            )
             .onHover { isHovered = $0 }
     }
 }

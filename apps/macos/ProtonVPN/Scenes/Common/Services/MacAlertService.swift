@@ -159,6 +159,9 @@ extension MacAlertService: CoreAlertService {
             )
             show(alert: alert, modalType: countryModal)
 
+        case let alert as HermesUpsellAlert:
+            show(alert: alert, modalType: .hermes)
+
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
 
@@ -294,6 +297,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as HermesSettingsViewAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -391,7 +397,7 @@ extension MacAlertService: CoreAlertService {
                     return
                 }
                 AppEvent.userEngagedWithUpsellAlert.post(modalSource)
-                linkOpener.open(url)
+                self?.linkOpener.open(url)
             }
         }
         

@@ -25,19 +25,29 @@ public struct SettingsDimensions: Encodable {
     let widgetCount: WidgetCount?
     let firstWidgetSize: WidgetSize?
     let isIPv6Enabled: IsIPv6Enabled
+    let hermesCount: HermesCount
+    let firstHermesAddressFamily: HermesAddressFamily
+    let isSystemHermesEnabled: SystemHermesEnabled
+
 
     init(defaultConnectionType: DefaultConnectionType,
          appIcon: AppIcon,
          userTier: UserTier,
          widgetCount: WidgetCount?,
          firstWidgetSize: WidgetSize?,
-         isIPv6Enabled: IsIPv6Enabled) {
+         isIPv6Enabled: IsIPv6Enabled,
+         hermesCount: HermesCount,
+         firstHermesAddressFamily: HermesAddressFamily,
+         isSystemHermesEnabled: SystemHermesEnabled) {
         self.defaultConnectionType = defaultConnectionType
         self.appIcon = appIcon
         self.userTier = userTier
         self.widgetCount = widgetCount
         self.firstWidgetSize = firstWidgetSize
         self.isIPv6Enabled = isIPv6Enabled
+        self.hermesCount = hermesCount
+        self.firstHermesAddressFamily = firstHermesAddressFamily
+        self.isSystemHermesEnabled = isSystemHermesEnabled
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -89,6 +99,36 @@ public struct SettingsDimensions: Encodable {
         case greaterOrEqualFive = ">=5"
     }
 
+    public enum HermesCount: String, Encodable {
+        case zero = "0"
+        case one = "1"
+        case twoToFour = "2-4"
+        case greaterOrEqualFive = ">=5"
+
+        public init(count: Int) {
+            switch count {
+            case 0:
+                self = .zero
+            case 1:
+                self = .one
+            case 2...4:
+                self = .twoToFour
+            default:
+                self = .greaterOrEqualFive
+            }
+        }
+    }
+
+    public enum HermesAddressFamily: String, Encodable {
+        case ipv4
+        case ipv6
+    }
+
+    public enum SystemHermesEnabled: String, Encodable {
+        case `true`
+        case `false`
+    }
+
     public enum WidgetSize: String, Encodable {
         case small
         case medium
@@ -99,5 +139,4 @@ public struct SettingsDimensions: Encodable {
         case `true`
         case `false`
     }
-
 }

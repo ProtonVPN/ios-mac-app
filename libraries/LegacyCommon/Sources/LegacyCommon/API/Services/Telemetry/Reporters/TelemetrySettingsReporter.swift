@@ -27,13 +27,14 @@ import Timer
 import VPNShared
 import WidgetKit
 
-final class TelemetrySettingsReporter {
-    public typealias Factory = PropertiesManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator & VpnKeychainFactory
+import Sharing
 
-    private let factory: Factory
+final class TelemetrySettingsReporter {
+    public typealias Factory = NetworkingFactory & TimerFactoryCreator & VpnKeychainFactory
+
     private var telemetryEventScheduler: TelemetryEventScheduler
     private let timerFactory: TimerFactory
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private var vpnKeychain: VpnKeychainProtocol
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
 
@@ -45,7 +46,7 @@ final class TelemetrySettingsReporter {
     // MARK: - Initialization
 
     init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
-        self.factory = factory
+        self.vpnKeychain = factory.makeVpnKeychain()
 
         self.telemetryEventScheduler = telemetryEventScheduler
         self.timerFactory = factory.makeTimerFactory()
@@ -103,14 +104,17 @@ final class TelemetrySettingsReporter {
             userTier: userTier(),
             widgetCount: await widgetCount(),
             firstWidgetSize: await firstWidgetSize(),
-            isIPv6Enabled: .false
+            isIPv6Enabled: .false,
+            hermesCount: await hermesCount(),
+            firstHermesAddressFamily: await firstHermesAddressFamily(),
+            isSystemHermesEnabled: await isSystemHermesEnabled()
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
         try await telemetryEventScheduler.report(event: heartbeatEvent)
     }
 
-    // Dimention helpers
+    // Dimensions helpers
 
     private func userTier() -> SettingsDimensions.UserTier {
         let cached: CachedVpnCredentials? = vpnKeychain.fetchCached()
@@ -137,6 +141,20 @@ final class TelemetrySettingsReporter {
             log.error("Error retrieving default connection preference: \(error)")
             return .fastest
         }
+    }
+
+    private func hermesCount() async -> SettingsDimensions.HermesCount {
+        @Dependency(\.hermesClient) var hermesClient
+        return .init(count: hermesClient.activeHermesResolvers().wrappedValue.count)
+    }
+
+    private func firstHermesAddressFamily() async -> SettingsDimensions.HermesAddressFamily {
+        return .ipv4
+    }
+
+    private func isSystemHermesEnabled() async -> SettingsDimensions.SystemHermesEnabled {
+        @Dependency(\.hermesClient) var hermesClient
+        return hermesClient.isEnabled().wrappedValue ? .true : .false
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount? {
