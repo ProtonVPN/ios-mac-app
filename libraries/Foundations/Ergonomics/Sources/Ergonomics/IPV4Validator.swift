@@ -19,7 +19,7 @@
 import Foundation
 private import Network
 
-public enum IPV4Validator {
+public enum IPv4Validator {
 
     case valid
     case invalid

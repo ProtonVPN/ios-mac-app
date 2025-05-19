@@ -232,7 +232,7 @@
                                 <outlet property="separator" destination="hhN-6A-ZEd" id="xCp-fp-2Kc"/>
                             </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hwi-PQ-ia8" customClass="SettingsClickableView" customModule="ProtonVPN" customModuleProvider="target">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hwi-PQ-ia8" userLabel="Plutonium View" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="180" width="500" height="50"/>
                             <subviews>
                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MuG-ao-j3a" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -261,9 +261,18 @@
                                         <constraint firstAttribute="height" constant="1" id="ZQv-mF-seM"/>
                                     </constraints>
                                 </box>
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3TX-zP-uHZ">
+                                    <rect key="frame" x="423" y="17" width="37" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="c2i-QY-xjo">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="gMd-cr-ffq" secondAttribute="bottom" id="BgZ-Au-ro4"/>
+                                <constraint firstItem="3TX-zP-uHZ" firstAttribute="centerY" secondItem="hwi-PQ-ia8" secondAttribute="centerY" id="I0D-iO-5Up"/>
                                 <constraint firstItem="gMd-cr-ffq" firstAttribute="trailing" secondItem="ovL-0f-34H" secondAttribute="trailing" id="J75-ib-TID"/>
                                 <constraint firstAttribute="trailing" secondItem="ovL-0f-34H" secondAttribute="trailing" constant="40" id="KKa-3V-t3h"/>
                                 <constraint firstItem="MuG-ao-j3a" firstAttribute="centerY" secondItem="hwi-PQ-ia8" secondAttribute="centerY" id="QLt-BJ-cAy"/>
@@ -271,9 +280,11 @@
                                 <constraint firstItem="ovL-0f-34H" firstAttribute="centerY" secondItem="hwi-PQ-ia8" secondAttribute="centerY" id="UCb-gy-LBw"/>
                                 <constraint firstAttribute="height" constant="50" id="ekC-oc-ed4"/>
                                 <constraint firstItem="MuG-ao-j3a" firstAttribute="leading" secondItem="hwi-PQ-ia8" secondAttribute="leading" constant="42" id="jBf-19-ApA"/>
+                                <constraint firstAttribute="trailing" secondItem="3TX-zP-uHZ" secondAttribute="trailing" constant="42" id="rcs-n7-Zfd"/>
                             </constraints>
                             <connections>
                                 <outlet property="label" destination="MuG-ao-j3a" id="9sM-Oh-v1E"/>
+                                <outlet property="onOffLabel" destination="3TX-zP-uHZ" id="pkl-At-SFd"/>
                                 <outlet property="separator" destination="gMd-cr-ffq" id="67T-ze-lC0"/>
                                 <outlet property="upsellImageView" destination="ovL-0f-34H" id="bLB-51-AwY"/>
                             </connections>
@@ -325,6 +336,7 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="hbw-eF-9Ju" secondAttribute="bottom" id="0Ld-7N-cEk"/>
+                                <constraint firstAttribute="trailing" secondItem="TtT-gy-HmN" secondAttribute="trailing" constant="42" id="Fhg-OV-xag"/>
                                 <constraint firstItem="PtJ-eO-bdK" firstAttribute="centerY" secondItem="TtT-gy-HmN" secondAttribute="centerY" id="KY5-Xv-2cn"/>
                                 <constraint firstItem="5IR-tj-bQx" firstAttribute="leading" secondItem="cCQ-Z4-WdI" secondAttribute="trailing" constant="5" id="Rjn-dX-YAA"/>
                                 <constraint firstItem="TtT-gy-HmN" firstAttribute="centerY" secondItem="4Ov-kj-b9p" secondAttribute="centerY" id="ZNq-9R-TQU"/>

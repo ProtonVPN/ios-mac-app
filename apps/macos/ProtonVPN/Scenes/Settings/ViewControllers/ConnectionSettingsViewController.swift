@@ -38,7 +38,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var protocolView: SettingsDropDownView!
 
     @IBOutlet private weak var vpnAcceleratorView: SettingsTickboxView!
-    @IBOutlet private weak var plutoniumView: SettingsClickableView!
+    @IBOutlet private weak var plutoniumView: SettingsTickboxView!
     @IBOutlet private weak var dnsLeakProtectionView: SettingsTickboxView!
     @IBOutlet private weak var allowLANView: SettingsTickboxView!
     private var viewModel: ConnectionSettingsViewModel
@@ -128,11 +128,23 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             plutoniumView.isHidden = true
             return
         }
-        let model = SettingsClickableView.ViewModel(
+
+        let featureState: PaidFeatureDisplayState = viewModel.displayState(for: Plutonium.self)
+
+        let model = SettingsTickboxView.ViewModel(
             labelText: Localizable.plutoniumTitle,
-            state: .available(enabled: true, interactive: true)
+            state: featureState,
+            toolTip: nil,
+            liveSource: nil
         )
+
         plutoniumView.setupItem(model: model, delegate: self)
+
+        if case .available = featureState {
+            plutoniumView.didTapHandler = { [weak viewModel] in
+                viewModel?.showPlutoniumSettings()
+            }
+        }
     }
 
     private func setupVpnAcceleratorItem() {
@@ -218,12 +230,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
 }
 
-extension ConnectionSettingsViewController: ClickableViewDelegate {
-    func tapped(_ view: SettingsClickableView) {
-        viewModel.showPlutoniumSettings()
-    }
-}
-
 extension ConnectionSettingsViewController: TickboxViewDelegate {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState) {
         switch tickboxView {
@@ -246,6 +252,8 @@ extension ConnectionSettingsViewController: TickboxViewDelegate {
             viewModel.showLANConnectionUpsell()
         case vpnAcceleratorView:
             viewModel.showVPNAcceleratorUpsell()
+        case plutoniumView:
+            viewModel.showPlutoniumUpsell()
         default:
             break
         }

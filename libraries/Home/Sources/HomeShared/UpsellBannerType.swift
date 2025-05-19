@@ -28,4 +28,5 @@ public enum BannerType: CaseIterable {
     case devices
     case tor
     case more
+    case plutonium
 }

@@ -167,7 +167,7 @@ extension PlutoniumFeature.State {
         } catch let error as ValidationError {
             throw error
         } catch {
-            // impossible path, need to cover this as `withLock` doesn't rethrow types of errors
+            assertionFailure("Unknown error caught when applying operation \(operation), on entry \(entry): \(error)")
         }
     }
 }
@@ -191,7 +191,7 @@ extension PlutoniumActivated {
                 if ips.contains(entry) {
                     throw .alreadyExists
                 }
-                guard IPV4Validator(location: entry) == .valid else {
+                guard IPv4Validator(location: entry) == .valid else {
                     throw .invalidIP
                 }
                 ips.append(entry)

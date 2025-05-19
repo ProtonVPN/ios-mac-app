@@ -16,12 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import AppKit
-import LegacyCommon
-import Theme
-import Sharing
+import Foundation
+
 import Perception
+import Sharing
+
+import ProtonCoreUIFoundations
+
+import LegacyCommon
+import Strings
+import Theme
 
 protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)
@@ -59,10 +64,11 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
     private weak var delegate: TickboxViewDelegate?
 
     @IBOutlet private weak var label: PVPNTextField!
-    @IBOutlet private weak var switchButton: SwitchButton!
+    @IBOutlet private weak var switchButton: SwitchButton?
     @IBOutlet private weak var upsellImageView: HoverableButtonImageView?
     @IBOutlet private weak var separator: NSBox!
-    @IBOutlet private weak var infoIcon: NSImageView!
+    @IBOutlet private weak var infoIcon: NSImageView?
+    @IBOutlet private weak var onOffLabel: NSTextField?
 
     private var model: ViewModel?
 
@@ -71,7 +77,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
     static let infoIcon = AppTheme.Icon.infoCircleFilled.colored(.hint)
 
     var isOn: Bool {
-        switchButton.currentButtonState == .on
+        switchButton?.currentButtonState == .on
     }
 
     var didTapHandler: ActionHandler?
@@ -85,7 +91,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
     }
 
     override func accessibilityValue() -> Any? {
-        switchButton.currentButtonState == .on
+        switchButton?.currentButtonState == .on
     }
 
     override func accessibilityHelp() -> String? {
@@ -93,22 +99,47 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
     }
 
     override func accessibilityPerformPress() -> Bool {
-        if let button = switchButton.buttonView {
-            switchButton.buttonClicked(button)
+        if let button = switchButton?.buttonView {
+            switchButton?.buttonClicked(button)
         }
         return true
+    }
+
+    private func updateOnOffLabel(isOn: Bool) {
+        guard let onOffLabel else { return }
+
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = IconProvider.chevronRight
+            .colored(.color(.text))
+            .resizeWhilePreservingRatio(newHeight: .themeSpacing16)
+        imageAttachment.bounds = .init(origin: .init(x: 0, y: -2),
+                                       size: .init(width: .themeSpacing16,
+                                                   height: .themeSpacing16))
+        let imageAttachmentString = NSAttributedString(attachment: imageAttachment)
+
+        let text: String
+        if isOn {
+            text = Localizable.switchSideButtonOn.capitalized + "  "
+        } else {
+            text = Localizable.switchSideButtonOff.capitalized + "  "
+        }
+        let isOnLabel = NSMutableAttributedString()
+        let isOn = text.styled(font: .themeFont(.heading4), alignment: .right)
+        isOnLabel.append(isOn)
+        isOnLabel.append(imageAttachmentString)
+        onOffLabel.attributedStringValue = isOnLabel
     }
 
     func setupItem(model: ViewModel, delegate: TickboxViewDelegate?) {
         setAccessibilityLabel(model.labelText)
         self.delegate = delegate
         self.model = model
-        switchButton.delegate = self
+        switchButton?.delegate = self
 
         label.attributedStringValue = model.labelText.styled(font: .themeFont(.heading4), alignment: .left)
 
-        infoIcon.image = model.toolTip != nil ? SettingsTickboxView.infoIcon : nil
-        infoIcon.toolTip = model.toolTip
+        infoIcon?.image = model.toolTip != nil ? SettingsTickboxView.infoIcon : nil
+        infoIcon?.toolTip = model.toolTip
         separator.fillColor = .color(.border, .weak)
 
         switch model.state {
@@ -125,19 +156,33 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
             upsellImageView.image = Theme.Asset.vpnSubscriptionBadge.image
             upsellImageView.isHidden = false
-            switchButton.isHidden = true
+            switchButton?.isHidden = true
+            onOffLabel?.isHidden = true
 
         case .available(let isOn, let isInteractive):
             upsellImageView?.isHidden = true
-            switchButton.isHidden = false
-            switchButton.enabled = isInteractive
-            switchButton.setState(isOn ? .on : .off)
+            switchButton?.isHidden = false
+            switchButton?.enabled = isInteractive
+            switchButton?.setState(isOn ? .on : .off)
+            updateOnOffLabel(isOn: isOn)
         }
 
         if let liveSource = model.liveSource {
             observationToken = observe { [weak self] in
                 let isOn = liveSource.wrappedValue
-                self?.switchButton.setState(isOn ? .on : .off)
+                self?.switchButton?.setState(isOn ? .on : .off)
+            }
+        }
+        // merge somehow the below and above code
+        if onOffLabel != nil {
+            @SharedReader(.plutoniumFeature) var plutoniumFeature
+            observationToken = observe { [weak self] in
+                switch plutoniumFeature {
+                case .disabled:
+                    self?.updateOnOffLabel(isOn: false)
+                case .enabled:
+                    self?.updateOnOffLabel(isOn: true)
+                }
             }
         }
     }

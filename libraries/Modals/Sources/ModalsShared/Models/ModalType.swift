@@ -43,6 +43,7 @@ public enum ModalType {
     case cantSkip(before: Date, totalDuration: TimeInterval, longSkip: Bool)
     case subscription
     case hermes
+    case plutonium
 
     public func modalModel(legacy: Bool = false) -> ModalModel {
         ModalModel(
@@ -140,6 +141,10 @@ public extension ModalType {
             Asset.hermes.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+        case .plutonium:
+            Asset.plutonium.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
     }
 
@@ -165,7 +170,7 @@ public extension ModalType {
 
     var hasNewUpsellScreen: Bool {
         switch self {
-        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN, .hermes:
+        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN, .hermes, .plutonium:
             return true
         case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
             return false
@@ -260,6 +265,8 @@ private extension ModalType {
             return Localizable.upsellTorOverVPNTitle
         case .hermes:
             return Localizable.hermesUpsellTitle
+        case .plutonium:
+            return Localizable.plutoniumUpsellTitle
         }
     }
 
@@ -337,6 +344,8 @@ private extension ModalType {
             return .init(text: Localizable.upsellTorOverVPNSubtitle)
         case .hermes:
             return .init(text: Localizable.hermesUpsellDescription)
+        case .plutonium:
+            return .init(text: Localizable.plutoniumUpsellSubtitle)
         }
     }
 
@@ -399,6 +408,8 @@ private extension ModalType {
         case .streaming, .p2pSupport, .devices, .torOverVPN:
             return []
         case .hermes:
+            return []
+        case .plutonium:
             return []
         }
     }

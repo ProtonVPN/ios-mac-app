@@ -473,6 +473,10 @@ final class ConnectionSettingsViewModel {
         alertService.push(alert: VPNAcceleratorUpsellAlert())
     }
     
+    func showPlutoniumUpsell() {
+        alertService.push(alert: PlutoniumUpsellAlert())
+    }
+
     // MARK: - Item
     
     func autoConnectItem(for index: Int) -> NSAttributedString {

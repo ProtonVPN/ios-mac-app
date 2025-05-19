@@ -38,20 +38,12 @@ extension NSItemProvider {
 }
 
 extension ItemProvider {
-    public func loadFileURL() async throws -> URL? {
-        try await withCheckedThrowingContinuation { continuation in
-            provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier, options: nil) { item, error in
-                if let error {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                if let data = item as? Data,
-                   let url = URL(dataRepresentation: data, relativeTo: nil) {
-                    continuation.resume(returning: url)
-                    return
-                }
-                continuation.resume(returning: nil)
-            }
+    public func loadFileURL() async -> URL? {
+        guard let item = try? await provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier),
+              let data = item as? Data,
+              let url = URL(dataRepresentation: data, relativeTo: nil) else {
+            return nil
         }
+        return url
     }
 }

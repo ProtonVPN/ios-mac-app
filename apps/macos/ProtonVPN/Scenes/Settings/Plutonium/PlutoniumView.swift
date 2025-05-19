@@ -196,11 +196,26 @@ public struct PlutoniumView: View {
         }
     }
 
+    private var emptyIpListView: some View {
+        VStack(spacing: .themeSpacing8) {
+            Spacer()
+            Theme.Asset.stars.swiftUIImage
+            Text(Localizable.plutoniumEmptyIpListContent)
+                .themeFont(.callout(emphasised: false))
+                .foregroundStyle(Color(.text, .weak))
+            Spacer()
+        }
+    }
+
     private func ipsList() -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(spacing: 0) {
             ipEntryView()
-            activatedIPsList()
-            Spacer(minLength: 0)
+            if store.activatedIPs.isEmpty {
+                emptyIpListView
+            } else {
+                activatedIPsList()
+                Spacer(minLength: 0)
+            }
             doneButton { ipsSheet.toggle() }
         }
         .padding(.horizontal, .themeSpacing16)
@@ -295,8 +310,11 @@ public struct PlutoniumView: View {
             .map(ItemProvider.init(provider:))
             .forEach { provider in
                 Task { @MainActor in
-                    guard let url = try? await provider.loadFileURL(),
-                          let app = PlutoniumApp(url: url) else { return }
+                    guard let url = await provider.loadFileURL(),
+                          let app = PlutoniumApp(url: url) else {
+                        log.debug("Tried to add an invalid app URL")
+                        return
+                    }
                     store.send(.entryClicked(.app(app), .add))
                 }
             }
