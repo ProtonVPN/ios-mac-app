@@ -21,19 +21,35 @@ import NetworkExtension
 import os
 import Logging
 import PMLogger
+import ComposableArchitecture
+
+@preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
-
-    // Temporary: Test App to jail
-    private static let targetAppIdentifier = "com.example.app"
 
     public override init() {
         super.init()
         setupLogs()
     }
 
+    @SharedReader(.plutoniumFeature) private var feature: PlutoniumFeatureToggle
+    private lazy var inclusionHelper: PlutoniumInclusionHelper? = {
+        do {
+            return try PlutoniumInclusionHelper()
+        } catch {
+            log.error("Failed to initialize PlutoniumInclusionHelper: \(error)")
+            return nil
+        }
+    }()
+
     open override func startProxy(options: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
         log.info("Starting proxy provider.")
+        guard case .enabled = feature else {
+            log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")
+            completionHandler(PlutoniumError.featureDisabled)
+            self.stopProxy(with: .none, completionHandler: {})
+            return
+        }
 
         let settings = createNetworkSettings()
         setTunnelNetworkSettings(settings) { error in
@@ -54,10 +70,15 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
     open override func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         let sourceAppIdentifier = flow.metaData.sourceAppSigningIdentifier
 
+        guard let inclusionHelper else {
+            log.error("Inclusion helper is not available.")
+            return false
+        }
+
         if let tcpFlow = flow as? NEAppProxyTCPFlow {
             log.debug("New TCP flow from: \(sourceAppIdentifier)")
 
-            if sourceAppIdentifier == Self.targetAppIdentifier {
+            if inclusionHelper.appIncluded(withIdentifier: sourceAppIdentifier) {
                 log.debug("Blocking TCP connection from \(sourceAppIdentifier)")
                 blockFlow(tcpFlow)
                 return true
@@ -69,7 +90,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         } else if let udpFlow = flow as? NEAppProxyUDPFlow {
             log.debug("New UDP flow from: \(sourceAppIdentifier)")
 
-            if sourceAppIdentifier == Self.targetAppIdentifier {
+            if inclusionHelper.appIncluded(withIdentifier: sourceAppIdentifier) {
                 log.debug("Blocking UDP connection from \(sourceAppIdentifier)")
                 blockFlow(udpFlow)
                 return true

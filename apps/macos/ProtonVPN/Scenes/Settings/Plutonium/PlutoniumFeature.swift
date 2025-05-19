@@ -130,10 +130,6 @@ public struct PlutoniumFeature {
                 @Dependency(\.appsProvider) var appsProvider
                 state.discoveredApps = appsProvider.enumerateAppsFolder()
 
-                // Save the configuration when changes apply
-                state.$featureApplied.withLock { $0 = state.feature }
-                state.$inclusionActivatedApplied.withLock { $0 = state.inclusionActivated }
-                state.$exclusionActivatedApplied.withLock { $0 = state.exclusionActivated }
                 return .none
             case .modeSelectionClicked(let mode):
                 state.$feature.withLock {

@@ -21,6 +21,7 @@
 
 import NetworkExtension
 
+import ComposableArchitecture
 import Dependencies
 
 import ProtonCoreFeatureFlags
@@ -730,6 +731,18 @@ public final class VpnManager: VpnManagerProtocol {
             "currentProtocol": "\(optional: currentVpnProtocol)"
         ])
 
+#if os(macOS)
+        Task {
+            do {
+                try await updatePlutoniumStateIfNeeded()
+            } catch {
+                log.error("Error while updating plutonium state: \(error.localizedDescription)")
+            }
+        }
+
+#endif
+
+
         switch self.state {
         case .connecting:
             if !self.connectAllowed {
@@ -878,4 +891,24 @@ public final class VpnManager: VpnManagerProtocol {
             delayedDisconnectRequest = request
         }
     }
+
+#if os(macOS)
+    private func updatePlutoniumStateIfNeeded() async throws {
+        @Dependency(\.plutoniumManager) var plutoniumManager: PlutoniumManager
+        @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+        guard FeatureFlagsRepository.shared
+            .isEnabled(VPNFeatureFlagType.plutoniumMacOS), case .enabled = feature else {
+            try await plutoniumManager.stop()
+            return
+        }
+
+        switch self.state
+        {
+        case .connected:
+            try await plutoniumManager.start()
+        default:
+            try await plutoniumManager.stop()
+        }
+    }
+#endif
 }
