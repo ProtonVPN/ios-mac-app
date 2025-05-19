@@ -24,6 +24,7 @@ import IssueReporting
 public enum PlanSession {
     case upgrade
     case manageSubscription
+    case promo2yPlan
 
     var queryItems: [URLQueryItem] {
         switch self {
@@ -31,6 +32,19 @@ public enum PlanSession {
             return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
         case .manageSubscription:
             return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem]
+        case .promo2yPlan:
+            return [
+                .actionQueryItem,
+                .appQueryItem,
+                .redirectQueryItem,
+                .planQueryItem,
+                .cycleQueryItem,
+                .promoQueryItem,
+                .disableCycleSelectorQueryItem,
+                .disablePlanSelectorQueryItem,
+                .startCheckoutQueryItem,
+                .hideCloseQueryItem
+            ]
         }
     }
 
@@ -157,4 +171,12 @@ fileprivate extension URLQueryItem {
     static let redirectQueryItem = URLQueryItem(name: "redirect", value: "protonvpn://refresh")
     static let typeQueryItem = URLQueryItem(name: "type", value: "upgrade")
     static let appQueryItem = URLQueryItem(name: "app", value: "vpn")
+    // 2y web specific
+    static let planQueryItem = URLQueryItem(name: "plan", value: "vpn2024")
+    static let cycleQueryItem = URLQueryItem(name: "cycle", value: "24")
+    static let promoQueryItem = URLQueryItem(name: "coupon", value: "VPNINTROPRICE2024")
+    static let disableCycleSelectorQueryItem = URLQueryItem(name: "disableCycleSelector", value: "true")
+    static let disablePlanSelectorQueryItem = URLQueryItem(name: "disablePlanSelector", value: "true")
+    static let startCheckoutQueryItem = URLQueryItem(name: "start", value: "checkout")
+    static let hideCloseQueryItem = URLQueryItem(name: "hideClose", value: "true")
 }

@@ -156,6 +156,17 @@ final class OneClickPayment {
 
     @MainActor
     func validate(selectedPlan: PlanOption) async {
+        guard selectedPlan.purchaseType == .iap else {
+            // redirect to web purchase
+            @Dependency(\.sessionService) var sessionService
+            guard let url = await sessionService.getPlanSession(mode: .promo2yPlan) else {
+                log.assertionFailure("Couldn't retrieve 2y plan session URL")
+                return
+            }
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(url)
+            return
+        }
         let result = await self.buyPlan(planOption: selectedPlan)
         await self.buyPlanResultHandler(result)
     }
@@ -232,6 +243,11 @@ final class OneClickPayment {
     }
 
     func buyPlan(planOption: PlanOption) async -> PurchaseResult {
+        guard planOption.purchaseType != .web else {
+            // should never happen
+            return .purchaseError(error: OneClickPurchaseError.planNotFound("Two years web plan should be purchased through web"))
+        }
+
         if payments.storeKitManager.hasUnfinishedPurchase() {
             log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
             return .purchaseError(error: OneClickPurchaseError.unfinishedPurchaseInQueue, processingPlan: nil)
