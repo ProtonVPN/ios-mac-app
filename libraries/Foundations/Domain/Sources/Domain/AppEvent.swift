@@ -72,6 +72,8 @@ public enum AppEvent: String {
     case safeMode
     /// The Hermes settings changed.
     case hermes
+    /// The Plutonium settings changed.
+    case plutonium
 
     // MARK: API-Driven
     /// New announcements are available.

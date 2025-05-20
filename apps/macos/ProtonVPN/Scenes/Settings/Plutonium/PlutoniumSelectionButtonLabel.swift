@@ -132,7 +132,7 @@ struct PlutoniumSelectionButtonLabel: View {
     var body: some View {
         WithPerceptionTracking {
             HStack(spacing: .themeSpacing16) {
-                VStack(alignment: .leading, spacing: .themeSpacing8) {
+                VStack(alignment: .leading, spacing: itemsCount == 0 ? .themeSpacing2 : .themeSpacing8) {
                     Text(title)
                         .themeFont(.body(emphasised: true))
                         .foregroundStyle(Color(.text))

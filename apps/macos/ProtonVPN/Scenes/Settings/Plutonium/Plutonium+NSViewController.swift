@@ -30,6 +30,9 @@ public extension NSViewController {
         let view = PlutoniumView(store: store)
             .frame(Theme.Constants.settingsViewSize)
 
-        return NSHostingController(rootView: view)
+        let controller = NSHostingController(rootView: view)
+        controller.preferredContentSize = Theme.Constants.settingsViewSize
+        controller.sizingOptions = .preferredContentSize
+        return controller
     }
 }

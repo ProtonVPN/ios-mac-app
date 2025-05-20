@@ -20,13 +20,25 @@
 import SwiftUI
 
 extension View {
+    private static func dashStroke(lineWidth: CGFloat) -> StrokeStyle {
+        StrokeStyle(lineWidth: lineWidth,
+                    lineCap: .square,
+                    lineJoin: .miter,
+                    dash: [.themeSpacing8])
+    }
+    
     public func themeBorder(style: AppTheme.Style = .weak,
+                            dashed: Bool = false,
                             lineWidth: CGFloat = 1,
                             cornerRadius: AppTheme.CornerRadius) -> some View {
         let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
+        let strokeStyle = dashed ? Self.dashStroke(lineWidth: lineWidth) : StrokeStyle(lineWidth: lineWidth)
+        let stroke = rectangle
+            .stroke(Color(.border, style), style: strokeStyle)
+            .padding(dashed ? 1 : 0)
         return self
             .clipShape(rectangle)
-            .overlay(rectangle.stroke(Color(.border, style), lineWidth: lineWidth))
+            .overlay(stroke)
     }
 
     public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {

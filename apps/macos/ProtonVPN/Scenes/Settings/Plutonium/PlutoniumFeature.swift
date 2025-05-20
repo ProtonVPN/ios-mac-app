@@ -19,8 +19,8 @@
 import Foundation
 
 import ComposableArchitecture
-import Network
 
+import Ergonomics
 import VPNAppCore
 
 @Reducer
@@ -107,25 +107,24 @@ public struct PlutoniumFeature {
                 }
                 return .none
             case .entryClicked(let entry, let operation):
-                state.perform(operation: operation, entry: entry)
-                if operation == .add {
-                    state.ipEntry = ""
+                do throws(State.ValidationError) {
+                    try state.perform(operation: operation, entry: entry)
+                    if operation == .add {
+                        state.ipEntry = ""
+                    }
+                    return .send(.inputFieldChanged(state.ipEntry))
+                } catch {
+                    switch error {
+                    case .invalidIP:
+                        state.validationError = .invalidIP
+                    case .alreadyExists:
+                        state.validationError = .alreadyExists
+                    }
                 }
-                return .send(.inputFieldChanged(state.ipEntry))
+                return .none
             case .inputFieldChanged(let input):
                 state.ipEntry = input
                 state.validationError = nil
-                if input.isEmpty {
-                    return .none
-                }
-                guard IPv4Address(input) != nil, input.components(separatedBy: ".").count == 4 else {
-                    state.validationError = .invalidIP
-                    return .none
-                }
-                if state.activatedIPs.contains(input) {
-                    state.validationError = .alreadyExists
-                    return .none
-                }
                 return .none
             case .onAppear:
                 @Dependency(\.appsProvider) var appsProvider
@@ -147,28 +146,35 @@ public struct PlutoniumFeature {
 }
 
 extension PlutoniumFeature.State {
-    mutating func perform(operation: Operation, entry: Entry) {
-        switch feature {
-        case .disabled:
-            log.error("Modifying Plutonium feature while it is disabled is not allowed.")
-            return
-        case .enabled(let mode):
-            switch mode {
-            case .inclusion:
-                $inclusionActivated.withLock {
-                    $0.apply(operation: operation, entry: entry)
-                }
-            case .exclusion:
-                $exclusionActivated.withLock {
-                    $0.apply(operation: operation, entry: entry)
+    mutating func perform(operation: Operation, entry: Entry) throws(ValidationError) {
+        do {
+            switch feature {
+            case .disabled:
+                log.error("Modifying Plutonium feature while it is disabled is not allowed.")
+                return
+            case .enabled(let mode):
+                switch mode {
+                case .inclusion:
+                    try $inclusionActivated.withLock {
+                        try $0.apply(operation: operation, entry: entry)
+                    }
+                case .exclusion:
+                    try $exclusionActivated.withLock {
+                        try $0.apply(operation: operation, entry: entry)
+                    }
                 }
             }
+        } catch let error as ValidationError {
+            throw error
+        } catch {
+            assertionFailure("Unknown error caught when applying operation \(operation), on entry \(entry): \(error)")
         }
     }
 }
 
 extension PlutoniumActivated {
-    mutating func apply(operation: PlutoniumFeature.State.Operation, entry: PlutoniumFeature.State.Entry) {
+    mutating func apply(operation: PlutoniumFeature.State.Operation,
+                        entry: PlutoniumFeature.State.Entry) throws(PlutoniumFeature.State.ValidationError) {
         switch entry {
         case .app(let entry):
             switch operation {
@@ -182,9 +188,13 @@ extension PlutoniumActivated {
         case .ip(let entry):
             switch operation {
             case .add:
-                if !ips.contains(entry) {
-                    ips.append(entry)
+                if ips.contains(entry) {
+                    throw .alreadyExists
                 }
+                guard IPv4Validator(location: entry) == .valid else {
+                    throw .invalidIP
+                }
+                ips.append(entry)
             case .remove:
                 ips.removeAll { $0 == entry }
             }

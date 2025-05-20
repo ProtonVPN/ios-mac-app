@@ -1545,6 +1545,24 @@
 /* Text appears when user makes any configuration changes that require reconnection */
 "_plutonium_reconnection_notice" = "Changes apply when you reconnect";
 
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Import apps";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "browse apps";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Get the best of both worlds";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "No IP addresses yet";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "${_plutonium_customize_connection}";
 

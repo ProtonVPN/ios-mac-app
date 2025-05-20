@@ -37,6 +37,8 @@ import Announcement
 import Ergonomics
 import Strings
 
+import Theme
+
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
 }
@@ -251,6 +253,7 @@ class WindowServiceImplementation: WindowService {
         let windowController = PlutoniumWindowController(viewController: .plutonium())
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
+        windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
     }
 
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
@@ -260,6 +263,7 @@ class WindowServiceImplementation: WindowService {
         windowController.delegate = controller
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
+        windowController.window?.centerWindowOnScreen()
     }
     
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {

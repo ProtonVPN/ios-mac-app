@@ -119,6 +119,8 @@ public struct RecentsFeature {
                     pushAlert(TorUpsellAlert())
                 case .more:
                     pushAlert(CustomizationUpsellAlert())
+                case .plutonium:
+                    pushAlert(PlutoniumUpsellAlert())
                 }
 
                 return .none

@@ -29,6 +29,7 @@ import Theme
 import Strings
 import Domain
 import VPNAppCore
+import UniformTypeIdentifiers
 
 public struct PlutoniumView: View {
     @Perception.Bindable public var store: StoreOf<PlutoniumFeature>
@@ -42,6 +43,8 @@ public struct PlutoniumView: View {
     @State var appsSheet = false
     @State var ipsSheet = false
 
+    @State private var dragOver = false
+
     public var body: some View {
         WithPerceptionTracking {
             VStack(spacing: .themeSpacing24) {
@@ -50,16 +53,7 @@ public struct PlutoniumView: View {
                     listsView
                 }
                 if store.requiresReconnection {
-                    HStack(spacing: .themeSpacing8) {
-                        IconProvider
-                            .infoCircle
-                            .resizable()
-                            .frame(.square(.themeSpacing16))
-                        Text(Localizable.plutoniumReconnectionNotice)
-                            .themeFont(.callout(emphasised: false))
-                        Spacer()
-                    }
-                    .foregroundStyle(Color(.text, .hint))
+                    reconnectionNotice()
                 }
                 Spacer(minLength: 0)
             }
@@ -79,6 +73,19 @@ public struct PlutoniumView: View {
                 store.send(.onAppear)
             }
         }
+    }
+
+    private func reconnectionNotice() -> some View {
+        HStack(spacing: .themeSpacing8) {
+            IconProvider
+                .infoCircle
+                .resizable()
+                .frame(.square(.themeSpacing16))
+            Text(Localizable.plutoniumReconnectionNotice)
+                .themeFont(.callout(emphasised: false))
+            Spacer()
+        }
+        .foregroundStyle(Color(.text, .hint))
     }
 
     private func isOnBinding() -> Binding<Bool> {
@@ -135,17 +142,19 @@ public struct PlutoniumView: View {
     }
 
     private var modesSelector: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .themeSpacing2) {
             Text(Localizable.plutoniumTitle)
                 .themeFont(.title3(emphasised: true))
                 .foregroundStyle(Color(.text))
-            Text(Localizable.plutoniumCustomizeConnection)
-                .themeFont(.body(emphasised: false))
-                .foregroundStyle(Color(.text, .weak))
-            Link(destination: VPNLink.learnMorePlutonium.url) {
-                Text(Localizable.learnMore)
-                    .themeFont(.body(emphasised: true))
-                    .foregroundStyle(Color(.text, [.interactive, .hint]))
+            VStack(alignment: .leading, spacing: 0) {
+                Text(Localizable.plutoniumCustomizeConnection)
+                    .themeFont(.body(emphasised: false))
+                    .foregroundStyle(Color(.text, .weak))
+                Link(destination: VPNLink.learnMorePlutonium.url) {
+                    Text(Localizable.learnMore)
+                        .themeFont(.body(emphasised: true))
+                        .foregroundStyle(Color(.text, [.interactive, .hint]))
+                }
             }
             if case .enabled = store.feature {
                 Spacer().frame(height: .themeSpacing24)
@@ -187,11 +196,26 @@ public struct PlutoniumView: View {
         }
     }
 
+    private var emptyIpListView: some View {
+        VStack(spacing: .themeSpacing8) {
+            Spacer()
+            Theme.Asset.stars.swiftUIImage
+            Text(Localizable.plutoniumEmptyIpListContent)
+                .themeFont(.callout(emphasised: false))
+                .foregroundStyle(Color(.text, .weak))
+            Spacer()
+        }
+    }
+
     private func ipsList() -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(spacing: 0) {
             ipEntryView()
-            activatedIPsList()
-            Spacer(minLength: 0)
+            if store.activatedIPs.isEmpty {
+                emptyIpListView
+            } else {
+                activatedIPsList()
+                Spacer(minLength: 0)
+            }
             doneButton { ipsSheet.toggle() }
         }
         .padding(.horizontal, .themeSpacing16)
@@ -223,8 +247,8 @@ public struct PlutoniumView: View {
                 Button(action: submitIP) {
                     Text(Localizable.plutoniumAddButton)
                 }
-                .disabled(store.validationError != nil)
-                .buttonStyle(SecondaryButtonStyle())
+                .disabled(store.validationError != nil || store.ipEntry.isEmpty)
+                .buttonStyle(ThemeButtonStyle(padding: .small, style: .secondary))
             }
 
             if let error = store.validationError?.errorDescription {
@@ -239,24 +263,26 @@ public struct PlutoniumView: View {
     private func activatedIPsList() -> some View {
         ScrollView {
             LazyVStack {
-                ForEach(store.activatedIPs, id: \.self) { ip in
-                    HStack {
-                        Text(ip)
-                            .themeFont(.body(emphasised: false))
-                            .foregroundStyle(Color(.text))
-                        Spacer()
-                        Button {
-                            store.send(.entryClicked(.ip(ip), .remove))
-                        } label: {
-                            IconProvider.cross
-                                .resizable()
-                                .frame(.square(.themeSpacing16))
-                                .padding(.themeSpacing4)
-                        }
-                        .buttonStyle(GhostButtonStyle())
-                    }
-                }
+                ForEach(store.activatedIPs, id: \.self, content: ipView(ip:))
             }
+        }
+    }
+
+    private func ipView(ip: String) -> some View {
+        HStack {
+            Text(ip)
+                .themeFont(.body(emphasised: false))
+                .foregroundStyle(Color(.text))
+            Spacer()
+            Button {
+                store.send(.entryClicked(.ip(ip), .remove))
+            } label: {
+                IconProvider.cross
+                    .resizable()
+                    .frame(.square(.themeSpacing16))
+                    .padding(.themeSpacing4)
+            }
+            .buttonStyle(GhostButtonStyle())
         }
     }
 
@@ -276,6 +302,23 @@ public struct PlutoniumView: View {
         }
         .padding([.horizontal, .top], .themeSpacing16)
         .background(Color(.background, .weak))
+        .onDrop(of: [UTType.fileURL.identifier], isTargeted: $dragOver, perform: performDrop)
+    }
+
+    private func performDrop(providers: [NSItemProvider]) -> Bool {
+        providers
+            .map(ItemProvider.init(provider:))
+            .forEach { provider in
+                Task { @MainActor in
+                    guard let url = await provider.loadFileURL(),
+                          let app = PlutoniumApp(url: url) else {
+                        log.debug("Tried to add an invalid app URL")
+                        return
+                    }
+                    store.send(.entryClicked(.app(app), .add))
+                }
+            }
+        return true
     }
 
     private func doneButton(action: @escaping () -> Void) -> some View {
@@ -286,7 +329,7 @@ public struct PlutoniumView: View {
             } label: {
                 Text(Localizable.done)
             }
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(ThemeButtonStyle(padding: .small))
             .padding(.vertical, .themeSpacing16)
         }
     }
@@ -314,7 +357,7 @@ public struct PlutoniumView: View {
     private func appsSection(title: String, subtitle: String?, apps: [PlutoniumApp], operation: PlutoniumFeature.State.Operation) -> some View {
         VStack(spacing: 0) {
             appsHeader(title: title, subtitle: subtitle)
-            if apps.isEmpty {
+            if apps.isEmpty, operation == .remove {
                 VStack(spacing: .themeSpacing8) {
                     Spacer()
                     Theme.Asset.plutonium.swiftUIImage
@@ -329,8 +372,42 @@ public struct PlutoniumView: View {
             }
         }
         .frame(width: Self.appsSectionWidth)
-        .background(Color(.background, .transparent))
+        .background(Color(.background, (operation == .remove && dragOver) ? [.transparent, .hovered] : [.transparent]))
         .clipRectangle(cornerRadius: .radius8)
+        .themeBorder(style: [],
+                     dashed: (operation == .remove && dragOver),
+                     lineWidth: (operation == .remove && dragOver) ? 2 : 0,
+                     cornerRadius: .radius8)
+    }
+
+    private func openPanelLabel() -> some View {
+        VStack(alignment: .leading, spacing: .themeSpacing2) {
+            HStack {
+                Text(Localizable.plutoniumImportAppsTitle)
+                    .themeFont(.callout(emphasised: false))
+                    .foregroundStyle(Color(.text))
+                Spacer()
+            }
+            Text(Localizable.plutoniumImportAppsSubtitle1)
+                .themeFont(.footnote(emphasised: false))
+                .foregroundColor(Color(.text, .hint))
+            + Text(Localizable.plutoniumImportAppsSubtitle2)
+                .themeFont(.footnote(emphasised: false))
+                .foregroundColor(Color(.text, [.interactive, .hint]))
+        }
+        .padding(.themeSpacing8)
+    }
+
+    private func openPanelAction() {
+        let panel = NSOpenPanel()
+        panel.allowsMultipleSelection = true
+        panel.canChooseDirectories = false
+        guard panel.runModal() == .OK else { return }
+        panel.urls
+            .compactMap(PlutoniumApp.init(url:))
+            .forEach {
+                store.send(.entryClicked(.app($0), .add))
+            }
     }
 
     private func appsRows(apps: [PlutoniumApp], operation: PlutoniumFeature.State.Operation) -> some View {
@@ -344,8 +421,13 @@ public struct PlutoniumView: View {
                     }
                     .buttonStyle(GhostButtonStyle())
                 }
+                if operation == .add {
+                    Button(action: openPanelAction, label: openPanelLabel)
+                        .buttonStyle(GhostButtonStyle())
+                }
             }
             .padding(.horizontal, .themeSpacing4)
+            .padding(.bottom, .themeSpacing4)
         }
     }
 
@@ -380,6 +462,7 @@ public struct PlutoniumView: View {
                     Text(Localizable.plutoniumExcludeModeDescription)
                         .themeFont(.body(emphasised: false))
                         .foregroundStyle(Color(.text, .weak))
+                    Spacer().frame(height: .themeSpacing8)
                 }
             case .inclusion:
                 VStack(alignment: .leading) {

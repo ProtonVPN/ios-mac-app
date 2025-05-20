@@ -46,7 +46,7 @@ struct SystemExtensionTutorialView: View {
 
     var player: some View {
         VideoPlayer(player: videoTourModel.player)
-            .cornerRadius(12)
+            .cornerRadius(.themeRadius12)
             .onAppear(perform: videoTourModel.onAppear)
             .onDisappear {
                 videoTourModel.player.pause()
@@ -54,8 +54,8 @@ struct SystemExtensionTutorialView: View {
     }
 
     var descriptionView: some View {
-        HStack(alignment: .center, spacing: 32) {
-            VStack(alignment: .leading, spacing: 16) {
+        HStack(alignment: .center, spacing: .themeSpacing32) {
+            VStack(alignment: .leading, spacing: .themeSpacing16) {
                 descriptionWithMarkdown(localised: Localizable.sysexDescription1)
                     .foregroundColor(.init(NSColor.color(.text)))
                 descriptionWithMarkdown(localised: Localizable.sysexDescription2)
@@ -77,12 +77,12 @@ struct SystemExtensionTutorialView: View {
     }
 
     var videoView: some View {
-        return VStack(alignment: .center, spacing: 32) {
+        return VStack(alignment: .center, spacing: .themeSpacing32) {
             Text(Localizable.sysexSetUpProtonVpn)
                 .foregroundColor(.init(NSColor.color(.text)))
                 .font(.system(size: 22, weight: .bold))
             descriptionView
-            VStack(spacing: 16) {
+            VStack(spacing: .themeSpacing16) {
                 Button {
                     NSWorkspace.shared.open(URL(string: Self.securityPreferencesUrlString)!)
                 } label: {
@@ -92,7 +92,7 @@ struct SystemExtensionTutorialView: View {
                         Text(Localizable.sysexOpenSecurityPreferences)
                     }
                 }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(ThemeButtonStyle())
                 Button {
                     @Dependency(\.linkOpener) var linkOpener
                     linkOpener.open(.systemExtensionsInstallationHelp)

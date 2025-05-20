@@ -156,6 +156,10 @@ public final class HermesUpsellAlert: UpsellAlert {
     public override var modalSource: UpsellModalSource? { .hermes }
 }
 
+public final class PlutoniumUpsellAlert: UpsellAlert {
+    public override var modalSource: UpsellModalSource? { .splitTunneling }
+}
+
 public final class WelcomeScreenAlert: UpsellAlert {
     /// This enum is used to narrow down the possible types of this alert. Theoretically we could just allow to use the `ModalType`
     /// but we don't want to use this alert (for now) for anything else than welcome alerts.

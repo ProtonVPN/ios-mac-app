@@ -1070,6 +1070,8 @@ public enum Localizable {
   public static var plutoniumAllApps: String { return Localizable.tr("Localizable", "_plutonium_all_apps", fallback: "All apps") }
   /// Plutonium feature description
   public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "${_plutonium_customize_connection}") }
+  /// Description of an empty list of IPs
+  public static var plutoniumEmptyIpListContent: String { return Localizable.tr("Localizable", "_plutonium_empty_ip_list_content", fallback: "No IP addresses yet") }
   /// Title of the plutonium feature operation mode
   public static var plutoniumExcludeMode: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode", fallback: "Exclude mode") }
   /// Description of the included apps list
@@ -1080,6 +1082,12 @@ public enum Localizable {
   public static var plutoniumExcludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_ips", fallback: "${_plutonium_exclude_mode_ips}") }
   /// Header of the excluded apps list
   public static var plutoniumExclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_exclusion_list_apps", fallback: "Excluded apps") }
+  /// Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string
+  public static var plutoniumImportAppsSubtitle1: String { return Localizable.tr("Localizable", "_plutonium_import_apps_subtitle_1", fallback: "Drag and drop here or ") }
+  /// Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps"
+  public static var plutoniumImportAppsSubtitle2: String { return Localizable.tr("Localizable", "_plutonium_import_apps_subtitle_2", fallback: "browse apps") }
+  /// Title of a button that opens a panel for file selection
+  public static var plutoniumImportAppsTitle: String { return Localizable.tr("Localizable", "_plutonium_import_apps_title", fallback: "Import apps") }
   /// Title of the plutonium feature operation mode
   public static var plutoniumIncludeMode: String { return Localizable.tr("Localizable", "_plutonium_include_mode", fallback: "Include mode") }
   /// Description of the included apps list
@@ -1098,6 +1106,10 @@ public enum Localizable {
   public static var plutoniumReconnectionNotice: String { return Localizable.tr("Localizable", "_plutonium_reconnection_notice", fallback: "Changes apply when you reconnect") }
   /// Settings page row title
   public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "${PLUTONIUM}") }
+  /// Plutonium upsell view subtitle
+  public static var plutoniumUpsellSubtitle: String { return Localizable.tr("Localizable", "_plutonium_upsell_subtitle", fallback: "${_plutonium_upsell_subtitle}") }
+  /// Plutonium upsell view title
+  public static var plutoniumUpsellTitle: String { return Localizable.tr("Localizable", "_plutonium_upsell_title", fallback: "Get the best of both worlds") }
   /// IP entry validation error
   public static var plutoniumValidationError: String { return Localizable.tr("Localizable", "_plutonium_validation_error", fallback: "Enter a valid IPv4 address") }
   /// MacOS: Settings screen title

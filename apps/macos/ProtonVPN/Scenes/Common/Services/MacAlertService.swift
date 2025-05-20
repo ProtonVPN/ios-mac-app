@@ -162,6 +162,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as HermesUpsellAlert:
             show(alert: alert, modalType: .hermes)
 
+        case let alert as PlutoniumUpsellAlert:
+            show(alert: alert, modalType: .plutonium)
+
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
 

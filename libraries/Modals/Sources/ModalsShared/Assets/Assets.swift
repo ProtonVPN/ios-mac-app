@@ -42,6 +42,7 @@ public enum Asset {
   public static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   public static let netshield = ImageAsset(name: "netshield")
   public static let p2p = ImageAsset(name: "p2p")
+  public static let plutonium = ImageAsset(name: "plutonium")
   public static let profiles = ImageAsset(name: "profiles")
   public static let speed = ImageAsset(name: "speed")
   public static let streaming = ImageAsset(name: "streaming")
