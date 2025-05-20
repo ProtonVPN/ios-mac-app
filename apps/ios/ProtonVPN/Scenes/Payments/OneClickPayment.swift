@@ -165,6 +165,7 @@ final class OneClickPayment {
             }
             @Dependency(\.linkOpener) var linkOpener
             linkOpener.open(url)
+            completionHandler()
             return
         }
         let result = await self.buyPlan(planOption: selectedPlan)

@@ -23,7 +23,7 @@
 import Foundation
 import UIKit
 
-import Dependencies
+import ComposableArchitecture
 
 import ProtonCoreFeatureFlags
 
@@ -278,6 +278,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
+
+            // populate (possibly) updated userTier
+            @Shared(.userTier) var userTier
+            $userTier.withLock { $0 = credentials.maxTier }
 
             if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier

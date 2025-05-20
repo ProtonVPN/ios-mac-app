@@ -1304,7 +1304,7 @@
 				E55CCA9B2D30121E00FD0AAD /* WidgetKit.framework */,
 				E55CCA9D2D30121E00FD0AAD /* SwiftUI.framework */,
 			);
-			path = Frameworks;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		79C5598120AAC51100E6D3F6 /* Resources */ = {
