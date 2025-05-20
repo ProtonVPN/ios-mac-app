@@ -126,6 +126,7 @@ struct PlanOptionsListView: View {
 #Preview("Loading") {
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
+        .twoYearsWebPlan,
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]

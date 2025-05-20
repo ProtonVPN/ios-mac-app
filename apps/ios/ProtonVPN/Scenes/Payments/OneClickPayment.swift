@@ -235,7 +235,7 @@ final class OneClickPayment {
         } else if !shouldShowTwoYearsWebPlan {
             throw OneClickPurchaseError.defaultPlanNotFound
         }
-        if true {
+        if shouldShowTwoYearsWebPlan {
             // add 2y web plan
             inAppPurchasePlans.append((.twoYearsWebPlan, nil))
         }
