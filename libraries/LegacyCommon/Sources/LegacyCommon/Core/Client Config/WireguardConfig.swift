@@ -45,7 +45,7 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
         defaultUdpPorts: [Int]? = nil,
         defaultTcpPorts: [Int]? = nil,
         defaultTlsPorts: [Int]? = nil,
-        dns: [String]
+        dns: [String] = ["10.2.0.1"]
     ) {
         self.defaultUdpPorts = defaultUdpPorts.unwrappedOr(defaultValue: [51820])
         self.defaultTcpPorts = defaultTcpPorts.unwrappedOr(defaultValue: [443])
@@ -54,7 +54,7 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     }
 
     public init() {
-        self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil, dns: [])
+        self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
     }
 }
 
