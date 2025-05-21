@@ -20,6 +20,7 @@ import Hermes
 import Domain
 import Sharing
 import Dependencies
+import ProtonCoreFeatureFlags
 
 private extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var hermesEnabled: Self {
@@ -38,6 +39,7 @@ extension HermesClient: @retroactive DependencyKey {
     private static var hermesResolvers
 
     public static let liveValue: HermesClient = .init {
+        guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS) else { return .init(value: false) }
         @SharedReader(.hermesEnabled) var hermesEnabled: Bool
         return $hermesEnabled
     } setIsEnabled: { newValue in

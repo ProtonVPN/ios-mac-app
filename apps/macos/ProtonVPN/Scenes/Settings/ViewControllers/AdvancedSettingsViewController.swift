@@ -22,7 +22,9 @@ import Ergonomics
 import Strings
 import Theme
 import ComposableArchitecture
+import Domain
 import Hermes
+import ProtonCoreFeatureFlags
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
 
@@ -118,6 +120,10 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupHermesItem() {
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS) {
+            hermesView.isHidden = true
+            return
+        }
         @Dependency(\.hermesClient) var hermesClient
 
         let featureState: PaidFeatureDisplayState = viewModel.displayState(for: HermesFeature.self)

@@ -55,6 +55,9 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// Plutonium flag for macOS
     case plutoniumMacOS = "Plutonium"
 
+    /// CustomDNS flag
+    case customDNS = "CustomDNS"
+
     /// Whether we include the "If-Modified-Since" header for v1/logicals to reduce load
     case timestampedLogicals = "TimestampedLogicals"
 
