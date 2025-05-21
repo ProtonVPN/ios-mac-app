@@ -183,6 +183,9 @@ class WindowServiceImplementation: WindowService {
     }
 
     func showInitialModals() {
+        // TODO: VPNAPPL-2831 actually make sure we don't show what's new after a specified deadline
+        propertiesManager.showWhatsNewModal = false
+
         guard propertiesManager.showWhatsNewModal else {
             return
         }
