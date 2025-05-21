@@ -194,12 +194,15 @@ extension ClientConfigResponse: Encodable {
         // encoded directly into the parent object without a container. See `ServerChangeConfig` docs for more info
         try clientConfig.serverChangeConfig.encode(to: encoder)
 
-        let defaultPorts = [
-            ProtocolType.WireGuard: [
-                PortType.UDP: clientConfig.wireGuardConfig.defaultUdpPorts,
-                PortType.TCP: clientConfig.wireGuardConfig.defaultTcpPorts
-            ],
-        ]
+        let defaultPorts = ClientConfigResponse.DefaultPorts(
+            openVPN: nil,
+            wireGuard: .init(
+                udp: clientConfig.wireGuardConfig.defaultUdpPorts,
+                tcp: clientConfig.wireGuardConfig.defaultTcpPorts,
+                tls: []
+            )
+        )
+
         try container.encode(defaultPorts, forKey: .defaultPorts)
     }
 }
