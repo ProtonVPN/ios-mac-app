@@ -23,7 +23,8 @@
 import Foundation
 import UIKit
 
-import ComposableArchitecture
+import Dependencies
+import Sharing
 
 import ProtonCoreFeatureFlags
 

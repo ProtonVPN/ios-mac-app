@@ -1541,6 +1541,10 @@ public enum Localizable {
   public static var subscriptionExtendedSuccess: String { return Localizable.tr("Localizable", "_subscription_extended_success", fallback: "You have successfully bought credits to extend your current plan.") }
   /// iOS Settings -> Connection: name of field.
   public static var subscriptionPlan: String { return Localizable.tr("Localizable", "_subscription_plan", fallback: "Subscription Plan") }
+  /// %@1 is the next payment date; %@2 price per year from that date and so on.
+  public static func subscriptionRenewalDate(_ p1: Any, _ p2: Any) -> String {
+    return Localizable.tr("Localizable", "_subscription_renewal_date", String(describing: p1), String(describing: p2), fallback: "Subscription auto-renews on %1$@ at %2$@/year")
+  }
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return Localizable.tr("Localizable", "_subscription_upgrade_option3", fallback: "Advanced features: NetShield, Secure Core, Tor, P2P") }
   /// Upgrade again to enjoy all the features:
@@ -1832,6 +1836,8 @@ public enum Localizable {
   public static var warning: String { return Localizable.tr("Localizable", "_warning", fallback: "Warning") }
   /// MacOS: alert shown during login if already connected to VPN
   public static var warningVpnSessionIsActive: String { return Localizable.tr("Localizable", "_warning_vpn_session_is_active", fallback: "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?") }
+  /// Text, that appears next to a subscription payment option which is only valid for web purchase.
+  public static var webOnlyFeature: String { return Localizable.tr("Localizable", "_web_only_feature", fallback: "Web only") }
   /// Shown on the Welcome screen as the longer screen text
   public static var welcomeBody: String { return Localizable.tr("Localizable", "_welcome_body", fallback: "High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.") }
   /// Thanks for using Proton VPN.

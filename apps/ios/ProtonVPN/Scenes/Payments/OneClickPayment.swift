@@ -155,17 +155,22 @@ final class OneClickPayment {
     }
 
     @MainActor
+    func redirectToWebPurchase() async {
+        @Dependency(\.sessionService) var sessionService
+        guard let url = await sessionService.getPlanSession(mode: .promo2yPlan) else {
+            log.assertionFailure("Couldn't retrieve 2y plan session URL")
+            return
+        }
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(url)
+        completionHandler()
+    }
+
+
+    @MainActor
     func validate(selectedPlan: PlanOption) async {
         guard selectedPlan.purchaseType == .iap else {
-            // redirect to web purchase
-            @Dependency(\.sessionService) var sessionService
-            guard let url = await sessionService.getPlanSession(mode: .promo2yPlan) else {
-                log.assertionFailure("Couldn't retrieve 2y plan session URL")
-                return
-            }
-            @Dependency(\.linkOpener) var linkOpener
-            linkOpener.open(url)
-            completionHandler()
+            await redirectToWebPurchase()
             return
         }
         let result = await self.buyPlan(planOption: selectedPlan)
@@ -212,9 +217,7 @@ final class OneClickPayment {
         let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
             plan.name == "vpn2022"
         }.first // it's only going to be one with this plan name
-        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan && FeatureFlagsRepository.shared.isEnabled(
-            VPNFeatureFlagType.iapToWeb
-        )
+        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
         if let vpn2022 {
             inAppPurchasePlans = vpn2022.instances

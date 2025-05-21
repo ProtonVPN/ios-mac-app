@@ -56,7 +56,7 @@ final class PlanOptionsListViewModel: ObservableObject {
         @Dependency(\.calendar) var calendar
         let twoYearsFromNow = calendar.date(byAdding: .year, value: 2, to: date.now)
         guard let selectedPlan, let twoYearsFromNow else { return nil }
-        let dateString = DateFormatter.usDateFormatter.string(from: twoYearsFromNow)
+        let dateString = DateFormatter.renewalDateFormatter.string(from: twoYearsFromNow)
         return selectedPlan.renews(at: dateString)
     }
 
@@ -92,8 +92,8 @@ final class PlanOptionsListViewModel: ObservableObject {
     }
 }
 
-extension DateFormatter {
-    static var usDateFormatter: DateFormatter {
+private extension DateFormatter {
+    static var renewalDateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
         dateFormatter.dateFormat = "dd MMM YYYY"

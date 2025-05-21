@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public struct PlanDuration: Hashable {
     public static let oneMonth: Self = .init(components: .init(month: 1))!
@@ -77,7 +78,7 @@ public struct PlanOption: Hashable {
         guard purchaseType == .web else {
             return nil
         }
-        return "Subscription auto-renews on \(date) at US$79.95/year"
+        return Localizable.subscriptionRenewalDate(date, "US$79.95")
     }
 
     public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice, purchaseType: PlanType = .iap) {

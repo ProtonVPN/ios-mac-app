@@ -180,18 +180,18 @@ private struct PlanDiscountBadgeView: View {
     }
 }
 
-struct PlanWebOnlyTagView: View {
+private struct PlanWebOnlyTagView: View {
     var body: some View {
-        Text("web only")
+        Text(Localizable.webOnlyFeature)
             .themeFont(.overline(emphasised: true))
             .textCase(.uppercase)
             .padding(.horizontal, .themeSpacing6)
             .padding(.vertical, .themeSpacing2)
-            .foregroundColor(Color(.text, .notificationWarning))
+            .foregroundColor(Color(.text, .warning))
             .cornerRadius(.themeRadius4)
             .background(
                 RoundedRectangle(cornerRadius: .themeSpacing4)
-                    .style(withStroke: Color(.text, .notificationWarning), lineWidth: 1.0, fill: .clear)
+                    .style(withStroke: Color(.text, .warning), lineWidth: 1.0, fill: .clear)
             )
     }
 }

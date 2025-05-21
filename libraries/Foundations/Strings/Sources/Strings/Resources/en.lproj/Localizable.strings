@@ -1078,6 +1078,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ yr";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Web only";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+
 // MARK: Plan selection: advances features; Manage subscription
 
 /* iOS plan feature */

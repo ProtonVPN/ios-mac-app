@@ -62,8 +62,6 @@ public enum AppTheme {
         public static let info = Self(bitPosition: 17)
         public static let selected = Self(bitPosition: 18)
 
-        public static let notificationWarning = Self(bitPosition: 19)
-
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
