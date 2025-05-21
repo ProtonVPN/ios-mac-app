@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
+import Dependencies
+import Foundation
 import ModalsShared
 import ModalsServices
 
@@ -49,6 +51,15 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     private(set) var mostExpensivePlan: PlanOption?
 
+    var renewalTextForSelectedPlan: String? {
+        @Dependency(\.date) var date
+        @Dependency(\.calendar) var calendar
+        let twoYearsFromNow = calendar.date(byAdding: .year, value: 2, to: date.now)
+        guard let selectedPlan, let twoYearsFromNow else { return nil }
+        let dateString = DateFormatter.usDateFormatter.string(from: twoYearsFromNow)
+        return selectedPlan.renews(at: dateString)
+    }
+
     init(client: PlansClient) {
         self.client = client
     }
@@ -78,6 +89,15 @@ final class PlanOptionsListViewModel: ObservableObject {
     @MainActor
     func notNow() {
         client.notNow()
+    }
+}
+
+extension DateFormatter {
+    static var usDateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "dd MMM YYYY"
+        return dateFormatter
     }
 }
 

@@ -64,6 +64,13 @@ struct PlanOptionsListView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
+    private func footerView(text: String) -> some View {
+        Text(text)
+            .themeFont(.body2(emphasised: false))
+            .foregroundColor(Color(.text, .weak))
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
     private var loadingView: some View {
         PlanOptionView(state: .loading)
     }
@@ -73,16 +80,21 @@ struct PlanOptionsListView: View {
     }
 
     private var contentView: some View {
-        ForEach(viewModel.plans, id: \.self) { option in
-            if viewModel.isLoading {
-                loadingView
-            } else {
-                let isSelected: Bool = viewModel.selectedPlan == option
-                let discount: Int? = discount(option: option)
-                PlanOptionView(state: .loaded(option: option, isSelected: isSelected, discount: discount))
-                    .onTapGesture {
-                        withAnimation { viewModel.selectedPlan = option }
-                    }
+        VStack(spacing: .themeSpacing16) {
+            ForEach(viewModel.plans, id: \.self) { option in
+                if viewModel.isLoading {
+                    loadingView
+                } else {
+                    let isSelected: Bool = viewModel.selectedPlan == option
+                    let discount: Int? = discount(option: option)
+                    PlanOptionView(state: .loaded(option: option, isSelected: isSelected, discount: discount))
+                        .onTapGesture {
+                            withAnimation { viewModel.selectedPlan = option }
+                        }
+                }
+            }
+            if let renewalText = viewModel.renewalTextForSelectedPlan {
+                footerView(text: renewalText)
             }
         }
     }

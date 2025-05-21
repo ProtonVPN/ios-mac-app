@@ -73,6 +73,13 @@ public struct PlanOption: Hashable {
         price.amount / Double(duration.components.amountOfMonths)
     }
 
+    public func renews(at date: String) -> String? {
+        guard purchaseType == .web else {
+            return nil
+        }
+        return "Subscription auto-renews on \(date) at US$79.95/year"
+    }
+
     public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice, purchaseType: PlanType = .iap) {
         self.id = id
         self.duration = duration
