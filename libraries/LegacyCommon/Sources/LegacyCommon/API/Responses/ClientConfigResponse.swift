@@ -25,16 +25,6 @@ import Dependencies
 import Hermes
 
 struct ClientConfigResponse {
-    enum PortType {
-        static let UDP = "UDP"
-        static let TCP = "TCP"
-        static let TLS = "TLS"
-    }
-    enum ProtocolType {
-        static let WireGuard = "WireGuard"
-        static let OpenVPN = "OpenVPN"
-    }
-
     let clientConfig: ClientConfig
 
     enum CodingKeys: String, CodingKey {
@@ -44,6 +34,36 @@ struct ClientConfigResponse {
         case smartProtocol
         case ratingSettings
     }
+
+    struct DefaultPorts: Codable {
+        struct ProtocolPorts: Codable, Equatable {
+            let udp: [Int]
+            let tcp: [Int]
+            let tls: [Int]
+
+            enum CodingKeys: String, CodingKey {
+                case udp = "UDP"
+                case tcp = "TCP"
+                case tls = "TLS"
+            }
+
+            init(udp: [Int], tcp: [Int], tls: [Int]) {
+                self.udp = udp
+                self.tcp = tcp
+                self.tls = tls
+            }
+
+            init(from decoder: any Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                self.udp = try container.decodeIfPresent([Int].self, forKey: .udp) ?? []
+                self.tcp = try container.decodeIfPresent([Int].self, forKey: .tcp) ?? []
+                self.tls = try container.decodeIfPresent([Int].self, forKey: .tls) ?? []
+            }
+        }
+
+        let openVPN: ProtocolPorts?
+        let wireGuard: ProtocolPorts?
+    }
 }
 
 extension ClientConfigResponse: Decodable {
@@ -51,12 +71,12 @@ extension ClientConfigResponse: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let featureFlags = try container.decode(FeatureFlags.self, forKey: .featureFlags)
         let serverRefreshInterval = try container.decode(Int.self, forKey: .serverRefreshInterval)
-        let defaultPorts = try container.decode([String: [String: [Int]]].self, forKey: .defaultPorts)
+        let defaultPorts = try container.decode(DefaultPorts.self, forKey: .defaultPorts)
 
-        let wireguardPorts = defaultPorts[ProtocolType.WireGuard]
-        let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?[PortType.UDP],
-                                                          wireguardPorts?[PortType.TCP],
-                                                          wireguardPorts?[PortType.TLS] ?? wireguardPorts?[PortType.TCP])
+        let wireguardPorts = defaultPorts.wireGuard
+        let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?.udp,
+                                                          wireguardPorts?.tcp,
+                                                          wireguardPorts?.tls ?? wireguardPorts?.tcp)
 
         @Dependency(\.hermesClient) var hermesClient
 

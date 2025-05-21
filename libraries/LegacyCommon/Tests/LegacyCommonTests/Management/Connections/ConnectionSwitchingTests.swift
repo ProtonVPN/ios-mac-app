@@ -816,7 +816,8 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
     // This test is currently skipped. It sometimes fails and it is testing the Legacy Connection feature that we'll deprecate
     // someday so let's ignore it for now (or pls fix it otherwise).
-    func testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect() { // swiftlint:disable:this function_body_length
+    func testUserPlanChangingFromFreeToPlusAndConnectingToPaidServerThruQuickConnect() throws { // swiftlint:disable:this function_body_length
+        throw XCTSkip("Disabled since sometimes it fails and it is testing the Legacy Connection feature that we'll deprecate")
         container.networkingDelegate.apiServerList = [testData.server1, testData.server3]
 
         container.vpnKeychain.setVpnCredentials(with: "free", maxTier: .freeTier)

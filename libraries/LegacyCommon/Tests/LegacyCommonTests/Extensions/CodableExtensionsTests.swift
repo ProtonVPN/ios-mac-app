@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 @testable import LegacyCommon
 
-class CodableExtennsionsTests: XCTestCase {
+class CodableExtensionsTests: XCTestCase {
     func testDecodingDefaultBoolValue() {
         do {
             let json = """
