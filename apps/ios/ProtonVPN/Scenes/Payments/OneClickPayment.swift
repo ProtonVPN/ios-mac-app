@@ -212,7 +212,9 @@ final class OneClickPayment {
         let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
             plan.name == "vpn2022"
         }.first // it's only going to be one with this plan name
-        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan
+        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan && FeatureFlagsRepository.shared.isEnabled(
+            VPNFeatureFlagType.iapToWeb
+        )
 
         if let vpn2022 {
             inAppPurchasePlans = vpn2022.instances
