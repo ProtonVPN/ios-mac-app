@@ -78,7 +78,7 @@ final class DefaultProfileTableViewCell: UITableViewCell {
             connectButton.backgroundColor = .clear
         } else {
             connectButton.setImage(viewModel.connectIcon, for: .normal)
-            connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
+            connectButton.backgroundColor = viewModel.isConnected || viewModel.isConnecting ? .brandColor() : .weakInteractionColor()
         }
     }
 }

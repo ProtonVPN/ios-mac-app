@@ -102,7 +102,7 @@ extension FeatureFlagsRepository {
             // the new connection layer.
             return false
         }
-        return !isFlagEnabled(.useConnectionFeatureKillSwitch) || isFlagEnabled(.useConnectionFeature)
+        return !isFlagEnabled(.useConnectionFeatureKillSwitch)
         #else
         return false
         #endif

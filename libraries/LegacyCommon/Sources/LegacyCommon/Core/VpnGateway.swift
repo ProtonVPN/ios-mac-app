@@ -397,12 +397,12 @@ public class VpnGateway: VpnGatewayProtocol {
         pushAlert(DomainErrorAlert(alert: alert))
     }
 
-    private var shouldUseNewConnect: Bool {
+    private var shouldUseNewConnectionFeature: Bool {
         FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
     public func connect(with request: ConnectionRequest?) {
-        if shouldUseNewConnect {
+        if shouldUseNewConnectionFeature {
             newConnect(with: request)
             return
         }
@@ -504,7 +504,19 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func disconnect() {
-        disconnect {}
+        if shouldUseNewConnectionFeature {
+            @Dependency(\.disconnectVPN) var disconnectVPN
+
+            Task {
+                do {
+                    try await disconnectVPN(.auto)
+                } catch {
+                    log.error("An error occured while disconnecting: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            disconnect {}
+        }
     }
     
     public func disconnect(completion: @escaping () -> Void) {

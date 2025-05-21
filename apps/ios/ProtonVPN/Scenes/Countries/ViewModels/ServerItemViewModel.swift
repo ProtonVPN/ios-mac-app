@@ -23,6 +23,8 @@
 import UIKit
 
 import AlamofireImage
+import Combine
+import ComposableArchitecture
 import Dependencies
 
 import ProtonCoreUIFoundations
@@ -49,25 +51,35 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     var partnersIconsReceipts: [RequestReceipt] = []
 
+    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
     var isConnected: Bool {
-        if vpnGateway.connection == .connected,
-           let activeServer = appStateManager.activeConnection()?.server,
-           activeServer.id == serverModel.logical.id {
-            return true
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            return vpnGateway.connection == .connected && appStateManager.activeConnection()?.server.id == serverModel.logical.id
         }
 
-        return false
+        guard case let .connected(_, actual) = vpnConnectionStatus, actual?.server.logical.id == serverModel.logical.id else {
+            return false
+        }
+        return true
     }
 
     var isConnecting: Bool {
-        if let activeConnection = vpnGateway.lastConnectionRequest,
-           vpnGateway.connection == .connecting,
-           case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
-           case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
-           activeServer.id == serverModel.logical.id {
-            return true
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            if let activeConnection = vpnGateway.lastConnectionRequest,
+               vpnGateway.connection == .connecting,
+               case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
+               case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
+               activeServer.id == serverModel.logical.id {
+                return true
+            }
+            return false
         }
-        return false
+
+        guard case let .connecting(_, server) = vpnConnectionStatus, server?.logical.id == serverModel.logical.id else {
+            return false
+        }
+
+        return true
     }
 
     var viaCountry: (name: String, code: String)? {
@@ -175,8 +187,19 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     // MARK: - Private functions
+    private var cancellables = Set<AnyCancellable>()
+
     fileprivate func startObserving() {
-        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
+        if FeatureFlagsRepository.isConnectionFeatureEnabled {
+            $vpnConnectionStatus
+                .publisher
+                .sink { [weak self] _ in
+                    self?.stateChanged()
+                }
+                .store(in: &cancellables)
+        } else {
+            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
+        }
     }
 
     @objc fileprivate func stateChanged() {

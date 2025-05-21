@@ -112,7 +112,9 @@ final class ProfilesTableViewCell: UITableViewCell {
             connectButton.setAttributedTitle(nil, for: .normal)
             connectButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
             connectButton.layer.cornerRadius = 20
-            connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
+            connectButton.backgroundColor = viewModel.isConnected || viewModel.isConnecting ?
+                .brandColor() : 
+                .weakInteractionColor()
         }
     }
 }
