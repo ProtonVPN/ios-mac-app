@@ -149,5 +149,10 @@ struct ConnectionResult {
     let error: LocalAgentError?
 
     static let success = ConnectionResult(state: .connected, error: nil)
+
+    init(state: LocalAgentState, error: LocalAgentError?) {
+        self.state = state
+        self.error = error
+    }
 }
 #endif

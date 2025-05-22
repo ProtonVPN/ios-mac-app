@@ -179,13 +179,13 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .send(.disconnect(.serverCertificateError))
 
             case .event(.state(.softJailed)):
-                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
+                state = .connecting(nil) // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
                 return .none
 
             case .event(.state(.hardJailed)):
                 // This state is always accompanied by a more specific error event.
                 // Let's handle it in response to the event instead, since it's not clear from the state alone how best to handle it
-                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
+                state = .connecting(nil) // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
                 return .none
 
             case .event(.state(.clientCertificateExpired)):
