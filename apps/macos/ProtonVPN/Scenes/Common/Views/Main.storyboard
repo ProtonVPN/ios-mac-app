@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22155"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,6 +42,50 @@
                                         <menuItem isSeparatorItem="YES" id="Dpa-Ex-rg1"/>
                                         <menuItem title="_Log Out" keyEquivalent="W" id="fMB-J1-ZCn"/>
                                         <menuItem title="_Quit ProtonVPN" keyEquivalent="q" id="T4h-7x-f33"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Edit" id="B5M-aG-bmB">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Edit" id="1ce-Ux-wig">
+                                    <items>
+                                        <menuItem title="Undo" keyEquivalent="z" id="B1H-qF-jo3">
+                                            <connections>
+                                                <action selector="undo:" target="Rfr-RJ-rux" id="dzK-dA-FPq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Redo" keyEquivalent="Z" id="7Ut-Xf-Yrf">
+                                            <connections>
+                                                <action selector="redo:" target="Rfr-RJ-rux" id="tLy-Qq-DUj"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="FCa-si-1ZI"/>
+                                        <menuItem title="Cut" keyEquivalent="x" id="5bK-xb-CgW">
+                                            <connections>
+                                                <action selector="cut:" target="Rfr-RJ-rux" id="h3d-wI-u0b"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Copy" keyEquivalent="c" id="sKX-cI-DXj">
+                                            <connections>
+                                                <action selector="copy:" target="Rfr-RJ-rux" id="sB9-LI-NUX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Paste" keyEquivalent="v" id="r4U-kO-X0w">
+                                            <connections>
+                                                <action selector="paste:" target="Rfr-RJ-rux" id="WlF-vM-n4Q"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Delete" id="3B6-T5-C0n">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="delete:" target="Rfr-RJ-rux" id="vCw-ki-OiX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Select All" keyEquivalent="a" id="p9a-QG-MJa">
+                                            <connections>
+                                                <action selector="selectAll:" target="Rfr-RJ-rux" id="KVT-Zr-elF"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -139,10 +183,20 @@
                     </connections>
                 </customObject>
                 <customObject id="zgJ-n0-DCA" customClass="StatusMenuWindowController" customModule="ProtonVPN" customModuleProvider="target"/>
-                <customObject id="OOE-T5-kGj" customClass="WindowMenuController" customModule="ProtonVPN" customModuleProvider="target">
+                <customObject id="OOE-T5-kGj" customClass="EditMenuController" customModule="ProtonVPN" customModuleProvider="target">
                     <connections>
-                        <outlet property="minimizeItem" destination="zsQ-yh-Eqf" id="ayV-ka-s5i"/>
-                        <outlet property="windowMenu" destination="MwC-dM-Zc0" id="yXL-EF-8nu"/>
+                        <outlet property="copyItem" destination="sKX-cI-DXj" id="sYg-3d-QnC"/>
+                        <outlet property="cutItem" destination="5bK-xb-CgW" id="xVG-VD-GQT"/>
+                        <outlet property="deleteItem" destination="3B6-T5-C0n" id="VuL-HL-hbe"/>
+                        <outlet property="editMenu" destination="1ce-Ux-wig" id="9J8-sd-2GE"/>
+                        <outlet property="pasteItem" destination="r4U-kO-X0w" id="BYq-kH-WL6"/>
+                        <outlet property="selectAllItem" destination="p9a-QG-MJa" id="7LO-Pr-OPf"/>
+                    </connections>
+                </customObject>
+                <customObject id="4Bs-XP-ZsH" customClass="WindowMenuController" customModule="ProtonVPN" customModuleProvider="target">
+                    <connections>
+                        <outlet property="minimizeItem" destination="zsQ-yh-Eqf" id="GkG-SG-aU5"/>
+                        <outlet property="windowMenu" destination="MwC-dM-Zc0" id="tdP-7Q-b6L"/>
                     </connections>
                 </customObject>
             </objects>

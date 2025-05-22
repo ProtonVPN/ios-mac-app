@@ -1884,6 +1884,14 @@ public enum Localizable {
   public static var connectionStatusProtecting: String { return Localizable.tr("Localizable", "connection_status_protecting", fallback: "Protecting your digital identity") }
   /// Connection status title when user is not connected to a VPN [Redesign_2023]
   public static var connectionStatusUnprotected: String { return Localizable.tr("Localizable", "connection_status_unprotected", fallback: "You are unprotected") }
+  /// MacOS menu item; MacOS copy item title;
+  public static var copyMenuTitle: String { return Localizable.tr("Localizable", "copy_menu_title", fallback: "Copy") }
+  /// MacOS menu item; MacOS cut item title;
+  public static var cutMenuTitle: String { return Localizable.tr("Localizable", "cut_menu_title", fallback: "Cut") }
+  /// MacOS menu item; MacOS delete item title;
+  public static var deleteMenuTitle: String { return Localizable.tr("Localizable", "delete_menu_title", fallback: "Delete") }
+  /// MacOS menu item; MacOS Edit tab title;
+  public static var editMenuTitle: String { return Localizable.tr("Localizable", "edit_menu_title", fallback: "Edit") }
   /// Modal that lists countries in which servers are available to free users: banner with CTA
   public static var freeConnectionsModalBanner: String { return Localizable.tr("Localizable", "free_connections_modal_banner", fallback: "Get worldwide coverage with VPN Plus") }
   /// Modal that lists countries in which servers are available to free users: Description
@@ -2082,6 +2090,8 @@ public enum Localizable {
   public static var onboardingUsageStatsDescription: String { return Localizable.tr("Localizable", "onboarding_usage_stats_description", fallback: "Usage data helps us overcome VPN blocks and improve app performance.") }
   /// Share anonymous usage statistics
   public static var onboardingUsageStatsTitle: String { return Localizable.tr("Localizable", "onboarding_usage_stats_title", fallback: "Share anonymous usage statistics") }
+  /// MacOS menu item; MacOS paste item title;
+  public static var pasteMenuTitle: String { return Localizable.tr("Localizable", "paste_menu_title", fallback: "Paste") }
   /// Plural format key: "%#@plan_duration_month@"
   public static func planDurationMonth(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "plan_duration_month", p1, fallback: "Plural format key: \"%#@plan_duration_month@\"")
@@ -2146,6 +2156,8 @@ public enum Localizable {
   public static var searchUsRegions: String { return Localizable.tr("Localizable", "search_us_regions", fallback: "US regions") }
   /// Sample US regions the user can search for
   public static var searchUsRegionsSample: String { return Localizable.tr("Localizable", "search_us_regions_sample", fallback: "California, Florida, Colorado...") }
+  /// MacOS menu item; MacOS select item title;
+  public static var selectAllMenuTitle: String { return Localizable.tr("Localizable", "select_all_menu_title", fallback: "Select All") }
   /// Plural format key: "Hundreds of servers in %#@num_countries@"
   public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option1", p1, fallback: "Plural format key: \"Hundreds of servers in %#@num_countries@\"")

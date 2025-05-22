@@ -590,6 +590,24 @@
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profile updated";
 
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Edit";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Cut";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Copy";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Paste";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Delete";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Select All";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Overview";
 
