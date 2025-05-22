@@ -115,7 +115,7 @@ class ConnectingOverlayViewModel {
         case .connected:
             return Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return Localizable.initializingConnection.styled(font: .themeFont(.small))
+            return (isReconnecting ? Localizable.notConnected : Localizable.initializingConnection).styled(font: .themeFont(.small))
         }
     }
     
@@ -147,7 +147,7 @@ class ConnectingOverlayViewModel {
             string = Localizable.connectingVpn(boldString)
         default:
             if isReconnecting {
-                string = Localizable.reconnectingTo(boldString) + "\n"
+                string = Localizable.reconnecting
             } else {
                 string = Localizable.connectingTo(boldString)
             }

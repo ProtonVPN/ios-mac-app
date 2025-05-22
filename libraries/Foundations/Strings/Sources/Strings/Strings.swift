@@ -1202,6 +1202,8 @@ public enum Localizable {
   public static var reconnectOnSettingsChangeBody: String { return Localizable.tr("Localizable", "_reconnect_on_settings_change_body", fallback: "Your connection needs to be restarted to apply this change.") }
   /// We are reconnecting to the fastest server available.
   public static var reconnectTitle: String { return Localizable.tr("Localizable", "_reconnect_title", fallback: "We are reconnecting to the fastest server available.") }
+  /// Setting up a new VPN connection to protect your IP
+  public static var reconnecting: String { return Localizable.tr("Localizable", "_reconnecting", fallback: "Setting up a new VPN connection to protect your IP") }
   /// Reconnecting to %@
   public static func reconnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_reconnecting_to", String(describing: p1), fallback: "Reconnecting to %@")
