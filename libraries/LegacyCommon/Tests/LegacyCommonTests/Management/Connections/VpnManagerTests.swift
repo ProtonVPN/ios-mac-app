@@ -35,6 +35,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         container.propertiesManager.hasConnected = true
     }
 
+    @MainActor
     func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() async throws { // swiftlint:disable:this function_body_length cyclomatic_complexity
         let expectations = (
             vpnManagerWireguardConnect: XCTestExpectation(description: "vpn manager wireguard connect"),

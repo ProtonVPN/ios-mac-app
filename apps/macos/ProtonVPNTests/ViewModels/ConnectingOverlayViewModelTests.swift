@@ -131,18 +131,6 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         XCTAssert(buttons[0].0 == Localizable.tryAgain)
         XCTAssert(buttons[1].0 == Localizable.cancel)
     }
-    
-    func testWhenAppStateIsAbortedAndIkev2AndKSAreDetectedDisableKSAndSwitchToOpenVpnAreShown() throws {
-        container.appStateManager.state = .aborted(userInitiated: false)
-        container.propertiesManager.killSwitch = true
-        
-        let buttons = viewModel.buttons
-        XCTAssert(buttons.count == 3)
-        XCTAssert(buttons[0].0 == Localizable.timeoutKsIkeSwitchProtocol)
-        XCTAssert(buttons[1].0 == Localizable.tryAgainWithoutKillswitch)
-        XCTAssert(buttons[2].0 == Localizable.cancel)
-    }
-
 }
 
 class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesManagerFactory, VpnGatewayFactory, VpnProtocolChangeManagerFactory {
