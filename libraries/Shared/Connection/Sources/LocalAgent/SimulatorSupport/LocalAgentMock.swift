@@ -39,7 +39,7 @@ final class LocalAgentMock: LocalAgent {
 
     var connectionTask: Task<Void, Error>?
     var connectionDuration: Duration = .milliseconds(500)
-    var connectionErrorToThrow: Error?
+    var connectionErrorToThrow: LAConnectionCreationError?
     var connectionResult: ConnectionResult = .success
     var disconnectionTask: Task<Void, Error>?
     var disconnectionDuration: Duration = .milliseconds(250)
@@ -50,12 +50,11 @@ final class LocalAgentMock: LocalAgent {
 
     init(
         state: LocalAgentState,
-        connectionErrorToThrow: Error? = nil
+        connectionErrorToThrow: LAConnectionCreationError? = nil
     ) {
         self.streamTuple = AsyncStream<LocalAgentEvent>.makeStream()
 
         self.state = state
-
         self.connectionErrorToThrow = connectionErrorToThrow
     }
 
@@ -65,7 +64,7 @@ final class LocalAgentMock: LocalAgent {
         return tuple.stream
     }
 
-    func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
+    func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws(LAConnectionCreationError) {
         disconnectionTask?.cancel()
 
         if let connectionErrorToThrow {
@@ -75,7 +74,7 @@ final class LocalAgentMock: LocalAgent {
         state = .connecting
 
         connectionTask = Task { [weak self] in
-            try await clock.sleep(for: connectionDuration)
+            try await self?.clock.sleep(for: connectionDuration)
             try Task.checkCancellation()
             log.debug("LocalAgentMock finished connecting")
 

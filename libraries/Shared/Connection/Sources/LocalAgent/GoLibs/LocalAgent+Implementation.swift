@@ -49,7 +49,7 @@ final class LocalAgentImplementation: LocalAgent {
         return tuple.stream
     }
 
-    func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws {
+    func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws(LAConnectionCreationError) {
         connection?.close()
 
         log.debug(

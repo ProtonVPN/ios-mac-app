@@ -77,7 +77,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
         @CasePathable
         public enum DelegateAction: Sendable {
             case errorReceived(LocalAgentError)
-            case connectionFailed(Error)
+            // We failed to create the connection object; this indicates mismatched/malformed keys/certificate
+            case connectionFailed(LAConnectionCreationError)
         }
     }
 
@@ -117,7 +118,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
             case .connect(let server, let authenticationData, let features):
                 let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
-                do {
+                do throws(LAConnectionCreationError) {
                     // Not a blocking call. Creates the connection to the Local Agent server
                     // If successful, will remain in the disconnected state until a reply is received,
                     // retrying with increasing backoff delays.
@@ -262,7 +263,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
 @CasePathable
 public enum LocalAgentConnectionError: Error, Equatable {
     /// Thrown during the initial connection attempt - wasn't able to establish a connection with the LocalAgent server.
-    case failedToEstablishConnection(Error)
+    case failedToEstablishConnection(LAConnectionCreationError)
     /// Raised by the agent after connecting. Usually sent by the server to us about something bad about our connection.
     case agentError(LocalAgentError)
     /// A certificate error occurred when attempting to connect to the LocalAgent server.
@@ -296,8 +297,8 @@ extension LocalAgentConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
-        case .failedToEstablishConnection:
-            return "FCNT"
+        case .failedToEstablishConnection(let connectionCreationError):
+            return connectionCreationError.charCode
         case .agentError:
             return "AGNT"
         case .serverCertificateError:

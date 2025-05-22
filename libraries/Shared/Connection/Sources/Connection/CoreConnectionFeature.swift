@@ -255,6 +255,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // This is likely due to a problem with our keys/certificate. Let's disconnect
             let connectionError = ConnectionError.agent(.failedToEstablishConnection(error))
             return .merge(
+                // Attempt to resolve the root cause of failing to connect (GoTLSError)
                 .send(.certAuth(.regenerateKeys)), // also removes the certificate
                 .send(.disconnect(.connectionFailure(connectionError)))
             )

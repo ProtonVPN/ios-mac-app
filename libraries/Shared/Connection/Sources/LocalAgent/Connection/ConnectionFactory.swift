@@ -18,6 +18,7 @@
 
 import Foundation
 
+import CasePaths
 import Dependencies
 
 import Domain
@@ -28,7 +29,7 @@ import class GoLibs.LocalAgentFeatures
 
 import CoreConnection
 
-typealias ConnectionCreator = @Sendable (ConnectionConfiguration, VPNAuthenticationData, LocalAgentNativeClientProtocol) throws -> LocalAgentConnection
+typealias ConnectionCreator = @Sendable (ConnectionConfiguration, VPNAuthenticationData, LocalAgentNativeClientProtocol) throws(LAConnectionCreationError) -> LocalAgentConnection
 
 struct ConnectionFactory: DependencyKey {
     var makeLocalAgentConnection: ConnectionCreator
@@ -64,7 +65,7 @@ extension DependencyValues {
 
 extension ConnectionFactory {
     static let liveValue = ConnectionFactory(
-        makeLocalAgentConnection: { connectionConfiguration, authenticationData, client in
+        makeLocalAgentConnection: { connectionConfiguration, authenticationData, client throws(LAConnectionCreationError) -> LocalAgentConnection in
             @Dependency(\.localAgentConfiguration) var localAgentConfiguration
 
             var error: NSError?
@@ -81,12 +82,19 @@ extension ConnectionFactory {
             )
 
             if let error {
-                throw error
+                // This will usually be "tls: private key does not match public key"
+                // For more information about possible errors, check the Go crypto/tls library.
+                // If an error is thrown here, it's unlikely we can connect without first regenerating our key&cert.
+                if let tlsError = GoTLSError(error: error) {
+                    throw .goTLSError(tlsError, underlyingError: error)
+                } else {
+                    throw .unknownError(error)
+                }
             }
 
             guard let connection else {
                 log.assertionFailure("LocalAgentNewAgentConnection should have returned an error")
-                throw LocalAgentError.serverError
+                throw .connectionObjectMissing
             }
 
             return connection
@@ -133,5 +141,81 @@ extension LocalAgentFeatures {
         featuresObject?.setBool(Keys.natType.rawValue, value: connectionFeatures.natType.flag)
         connectionFeatures.safeMode.map { featuresObject?.setBool(Keys.safeMode.rawValue, value: $0) }
         return featuresObject
+    }
+}
+
+@CasePathable
+public enum LAConnectionCreationError: Error {
+    /// We're most likely connecting with mismatched/malformed keys or certificates. This indicates we tried to connect
+    /// with malformed/mismatched certificates/keys.
+    case goTLSError(GoTLSError, underlyingError: Error)
+
+    /// ``LocalAgentNewAgentConnection`` returned an unexpected non-crypto/tls error. We need to add this error to our
+    /// `GoTLSError` enum.
+    case unknownError(Error)
+
+    /// ``LocalAgentNewAgentConnection`` did not return a connection object, or an error. Should never happen.
+    case connectionObjectMissing
+}
+
+extension LAConnectionCreationError: ProtonVPNError {
+    public static let errorDomain = "LocalAgentConnectionCreationErrorDomain"
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .connectionObjectMissing:
+            return "LACO"
+        case .goTLSError(let goTLSError, _):
+            return goTLSError.charCode
+        case .unknownError:
+            return "LACU"
+        }
+    }
+
+    public var underlyingError: (any Error)? {
+        switch self {
+        case .goTLSError(_, let underlyingError):
+            return underlyingError
+
+        case .unknownError(let error):
+            return error
+
+        case .connectionObjectMissing:
+            return nil
+        }
+    }
+}
+
+/// Whenever a new error is seen in the wild, and we want to handle it differently/track it, add it here.
+/// Possible errors can be found at [tls.go](https://cs.opensource.google/go/go/+/master:src/crypto/tls/tls.go;l=267)
+/// In theory, *none* of these should ever be encountered - if they are, we're connecting with mismatched/malformed
+/// keys or certificates, and this is indicative of a different problem earlier in the connection process
+@CasePathable
+public enum GoTLSError: Error {
+    /// Thrown when a previous user's key is used to connect with the current user's certificate, and vice-versa.
+    case privateKeyDoesNotMatchPublicKey
+}
+
+extension GoTLSError: ProtonVPNError {
+    private static let privateKeyDoesNotMatchPublicKeyErrorDescription: String = "tls: private key does not match public key"
+
+    public static let errorDomain = "GoTLSErrorDomain"
+
+    init?(error: NSError) {
+        guard let localizedDescription = error.userInfo[NSLocalizedDescriptionKey] as? String else { return nil }
+
+        switch localizedDescription {
+        case Self.privateKeyDoesNotMatchPublicKeyErrorDescription:
+            self = .privateKeyDoesNotMatchPublicKey
+        default:
+            return nil
+        }
+    }
+
+    public var charCode: FourCharCode {
+        switch self {
+        case .privateKeyDoesNotMatchPublicKey:
+            return "GTNM"
+        }
     }
 }
