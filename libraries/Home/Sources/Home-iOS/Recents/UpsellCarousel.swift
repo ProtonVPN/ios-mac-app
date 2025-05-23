@@ -144,10 +144,6 @@ fileprivate struct BannerModel {
             title = Localizable.upsellCarouselMoreTitle
             subtitle = Localizable.upsellCarouselMoreSubtitle
             image = HomeAsset.customisationMobileSmall
-        case .plutonium:
-            title = Localizable.plutoniumUpsellTitle
-            subtitle = Localizable.plutoniumUpsellSubtitle
-            image = HomeAsset.customisationMobileSmall
         }
     }
 }
