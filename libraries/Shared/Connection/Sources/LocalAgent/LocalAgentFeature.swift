@@ -56,7 +56,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
     @CasePathable
     @dynamicMemberLookup
     public enum State: Equatable, Sendable {
-        case connecting
+        case connecting(ConnectionDetailsMessage?)
         case connected(ConnectionDetailsMessage?)
         case disconnecting(LocalAgentConnectionError?)
         case disconnected(LocalAgentConnectionError?)
@@ -144,7 +144,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .cancel(id: CancelIDs.netshieldStatsObservation)
 
             case .event(.state(.connecting)):
-                state = .connecting
+                state = .connecting(previousConnectionDetails(state))
                 return .none
 
             case .event(.state(.serverUnreachable)):
@@ -152,12 +152,11 @@ public struct LocalAgentFeature: Reducer, Sendable {
 
                 // Set state as connecting just in case this happens after connection
                 // This should update the UI to reflect that we are reconnecting.
-                state = .connecting
+                state = .connecting(previousConnectionDetails(state))
                 return .none
 
             case .event(.state(.connected)):
-                let existingConnectionDetails = state.connected ?? nil
-                state = .connected(existingConnectionDetails)
+                state = .connected(previousConnectionDetails(state))
                 return .none
 
             case .event(.state(.connectionError)):
@@ -170,7 +169,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 // Since we time out unsuccessful connections after a set period, and briefly after this state
                 // transition, LA attempts to reconnect, let's not immediately disconnect but instead set the state to
                 // connecting such that if this happens after connection, this change is reflected in the UI.
-                state = .connecting
+                state = .connecting(previousConnectionDetails(state))
                 return .none
 
             case .event(.state(.serverCertificateError)):
@@ -180,13 +179,13 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .send(.disconnect(.serverCertificateError))
 
             case .event(.state(.softJailed)):
-                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
+                state = .connecting(nil) // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
                 return .none
 
             case .event(.state(.hardJailed)):
                 // This state is always accompanied by a more specific error event.
                 // Let's handle it in response to the event instead, since it's not clear from the state alone how best to handle it
-                state = .connecting // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
+                state = .connecting(nil) // VPNAPPL-2812: Show resolving state when jailed after connection has already been established
                 return .none
 
             case .event(.state(.clientCertificateExpired)):
@@ -202,7 +201,14 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 return .none
 
             case .event(.connectionDetails(let connectionDetails)):
-                state = .connected(connectionDetails)
+                switch state {
+                case .connecting:
+                    state = .connecting(connectionDetails)
+                case .connected:
+                    state = .connected(connectionDetails)
+                default:
+                    reportIssue("Connection details received during unexpected state: \(state)")
+                }
                 return .none
 
             case .event(.error(let error)):
@@ -241,6 +247,12 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 .cancellable(id: CancelIDs.netshieldStatsObservation)
             }
         }
+    }
+
+    /// We can attempt to extract connection details from the previous state in order to not lose them
+    /// when flipping between connecting/connected states.
+    private func previousConnectionDetails(_ state: State) -> ConnectionDetailsMessage? {
+        return (state.connecting ?? state.connected) ?? nil
     }
 
     private var longLivingEventObservationEffect: Effect<Action> {

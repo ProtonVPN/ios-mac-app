@@ -116,7 +116,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.connect)
         await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
-            $0.localAgent = .connecting
+            $0.localAgent = .connecting(nil)
         }
 
         await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
@@ -451,7 +451,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.connect)
         await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
-            $0.localAgent = .connecting
+            $0.localAgent = .connecting(nil)
         }
 
         await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
@@ -581,7 +581,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.connect)
         await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
-            $0.localAgent = .connecting
+            $0.localAgent = .connecting(nil)
         }
 
         await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
@@ -629,7 +629,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.connect)
         await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
-            $0.localAgent = .connecting
+            $0.localAgent = .connecting(nil)
         }
         await store.receive(stateChange(from: \.disconnecting, to: \.connecting))
 
@@ -734,7 +734,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.connect)
         await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
-            $0.localAgent = .connecting
+            $0.localAgent = .connecting(nil)
         }
 
         // Fast forward to the exact time at which the connection should time out
@@ -834,7 +834,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.connect)
         await store.receive(\.localAgent.startNetShieldStatsObservation)
         await store.receive(\.localAgent.event.state.connecting) {
-            $0.localAgent = .connecting
+            $0.localAgent = .connecting(nil)
         }
 
         // Let's simulate a max sessions error being received before we are able to finish connecting

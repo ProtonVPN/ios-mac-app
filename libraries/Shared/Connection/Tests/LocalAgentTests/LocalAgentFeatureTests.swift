@@ -39,6 +39,8 @@ final class LocalAgentFeatureTests: XCTestCase {
         let disconnected = LocalAgentFeature.State.disconnected(nil)
 
         let localAgentMock = LocalAgentMock(state: .disconnected)
+        localAgentMock.connectionDuration = .seconds(5)
+        localAgentMock.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
 
         let store = TestStore(initialState: disconnected) {
             LocalAgentFeature()
@@ -56,23 +58,28 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.send(.connect(server, .empty, defaultFeatures))
         await store.receive(\.startNetShieldStatsObservation)
         await store.receive(\.event.state.connecting) {
-            $0 = .connecting
+            $0 = .connecting(nil)
         }
 
-        await mockClock.advance(by: .milliseconds(500))
-        await store.receive(\.event.state.connected) {
-            $0 = .connected(nil)
-        }
+        await mockClock.advance(by: .seconds(5))
 
-        let mockConnectionDetails = ConnectionDetailsMessage(
-            exitIp: IPv4Address("1.2.3.4")!,
-            deviceIp: IPv4Address("5.6.7.8")!,
-            deviceCountry: "CH"
-        )
+        // When connecting to restricted servers, we may receive connection details while still hardjailed.
+        // Let's check we don't prematurely transition to the connected state.
+        await store.receive(\.event.state.hardJailed)
+        await store.receive(\.event.error.restrictedServer)
+        await store.receive(\.delegate.errorReceived.restrictedServer)
 
-        localAgentMock.simulate(event: .connectionDetails(mockConnectionDetails))
+        let connectionDetails = ConnectionDetailsMessage(exitIp: IPv4Address("1.2.3.4")!, deviceIp: nil, deviceCountry: nil)
+        localAgentMock.simulate(event: .connectionDetails(connectionDetails))
         await store.receive(\.event.connectionDetails) {
-            $0 = .connected(mockConnectionDetails)
+            // We've received connection details, but we're still jailed.
+            $0 = .connecting(connectionDetails)
+        }
+
+        // Now, let's simulate being unjailed. We should finally transition to connected.
+        localAgentMock.simulate(event: .state(.connected))
+        await store.receive(\.event.state.connected) {
+            $0 = .connected(connectionDetails)
         }
 
         await store.send(.stopAllObservations)
@@ -92,7 +99,7 @@ final class LocalAgentFeatureTests: XCTestCase {
 
         await fulfillment(of: [clientDelegateSet])
 
-        let store = TestStore(initialState: .connecting) {
+        let store = TestStore(initialState: .connecting(nil)) {
             LocalAgentFeature()
         } withDependencies: {
             $0.localAgent = agent
@@ -140,7 +147,7 @@ final class LocalAgentFeatureTests: XCTestCase {
         localAgent.netShieldStatsBehaviour = .constant(statsMessage)
         localAgent.didRequestStats = { XCTFail("Requested NetShield stats too early") }
 
-        let store = TestStore(initialState: .connecting) {
+        let store = TestStore(initialState: .connecting(nil)) {
             LocalAgentFeature()
         } withDependencies: {
             $0.continuousClock = clock
