@@ -19,44 +19,6 @@
 import Foundation
 import Strings
 
-public struct PlanDuration: Hashable {
-    public static let oneMonth: Self = .init(components: .init(month: 1))!
-    public static let threeMonths: Self = .init(components: .init(month: 3))!
-    public static let oneYear: Self = .init(components: .init(year: 1))!
-    public static let twoYears: Self = .init(components: .init(year: 2))!
-
-    public let components: DateComponents
-
-    public init?(components: DateComponents) {
-        guard components.amountOfMonths > 0 else {
-            return nil
-        }
-        self.components = components
-    }
-}
-
-extension PlanDuration: CustomStringConvertible {
-    public var description: String {
-        components.description
-    }
-
-    public var months: Int {
-        components.amountOfMonths
-    }
-}
-
-public struct PlanPrice: Hashable {
-    public let amount: Double
-    public let currency: String
-    public let locale: Locale
-
-    public init(amount: Double, currency: String, locale: Locale = .current) {
-        self.amount = amount
-        self.currency = currency
-        self.locale = locale
-    }
-}
-
 public struct PlanOption: Hashable {
     private static let minimumVisibleDiscount = 5
 
@@ -65,41 +27,32 @@ public struct PlanOption: Hashable {
         case web
     }
 
-    public let duration: PlanDuration
-    public let price: PlanPrice
-    public let id: UUID
     public let purchaseType: PlanType
+    public let id: String
+    public let amountOfMonths: Int
+    public let durationLabel: String?
+    public let displayPrice: String
+    public let pricePerMonth: String
 
-    public var pricePerMonth: Double {
-        price.amount / Double(duration.components.amountOfMonths)
+    var isMoreThanOneMonth: Bool {
+        amountOfMonths > 1
     }
 
-    public func renews(at date: String) -> String? {
-        guard purchaseType == .web else {
-            return nil
-        }
-        return Localizable.subscriptionRenewalDate(date, "US$79.95")
-    }
-
-    public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice, purchaseType: PlanType = .iap) {
+    // MARK: - Init
+    public init(
+        id: String,
+        amountOfMonths: Int,
+        durationLabel: String?,
+        displayPrice: String,
+        pricePerMonth: String,
+        purchaseType: PlanType = .iap
+    ) {
         self.id = id
-        self.duration = duration
-        self.price = price
+        self.amountOfMonths = amountOfMonths
+        self.durationLabel = durationLabel
+        self.displayPrice = displayPrice
+        self.pricePerMonth = pricePerMonth
         self.purchaseType = purchaseType
-    }
-
-    public func discount(comparedTo plan: PlanOption) -> Int? {
-        let pricePerMonthMine: Double = pricePerMonth
-        let pricePerMonthTheirs: Double = plan.pricePerMonth
-        if pricePerMonthTheirs == 0 {
-            return nil
-        } else if pricePerMonthMine == 0 {
-            return 100
-        }
-        let discountDouble = (1 - (pricePerMonthMine / pricePerMonthTheirs)) * 100
-        // don't round to 100% if it's not exactly 100%
-        let discountInt = min(Int(discountDouble.rounded()), 99)
-        return discountInt >= Self.minimumVisibleDiscount ? discountInt : nil
     }
 }
 
@@ -111,8 +64,9 @@ public extension PlanOption {
 
 // MARK: - Helpers
 
-public extension DateComponents {
-    var amountOfMonths: Int {
-        (year ?? 0) * 12 + (month ?? 0)
-    }
+#if DEBUG
+public extension PlanOption {
+    static var oneMonth: Self = PlanOption(id: "1", amountOfMonths: 1, durationLabel: "1 month", displayPrice: "$9.95", pricePerMonth: "$9.95")
+    static var oneYear: Self = PlanOption(id: "2", amountOfMonths: 12, durationLabel: "1 year", displayPrice: "$79.95", pricePerMonth: "$6.66")
 }
+#endif

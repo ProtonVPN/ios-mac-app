@@ -27,7 +27,6 @@ public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCore
 import ModalsServices
 
 public typealias PlanOption = ModalsServices.PlanOption
-public typealias PlanDuration = ModalsServices.PlanDuration
 
 #if canImport(Modals_macOS)
     import Modals_macOS

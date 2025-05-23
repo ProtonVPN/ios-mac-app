@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ModalsServices
-import ModalsShared
-import Strings
 import SwiftUI
+import Strings
+import ModalsShared
+import ModalsServices
 
 private enum Constants {
     static let planOptionViewRowHeight: CGFloat = 64
@@ -41,7 +41,7 @@ struct PlanOptionView: View {
         switch state {
         case .loading:
             PlanOptionLoadingView()
-        case let .loaded(planOption, isSelected, discount):
+        case .loaded(let planOption, let isSelected, let discount):
             PlanOptionLoadedView(
                 planOption: planOption,
                 discount: discount,
@@ -52,6 +52,7 @@ struct PlanOptionView: View {
 }
 
 private struct PlanOptionLoadedView: View {
+
     private enum AccessibilityIdentifier {
         static let planOptionDuration: String = "plan_option_duration"
         static let planOptionAmount: String = "plan_option_amount"
@@ -69,11 +70,8 @@ private struct PlanOptionLoadedView: View {
     let isSelected: Bool
 
     var body: some View {
-        let planDuration = planOption.duration
-        let planPrice = planOption.price
-
         HStack(spacing: .themeSpacing8) {
-            let planDurationString = Self.dateComponentsFormatter.string(from: planDuration.components) ?? planDuration.components.fallbackDuration
+            let planDurationString: String = planOption.durationLabel ?? "One-time purchase"
             Text(planDurationString)
                 .themeFont(.body1(.regular))
                 .accessibilityIdentifier(AccessibilityIdentifier.planOptionDuration)
@@ -90,17 +88,15 @@ private struct PlanOptionLoadedView: View {
 
             VStack(alignment: .trailing) {
                 HStack(alignment: .bottom, spacing: .zero) {
-                    Text(PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale))
+                    Text(planOption.displayPrice)
                         .themeFont(.body1(.bold))
                         .accessibilityIdentifier(AccessibilityIdentifier.planOptionAmount)
                 }
                 .accessibilityElement(children: .combine)
 
-                if planDuration.components.isMoreThanOneMonth {
-                    let amountPerMonth = Double(planPrice.amount) / Double(planDuration.components.amountOfMonths)
-
+                if planOption.amountOfMonths > 1 {
                     HStack(spacing: .zero) {
-                        Text(PriceFormatter.formatPlanPrice(price: amountPerMonth, locale: planPrice.locale))
+                        Text(planOption.pricePerMonth)
                         Text(Localizable.upsellPlansListOptionAmountPerMonth)
                     }
                     .font(.body3())
@@ -179,85 +175,36 @@ private struct PlanDiscountBadgeView: View {
     }
 }
 
-private struct PlanWebOnlyTagView: View {
-    var body: some View {
-        Text(Localizable.webOnlyFeature)
-            .themeFont(.overline(emphasised: true))
-            .textCase(.uppercase)
-            .padding(.horizontal, .themeSpacing6)
-            .padding(.vertical, .themeSpacing2)
-            .foregroundColor(Color(.text, .warning))
-            .cornerRadius(.themeRadius4)
-            .background(
-                RoundedRectangle(cornerRadius: .themeSpacing4)
-                    .style(withStroke: Color(.text, .warning), lineWidth: 1.0, fill: .clear)
-            )
-    }
-}
-
-// MARK: - Helpers
-
-private extension DateComponents {
-    var isMoreThanOneMonth: Bool {
-        amountOfMonths > 1
-    }
-
-    // This property is a fallback in case where DateComponentsFormatter returns `nil`
-    // Not ideal but should do the job
-    var fallbackDuration: String {
-        var duration = ""
-        if let year, year != 0 {
-            duration += Localizable.planDurationYear(year)
-        }
-        if let month, month != 0 {
-            if !duration.isEmpty {
-                duration += ", "
-            }
-            duration += Localizable.planDurationMonth(month)
-        }
-        if duration.isEmpty {
-            assertionFailure("This components receiver is invalid")
-        }
-        return duration
-    }
-}
-
+#if DEBUG
 #Preview("Unselected") {
-    let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
+    let planOptionMonth = PlanOption.oneMonth
+    let planOptionYear = PlanOption.oneYear
     return VStack {
         PlanOptionView(
-            state: .loaded(option: planOptionMonth, isSelected: false, discount: planOptionMonth.discount(comparedTo: planOptionYear))
+            state: .loaded(option: planOptionMonth, isSelected: false, discount: nil)
         )
         PlanOptionView(
-            state: .loaded(option: planOptionYear, isSelected: false, discount: planOptionYear.discount(comparedTo: planOptionMonth))
+            state: .loaded(option: planOptionYear, isSelected: false, discount: 33)
         )
     }
 }
 
 #Preview("Selected") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+    let planOption = PlanOption.oneYear
     return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
 }
 
 #Preview("RTL") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+    let planOption = PlanOption.oneYear
     return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
         .environment(\.layoutDirection, .rightToLeft)
 }
 
 #Preview("Loading") {
-    PlanOptionView(state: .loading)
-}
-
-#Preview("Annoying Duration") {
-    let planOption = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6))!,
-        price: .init(amount: 85, currency: "CHF")
-    )
-    return PlanOptionView(state: .loaded(option: planOption, isSelected: false, discount: 35))
+    return PlanOptionView(state: .loading)
 }
 
 #Preview("Badge") {
     PlanDiscountBadgeView(discount: 50)
 }
+#endif
