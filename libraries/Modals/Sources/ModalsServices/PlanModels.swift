@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Strings
 
 public struct PlanDuration: Hashable {
     public static let oneMonth: Self = .init(components: .init(month: 1))!
@@ -59,18 +60,32 @@ public struct PlanPrice: Hashable {
 public struct PlanOption: Hashable {
     private static let minimumVisibleDiscount = 5
 
+    public enum PlanType: Hashable {
+        case iap
+        case web
+    }
+
     public let duration: PlanDuration
     public let price: PlanPrice
     public let id: UUID
+    public let purchaseType: PlanType
 
     public var pricePerMonth: Double {
         price.amount / Double(duration.components.amountOfMonths)
     }
 
-    public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice) {
+    public func renews(at date: String) -> String? {
+        guard purchaseType == .web else {
+            return nil
+        }
+        return Localizable.subscriptionRenewalDate(date, "US$79.95")
+    }
+
+    public init(id: UUID = UUID(), duration: PlanDuration, price: PlanPrice, purchaseType: PlanType = .iap) {
         self.id = id
         self.duration = duration
         self.price = price
+        self.purchaseType = purchaseType
     }
 
     public func discount(comparedTo plan: PlanOption) -> Int? {
@@ -85,6 +100,12 @@ public struct PlanOption: Hashable {
         // don't round to 100% if it's not exactly 100%
         let discountInt = min(Int(discountDouble.rounded()), 99)
         return discountInt >= Self.minimumVisibleDiscount ? discountInt : nil
+    }
+}
+
+public extension PlanOption {
+    static var twoYearsWebPlan: Self {
+        .init(duration: .twoYears, price: .init(amount: 119.76, currency: "USD"), purchaseType: .web)
     }
 }
 

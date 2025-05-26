@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 
 import Dependencies
+import Sharing
 
 import ProtonCoreFeatureFlags
 
@@ -279,6 +280,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
 
+            // populate (possibly) updated userTier
+            @Shared(.userTier) var userTier
+            $userTier.withLock { $0 = credentials.maxTier }
+
             if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
                 assert(isFreeTierRequest == isFreeTier)
@@ -490,6 +495,20 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         
         refreshTimer.startTimers()
+    }
+
+    // MARK: User plan changed (before refreshing data)
+    override func userPlanChanged(_ notification: Notification) {
+        if let downgradeInfo = notification.object as? VpnDowngradeInfo,
+           downgradeInfo.from.maxTier < downgradeInfo.to.maxTier {
+
+            // At some point it may be possible to plumb the modal source through from the redirect deep link.
+            // For now we will leave it nil and let the telemetry service take its best guess.
+            let modalSource: UpsellModalSource? = nil
+            AppEvent.userCompletedUpsellAlertJourney.post((modalSource, downgradeInfo.to.planName))
+        }
+
+        super.userPlanChanged(notification) // refreshes data
     }
 }
 

@@ -83,6 +83,10 @@ private struct PlanOptionLoadedView: View {
                 PlanDiscountBadgeView(discount: discount)
             }
 
+            if planOption.purchaseType == .web {
+                PlanWebOnlyTagView()
+            }
+
             Spacer()
 
             VStack(alignment: .trailing) {
@@ -90,9 +94,6 @@ private struct PlanOptionLoadedView: View {
                     Text(PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale))
                         .themeFont(.body1(.bold))
                         .accessibilityIdentifier(AccessibilityIdentifier.planOptionAmount)
-                    Text(planDuration.periodDescription)
-                        .themeFont(.body3())
-                        .foregroundColor(Color(.text, .weak))
                 }
                 .accessibilityElement(children: .combine)
 
@@ -179,6 +180,22 @@ private struct PlanDiscountBadgeView: View {
     }
 }
 
+private struct PlanWebOnlyTagView: View {
+    var body: some View {
+        Text(Localizable.webOnlyFeature)
+            .themeFont(.overline(emphasised: true))
+            .textCase(.uppercase)
+            .padding(.horizontal, .themeSpacing6)
+            .padding(.vertical, .themeSpacing2)
+            .foregroundColor(Color(.text, .warning))
+            .cornerRadius(.themeRadius4)
+            .background(
+                RoundedRectangle(cornerRadius: .themeSpacing4)
+                    .style(withStroke: Color(.text, .warning), lineWidth: 1.0, fill: .clear)
+            )
+    }
+}
+
 // MARK: - Helpers
 
 private extension DateComponents {
@@ -203,14 +220,6 @@ private extension DateComponents {
             assertionFailure("This components receiver is invalid")
         }
         return duration
-    }
-}
-
-extension PlanDuration {
-    var periodDescription: String {
-        components.isMoreThanOneMonth 
-            ? Localizable.upsellPlansListOptionAmountPerYear
-            : Localizable.upsellPlansListOptionAmountPerMonth
     }
 }
 

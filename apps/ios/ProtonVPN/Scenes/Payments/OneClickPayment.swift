@@ -155,7 +155,24 @@ final class OneClickPayment {
     }
 
     @MainActor
+    func redirectToWebPurchase() async {
+        @Dependency(\.sessionService) var sessionService
+        guard let url = await sessionService.getPlanSession(mode: .promo2yPlan) else {
+            log.assertionFailure("Couldn't retrieve 2y plan session URL")
+            return
+        }
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(url)
+        completionHandler()
+    }
+
+
+    @MainActor
     func validate(selectedPlan: PlanOption) async {
+        guard selectedPlan.purchaseType == .iap else {
+            await redirectToWebPurchase()
+            return
+        }
         let result = await self.buyPlan(planOption: selectedPlan)
         await self.buyPlanResultHandler(result)
     }
@@ -192,7 +209,7 @@ final class OneClickPayment {
         }
     }
 
-    private var inAppPurchasePlans: [(PlanOption, InAppPurchasePlan)] = []
+    private var inAppPurchasePlans: [(planOption: PlanOption, iapPlan: InAppPurchasePlan?)] = []
 
     @MainActor
     func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption] {
@@ -200,28 +217,43 @@ final class OneClickPayment {
         let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
             plan.name == "vpn2022"
         }.first // it's only going to be one with this plan name
-        guard let vpn2022 else { throw OneClickPurchaseError.defaultPlanNotFound }
-        inAppPurchasePlans = vpn2022.instances
-            .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
-            .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in
-                guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
-                      let period = iAP.period,
-                      let duration = PlanDuration(components: .init(month: Int(period)))
-                else { return nil }
-                let planOption = PlanOption(
-                    duration: duration,
-                    price: .init(
-                        amount: priceLabel.value.doubleValue,
-                        currency: iAP.currency ?? "",
-                        locale: priceLabel.locale
+        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+
+        if let vpn2022 {
+            inAppPurchasePlans = vpn2022.instances
+                .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
+                .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in
+                    guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
+                          let period = iAP.period,
+                          let duration = PlanDuration(components: .init(month: Int(period)))
+                    else { return nil }
+                    let planOption = PlanOption(
+                        duration: duration,
+                        price: .init(
+                            amount: priceLabel.value.doubleValue,
+                            currency: iAP.currency ?? "",
+                            locale: priceLabel.locale
+                        )
                     )
-                )
-                return (planOption, iAP)
-            }
-        return inAppPurchasePlans.map { $0.0 }
+                    return (planOption, iAP)
+                }
+        } else if !shouldShowTwoYearsWebPlan {
+            throw OneClickPurchaseError.defaultPlanNotFound
+        }
+        if shouldShowTwoYearsWebPlan {
+            // add 2y web plan
+            inAppPurchasePlans.append((.twoYearsWebPlan, nil))
+        }
+
+        return inAppPurchasePlans.map { $0.planOption }
     }
 
     func buyPlan(planOption: PlanOption) async -> PurchaseResult {
+        guard planOption.purchaseType != .web else {
+            // should never happen
+            return .purchaseError(error: OneClickPurchaseError.planNotFound("Two years web plan should be purchased through web"))
+        }
+
         if payments.storeKitManager.hasUnfinishedPurchase() {
             log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
             return .purchaseError(error: OneClickPurchaseError.unfinishedPurchaseInQueue, processingPlan: nil)
@@ -229,8 +261,8 @@ final class OneClickPayment {
         let plan = inAppPurchasePlans.first { plan, _ in
             plan.fingerprint == planOption.fingerprint
         }
-        guard let iAP = plan?.1 else {
-            let planName = plan?.1.protonName ?? "Unknown"
+        guard let iAP = plan?.iapPlan else {
+            let planName = plan?.iapPlan?.protonName ?? "Unknown"
             return .purchaseError(error: OneClickPurchaseError.planNotFound(planName), processingPlan: nil)
         }
         return await withCheckedContinuation {

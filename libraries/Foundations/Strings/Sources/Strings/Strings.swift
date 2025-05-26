@@ -1541,6 +1541,10 @@ public enum Localizable {
   public static var subscriptionExtendedSuccess: String { return Localizable.tr("Localizable", "_subscription_extended_success", fallback: "You have successfully bought credits to extend your current plan.") }
   /// iOS Settings -> Connection: name of field.
   public static var subscriptionPlan: String { return Localizable.tr("Localizable", "_subscription_plan", fallback: "Subscription Plan") }
+  /// %@1 is the next payment date; %@2 price per year from that date and so on.
+  public static func subscriptionRenewalDate(_ p1: Any, _ p2: Any) -> String {
+    return Localizable.tr("Localizable", "_subscription_renewal_date", String(describing: p1), String(describing: p2), fallback: "Subscription auto-renews on %1$@ at %2$@/year")
+  }
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return Localizable.tr("Localizable", "_subscription_upgrade_option3", fallback: "Advanced features: NetShield, Secure Core, Tor, P2P") }
   /// Upgrade again to enjoy all the features:
@@ -1832,6 +1836,8 @@ public enum Localizable {
   public static var warning: String { return Localizable.tr("Localizable", "_warning", fallback: "Warning") }
   /// MacOS: alert shown during login if already connected to VPN
   public static var warningVpnSessionIsActive: String { return Localizable.tr("Localizable", "_warning_vpn_session_is_active", fallback: "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?") }
+  /// Text, that appears next to a subscription payment option which is only valid for web purchase.
+  public static var webOnlyFeature: String { return Localizable.tr("Localizable", "_web_only_feature", fallback: "Web only") }
   /// Shown on the Welcome screen as the longer screen text
   public static var welcomeBody: String { return Localizable.tr("Localizable", "_welcome_body", fallback: "High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.") }
   /// Thanks for using Proton VPN.
@@ -2252,8 +2258,6 @@ public enum Localizable {
   public static var upsellP2pSupportTitle: String { return Localizable.tr("Localizable", "upsell_p2pSupport_title", fallback: "Unlock peer-to-peer (P2P) downloads and file sharing") }
   /// Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
   public static var upsellPlansListOptionAmountPerMonth: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerMonth", fallback: " /month") }
-  /// Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
-  public static var upsellPlansListOptionAmountPerYear: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerYear", fallback: " /year") }
   /// Header of paid plans list where there are more than 1 plan option to pick from.
   public static var upsellPlansListSectionHeader: String { return Localizable.tr("Localizable", "upsell_plans_list_section_header", fallback: "Select your plan") }
   /// Subtitle of paid plans list.

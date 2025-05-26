@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Combine
+import Dependencies
+import Foundation
 import ModalsShared
 import ModalsServices
 
@@ -49,6 +51,15 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     private(set) var mostExpensivePlan: PlanOption?
 
+    var renewalTextForSelectedPlan: String? {
+        @Dependency(\.date) var date
+        @Dependency(\.calendar) var calendar
+        let twoYearsFromNow = calendar.date(byAdding: .year, value: 2, to: date.now)
+        guard let selectedPlan, let twoYearsFromNow else { return nil }
+        let dateString = DateFormatter.renewalDateFormatter.string(from: twoYearsFromNow)
+        return selectedPlan.renews(at: dateString)
+    }
+
     init(client: PlansClient) {
         self.client = client
     }
@@ -57,9 +68,9 @@ final class PlanOptionsListViewModel: ObservableObject {
     func onAppear() async {
         isLoading = true
         do {
-            plans = try await client.retrievePlans()
+            plans = try await client.retrievePlans().sorted { $0.pricePerMonth < $1.pricePerMonth }
             selectedPlan = plans.first
-            mostExpensivePlan = plans.sorted { $0.pricePerMonth > $1.pricePerMonth }.first
+            mostExpensivePlan = plans.first
             isLoading = false
         } catch {
             // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message
@@ -78,6 +89,15 @@ final class PlanOptionsListViewModel: ObservableObject {
     @MainActor
     func notNow() {
         client.notNow()
+    }
+}
+
+private extension DateFormatter {
+    static var renewalDateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateFormat = "dd MMM YYYY"
+        return dateFormatter
     }
 }
 

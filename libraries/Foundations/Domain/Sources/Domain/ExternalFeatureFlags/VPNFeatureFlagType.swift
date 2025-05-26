@@ -63,6 +63,9 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Allow Sandbox purchases on TestFlight builds.
     case allowSandboxPurchases = "AllowSandboxPurchases"
+
+    /// Enable web purchases for iOS users
+    case iapToWeb = "IapToWeb"
 }
 
 /// These features are guarded by an additional condition, such as reliance on another flag or an OS version check.

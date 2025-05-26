@@ -54,16 +54,12 @@ class TelemetryUpsellReporter {
                      offerReference: String?,
                      vpnStatus: UpsellEvent.VPNStatus) async throws {
         let modalSource: UpsellModalSource?
-        #if os(macOS)
-        // macOS payments happen through the web, so on success collapse it with the previous value if it's missing.
+        // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
         if event == .success {
             modalSource = _modalSource ?? previousModalSource
         } else {
             modalSource = _modalSource
         }
-        #else
-        modalSource = _modalSource
-        #endif
 
         guard let modalSource else {
             throw Error(localizedDescription: "unable to determine modal source, ignoring event")

@@ -102,6 +102,8 @@ private extension AppTheme.Style {
             return ColorProvider.NotificationSuccess
         } else if contains(.vpnGreen) {
             return Asset.vpnGreen.color
+        } else if contains(.warning) {
+            return ColorProvider.NotificationWarning
         } else {
             return ColorProvider.TextNorm
         }

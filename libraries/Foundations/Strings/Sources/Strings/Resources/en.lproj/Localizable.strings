@@ -1078,6 +1078,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ yr";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Web only";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+
 // MARK: Plan selection: advances features; Manage subscription
 
 /* iOS plan feature */
@@ -2528,9 +2534,6 @@
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /month";
-
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /year";
 
 // MARK: Onboarding
 
