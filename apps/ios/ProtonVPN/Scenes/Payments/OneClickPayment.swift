@@ -52,15 +52,15 @@ final class OneClickPayment {
     }
 
     private let alertService: CoreAlertService
-    private let planServiceV2: PlanServiceV2
+    private let planService: PlanService
     private let plansComposer: PlansComposerProviding
     private let protonPlansManager: ProtonPlansManagerProviding
 
     init(
         alertService: CoreAlertService,
-        planServiceV2: PlanServiceV2?
+        planService: PlanService?
     ) throws {
-        guard let planServiceV2 else {
+        guard let planService else {
             throw UnavailableError.featureFlagDisabled
         }
 
@@ -94,9 +94,9 @@ final class OneClickPayment {
 //        }
 
         self.alertService = alertService
-        self.planServiceV2 = planServiceV2
-        self.plansComposer = planServiceV2.plansComposer
-        self.protonPlansManager = planServiceV2.protonPlansManager
+        self.planService = planService
+        self.plansComposer = planService.plansComposer
+        self.protonPlansManager = planService.protonPlansManager
 
         AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }
@@ -163,13 +163,12 @@ final class OneClickPayment {
         }
         do {
             let purchasedPlan = try await self.buyPlan(planOption: selectedPlan)
-            log.debug("Purchased plan: \(String(describing: purchasedPlan.protonName))", category: .iap)
+            log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
             await planService.delegate?
                 .paymentTransactionDidFinish(
                 modalSource: nil,
-                newPlanName: plan.protonName,
+                newPlanName: purchasedPlan.plan.name,
                 offerReference: nil,
-                flowType: .oneClick
             )
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)

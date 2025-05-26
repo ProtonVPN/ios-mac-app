@@ -1,5 +1,5 @@
 //
-//  SettingsViewModel.swift
+//  StatusMenuViewModel.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -27,16 +27,16 @@ import Dependencies
 import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
-import ProtonCoreLoginUI
 import ProtonCoreUIFoundations
+import ProtonCoreLoginUI
 
 import CommonNetworking
+import VPNShared
 import LegacyCommon
-import LocalAuthentication
+import VPNAppCore
 import Settings
 import SwiftUI
-import VPNAppCore
-import VPNShared
+import LocalAuthentication
 
 import Domain
 import Strings
@@ -44,25 +44,24 @@ import Strings
 // TODO: Migrate to @MainActor once overall codebase is ready for it
 
 final class SettingsViewModel {
-    typealias Factory =
-        AppInfoFactory &
-        AppSessionManagerFactory & AppStateManagerFactory &
-        AuthKeychainHandleFactory &
-        ConnectionStatusServiceFactory &
-        CoreAlertServiceFactory &
-        NATTypePropertyProviderFactory &
-        NetShieldPropertyProviderFactory &
-        NetworkingFactory &
-        PaymentsApiServiceFactory &
-        PlanServiceFactory &
-        ProfileManagerFactory &
-        PropertiesManagerFactory &
-        SafeModePropertyProviderFactory &
-        SettingsServiceFactory &
-        VpnGatewayFactory &
-        VpnKeychainFactory &
-        VpnManagerFactory &
-        VpnStateConfigurationFactory
+    typealias Factory = AppStateManagerFactory &
+    AppSessionManagerFactory &
+    VpnGatewayFactory &
+    CoreAlertServiceFactory &
+    SettingsServiceFactory &
+    VpnKeychainFactory &
+    ConnectionStatusServiceFactory &
+    NetShieldPropertyProviderFactory &
+    VpnManagerFactory &
+    VpnStateConfigurationFactory &
+    PropertiesManagerFactory &
+    AppInfoFactory &
+    ProfileManagerFactory &
+    NATTypePropertyProviderFactory &
+    SafeModePropertyProviderFactory &
+    PaymentsApiServiceFactory &
+    AuthKeychainHandleFactory &
+    NetworkingFactory
 
     private let factory: Factory
 
@@ -102,7 +101,7 @@ final class SettingsViewModel {
         self.protocolService = protocolService
         self.vpnGateway = vpnGateway
 
-        self.isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
+        isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
 
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: vpnGateway)
@@ -121,7 +120,7 @@ final class SettingsViewModel {
         sections.append(securitySection)
         sections.append(advancedSection)
 
-        if let connectionSection {
+        if let connectionSection = connectionSection {
             sections.append(connectionSection)
         }
 
@@ -136,17 +135,14 @@ final class SettingsViewModel {
     var shouldShowAccountRecovery: Bool {
         accountRecoveryStatus?.isVisibleInSettings ?? false
     }
-
     var accountRecoveryStateText: String {
         accountRecoveryStatus?.valueForSettingsItem ?? ""
     }
-
     var accountRecoveryImage: UIImage? {
         accountRecoveryStatus?.imageForSettingsItem
     }
 
     // MARK: - Header section
-
     func viewForFooter() -> UIView {
         let view = AppVersionView.loadViewFromNib() as AppVersionView
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
@@ -155,7 +151,6 @@ final class SettingsViewModel {
     }
 
     // MARK: - Private functions
-
     private func startObserving() {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
 
@@ -167,13 +162,12 @@ final class SettingsViewModel {
             .featureFlags,
             .safeMode,
             .credentialsChanged,
-            .smartProtocol,
+            .smartProtocol
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
     }
 
-    @objc
-    private func sessionChanged(_ notification: Notification) {
+    @objc private func sessionChanged(_ notification: Notification) {
         if appSessionManager.sessionStatus == .established, let vpnGateway = notification.object as? VpnGatewayProtocol {
             sessionEstablished(vpnGateway: vpnGateway)
         } else {
@@ -190,7 +184,7 @@ final class SettingsViewModel {
 
         let reloadEvents: [AppEvent] = [
             .connectionStateChanged,
-            .profileContentChanged,
+            .profileContentChanged
         ]
 
         reloadEvents.subscribe(self, selector: #selector(reload))
@@ -205,17 +199,19 @@ final class SettingsViewModel {
         profileManager = nil
     }
 
-    @objc
-    private func reload() {
+    @objc private func reload() {
         reloadNeeded?()
     }
 
     private var accountSection: TableViewSection {
+
         let username: String = authKeychain.username ?? Localizable.unavailable
-        let accountPlanName: String = if let vpnCredentials = try? vpnKeychain.fetchCached() {
-            vpnCredentials.planTitle
+        let accountPlanName: String
+
+        if let vpnCredentials = try? vpnKeychain.fetchCached() {
+            accountPlanName = vpnCredentials.planTitle
         } else {
-            Localizable.unavailable
+            accountPlanName = Localizable.unavailable
         }
 
         let cell = TableViewCellModel.pushAccountDetails(
@@ -227,7 +223,7 @@ final class SettingsViewModel {
         }
 
         var cells: [TableViewCellModel]
-        if isAccountRecoveryEnabled, shouldShowAccountRecovery {
+        if isAccountRecoveryEnabled && shouldShowAccountRecovery {
             let accountRecoveryCell = TableViewCellModel.pushKeyValue(key: AccountRecoveryModule.settingsItem, value: accountRecoveryStateText, icon: accountRecoveryImage) { [weak self] in
                 self?.pushAccountRecoveryViewController()
             }
@@ -240,13 +236,13 @@ final class SettingsViewModel {
         let qrLoginFeatureDisabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.easyDeviceMigrationDisabled)
         let isDeviceSecured: Bool = {
             #if targetEnvironment(simulator)
-                return true
+            return true
             #else
-                return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+            return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
             #endif
         }()
 
-        if !qrLoginFeatureDisabled, !qrLoginOptedOut, isDeviceSecured {
+        if !qrLoginFeatureDisabled && !qrLoginOptedOut && isDeviceSecured {
             let qrCodeSignInCell = TableViewCellModel.pushStandard(title: Localizable.settingsTitleQrCodeSignIn) { [weak self] in
                 self?.pushSignInToAnotherDeviceViewController()
             }
@@ -277,14 +273,14 @@ final class SettingsViewModel {
         cells.append(.upsellableToggle(
             title: Localizable.alwaysOnVpn,
             state: { .available(enabled: true, interactive: false) },
-            upsell: {}, // Always on VPN is always in the enabled and non-interactive state
+            upsell: { }, // Always on VPN is always in the enabled and non-interactive state
             handler: nil
         ))
         cells.append(.tooltip(text: Localizable.alwaysOnVpnTooltipIos))
 
         cells.append(.upsellableToggle(
             title: Localizable.killSwitch,
-            state: { [unowned self] in .available(enabled: propertiesManager.killSwitch, interactive: true) },
+            state: { [unowned self] in .available(enabled: self.propertiesManager.killSwitch, interactive: true) },
             upsell: {
                 // No Upsell: Kill Switch is a free feature
             },
@@ -305,7 +301,7 @@ final class SettingsViewModel {
                     value: netShieldPropertyProvider.netShieldType.name,
                     handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
                 ),
-                .tooltip(text: Localizable.netshieldTitleTooltip),
+                .tooltip(text: Localizable.netshieldTitleTooltip)
             ]
         case .failure(.requiresUpgrade):
             return [
@@ -313,9 +309,9 @@ final class SettingsViewModel {
                     title: Localizable.netshieldTitle,
                     state: { .upsell },
                     upsell: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) },
-                    handler: { _, _ in }
+                    handler: { (_, _) in }
                 ),
-                .tooltip(text: Localizable.netshieldTitleTooltip),
+                .tooltip(text: Localizable.netshieldTitleTooltip)
             ]
         case .failure(.featureDisabled):
             return []
@@ -323,12 +319,12 @@ final class SettingsViewModel {
     }
 
     private var vpnAcceleratorSection: [TableViewCellModel] {
-        [
+        return [
             .upsellableToggle(
                 title: Localizable.vpnAcceleratorTitle,
-                state: { [unowned self] in displayState(for: VPNAccelerator.self) },
+                state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
-                handler: { toggleOn, callback in
+                handler: { (toggleOn, callback) in
                     self.getFeatureChangeAvailability(for: .agent(.vpnAccelerator(toggleOn))) { featureChangeAvailability in
                         let acceleratorValue = toggleOn ? VPNAccelerator.on : VPNAccelerator.off
                         switch featureChangeAvailability {
@@ -347,15 +343,15 @@ final class SettingsViewModel {
                     }
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString)),
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString))
         ]
     }
 
-    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
+    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
-            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+            return .available( enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):
@@ -364,14 +360,14 @@ final class SettingsViewModel {
     }
 
     private var allowLanSection: [TableViewCellModel] {
-        [
+        return [
             .upsellableToggle(
                 title: Localizable.allowLanTitle,
-                state: { [unowned self] in displayState(for: ExcludeLocalNetworks.self) },
+                state: { [unowned self] in self.displayState(for: ExcludeLocalNetworks.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: CustomizationUpsellAlert()) },
-                handler: switchLANCallback()
+                handler: self.switchLANCallback()
             ),
-            .tooltip(text: Localizable.allowLanInfo),
+            .tooltip(text: Localizable.allowLanInfo)
         ]
     }
 
@@ -379,7 +375,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+            return .available(enabled: self.natTypePropertyProvider.natType == .moderateNAT, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -388,12 +384,12 @@ final class SettingsViewModel {
     }
 
     private var moderateNATSection: [TableViewCellModel] {
-        [
+        return [
             .upsellableToggle(
                 title: Localizable.moderateNatTitle,
-                state: { [unowned self] in moderateNATState },
+                state: { [unowned self] in self.moderateNATState },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
-                handler: { [weak self] toggleOn, callback in
+                handler: { [weak self] (toggleOn, callback) in
                     let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 
                     self?.getFeatureChangeAvailability(for: .agent(.moderateNAT(natType))) { [weak self] featureChangeAvailability in
@@ -424,7 +420,7 @@ final class SettingsViewModel {
                     link: Localizable.moderateNatExplanationLink,
                     withUrl: VPNLink.moderateNAT.urlString
                 )
-            ),
+            )
         ]
     }
 
@@ -432,7 +428,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: safeModePropertyProvider.safeMode == false, interactive: true)
+            return .available(enabled: self.safeModePropertyProvider.safeMode == false, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -443,16 +439,16 @@ final class SettingsViewModel {
     private var safeModeSection: [TableViewCellModel] {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
-        [
+        return [
             .upsellableToggle(
                 title: Localizable.nonStandardPortsTitle,
-                state: { [unowned self] in safeModeState },
+                state: { [unowned self] in self.safeModeState },
                 upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
-                handler: { [unowned self] toggleOn, callback in
-                    let currentSafeMode = safeModePropertyProvider.safeMode ?? true
+                handler: { [unowned self] (toggleOn, callback) in
+                    let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
                     let newSafeMode = !currentSafeMode
 
-                    vpnStateConfiguration.getInfo { info in
+                    self.vpnStateConfiguration.getInfo { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
                             self.safeModePropertyProvider.safeMode = newSafeMode
@@ -476,25 +472,24 @@ final class SettingsViewModel {
                 text: NSMutableAttributedString(
                     attributedString: Localizable.nonStandardPortsExplanation.attributed(
                         withColor: UIColor.weakTextColor(),
-                        fontSize: 13
-                    ))
-                    .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
-            ),
+                        fontSize: 13))
+                .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
+            )
         ]
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
-        [
+        return [
             .upsellableToggle(
                 title: Localizable.troubleshootItemAltTitle,
-                state: { [unowned self] in .available(enabled: propertiesManager.alternativeRouting, interactive: true) },
-                upsell: {}, // No Upsell: Alternative Routing is a free feature
-                handler: { [unowned self] _, callback in
-                    propertiesManager.alternativeRouting.toggle()
-                    callback(propertiesManager.alternativeRouting)
+                state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
+                upsell: { }, // No Upsell: Alternative Routing is a free feature
+                handler: { [unowned self] (toggleOn, callback) in
+                    self.propertiesManager.alternativeRouting.toggle()
+                    callback(self.propertiesManager.alternativeRouting)
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)),
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString))
         ]
     }
 
@@ -528,7 +523,7 @@ final class SettingsViewModel {
     }
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        { toggleOn, callback in
+        return { (toggleOn, callback) in
             let isActive = self.isActive()
             let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
 
@@ -567,7 +562,7 @@ final class SettingsViewModel {
     }
 
     private func ksSwitchCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        { toggleOn, callback in
+        return { (toggleOn, callback) in
             let isActive = self.isActive()
 
             var alert: SystemAlert
@@ -611,7 +606,7 @@ final class SettingsViewModel {
                 handler: { [pushExtensionsViewController] in
                     pushExtensionsViewController()
                 }
-            ),
+            )
         ]
 
         return TableViewSection(title: Localizable.extensions, cells: cells)
@@ -624,7 +619,7 @@ final class SettingsViewModel {
                 handler: { [pushUsageStatisticsViewController] in
                     pushUsageStatisticsViewController()
                 }
-            ),
+            )
         ]
 
         return TableViewSection(title: "", cells: cells)
@@ -634,7 +629,7 @@ final class SettingsViewModel {
         let cells: [TableViewCellModel] = [
             .pushStandard(title: Localizable.viewLogs, handler: { [pushLogSelectionViewController] in
                 pushLogSelectionViewController()
-            }),
+            })
         ]
 
         return TableViewSection(title: "", cells: cells)
@@ -647,14 +642,14 @@ final class SettingsViewModel {
             }),
             .button(title: Localizable.logOut, accessibilityIdentifier: "Sign out", color: .notificationErrorColor(), handler: { [logOut] in
                 logOut()
-            }),
+            })
         ]
 
         return TableViewSection(title: "", cells: cells)
     }
 
     private func pushSettingsAccountViewController() {
-        guard let pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
+        guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
         }
         pushHandler(accountViewController)
@@ -662,7 +657,7 @@ final class SettingsViewModel {
 
     private func pushSignInToAnotherDeviceViewController() {
         Task { @MainActor in
-            guard let pushHandler else {
+            guard let pushHandler = pushHandler else {
                 return
             }
 
@@ -672,11 +667,9 @@ final class SettingsViewModel {
 
             let qrCodeInstructionsView = ScanQRCodeInstructionsView(
                 viewModel: .init(dependencies:
-                    .init(
-                        passphrase: passphrase,
-                        userEmail: email,
-                        apiService: apiService
-                    )))
+                        .init(passphrase: passphrase,
+                              userEmail: email,
+                              apiService: apiService)))
             let hostingController = ShowingNavigationBarUIHostingController(
                 rootView: AnyView(qrCodeInstructionsView)
             )
@@ -689,19 +682,17 @@ final class SettingsViewModel {
 
     private func pushAccountRecoveryViewController() {
         assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
-        guard let pushHandler else { return }
+        guard let pushHandler = pushHandler else { return }
         let accountRecoveryViewController = settingsService.makeAccountRecoveryViewController()
         pushHandler(accountRecoveryViewController)
     }
 
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(
-            connectionProtocol: propertiesManager.connectionProtocol,
-            smartProtocolConfig: propertiesManager.smartProtocolConfig,
-            featureFlags: propertiesManager.featureFlags
-        )
+        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol,
+                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
+                                                        featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
-            switch getProtocolChangeAvailability(for: newProtocol) {
+            switch self.getProtocolChangeAvailability(for: newProtocol) {
             case .immediate:
                 completion(.success(true))
                 return
@@ -709,13 +700,10 @@ final class SettingsViewModel {
             case .protocolUnavailable:
                 // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
                 // sure the user knows that the app is about to disconnect.
-                alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
-                    log.debug(
-                        "Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
-                        category: .connectionDisconnect,
-                        event: .trigger
-                    )
-                    completion(.success( /* shouldReconnect */ false))
+                self.alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
+                    log.debug("Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
+                              category: .connectionDisconnect, event: .trigger)
+                    completion(.success(/* shouldReconnect */ false))
                 }, cancelHandler: {
                     completion(.failure(.userCancelled))
                 }))
@@ -723,25 +711,22 @@ final class SettingsViewModel {
             case .withReconnect:
                 // Otherwise, reconnect normally after changing the protocol.
                 let alert = ChangeProtocolDisconnectAlert {
-                    log.debug(
-                        "Reconnect requested after changing protocol to \(newProtocol)",
-                        category: .connectionDisconnect,
-                        event: .trigger
-                    )
+                    log.debug("Reconnect requested after changing protocol to \(newProtocol)",
+                              category: .connectionDisconnect, event: .trigger)
                     completion(.success(true))
                 }
                 alert.dismiss = { completion(.failure(.userCancelled)) }
-                alertService.push(alert: alert)
+                self.alertService.push(alert: alert)
             }
         }
 
         vpnProtocolViewModel.protocolChanged = { [self] newProtocol, shouldReconnect in
             switch newProtocol {
             case .smartProtocol:
-                propertiesManager.smartProtocol = true
-            case let .vpnProtocol(vpnProtocol):
-                propertiesManager.smartProtocol = false
-                propertiesManager.vpnProtocol = vpnProtocol
+                self.propertiesManager.smartProtocol = true
+            case .vpnProtocol(let vpnProtocol):
+                self.propertiesManager.smartProtocol = false
+                self.propertiesManager.vpnProtocol = vpnProtocol
             }
 
             switch getProtocolChangeAvailability(for: newProtocol) {
@@ -749,13 +734,13 @@ final class SettingsViewModel {
                 break // we're not connected, so nothing needs to be done
 
             case .protocolUnavailable:
-                requestDisconnect()
+                self.requestDisconnect()
 
             case .withReconnect:
                 if shouldReconnect {
-                    reconnect(with: .connectionProtocol(newProtocol))
+                    self.reconnect(with: .connectionProtocol(newProtocol))
                 } else {
-                    requestDisconnect()
+                    self.requestDisconnect()
                 }
             }
         }
@@ -838,9 +823,9 @@ final class SettingsViewModel {
 
     func isActive() -> Bool {
         if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            settingsClient.isActive()
+            return settingsClient.isActive()
         } else {
-            !appStateManager.state.isSafeToEnd
+            return !appStateManager.state.isSafeToEnd
         }
     }
 
@@ -902,13 +887,13 @@ final class SettingsViewModel {
             }
         } else {
             switch agentFeatureChange {
-            case let .netShield(value):
+            case .netShield(let value):
                 vpnManager.set(netShieldType: value)
 
-            case let .vpnAccelerator(value):
+            case .vpnAccelerator(let value):
                 vpnManager.set(vpnAccelerator: value)
 
-            case let .moderateNAT(value):
+            case .moderateNAT(let value):
                 vpnManager.set(natType: value)
             }
         }
@@ -918,7 +903,7 @@ final class SettingsViewModel {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
         if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
+            if case .connectionProtocol(let connectionProtocol) = tunnelFeatureChange {
                 propertiesManager.connectionProtocol = connectionProtocol
             }
             Task {
@@ -936,7 +921,7 @@ final class SettingsViewModel {
             case .killSwitch:
                 vpnGateway.retryConnection()
 
-            case let .connectionProtocol(value):
+            case .connectionProtocol(let value):
                 vpnGateway.reconnect(with: value)
             }
         }
@@ -946,6 +931,6 @@ final class SettingsViewModel {
 class ShowingNavigationBarUIHostingController: UIHostingController<AnyView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }

@@ -44,8 +44,7 @@ final class IosAlertService {
         WindowServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory &
-        PlanServiceFactory &
-        PlanServiceFactoryV2
+        PlanServiceFactory
 
     private let factory: Factory
 
@@ -54,8 +53,7 @@ final class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
-    private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var planServiceV2: PlanServiceV2? = factory.makePlanServiceV2()
+    private lazy var planService: PlanService? = factory.makePlanService()
 
     private lazy var modalsFactory: ModalsFactory = ModalsFactory()
 
@@ -299,12 +297,12 @@ extension IosAlertService: CoreAlertService {
             }
         case is UserPlanDowngradedAlert:
             if let server = server {
-                viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
+                viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService?.countriesCount ?? 0,
                                                                 numberOfDevices: DomainConstants.maxDeviceCount,
                                                               fromServer: server.from,
                                                               toServer: server.to)
             } else {
-                viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
+                viewModel = .subscriptionDowngraded(numberOfCountries: planService?.countriesCount ?? 0,
                                                   numberOfDevices: DomainConstants.maxDeviceCount)
             }
         case let alert as MaxSessionsAlert:
@@ -317,7 +315,9 @@ extension IosAlertService: CoreAlertService {
             return
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
-            self?.planService.presentPlanSelection()
+            Task {
+                await self?.planService?.presentSubscriptionManagement()
+            }
         }
 
         let viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel,
@@ -352,7 +352,7 @@ extension IosAlertService: CoreAlertService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: self,
-                planServiceV2: planServiceV2
+                planService: planService
             )
         } catch {
             log.error("Unexpected payments error: \(error)")
@@ -479,7 +479,9 @@ extension IosAlertService: CoreAlertService {
     private func show(_ alert: FreeConnectionsAlert) {
         let upgradeAction: (() -> Void) = { [weak self] in
             self?.windowService.dismissModal {
-                self?.planService.presentPlanSelection()
+                Task {
+                    await self?.planService?.presentSubscriptionManagement()
+                }
             }
         }
 

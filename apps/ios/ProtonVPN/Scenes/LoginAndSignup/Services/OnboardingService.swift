@@ -45,11 +45,10 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory & PlanServiceFactoryV2 & CoreAlertServiceFactory
+    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory
 
     private let windowService: WindowService
-    private let planService: PlanService
-    private let planServiceV2: PlanServiceV2?
+    private let planService: PlanService?
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
 
@@ -60,7 +59,6 @@ final class OnboardingModuleService {
     init(factory: Factory) {
         self.windowService = factory.makeWindowService()
         self.planService = factory.makePlanService()
-        self.planServiceV2 = factory.makePlanServiceV2()
         self.alertService = factory.makeCoreAlertService()
         self.modalsFactory = ModalsFactory()
     }
@@ -110,7 +108,7 @@ extension OnboardingModuleService: OnboardingService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: alertService,
-                planServiceV2: planServiceV2
+                planService: planService
             )
         } catch {
             log.error("Encountered payments error: \(error)")

@@ -41,7 +41,7 @@ final class SettingsAccountViewModel {
                         AppStateManagerFactory &
                         CoreAlertServiceFactory &
                         NetworkingFactory &
-                        PlanServiceFactoryV2 &
+                        PlanServiceFactory &
                         PropertiesManagerFactory &
                         VpnKeychainFactory &
                         AuthKeychainHandleFactory &
@@ -52,7 +52,7 @@ final class SettingsAccountViewModel {
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var planServiceV2: PlanServiceV2? = factory.makePlanServiceV2()
+    private lazy var planService: PlanService? = factory.makePlanService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
@@ -184,7 +184,7 @@ final class SettingsAccountViewModel {
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
         Task { [weak self] in
-            await self?.planServiceV2?.presentSubscriptionManagement()
+            await self?.planService?.presentSubscriptionManagement()
         }
     }
 

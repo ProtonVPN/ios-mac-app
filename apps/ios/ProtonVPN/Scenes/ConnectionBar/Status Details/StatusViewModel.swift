@@ -29,31 +29,30 @@ import GSMessages
 import ProtonCoreUIFoundations
 
 import LegacyCommon
-import NetShield
 import VPNAppCore
 import VPNShared
+import NetShield
 
-import Domain
-import Ergonomics
-import Strings
 import Theme
+import Domain
+import Strings
+import Ergonomics
 
 private let connectionDurationRefreshInterval: TimeInterval = 1.0
 
 class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &
-        AppStateManagerFactory &
-        CoreAlertServiceFactory &
-        NATTypePropertyProviderFactory &
-        NetShieldPropertyProviderFactory &
-        PlanServiceFactory &
-        ProfileManagerFactory &
         PropertiesManagerFactory &
-        SafeModePropertyProviderFactory &
+        ProfileManagerFactory &
+        AppStateManagerFactory &
         VpnGatewayFactory &
+        CoreAlertServiceFactory &
         VpnKeychainFactory &
+        NetShieldPropertyProviderFactory &
         VpnManagerFactory &
-        VpnStateConfigurationFactory
+        VpnStateConfigurationFactory &
+        NATTypePropertyProviderFactory &
+        SafeModePropertyProviderFactory
 
     private let factory: Factory
 
@@ -68,7 +67,6 @@ class StatusViewModel {
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
 
     // Used to send GSMessages to a view controller
@@ -79,13 +77,13 @@ class StatusViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     var isSessionEstablished: Bool {
-        appSessionManager.sessionStatus == .established
+        return appSessionManager.sessionStatus == .established
     }
 
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
-    private lazy var isNetShieldEnabled: Bool = featureFlags[\.netShield]
-    private lazy var isNetShieldStatsEnabled: Bool = featureFlags[\.netShieldStats]
+    private lazy var isNetShieldEnabled: Bool = { featureFlags[\.netShield] }()
+    private lazy var isNetShieldStatsEnabled: Bool = { featureFlags[\.netShieldStats] }()
     @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
@@ -120,7 +118,7 @@ class StatusViewModel {
     private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
-        if let lastState = lastChangeServerAvailableState, case let .unavailable(until, _, _) = lastState, until.isFuture {
+        if let lastState = lastChangeServerAvailableState, case .unavailable(let until, _, _) = lastState, until.isFuture {
             // Don't re-calculate server change availability if we know we don't need to
             // (if we are already in time-out, this won't change unless we upgrade)
             return lastState
@@ -144,7 +142,7 @@ class StatusViewModel {
         Task {
             await updateConnectionDate()
         }
-        self.netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
+        netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
         startObserving()
         runTimer()
     }
@@ -184,7 +182,6 @@ class StatusViewModel {
 
         case .loadingConnectionInfo:
             sections.append(technicalDetailsSectionLoadingConnectionInfo)
-
         default:
             sections.append(technicalDetailsSectionDisconnected)
         }
@@ -208,15 +205,15 @@ class StatusViewModel {
     private var connectionStatusCell: TableViewCellModel {
         switch appStateManager.displayState {
         case .connected:
-            .textWithActivityCell(title: Localizable.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
+            return .textWithActivityCell(title: Localizable.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
         case .connecting:
-            .textWithActivityCell(title: Localizable.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            return .textWithActivityCell(title: Localizable.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .loadingConnectionInfo:
-            .textWithActivityCell(title: Localizable.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
+            return .textWithActivityCell(title: Localizable.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
         case .disconnecting:
-            .textWithActivityCell(title: Localizable.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            return .textWithActivityCell(title: Localizable.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .disconnected:
-            .textWithActivityCell(title: Localizable.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
+            return .textWithActivityCell(title: Localizable.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
         }
     }
 
@@ -225,6 +222,7 @@ class StatusViewModel {
     }
 
     private var connectionCountryString: String {
+
         guard let lastPreparedServer = propertiesManager.lastPreparedServer else { return "" }
 
         if propertiesManager.serverTypeToggle == .secureCore {
@@ -242,7 +240,7 @@ class StatusViewModel {
             .staticKeyValue(key: Localizable.ip, value: activeConnection?.serverIp.exitIp ?? ""),
             .staticKeyValue(key: Localizable.server, value: (activeConnection?.server.name ?? "") + city),
             .staticKeyValue(key: Localizable.protocol, value: activeConnection?.vpnProtocol.localizedDescription ?? ""),
-            timeCell,
+            timeCell
         ]
 
         return TableViewSection(title: Localizable.technicalDetails, cells: cells)
@@ -302,23 +300,19 @@ class StatusViewModel {
             connectionRequest(for: profile) == vpnGateway.lastConnectionRequest
         }
         if contains {
-            return .button(
-                title: Localizable.deleteProfile,
-                accessibilityIdentifier: "Delete Profile",
-                color: .notificationErrorColor(),
-                handler: { [deleteProfile] in
-                    deleteProfile()
-                }
-            )
+            return .button(title: Localizable.deleteProfile,
+                           accessibilityIdentifier: "Delete Profile",
+                           color: .notificationErrorColor(),
+                           handler: { [deleteProfile] in
+                deleteProfile()
+            })
         } else {
-            return .button(
-                title: Localizable.saveAsProfile,
-                accessibilityIdentifier: "Save as Profile",
-                color: .normalTextColor(),
-                handler: { [saveAsProfile] in
-                    saveAsProfile()
-                }
-            )
+            return .button(title: Localizable.saveAsProfile,
+                           accessibilityIdentifier: "Save as Profile",
+                           color: .normalTextColor(),
+                           handler: { [saveAsProfile] in
+                saveAsProfile()
+            })
         }
     }
 
@@ -332,7 +326,7 @@ class StatusViewModel {
                 color: .normalTextColor(),
                 handler: { [weak self] in self?.changeServer() }
             )
-        case let .unavailable(duration):
+        case .unavailable(let duration):
             let serverChangeString = Localizable.changeServer
                 .attributed(withColor: .normalTextColor(), font: .systemFont(ofSize: 15))
             return TableViewCellModel.attributedKeyValue(
@@ -357,22 +351,18 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
             log.error("Could not create profile because matching profile already exists", category: .ui)
-            messageHandler?(
-                Localizable.profileCreatedSuccessfully,
-                GSMessageType.success,
-                UIConstants.messageOptions
-            )
+            messageHandler?(Localizable.profileCreatedSuccessfully,
+                            GSMessageType.success,
+                            UIConstants.messageOptions)
             DispatchQueue.main.async { self.contentChanged?() }
             return
         }
 
         let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol ?? propertiesManager.vpnProtocol
         _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol, netShield: appStateManager.activeConnection()?.netShieldType)
-        messageHandler?(
-            Localizable.profileCreatedSuccessfully,
-            GSMessageType.success,
-            UIConstants.messageOptions
-        )
+        messageHandler?(Localizable.profileCreatedSuccessfully,
+                        GSMessageType.success,
+                        UIConstants.messageOptions)
         DispatchQueue.main.async { self.contentChanged?() }
     }
 
@@ -380,21 +370,17 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               let existingProfile = profileManager.profile(withServer: server) else {
             log.error("Could not find profile to delete", category: .ui)
-            messageHandler?(
-                Localizable.profileDeletionFailed,
-                GSMessageType.error,
-                UIConstants.messageOptions
-            )
+            messageHandler?(Localizable.profileDeletionFailed,
+                            GSMessageType.error,
+                            UIConstants.messageOptions)
             DispatchQueue.main.async { self.contentChanged?() }
             return
         }
 
         profileManager.deleteProfile(existingProfile)
-        messageHandler?(
-            Localizable.profileDeletedSuccessfully,
-            GSMessageType.success,
-            UIConstants.messageOptions
-        )
+        messageHandler?(Localizable.profileDeletedSuccessfully,
+                        GSMessageType.success,
+                        UIConstants.messageOptions)
         DispatchQueue.main.async { self.contentChanged?() }
     }
 
@@ -406,8 +392,7 @@ class StatusViewModel {
         }
     }
 
-    @objc
-    private func serverChangeTimerFired() {
+    @objc private func serverChangeTimerFired() {
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         if case .available = viewState {
             serverChangeTimer?.invalidate()
@@ -418,13 +403,12 @@ class StatusViewModel {
         updateServerChangeCell()
     }
 
-    @objc
-    private func timerFired() {
+    @objc private func timerFired() {
         updateTimeCell()
     }
 
     private func updateTimeCell() {
-        guard let timeCellIndexPath else { return } // No time cell in the view
+        guard let timeCellIndexPath = timeCellIndexPath else { return } // No time cell in the view
         rowsUpdated?([timeCellIndexPath: timeCell])
     }
 
@@ -442,7 +426,7 @@ class StatusViewModel {
 
         if showChangeServerBanner {
             rowsUpdated?([indexPath: changeCountryBannerCell])
-        } else if !showChangeServerBanner, shouldShowNetShieldV2 {
+        } else if !showChangeServerBanner && shouldShowNetShieldV2 {
             rowsUpdated?([indexPath: netShieldV2UpsellBannerCell])
         }
     }
@@ -456,7 +440,7 @@ class StatusViewModel {
             .appStateManagerStateChange,
             .netShield,
             .natType,
-            .planChanged,
+            .planChanged
         ]
 
         let connectionChangedTokens = NotificationCenter.default.addObservers(for: events.map(\.name), object: nil) { [weak self] notification in
@@ -478,11 +462,11 @@ class StatusViewModel {
         notificationTokens = []
     }
 
-    private func connectionChanged(notification _: Notification) {
+    private func connectionChanged(notification: Notification) {
         contentChanged?()
     }
 
-    private func stateChanged(notification _: Notification) {
+    private func stateChanged(notification: Notification) {
         Task {
             await updateConnectionDate()
         }
@@ -490,8 +474,8 @@ class StatusViewModel {
 
     @MainActor
     private func updateConnectionDate() async {
-        connectedDate = await (appStateManager.connectedDate()) ?? Date()
-        updateTimeCell()
+        self.connectedDate = (await appStateManager.connectedDate()) ?? Date()
+        self.updateTimeCell()
     }
 
     // MARK: - NetShield
@@ -514,7 +498,7 @@ class StatusViewModel {
             upsell: {
                 // No Upsell: This UI is shown only for paid users when NetShieldStats feature flag is off
             },
-            handler: { toggleOn, _ in
+            handler: { (toggleOn, _) in
                 self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
             }
         ))
@@ -550,14 +534,15 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
 
         cells.append(.attributedKeyValue(key: Localizable.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: Localizable.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-            guard let self, userIsEligibleForNetshield else { return }
-            alertService.push(alert: NetShieldUpsellAlert())
+
+            guard let self, self.userIsEligibleForNetshield else { return }
+            self.alertService.push(alert: NetShieldUpsellAlert())
         }))
 
-        for type in [NetShieldType.level1, NetShieldType.level2] {
+        [NetShieldType.level1, NetShieldType.level2].forEach { type in
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
-                guard let self, userIsEligibleForNetshield else { return }
-                alertService.push(alert: NetShieldUpsellAlert())
+                guard let self, self.userIsEligibleForNetshield else { return }
+                self.alertService.push(alert: NetShieldUpsellAlert())
             }))
         }
 
@@ -590,7 +575,7 @@ class StatusViewModel {
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,
                 leadingImage: Asset.netshieldSmall.image,
                 trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: {}
+                handler: { }
             )
         }
 
@@ -655,7 +640,7 @@ class StatusViewModel {
     // MARK: Upsell
 
     private var changeCountryBannerCell: TableViewCellModel {
-        .imageSubtitle(
+        return .imageSubtitle(
             title: Localizable.wrongCountryBannerTitle,
             subtitle: Localizable.wrongCountryBannerSubtitle,
             image: Theme.Asset.wrongCountry.image,

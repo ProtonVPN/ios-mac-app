@@ -26,20 +26,19 @@ import Strings
 import Theme
 
 import LegacyCommon
-import VPNAppCore
 import VPNShared
+import VPNAppCore
 
 final class NetShieldSelectionViewModel {
-    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory & PlanServiceFactory
+    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
     private var factory: Factory
 
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
     private var selectedFeature: NetShieldType
 
-    let onSelect: (NetShieldType, @escaping (Bool) -> Void) -> Void
+    let onSelect: ((NetShieldType, @escaping (Bool) -> Void) -> Void)
 
     var onDataChange: (() -> Void)?
 
@@ -84,16 +83,17 @@ final class NetShieldSelectionViewModel {
 
     private var netShieldUpsellSection: TableViewSection {
         @Dependency(\.credentialsProvider) var credentialsProvider
-        let upsellCell = if credentialsProvider.planName.isBusinessWithoutNetShield {
-            TableViewCellModel.imageSubtitleImage(
+        let upsellCell: TableViewCellModel
+        if credentialsProvider.planName.isBusinessWithoutNetShield {
+            upsellCell = TableViewCellModel.imageSubtitleImage(
                 title: Localizable.netshieldBusinessUpsellTitle,
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,
                 leadingImage: Asset.netshieldSmall.image,
                 trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: {}
+                handler: { }
             )
         } else {
-            TableViewCellModel.imageSubtitle(
+            upsellCell = TableViewCellModel.imageSubtitle(
                 title: Localizable.netshieldUpsellTitle,
                 subtitle: Localizable.netshieldUpsellSubtitle,
                 image: Asset.netshieldSmall.image,
@@ -141,8 +141,7 @@ final class NetShieldSelectionViewModel {
         }
     }
 
-    @objc
-    private func reload() {
+    @objc private func reload() {
         onDataChange?()
     }
 }
