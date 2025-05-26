@@ -24,9 +24,9 @@ import Dependencies
 import ProtonCoreFeatureFlags
 
 import LegacyCommon
-import Modals
 import Persistence
 import VPNShared
+import Modals
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
@@ -45,10 +45,11 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory & WindowServiceFactory
+    typealias Factory = WindowServiceFactory & PlanServiceFactory & PlanServiceFactoryV2 & CoreAlertServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService
+    private let planServiceV2: PlanServiceV2?
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
 
@@ -59,6 +60,7 @@ final class OnboardingModuleService {
     init(factory: Factory) {
         self.windowService = factory.makeWindowService()
         self.planService = factory.makePlanService()
+        self.planServiceV2 = factory.makePlanServiceV2()
         self.alertService = factory.makeCoreAlertService()
         self.modalsFactory = ModalsFactory()
     }
@@ -75,12 +77,12 @@ extension OnboardingModuleService: OnboardingService {
 
     private func welcomeToProtonViewController() -> UIViewController {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
-            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
+            return modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
                 let getStartedVC = self.onboardingGetStartedViewController()
                 self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
             })
         } else {
-            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
+            return modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
                 self.postOnboardingAction()
             })
         }
@@ -93,9 +95,9 @@ extension OnboardingModuleService: OnboardingService {
             self.postOnboardingAction()
         } onFeatureUpdate: { feature in
             switch feature {
-            case let .toggle(.statistics, _, _, state):
+            case .toggle(.statistics, _, _, let state):
                 self.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
-            case let .toggle(.crashes, _, _, state):
+            case .toggle(.crashes, _, _, let state):
                 self.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
             default:
                 assertionFailure("Onboarding interactive feature not handled")
@@ -108,12 +110,11 @@ extension OnboardingModuleService: OnboardingService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: alertService,
-                planService: planService,
-                payments: planService.payments
+                planServiceV2: planServiceV2
             )
         } catch {
             log.error("Encountered payments error: \(error)")
-            windowService.dismissModal {
+            self.windowService.dismissModal {
                 self.onboardingCoordinatorDidFinish()
             }
             return

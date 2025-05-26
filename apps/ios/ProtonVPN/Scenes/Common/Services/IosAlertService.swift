@@ -1,5 +1,5 @@
 //
-//  IosAlertService.swift
+//  IosCoreAlertService.swift
 //  ProtonVPN - Created on 09/09/2019.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -27,23 +27,25 @@ import Dependencies
 
 import ProtonCoreUIFoundations
 
-import Announcement
 import LegacyCommon
-import Modals
 import Persistence
 import VPNAppCore
+import Modals
+import Announcement
 
-import Domain
 import Ergonomics
 import Strings
+import Domain
 
 final class IosAlertService {
-    typealias Factory =
+
+    typealias Factory = UIAlertServiceFactory &
         AppSessionManagerFactory &
-        PlanServiceFactory &
+        WindowServiceFactory &
         SettingsServiceFactory &
-        TroubleshootCoordinatorFactory & UIAlertServiceFactory &
-        WindowServiceFactory
+        TroubleshootCoordinatorFactory &
+        PlanServiceFactory &
+        PlanServiceFactoryV2
 
     private let factory: Factory
 
@@ -53,11 +55,14 @@ final class IosAlertService {
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
     private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var modalsFactory: ModalsFactory = .init()
+    private lazy var planServiceV2: PlanServiceV2? = factory.makePlanServiceV2()
+
+    private lazy var modalsFactory: ModalsFactory = ModalsFactory()
 
     private var oneClickPayment: OneClickPayment?
 
-    @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
+    @ConcurrentlyReadable
+    private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -65,6 +70,7 @@ final class IosAlertService {
 }
 
 extension IosAlertService: CoreAlertService {
+
     func push(alert: SystemAlert) {
         executeOnUIThread {
             self.pushOnUIThread(alert: alert)
@@ -272,13 +278,12 @@ extension IosAlertService: CoreAlertService {
 
         default:
             #if DEBUG
-                fatalError("Alert type handling not implemented: \(String(describing: alert))")
+            fatalError("Alert type handling not implemented: \(String(describing: alert))")
             #else
-                showDefaultSystemAlert(alert)
+            showDefaultSystemAlert(alert)
             #endif
         }
     }
-
     // swiftlint:enable cyclomatic_complexity function_body_length
 
     // This method translates the `UserAccountUpdateAlert` subclasses to specific feature types that the Modals module expects.
@@ -287,24 +292,20 @@ extension IosAlertService: CoreAlertService {
         let viewModel: UserAccountUpdateViewModel
         switch alert {
         case is UserBecameDelinquentAlert:
-            if let server {
+            if let server = server {
                 viewModel = .pendingInvoicesReconnecting(fromServer: server.from, toServer: server.to)
             } else {
                 viewModel = .pendingInvoices
             }
         case is UserPlanDowngradedAlert:
-            if let server {
-                viewModel = .subscriptionDowngradedReconnecting(
-                    numberOfCountries: planService.countriesCount,
-                    numberOfDevices: DomainConstants.maxDeviceCount,
-                    fromServer: server.from,
-                    toServer: server.to
-                )
+            if let server = server {
+                viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
+                                                                numberOfDevices: DomainConstants.maxDeviceCount,
+                                                              fromServer: server.from,
+                                                              toServer: server.to)
             } else {
-                viewModel = .subscriptionDowngraded(
-                    numberOfCountries: planService.countriesCount,
-                    numberOfDevices: DomainConstants.maxDeviceCount
-                )
+                viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
+                                                  numberOfDevices: DomainConstants.maxDeviceCount)
             }
         case let alert as MaxSessionsAlert:
             if alert.accountTier.isFreeTier {
@@ -319,26 +320,24 @@ extension IosAlertService: CoreAlertService {
             self?.planService.presentPlanSelection()
         }
 
-        let viewController = modalsFactory.userAccountUpdateViewController(
-            viewModel: viewModel,
-            onPrimaryButtonTap: onPrimaryButtonTap
-        )
+        let viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel,
+                                                                           onPrimaryButtonTap: onPrimaryButtonTap)
         viewController.modalPresentationStyle = .overFullScreen
-        windowService.present(modal: viewController)
+        self.windowService.present(modal: viewController)
     }
 
     private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
-        let modalType: ModalType = switch welcomeScreenAlert.plan {
+        let modalType: ModalType
+        switch welcomeScreenAlert.plan {
         case .fallback:
-            .welcomeFallback
+            modalType = .welcomeFallback
         case .unlimited:
-            .welcomeUnlimited
+            modalType = .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            .welcomePlus(
+            modalType = .welcomePlus(
                 numberOfServers: numberOfServers,
                 numberOfDevices: numberOfDevices,
-                numberOfCountries: numberOfCountries
-            )
+                numberOfCountries: numberOfCountries)
         }
         let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)
@@ -353,8 +352,7 @@ extension IosAlertService: CoreAlertService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: self,
-                planService: planService,
-                payments: planService.payments
+                planServiceV2: planServiceV2
             )
         } catch {
             log.error("Unexpected payments error: \(error)")
@@ -402,12 +400,12 @@ extension IosAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert)
     }
 
-    private func show(_: CannotAccessVpnCredentialsAlert) {
+    private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
         appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
     }
 
-    private func show(_: RefreshTokenExpiredAlert) {
+    private func show(_ alert: RefreshTokenExpiredAlert) {
         appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
@@ -420,7 +418,7 @@ extension IosAlertService: CoreAlertService {
         }
     }
 
-    private func show(_: ReportBugAlert) {
+    private func show(_ alert: ReportBugAlert) {
         settingsService.presentReportBug()
     }
 
@@ -428,18 +426,18 @@ extension IosAlertService: CoreAlertService {
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
-        uiAlertService.displayAlert(alert)
+        self.uiAlertService.displayAlert(alert)
     }
 
     private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {
         uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
     }
 
-    private func show(_: ConnectionTroubleshootingAlert) {
+    private func show(_ alert: ConnectionTroubleshootingAlert) {
         factory.makeTroubleshootCoordinator().start()
     }
 
-    private func show(_ alert: VpnServerOnMaintenanceAlert) {
+    private func show(_ alert: VpnServerOnMaintenanceAlert ) {
         showNotificationStyleAlert(message: alert.title ?? "", type: .success)
     }
 
@@ -450,15 +448,15 @@ extension IosAlertService: CoreAlertService {
         }
         let announcement: AnnouncementViewController
         switch panelMode {
-        case let .legacy(legacyPanel):
+        case .legacy(let legacyPanel):
             announcement = AnnouncementDetailViewController(legacyPanel)
             announcement.modalPresentationStyle = .fullScreen
-        case let .image(imagePanel):
+        case .image(let imagePanel):
             announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference)
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }
         announcement.cancelled = { [weak self] in
-            self?.windowService.dismissModal {}
+            self?.windowService.dismissModal { }
         }
         announcement.urlRequested = { url in
             @Dependency(\.linkOpener) var linkOpener
@@ -490,7 +488,7 @@ extension IosAlertService: CoreAlertService {
     }
 }
 
-private extension ReconnectInfo {
+fileprivate extension ReconnectInfo {
     func servers() -> (from: (String, Image), to: (String, Image)) {
         ((fromServer.name, fromServer.image), (toServer.name, toServer.image))
     }
