@@ -19,6 +19,27 @@
   },
   "testTargets" : [
     {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
+        "identifier" : "PersistenceTests",
+        "name" : "PersistenceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "VPNSharedTests",
+        "name" : "VPNSharedTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
+      }
+    },
+    {
       "skippedTests" : [
         "ProtonVPNUITests"
       ],
@@ -29,24 +50,27 @@
       }
     },
     {
+      "skippedTests" : [
+        "CertificateRefreshTests\/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
+      ],
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Review",
-        "identifier" : "ReviewTests",
-        "name" : "ReviewTests"
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "NEHelperTests",
+        "name" : "NEHelperTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/Home",
-        "identifier" : "HomeSnapshotTests",
-        "name" : "HomeSnapshotTests"
+        "containerPath" : "container:..\/..\/libraries\/Modals",
+        "identifier" : "ModalsTests",
+        "name" : "ModalsTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/BugReport",
-        "identifier" : "BugReportTests",
-        "name" : "BugReportTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
+        "identifier" : "TimerMockTests",
+        "name" : "TimerMockTests"
       }
     },
     {
@@ -54,6 +78,27 @@
         "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
         "identifier" : "ConnectionDetailsTests",
         "name" : "ConnectionDetailsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
+        "identifier" : "LocalizationTests",
+        "name" : "LocalizationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Search",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/BugReport",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
       }
     },
     {
@@ -69,51 +114,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Localization",
-        "identifier" : "LocalizationTests",
-        "name" : "LocalizationTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Modals",
-        "identifier" : "ModalsTests",
-        "name" : "ModalsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Search",
-        "identifier" : "SearchTests",
-        "name" : "SearchTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/Persistence",
-        "identifier" : "PersistenceTests",
-        "name" : "PersistenceTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Home",
-        "identifier" : "HomeTests",
-        "name" : "HomeTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerTests",
-        "name" : "TimerTests"
+        "containerPath" : "container:..\/..\/libraries\/NetShield",
+        "identifier" : "NetShieldTests",
+        "name" : "NetShieldTests"
       }
     },
     {
@@ -131,33 +134,16 @@
         "FileLogHandlerTests\/testRotatesFiles()"
       ],
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
-      }
-    },
-    {
-      "skippedTests" : [
-        "CertificateRefreshTests\/testManagerStopAfterSchedulingRetryDueToNetworkTimeoutResultsInOperationBeingCancelled()"
-      ],
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "NEHelperTests",
-        "name" : "NEHelperTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
+        "identifier" : "ErgonomicsTests",
+        "name" : "ErgonomicsTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "VPNSharedTests",
-        "name" : "VPNSharedTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NetShield",
-        "identifier" : "NetShieldTests",
-        "name" : "NetShieldTests"
+        "containerPath" : "container:..\/..\/libraries\/Review",
+        "identifier" : "ReviewTests",
+        "name" : "ReviewTests"
       }
     },
     {
@@ -169,9 +155,23 @@
     },
     {
       "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Home",
+        "identifier" : "HomeSnapshotTests",
+        "name" : "HomeSnapshotTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
-        "identifier" : "TimerMockTests",
-        "name" : "TimerMockTests"
+        "identifier" : "TimerTests",
+        "name" : "TimerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Home",
+        "identifier" : "HomeTests",
+        "name" : "HomeTests"
       }
     }
   ],
