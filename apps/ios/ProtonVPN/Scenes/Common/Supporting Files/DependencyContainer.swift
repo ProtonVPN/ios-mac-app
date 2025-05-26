@@ -64,7 +64,7 @@ final class DependencyContainer: Container {
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService(), authKeychain: makeAuthKeychainHandle())
-    private lazy var planServiceV2 = CorePlanServiceV2(networking: makeNetworking(), authKeychain: makeAuthKeychainHandle())
+    private lazy var planServiceV2 = CorePlanServiceV2(networking: makeNetworking(), alertService: makeCoreAlertService(), authKeychain: makeAuthKeychainHandle())
 
     private lazy var searchStorage = SearchModuleStorage()
     private lazy var review = Review(configuration: ReviewConfiguration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().planTitle), logger: { message in log.debug("\(message)", category: .review) })

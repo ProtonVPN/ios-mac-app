@@ -29,29 +29,30 @@ import ProtonCorePasswordChange
 
 import CommonNetworking
 import LegacyCommon
-import VPNAppCore
 import VPNShared
+import VPNAppCore
 
-import Domain
 import Strings
+import Domain
 
 final class SettingsAccountViewModel {
+    
     typealias Factory = AppSessionManagerFactory &
-        AppStateManagerFactory &
-        AuthKeychainHandleFactory &
-        CoreAlertServiceFactory &
-        NavigationServiceFactory &
-        NetworkingFactory &
-        PlanServiceFactory &
-        PropertiesManagerFactory &
-        VpnKeychainFactory
+                        AppStateManagerFactory &
+                        CoreAlertServiceFactory &
+                        NetworkingFactory &
+                        PlanServiceFactoryV2 &
+                        PropertiesManagerFactory &
+                        VpnKeychainFactory &
+                        AuthKeychainHandleFactory &
+                        NavigationServiceFactory
 
     private let factory: Factory
-
+    
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var planServiceV2: PlanServiceV2? = factory.makePlanServiceV2()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
@@ -60,53 +61,49 @@ final class SettingsAccountViewModel {
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
     var reloadNeeded: (() -> Void)?
-
+    
     init(factory: Factory) {
         self.factory = factory
 
         AppEvent.sessionManagerDataReloaded.subscribe(self, selector: #selector(reload))
     }
-
+    
     var tableViewData: [TableViewSection] {
         var sections: [TableViewSection] = []
-
+        
         sections.append(accountSection)
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
         sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
-
+        
         return sections
     }
-
+    
     private var accountSection: TableViewSection {
         let username = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
         let allowUpgrade: Bool
         let allowPlanManagement: Bool
-
+        
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
-            allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
+            allowUpgrade = /*planService.iapStatus.isEnabled &&*/ !allowPlanManagement
         } else {
             accountPlanName = Localizable.unavailable
             allowUpgrade = false
             allowPlanManagement = false
         }
-
+        
         var cells: [TableViewCellModel] = [
             .staticKeyValue(key: Localizable.username, value: username),
-            .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName),
+            .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName)
         ]
         if allowUpgrade {
             cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
-                if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
-                    self?.manageSubscriptionAction()
-                } else {
-                    self?.buySubscriptionAction()
-                }
+                self?.manageSubscriptionAction()
             }))
         }
         if allowPlanManagement {
@@ -117,26 +114,25 @@ final class SettingsAccountViewModel {
 
         return TableViewSection(title: Localizable.account.uppercased(), cells: cells)
     }
-
+    
     final class ButtonWithLoadingIndicatorControllerImplementation: ButtonWithLoadingIndicatorController {
-        var startLoading: () -> Void = {}
-        var stopLoading: () -> Void = {}
+        var startLoading: () -> Void = { }
+        var stopLoading: () -> Void = { }
         var handler: () -> Void
         init(handler: @escaping () -> Void) {
             self.handler = handler
         }
-
         func onPressed() {
             handler()
         }
     }
-
+    
     private lazy var controller = ButtonWithLoadingIndicatorControllerImplementation { [weak self] in
         self?.deleteAccount()
     }
 
     private var changePasswordSection: TableViewSection {
-        TableViewSection(title: "", cells: [
+        return TableViewSection(title: "", cells: [
             .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
@@ -145,16 +141,16 @@ final class SettingsAccountViewModel {
                     if userSettings.password.mode != .singlePassword {
                         mode = .loginPassword
                     }
-                    if let viewController = navigationService.makePasswordChangeViewController(mode: mode) {
+                    if let viewController = self.navigationService.makePasswordChangeViewController(mode: mode) {
                         pushHandler(viewController)
                     }
                 }
-            }),
+            })
         ])
     }
 
     private var securityKeysSection: TableViewSection {
-        TableViewSection(title: "", cells: [
+        return TableViewSection(title: "", cells: [
             .pushStandard(title: Localizable.securityKeys) { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
@@ -162,7 +158,7 @@ final class SettingsAccountViewModel {
                         pushHandler(viewController)
                     }
                 }
-            },
+            }
         ])
     }
 
@@ -176,25 +172,20 @@ final class SettingsAccountViewModel {
 
     private var deleteAccountSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .buttonWithLoadingIndicator(
-                title: AccountDeletionService.defaultButtonName,
-                accessibilityIdentifier: "Delete account",
-                color: .notificationErrorColor(),
-                controller: controller
-            ),
-            .tooltip(text: AccountDeletionService.defaultExplanationMessage),
+            .buttonWithLoadingIndicator(title: AccountDeletionService.defaultButtonName,
+                                        accessibilityIdentifier: "Delete account",
+                                        color: .notificationErrorColor(),
+                                        controller: controller),
+            .tooltip(text: AccountDeletionService.defaultExplanationMessage)
         ]
         return TableViewSection(title: "", cells: cells)
     }
 
-    /// Open modal with new plan selection (for free/trial users and non-renewing plans)
-    private func buySubscriptionAction() {
-        planService.presentPlanSelection()
-    }
-
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        planService.presentSubscriptionManagement()
+        Task { [weak self] in
+            await self?.planServiceV2?.presentSubscriptionManagement()
+        }
     }
 
     private func deleteAccount() {
@@ -202,23 +193,23 @@ final class SettingsAccountViewModel {
             log.assertionFailure("SettingsViewModel.viewControllerFetcher must be set for account deletion flow to be presented")
             return
         }
-
+        
         controller.startLoading()
-
+        
         guard !appStateManager.state.isSafeToEnd else {
             proceedWithAccountDeletion(viewController: viewController)
             return
         }
-
+        
         alertService.push(alert: AccountDeletionWarningAlert { [weak self] in
-            guard let self else { return }
-            switch appStateManager.state {
+            guard let self = self else { return }
+            switch self.appStateManager.state {
             case .connecting:
-                appStateManager.cancelConnectionAttempt { [weak self] in
+                self.appStateManager.cancelConnectionAttempt { [weak self] in
                     self?.proceedWithAccountDeletion(viewController: viewController)
                 }
             default:
-                appStateManager.disconnect { [weak self] in
+                self.appStateManager.disconnect { [weak self] in
                     self?.proceedWithAccountDeletion(viewController: viewController)
                 }
             }
@@ -226,7 +217,7 @@ final class SettingsAccountViewModel {
             self?.controller.stopLoading()
         })
     }
-
+    
     private func proceedWithAccountDeletion(viewController: UIViewController) {
         let deletionService = AccountDeletionService(api: factory.makeNetworking().apiService)
         deletionService.initiateAccountDeletionProcess(
@@ -238,17 +229,16 @@ final class SettingsAccountViewModel {
                 switch result {
                 case .success:
                     self?.handleAccountDeletionSuccess()
-                case let .failure(error):
+                case .failure(let error):
                     self?.handleAccountDeletionFailure(error)
                 }
-            }
-        )
+            })
     }
-
+    
     private func handleAccountDeletionSuccess() {
         appSessionManager.logOut(force: true, reason: nil)
     }
-
+    
     private func handleAccountDeletionFailure(_ error: AccountDeletionError) {
         switch error {
         case .closedByUser: break
@@ -257,9 +247,8 @@ final class SettingsAccountViewModel {
             alertService.push(alert: alert)
         }
     }
-
-    @objc
-    private func reload() {
+    
+    @objc private func reload() {
         reloadNeeded?()
     }
 }

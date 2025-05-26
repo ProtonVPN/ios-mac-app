@@ -181,6 +181,7 @@
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
+		A42F23772DE47D400067A6E8 /* ProtonCorePaymentsUIV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A42F23762DE47D400067A6E8 /* ProtonCorePaymentsUIV2 */; };
 		A486CC102DDF19AE00BA1444 /* PlanServiceV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A486CC0F2DDF19AA00BA1444 /* PlanServiceV2.swift */; };
 		A486CC122DDF239300BA1444 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A486CC112DDF239300BA1444 /* ProtonCorePaymentsV2 */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
@@ -941,6 +942,7 @@
 				4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */,
 				A486CC122DDF239300BA1444 /* ProtonCorePaymentsV2 in Frameworks */,
 				E5C384642D96AA98003494D5 /* Settings in Frameworks */,
+				A42F23772DE47D400067A6E8 /* ProtonCorePaymentsUIV2 in Frameworks */,
 				E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
 				4C9FF4882D64897C004DBF89 /* Announcement in Frameworks */,
@@ -2359,6 +2361,7 @@
 				E5C3847B2D96B9D5003494D5 /* Modals */,
 				E5E39ED32D96DFED006E4978 /* Home */,
 				A486CC112DDF239300BA1444 /* ProtonCorePaymentsV2 */,
+				A42F23762DE47D400067A6E8 /* ProtonCorePaymentsUIV2 */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4807,6 +4810,10 @@
 		8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreTelemetry;
+		};
+		A42F23762DE47D400067A6E8 /* ProtonCorePaymentsUIV2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCorePaymentsUIV2;
 		};
 		A486CC112DDF239300BA1444 /* ProtonCorePaymentsV2 */ = {
 			isa = XCSwiftPackageProductDependency;
