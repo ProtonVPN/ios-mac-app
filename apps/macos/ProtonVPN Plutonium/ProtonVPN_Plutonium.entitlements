@@ -8,5 +8,9 @@
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>$(TeamIdentifierPrefix)group.ch.protonvpn.mac</string>
+	</array>
 </dict>
 </plist>

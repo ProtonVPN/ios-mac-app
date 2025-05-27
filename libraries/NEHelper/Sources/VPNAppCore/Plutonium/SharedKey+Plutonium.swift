@@ -19,6 +19,7 @@
 #if canImport(AppKit)
 
 import Foundation
+import Domain
 
 import ComposableArchitecture
 
@@ -64,7 +65,10 @@ public struct PlutoniumActivated: Codable, Equatable {
 
 private extension URL {
     static func plutoniumDirectory(for file: PlutoniumFile) -> URL {
-        .applicationSupportDirectory.appending(component: file.rawValue)
+        FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
+            .appending(component: "plutonium")
+            .appending(component: file.rawValue)
     }
     static var excludeListURL: URL {
         .plutoniumDirectory(for: .excludeList)
