@@ -210,6 +210,8 @@
 
 "_reconnecting_to" = "Uudelleenyhdistetään palvelimeen %@";
 
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+
 /* iOS status view */
 "_connected_to" = "Yhdistetty palvelimeen";
 
@@ -588,6 +590,24 @@
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profiili päivitettiin";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Muokkaa";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Leikkaa";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Kopioi";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Liitä";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Poista";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Valitse kaikki";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Yleisnäkymä";
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ vuosi";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Web only";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+
 /* iOS plan feature */
 "_feature_server_count" = "Yhdistä palvelimiin";
 
@@ -1151,7 +1177,7 @@
 "_extensions" = "Laajennukset";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "Widget";
+"_widget" = "Widgetti";
 
 /* Menu point in settings screen */
 "_usage_statistics" = "Käyttötilastot";
@@ -1437,9 +1463,23 @@
 
 "_sysex_enabled_description" = "Määritys on valmis. Nyt voit selata Internetiä nopeammin, parhailla VPN-tekniikoilla.";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "Järjestelmälaajennusta ei voida ottaa käyttöön";
 
-"_sysex_error_description" = "Järjestelmälaajennuksen asennuksessa tapahtui virhe.\nKorjaa ongelma asentamalla Proton VPN uudelleen varmistaen, että sen sijainti on Sovellukset-kansiossa. Vaihtoehtoisesti ota yhteyttä asiakaspalveluumme.";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "An error occurred while enabling System Extensions: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "the current system policy prohibits activating extensions on your device.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "please contact our support. (Error %@)";
 
 "_vpnauth_certfail_title" = "Todennusvirhe";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "Lue lisää";
 
 "_action_requires_reconnect" = "Muutoksen käyttöönotto vaatii uudelleenyhdistyksen";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Syötä kelvollinen IPv4-osoite";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Osoite on jo lisätty";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Lisää";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Kaikki sovellukset";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Ei mitään";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Ei valittuja sovelluksia";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Poissulje-tila";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Sisällytä-tila";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Poissuljetut sovellukset";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Suojatut sovellukset";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Muutokset tulevat voimaan, kun yhdistät uudelleen";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Import apps";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "browse apps";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Get the best of both worlds";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "No IP addresses yet";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "Palvelinvirhe";
 
@@ -1713,7 +1828,7 @@
 "_connection_card_accessibility_fastest" = "Nopein käytettävissä oleva maa";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
-"_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
+"_connection_card_accessibility_fastest_sc" = "Nopein käytettävissä oleva Secure Core -maa";
 
 /* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
 "_connection_details_accessibility_ipView_showAddress" = "Näytä IP-osoitteesi kaksoisnapauttamalla";
@@ -1758,7 +1873,7 @@
 "home_default_connection_title" = "Valitse oletusyhteytesi";
 
 /* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
-"home_default_connection_fastest_name" = "Fastest Country";
+"home_default_connection_fastest_name" = "Nopein maa";
 
 /* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
 "home_default_connection_fastest_description" = "Sijaintisi perusteella paras palvelin";
@@ -2021,7 +2136,7 @@
 "_settings_app_version" = "Sovellusversio: %@";
 
 /* Title of the "Sign in to another device" cell in the Settings tab */
-"_settings_title_qr_code_sign_in" = "Sign in to another device";
+"_settings_title_qr_code_sign_in" = "Kirjaudu toiseen laitteeseen";
 
 /* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
 "_settings_netshield_on" = "Käytössä";
@@ -2536,9 +2651,6 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /kuukausi";
 
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /vuosi";
-
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Sisältyy VPN Businessiin.";
 
@@ -2750,7 +2862,7 @@
 "_generic_error_description" = "Toimintoa ei voitu suorittaa. (Virhe %@)";
 
 /* Error alert title: a connection error has occurred. */
-"_connection_error_title" = "Connection Error";
+"_connection_error_title" = "Yhteysvirhe";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
@@ -2780,7 +2892,7 @@
 "_provider_message_error" = "Yhteysvirhe. (Virhe %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Unprotected";
+"widget_unprotected_header" = "Suojaamaton";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
@@ -2789,34 +2901,106 @@
 "widget_recents_title" = "Viimeisimmät";
 
 /* Recents section description */
-"widget_recents_description" = "View your connection history here.";
+"widget_recents_description" = "Tarkastele yhteyshistoriaasi täällä.";
 
 /* What's new screen section title */
-"widget_whats_new_title" = "Widgets are back";
+"widget_whats_new_title" = "Widgetit tulivat takaisin";
 
 /* What's new screen section subtitle */
-"widget_whats_new_subtitle" = "You can now view and manage your VPN connection without leaving the Home Screen.";
+"widget_whats_new_subtitle" = "Voit nyt tarkastella ja hallita VPN-yhteyttäsi aloitusnäytöstä poistumatta.";
 
 /* Widget adoption modal title. */
-"_widgetAdoption_modal_title" = "Try the Proton VPN widget";
+"_widgetAdoption_modal_title" = "Kokeile Proton VPN -widgettiä";
 
 /* Widget adoption modal subtitle. */
-"_widgetAdoption_modal_subtitle" = "Check if you’re connected to VPN and access your default and favorite connections from the home screen.";
+"_widgetAdoption_modal_subtitle" = "Tarkista, onko VPN-yhteytesi käytössä, ja käytä oletus- ja suosikkiyhteyksiäsi aloitusnäytöltä.";
 
 /* Widget adoption modal instructions header. */
-"_widgetAdoption_modal_instructions_header" = "How to add the Proton VPN widget";
+"_widgetAdoption_modal_instructions_header" = "Miten lisäät Proton VPN -widgetin";
 
 /* Widget adoption modal 1st instruction content. */
-"_widgetAdoption_modal_instruction_1" = "Press and hold anywhere on your Home Screen";
+"_widgetAdoption_modal_instruction_1" = "Paina pitkään missä tahansa aloitusnäytölläsi";
 
 /* Widget adoption modal 2nd instruction content. */
-"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
+"_widgetAdoption_modal_instruction_2" = "Paina **muokkaa**-painiketta ja valitse **Lisää widgetti**";
 
 /* Widget adoption modal 3rd instruction content. */
-"_widgetAdoption_modal_instruction_3" = "Select or search for **Proton VPN**";
+"_widgetAdoption_modal_instruction_3" = "Valitse tai etsi **Proton VPN**";
 
 /* Widget adoption modal 4th instruction content. */
-"_widgetAdoption_modal_instruction_4" = "Choose your favorite widget from the carousel, then press **Add Widget** to confirm";
+"_widgetAdoption_modal_instruction_4" = "Valitse suosikkiwidgettisi karusellista ja vahvista painamalla **Lisää widgetti**";
 
 /* Widget adoption modal CTA. */
-"_widgetAdoption_modal_instruction_button" = "Got it";
+"_widgetAdoption_modal_instruction_button" = "Selvä";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Advanced VPN customization";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Connect using a custom DNS server with VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Päivitä";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "Mukautettu DNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Asetukset";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Mukautettu DNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS).";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Palvelimet (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Lisää uusi DNS-palvelin";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Lisää";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Syötä palvelimen IPv4-osoite";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Syötä IPv4-osoite";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Syötä kelvollinen IPv4-osoite";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Palvelin on jo lisätty";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Odottamaton virhe tapahtui.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Kopioi kaksoisklikkaamalla";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Otetaanko mukautettu DNS käyttöön?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Tämä poistaa NetShieldin käytöstä.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Otetaanko NetShield käyttöön?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Tämä poistaa mukautetun DNS:n käytöstä.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Muuta asetuksia";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Your connection needs to be restarted to apply this change.";

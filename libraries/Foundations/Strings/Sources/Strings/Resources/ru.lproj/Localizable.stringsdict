@@ -647,5 +647,25 @@
         <string>%d года</string>
       </dict>
     </dict>
+    <key>plutonium_others</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plutonium_others@</string>
+      <key>plutonium_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>+ %d другое</string>
+        <key>few</key>
+        <string>+ %d другие</string>
+        <key>many</key>
+        <string>+ %d другие</string>
+        <key>other</key>
+        <string>+ %d другие</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

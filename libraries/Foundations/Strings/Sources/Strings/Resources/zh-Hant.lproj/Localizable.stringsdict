@@ -13,7 +13,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d devices</string>
+        <string>%d 裝置</string>
       </dict>
     </dict>
     <key>welcome_screen_feature_servers_countries</key>
@@ -426,7 +426,7 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d countries</string>
+        <string>%d 國家</string>
       </dict>
     </dict>
     <key>plan_duration_year</key>
@@ -441,6 +441,20 @@
         <string>d</string>
         <key>other</key>
         <string>%d 年</string>
+      </dict>
+    </dict>
+    <key>plutonium_others</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plutonium_others@</string>
+      <key>plutonium_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>+ %d others</string>
       </dict>
     </dict>
   </dict>

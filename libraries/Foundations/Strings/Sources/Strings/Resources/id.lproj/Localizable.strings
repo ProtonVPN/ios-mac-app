@@ -62,7 +62,7 @@
 "_on_maintenance" = "Dalam pemeliharaan";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Diperlukan Koneksi Ulang";
+"_reconnection_required" = "Penyambungan Ulang Dibutuhkan";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Pemeliharaan";
@@ -100,7 +100,7 @@
 "_not_connected_to_the_internet" = "Koneksi VPN tidak dapat dikukuhkan. Anda tidak sedang terhubung ke internet.";
 
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
-"_vpn_connection_active" = "Sambungan VPN Aktif";
+"_vpn_connection_active" = "Koneksi VPN Aktif";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
 "_vpn_protocol_not_supported_title" = "Protokol VPN Tidak Didukung";
@@ -209,6 +209,8 @@
 "_connecting_to" = "Menghubungkan ke %@";
 
 "_reconnecting_to" = "Menghubungkan ulang ke %@";
+
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
 
 /* iOS status view */
 "_connected_to" = "Terhubung ke";
@@ -589,6 +591,24 @@
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profil telah diperbarui";
 
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Sunting";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Potong";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Salin";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Tempel";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Hapus";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Pilih Semua";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Ikhtisar";
 
@@ -755,7 +775,7 @@
 
 "_p2p_detected_popup_title" = "Lalu lintas P2P tidak diizinkan pada server ini";
 
-"_p2p_detected_popup_body" = "Sambungan Anda dinonaktifkan karena Anda menggunakan server yang tidak mendukung lalu lintas peer-to-peer (P2P). P2P tidak didukung pada server gratis dan server dengan nomor 100 atau lebih besar.";
+"_p2p_detected_popup_body" = "Koneksi Anda telah dinonaktifkan karena Anda menggunakan server yang tidak mendukung lalu lintas peer-to-peer (P2P). P2P tidak didukung pada server gratis dan server yang bernomor 100 atau lebih besar.";
 
 "_p2p_forwarded_popup_title" = "Koneksi dialihkan";
 
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/th";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Khusus web";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Langganan diperbarui secara otomatis pada %1$@ dengan harga %2$@/tahun";
+
 /* iOS plan feature */
 "_feature_server_count" = "Terhubung ke server dalam";
 
@@ -1370,7 +1396,7 @@
 
 "_ip_will_not_be_exposed" = "IP Anda tidak akan diekspos.";
 
-"_cancel_reconnection" = "Ini akan membatalkan usaha menyambung ulang dan membiarkan Anda terputus sambungan";
+"_cancel_reconnection" = "Tindakan ini akan membatalkan segala usaha penyambungan ulang dan membiarkan Anda tidak tersambung";
 
 "_quick_settings_netshield_option_off" = "Jangan blokir";
 
@@ -1393,7 +1419,7 @@
 "_kill_switch_reconnection_bold2" = "Perlindungan kill switch";
 
 /* MacOS: connection screen - cancel button */
-"_kill_switch_reconnection_cancel" = "Batalkan sambungan ulang";
+"_kill_switch_reconnection_cancel" = "Batalkan penyambungan ulang";
 
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
@@ -1402,7 +1428,7 @@
 "_smart_title" = "Smart";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Aktifkan Smart Protocol agar Anda dapat terhubung ke internet melalui protokol dan port yang memiliki kualitas sambungan terbaik secara otomatis.";
+"_smart_protocol_description" = "Aktifkan Smart Protocol untuk menggunakan protokol dan port yang menyediakan konektivitas terbaik secara otomatis.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Penyambungan ulang dibutuhkan";
@@ -1420,7 +1446,7 @@
 "_sysex_description_3" = "Untuk melanjutkan, klik **Buka Pengaturan Sistem** dan ikuti instruksi yang tertera pada video yang muncul di layar ini.";
 
 /* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "Untuk melanjutkan, klik **Buka Preferensi Keamanan** dan ikuti instruksi yang tertera pada video yang muncul di layar ini.";
+"_sysex_description_4" = "Untuk melanjutkan, klik **Buka Preferensi Keamanan** dan ikuti instruksi video yang muncul pada layar ini.";
 
 /* Title of the system extension wizard in mac */
 "_sysex_set_up_proton_vpn" = "Atur Proton VPN";
@@ -1435,11 +1461,25 @@
 
 "_sysex_enabled_title" = "Konfigurasi selesai";
 
-"_sysex_enabled_description" = "Konfigurasi selesai. Anda kini dapat menjelajah internet lebih cepat dengan berbagai teknologi VPN terbaik.";
+"_sysex_enabled_description" = "Konfigurasi selesai. Anda kini dapat menjelajah internet secara lebih cepat dengan berbagai teknologi VPN terbaik.";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "Tidak dapat mengaktifkan modul Ekstensi Sistem";
 
-"_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang Proton VPN dan pastikan Proton VPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Terjadi kesalahan saat mengaktifkan Ekstensi Sistem: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "pastikan aplikasi terinstal dengan benar di folder /Applications.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "kebijakan sistem saat ini melarang aktivasi ekstensi pada perangkat Anda.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "Otorisasi Anda diperlukan untuk melanjutkan.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "silakan hubungi layanan dukungan kami. (Kesalahan %@)";
 
 "_vpnauth_certfail_title" = "Kesalahan autentikasi";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "Pelajari lebih lanjut";
 
 "_action_requires_reconnect" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Masukkan alamat IPv4 yang valid";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Alamat telah ditambahkan";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Tambah";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Semua aplikasi";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Tidak ada";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Tidak ada aplikasi yang dipilih";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Mode pengecualian";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Sertakan mode";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Aplikasi yang dikecualikan";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Aplikasi yang dilindungi";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Segala perubahan akan diterapkan pada saat Anda menghubungkan ulang";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Impor aplikasi";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Seret dan lepas di sini atau ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "telusuri aplikasi";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Dapatkan yang terbaik dari koneksi VPN dan non-VPN";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Belum ada alamat IP";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "Kesalahan server";
 
@@ -2060,7 +2175,7 @@
 "_settings_protocol_section_title_tcp" = "Keterandalan (TCP)";
 
 /* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_smart" = "Memilih protokol terbaik secara otomatis untuk koneksi Anda.";
+"_settings_protocol_description_smart" = "Memilih protokol yang terbaik untuk koneksi Anda secara otomatis.";
 
 /* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_wireguard_udp" = "Cepat, aman, dan efisien. WireGuard lebih efisien dalam penggunaan baterai dibanding protokol lainnya.";
@@ -2105,7 +2220,7 @@
 "_bad_interface_ip_range_alert_title" = "Antarmuka Jaringan Tidak Benar";
 
 /* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
-"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Jaringan lokal Anda mungkin tidak aman (antarmuka '%@' memiliki IP dan awalan '%@'). Data Anda dapat dikirim secara tidak terenkripsi melalui jaringan lokal. Mengaktifkan Kill Switch akan memblokir lalu lintas ini. Koneksi ke perangkat lokal akan tidak mungkin.";
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "Jaringan lokal Anda mungkin tidak aman (antarmuka '%@' memiliki IP dan awalan '%@'). Data Anda dapat dikirim secara tidak terenkripsi melalui jaringan lokal. Mengaktifkan Kill Switch akan memblokir lalu lintas ini. Koneksi ke perangkat lokal akan terhenti sementara.";
 
 /* Title of the search screen */
 "search_title" = "Pencarian";
@@ -2536,9 +2651,6 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /bulan";
 
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /tahun";
-
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Tersedia dengan VPN Business.";
 
@@ -2820,3 +2932,75 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Mengerti";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Kustomisasi VPN lanjutan";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Sambungkan menggunakan server DNS khusus dengan VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Tingkatkan";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "DNS khusus";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Preferensi";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "DNS khusus";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Hubungkan diri Anda ke VPN dengan nama domain (DNS) milik pihak ketiga atau yang dikelola secara mandiri.";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Server (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Tambah server DNS baru";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Tambah";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Masukkan alamat IPv4 server";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Masukkan alamat IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Masukkan alamat IPv4 yang valid";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Server telah ditambahkan";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Terjadi kesalahan yang tak terduga.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Klik dua kali untuk menyalin";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "Apabila server DNS khusus Anda tidak berfungsi, DNS VPN standar akan digunakan.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Aktifkan DNS Khusus?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Tindakan ini akan menonaktifkan NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Aktifkan NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Tindakan ini akan menonaktifkan DNS khusus.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Ubah pengaturan";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini.";

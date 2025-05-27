@@ -513,5 +513,21 @@ parados</string>
         <string>%d anos</string>
       </dict>
     </dict>
+    <key>plutonium_others</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plutonium_others@</string>
+      <key>plutonium_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>+ %d outro</string>
+        <key>other</key>
+        <string>+ %d outros</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
