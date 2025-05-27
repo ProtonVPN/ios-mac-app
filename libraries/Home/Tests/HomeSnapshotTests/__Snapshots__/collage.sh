@@ -2,9 +2,11 @@
 
 # Directory containing images
 IMAGEDIR="MapSnapshots/"
+IMAGEDIR2="ConnectedCitySnapshots/"
 
 # Output filename
-OUTPUT="collage.jpg"
+OUTPUT="collageCountires.jpg"
+OUTPUT2="collageCities.jpg"
 
 # Size of each thumbnail
 THUMB_WIDTH=320
@@ -22,4 +24,12 @@ montage "$IMAGEDIR"/*png \
   -geometry +2+2 \
   "$OUTPUT"
 
-echo "Collage created: $OUTPUT"
+montage "$IMAGEDIR2"/*png \
+  -thumbnail ${THUMB_WIDTH}x${THUMB_HEIGHT}^ \
+  -gravity center \
+  -extent ${THUMB_WIDTH}x${THUMB_HEIGHT} \
+  -tile ${COLUMNS}x \
+  -geometry +2+2 \
+  "$OUTPUT2"
+
+echo "Collage created: $OUTPUT, $OUTPUT2"
