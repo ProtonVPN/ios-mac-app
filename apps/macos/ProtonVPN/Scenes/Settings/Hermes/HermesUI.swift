@@ -27,8 +27,14 @@ import Sharing
 import Strings
 import Theme
 
+// MARK: - View Definitions
+
 struct HermesView: ExplicitlySizedView {
     static let viewSize: CGSize = .init(width: 752, height: 600)
+
+    private static let macOSListInterItemVerticalPadding: CGFloat = 4.0
+    private static let resolverCellVerticalHeight: CGFloat = 40.0
+    private static let resolversListVerticalHeight: CGFloat = 192.0
 
     let viewModel: HermesViewModel
 
@@ -43,11 +49,17 @@ struct HermesView: ExplicitlySizedView {
         }
     }
 
+    private var localHermesResolvers: Binding<[HermesResolver]> {
+        return .init { viewModel.activeHermesResolvers } set: { newValue in
+            viewModel.applyDiff(newValue.difference(from: viewModel.activeHermesResolvers))
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             HermesSectionView {
                 HStack {
-                    VStack(alignment: .leading, spacing: .zero) {
+                    VStack(alignment: .leading, spacing: .themeSpacing2) {
                         Text(Localizable.hermesFeatureTitle)
                             .themeFont(.title3(emphasised: true))
                             .foregroundStyle(Color.white)
@@ -59,9 +71,15 @@ struct HermesView: ExplicitlySizedView {
                     Spacer()
 
                     Toggle(isOn: isEnabledBinding) { EmptyView() }
-                        .onSubmit { isEnabledBinding.wrappedValue = !isEnabledBinding.wrappedValue }
+                        .onSubmit {
+                            withAnimation {
+                                isEnabledBinding.wrappedValue = !isEnabledBinding.wrappedValue
+                            }
+                        }
                         .toggleStyle(ThemeToggleStyle())
                 }
+                .padding(.horizontal, .themeSpacing16)
+                .padding(.vertical, .themeSpacing24)
             }
 
             if isEnabledBinding.wrappedValue {
@@ -87,34 +105,32 @@ struct HermesView: ExplicitlySizedView {
 
     @ViewBuilder
     private var resolversContent: some View {
-        let resolvers = viewModel.activeHermesResolvers
+        let resolversCount = localHermesResolvers.count
 
-        Text(Localizable.hermesEntitiesHeader(resolvers.count))
+        Text(Localizable.hermesEntitiesHeader(resolversCount))
             .themeFont(.callout(emphasised: false))
             .foregroundStyle(Color(.text, .weak))
             .padding(.top, .themeSpacing24)
 
-        VStack(alignment: .leading, spacing: .themeSpacing16) {
-            Text(Localizable.hermesEntitiesFormHeader)
-                .themeFont(.title3(emphasised: true))
-                .foregroundStyle(Color(.text, .normal))
+        HermesSectionView {
+            VStack(alignment: .leading, spacing: .themeSpacing16) {
+                Text(Localizable.hermesEntitiesFormHeader)
+                    .themeFont(.title3(emphasised: true))
+                    .foregroundStyle(Color(.text, .normal))
 
-            locationInputView
+                locationInputView
 
-            locationValidationView
+                locationValidationView
 
-            Text(Localizable.hermesEntitiesFootnote)
-                .themeFont(.callout(emphasised: false))
-                .foregroundStyle(Color(.text, .hint))
+                resolversListView
 
-            resolversListView
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, .themeSpacing16)
-        .padding(.vertical, .themeSpacing24)
-        .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: .themeSpacing12, style: .continuous))
-        .onChange(of: resolverLocation) { newValue in
-            resolverLocationValidation = viewModel.validate(location: newValue)
+                Text(resolversCount > 1 ? Localizable.hermesEntitiesFootnoteMultiple : Localizable.hermesEntitiesFootnoteSingle)
+                    .themeFont(.callout(emphasised: false))
+                    .foregroundStyle(Color(.text, .hint))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.vertical, .themeSpacing24)
         }
     }
 
@@ -146,6 +162,12 @@ struct HermesView: ExplicitlySizedView {
     }
 
     private func submitResolverLocation() {
+        resolverLocationValidation = viewModel.validate(location: resolverLocation)
+
+        guard case .valid = resolverLocationValidation else {
+            return
+        }
+
         if viewModel.addResolver(with: resolverLocation) {
             resolverLocation = ""
         } else {
@@ -176,26 +198,28 @@ struct HermesView: ExplicitlySizedView {
     }
 
     private var resolversListView: some View {
-        List {
-            let resolvers = viewModel.activeHermesResolvers
-            let singleResolver = resolvers.count == 1
-
-            ForEach(resolvers, id: \.self) { resolver in
-                cell(forResolver: resolver, isSingleResolver: singleResolver)
-                    .frame(height: 40.0)
-                    .listRowSeparator(.hidden)
-                    .help(Localizable.hermesEntitiesCopyAction)
-                    .onTapGesture(count: 2) {
-                        setPasteboard(to: resolver.location)
-                    }
+        let resolversCount = localHermesResolvers.count
+        let listHeight = min(
+            max(0, CGFloat(localHermesResolvers.count) * (Self.resolverCellVerticalHeight + 2 * Self.macOSListInterItemVerticalPadding)),
+            Self.resolversListVerticalHeight
+        )
+        let editActions: EditActions<[HermesResolver]> = resolversCount > 1 ? [.move] : []
+        return List(localHermesResolvers, editActions: editActions) { binding in
+            let resolver = binding.wrappedValue
+            HermesResolverTableViewCell(resolver: resolver, isSingleResolver: resolversCount == 1) {
+                _ = viewModel.removeResolver(resolver)
             }
-            .onMove { src, dst in
-                viewModel.moveResolvers(from: src, to: dst)
-            }
+            .frame(height: Self.resolverCellVerticalHeight)
+            .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
+            .help(Localizable.hermesEntitiesCopyAction)
+            .onTapGesture(count: 2) {
+                setPasteboard(to: resolver.location)
+            }
         }
-        .scrollContentBackground(.hidden)
+        .frame(height: listHeight)
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
     }
 
     @discardableResult
@@ -203,29 +227,35 @@ struct HermesView: ExplicitlySizedView {
         NSPasteboard.general.clearContents()
         return NSPasteboard.general.setString(newContent, forType: .string)
     }
+}
 
-    private func cell(forResolver resolver: HermesResolver, isSingleResolver: Bool) -> some View {
+private struct HermesResolverTableViewCell: View {
+    let resolver: HermesResolver
+    let isSingleResolver: Bool
+    let onDeleteAction: () -> Void
+
+    var body: some View {
         HStack {
             if !isSingleResolver {
                 Asset.hermesDragIcon.swiftUIImage
-                    .disabled(true)
+                    .allowsHitTesting(false)
             }
 
             Text(resolver.location)
                 .themeFont(.body(emphasised: false))
+                .allowsHitTesting(false)
 
             Spacer()
 
-            Button(role: .destructive) {
-                _ = viewModel.removeResolver(resolver)
-            } label: {
+            Button(role: .destructive, action: onDeleteAction) {
                 Label("Delete", systemImage: "trash")
                     .foregroundStyle(.primary)
                     .labelStyle(.iconOnly)
+                    .padding(.all, .themeSpacing6)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(GhostButtonStyle())
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -239,11 +269,12 @@ private struct HermesSectionView<Content: View>: View {
     var body: some View {
         content
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, .themeSpacing24)
-            .padding(.vertical, .themeSpacing24)
-            .background(.white.opacity(0.05), in: RoundedRectangle(cornerRadius: .themeSpacing12, style: .continuous))
+            .background(Color(.background, .transparent))
+            .themeBorder(style: .weak, cornerRadius: .radius12)
     }
 }
+
+// MARK: - Window
 
 final class HermesWindow: NSWindow {
     override var canBecomeKey: Bool {

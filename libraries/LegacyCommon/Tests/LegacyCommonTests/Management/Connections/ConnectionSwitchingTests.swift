@@ -458,146 +458,152 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     // Test that Smart Protocol doesn't use WireGuard TLS when it's disabled in feature flags.
     @MainActor
     func testSmartProtocolRespectsAPIConfig() async { // swiftlint:disable:this function_body_length
-        PMAPIService.noTrustKit = true // disabling trustKit, otherwise it will trigger this `assertionFailure("TrustKit not initialized correctly")`
-        let isConnectedUsingTcpOrTls: () -> Bool = {
-            [.wireGuard(.tls), .wireGuard(.tcp)].contains(self.container.vpnManager.currentVpnProtocol)
-        }
-
-        let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
-                .unavailable
-        }
-
-        let unavailableProtocols: [VpnProtocol] = [
-            .ike,
-            .openVpn(.tcp),
-            .openVpn(.udp),
-            .wireGuard(.udp)
-        ]
-
-        for vpnProtocol in unavailableProtocols {
-            container.availabilityCheckerResolverFactory.checkers[vpnProtocol]?.availabilityCallback = unavailableCallback
-        }
-
-        let expectations = (
-            connection: (1...5).map { XCTestExpectation(description: "connection #\($0)") },
-            clientConfig: (1...5).map { XCTestExpectation(description: "fetch client config #\($0)") },
-            disconnect: (1...5).map { XCTestExpectation(description: "disconnect #\($0)") }
-        )
-        let protocolAlertExpectation = XCTestExpectation(description: "Protocol not supported alert should be shown")
-        protocolAlertExpectation.expectedFulfillmentCount = 1
-
-        var didConnect = false
-        var step = 0
-        statusChanged = { status in
-            if status == .connected {
-                didConnect = true
-                expectations.connection[step].fulfill()
-            } else if status == .disconnected {
-                XCTAssert(didConnect, "should have connected first")
-                expectations.disconnect[step].fulfill()
+        await withDependencies {
+            let mockAuthorizer = MockFeatureAuthorizerProvider()
+            mockAuthorizer.registerAuthorization(for: HermesFeature.self, to: .success)
+            $0.featureAuthorizerProvider = mockAuthorizer
+        } operation: {
+            PMAPIService.noTrustKit = true // disabling trustKit, otherwise it will trigger this `assertionFailure("TrustKit not initialized correctly")`
+            let isConnectedUsingTcpOrTls: () -> Bool = {
+                [.wireGuard(.tls), .wireGuard(.tcp)].contains(self.container.vpnManager.currentVpnProtocol)
             }
-        }
 
-        container.networkingDelegate.didHitRoute = { route in
-            guard route == .clientConfig else { return }
-
-            expectations.clientConfig[step].fulfill()
-        }
-
-        container.alertService.alertAdded = { alert in
-            if alert is ProtocolNotAvailableForServerAlert {
-                protocolAlertExpectation.fulfill()
-            } else {
-                XCTFail("Unexpected alert. \(type(of: alert))")
+            let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
+                    .unavailable
             }
+
+            let unavailableProtocols: [VpnProtocol] = [
+                .ike,
+                .openVpn(.tcp),
+                .openVpn(.udp),
+                .wireGuard(.udp)
+            ]
+
+            for vpnProtocol in unavailableProtocols {
+                container.availabilityCheckerResolverFactory.checkers[vpnProtocol]?.availabilityCallback = unavailableCallback
+            }
+
+            let expectations = (
+                connection: (1...5).map { XCTestExpectation(description: "connection #\($0)") },
+                clientConfig: (1...5).map { XCTestExpectation(description: "fetch client config #\($0)") },
+                disconnect: (1...5).map { XCTestExpectation(description: "disconnect #\($0)") }
+            )
+            let protocolAlertExpectation = XCTestExpectation(description: "Protocol not supported alert should be shown")
+            protocolAlertExpectation.expectedFulfillmentCount = 1
+
+            var didConnect = false
+            var step = 0
+            statusChanged = { status in
+                if status == .connected {
+                    didConnect = true
+                    expectations.connection[step].fulfill()
+                } else if status == .disconnected {
+                    XCTAssert(didConnect, "should have connected first")
+                    expectations.disconnect[step].fulfill()
+                }
+            }
+
+            container.networkingDelegate.didHitRoute = { route in
+                guard route == .clientConfig else { return }
+
+                expectations.clientConfig[step].fulfill()
+            }
+
+            container.alertService.alertAdded = { alert in
+                if alert is ProtocolNotAvailableForServerAlert {
+                    protocolAlertExpectation.fulfill()
+                } else {
+                    XCTFail("Unexpected alert. \(type(of: alert))")
+                }
+            }
+
+            let request = ConnectionRequest(serverType: .standard,
+                                            connectionType: .country("CH", .fastest),
+                                            connectionProtocol: .smartProtocol,
+                                            netShieldType: .level1,
+                                            natType: .moderateNAT,
+                                            safeMode: true,
+                                            profileId: nil,
+                                            profileName: nil,
+                                            trigger: .country)
+
+            // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
+            container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
+                .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
+            container.authKeychain.setMockUsername("user")
+            let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
+                                                           maxTier: .freeTier)
+            container.networkingDelegate.apiCredentials = freeCreds
+
+            await retrieveAndSetVpnProperties()
+
+            processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            await fulfillment(of: [expectations.clientConfig[step], protocolAlertExpectation], timeout: expectationTimeout)
+
+            step += 1
+
+            // Feature flag disables TLS, connection should use another protocol
+            container.networkingDelegate.apiClientConfig = testData.clientConfigNoWireGuardTls
+            await retrieveAndSetVpnProperties()
+            processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+            XCTAssertFalse(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssertFalse(isConnectedUsingTcpOrTls())
+
+            container.vpnGateway.disconnect()
+            await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
+
+            step += 1
+
+            // Enable feature flag, but disable TCP and TLS in API config. Connection should use another protocol again
+            container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
+                .with(smartProtocolConfig: .onlyIke)
+            await retrieveAndSetVpnProperties()
+            XCTAssertEqual(self.container.propertiesManager.smartProtocolConfig, .onlyIke)
+
+            processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+            XCTAssertTrue(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssertFalse(isConnectedUsingTcpOrTls())
+
+            container.vpnGateway.disconnect()
+            await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
+
+            step += 1
+
+            // Now enable the feature flag and protocols in smart config, and try reconnecting with smart protocol.
+            // Resulting connection should be using wireguard with tls, when tcp is unavailable
+            container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
+            container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
+            await retrieveAndSetVpnProperties()
+
+            processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+            XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+
+            container.vpnGateway.disconnect()
+            await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
+
+            step += 1
+
+            // Test common config for restricted countries (only WireGuard TCP and TLS enabled). Should connect with TCP or TLS
+            container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
+                .with(smartProtocolConfig: .onlyWgTcpAndTls)
+            await retrieveAndSetVpnProperties()
+
+            processGatewayConnectionRequestWithOverriddenDependencies(request: request)
+            await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+            XCTAssert(isConnectedUsingTcpOrTls())
+            XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
+
+            container.vpnGateway.disconnect()
+            await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
         }
-
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .smartProtocol,
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
-
-        // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
-        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-            .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
-        container.authKeychain.setMockUsername("user")
-        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                       maxTier: .freeTier)
-        container.networkingDelegate.apiCredentials = freeCreds
-
-        await retrieveAndSetVpnProperties()
-
-        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        await fulfillment(of: [expectations.clientConfig[step], protocolAlertExpectation], timeout: expectationTimeout)
-
-        step += 1
-
-        // Feature flag disables TLS, connection should use another protocol
-        container.networkingDelegate.apiClientConfig = testData.clientConfigNoWireGuardTls
-        await retrieveAndSetVpnProperties()
-        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
-
-        XCTAssertFalse(container.propertiesManager.featureFlags.wireGuardTls)
-        XCTAssertFalse(isConnectedUsingTcpOrTls())
-
-        container.vpnGateway.disconnect()
-        await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
-
-        step += 1
-
-        // Enable feature flag, but disable TCP and TLS in API config. Connection should use another protocol again
-        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-            .with(smartProtocolConfig: .onlyIke)
-        await retrieveAndSetVpnProperties()
-        XCTAssertEqual(self.container.propertiesManager.smartProtocolConfig, .onlyIke)
-
-        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
-
-        XCTAssertTrue(container.propertiesManager.featureFlags.wireGuardTls)
-        XCTAssertFalse(isConnectedUsingTcpOrTls())
-
-        container.vpnGateway.disconnect()
-        await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
-
-        step += 1
-
-        // Now enable the feature flag and protocols in smart config, and try reconnecting with smart protocol.
-        // Resulting connection should be using wireguard with tls, when tcp is unavailable
-        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
-        await retrieveAndSetVpnProperties()
-
-        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
-
-        XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
-
-        container.vpnGateway.disconnect()
-        await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
-
-        step += 1
-
-        // Test common config for restricted countries (only WireGuard TCP and TLS enabled). Should connect with TCP or TLS
-        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
-            .with(smartProtocolConfig: .onlyWgTcpAndTls)
-        await retrieveAndSetVpnProperties()
-
-        processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        await fulfillment(of: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
-
-        XCTAssert(isConnectedUsingTcpOrTls())
-        XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
-
-        container.vpnGateway.disconnect()
-        await fulfillment(of: [expectations.disconnect[step]], timeout: expectationTimeout)
     }
 
     /// Tests user connected to a plus server. Then the plan gets downgraded to free. Supposing the user then realizes

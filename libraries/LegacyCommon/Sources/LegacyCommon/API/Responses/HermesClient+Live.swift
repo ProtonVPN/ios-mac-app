@@ -62,9 +62,9 @@ extension HermesClient: @retroactive DependencyKey {
         $hermesResolvers.withLock { $0 = copy }
         AppEvent.hermes.post()
         return true
-    } reorderResolvers: { src, dst in
+    } applyDiff: { diff in
         var copy = hermesResolvers
-        copy.move(fromOffsets: src, toOffset: dst)
+        copy = copy.applying(diff) ?? copy
         $hermesResolvers.withLock { $0 = copy }
         AppEvent.hermes.post()
     }

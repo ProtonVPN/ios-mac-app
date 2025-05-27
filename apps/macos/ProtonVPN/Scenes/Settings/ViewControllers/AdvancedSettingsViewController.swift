@@ -129,10 +129,9 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         let featureState: PaidFeatureDisplayState = viewModel.displayState(for: HermesFeature.self)
 
         let model = SettingsTickboxView.ViewModel(
-            labelText: "Hermes Feature",
+            labelText: Localizable.hermesFeatureTitle,
             state: featureState,
-            toolTip: "Set a Hermes Resolver",
-            liveSource: hermesClient.isEnabled()
+            liveSource: hermesClient.isEnabled().publisher
         )
         hermesView.setupItem(model: model, delegate: self)
 
@@ -144,11 +143,15 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     @objc private func didTapHermesView(_ sender: Any?) {
-        let window = HermesWindow(viewModel: viewModel.hermesViewModel)
-        let controller = NSWindowController(window: window)
-        window.centerWindow(in: self.view.window?.screen)
-        controller.showWindow(self)
-        self.hermesChildWindowController = controller
+        if hermesChildWindowController != nil {
+            hermesChildWindowController?.window?.makeKeyAndOrderFront(self)
+        } else {
+            let controller = HermesWindowController(viewModel: viewModel.hermesViewModel)
+            controller.window?.centerWindow(in: self.view.window?.screen)
+            controller.showWindow(self)
+            controller.delegate = self
+            self.hermesChildWindowController = controller
+        }
     }
 
     // MARK: - ReloadableViewController
@@ -199,6 +202,20 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
             viewModel.hermesViewModel.upsellButtonTapped()
         default:
             break
+        }
+    }
+}
+
+extension AdvancedSettingsViewController: WindowControllerDelegate {
+    func windowCloseRequested(_ sender: WindowController) {
+        guard sender is HermesWindowController else { return }
+        sender.close()
+    }
+
+    func windowWillClose(_ sender: WindowController) {
+        guard sender is HermesWindowController else { return }
+        viewModel.hermesViewModel.hermesWindowWillClose { [weak self] in
+            self?.hermesChildWindowController = nil
         }
     }
 }
