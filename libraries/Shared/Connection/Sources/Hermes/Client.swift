@@ -56,7 +56,7 @@ public struct HermesClient: Sendable {
     public internal(set) var validateHermesLocation: @Sendable (String) -> Bool
     public internal(set) var addHermesResolver: @Sendable (HermesResolver) -> Bool
     public internal(set) var removeHermesResolver: @Sendable (Int) -> Bool
-    public internal(set) var reorderResolvers: @Sendable (IndexSet, Int) -> Void
+    public internal(set) var applyDiff: @Sendable (CollectionDifference<HermesResolver>) -> Void
 
     public init(
         isEnabled: @Sendable @escaping () -> SharedReader<Bool>,
@@ -65,7 +65,7 @@ public struct HermesClient: Sendable {
         validateHermesLocation: @Sendable @escaping (String) -> Bool,
         addHermesResolver: @Sendable @escaping (HermesResolver) -> Bool,
         removeHermesResolver: @Sendable @escaping (Int) -> Bool,
-        reorderResolvers: @Sendable @escaping (IndexSet, Int) -> Void
+        applyDiff: @Sendable @escaping (CollectionDifference<HermesResolver>) -> Void
     ) {
         self.isEnabled = isEnabled
         self.setIsEnabled = setIsEnabled
@@ -73,7 +73,7 @@ public struct HermesClient: Sendable {
         self.validateHermesLocation = validateHermesLocation
         self.addHermesResolver = addHermesResolver
         self.removeHermesResolver = removeHermesResolver
-        self.reorderResolvers = reorderResolvers
+        self.applyDiff = applyDiff
     }
 }
 
@@ -91,7 +91,7 @@ extension HermesClient: TestDependencyKey {
             false
         } removeHermesResolver: { _ in
             false
-        } reorderResolvers: { _, _ in
+        } applyDiff: { _ in
             ()
         }
     }()
@@ -118,9 +118,10 @@ extension HermesResolver: ExpressibleByStringLiteral {
 extension HermesResolver {
     public static let cloudFlare: HermesResolver = "1.1.1.1"
     public static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
-    public static let cloudFlareDoH: HermesResolver = "https://1.1.1.1"
+    public static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
     public static let google: HermesResolver = "8.8.8.8"
     public static let googleDoT: HermesResolver = "tls://8.8.8.8"
-    public static let googleDoH: HermesResolver = "https://8.8.8.8"
+    public static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
+    public static let quadNine: HermesResolver = "9.9.9.9"
 }
 #endif

@@ -20,12 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 import Cocoa
+import Combine
 
 import Domain
 import Ergonomics
 import Strings
 import LegacyCommon
 import ProtonCoreFeatureFlags
+import NEHelper
+import Sharing
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     
@@ -122,7 +125,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         refreshPendingEnablement()
     }
-    
+
     private func setupPlutoniumItem() {
         if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
             plutoniumView.isHidden = true
@@ -131,11 +134,20 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         let featureState: PaidFeatureDisplayState = viewModel.displayState(for: Plutonium.self)
 
+        @SharedReader(.plutoniumFeature) var plutoniumFeature
+
+        let mappedPublisher: some Publisher<Bool, Never> = $plutoniumFeature.publisher.map {
+            switch $0 {
+            case .enabled: true
+            case .disabled: false
+            }
+        }
+
         let model = SettingsTickboxView.ViewModel(
             labelText: Localizable.plutoniumTitle,
             state: featureState,
             toolTip: nil,
-            liveSource: nil
+            liveSource: mappedPublisher
         )
 
         plutoniumView.setupItem(model: model, delegate: self)

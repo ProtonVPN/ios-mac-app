@@ -2863,11 +2863,14 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Double click to copy";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "If your custom ${HERMES_ENTITY} doesn’t work, the standard VPN ${HERMES_TECHNOLOGY} will be used.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "If your custom ${HERMES_ENTITY} doesn’t work, the standard VPN ${HERMES_TECHNOLOGY} will be used.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN ${HERMES_TECHNOLOGY} will be used.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Enables ${HERMES}?";
+"_hermes_conflict_hermesOn_title" = "Enable ${HERMES}?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "This will disable NetShield.";

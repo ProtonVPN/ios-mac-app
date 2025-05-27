@@ -65,13 +65,11 @@ final class HermesViewModel {
     private let vpnGateway: any VpnGatewayProtocol
     private var netShieldPropertyProvider: any NetShieldPropertyProvider
 
-    private let initialState: State
+    private var initialState: State
 
     private var isNetShieldEnabled: Bool {
         netShieldPropertyProvider.netShieldType != .off
     }
-
-    private var windowListeningCancellable: AnyCancellable?
 
     init(factory: Factory) {
         @Dependency(\.hermesClient) var hermesClient
@@ -84,30 +82,26 @@ final class HermesViewModel {
         self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
         self.vpnGateway = factory.makeVpnGateway()
         self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
-        self.listenWindowEvents()
     }
 
-    private func listenWindowEvents() {
-        windowListeningCancellable = NotificationCenter.default
-            .publisher(for: NSWindow.willCloseNotification)
-            .compactMap { ($0.object as? HermesWindow) }
-            .sink { [weak self] _ in
-                self?.hermesWindowDidClose()
-            }
-    }
-
-    func hermesWindowDidClose() {
-        guard State(enabled: isEnabled, resolvers: activeHermesResolvers) != initialState else { return }
+    func hermesWindowWillClose(completion: (() -> Void)? = nil) {
+        let newState = State(enabled: isEnabled, resolvers: activeHermesResolvers)
+        guard newState != initialState else {
+            completion?()
+            return
+        }
         vpnStateConfiguration.getInfo { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .immediate:
-                break
+                completion?()
             case .withConnectionUpdate, .withReconnect:
                 self?.showAlert(.reconnectNecessary) {
                     self?.userConfirmsReconnection()
+                    completion?()
                 }
             }
         }
+        initialState = newState
     }
 
     func setIsEnabled(_ newValue: Bool) {
@@ -156,8 +150,8 @@ final class HermesViewModel {
         return false
     }
 
-    func moveResolvers(from source: IndexSet, to destination: Int) {
-        hermesClient.reorderResolvers(source, destination)
+    func applyDiff(_ difference: CollectionDifference<HermesResolver>) {
+        hermesClient.applyDiff(difference)
     }
 
     func showAlert(

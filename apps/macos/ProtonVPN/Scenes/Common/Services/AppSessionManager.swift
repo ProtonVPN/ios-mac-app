@@ -427,7 +427,11 @@ import Hermes
 private extension WireguardConfig {
     func refreshConfig() -> WireguardConfig {
         @Dependency(\.hermesClient) var hermesClient
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+
         let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+
         var hermesResolvers: [HermesResolver] = [.proton]
         if hermesIsEnabled {
             hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)

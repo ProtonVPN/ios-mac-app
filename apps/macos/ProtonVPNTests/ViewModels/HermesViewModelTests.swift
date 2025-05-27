@@ -110,6 +110,41 @@ final class HermesViewModelTests: XCTestCase {
         }
     }
 
+    func testAddingRemovingReorderingResolversWithDoHDoT() throws {
+        XCTSkip("Skipped because of DoH/DoT. Enable again when this is supported")
+
+        let viewModel = withDependencies {
+            $0.hermesClient = .liveValue
+        } operation: {
+            HermesViewModel(factory: HermesTestContainer())
+        }
+
+        // adding resolver should still go once more to validation
+        for (input, _, addingResult) in Self.resolversValidationSamples {
+            XCTAssertEqual(viewModel.addResolver(with: input), addingResult)
+        }
+
+        XCTAssertEqual(viewModel.activeHermesResolvers, Self.expectedResolvers)
+
+        // let's check for duplicates
+
+        XCTAssertEqual(viewModel.validate(location: "1.1.1.1"), .duplicate)
+        XCTAssertEqual(viewModel.validate(location: "https://1.1.1.1/dns-query"), .duplicate)
+        XCTAssertEqual(viewModel.validate(location: "tls://1.1.1.1"), .duplicate)
+
+        let resolver = try HermesResolver(ipAddress: "8.8.8.8")
+        XCTAssertFalse(viewModel.removeResolver(resolver))
+        XCTAssertTrue(viewModel.removeResolver(.cloudFlareDoH))
+        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .cloudFlareDoT])
+        XCTAssertTrue(viewModel.addResolver(with: HermesResolver.cloudFlareDoH.location))
+        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .cloudFlareDoT, .cloudFlareDoH])
+
+//        viewModel.moveResolvers(from: .init(integer: 0), to: 3)
+//        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlareDoT, .cloudFlareDoH, .cloudFlare])
+//        viewModel.moveResolvers(from: .init(integer: 1), to: 0)
+//        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlareDoH, .cloudFlareDoT, .cloudFlare])
+    }
+
     func testAddingRemovingReorderingResolvers() throws {
         let viewModel = withDependencies {
             $0.hermesClient = .liveValue
@@ -127,20 +162,31 @@ final class HermesViewModelTests: XCTestCase {
         // let's check for duplicates
 
         XCTAssertEqual(viewModel.validate(location: "1.1.1.1"), .duplicate)
-        XCTAssertEqual(viewModel.validate(location: "https://1.1.1.1"), .duplicate)
-        XCTAssertEqual(viewModel.validate(location: "tls://1.1.1.1"), .duplicate)
+        XCTAssertEqual(viewModel.validate(location: "9.9.9.9"), .duplicate)
+        XCTAssertEqual(viewModel.validate(location: "8.8.8.8"), .duplicate)
 
-        let resolver = try HermesResolver(ipAddress: "8.8.8.8")
+        let resolver = try HermesResolver(ipAddress: "2.2.2.2")
         XCTAssertFalse(viewModel.removeResolver(resolver))
-        XCTAssertTrue(viewModel.removeResolver(.cloudFlareDoH))
-        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .cloudFlareDoT])
-        XCTAssertTrue(viewModel.addResolver(with: HermesResolver.cloudFlareDoH.location))
-        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .cloudFlareDoT, .cloudFlareDoH])
+        XCTAssertTrue(viewModel.removeResolver(.quadNine))
+        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .google])
+        XCTAssertTrue(viewModel.addResolver(with: HermesResolver.quadNine.location))
+        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .google, .quadNine])
 
-        viewModel.moveResolvers(from: .init(integer: 0), to: 3)
-        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlareDoT, .cloudFlareDoH, .cloudFlare])
-        viewModel.moveResolvers(from: .init(integer: 1), to: 0)
-        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlareDoH, .cloudFlareDoT, .cloudFlare])
+        let firstDiffElementMoved = viewModel.activeHermesResolvers[0]
+        let firstDiff: CollectionDifference<HermesResolver> = .init([
+            .insert(offset: 2, element: firstDiffElementMoved, associatedWith: nil),
+            .remove(offset: 0, element: firstDiffElementMoved, associatedWith: nil)
+        ])!
+        viewModel.applyDiff(firstDiff)
+        XCTAssertEqual(viewModel.activeHermesResolvers, [.google, .quadNine, .cloudFlare])
+
+        let secondDiffElementMoved = viewModel.activeHermesResolvers[1]
+        let secondDiff: CollectionDifference<HermesResolver> = .init([
+            .insert(offset: 0, element: secondDiffElementMoved, associatedWith: nil),
+            .remove(offset: 1, element: secondDiffElementMoved, associatedWith: nil)
+        ])!
+        viewModel.applyDiff(secondDiff)
+        XCTAssertEqual(viewModel.activeHermesResolvers, [.quadNine, .google, .cloudFlare])
     }
 
     func testHermesAppEventNotification() {
@@ -194,8 +240,19 @@ final class HermesViewModelTests: XCTestCase {
 
         AppEvent.hermes.publisher.sink { _ in movingResolverExpectation.fulfill() }.store(in: &cancellables)
 
-        viewModel.moveResolvers(from: .init(integer: 0), to: 2)
-        viewModel.moveResolvers(from: .init(integer: 1), to: 0)
+        let firstDiffElement = viewModel.activeHermesResolvers[0]
+        let firstDiff: CollectionDifference<HermesResolver> = .init([
+            .insert(offset: 1, element: firstDiffElement, associatedWith: nil),
+            .remove(offset: 0, element: firstDiffElement, associatedWith: nil)
+        ])!
+        viewModel.applyDiff(firstDiff)
+
+        let secondDiffElement = viewModel.activeHermesResolvers[0]
+        let secondDiff: CollectionDifference<HermesResolver> = .init([
+            .insert(offset: 1, element: secondDiffElement, associatedWith: nil),
+            .remove(offset: 0, element: secondDiffElement, associatedWith: nil)
+        ])!
+        viewModel.applyDiff(secondDiff)
 
         wait(for: [movingResolverExpectation], timeout: 1.0)
     }
@@ -210,12 +267,23 @@ private extension HermesViewModelTests {
         ("1", .invalid, false),
         ("1.1.1.1", .valid, true),
         ("http://1.1.1.1", .invalid, false),
-        ("https://1.1.1.1", .valid, true),
+        ("8.8.8.8", .valid, true),
+        ("256.128.64.32", .invalid, false),
+        ("9.9.9.9", .valid, true),
+        // ("https://1.1.1.1/dns-query", .valid, true),
         ("tls:/1.1.1.1", .invalid, false),
-        ("tls://1.1.1.1", .valid, true),
+        // ("tls://1.1.1.1", .valid, true),
     ]
 
     static let expectedResolvers: [HermesResolver] = [
+        .cloudFlare,
+        .google,
+        .quadNine,
+//        .cloudFlareDoH,
+//        .cloudFlareDoT
+    ]
+
+    static let extraExpectedResolvers: [HermesResolver] = [
         .cloudFlare,
         .cloudFlareDoH,
         .cloudFlareDoT

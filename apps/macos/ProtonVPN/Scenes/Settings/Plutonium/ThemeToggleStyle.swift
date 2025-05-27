@@ -20,8 +20,8 @@ import Theme
 import SwiftUI
 
 struct ThemeToggleStyle: ToggleStyle {
-    private var activeColor: Color = Color(.background, [.interactive])
-    private var inactiveColor: Color = Color(.background, [.interactive, .weak])
+    private let activeColor: Color = Color(.background, [.interactive])
+    private let inactiveColor: Color = Color(.background, [.interactive, .weak])
 
     func makeBody(configuration: Configuration) -> some View {
         HStack {

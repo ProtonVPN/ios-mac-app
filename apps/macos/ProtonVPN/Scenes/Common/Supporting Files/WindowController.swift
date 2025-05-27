@@ -103,8 +103,6 @@ extension WindowController: NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
-        if let delegate = delegate {
-            delegate.windowWillClose(self)
-        }
+        delegate?.windowWillClose(self)
     }
 }

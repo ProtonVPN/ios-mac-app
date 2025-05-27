@@ -593,15 +593,17 @@ public enum Localizable {
   /// Hermes conflict notification description within alert when enabling Hermes
   public static var hermesConflictHermesOnDescription: String { return Localizable.tr("Localizable", "_hermes_conflict_hermesOn_description", fallback: "This will disable NetShield.") }
   /// Hermes conflict notification title within alert when enabling Hermes
-  public static var hermesConflictHermesOnTitle: String { return Localizable.tr("Localizable", "_hermes_conflict_hermesOn_title", fallback: "Enables ${HERMES}?") }
+  public static var hermesConflictHermesOnTitle: String { return Localizable.tr("Localizable", "_hermes_conflict_hermesOn_title", fallback: "Enable ${HERMES}?") }
   /// Hermes conflict notification description within alert when enabling NetShield
   public static var hermesConflictNetshieldOnDescription: String { return Localizable.tr("Localizable", "_hermes_conflict_netshieldOn_description", fallback: "This will disable ${HERMES}.") }
   /// Hermes conflict notification title within alert when enabling NetShield
   public static var hermesConflictNetshieldOnTitle: String { return Localizable.tr("Localizable", "_hermes_conflict_netshieldOn_title", fallback: "Enable NetShield?") }
   /// Hermes entities double click to copy within dedicated Hermes Settings view
   public static var hermesEntitiesCopyAction: String { return Localizable.tr("Localizable", "_hermes_entities_copyAction", fallback: "Double click to copy") }
-  /// Hermes entities footnote within dedicated Hermes Settings view
-  public static var hermesEntitiesFootnote: String { return Localizable.tr("Localizable", "_hermes_entities_footnote", fallback: "If your custom ${HERMES_ENTITY} doesn’t work, the standard VPN ${HERMES_TECHNOLOGY} will be used.") }
+  /// Hermes entities footnote with multiple entities within dedicated Hermes Settings view
+  public static var hermesEntitiesFootnoteMultiple: String { return Localizable.tr("Localizable", "_hermes_entities_footnote_multiple", fallback: "We’ll try to connect to these servers in order. If none of them work, the VPN ${HERMES_TECHNOLOGY} will be used.") }
+  /// Hermes entities footnote with single entity within dedicated Hermes Settings view
+  public static var hermesEntitiesFootnoteSingle: String { return Localizable.tr("Localizable", "_hermes_entities_footnote_single", fallback: "If your custom ${HERMES_ENTITY} doesn’t work, the standard VPN ${HERMES_TECHNOLOGY} will be used.") }
   /// Hermes entities Form main button title within dedicated Hermes Settings view
   public static var hermesEntitiesFormAddButton: String { return Localizable.tr("Localizable", "_hermes_entities_form_addButton", fallback: "Add") }
   /// Hermes entities Form description within dedicated Hermes Settings view

@@ -20,13 +20,13 @@ import AppKit
 import Foundation
 
 import Perception
-import Sharing
 
 import ProtonCoreUIFoundations
 
 import LegacyCommon
 import Strings
 import Theme
+import Combine
 
 protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)
@@ -41,9 +41,9 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         let labelText: String
         let state: PaidFeatureDisplayState
         let toolTip: String?
-        let liveSource: SharedReader<Bool>?
+        let liveSource: (any Publisher<Bool, Never>)?
 
-        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: SharedReader<Bool>? = nil) {
+        init(labelText: String, state: PaidFeatureDisplayState, toolTip: String? = nil, liveSource: (any Publisher<Bool, Never>)? = nil) {
             self.labelText = labelText
             self.state = state
             self.toolTip = toolTip
@@ -168,22 +168,14 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         }
 
         if let liveSource = model.liveSource {
-            observationToken = observe { [weak self] in
-                let isOn = liveSource.wrappedValue
-                self?.switchButton?.setState(isOn ? .on : .off)
-            }
-        }
-        // merge somehow the below and above code
-        if onOffLabel != nil {
-            @SharedReader(.plutoniumFeature) var plutoniumFeature
-            observationToken = observe { [weak self] in
-                switch plutoniumFeature {
-                case .disabled:
-                    self?.updateOnOffLabel(isOn: false)
-                case .enabled:
-                    self?.updateOnOffLabel(isOn: true)
+            observationToken = liveSource
+                .sink { [weak self] isOn in
+                    guard let self else { return }
+                    switchButton?.setState(isOn ? .on : .off)
+                    if onOffLabel != nil {
+                        updateOnOffLabel(isOn: isOn)
+                    }
                 }
-            }
         }
     }
 
@@ -196,9 +188,6 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
     }
 
     override func mouseDown(with event: NSEvent) {
-        let hitView = hitTest(event.locationInWindow)
-        if hitView !== switchButton {
-            didTapHandler?()
-        }
+        didTapHandler?()
     }
 }
