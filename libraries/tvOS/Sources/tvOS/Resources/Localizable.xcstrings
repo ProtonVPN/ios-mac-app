@@ -1123,6 +1123,12 @@
             "value" : "Skutočne sa chcete odhlásiť z Proton VPN?"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ali ste prepričani, da se želite izpisati iz storitve Proton VPN?"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5353,6 +5359,12 @@
             "value" : "Služba Proton VPN pre Apple TV nie je k dispozícii v bezplatných plánoch"
           }
         },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN za Apple TV ni na voljo na brezplačnih paketih"
+          }
+        },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6305,7 +6317,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Параметри"
+            "value" : "Налаштування"
           }
         },
         "zh-Hant" : {
@@ -9605,6 +9617,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po výzve na zadanie overovacieho kódu zadajte (načítanie...)"
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ko ste pozvani k vnosu vaše potrditvene kode, vnesite (pridobivam...)"
           }
         },
         "sv" : {
