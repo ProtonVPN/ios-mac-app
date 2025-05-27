@@ -128,6 +128,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         Task {
             let completeOnMain = { result in await MainActor.run { completion(result) } }
             do {
+                do {
+                    @Dependency(\.userSettingsClient) var userSettingsClient
+                    propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings().userSettings
+                } catch {
+                    log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
+                }
                 try await retrievePropertiesAndLogIn()
                 await completeOnMain(.success)
             } catch {
