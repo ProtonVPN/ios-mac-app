@@ -202,6 +202,7 @@
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "Connecting to %@";
 "_reconnecting_to" = "Reconnecting to %@";
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
 
 /* iOS status view */
 "_connected_to" = "Connected to";
