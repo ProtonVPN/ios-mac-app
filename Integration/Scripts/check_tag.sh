@@ -27,28 +27,28 @@ echo -e "trust\n5\ny\n" | gpg --no-tty --status-fd=1 --command-fd=0 --edit-key "
 echo "== Importing keys in ${KEYS_PATH}..."
 gpg --no-tty --import "$KEYS_PATH"
 
-# Setup keys and verify tags/nominations (releases only)
-if grep "\d\d*\.\d\d*\.\d\d*-alpha\.\d\d*" <<< "$CI_COMMIT_TAG" > /dev/null; then
-    echo "== Verifying signature on alpha tag..."
+# Verify tags/nominations
+echo "== Verifying tag signature..."
 
-    SIG=$(git verify-tag --raw "$CI_COMMIT_TAG" 2> /dev/stdout | cut -d ' ' -f 2)
-    if ! grep GOODSIG <<< "$SIG" > /dev/null; then
-        echo "Error: invalid signature for tag."
-        exit 1
-    fi
+SIG=$(git verify-tag --raw "$CI_COMMIT_TAG" 2> /dev/stdout | cut -d ' ' -f 2)
+if ! grep GOODSIG <<< "$SIG" > /dev/null; then
+    echo "Error: invalid signature for tag."
+    exit 1
+fi
 
-    if ! grep VALIDSIG <<< "$SIG" > /dev/null; then
-        echo "Error: signature for tag has expired."
-        exit 1
-    fi
+if ! grep VALIDSIG <<< "$SIG" > /dev/null; then
+    echo "Error: signature for tag has expired."
+    exit 1
+fi
 
-    if ! grep TRUST_FULLY <<< "$SIG" > /dev/null; then
-        echo "Error: signature for tag is not trusted."
-        exit 1
-    fi
+if ! grep TRUST_FULLY <<< "$SIG" > /dev/null; then
+    echo "Error: signature for tag is not trusted."
+    exit 1
+fi
 
-    echo "Good signature on alpha tag."
-  elif grep "\d\d*\.\d\d*\.\d\d*\(-beta\.\d\d*\)*" <<< "$CI_COMMIT_TAG" > /dev/null; then
+echo "Good tag signature."
+
+if grep "\d\d*\.\d\d*\.\d\d*\(-beta\.\d\d*\)*" <<< "$CI_COMMIT_TAG" > /dev/null; then
     VERIFY_TRAIN=$(cut -d '/' -f 1 <<< "$CI_COMMIT_TAG")
 
     if grep "\d\d*\.\d\d*\.\d\d*-beta\.\d\d*" <<< "$CI_COMMIT_TAG" > /dev/null; then
@@ -88,6 +88,7 @@ if grep "\d\d*\.\d\d*\.\d\d*-alpha\.\d\d*" <<< "$CI_COMMIT_TAG" > /dev/null; the
 
     if [ -z "$CORE_VERSION" ]; then
         echo "Error: no Proton Core tag is specified in .gitmodules, please correct this before releasing publicly."
+        exit 3
     fi
 
     REPO="$PWD"
