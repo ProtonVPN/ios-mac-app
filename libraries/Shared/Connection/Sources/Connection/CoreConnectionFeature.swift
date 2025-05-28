@@ -78,6 +78,9 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         /// Starts the disconnection process.
         /// When sent with a `DisconnectReason.connectionFailure`, a delegate action containing the error is sent.
         case disconnect(DisconnectReason)
+        /// Internal action sent after the `defaultConnectionTimeout` duration has elapsed following a connection
+        /// intent. The reducer then inspects the state of child features to determine what stage we timed out at.
+        case timeout
         /// Sends effects to start observing changes from dependencies owned by child features. Must be immediately
         /// sent by the parent in order to start resolving the initial connection state.
         case startObserving
@@ -162,7 +165,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                     try await clock.sleep(for: Self.defaultConnectionTimeout)
                     try Task.checkCancellation()
 
-                    await send(.disconnect(.connectionFailure(.timeout)))
+                    await send(.timeout)
                 } catch: { error, _ in
                     log.error("Timeout task cancellation error: \(error)")
                 }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
@@ -288,6 +291,12 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
             return effectToResolve(error: error)
 
+        case .timeout:
+            // Maximum allowed connection duration has been exceeded, so we must terminate the connection attempt.
+            // Let's inspect the state of the child features to determine what stage we have reached and disconnect.
+            let currentConnectionStage = getConnectionStage(state)
+            return .send(.disconnect(.connectionFailure(.timeout(currentConnectionStage))))
+
         case .tunnel:
             return .none
 
@@ -376,6 +385,36 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             return effects
         }
         return .concatenate(.send(.delegate(.stateChanged(oldValue, newValue))), effects)
+    }
+
+    private func getConnectionStage(_ state: State) -> ConnectionStage {
+        guard state.tunnel.is(\.connected) else {
+            return .tunnelStartingAndConnecting
+        }
+        guard state.certAuth.is(\.loaded) else {
+            return .refreshingCertificate
+        }
+        assert(!state.localAgent.is(\.connected))
+        return .connectingToLocalAgentServer
+    }
+
+    /// Used to provide more information about what stage of the connection process we reached before timing out.
+    @CasePathable public enum ConnectionStage: Equatable, Sendable {
+        /// We have failed to start the network extension process, or the the extension failed to transition to the
+        /// `connected` state.
+        case tunnelStartingAndConnecting
+        /// We've established the tunnel to the server, but failed to refresh our certificate.
+        /// The refresh process can time out during the following:
+        ///  - forking our main app session
+        ///  - consuming of the forked session selector by the network extension
+        ///  - refreshing of the forked session by the network extension
+        ///  - refreshing of the certificate.
+        ///  It's not currently possible to distinguish between the last three cases, since this requires knowledge of
+        ///  what state the extension's `CertificateRefreshManager` is in.
+        case refreshingCertificate
+        /// We've established the tunnel to the server, and we have a valid certificate, but we've not been able to
+        /// establish a connection to the Local Agent remote server.
+        case connectingToLocalAgentServer
     }
 }
 
