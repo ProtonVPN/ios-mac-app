@@ -42,6 +42,12 @@ public enum AnnouncementStorageKey: DependencyKey {
     }()
 }
 
+public enum AnnouncementRefresherKey: DependencyKey {
+    public static let liveValue: any AnnouncementRefresher = {
+        AnnouncementRefresherImplementation()
+    }()
+}
+
 #if DEBUG
 extension AnnouncementStorageKey: TestDependencyKey {
     public static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
@@ -58,6 +64,11 @@ public extension DependencyValues {
     var announcementStorage: AnnouncementStorage {
         get { self[AnnouncementStorageKey.self] }
         set { self[AnnouncementStorageKey.self] = newValue }
+    }
+
+    var announcementRefresher: AnnouncementRefresher {
+        get { self[AnnouncementRefresherKey.self] }
+        set { self[AnnouncementRefresherKey.self] = newValue }
     }
 }
 

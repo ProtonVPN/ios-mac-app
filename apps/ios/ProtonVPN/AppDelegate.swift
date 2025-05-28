@@ -243,7 +243,7 @@ extension AppDelegate: UIApplicationDelegate {
         switchToHomeIfConnecting()
 
         // Refresh API announcements
-        let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
+        @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
             announcementRefresher.tryRefreshing()
         }

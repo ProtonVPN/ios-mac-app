@@ -77,7 +77,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         NavigationServiceFactory &
                         NetworkingFactory &
                         AppSessionRefreshTimerFactory &
-                        AnnouncementRefresherFactory &
                         VpnAuthenticationFactory &
                         PlanServiceFactory &
                         ProfileManagerFactory &
@@ -96,7 +95,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
@@ -105,6 +103,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+
+    @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
 
     var sessionStatus: SessionStatus = .notEstablished
 
