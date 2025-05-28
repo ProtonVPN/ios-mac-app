@@ -16,19 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-@testable import CommonNetworking
+import Foundation
+import XCTest
 import ComposableArchitecture
 import Ergonomics
-import Foundation
+import ModalsServices
+import ProtonCorePaymentsV2
 @testable import tvOS
-import XCTest
+@testable import CommonNetworking
 
 final class UpsellFeatureTests: XCTestCase {
-    let monthlyPlan = PlanIAPTuple(
-        planOption: .init(duration: .oneMonth, price: .init(amount: 9.99, currency: "GBP")),
-        iap: .freePlan
-    )
-
     @MainActor
     func testFailingToLoadPlansShowsError() async {
         let error = GenericError("No products")
@@ -38,7 +35,7 @@ final class UpsellFeatureTests: XCTestCase {
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
                 getOptions: { throw error },
-                attemptPurchase: { _ in unimplemented(placeholder: .purchaseCancelled) }
+                attemptPurchase: { _ in unimplemented(placeholder: nil) }
             )
         }
 
@@ -54,20 +51,20 @@ final class UpsellFeatureTests: XCTestCase {
         } withDependencies: {
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [self.monthlyPlan] },
-                attemptPurchase: { _ in .purchaseCancelled }
+                getOptions: { [PlanOption.oneMonth] },
+                attemptPurchase: { _ in throw ProtonPlansManagerError.transactionCancelledByUser }
             )
         }
 
         await store.send(\.loadProducts)
         await store.receive(\.finishedLoadingProducts.success) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: false)
         }
-        await store.send(.attemptPurchase(monthlyPlan)) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: true)
+        await store.send(.attemptPurchase(PlanOption.oneMonth)) {
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: true)
         }
-        await store.receive(\.finishedPurchasing.purchaseCancelled) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+        await store.receive(\.finishedPurchasing.failure) {
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: false)
         }
     }
 
@@ -79,28 +76,27 @@ final class UpsellFeatureTests: XCTestCase {
         } withDependencies: {
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [self.monthlyPlan] },
-                attemptPurchase: { _ in .purchaseError(error: error, processingPlan: nil) }
+                getOptions: { [PlanOption.oneMonth] },
+                attemptPurchase: { _ in throw ProtonPlansManagerError.transactionUnknownError }
             )
         }
 
         await store.send(\.loadProducts)
         await store.receive(\.finishedLoadingProducts.success) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: false)
         }
-        await store.send(.attemptPurchase(monthlyPlan)) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: true)
+        await store.send(.attemptPurchase(PlanOption.oneMonth)) {
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: true)
         }
-        await store.receive(\.finishedPurchasing.purchaseError) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+        await store.receive(\.finishedPurchasing.failure) {
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: false)
         }
     }
 
     @MainActor
     func testRespondsToBackgroundTransaction() async {
-        let error = GenericError("Payment Failed")
         let clock = TestClock()
-        let initialState = UpsellFeature.State.loaded(planOptions: [monthlyPlan], purchaseInProgress: false)
+        let initialState = UpsellFeature.State.loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: false)
         let networking = VPNNetworkingMock(userTierResult: .success(2))
 
         let store = TestStore(initialState: initialState) {
@@ -108,15 +104,15 @@ final class UpsellFeatureTests: XCTestCase {
         } withDependencies: {
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [self.monthlyPlan] },
-                attemptPurchase: { _ in .purchaseError(error: error, processingPlan: nil) }
+                getOptions: { [PlanOption.oneMonth] },
+                attemptPurchase: { _ in throw ProtonPlansManagerError.transactionUnknownError }
             )
             $0.continuousClock = clock
             $0.networking = networking
         }
 
-        await store.send(.event(.finished(.resolvingIAPToSubscription))) {
-            $0 = .loaded(planOptions: [self.monthlyPlan], purchaseInProgress: true)
+        await store.send(.event(.transactionCompleted)) {
+            $0 = .loaded(planOptions: [PlanOption.oneMonth], purchaseInProgress: true)
         }
         await store.receive(\.pollTierUpdate)
         await store.receive(\.finishedPollingTierUpdate)

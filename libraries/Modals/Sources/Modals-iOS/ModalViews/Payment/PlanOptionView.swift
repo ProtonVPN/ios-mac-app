@@ -58,12 +58,6 @@ private struct PlanOptionLoadedView: View {
         static let planOptionAmount: String = "plan_option_amount"
     }
 
-    private static let dateComponentsFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        return formatter
-    }()
-
     let planOption: PlanOption
     let discount: Int?
 
@@ -71,7 +65,7 @@ private struct PlanOptionLoadedView: View {
 
     var body: some View {
         HStack(spacing: .themeSpacing8) {
-            let planDurationString: String = planOption.durationLabel ?? "One-time purchase"
+            let planDurationString: String = planOption.durationLabel ?? "" // if `durationLabel` is `nil` then it's one-time purchase that's not present now
             Text(planDurationString)
                 .themeFont(.body1(.regular))
                 .accessibilityIdentifier(AccessibilityIdentifier.planOptionDuration)
@@ -172,6 +166,22 @@ private struct PlanDiscountBadgeView: View {
             .foregroundStyle(Color(.text, .inverted))
             .background(Color(.icon, .vpnGreen))
             .cornerRadius(.themeRadius4)
+    }
+}
+
+private struct PlanWebOnlyTagView: View {
+    var body: some View {
+        Text(Localizable.webOnlyFeature)
+            .themeFont(.overline(emphasised: true))
+            .textCase(.uppercase)
+            .padding(.horizontal, .themeSpacing6)
+            .padding(.vertical, .themeSpacing2)
+            .foregroundColor(Color(.text, .warning))
+            .cornerRadius(.themeRadius4)
+            .background(
+                RoundedRectangle(cornerRadius: .themeSpacing4)
+                    .style(withStroke: Color(.text, .warning), lineWidth: 1.0, fill: .clear)
+            )
     }
 }
 

@@ -203,19 +203,38 @@ final class OneClickPayment {
     @MainActor
     func planOptions() async throws -> [PlanOption] {
         let composedPlans = try await protonPlansManager.getAvailablePlans()
+        let userAppStoreCountryCode = await protonPlansManager.countryCode
+        let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+
+        if composedPlans.isEmpty && !shouldShowTwoYearsWebPlan {
+            throw PurchaseError.defaultPlanNotFound
+        }
+
         availablePlans = composedPlans
-        return composedPlans.map {
+        var iapPlans: [PlanOption] = composedPlans.map {
             PlanOption(
                 id: $0.product.id,
+                storePricePerMonth: $0.storePricePerMonth,
                 amountOfMonths: $0.amountOfMonths,
                 durationLabel: $0.durationLabel,
                 displayPrice: $0.product.displayPrice,
                 pricePerMonth: $0.pricePerMonthLabel
             )
         }
+        if shouldShowTwoYearsWebPlan {
+            availablePlans.append(.twoYearsPlan) // in order to properly calculate a discount
+            iapPlans.append(.twoYearsWebPlan)
+        }
+        return iapPlans
     }
 
     func buyPlan(planOption: PlanOption) async throws -> ComposedPlan {
+        guard planOption.purchaseType != .web else {
+            // should never happen
+            throw PurchaseError.planNotFound("Two years web plan should be purchased through web")
+        }
+
         guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }),
               let planName = composedPlan.plan.name,
               let product = composedPlan.product as? Product else {
@@ -263,4 +282,42 @@ extension OneClickPayment {
             }
         }
     }
+}
+
+extension ComposedPlan {
+    static var twoYearsPlan: Self {
+        ComposedPlan(
+            plan: AvailablePlan.init(
+                description: "Mock plan for calculation purposes",
+                instances: [],
+                name: nil,
+                state: 0,
+                type: nil,
+                title: "Mock plan",
+                features: 0,
+                entitlements: [],
+                decorations: [],
+                id: UUID().uuidString,
+                services: 0
+            ),
+            instance: PlanInstance.init(
+                price: [],
+                description: "mock instance for calculation purposes",
+                cycle: 24,
+                periodEnd: 0,
+                vendors: .init(apple: nil)
+            ),
+            product: MockUSDProduct(id: "2YwebPlan", displayName: "2 years", displayPrice: "$119.76", price: 119.76)
+        )
+    }
+}
+
+private struct MockUSDProduct: ProductProtocol {
+    var id: String
+    var displayName: String
+    var description: String = "this is a half mock product for calculation puproses"
+    var displayPrice: String
+    var price: Decimal
+    var priceFormatStyle: Decimal.FormatStyle.Currency = .currency(code: "USD")
+    var subscription: Product.SubscriptionInfo?
 }

@@ -33,14 +33,24 @@ public struct PlanOption: Hashable {
     public let durationLabel: String?
     public let displayPrice: String
     public let pricePerMonth: String
+    public var storePricePerMonth: Decimal
 
     var isMoreThanOneMonth: Bool {
         amountOfMonths > 1
     }
 
+    public func renews(at date: String) -> String? {
+        guard purchaseType == .web else {
+            return nil
+        }
+        return Localizable.subscriptionRenewalDate(date, "US$79.95")
+    }
+
     // MARK: - Init
+
     public init(
         id: String,
+        storePricePerMonth: Decimal,
         amountOfMonths: Int,
         durationLabel: String?,
         displayPrice: String,
@@ -48,6 +58,7 @@ public struct PlanOption: Hashable {
         purchaseType: PlanType = .iap
     ) {
         self.id = id
+        self.storePricePerMonth = storePricePerMonth
         self.amountOfMonths = amountOfMonths
         self.durationLabel = durationLabel
         self.displayPrice = displayPrice
@@ -58,7 +69,15 @@ public struct PlanOption: Hashable {
 
 public extension PlanOption {
     static var twoYearsWebPlan: Self {
-        .init(duration: .twoYears, price: .init(amount: 119.76, currency: "USD"), purchaseType: .web)
+        .init(
+            id: "2YwebPlan",
+            storePricePerMonth: 4.99,
+            amountOfMonths: 24,
+            durationLabel: "2 years",
+            displayPrice: "$119.76",
+            pricePerMonth: "$4.99",
+            purchaseType: .web
+        )
     }
 }
 
@@ -66,7 +85,21 @@ public extension PlanOption {
 
 #if DEBUG
 public extension PlanOption {
-    static var oneMonth: Self = PlanOption(id: "1", amountOfMonths: 1, durationLabel: "1 month", displayPrice: "$9.95", pricePerMonth: "$9.95")
-    static var oneYear: Self = PlanOption(id: "2", amountOfMonths: 12, durationLabel: "1 year", displayPrice: "$79.95", pricePerMonth: "$6.66")
+    static var oneMonth: Self = PlanOption(
+        id: "1",
+        storePricePerMonth: 9.95,
+        amountOfMonths: 1,
+        durationLabel: "1 month",
+        displayPrice: "$9.95",
+        pricePerMonth: "$9.95"
+    )
+    static var oneYear: Self = PlanOption(
+        id: "2",
+        storePricePerMonth: 6.66,
+        amountOfMonths: 12,
+        durationLabel: "1 year",
+        displayPrice: "$79.95",
+        pricePerMonth: "$6.66"
+    )
 }
 #endif

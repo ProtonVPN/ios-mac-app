@@ -42,6 +42,7 @@ let package = Package(
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
                 .core(module: "Payments"),
+                .core(module: "PaymentsV2"),
                 .core(module: "UIFoundations"),
                 .core(module: "Services"),
             ],

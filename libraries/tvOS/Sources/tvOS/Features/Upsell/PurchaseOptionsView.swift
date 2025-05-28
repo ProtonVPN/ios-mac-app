@@ -16,64 +16,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
-import struct StoreKit.Product
-import Strings
 import SwiftUI
+import Strings
+import ModalsServices // Borrow logic from iOS OneClick
 
 struct PurchaseOptionsView: View {
-    let products: [PlanIAPTuple]
+    
+    let products: [PlanOption]
 
     let sendAction: UpsellFeature.ActionSender
 
     var body: some View {
         VStack {
-            ForEach(products) { product in
+            ForEach(products, id: \.self) { planOption in
                 Button {
-                    sendAction(.attemptPurchase(product))
+                    sendAction(.attemptPurchase(planOption))
                 } label: {
-                    buttonContent(product: product)
+                    buttonContent(planOption: planOption)
                 }
                 .buttonStyle(UpsellButtonStyle())
             }
         }
     }
 
-    @ViewBuilder
-    private func buttonContent(product: Product) -> some View {
-        if let subscription = product.subscription {
-            HStack(spacing: .themeSpacing16) {
-                headlineText("\(subscription.subscriptionPeriod)")
-                Spacer()
-                if subscription.subscriptionPeriod.unit == .year {
-                    VStack {
-                        headlineText("\(product.displayPrice)")
-                            + bodyText(" /year")
-                        bodyText(pricePerMonth(product))
-                    }
-                } else if subscription.subscriptionPeriod.unit == .month {
-                    headlineText("\(product.displayPrice)")
-                        + bodyText(" /month")
-                } else {
-                    headlineText("\(product.displayPrice)")
-                }
-            }
-        }
-    }
-
-    func pricePerMonth(_ product: Product) -> String {
-        let pricePerPeriod = product.price / 12
-        let price = pricePerPeriod.formatted(product.priceFormatStyle)
-        return "\(price)/month"
-    }
-
     private func headlineText(_ text: String) -> Text {
-        Text(text)
+        return Text(text)
             .font(.system(size: 38, weight: .regular))
     }
 
     private func bodyText(_ text: String) -> Text {
-        Text(text)
+        return Text(text)
             .font(.body)
             .fontWeight(.regular)
             .foregroundStyle(Color(.text, .weak))
@@ -91,15 +63,8 @@ struct PurchaseOptionsView: View {
             .hidden()
     }
 
-    // MARK: Legacy ProtonCorePayments
-
     @ViewBuilder
-    private func buttonContent(product: PlanIAPTuple) -> some View {
-        let planOption = product.planOption
-        let planDuration = planOption.duration
-        let planPrice = planOption.price
-        let planPriceString = PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale)
-        let pricePerMonthString = PriceFormatter.formatPlanPrice(price: planOption.pricePerMonth, locale: planPrice.locale)
+    private func buttonContent(planOption: PlanOption) -> some View {
         HStack(spacing: .themeSpacing16) {
             VStack(alignment: .leading) {
                 // > Apps offering auto-renewable subscriptions must include:
@@ -111,66 +76,21 @@ struct PurchaseOptionsView: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                if planDuration.months == 12 {
-                    headlineText(planPriceString)
-                        + bodyText(" /year")
-                    bodyText("\(pricePerMonthString) /month")
-                } else if planDuration == .oneMonth {
-                    headlineText(planPriceString)
-                        + bodyText(" /month")
+                if planOption.amountOfMonths == 12 {
+                    headlineText(planOption.displayPrice)
+                    + bodyText(" /year")
+                    bodyText("\(planOption.pricePerMonth) /month")
+                } else if planOption.amountOfMonths == 1 {
+                    headlineText(planOption.displayPrice)
+                    + bodyText(" /month")
                 } else {
-                    headlineText(planPriceString)
+                    headlineText(planOption.displayPrice)
                 }
             }
         }
     }
 
-    private static let dateComponentsFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        return formatter
-    }()
-
     private func subscriptionPeriod(for planOption: PlanOption) -> String {
-        Self.dateComponentsFormatter.string(from: planOption.duration.components)
-            ?? planOption.duration.components.fallbackDuration
-    }
-}
-
-enum PriceFormatter {
-    private static let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        return formatter
-    }()
-
-    static func formatPlanPrice(price: Double, locale: Locale) -> String {
-        formatter.locale = locale
-        return formatter.string(from: NSNumber(value: price)) ?? ""
-    }
-}
-
-private extension DateComponents {
-    var isMoreThanOneMonth: Bool {
-        amountOfMonths > 1
-    }
-
-    // This property is a fallback in case where DateComponentsFormatter returns `nil`
-    // Not ideal but should do the job
-    var fallbackDuration: String {
-        var duration = ""
-        if let year, year != 0 {
-            duration += Localizable.planDurationYear(year)
-        }
-        if let month, month != 0 {
-            if !duration.isEmpty {
-                duration += ", "
-            }
-            duration += Localizable.planDurationMonth(month)
-        }
-        if duration.isEmpty {
-            assertionFailure("This components receiver is invalid")
-        }
-        return duration
+        planOption.durationLabel ?? "" // if `durationLabel` is `nil` then it's one-time purchase that's not present now
     }
 }
