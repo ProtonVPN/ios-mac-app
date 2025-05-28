@@ -98,9 +98,13 @@ class CreateOrEditProfileViewModel: NSObject {
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
         self.selectedProtocol = propertiesManager.connectionProtocol
-        
-        self.colorPickerViewModel = ColorPickerViewModel()
-        
+
+        if case .circle(let color) = profile?.profileIcon {
+            self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
+        } else {
+            self.colorPickerViewModel = ColorPickerViewModel()
+        }
+
         if let profile = profile,
            let username = username,
            let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
