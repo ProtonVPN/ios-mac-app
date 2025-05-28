@@ -283,8 +283,6 @@
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Another application might be interfering with kill switch. To fix this problem, switch to the OpenVPN protocol or disable kill switch and retry.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -997,9 +995,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Application Logs";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN Logs";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard Logs";
 
@@ -1204,9 +1199,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Thank you for your report";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";

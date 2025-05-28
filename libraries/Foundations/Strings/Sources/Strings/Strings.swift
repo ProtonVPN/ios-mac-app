@@ -988,8 +988,6 @@ public enum Localizable {
   public static var onboardingMacUsageStats: String { return Localizable.tr("Localizable", "_onboarding_mac_usage_stats", fallback: "Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance.") }
   /// Main mac app menu item
   public static var openAppToLogIn: String { return Localizable.tr("Localizable", "_open_app_to_log_in", fallback: "Show Proton VPN to sign in...") }
-  /// iOS Settings: OpenVPN logs row
-  public static var openVpnLogs: String { return Localizable.tr("Localizable", "_open_vpn_logs", fallback: "OpenVPN Logs") }
   /// OpenVPN
   public static var openvpn: String { return Localizable.tr("Localizable", "_openvpn", fallback: "OpenVPN") }
   /// Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update.
@@ -1228,8 +1226,6 @@ public enum Localizable {
   public static var reportAttachmentsCheckbox: String { return Localizable.tr("Localizable", "_report_attachments_checkbox", fallback: "Include app logs and system details") }
   /// Report bug screen title; iOS settings screen: item;
   public static var reportBug: String { return Localizable.tr("Localizable", "_report_bug", fallback: "Report an issue") }
-  /// Mac bug report: description text before bug report form
-  public static var reportDescription: String { return Localizable.tr("Localizable", "_report_description", fallback: "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs") }
   /// Mac bug report: email field label
   public static var reportFieldEmail: String { return Localizable.tr("Localizable", "_report_field_email", fallback: "Email:") }
   /// Mac bug report: feedback field label
@@ -1639,8 +1635,6 @@ public enum Localizable {
   public static var tierVisionary: String { return Localizable.tr("Localizable", "_tier_visionary", fallback: "Visionary") }
   /// MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on
   public static var timeoutKsIkeDescritpion: String { return Localizable.tr("Localizable", "_timeout_ks_ike_descritpion", fallback: "Another application might be interfering with kill switch. To fix this problem, switch to the OpenVPN protocol or disable kill switch and retry.") }
-  /// MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english.
-  public static var timeoutKsIkeSwitchProtocol: String { return Localizable.tr("Localizable", "_timeout_ks_ike_switch_protocol", fallback: "Switch to OpenVPN and retry") }
   /// iOS Settings -> Protocol -> WireGuard: TLS option
   public static var tls: String { return Localizable.tr("Localizable", "_tls", fallback: "TLS") }
   /// To Server:
