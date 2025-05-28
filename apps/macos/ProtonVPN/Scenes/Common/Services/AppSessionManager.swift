@@ -68,7 +68,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         CoreAlertServiceFactory &
                         NetworkingFactory &
                         AppSessionRefreshTimerFactory &
-                        AnnouncementRefresherFactory &
                         VpnAuthenticationFactory &
                         ProfileManagerFactory &
                         AppCertificateRefreshManagerFactory &
@@ -83,13 +82,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
-    private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
+
+    @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
 
     var sessionStatus: SessionStatus = .notEstablished {
         didSet { loggedIn = sessionStatus == .established }

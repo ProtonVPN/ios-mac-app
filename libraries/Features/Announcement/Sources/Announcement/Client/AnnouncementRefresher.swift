@@ -23,6 +23,7 @@
 import Foundation
 
 import Dependencies
+import Sharing
 
 import ProtonCoreFeatureFlags
 
@@ -32,13 +33,6 @@ import LegacyCommon
 import Ergonomics
 import Domain
 
-// MARK: AnnouncementRefresherFactory
-extension Container: AnnouncementRefresherFactory {
-    public func makeAnnouncementRefresher() -> AnnouncementRefresher {
-        AnnouncementRefresherImplementation()
-    }
-}
-
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
     func tryRefreshing()
@@ -46,8 +40,10 @@ public protocol AnnouncementRefresher {
     func clear()
 }
 
-public protocol AnnouncementRefresherFactory {
-    func makeAnnouncementRefresher() -> AnnouncementRefresher
+public extension SharedKey where Self == AppStorageKey<Date?> {
+    static var lastAnnouncementRefreshDate: Self {
+        .appStorage("lastAnnouncementRefreshDate")
+    }
 }
 
 public class AnnouncementRefresherImplementation: AnnouncementRefresher {
@@ -56,24 +52,24 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     @Dependency(\.announcementStorage) private var announcementStorage
 
     private let refreshInterval: TimeInterval
+    
+    @Shared(.lastAnnouncementRefreshDate) public var lastRefreshDate
 
-    private var lastRefreshDate: Date?
-
-    public init(
-        refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval
-    ) {
+    public init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {
         self.refreshInterval = refreshInterval
 
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
-        AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(refresh))
+        AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(tryRefreshing))
     }
     
-    public func tryRefreshing() {
+    @objc public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
            Date().timeIntervalSince(lastRefresh) < refreshInterval {
             return
         }
-        lastRefreshDate = Date()
+        $lastRefreshDate.withLock {
+            $0 = Date()
+        }
         refresh()
     }
 
@@ -82,11 +78,13 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
            Date().timeIntervalSince(lastRefresh) < refreshInterval {
             return
         }
-        lastRefreshDate = Date()
+        $lastRefreshDate.withLock {
+            $0 = Date()
+        }
         await refreshAsync()
     }
 
-    @objc private func refresh() {
+    private func refresh() {
         Task {
             await refreshAsync()
         }
@@ -104,7 +102,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
 
     public func clear() {
-        lastRefreshDate = nil
+        $lastRefreshDate.withLock {
+            $0 = nil
+        }
         announcementStorage.clear()
     }
     

@@ -210,8 +210,9 @@ extension AppDelegate: NSApplicationDelegate {
         updateRecentlyActive(true)
 
         // Refresh API announcements
+        @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().username != nil {
-            container.makeAnnouncementRefresher().tryRefreshing()
+            announcementRefresher.tryRefreshing()
         }
     }
 
