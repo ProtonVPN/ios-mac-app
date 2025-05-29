@@ -225,7 +225,7 @@ public struct PlutoniumView: View {
 
     private func submitIP() {
         guard store.validationError == nil else { return }
-        store.send(.entryClicked(.ip(store.ipEntry), .add))
+        store.send(.entryClicked(.ip(store.ipEntry), .add, store.feature.mode))
     }
 
     private func ipEntryView() -> some View {
@@ -235,7 +235,7 @@ public struct PlutoniumView: View {
                 .foregroundStyle(Color(.text))
             HStack {
                 TextField("", text: $store.ipEntry.sending(\.inputFieldChanged))
-                    .modifier(ClearButton(text: $store.ipEntry.sending(\.inputFieldChanged)))
+                    .clearButton(text: $store.ipEntry.sending(\.inputFieldChanged))
                     .disableAutocorrection(true)
                     .onSubmit(submitIP)
                     .textFieldStyle(.plain)
@@ -276,7 +276,7 @@ public struct PlutoniumView: View {
                 .foregroundStyle(Color(.text))
             Spacer()
             Button {
-                store.send(.entryClicked(.ip(ip), .remove))
+                store.send(.entryClicked(.ip(ip), .remove, store.feature.mode))
             } label: {
                 IconProvider.cross
                     .resizable()
@@ -316,7 +316,7 @@ public struct PlutoniumView: View {
                         log.debug("Tried to add an invalid app URL")
                         return
                     }
-                    store.send(.entryClicked(.app(app), .add))
+                    store.send(.entryClicked(.app(app), .add, store.feature.mode))
                 }
             }
         return true
@@ -407,7 +407,7 @@ public struct PlutoniumView: View {
         panel.urls
             .compactMap(PlutoniumApp.init(url:))
             .forEach {
-                store.send(.entryClicked(.app($0), .add))
+                store.send(.entryClicked(.app($0), .add, store.feature.mode))
             }
     }
 
@@ -416,7 +416,7 @@ public struct PlutoniumView: View {
             LazyVStack(alignment: .leading, spacing: 0) {
                 ForEach(apps) { app in
                     Button {
-                        store.send(.entryClicked(.app(app), operation))
+                        store.send(.entryClicked(.app(app), operation, store.feature.mode))
                     } label: {
                         appRow(app, operation: operation)
                     }
@@ -497,28 +497,6 @@ extension PlutoniumFeature.State.ValidationError: LocalizedError {
             Localizable.plutoniumAddressExists
         case .invalidIP:
             Localizable.plutoniumValidationError
-        }
-    }
-}
-
-struct ClearButton: ViewModifier {
-    @Binding var text: String
-
-    public func body(content: Content) -> some View {
-        ZStack(alignment: .trailing) {
-            content
-
-            if !text.isEmpty {
-                Button {
-                    self.text = ""
-                } label: {
-                    IconProvider.crossCircleFilled.swiftUIImage
-                        .resizable()
-                        .foregroundStyle(Color(.text, .weak))
-                        .frame(.square(.themeSpacing12))
-                }
-                .buttonStyle(.plain)
-            }
         }
     }
 }
