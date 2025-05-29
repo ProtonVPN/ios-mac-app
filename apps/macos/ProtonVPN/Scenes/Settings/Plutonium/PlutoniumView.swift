@@ -234,15 +234,16 @@ public struct PlutoniumView: View {
                 .themeFont(.body(emphasised: true))
                 .foregroundStyle(Color(.text))
             HStack {
-                TextField(text: $store.ipEntry.sending(\.inputFieldChanged)) { }
+                TextField("", text: $store.ipEntry.sending(\.inputFieldChanged))
+                    .modifier(ClearButton(text: $store.ipEntry.sending(\.inputFieldChanged)))
                     .disableAutocorrection(true)
                     .onSubmit(submitIP)
                     .textFieldStyle(.plain)
                     .font(.callout(emphasised: false))
                     .foregroundStyle(Color(.text))
                     .padding(.themeSpacing8)
-                    .background(Color(.background))
-                    .themeBorder(cornerRadius: .radius8)
+                    .background(Color(.background, .transparent))
+                    .themeBorder(style: store.validationError != nil ? .danger : .normal, cornerRadius: .radius8)
 
                 Button(action: submitIP) {
                     Text(Localizable.plutoniumAddButton)
@@ -496,6 +497,28 @@ extension PlutoniumFeature.State.ValidationError: LocalizedError {
             Localizable.plutoniumAddressExists
         case .invalidIP:
             Localizable.plutoniumValidationError
+        }
+    }
+}
+
+struct ClearButton: ViewModifier {
+    @Binding var text: String
+
+    public func body(content: Content) -> some View {
+        ZStack(alignment: .trailing) {
+            content
+
+            if !text.isEmpty {
+                Button {
+                    self.text = ""
+                } label: {
+                    IconProvider.crossCircleFilled.swiftUIImage
+                        .resizable()
+                        .foregroundStyle(Color(.text, .weak))
+                        .frame(.square(.themeSpacing12))
+                }
+                .buttonStyle(.plain)
+            }
         }
     }
 }

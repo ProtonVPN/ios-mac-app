@@ -253,7 +253,7 @@ class WindowServiceImplementation: WindowService {
 
     func openPlutoniumWindow() {
         NSApp.setActivationPolicy(.regular)
-        let windowController = PlutoniumWindowController(viewController: .plutonium())
+        let windowController = PlutoniumWindowController(factory: factory)
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
         windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)

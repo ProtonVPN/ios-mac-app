@@ -41,10 +41,10 @@ public struct PlutoniumManager: DependencyKey, TestDependencyKey {
         start: {
             let manager = try await makeOrGetManager()
             try manager.connection.startVPNTunnel()
-            updateAppliedConfiguration()
             log.info("Plutonium started")
         },
         stop: {
+            updateAppliedConfiguration()
             let manager = try await makeOrGetManager()
             guard manager.connection.status == .connected else { return }
             manager.connection.stopVPNTunnel()

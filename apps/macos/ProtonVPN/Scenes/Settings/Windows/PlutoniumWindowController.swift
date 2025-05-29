@@ -17,16 +17,35 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+
+import ComposableArchitecture
+
 import LegacyCommon
 import Strings
+import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
+
+    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+
+    let store: StoreOf<PlutoniumFeature>
+
+    private let alertService: CoreAlertService
+    private let vpnGateway: VpnGatewayProtocol
 
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
-    required init(viewController: NSViewController) {
+    required init(factory: Factory) {
+        alertService = factory.makeCoreAlertService()
+        vpnGateway = factory.makeVpnGateway()
+
+        let state = PlutoniumFeature.State()
+        store = StoreOf<PlutoniumFeature>(initialState: state) {
+            PlutoniumFeature()
+        }
+        let viewController: NSViewController = .plutonium(store: store)
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
 
@@ -44,5 +63,15 @@ class PlutoniumWindowController: WindowController {
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background)
+    }
+
+    override func windowWillClose(_ notification: Notification) {
+        if store.requiresReconnection {
+            alertService.push(alert: ReconnectOnActionAlert(
+                actionTitle: Localizable.hermesApplyChangesWindowTitle,
+                confirmHandler: { [weak self] in self?.vpnGateway.retryConnection() },
+                cancelHandler: { }
+            ))
+        }
     }
 }
