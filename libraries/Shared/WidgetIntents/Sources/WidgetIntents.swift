@@ -22,10 +22,10 @@ import Connection
 import ConnectionInventory
 import Domain
 import Logging
-import VPNAppCore
 import UIKit
+import VPNAppCore
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.WidgetIntents.logger")
+let log: Logging.Logger = .init(label: "ProtonVPN.WidgetIntents.logger")
 
 public struct DisconnectFromVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Disconnect from VPN"
@@ -47,10 +47,11 @@ public struct ConnectToVPNIntent: AppIntent {
 
     private static let timeOut = 20 // 20 Seconds
 
-    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+    @Parameter(title: "Recent Connection Index")
+    var recentIndex: Int?
 
     public init() {
-        recentIndex = nil
+        self.recentIndex = nil
     }
 
     public init(recentIndex: Int) {
@@ -141,7 +142,7 @@ public struct LoginIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 

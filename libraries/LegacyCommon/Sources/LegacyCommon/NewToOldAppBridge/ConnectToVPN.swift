@@ -81,14 +81,14 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         @Dependency(\.connectionBridge) var bridge
         await bridge
             .push(
-                intent: 
-                        .connect(
-                            ConnectionPreparationIntent(
-                                spec: spec,
-                                server: server,
-                                connectionProtocol: specifiedProtocol
-                            )
-                        )
+                intent:
+                .connect(
+                    ConnectionPreparationIntent(
+                        spec: spec,
+                        server: server,
+                        connectionProtocol: specifiedProtocol
+                    )
+                )
             )
     }
 }

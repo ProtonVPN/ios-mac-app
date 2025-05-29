@@ -8,12 +8,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
             name: "WidgetIntents",
-            targets: ["WidgetIntents"]),
+            targets: ["WidgetIntents"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),

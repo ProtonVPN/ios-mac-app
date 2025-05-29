@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../SharedViews"),
         .package(path: "../Shared/ConnectionInventory"),
         .package(path: "../Shared/WidgetIntents"),
-        ],
+    ],
     targets: [
         .target(
             name: "ConnectWidget",

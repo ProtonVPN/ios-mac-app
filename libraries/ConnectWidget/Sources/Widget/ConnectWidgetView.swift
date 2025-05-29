@@ -17,15 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import SwiftUI
-import WidgetKit
-import VPNAppCore
-import Theme
-import Strings
-import ProtonCoreUIFoundations
 import Domain
+import ProtonCoreUIFoundations
 import SharedViews
+import Strings
+import SwiftUI
+import Theme
+import VPNAppCore
 import WidgetIntents
+import WidgetKit
 
 public struct ConnectWidgetView: View {
     let entry: ConnectWidgetEntry

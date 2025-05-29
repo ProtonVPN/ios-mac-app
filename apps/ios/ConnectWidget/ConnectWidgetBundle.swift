@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppIntents
-import SwiftUI
 import ConnectWidget
+import SwiftUI
 import WidgetIntents
 
 @main
@@ -29,7 +29,7 @@ struct ConnectWidgetBundle: WidgetBundle {
 }
 
 public struct ExtensionAppIntents: AppIntentsPackage {
-    static public var includedPackages: [any AppIntentsPackage.Type] = [
-        WidgetIntentsPackage.self
+    public static var includedPackages: [any AppIntentsPackage.Type] = [
+        WidgetIntentsPackage.self,
     ]
 }
