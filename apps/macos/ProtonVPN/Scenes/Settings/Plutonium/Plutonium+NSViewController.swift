@@ -22,11 +22,7 @@ import Theme
 import ComposableArchitecture
 
 public extension NSViewController {
-    static func plutonium() -> NSViewController {
-        let state = PlutoniumFeature.State()
-        let store = StoreOf<PlutoniumFeature>(initialState: state) {
-            PlutoniumFeature()
-        }
+    static func plutonium(store: StoreOf<PlutoniumFeature>) -> NSViewController {
         let view = PlutoniumView(store: store)
             .frame(Theme.Constants.settingsViewSize)
 
