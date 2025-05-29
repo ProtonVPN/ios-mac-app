@@ -358,6 +358,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
+        try await planService?.fetchAppleStatus()
     }
 
     // swiftlint:enable function_body_length
@@ -469,6 +470,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
+        planService?.clear()
         searchStorage.clear()
         review.clear()
 

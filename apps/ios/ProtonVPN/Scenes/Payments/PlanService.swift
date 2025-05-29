@@ -24,6 +24,7 @@ import ProtonCorePaymentsUIV2
 import LegacyCommon
 import VPNAppCore
 import VPNShared
+import ProtonCoreFeatureFlags
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService?
@@ -39,8 +40,11 @@ protocol PlanService {
     var protonPlansManager: ProtonPlansManagerProviding { get }
     var plansComposer: PlansComposerProviding { get }
     var countriesCount: Int { get }
+    var iapStatus: IAPSupportStatusV2 { get }
 
     func presentSubscriptionManagement() async
+    func fetchAppleStatus() async throws
+    func clear()
 }
 
 final class CorePlanService: PlanService {
@@ -48,11 +52,14 @@ final class CorePlanService: PlanService {
 
     var cancellables: [AnyCancellable] = []
 
+    let remoteManager: RemoteManagerProviding
+    let paymentsAPIs: PaymentsAPIs
     let plansComposer: PlansComposerProviding
     let protonPlansManager: ProtonPlansManagerProviding
 
     private let alertService: CoreAlertService
     private let authKeychain: AuthKeychainHandle
+    private let iapCachedStatus: IapCachedStatus
 
     var countriesCount: Int {
         serverRepository.countryCount()
@@ -61,9 +68,9 @@ final class CorePlanService: PlanService {
     weak var delegate: PlanServiceDelegate?
 
     /// V6PaymentStatusResponse from v6/status/apple
-//    var iapStatus: IAPSupportStatus {
-//        return userCachedStatus.iapSupportStatus
-//    }
+    var iapStatus: IAPSupportStatusV2 {
+        iapCachedStatus.iapSupportStatus
+    }
 
     // MARK: - Init
 
@@ -74,6 +81,7 @@ final class CorePlanService: PlanService {
 
         self.alertService = alertService
         self.authKeychain = authKeychain
+        self.iapCachedStatus = IapCachedStatus()
 
         @Dependency(\.dohConfiguration) var doh
         let appInfo = AppInfoImplementation(context: .mainApp)
@@ -83,7 +91,10 @@ final class CorePlanService: PlanService {
             authToken: authCredentials.accessToken,
             appVersion: appInfo.appVersion
         )
-        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: .init(doh: doh))
+        self.remoteManager = remoteManager
+        let paymentsAPIs = PaymentsAPIs(doh: doh)
+        self.paymentsAPIs = paymentsAPIs
+        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
         self.protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
         self.plansComposer = plansComposer
 
@@ -103,11 +114,29 @@ final class CorePlanService: PlanService {
         }.store(in: &cancellables)
     }
 
+    func clear() {
+        iapCachedStatus.clear()
+    }
+
+    func fetchAppleStatus() async throws {
+        let iapStatus: IAPSupportStatusV2
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV6Status) {
+            let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
+            let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+            iapStatus = iapV6Response.status
+        } else {
+            let iapV5StatusRequest = try paymentsAPIs.url(for: .legacyAppleStatus)
+            let iapV5Response: LegacyIAPStatus = try await remoteManager.getFromURL(iapV5StatusRequest.url)
+            iapStatus = iapV5Response.status
+        }
+        iapCachedStatus.iapSupportStatus = iapStatus
+    }
+
     func presentSubscriptionManagement() async {
-//        if case let .disabled(localizedReason) = iapSupportStatus {
-//            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
-//            return
-//        }
+        if case let .disabled(localizedReason) = iapCachedStatus.iapSupportStatus {
+            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
+            return
+        }
         guard let authCredentials = authKeychain.fetch() else {
             return
         }

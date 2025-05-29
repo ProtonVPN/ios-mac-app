@@ -22,6 +22,7 @@ import ModalsServices
 import ProtonCorePaymentsV2
 import StoreKit
 import VPNShared
+import ProtonCoreFeatureFlags
 
 struct PaymentsFactory {
     var payments: @Sendable () -> PlanService
@@ -39,8 +40,11 @@ extension DependencyValues {
 }
 
 final class PlanService {
+    let remoteManager: RemoteManagerProviding
+    let paymentsAPIs: PaymentsAPIs
     let plansComposer: PlansComposerProviding
     let protonPlansManager: ProtonPlansManagerProviding
+    var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
 
     // MARK: - Init
 
@@ -58,7 +62,10 @@ final class PlanService {
             authToken: authCredentials.accessToken,
             appVersion: appInfo.appVersion
         )
-        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: .init(doh: doh))
+        self.remoteManager = remoteManager
+        let paymentsAPIs = PaymentsAPIs(doh: doh)
+        self.paymentsAPIs = paymentsAPIs
+        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
         self.protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
         self.plansComposer = plansComposer
 
@@ -72,6 +79,20 @@ final class PlanService {
         Task {
             try? await TransactionsObserver.shared.start()
         }
+    }
+
+    func fetchAppleStatus() async throws {
+        let iapStatus: IAPSupportStatusV2
+        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV6Status) {
+            let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
+            let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+            iapStatus = iapV6Response.status
+        } else {
+            let iapV5StatusRequest = try paymentsAPIs.url(for: .legacyAppleStatus)
+            let iapV5Response: LegacyIAPStatus = try await remoteManager.getFromURL(iapV5StatusRequest.url)
+            iapStatus = iapV5Response.status
+        }
+        iapSupportStatus = iapStatus
     }
 
     private var availablePlans: [ComposedPlan] = []

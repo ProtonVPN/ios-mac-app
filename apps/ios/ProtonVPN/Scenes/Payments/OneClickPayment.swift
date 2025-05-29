@@ -87,11 +87,10 @@ final class OneClickPayment {
             throw UnavailableError.isTestFlight
         }
 
-        /// no iAP status for now in PaymentsV2
-//        if case let .disabled(localizedReason) = planService.iapStatus {
-//            pushCantUpgradeAlert(localizedReason)
-//            throw UnavailableError.iapDisabled(localizedReason: localizedReason)
-//        }
+        if case let .disabled(localizedReason) = planService.iapStatus {
+            pushCantUpgradeAlert(localizedReason)
+            throw UnavailableError.iapDisabled(localizedReason: localizedReason)
+        }
 
         self.alertService = alertService
         self.planService = planService

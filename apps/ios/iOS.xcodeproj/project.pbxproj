@@ -182,6 +182,7 @@
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		A42F23772DE47D400067A6E8 /* ProtonCorePaymentsUIV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A42F23762DE47D400067A6E8 /* ProtonCorePaymentsUIV2 */; };
+		A42F23CB2DE841EF0067A6E8 /* IapCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42F23CA2DE841EF0067A6E8 /* IapCachedStatus.swift */; };
 		A486CC102DDF19AE00BA1444 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A486CC0F2DDF19AA00BA1444 /* PlanService.swift */; };
 		A486CC122DDF239300BA1444 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A486CC112DDF239300BA1444 /* ProtonCorePaymentsV2 */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
@@ -203,7 +204,6 @@
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		ADDB04A72B768CC200211434 /* CountriesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDB04A62B768CC200211434 /* CountriesViewModelTests.swift */; };
-		ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */; };
 		ADEB35E62B62842C0044ABD4 /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E52B62842C0044ABD4 /* TimerMock */; };
 		ADEB35EA2B6284420044ABD4 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = ADEB35E92B6284420044ABD4 /* VPNSharedTesting */; };
 		ADFC97B82B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */ = {isa = PBXBuildFile; productRef = ADFC97B72B62E1A100CEBC16 /* ProtonCoreCryptoVPNPatchedGoImplementation */; };
@@ -676,6 +676,7 @@
 		8815D27DF5F2EEB85DCFD444 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
 		8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Extension.swift"; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		A42F23CA2DE841EF0067A6E8 /* IapCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IapCachedStatus.swift; sourceTree = "<group>"; };
 		A486CC0F2DDF19AA00BA1444 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanService.swift; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
@@ -923,7 +924,6 @@
 				E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */,
 				4CF361FF2D6E21A60088CEB3 /* Perception in Frameworks */,
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
-				ADEB35D42B62832A0044ABD4 /* ProtonCorePaymentsUI in Frameworks */,
 				4C7D40642A60282D00ACDBED /* AlamofireImage in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				4C9754FA2A6018040035A61B /* GSMessages in Frameworks */,
@@ -2268,6 +2268,7 @@
 			isa = PBXGroup;
 			children = (
 				A486CC0F2DDF19AA00BA1444 /* PlanService.swift */,
+				A42F23CA2DE841EF0067A6E8 /* IapCachedStatus.swift */,
 				E5BE14932BBE99A00093F30F /* OneClickPayment.swift */,
 			);
 			path = Payments;
@@ -2337,7 +2338,6 @@
 				4C8C31572A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation */,
 				E58974792A812A870017987D /* OHHTTPStubsSwift */,
 				57BC69892B1F33CB0049485C /* ProtonCoreAccountRecovery */,
-				ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */,
 				E55B1A642B922031001EF2C6 /* PMLogger */,
 				8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */,
 				8BAA73B62BD131FA00187E26 /* ProtonCorePasswordChange */,
@@ -2905,6 +2905,7 @@
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,
 				F314141927B170FC007424E9 /* NetShieldSelectionViewModel.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
+				A42F23CB2DE841EF0067A6E8 /* IapCachedStatus.swift in Sources */,
 				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
@@ -4839,10 +4840,6 @@
 		ADE98F252B6306D800601881 /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PMLogger;
-		};
-		ADEB35D32B62832A0044ABD4 /* ProtonCorePaymentsUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ProtonCorePaymentsUI;
 		};
 		ADEB35E52B62842C0044ABD4 /* TimerMock */ = {
 			isa = XCSwiftPackageProductDependency;

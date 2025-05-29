@@ -72,10 +72,10 @@ struct PaymentsClient: Sendable, DependencyKey {
             getOptions: {
                 // IAP availability depends on currently logged in user account.
                 // Let's update it in case a different user is logged in than at app launch time.
-//                try await payments.updateServiceIAPAvailability()
-//                guard try payments.plansDataSource.isIAPAvailable else {
-//                    throw PaymentsError.iapDisabled
-//                }
+                try await payments?.fetchAppleStatus()
+                guard payments?.iapSupportStatus.isEnabled == true else {
+                    throw PaymentsError.iapDisabled
+                }
 
                 let planOptions = try await payments?.planOptions()
                 return planOptions?.map { $0 } ?? []
