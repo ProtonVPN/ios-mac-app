@@ -547,8 +547,7 @@ final class ConnectionFeatureTests: XCTestCase {
         let store = environment.createConnectionTestStore()
 
         // Set up a failure to occur while creating the local agent connection
-        // VPNAPPL-2651: Confirm the error thrown by `LocalAgentNewAgenConnection` in  `localAgentConnectionFactory`
-        let localAgentError = NSError(domain: "go", code: 1, localizedDescription: "tls: private key does not match public key")
+        let localAgentError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         environment.localAgent.connectionErrorToThrow = localAgentError
 
         store.exhaustivity = .off

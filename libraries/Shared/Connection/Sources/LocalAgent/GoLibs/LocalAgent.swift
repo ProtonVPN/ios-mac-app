@@ -30,7 +30,7 @@ import CoreConnection
 protocol LocalAgent {
     func createEventStream() -> AsyncStream<LocalAgentEvent>
 
-    func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws
+    func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws(LAConnectionCreationError)
     func set(features: LocalAgentFeatures)
     func disconnect()
 

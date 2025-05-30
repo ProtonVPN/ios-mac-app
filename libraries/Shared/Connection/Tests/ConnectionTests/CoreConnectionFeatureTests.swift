@@ -278,7 +278,6 @@ final class CoreConnectionFeatureTests: XCTestCase {
     /// be reconnected with a new private key).
     @MainActor func testDisconnectsWithErrorWhenCertificateAuthenticationFailsDueToKeyConflict() async {
         let now = Date()
-        let tomorrow = now.addingTimeInterval(.days(1))
         let mockManager = MockTunnelManager()
         let localAgent = LocalAgentMock(state: .disconnected)
         let mockClock = TestClock()
@@ -362,6 +361,118 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
 
         await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+
+        await mockClock.advance(by: .seconds(1))
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
+            $0.tunnel = .disconnected(nil)
+        }
+        await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
+
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopAllObservations)
+    }
+
+    @MainActor func testRegeneratesKeysAndDisconnectsWhenLocalAgentFailsWithGoTLSError() async {
+        // Set up a failure to occur while creating the local agent connection
+        let localAgent = LocalAgentMock(state: .disconnected)
+        let connectionCreationError = LAConnectionCreationError.goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
+        localAgent.connectionErrorToThrow = connectionCreationError
+
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let mockManager = MockTunnelManager()
+        let mockClock = TestClock()
+        let mockStorage = MockVpnAuthenticationStorage()
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        mockStorage.keys = mockKeys
+        mockStorage.cert = certificate
+        mockStorage.features = .mock
+        mockStorage.keysDeleted = { XCTFail("Keys shouldn't be cleared until we encounter the Go TLS error") }
+
+        mockManager.connection = VPNSessionMock(
+            status: .disconnected,
+            connectedDate: nil,
+            lastDisconnectError: nil
+        )
+
+        let server = Server.mock
+        let features = VPNConnectionFeatures.mock
+        let tunnelSettings = TunnelSettings.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+        let disconnected = CoreConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+
+        let store = TestStore(initialState: disconnected) {
+            CoreConnectionFeature()._printChanges()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.localAgent = localAgent
+            $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
+        }
+
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
+
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+
+        // Connection
+
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+
+        await store.send(.connect(intent))
+        await store.receive(\.tunnel.connect) {
+            $0.tunnel = .preparingConnection(connectedLogicalServer)
+        }
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
+
+        await store.receive(\.tunnel.tunnelStartRequestFinished.success)
+        await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
+            $0.tunnel = .connecting(connectedLogicalServer)
+        }
+
+        let keysCleared = XCTestExpectation(description: "Keys should have been cleared")
+        mockStorage.keysDeleted = { keysCleared.fulfill()}
+
+        await mockClock.advance(by: .seconds(1))
+        await store.receive(\.tunnel.tunnelStatusChanged.connected)
+        await store.receive(\.tunnel.connectionFinished.success) {
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+        }
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
+
+        await store.receive(\.certAuth.loadAuthenticationData) {
+            $0.certAuth = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.certAuth.loadFromStorage)
+        await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: certificate, features: .mock))
+        }
+        await store.receive(\.certAuth.loadingFinished.success)
+
+        await store.receive(\.localAgent.connect) {
+            $0.localAgent = .disconnected(.failedToEstablishConnection(connectionCreationError))
+        }
+        await store.receive(\.localAgent.delegate.connectionFailed)
+        await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+        await store.receive(\.certAuth.regenerateKeys) {
+            $0.certAuth = .idle // Make sure keys are cleared from memory
+        }
+        await store.receive(\.disconnect)
+        await store.receive(\.delegate.error.agent.failedToEstablishConnection)
+
+        await store.receive(\.localAgent.disconnect)
+        await store.receive(\.tunnel.disconnect) {
+            $0.tunnel = .disconnecting(nil)
+        }
+
+        await fulfillment(of: [keysCleared], timeout: 0) // Make sure keys were also cleared from the keychain
 
         await mockClock.advance(by: .seconds(1))
         await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {

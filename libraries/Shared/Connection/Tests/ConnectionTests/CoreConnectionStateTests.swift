@@ -21,18 +21,20 @@ import XCTest
 import Connection
 import ExtensionManager
 import CoreConnection
+import LocalAgent
 import Ergonomics
 
 final class CoreConnectionStateTests: XCTestCase {
 
     func testLocalAgentErrorResolvesToError() async {
+        let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         let state = CoreConnectionState(
             tunnelState: .disconnected(nil),
             certAuthState: .idle,
-            localAgentState: .disconnected(.failedToEstablishConnection("" as GenericError))
+            localAgentState: .disconnected(.failedToEstablishConnection(goTLSError))
         )
 
-        XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection("" as GenericError))))
+        XCTAssertEqual(state, .disconnected(.agent(.failedToEstablishConnection(goTLSError))))
     }
 
     func testTunnelConnectingResolvesToStarting() async {
