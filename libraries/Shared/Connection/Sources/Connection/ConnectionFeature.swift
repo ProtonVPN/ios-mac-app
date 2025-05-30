@@ -267,7 +267,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         case .unknown:
             state.core.shouldDisconnectWhenAllowed = true
             internalDisconnectOrStateChangeEffect = .none
-            log.debug("Delyaing disconnection request until internal state has been resolved", category: .connection)
+            log.debug("Delaying disconnection request until internal state has been resolved", category: .connection)
 
         case .starting, .connecting:
             if state.core.isInteractionAllowed {

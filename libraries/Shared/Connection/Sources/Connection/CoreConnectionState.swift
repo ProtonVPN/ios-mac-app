@@ -77,22 +77,26 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
             self = .disconnecting
 
         case (.disconnecting, .connected), (.disconnecting, .connecting):
-            log.assertionFailure("Unexpected state: local agent connecting or connected while tunnel disconnecting")
+            // Disconnection can be trigged from outside of the app. More info in the README under
+            // ExtensionManagerFeature.
+            // This transitions the tunnel/network extension into disconnecting -> disconnected states, before we have
+            // the opportunity to disconnect the Local Agent. This state is unusual, but not immediately indicative of
+            // an error occurring.
             self = .disconnecting
+
+        case (.disconnected(let possibleTunnelError), .connecting),
+            (.disconnected(let possibleTunnelError), .connected):
+            // Same as the above case, the user may have initiated a disconnection while the app was in the background
+            self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
         case (.disconnected(.none), .disconnected(.some(let agentError))):
             self = .disconnected(.agent(agentError))
 
-        case (.disconnected(let possibleTunnelError), .connecting),
-            (.disconnected(let possibleTunnelError), .connected):
-            log.assertionFailure("Unexpected state: local agent connecting or connected while tunnel disconnected")
-            self = .disconnected(possibleTunnelError.map { .tunnel($0) })
-
         case (.disconnected(let possibleTunnelError), .disconnecting(_)):
-            // While not necessarily an error state, this is unusual because local agent disconnection should be instant
-            // Let's report state as disconnected because local agent connection can just be recreated instantly
-            reportIssue("Suspicious internal state") // highlight this issue in tests
-            log.warning("Suspicious internal state - tunnel is disconnected while LA is still disconnecting")
+            // While not necessarily an error state, this is unusual because local agent disconnection should be instant.
+            // Let's report state as disconnected because local agent connection can just be recreated instantly.
+            // This scenario is usually due to the tunnel crashing or being stopped by the system or as a result of
+            // user actions outside of the app
             self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
         case (.disconnected(.none), .disconnected(.none)):

@@ -273,6 +273,116 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
     }
 
+
+    /// In case the tunnel disconnects for some unexpected reason after we have successfully connected, make sure that
+    /// Local Agent is disconnected as well.
+    /// Possible reasons for the tunnel disconnecting include user actions outside of the app (control centre or
+    /// system VPN settings) or packet tunnel provider process crashes.
+    @MainActor func testDisconnectsLocalAgentIfTunnelIsStoppedExternally() async {
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let mockManager = MockTunnelManager()
+        let localAgent = LocalAgentMock(state: .disconnected)
+        let mockClock = TestClock()
+
+        let mockStorage = MockVpnAuthenticationStorage()
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let certificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+        let features: VPNConnectionFeatures = .mock
+        mockStorage.keys = mockKeys
+        mockStorage.cert = certificate
+        mockStorage.features = features
+
+        mockManager.connection = VPNSessionMock(
+            status: .disconnected,
+            connectedDate: nil,
+            lastDisconnectError: nil
+        )
+
+        let server = Server.mock
+        let tunnelSettings = TunnelSettings.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+        let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
+
+        let disconnected = CoreConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+
+        let store = TestStore(initialState: disconnected) {
+            CoreConnectionFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.localAgent = localAgent
+            $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { features }
+        }
+
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
+
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+
+        // Connection
+
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: .mock)
+
+        await store.send(.connect(intent))
+        await store.receive(\.tunnel.connect) {
+            $0.tunnel = .preparingConnection(connectedLogicalServer)
+        }
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
+
+        await store.receive(\.tunnel.tunnelStartRequestFinished.success)
+        await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
+            $0.tunnel = .connecting(connectedLogicalServer)
+        }
+
+        await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
+        await store.receive(\.tunnel.tunnelStatusChanged.connected)
+        await store.receive(\.tunnel.connectionFinished.success) {
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+        }
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
+
+        await store.receive(\.certAuth.loadAuthenticationData) {
+            $0.certAuth = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.certAuth.loadFromStorage)
+        await store.receive(\.certAuth.loadingFromStorageFinished.loaded) {
+            $0.certAuth = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: certificate, features: features))
+        }
+        await store.receive(\.certAuth.loadingFinished.success)
+        await store.receive(\.localAgent.connect)
+        await store.receive(\.localAgent.startNetShieldStatsObservation)
+        await store.receive(\.localAgent.event.state.connecting) {
+            $0.localAgent = .connecting(nil)
+        }
+
+        await mockClock.advance(by: .seconds(1)) // give LocalAgentMock time to connect
+        await store.receive(\.localAgent.event.state.connected) {
+            $0.localAgent = .connected(nil)
+        }
+        await store.receive(stateChange(from: \.connecting, to: \.connected))
+
+        // Simulate the tunnel crashing or being manually disconnected by the user
+        mockManager.connection.status = .disconnected
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
+            $0.tunnel = .disconnected(nil)
+        }
+        await store.receive(stateChange(from: \.connected, to: \.disconnected))
+
+        // Now, because the network extension was unexpectly stopped, we should disconnect from Agent as well
+        await store.receive(\.localAgent.disconnect) {
+            $0.localAgent = .disconnecting(nil)
+        }
+
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopAllObservations)
+    }
+
     /// Tests how we handle an edge case where the API refuses to refresh our certificate due to key conflict.
     /// We have to purge our locally stored keys and interrupt the connetion process (since the tunnel will need to
     /// be reconnected with a new private key).
