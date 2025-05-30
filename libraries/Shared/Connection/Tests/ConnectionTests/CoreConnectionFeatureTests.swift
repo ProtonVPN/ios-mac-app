@@ -655,7 +655,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.localAgent.stopAllObservations)
     }
 
-    @MainActor func testDisconnectsWithTimeoutErrorWhenConnectionTimesOut() async {
+    @MainActor func testDisconnectsWithTimeoutErrorWhenLocalAgentConnectionTimesOut() async {
         let now = Date.now
         let tomorrow = now.addingTimeInterval(.days(1))
 
@@ -739,8 +739,9 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
         // Fast forward to the exact time at which the connection should time out
         await mockClock.advance(by: .seconds(29)) // Default timeout minus time spent connecting tunnel (1s)
-        await store.receive(\.disconnect.connectionFailure.timeout)
-        await store.receive(\.delegate.error.timeout)
+        await store.receive(\.timeout)
+        await store.receive(\.disconnect.connectionFailure.timeout.connectingToLocalAgentServer)
+        await store.receive(\.delegate.error.timeout.connectingToLocalAgentServer)
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnecting(nil)
         }
@@ -914,8 +915,9 @@ final class CoreConnectionFeatureTests: XCTestCase {
         // Let's verify that if this does not happen, we do not get stuck in a connecting/disconnecting state forever.
 
         await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
-        await store.receive(\.disconnect.connectionFailure.timeout)
-        await store.receive(\.delegate.error.timeout)
+        await store.receive(\.timeout)
+        await store.receive(\.disconnect.connectionFailure.timeout.tunnelStartingAndConnecting)
+        await store.receive(\.delegate.error.timeout.tunnelStartingAndConnecting)
 
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {

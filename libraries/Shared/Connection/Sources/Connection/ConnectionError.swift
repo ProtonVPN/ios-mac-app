@@ -64,7 +64,7 @@ public enum ConnectionError: Error, Equatable, Sendable {
     /// Connection was attempted to a server that is no longer in the server list.
     case serverMissing
     /// The connection timed out.
-    case timeout
+    case timeout(CoreConnectionFeature.ConnectionStage)
 }
 
 extension ConnectionError: ProtonVPNError {
@@ -126,8 +126,15 @@ extension ConnectionError: ProtonVPNError {
             return "ITNT"
         case .serverMissing:
             return "SVRM"
-        case .timeout:
-            return "TIMO"
+        case .timeout(let stage):
+            switch stage {
+            case .tunnelStartingAndConnecting:
+                return "TOTS"
+            case .refreshingCertificate:
+                return "TORC"
+            case .connectingToLocalAgentServer:
+                return "TOLA"
+            }
         }
     }
 
