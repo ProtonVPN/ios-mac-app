@@ -22,7 +22,6 @@ import ModalsServices
 import ProtonCorePaymentsV2
 import StoreKit
 import VPNShared
-import ProtonCoreFeatureFlags
 
 struct PaymentsFactory {
     var payments: @Sendable () -> PlanService
@@ -82,17 +81,9 @@ final class PlanService {
     }
 
     func fetchAppleStatus() async throws {
-        let iapStatus: IAPSupportStatusV2
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV6Status) {
-            let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
-            let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
-            iapStatus = iapV6Response.status
-        } else {
-            let iapV5StatusRequest = try paymentsAPIs.url(for: .legacyAppleStatus)
-            let iapV5Response: LegacyIAPStatus = try await remoteManager.getFromURL(iapV5StatusRequest.url)
-            iapStatus = iapV5Response.status
-        }
-        iapSupportStatus = iapStatus
+        let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
+        let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+        iapSupportStatus = iapV6Response.status
     }
 
     private var availablePlans: [ComposedPlan] = []

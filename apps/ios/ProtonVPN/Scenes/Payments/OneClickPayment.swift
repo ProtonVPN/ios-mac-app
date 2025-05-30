@@ -120,10 +120,14 @@ final class OneClickPayment {
                 await self?.validate(selectedPlan: planOption)
             },
             availableDiscount: { [weak self] planOption in
-                guard let matchingComposedPlan = self?.availablePlans.first(where: { $0.product.id == planOption.id }) else {
+                guard let mostExpensivePlan = self?.plansComposer.mostExpensivePlan else {
                     return nil
                 }
-                return self?.plansComposer.availableDiscount(comparedTo: matchingComposedPlan)
+                return ComposedPlan
+                    .discount(
+                        currentPrice: planOption.storePricePerMonth,
+                        comparedPrice: mostExpensivePlan.storePricePerMonth
+                    )
             },
             notNow: { [weak self] in
                 notNowHandler?()
@@ -222,7 +226,6 @@ final class OneClickPayment {
             )
         }
         if shouldShowTwoYearsWebPlan {
-            availablePlans.append(.twoYearsPlan) // in order to properly calculate a discount
             iapPlans.append(.twoYearsWebPlan)
         }
         return iapPlans
@@ -281,42 +284,4 @@ extension OneClickPayment {
             }
         }
     }
-}
-
-extension ComposedPlan {
-    static var twoYearsPlan: Self {
-        ComposedPlan(
-            plan: AvailablePlan.init(
-                description: "Mock plan for calculation purposes",
-                instances: [],
-                name: nil,
-                state: 0,
-                type: nil,
-                title: "Mock plan",
-                features: 0,
-                entitlements: [],
-                decorations: [],
-                id: UUID().uuidString,
-                services: 0
-            ),
-            instance: PlanInstance.init(
-                price: [],
-                description: "mock instance for calculation purposes",
-                cycle: 24,
-                periodEnd: 0,
-                vendors: .init(apple: nil)
-            ),
-            product: MockUSDProduct(id: "2YwebPlan", displayName: "2 years", displayPrice: "$119.76", price: 119.76)
-        )
-    }
-}
-
-private struct MockUSDProduct: ProductProtocol {
-    var id: String
-    var displayName: String
-    var description: String = "this is a half mock product for calculation puproses"
-    var displayPrice: String
-    var price: Decimal
-    var priceFormatStyle: Decimal.FormatStyle.Currency = .currency(code: "USD")
-    var subscription: Product.SubscriptionInfo?
 }

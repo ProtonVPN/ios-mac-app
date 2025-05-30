@@ -24,7 +24,6 @@ import ProtonCorePaymentsUIV2
 import LegacyCommon
 import VPNAppCore
 import VPNShared
-import ProtonCoreFeatureFlags
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService?
@@ -119,17 +118,9 @@ final class CorePlanService: PlanService {
     }
 
     func fetchAppleStatus() async throws {
-        let iapStatus: IAPSupportStatusV2
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.paymentsV6Status) {
-            let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
-            let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
-            iapStatus = iapV6Response.status
-        } else {
-            let iapV5StatusRequest = try paymentsAPIs.url(for: .legacyAppleStatus)
-            let iapV5Response: LegacyIAPStatus = try await remoteManager.getFromURL(iapV5StatusRequest.url)
-            iapStatus = iapV5Response.status
-        }
-        iapCachedStatus.iapSupportStatus = iapStatus
+        let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
+        let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+        iapCachedStatus.iapSupportStatus = iapV6Response.status
     }
 
     func presentSubscriptionManagement() async {
