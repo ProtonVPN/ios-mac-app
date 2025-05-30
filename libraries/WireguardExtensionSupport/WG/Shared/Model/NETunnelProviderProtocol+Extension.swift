@@ -89,13 +89,12 @@ extension NETunnelProviderProtocol {
 
         let configData = data[1...]
         let decoder = JSONDecoder()
-        guard let storedConfig = (try? decoder.decode(StoredWireguardConfig.self,
-                                                      from: configData)) else {
-            log.error("Could not decode data (\(String(describing: version))")
+        do {
+            return try decoder.decode(StoredWireguardConfig.self, from: configData)
+        } catch {
+            log.error("Could not decode data (\(String(describing: version)) with error: \(error)")
             return nil
         }
-
-        return storedConfig
     }
 
     /// This is needed in case the user updates their app while connected, without

@@ -29,7 +29,8 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let defaultTcpPorts: [Int]
     public let defaultTlsPorts: [Int]
 
-    public let dnsServers: [String]
+    // This is an optional array to be more *lenient* regarding Decodable conformance
+    public let dnsServers: [String]?
 
     public var address: String {
         return "10.2.0.2/32"
@@ -103,7 +104,8 @@ extension StoredWireguardConfig {
             output.append("PrivateKey = \(clientPrivateKey)\n")
         }
         output.append("Address = \(wireguardConfig.address)\n")
-        output.append("DNS = \(wireguardConfig.dnsServers.joined(separator: ","))\n")
+
+        output.append("DNS = \(wireguardConfig.dnsServers?.joined(separator: ",") ?? "10.2.0.1")\n")
 
         output.append("\n[Peer]\n")
         if let serverPublicKey = serverPublicKey {
