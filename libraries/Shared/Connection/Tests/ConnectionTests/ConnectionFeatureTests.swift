@@ -311,6 +311,55 @@ final class ConnectionFeatureTests: XCTestCase {
         }
     }
 
+    /// Connection preparation must be completed while disconnected from the VPN.
+    /// Upon finishing preparation, if we find that the core connection state is not disconnected, the tunnel has
+    /// likely been started externally, and we cannot guarantee that the feature is ready to handle the connection
+    /// attempt, so it should be disconnected with an error.
+    @MainActor func testExternalConnectionDuringPreparationHandledByDisconnectingWithError() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        store.dependencies.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
+        store.dependencies.smartPortSelector = .init(select: { endpoint, proto in
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: .seconds(2))
+            return .init(chosenProtocol: .wireGuard(.udp), ports: [1337])
+        })
+
+        let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(preparationIntent)))
+        await store.receive(\.prepare)
+        await store.receive(stateChange(to: \.connecting.unresolved)) {
+            $0.connectionState = .connecting(.unresolved(preparationIntent))
+        }
+
+        // Give some time for preparation to start
+        await environment.clock.advance(by: .seconds(1))
+
+        // Halfway during preparation, the tunnel is started either by the system due to on-demand rules, or by the
+        // user from the control centre (they must be fast because preparation is only ~1s long!)
+        environment.vpnSession.status = .connecting
+        await store.receive(\.core.tunnel.tunnelStatusChanged.connecting)
+        await store.receive(stateChange(to: \.connecting.resolved))
+
+        // Advance the clock so that preparation finishes
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(\.finishedPreparing.success)
+        await store.receive(\.core.disconnect.connectionFailure.preparation.featureNotReady)
+        await store.receive(\.delegate.connectionFailed.preparation.featureNotReady)
+        await store.receive(stateChange(to: \.disconnecting))
+
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.disconnected)) {
+            $0.connectionState = .disconnected
+        }
+    }
+
     @MainActor func testFeatureDelaysInternalDisconnectWhenStartingTunnelUntilTunnelStartSucceeds() async {
         let environment = ConnectionEnvironment.disconnected()
         let store = environment.createConnectionTestStore()
@@ -467,7 +516,6 @@ final class ConnectionFeatureTests: XCTestCase {
         let store = environment.createConnectionTestStore()
 
         // Set up a failure that should happen during connection preparation
-        let preparationError = ConnectionError.unexpectedProtocol(.ike)
         store.dependencies.connectionIntentResolver = .init(resolve: { _ in
             XCTFail("Shouldn't get to preparation step, authorization should fail first")
             return .mock()

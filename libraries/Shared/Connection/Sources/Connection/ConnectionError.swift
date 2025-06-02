@@ -58,7 +58,7 @@ public enum ConnectionError: Error, Equatable, Sendable {
     /// The LocalAgent on the server has sent an error to us, or we encountered an error trying to connect to it.
     case agent(LocalAgentConnectionError)
     /// An error occurred while trying to prepare to connect to the server.
-    case preparation(WrappedError)
+    case preparation(ConnectionPreparationError)
     /// Original connection intent is missing, and we cannot provide accurate connection details
     case intentMissing
     /// Connection was attempted to a server that is no longer in the server list.
@@ -80,13 +80,8 @@ extension ConnectionError: ProtonVPNError {
             return tunnelError.errorDescription
         case .agent(let agentError):
             return agentError.errorDescription
-        case .preparation(let wrapped):
-            if let protonVpnError = wrapped.wrapped as? ProtonVPNError {
-                return protonVpnError.errorDescription
-            } else {
-                let error = wrapped.wrapped as NSError
-                return Localizable.connectionErrorPreparation("\(error.domain) 0x\(String(error.code, radix: 16))")
-            }
+        case .preparation(let preparationError):
+            return preparationError.errorDescription
         case .intentMissing:
             return includeCode(inside: Localizable.connectionErrorIntentMissing)
         case .serverMissing:
@@ -120,8 +115,8 @@ extension ConnectionError: ProtonVPNError {
             return "TUNN"
         case .agent:
             return "AGNT"
-        case .preparation:
-            return "PREP"
+        case .preparation(let preparationError):
+            return preparationError.charCode
         case .intentMissing:
             return "ITNT"
         case .serverMissing:
@@ -146,8 +141,8 @@ extension ConnectionError: ProtonVPNError {
             return certAuthError
         case .agent(let agentError):
             return agentError
-        case .preparation(let wrapped):
-            return wrapped.wrapped
+        case .preparation(let preparationError):
+            return preparationError.underlyingError
         default:
             return nil
         }
@@ -167,7 +162,9 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .agent(let agentError):
             return agentError.alert
-        case .preparation(let wrappedError):
+        case .preparation(.featureNotReady):
+            break
+        case .preparation(.wrapped(let wrappedError)):
             return wrappedError.alert
         case .serverMissing:
             break
