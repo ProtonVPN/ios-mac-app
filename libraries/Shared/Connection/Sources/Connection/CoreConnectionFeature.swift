@@ -156,7 +156,11 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
 
         case .connect(let intent):
-            assert(CoreConnectionState(connectionFeatureState: state).is(\.disconnected))
+            if !CoreConnectionState(connectionFeatureState: state).is(\.disconnected) {
+                // This can happen if the tunnel is started by the system, or by the user from the control centre
+                // during connection preparation.
+                log.assertionFailure("Connection initiated, but feature is not ready", category: .connection)
+            }
             clearErrorsFromPreviousAttempts(state: &state)
 
             return .concatenate(
@@ -244,9 +248,15 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
         case .tunnel(.tunnelStatusChanged(.disconnected)):
             state.shouldDisconnectWhenAllowed = false
-            if case .disconnected = state.localAgent { return .none }
-            // Now that we're fully disconnected, let's cancel the timeout
-            return .cancel(id: CancelID.connectionTimeout)
+            if case .disconnected = state.localAgent {
+                // Now that we're fully disconnected, let's cancel the timeout
+                return .cancel(id: CancelID.connectionTimeout)
+            }
+            // Local agent disconnection is normally instant. If LA still connected, but the tunnel has already
+            // finished disconnecting, it either crashed, or was stopped by the system or as a result of user actions
+            // outside the app. Let's disconnect from local agent as well.
+            log.info("Tunnel disconnected while Local Agent was still active", category: .connection)
+            return .send(.localAgent(.disconnect(nil)))
 
         case .tunnel(.tunnelStartRequestFinished(.failure)):
             // Special case of failure that occurs before the tunnel is started.
@@ -395,7 +405,10 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         guard state.certAuth.is(\.loaded) else {
             return .refreshingCertificate
         }
-        assert(!state.localAgent.is(\.connected))
+        guard state.localAgent.is(\.connected) else {
+            return .connectingToLocalAgentServer
+        }
+        log.assertionFailure("Connection timed out, but all components are connected/ready", category: .connection)
         return .connectingToLocalAgentServer
     }
 
