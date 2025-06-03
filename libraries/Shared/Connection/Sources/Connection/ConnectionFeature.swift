@@ -164,7 +164,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 )
 
             case .finishedPreparing(.success(let resolvedIntent)):
-                assert(state.coreConnectionState, is: \.disconnected)
+                guard state.coreConnectionState.is(\.disconnected) else {
+                    // Preparation can only be initiated while we are fully disconnected. If upon finishing preparation
+                    // we are not disconnected, the tunnel was started externally. Let's disconnect with an error
+                    log.error("Core connection state not disconnected after preparation", category: .connection)
+                    return .send(.core(.disconnect(.connectionFailure(.preparation(.featureNotReady)))))
+                }
                 state.currentIntent = resolvedIntent
                 do {
                     try intentStorage.set(resolvedIntent)
@@ -175,7 +180,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 } catch {
                     return .concatenate(
                         updateStateSendingEffectIfNecessary(&state, to: .disconnected),
-                        .send(.delegate(.connectionFailed(.preparation(.init(wrapped: error)))))
+                        .send(.delegate(.connectionFailed(.preparation(.wrapped(.init(wrapped: error))))))
                     )
                 }
 
@@ -184,7 +189,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                 let wrappedError = ConnectionError.WrappedError(wrapped: error)
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .disconnected),
-                    .send(.delegate(.connectionFailed(.preparation(wrappedError))))
+                    .send(.delegate(.connectionFailed(.preparation(.wrapped(wrappedError)))))
                 )
 
             case .core(.delegate(.stateChanged(_, .disconnected(.some(let error))))):
@@ -200,7 +205,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                     state.reconnectionIntent = nil
                     return .send(.prepare(reconnectionIntent))
                 } else {
-                    return .send(.delegate(.stateChanged(.disconnected)))
+                    return .concatenate(
+                        updateStateSendingEffectIfNecessary(&state, to: .disconnected),
+                        .send(.delegate(.stateChanged(.disconnected)))
+                    )
                 }
 
             case .core(.delegate(.stateChanged(_, .connected(_, let connectedAt, let details)))):

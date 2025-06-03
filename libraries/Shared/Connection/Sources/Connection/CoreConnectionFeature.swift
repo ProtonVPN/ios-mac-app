@@ -157,9 +157,13 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
         case .connect(let intent):
             if !CoreConnectionState(connectionFeatureState: state).is(\.disconnected) {
-                // This can happen if the tunnel is started by the system, or by the user from the control centre
-                // during connection preparation.
+                // This could happen if the tunnel is started externally during the connection preparation phase.
+                // Check the README under ExtensionManagerFeature for more information about how the tunnel can be
+                // started outside the app.
+                // We trigger an assertion failure here because the parent feature should halt connection when this
+                // happens.
                 log.assertionFailure("Connection initiated, but feature is not ready", category: .connection)
+                return .send(.disconnect(.connectionFailure(.preparation(.featureNotReady))))
             }
             clearErrorsFromPreviousAttempts(state: &state)
 
