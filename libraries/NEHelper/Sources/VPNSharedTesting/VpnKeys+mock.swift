@@ -54,6 +54,8 @@ public extension VpnKeys {
             )
         )
     }
+
+    static let constantKeys: VpnKeys = .mock(privateKey: "abcd", publicKey: "1234")
 }
 
 fileprivate extension String {

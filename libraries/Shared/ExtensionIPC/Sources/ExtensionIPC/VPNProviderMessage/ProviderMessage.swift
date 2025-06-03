@@ -48,6 +48,7 @@ extension ProviderMessageSender {
 
 public enum ProviderMessageError: Error {
     case noDataReceived
+    case cancelled
     case decodingError
     case sendingError
     case unknownRequest
@@ -66,6 +67,8 @@ extension ProviderMessageError: ProtonVPNError {
         switch self {
         case .noDataReceived:
             return "NRCV"
+        case .cancelled:
+            return "CANC"
         case .decodingError:
             return "MDCD"
         case .sendingError:

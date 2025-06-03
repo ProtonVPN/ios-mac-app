@@ -31,13 +31,15 @@ extension NETunnelProviderSession: VPNSession {
     static let maxRetries = 5
     static let retryInterval = Duration.seconds(1)
 
-    private func send(_ messageData: Data) async throws -> Data {
+    private func sendWithRetries(_ message: WireguardProviderRequest) async throws -> Data {
+        let messageData = message.asData
         // From documentation: "If this method can’t start sending the message it throws an error. If an error occurs
         // while sending the message or returning the result, `nil` should be sent to the response handler as
         // notification." If we encounter an xpc error, try sleeping for a second and then trying again - the extension
         // could still be launching, or we could be coming out of sleep. If we retry enough times and still get
         // nowhere, return an error.
-        for _ in 0..<Self.maxRetries {
+        for attempt in 0..<Self.maxRetries {
+            log.debug("Sending provider message", category: .ipc, metadata: ["message": "\(message)", "attempt": "\(attempt + 1)"])
             let data: Data? = try await withCheckedThrowingContinuation { continuation in
                 do {
                     try sendProviderMessage(messageData) { optionalData in
@@ -47,23 +49,30 @@ extension NETunnelProviderSession: VPNSession {
                     continuation.resume(throwing: error)
                 }
             }
-            try Task.checkCancellation()
+            if Task.isCancelled {
+                throw ProviderMessageError.cancelled
+            }
 
             if let data {
                 return data
             }
 
+            log.debug("No data received, retrying after: \(Self.retryInterval)", category: .ipc, metadata: ["message": "\(message)"])
             try await Task.sleep(for: Self.retryInterval)
+
+            if Task.isCancelled {
+                throw ProviderMessageError.cancelled
+            }
         }
 
+        log.error("Retries exhausted, no data received", category: .ipc, metadata: ["message": "\(message)"])
         throw ProviderMessageError.noDataReceived
     }
 
     public func send(
         _ message: WireguardProviderRequest
     ) async throws -> WireguardProviderRequest.Response {
-        log.debug("Sending provider message: \(message)", category: .ipc)
-        let data = try await send(message.asData)
+        let data = try await sendWithRetries(message)
         return try WireguardProviderRequest.Response.decode(data: data)
     }
 

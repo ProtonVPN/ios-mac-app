@@ -24,6 +24,7 @@ import ComposableArchitecture
 import Domain
 import DomainTestSupport
 import Ergonomics
+import ExtensionIPC
 import VPNShared
 import VPNSharedTesting
 
@@ -145,6 +146,118 @@ final class CoreConnectionFeatureTests: XCTestCase {
             $0.tunnel = .disconnected(nil)
         }
         await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
+        await store.send(.stopObserving)
+        await store.receive(\.tunnel.stopObservingStateChanges)
+        await store.receive(\.localAgent.stopAllObservations)
+    }
+
+    /// This test ensures that if the network extension is stopped while the certificate refresh process is active, we
+    /// cancel any in-flight certificate refresh effects that would otherwise retry sending IPC messages to the
+    /// extension after the tunnel is stopped, resulting in extra UNEX or TNAB errors after disconnecting.
+    @MainActor func testCancelsCertificateRefreshEffectsWhenConnectionIsAborted() async {
+        let now = Date.now
+        let mockManager = MockTunnelManager()
+        let mockClock = TestClock()
+
+        let mockStorage = MockVpnAuthenticationStorage().with(keys: .constantKeys)
+
+        mockManager.connection = VPNSessionMock(
+            status: .disconnected,
+            connectedDate: nil,
+            lastDisconnectError: nil
+        )
+
+        let server = Server.mock
+        let tunnelSettings = TunnelSettings.mock
+        let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+        let disconnected = CoreConnectionFeature.State.init(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+
+        let store = TestStore(initialState: disconnected) {
+            CoreConnectionFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = mockClock
+            $0.tunnelManager = mockManager
+            $0.vpnAuthenticationStorage = mockStorage
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
+            $0.localAgent = LocalAgentMock(state: .disconnected)
+
+            // We want to test the real implementation of the cert refresh client in this test
+            $0.certificateRefreshClient = .liveValue
+
+            // Let's control the lower level tunnel message sender instead
+            $0.tunnelMessageSender.send = { message in
+                XCTAssertEqual(message, .refreshCertificate(features: .mock), "Expected cert refresh client to ask for refresh")
+
+                // Let's model a scenario where the cert refresh takes a long time because of poor network conditions.
+                // If the tunnel is stopped before it can respond to our message, the completion handler app-side will
+                // still be invoked, so it's important to verify that the task is cancelled so we don't retry sending
+                // messages.
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: .seconds(45))
+
+                // After 45 seconds, the connection attempt should have been aborted, and therefore this task should have been cancelled.
+                XCTAssertTrue(Task.isCancelled, "Certificate refresh task should been cancelled")
+                throw ProviderMessageError.cancelled
+            }
+        }
+
+        await store.send(.startObserving)
+        await store.receive(\.tunnel.startObservingStateChanges)
+        await store.receive(\.localAgent.startObservingEvents)
+
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected)
+
+        // Connection
+
+        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: .mock)
+
+        await store.send(.connect(intent))
+        await store.receive(\.tunnel.connect) {
+            $0.tunnel = .preparingConnection(connectedLogicalServer)
+        }
+        await store.receive(stateChange(from: \.disconnected, to: \.starting))
+
+        await store.receive(\.tunnel.tunnelStartRequestFinished.success)
+        await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
+            $0.tunnel = .connecting(connectedLogicalServer)
+        }
+
+        await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
+        await store.receive(\.tunnel.tunnelStatusChanged.connected)
+        await store.receive(\.tunnel.connectionFinished.success) {
+            $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+        }
+        await store.receive(stateChange(from: \.starting, to: \.connecting))
+
+        await store.receive(\.certAuth.loadAuthenticationData) {
+            $0.certAuth = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.certAuth.loadFromStorage)
+        await store.receive(\.certAuth.loadingFromStorageFinished.certificateMissing)
+        await store.receive(\.certAuth.refreshCertificate)
+
+        // Let's assume the connection attempt times out while the certificate refresh is still in progress
+        // In this case, we don't receive a response to our certificate refresh IPC message until the tunnel is killed.
+        await mockClock.advance(by: .seconds(30))
+        await store.receive(\.timeout)
+        await store.receive(\.disconnect.connectionFailure.timeout.refreshingCertificate) // Should cancel the cert-refresh effect
+        await store.receive(\.delegate.error.timeout.refreshingCertificate)
+        await store.receive(\.localAgent.disconnect)
+        await store.receive(\.tunnel.disconnect) {
+            $0.tunnel = .disconnecting(nil)
+        }
+        await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+        await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
+            $0.tunnel = .disconnected(nil)
+        }
+        await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
+
+        // Advance the clock 30 more seconds just in case an erroneous retry happens
+        await mockClock.advance(by: .seconds(30))
+        // If we haven't received any additional cert-auth failures by now, then the test was successful.
+
         await store.send(.stopObserving)
         await store.receive(\.tunnel.stopObservingStateChanges)
         await store.receive(\.localAgent.stopAllObservations)
@@ -272,7 +385,6 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.tunnel.stopObservingStateChanges)
         await store.receive(\.localAgent.stopAllObservations)
     }
-
 
     /// In case the tunnel disconnects for some unexpected reason after we have successfully connected, make sure that
     /// Local Agent is disconnected as well.

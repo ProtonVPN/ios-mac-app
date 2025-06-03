@@ -183,6 +183,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // Disconnection initiated due to an error
             return .merge(
                 .send(.delegate(.error(error))),
+                certificateRefreshCancellation,
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.localAgent(.disconnect(nil))),
                 .send(.tunnel(.disconnect(nil)))
@@ -191,6 +192,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .disconnect(.userIntent):
             return .merge(
                 .cancel(id: CancelID.connectionTimeout),
+                certificateRefreshCancellation,
                 .send(.localAgent(.disconnect(nil))),
                 .send(.tunnel(.disconnect(nil)))
             )
@@ -336,6 +338,13 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             return .none
         }
     }
+
+    /// Cancel any in-flight effects that may have resulted in IPC messages such as `refreshCertificate`
+    /// This prevents us from raising unnecessary certificate authentication errors after disconnecting.
+    /// While this could be a separate action on the child feature, it would require extra assertions in exhaustive
+    /// tests.
+    private let certificateRefreshCancellation: Effect<Action>
+        = .cancel(id: CertificateAuthenticationFeature.CancelID.certificateRefreshAndRetries)
 
     private func effectToResolve(error: LocalAgentError) -> Effect<Action> {
         switch error.resolutionStrategy {
