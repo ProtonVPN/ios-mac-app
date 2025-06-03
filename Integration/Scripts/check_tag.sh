@@ -48,7 +48,9 @@ fi
 
 echo "Good tag signature."
 
-if grep "\d\d*\.\d\d*\.\d\d*\(-beta\.\d\d*\)*" <<< "$CI_COMMIT_TAG" > /dev/null; then
+if grep "\d\d*\.\d\d*\.\d\d*-alpha\.\d\d*" <<< "$CI_COMMIT_TAG" > /dev/null; then
+    echo "== Skipping nomination checks for alpha tag."
+elif grep "\d\d*\.\d\d*\.\d\d*\(-beta\.\d\d*\)*" <<< "$CI_COMMIT_TAG" > /dev/null; then
     VERIFY_TRAIN=$(cut -d '/' -f 1 <<< "$CI_COMMIT_TAG")
 
     if grep "\d\d*\.\d\d*\.\d\d*-beta\.\d\d*" <<< "$CI_COMMIT_TAG" > /dev/null; then
