@@ -445,5 +445,19 @@
         <string>%d 年</string>
       </dict>
     </dict>
+    <key>plutonium_others</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plutonium_others@</string>
+      <key>plutonium_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>+ %d その他</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -210,6 +210,8 @@
 
 "_reconnecting_to" = "Opětovné připojování k %@";
 
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+
 /* iOS status view */
 "_connected_to" = "Připojeno k";
 
@@ -588,6 +590,24 @@
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profil aktualizován";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Upravit";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Vyjmout";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Kopírovat";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Vložit";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Smazat";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Vybrat vše";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Přehled";
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ rok";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Pouze web";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Předplatné je automaticky obnovováno %1$@ za %2$@/rok";
+
 /* iOS plan feature */
 "_feature_server_count" = "Připojit k serverům v";
 
@@ -1437,9 +1463,23 @@
 
 "_sysex_enabled_description" = "Nastavení dokončeno. Nyní můžete procházet internet rychleji díky nejlepším technologiím VPN.";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "Nelze povolit rozšíření systému";
 
-"_sysex_error_description" = "Při instalaci rozšíření systému došlo k chybě.\nPro vyřešení tohoto problému znovu nainstalujte Proton VPN a ujistěte se, že se nachází ve složce Aplikace. Případně kontaktujte naši podporu.";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Došlo k chybě při povolování systémových rozšíření: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "zkontrolujte, zda je aplikace správně nainstalována ve složce /Aplikace.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "aktuální systémová zásada zakazuje aktivaci rozšíření na vašem zařízení.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "k pokračování je vyžadována vaše autorizace.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "prosím, kontaktujte naši podporu. (Chyba %@)";
 
 "_vpnauth_certfail_title" = "Ověření selhalo";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "Více informací";
 
 "_action_requires_reconnect" = "Pro použití této změny je třeba připojení restartovat";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Zadejte platnou adresu IPv4";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Adresa je již přidána";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Přidat";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Všechny aplikace";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Nic";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Žádné vybrané aplikace";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Režim vyloučení";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Režim zahrnutí";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Vyloučené aplikace";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Chráněné aplikace";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Změny se uplatní po opětovném připojení";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Importovat aplikace";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Přetáhněte sem nebo ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "procházejte aplikace";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Získejte to nejlepší z obou světů";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Zatím žádné IP adresy";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "Chyba serveru";
 
@@ -2536,9 +2651,6 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /měsíc";
 
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /rok";
-
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Dostupné s VPN Business.";
 
@@ -2820,3 +2932,75 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Rozumím";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Pokročilé přizpůsobení VPN";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Připojení pomocí vlastního serveru DNS s VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Navýšit";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "Vlastní DNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Předvolby";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Vlastní DNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Připojení k VPN pomocí vlastního systému doménových jmen nebo systému doménových jmen třetích stran (DNS).";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Servery (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Přidat nový DNS server";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Přidat";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Zadejte adresu serveru IPv4";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Zadejte adresu IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Zadejte platnou adresu IPv4";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Server je již přidán";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Došlo k neočekávané chybě.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Dvojitým kliknutím zkopírovat";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "Pokud váš vlastní server DNS nefunguje, použije se standardní DNS VPN.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Povolit vlastní DNS?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Tím se deaktivuje NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Povolit NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Tím se deaktivuje vlastní DNS.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Změnit nastavení";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Pro použití této změny je potřeba restartovat vaše připojení.";

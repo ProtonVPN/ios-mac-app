@@ -139,7 +139,7 @@
 "_close" = "Закрити";
 
 /* Changing settings title */
-"_change_settings" = "Змінити параметри";
+"_change_settings" = "Змінити налаштування";
 
 /* Suggest the user to upgrade account for new features */
 "_get_plus_for_feature" = "Отримайте Proton VPN Plus для доступу до цієї та інших функцій.";
@@ -209,6 +209,8 @@
 "_connecting_to" = "З'єднання з %@";
 
 "_reconnecting_to" = "Повторне з'єднання з %@";
+
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
 
 /* iOS status view */
 "_connected_to" = "З'єднано з";
@@ -588,6 +590,24 @@
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Профіль оновлено";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Редагувати";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Вирізати";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Копіювати";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Вставити";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Видалити";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Вибрати все";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Огляд";
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ рік";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Тільки веб";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Передплата автоматично поновлюється %1$@ за %2$@/рік";
+
 /* iOS plan feature */
 "_feature_server_count" = "З'єднатися з серверами в";
 
@@ -1364,7 +1390,7 @@
 
 "_quick_settings_get_plus" = "Отримати Plus";
 
-"_applying_settings_" = "Застосування параметрів";
+"_applying_settings_" = "Застосування налаштувань";
 
 "_reestablish_vpn_connection_" = "Повторне встановлення VPN-з'єднання.";
 
@@ -1437,9 +1463,23 @@
 
 "_sysex_enabled_description" = "Налаштування завершено. Тепер ви можете користуватися інтернетом швидше за допомогою найкращих технологій VPN.";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "Не вдається увімкнути системне розширення";
 
-"_sysex_error_description" = "Під час встановлення System Extension сталася помилка.\nЩоб виправити цю проблему, перевстановіть Proton VPN, переконавшись, що він розташований в теці Applications. Ви також можете звернутися до нашої служби підтримки.";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Виникла помилка під час увімкнення системних розширень: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "Переконайтеся, що програму правильно встановлено у теці /Applications.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "Поточна системна політика забороняє активацію розширень на вашому пристрої.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "Потрібна ваша авторизація для продовження.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "Зв'яжіться з нашою службою підтримки. (Помилка %@)";
 
 "_vpnauth_certfail_title" = "Помилка автентифікації";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "Докладніше";
 
 "_action_requires_reconnect" = "Для застосування змін необхідно перезапустити з'єднання";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Введіть дійсну адресу IPv4";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Адресу вже додано";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Додати";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Усі програми";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Немає";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Не вибрано жодної програми";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Режим винятків";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Режим включення";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Винятки програм";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Захищені програми";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Зміни застосуються після повторного з'єднання";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Імпортувати програми";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Перетягніть сюди або ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "перегляньте програми";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Відчуйте переваги повного контролю VPN-з'єднання";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Ще немає IP-адрес";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "Помилка сервера";
 
@@ -2536,9 +2651,6 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /місяць";
 
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /рік";
-
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Доступно для VPN Business.";
 
@@ -2820,3 +2932,75 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Зрозуміло";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Розширені налаштування VPN";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Під'єднуйтеся з використанням власного DNS-сервера з VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Покращити";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "Власний DNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Налаштування";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Власний DNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Під'єднання до VPN з використанням власної або сторонньої системи доменних імен (DNS).";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Сервери (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Додати новий DNS-сервер";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Додати";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Введіть адресу IPv4 сервера";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Введіть адресу IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Введіть дійсну адресу IPv4";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Сервер уже додано";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Сталася неочікувана помилка.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Натисніть двічі, щоб скопіювати";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "Якщо ваш власний DNS-сервер не працює, використовуватиметься стандартний VPN DNS.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Увімкнути власний DNS?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Ця дія призведе до вимкнення NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Увімкнути NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Ця дія вимкне власний DNS.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Змінити налаштування";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Для застосування змін необхідно перезапустити з'єднання.";

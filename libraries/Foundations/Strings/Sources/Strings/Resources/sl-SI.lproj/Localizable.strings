@@ -210,6 +210,8 @@
 
 "_reconnecting_to" = "Ponovna povezava z %@";
 
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+
 /* iOS status view */
 "_connected_to" = "Povezano z";
 
@@ -588,6 +590,24 @@
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profil je posodobljen.";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Uredi";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Izreži";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Kopiraj";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Prilepi";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Izbriši";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Izberi vse";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Pregled";
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ leto";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Web only";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+
 /* iOS plan feature */
 "_feature_server_count" = "Povežite se s strežniki v";
 
@@ -1437,9 +1463,23 @@
 
 "_sysex_enabled_description" = "Konfiguracija končana. Zdaj lahko brskate po internetu hitreje z najboljšimi tehnologijami VPN.";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "Sistemske razširitve ni mogoče omogočiti";
 
-"_sysex_error_description" = "Med nameščanjem sistemske razširitve je prišlo do napake.\nZnova namestite Proton VPN in se prepričajte, da se nahaja v mapi aplikacij, da odpravite to težavo. Druga možnost je, da se obrnete na našo podporo.";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Prišlo je do napake pri omogočanju razširitev sistema: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "the current system policy prohibits activating extensions on your device.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "kontaktirajte našo podporo. (Napaka %@)";
 
 "_vpnauth_certfail_title" = "Napaka pri preverjanju pristnosti";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "Izvedi več";
 
 "_action_requires_reconnect" = "Za uveljavitev sprememb je treba ponovno zagnati povezavo.";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Vnesite veljaven naslov IPv4";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Naslov je že dodan";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Dodaj";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Vse aplikacije";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Brez";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Nobenih aplikacij ni izbranih";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Način izključitve";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Način vključitve";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Izvzete aplikacije";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Zaščitene aplikacije";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Changes apply when you reconnect";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Uvozi aplikacije";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "browse apps";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Izkoristite najboljše iz obeh svetov";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "No IP addresses yet";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "Napaka strežnika";
 
@@ -1710,7 +1825,7 @@
 "_home_unprotected_accessibility_hint" = "The VPN is disconnected. Connect to a server to securely browse the internet.";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
-"_connection_card_accessibility_fastest" = "The fastest country available";
+"_connection_card_accessibility_fastest" = "Najhitrejša država na voljo";
 
 /* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
 "_connection_card_accessibility_fastest_sc" = "The fastest Secure Core country available";
@@ -2342,7 +2457,7 @@
 "upsell_devices_title" = "Zaščitite 10 naprav hkrati";
 
 /* Subtitle of devices upsell modal */
-"upsell_devices_subtitle" = "Proton VPN is available on 8 different platforms.";
+"upsell_devices_subtitle" = "Proton VPN je na voljo na 8 različnih platformah.";
 
 /* Title of torOverVPN upsell modal */
 "upsell_torOverVPN_title" = "Dostopajte do omrežja Tor z enim dotikom";
@@ -2453,7 +2568,7 @@
 "modals_whats_new_gateways_title" = "Prehodi so bili premaknjeni";
 
 /* Subtitle of gateways related content of the "What's new" screen */
-"modals_whats_new_gateways_subtitle" = "You can now access your organization’s dedicated servers from the main navigation.";
+"modals_whats_new_gateways_subtitle" = "Zdaj lahko dostopate do namenskih strežnikov svoje organizacije v glavni navigaciji.";
 
 /* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
 "upsell_specific_location_subtitle" = "Pridobite neomejene spremembe z VPN Plus";
@@ -2507,7 +2622,7 @@
 "welcome_to_proton_banner_subtitle" = "Vaša dejavnost ob uporabi VPN je zaščitena s švicarskimi zakoni o zasebnosti. Nikoli vam ne bomo sledili na spletu ali vaših podatkov delili s tretjimi osebami.";
 
 /* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
-"welcome_to_proton_banner_subtitle_redesign" = "We’ll never log your internet activity or share your information with third parties.";
+"welcome_to_proton_banner_subtitle_redesign" = "Nikoli ne bomo beležili vaše internetne aktivnosti ali delili vaših podatkov s tretjimi osebami.";
 
 /* Onboarding Get Started screen. Statistics Toggle title. */
 "onboarding_get_started_statistics_toggle_title" = "Delite anonimne podatke o uporabi";
@@ -2535,9 +2650,6 @@
 
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /mesec";
-
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /leto";
 
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Na voljo z VPN Business.";
@@ -2669,7 +2781,7 @@
 "_ike_deprecation_alert_continue_button_title" = "Nadaljuj z IKEv2";
 
 /* Button title for 'Enable Smart protocol' */
-"_ike_deprecation_alert_enable_smart_button_title" = "Enable Smart protocol";
+"_ike_deprecation_alert_enable_smart_button_title" = "Omogoči Smart Protocol";
 
 /* User is trying to connect to a server that is currently unavailable. (title) */
 "_location_not_available_title" = "Strežnik ni na voljo";
@@ -2684,7 +2796,7 @@
 "_location_not_available_for_profile_text" = "Strežnik, ki ste ga izbrali za '%@' trenutno ni na voljo. Izberite drug strežnik ali poskusite znova pozneje.";
 
 /* User's OS version is no longer actively supported by Proton VPN (alert title) */
-"_operating_system_out_of_date_alert_title" = "Update your software";
+"_operating_system_out_of_date_alert_title" = "Posodobite programsko opremo";
 
 /* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
 "_operating_system_out_of_date_alert_description" = "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.";
@@ -2747,7 +2859,7 @@
 "_generic_error_title" = "Napaka";
 
 /* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_generic_error_description" = "The operation could not be completed. (Error %@)";
+"_generic_error_description" = "Operacije ni bilo mogoče dokončati. (Napaka %@)";
 
 /* Error alert title: a connection error has occurred. */
 "_connection_error_title" = "Napaka povezave";
@@ -2756,16 +2868,16 @@
 "_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server. (Error %@)";
+"_connection_error_certificate_authentication" = "Prišlo je do težave pri preverjanju pristnosti s strežnikom. (Napaka %@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_tunnel_connection" = "There was an issue starting the VPN. (Error %@)";
+"_connection_error_tunnel_connection" = "Pri zagonu VPN je prišlo do težave. (Napaka %@)";
 
 /* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_local_agent" = "An unexpected error occurred while connecting: %@";
+"_connection_error_local_agent" = "Prišlo je do nepričakovane napake med povezovanjem: %@";
 
 /* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_intent_missing" = "We were unable to connect to the server. (Error %@).";
+"_connection_error_intent_missing" = "Nismo se mogli povezati s strežnikom. (Napaka %@).";
 
 /* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_preparation" = "Pri pripravi na povezavo je prišlo do težave (napaka %@)";
@@ -2810,7 +2922,7 @@
 "_widgetAdoption_modal_instruction_1" = "Pritisnite in pridržite kjer koli na začetnem zaslonu.";
 
 /* Widget adoption modal 2nd instruction content. */
-"_widgetAdoption_modal_instruction_2" = "Press the **Edit** button, then select **Add Widget**";
+"_widgetAdoption_modal_instruction_2" = "Pritisnite gumb **Uredi**, nato izberite **Dodaj gradnik**";
 
 /* Widget adoption modal 3rd instruction content. */
 "_widgetAdoption_modal_instruction_3" = "Izberite ali poiščite **Proton VPN**";
@@ -2820,3 +2932,75 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Razumem";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Napredno prilagoditev VPN";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Povežite se z DNS strežnikom po meri z VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Prehod na plačljiv paket";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "DNS po meri";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Nastavitve";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "DNS po meri";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS).";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Strežnikov (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Dodaj nov strežnik DNS";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Dodaj";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Enter the server’s IPv4 address";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Vnesite naslov IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Vnesite veljaven naslov IPv4";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Strežnik je že dodan";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Prišlo je do nepričakovane napake.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Double click to copy";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Enables Custom DNS?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "To bo onemogočilo NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Omogočiti NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "To bo onemogočilo po meri DNS.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Spremeni nastavitve";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "Za uveljavitev sprememb je potrebno ponovno zagnati povezavo.";

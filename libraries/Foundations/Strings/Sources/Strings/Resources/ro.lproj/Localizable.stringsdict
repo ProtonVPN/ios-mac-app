@@ -585,5 +585,23 @@ blocați</string>
         <string>%d de ani</string>
       </dict>
     </dict>
+    <key>plutonium_others</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@plutonium_others@</string>
+      <key>plutonium_others</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>+ încă %d</string>
+        <key>few</key>
+        <string>+ încă %d</string>
+        <key>other</key>
+        <string>+ încă %d</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

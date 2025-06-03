@@ -210,6 +210,8 @@
 
 "_reconnecting_to" = "%@ に再接続中";
 
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+
 /* iOS status view */
 "_connected_to" = "接続先";
 
@@ -588,6 +590,24 @@
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "プロファイルは更新されました";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Edit";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Cut";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Copy";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Paste";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Delete";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Select All";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "概要";
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ 年";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Web only";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+
 /* iOS plan feature */
 "_feature_server_count" = "のサーバーへ接続";
 
@@ -1437,9 +1463,23 @@
 
 "_sysex_enabled_description" = "構成が完了しました。最適な VPN 技術を利用して高速なインターネットを使うことができます。";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "システム拡張機能を有効にできません";
 
-"_sysex_error_description" = "システム拡張機能のインストール中にエラーが発生しました。\nこの問題を解決するには、Proton VPN がアプリケーション フォルダにあることを確認して再インストールしてください。 または、弊社サポートまでお問い合わせください。";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "システム拡張機能の有効化中にエラーが発生しました: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "/Applications フォルダーにアプリが正しくインストールされていることをご確認ください。";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "現在のシステムポリシーにより、デバイスで拡張機能を有効にすることが禁止されています。";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "続けるには承認が必要です。";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "サポートにご連絡ください。（エラー %@）";
 
 "_vpnauth_certfail_title" = "認証エラー";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "詳細";
 
 "_action_requires_reconnect" = "変更を適用するには再接続する必要があります";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "有効なIPv4アドレスを入力してください";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "アドレスはすでに追加されています";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "追加";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "すべてのアプリ";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "なし";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "アプリが選択されていません";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "除外モード";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "含めるモード";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "除外するアプリ";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "保護されたアプリ";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "再接続すると変更が適用されます";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Import apps";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "browse apps";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Get the best of both worlds";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "No IP addresses yet";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "サーバーエラーが発生しました";
 
@@ -2536,9 +2651,6 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /月";
 
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /年";
-
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "VPN ビジネスでご利用いただけます。";
 
@@ -2820,3 +2932,75 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "分かりました";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "高度なVPNカスタマイズ";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "VPN PlusでカスタムDNSサーバーを使用して接続。";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "アップグレード";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "カスタムDNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "設定";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "カスタムDNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "セルフホストまたはサードパーティ製のドメインネームシステム(DNS)を使用してVPNに接続します。";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "サーバー (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "新しいDNSサーバーを追加";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "追加";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "サーバーの IPv4アドレスを入力してください";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "IPv4アドレスを入力してください";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "有効なIPv4アドレスを入力してください";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "サーバーは既に追加されています";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "予期しないエラーが発生しました。";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "ダブルクリックしてコピー";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "カスタム DNS サーバーが動作しない場合は、標準 VPN DNS が使用されます。";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "カスタム DNS を有効にしますか？";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "これにより NetShield が無効化されます。";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "NetShieldを有効にしますか？";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "これによりカスタムDNSが無効化されます。";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "設定を変更";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "変更を適用するには再接続する必要があります。";

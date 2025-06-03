@@ -210,6 +210,8 @@
 
 "_reconnecting_to" = "Riconnessione a %@";
 
+"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+
 /* iOS status view */
 "_connected_to" = "Connesso a";
 
@@ -588,6 +590,24 @@
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profilo aggiornato";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Modifica";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Taglia";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Copia";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Incolla";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Elimina";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Seleziona tutto";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Panoramica";
@@ -1070,6 +1090,12 @@
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/anno";
 
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Solo Web";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "L'abbonamento si rinnova automaticamente il %1$@ a %2$@/anno.";
+
 /* iOS plan feature */
 "_feature_server_count" = "Collegati ai server in";
 
@@ -1437,9 +1463,23 @@
 
 "_sysex_enabled_description" = "Configurazione completata. Ora puoi navigare in internet più velocemente con le migliori tecnologie VPN.";
 
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
 "_sysex_cannot_enable" = "Impossibile abilitare l'Estensione del Sistema";
 
-"_sysex_error_description" = "Si è verificato un errore durante l'installazione dell'estensione di sistema.\nReinstalla Proton VPN, assicurandoti che sia situata nella cartella delle Applicazioni, per risolvere questo problema. Altrimenti, contatta la nostra assistenza.";
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Si è verificato un errore nell'abilitare le estensioni del sistema: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "Assicurarsi che l'applicazione sia installata correttamente in/nella cartella Applicazioni.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "L'attuale politica del sistema proibisce l'attivazione di estensioni sul tuo dispositivo.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "Per continuare è necessaria la tua autorizzazione.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "Contatta il nostro centro di assistenza. (Errore %@)";
 
 "_vpnauth_certfail_title" = "Errore di autenticazione";
 
@@ -1558,6 +1598,81 @@
 "_vpn_accelerator_description_alt_link" = "Scopri di più";
 
 "_action_requires_reconnect" = "La tua connessione dev'essere riavviata per applicare questa modifica";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Inserisci un indirizzo IPv4 valido";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Indirizzo già aggiunto";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Aggiungi";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Tutte le app";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Nessuno";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Nessuna app selezionata";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Modalità di esclusione";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Modalità d'inclusione";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "App escluse";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "App protette";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "Le modifiche si applicano quando ti riconnetti.";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Importa app";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Trascina e rilascia qui o ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "sfoglia app";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Ottieni il meglio di entrambi i mondi";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Nessun indirizzo IP ancora";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 "_local_agent_server_error_title" = "Errore del server";
 
@@ -2536,9 +2651,6 @@
 /* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
 "upsell_plans_list_option_amountPerMonth" = " /mese";
 
-/* Trailing text of the paid plan option amount indicating the amount per year. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
-"upsell_plans_list_option_amountPerYear" = " /anno";
-
 /* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
 "_available_with_vpn_business_tooltip" = "Disponibile con VPN Business.";
 
@@ -2820,3 +2932,75 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Ho capito";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Personalizzazione VPN avanzata";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Connettiti a un server DNS personalizzato con VPN Plus.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Effettua l'upgrade";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "DNS personalizzato";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Preferenze";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "DNS personalizzato";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Connettiti alla VPN con un sistema di nomi di dominio (DNS) self-hosted o di terze parti.";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Server (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Aggiungi un nuovo server DNS";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Aggiungi";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Inserisci l'indirizzo IPv4 del server";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Inserisci un indirizzo IPv4";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Inserisci un indirizzo IPv4 valido";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Server già aggiunto";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Si è verificato un errore imprevisto.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Doppio clic per copiare";
+
+/* Hermes entities footnote within dedicated Hermes Settings view */
+"_hermes_entities_footnote" = "Se il tuo DNS personalizzato non funziona, il VPN standard verrà utilizzato.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Vuoi abilitare il DNS personalizzato?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Questo disabiliterà NetShield.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Vuoi abilitare NetShield?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Questo disattiverà il DNS personalizzato.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Cambia le impostazioni";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "La tua connessione deve essere riavviata per applicare questa modifica.";
