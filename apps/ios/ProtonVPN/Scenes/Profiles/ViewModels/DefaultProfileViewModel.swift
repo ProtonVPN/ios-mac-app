@@ -27,6 +27,8 @@ import LegacyCommon
 import VPNAppCore
 import Strings
 import Theme
+import ComposableArchitecture
+import Combine
 import Domain
 
 import ProtonCoreFeatureFlags
@@ -88,42 +90,60 @@ class DefaultProfileViewModel {
     fileprivate let isRedesign: Bool
     fileprivate let extraMargin: Bool
 
-    var isConnected: Bool {
-        guard vpnGateway.connection == .connected else { return false }
+    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
-        if isRedesign {
-            return propertiesManager.lastConnectionIntent == ConnectionSpec(
-                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                             withDefaultNATType: natTypePropertyProvider.natType,
-                                                             withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                             trigger: .profile)
+    var isConnected: Bool {
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+
+            guard vpnGateway.connection == .connected else { return false }
+
+            return vpnGateway.lastConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
             )
-        } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                                        withDefaultNATType: natTypePropertyProvider.natType,
-                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                                        trigger: .profile)
         }
-        return false
+
+        guard case .connected = vpnConnectionStatus else {
+            return false
+        }
+
+        return propertiesManager.lastConnectionIntent == ConnectionSpec(
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
+        )
     }
 
-    fileprivate var isConnecting: Bool {
-        guard vpnGateway.connection == .connecting else { return false }
+    var isConnecting: Bool {
 
-        if isRedesign {
-            return propertiesManager.lastConnectionIntent == ConnectionSpec(
-                connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                             withDefaultNATType: natTypePropertyProvider.natType,
-                                                             withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                             trigger: .profile)
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            guard vpnGateway.connection == .connecting else { return false }
+            
+            return vpnGateway.lastConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
             )
-        } else if let activeConnectionRequest = vpnGateway.lastConnectionRequest {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                                        withDefaultNATType: natTypePropertyProvider.natType,
-                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                                        trigger: .profile)
         }
-        return false
+        
+        guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
+            return false
+        }
+        
+        return connectionSpec == ConnectionSpec(
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
+        )
     }
 
     private var connectedUiState: Bool {
@@ -216,13 +236,27 @@ class DefaultProfileViewModel {
     }
 
     // MARK: - Private functions
-    private func startObserving() {
-        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
+    private var cancellables = Set<AnyCancellable>()
+
+    fileprivate func startObserving() {
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
+            return
+        }
+
+        $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] _ in
+                self?.stateChanged()
+            }
+            .store(in: &cancellables)
     }
 
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
-            connectionChanged()
+            DispatchQueue.main.async {
+                connectionChanged()
+            }
         }
     }
 }

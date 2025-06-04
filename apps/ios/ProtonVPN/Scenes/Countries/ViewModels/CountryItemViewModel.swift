@@ -21,6 +21,8 @@
 //
 
 import UIKit
+import Combine
+import ComposableArchitecture
 
 import Dependencies
 
@@ -44,6 +46,8 @@ class CountryItemViewModel {
     /// country is available for, and what features are available OR a Gateway instead of
     /// a country.
     let serversGroup: ServerGroupInfo
+
+    @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     private lazy var servers: [ServerInfo] = {
         @Dependency(\.serverRepository) var repository
@@ -102,20 +106,34 @@ class CountryItemViewModel {
     }
 
     private var isConnected: Bool {
-        guard vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server else {
+
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            return vpnGateway.connection == .connected && appStateManager.activeConnection()?.server.kind == serversGroup.kind
+        }
+
+        guard case let .connected(_, actual) = vpnConnectionStatus, let logical = actual?.server.logical else {
             return false
         }
 
-        return activeServer.kind == serversGroup.kind
+        return serversGroup.matchesLogical(logical)
     }
 
     private var isConnecting: Bool {
-        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
-            // If a connect button is ever added to gateway groups, this check will also need to verify that the last
-            // connection request was specifically a gateway connection request
-            return true
+
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+                // If a connect button is ever added to gateway groups, this check will also need to verify that the last
+                // connection request was specifically a gateway connection request
+                return true
+            }
+            return false
         }
-        return false
+
+        guard case let .connecting(_, server) = vpnConnectionStatus, let logical = server?.logical else {
+            return false
+        }
+
+        return serversGroup.matchesLogical(logical)
     }
 
     private var connectedUiState: Bool {
@@ -368,9 +386,20 @@ class CountryItemViewModel {
     }
 
     // MARK: - Private functions
+    private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {
-        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
+        guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+            AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
+            return
+        }
+
+        $vpnConnectionStatus
+            .publisher
+            .sink { [weak self] _ in
+                self?.stateChanged()
+            }
+            .store(in: &cancellables)
     }
 
     @objc fileprivate func stateChanged() {
@@ -430,5 +459,27 @@ extension CountryItemViewModel: CountryViewModel {
 
     var isSecureCoreCountry: Bool {
         serversGroup.featureIntersection.contains(.secureCore)
+    }
+}
+
+fileprivate extension ServerGroupInfo {
+    func matchesLogical(_ logical: Logical) -> Bool {
+        switch self.kind {
+        case .gateway(let name):
+            return logical.kind == .gateway(name: name)
+        case .country(let code) where code == logical.exitCountryCode:
+            if self.featureIntersection == .secureCore {
+                guard case .secureCore = logical.kind else {
+                    return false
+                }
+            } else {
+                guard case .country = logical.kind else {
+                    return false
+                }
+            }
+            return true
+        default:
+            return false
+        }
     }
 }
