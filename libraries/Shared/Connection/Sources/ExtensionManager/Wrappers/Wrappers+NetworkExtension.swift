@@ -68,7 +68,9 @@ extension NETunnelProviderSession: VPNSession {
     }
 
     public func startTunnel() throws {
-        try startVPNTunnel()
+        let id = UUID()
+        log.debug("Starting VPN tunnel", category: .connection, metadata: ["activationAttemptId": "\(id)"])
+        try startVPNTunnel(options: ["activationAttemptId": id.uuidString as NSString])
     }
 
     public func fetchLastDisconnectError() async -> Error? {
