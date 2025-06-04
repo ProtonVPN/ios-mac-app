@@ -51,7 +51,7 @@ final class SettingsAccountViewModel {
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var planService: PlanService? = factory.makePlanService()
+    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
@@ -89,7 +89,7 @@ final class SettingsAccountViewModel {
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
-            allowUpgrade = planService?.iapStatus.isEnabled == true && !allowPlanManagement
+            allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
         } else {
             accountPlanName = Localizable.unavailable
             allowUpgrade = false
@@ -186,7 +186,7 @@ final class SettingsAccountViewModel {
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
         Task { [weak self] in
-            await self?.planService?.presentSubscriptionManagement()
+            await self?.planService.presentSubscriptionManagement(alertService: alertService)
         }
     }
 

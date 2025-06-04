@@ -52,7 +52,7 @@ final class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
-    private lazy var planService: PlanService? = factory.makePlanService()
+    private lazy var planService: PlanService = factory.makePlanService()
 
     private lazy var modalsFactory: ModalsFactory = .init()
 
@@ -296,14 +296,14 @@ extension IosAlertService: CoreAlertService {
         case is UserPlanDowngradedAlert:
             if let server {
                 viewModel = .subscriptionDowngradedReconnecting(
-                    numberOfCountries: planService?.countriesCount ?? 0,
+                    numberOfCountries: planService.countriesCount,
                     numberOfDevices: DomainConstants.maxDeviceCount,
                     fromServer: server.from,
                     toServer: server.to
                 )
             } else {
                 viewModel = .subscriptionDowngraded(
-                    numberOfCountries: planService?.countriesCount ?? 0,
+                    numberOfCountries: planService.countriesCount,
                     numberOfDevices: DomainConstants.maxDeviceCount
                 )
             }
@@ -318,7 +318,8 @@ extension IosAlertService: CoreAlertService {
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
             Task {
-                await self?.planService?.presentSubscriptionManagement()
+                guard let self else { return }
+                await self.planService.presentSubscriptionManagement(alertService: self)
             }
         }
 
@@ -482,9 +483,10 @@ extension IosAlertService: CoreAlertService {
 
     private func show(_ alert: FreeConnectionsAlert) {
         let upgradeAction: (() -> Void) = { [weak self] in
-            self?.windowService.dismissModal {
+            guard let self else { return }
+            windowService.dismissModal {
                 Task {
-                    await self?.planService?.presentSubscriptionManagement()
+                    await self.planService.presentSubscriptionManagement(alertService: self)
                 }
             }
         }

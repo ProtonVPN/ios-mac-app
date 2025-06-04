@@ -48,7 +48,7 @@ final class OnboardingModuleService {
     typealias Factory = CoreAlertServiceFactory & PlanServiceFactory & WindowServiceFactory
 
     private let windowService: WindowService
-    private let planService: PlanService?
+    private let planService: PlanService
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
 

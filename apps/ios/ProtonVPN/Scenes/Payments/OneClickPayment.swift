@@ -53,17 +53,11 @@ final class OneClickPayment {
 
     private let alertService: CoreAlertService
     private let planService: PlanService
-    private let plansComposer: PlansComposerProviding
-    private let protonPlansManager: ProtonPlansManagerProviding
 
     init(
         alertService: CoreAlertService,
-        planService: PlanService?
+        planService: PlanService
     ) throws {
-        guard let planService else {
-            throw UnavailableError.featureFlagDisabled
-        }
-
         let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
             Task {
                 @Dependency(\.sessionService) var sessionService
@@ -94,8 +88,6 @@ final class OneClickPayment {
 
         self.alertService = alertService
         self.planService = planService
-        self.plansComposer = planService.plansComposer
-        self.protonPlansManager = planService.protonPlansManager
 
         AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }
@@ -120,7 +112,7 @@ final class OneClickPayment {
                 await self?.validate(selectedPlan: planOption)
             },
             availableDiscount: { [weak self] planOption in
-                guard let mostExpensivePlan = self?.plansComposer.mostExpensivePlan else {
+                guard let mostExpensivePlan = self?.planService.mostExpensivePlan else {
                     return nil
                 }
                 return ComposedPlan
@@ -207,17 +199,20 @@ final class OneClickPayment {
 
     @MainActor
     func planOptions() async throws -> [PlanOption] {
-        let composedPlans = try await protonPlansManager.getAvailablePlans()
-        let userAppStoreCountryCode = await protonPlansManager.countryCode
+        let composedPlans = try await planService.getAvailablePlans()
+        let vpn2022 = composedPlans.filter { composedPlan in
+            composedPlan.plan.name == "vpn2022"
+        }
+        let userAppStoreCountryCode = await planService.countryCode
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
-        if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
+        if vpn2022.isEmpty, !shouldShowTwoYearsWebPlan {
             throw PurchaseError.defaultPlanNotFound
         }
 
-        availablePlans = composedPlans
-        var iapPlans: [PlanOption] = composedPlans.map {
+        availablePlans = vpn2022
+        var iapPlans: [PlanOption] = vpn2022.map {
             PlanOption(
                 id: $0.product.id,
                 storePricePerMonth: $0.storePricePerMonth,
@@ -251,7 +246,7 @@ final class OneClickPayment {
             throw PurchaseError.planNotFound(.planMissingProduct)
         }
 
-        return try await protonPlansManager.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
+        return try await planService.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
     }
 }
 

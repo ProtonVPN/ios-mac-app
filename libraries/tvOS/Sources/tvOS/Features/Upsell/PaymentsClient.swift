@@ -61,7 +61,7 @@ struct PaymentsClient: Sendable, DependencyKey {
             startObserving: {
                 var cancellable: AnyCancellable?
                 return AsyncStream { continuation in
-                    cancellable = payments?.protonPlansManager.transactionProgress.sink { event in
+                    cancellable = payments.transactionProgress.sink { event in
                         continuation.yield(event)
                     }
                     continuation.onTermination = { @Sendable _ in
@@ -72,16 +72,16 @@ struct PaymentsClient: Sendable, DependencyKey {
             getOptions: {
                 // IAP availability depends on currently logged in user account.
                 // Let's update it in case a different user is logged in than at app launch time.
-                try await payments?.fetchAppleStatus()
-                guard payments?.iapSupportStatus.isEnabled == true else {
+                try await payments.fetchAppleStatus()
+                guard payments.iapSupportStatus.isEnabled else {
                     throw PaymentsError.iapDisabled
                 }
 
-                let planOptions = try await payments?.planOptions()
-                return planOptions?.map { $0 } ?? []
+                let planOptions = try await payments.planOptions()
+                return planOptions.map { $0 }
             },
             attemptPurchase: { planOption in
-                try await payments?.buyPlan(planOption: planOption)
+                try await payments.buyPlan(planOption: planOption)
             }
         )
     }()
