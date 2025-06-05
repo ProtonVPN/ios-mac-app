@@ -27,25 +27,70 @@ import Logging
 
 import Domain
 
+public enum CustomHostValidator {
+    public static func validate(customHost: String) throws (ValidationFailure) {
+        let controlledDomains = ["proton.black"]
+        // Only allow custom hosts using a domain we control.
+        guard let url = URL(string: customHost) else {
+            throw .invalidURL
+        }
+
+        guard let host = url.host else {
+            throw .invalidHost
+        }
+
+        let isControlledDomain = controlledDomains.contains { host.hasSuffix($0) }
+        guard isControlledDomain else {
+            throw .uncontrolledDomain
+        }
+    }
+
+    public enum ValidationFailure: Error, Equatable, CustomStringConvertible {
+        case invalidURL
+        case invalidHost
+        case uncontrolledDomain
+
+        public var description: String {
+            switch self {
+            case .invalidURL:
+                return "Invalid URL"
+            case .invalidHost:
+                return "Invalid Host"
+            case .uncontrolledDomain:
+                return "Uncontrolled Domain"
+            }
+        }
+    }
+}
+
 public class DoHVPN: DoH, ServerConfig {
     public var proxyToken: String?
     public let liveURL: String = "https://vpn-api.proton.me"
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
-        if let customHost {
-            #if !DEBUG
-            // Only allow custom hosts using a domain we control.
-            let url = URL(string: customHost)
-            guard url?.host()?.hasSuffix("proton.black") == true else {
-                return liveURL
-            }
-            #endif
-            log.debug("Allowing host \(customHost)...")
-            return customHost
+        guard let customHost else {
+            return liveURL
         }
 
-        return liveURL
+#if VALIDATE_CUSTOM_HOST
+        // In RELEASE, verify the host is valid and a domain we control
+        do {
+            try CustomHostValidator.validate(customHost: customHost)
+            log.debug("Allowing custom host", category: .api, metadata: ["customHost": "\(customHost)"])
+            return customHost
+        } catch {
+            log.debug(
+                "Rejecting custom host, falling back to default live url",
+                category: .api,
+                metadata: ["customHost": "\(customHost)", "error": "\(error)"]
+            )
+            return liveURL
+        }
+#else
+        // Allow any host in DEBUG & STAGING
+        return customHost
+#endif
     }
 
     public var captchaHost: String {

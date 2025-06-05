@@ -30,15 +30,25 @@ public struct EnvironmentSelectorMobileView: View {
     @ViewBuilder
     var selectedEnvironmentSection: some View {
         Section {
-            Text(store.apiEndpoint)
-                .themeFont(.body1(.regular))
-                .padding(.top, .themeSpacing2)
+            VStack(alignment: .leading) {
+                Text(store.apiEndpoint)
+                    .themeFont(.body1(.regular))
+                    .padding(.top, .themeSpacing2)
+                currentEnvironmentCaption
+            }
         } header: {
             Text("Selected Environment").font(.headline)
         } footer: {
             sendActionButton(title: "Use and continue",
                              action: .useAndContinueButtonTapped)
         }
+    }
+
+    var currentEnvironmentCaption: Text {
+        let (style, text) = store.state.currentEnvironmentCaption
+        return Text(text)
+            .themeFont(.caption())
+            .styled(style)
     }
 
     var changeEnvironmentCaption: Text {
@@ -75,11 +85,25 @@ public struct EnvironmentSelectorMobileView: View {
                 .buttonStyle(EnvironmentSelectorButtonStyle.inActive)
                 .padding(.trailing, .themeSpacing12)
             }
+            HStack {
+                // Prefill buttons
+                ForEach(store.customEnvironments) { environment in
+                    prefillButton(environment: environment)
+                }
+            }
         } header: {
             Text("Change Environment").font(.headline)
         } footer: {
             changeEnvironmentCaption
         }
+    }
+
+    func prefillButton(environment: DebugConfigurationFeature.State.CustomEnvironment) -> some View {
+        Button(environment.label) {
+            store.newApiEndpointURLString = environment.url
+        }
+        .buttonStyle(environment.url == store.newApiEndpointURLString ? EnvironmentSelectorButtonStyle.active : EnvironmentSelectorButtonStyle.inActive)
+        .padding(.trailing, .themeSpacing12)
     }
 
     @ViewBuilder

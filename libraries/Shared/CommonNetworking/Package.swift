@@ -42,6 +42,7 @@ let package = Package(
             ],
             swiftSettings: [
                 .define("TLS_PIN_DISABLE", .when(configuration: .debug)),
+                .define("VALIDATE_CUSTOM_HOST", .when(configuration: .release))
             ]
         ),
         .target(
@@ -51,6 +52,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
+        .testTarget(name: "CommonNetworkingTests", dependencies: ["CommonNetworking"])
     ]
 )
 

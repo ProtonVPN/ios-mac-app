@@ -17,6 +17,7 @@ let package = Package(
         .package(path: "../Foundations/Theme"),
         .package(path: "../Foundations/Strings"),
         .package(path: "../NEHelper"),
+        .package(path: "../Shared/CommonNetworking"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1"))
@@ -36,11 +37,13 @@ let package = Package(
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 "Theme",
                 "Strings",
+                "CommonNetworking",
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "SwiftNavigation", package: "swift-navigation"),
-            ]
+            ],
+            exclude: ["ObfuscatedConstants.example.swift"]
         ),
         .target(
             name: "Settings-iOS",

@@ -21,6 +21,8 @@ import ComposableArchitecture
 import Dependencies
 import Theme
 
+import CommonNetworking
+
 import ProtonCoreFeatureFlags // Needed to create a manual override type
 
 @Reducer
@@ -44,6 +46,8 @@ public struct DebugConfigurationFeature {
     public struct State: Equatable {
         public static let defaultApiUrlString = "https://vpn-api.proton.me"
 
+        package let customEnvironments: [CustomEnvironment] = CustomEnvironment.allCases
+
         public let apiEndpoint: String
         public var newApiEndpointURLString: String
 
@@ -53,6 +57,17 @@ public struct DebugConfigurationFeature {
         public var atlasSecretFetchErrorDescription: String?
 
         public var overrides: [FeatureOverride]
+
+        public var currentEnvironmentCaption: (AppTheme.Style, String) {
+            @Dependency(\.dohConfiguration) var doh
+            let actualHost = doh.defaultHost
+            if actualHost == apiEndpoint {
+                return (.hint, "Environment active")
+            }
+            // If the custom host differs from what we've set, let's try to find the reason why
+            let validationResult = Result { try CustomHostValidator.validate(customHost: apiEndpoint) }
+            return (.danger, "Environment not set {actual: \(actualHost), error: \(optional: validationResult.error)}")
+        }
 
         public var environmentsCaption: (AppTheme.Style, String) {
             if atlasSecretFetchURLString.isEmpty && atlasSecret.isEmpty {
@@ -314,3 +329,30 @@ extension DebugConfigurationFeature {
 }
 
 extension DebugConfigurationFeature.Destination.State: Equatable { }
+
+extension DebugConfigurationFeature.State {
+    public enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
+        case protonBTI
+        case protonBlack
+
+        public var id: String { url }
+
+        package var url: String {
+            switch self {
+            case .protonBTI:
+                return ObfuscatedConstants.btiAPIHost
+            case .protonBlack:
+                return ObfuscatedConstants.blackAPIHost
+            }
+        }
+
+        package var label: String {
+            switch self {
+            case .protonBTI:
+                return "BTI"
+            case .protonBlack:
+                return "Black"
+            }
+        }
+    }
+}
