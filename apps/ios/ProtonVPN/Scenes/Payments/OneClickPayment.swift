@@ -234,13 +234,19 @@ final class OneClickPayment {
     func buyPlan(planOption: PlanOption) async throws -> ComposedPlan {
         guard planOption.purchaseType != .web else {
             // should never happen
-            throw PurchaseError.planNotFound("Two years web plan should be purchased through web")
+            throw PurchaseError.planNotFound(.webPlanPurchaseTriggeredWithinIap)
         }
 
-        guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }),
-              let planName = composedPlan.plan.name,
-              let product = composedPlan.product as? Product else {
-            throw PurchaseError.planNotFound("unknown")
+        guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }) else {
+            throw PurchaseError.planNotFound(.planIDNotInAvailablePlanList)
+        }
+
+        guard let planName = composedPlan.plan.name else {
+            throw PurchaseError.planNotFound(.planNameMissing)
+        }
+
+        guard let product = composedPlan.product as? Product else {
+            throw PurchaseError.planNotFound(.planMissingProduct)
         }
 
         return try await protonPlansManager.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
@@ -249,14 +255,11 @@ final class OneClickPayment {
 
 extension OneClickPayment {
     enum UnavailableError: Error {
-        case featureFlagDisabled
         case isTestFlight
         case iapDisabled(localizedReason: String?)
 
         var localizedDescription: String {
             switch self {
-            case .featureFlagDisabled:
-                return "Account upgrade is currently unavailable on this device."
             case .isTestFlight:
                 return "Account upgrade is not available on TestFlight."
             case .iapDisabled(localizedReason: let reason):
@@ -267,9 +270,15 @@ extension OneClickPayment {
 
     enum PurchaseError: Error, LocalizedError {
         case defaultPlanNotFound
-        case planNotFound(String)
-        case unfinishedPurchaseInQueue
+        case planNotFound(PlanMissingReason)
         case presentingScreenDismissed
+
+        enum PlanMissingReason {
+            case webPlanPurchaseTriggeredWithinIap
+            case planIDNotInAvailablePlanList
+            case planNameMissing
+            case planMissingProduct
+        }
 
         var localizedDescription: String? {
             switch self {
@@ -277,11 +286,42 @@ extension OneClickPayment {
                 return "Default plan not found"
             case .planNotFound(let planName):
                 return "StoreKitManager plan (\(planName)) not found"
-            case .unfinishedPurchaseInQueue:
-                return "StoreKitManager is not ready to purchase"
             case .presentingScreenDismissed:
                 return "Presenting screen was dismissed"
             }
+        }
+    }
+}
+
+extension OneClickPayment.UnavailableError: ProtonVPNError {
+    var charCode: FourCharCode {
+        switch self {
+        case .isTestFlight:
+            "OPTF"
+        case .iapDisabled(localizedReason: _):
+            "OPID"
+        }
+    }
+}
+
+extension OneClickPayment.PurchaseError:  ProtonVPNError {
+    var charCode: FourCharCode {
+        switch self {
+        case .defaultPlanNotFound:
+            "OPNF"
+        case let .planNotFound(planMissingReason):
+            switch planMissingReason {
+            case .webPlanPurchaseTriggeredWithinIap:
+                "OPWI"
+            case .planIDNotInAvailablePlanList:
+                "OPID"
+            case .planNameMissing:
+                "OPMP"
+            case .planMissingProduct:
+                "OPMP"
+            }
+        case .presentingScreenDismissed:
+            "OPSD"
         }
     }
 }
