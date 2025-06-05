@@ -185,7 +185,6 @@ class DependencyFactory: CountriesViewModel.Factory {
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider { SafeModePropertyProviderMock() }
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
     func makeConnectionStatusService() -> ConnectionStatusService { ConnectionStatusServiceMock() }
-    func makePlanService() -> PlanService? { PlanServiceMock() }
     func makeSearchStorage() -> SearchStorage { SearchModuleStorage() }
 }
 

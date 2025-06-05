@@ -52,12 +52,9 @@ final class OneClickPayment {
     }
 
     private let alertService: CoreAlertService
-    private let planService: PlanService
+    @Dependency(\.planService) private var planService
 
-    init(
-        alertService: CoreAlertService,
-        planService: PlanService
-    ) throws {
+    init(alertService: CoreAlertService) throws {
         let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
             Task {
                 @Dependency(\.sessionService) var sessionService
@@ -81,13 +78,13 @@ final class OneClickPayment {
             throw UnavailableError.isTestFlight
         }
 
+        @Dependency(\.planService) var planService
         if case let .disabled(localizedReason) = planService.iapStatus {
             pushCantUpgradeAlert(localizedReason)
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
         self.alertService = alertService
-        self.planService = planService
 
         AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }

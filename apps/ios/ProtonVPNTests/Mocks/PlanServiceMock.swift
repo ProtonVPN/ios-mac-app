@@ -44,6 +44,10 @@ class PlanServiceMock: PlanService {
         63
     }
 
+    func setDelegate(_ delegate: PlanServiceDelegate) {
+        self.delegate = delegate
+    }
+
     func presentSubscriptionManagement(alertService _: CoreAlertService) {
         callbackPresentSubscriptionManagement?()
     }

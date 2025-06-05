@@ -40,7 +40,6 @@ import Strings
 final class IosAlertService {
     typealias Factory =
         AppSessionManagerFactory &
-        PlanServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory & UIAlertServiceFactory &
         WindowServiceFactory
@@ -52,13 +51,13 @@ final class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
-    private lazy var planService: PlanService = factory.makePlanService()
-
     private lazy var modalsFactory: ModalsFactory = .init()
 
     private var oneClickPayment: OneClickPayment?
 
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
+
+    @Dependency(\.planService) private var planService
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -355,10 +354,7 @@ extension IosAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
         let oneClickPayment: OneClickPayment
         do {
-            oneClickPayment = try OneClickPayment(
-                alertService: self,
-                planService: planService
-            )
+            oneClickPayment = try OneClickPayment(alertService: self)
         } catch {
             log.error("Unexpected payments error: \(error)")
             return
