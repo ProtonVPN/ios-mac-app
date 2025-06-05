@@ -72,7 +72,7 @@ class ConnectingOverlayViewModel {
     
     private var isReconnecting: Bool {
         switch appState {
-        case .connecting:
+        case .preparingConnection, .connecting:
             return !propertiesManager.intentionallyDisconnected
         default:
             return false
@@ -138,7 +138,7 @@ class ConnectingOverlayViewModel {
         }
         
         switch appState {
-        case .preparingConnection:
+        case .preparingConnection where !isReconnecting:
             string = Localizable.preparingConnection
         case .connected:
             string = Localizable.connectedToVpn(boldString)
