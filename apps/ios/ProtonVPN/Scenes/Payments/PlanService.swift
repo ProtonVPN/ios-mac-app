@@ -49,7 +49,7 @@ protocol PlanService {
 final class CorePlanService: PlanService {
     @Dependency(\.serverRepository) var serverRepository
 
-    var cancellables: [AnyCancellable] = []
+    private var cancellables: [AnyCancellable] = []
 
     let remoteManager: RemoteManagerProviding
     let paymentsAPIs: PaymentsAPIs

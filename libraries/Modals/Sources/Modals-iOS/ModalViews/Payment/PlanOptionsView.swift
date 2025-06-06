@@ -118,8 +118,11 @@ import CombineSchedulers
 #Preview("Classic") {
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [.oneYear, .oneMonth]
-    let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in
-        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!)) }, availableDiscount: { _ in 23 }
+    let client: PlansClient = .init(
+        retrievePlans: { plans },
+        validate: { _ in
+        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!)) },
+        availableDiscount: { _ in 23 }
     )
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }

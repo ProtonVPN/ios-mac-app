@@ -255,11 +255,14 @@ final class OneClickPayment {
 
 extension OneClickPayment {
     enum UnavailableError: Error {
+        case featureFlagDisabled
         case isTestFlight
         case iapDisabled(localizedReason: String?)
 
         var localizedDescription: String {
             switch self {
+            case .featureFlagDisabled:
+                return "Account upgrade is currently unavailable on this device."
             case .isTestFlight:
                 return "Account upgrade is not available on TestFlight."
             case .iapDisabled(localizedReason: let reason):
@@ -294,17 +297,24 @@ extension OneClickPayment {
 }
 
 extension OneClickPayment.UnavailableError: ProtonVPNError {
+    static var errorDomain: String = "OneClickPayment.UnavailableError"
+
     var charCode: FourCharCode {
         switch self {
+        case .featureFlagDisabled:
+            return "OPFF"
         case .isTestFlight:
-            "OPTF"
-        case .iapDisabled(localizedReason: _):
-            "OPID"
+            return "OPTF"
+        case let .iapDisabled(localizedReason: reason):
+            log.warning("IAP is disabled on the backend: \(reason ?? "no reason provided")", category: .iap)
+            return "OPID"
         }
     }
 }
 
-extension OneClickPayment.PurchaseError:  ProtonVPNError {
+extension OneClickPayment.PurchaseError: ProtonVPNError {
+    static var errorDomain: String = "OneClickPayment.PurchaseError"
+
     var charCode: FourCharCode {
         switch self {
         case .defaultPlanNotFound:
@@ -314,9 +324,9 @@ extension OneClickPayment.PurchaseError:  ProtonVPNError {
             case .webPlanPurchaseTriggeredWithinIap:
                 "OPWI"
             case .planIDNotInAvailablePlanList:
-                "OPID"
+                "OPNA"
             case .planNameMissing:
-                "OPMP"
+                "OPMN"
             case .planMissingProduct:
                 "OPMP"
             }
