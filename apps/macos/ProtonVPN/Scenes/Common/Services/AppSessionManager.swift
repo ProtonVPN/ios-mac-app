@@ -439,7 +439,7 @@ private extension WireguardConfig {
         let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
 
         var hermesResolvers: [HermesResolver] = [.proton]
-        if hermesIsEnabled {
+        if hermesIsEnabled, hermesIsAllowed {
             hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
         }
         return .init(

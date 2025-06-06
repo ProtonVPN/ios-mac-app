@@ -28,17 +28,17 @@ import Sharing
 
 import ProtonCoreFeatureFlags
 
-import Announcement
+import VPNShared
+import LegacyCommon
 import CommonNetworking
 import ExtensionIPC
-import LegacyCommon
 import VPNAppCore
-import VPNShared
+import Announcement
 
 import Domain
 import Ergonomics
-import Review
 import Search
+import Review
 
 enum SessionStatus {
     case notEstablished
@@ -54,40 +54,42 @@ protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
-    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void)
+    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
-
+    
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin() async throws
     func canPreviewApp() -> Bool
     func refreshUserInfo()
 }
 
-class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory =
-        AppSessionRefreshTimerFactory &
-        AppStateManagerFactory &
-        AuthKeychainHandleFactory &
-        CoreAlertServiceFactory &
-        NavigationServiceFactory &
-        NetworkingFactory &
-        ProfileManagerFactory &
-        PropertiesManagerFactory &
-        ReviewFactory &
-        SearchStorageFactory &
-        UnauthKeychainHandleFactory &
-        UpdateCheckerFactory & VpnApiServiceFactory &
-        VpnAuthenticationFactory &
-        VpnGatewayFactory &
-        VpnKeychainFactory
+final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
+
+    typealias Factory = VpnApiServiceFactory &
+                        AppStateManagerFactory &
+                        VpnKeychainFactory &
+                        PropertiesManagerFactory &
+                        VpnGatewayFactory &
+                        CoreAlertServiceFactory &
+                        NavigationServiceFactory &
+                        NetworkingFactory &
+                        AppSessionRefreshTimerFactory &
+                        VpnAuthenticationFactory &
+                        PlanServiceFactory &
+                        ProfileManagerFactory &
+                        SearchStorageFactory &
+                        ReviewFactory &
+                        AuthKeychainHandleFactory &
+                        UnauthKeychainHandleFactory &
+                        UpdateCheckerFactory
 
     private let factory: Factory
 
-    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private var navService: NavigationService? {
-        factory.makeNavigationService()
+        return factory.makeNavigationService()
     }
 
     private lazy var networking: Networking = factory.makeNetworking()
@@ -115,11 +117,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
+        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: - Beginning of the login logic.
-
-    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         guard authKeychain.fetch()?.username != nil else {
             completion(.failure(CommonVpnError.userCredentialsMissing))
             return
@@ -165,7 +167,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func loadDataWithoutFetching() -> Bool {
-        if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
+        if isServerRepositoryEmpty || self.propertiesManager.userLocation?.ip == nil {
             return false
         }
 
@@ -181,7 +183,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func canPreviewApp() -> Bool {
-        !isServerRepositoryEmpty && propertiesManager.userLocation?.ip != nil
+        return !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
     }
 
     func loadDataWithoutLogin() async throws {
@@ -192,8 +194,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             properties = try await vpnApiService.vpnProperties(
                 isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
-                serversAccordingToTier: shouldRefreshServers
-            )
+                serversAccordingToTier: shouldRefreshServers)
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
 
@@ -211,10 +212,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
         review.update(plan: credentials.planName)
 
-        if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
+        if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
             assert(isFreeTierRequest == isFreeTier)
-            serverManager.update(
+            self.serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
@@ -281,7 +282,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
-
+            
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
@@ -290,10 +291,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             @Shared(.userTier) var userTier
             $userTier.withLock { $0 = credentials.maxTier }
 
-            if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
+            if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
                 assert(isFreeTierRequest == isFreeTier)
-                serverManager.update(
+                self.serverManager.update(
                     servers: servers.map { VPNServer(legacyModel: $0) },
                     freeServersOnly: isFreeTierRequest,
                     lastModifiedAt: lastModified
@@ -359,7 +360,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         try await refreshVpnAuthCertificate()
         try await planService.fetchAppleStatus()
     }
-
     // swiftlint:enable function_body_length
 
     private func resolveActiveSession() async throws {
@@ -370,7 +370,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
 
         guard let activeUsername = await appStateManager.stateThreadSafe.descriptor?.username,
-              let vpnCredentials = try? vpnKeychain.fetch() else {
+                let vpnCredentials = try? vpnKeychain.fetch() else {
             throw CommonVpnError.fetchSession // Error
         }
 
@@ -392,8 +392,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         refreshUserInfoTask = Task { [weak self] in
             guard let self else { return }
             do {
-                let user = try await vpnApiService.userInfo()
-                propertiesManager.userAccountRecovery = user.accountRecovery
+                let user = try await self.vpnApiService.userInfo()
+                self.propertiesManager.userAccountRecovery = user.accountRecovery
                 await MainActor.run {
                     AppEvent.sessionManagerDataReloaded.post()
                 }
@@ -405,7 +405,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     // MARK: - Log out
-
     func logOut(force: Bool = false, reason: String?) {
         let logOutRoutine: () -> Void = { [weak self] in
             self?.loggedIn = false
@@ -440,8 +439,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     }
                 }
                 return
-            } else if appStateManager.state.isConnected {
-                appStateManager.disconnect { logOutRoutine() }
+            } else if self.appStateManager.state.isConnected {
+                self.appStateManager.disconnect { logOutRoutine() }
                 return
             }
 
@@ -484,15 +483,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         networking.apiService.acquireSessionIfNeeded { _ in }
     }
-
     // End of the logout logic
-
     // MARK: -
-
+    
     // Updates the status of the app, including refreshing the VpnGateway object if the VPN creds change
     private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
-
+        
         sessionStatus = state
         if state == .established {
             loggedIn = true
@@ -503,7 +500,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             logOutCleanup()
             DispatchQueue.main.async { AppEvent.sessionManagerSessionChanged.post(reason) }
         }
-
+        
         refreshTimer.startTimers()
     }
 
@@ -555,21 +552,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 }
 
 // MARK: - Plan change
-
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async {
+    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async {
         guard authKeychain.username != nil else {
             return
         }
-        let upsellSuccessData = UpsellData(
-            modalSource: modalSource,
-            newPlanName: newPlanName,
-            reference: offerReference,
-            flowType: flowType
-        )
         // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
-        AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)
+        AppEvent.userCompletedUpsellAlertJourney.post((modalSource, newPlanName))
         log.debug("Reloading data after plan purchase", category: .app)
         do {
             try await retrievePropertiesAndLogIn()
@@ -581,10 +571,8 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
 }
 
 // MARK: - Review
-
 extension AppSessionManagerImplementation {
-    @objc
-    private func updateState(_ notification: Notification) {
+    @objc private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
@@ -599,5 +587,36 @@ extension AppSessionManagerImplementation {
         default:
             break
         }
+    }
+}
+
+// MARK: - WireGuard config
+
+import Hermes
+
+private extension WireguardConfig {
+    func refreshConfig() -> WireguardConfig {
+        @Dependency(\.hermesClient) var hermesClient
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+
+        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+
+        var hermesResolvers: [HermesResolver] = [.proton]
+        if hermesIsEnabled, hermesIsAllowed {
+            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
+        }
+        return .init(
+            defaultUdpPorts: defaultUdpPorts,
+            defaultTcpPorts: defaultTcpPorts,
+            defaultTlsPorts: defaultTlsPorts,
+            dns: hermesResolvers.map(\.location)
+        )
+    }
+}
+
+extension AppSessionManagerImplementation {
+    @objc private func updateWiregardConfig(_ notification: Notification) {
+        propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
     }
 }

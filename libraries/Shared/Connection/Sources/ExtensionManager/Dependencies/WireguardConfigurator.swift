@@ -22,6 +22,7 @@ import class NetworkExtension.NEOnDemandRuleConnect
 import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
+import DependenciesMacros
 
 import struct Domain.ServerConnectionIntent
 import enum Domain.VPNFeatureFlagType
@@ -30,6 +31,7 @@ import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 
 import CoreConnection
+import Hermes
 import ProtonCoreFeatureFlags
 
 public struct ConnectionConfiguration {
@@ -38,15 +40,36 @@ public struct ConnectionConfiguration {
     public let wireguardConfig: WireguardConfig
 }
 
-public enum ConnectionConfigurationKey: DependencyKey {
-    public static let testValue = ConnectionConfiguration(username: "mock_username", wireguardConfig: .init())
-    public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
+public extension ConnectionConfiguration {
+    static let testValue = ConnectionConfiguration(username: "mock_username", wireguardConfig: .init())
+}
+
+@DependencyClient
+public struct ConnectionConfigurationProvider {
+    public internal(set) var configuration: @Sendable () -> ConnectionConfiguration = { .testValue }
+}
+
+extension ConnectionConfigurationProvider: DependencyKey {
+    public static var liveValue: ConnectionConfigurationProvider {
+        ConnectionConfigurationProvider {
+            @Dependency(\.hermesClient) var hermesClient
+            let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+
+            var hermesResolvers: [HermesResolver] = [.proton]
+            if hermesIsEnabled {
+                hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
+            }
+
+            let wireguardConfig = WireguardConfig(dns: hermesResolvers.map(\.location))
+            return ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: wireguardConfig)
+        }
+    }
 }
 
 public extension DependencyValues {
-    var connectionConfiguration: ConnectionConfiguration {
-        get { self[ConnectionConfigurationKey.self] }
-        set { self[ConnectionConfigurationKey.self] = newValue }
+    var connectionConfiguration: ConnectionConfigurationProvider {
+        get { self[ConnectionConfigurationProvider.self] }
+        set { self[ConnectionConfigurationProvider.self] = newValue }
     }
 }
 
@@ -68,7 +91,7 @@ extension ManagerConfigurator {
         protocolConfiguration.serverAddress = entryIP
         protocolConfiguration.wgProtocol = connectionIntent.tunnelSettings.transport.rawValue
 
-        @Dependency(\.connectionConfiguration) var connectionConfiguration
+        @Dependency(\.connectionConfiguration) var connectionConfigurationProvider
         @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
         @Dependency(\.tunnelKeychain) var tunnelKeychain
         @Dependency(\.date) var date
@@ -89,7 +112,7 @@ extension ManagerConfigurator {
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
         let storedConfig = StoredWireguardConfig(
-            wireguardConfig: connectionConfiguration.wireguardConfig,
+            wireguardConfig: connectionConfigurationProvider.configuration().wireguardConfig,
             clientPrivateKey: authenticationStorage.getKeys().privateKey.base64X25519Representation,
             serverPublicKey: server.endpoint.x25519PublicKey,
             entryServerAddress: entryIP,

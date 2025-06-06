@@ -109,7 +109,14 @@ final class SettingsViewController: UIViewController {
         tableView.contentInset.bottom = UIConstants.cellHeight
     }
 
-    private func pushViewController(_ viewController: UIViewController) {
+    private func pushViewController(_ viewController: UIViewController, translucentNavBar: Bool, hidesBackButton: Bool) {
+        navigationController?.navigationBar.isTranslucent = translucentNavBar
+        navigationController?.navigationBar.backgroundColor = translucentNavBar ? .clear : nil
+
+        if hidesBackButton {
+            navigationItem.backBarButtonItem = .emptyBackBarButtonItem
+        }
+
         navigationController?.pushViewController(viewController, animated: true)
     }
 

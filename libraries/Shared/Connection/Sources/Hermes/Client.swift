@@ -77,30 +77,65 @@ public struct HermesClient: Sendable {
     }
 }
 
-extension HermesClient: TestDependencyKey {
-    public static let testValue: HermesClient = .init {
-        SharedReader(value: false)
-    } setIsEnabled: { _ in
-        ()
-    } activeHermesResolvers: {
-        SharedReader(value: [.proton])
-    } validateHermesLocation: { location in
-        HermesResolverLocationValidator.isValid(location) != nil
-    } addHermesResolver: { _ in
-        false
-    } removeHermesResolver: { _ in
-        false
-    } applyDiff: { _ in
-        ()
-    }
-}
-
 public extension DependencyValues {
     var hermesClient: HermesClient {
         get { self[HermesClient.self] }
         set { self[HermesClient.self] = newValue }
     }
 }
+
+// MARK: - Testing
+
+private extension SharedKey where Self == InMemoryKey<Bool>.Default {
+    static var hermesEnabled: Self {
+        self[.inMemory("HermesFeatureEnabled"), default: false]
+    }
+}
+
+private extension SharedKey where Self == InMemoryKey<[HermesResolver]>.Default {
+    static var hermesResolvers: Self {
+        self[.inMemory("HermesResolvers"), default: []]
+    }
+}
+
+extension HermesClient: TestDependencyKey {
+    public static let testValue: HermesClient = {
+        @Shared(.hermesEnabled) var enabled
+
+        return .init {
+            SharedReader(wrappedValue: false, .hermesEnabled)
+        } setIsEnabled: { newValue in
+            @Shared(.hermesEnabled) var hermesEnabled: Bool
+            $hermesEnabled.withLock { $0 = newValue }
+            AppEvent.hermes.post()
+        } activeHermesResolvers: {
+            SharedReader(wrappedValue: [], .hermesResolvers)
+        } validateHermesLocation: { location in
+            HermesResolverLocationValidator.isValid(location) != nil
+        } addHermesResolver: { newResolver in
+            @Shared(.hermesResolvers) var hermesResolvers
+            let newResolvers = hermesResolvers + [newResolver]
+            $hermesResolvers.withLock { $0 = newResolvers }
+            AppEvent.hermes.post()
+            return true
+        } removeHermesResolver: { index in
+            @Shared(.hermesResolvers) var hermesResolvers
+            var copy = hermesResolvers
+            copy.remove(at: index)
+            $hermesResolvers.withLock { $0 = copy }
+            AppEvent.hermes.post()
+            return true
+        } applyDiff: { diff in
+            @Shared(.hermesResolvers) var hermesResolvers
+            var copy = hermesResolvers
+            copy = copy.applying(diff) ?? copy
+            $hermesResolvers.withLock { $0 = copy }
+            AppEvent.hermes.post()
+        }
+    }()
+}
+
+// MARK: - Definitions
 
 public extension HermesResolver {
     static let proton: HermesResolver = try! HermesResolver(ipAddress: "10.2.0.1")

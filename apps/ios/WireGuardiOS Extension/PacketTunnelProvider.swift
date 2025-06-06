@@ -21,7 +21,7 @@ import Domain
 import Ergonomics
 import Timer
 
-class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
+final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
     private var appInfo: AppInfo
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
