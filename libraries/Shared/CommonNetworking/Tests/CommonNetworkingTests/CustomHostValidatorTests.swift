@@ -17,42 +17,32 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import CommonNetworking
-import XCTest
+import Testing
 
-final class CustomHostValidatorTests: XCTestCase {
+@Suite
+struct CustomHostValidatorTests {
     typealias ValidationError = CustomHostValidator.ValidationFailure
 
-    func testValidatorThrowsInvalidURLForInvalidURL() {
-        assert(validating: "", throws: .invalidURL)
+    struct TestHost {
+        let url: String
+        let expectedFailure: ValidationError
+
+        static let withInvalidURL = TestHost(url: "", expectedFailure: .invalidURL)
+        static let withInvalidHost = TestHost(url: "./api-file", expectedFailure: .invalidHost)
+        static let withUncontrolledDomain = TestHost(url: "http://suspicious.gg", expectedFailure: .uncontrolledDomain)
     }
 
-    func testValidatorThrowsInvalidHostForInvalidHost() {
-        assert(validating: "./api-file", throws: .invalidHost)
-    }
-
-    func testValidatorThrowsUncontrolledDomainForUnknownDomain() {
-        assert(validating: "https://api-proxy.domain.suspicious.gg/api", throws: .uncontrolledDomain)
-    }
-
-    func testValidHostDoesntThrow() throws {
-        XCTAssertNoThrow {
-            try CustomHostValidator.validate(customHost: "https://hello.proton.black/api")
+    @Test(arguments: [TestHost.withInvalidURL, .withInvalidHost, .withUncontrolledDomain])
+    func testValidatorThrowsErrorForProblematicURL(host: TestHost) {
+        #expect(throws: host.expectedFailure) {
+            try CustomHostValidator.validate(customHost: host.url)
         }
     }
 
-    private func assert(validating customHost: String, throws expectedError: ValidationError) {
-        XCTAssertThrowsError(
-            try CustomHostValidator.validate(customHost: customHost),
-            "Expected \(expectedError) to be thrown",
-            { thrownError in assert(thrownError, is: expectedError) }
-        )
-    }
-
-    private func assert(_ thrownError: Error, is expectedError: ValidationError) {
-        guard let validationError = thrownError as? ValidationError else {
-            XCTFail("Thrown error is of the incorrect type")
-            return
+    @Test
+    func testValidatorDoesNotThrowForControlledDomain() {
+        #expect(throws: Never.self) {
+            try CustomHostValidator.validate(customHost: "http://hello.proton.black/world")
         }
-        XCTAssertEqual(validationError, expectedError)
     }
 }
