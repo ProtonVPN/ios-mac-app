@@ -240,7 +240,7 @@ extension AppDelegate: UIApplicationDelegate {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
-        switchToHomeIfConnecting()
+        switchToHomeIfConnectingAndRedesign()
 
         // Refresh API announcements
         @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
@@ -352,10 +352,14 @@ fileprivate extension AppDelegate {
         }
     }
 
-    private func switchToHomeIfConnecting() {
+    private func switchToHomeIfConnectingAndRedesign() {
+        guard FeatureFlagsRepository.isRedesigniOSEnabled else {
+            return
+        }
         @SharedReader(.connectionState) var connectionState: ConnectionState
         switch connectionState {
         case .connecting, .resolving:
+            log.debug("Connection state is resolving or connecting, navigating to Home", category: .app)
             container.makeNavigationService().presentStatusViewController()
         default:
             break
