@@ -1,5 +1,5 @@
 //
-//  SettingsViewController.swift
+//  StatusViewController.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,37 +22,41 @@
 
 import UIKit
 
-import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
+import ProtonCoreFeatureFlags
 
-import Announcement
 import LegacyCommon
+import Announcement
 
-import Domain
 import Strings
+import Domain
 
 final class SettingsViewController: UIViewController {
-    @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var connectionBarContainerView: UIView!
+
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var connectionBarContainerView: UIView!
 
     var connectionBarViewController: ConnectionBarViewController?
     var genericDataSource: GenericTableViewDataSource?
     var viewModel: SettingsViewModel? {
         didSet {
-            viewModel?.pushHandler = { [pushViewController] viewController in
-                pushViewController(viewController)
+            viewModel?.showModalController = { [weak self] viewController in
+                self?.present(viewController, animated: true)
+            }
+            viewModel?.pushHandler = { [weak self] viewController, translucent, hidesBackButton in
+                self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
             }
             viewModel?.reloadNeeded = { [weak self] in
-                guard let self, isViewLoaded else {
+                guard let self = self, self.isViewLoaded else {
                     return
                 }
 
-                setupTableView()
-                tableView.reloadData()
+                self.setupTableView()
+                self.tableView.reloadData()
             }
         }
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -63,7 +67,7 @@ final class SettingsViewController: UIViewController {
         }
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,39 +80,39 @@ final class SettingsViewController: UIViewController {
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         setupTableView()
         tableView.reloadData()
 
         /// This is required by QR Login. One of the views in the QR Login flow hides the navigation bar and we need to make sure it is visible when we pop back to the root view controller.
-        navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-
+    
     private func setupView() {
         navigationItem.title = Localizable.settings
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-
+    
     private func setupTableView() {
-        guard let viewModel else { return }
-
+        guard let viewModel = viewModel else { return }
+        
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
-
+        
         tableView.separatorColor = .normalSeparatorColor()
         tableView.separatorInset = .zero
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
-
+        
         tableView.tableFooterView = viewModel.viewForFooter()
         tableView.contentInset.bottom = UIConstants.cellHeight
     }
-
+    
     private func pushViewController(_ viewController: UIViewController, translucentNavBar: Bool, hidesBackButton: Bool) {
         navigationController?.navigationBar.isTranslucent = translucentNavBar
         navigationController?.navigationBar.backgroundColor = translucentNavBar ? .clear : nil
@@ -119,10 +123,14 @@ final class SettingsViewController: UIViewController {
 
         navigationController?.pushViewController(viewController, animated: true)
     }
-
+    
     private func setupConnectionBar() {
-        if let connectionBarViewController {
+        if let connectionBarViewController = connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
+}
+
+private extension UIBarButtonItem {
+    static let emptyBackBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 }

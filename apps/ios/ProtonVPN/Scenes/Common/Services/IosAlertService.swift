@@ -270,6 +270,9 @@ extension IosAlertService: CoreAlertService {
         case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as HermesUpsellAlert:
+            show(alert: alert, modalType: .hermes)
+
         default:
             #if DEBUG
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")

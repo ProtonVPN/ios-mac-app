@@ -87,7 +87,7 @@
 		661C76D12DE48E04005AE583 /* HermesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661C76D02DE48E00005AE583 /* HermesWindowController.swift */; };
 		663552142DB7D41E0012B712 /* HermesNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552132DB7D4160012B712 /* HermesNotifications.swift */; };
 		663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552152DB7D48F0012B712 /* HermesDefinitions.swift */; };
-		664F8E8B2DA0243000C8F3EF /* HermesUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664F8E8A2DA0242800C8F3EF /* HermesUI.swift */; };
+		665897452DE5F95300295938 /* HermesUI-macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665897442DE5F95300295938 /* HermesUI-macOS.swift */; };
 		66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */; };
 		66FC40D32DA94A7D0010CD8D /* HermesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */; };
 		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
@@ -634,7 +634,7 @@
 		661C76D02DE48E00005AE583 /* HermesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesWindowController.swift; sourceTree = "<group>"; };
 		663552132DB7D4160012B712 /* HermesNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesNotifications.swift; sourceTree = "<group>"; };
 		663552152DB7D48F0012B712 /* HermesDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesDefinitions.swift; sourceTree = "<group>"; };
-		664F8E8A2DA0242800C8F3EF /* HermesUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesUI.swift; sourceTree = "<group>"; };
+		665897442DE5F95300295938 /* HermesUI-macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HermesUI-macOS.swift"; sourceTree = "<group>"; };
 		66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModelTests.swift; sourceTree = "<group>"; };
 		66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModel.swift; sourceTree = "<group>"; };
 		66FEF8782B7A680F00452A8D /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewController.swift; sourceTree = "<group>"; };
@@ -1253,7 +1253,7 @@
 				663552152DB7D48F0012B712 /* HermesDefinitions.swift */,
 				663552132DB7D4160012B712 /* HermesNotifications.swift */,
 				66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */,
-				664F8E8A2DA0242800C8F3EF /* HermesUI.swift */,
+				665897442DE5F95300295938 /* HermesUI-macOS.swift */,
 			);
 			path = Hermes;
 			sourceTree = "<group>";
@@ -3269,6 +3269,7 @@
 				EE068DC41F23E8A90006C2D0 /* ProfileItemViewModel.swift in Sources */,
 				E1454CED206FC6A900E6D396 /* HelpPopoverViewController.swift in Sources */,
 				EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */,
+				665897452DE5F95300295938 /* HermesUI-macOS.swift in Sources */,
 				AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */,
 				E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */,
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
@@ -3339,7 +3340,6 @@
 				E50859E82B4D679600673EF1 /* OfferBannerView.swift in Sources */,
 				F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */,
 				E5FF89632A810046002B4A49 /* SideBarButtonStyle.swift in Sources */,
-				664F8E8B2DA0243000C8F3EF /* HermesUI.swift in Sources */,
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
 				E551EB0829AF7C1300B6612D /* Assets.swift in Sources */,
 				EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */,

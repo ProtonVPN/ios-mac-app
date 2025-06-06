@@ -20,6 +20,7 @@ import SwiftUI
 
 import Dependencies
 import Domain
+import Ergonomics
 import Hermes
 import LegacyCommon
 import ProtonCoreUIFoundations

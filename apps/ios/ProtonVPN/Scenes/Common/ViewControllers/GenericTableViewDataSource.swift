@@ -20,39 +20,43 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import UIKit
 import LegacyCommon
 import NetShield
-import UIKit
 
 enum TableViewCellModel {
     case pushStandard(title: String, handler: () -> Void)
     case pushKeyValue(key: String, value: String, icon: UIImage? = nil, handler: () -> Void)
     case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: () -> Void)
-    case pushAccountDetails(
-        initials: NSAttributedString,
-        username: NSAttributedString,
-        plan: NSAttributedString,
-        handler: () -> Void
-    )
+    case pushAccountDetails(initials: NSAttributedString,
+                            username: NSAttributedString,
+                            plan: NSAttributedString,
+                            handler: () -> Void)
     case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
     case imageSubtitleImage(title: String, subtitle: String, leadingImage: UIImage, trailingImage: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
-    case staticPushKeyValue(key: String, value: String, handler: () -> Void)
+    case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
     /// `upsell` is executed when the cell accessory is tapped while in the `PaidFeatureDisplayState.upsell` state
     case upsellableToggle(
         title: String,
         state: () -> PaidFeatureDisplayState,
-        upsell: () -> Void,
+        upsell: (() -> Void),
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
     )
-    case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: () -> Void)
-    case buttonWithLoadingIndicator(
+    case upsellablePushKeyValue(
         title: String,
-        accessibilityIdentifier: String?,
-        color: UIColor,
-        controller: ButtonWithLoadingIndicatorController
+        state: () -> PaidFeatureDisplayState,
+        value: String,
+        icon: UIImage? = nil,
+        upsell: (() -> Void),
+        handler: () -> Void
     )
+    case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
+    case buttonWithLoadingIndicator(title: String,
+                                    accessibilityIdentifier: String?,
+                                    color: UIColor,
+                                    controller: ButtonWithLoadingIndicatorController)
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)
     case checkmarkStandard(title: String, checked: Bool, enabled: Bool = true, handler: () -> Bool)
@@ -75,29 +79,31 @@ struct TableViewSection {
     var cells: [TableViewCellModel]
     let showHeader: Bool
     let showSeparator: Bool
-
+    
     init(title: String, showHeader: Bool = true, showSeparator: Bool = false, cells: [TableViewCellModel]) {
         self.title = title
         self.cells = cells
         self.showHeader = showHeader
         self.showSeparator = showSeparator
     }
-
+    
     var headerHeight: CGFloat {
-        showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
+        return showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
     }
 }
 
 // A generic data source for table views
 class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
+    
     var sections: [TableViewSection]
     var onSelectionChange: (() -> Void)?
-
+    
     init(for tableView: UITableView, with sections: [TableViewSection], onSelectionChange: (() -> Void)? = nil) {
         self.sections = sections
         self.onSelectionChange = onSelectionChange
-
+        
         tableView.register(StandardTableViewCell.nib, forCellReuseIdentifier: StandardTableViewCell.identifier)
+        tableView.register(UpsellStandardTableViewCell.nib, forCellReuseIdentifier: UpsellStandardTableViewCell.identifier)
         tableView.register(TitleTextFieldTableViewCell.nib, forCellReuseIdentifier: TitleTextFieldTableViewCell.identifier)
         tableView.register(KeyValueTableViewCell.nib, forCellReuseIdentifier: KeyValueTableViewCell.identifier)
         tableView.register(SwitchTableViewCell.nib, forCellReuseIdentifier: SwitchTableViewCell.identifier)
@@ -113,27 +119,27 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(ImageSubtitleImageTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleImageTableViewCell.identifier)
         tableView.register(NetShieldStatsTableViewCell.nib, forCellReuseIdentifier: NetShieldStatsTableViewCell.identifier)
     }
-
+    
     public func update(rows: [IndexPath: TableViewCellModel]) {
         for (index, row) in rows {
             sections[index.section].cells[index.row] = row
         }
     }
-
-    func numberOfSections(in _: UITableView) -> Int {
-        sections.count
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
     }
-
-    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        sections[section].cells.count
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sections[section].cells.count
     }
-
+    
     // swiftlint:disable cyclomatic_complexity function_body_length
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
-
+        
         switch cellModel {
-        case let .invertedKeyValue(key: key, value: value, handler: handler):
+        case .invertedKeyValue(key: let key, value: let value, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
@@ -145,7 +151,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.invert()
 
             return cell
-        case let .attributedKeyValue(key: key, value: value, handler: handler):
+        case .attributedKeyValue(key: let key, value: let value, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
@@ -156,7 +162,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case let .pushStandard(title: title, handler: handler):
+        case .pushStandard(title: let title, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
@@ -166,7 +172,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case let .pushKeyValue(key: key, value: value, icon: icon, handler: handler):
+        case .pushKeyValue(key: let key, value: let value, icon: let icon, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
@@ -179,7 +185,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case let .pushKeyValueAttributed(key: key, value: value, handler: handler):
+        case .pushKeyValueAttributed(key: let key, value: let value, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
@@ -189,7 +195,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case let .imageSubtitle(title: title, subtitle: subtitle, image: image, handler: handler):
+
+        case .imageSubtitle(title: let title, subtitle: let subtitle, image: let image, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleTableViewCell.identifier) as? ImageSubtitleTableViewCell else {
                 return UITableViewCell()
             }
@@ -200,7 +207,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.selectionHandler = handler
 
             return cell
-        case let .imageSubtitleImage(title: title, subtitle: subtitle, leadingImage: leadingImage, trailingImage: trailingImage, handler: handler):
+
+        case .imageSubtitleImage(title: let title, subtitle: let subtitle, leadingImage: let leadingImage, trailingImage: let trailingImage, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleImageTableViewCell.identifier) as? ImageSubtitleImageTableViewCell else {
                 return UITableViewCell()
             }
@@ -212,7 +220,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.selectionHandler = handler
 
             return cell
-        case let .titleTextField(title: title, textFieldText: textFieldText, textFieldPlaceholder: textFieldPlaceholder, textFieldDelegate: delegate):
+        case .titleTextField(title: let title, textFieldText: let textFieldText, textFieldPlaceholder: let textFieldPlaceholder, textFieldDelegate: let delegate):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleTextFieldTableViewCell.identifier) as? TitleTextFieldTableViewCell else {
                 return UITableViewCell()
             }
@@ -223,14 +231,14 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.textField.delegate = delegate
 
             return cell
-        case let .staticKeyValue(key: key, value: value):
+        case .staticKeyValue(key: let key, value: let value):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: KeyValueTableViewCell.identifier) as? KeyValueTableViewCell else {
                 return UITableViewCell()
             }
             cell.viewModel = [key: value]
 
             return cell
-        case let .staticPushKeyValue(key: key, value: value, handler: handler):
+        case .staticPushKeyValue(key: let key, value: let value, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: KeyValueTableViewCell.identifier) as? KeyValueTableViewCell else {
                 return UITableViewCell()
             }
@@ -239,7 +247,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.showDisclosure(true)
 
             return cell
-        case let .upsellableToggle(title, state, upsell, handler):
+
+        case .upsellableToggle(let title, let state, let upsell, let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier) as? SwitchTableViewCell else {
                 return UITableViewCell()
             }
@@ -250,7 +259,23 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.switchControl.accessibilityLabel = title
 
             return cell
-        case let .button(title: title, accessibilityIdentifier: accessibilityIdentifier, color: color, handler: handler):
+
+        case .upsellablePushKeyValue(let key, let state, let value, let icon, let upsell, let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellStandardTableViewCell.identifier) as? UpsellStandardTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.icon = icon
+            cell.titleLabel.text = key
+            cell.accessibilityIdentifier = key
+            cell.subtitleLabel.text = value
+            cell.subtitleLabel.accessibilityIdentifier = value
+            cell.upsellTapped = upsell
+            cell.setup(with: state())
+            cell.completionHandler = handler
+
+            return cell
+
+        case .button(title: let title, accessibilityIdentifier: let accessibilityIdentifier, color: let color, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier) as? ButtonTableViewCell else {
                 return UITableViewCell()
             }
@@ -260,14 +285,14 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case let .tooltip(text: text):
+        case .tooltip(text: let text):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TooltipTableViewCell.identifier) as? TooltipTableViewCell else {
                 return UITableViewCell()
             }
             cell.tooltipLabel.attributedText = TooltipTableViewCell.attributedText(for: text)
 
             return cell
-        case let .instructionStep(number: number, text: text):
+        case .instructionStep(number: let number, text: let text):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: InstructionStepTableViewCell.identifier) as? InstructionStepTableViewCell else {
                 return UITableViewCell()
             }
@@ -275,7 +300,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.label.text = text
 
             return cell
-        case let .checkmarkStandard(title: title, checked: checked, enabled, handler: handler):
+        case .checkmarkStandard(title: let title, checked: let checked, let enabled, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CheckmarkTableViewCell.identifier) as? CheckmarkTableViewCell else {
                 return UITableViewCell()
             }
@@ -286,7 +311,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case let .colorPicker(viewModel: viewModel):
+        case .colorPicker(viewModel: let viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ColorPickerTableViewCell.identifier) as? ColorPickerTableViewCell else {
                 return UITableViewCell()
             }
@@ -298,7 +323,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.collectionView.selectItem(at: selectedIndex, animated: false, scrollPosition: .top)
 
             return cell
-        case let .textWithActivityCell(title: title, textColor: textColor, backgroundColor: backgroundColor, showActivity: showActivity):
+        case .textWithActivityCell(title: let title, textColor: let textColor, backgroundColor: let backgroundColor, showActivity: let showActivity):
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TextWithActivityCell.identifier) as? TextWithActivityCell else {
                 return UITableViewCell()
             }
@@ -321,6 +347,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.tooltipLabel.attributedText = attributedText
 
             return cell
+
         case let .pushAccountDetails(initials, username, plan, handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailsTableViewCell.identifier) as? AccountDetailsTableViewCell else {
                 return UITableViewCell()
@@ -329,6 +356,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.setup(initials: initials, username: username, plan: plan, handler: handler)
 
             return cell
+
         case let .buttonWithLoadingIndicator(title, accessibilityIdentifier, color, controller):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonWithLoadingTableViewCell.identifier) as? ButtonWithLoadingTableViewCell else {
                 return UITableViewCell()
@@ -346,39 +374,38 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return cell
         }
     }
-
     // swiftlint:enable cyclomatic_complexity function_body_length
-
-    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        sections[section].headerHeight
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return sections[section].headerHeight
     }
-
-    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
         headerView.setName(name: sections[section].title)
         return headerView
     }
-
-    func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section].cells[indexPath.row] {
         case .tooltip, .attributedTooltip:
-            -1 // allows for self sizing
+            return -1 // allows for self sizing
         case .instructionStep:
-            -1 // allows for self sizing
-        case let .colorPicker(viewModel: viewModel):
-            viewModel.height
+            return -1 // allows for self sizing
+        case .colorPicker(viewModel: let viewModel):
+            return viewModel.height
         case .textWithActivityCell:
-            -1 // allows for self sizing
+            return -1 // allows for self sizing
         case .pushAccountDetails:
-            -1
+            return -1
         case .imageSubtitle:
-            -1
+            return -1
         case .imageSubtitleImage:
-            -1
+            return -1
         case .netShieldStats:
-            UITableView.automaticDimension
+            return UITableView.automaticDimension
         default:
-            UIConstants.cellHeight
+            return UIConstants.cellHeight
         }
     }
 
@@ -386,26 +413,30 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
-
+        
         switch cellModel {
         case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue, .attributedKeyValue:
             guard let cell = cell as? StandardTableViewCell else { return }
+            cell.select()
+            onSelectionChange?()
+        case .upsellablePushKeyValue:
+            guard let cell = cell as? UpsellStandardTableViewCell else { return }
 
             cell.select()
             onSelectionChange?()
         case .checkmarkStandard:
             guard let cell = cell as? CheckmarkTableViewCell else { return }
-
+            
             cell.select()
             onSelectionChange?()
         case .staticPushKeyValue:
             guard let cell = cell as? KeyValueTableViewCell else { return }
-
+            
             cell.select()
             onSelectionChange?()
         case .pushAccountDetails:
             guard let cell = cell as? AccountDetailsTableViewCell else { return }
-
+            
             cell.select()
             onSelectionChange?()
         case .imageSubtitle:
@@ -422,23 +453,22 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return
         }
     }
-
     // swiftlint:enable cyclomatic_complexity
-
+    
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
-
+        
         switch cellModel {
         case .checkmarkStandard:
             guard let cell = cell as? CheckmarkTableViewCell else { return }
-
+            
             cell.deselect()
         default:
             return
         }
     }
-
+    
     // Prevents separators showing on the background (below the last row)
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if sections.indices.contains(section), sections[section].showSeparator {
@@ -449,10 +479,10 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         if section == sectionCount - 1 {
             return 0.1
         }
-
+        
         return 0
     }
-
+    
     // Prevents separator artifacts showing below the last cell
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let sectionCount = numberOfSections(in: tableView)
@@ -460,7 +490,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIConstants.cellHeight))
             return view
         }
-
+        
         return nil
     }
 }

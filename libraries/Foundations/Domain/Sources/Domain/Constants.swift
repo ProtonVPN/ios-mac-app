@@ -69,6 +69,8 @@ public enum VPNLink: String, CaseIterable {
     case safeMode = "https://protonvpn.com/support/non-standard-ports"
     case loginProblems = "https://protonvpn.com/support/login-problems"
     case systemExtensionsInstallationHelp = "https://protonvpn.com/support/how-to-change-vpn-protocols"
+    case hermes = "https://protonvpn.com/support/custom-dns#ios-and-ipados"
+    case hermesMacOS = "https://protonvpn.com/support/custom-dns#macos"
 
     case learnMoreSmartRouting = "https://protonvpn.com/support/smart-routing"
     case learnMoreStreaming = "https://protonvpn.com/support/streaming-guide"

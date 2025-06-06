@@ -86,6 +86,13 @@
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
+		660251122DE7461E001D5E7C /* UpsellStandardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660251102DE7461E001D5E7C /* UpsellStandardTableViewCell.swift */; };
+		660251132DE7461E001D5E7C /* UpsellStandardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 660251112DE7461E001D5E7C /* UpsellStandardTableViewCell.xib */; };
+		6652FC8A2DF30FAF008D1720 /* HermesStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6652FC892DF30FAD008D1720 /* HermesStyles.swift */; };
+		6652FC8C2DF319C7008D1720 /* HermesSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6652FC8B2DF319C2008D1720 /* HermesSettingsViewController.swift */; };
+		66847CD42DF1E85F00D3C7EB /* HermesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66847CD32DF1E85B00D3C7EB /* HermesViewModelTests.swift */; };
+		66BE97862DE0C6D600715454 /* HermesUI-iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BE97852DE0C6D000715454 /* HermesUI-iOS.swift */; };
+		66C3031A2DE48C9700B8E542 /* HermesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C303192DE48C9500B8E542 /* HermesViewModel.swift */; };
 		66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */; };
 		66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */; };
 		66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
@@ -579,6 +586,13 @@
 		57E3439128E5A6780012B2DF /* AccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRobot.swift; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
 		626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
+		660251102DE7461E001D5E7C /* UpsellStandardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellStandardTableViewCell.swift; sourceTree = "<group>"; };
+		660251112DE7461E001D5E7C /* UpsellStandardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpsellStandardTableViewCell.xib; sourceTree = "<group>"; };
+		6652FC892DF30FAD008D1720 /* HermesStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesStyles.swift; sourceTree = "<group>"; };
+		6652FC8B2DF319C2008D1720 /* HermesSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesSettingsViewController.swift; sourceTree = "<group>"; };
+		66847CD32DF1E85B00D3C7EB /* HermesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModelTests.swift; sourceTree = "<group>"; };
+		66BE97852DE0C6D000715454 /* HermesUI-iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HermesUI-iOS.swift"; sourceTree = "<group>"; };
+		66C303192DE48C9500B8E542 /* HermesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModel.swift; sourceTree = "<group>"; };
 		66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsAccountViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/SettingsAccountViewModel.swift; sourceTree = "<group>"; };
 		66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AccountDetailsTableViewCell.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountDetailsTableViewCell.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -1089,6 +1103,17 @@
 				42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		66C303172DE46F5500B8E542 /* Hermes */ = {
+			isa = PBXGroup;
+			children = (
+				6652FC8B2DF319C2008D1720 /* HermesSettingsViewController.swift */,
+				6652FC892DF30FAD008D1720 /* HermesStyles.swift */,
+				66C303192DE48C9500B8E542 /* HermesViewModel.swift */,
+				66BE97852DE0C6D000715454 /* HermesUI-iOS.swift */,
+			);
+			path = Hermes;
 			sourceTree = "<group>";
 		};
 		6C79F2C7D41897FA4247FD73 /* Misc */ = {
@@ -1818,6 +1843,7 @@
 		E9492EE1266A14BC00500E7D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				66847CD32DF1E85B00D3C7EB /* HermesViewModelTests.swift */,
 				E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */,
 			);
 			path = Settings;
@@ -2018,6 +2044,7 @@
 		F36ECCAE2611C73B0089B898 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				66C303172DE46F5500B8E542 /* Hermes */,
 				F36ECCD42611C8530089B898 /* Views */,
 				791DE610208E08E600A29EA5 /* ViewControllers */,
 				F36ECCAF2611C75E0089B898 /* ViewModels */,
@@ -2091,6 +2118,8 @@
 				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
 				E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */,
 				E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */,
+				660251102DE7461E001D5E7C /* UpsellStandardTableViewCell.swift */,
+				660251112DE7461E001D5E7C /* UpsellStandardTableViewCell.xib */,
 				D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */,
 				D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */,
 				E1FB5479230C000E00153F4D /* TitleTextFieldTableViewCell.swift */,
@@ -2736,6 +2765,7 @@
 				E5FE544A2DB7AEE800AFB78C /* Main.storyboard in Resources */,
 				D596B86A2A79330500CF6E30 /* ImageSubtitleImageTableViewCell.xib in Resources */,
 				E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */,
+				660251132DE7461E001D5E7C /* UpsellStandardTableViewCell.xib in Resources */,
 				ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */,
 				4CF2982A2A7D3B8E00DEB23F /* it.lproj in Resources */,
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
@@ -2904,6 +2934,7 @@
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
 				A42F23CB2DE841EF0067A6E8 /* IapCachedStatus.swift in Sources */,
 				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
+				66BE97862DE0C6D600715454 /* HermesUI-iOS.swift in Sources */,
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
 				7904DA4920E6BA3E008A4FCB /* ColorPickerViewModel.swift in Sources */,
@@ -2971,6 +3002,7 @@
 				793ECF412148EA0B00C186A7 /* ButtonTableViewCell.swift in Sources */,
 				79848BAC20D1B9DC00EF6F9F /* CountriesViewModel.swift in Sources */,
 				AD8130FD2A852E4F00729E03 /* SharedDependencies+Live.swift in Sources */,
+				660251122DE7461E001D5E7C /* UpsellStandardTableViewCell.swift in Sources */,
 				7950441721183E6E0022ED35 /* ColorPickerItem.swift in Sources */,
 				79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */,
 				E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */,
@@ -2999,6 +3031,7 @@
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
 				428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */,
 				D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */,
+				6652FC8C2DF319C7008D1720 /* HermesSettingsViewController.swift in Sources */,
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
@@ -3014,6 +3047,7 @@
 				E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */,
 				E1C2EAA121EF931500353A63 /* StandardTableViewCell.swift in Sources */,
 				7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */,
+				66C3031A2DE48C9700B8E542 /* HermesViewModel.swift in Sources */,
 				791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */,
 				D572E5712AB487D900CBD2B7 /* BannerViewCell.swift in Sources */,
 				42066E8F2630240F001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
@@ -3028,6 +3062,7 @@
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,
 				E1D187E92301A20700C5F492 /* VpnProtocolViewController.swift in Sources */,
 				D5F56899232620C600795953 /* DependencyContainer.swift in Sources */,
+				6652FC8A2DF30FAF008D1720 /* HermesStyles.swift in Sources */,
 				A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */,
 				223BDF9C51D60D8AD239D951 /* AnnouncementFeatureView.swift in Sources */,
 				AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */,
@@ -3049,6 +3084,7 @@
 				E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */,
 				AD81310D2A853E2C00729E03 /* AlertTests.swift in Sources */,
 				E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */,
+				66847CD42DF1E85F00D3C7EB /* HermesViewModelTests.swift in Sources */,
 				ADDB04A72B768CC200211434 /* CountriesViewModelTests.swift in Sources */,
 				E5BBFED32B333B2200FA9CF8 /* ProfileServiceMock.swift in Sources */,
 				E5BBFED12B333B2200FA9CF8 /* PlanServiceMock.swift in Sources */,

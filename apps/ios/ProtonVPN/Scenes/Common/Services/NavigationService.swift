@@ -20,30 +20,30 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import GSMessages
 import SwiftUI
 import UIKit
+import GSMessages
 
 import ComposableArchitecture
 import Dependencies
 
-import ProtonCoreAccountRecovery
-import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
+import ProtonCoreAccountRecovery
+import ProtonCorePasswordChange
+import ProtonCoreDataModel
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
-import ProtonCorePasswordChange
 
-import CommonNetworking
 import LegacyCommon
-import VPNAppCore
+import CommonNetworking
 import VPNShared
+import VPNAppCore
 
 import BugReport
+import Strings
+import Modals
 import Domain
 import Home
-import Modals
-import Strings
 
 // MARK: Country Service
 
@@ -72,6 +72,7 @@ protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> UIViewController
+    func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
@@ -98,7 +99,7 @@ protocol ConnectionStatusServiceFactory {
 
 extension DependencyContainer: ConnectionStatusServiceFactory {
     func makeConnectionStatusService() -> ConnectionStatusService {
-        makeNavigationService()
+        return makeNavigationService()
     }
 }
 
@@ -115,17 +116,15 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     typealias Factory = DependencyContainer
     private let factory: Factory
-
+    
     // MARK: Storyboards
-
     private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
     private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
     private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: nil)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: nil)
-
+    
     // MARK: Properties
-
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
@@ -142,7 +141,6 @@ final class NavigationService {
         loginService.delegate = self
         return loginService
     }()
-
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var profileManager = factory.makeProfileManager()
     @Dependency(\.announcementManager) var announcementManager
@@ -157,28 +155,31 @@ final class NavigationService {
 
     lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
-    private lazy var connectionBarViewController = makeConnectionBarViewController()
+    private lazy var connectionBarViewController = { 
+        return makeConnectionBarViewController()
+    }()
 
-    private lazy var tabBarController = makeTabBarController()
+    private lazy var tabBarController = {
+        return makeTabBarController()
+    }()
 
     var vpnGateway: VpnGatewayProtocol {
-        appSessionManager.vpnGateway
+        return appSessionManager.vpnGateway
     }
-
+    
     // MARK: Initializers
-
     init(_ factory: Factory) {
         self.factory = factory
     }
-
+    
     func launched() {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
         NotificationCenter.default.addObserver(self, selector: #selector(refreshVpnManager(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-
+        
         if let launchViewController = makeLaunchViewController() {
             windowService.show(viewController: launchViewController)
         }
-
+        
         loginService.attemptSilentLogIn { [weak self] result in
             switch result {
             case .loggedIn:
@@ -192,12 +193,12 @@ final class NavigationService {
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
     }
-
+    
     func switchTab(index: Int) {
-        guard index >= 0, index < tabBarController?.viewControllers?.count ?? 0 else {
+        guard index >= 0 && index < self.tabBarController?.viewControllers?.count ?? 0 else {
             return
         }
-        tabBarController?.selectedIndex = index
+        self.tabBarController?.selectedIndex = index
     }
 
     private func presentMainInterface() {
@@ -224,18 +225,16 @@ final class NavigationService {
 
         tabBarController?.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
     }
-
-    @objc
-    private func sessionChanged(_ notification: Notification) {
+    
+    @objc private func sessionChanged(_ notification: Notification) {
         guard appSessionManager.sessionStatus == .notEstablished else {
             return
         }
         let reasonForSessionChange = notification.object as? String
         presentWelcome(initialError: reasonForSessionChange)
     }
-
-    @objc
-    private func refreshVpnManager(_: Notification) {
+    
+    @objc private func refreshVpnManager(_ notification: Notification) {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
             Task { @MainActor in
                 await self.vpnManager.refreshManagers()
@@ -244,12 +243,12 @@ final class NavigationService {
             vpnManager.refreshManagers()
         }
     }
-
+    
     private func setupTabs() {
-        guard let tabBarController else { return }
-
+        guard let tabBarController = tabBarController else { return }
+        
         tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
-
+        
         var tabViewControllers = [UIViewController]()
 
         let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
@@ -263,7 +262,7 @@ final class NavigationService {
         }
 
         tabViewControllers.append(UINavigationController(rootViewController: makeCountriesViewController()))
-
+        
         if !isRedesign {
             tabViewControllers.append(UINavigationController(rootViewController: makeMapViewController()))
 
@@ -271,9 +270,9 @@ final class NavigationService {
                 tabViewControllers.append(protonQCViewController)
             }
         }
-
+        
         tabViewControllers.append(UINavigationController(rootViewController: makeProfilesViewController()))
-
+        
         if let settingsViewController = makeSettingsViewController() {
             tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
         }
@@ -283,18 +282,18 @@ final class NavigationService {
 
         windowService.show(viewController: tabBarController)
     }
-
+    
     func makeLaunchViewController() -> LaunchViewController? {
         if let launchViewController = launchStoryboard.instantiateViewController(withIdentifier: "LaunchViewController") as? LaunchViewController {
             return launchViewController
         }
         return nil
     }
-
+    
     private func makeTabBarController() -> TabBarController? {
         guard let tabBarController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController else { return nil }
         tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
-
+        
         return tabBarController
     }
 }
@@ -304,10 +303,10 @@ extension NavigationService: CountryService {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
         countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self)
         countriesViewController.connectionBarViewController = makeConnectionBarViewController()
-
+        
         return countriesViewController
     }
-
+    
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController {
         let countryViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountryViewController.self)) as! CountryViewController
         countryViewController.viewModel = country
@@ -332,7 +331,7 @@ extension NavigationService: ProfileService {
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
-
+    
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         guard let username = authKeychain.username else {
             return nil
@@ -342,21 +341,19 @@ extension NavigationService: ProfileService {
             return nil
         }
 
-        createProfileViewController.viewModel = CreateOrEditProfileViewModel(
-            username: username,
-            for: profile,
-            profileService: self,
-            protocolSelectionService: self,
-            alertService: alertService,
-            vpnKeychain: vpnKeychain,
-            appStateManager: appStateManager,
-            vpnGateway: vpnGateway,
-            profileManager: profileManager,
-            propertiesManager: propertiesManager
-        )
+        createProfileViewController.viewModel = CreateOrEditProfileViewModel(username: username,
+                                                                             for: profile,
+                                                                             profileService: self,
+                                                                             protocolSelectionService: self,
+                                                                             alertService: alertService,
+                                                                             vpnKeychain: vpnKeychain,
+                                                                             appStateManager: appStateManager,
+                                                                             vpnGateway: vpnGateway,
+                                                                             profileManager: profileManager,
+                                                                             propertiesManager: propertiesManager)
         return createProfileViewController
     }
-
+    
     func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController {
         let selectionViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: SelectionViewController.self)) as! SelectionViewController
         selectionViewController.dataSet = dataSet
@@ -366,21 +363,22 @@ extension NavigationService: ProfileService {
 }
 
 extension NavigationService: SettingsService {
+    
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
             settingsViewController.viewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }
-
+        
         return nil
     }
-
+    
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
         guard let connectionBar = makeConnectionBarViewController() else { return nil }
         return SettingsAccountViewController(viewModel: SettingsAccountViewModel(factory: factory), connectionBar: connectionBar)
     }
-
+    
     func makeExtensionsSettingsViewController() -> UIViewController {
         if #available(iOS 17.0, *) {
             let controller = UIHostingController(rootView: WidgetSettingsView())
@@ -391,8 +389,12 @@ extension NavigationService: SettingsService {
         }
     }
 
+    func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController {
+        return HermesSettingsViewController(viewModel: viewModel)
+    }
+
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        TelemetrySettingsViewController(
+        return TelemetrySettingsViewController(
             preferenceChangeUsageData: { [weak self] isOn in
                 self?.telemetrySettings.updateTelemetryUsageData(isOn: isOn)
             },
@@ -408,20 +410,20 @@ extension NavigationService: SettingsService {
             title: Localizable.usageStatistics
         )
     }
-
+    
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
+        return LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
     }
-
+    
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogContentProvider().getLogData(for: logSource)))
+        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogContentProvider().getLogData(for: logSource)))
     }
-
+    
     func presentReportBug() {
         let manager = factory.makeDynamicBugReportManager()
         if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
             manager.closeBugReportHandler = {
-                self.windowService.dismissModal {}
+                self.windowService.dismissModal { }
             }
             windowService.present(modal: viewController)
             return
@@ -457,7 +459,7 @@ extension NavigationService: SettingsService {
             userInfo: userInfo
         ) { [weak self] authCredential, userInfo in
             guard let self else { return }
-            processPasswordChange(authCredential: authCredential, userInfo: userInfo)
+            self.processPasswordChange(authCredential: authCredential, userInfo: userInfo)
         }
     }
 
@@ -469,9 +471,9 @@ extension NavigationService: SettingsService {
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {
         do {
             try authKeychain.store(AuthCredentials(.init(authCredential)))
-            propertiesManager.userInfo = userInfo
-            windowService.popStackToRoot()
-            windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
+            self.propertiesManager.userInfo = userInfo
+            self.windowService.popStackToRoot()
+            self.windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
         } catch {
             log.error("Could not update stored credentials", category: .app)
             appSessionManager.logOut(force: true, reason: "Could not update stored credentials")
@@ -481,33 +483,35 @@ extension NavigationService: SettingsService {
 
 extension NavigationService: ProtocolService {
     func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController {
-        VpnProtocolViewController(viewModel: viewModel)
+        return VpnProtocolViewController(viewModel: viewModel)
     }
 }
 
 extension NavigationService: ConnectionStatusService {
     func makeConnectionBarViewController() -> ConnectionBarViewController? {
+        
         if let connectionBarViewController =
-            commonStoryboard.instantiateViewController(withIdentifier:
+            self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: ConnectionBarViewController.self)) as? ConnectionBarViewController {
+            
             connectionBarViewController.viewModel = ConnectionBarViewModel(appStateManager: appStateManager)
             connectionBarViewController.connectionStatusService = self
             return connectionBarViewController
         }
-
+        
         return nil
     }
-
+    
     func makeStatusViewController() -> StatusViewController? {
         if let statusViewController =
-            commonStoryboard.instantiateViewController(withIdentifier:
+            self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
             statusViewController.viewModel = StatusViewModel(factory: factory)
             return statusViewController
         }
         return nil
     }
-
+    
     func presentStatusViewController() {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
             switchTab(index: 0) // Switch to Home tab which included new connection status view.
@@ -515,19 +519,18 @@ extension NavigationService: ConnectionStatusService {
             guard let viewController = makeStatusViewController() else {
                 return
             }
-            windowService.addToStack(viewController, checkForDuplicates: true)
+            self.windowService.addToStack(viewController, checkForDuplicates: true)
         }
-    }
+    }    
 }
 
 // MARK: Account Recovery
-
 extension NavigationService {
     func presentAccountRecoveryViewController() {
         guard FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature) else { return }
 
         let viewController = makeAccountRecoveryViewController()
-        windowService.addToStack(viewController, checkForDuplicates: true)
+        self.windowService.addToStack(viewController, checkForDuplicates: true)
     }
 }
 

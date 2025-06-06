@@ -41,32 +41,3 @@ class ExplicitlySizedHostingController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-// MARK: - Other helpers
-
-extension View {
-    @available(macOS 14.0, *)
-    func onChange<V>(
-        of value: V,
-        to checkValue: V,
-        _ action: @escaping (_ oldValue: V, _ newValue: V) -> Void
-    ) -> some View where V: Equatable {
-        onChange(of: value) { oldValue, newValue in
-            if newValue == checkValue {
-                action(oldValue, newValue)
-            }
-        }
-    }
-
-    func onChange<V>(
-        of value: V,
-        to checkValue: V,
-        _ action: @escaping (_ oldValue: V) -> Void
-    ) -> some View where V: Equatable {
-        onChange(of: value) { newValue in
-            if newValue == checkValue {
-                action(newValue)
-            }
-        }
-    }
-}
