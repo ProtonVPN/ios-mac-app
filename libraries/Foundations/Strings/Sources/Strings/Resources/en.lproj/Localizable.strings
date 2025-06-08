@@ -2826,7 +2826,7 @@
 "_hermes_feature_description" = "${HERMES}";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a ${HERMES_DESCRIPTION}";
+"_hermes_feature_description" = "Connect to VPN with a ${HERMES_DESCRIPTION}. Learn more";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Servers (%@)";

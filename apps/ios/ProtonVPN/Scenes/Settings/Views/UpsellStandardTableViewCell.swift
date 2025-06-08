@@ -56,6 +56,7 @@ final class UpsellStandardTableViewCell: UITableViewCell {
     }
 
     func select() {
+        guard canSelect else { return }
         completionHandler?()
     }
 
@@ -101,11 +102,11 @@ final class UpsellStandardTableViewCell: UITableViewCell {
             upsellImageView.isHidden = false
             canSelect = false
 
-        case .available(let isOn, _):
+        case .available:
             accessoryType = .disclosureIndicator
             subtitleLabel.isHidden = false
             upsellImageView.isHidden = true
-            canSelect = isOn
+            canSelect = true
         }
     }
 }

@@ -49,6 +49,10 @@ public struct ConnectionConfigurationProvider {
     public internal(set) var configuration: @Sendable () -> ConnectionConfiguration = { .testValue }
 }
 
+extension ConnectionConfigurationProvider: TestDependencyKey {
+    public static let testValue = ConnectionConfigurationProvider { .testValue }
+}
+
 extension ConnectionConfigurationProvider: DependencyKey {
     public static var liveValue: ConnectionConfigurationProvider {
         ConnectionConfigurationProvider {

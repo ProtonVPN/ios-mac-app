@@ -156,6 +156,16 @@ final class SettingsViewModel {
         accountRecoveryStatus?.imageForSettingsItem
     }
 
+    // MARK: - Action handling
+
+    private func push(
+        viewController: UIViewController,
+        hidesTranslucentNarBar: Bool = false,
+        hidesBackBarButton: Bool = false
+    ) {
+        pushHandler?(viewController, hidesTranslucentNarBar, hidesBackBarButton)
+    }
+
     // MARK: - Header section
 
     func viewForFooter() -> UIView {
@@ -425,7 +435,7 @@ final class SettingsViewModel {
             viewController.onDidDisappear = { [weak self] in
                 self?.showHermesReconnectionAlertIfNecessary()
             }
-            self.pushHandler?(viewController, true, true)
+            self.push(viewController: viewController, hidesTranslucentNarBar: true, hidesBackBarButton: true)
         }
     }
 
@@ -817,20 +827,20 @@ final class SettingsViewModel {
                 }
             }
         }
-        pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel), false, false)
+        push(viewController: protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }
 
     private func pushExtensionsViewController() {
-        pushHandler?(settingsService.makeExtensionsSettingsViewController(), false, false)
+        push(viewController: settingsService.makeExtensionsSettingsViewController())
     }
 
     private func pushUsageStatisticsViewController() {
-        pushHandler?(settingsService.makeTelemetrySettingsViewController(), false, false)
+        push(viewController: settingsService.makeTelemetrySettingsViewController())
     }
 
     private func pushLogSelectionViewController() {
         log.info("Build info: \(appInfo.debugInfoString)")
-        pushHandler?(settingsService.makeLogSelectionViewController(), false, false)
+        push(viewController: settingsService.makeLogSelectionViewController())
     }
 
     private func pushNetshieldSelectionViewController() {
@@ -841,7 +851,7 @@ final class SettingsViewModel {
             factory: factory,
             onSelect: { [weak self] type, completion in self?.changeNetShieldType(to: type, completion: completion) }
         )
-        pushHandler?(NetShieldSelectionViewController(viewModel: viewModel), false, false)
+        push(viewController: NetShieldSelectionViewController(viewModel: viewModel))
     }
 
     private func changeNetShieldType(to type: NetShieldType, completion: @escaping (Bool) -> Void) {

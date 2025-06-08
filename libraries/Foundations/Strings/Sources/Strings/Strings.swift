@@ -635,7 +635,7 @@ public enum Localizable {
     return Localizable.tr("Localizable", "_hermes_entities_header", String(describing: p1), fallback: "Servers (%@)")
   }
   /// Hermes Feature Description within dedicated Hermes Settings view
-  public static var hermesFeatureDescription: String { return Localizable.tr("Localizable", "_hermes_feature_description", fallback: "Connect to VPN with a ${HERMES_DESCRIPTION}") }
+  public static var hermesFeatureDescription: String { return Localizable.tr("Localizable", "_hermes_feature_description", fallback: "Connect to VPN with a ${HERMES_DESCRIPTION}. Learn more") }
   /// Hermes Feature Title within app settings screens
   public static var hermesFeatureTitle: String { return Localizable.tr("Localizable", "_hermes_feature_title", fallback: "${HERMES}") }
   /// Hermes Feature Window Title within dedicated Hermes Settings view

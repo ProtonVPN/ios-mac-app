@@ -16,14 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Combine
 import Connection
 import Dependencies
 import Domain
-import LegacyCommon
 import Hermes
+import LegacyCommon
+import ProtonCoreFeatureFlags
 @testable import ProtonVPN
+import XCTest
 
 private final class HermesTestContainer: MockDependencyContainer {
     let netShieldPropertyProvider: NetShieldPropertyProviderMock
@@ -60,21 +61,16 @@ extension HermesTestContainer: VpnGatewayFactory {
 
 @available(iOS 16.0, *)
 final class HermesSettingsViewModelTests: XCTestCase {
-    var cancellables: Set<AnyCancellable> = []
-
     override func setUp() {
         super.setUp()
-        cancellables.removeAll()
+
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.customDNS, true)
     }
 
     func testEnablingWithNetShieldOff() {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            let testContainer = HermesTestContainer()
-            testContainer.netShieldPropertyProvider.netShieldType = .off
-            return HermesSettingsViewModel(factory: testContainer)
-        }
+        let testContainer = HermesTestContainer()
+        testContainer.netShieldPropertyProvider.netShieldType = .off
+        let viewModel = HermesSettingsViewModel(factory: testContainer)
 
         XCTAssertFalse(viewModel.isEnabled)
         viewModel.setIsEnabled(true)
@@ -82,13 +78,9 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testEnablingWithNetShieldOn() {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            let testContainer = HermesTestContainer()
-            testContainer.netShieldPropertyProvider.netShieldType = .level2
-            return HermesSettingsViewModel(factory: testContainer)
-        }
+        let testContainer = HermesTestContainer()
+        testContainer.netShieldPropertyProvider.netShieldType = .level2
+        let viewModel = HermesSettingsViewModel(factory: testContainer)
 
         XCTAssertFalse(viewModel.isEnabled)
         viewModel.setIsEnabled(true) // this make an alert appear since NetShield is not off
@@ -98,11 +90,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
     }
 
     func testResolverValidation() {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            HermesSettingsViewModel(factory: HermesTestContainer())
-        }
+        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
         // we'll not test extensively IPv4/IPv6/DOH/DOT validation, this is already done in Connection.Hermes tests
         for (input, expectedResult, _) in Self.resolversValidationSamples {
@@ -110,47 +98,8 @@ final class HermesSettingsViewModelTests: XCTestCase {
         }
     }
 
-    func testAddingRemovingReorderingResolversWithDoHDoT() throws {
-        XCTSkip("Skipped because of DoH/DoT. Enable again when this is supported")
-
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            HermesSettingsViewModel(factory: HermesTestContainer())
-        }
-
-        // adding resolver should still go once more to validation
-        for (input, _, addingResult) in Self.resolversValidationSamples {
-            XCTAssertEqual(viewModel.addResolver(with: input), addingResult)
-        }
-
-        XCTAssertEqual(viewModel.activeHermesResolvers, Self.expectedResolvers)
-
-        // let's check for duplicates
-
-        XCTAssertEqual(viewModel.validate(location: "1.1.1.1"), .duplicate)
-        XCTAssertEqual(viewModel.validate(location: "https://1.1.1.1/dns-query"), .duplicate)
-        XCTAssertEqual(viewModel.validate(location: "tls://1.1.1.1"), .duplicate)
-
-        let resolver = try HermesResolver(ipAddress: "8.8.8.8")
-        XCTAssertFalse(viewModel.removeResolver(resolver))
-        XCTAssertTrue(viewModel.removeResolver(.cloudFlareDoH))
-        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .cloudFlareDoT])
-        XCTAssertTrue(viewModel.addResolver(with: HermesResolver.cloudFlareDoH.location))
-        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlare, .cloudFlareDoT, .cloudFlareDoH])
-
-//        viewModel.moveResolvers(from: .init(integer: 0), to: 3)
-//        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlareDoT, .cloudFlareDoH, .cloudFlare])
-//        viewModel.moveResolvers(from: .init(integer: 1), to: 0)
-//        XCTAssertEqual(viewModel.activeHermesResolvers, [.cloudFlareDoH, .cloudFlareDoT, .cloudFlare])
-    }
-
     func testAddingRemovingReorderingResolvers() throws {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            HermesSettingsViewModel(factory: HermesTestContainer())
-        }
+        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
         // adding resolver should still go once more to validation
         for (input, _, addingResult) in Self.resolversValidationSamples {
@@ -175,7 +124,7 @@ final class HermesSettingsViewModelTests: XCTestCase {
         let firstDiffElementMoved = viewModel.activeHermesResolvers[0]
         let firstDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 2, element: firstDiffElementMoved, associatedWith: nil),
-            .remove(offset: 0, element: firstDiffElementMoved, associatedWith: nil)
+            .remove(offset: 0, element: firstDiffElementMoved, associatedWith: nil),
         ])!
         viewModel.applyDiff(firstDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.google, .quadNine, .cloudFlare])
@@ -183,74 +132,71 @@ final class HermesSettingsViewModelTests: XCTestCase {
         let secondDiffElementMoved = viewModel.activeHermesResolvers[1]
         let secondDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 0, element: secondDiffElementMoved, associatedWith: nil),
-            .remove(offset: 1, element: secondDiffElementMoved, associatedWith: nil)
+            .remove(offset: 1, element: secondDiffElementMoved, associatedWith: nil),
         ])!
         viewModel.applyDiff(secondDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.quadNine, .google, .cloudFlare])
     }
 
-    func testHermesAppEventNotification() {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            HermesSettingsViewModel(factory: HermesTestContainer())
-        }
+    func testHermesAppEventNotificationWhenEnablingDisabling() {
+        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
-        let enabledExpectation = expectation(description: "Hermes AppEvent received when enabling/disabling")
+        let enabledExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         enabledExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in enabledExpectation.fulfill() }.store(in: &cancellables)
 
         viewModel.setIsEnabled(true)
         viewModel.setIsEnabled(false)
 
         wait(for: [enabledExpectation], timeout: 1.0)
+    }
 
-        cancellables.removeAll()
+    func testHermesAppEventNotificationWhenAddingResolvers() {
+        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
-        let addingResolverExpectation = expectation(description: "Hermes AppEvent received when adding resolvers")
+        let addingResolverExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         addingResolverExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in addingResolverExpectation.fulfill() }.store(in: &cancellables)
 
         _ = viewModel.addResolver(with: "10.2.0.1")
         _ = viewModel.addResolver(with: "16.32.64.128")
 
         wait(for: [addingResolverExpectation], timeout: 1.0)
+    }
 
-        cancellables.removeAll()
+    func testHermesAppEventNotificationWhenRemovingResolvers() {
+        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
-        let removingResolverExpectation = expectation(description: "Hermes AppEvent received when removing resolvers")
+        _ = viewModel.addResolver(with: "10.2.0.1")
+        _ = viewModel.addResolver(with: "16.32.64.128")
+
+        let removingResolverExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         removingResolverExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in removingResolverExpectation.fulfill() }.store(in: &cancellables)
 
         _ = viewModel.removeResolver(try! .init(ipAddress: "16.32.64.128"))
         _ = viewModel.removeResolver(try! .init(ipAddress: "10.2.0.1"))
 
         wait(for: [removingResolverExpectation], timeout: 1.0)
+    }
 
-        cancellables.removeAll()
+    func testHermesAppEventNotificationWhenMovingResolvers() {
+        let viewModel = HermesSettingsViewModel(factory: HermesTestContainer())
 
-        _ = viewModel.addResolver(with: "10.2.0.1")
-        _ = viewModel.addResolver(with: "16.32.64.128")
+        XCTAssertTrue(viewModel.addResolver(with: "20.4.0.2"))
+        XCTAssertTrue(viewModel.addResolver(with: "32.64.128.255"))
 
-        let movingResolverExpectation = expectation(description: "Hermes AppEvent received when moving around resolvers")
+        let movingResolverExpectation = XCTNSNotificationExpectation(name: AppEvent.hermes.name, object: nil, notificationCenter: .default)
         movingResolverExpectation.expectedFulfillmentCount = 2
-
-        AppEvent.hermes.publisher.sink { _ in movingResolverExpectation.fulfill() }.store(in: &cancellables)
 
         let firstDiffElement = viewModel.activeHermesResolvers[0]
         let firstDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 1, element: firstDiffElement, associatedWith: nil),
-            .remove(offset: 0, element: firstDiffElement, associatedWith: nil)
+            .remove(offset: 0, element: firstDiffElement, associatedWith: nil),
         ])!
         viewModel.applyDiff(firstDiff)
 
         let secondDiffElement = viewModel.activeHermesResolvers[0]
         let secondDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 1, element: secondDiffElement, associatedWith: nil),
-            .remove(offset: 0, element: secondDiffElement, associatedWith: nil)
+            .remove(offset: 0, element: secondDiffElement, associatedWith: nil),
         ])!
         viewModel.applyDiff(secondDiff)
 
@@ -286,6 +232,6 @@ private extension HermesSettingsViewModelTests {
     static let extraExpectedResolvers: [HermesResolver] = [
         .cloudFlare,
         .cloudFlareDoH,
-        .cloudFlareDoT
+        .cloudFlareDoT,
     ]
 }

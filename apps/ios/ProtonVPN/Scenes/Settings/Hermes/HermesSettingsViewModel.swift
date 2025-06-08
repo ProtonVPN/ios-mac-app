@@ -18,12 +18,12 @@
 
 import SwiftUI
 
-import Hermes
-
 import Dependencies
 import Perception
 import Sharing
 
+import Domain
+import Hermes
 import LegacyCommon
 import Strings
 
@@ -31,8 +31,8 @@ import Strings
 final class HermesSettingsViewModel {
     public typealias Factory = CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
-        VpnStateConfigurationFactory &
-        VpnGatewayFactory
+        VpnGatewayFactory &
+        VpnStateConfigurationFactory
 
     enum LocationValidation {
         case empty
@@ -185,7 +185,8 @@ final class HermesSettingsViewModel {
     }
 
     func openLearnMore() {
-        UIApplication.shared.open(URL(string: "https://protonvpn.com/support/custom-dns#ios-and-ipados")!)
+        @Dependency(\.linkOpener) var linkOpener
+        linkOpener.open(.hermes)
     }
 }
 

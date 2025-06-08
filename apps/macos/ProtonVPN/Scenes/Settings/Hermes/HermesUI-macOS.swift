@@ -238,7 +238,7 @@ private struct HermesResolverTableViewCell: View {
     var body: some View {
         HStack {
             if !isSingleResolver {
-                Asset.hermesDragIcon.swiftUIImage
+                Theme.Asset.hermesDragIcon.swiftUIImage
                     .allowsHitTesting(false)
             }
 
@@ -249,7 +249,7 @@ private struct HermesResolverTableViewCell: View {
             Spacer()
 
             Button(role: .destructive, action: onDeleteAction) {
-                Label("Delete", systemImage: "trash")
+                Label(Localizable.delete, systemImage: "trash")
                     .foregroundStyle(.primary)
                     .labelStyle(.iconOnly)
                     .padding(.all, .themeSpacing6)

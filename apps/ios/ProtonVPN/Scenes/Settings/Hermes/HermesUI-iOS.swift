@@ -20,11 +20,12 @@ import SwiftUI
 import UIKit
 
 import Perception
+import SwiftUINavigation
 
+import Domain
 import Hermes
 import Strings
 import Theme
-import SwiftUINavigation
 
 struct HermesSettingsView: View {
     enum Sheet {
@@ -35,11 +36,12 @@ struct HermesSettingsView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    @State fileprivate var sheet: Sheet?
+    @State private var canScroll: Bool = false
+    @State private var sheet: Sheet?
     @State private var resolverLocation: String = ""
 
     private var isEnabledBinding: Binding<Bool> {
-        return .init { viewModel.isEnabled } set: { newValue in
+        .init { viewModel.isEnabled } set: { newValue in
             withAnimation { viewModel.setIsEnabled(newValue) }
         }
     }
@@ -50,7 +52,7 @@ struct HermesSettingsView: View {
 
     var body: some View {
         ZStack {
-            Color(.background, .transparent)
+            Color(.background, .strong)
                 .ignoresSafeArea()
 
             contentView
@@ -63,9 +65,8 @@ struct HermesSettingsView: View {
             Group {
                 if resolversCount == 0 || (viewModel.isEnabled && resolversCount > 0) {
                     Button(Localizable.hermesEntitiesFormAddButtonFull) {
-                        if viewModel.isEnabled {
-                            sheet = .insertion
-                        } else {
+                        sheet = .insertion
+                        if !viewModel.isEnabled {
                             isEnabledBinding.wrappedValue = true
                         }
                     }
@@ -76,6 +77,7 @@ struct HermesSettingsView: View {
             }
             .animation(.bouncy, value: viewModel.isEnabled)
         }
+        .navigationTitle(canScroll ? Localizable.hermesFeatureTitle : "")
         .alert(item: $viewModel.alert) { alert in
             Text(alert.title)
         } actions: { alert in
@@ -103,39 +105,47 @@ private extension HermesSettingsView {
     @ViewBuilder
     var contentView: some View {
         if viewModel.isEnabled || resolversCount > 0 {
-            VStack(spacing: .zero) {
-                hermesPresentationView(alignment: .leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                List {
-                    Section {
-                        Toggle(isOn: isEnabledBinding) {
-                            Text(Localizable.hermesFeatureTitle)
-                        }
-                        .tint(Color(.background, [.interactive]))
-                        .padding(.vertical, .themeSpacing4)
-                    }
-
-                    if viewModel.isEnabled && resolversCount > 0 {
-                        Section(Localizable.hermesEntitiesHeader(resolversCount)) {
-                            hermesResolversContentView(resolversCount: resolversCount)
-                        }
-
-                        Text(resolversCount > 1 ? Localizable.hermesEntitiesFootnoteMultiple : Localizable.hermesEntitiesFootnoteSingle)
-                            .themeFont(.body2(emphasised: false))
-                            .foregroundStyle(Color(.text, .hint))
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets(top: 0, leading: .themeSpacing2, bottom: 0, trailing: .themeSpacing2))
-                    }
-                }
-                .basedOnSizeScrollBehavior()
-                .listStyle(.insetGrouped)
-                .scrollContentBackground(.hidden)
-                .background(Color.clear)
+            List {
+                listContentView
             }
+            .basedOnSizeScrollBehavior()
+            .onScrollGeometryChange(canScroll: $canScroll)
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
         } else {
             hermesPresentationView(alignment: .center)
+                .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
+    }
+
+    @ViewBuilder
+    private var listContentView: some View {
+        hermesPresentationView(alignment: .leading)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+        Section {
+            Toggle(isOn: isEnabledBinding) {
+                Text(Localizable.hermesFeatureTitle)
+            }
+            .tint(Color(.background, [.interactive]))
+            .padding(.vertical, .themeSpacing4)
+        }
+        .listRowBackground(Color(.background))
+
+        if viewModel.isEnabled, resolversCount > 0 {
+            Section(Localizable.hermesEntitiesHeader(resolversCount)) {
+                hermesResolversContentView(resolversCount: resolversCount)
+            }
+            .listRowBackground(Color(.background))
+
+            Text(resolversCount > 1 ? Localizable.hermesEntitiesFootnoteMultiple : Localizable.hermesEntitiesFootnoteSingle)
+                .themeFont(.body2(emphasised: false))
+                .foregroundStyle(Color(.text, .hint))
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 0, leading: .themeSpacing2, bottom: 0, trailing: .themeSpacing2))
         }
     }
 
@@ -166,12 +176,17 @@ private extension HermesSettingsView {
             VStack(alignment: alignment, spacing: .themeSpacing8) {
                 Text(Localizable.hermesFeatureTitle)
                     .themeFont(.headline)
+                    .foregroundStyle(Color(.text))
 
-                Text(Localizable.hermesFeatureDescription)
-                    .themeFont(.body3(emphasised: false))
+                Text(
+                    base: Localizable.hermesFeatureDescription,
+                    linkText: Localizable.learnMore,
+                    urlString: VPNLink.hermes.urlString
+                )
+                .themeFont(.body3(emphasised: false))
+                .foregroundStyle(Color(.text, .weak))
             }
         }
-        .padding()
     }
 }
 
@@ -183,7 +198,7 @@ private struct HermesResolverListViewCell: View {
     var body: some View {
         HStack {
             if !isSingleResolver {
-                Asset.hermesDragIcon.swiftUIImage
+                Theme.Asset.hermesDragIcon.swiftUIImage
                     .allowsHitTesting(false)
             }
 
@@ -193,8 +208,8 @@ private struct HermesResolverListViewCell: View {
                 Spacer()
 
                 Button(role: .destructive, action: onDeleteAction) {
-                    Label("Delete", systemImage: "trash")
-                        .foregroundStyle(.primary)
+                    Label(Localizable.delete, systemImage: "trash")
+                        .foregroundStyle(Color(.icon))
                         .labelStyle(.iconOnly)
                         .padding(.all, .themeSpacing6)
                 }
@@ -261,9 +276,9 @@ private struct HermesSettingsInputView: View {
     private var resolverLocationOverlay: some View {
         switch resolverLocationValidation {
         case .empty, .valid:
-            return RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.purple)
+            RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color(.border, .interactive))
         case .invalid, .duplicate, .unexpectedError:
-            return RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.red)
+            RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color(.border, .danger))
         }
     }
 
@@ -277,15 +292,15 @@ private struct HermesSettingsInputView: View {
         case .invalid:
             Text(Localizable.hermesEntitiesFormValidationEnterValidAddress)
                 .themeFont(.caption(emphasised: false))
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color(.text, .danger))
         case .duplicate:
             Text(Localizable.hermesEntitiesFormValidationDuplicate)
                 .themeFont(.caption(emphasised: false))
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color(.text, .danger))
         case .unexpectedError:
             Text(Localizable.hermesEntitiesFormValidationUnexpectedError)
                 .themeFont(.caption(emphasised: false))
-                .foregroundStyle(Color.red)
+                .foregroundStyle(Color(.text, .danger))
         }
     }
 
@@ -304,7 +319,9 @@ private struct HermesSettingsInputView: View {
     }
 }
 
-private extension List {
+// MARK: - SwiftUI Helpers
+
+private extension View {
     @ViewBuilder
     func basedOnSizeScrollBehavior(axes: Axis.Set = [.vertical]) -> some View {
         if #available(iOS 16.4, *) {
@@ -312,5 +329,25 @@ private extension List {
         } else {
             self
         }
+    }
+
+    @ViewBuilder
+    func onScrollGeometryChange(canScroll: Binding<Bool>) -> some View {
+        if #available(iOS 18.0, *) {
+            onScrollGeometryChange(for: Double.self) { geometry in
+                geometry.contentOffset.y
+            } action: { _, newValue in
+                canScroll.wrappedValue = newValue > 0
+            }
+        } else {
+            self
+        }
+    }
+}
+
+private extension Text {
+    init(base: some StringProtocol, linkText: some StringProtocol, urlString: String) {
+        let contents = base.replacingOccurrences(of: linkText, with: "[\(linkText)](\(urlString))")
+        self.init(.init(contents))
     }
 }
