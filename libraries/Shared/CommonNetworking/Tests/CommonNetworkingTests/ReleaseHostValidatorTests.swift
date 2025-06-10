@@ -20,7 +20,7 @@
 import Testing
 
 @Suite
-struct CustomHostValidatorTests {
+struct ReleaseHostValidatorTests {
     typealias ValidationError = CustomHostValidator.ValidationFailure
 
     struct TestHost {
@@ -35,14 +35,14 @@ struct CustomHostValidatorTests {
     @Test(arguments: [TestHost.withInvalidURL, .withInvalidHost, .withUncontrolledDomain])
     func testValidatorThrowsErrorForProblematicURL(host: TestHost) {
         #expect(throws: host.expectedFailure) {
-            try CustomHostValidator.validate(customHost: host.url)
+            try ReleaseHostValidator.validate(customHost: host.url)
         }
     }
 
     @Test
     func testValidatorDoesNotThrowForControlledDomain() {
         #expect(throws: Never.self) {
-            try CustomHostValidator.validate(customHost: "http://hello.proton.black/world")
+            try ReleaseHostValidator.validate(customHost: "http://hello.proton.black/world")
         }
     }
 }

@@ -82,3 +82,19 @@ extension DoHVPN {
         )
     }
 }
+
+extension CustomHostValidator: @retroactive DependencyKey {
+
+    /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
+    /// Let's override it here when building for staging or debug.
+    /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
+    /// `debug` and `release` build configurations.
+    public static let liveValue: CustomHostValidator = {
+        #if DEBUG || STAGING
+        log.info("Using debug custom host validator", category: .api)
+        return CustomHostValidator.debug
+        #else
+        return CustomHostValidator.release
+        #endif
+    }()
+}

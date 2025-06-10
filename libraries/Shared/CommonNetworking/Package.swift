@@ -42,7 +42,6 @@ let package = Package(
             ],
             swiftSettings: [
                 .define("TLS_PIN_DISABLE", .when(configuration: .debug)),
-                .define("VALIDATE_CUSTOM_HOST", .when(configuration: .release))
             ]
         ),
         .target(

@@ -64,8 +64,8 @@ public struct DebugConfigurationFeature {
             if actualHost == apiEndpoint {
                 return (.hint, "Environment active")
             }
-            // If the custom host differs from what we've set, let's try to find the reason why
-            let validationResult = Result { try CustomHostValidator.validate(customHost: apiEndpoint) }
+            // If the custom host differs from what we've set, let's use the release host validator to find out why
+            let validationResult = Result { try ReleaseHostValidator.validate(customHost: apiEndpoint) }
             return (.danger, "Environment not set {actual: \(actualHost), error: \(optional: validationResult.error)}")
         }
 

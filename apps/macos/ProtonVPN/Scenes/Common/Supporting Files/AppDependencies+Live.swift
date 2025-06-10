@@ -30,15 +30,15 @@ import Ergonomics
 
 // MARK: Live implementations of app dependencies
 
-extension DatabaseConfigurationKey: DependencyKey {
+extension DatabaseConfigurationKey: @retroactive DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
 }
 
-extension ChallengeParametersProviderKey: DependencyKey {
+extension ChallengeParametersProviderKey: @retroactive DependencyKey {
     public static let liveValue: ChallengeParametersProvider = .empty
 }
 
-extension DoHConfigurationKey: DependencyKey {
+extension DoHConfigurationKey: @retroactive DependencyKey {
     public static var liveValue: DoHVPN {
         @Dependency(\.propertiesManager) var propertiesManager
 
@@ -72,4 +72,20 @@ extension DoHVPN {
             isAppStateNotificationConnected: DoHVPN.isAppStateChangeNotificationInConnectedState
         )
     }
+}
+
+extension CustomHostValidator: @retroactive DependencyKey {
+
+    /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
+    /// Let's override it here when building for staging or debug.
+    /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
+    /// `debug` and `release` build configurations.
+    public static let liveValue: CustomHostValidator = {
+        #if DEBUG || STAGING
+        log.info("Using debug custom host validator", category: .api)
+        return CustomHostValidator.debug
+        #else
+        return CustomHostValidator.release
+        #endif
+    }()
 }
