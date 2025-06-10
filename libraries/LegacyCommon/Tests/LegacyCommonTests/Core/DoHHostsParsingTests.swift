@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import CommonNetworking
+import Dependencies
 @testable import LegacyCommon
 
 class DoHHostsParsingTests: XCTestCase {
@@ -38,34 +39,41 @@ class DoHHostsParsingTests: XCTestCase {
     }
 
     func testHostParsingForAtlasEnvironment() {
-        let doh = DoHVPN(
-            apiHost: "",
-            verifyHost: "",
-            alternativeRouting: true,
-            customHost: "https://example.com",
-            isConnected: false,
-            isAppStateNotificationConnected: { _ in false }
-        )
+        withDependencies {
+            $0.customHostValidator = .debug
+        } operation: {
+            let doh = DoHVPN(
+                apiHost: "",
+                verifyHost: "",
+                alternativeRouting: true,
+                customHost: "https://example.com",
+                isConnected: false,
+                isAppStateNotificationConnected: { _ in false }
+            )
 
-        XCTAssertEqual(doh.defaultHost, "https://example.com")
-        XCTAssertEqual(doh.accountHost, "https://account.example.com")
-        XCTAssertEqual(doh.humanVerificationV3Host, "https://verify.example.com")
-        XCTAssertTrue(doh.isAtlasRequest)
+            XCTAssertEqual(doh.defaultHost, "https://example.com")
+            XCTAssertEqual(doh.accountHost, "https://account.example.com")
+            XCTAssertEqual(doh.humanVerificationV3Host, "https://verify.example.com")
+            XCTAssertTrue(doh.isAtlasRequest)
+        }
     }
 
     func testHostParsingForVPNAtlasEnvironment() {
-        let doh = DoHVPN(
-            apiHost: "",
-            verifyHost: "",
-            alternativeRouting: true,
-            customHost: "https://vpn.example.com",
-            isConnected: false,
-            isAppStateNotificationConnected: { _ in false }
-        )
-
-        XCTAssertEqual(doh.defaultHost, "https://vpn.example.com")
-        XCTAssertEqual(doh.accountHost, "https://account.example.com")
-        XCTAssertEqual(doh.humanVerificationV3Host, "https://verify.example.com")
-        XCTAssertTrue(doh.isAtlasRequest)
+        withDependencies {
+            $0.customHostValidator = .debug
+        } operation: {
+            let doh = DoHVPN(
+                apiHost: "",
+                verifyHost: "",
+                alternativeRouting: true,
+                customHost: "https://vpn.example.com",
+                isConnected: false,
+                isAppStateNotificationConnected: { _ in false }
+            )
+            XCTAssertEqual(doh.defaultHost, "https://vpn.example.com")
+            XCTAssertEqual(doh.accountHost, "https://account.example.com")
+            XCTAssertEqual(doh.humanVerificationV3Host, "https://verify.example.com")
+            XCTAssertTrue(doh.isAtlasRequest)
+        }
     }
 }
