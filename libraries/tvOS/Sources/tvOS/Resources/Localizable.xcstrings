@@ -19,6 +19,12 @@
             "value" : " /месяц"
           }
         },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mes"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -71,6 +77,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /mois"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /hónap"
           }
         },
         "id" : {
@@ -169,6 +181,12 @@
             "value" : " /місяць"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /月"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -183,6 +201,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /год"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /any"
           }
         },
         "cs" : {
@@ -237,6 +261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " /an"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /év"
           }
         },
         "id" : {
@@ -335,6 +365,12 @@
             "value" : " /рік"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /年"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -349,6 +385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@/месяц"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mes"
           }
         },
         "cs" : {
@@ -397,6 +439,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@/mois"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/hónap"
           }
         },
         "id" : {
@@ -495,6 +543,12 @@
             "value" : "%@/місяць"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/月"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -509,6 +563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пагадзіцца і працягнуць"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accepta i continua"
           }
         },
         "cs" : {
@@ -557,6 +617,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accepter et continuer"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elfogadom és folytatom"
           }
         },
         "id" : {
@@ -655,6 +721,12 @@
             "value" : "Погодитись і продовжити"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "同意并继续"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -671,6 +743,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Усе краіны"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tots els països"
           }
         },
         "cs" : {
@@ -719,6 +797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tous les pays"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minden ország"
           }
         },
         "id" : {
@@ -817,6 +901,12 @@
             "value" : "Всі країни"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有国家/地区"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -833,6 +923,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Адбылася памылка."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'ha produït un error."
           }
         },
         "cs" : {
@@ -887,6 +983,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Une erreur s'est produite."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiba történt."
           }
         },
         "id" : {
@@ -985,6 +1087,12 @@
             "value" : "Сталася помилка."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出错了。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1001,6 +1109,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы сапраўды хочаце выйсці з Proton VPN?"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esteu segur que voleu tancar la sessió de Proton VPN?"
           }
         },
         "cs" : {
@@ -1049,6 +1163,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Êtes-vous sûr de vouloir vous déconnecter de Proton VPN ?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biztos, hogy kijelentkezik Proton VPN-ből?"
           }
         },
         "id" : {
@@ -1146,6 +1266,12 @@
             "state" : "translated",
             "value" : "Ви дійсно хочете вийти з Proton VPN?"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您确定要退出 Proton VPN 吗？"
+          }
         }
       }
     },
@@ -1156,6 +1282,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Даступна з Proton VPN Plus"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponible amb el Proton VPN Plus"
           }
         },
         "cs" : {
@@ -1204,6 +1336,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disponible avec Proton VPN Plus"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN Plus csomagban érhető el"
           }
         },
         "id" : {
@@ -1302,6 +1440,12 @@
             "value" : "Доступно з Proton VPN Plus"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可使用 Proton VPN Plus"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1318,6 +1462,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Скасаваць"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel·la"
           }
         },
         "cs" : {
@@ -1372,6 +1522,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mégsem"
           }
         },
         "id" : {
@@ -1470,6 +1626,12 @@
             "value" : "Скасувати"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1486,6 +1648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Падключэнне да высакахуткасных сервераў па ўсім свеце і прагляд вашых абраных тэлеперадач з абароненым падключэннем па VPN."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecteu-vos a servidors d'alta velocitat d'arreu del món i reproduïu els vostres programes preferits amb protecció VPN."
           }
         },
         "cs" : {
@@ -1534,6 +1702,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connectez-vous à des serveurs ultra-rapides partout dans le monde et regardez vos séries favorites en streaming tout en étant protégé avec un VPN."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Csatlakozzon a világ nagysebességű szervereihez, és streamelje kedvenc műsorait VPN-védelemmel."
           }
         },
         "id" : {
@@ -1625,6 +1799,12 @@
             "state" : "translated",
             "value" : "Під'єднуйтеся до високошвидкісних серверів у всьому світі й транслюйте улюблені шоу із захистом VPN."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接到世界各地的高速服务器，并用 VPN 保护来播放您最喜欢的节目。"
+          }
         }
       }
     },
@@ -1635,6 +1815,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Падключана"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connectat"
           }
         },
         "cs" : {
@@ -1689,6 +1875,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connecté"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Csatlakoztatva"
           }
         },
         "id" : {
@@ -1787,6 +1979,12 @@
             "value" : "Під'єднано"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1802,6 +2000,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Падключэнне"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'està connectant"
           }
         },
         "cs" : {
@@ -1856,6 +2060,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connexion en cours"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapcsolódás"
           }
         },
         "id" : {
@@ -1954,6 +2164,12 @@
             "value" : "З'єднання"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在连接"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1970,6 +2186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Збой падключэння"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error de connexió"
           }
         },
         "cs" : {
@@ -2024,6 +2246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La connexion n'a pas abouti."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sikertelen kapcsolódás"
           }
         },
         "id" : {
@@ -2122,6 +2350,12 @@
             "value" : "Не вдалося встановити з'єднання"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接失败"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2138,6 +2372,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Звязацца з намі"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacteu amb nosaltres"
           }
         },
         "cs" : {
@@ -2192,6 +2432,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contactez-nous"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lépjen velünk kapcsolatba"
           }
         },
         "id" : {
@@ -2290,6 +2536,12 @@
             "value" : "Зв'язатися з нами"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "联系我们"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2306,6 +2558,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Стварыць уліковы запіс"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea un compte"
           }
         },
         "cs" : {
@@ -2360,6 +2618,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Créer un compte"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fiók létrehozása"
           }
         },
         "id" : {
@@ -2458,6 +2722,12 @@
             "value" : "Зареєструватися"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建账户"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2474,6 +2744,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Стварыць уліковы запіс Proton"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creeu el vostre Compte Proton"
           }
         },
         "cs" : {
@@ -2528,6 +2804,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Créez votre compte Proton"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton fiók létrehozása"
           }
         },
         "id" : {
@@ -2626,6 +2908,12 @@
             "value" : "Створіть свій обліковий запис Proton"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建您的 Proton 账户"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2642,6 +2930,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Адключыцца"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconnecta"
           }
         },
         "cs" : {
@@ -2696,6 +2990,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se déconnecter"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapcsolat bontása"
           }
         },
         "id" : {
@@ -2794,6 +3094,12 @@
             "value" : "Від'єднатися"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "断开连接"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2810,6 +3116,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Адключэнне"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'està desconnectant"
           }
         },
         "cs" : {
@@ -2864,6 +3176,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Déconnexion"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leválasztás"
           }
         },
         "id" : {
@@ -2962,6 +3280,12 @@
             "value" : "Роз'єднання"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在断开连接"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2978,6 +3302,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Памылка"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
           }
         },
         "cs" : {
@@ -3032,6 +3362,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erreur"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiba"
           }
         },
         "id" : {
@@ -3130,6 +3466,12 @@
             "value" : "Помилка"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出错"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3144,6 +3486,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Найхутчэйшы"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El més ràpid"
           }
         },
         "cs" : {
@@ -3198,6 +3546,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le plus rapide"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leggyorsabb"
           }
         },
         "id" : {
@@ -3296,6 +3650,12 @@
             "value" : "Найшвидші"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最快"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3311,6 +3671,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Згенерыраваць новы код"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genera un codi nou"
           }
         },
         "cs" : {
@@ -3359,6 +3725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Générer un nouveau code"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Új kód generálása"
           }
         },
         "id" : {
@@ -3457,6 +3829,12 @@
             "value" : "Згенерувати новий код"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成新代码"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3471,6 +3849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зразумела"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "D'acord"
           }
         },
         "cs" : {
@@ -3525,6 +3909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "J'ai compris"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Értem"
           }
         },
         "id" : {
@@ -3623,6 +4013,12 @@
             "value" : "Зрозуміло"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "知道了"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3638,6 +4034,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Галоўная"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inici"
           }
         },
         "cs" : {
@@ -3692,6 +4094,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accueil"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otthoni"
           }
         },
         "id" : {
@@ -3790,6 +4198,12 @@
             "value" : "Домівка"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "首页"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3806,6 +4220,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Наша каманда падтрымкі кліентаў заўсёды гатовая дапамагчы ў выпадку ўзнікнення праблем з Proton VPN.\n\nПроста адсканіруйце QR-код або перайдзіце па спасылцы:"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si teniu problemes per utilitzar Proton VPN, el nostre equip del servei d'atenció al client estarà encantat d'ajudar-vos.\n\nNomés cal escanejar el codi QR o anar a"
           }
         },
         "cs" : {
@@ -3854,6 +4274,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Si vous avez des difficultés à utiliser Proton VPN, notre équipe de support client se fera un plaisir de vous aider.\n\nScannez le QR code ou dirigez-vous vers"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha problémái vannak a Proton VPN használatával, ügyfélszolgálati csapatunk szívesen segít."
           }
         },
         "id" : {
@@ -3945,6 +4371,12 @@
             "state" : "translated",
             "value" : "У разі виникнення проблем з використанням Proton VPN наша команда підтримки клієнтів залюбки вам допоможе.\n\nПросто скануйте QR-код або перейдіть на"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您在使用 Proton VPN 时遇到问题，我们的客户支持团队很乐意为您提供帮助。\n\n只需扫描二维码或访问"
+          }
         }
       }
     },
@@ -3954,6 +4386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уключае прэміяльную абарону VPN для вашай мабільнай прылады і камп'ютара (можа быць падключана да 10 прылад адначасова)"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclou protecció VPN prèmium per al vostre mòbil i escriptori (connecteu fins a 10 dispositius alhora)"
           }
         },
         "cs" : {
@@ -4002,6 +4440,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inclut une protection VPN premium pour vos appareils mobiles et de bureau (connectez jusqu'à 10 appareils à la fois)."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tartalmazza a prémium VPN-védelmet mobil és asztali készülékei számára (egyszerre akár 10 készüléket is csatlakoztathat)"
           }
         },
         "id" : {
@@ -4093,6 +4537,12 @@
             "state" : "translated",
             "value" : "Включає преміальний захист VPN для мобільного пристрою і комп'ютера (одночасне під'єднання до 10 пристроїв)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包括针对手机和电脑的高级 VPN 保护（最多可同时连接 10 台设备）"
+          }
         }
       }
     },
@@ -4102,6 +4552,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузка"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'està carregant"
           }
         },
         "cs" : {
@@ -4156,6 +4612,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chargement"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betöltés"
           }
         },
         "id" : {
@@ -4254,6 +4716,12 @@
             "value" : "Завантаження"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加载中"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4269,6 +4737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузка краін"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'estan carregant els països"
           }
         },
         "cs" : {
@@ -4317,6 +4791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chargement des pays"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Országok betöltése"
           }
         },
         "id" : {
@@ -4415,6 +4895,12 @@
             "value" : "Завантаження країн"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在载入国家/地区"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4431,6 +4917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Неабходна дапамога ў наладжванні або выкарыстанні Proton VPN?\n\nНаведайце наш цэнтр падтрымкі ў інтэрнэце для атрымання парад у выпраўленні непаладак, дапаможнікаў па наладцы і адказаў на частыя пытанні.\n\nПроста адсканіруйце QR-код або перайдзіце па спасылцы:"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Necessiteu ajuda per configurar o utilitzar Proton VPN?\n\nVisiteu el nostre Centre d'ajuda en línia per obtenir consells de resolució de problemes, guies de configuració i respostes a les PMF.\n\nNomés cal escanejar el codi QR o anar a"
           }
         },
         "cs" : {
@@ -4479,6 +4971,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Besoin d'aide pour paramétrer ou utiliser Proton VPN ?\n\nConsultez notre espace en ligne Aide et Support pour des conseils de dépannage, des guides de configuration et des réponses aux questions les plus fréquentes.\n\n Scannez le QR code ou rendez-vous sur"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segítségre van szüksége a Proton VPN beállításához vagy használatához?\n\nLátogasson el online súgóközpontba, ahol hibaelhárítási tippeket, beállítási útmutatókat és válaszokat talál a GYIK-re.\n\nCsak szkennelje be a QR-kódot, vagy látogasson el a"
           }
         },
         "id" : {
@@ -4570,6 +5068,12 @@
             "state" : "translated",
             "value" : "Потрібна допомога з налаштуванням чи використанням Proton VPN?\n\nВідвідайте наш довідковий центр для отримання порад щодо усунення проблем, налаштування та відповідей на поширені запитання.\n\nПросто скануйте QR-код або перейдіть на"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要帮助设置或使用 Proton VPN 吗？\n\n请访问我们的在线支持中心，了解故障排除技巧、设置指南和常见问题答案。\n\n只需扫描二维码或访问"
+          }
         }
       }
     },
@@ -4581,6 +5085,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Палітыка прыватнасці"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacitat"
           }
         },
         "cs" : {
@@ -4635,6 +5145,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Politique de confidentialité"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adatvédelmi irányelvek"
           }
         },
         "id" : {
@@ -4733,6 +5249,12 @@
             "value" : "Політика приватності"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私政策"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4747,6 +5269,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Палітыка прыватнасці"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacitat"
           }
         },
         "cs" : {
@@ -4801,6 +5329,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Politique de confidentialité"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adatvédelmi irányelvek"
           }
         },
         "id" : {
@@ -4899,6 +5433,12 @@
             "value" : "Політика приватності"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私政策"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4915,6 +5455,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Абаронена"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protegit"
           }
         },
         "cs" : {
@@ -4969,6 +5515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Protégé"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Védett"
           }
         },
         "id" : {
@@ -5067,6 +5619,12 @@
             "value" : "Захищено"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保护中"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5083,6 +5641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN для Apple TV даступны на ўсіх платных тарыфных планах. Вы можаце праверыць і кіраваць сваёй падпіскай на нашым вэб-сайце."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN per a Apple TV està disponible en tots els plans de pagament. Podeu consultar i gestionar la vostra subscripció al nostre lloc web."
           }
         },
         "cs" : {
@@ -5131,6 +5695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN pour Apple TV est disponible sur tous les abonnements payants. Vous pouvez vérifier et gérer vos abonnements sur notre site."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Proton VPN az Apple TV-hez minden fizetős csomagban elérhető. Előfizetését weboldalunkon ellenőrizheti és kezelheti."
           }
         },
         "id" : {
@@ -5228,6 +5798,12 @@
             "state" : "translated",
             "value" : "Proton VPN для Apple TV доступна у всіх платних тарифних планах. Ви можете перевірити свою передплату й керувати нею на нашому вебсайті."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple TV 的 Proton VPN 适用于所有付费计划。您可以在我们的网站上查看和管理您的订阅。"
+          }
         }
       }
     },
@@ -5237,6 +5813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN для Apple TV недаступны на бясплатных тарыфных планах"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El Proton VPN per a Apple TV no està disponible als plans gratuïts"
           }
         },
         "cs" : {
@@ -5285,6 +5867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN pour Apple TV n'est pas disponible avec un abonnement gratuit."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Proton VPN az Apple TV-hez nem érhető el az ingyenes csomagokban"
           }
         },
         "id" : {
@@ -5382,6 +5970,12 @@
             "state" : "translated",
             "value" : "Proton VPN для Apple TV недоступний у безплатних тарифних планах"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple TV 的 Proton VPN 在免费计划中不可用"
+          }
         }
       }
     },
@@ -5391,6 +5985,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Палітыка строгай адсутнасці журналаў актыўнасці Proton VPN сертыфікавана знешнім аўдытам. Мы ніколі не сочым за вамі ў інтэрнэце, не запісваем ваш IP-адрас і не абагульваем вашы звесткі са староннімі асобамі."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La política estricta de no guardar registres de Proton VPN està certificada per una auditoria externa. Mai us rastrejarem en línia, registrarem la vostra adreça IP o compartirem la vostra informació amb tercers."
           }
         },
         "cs" : {
@@ -5439,6 +6039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La politique stricte de non-journalisation (no log) de Proton VPN est certifiée par un audit externe. Nous ne suivrons jamais vos activités en ligne, n'enregistrerons jamais votre adresse IP et ne partagerons jamais vos informations avec des tiers."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Proton VPN szigorú naplózásmentes politikáját külső ellenőrzés igazolja. Soha nem követjük Önt online, nem naplózzuk az IP-címét, és nem osztjuk meg adatait harmadik felekkel."
           }
         },
         "id" : {
@@ -5530,6 +6136,12 @@
             "state" : "translated",
             "value" : "Сувора політика без журналювання Proton VPN сертифікована зовнішнім аудитом. Ми ніколи не стежимо за вашими діями онлайн, не записуємо вашу IP-адресу та не передаємо вашу інформацію третім сторонам."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN 严格的无日志政策已通过外部审计认证。我们绝不会在线跟踪您、记录您的 IP 地址或与第三方共享您的信息。"
+          }
         }
       }
     },
@@ -5541,6 +6153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Хуткае падлучэнне"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexió ràpida"
           }
         },
         "cs" : {
@@ -5595,6 +6213,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connexion rapide"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gyors kapcsolódás"
           }
         },
         "id" : {
@@ -5693,6 +6317,12 @@
             "value" : "Швидке з'єднання"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快速连接"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5709,6 +6339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рэкамендавана"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomanat"
           }
         },
         "cs" : {
@@ -5763,6 +6399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recommandé"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajánlott"
           }
         },
         "id" : {
@@ -5861,6 +6503,12 @@
             "value" : "Рекомендовано"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推荐"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5875,6 +6523,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вырашаецца"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'està resolent"
           }
         },
         "cs" : {
@@ -5917,6 +6571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Résolution"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Megoldás"
           }
         },
         "id" : {
@@ -6008,6 +6668,12 @@
             "state" : "translated",
             "value" : "Вирішення"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在处理"
+          }
         }
       }
     },
@@ -6019,6 +6685,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Адсканіруйце QR-кода або перайдзіце па спасылцы:\n"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escanegeu el codi QR o aneu a\n"
           }
         },
         "cs" : {
@@ -6067,6 +6739,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scannez le QR code ou allez à\n"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szkennelje be a QR-kódot, vagy látogasson el a\n"
           }
         },
         "id" : {
@@ -6158,6 +6836,12 @@
             "state" : "translated",
             "value" : "Скануйте QR-код або перейдіть на\n"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扫描二维码或转到\n"
+          }
         }
       }
     },
@@ -6168,6 +6852,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Налады"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferències"
           }
         },
         "cs" : {
@@ -6222,6 +6912,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paramètres"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beállítások"
           }
         },
         "id" : {
@@ -6320,6 +7016,12 @@
             "value" : "Налаштування"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6335,6 +7037,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увайсці"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia la sessió"
           }
         },
         "cs" : {
@@ -6389,6 +7097,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se connecter"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bejelentkezés"
           }
         },
         "id" : {
@@ -6487,6 +7201,12 @@
             "value" : "Увійти"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6503,6 +7223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увайдзіце ў свой уліковы запіс."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicieu sessió al vostre compte."
           }
         },
         "cs" : {
@@ -6551,6 +7277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connectez-vous à votre compte."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelentkezzen be a fiókjába."
           }
         },
         "id" : {
@@ -6649,6 +7381,12 @@
             "value" : "Увійдіть у свій обліковий запис."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录到您的账户。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6665,6 +7403,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выйсці"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tanca la sessió"
           }
         },
         "cs" : {
@@ -6719,6 +7463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se déconnecter"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kijelentkezés"
           }
         },
         "id" : {
@@ -6817,6 +7567,12 @@
             "value" : "Вийти"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登出"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6831,6 +7587,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выйсці?"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voleu tancar la sessió?"
           }
         },
         "cs" : {
@@ -6885,6 +7647,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se déconnecter ?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kijelentkezik?"
           }
         },
         "id" : {
@@ -6983,6 +7751,12 @@
             "value" : "Вийти?"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登出?"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6999,6 +7773,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Адбываецца выхад..."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'està tancant la sessió..."
           }
         },
         "cs" : {
@@ -7053,6 +7833,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Déconnexion..."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kijelentkezés..."
           }
         },
         "id" : {
@@ -7151,6 +7937,12 @@
             "value" : "Триває вихід..."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在登出账户…"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7167,6 +7959,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Цэнтр падтрымкі"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centre de suport"
           }
         },
         "cs" : {
@@ -7215,6 +8013,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Centre d'assistance"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Súgóközpont"
           }
         },
         "id" : {
@@ -7313,6 +8117,12 @@
             "value" : "Довідковий центр"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持中心"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7327,6 +8137,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Умовы абслугоўвання"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condicions del servei"
           }
         },
         "cs" : {
@@ -7381,6 +8197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conditions d’utilisation du service"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szolgáltatási feltételek"
           }
         },
         "id" : {
@@ -7479,6 +8301,12 @@
             "value" : "Умови надання послуг"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务条款"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7493,6 +8321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Умовы абслугоўвання"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condicions del servei"
           }
         },
         "cs" : {
@@ -7541,6 +8375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conditions d’utilisation du service"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szolgáltatási feltételek"
           }
         },
         "id" : {
@@ -7639,6 +8479,12 @@
             "value" : "Умови надання послуг"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务条款"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7654,6 +8500,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Узнікла праблема.\nПраверце падключэнне да вашай сеткі"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi ha hagut un problema.\nSi us plau, comproveu la vostra connexió de xarxa"
           }
         },
         "cs" : {
@@ -7702,6 +8554,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Une erreur s'est produite.\nVeuillez vérifier votre connexion réseau."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volt egy probléma.\nKérjük, ellenőrizze a hálózati kapcsolatot"
           }
         },
         "id" : {
@@ -7799,6 +8657,12 @@
             "state" : "translated",
             "value" : "Виникла проблема.\nПеревірте своє мережеве з'єднання"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "这里有一个错误。\n请检查您的网络连接"
+          }
         }
       }
     },
@@ -7810,6 +8674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Каб прачытаць нашу палітыку прыватнасці, адсканіруйце QR-код або перайдзіце па спасылцы:"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per a llegir la nostra política de privadesa, escanegeu el codi QR o aneu a"
           }
         },
         "cs" : {
@@ -7858,6 +8728,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pour lire notre politique de confidentialité, scannez le QR code ou dirigez-vous vers"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adatvédelmi szabályzatunk elolvasásához szkennelje be a QR-kódot, vagy látogasson el a következő weboldalra"
           }
         },
         "id" : {
@@ -7949,6 +8825,12 @@
             "state" : "translated",
             "value" : "Щоб ознайомитися з нашою політикою приватності, скануйте QR-код або перейдіть на"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若要阅读我们的隐私政策，请扫描二维码或转至"
+          }
         }
       }
     },
@@ -7958,6 +8840,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Падпішыцеся на VPN Plus, каб разблакіраваць звышвысокія хуткасці трансляцый тэлеперадач і фільмаў з серверамі, якія знаходзяцца больш чым у 100 краінах."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per desbloquejar un estríming ràpid amb servidors de més de 100 països, subscriviu-vos a VPN Plus."
           }
         },
         "cs" : {
@@ -8006,6 +8894,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pour bénéficier d'un streaming ultra-rapide avec des serveurs dans plus de 100 pays, abonnez-vous à VPN Plus."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha villámgyors streaminget szeretne több mint 100 országban található szerverekkel, fizessen elő a VPN Plus szolgáltatásra."
           }
         },
         "id" : {
@@ -8097,6 +8991,12 @@
             "state" : "translated",
             "value" : "Щоб розблокувати блискавичну потокову трансляцію з серверами в понад 100 країнах, передплатіть VPN Plus."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要通过遍布 100 多个国家/地区的服务器获得快如闪电的流媒体服务，请订阅 VPN Plus。"
+          }
         }
       }
     },
@@ -8108,6 +9008,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не абаронена"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desprotegit"
           }
         },
         "cs" : {
@@ -8162,6 +9068,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sans protection"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nem védett"
           }
         },
         "id" : {
@@ -8260,6 +9172,12 @@
             "value" : "Незахищено"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未受保护"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8274,6 +9192,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Палепшыце сваю падпіску, каб карыстацца праграмай. Вы таксама можаце ўвайсці з іншым уліковым запісам, калі ў вас ужо ёсць Proton VPN Plus."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Milloreu ara per utilitzar l'aplicació o inicieu la sessió amb un compte diferent si ja teniu Proton VPN Plus."
           }
         },
         "cs" : {
@@ -8322,6 +9246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Améliorez dès à présent votre abonnement pour utiliser l'application ou connectez-vous à un autre compte si vous disposez déjà Proton VPN Plus."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fizessen elő most, hogy használhassa az alkalmazást, vagy jelentkezzen be egy másik fiókkal, ha már rendelkezik a Proton VPN Plus előfizetéssel"
           }
         },
         "id" : {
@@ -8413,6 +9343,12 @@
             "state" : "translated",
             "value" : "Перейдіть на вищий тарифний план, щоб використовувати програму, або ввійдіть з іншим обліковим записом, якщо ви вже маєте передплату Proton VPN Plus"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "现在升级即可使用该应用程序，如果您已经拥有 Proton VPN Plus，请使用该账户登录"
+          }
         }
       }
     },
@@ -8422,6 +9358,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Палепшыце сваю прыватнасць"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Milloreu la vostra privacitat"
           }
         },
         "cs" : {
@@ -8476,6 +9418,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Faites passer le respect de votre vie privée au niveau supérieur."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fejlessze az adatvédelmét"
           }
         },
         "id" : {
@@ -8574,6 +9522,12 @@
             "value" : "Вдоскональте свою приватність"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私升级"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8590,6 +9544,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выкарыстоўвайце іншую прыладу? Перайдзіце па спасылцы:"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amb un altre dispositiu, aneu a"
           }
         },
         "cs" : {
@@ -8638,6 +9598,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "À l'aide d'un autre appareil, dirigez-vous vers"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Másik eszköz használatával menjen a"
           }
         },
         "id" : {
@@ -8729,6 +9695,12 @@
             "state" : "translated",
             "value" : "Використовуєте інший пристрій? Перейдіть на"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用另一台设备，跳转至"
+          }
         }
       }
     },
@@ -8740,6 +9712,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выкарыстоўваеце Proton Free?"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilitzant Proton Free?"
           }
         },
         "cs" : {
@@ -8788,6 +9766,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utiliser Proton Free ?"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton Free-t használ?"
           }
         },
         "id" : {
@@ -8886,6 +9870,12 @@
             "value" : "Використовуєте Proton Free?"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 Proton Free？"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8900,6 +9890,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Наведайце наш даведачны цэнтр у інтэрнэце для парад, якія датычыцца выпраўлення непаладак, дапаможнікаў па наладцы і адказаў на частыя пытанні."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulteu el nostre centre d'ajuda en línia per obtenir consells de resolució de problemes, guies de configuració i respostes a les PMF."
           }
         },
         "cs" : {
@@ -8948,6 +9944,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veuillez consulter notre espace Aide & Support pour obtenir des conseils de dépannage, des guides de configuration, et des réponses aux questions fréquentes."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Látogasson el online súgóközpontunkba, ahol hibaelhárítási tippeket, beállítási útmutatókat és válaszokat talál a GYIK-re."
           }
         },
         "id" : {
@@ -9039,6 +10041,12 @@
             "state" : "translated",
             "value" : "Відвідайте наш довідковий центр онлайн, щоб дізнатися про поради щодо усунення несправностей, прочитати інструкції з налаштування та знайти відповіді на поширені запитання."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "访问我们的在线支持中心查看故障排除提示、设置指南和常见问题解答。"
+          }
         }
       }
     },
@@ -9049,6 +10057,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Праглядайце без назірання"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mirar sense ser observat."
           }
         },
         "cs" : {
@@ -9097,6 +10111,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regardez ce que vous voulez en toute confidentialité."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nézze anélkül, hogy néznék."
           }
         },
         "id" : {
@@ -9188,6 +10208,12 @@
             "state" : "translated",
             "value" : "Користуйтеся інтернетом без стеження."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不受监视地观看。"
+          }
         }
       }
     },
@@ -9197,6 +10223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Глядзіце свае абраныя фільмы і тэлеперадачы на любой асноўнай платформе з трансляцыямі"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mireu les vostres pel·lícules i programes de televisió preferits a qualsevol plataforma d'estríming."
           }
         },
         "cs" : {
@@ -9245,6 +10277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profitez de vos émissions de télévision et films préférés sur la plupart des plateformes de streaming."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nézze kedvenc filmjeit és tévéműsorait bármely nagyobb streaming platformon"
           }
         },
         "id" : {
@@ -9336,6 +10374,12 @@
             "state" : "translated",
             "value" : "Дивіться свої улюблені фільми й телешоу на будь-якій популярній платформі потокової трансляції"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在任何主要流媒体平台上观看您最喜欢的电影和电视节目"
+          }
         }
       }
     },
@@ -9347,6 +10391,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Калі ў вас спытаюць праверачны код, увядзіце"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quan se us demani el codi de verificació, introduïu-lo"
           }
         },
         "cs" : {
@@ -9395,6 +10445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lorsqu'on vous demande votre code de vérification, saisissez"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amikor megkérdezik az ellenőrző kódot, írja be"
           }
         },
         "id" : {
@@ -9486,6 +10542,12 @@
             "state" : "translated",
             "value" : "Отримавши запит коду підтвердження, введіть"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当被要求验证码时，请输入"
+          }
         }
       }
     },
@@ -9497,6 +10559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Калі ў вас спытаюць праверачны код, увядзіце (аднаўленне...)"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quan se us demani el codi de verificació, introduïu-lo (recuperant...)"
           }
         },
         "cs" : {
@@ -9545,6 +10613,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lorsqu'on vous demande votre code de vérification, saisissez (récupération...)"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amikor megkérdezik az ellenőrző kódot, írja be (lekérdezés...)"
           }
         },
         "id" : {
@@ -9642,6 +10716,12 @@
             "state" : "translated",
             "value" : "Отримавши запит коду підтвердження, введіть (готується код...)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当要求您输入验证码时，请输入（检索中...）"
+          }
         }
       }
     },
@@ -9652,6 +10732,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ваш праверачны код пратэрмінаваны"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El codi de verificació ha caducat"
           }
         },
         "cs" : {
@@ -9700,6 +10786,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Votre code de vérification a expiré."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az ellenőrző kódja lejárt"
           }
         },
         "id" : {
@@ -9796,6 +10888,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Термін дії коду підтвердження минув"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "验证码已过期"
           }
         }
       }
