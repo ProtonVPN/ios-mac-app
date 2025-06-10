@@ -3,7 +3,7 @@
 "2pk-oe-F9k.text" = "Marcador";
 
 /* Class = "UILabel"; text = "CREATE NEW PROFILE"; ObjectID = "EEL-5z-u8K"; */
-"EEL-5z-u8K.text" = "Criar novo perfil";
+"EEL-5z-u8K.text" = "CRIAR PERFIL";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Nwg-Ka-w8D"; */
 "Nwg-Ka-w8D.text" = "Marcador";
@@ -24,7 +24,7 @@
 "Wh4-tZ-Tb9.title" = "Proton VPN";
 
 /* Class = "UILabel"; text = "ProtonQuickConnect"; ObjectID = "hW7-bO-L6F"; */
-"hW7-bO-L6F.text" = "Proton Conexão Rápida";
+"hW7-bO-L6F.text" = "ProtonQuickConnect";
 
 /* Class = "UILabel"; text = "Status"; ObjectID = "hjD-Nv-We8"; */
 "hjD-Nv-We8.text" = "Status";

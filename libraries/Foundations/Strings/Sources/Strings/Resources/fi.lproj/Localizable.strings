@@ -293,9 +293,6 @@
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Joku sovellus saattaa häiritä tappokytkimen toimintaa. Korjataksesi ongelman, vahda OpenVPN-protokollaan tai poista tappokytkin käytöstä ja yritä sitten uudelleen.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Vaihda OpenVPN:ään ja yritä uudelleen";
-
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
 
@@ -822,7 +819,7 @@
 "_vpn_stuck_disconnecting_title" = "Yhteysvirhe";
 
 /* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Laitteesi ei onnistunut katkaisemaan edellistä VPN-istuntoa. Laitteesi on käynnistettävä uudelleen ennen kuin voit muodostaa uutta VPN-yhteyttä.";
+"_vpn_stuck_disconnecting_body" = "Laitteesi ei onnistunut katkaisemaan edellistä VPN-istuntoa ja se on käynnistettävä uudelleen ennen kuin voit muodostaa uutta VPN-yhteyttä.";
 
 "_update_required" = "Päivitys vaaditaan";
 
@@ -838,7 +835,7 @@
 
 "_error_mitm_title" = "Suojaamaton yhteys";
 
-"_error_mitm_description" = "TLS-varmenteen vahvistus epäonnistui muodostettaessa yhteyttä Proton VPN -rajapintaan. Nykyistä Internet-yhteyttäsi saatetaan valvoa ja tietojesi turvaamiseksi Proton VPN -rajapinta estetään sovellukselta.\nKirjautuaksesi tai käyttääksesi tiliäsi, vaihda eri verkkoon ja yritä muodostaa yhteys uudelleen.";
+"_error_mitm_description" = "TLS-varmenteen vahvistus epäonnistui yhdistettäessä Proton VPN:n rajapintaan. Nykyistä Internet-yhteyttäsi saatetaan valvoa ja tietojesi turvaamiseksi Proton VPN:n rajapinta on estetty sovellukselta.\nKirjautuaksesi tai käyttääksesi tiliäsi, vaihda eri verkkoon ja yritä muodostaa yhteys uudelleen.";
 
 "_error_mitm_vpn_description" = "TLS-varmenteen vahvistus epäonnistui muodostettaessa yhteyttä VPN-palvelimeen. Nykyistä Internet-yhteyttäsi saatetaan valvoa. Tietojesi turvaamiseksi tämä VPN-palvelin estetään sovellukselta.\nValitse eri palvelin.";
 
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Sovelluslokit";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN-lokit";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard-lokit";
 
@@ -1085,7 +1079,7 @@
 "_adblocker_netshield_feature" = "Mainosesto (NetShield)";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Maksullisen tilauksesi vahvistuksen yhteydessä iTunes-tililtäsi veloitetaan näytty summa, johon sisältyvät verot ja alustakohtaisen kulut (jotka eivät olet Protonin suoraan veloittamia). Oston jälkeen valitsemasi tilaus aktivoituu tilillesi automaattisesti 1 vuoden ajaksi, jonka päättyessä voit uudistaa tai perua sen verkkosivustolla tai iOS-sovelluksessa.";
+"_plans_footer" = "Maksullisen tilauksesi vahvistuksen yhteydessä iTunes-tililtäsi veloitetaan näytty summa, johon sisältyvät verot ja alustakohtaisen kulut (jotka eivät olet Protonin suoraan veloittamia). Oston jälkeen valitsemasi tilaus aktivoituu tilillesi automaattisesti yhden vuoden ajaksi, jonka päättyessä voit uudistaa tai perua sen verkkosivustolta tai iOS-sovelluksesta.";
 
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ vuosi";
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Kiitos raportistasi";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Jakamalla seuraavat tiedot, tiimimme tunnistaa ongelman ja voi löytää mahdollisen ratkaisun suuremmalla todennäköisyydelllä ja nopeammin:\n• Proton VPN -sovelluksen lokit\n• OpenVPN-lokit\n• WireGuard-lokit";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Sähköpostiosoite:";
@@ -1894,7 +1885,7 @@
 "_home_recents_options_button_help" = "Toiminnot";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
-"_home_recents_plus_server" = "Palvelin on käytettävissä VPN Plus -tilauksella";
+"_home_recents_plus_server" = "Palvelin on käytettävissä VPN Plussalla";
 
 /* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
 "_home_recents_server_under_maintenance" = "Palvelin on huollossa";
@@ -2184,7 +2175,7 @@
 "_settings_protocol_description_wireguard_tcp" = "Nopea, turvallinen ja tehokas. WireGuardia on vaikea havaita ja estää.";
 
 /* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
-"_settings_protocol_description_wireguard_tls" = "Kiertää VPN-estot piilottamalla VPN-yhteytesi sensuureilta. Tämä protokolla on DPI-vastustuskykyinen (Deep Packet Inspection), mutta ei välttämättä yhtä nopea kuin muut protokollat. Stealth on Proton VPN:n yksinoikeus.";
+"_settings_protocol_description_wireguard_tls" = "Kiertää VPN-estot piilottamalla VPN-yhteytesi sensuureilta. Tämä protokolla on DPI-vastustuskykyinen (syvä pakettitarkastus), muttei välttämättä yhtä nopea kuin muut protokollat. Stealth on Proton VPN:n oma protokolla.";
 
 /* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
 "_settings_protocol_description_openvpn_udp" = "Vakiintunut, hyvin testattu ja turvallinen. OpenVPN:n virrankulutus ei ole yhtä hyvä kuin joidenkin muiden protokollien.";
@@ -2199,7 +2190,7 @@
 "_settings_protocol_tag_recommended" = "SUOSITELTU";
 
 /* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
-"_settings_protocol_tag_new" = "UUSI";
+"_settings_protocol_tag_new" = "UUTTA";
 
 /* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
 "_settings_protocol_footer" = "VPN-protokolla määrittää, miten tiedonsiirto VPN-palvelimen ja laitteesi välillä tapahtuu. **[Lue lisää](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
@@ -2259,7 +2250,7 @@
 "search_no_results_subtitle" = "Kokeile eri hakusanaa";
 
 /* Header for the recent searches section in search */
-"search_recent_header" = "Viimeksi näytetyt";
+"search_recent_header" = "Viimeksi etsityt";
 
 /* Button to clear recent searches history */
 "search_recent_clear" = "Tyhjennä";
@@ -2415,7 +2406,7 @@
 "modals_discourage_secure_core_activate" = "Aktivoi Secure Core";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Päivitetty Proton yhtenäisellä suojauksella";
+"new_plans_brand_title" = "Päivitetty Proton, yhtenäinen suojaus";
 
 /* Subtitle of the New Brand screen */
 "new_plans_brand_subtitle" = "Esittelyssä Protonin uusi ilme.\nUseita palveluita, yhteinen tehtävä. Tervetuloa Internetiin, jossa yksityisyys on oletusarvoista.";
@@ -2556,10 +2547,10 @@
 "modals_whats_new_redesign_title" = "Uusi ilme, sama suojaus";
 
 /* Subtitle of redesign related content of the "What's new" screen */
-"modals_whats_new_redesign_subtitle" = "Päivitimme ulkoasuamme ja siirtelimme joitain asioita, jotta sovelluksen käyttäminen olisi helpompaa.";
+"modals_whats_new_redesign_subtitle" = "Päivitimme ulkoasua ja siirtelimme joitakin asioita, jotta sovelluksen käyttäminen olisi helpompaa.";
 
 /* Title of recents related content of the "What's new" screen */
-"modals_whats_new_recents_title" = "Esittelyssä edelliset";
+"modals_whats_new_recents_title" = "Esittelyssä Viimeisimmät";
 
 /* Subtitle of recents related content of the "What's new" screen */
 "modals_whats_new_recents_subtitle" = "Suosikkipalvelimiisi uudelleenyhdistäminen on nyt entistäkin helpompaa. Voit nähdä viimeisimmät yhteytesi aloitusnäytössä tai kiinnittää ne pikakäyttöä varten.";
@@ -2586,7 +2577,7 @@
 "welcome_upgrade_advanced_features" = "Edistyneet suojausominaisuudet";
 
 /* The title of the Welcome screen when user upgrades to VPN Plus */
-"welcome_upgrade_title_plus" = "Tervetluoa VPN Plussaan";
+"welcome_upgrade_title_plus" = "Tervetuloa VPN Plussaan";
 
 /* The title of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_title_unlimited" = "Tervetuloa Proton Unlimitediin";
@@ -2943,13 +2934,13 @@
 "_hermes_upsell_button" = "Päivitä";
 
 /* Hermes Feature Title within app settings screens */
-"_hermes_feature_title" = "Mukautettu DNS";
+"_hermes_feature_title" = "Vaihtoehtoinen DNS";
 
 /* Hermes Feature Window Title within dedicated Hermes Settings view */
 "_hermes_feature_windowTitle" = "Asetukset";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Mukautettu DNS";
+"_hermes_feature_description" = "Vaihtoehtoinen DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
 "_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS).";
@@ -2984,11 +2975,14 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Kopioi kaksoisklikkaamalla";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Otetaanko mukautettu DNS käyttöön?";
+"_hermes_conflict_hermesOn_title" = "Enable Custom DNS?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "Tämä poistaa NetShieldin käytöstä.";
@@ -2997,7 +2991,7 @@
 "_hermes_conflict_netshieldOn_title" = "Otetaanko NetShield käyttöön?";
 
 /* Hermes conflict notification description within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_description" = "Tämä poistaa mukautetun DNS:n käytöstä.";
+"_hermes_conflict_netshieldOn_description" = "Tämä poistaa vaihtoehtoisen DNS:n käytöstä.";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_windowTitle" = "Muuta asetuksia";

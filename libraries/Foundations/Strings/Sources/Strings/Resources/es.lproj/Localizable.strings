@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Reconectando a %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Configurando una nueva conexión VPN para proteger tu IP";
 
 /* iOS status view */
 "_connected_to" = "Conectado a";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Otra aplicación puede estar interfiriendo con Kill Switch. Para solucionar este problema, cambia al protocolo OpenVPN o desactiva Kill Switch y vuelve a intentarlo.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Cambiar a OpenVPN y reintentar";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Registro de la aplicación";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Registros de OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Registros de WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Gracias por tu informe";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Proporcionando los siguientes detalles, nuestro equipo puede identificar tu problema y una posible solución con mayores posibilidades y menor tiempo:\n- Registros de la aplicación Proton VPN\n- Registros de OpenVPN\n- Registros de WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Correo electrónico:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Doble clic para copiar";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Si tu servidor DNS personalizado no funciona, se utilizará el DNS estándar de la VPN.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Si tu servidor DNS personalizado no funciona, se utilizará el DNS estándar de la VPN.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Intentaremos conectarte a estos servidores en orden. Si ninguno de ellos funciona, se utilizará el DNS de la VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "¿Activar DNS personalizado?";

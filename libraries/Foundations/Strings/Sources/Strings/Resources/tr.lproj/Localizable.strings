@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "%@ ile yeniden bağlantı kuruluyor";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "IP adresinizi korumak için yeni bir VPN bağlantısı ayarlanıyor";
 
 /* iOS status view */
 "_connected_to" = "Şuraya bağlandı";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Başka bir uygulama bağlantı kesici özelliği ile çakışabilir. Bu sorunu çözmek için OpenVPN iletişim kuralına geçin ya da bağlantı kesici özelliğini kapatarak yeniden deneyin.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "OpenVPN kullanmaya geçerek yeniden deneyin";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -592,22 +589,22 @@
 "_profile_edited_successfully" = "Profil güncellendi";
 
 /* MacOS menu item; MacOS Edit tab title; */
-"edit_menu_title" = "Edit";
+"edit_menu_title" = "Düzenle";
 
 /* MacOS menu item; MacOS cut item title; */
-"cut_menu_title" = "Cut";
+"cut_menu_title" = "Kes";
 
 /* MacOS menu item; MacOS copy item title; */
-"copy_menu_title" = "Copy";
+"copy_menu_title" = "Kopyala";
 
 /* MacOS menu item; MacOS paste item title; */
-"paste_menu_title" = "Paste";
+"paste_menu_title" = "Yapıştır";
 
 /* MacOS menu item; MacOS delete item title; */
-"delete_menu_title" = "Delete";
+"delete_menu_title" = "Sil";
 
 /* MacOS menu item; MacOS select item title; */
-"select_all_menu_title" = "Select All";
+"select_all_menu_title" = "Tümünü seç";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Özet";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Uygulama günlüğü kayıtları";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN günlük kayıtları";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard günlük kayıtları";
 
@@ -1091,10 +1085,10 @@
 "_per_year_short" = "/ yıl";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
-"_web_only_feature" = "Web only";
+"_web_only_feature" = "İnternete özel";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+"_subscription_renewal_date" = "Abonelik %1$@ tarihinde %2$@/yıl tutar ile otomatik olarak yenilenir";
 
 /* iOS plan feature */
 "_feature_server_count" = "Şuradaki sunuculara bağlan";
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Bildiriminiz için teşekkür ederiz";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Aşağıdaki bilgileri verdiğinizde ekibimiz, sorununuzu ve olası çözümünü daha yüksek olasılıkla ve daha kısa sürede bulabilir:\n• Proton VPN uygulama günlüğü kayıtları\n• OpenVPN günlüğü kayıtları\n• WireGuard günlüğü kayıtları";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-posta:";
@@ -1642,13 +1633,13 @@
 "_plutonium_import_apps_subtitle_1" = "Buraya sürükleyip bırakın veya ";
 
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
-"_plutonium_import_apps_subtitle_2" = "uygulamalara göz at";
+"_plutonium_import_apps_subtitle_2" = "uygulamalara göz atın";
 
 /* Plutonium upsell view title */
-"_plutonium_upsell_title" = "Her iki dünyanın da en iyisini elde edin";
+"_plutonium_upsell_title" = "İki dünyanın da en iyisini elde edin";
 
 /* Description of an empty list of IPs */
-"_plutonium_empty_ip_list_content" = "Henüz IP adresi yok";
+"_plutonium_empty_ip_list_content" = "Henüz bir IP adresi yok";
 
 /* Plutonium upsell view subtitle */
 "_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
@@ -2946,13 +2937,13 @@
 "_hermes_feature_title" = "Özel DNS";
 
 /* Hermes Feature Window Title within dedicated Hermes Settings view */
-"_hermes_feature_windowTitle" = "Tercihler";
+"_hermes_feature_windowTitle" = "Ayarlar";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
 "_hermes_feature_description" = "Özel DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Kendi barındırdığınız veya üçüncü taraf bir alan adı sistemi (DNS) ile VPN'e bağlanın.";
+"_hermes_feature_description" = "Kendi barındırdığınız veya üçüncü taraf bir etki alanı adı sistemi (DNS) ile VPN bağlantısı kurun.";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Sunucular (%@)";
@@ -2967,37 +2958,40 @@
 "_hermes_entities_form_addButton" = "Ekle";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
-"_hermes_entities_form_description" = "Sunucunun IPv4 adresini girin";
+"_hermes_entities_form_description" = "Sunucunun IPv4 adresini yazın";
 
 /* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_enterAddress" = "Bir IPv4 adresi girin";
+"_hermes_entities_form_validation_enterAddress" = "Bir IPv4 adresi yazın";
 
 /* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_enterValidAddress" = "Geçerli bir IPv4 adresi girin";
+"_hermes_entities_form_validation_enterValidAddress" = "Geçerli bir IPv4 adresi yazın";
 
 /* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_duplicate" = "Sunucu zaten eklendi";
+"_hermes_entities_form_validation_duplicate" = "Sunucu zaten eklenmiş";
 
 /* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
-"_hermes_entities_form_validation_unexpectedError" = "Beklenmeyen bir hata oluştu.";
+"_hermes_entities_form_validation_unexpectedError" = "Beklenmeyen bir sorun çıktı.";
 
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Kopyalamak için çift tıklayın";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Özel DNS sunucunuz çalışmıyorsa, standart VPN DNS kullanılacaktır.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Özel DNS sunucunuz çalışmıyorsa, standart VPN DNS kullanılır.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Sırayla bu sunuculara bağlanmaya çalışacağız. Hiçbiri işe yaramazsa, VPN DNS kullanılacak.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Enables Custom DNS?";
+"_hermes_conflict_hermesOn_title" = "Özel DNS kullanılsın mı?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_description" = "Bu, NetShield'i devre dışı bırakacaktır.";
+"_hermes_conflict_hermesOn_description" = "Bu işlem, NetShield özelliğini kapatacak.";
 
 /* Hermes conflict notification title within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_title" = "NetShield'ı etkinleştir?";
+"_hermes_conflict_netshieldOn_title" = "NetShield açılsın mı?";
 
 /* Hermes conflict notification description within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_description" = "Bu, Özel DNS'yi devre dışı bırakacaktır.";
+"_hermes_conflict_netshieldOn_description" = "Bu işlem, Özel DNS özelliğini kapatacak.";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_windowTitle" = "Ayarları değiştir";

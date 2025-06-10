@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Kobler til %@ på nytt";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Konfigurerer en ny VPN-tilkobling for å beskytte IP-en din";
 
 /* iOS status view */
 "_connected_to" = "Koblet til";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "En annen applikasjon kan forstyrre nødstopp. For å løse dette problemet, bytt til OpenVPN-protokollen eller deaktiver nødstopp og prøv på nytt.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Bytt til OpenVPN og prøv på nytt";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Applikasjonslogger";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN-logger";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard-logger";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Takk for rapporten";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Ved å gi følgende detaljer kan teamet vårt identifisere problemet ditt og en mulig løsning med høyere sjanser og kortere tid:\n• Proton VPN-applogger\n• OpenVPN-logger\n• WireGuard-logger";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-post:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Dobbeltklikk for å kopiere";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Hvis din egendefinerte DNS-tjener ikke fungerer, vil standard VPN DNS bli brukt.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Hvis din egendefinerte DNS-tjener ikke fungerer, vil standard VPN DNS bli brukt.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Vi vil prøve å koble til disse tjenerne i rekkefølge. Hvis ingen av dem fungerer, vil VPN DNS brukes.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Aktivere egendefinert DNS?";

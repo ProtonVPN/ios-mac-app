@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "%@ に再接続中";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "IPアドレスを保護する新しいVPN接続を設定しています";
 
 /* iOS status view */
 "_connected_to" = "接続先";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "他のアプリケーションがキルスイッチに干渉する場合があります。問題を解決するには OpenVPN プロトコルに切り替えるか、キルスイッチを無効化して再施行します。";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "OpenVPN に切り替えて再試行してください";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -592,22 +589,22 @@
 "_profile_edited_successfully" = "プロファイルは更新されました";
 
 /* MacOS menu item; MacOS Edit tab title; */
-"edit_menu_title" = "Edit";
+"edit_menu_title" = "編集";
 
 /* MacOS menu item; MacOS cut item title; */
-"cut_menu_title" = "Cut";
+"cut_menu_title" = "カット";
 
 /* MacOS menu item; MacOS copy item title; */
-"copy_menu_title" = "Copy";
+"copy_menu_title" = "コピー";
 
 /* MacOS menu item; MacOS paste item title; */
-"paste_menu_title" = "Paste";
+"paste_menu_title" = "貼り付け";
 
 /* MacOS menu item; MacOS delete item title; */
-"delete_menu_title" = "Delete";
+"delete_menu_title" = "削除";
 
 /* MacOS menu item; MacOS select item title; */
-"select_all_menu_title" = "Select All";
+"select_all_menu_title" = "すべて選択";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "概要";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "アプリケーションのログ";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN のログ";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard のログ";
 
@@ -1091,10 +1085,10 @@
 "_per_year_short" = "/ 年";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
-"_web_only_feature" = "Web only";
+"_web_only_feature" = "ウェブのみ";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+"_subscription_renewal_date" = "サブスクリプションは%1$@に%2$@/年で自動更新されます";
 
 /* iOS plan feature */
 "_feature_server_count" = "のサーバーへ接続";
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "ご報告ありがとうございます。";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "以下の詳細情報をご提供いただければ、私たちのチームがお客様の問題を特定し、より高い可能性と短い時間で可能な解決策を提案します。\n• Proton VPN アプリのログ\n• OpenVPN のログ\n• WireGuard のログ";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "メール:";
@@ -1636,19 +1627,19 @@
 "_plutonium_reconnection_notice" = "再接続すると変更が適用されます";
 
 /* Title of a button that opens a panel for file selection */
-"_plutonium_import_apps_title" = "Import apps";
+"_plutonium_import_apps_title" = "アプリをインポート";
 
 /* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
-"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
+"_plutonium_import_apps_subtitle_1" = "ここにドラッグ＆ドロップ または ";
 
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
-"_plutonium_import_apps_subtitle_2" = "browse apps";
+"_plutonium_import_apps_subtitle_2" = "アプリを選択";
 
 /* Plutonium upsell view title */
-"_plutonium_upsell_title" = "Get the best of both worlds";
+"_plutonium_upsell_title" = "両方の利点を最大限に活用";
 
 /* Description of an empty list of IPs */
-"_plutonium_empty_ip_list_content" = "No IP addresses yet";
+"_plutonium_empty_ip_list_content" = "IPアドレスはまだありません";
 
 /* Plutonium upsell view subtitle */
 "_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "ダブルクリックしてコピー";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "カスタム DNS サーバーが動作しない場合は、標準 VPN DNS が使用されます。";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "カスタム DNS サーバーが動作しない場合は、標準 VPN DNS が使用されます。";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "これらのサーバーに順番に接続しようとします。どれも動作しない場合は、VPN DNSが使用されます。";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "カスタム DNS を有効にしますか？";

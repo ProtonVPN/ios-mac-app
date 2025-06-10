@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Reconectare la %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Se configurează o nouă conexiune VPN pentru a vă proteja adresa IP";
 
 /* iOS status view */
 "_connected_to" = "Conectat la";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu întrerupătorul de conexiune. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați întrerupătorul de conexiune.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Reîncercare prin OpenVPN";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Jurnale aplicație";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Jurnale OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Jurnale WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Vă mulțumim pentru raport";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Furnizând următoarele detalii, echipa noastră vă poate identifica problema și o posibilă soluție cu șanse mai mari și în timp mai scurt:\n• Jurnale aplicație Proton VPN\n• Jurnale OpenVPN\n• Jurnale WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Dublu clic pentru copiere";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Dacă serverul DNS personal nu funcționează, va fi folosit DNS-ul standard din VPN.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Dacă serverul DNS personal nu funcționează, va fi folosit DNS-ul standard din VPN.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Se va încerca accesarea în ordine a acestor servere. Dacă nu funcționează niciunul, va fi folosit DNS-ul din VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Activați DNS-ul personal?";
