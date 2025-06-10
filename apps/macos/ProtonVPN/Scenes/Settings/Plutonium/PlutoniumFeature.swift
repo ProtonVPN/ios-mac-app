@@ -27,7 +27,7 @@ import VPNAppCore
 public struct PlutoniumFeature {
 
     @ObservableState
-    public struct State {
+    public struct State: Equatable {
         enum ValidationError: Error {
             case alreadyExists
             case invalidIP
@@ -80,10 +80,11 @@ public struct PlutoniumFeature {
         public init() { }
     }
 
+    @CasePathable
     public enum Action {
         case toggleModeClicked(Bool)
         case modeSelectionClicked(PlutoniumFeatureToggle.Mode)
-        case entryClicked(State.Entry, State.Operation)
+        case entryClicked(State.Entry, State.Operation, PlutoniumFeatureToggle.Mode)
         case inputFieldChanged(String)
         case onAppear // discover apps
     }
@@ -106,13 +107,14 @@ public struct PlutoniumFeature {
                     }
                 }
                 return .none
-            case .entryClicked(let entry, let operation):
+            case .entryClicked(let entry, let operation, let mode):
                 do throws(State.ValidationError) {
-                    try state.perform(operation: operation, entry: entry)
-                    if operation == .add {
+                    try state.perform(operation: operation, entry: entry, mode: mode)
+                    if case .ip = entry, operation == .add {
                         state.ipEntry = ""
+                        return .send(.inputFieldChanged(state.ipEntry))
                     }
-                    return .send(.inputFieldChanged(state.ipEntry))
+                    return .none
                 } catch {
                     switch error {
                     case .invalidIP:
@@ -142,22 +144,16 @@ public struct PlutoniumFeature {
 }
 
 extension PlutoniumFeature.State {
-    mutating func perform(operation: Operation, entry: Entry) throws(ValidationError) {
+    mutating func perform(operation: Operation, entry: Entry, mode: PlutoniumFeatureToggle.Mode) throws(ValidationError) {
         do {
-            switch feature {
-            case .disabled:
-                log.error("Modifying Plutonium feature while it is disabled is not allowed.")
-                return
-            case .enabled(let mode):
-                switch mode {
-                case .inclusion:
-                    try $inclusionActivated.withLock {
-                        try $0.apply(operation: operation, entry: entry)
-                    }
-                case .exclusion:
-                    try $exclusionActivated.withLock {
-                        try $0.apply(operation: operation, entry: entry)
-                    }
+            switch mode {
+            case .inclusion:
+                try $inclusionActivated.withLock {
+                    try $0.apply(operation: operation, entry: entry)
+                }
+            case .exclusion:
+                try $exclusionActivated.withLock {
+                    try $0.apply(operation: operation, entry: entry)
                 }
             }
         } catch let error as ValidationError {

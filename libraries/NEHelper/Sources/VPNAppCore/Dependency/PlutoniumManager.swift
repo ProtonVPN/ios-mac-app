@@ -102,15 +102,9 @@ public struct PlutoniumManager: DependencyKey, TestDependencyKey {
         @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
         @Shared(.exclusionActivatedApplied) var exclusionActivatedApplied: PlutoniumActivated
 
-        if feature != featureApplied {
-            $featureApplied.withLock { $0 = feature }
-        }
-        if inclusionActivated != inclusionActivatedApplied {
-            $inclusionActivatedApplied.withLock { $0 = inclusionActivated }
-        }
-        if exclusionActivated != exclusionActivatedApplied {
-            $exclusionActivatedApplied.withLock { $0 = exclusionActivated }
-        }
+        $featureApplied.withLock { $0 = feature }
+        $inclusionActivatedApplied.withLock { $0 = inclusionActivated }
+        $exclusionActivatedApplied.withLock { $0 = exclusionActivated }
     }
 }
 

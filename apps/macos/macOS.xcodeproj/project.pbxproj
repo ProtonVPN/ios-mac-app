@@ -260,6 +260,7 @@
 		E582BF3D2BB16FE800C95CD7 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */; };
 		E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */ = {isa = PBXBuildFile; productRef = E5867D7C2C4E7D55009FB802 /* NetShield */; };
 		E59447542A86217A00E1E241 /* ProtonCoreLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E59447532A86217A00E1E241 /* ProtonCoreLoginUI */; };
+		E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B932E2DE99AAD0029C115 /* PlutoniumFeatureTests.swift */; };
 		E5C00F0B2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F0A2A15FC6E0030076F /* ProtonVPNmac_redesign_UITests.swift */; };
 		E5C00F0D2A15FC6E0030076F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E5C00F152A1612950030076F /* NavigationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C00F142A1612950030076F /* NavigationRobot.swift */; };
@@ -268,6 +269,7 @@
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
 		E5C4EF3F29B882C10013ACB2 /* ThemeButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* ThemeButtonStyle.swift */; };
+		E5C7F0B32DE8A98700A7AD13 /* ClearButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7F0B22DE8A98400A7AD13 /* ClearButtonModifier.swift */; };
 		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
 		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
 		E5DA73C12DC4D1930057B273 /* ThemeToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73C02DC4D1930057B273 /* ThemeToggleStyle.swift */; };
@@ -816,6 +818,7 @@
 		E57E4C9E2DBBD00600E24BF7 /* PlutoniumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumView.swift; sourceTree = "<group>"; };
 		E57E4C9F2DBBD00600E24BF7 /* PlutoniumFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumFeature.swift; sourceTree = "<group>"; };
 		E582BF3C2BB16FE300C95CD7 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		E59B932E2DE99AAD0029C115 /* PlutoniumFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumFeatureTests.swift; sourceTree = "<group>"; };
 		E5BDD80A2A67FD3700F3BB7C /* ProtonVPN-mac-redesign-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ProtonVPN-mac-redesign-Info.plist"; sourceTree = "<group>"; };
 		E5C00F002A15FB680030076F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "ProtonVPNmac-redesign-UITests/Info.plist"; sourceTree = SOURCE_ROOT; };
 		E5C00F082A15FC6E0030076F /* ProtonVPNmac-redesign-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProtonVPNmac-redesign-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -825,6 +828,7 @@
 		E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewController.swift; sourceTree = "<group>"; };
 		E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButtonStyle.swift; sourceTree = "<group>"; };
 		E5C4EF3E29B882C10013ACB2 /* ThemeButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonStyle.swift; sourceTree = "<group>"; };
+		E5C7F0B22DE8A98400A7AD13 /* ClearButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonModifier.swift; sourceTree = "<group>"; };
 		E5CCA11729B2057700BDE32B /* VideoTourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTourModel.swift; sourceTree = "<group>"; };
 		E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTheme+Icons.swift"; sourceTree = "<group>"; };
 		E5DA73C02DC4D1930057B273 /* ThemeToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeToggleStyle.swift; sourceTree = "<group>"; };
@@ -1491,19 +1495,13 @@
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
 		};
-		D5D298A925B5BBFE000FBD74 /* Management */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Management;
-			sourceTree = "<group>";
-		};
 		E13F4CFF20FCD6CF00D985C2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				E15B755B20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift */,
 				E1683FF92372DCBD00992E75 /* AlertTests.swift */,
 				AD8C78AD29898403008AC0B5 /* AppSessionManagerImplementationTests.swift */,
+				E59B932E2DE99AAD0029C115 /* PlutoniumFeatureTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1513,7 +1511,6 @@
 			children = (
 				E15B755120FA83CB0022C406 /* Info.plist */,
 				E9AF94B226B450BA00AA1A5F /* Extensions */,
-				D5D298A925B5BBFE000FBD74 /* Management */,
 				D5421EA725B6DAF300280C29 /* Mocks */,
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				D549C8F5262EF4B900A0903F /* ViewModels */,
@@ -1549,6 +1546,7 @@
 			children = (
 				E5DA73C82DCCCADF0057B273 /* GhostButtonStyle.swift */,
 				E57E4C9D2DBBD00600E24BF7 /* Plutonium+NSViewController.swift */,
+				E5C7F0B22DE8A98400A7AD13 /* ClearButtonModifier.swift */,
 				E57E4C9E2DBBD00600E24BF7 /* PlutoniumView.swift */,
 				E5DA73CA2DCCF4F20057B273 /* LinkPointer.swift */,
 				E50E24B82DD4CE940046A14D /* ItemProvider.swift */,
@@ -3211,6 +3209,7 @@
 				D5C7C8B32B0B8C4500641808 /* TestAppDelegate.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				AD8C78AE29898403008AC0B5 /* AppSessionManagerImplementationTests.swift in Sources */,
+				E59B932F2DE99AB40029C115 /* PlutoniumFeatureTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3535,6 +3534,7 @@
 				EE52EA271F1E9693009DFF1D /* ColorPickerViewController.swift in Sources */,
 				EEBB82E41F1DEF1B0041432A /* ProfilesTabBarView.swift in Sources */,
 				D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */,
+				E5C7F0B32DE8A98700A7AD13 /* ClearButtonModifier.swift in Sources */,
 				EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */,
 				42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */,
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
