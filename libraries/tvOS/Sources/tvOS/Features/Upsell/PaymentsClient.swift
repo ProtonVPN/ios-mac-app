@@ -76,9 +76,7 @@ struct PaymentsClient: Sendable, DependencyKey {
                 guard planService.iapSupportStatus.isEnabled else {
                     throw PaymentsError.iapDisabled
                 }
-
-                let planOptions = try await planService.planOptions()
-                return planOptions.map { $0 }
+                return try await planService.planOptions()
             },
             attemptPurchase: { planOption in
                 try await planService.buyPlan(planOption: planOption)

@@ -371,7 +371,7 @@ extension IosAlertService: CoreAlertService {
                     let upsellData = UpsellData(
                         modalSource: alert.modalSource,
                         newPlanName: composedPlan?.plan.name,
-                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil, // TODO: check offer
+                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil,
                         flowType: planOption.purchaseType == .web ? .external : .oneClick
                     )
                     AppEvent.userEngagedWithUpsellAlert.post(upsellData)

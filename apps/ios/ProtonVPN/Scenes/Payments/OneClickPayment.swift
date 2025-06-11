@@ -196,20 +196,18 @@ final class OneClickPayment {
 
     @MainActor
     func planOptions() async throws -> [PlanOption] {
-        let composedPlans = try await planService.getAvailablePlans()
-        let vpn2022 = composedPlans.filter { composedPlan in
-            composedPlan.plan.name == "vpn2022"
-        }
+        // check eligibility for 2Y web plan
         let userAppStoreCountryCode = await planService.countryCode
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
-        if vpn2022.isEmpty, !shouldShowTwoYearsWebPlan {
+        let composedPlans = try await planService.getAvailablePlans()
+        if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
             throw PurchaseError.defaultPlanNotFound
         }
 
-        availablePlans = vpn2022
-        var iapPlans: [PlanOption] = vpn2022.map {
+        availablePlans = composedPlans
+        var iapPlans: [PlanOption] = composedPlans.map {
             PlanOption(
                 id: $0.product.id,
                 storePricePerMonth: $0.storePricePerMonth,

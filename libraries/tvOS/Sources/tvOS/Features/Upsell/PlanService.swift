@@ -45,20 +45,20 @@ final class PlanService {
 
     init() {
         // initial setup; will create managers if auth credentials are present
-        createPaymentsManagers()
-        recreateTransactionSubscription()
+        let authCredentials: AuthCredentials? = authKeychain.fetch()
+        createPaymentsManagers(authCredentials: authCredentials)
+        recreateTransactionSubscription(authCredentials: authCredentials)
 
         // setup subscription to react to auth credentials change
         AppEvent.authCredentialsChanged.publisher
             .sink { [weak self] _ in
-                self?.updateRemoteManager()
-                self?.recreateTransactionSubscription()
+                self?.handleAuthCredentialsChanged()
             }
             .store(in: &cancellables)
     }
 
-    private func createPaymentsManagers() {
-        guard let authCredentials = authKeychain.fetch() else {
+    private func createPaymentsManagers(authCredentials: AuthCredentials?) {
+        guard let authCredentials else {
             log.info("No auth credentials to create payment managers", category: .iap)
             return clear()
         }
@@ -77,19 +77,28 @@ final class PlanService {
         self.protonPlansManager = protonPlansManager
     }
 
-    private func updateRemoteManager() {
-        guard remoteManager != nil else {
-            return createPaymentsManagers()
-        }
+    private func handleAuthCredentialsChanged() {
         guard let authCredentials = authKeychain.fetch() else {
+            log.info("No auth credentials to create payment managers", category: .iap)
+            return clear()
+        }
+        updateRemoteManager(authCredentials: authCredentials)
+        recreateTransactionSubscription(authCredentials: authCredentials)
+    }
+
+    private func updateRemoteManager(authCredentials: AuthCredentials?) {
+        guard remoteManager != nil else {
+            return createPaymentsManagers(authCredentials: authCredentials)
+        }
+        guard let authCredentials else {
             log.info("No auth credentials to update payment managers", category: .iap)
             return clear()
         }
         remoteManager?.updateSession(sessionID: authCredentials.sessionId, authToken: authCredentials.accessToken)
     }
 
-    private func recreateTransactionSubscription() {
-        guard let authCredentials = authKeychain.fetch() else {
+    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) {
+        guard let authCredentials else {
             log.info("No auth credentials to subscribe to transactions", category: .iap)
             return clear()
         }
@@ -114,8 +123,8 @@ final class PlanService {
         }
 
         transactionSubscriptionCancellable = protonPlansManager?.transactionProgress
-            .sink { [weak self] transactionProgress in
-                self?.handleTransactionProgress(transactionProgress)
+            .sink { [weak self] transactionHandlerState in
+                self?.handleTransactionHandlerState(transactionHandlerState)
             }
     }
 
@@ -142,11 +151,9 @@ final class PlanService {
             throw UnavailableError.noAuthDataPresent
         }
         let composedPlans = try await protonPlansManager.getAvailablePlans()
-        let vpn2022 = composedPlans.filter { composedPlan in
-            composedPlan.plan.name == "vpn2022"
-        }
-        availablePlans = vpn2022
-        return vpn2022.map {
+
+        availablePlans = composedPlans
+        return composedPlans.map {
             PlanOption(
                 id: $0.product.id,
                 storePricePerMonth: $0.storePricePerMonth,
@@ -171,8 +178,8 @@ final class PlanService {
         return try await protonPlansManager.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
     }
 
-    private func handleTransactionProgress(_ transactionProgress: TransactionHandlerState) {
-        self.transactionProgress.send(transactionProgress)
+    private func handleTransactionHandlerState(_ transactionHandlerState: TransactionHandlerState) {
+        transactionProgress.send(transactionHandlerState)
     }
 }
 

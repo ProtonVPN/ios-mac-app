@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import Foundation
 import LegacyCommon
 import Modals
@@ -57,13 +58,9 @@ class PlanServiceMock: PlanService {
     }
 
     func purchase(_: Product, planName _: String, planCycle _: Int) async throws -> ComposedPlan {
-        throw LocalError.justError
+        throw GenericError(message: "Just error")
     }
 
     func fetchAppleStatus() async throws {}
     func clear() {}
-}
-
-private enum LocalError: Error {
-    case justError
 }
