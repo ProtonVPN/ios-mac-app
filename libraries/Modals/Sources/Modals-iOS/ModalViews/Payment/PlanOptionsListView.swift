@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import CombineSchedulers
+import ModalsServices
+import ModalsShared
 import SharedViews
 import Strings
-import ModalsShared
-import ModalsServices
+import SwiftUI
 
 @MainActor
 struct PlanOptionsListView: View {
@@ -76,7 +76,7 @@ struct PlanOptionsListView: View {
     }
 
     private func discount(option: PlanOption) -> Int? {
-        return viewModel.availableDiscount(comparedTo: option)
+        viewModel.availableDiscount(comparedTo: option)
     }
 
     private var contentView: some View {
@@ -126,29 +126,29 @@ struct PlanOptionsListView: View {
 }
 
 #if DEBUG
-#Preview("Classic") {
-    let plans: [PlanOption] = [.oneYear, .oneMonth]
-    let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () }, availableDiscount: { _ in 55 })
-    let viewModel = PlanOptionsListViewModel(client: client)
-    return PlanOptionsListView(viewModel: viewModel)
-}
+    #Preview("Classic") {
+        let plans: [PlanOption] = [.oneYear, .oneMonth]
+        let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () }, availableDiscount: { _ in 55 })
+        let viewModel = PlanOptionsListViewModel(client: client)
+        return PlanOptionsListView(viewModel: viewModel)
+    }
 
-#Preview("Loading") {
-    let scheduler: AnySchedulerOf<DispatchQueue> = .main
-    let plans: [PlanOption] = [.twoYearsWebPlan, .oneYear, .oneMonth]
-    let client: PlansClient = .init(
-        retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
-            return plans
-        },
-        validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
-        },
-        availableDiscount: { _ in
-            33
-        }
-    )
-    let viewModel = PlanOptionsListViewModel(client: client)
-    return PlanOptionsListView(viewModel: viewModel)
-}
+    #Preview("Loading") {
+        let scheduler: AnySchedulerOf<DispatchQueue> = .main
+        let plans: [PlanOption] = [.twoYearsWebPlan, .oneYear, .oneMonth]
+        let client: PlansClient = .init(
+            retrievePlans: {
+                try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
+                return plans
+            },
+            validate: { _ in
+                try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+            },
+            availableDiscount: { _ in
+                33
+            }
+        )
+        let viewModel = PlanOptionsListViewModel(client: client)
+        return PlanOptionsListView(viewModel: viewModel)
+    }
 #endif

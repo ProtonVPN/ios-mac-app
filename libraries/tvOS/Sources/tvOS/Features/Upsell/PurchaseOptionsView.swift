@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
 import ModalsServices // Borrow logic from iOS OneClick
+import Strings
+import SwiftUI
 
 struct PurchaseOptionsView: View {
-    
     let products: [PlanOption]
 
     let sendAction: UpsellFeature.ActionSender
@@ -40,12 +39,12 @@ struct PurchaseOptionsView: View {
     }
 
     private func headlineText(_ text: String) -> Text {
-        return Text(text)
+        Text(text)
             .font(.system(size: 38, weight: .regular))
     }
 
     private func bodyText(_ text: String) -> Text {
-        return Text(text)
+        Text(text)
             .font(.body)
             .fontWeight(.regular)
             .foregroundStyle(Color(.text, .weak))
@@ -78,11 +77,11 @@ struct PurchaseOptionsView: View {
             VStack(alignment: .trailing) {
                 if planOption.amountOfMonths == 12 {
                     headlineText(planOption.displayPrice)
-                    + bodyText(" /year")
+                        + bodyText(" /year")
                     bodyText("\(planOption.pricePerMonth) /month")
                 } else if planOption.amountOfMonths == 1 {
                     headlineText(planOption.displayPrice)
-                    + bodyText(" /month")
+                        + bodyText(" /month")
                 } else {
                     headlineText(planOption.displayPrice)
                 }

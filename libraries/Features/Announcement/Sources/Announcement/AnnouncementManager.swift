@@ -20,19 +20,19 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
 import Foundation
 import VPNShared
-import Dependencies
 
 public enum AnnouncementManagerKey: DependencyKey {
     public static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()
 }
 
 #if DEBUG
-extension AnnouncementManagerKey: TestDependencyKey {
-    public static let previewValue: any AnnouncementManager = AnnouncementManagerImplementation()
-    public static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
-}
+    extension AnnouncementManagerKey: TestDependencyKey {
+        public static let previewValue: any AnnouncementManager = AnnouncementManagerImplementation()
+        public static let testValue: any AnnouncementManager = AnnouncementManagerImplementation()
+    }
 #endif
 
 public enum AnnouncementStorageKey: DependencyKey {
@@ -43,16 +43,14 @@ public enum AnnouncementStorageKey: DependencyKey {
 }
 
 public enum AnnouncementRefresherKey: DependencyKey {
-    public static let liveValue: any AnnouncementRefresher = {
-        AnnouncementRefresherImplementation()
-    }()
+    public static let liveValue: any AnnouncementRefresher = AnnouncementRefresherImplementation()
 }
 
 #if DEBUG
-extension AnnouncementStorageKey: TestDependencyKey {
-    public static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
-    public static let testValue: any AnnouncementStorage = AnnouncementStorageMock()
-}
+    extension AnnouncementStorageKey: TestDependencyKey {
+        public static let previewValue: any AnnouncementStorage = AnnouncementStorageMock()
+        public static let testValue: any AnnouncementStorage = AnnouncementStorageMock()
+    }
 #endif
 
 public extension DependencyValues {
@@ -82,8 +80,8 @@ public protocol AnnouncementManager {
     func shouldShowAnnouncementsIcon() -> Bool
 }
 
-extension AnnouncementManager {
-    public static var notification: Notification.Name {
+public extension AnnouncementManager {
+    static var notification: Notification.Name {
         .init("Announcements")
     }
 }
@@ -92,7 +90,6 @@ extension AnnouncementManager {
 /// Informs if there are any unread current announcements.
 /// Marks announcements as read.
 public class AnnouncementManagerImplementation: AnnouncementManager {
-    
     @Dependency(\.announcementStorage) private var announcementStorage: AnnouncementStorage
 
     public func shouldShowAnnouncementsIcon() -> Bool {
@@ -163,40 +160,40 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
 // MARK: - Mocks
 
 #if DEBUG
-import Domain
+    import Domain
 
-public final class AnnouncementStorageMock: AnnouncementStorage {
-    public var announcements: [Announcement]
+    public final class AnnouncementStorageMock: AnnouncementStorage {
+        public var announcements: [Announcement]
 
-    public init(_ announcements: [Announcement] = []) {
-        self.announcements = announcements
+        public init(_ announcements: [Announcement] = []) {
+            self.announcements = announcements
+        }
+
+        public func fetch() -> [Announcement] {
+            announcements
+        }
+
+        public func store(_ objects: [Announcement]) {
+            announcements = objects
+            AppEvent.announcementStorageContent.post(objects)
+        }
+
+        public func clear() {
+            announcements = []
+        }
     }
-
-    public func fetch() -> [Announcement] {
-        return announcements
-    }
-
-    public func store(_ objects: [Announcement]) {
-        self.announcements = objects
-        AppEvent.announcementStorageContent.post(objects)
-    }
-
-    public func clear() {
-        announcements = []
-    }
-}
 #endif
 
-private extension Date {
+public extension Date {
     /// Check if this date represnt time in future
     var isFuture: Bool {
         // TODO: rethink this implementation
-        return self.timeIntervalSinceNow > 0
+        timeIntervalSinceNow > 0
     }
 
     /// Check if this date represnt time in future
     var isPast: Bool {
         // TODO: rethink this implementation
-        return self.timeIntervalSinceNow < 0
+        timeIntervalSinceNow < 0
     }
 }

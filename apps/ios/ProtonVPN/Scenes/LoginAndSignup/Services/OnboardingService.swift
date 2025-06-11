@@ -24,9 +24,9 @@ import Dependencies
 import ProtonCoreFeatureFlags
 
 import LegacyCommon
+import Modals
 import Persistence
 import VPNShared
-import Modals
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
@@ -45,7 +45,7 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory & WindowServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService?
@@ -75,12 +75,12 @@ extension OnboardingModuleService: OnboardingService {
 
     private func welcomeToProtonViewController() -> UIViewController {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
-            return modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
+            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
                 let getStartedVC = self.onboardingGetStartedViewController()
                 self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
             })
         } else {
-            return modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
+            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
                 self.postOnboardingAction()
             })
         }
@@ -93,9 +93,9 @@ extension OnboardingModuleService: OnboardingService {
             self.postOnboardingAction()
         } onFeatureUpdate: { feature in
             switch feature {
-            case .toggle(.statistics, _, _, let state):
+            case let .toggle(.statistics, _, _, state):
                 self.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
-            case .toggle(.crashes, _, _, let state):
+            case let .toggle(.crashes, _, _, state):
                 self.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
             default:
                 assertionFailure("Onboarding interactive feature not handled")
@@ -112,7 +112,7 @@ extension OnboardingModuleService: OnboardingService {
             )
         } catch {
             log.error("Encountered payments error: \(error)")
-            self.windowService.dismissModal {
+            windowService.dismissModal {
                 self.onboardingCoordinatorDidFinish()
             }
             return

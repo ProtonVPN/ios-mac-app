@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
-import ModalsShared
 import ModalsServices
+import ModalsShared
+import Strings
+import SwiftUI
 
 private enum Constants {
     static let planOptionViewRowHeight: CGFloat = 64
@@ -41,7 +41,7 @@ struct PlanOptionView: View {
         switch state {
         case .loading:
             PlanOptionLoadingView()
-        case .loaded(let planOption, let isSelected, let discount):
+        case let .loaded(planOption, isSelected, discount):
             PlanOptionLoadedView(
                 planOption: planOption,
                 discount: discount,
@@ -52,7 +52,6 @@ struct PlanOptionView: View {
 }
 
 private struct PlanOptionLoadedView: View {
-
     private enum AccessibilityIdentifier {
         static let planOptionDuration: String = "plan_option_duration"
         static let planOptionAmount: String = "plan_option_amount"
@@ -186,35 +185,35 @@ private struct PlanWebOnlyTagView: View {
 }
 
 #if DEBUG
-#Preview("Unselected") {
-    let planOptionMonth = PlanOption.oneMonth
-    let planOptionYear = PlanOption.oneYear
-    return VStack {
-        PlanOptionView(
-            state: .loaded(option: planOptionMonth, isSelected: false, discount: nil)
-        )
-        PlanOptionView(
-            state: .loaded(option: planOptionYear, isSelected: false, discount: 33)
-        )
+    #Preview("Unselected") {
+        let planOptionMonth = PlanOption.oneMonth
+        let planOptionYear = PlanOption.oneYear
+        return VStack {
+            PlanOptionView(
+                state: .loaded(option: planOptionMonth, isSelected: false, discount: nil)
+            )
+            PlanOptionView(
+                state: .loaded(option: planOptionYear, isSelected: false, discount: 33)
+            )
+        }
     }
-}
 
-#Preview("Selected") {
-    let planOption = PlanOption.oneYear
-    return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
-}
+    #Preview("Selected") {
+        let planOption = PlanOption.oneYear
+        return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
+    }
 
-#Preview("RTL") {
-    let planOption = PlanOption.oneYear
-    return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
-        .environment(\.layoutDirection, .rightToLeft)
-}
+    #Preview("RTL") {
+        let planOption = PlanOption.oneYear
+        return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
+            .environment(\.layoutDirection, .rightToLeft)
+    }
 
-#Preview("Loading") {
-    return PlanOptionView(state: .loading)
-}
+    #Preview("Loading") {
+        PlanOptionView(state: .loading)
+    }
 
-#Preview("Badge") {
-    PlanDiscountBadgeView(discount: 50)
-}
+    #Preview("Badge") {
+        PlanDiscountBadgeView(discount: 50)
+    }
 #endif

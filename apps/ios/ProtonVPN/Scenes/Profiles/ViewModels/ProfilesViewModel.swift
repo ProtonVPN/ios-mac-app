@@ -20,13 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import Dependencies
 import ProtonCoreFeatureFlags
+import UIKit
 
 import LegacyCommon
-import VPNAppCore
 import Strings
+import VPNAppCore
 
 class ProfilesViewModel {
     typealias Factory = ProfileService
@@ -51,7 +51,7 @@ class ProfilesViewModel {
             return .freeTier
         }
     }
-    
+
     init(vpnGateway: VpnGatewayProtocol, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.factory = factory
@@ -63,29 +63,29 @@ class ProfilesViewModel {
         self.safeModePropertyProvider = safeModePropertyProvider
         self.profileManager = profileManager
     }
-    
+
     func makeCreateProfileViewController() -> UITableViewController? {
-        return factory.makeCreateProfileViewController(for: nil)
+        factory.makeCreateProfileViewController(for: nil)
     }
-    
+
     func makeEditProfileViewController(for index: Int) -> UITableViewController? {
-        return factory.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
+        factory.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
     }
-    
+
     var headerHeight: CGFloat {
-        return UIConstants.headerHeight
+        UIConstants.headerHeight
     }
-    
+
     var sectionCount: Int {
-        return 2
+        2
     }
-    
+
     func title(for section: Int) -> String {
-        return sectionTitles[section]
+        sectionTitles[section]
     }
-    
+
     var cellHeight: CGFloat {
-        return UIConstants.cellHeight
+        UIConstants.cellHeight
     }
 
     var canUseProfiles: Bool { profileAuthorizer.canUseProfiles }
@@ -97,51 +97,54 @@ class ProfilesViewModel {
         }
         alertService.push(alert: ProfilesUpsellAlert())
     }
-    
+
     func cellCount(for section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            2
         default:
-            return profileManager?.customProfiles.count ?? 0
+            profileManager?.customProfiles.count ?? 0
         }
     }
-    
+
     func defaultCellModel(for row: Int) -> DefaultProfileViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
-        return DefaultProfileViewModel(serverOffering: serverOffering,
-                                       vpnGateway: vpnGateway,
-                                       alertService: alertService,
-                                       propertiesManager: propertiesManager,
-                                       connectionStatusService: connectionStatusService,
-                                       netShieldPropertyProvider: netShieldPropertyProvider,
-                                       natTypePropertyProvider: natTypePropertyProvider,
-                                       safeModePropertyProvider: safeModePropertyProvider
+        return DefaultProfileViewModel(
+            serverOffering: serverOffering,
+            vpnGateway: vpnGateway,
+            alertService: alertService,
+            propertiesManager: propertiesManager,
+            connectionStatusService: connectionStatusService,
+            netShieldPropertyProvider: netShieldPropertyProvider,
+            natTypePropertyProvider: natTypePropertyProvider,
+            safeModePropertyProvider: safeModePropertyProvider
         )
     }
-    
+
     func cellModel(for index: Int) -> ProfileItemViewModel? {
         if let profile = profileManager?.customProfiles[index] {
-            return ProfileItemViewModel(profile: profile,
-                                        vpnGateway: vpnGateway,
-                                        alertService: alertService,
-                                        userTier: userTier,
-                                        netShieldPropertyProvider: netShieldPropertyProvider,
-                                        natTypePropertyProvider: natTypePropertyProvider,
-                                        safeModePropertyProvider: safeModePropertyProvider,
-                                        connectionStatusService: connectionStatusService,
-                                        propertiesManager: propertiesManager)
+            return ProfileItemViewModel(
+                profile: profile,
+                vpnGateway: vpnGateway,
+                alertService: alertService,
+                userTier: userTier,
+                netShieldPropertyProvider: netShieldPropertyProvider,
+                natTypePropertyProvider: natTypePropertyProvider,
+                safeModePropertyProvider: safeModePropertyProvider,
+                connectionStatusService: connectionStatusService,
+                propertiesManager: propertiesManager
+            )
         }
         return nil
     }
-    
+
     func deleteProfile(for index: Int) {
         if let profile = profileManager?.customProfiles[index],
-            let profileManager = profileManager {
-                profileManager.deleteProfile(profile)
+           let profileManager {
+            profileManager.deleteProfile(profile)
         }
     }
-    
+
     func reloadData() {
         profileManager?.refreshProfiles()
     }

@@ -19,8 +19,8 @@
 import Combine
 import Dependencies
 import Foundation
-import ModalsShared
 import ModalsServices
+import ModalsShared
 
 public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]
@@ -107,22 +107,22 @@ private extension DateFormatter {
 }
 
 #if DEBUG
-public extension PlansClient {
-    static func mock() -> PlansClient {
-        PlansClient(
-            retrievePlans: {
-                [.oneMonth, .oneYear]
-            },
-            validate: { option in
-                print("User wants to go with \(option)")
-            },
-            availableDiscount: { plan in
-                return 66
-            },
-            notNow: {
-                print("User wants to stay with free plan")
-            }
-        )
+    public extension PlansClient {
+        static func mock() -> PlansClient {
+            PlansClient(
+                retrievePlans: {
+                    [.oneMonth, .oneYear]
+                },
+                validate: { option in
+                    print("User wants to go with \(option)")
+                },
+                availableDiscount: { _ in
+                    66
+                },
+                notNow: {
+                    print("User wants to stay with free plan")
+                }
+            )
+        }
     }
-}
 #endif

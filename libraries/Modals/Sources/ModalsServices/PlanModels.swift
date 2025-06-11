@@ -84,22 +84,22 @@ public extension PlanOption {
 // MARK: - Helpers
 
 #if DEBUG
-public extension PlanOption {
-    static var oneMonth: Self = PlanOption(
-        id: "1",
-        storePricePerMonth: 9.95,
-        amountOfMonths: 1,
-        durationLabel: "1 month",
-        displayPrice: "$9.95",
-        pricePerMonth: "$9.95"
-    )
-    static var oneYear: Self = PlanOption(
-        id: "2",
-        storePricePerMonth: 6.66,
-        amountOfMonths: 12,
-        durationLabel: "1 year",
-        displayPrice: "$79.95",
-        pricePerMonth: "$6.66"
-    )
-}
+    public extension PlanOption {
+        static var oneMonth: Self = PlanOption(
+            id: "1",
+            storePricePerMonth: 9.95,
+            amountOfMonths: 1,
+            durationLabel: "1 month",
+            displayPrice: "$9.95",
+            pricePerMonth: "$9.95"
+        )
+        static var oneYear: Self = PlanOption(
+            id: "2",
+            storePricePerMonth: 6.66,
+            amountOfMonths: 12,
+            durationLabel: "1 year",
+            displayPrice: "$79.95",
+            pricePerMonth: "$6.66"
+        )
+    }
 #endif

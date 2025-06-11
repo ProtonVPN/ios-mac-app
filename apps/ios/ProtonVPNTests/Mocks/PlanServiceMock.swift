@@ -42,10 +42,18 @@ class PlanServiceMock: PlanService {
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
-        return 63
+        63
+    }
+
+    var iapStatus: IAPSupportStatusV2 {
+        .enabled
     }
 
     func presentSubscriptionManagement() {
         callbackPresentSubscriptionManagement?()
     }
+
+    func clear() {}
+
+    func fetchAppleStatus() async throws {}
 }

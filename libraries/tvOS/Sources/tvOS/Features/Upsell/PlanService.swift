@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import ModalsServices
 import ProtonCorePaymentsV2
 import StoreKit
@@ -59,7 +59,8 @@ final class PlanService {
         let remoteManager = RemoteManager(
             sessionID: authCredentials.sessionId,
             authToken: authCredentials.accessToken,
-            appVersion: appInfo.appVersion
+            appVersion: appInfo.appVersion,
+            atlasSecret: doh.atlasSecret
         )
         self.remoteManager = remoteManager
         let paymentsAPIs = PaymentsAPIs(doh: doh)

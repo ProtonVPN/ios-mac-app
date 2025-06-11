@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import Combine
-import ProtonCorePaymentsV2
-import ProtonCorePaymentsUIV2
+import Dependencies
+import Foundation
 import LegacyCommon
+import ProtonCorePaymentsUIV2
+import ProtonCorePaymentsV2
 import VPNAppCore
 import VPNShared
 
@@ -31,7 +31,7 @@ protocol PlanServiceFactory {
 
 protocol PlanServiceDelegate: AnyObject {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async
+    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async
 }
 
 protocol PlanService {
@@ -88,7 +88,8 @@ final class CorePlanService: PlanService {
         let remoteManager = RemoteManager(
             sessionID: authCredentials.sessionId,
             authToken: authCredentials.accessToken,
-            appVersion: appInfo.appVersion
+            appVersion: appInfo.appVersion,
+            atlasSecret: doh.atlasSecret
         )
         self.remoteManager = remoteManager
         let paymentsAPIs = PaymentsAPIs(doh: doh)
@@ -108,7 +109,7 @@ final class CorePlanService: PlanService {
             try? await TransactionsObserver.shared.start()
         }
 
-        self.protonPlansManager.transactionProgress.sink { [weak self] transactionProgress in
+        protonPlansManager.transactionProgress.sink { [weak self] transactionProgress in
             self?.handleTransactionProgress(transactionProgress)
         }.store(in: &cancellables)
     }
@@ -162,11 +163,11 @@ final class CorePlanService: PlanService {
             Task { [weak self] in
                 await self?.delegate?
                     .paymentTransactionDidFinish(
-                    modalSource: nil,
-                    newPlanName: nil,
-                    offerReference: nil,
-                    flowType: .oneClick
-                )
+                        modalSource: nil,
+                        newPlanName: nil,
+                        offerReference: nil,
+                        flowType: .oneClick
+                    )
             }
         case .transactionCancelledByUser:
             break

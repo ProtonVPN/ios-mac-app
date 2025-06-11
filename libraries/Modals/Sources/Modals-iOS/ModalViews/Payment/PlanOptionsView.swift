@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import ModalsShared
 import ModalsServices
+import ModalsShared
+import SwiftUI
 
 struct PlanOptionsView: View {
-    private static let imagePadding: EdgeInsets = EdgeInsets(top: 0, leading: 52, bottom: 24, trailing: 52)
+    private static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
     private static let maxContentWidth: CGFloat = 480
 
     typealias ActionHandler = () -> Void
@@ -109,7 +109,7 @@ struct PlanOptionsView: View {
     }
 
     private var imagePadding: EdgeInsets? {
-        return modalType.hasNewUpsellScreen ? Self.imagePadding : nil
+        modalType.hasNewUpsellScreen ? Self.imagePadding : nil
     }
 }
 
@@ -121,7 +121,8 @@ import CombineSchedulers
     let client: PlansClient = .init(
         retrievePlans: { plans },
         validate: { _ in
-        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!)) },
+            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+        },
         availableDiscount: { _ in 23 }
     )
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
@@ -132,13 +133,13 @@ import CombineSchedulers
     let plans: [PlanOption] = [.oneYear, .oneMonth]
     let client: PlansClient = .init(
         retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
             return plans
         },
         validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
         },
-        availableDiscount: { _  in 49 }
+        availableDiscount: { _ in 49 }
     )
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }

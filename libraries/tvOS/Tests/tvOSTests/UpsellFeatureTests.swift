@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
+@testable import CommonNetworking
 import ComposableArchitecture
 import Ergonomics
+import Foundation
 import ModalsServices
 import ProtonCorePaymentsV2
 @testable import tvOS
-@testable import CommonNetworking
+import XCTest
 
 final class UpsellFeatureTests: XCTestCase {
     @MainActor

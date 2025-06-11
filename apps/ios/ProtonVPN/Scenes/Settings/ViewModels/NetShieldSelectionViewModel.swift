@@ -26,8 +26,8 @@ import Strings
 import Theme
 
 import LegacyCommon
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 final class NetShieldSelectionViewModel {
     typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
@@ -38,7 +38,7 @@ final class NetShieldSelectionViewModel {
 
     private var selectedFeature: NetShieldType
 
-    let onSelect: ((NetShieldType, @escaping (Bool) -> Void) -> Void)
+    let onSelect: (NetShieldType, @escaping (Bool) -> Void) -> Void
 
     var onDataChange: (() -> Void)?
 
@@ -83,17 +83,16 @@ final class NetShieldSelectionViewModel {
 
     private var netShieldUpsellSection: TableViewSection {
         @Dependency(\.credentialsProvider) var credentialsProvider
-        let upsellCell: TableViewCellModel
-        if credentialsProvider.planName.isBusinessWithoutNetShield {
-            upsellCell = TableViewCellModel.imageSubtitleImage(
+        let upsellCell = if credentialsProvider.planName.isBusinessWithoutNetShield {
+            TableViewCellModel.imageSubtitleImage(
                 title: Localizable.netshieldBusinessUpsellTitle,
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,
                 leadingImage: Asset.netshieldSmall.image,
                 trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: { }
+                handler: {}
             )
         } else {
-            upsellCell = TableViewCellModel.imageSubtitle(
+            TableViewCellModel.imageSubtitle(
                 title: Localizable.netshieldUpsellTitle,
                 subtitle: Localizable.netshieldUpsellSubtitle,
                 image: Asset.netshieldSmall.image,
@@ -141,7 +140,8 @@ final class NetShieldSelectionViewModel {
         }
     }
 
-    @objc private func reload() {
+    @objc
+    private func reload() {
         onDataChange?()
     }
 }

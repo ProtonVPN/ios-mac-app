@@ -16,21 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import StoreKit
+import UIKit
 
 import Dependencies
 
 import ProtonCoreFeatureFlags
 import ProtonCorePaymentsV2
 
-import Modals
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
+import Modals
 import VPNAppCore
 
-import Strings
 import Domain
+import Strings
 
 final class OneClickPayment {
     static var allowPayments: Bool {
@@ -101,22 +101,22 @@ final class OneClickPayment {
     }
 
     @objc
-    private func userDidDismissWelcomeScreen(_ notification: Notification) {
+    private func userDidDismissWelcomeScreen(_: Notification) {
         log.debug("Received UserDismissedWelcomeScreen notification, completing flow", category: .iap)
         completionHandler()
     }
 
-    func plansClient(validationHandler: ((PlanOption, InAppPurchasePlan?) -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
+    func plansClient(validationHandler: ((PlanOption, ComposedPlan?) -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
         let client = PlansClient(
             retrievePlans: { [weak self] in
                 guard let self else { throw PurchaseError.presentingScreenDismissed }
-                return try await self.planOptions()
+                return try await planOptions()
             },
             validate: { @MainActor [weak self] planOption in
-                let plan = self?.inAppPurchasePlans.first { plan, _ in
-                    plan.fingerprint == planOption.fingerprint
+                let composedPlan = self?.availablePlans.first {
+                    $0.product.id == planOption.id
                 }
-                validationHandler?(planOption, plan?.iapPlan)
+                validationHandler?(planOption, composedPlan)
                 await self?.validate(selectedPlan: planOption)
             },
             availableDiscount: { [weak self] planOption in
@@ -132,13 +132,14 @@ final class OneClickPayment {
             notNow: { [weak self] in
                 notNowHandler?()
                 self?.completionHandler()
-            })
+            }
+        )
         return client
     }
 
     @MainActor
     func oneClickIAPViewController(dismissAction: (() -> Void)? = nil) -> UIViewController {
-        return ModalsFactory().upsellViewController(
+        ModalsFactory().upsellViewController(
             modalType: .subscription,
             client: plansClient(),
             dismissAction: dismissAction
@@ -157,7 +158,6 @@ final class OneClickPayment {
         completionHandler()
     }
 
-
     @MainActor
     func validate(selectedPlan: PlanOption) async {
         guard selectedPlan.purchaseType == .iap else {
@@ -165,14 +165,16 @@ final class OneClickPayment {
             return
         }
         do {
-            let purchasedPlan = try await self.buyPlan(planOption: selectedPlan)
+            let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
             await planService.delegate?
                 .paymentTransactionDidFinish(
-                modalSource: nil,
-                newPlanName: purchasedPlan.plan.name,
-                offerReference: nil,
-            )
+                    modalSource: nil,
+                    newPlanName: purchasedPlan.plan.name,
+                    offerReference: nil,
+                    flowType: .oneClick
+                )
+            completionHandler()
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
         } catch {
@@ -210,7 +212,7 @@ final class OneClickPayment {
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
-        if composedPlans.isEmpty && !shouldShowTwoYearsWebPlan {
+        if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
             throw PurchaseError.defaultPlanNotFound
         }
 
@@ -262,11 +264,11 @@ extension OneClickPayment {
         var localizedDescription: String {
             switch self {
             case .featureFlagDisabled:
-                return "Account upgrade is currently unavailable on this device."
+                "Account upgrade is currently unavailable on this device."
             case .isTestFlight:
-                return "Account upgrade is not available on TestFlight."
-            case .iapDisabled(localizedReason: let reason):
-                return reason ?? "In-App purchases are temporarily unavailable on this device."
+                "Account upgrade is not available on TestFlight."
+            case let .iapDisabled(localizedReason: reason):
+                reason ?? "In-App purchases are temporarily unavailable on this device."
             }
         }
     }
@@ -286,11 +288,11 @@ extension OneClickPayment {
         var localizedDescription: String? {
             switch self {
             case .defaultPlanNotFound:
-                return "Default plan not found"
-            case .planNotFound(let planName):
-                return "StoreKitManager plan (\(planName)) not found"
+                "Default plan not found"
+            case let .planNotFound(planName):
+                "StoreKitManager plan (\(planName)) not found"
             case .presentingScreenDismissed:
-                return "Presenting screen was dismissed"
+                "Presenting screen was dismissed"
             }
         }
     }

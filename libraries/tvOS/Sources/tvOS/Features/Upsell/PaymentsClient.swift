@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Combine
 import Dependencies
-import StoreKit
-import ProtonCorePaymentsV2
+import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import ProtonCorePaymentsV2
+import StoreKit
 
 enum PaymentsError: Error, CustomStringConvertible {
     case planNotFound(String)
@@ -30,20 +30,20 @@ enum PaymentsError: Error, CustomStringConvertible {
     var code: Int? {
         switch self {
         case .iapDisabled:
-            return nil
+            nil
 
         case .planNotFound:
-            return -1
+            -1
         }
     }
 
     var codeSuffix: String? {
-        code.map { "(\($0))"}
+        code.map { "(\($0))" }
     }
 
     /// Default error description, suffixed with the code if it has one, to ease error identification.
     var description: String {
-        return ["In-App Purchases are temporarily not available.", codeSuffix]
+        ["In-App Purchases are temporarily not available.", codeSuffix]
             .compactMap { $0 }
             .joined(separator: " ")
     }
@@ -81,13 +81,13 @@ struct PaymentsClient: Sendable, DependencyKey {
                 return planOptions?.map { $0 } ?? []
             },
             attemptPurchase: { planOption in
-                return try await payments?.buyPlan(planOption: planOption)
+                try await payments?.buyPlan(planOption: planOption)
             }
         )
     }()
 
     static let testValue: PaymentsClient = .init(
-        startObserving: { .init(unfolding: { nil })},
+        startObserving: { .init(unfolding: { nil }) },
         getOptions: unimplemented(),
         attemptPurchase: unimplemented(placeholder: nil)
     )

@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
 import Dependencies
 import Ergonomics
+import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import ProtonCorePaymentsV2
 
@@ -66,18 +66,18 @@ struct UpsellFeature {
                     await send(.finishedLoadingProducts(Result { try await client.getOptions() }))
                 }
 
-            case .finishedLoadingProducts(.success(let planOptions)):
+            case let .finishedLoadingProducts(.success(planOptions)):
                 let sortedPlanOptions = planOptions.sorted(by: { $0.amountOfMonths > $1.amountOfMonths })
                 state = .loaded(planOptions: sortedPlanOptions, purchaseInProgress: false)
                 return .none
 
-            case .finishedLoadingProducts(.failure(let error)):
+            case let .finishedLoadingProducts(.failure(error)):
                 log.error("Failed to load products with error: \(error)")
-                return .run { send in
+                return .run { _ in
                     await alertService.feed(error)
                 }
 
-            case .event(let result):
+            case let .event(result):
                 log.info("Finished processing transaction with the result: \(result)")
 
                 switch result {
@@ -89,7 +89,6 @@ struct UpsellFeature {
                     // Let's block the user from purchasing while we check that the tier has updated
                     setPurchaseInProgress(true, state: &state, shouldAssertLoading: false)
                     return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
-
                 case .transactionCancelledByUser:
                     return .none
                 case .mismatchTransactionIDs, .transactionProcessError, .unableToGetUserTransactionUUID, .unknownError:
@@ -97,7 +96,7 @@ struct UpsellFeature {
                     return .none
                 }
 
-            case .attemptPurchase(let option):
+            case let .attemptPurchase(option):
                 setPurchaseInProgress(true, state: &state)
                 return .run { send in
                     await send(.finishedPurchasing(Result { try await client.attemptPurchase(option) }))
@@ -133,7 +132,7 @@ struct UpsellFeature {
                     return .run { _ in await alertService.feed(purchaseError) }
                 }
 
-            case .pollTierUpdate(let remainingAttempts):
+            case let .pollTierUpdate(remainingAttempts):
                 guard remainingAttempts > 0 else {
                     // Purchase went through, but tier has not been updated on BE in sufficient time
                     setPurchaseInProgress(false, state: &state)
@@ -148,11 +147,11 @@ struct UpsellFeature {
                     ))
                 }
 
-            case .finishedPollingTierUpdate(let result):
-                if case .success(let tier) = result.tierResult, tier > 0 {
+            case let .finishedPollingTierUpdate(result):
+                if case let .success(tier) = result.tierResult, tier > 0 {
                     log.info("Upsell complete. Tier: \(tier)")
                     return .send(.upsold(tier: tier))
-                } else if case .failure(let error) = result.tierResult {
+                } else if case let .failure(error) = result.tierResult {
                     log.error("Failed to fetch tier information with error: \(error)")
                 }
                 return .run { send in
@@ -171,7 +170,7 @@ struct UpsellFeature {
 
     /// After we've loaded products, this function toggles the `purchaseInProgress` flag with some extra assertions
     private func setPurchaseInProgress(_ purchaseInProgress: Bool, state: inout State, shouldAssertLoading: Bool = true) {
-        guard case .loaded(let planOptions, let currentPurchaseInProgress) = state else {
+        guard case let .loaded(planOptions, currentPurchaseInProgress) = state else {
             assertionFailure("Cannot toggle purchase in progress while still loading")
             return
         }
