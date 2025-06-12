@@ -564,8 +564,12 @@ public final class VpnManager: VpnManagerProtocol {
                 self.setState(withError: error)
                 return
             }
+
             guard let vpnManager = vpnManager else { return }
             guard self.connectAllowed else { return }
+
+            tokens.removeAll()
+
             do {
                 log.info("Starting VPN tunnel", category: .connectionConnect)
 
@@ -585,13 +589,14 @@ public final class VpnManager: VpnManagerProtocol {
                                 return
                             }
 
+                            guard connection.status == .connected, let date = connection.connectedDate else {
+                                return
+                            }
+
                             defer {
                                 self?.tokens.removeValue(forKey: requestId)
                             }
 
-                            guard connection.status == .connected, let date = connection.connectedDate else {
-                                return
-                            }
                             if originalIntent == .random {
                                 @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
                                 serverChangeAuthorizer.registerServerChange(connectedAt: date)
