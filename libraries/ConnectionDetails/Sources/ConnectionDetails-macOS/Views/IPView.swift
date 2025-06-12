@@ -53,7 +53,7 @@ public struct IPView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
 
-                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
+                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable))
                     .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width

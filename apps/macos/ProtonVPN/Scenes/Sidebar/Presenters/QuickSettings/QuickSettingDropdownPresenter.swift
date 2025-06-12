@@ -55,7 +55,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     
     var dismiss: (() -> Void)?
     
-    init( _ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, alertService: CoreAlertService) {
+    init(_ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         self.alertService = alertService

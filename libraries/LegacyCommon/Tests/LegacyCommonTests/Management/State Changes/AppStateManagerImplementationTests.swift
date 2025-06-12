@@ -209,7 +209,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         successfullyConnect()
     }
     
-    func testDisconnectionFromConnected () {
+    func testDisconnectionFromConnected() {
         testConnectionFromInvalidOrDisconnected()
         startDisconnecting()
         successfullyDisconnect()

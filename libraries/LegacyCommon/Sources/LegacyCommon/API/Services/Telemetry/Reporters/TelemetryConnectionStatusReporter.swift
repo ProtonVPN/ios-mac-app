@@ -120,7 +120,7 @@ class TelemetryConnectionStatusReporter {
         var eventType: ConnectionEvent.Event?
         var connection: ServerConnectionIntent?
         switch connectionState {
-        case let .connected(connectionIntent,_, connectedDate, _):
+        case let .connected(connectionIntent, _, connectedDate, _):
             connection = connectionIntent
             timer.updateConnectionStarted(connectedDate)
             timer.markFinishedConnecting()

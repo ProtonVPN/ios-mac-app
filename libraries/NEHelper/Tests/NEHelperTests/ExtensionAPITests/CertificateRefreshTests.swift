@@ -393,7 +393,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
     func testMultipleRequestsShouldEnqueueProperly() {
         // How many "simultaneous" requests we should simulate being enqueued in the refresh manager
-        let requestIndices = 0..<10
+        let requestIndices = 0 ..< 10
 
         let expectations = (
             certRefresh: XCTestExpectation(description: "Wait for cert refresh request"),
@@ -911,7 +911,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         let expectations = (
             firstCertRefresh: XCTestExpectation(description: "first certificate refresh"),
             authTokenRefresh: XCTestExpectation(description: "first auth token refresh"),
-            sessionExpiredResult: (1...3).map { XCTestExpectation(description: "session expiry result #\($0)") }
+            sessionExpiredResult: (1 ... 3).map { XCTestExpectation(description: "session expiry result #\($0)") }
         )
 
         keychain.credentials = [

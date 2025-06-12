@@ -87,7 +87,7 @@ final class CountryItemViewModel {
     }
 
     var alphaForMainElements: CGFloat {
-        underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
+        underMaintenance ? 0.25 : (isTierTooLow ? 0.5 : 1)
     }
 
     var accessibilityLabel: String {

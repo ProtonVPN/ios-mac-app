@@ -142,7 +142,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                     let result = await Result { try await TunnelConnectionResponse(
                         logicalInfo: tunnelManager.connectedServer,
                         connectionDate: tunnelManager.session.connectedDate ?? date.now
-                    )}
+                    ) }
                     return await send(.connectionFinished(result))
                 }
 

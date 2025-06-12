@@ -284,7 +284,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
-        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)"} ?? "OS directly"
+        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 

@@ -65,7 +65,7 @@ public extension String {
         let allowedCharsCount = UInt32(allowedChars.count)
         var randomString = ""
         
-        for _ in 0..<length {
+        for _ in 0 ..< length {
             let randomNum = Int(arc4random_uniform(allowedCharsCount)) // swiftlint:disable:this legacy_random
             let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
             let newCharacter = allowedChars[randomIndex]
@@ -94,18 +94,18 @@ public extension String {
 }
 
 public extension String {
-    subscript (i: Int) -> Character {
+    subscript(i: Int) -> Character {
         self[index(startIndex, offsetBy: i)]
     }
     
-    subscript (i: Int) -> String {
+    subscript(i: Int) -> String {
         String(self[i] as Character)
     }
     
-    subscript (r: Range<Int>) -> String {
+    subscript(r: Range<Int>) -> String {
         let start = index(startIndex, offsetBy: r.lowerBound)
         let end = index(startIndex, offsetBy: r.upperBound)
-        let range: Range<Index> = start..<end
+        let range: Range<Index> = start ..< end
         return String(self[range])
     }
 }

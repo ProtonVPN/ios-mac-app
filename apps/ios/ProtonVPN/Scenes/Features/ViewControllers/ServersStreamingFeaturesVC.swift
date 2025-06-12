@@ -39,7 +39,7 @@ class ServersStreamingFeaturesVC: UIViewController {
     @IBOutlet private weak var extraLbl: UILabel!
     @IBOutlet private weak var servicesCVHeightConstraint: NSLayoutConstraint!
 
-    init( _ viewModel: ServersStreamingFeaturesViewModel ) {
+    init(_ viewModel: ServersStreamingFeaturesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

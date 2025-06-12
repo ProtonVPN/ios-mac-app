@@ -30,7 +30,7 @@ import LegacyCommon
 
 protocol CountriesServersHeaderViewModelProtocol: AnyObject {
     var title: String { get }
-    var didTapInfoBtn: ( () -> Void )? { get }
+    var didTapInfoBtn: (() -> Void)? { get }
 }
 
 class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {

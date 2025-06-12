@@ -59,7 +59,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         NetShieldUpsellAlert()
     }
 
-    init( _ factory: Factory ) {
+    init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
         netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification

@@ -169,7 +169,7 @@ func presentationRules() {
     // Not presented yet but registered 3 days ago (and item requires 2 days before first presentation)
     withDependencies {
         $0.evaluatorClient = basicEvaluatorClient
-        $0.date.now = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 + 3*86400) // +3 days
+        $0.date.now = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 + 3 * 86400) // +3 days
     } operation: {
         #expect(Evaluator.evaluate(items: [.testingDelayItem]) == [.testingDelayItem])
     }

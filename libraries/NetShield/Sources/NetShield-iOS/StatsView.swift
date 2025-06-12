@@ -79,7 +79,7 @@ struct StatsView_Previews: PreviewProvider {
 
 private extension StatModel {
     static var random: StatModel {
-        .init(value: "\(Int.random(in: 1...1000))",
+        .init(value: "\(Int.random(in: 1 ... 1000))",
               title: "Trackers\nstopped",
               help: "",
               isEnabled: .random())

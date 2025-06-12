@@ -106,7 +106,7 @@ class StateAlertTests: XCTestCase {
 
         XCTAssertTrue(alertService.alerts.isEmpty)
 
-        let timeouts = (1...2).map { XCTestExpectation(description: "connection timeout \($0)") }
+        let timeouts = (1 ... 2).map { XCTestExpectation(description: "connection timeout \($0)") }
         timerFactory.runRepeatingTimers {
             timeouts[0].fulfill()
         }

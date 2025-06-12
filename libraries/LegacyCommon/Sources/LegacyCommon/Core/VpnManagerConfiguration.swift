@@ -213,7 +213,7 @@ public class VpnManagerConfigurationPreparer {
         }
 
         return extraConfiguration.reduce("") {
-            $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.usernameSuffix
+            $0 + "\(VpnManagerConfiguration.configConcatChar)" + $1.usernameSuffix
         }
     }
 }

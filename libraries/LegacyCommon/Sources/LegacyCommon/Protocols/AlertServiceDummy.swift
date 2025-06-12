@@ -25,7 +25,7 @@ import VPNAppCore
 
 public class CoreAlertServiceDummy: CoreAlertService {
     public var alerts = [SystemAlert]()
-    public var alertAdded: ( (SystemAlert) -> Void )?
+    public var alertAdded: ((SystemAlert) -> Void)?
 
     public init() {}
 

@@ -40,7 +40,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let minNetworkErrorRetryDelay: UInt32 = 10
     private let networkErrorRetryDelayJitter: UInt32 = 5
     private var networkRetryDelay: UInt32 {
-        let jitter = UInt32.random(in: 0...networkErrorRetryDelayJitter)
+        let jitter = UInt32.random(in: 0 ... networkErrorRetryDelayJitter)
         return minNetworkErrorRetryDelay + jitter
     }
 

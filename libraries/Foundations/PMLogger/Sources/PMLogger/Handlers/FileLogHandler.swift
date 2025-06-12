@@ -79,7 +79,7 @@ public final class FileLogHandler: ParentLogHandler {
         if !fileManager.fileExists(atPath: fileUrl.path) {
             fileManager.createFile(atPath: fileUrl.path, contents: nil, attributes: nil)
             #if !os(OSX)
-                try (fileUrl as NSURL).setResourceValue( URLFileProtection.complete, forKey: .fileProtectionKey)
+                try (fileUrl as NSURL).setResourceValue(URLFileProtection.complete, forKey: .fileProtectionKey)
             #endif
             delegate?.didCreateNewLogFile()
         }

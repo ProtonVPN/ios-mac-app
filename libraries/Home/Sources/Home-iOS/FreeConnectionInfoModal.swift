@@ -156,7 +156,7 @@ private struct WrappingHStack: Layout {
     FreeConnectionInfoModal(
         store: .init(
             initialState: .init(
-                countryCodes: ["US","JP","PL","NL","RO"]
+                countryCodes: ["US", "JP", "PL", "NL", "RO"]
             )
         ) {
             FreeConnectionInfoFeature()

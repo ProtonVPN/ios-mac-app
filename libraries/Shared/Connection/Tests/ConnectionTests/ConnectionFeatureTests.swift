@@ -518,7 +518,7 @@
             store.dependencies.connectionIntentResolver = .init(resolve: { _ in
                 XCTFail("Shouldn't get to preparation step, authorization should fail first")
                 return .mock()
-            }, authorize: { _, _ throws (ConnectionIntentResolutionError) in
+            }, authorize: { _, _ throws(ConnectionIntentResolutionError) in
                 throw ConnectionIntentResolutionError.specificCountryUnavailable(countryCode: "US")
             })
 

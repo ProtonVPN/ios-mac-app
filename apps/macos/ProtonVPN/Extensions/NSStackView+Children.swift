@@ -27,7 +27,7 @@ extension NSStackView {
     /// Keep in mind that views should be retained if you inted to reuse them.
     func clear() {
         for arrangedSubview in arrangedSubviews {
-            removeArrangedSubview( arrangedSubview )
+            removeArrangedSubview(arrangedSubview)
             arrangedSubview.removeFromSuperview()
         }
     }

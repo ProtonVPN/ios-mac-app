@@ -59,7 +59,7 @@ public struct AppView: View {
                 } else {
                     UpsellView(store: store.scope(state: \.upsell, action: \.upsell))
                         .background(Image(.backgroundStage))
-                        .task { store.send(.upsell(.loadProducts))}
+                        .task { store.send(.upsell(.loadProducts)) }
                 }
             } else {
                 progressView

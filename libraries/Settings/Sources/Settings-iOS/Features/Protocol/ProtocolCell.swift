@@ -33,7 +33,7 @@ struct ProtocolCell: View {
 
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-    private var isStandardLayoutActive: Bool { dynamicTypeSize <= .xxxLarge}
+    private var isStandardLayoutActive: Bool { dynamicTypeSize <= .xxxLarge }
 
     var body: some View {
         cellContent

@@ -90,7 +90,7 @@ class ZoomView: NSView {
         var tickStart: CGPoint
         var tickEnd: CGPoint
         
-        for i in 1...Int(zoomLevels + 0.5) {
+        for i in 1 ... Int(zoomLevels + 0.5) {
             if orientation == .vertical {
                 tickStart = CGPoint(x: bounds.width - buttonWidth + (buttonWidth - tickHeight) / 2, y: buttonWidth + CGFloat(i) * length / (zoomLevels + 1))
                 tickEnd = CGPoint(x: tickStart.x + tickHeight, y: tickStart.y)

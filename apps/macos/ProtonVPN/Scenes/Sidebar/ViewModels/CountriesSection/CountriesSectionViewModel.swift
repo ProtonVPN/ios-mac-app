@@ -211,7 +211,7 @@ class CountriesSectionViewModel {
         updateState()
     }
 
-    func displayUpgradeMessage( _ serverModel: ServerModel? ) {
+    func displayUpgradeMessage(_ serverModel: ServerModel?) {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
 
@@ -273,7 +273,7 @@ class CountriesSectionViewModel {
         currentQuery = query
         updateState()
         let newCount = totalRowCount
-        let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount), removedRows: IndexSet(integersIn: 0..<pastCount))
+        let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0 ..< newCount), removedRows: IndexSet(integersIn: 0 ..< pastCount))
         contentChanged?(contentChange)
     }
 
@@ -423,7 +423,7 @@ class CountriesSectionViewModel {
             .flatMap { [$0.header].appending($0.cells) }
     }
 
-    private func serverViewModel( _ server: ServerInfo) -> ServerItemViewModel {
+    private func serverViewModel(_ server: ServerInfo) -> ServerItemViewModel {
         ServerItemViewModel(serverModel: server,
                             vpnGateway: vpnGateway,
                             appStateManager: appStateManager,

@@ -122,7 +122,7 @@
             }
 
             let nAttempts = 10
-            for attempt in 1...nAttempts {
+            for attempt in 1 ... nAttempts {
                 var cancelResult: SystemExtensionResult?
                 let installCancelled = XCTestExpectation(description: "Cancel install attempt #\(attempt)")
 

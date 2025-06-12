@@ -70,7 +70,7 @@ final class CountryViewController: UIViewController {
         guard let viewModel else { return }
         let services = viewModel.streamingServices
         let countryName = viewModel.countryName
-        let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager )
+        let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager)
         let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
         present(vc, animated: true, completion: nil)
     }

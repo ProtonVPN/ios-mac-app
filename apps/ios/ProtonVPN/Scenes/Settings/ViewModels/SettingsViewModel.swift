@@ -353,7 +353,7 @@ final class SettingsViewModel {
         let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
-            return .available( enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
+            return .available(enabled: featurePropertyProvider.getValue(for: feature) == .on, interactive: true)
         case .failure(.featureDisabled):
             return .disabled
         case .failure(.requiresUpgrade):
@@ -705,7 +705,7 @@ final class SettingsViewModel {
                 alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
                     log.debug("Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
                               category: .connectionDisconnect, event: .trigger)
-                    completion(.success(/* shouldReconnect */ false))
+                    completion(.success( /* shouldReconnect */ false))
                 }, cancelHandler: {
                     completion(.failure(.userCancelled))
                 }))

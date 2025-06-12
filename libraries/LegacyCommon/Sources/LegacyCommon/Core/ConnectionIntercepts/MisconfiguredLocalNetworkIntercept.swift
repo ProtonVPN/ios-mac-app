@@ -107,10 +107,10 @@ struct MisconfiguredLocalNetworkIntercept: VpnConnectionInterceptPolicyItem {
 
 extension NetworkInterface {
     static let localIpv4Ranges: [Range<IPv4Address>] = [
-        IPv4Address("10.0.0.0")!..<IPv4Address("10.255.255.255")!, // RFC1918
-        IPv4Address("172.16.0.0")!..<IPv4Address("172.31.255.255")!,
-        IPv4Address("192.168.0.0")!..<IPv4Address("192.168.255.255")!,
-        IPv4Address("169.254.0.0")!..<IPv4Address("169.254.255.255")!, // RFC3927
+        IPv4Address("10.0.0.0")! ..< IPv4Address("10.255.255.255")!, // RFC1918
+        IPv4Address("172.16.0.0")! ..< IPv4Address("172.31.255.255")!,
+        IPv4Address("192.168.0.0")! ..< IPv4Address("192.168.255.255")!,
+        IPv4Address("169.254.0.0")! ..< IPv4Address("169.254.255.255")!, // RFC3927
     ]
 
     var hasBadRanges: Bool {
@@ -197,7 +197,7 @@ extension Range<IPv4Address> {
                 let lowData = Data(bytes: &low, count: MemoryLayout<UInt32>.size)
                 let hiData = Data(bytes: &hi, count: MemoryLayout<UInt32>.size)
 
-                return IPv4Address(lowData)!..<IPv4Address(hiData)!
+                return IPv4Address(lowData)! ..< IPv4Address(hiData)!
             }
         }
     }

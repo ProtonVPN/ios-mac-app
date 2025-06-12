@@ -106,7 +106,7 @@ class GIFView: NSView {
 
         let count = CGImageSourceGetCount(imageSource)
         var frames: [CGImage] = []
-        for index in 0..<count {
+        for index in 0 ..< count {
             guard let frame = CGImageSourceCreateImageAtIndex(imageSource, index, nil) else {
                 return nil
             }

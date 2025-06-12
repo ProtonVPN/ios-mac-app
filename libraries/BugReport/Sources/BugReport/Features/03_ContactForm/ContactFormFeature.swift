@@ -183,7 +183,7 @@ struct ContactFormFeature: Reducer {
 
             case let .sendResponseReceived(response):
                 state.isSending = false
-                state.resultState = BugReportResultFeature.State(error: response.errorOrNil?.localizedDescription ?? nil )
+                state.resultState = BugReportResultFeature.State(error: response.errorOrNil?.localizedDescription ?? nil)
                 return .none
 
             case .resultViewClosed:

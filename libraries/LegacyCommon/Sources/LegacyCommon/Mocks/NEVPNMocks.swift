@@ -256,7 +256,7 @@
 
         public var wireguardRequestSent: ((WireguardProviderRequest) -> Response)?
 
-        public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R : ProviderRequest {
+        public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
             guard let request = message as? WireguardProviderRequest else {
                 reportIssue("\(self): received incorrect message type: \(message)")
                 return

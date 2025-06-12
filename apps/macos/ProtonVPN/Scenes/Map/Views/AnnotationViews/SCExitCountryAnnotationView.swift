@@ -74,7 +74,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             let mousePoint = window.mouseLocationOutsideOfEventStream
             let pointInView = convert(mousePoint, from: nil)
 
-            for index in 0..<viewModel.servers.count {
+            for index in 0 ..< viewModel.servers.count {
                 let itemFrame = CGRect(x: buttonFrame.origin.x,
                                        y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
                                        width: buttonFrame.size.width, height: Self.textLineHeight)

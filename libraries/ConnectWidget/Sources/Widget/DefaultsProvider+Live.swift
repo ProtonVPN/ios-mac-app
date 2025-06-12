@@ -21,5 +21,5 @@ import struct VPNShared.DefaultsProvider
 import Domain
 
 extension DefaultsProvider: @retroactive DependencyKey {
-    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults } )
+    public static let liveValue: DefaultsProvider = .init(getDefaults: { .domainUserDefaults })
 }

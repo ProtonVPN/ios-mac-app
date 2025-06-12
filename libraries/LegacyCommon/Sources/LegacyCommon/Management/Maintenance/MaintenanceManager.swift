@@ -52,7 +52,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
 
     private var timer: Timer?
 
-    public init( factory: Factory) {
+    public init(factory: Factory) {
         self.factory = factory
     }
 

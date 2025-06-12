@@ -46,7 +46,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     var name: NSAttributedString {
         var adjustedName = profile.name
         if adjustedName.count > ProfileItemViewModel.maxCharCount {
-            adjustedName = adjustedName[0..<ProfileItemViewModel.maxCharCount] + "..."
+            adjustedName = adjustedName[0 ..< ProfileItemViewModel.maxCharCount] + "..."
         }
         return adjustedName.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }

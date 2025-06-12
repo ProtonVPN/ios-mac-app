@@ -51,7 +51,7 @@ extension NEPacketTunnelProvider: ConnectionTunnelFactory {
             let result = closure()
             guard result == errSecSuccess else {
                 let userInfo: [String: Any]? = if let string = SecCopyErrorMessageString(result, nil) as? String {
-                    [ NSLocalizedDescriptionKey: string ]
+                    [NSLocalizedDescriptionKey: string]
                 } else {
                     nil
                 }
@@ -418,7 +418,7 @@ class NWTCPDataTask: DataTaskProtocol {
                             domain: NSPOSIXErrorDomain,
                             code: Int(ETIMEDOUT),
                             userInfo: userInfo
-                        )) )
+                        )))
                     }
                 case .invalid:
                     log.error("Connection state invalidated", category: .net, metadata: ["id": "\(self.taskId)"])

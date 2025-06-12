@@ -155,11 +155,11 @@ class UserAccountUpdateViewController: NSViewController {
         setServerHeader(reconnectInfo.toServer, Localizable.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
 
-    private func setServerHeader( _ server: ReconnectInfo.Server,
-                                  _ header: String,
-                                  _ flagIV: NSImageView,
-                                  _ serverName: NSTextField,
-                                  _ serverHeader: NSTextField ) {
+    private func setServerHeader(_ server: ReconnectInfo.Server,
+                                 _ header: String,
+                                 _ flagIV: NSImageView,
+                                 _ serverName: NSTextField,
+                                 _ serverHeader: NSTextField) {
         serverName.stringValue = server.name
         flagIV.image = server.image
         serverHeader.stringValue = header

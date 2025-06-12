@@ -71,7 +71,7 @@ class TabBarView: NSView {
         }
         
         let startX = (bounds.size.width - (tabWidth * CGFloat(tabCount))) / 2
-        for i in 0..<tabCount {
+        for i in 0 ..< tabCount {
             let x = startX + bounds.origin.x + CGFloat(i) * tabWidth
             let rect = NSRect(x: x, y: bounds.origin.y, width: tabWidth, height: tabHeight)
             drawSection(context: context, rect: rect, sectionIndex: i)

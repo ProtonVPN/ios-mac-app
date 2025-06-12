@@ -345,11 +345,11 @@ class CountryItemViewModel {
         return DomainConstants.serverTierName(forTier: tier) + " (\(serversCount(for: section)))"
     }
 
-    func isServerPlusOrAbove( for section: Int) -> Bool {
+    func isServerPlusOrAbove(for section: Int) -> Bool {
         serverViewModels[section].tier.isPaidTier
     }
 
-    func isServerFree( for section: Int) -> Bool {
+    func isServerFree(for section: Int) -> Bool {
         serverViewModels[section].tier.isFreeTier
     }
 

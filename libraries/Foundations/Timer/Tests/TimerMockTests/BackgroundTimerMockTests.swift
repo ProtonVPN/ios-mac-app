@@ -60,7 +60,7 @@ final class BackgroundTimerMockTests: XCTestCase {
         factory.runRepeatingTimers()
 
         // Run with done closure and count how many times it was called
-        for _ in 1...expectation.expectedFulfillmentCount - 1 {
+        for _ in 1 ... expectation.expectedFulfillmentCount - 1 {
             factory.runRepeatingTimers {
                 expectationRepeatingTimersAreDone.fulfill()
             }
@@ -75,7 +75,7 @@ final class BackgroundTimerMockTests: XCTestCase {
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 3
 
-        for _ in 1...expectation.expectedFulfillmentCount {
+        for _ in 1 ... expectation.expectedFulfillmentCount {
             factory.scheduleAfter(.milliseconds(1), on: DispatchQueue.global()) {
                 expectation.fulfill()
             }

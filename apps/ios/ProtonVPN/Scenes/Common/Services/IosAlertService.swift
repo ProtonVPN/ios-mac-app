@@ -427,7 +427,7 @@ extension IosAlertService: CoreAlertService {
         factory.makeTroubleshootCoordinator().start()
     }
 
-    private func show(_ alert: VpnServerOnMaintenanceAlert ) {
+    private func show(_ alert: VpnServerOnMaintenanceAlert) {
         showNotificationStyleAlert(message: alert.title ?? "", type: .success)
     }
 

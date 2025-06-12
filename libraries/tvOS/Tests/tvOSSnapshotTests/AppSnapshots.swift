@@ -45,7 +45,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
             $0.continuousClock = TestClock()
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [ ] },
+                getOptions: { [] },
                 attemptPurchase: { _ in .purchaseCancelled }
             )
 
@@ -85,7 +85,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
             $0.continuousClock = TestClock()
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [ ] },
+                getOptions: { [] },
                 attemptPurchase: { _ in .purchaseCancelled }
             )
         }

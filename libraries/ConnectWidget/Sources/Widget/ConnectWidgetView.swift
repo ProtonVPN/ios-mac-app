@@ -27,7 +27,7 @@ import SharedViews
 
 import ComposableArchitecture
 
-public struct ConnectWidgetView : View {
+public struct ConnectWidgetView: View {
     let entry: ConnectWidgetEntry
 
     @Environment(\.widgetFamily) var widgetFamily
@@ -241,7 +241,7 @@ private struct RecentsView: View {
     }
 }
 
-private struct ButtonsView : View {
+private struct ButtonsView: View {
     @Environment(\.widgetFamily) var widgetFamily
     let entry: ConnectWidgetEntry
 

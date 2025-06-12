@@ -30,7 +30,7 @@
 
         public convenience init(rgbHex: Int) {
             let components = rgbHex.rgbComponents
-            self.init( red: components.r, green: components.g, blue: components.b )
+            self.init(red: components.r, green: components.g, blue: components.b)
         }
 
         public var hexRepresentation: Int {
@@ -54,7 +54,7 @@
 
         public convenience init(rgbHex: Int) {
             let components = rgbHex.rgbComponents
-            self.init( red: components.r, green: components.g, blue: components.b )
+            self.init(red: components.r, green: components.g, blue: components.b)
         }
 
         public var hexRepresentation: Int {
@@ -70,13 +70,13 @@
 
 private typealias RGB = (r: Int, g: Int, b: Int)
 
-private func checkColors( _ red: Int, _ green: Int, _ blue: Int) {
+private func checkColors(_ red: Int, _ green: Int, _ blue: Int) {
     assert(red >= 0 && red <= 255, "Invalid red component")
     assert(green >= 0 && green <= 255, "Invalid green component")
     assert(blue >= 0 && blue <= 255, "Invalid blue component")
 }
 
-private func convert2Hex( _ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ alpha: CGFloat ) -> Int {
+private func convert2Hex(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ alpha: CGFloat) -> Int {
     let red = Int((red * 255.0).rounded())
     let green = Int((green * 255.0).rounded())
     let blue = Int((blue * 255.0).rounded())
@@ -86,6 +86,6 @@ private func convert2Hex( _ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ a
 
 extension Int {
     fileprivate var rgbComponents: RGB {
-        RGB( (self >> 16) & 0xFF, (self >> 8) & 0xFF, self & 0xFF )
+        RGB((self >> 16) & 0xFF, (self >> 8) & 0xFF, self & 0xFF)
     }
 }

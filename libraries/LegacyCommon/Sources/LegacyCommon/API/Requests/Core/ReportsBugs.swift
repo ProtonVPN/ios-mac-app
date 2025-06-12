@@ -25,7 +25,7 @@ public final class ReportsBugs: Request {
     public let bug: ReportBug
     private let authKeychain: AuthKeychainHandle
 
-    public init( _ bug: ReportBug, authKeychain: AuthKeychainHandle) {
+    public init(_ bug: ReportBug, authKeychain: AuthKeychainHandle) {
         self.bug = bug
         self.authKeychain = authKeychain
     }

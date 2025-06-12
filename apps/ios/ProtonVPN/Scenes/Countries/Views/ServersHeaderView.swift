@@ -28,7 +28,7 @@ class ServersHeaderView: UITableViewHeaderFooterView {
     @IBOutlet private weak var serversName: UILabel!
     @IBOutlet private weak var infoBtn: UIButton!
 
-    var callback: ( () -> Void )? {
+    var callback: (() -> Void)? {
         didSet {
             infoBtn.isHidden = callback == nil
         }

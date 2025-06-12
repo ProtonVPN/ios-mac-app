@@ -29,7 +29,7 @@ extension NEVPNStatus: @retroactive CasePathable {
             )
         }
 
-        public var disconnected: AnyCasePath<NEVPNStatus, Void>{
+        public var disconnected: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.disconnected },
                 extract: { guard case .disconnected = $0 else { return nil } }

@@ -190,7 +190,7 @@ let package = Package(
 
 extension Range<PackageDescription.Version> {
     static func upTo(_ version: Version) -> Self {
-        "0.0.0"..<version
+        "0.0.0" ..< version
     }
 }
 

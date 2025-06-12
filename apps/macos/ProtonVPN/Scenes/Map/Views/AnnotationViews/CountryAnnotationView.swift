@@ -169,7 +169,7 @@ class MapAnnotationView: MKAnnotationView {
         let r = AppTheme.ButtonConstants.cornerRadius
         let lineWidth = Self.lineWidth
         // inner button frame
-        let ibf = CGRect(x: buttonFrame.origin.x + lineWidth/2,
+        let ibf = CGRect(x: buttonFrame.origin.x + lineWidth / 2,
                          y: buttonFrame.origin.y + lineWidth,
                          width: buttonFrame.size.width - lineWidth,
                          height: buttonFrame.size.height)
@@ -179,7 +179,7 @@ class MapAnnotationView: MKAnnotationView {
         // bottom-right corner
         path.addArc(center: CGPoint(x: ibf.maxX - r, y: ibf.maxY - r),
                     radius: r,
-                    startAngle: .pi/2,
+                    startAngle: .pi / 2,
                     endAngle: 0,
                     clockwise: true)
         // right border
@@ -188,14 +188,14 @@ class MapAnnotationView: MKAnnotationView {
         path.addArc(center: CGPoint(x: ibf.maxX - r, y: ibf.minY + r),
                     radius: r,
                     startAngle: 0,
-                    endAngle: .pi*3/2,
+                    endAngle: .pi * 3 / 2,
                     clockwise: true)
         // top border
         path.addLine(to: CGPoint(x: ibf.minX + r, y: ibf.minY))
         // top-left corner
         path.addArc(center: CGPoint(x: ibf.minX + r, y: ibf.minY + r),
                     radius: r,
-                    startAngle: .pi*3/2,
+                    startAngle: .pi * 3 / 2,
                     endAngle: .pi,
                     clockwise: true)
         // left border
@@ -204,7 +204,7 @@ class MapAnnotationView: MKAnnotationView {
         path.addArc(center: CGPoint(x: ibf.minX + r, y: ibf.maxY - r),
                     radius: r,
                     startAngle: .pi,
-                    endAngle: .pi/2,
+                    endAngle: .pi / 2,
                     clockwise: true)
     }
 
@@ -224,10 +224,10 @@ class MapAnnotationView: MKAnnotationView {
         // side so that the bottom of the rounded corner still rests exactly over
         // the country's coordinate on the map.
         let itf = (
-            x: tf.origin.x + lineWidth/2,
+            x: tf.origin.x + lineWidth / 2,
             y: tf.origin.y + ct.b,
             w: tf.width - lineWidth,
-            h: (tf.width - lineWidth) * sqrt3/2 - lineWidth
+            h: (tf.width - lineWidth) * sqrt3 / 2 - lineWidth
         )
 
         // To keep the bottom side of the hover button horizontal
@@ -278,7 +278,7 @@ class MapAnnotationView: MKAnnotationView {
         let shouldShowBadge = badgeImage != nil
         if shouldShowBadge {
             let badgeFrame = CGRect(
-                origin: CGPoint(x: 15, y: (buttonFrame.height - Self.badgeSize.height)/2),
+                origin: CGPoint(x: 15, y: (buttonFrame.height - Self.badgeSize.height) / 2),
                 size: Self.badgeSize
             )
             badgeImage?.draw(in: badgeFrame)

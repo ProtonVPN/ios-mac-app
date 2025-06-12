@@ -40,7 +40,7 @@ class StreamingServiceCell: UICollectionViewCell {
             guard propertiesManager.featureFlags.streamingServicesLogos,
                   let icon = service?.icon,
                   let baseUrl = propertiesManager.streamingResourcesUrl,
-                  let url = URL(string: baseUrl + icon ) else {
+                  let url = URL(string: baseUrl + icon) else {
                 return
             }
             

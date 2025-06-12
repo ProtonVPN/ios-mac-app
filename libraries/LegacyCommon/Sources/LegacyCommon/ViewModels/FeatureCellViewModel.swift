@@ -60,7 +60,7 @@ public struct SmartRoutingFeatureCellViewModel: FeatureCellViewModel {
     public let description: String = Localizable.featureSmartRoutingDescription
     public let footer: String? = Localizable.learnMore
     public let urlContact: VPNLink? = .learnMoreSmartRouting
-    public init () {}
+    public init() {}
 }
 
 public struct StreamingFeatureCellViewModel: FeatureCellViewModel {
@@ -70,7 +70,7 @@ public struct StreamingFeatureCellViewModel: FeatureCellViewModel {
     public let description: String = Localizable.featureStreamingDescription
     public let footer: String? = Localizable.learnMore
     public let urlContact: VPNLink? = .learnMoreStreaming
-    public init () {}
+    public init() {}
 }
 
 public struct P2PFeatureCellViewModel: FeatureCellViewModel {
@@ -80,7 +80,7 @@ public struct P2PFeatureCellViewModel: FeatureCellViewModel {
     public let description: String = Localizable.featureP2pDescription
     public let footer: String? = Localizable.learnMore
     public let urlContact: VPNLink? = .learnMoreP2p
-    public init () {}
+    public init() {}
 }
 
 public struct TorFeatureCellViewModel: FeatureCellViewModel {
@@ -90,7 +90,7 @@ public struct TorFeatureCellViewModel: FeatureCellViewModel {
     public let description: String = Localizable.featureTorDescription
     public let footer: String? = Localizable.learnMore
     public let urlContact: VPNLink? = .learnMoreTor
-    public init () {}
+    public init() {}
 }
 
 public struct LoadPerformanceFeatureCellViewModel: FeatureCellViewModel {
@@ -101,7 +101,7 @@ public struct LoadPerformanceFeatureCellViewModel: FeatureCellViewModel {
     public let footer: String? = Localizable.learnMore
     public let urlContact: VPNLink? = .learnMoreLoads
     public let displayLoads: Bool = true
-    public init () {}
+    public init() {}
 }
 
 public struct FreeServersFeatureCellViewModel: FeatureCellViewModel {
@@ -111,7 +111,7 @@ public struct FreeServersFeatureCellViewModel: FeatureCellViewModel {
     public let description: String = Localizable.featureFreeServersDescription
     public let footer: String? = nil
     public let urlContact: VPNLink? = nil
-    public init () {}
+    public init() {}
 }
 
 public struct ServerFeatureViewModel: FeatureCellViewModel {
@@ -121,7 +121,7 @@ public struct ServerFeatureViewModel: FeatureCellViewModel {
     public let description: String
     public let footer: String? = nil
     public let urlContact: VPNLink? = nil
-    public init (sectionTitle: String? = nil, title: String, description: String, icon: Icon) {
+    public init(sectionTitle: String? = nil, title: String, description: String, icon: Icon) {
         self.sectionTitle = sectionTitle
         self.title = title
         self.icon = icon
@@ -136,5 +136,5 @@ public struct GatewayFeatureCellViewModel: FeatureCellViewModel {
     public let description: String = Localizable.gatewaysModalText
     public let footer: String? = nil
     public let urlContact: VPNLink? = .dedicatedIps
-    public init () {}
+    public init() {}
 }

@@ -83,7 +83,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         wg_log(.info, message: message)
     }
 
-    override open func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
@@ -91,7 +91,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
             CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
-        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)"} ?? "OS directly"
+        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 

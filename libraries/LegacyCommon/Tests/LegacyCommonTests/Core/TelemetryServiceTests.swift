@@ -32,12 +32,12 @@ import Ergonomics
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()
-    func flushEvent(event: [String : Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
+    func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
         events.append(event)
         return TelemetryResponse(code: 1000)
     }
 
-    func flushEvents(events: [String : Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
+    func flushEvents(events: [String: Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
         TelemetryResponse(code: 1000)
     }
 }

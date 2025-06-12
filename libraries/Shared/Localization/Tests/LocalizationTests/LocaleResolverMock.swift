@@ -67,7 +67,7 @@
             regionCodeDict[regionCode]
         }
 
-        public init(ietfRegionTag: String?, regionCodeDict: [String : String]) {
+        public init(ietfRegionTag: String?, regionCodeDict: [String: String]) {
             self.ietfRegionTag = ietfRegionTag
             self.regionCodeDict = regionCodeDict
         }

@@ -921,7 +921,7 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
         public var dismiss: (() -> Void)?
         public var cancelHandler: () -> Void
 
-        public init(cancelHandler: @escaping() -> Void) {
+        public init(cancelHandler: @escaping () -> Void) {
             self.cancelHandler = cancelHandler
             dismiss = cancelHandler
         }

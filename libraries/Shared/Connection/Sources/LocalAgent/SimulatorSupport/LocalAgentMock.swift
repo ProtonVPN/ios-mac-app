@@ -130,10 +130,10 @@
             switch self {
             case .random:
                 FeatureStatisticsMessage.NetShieldStats(
-                    malwareBlocked: .random(in: 0...100),
-                    adsBlocked: .random(in: 0...100),
-                    trackersBlocked: .random(in: 0...100),
-                    bytesSaved: .random(in: 0...100)
+                    malwareBlocked: .random(in: 0 ... 100),
+                    adsBlocked: .random(in: 0 ... 100),
+                    trackersBlocked: .random(in: 0 ... 100),
+                    bytesSaved: .random(in: 0 ... 100)
                 )
             case let .constant(value):
                 value

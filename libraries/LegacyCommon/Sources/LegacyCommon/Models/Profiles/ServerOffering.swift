@@ -35,7 +35,7 @@ public struct ServerWrapper: Codable {
         if let vpnServer = serverRepository.getFirstServer(
             filteredBy: [.logicalID(_server.id)],
             orderedBy: .fastest
-        ){
+        ) {
             return ServerModel(server: vpnServer)
         } else {
             return _server

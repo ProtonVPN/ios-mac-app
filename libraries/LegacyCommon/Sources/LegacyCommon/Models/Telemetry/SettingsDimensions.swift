@@ -110,7 +110,7 @@ public struct SettingsDimensions: Encodable {
                 self = .zero
             case 1:
                 self = .one
-            case 2...4:
+            case 2 ... 4:
                 self = .twoToFour
             default:
                 self = .greaterOrEqualFive

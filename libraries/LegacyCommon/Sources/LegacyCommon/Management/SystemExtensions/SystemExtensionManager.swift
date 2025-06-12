@@ -233,13 +233,13 @@
                 didRequireUserApproval = true
 
                 guard shouldStartTour else {
-                    SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : "skipped"])
+                    SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "skipped"])
                     actionHandler(.failure(.tourSkipped))
                     return
                 }
 
                 let tour = SystemExtensionTourAlert(cancelHandler: {
-                    SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason" : "cancelled"])
+                    SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "cancelled"])
                     DispatchQueue.main.async {
                         actionHandler(.failure(.tourCancelled))
                         AppEvent.systemExtensionTourCancelled.post()

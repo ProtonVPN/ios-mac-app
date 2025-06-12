@@ -44,7 +44,7 @@ enum TableViewCellModel {
         upsell: () -> Void,
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
     )
-    case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: () -> Void )
+    case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: () -> Void)
     case buttonWithLoadingIndicator(title: String,
                                     accessibilityIdentifier: String?,
                                     color: UIColor,

@@ -144,7 +144,7 @@ class LoginRobot: CoreElements {
         }
         
         @discardableResult
-        func checkErrorMessageIsShown(message: String ) -> LoginRobot {
+        func checkErrorMessageIsShown(message: String) -> LoginRobot {
             staticText(message).checkExists()
             return LoginRobot()
         }

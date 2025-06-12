@@ -60,7 +60,7 @@ extension ServerModel {
             tier: logical.tier,
             feature: logical.feature,
             city: logical.city,
-            ips: endpoints.map { ServerIp(endpoint: $0)},
+            ips: endpoints.map { ServerIp(endpoint: $0) },
             score: logical.score,
             status: logical.status,
             location: .init(lat: logical.latitude, long: logical.longitude),

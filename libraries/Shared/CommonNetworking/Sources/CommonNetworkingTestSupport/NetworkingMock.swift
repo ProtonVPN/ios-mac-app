@@ -107,7 +107,7 @@
             }
         }
 
-        public func perform<R>(request route: Request) async throws -> R where R : Decodable {
+        public func perform<R>(request route: Request) async throws -> R where R: Decodable {
             try await withCheckedThrowingContinuation { continuation in
                 request(route) { (result: Result<Data, Error>) in
                     switch result {

@@ -25,9 +25,9 @@ import Foundation
 /// 2. If `e.ipv4` is not `nil`, `s` supports all protocols. Client must use `e.ipv4` when connecting with `p`.
 /// 3. If `e.ports` is non-empty, client must choose from these ports when connecting, instead of ports from config.
 public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDictionaryLiteral, Codable, Sendable {
-    public let rawValue: [String : Value]
+    public let rawValue: [String: Value]
 
-    public init(rawValue: [String : Value]) {
+    public init(rawValue: [String: Value]) {
         self.rawValue = rawValue
     }
 
@@ -49,7 +49,7 @@ public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDict
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        rawValue = try container.decode([String : PerProtocolEntries.Value].self)
+        rawValue = try container.decode([String: PerProtocolEntries.Value].self)
     }
 
     public func encode(to encoder: Encoder) throws {

@@ -63,7 +63,7 @@ final class WindowServiceImplementation: WindowService {
     /// We decided to try to show it on each of the `rootViewController`s but only "approve" it when it actually finishes showing the modal.
     var scheduledViewControllers: [UIViewController] = []
 
-    init (window: UIWindow) {
+    init(window: UIWindow) {
         self.window = window
 
         if ProcessInfo.processInfo.arguments.contains("UITests") {

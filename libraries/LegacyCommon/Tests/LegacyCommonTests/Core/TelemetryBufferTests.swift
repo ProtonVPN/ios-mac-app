@@ -145,7 +145,7 @@ class TelemetryBufferTests: XCTestCase {
 
     // Test that event is being saved to storage
     func testBufferSavesMax100Events() async throws {
-        let mock = (0...TelemetryBuffer.Constants.maxStoredEvents).map { _ in TelemetryBuffer.BufferedEvent
+        let mock = (0 ... TelemetryBuffer.Constants.maxStoredEvents).map { _ in TelemetryBuffer.BufferedEvent
             .mock()
         }
         let data = try! JSONEncoder().encode(mock)

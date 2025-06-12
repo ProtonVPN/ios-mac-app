@@ -79,7 +79,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
     private func setupAutoConnectItem() {
         let count = viewModel.autoConnectItemCount
-        let menuItems: [NSMenuItem] = (0..<count).map { index in
+        let menuItems: [NSMenuItem] = (0 ..< count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.autoConnectItem(for: index)
             return menuItem
@@ -92,7 +92,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
     private func setupQuickConnectItem() {
         let count = viewModel.quickConnectItemCount
-        let menuItems: [NSMenuItem] = (0..<count).map { index in
+        let menuItems: [NSMenuItem] = (0 ..< count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.quickConnectItem(for: index)
             return menuItem
@@ -106,7 +106,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
     private func setupProtocolItem() {
         let count = viewModel.protocolItemCount
-        let menuItems: [NSMenuItem] = (0..<count).map { index in
+        let menuItems: [NSMenuItem] = (0 ..< count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.protocolString(for: viewModel.protocolItem(for: index) ?? .vpnProtocol(.ike))
             menuItem.isHidden = viewModel.protocolItem(for: index)?.isDeprecated == true

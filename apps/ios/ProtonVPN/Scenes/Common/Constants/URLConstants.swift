@@ -23,7 +23,7 @@
 import Foundation
 
 struct URLConstants {
-    private init () {}
+    private init() {}
     
     // MARK: - DeepLinking
 

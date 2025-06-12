@@ -80,7 +80,7 @@
 
         var session: VPNSession
 
-        var vpnProtocolConfiguration: NETunnelProviderProtocol?{
+        var vpnProtocolConfiguration: NETunnelProviderProtocol? {
             didSet {
                 onModification()
             }
@@ -92,13 +92,13 @@
             }
         }
 
-        var isOnDemandEnabled: Bool{
+        var isOnDemandEnabled: Bool {
             didSet {
                 onModification()
             }
         }
 
-        var isEnabled: Bool{
+        var isEnabled: Bool {
             didSet {
                 onModification()
             }

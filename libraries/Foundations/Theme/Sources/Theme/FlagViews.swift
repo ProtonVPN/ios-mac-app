@@ -127,7 +127,7 @@ public struct SimpleFlagView: View {
             .swiftUIImage
             .resizable()
             .cornerRadius(cornerRadius * scale)
-            .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale}
+            .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale }
             .frame(width: startSize.width * scale,
                    height: startSize.height * scale)
     }

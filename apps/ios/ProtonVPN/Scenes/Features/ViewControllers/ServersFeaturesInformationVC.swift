@@ -32,7 +32,7 @@ class ServersFeaturesInformationVC: UIViewController {
     
     let viewModel: ServersFeaturesInformationViewModel
     
-    init( _ viewModel: ServersFeaturesInformationViewModel ) {
+    init(_ viewModel: ServersFeaturesInformationViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

@@ -279,9 +279,9 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func setupQuickSettings() {
-        [ (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
-          (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
-          (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2) ].forEach { presenter, container, button, index in
+        [(viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
+         (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
+         (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2)].forEach { presenter, container, button, index in
             let vc = QuickSettingDetailViewController(presenter)
             vc.viewWillAppear()
             container?.addSubview(vc.view)
@@ -313,7 +313,7 @@ final class CountriesSectionViewController: NSViewController {
         viewModel.filterContent(forQuery: "")
     }
 
-    private func didTapSettingButton( _ index: Int ) {
+    private func didTapSettingButton(_ index: Int) {
         switch index {
         case 0:
             let finalValue = secureCoreContainer.isHidden
@@ -327,7 +327,7 @@ final class CountriesSectionViewController: NSViewController {
         }
     }
 
-    private func didDisplayQuickSetting(_ quickSettingItem: QuickSettingType? = nil, appear: Bool ) {
+    private func didDisplayQuickSetting(_ quickSettingItem: QuickSettingType? = nil, appear: Bool) {
         let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
         let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
         let killSwitchDisplay = (quickSettingItem == .killSwitchDisplay) && appear

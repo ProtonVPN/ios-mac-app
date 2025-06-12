@@ -128,7 +128,7 @@
 
     infix operator |=|
 
-    public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {
+    public func |=| <Value>(lhs: Shared<Value>, rhs: Value) {
         lhs.withLock { $0 = rhs }
     }
 

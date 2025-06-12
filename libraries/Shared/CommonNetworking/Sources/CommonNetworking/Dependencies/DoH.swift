@@ -151,12 +151,12 @@ public class DoHVPN: DoH, ServerConfig {
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    override public func getAccountHeaders() -> [String : String] {
+    override public func getAccountHeaders() -> [String: String] {
         super.getAccountHeaders()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    override public func getCaptchaHeaders() -> [String : String] {
+    override public func getCaptchaHeaders() -> [String: String] {
         super.getCaptchaHeaders()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }

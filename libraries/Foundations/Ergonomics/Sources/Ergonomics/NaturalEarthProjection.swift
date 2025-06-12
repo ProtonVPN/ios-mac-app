@@ -27,19 +27,19 @@ public enum NaturalEarthProjection {
 
     private static func lPolynomial(lat: Double, long: Double) -> Double {
         var sum = 0.870700
-        sum -= 0.131979 * lat^^2
-        sum -= 0.013791 * lat^^4
-        sum += 0.003971 * lat^^10
-        sum -= 0.001529 * lat^^12
+        sum -= 0.131979 * lat ^^ 2
+        sum -= 0.013791 * lat ^^ 4
+        sum += 0.003971 * lat ^^ 10
+        sum -= 0.001529 * lat ^^ 12
         return sum * long
     }
 
     private static func dPolynomial(lat: Double) -> Double {
         var sum = 1.007226
-        sum += 0.015085 * lat^^2
-        sum -= 0.044475 * lat^^6
-        sum += 0.028874 * lat^^8
-        sum -= 0.005916 * lat^^10
+        sum += 0.015085 * lat ^^ 2
+        sum -= 0.044475 * lat ^^ 6
+        sum += 0.028874 * lat ^^ 8
+        sum -= 0.005916 * lat ^^ 10
         return sum * lat
     }
 
@@ -64,7 +64,7 @@ public enum NaturalEarthProjection {
 }
 
 precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
-infix operator ^^ : PowerPrecedence
+infix operator ^^: PowerPrecedence
 private func ^^ (radix: Double, power: Int) -> Double {
     pow(radix, Double(power))
 }

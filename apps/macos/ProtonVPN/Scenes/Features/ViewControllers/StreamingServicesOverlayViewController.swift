@@ -40,7 +40,7 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
     private let viewModel: StreamingServicesOverlayViewModelProtocol
     private let cellIdentifier = NSUserInterfaceItemIdentifier("StreamOptionCVItem")
     
-    init( viewModel: StreamingServicesOverlayViewModelProtocol) {
+    init(viewModel: StreamingServicesOverlayViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

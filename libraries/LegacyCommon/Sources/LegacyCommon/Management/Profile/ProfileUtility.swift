@@ -100,7 +100,7 @@ public final class ProfileUtility {
         let name = pickName(for: server, in: profiles)
         
         let colors = ProfileConstants.profileColors
-        let color = colors[.random(in: 0..<colors.count)]
+        let color = colors[.random(in: 0 ..< colors.count)]
         
         let profile = Profile(accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
                               serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))

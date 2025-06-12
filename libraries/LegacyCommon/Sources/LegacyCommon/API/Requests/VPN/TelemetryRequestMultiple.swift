@@ -22,7 +22,7 @@ final class TelemetryRequestMultiple: Request {
     var parameters: [String: Any]?
     let isBusiness: Bool
 
-    init( _ events: [String: Any], isBusiness: Bool) {
+    init(_ events: [String: Any], isBusiness: Bool) {
         parameters = events
         self.isBusiness = isBusiness
     }

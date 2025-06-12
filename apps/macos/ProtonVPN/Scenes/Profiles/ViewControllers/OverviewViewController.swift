@@ -102,8 +102,8 @@ class OverviewViewController: NSViewController {
     }
     
     private func contentChanged() {
-        let oldIndices = IndexSet(integersIn: 0..<profileListTableView.numberOfRows)
-        let newIndices = IndexSet(integersIn: 0..<viewModel.cellCount)
+        let oldIndices = IndexSet(integersIn: 0 ..< profileListTableView.numberOfRows)
+        let newIndices = IndexSet(integersIn: 0 ..< viewModel.cellCount)
         
         profileListTableView.removeRows(at: oldIndices, withAnimation: [])
         profileListTableView.insertRows(at: newIndices, withAnimation: [])

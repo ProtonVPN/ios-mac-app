@@ -28,6 +28,6 @@ extension String {
         guard let last = firstIndex(of: char) else {
             return self
         }
-        return String(self[startIndex..<last])
+        return String(self[startIndex ..< last])
     }
 }

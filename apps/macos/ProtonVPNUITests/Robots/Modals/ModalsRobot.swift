@@ -54,7 +54,7 @@ class ModalsRobot: CoreElements {
             func checkModalAppear() -> ModalsRobot {
                 let container = dialog("Untitled")
                 container.checkExists()
-                container.onChild(staticText( Localizable.modalsNewUpsellAllCountriesTitle)).checkExists(message: "Banner title does not contain expected text '\(Localizable.modalsNewUpsellAllCountriesTitle)'")
+                container.onChild(staticText(Localizable.modalsNewUpsellAllCountriesTitle)).checkExists(message: "Banner title does not contain expected text '\(Localizable.modalsNewUpsellAllCountriesTitle)'")
                 container.onChild(staticText(NSPredicate(format: "title CONTAINS[c] %@", "VPN Plus"))).checkExists(message: "Banner description does not contain expected text 'VPN Plus'")
                 
                 container.onChild(button("ModalUpgradeButton")).checkExists(message: "ModalUpgradeButton does not appear at the AccessAllCountriesBanner")

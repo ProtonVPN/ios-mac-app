@@ -182,13 +182,13 @@ public final class UpsellViewController: NSViewController {
 private extension CAGradientLayer {
     static func gradientLayer(in frame: CGRect) -> Self {
         let layer = Self()
-        layer.colors = [NSColor(red: 110.0/255.0,
-                                green: 75.0/255.0,
-                                blue: 255.0/255.0,
+        layer.colors = [NSColor(red: 110.0 / 255.0,
+                                green: 75.0 / 255.0,
+                                blue: 255.0 / 255.0,
                                 alpha: 0).cgColor,
-                        NSColor(red: 17.0/255.0,
-                                green: 216.0/255.0,
-                                blue: 204.0/255.0,
+                        NSColor(red: 17.0 / 255.0,
+                                green: 216.0 / 255.0,
+                                blue: 204.0 / 255.0,
                                 alpha: 1).cgColor]
         layer.frame = frame
         return layer

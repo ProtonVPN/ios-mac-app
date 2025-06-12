@@ -64,9 +64,9 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         context.setFillColor(cgColor(.background))
 
         if isConnected {
-            ib = NSRect(x: bounds.origin.x + lw/2, y: bounds.origin.y + lw/2, width: bounds.width - lw, height: bounds.height - lw)
+            ib = NSRect(x: bounds.origin.x + lw / 2, y: bounds.origin.y + lw / 2, width: bounds.width - lw, height: bounds.height - lw)
         } else {
-            ib = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width - lw/2, height: bounds.height)
+            ib = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width - lw / 2, height: bounds.height)
         }
 
         context.setLineWidth(lw)
@@ -133,9 +133,9 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         context.setStrokeColor(cgColor(.border))
         context.setFillColor(cgColor(.background))
         if isConnected {
-            ib = NSRect(x: bounds.origin.x - lw/2 + buttonMargin, y: bounds.origin.y + lw/2, width: bounds.width - lw/2 - buttonMargin, height: bounds.height - lw)
+            ib = NSRect(x: bounds.origin.x - lw / 2 + buttonMargin, y: bounds.origin.y + lw / 2, width: bounds.width - lw / 2 - buttonMargin, height: bounds.height - lw)
         } else {
-            ib = NSRect(x: bounds.origin.x + lw/2 + buttonMargin, y: bounds.origin.y, width: bounds.width - lw/2 - buttonMargin, height: bounds.height)
+            ib = NSRect(x: bounds.origin.x + lw / 2 + buttonMargin, y: bounds.origin.y, width: bounds.width - lw / 2 - buttonMargin, height: bounds.height)
         }
 
         context.setLineWidth(lw)
@@ -145,11 +145,11 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
 
         let ah: CGFloat = dropDownExpanded ? -4 : 4 // arrowHeight
         let borderMargin: CGFloat = customStyle(context: .border) == .transparent ? 0 : 2
-        let midX: CGFloat = bounds.midX - borderMargin + buttonMargin/2
+        let midX: CGFloat = bounds.midX - borderMargin + buttonMargin / 2
         let arrow = CGMutablePath()
-        arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah/2))
-        arrow.addLine(to: CGPoint(x: midX, y: bounds.midY + ah/2))
-        arrow.addLine(to: CGPoint(x: midX + ah, y: bounds.midY - ah/2))
+        arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah / 2))
+        arrow.addLine(to: CGPoint(x: midX, y: bounds.midY + ah / 2))
+        arrow.addLine(to: CGPoint(x: midX + ah, y: bounds.midY - ah / 2))
 
         context.addPath(path)
         context.drawPath(using: .fillStroke)

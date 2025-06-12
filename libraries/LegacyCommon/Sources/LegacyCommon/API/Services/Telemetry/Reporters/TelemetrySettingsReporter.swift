@@ -165,7 +165,7 @@ final class TelemetrySettingsReporter {
                     return .zero
                 case 1:
                     return .one
-                case 2...4:
+                case 2 ... 4:
                     return .twoToFour
                 default:
                     return .greaterOrEqualFive

@@ -28,7 +28,7 @@ import VPNAppCore
 class ExpandablePopupViewModel: NSObject {
     private let alert: ExpandableSystemAlert
     
-    init( _ alert: ExpandableSystemAlert ) {
+    init(_ alert: ExpandableSystemAlert) {
         self.alert = alert
         super.init()
     }

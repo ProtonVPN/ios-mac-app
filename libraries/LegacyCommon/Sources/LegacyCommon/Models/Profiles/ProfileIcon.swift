@@ -28,7 +28,7 @@
 public enum ProfileIcon: Codable {
     case bolt
     case arrowsSwapRight
-    case image(Image) //left for historical reasons, used for migration
+    case image(Image) // left for historical reasons, used for migration
     case circle(Int) // rgb color in hexadecimal
 
     enum CodingKeys: CodingKey {

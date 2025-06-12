@@ -76,7 +76,7 @@ final class SignInFeatureTests: XCTestCase {
         }
 
         store.dependencies.networkClient = .init(
-            fetchSignInCode: { .init(selector: "", userCode: "")},
+            fetchSignInCode: { .init(selector: "", userCode: "") },
             forkedSession: { selector in
                 XCTAssertEqual(selector, mockSignInResponse.selector)
                 return .authenticated(.mock)
@@ -138,7 +138,7 @@ final class SignInFeatureTests: XCTestCase {
         await clock.advance(by: pollConf.delayBeforePollingStarts)
         var failAfterAttempts = pollConf.failAfterAttempts
 
-        for _ in 1...pollConf.failAfterAttempts {
+        for _ in 1 ... pollConf.failAfterAttempts {
             failAfterAttempts -= 1
             await clock.advance(by: pollConf.period)
             await store.receive(\.pollServer) {

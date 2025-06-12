@@ -74,7 +74,7 @@ final class ViewController: UIViewController {
         let isSecureCoreCountry = mode == .secureCore
         let entryCountryName: String? = mode == .secureCore ? "Italy" : nil
 
-        let switzerlandServers: [ServerTier : [ServerViewModel]] = {
+        let switzerlandServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
                 ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
@@ -92,7 +92,7 @@ final class ViewController: UIViewController {
             }
         }()
 
-        let usServers: [ServerTier : [ServerViewModel]] = {
+        let usServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
                 ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
@@ -110,7 +110,7 @@ final class ViewController: UIViewController {
             }
         }()
 
-        let czechiaServers: [ServerTier : [ServerViewModel]] = {
+        let czechiaServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
                 ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)

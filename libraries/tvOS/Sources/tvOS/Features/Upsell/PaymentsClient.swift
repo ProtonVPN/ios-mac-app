@@ -43,7 +43,7 @@ enum PaymentsError: Error, CustomStringConvertible {
     }
 
     var codeSuffix: String? {
-        code.map { "(\($0))"}
+        code.map { "(\($0))" }
     }
 
     /// Default error description, suffixed with the code if it has one, to ease error identification.
@@ -133,7 +133,7 @@ struct PaymentsClient: Sendable, DependencyKey {
     }()
 
     static let testValue: PaymentsClient = .init(
-        startObserving: { .init(unfolding: { nil })},
+        startObserving: { .init(unfolding: { nil }) },
         getOptions: unimplemented(),
         attemptPurchase: unimplemented(placeholder: .purchaseCancelled)
     )

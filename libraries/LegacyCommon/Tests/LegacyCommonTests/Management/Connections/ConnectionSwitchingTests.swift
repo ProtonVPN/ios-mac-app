@@ -483,9 +483,9 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
 
             let expectations = (
-                connection: (1...5).map { XCTestExpectation(description: "connection #\($0)") },
-                clientConfig: (1...5).map { XCTestExpectation(description: "fetch client config #\($0)") },
-                disconnect: (1...5).map { XCTestExpectation(description: "disconnect #\($0)") }
+                connection: (1 ... 5).map { XCTestExpectation(description: "connection #\($0)") },
+                clientConfig: (1 ... 5).map { XCTestExpectation(description: "fetch client config #\($0)") },
+                disconnect: (1 ... 5).map { XCTestExpectation(description: "disconnect #\($0)") }
             )
             let protocolAlertExpectation = XCTestExpectation(description: "Protocol not supported alert should be shown")
             protocolAlertExpectation.expectedFulfillmentCount = 1
@@ -621,9 +621,9 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let (totalConnections, totalDisconnections) = (4, 4)
         let expectations = (
-            connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
-            appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
-            disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
+            connections: (1 ... totalConnections).map { XCTestExpectation(description: "connection \($0)") },
+            appStateConnectedTransitions: (1 ... totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
+            disconnections: (1 ... totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
             downgradeAlert: XCTestExpectation(description: "downgraded alert"),
             delinquentAlert: XCTestExpectation(description: "delinquent alert"),
             upgradeNotification: XCTestExpectation(description: "notify upgrade state")
@@ -838,10 +838,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         let (totalConnections, totalDisconnections) = (2, 2)
 
         let expectations = (
-            connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
-            appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
-            disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
-            serverSaves: (1...totalConnections + 1).map { XCTestExpectation(description: "server list store \($0)") },
+            connections: (1 ... totalConnections).map { XCTestExpectation(description: "connection \($0)") },
+            appStateConnectedTransitions: (1 ... totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
+            disconnections: (1 ... totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
+            serverSaves: (1 ... totalConnections + 1).map { XCTestExpectation(description: "server list store \($0)") },
             upgradeNotification: XCTestExpectation(description: "notify upgrade state"),
             refreshLogicalsAfterPlanUpgrade: XCTestExpectation(description: "refresh logicals after plan upgrade")
         )
@@ -1015,13 +1015,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         let totalDisconnections = totalConnections
 
         let expectations = (
-            alerts: (1...totalAlerts).map {
+            alerts: (1 ... totalAlerts).map {
                 XCTestExpectation(description: "Alert \($0)/\(totalAlerts)")
             },
-            connections: (1...totalConnections).map {
+            connections: (1 ... totalConnections).map {
                 XCTestExpectation(description: "Connection \($0)/\(totalConnections)")
             },
-            disconnections: (1...totalConnections).map {
+            disconnections: (1 ... totalConnections).map {
                 XCTestExpectation(description: "Disconnection \($0)/\(totalConnections)")
             }
         )
@@ -1134,7 +1134,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 // Now add a bunch of connections to the stack, we should get the longer delay
                 // We already have one server change in the stack, so add one less than the limit
                 let connectionsToAdd = $0.serverChangeStorage.config.changeServerAttemptLimit - 1
-                for i in 0..<connectionsToAdd {
+                for i in 0 ..< connectionsToAdd {
                     $0.serverChangeAuthorizer.registerServerChange(connectedAt: date
                         .addingTimeInterval(TimeInterval(
                             -(connectionsToAdd - i - 1) *

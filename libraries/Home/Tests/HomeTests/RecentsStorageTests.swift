@@ -97,7 +97,7 @@ final class RecentsStorageTests: XCTestCase {
 
     func testInitializingRecentsListWithMoreThanAllowedNumberOfConnectionsTrimsTheRecentList() {
         let now = Date()
-        let array = (0...9).map { element in
+        let array = (0 ... 9).map { element in
             RecentConnection(pinnedDate: nil,
                              underMaintenance: false,
                              connectionDate: now,

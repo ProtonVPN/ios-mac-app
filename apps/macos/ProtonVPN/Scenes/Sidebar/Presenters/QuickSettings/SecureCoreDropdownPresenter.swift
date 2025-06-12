@@ -47,7 +47,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         VPNLink.learnMore.urlString
     }
     
-    init( _ factory: Factory ) {
+    init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }

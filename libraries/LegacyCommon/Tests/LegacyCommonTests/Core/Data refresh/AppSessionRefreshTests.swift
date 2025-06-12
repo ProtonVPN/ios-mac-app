@@ -121,7 +121,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.serverManager = .noOp
         } operation: {
             let expectations = (
-                updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
+                updateServers: (1 ... 2).map { XCTestExpectation(description: "update server list #\($0)") },
                 updateCredentials: XCTestExpectation(description: "update vpn credentials"),
                 displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
             )

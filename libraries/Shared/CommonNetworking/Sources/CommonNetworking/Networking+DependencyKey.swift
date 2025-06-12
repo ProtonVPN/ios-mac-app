@@ -169,7 +169,7 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
 
         func setSession(_ session: Session) {}
 
-        func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {
+        func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T: Decodable {
             throw "" as GenericError
         }
 

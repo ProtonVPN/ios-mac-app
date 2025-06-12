@@ -56,7 +56,7 @@ class CreateProfileRobot: CoreElements {
             .chooseServer()
     }
         
-    func enterProfileName( _ name: String) -> CreateProfileRobot {
+    func enterProfileName(_ name: String) -> CreateProfileRobot {
         profileName(name)
     }
         
@@ -64,7 +64,7 @@ class CreateProfileRobot: CoreElements {
         deleteName()
     }
 
-    func enterProfileCountry( _ countryname: String) -> CreateProfileRobot {
+    func enterProfileCountry(_ countryname: String) -> CreateProfileRobot {
         selectCountry()
             .chooseCountry(countryname)
     }

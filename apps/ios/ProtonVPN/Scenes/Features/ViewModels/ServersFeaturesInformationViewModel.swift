@@ -25,9 +25,9 @@ import LegacyCommon
 import Strings
 
 protocol ServersFeaturesInformationViewModel {
-    func titleFor( _ section: Int ) -> String?
+    func titleFor(_ section: Int) -> String?
     func featuresCount(for section: Int) -> Int
-    func getFeatureViewModel( indexPath: IndexPath ) -> FeatureCellViewModel
+    func getFeatureViewModel(indexPath: IndexPath) -> FeatureCellViewModel
     var totalFeatures: Int { get }
     var headerHeight: CGFloat { get }
 }

@@ -249,7 +249,7 @@ extension View {
     EnvironmentSelectorMobileView(store: Store(
         initialState: DebugConfigurationFeature.State(
             apiEndpoint: "https://vpn-api.proton.me",
-            atlasSecret: String((0..<32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
+            atlasSecret: String((0 ..< 32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
             atlasSecretFetchURLString: "",
             overrides: [.empty()]
         ),

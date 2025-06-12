@@ -74,7 +74,7 @@ struct DynamicDrillDownModel {
         description: "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.",
         url: nil, // "https://protonvpn.com/support-form?platform=appletv",
         displayURL: ""
-    ) //" protonvpn.com/support-form")
+    ) // " protonvpn.com/support-form")
 
     static let supportCenter = Self(
         title: "Support Center",

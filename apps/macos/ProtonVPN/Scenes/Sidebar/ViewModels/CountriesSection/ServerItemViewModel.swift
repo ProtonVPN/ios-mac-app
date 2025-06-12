@@ -61,8 +61,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     var accessibilityLabel: String {
-        if isUsersTierTooLow { return "\(Localizable.server ): \(serverName). \(Localizable.updateRequired)" }
-        if underMaintenance { return "\(Localizable.server ): \(serverName). \(Localizable.onMaintenance)" }
+        if isUsersTierTooLow { return "\(Localizable.server): \(serverName). \(Localizable.updateRequired)" }
+        if underMaintenance { return "\(Localizable.server): \(serverName). \(Localizable.onMaintenance)" }
 
         var features: [String] = []
 
@@ -71,7 +71,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
         if isSmartAvailable { features.append(Localizable.smartRoutingTitle) }
         if isStreamingAvailable { features.append(Localizable.streamingTitle) }
 
-        let description = "\(Localizable.server ): \(serverName), \(cityName). \(Localizable.serverLoad) \(load)%"
+        let description = "\(Localizable.server): \(serverName), \(cityName). \(Localizable.serverLoad) \(load)%"
 
         if features.isEmpty { return description }
 

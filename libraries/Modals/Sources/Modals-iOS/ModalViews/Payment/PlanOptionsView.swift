@@ -122,7 +122,7 @@ import CombineSchedulers
         .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in
-        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+        try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
     })
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
@@ -135,11 +135,11 @@ import CombineSchedulers
     ]
     let client: PlansClient = .init(
         retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
             return plans
         },
         validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
         })
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }

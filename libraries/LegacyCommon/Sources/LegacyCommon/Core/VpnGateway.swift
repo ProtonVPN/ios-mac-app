@@ -776,7 +776,7 @@ private extension VpnGateway {
         }
     }
 
-    private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel? ) -> ReconnectInfo? {
+    private func reconnectServer(_ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel?) -> ReconnectInfo? {
         guard let previousServer = oldServer else { return nil }
 
         let tier = downgradeInfo.to.maxTier

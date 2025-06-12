@@ -26,14 +26,14 @@ public typealias OptionalErrorBlock = (Error?) -> Void
 
 /// The MigrationBlock contains the previous version of the App from which we updated and a completion block for asynchronous migration process
 
-public typealias MigrationBlock = ( _ version: String, _ completion: @escaping OptionalErrorBlock) -> Void
+public typealias MigrationBlock = (_ version: String, _ completion: @escaping OptionalErrorBlock) -> Void
 
 public protocol MigrationManagerProtocol {
-    init( _ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String )
+    init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String)
     
-    func addCheck( _ version: String, block: @escaping MigrationBlock ) -> MigrationManagerProtocol
+    func addCheck(_ version: String, block: @escaping MigrationBlock) -> MigrationManagerProtocol
     
-    func migrate( _ completion: @escaping OptionalErrorBlock )
+    func migrate(_ completion: @escaping OptionalErrorBlock)
 }
 
 public protocol MigrationManagerFactory {
@@ -59,7 +59,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     /// Add a migration step where the version specified has to be GREATER than the previous version in order to be executed
     /// Usually when adding a new check will be added specifying the new version to update
     public func addCheck(_ version: String, block: @escaping MigrationBlock) -> MigrationManagerProtocol {
-        migrationBlocks.append( ( version, block ) )
+        migrationBlocks.append((version, block))
         return self
     }
     
@@ -70,7 +70,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     
     // MARK: - Private
     
-    private func migrate( _ completion: @escaping OptionalErrorBlock, step: Int ) {
+    private func migrate(_ completion: @escaping OptionalErrorBlock, step: Int) {
         if step >= migrationBlocks.count {
             propertiesManager.lastAppVersion = currentVersion.description
             completion(nil)
@@ -84,7 +84,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
         let block = migrationBlocks[step].1
         
         if migrationVersion > lastAppVersion {
-            block( propertiesManager.lastAppVersion ) { error in
+            block(propertiesManager.lastAppVersion) { error in
                 if let error {
                     completion(error)
                     return

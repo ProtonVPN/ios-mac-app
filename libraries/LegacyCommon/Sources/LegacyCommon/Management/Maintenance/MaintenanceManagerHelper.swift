@@ -32,7 +32,7 @@ public protocol MaintenanceManagerHelperFactory {
 public class MaintenanceManagerHelper {
     private static let jitterPercentage = 10
     private static var randomJitterPercentage: Int {
-        .random(in: -jitterPercentage...jitterPercentage)
+        .random(in: -jitterPercentage ... jitterPercentage)
     }
 
     public typealias Factory = MaintenanceManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory

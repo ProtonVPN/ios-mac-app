@@ -54,7 +54,7 @@ extension NSAttributedString {
         NSAttributedString.imageAttachment(image: NSImage(named: NSImage.Name(name.lowercased())), width: width, height: height, colored: color)
     }
 
-    func applyStyle( for strings: [String], attrs: [NSAttributedString.Key: Any] ) -> NSAttributedString {
+    func applyStyle(for strings: [String], attrs: [NSAttributedString.Key: Any]) -> NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(self)
         for str in strings {

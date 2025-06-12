@@ -268,7 +268,7 @@ public struct DebugConfigurationFeature {
                 state.overrides.remove(atOffsets: indexSet)
 
                 // recompute the indices so that the text fields have the correct labels
-                for index in 0..<state.overrides.count {
+                for index in 0 ..< state.overrides.count {
                     state.overrides[index].index = index
                 }
             case let .toggle(id):

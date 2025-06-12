@@ -50,7 +50,7 @@ extension WhatsNew {
         private static func isSatisfied(_ rule: Rule) -> Bool {
             switch rule {
             case let .timeWindow(startDate, endDate):
-                return (startDate...endDate).contains(now)
+                return (startDate ... endDate).contains(now)
             case let .appVersions(versions):
                 return versions.contains(evaluatorClient.bundleShortVersionString())
             case let .osVersion(version):
@@ -123,9 +123,9 @@ extension WhatsNewEvaluatorClient: DependencyKey {
     } systemOSVersion: {
         "18.0"
     } itemPresentationData: { item in
-        let secondsInDay: TimeInterval = 24*60*60
+        let secondsInDay: TimeInterval = 24 * 60 * 60
         let yesterday = Date.now.addingTimeInterval(-secondsInDay)
-        let beforeYesterday = Date.now.addingTimeInterval(-2*secondsInDay)
+        let beforeYesterday = Date.now.addingTimeInterval(-2 * secondsInDay)
         return WhatsNew.PresentationDataItem(amount: 1, firstRegistrationDate: beforeYesterday, lastPresentationDate: yesterday)
     }
 }

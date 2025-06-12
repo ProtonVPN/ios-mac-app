@@ -307,7 +307,7 @@ public final class ExtensionAPIService {
                                     handleTokenRefresh: Bool = true,
                                     usingCredentialsFrom context: AppContext = .wireGuardExtension,
                                     asPartOf operation: CertificateRefreshAsyncOperation? = nil,
-                                    retryBlock: @escaping (() -> Void) ,
+                                    retryBlock: @escaping (() -> Void),
                                     errorHandler: @escaping ((Error) -> Void)) {
         log.error("Encountered error while processing request in \(caller): \(error)")
 

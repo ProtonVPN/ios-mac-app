@@ -35,7 +35,7 @@ class StreamOptionCVItemViewModel: StreamOptionCVItemViewModelProtocol {
         guard propertiesManager.featureFlags.streamingServicesLogos,
               let baseUrl = propertiesManager.streamingResourcesUrl else { return nil }
         let icon = option.icon
-        return URL(string: baseUrl + icon )
+        return URL(string: baseUrl + icon)
     }
 
     private let option: VpnStreamingOption

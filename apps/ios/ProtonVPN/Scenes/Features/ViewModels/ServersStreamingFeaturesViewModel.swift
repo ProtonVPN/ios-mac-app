@@ -29,7 +29,7 @@ protocol ServersStreamingFeaturesViewModel {
     var totalRows: Int { get }
     var totalItems: Int { get }
     
-    func vpnOption( for index: Int ) -> VpnStreamingOption
+    func vpnOption(for index: Int) -> VpnStreamingOption
     
     var propertiesManager: PropertiesManagerProtocol { get }
 }
@@ -39,7 +39,7 @@ class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesV
     
     let propertiesManager: PropertiesManagerProtocol
     
-    init( country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
+    init(country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
         countryName = country
         streamingServices = streamServices
         self.propertiesManager = propertiesManager
@@ -48,7 +48,7 @@ class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesV
     let columnsAmount: Int = 4
     
     var totalRows: Int {
-        Int( (Float(streamingServices.count) / Float(columnsAmount) ).rounded(.up) )
+        Int((Float(streamingServices.count) / Float(columnsAmount)).rounded(.up))
     }
     
     let countryName: String

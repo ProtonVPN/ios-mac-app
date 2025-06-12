@@ -144,11 +144,11 @@ struct PlanOptionsListView: View {
     ]
     let client: PlansClient = .init(
         retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
             return plans
         },
         validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
         })
     let viewModel = PlanOptionsListViewModel(client: client)
     return PlanOptionsListView(viewModel: viewModel)
