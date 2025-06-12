@@ -1,5 +1,5 @@
 //
-//  IosCoreAlertService.swift
+//  IosAlertService.swift
 //  ProtonVPN - Created on 09/09/2019.
 //
 //  Copyright (c) 2019 Proton Technologies AG

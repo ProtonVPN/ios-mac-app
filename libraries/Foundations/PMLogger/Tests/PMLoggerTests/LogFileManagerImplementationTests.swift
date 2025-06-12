@@ -1,5 +1,5 @@
 //
-//  PMLogtests.swift
+//  LogFileManagerImplementationTests.swift
 //  vpncore - Created on 2021-03-26.
 //
 //  Copyright (c) 2019 Proton Technologies AG

@@ -1,5 +1,5 @@
 //
-//  CreateOrEditProfileViewModeltests.swift
+//  CreateOrEditProfileViewModelTests.swift
 //  ProtonVPN - Created on 19/07/2019.
 //
 //  Copyright (c) 2019 Proton Technologies AG

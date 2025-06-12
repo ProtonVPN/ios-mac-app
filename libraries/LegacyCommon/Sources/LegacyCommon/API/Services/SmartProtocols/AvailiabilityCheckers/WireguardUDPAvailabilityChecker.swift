@@ -1,5 +1,5 @@
 //
-//  WireguardAvailabilityChecker.swift
+//  WireguardUDPAvailabilityChecker.swift
 //  ProtonVPN - Created on 2020-10-21.
 //
 //  Copyright (c) 2021 Proton Technologies AG

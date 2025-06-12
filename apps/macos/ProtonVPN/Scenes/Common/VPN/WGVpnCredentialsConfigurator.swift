@@ -1,5 +1,5 @@
 //
-//  SysExVpnCredentialsConfigurator.swift
+//  WGVpnCredentialsConfigurator.swift
 //  ProtonVPN-mac
 //
 //  Created by Jaroslav on 2021-08-06.

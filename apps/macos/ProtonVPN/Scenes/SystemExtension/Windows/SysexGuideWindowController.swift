@@ -1,5 +1,5 @@
 //
-//  SysexWizardWindowController.swift
+//  SysexGuideWindowController.swift
 //  ProtonVPN-mac
 //
 //  Created by Jaroslav on 2021-09-06.

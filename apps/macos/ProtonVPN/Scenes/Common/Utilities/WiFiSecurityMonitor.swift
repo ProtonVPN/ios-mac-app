@@ -1,5 +1,5 @@
 //
-//  WiFiSecurityObtainer.swift
+//  WiFiSecurityMonitor.swift
 //  ProtonVPN - Created on 07.05.20.
 //
 //  Copyright (c) 2019 Proton Technologies AG

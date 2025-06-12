@@ -1,5 +1,5 @@
 //
-//  AuthCredentials+LegacyCommon.swift
+//  AuthCredentials+Legacy.swift
 //  Core
 //
 //  Created by Jaroslav on 2021-06-22.

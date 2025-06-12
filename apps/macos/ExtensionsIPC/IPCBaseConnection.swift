@@ -1,5 +1,5 @@
 //
-//  IPCWGConnection.swift
+//  IPCBaseConnection.swift
 //  ProtonVPN WireGuard
 //
 //  Created by Jaroslav on 2021-07-28.

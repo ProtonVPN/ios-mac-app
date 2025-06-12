@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  CountriesViewController.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG

@@ -1,5 +1,5 @@
 //
-//  PMLog.swift
+//  WGLogger.swift
 //  WireGuardiOS Extension
 //
 //  Created by Jaroslav on 2021-06-22.

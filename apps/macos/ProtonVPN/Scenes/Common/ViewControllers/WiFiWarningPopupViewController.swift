@@ -1,5 +1,5 @@
 //
-//  UnsecureWiFiPopupViewController.swift
+//  WiFiWarningPopupViewController.swift
 //  ProtonVPN - Created on 11.05.20.
 //
 //  Copyright (c) 2019 Proton Technologies AG

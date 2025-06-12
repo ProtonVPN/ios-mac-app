@@ -1,5 +1,5 @@
 //
-//  vpnAuthentication.swift
+//  VpnAuthentication.swift
 //  vpncore - Created on 06.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG

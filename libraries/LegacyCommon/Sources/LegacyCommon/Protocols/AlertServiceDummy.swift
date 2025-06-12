@@ -1,5 +1,5 @@
 //
-//  AlertService.swift
+//  AlertServiceDummy.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG

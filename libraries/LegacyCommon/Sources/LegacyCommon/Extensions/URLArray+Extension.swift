@@ -1,5 +1,5 @@
 //
-//  URL+Extension.swift
+//  URLArray+Extension.swift
 //  vpncore - Created on 2019-12-11.
 //
 //  Copyright (c) 2019 Proton Technologies AG

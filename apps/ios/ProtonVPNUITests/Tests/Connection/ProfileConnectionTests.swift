@@ -1,5 +1,5 @@
 //
-//  ConnectionTests.swift
+//  ProfileConnectionTests.swift
 //  ProtonVPNUITests
 //
 //  Created by Egle Predkelyte on 2021-08-10.

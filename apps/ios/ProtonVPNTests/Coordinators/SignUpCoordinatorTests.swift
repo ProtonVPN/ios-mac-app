@@ -1,5 +1,5 @@
 //
-//  SignUpCoordinatortests.swift
+//  SignUpCoordinatorTests.swift
 //  ProtonVPN - Created on 10/09/2019.
 //
 //  Copyright (c) 2019 Proton Technologies AG

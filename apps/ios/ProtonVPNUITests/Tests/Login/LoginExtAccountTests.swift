@@ -1,5 +1,5 @@
 //
-//  LoginExtAccountsTests.swift
+//  LoginExtAccountTests.swift
 //  ProtonVPNUITests
 //
 //  Created on 2021-09-01.

@@ -1,5 +1,5 @@
 //
-//  NativeClient.swift
+//  LocalAgentNativeClientImplementation.swift
 //  vpncore - Created on 27.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG

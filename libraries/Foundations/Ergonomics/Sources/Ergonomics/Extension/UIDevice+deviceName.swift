@@ -1,5 +1,5 @@
 //
-//  UIDevice+ModelName.swift
+//  UIDevice+deviceName.swift
 //  Core
 //
 //  Created by Jaroslav on 2021-06-30.

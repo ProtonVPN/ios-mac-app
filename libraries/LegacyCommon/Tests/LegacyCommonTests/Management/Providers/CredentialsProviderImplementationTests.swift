@@ -1,5 +1,5 @@
 //
-//  AccountPlanProviderImplementationTests.swift
+//  CredentialsProviderImplementationTests.swift
 //  vpncore - Created on 2021-01-06.
 //
 //  Copyright (c) 2019 Proton Technologies AG

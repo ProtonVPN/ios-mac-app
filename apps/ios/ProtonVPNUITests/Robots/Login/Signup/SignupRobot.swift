@@ -1,5 +1,5 @@
 //
-//  NewSignupRobot.swift
+//  SignupRobot.swift
 //  ProtonVPNUITests
 //
 //  Created by Egle Predkelyte on 2021-09-01.

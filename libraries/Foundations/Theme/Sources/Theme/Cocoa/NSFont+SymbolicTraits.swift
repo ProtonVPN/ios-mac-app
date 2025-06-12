@@ -1,5 +1,5 @@
 //
-//  NSFont+Extension.swift
+//  NSFont+SymbolicTraits.swift
 //  ProtonVPN - Created on 26/11/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG

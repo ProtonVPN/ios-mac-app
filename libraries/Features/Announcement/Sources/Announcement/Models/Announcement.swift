@@ -1,5 +1,5 @@
 //
-//  News.swift
+//  Announcement.swift
 //  vpncore - Created on 2020-10-05.
 //
 //  Copyright (c) 2019 Proton Technologies AG

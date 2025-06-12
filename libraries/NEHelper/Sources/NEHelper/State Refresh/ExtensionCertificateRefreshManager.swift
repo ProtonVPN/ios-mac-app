@@ -1,5 +1,5 @@
 //
-//  CertificateRefreshManager.swift
+//  ExtensionCertificateRefreshManager.swift
 //  WireGuardiOS Extension
 //
 //  Created by Jaroslav on 2021-06-28.

@@ -1,5 +1,5 @@
 //
-//  XPCWGService.swift
+//  IPCWGService.swift
 //  ProtonVPN WireGuard
 //
 //  Created by Jaroslav on 2021-08-02.
