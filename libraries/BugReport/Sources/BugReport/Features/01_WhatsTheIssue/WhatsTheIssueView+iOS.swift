@@ -77,7 +77,7 @@
                     case .quickFixes:
                         QuickFixesView(store: store.scope(state: \.route?.quickFixes, action: \.route.quickFixes)!)
 
-                    case .contactForm(_):
+                    case .contactForm:
                         ContactFormView(store: store.scope(state: \.route?.contactForm, action: \.route.contactForm)!)
 
                     case .none:

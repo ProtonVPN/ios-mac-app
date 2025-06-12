@@ -60,7 +60,7 @@ public struct HomeMapFeature {
             case .disconnected:
                 self = .disconnected
 
-            case .disconnecting(_, _):
+            case .disconnecting:
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
 
@@ -211,7 +211,7 @@ extension ConnectionSpec {
             break
         case let .region(code: code):
             return code
-        case .gateway(_):
+        case .gateway:
             return nil
         case let .exact(_, _, _, _, regionCode):
             return regionCode

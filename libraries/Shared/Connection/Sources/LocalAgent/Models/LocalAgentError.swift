@@ -150,7 +150,7 @@ public enum LocalAgentError: ProtonVPNError {
             return "LCNP"
         case .serverSessionDoesNotMatch:
             return "LSNM"
-        case .systemError(_):
+        case .systemError:
             return "LSER"
         case .unknown:
             return "LUNK"

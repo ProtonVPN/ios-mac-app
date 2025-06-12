@@ -364,7 +364,7 @@ public final class VpnManager: VpnManagerProtocol {
             }
 
             // Returns a date if currently connected
-            if case VpnState.connected(_) = self.state {
+            if case VpnState.connected = self.state {
                 completion(vpnManager.vpnConnection.connectedDate)
             } else {
                 completion(nil)
@@ -385,7 +385,7 @@ public final class VpnManager: VpnManagerProtocol {
         do {
             let vpnManager = try await currentVpnProtocolFactory.vpnProviderManager(for: .status)
             // Returns a date if currently connected
-            if case VpnState.connected(_) = self.state {
+            if case VpnState.connected = self.state {
                 return vpnManager.vpnConnection.connectedDate
             }
         } catch {

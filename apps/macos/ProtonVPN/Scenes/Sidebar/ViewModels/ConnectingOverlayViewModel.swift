@@ -279,7 +279,7 @@ class ConnectingOverlayViewModel {
         DispatchQueue.main.async { [weak self] in
             self?.cancellation()
         }
-        if case AppState.connected(_) = appState {
+        if case AppState.connected = appState {
             return
         } else {
             appStateManager.cancelConnectionAttempt()
@@ -305,7 +305,7 @@ class ConnectingOverlayViewModel {
         let state = appStateManager.state
 
         let oldState = self.appState
-        if case AppState.connected(_) = oldState {
+        if case AppState.connected = oldState {
             // let overlay fade out
             return
         }

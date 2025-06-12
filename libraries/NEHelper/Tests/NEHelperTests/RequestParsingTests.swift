@@ -109,7 +109,7 @@ class RequestParsingTests: XCTestCase {
         let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
         do {
             let response = "This is not an HTTP response.\nThese are just random English sentences.".data(using: .utf8)!
-            let (_, _) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
+            let _ = try HTTPURLResponse.parse(responseFromURL: url, data: response)
             XCTFail("Expected to throw an error from the above function.")
         } catch HTTPError.parseError {
             // This is expected

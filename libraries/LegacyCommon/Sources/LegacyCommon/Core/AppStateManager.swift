@@ -533,7 +533,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func handleVpnError(_ vpnState: VpnState) {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
-        if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
+        if case VpnState.disconnecting = vpnState, stuckDisconnecting {
             log.error("Stale VPN connection failing to disconnect", category: .connectionConnect)
             vpnStuck()
             return

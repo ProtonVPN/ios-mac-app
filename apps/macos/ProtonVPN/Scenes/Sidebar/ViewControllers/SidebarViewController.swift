@@ -327,7 +327,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     
     @objc private func occlusionStateChanged(_ notification: Notification) {
         if NSApp.occlusionState.contains(.visible) {
-            if case AppState.connecting(_) = appStateManager.state, let overlayViewModel {
+            if case AppState.connecting = appStateManager.state, let overlayViewModel {
                 showLoadingOverlay(with: overlayViewModel)
             }
         } else if !connectionOverlay.isHidden {

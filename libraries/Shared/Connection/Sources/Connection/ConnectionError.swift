@@ -173,7 +173,7 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .timeout:
             break
-        case .unexpectedProtocol(_):
+        case .unexpectedProtocol:
             break
         }
 

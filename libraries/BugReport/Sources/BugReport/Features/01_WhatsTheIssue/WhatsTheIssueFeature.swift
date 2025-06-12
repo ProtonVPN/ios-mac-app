@@ -85,7 +85,7 @@ struct WhatsTheIssueFeature: Reducer {
 
             // Other
 
-            case .binding(_):
+            case .binding:
                 // Everything's done in BindingReducer()
                 return .none
             }

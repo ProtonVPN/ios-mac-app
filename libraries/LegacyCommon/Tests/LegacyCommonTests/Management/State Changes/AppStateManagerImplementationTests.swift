@@ -89,7 +89,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager.state = .connecting(serverDescriptor)
 
         let state = self.appStateManager.state
-        if case AppState.connecting(_) = state {} else {
+        if case AppState.connecting = state {} else {
             XCTFail("App state should be 'connecting' but it's \(state.description)")
         }
         XCTAssertFalse(state.isConnected)
@@ -106,7 +106,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager.state = .connected(serverDescriptor)
 
         let state = self.appStateManager.state
-        if case AppState.connected(_) = state {} else {
+        if case AppState.connected = state {} else {
             XCTFail("App state should be 'connected' but it's \(state.description)")
         }
         XCTAssert(state.isConnected)
@@ -118,7 +118,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager.state = .disconnecting(serverDescriptor)
 
         let state = self.appStateManager.state
-        if case AppState.disconnecting(_) = state {} else {
+        if case AppState.disconnecting = state {} else {
             XCTFail("App state should be 'disconnecting' but it's \(state.description)")
         }
         XCTAssertFalse(state.isConnected)
@@ -196,7 +196,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager.state = .error(Self.emptyError)
 
         let state = self.appStateManager.state
-        if case AppState.error(_) = state {} else {
+        if case AppState.error = state {} else {
             XCTFail("App state should be 'error' but it's \(state.description)")
         }
         XCTAssertFalse(state.isConnected)
@@ -290,7 +290,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager.state = .reasserting(serverDescriptor)
 
         let state = self.appStateManager.state
-        if case AppState.connecting(_) = state {} else {
+        if case AppState.connecting = state {} else {
             XCTFail("State should be 'connecting' but is actually \(state.description)")
         }
         XCTAssertFalse(state.isConnected)

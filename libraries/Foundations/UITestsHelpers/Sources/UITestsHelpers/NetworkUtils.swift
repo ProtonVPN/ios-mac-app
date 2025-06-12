@@ -120,7 +120,7 @@ public enum NetworkUtils {
                     connection?.cancel() // Close the connection
                     continuation.resume(returning: true)
                     
-                case .failed(_):
+                case .failed:
                     // Connection failed
                     connection?.cancel() // Close the connection
                     continuation.resume(returning: false)

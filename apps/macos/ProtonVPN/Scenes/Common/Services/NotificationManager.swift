@@ -54,7 +54,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     @objc private func appStateChanged(_ notification: Notification) {
         if let newState = notification.object as? AppState {
-            if case AppState.connected(_) = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
+            if case AppState.connected = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
                 fire(connectedNotification(for: server))
             }
             

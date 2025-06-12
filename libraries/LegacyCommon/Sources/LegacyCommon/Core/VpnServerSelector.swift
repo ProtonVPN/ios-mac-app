@@ -195,7 +195,7 @@ extension ConnectionRequest {
         case .gateway:
             return .fastest
 
-        case .city(_, _):
+        case .city:
             return .fastest
 
         case .fastest:

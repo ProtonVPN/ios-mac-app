@@ -118,7 +118,7 @@ public struct SharedPropertiesFeature {
                     log.error("Failed to update loads", category: .api, metadata: ["error": "\(error)"])
                 }
 
-            case .userLocation(_):
+            case .userLocation:
                 return .none
 
             case let .newConnectionStatus(newValue):

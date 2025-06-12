@@ -153,7 +153,7 @@ public struct UserLocationFeature {
                 log.error("User location request failed", category: .api, metadata: ["error": "\(error)"])
                 return .none
 
-            case .didBecomeActive(_):
+            case .didBecomeActive:
                 return .send(.fetchUserLocation)
 
             case .tearDown:

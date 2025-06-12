@@ -57,7 +57,7 @@ struct QuickFixesFeature: Reducer {
             case .contactFormAction:
                 return .none
 
-            case .binding(_):
+            case .binding:
                 // Everything's done in BindingReducer()
                 return .none
             }

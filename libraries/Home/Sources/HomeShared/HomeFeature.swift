@@ -190,7 +190,7 @@ public struct HomeFeature {
             case .sharedProperties(.userLocation(.userLocationFetchFinished(.success(_)))):
                 // a bit unfortunate but map.pinOffset can only be updated via this action atm
                 return .send(.map(.connectionStateUpdated(state.vpnConnectionStatus)))
-            case .sharedProperties(_):
+            case .sharedProperties:
                 return .none
             case let .connect(spec, trigger):
                 return .run { send in
@@ -282,11 +282,11 @@ public struct HomeFeature {
             case .destination(.presented(.whatsNew(.dismissItem))):
                 state.destination = nil
                 return .none
-            case .destination(_):
+            case .destination:
                 return .none
             case .map:
                 return .none
-            case .freeConnectionsInfo(_):
+            case .freeConnectionsInfo:
                 return .none
             case let .connection(.core(.localAgent(.event(.stats(message))))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
@@ -295,7 +295,7 @@ public struct HomeFeature {
             case let .whatsNewChecker(.show(items)):
                 state.destination = .whatsNew(.init(item: items[0]))
                 return .none
-            case .whatsNewChecker(_), .whatsNewPresenter(_):
+            case .whatsNewChecker(_), .whatsNewPresenter:
                 return .none
             case let .incomingAlert(alert):
                 pushAlert(DomainErrorAlert(alert: alert))

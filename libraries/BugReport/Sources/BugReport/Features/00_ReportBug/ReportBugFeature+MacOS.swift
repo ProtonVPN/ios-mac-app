@@ -55,7 +55,7 @@
                     switch route {
                     case let .quickFixes(state):
                         return state
-                    case .contactForm(_):
+                    case .contactForm:
                         return nil
                     }
                 }
@@ -76,7 +76,7 @@
                         return nil
                     }
                     switch route {
-                    case .quickFixes(_):
+                    case .quickFixes:
                         return nil
                     case let .contactForm(state):
                         return state
