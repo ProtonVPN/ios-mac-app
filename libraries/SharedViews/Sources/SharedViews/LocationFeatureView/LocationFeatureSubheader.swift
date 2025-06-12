@@ -40,7 +40,8 @@ public struct LocationFeatureSubheader: View {
         #endif
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         switch model {
         case let .textual(textModel):
             [Text(textModel.location)]

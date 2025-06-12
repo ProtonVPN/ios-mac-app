@@ -13,6 +13,7 @@
 --funcattributes prev-line
 --typeattributes prev-line
 --storedvarattrs same-line
+--computedvarattrs prev-line
 
 # excludes
 --exclude external,Build

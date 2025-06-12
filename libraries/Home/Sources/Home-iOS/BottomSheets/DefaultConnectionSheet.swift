@@ -53,7 +53,8 @@ struct DefaultConnectionSheet: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         section {
             Text(Localizable.homeDefaultConnectionTitle)
                 .styled(.normal)

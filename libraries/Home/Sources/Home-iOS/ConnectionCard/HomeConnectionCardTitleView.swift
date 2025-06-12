@@ -49,7 +49,8 @@ struct HomeConnectionCardHeader: View {
         }
     }
 
-    @ViewBuilder private var titleView: some View {
+    @ViewBuilder
+    private var titleView: some View {
         if let action {
             Button {
                 actionSender(action)

@@ -35,7 +35,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         switch store.content {
         case .none:
             ProgressView()

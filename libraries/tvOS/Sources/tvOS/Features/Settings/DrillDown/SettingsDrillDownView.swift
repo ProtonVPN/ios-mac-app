@@ -30,7 +30,8 @@ struct SettingsDrillDownView: View {
             .onExitCommand { store.send(.onExitCommand) }
     }
 
-    @ViewBuilder var viewBody: some View {
+    @ViewBuilder
+    var viewBody: some View {
         switch store.state {
         case .eula:
             EULAView()

@@ -42,7 +42,8 @@ struct ProtocolCell: View {
             .onTapGesture { onTap() }
     }
 
-    @ViewBuilder var cellContent: some View {
+    @ViewBuilder
+    var cellContent: some View {
         if isStandardLayoutActive {
             HStack {
                 VStack(alignment: .leading, spacing: .themeSpacing6) {
@@ -76,7 +77,8 @@ struct ProtocolCell: View {
             .foregroundColor(.init(.text, .normal))
     }
 
-    @ViewBuilder private var tagView: some View {
+    @ViewBuilder
+    private var tagView: some View {
         HStack {
             ForEach(attributes) { attribute in
                 ProtocolTag(attribute: attribute)
