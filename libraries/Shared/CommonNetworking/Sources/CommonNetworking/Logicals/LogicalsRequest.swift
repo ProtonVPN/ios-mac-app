@@ -90,7 +90,7 @@ public struct LogicalsRequest: ConditionalRequest {
     }
 }
 
-extension Array<URLQueryItem> {
+extension [URLQueryItem] {
     init(_ elements: (name: String, value: String?)...) {
         self = elements.map { URLQueryItem(name: $0.name, value: $0.value) }
     }

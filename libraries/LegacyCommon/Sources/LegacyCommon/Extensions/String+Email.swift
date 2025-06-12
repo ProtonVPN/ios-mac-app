@@ -33,7 +33,7 @@ public extension String {
     }
 }
 
-public extension Optional<String> {
+public extension String? {
     var isEmpty: Bool {
         self?.isEmpty ?? true
     }

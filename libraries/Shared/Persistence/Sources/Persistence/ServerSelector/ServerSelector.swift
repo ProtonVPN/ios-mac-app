@@ -169,7 +169,7 @@ extension ServerSelector: DependencyKey {
     })
 }
 
-extension Array<ServerInfo> {
+extension [ServerInfo] {
     func filter(_ filter: VPNServerFilter) -> Self {
         self.filter(filter.allows(_:))
     }

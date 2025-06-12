@@ -18,7 +18,7 @@
 
 import Foundation
 
-extension Optional<URL> {
+extension URL? {
     /// Url as string or empty string if nil
     var stringOrEmpty: String {
         switch self {

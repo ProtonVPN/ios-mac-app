@@ -226,7 +226,7 @@ extension AuthKeychain: AuthKeychainHandle {
     }
 
     public func clear() {
-        keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
+        keychain.clear(contextValues: [String](StorageKey.contextKeys.values))
         saveToCache(nil)
     }
 }

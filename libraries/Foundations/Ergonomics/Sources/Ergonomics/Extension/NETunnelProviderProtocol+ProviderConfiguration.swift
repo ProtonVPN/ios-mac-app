@@ -112,7 +112,7 @@ extension NETunnelProviderProtocol {
 }
 
 @available(tvOS 17.0, *)
-private extension Dictionary<String, Any> {
+private extension [String: Any] {
     subscript(_ customKey: NETunnelProviderProtocol.CustomKeys) -> Any? {
         get {
             self[customKey.rawValue]

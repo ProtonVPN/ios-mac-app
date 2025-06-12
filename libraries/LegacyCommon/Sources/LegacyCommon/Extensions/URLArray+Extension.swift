@@ -22,7 +22,7 @@
 
 import Foundation
 
-extension Array<URL> {
+extension [URL] {
     /// Only reachable URLs
     public func reachable() -> Self {
         compactMap { (try? $0.checkPromisedItemIsReachable()) ?? false ? $0 : nil }

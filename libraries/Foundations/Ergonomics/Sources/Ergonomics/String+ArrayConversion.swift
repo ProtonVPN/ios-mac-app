@@ -16,7 +16,7 @@ extension String {
     }
 }
 
-extension Optional<String> {
+extension String? {
     public func splitToArray(separator: Character = ",", trimmingCharacters: CharacterSet? = nil) -> [String] {
         switch self {
         case .none:

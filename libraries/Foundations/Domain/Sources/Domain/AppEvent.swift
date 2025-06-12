@@ -221,7 +221,7 @@ public extension AppEvent {
     }
 }
 
-public extension Array<AppEvent> {
+public extension [AppEvent] {
     func subscribe(_ object: Any, selector: Selector) {
         for event in self {
             event.subscribe(object, selector: selector)
