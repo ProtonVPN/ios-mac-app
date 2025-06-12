@@ -52,12 +52,14 @@ class ProviderMessageTests: XCTestCase {
     }
 
     func testProviderRequests() {
-        let cookie = HTTPCookie(properties: [.name: "testing",
-                                             .value: "12345",
-                                             .version: 2,
-                                             .domain: "piv.pivpiv.dk",
-                                             .path: "/",
-                                             .maximumAge: "420"])!
+        let cookie = HTTPCookie(properties: [
+            .name: "testing",
+            .value: "12345",
+            .version: 2,
+            .domain: "piv.pivpiv.dk",
+            .path: "/",
+            .maximumAge: "420",
+        ])!
 
         let messages: [WireguardProviderRequest] = [
             .getRuntimeTunnelConfiguration,

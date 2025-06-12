@@ -87,8 +87,10 @@ class PropertiesManagerTests: XCTestCase {
 
     func testTelemetryMigratingFromBoolValue() {
         withDependencies {
-            $0.storage = MemoryStorage(initialValue: ["TelemetryUsageDatauser": false,
-                                                      "TelemetryCrashReportsuser": false])
+            $0.storage = MemoryStorage(initialValue: [
+                "TelemetryUsageDatauser": false,
+                "TelemetryCrashReportsuser": false,
+            ])
         } operation: {
             XCTAssertFalse(sut.getTelemetryUsageData())
             XCTAssertFalse(sut.getTelemetryCrashReports())
@@ -97,8 +99,10 @@ class PropertiesManagerTests: XCTestCase {
 
     func testTelemetryUsingStringValue() {
         withDependencies {
-            $0.storage = MemoryStorage(initialValue: ["TelemetryUsageDatauser": "false",
-                                                      "TelemetryCrashReportsuser": "false"])
+            $0.storage = MemoryStorage(initialValue: [
+                "TelemetryUsageDatauser": "false",
+                "TelemetryCrashReportsuser": "false",
+            ])
         } operation: {
             XCTAssertFalse(sut.getTelemetryUsageData())
             XCTAssertFalse(sut.getTelemetryCrashReports())

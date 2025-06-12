@@ -66,9 +66,11 @@ class PVPNTextViewLink: NSTextView {
         isAutomaticLinkDetectionEnabled = true
 
         guard let text = textStorage?.string, !text.isEmpty else { return }
-        let titleAttributes = [NSAttributedString.Key.font: textViewFont,
-                               NSAttributedString.Key.foregroundColor: textColor ?? .color(.text),
-                               NSAttributedString.Key.paragraphStyle: defaultStyle]
+        let titleAttributes = [
+            NSAttributedString.Key.font: textViewFont,
+            NSAttributedString.Key.foregroundColor: textColor ?? .color(.text),
+            NSAttributedString.Key.paragraphStyle: defaultStyle,
+        ]
 
         let titleString = NSAttributedString(string: text, attributes: titleAttributes)
         textStorage?.setAttributedString(titleString)

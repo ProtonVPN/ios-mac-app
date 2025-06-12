@@ -28,11 +28,13 @@
         static let liveValue = InitialStateProvider(
             initialState: .init(
                 home: .init(
-                    connections: [.pinnedConnection,
-                                  .previousConnection,
-                                  .connectionSecureCoreFastest,
-                                  .connectionRegion,
-                                  .connectionSecureCore],
+                    connections: [
+                        .pinnedConnection,
+                        .previousConnection,
+                        .connectionSecureCoreFastest,
+                        .connectionRegion,
+                        .connectionSecureCore,
+                    ],
                     connectionStatus: .init(protectionState: .unprotected(country: "PL", ip: "192.168.1.0")),
                     vpnConnectionStatus: .disconnected
                 ),

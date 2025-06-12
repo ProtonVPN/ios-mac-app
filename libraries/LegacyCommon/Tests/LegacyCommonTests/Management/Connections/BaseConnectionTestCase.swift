@@ -35,9 +35,11 @@ import VPNShared
 /// base dependencies required for fully mocking business logic & connection flows.
 class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     let expectationTimeout: TimeInterval = 10
-    let neVpnEvents = [NEVPNConnectionMock.connectionCreatedNotification,
-                       NEVPNConnectionMock.tunnelStateChangeNotification,
-                       NEVPNManagerMock.managerCreatedNotification]
+    let neVpnEvents = [
+        NEVPNConnectionMock.connectionCreatedNotification,
+        NEVPNConnectionMock.tunnelStateChangeNotification,
+        NEVPNManagerMock.managerCreatedNotification,
+    ]
 
     var mockProviderState: (
         forceResponse: WireguardProviderRequest.Response?,
@@ -216,9 +218,11 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     func makeNewCertificate() -> VpnCertificate {
         let refreshTime = Date().addingTimeInterval(.hours(6))
         let expiryTime = refreshTime.addingTimeInterval(.hours(6))
-        let certDict: [String: Any] = ["Certificate": "abcd1234",
-                                       "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
-                                       "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
+        let certDict: [String: Any] = [
+            "Certificate": "abcd1234",
+            "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
+            "RefreshTime": Int(refreshTime.timeIntervalSince1970),
+        ]
         return try! VpnCertificate(dict: certDict.mapValues { $0 as AnyObject })
     }
 }

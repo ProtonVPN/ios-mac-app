@@ -56,9 +56,11 @@ struct WelcomeView: View {
             RoundedRectangle(cornerRadius: .themeRadius12)
                 .stroke(
                     LinearGradient(
-                        colors: [Color(hex: 0x6E4BFF), // custom colors just for this
-                                 Color(hex: 0x547AEC),
-                                 Color(hex: 0x2FCCCF)],
+                        colors: [
+                            Color(hex: 0x6E4BFF), // custom colors just for this
+                            Color(hex: 0x547AEC),
+                            Color(hex: 0x2FCCCF),
+                        ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),

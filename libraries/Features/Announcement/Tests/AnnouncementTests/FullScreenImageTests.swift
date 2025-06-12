@@ -29,8 +29,10 @@ class FullScreenImageTests: XCTestCase {
     }
 
     func testSelectsFirstAvailableURL() {
-        let sources: [FullScreenImage.Source] = [.init(url: "first", type: "", width: nil, height: nil),
-                                                 .init(url: "second", type: "", width: nil, height: nil)]
+        let sources: [FullScreenImage.Source] = [
+            .init(url: "first", type: "", width: nil, height: nil),
+            .init(url: "second", type: "", width: nil, height: nil),
+        ]
         let sut = FullScreenImage(source: sources, alternativeText: "")
         XCTAssertEqual(sut.firstURL?.absoluteString, "first")
     }

@@ -147,9 +147,11 @@
             case .certificate:
                 let refreshTime = Date().addingTimeInterval(.hours(6))
                 let expiryTime = refreshTime.addingTimeInterval(.hours(6))
-                let certDict: [String: Any] = ["Certificate": "abcd1234",
-                                               "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
-                                               "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
+                let certDict: [String: Any] = [
+                    "Certificate": "abcd1234",
+                    "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
+                    "RefreshTime": Int(refreshTime.timeIntervalSince1970),
+                ]
                 let data = try JSONSerialization.data(withJSONObject: certDict)
                 return .success(data)
             case .sessionCount:

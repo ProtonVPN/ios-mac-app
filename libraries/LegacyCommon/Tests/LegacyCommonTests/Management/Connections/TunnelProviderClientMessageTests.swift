@@ -95,8 +95,14 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
 
         populateExpectations(
             description: "Handle WireGuard extension asking app to generate new keys and reconnect",
-            [.vpnConnection, .localAgentConnection, .vpnDisconnection,
-             storeKeys, .vpnConnection, .certificateRefresh]
+            [
+                .vpnConnection,
+                .localAgentConnection,
+                .vpnDisconnection,
+                storeKeys,
+                .vpnConnection,
+                .certificateRefresh,
+            ]
         )
 
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)

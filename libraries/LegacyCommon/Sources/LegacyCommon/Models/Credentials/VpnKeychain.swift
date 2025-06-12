@@ -300,9 +300,11 @@ public class VpnKeychain: VpnKeychainProtocol {
     // MARK: - Certificates
 
     public func getServerCertificate() throws -> SecCertificate {
-        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
-                                    kSecAttrLabel as String: StorageKey.serverCertificate,
-                                    kSecReturnRef as String: kCFBooleanTrue as Any]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassCertificate,
+            kSecAttrLabel as String: StorageKey.serverCertificate,
+            kSecReturnRef as String: kCFBooleanTrue as Any,
+        ]
         var item: CFTypeRef?
         let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &item)
         guard result == errSecSuccess else {
@@ -317,9 +319,11 @@ public class VpnKeychain: VpnKeychainProtocol {
         let certificateData = NSData(contentsOfFile: certificateFile)!
         let certificate = SecCertificateCreateWithData(nil, certificateData)!
 
-        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
-                                    kSecValueRef as String: certificate,
-                                    kSecAttrLabel as String: StorageKey.serverCertificate]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassCertificate,
+            kSecValueRef as String: certificate,
+            kSecAttrLabel as String: StorageKey.serverCertificate,
+        ]
 
         let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
         guard result == errSecSuccess else {
@@ -328,9 +332,11 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     private func deleteServerCertificate() {
-        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
-                                    kSecAttrLabel as String: StorageKey.serverCertificate,
-                                    kSecReturnRef as String: kCFBooleanTrue as Any]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassCertificate,
+            kSecAttrLabel as String: StorageKey.serverCertificate,
+            kSecReturnRef as String: kCFBooleanTrue as Any,
+        ]
         _ = KeychainEnvironment.secItemDelete(query as CFDictionary)
     }
 

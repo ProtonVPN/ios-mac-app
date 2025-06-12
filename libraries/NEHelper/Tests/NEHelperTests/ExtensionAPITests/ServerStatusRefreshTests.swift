@@ -105,9 +105,11 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             timerFactory.runRepeatingTimers {}
         }
 
-        wait(for: [expectations.managerStarted,
-                   expectations.endpointHit,
-                   expectations.callbackInvoked], timeout: expectationTimeout)
+        wait(for: [
+            expectations.managerStarted,
+            expectations.endpointHit,
+            expectations.callbackInvoked,
+        ], timeout: expectationTimeout)
     }
 
     func testServerIpStatusUnderMaintenanceGetsCallback() {
@@ -120,8 +122,10 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         let originalServer = ServerStatusRequest.Logical(
             id: "logical-original-id",
             status: 1,
-            servers: [.mock(id: "original-serverip-id", status: 0),
-                      .mock(id: "new-serverip-id", status: 1)]
+            servers: [
+                .mock(id: "original-serverip-id", status: 0),
+                .mock(id: "new-serverip-id", status: 1),
+            ]
         )
         Self.currentLogicalId = originalServer.id
         Self.currentServerIpId = originalServer.servers.first!.id
@@ -145,9 +149,11 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             timerFactory.runRepeatingTimers {}
         }
 
-        wait(for: [expectations.managerStarted,
-                   expectations.endpointHit,
-                   expectations.callbackInvoked], timeout: expectationTimeout)
+        wait(for: [
+            expectations.managerStarted,
+            expectations.endpointHit,
+            expectations.callbackInvoked,
+        ], timeout: expectationTimeout)
     }
 
     func testServerIpGoingAwayGetsCallback() {
@@ -190,9 +196,11 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             timerFactory.runRepeatingTimers {}
         }
 
-        wait(for: [expectations.managerStarted,
-                   expectations.endpointHit,
-                   expectations.callbackInvoked], timeout: expectationTimeout)
+        wait(for: [
+            expectations.managerStarted,
+            expectations.endpointHit,
+            expectations.callbackInvoked,
+        ], timeout: expectationTimeout)
     }
 
     func testResponseParseError() {

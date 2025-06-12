@@ -84,8 +84,10 @@ actor TelemetryBuffer {
         let events = events.compactMap {
             try? JSONSerialization.jsonObject(with: $0.data) as? JSONDictionary
         }
-        return ["MeasurementGroup": Constants.measurementGroup,
-                "EventInfo": events]
+        return [
+            "MeasurementGroup": Constants.measurementGroup,
+            "EventInfo": events,
+        ]
     }
 
     func discardOutdatedEvents() {

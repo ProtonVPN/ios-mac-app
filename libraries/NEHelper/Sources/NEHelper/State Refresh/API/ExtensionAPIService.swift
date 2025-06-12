@@ -527,8 +527,10 @@ public final class ExtensionAPIService {
         }
 
         let serverStatusRequest = ServerStatusRequest(params: .init(logicalId: logicalId, transport: transport))
-        let headers: [(APIHeader, String?)] = [(.authorization, "Bearer \(authCredentials.accessToken)"),
-                                               (.sessionId, authCredentials.sessionId)]
+        let headers: [(APIHeader, String?)] = [
+            (.authorization, "Bearer \(authCredentials.accessToken)"),
+            (.sessionId, authCredentials.sessionId),
+        ]
         let retryBlock: () -> Void = {
             self.refreshServerStatus(
                 logicalId: logicalId,
@@ -596,8 +598,10 @@ public final class ExtensionAPIService {
                 completionHandler: completionHandler
             )
         }
-        request(certificateRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
-                                              (.sessionId, authCredentials.sessionId)]) { [weak self] result in
+        request(certificateRequest, headers: [
+            (.authorization, "Bearer \(authCredentials.accessToken)"),
+            (.sessionId, authCredentials.sessionId),
+        ]) { [weak self] result in
             switch result {
             case let .success(certificate):
                 completionHandler(.success(certificate))

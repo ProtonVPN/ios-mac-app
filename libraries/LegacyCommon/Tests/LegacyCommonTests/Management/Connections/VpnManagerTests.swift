@@ -127,8 +127,10 @@ class VpnManagerTests: BaseConnectionTestCase {
         }
 
         await fulfillment(
-            of: [expectations.wireguardTunnelStarted,
-                 expectations.vpnManagerWireguardConnect], timeout: expectationTimeout
+            of: [
+                expectations.wireguardTunnelStarted,
+                expectations.vpnManagerWireguardConnect,
+            ], timeout: expectationTimeout
         )
 
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))

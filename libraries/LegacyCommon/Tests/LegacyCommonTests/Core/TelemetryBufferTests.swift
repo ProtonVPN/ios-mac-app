@@ -129,8 +129,10 @@ class TelemetryBufferTests: XCTestCase {
 
     // When asked for the oldest event, Buffer will return the first event from the list
     func testBufferReturnsFirstEvent() async {
-        let mock: [TelemetryBuffer.BufferedEvent] = [.mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!),
-                                                     .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!)]
+        let mock: [TelemetryBuffer.BufferedEvent] = [
+            .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!),
+            .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!),
+        ]
         let data = try! JSONEncoder().encode(mock)
 
         await withDependencies {

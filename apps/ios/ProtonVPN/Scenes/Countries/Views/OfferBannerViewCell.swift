@@ -92,8 +92,10 @@ class OfferBannerViewCell: UITableViewCell {
 }
 
 class RoundedBackgroundView: UIView {
-    let colors = [Theme.Asset.offerBannerGradientLeft.color,
-                  Theme.Asset.offerBannerGradientRight.color]
+    let colors = [
+        Theme.Asset.offerBannerGradientLeft.color,
+        Theme.Asset.offerBannerGradientRight.color,
+    ]
 
     override func awakeFromNib() {
         super.awakeFromNib()

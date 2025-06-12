@@ -760,8 +760,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
 
-        wait(for: [expectations.disconnections[0],
-                   expectations.downgradeAlert], timeout: expectationTimeout)
+        wait(for: [
+            expectations.disconnections[0],
+            expectations.downgradeAlert,
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nDisconnections, 1)
         container.alertService.alerts.removeAll()
 
@@ -773,8 +775,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(reconnectInfo.fromServer.name, testData.server3.name)
         XCTAssertEqual(reconnectInfo.toServer.name, testData.server1.name)
 
-        wait(for: [expectations.connections[1],
-                   expectations.appStateConnectedTransitions[1]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.connections[1],
+            expectations.appStateConnectedTransitions[1],
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nConnections, 2)
 
         // Should have reconnected to server1 now that the user tier has changed
@@ -800,8 +804,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(nDisconnections, 2)
 
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        wait(for: [expectations.connections[2],
-                   expectations.appStateConnectedTransitions[2]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.connections[2],
+            expectations.appStateConnectedTransitions[2],
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nConnections, 3)
 
         // Should have reconnected to server3 now that the user is again eligible
@@ -822,8 +828,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(delinquentAlert?.reconnectInfo?.fromServer.name, testData.server3.name)
         XCTAssertEqual(delinquentAlert?.reconnectInfo?.toServer.name, testData.server1.name)
 
-        wait(for: [expectations.connections[3],
-                   expectations.appStateConnectedTransitions[3]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.connections[3],
+            expectations.appStateConnectedTransitions[3],
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nConnections, 4)
 
         // Should have reconnected to server1 now that user is delinquent

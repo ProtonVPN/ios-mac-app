@@ -54,8 +54,10 @@ final class UpsellPrimaryActionButton: HoverDetectionButton {
     private func configureTitle() {
         attributedTitle = NSAttributedString(
             string: title,
-            attributes: [.foregroundColor: NSColor.color(.text),
-                         .font: NSFont.systemFont(ofSize: fontSize)]
+            attributes: [
+                .foregroundColor: NSColor.color(.text),
+                .font: NSFont.systemFont(ofSize: fontSize),
+            ]
         )
     }
 }

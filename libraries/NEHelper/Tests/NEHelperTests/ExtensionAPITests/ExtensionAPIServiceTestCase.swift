@@ -36,12 +36,14 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     static let sessionSelector = "SELECTOR"
     static var currentLogicalId = "logical-id"
     static var currentServerIpId = "server-ip-id"
-    static let sessionCookie = HTTPCookie(properties: [.name: "COOOKIEE",
-                                                       .value: "OM NOM NOM NOM",
-                                                       .version: 2,
-                                                       .path: "/",
-                                                       .domain: "piv.pivpiv.dk",
-                                                       .maximumAge: "420"])!
+    static let sessionCookie = HTTPCookie(properties: [
+        .name: "COOOKIEE",
+        .value: "OM NOM NOM NOM",
+        .version: 2,
+        .path: "/",
+        .domain: "piv.pivpiv.dk",
+        .maximumAge: "420",
+    ])!
 
     static let defaultVpnFeatures = VPNConnectionFeatures(
         netshield: .off,

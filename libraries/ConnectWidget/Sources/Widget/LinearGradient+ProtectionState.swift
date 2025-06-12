@@ -24,8 +24,10 @@ extension LinearGradient {
         switch protectionState {
         case .signedOut:
             return .linearGradient(
-                stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
-                        .init(color: Color(.loggedOutGradientStop), location: 0.7)],
+                stops: [
+                    .init(color: Color(.loggedOutGradientStart), location: 0),
+                    .init(color: Color(.loggedOutGradientStop), location: 0.7),
+                ],
                 startPoint: .topTrailing,
                 endPoint: .bottomLeading
             )
@@ -38,8 +40,10 @@ extension LinearGradient {
         }
 
         return .linearGradient(
-            stops: [.init(color: startColor.opacity(0.5), location: 0),
-                    .init(color: .clear, location: 1)],
+            stops: [
+                .init(color: startColor.opacity(0.5), location: 0),
+                .init(color: .clear, location: 1),
+            ],
             startPoint: .top,
             endPoint: .center
         )

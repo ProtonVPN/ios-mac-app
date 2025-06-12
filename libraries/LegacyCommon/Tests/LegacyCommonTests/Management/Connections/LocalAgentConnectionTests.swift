@@ -52,10 +52,12 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
     func testLocalAgentRekeyReconnectionCases() {
         let errorServerSessionDoesNotMatch = 86202
 
-        let expectations: [ExpectationCategory] = [.certificateRefresh,
-                                                   .vpnDisconnection,
-                                                   .vpnConnection,
-                                                   .localAgentConnection]
+        let expectations: [ExpectationCategory] = [
+            .certificateRefresh,
+            .vpnDisconnection,
+            .vpnConnection,
+            .localAgentConnection,
+        ]
 
         let subcases: [Subcase] = [
             (

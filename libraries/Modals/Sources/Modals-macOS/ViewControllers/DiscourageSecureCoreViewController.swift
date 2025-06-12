@@ -70,8 +70,10 @@ final class DiscourageSecureCoreViewController: NSViewController {
         imageView.image = feature.artImage
         learnMoreButton.attributedTitle = NSAttributedString(
             string: feature.learnMore,
-            attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
-                         .font: NSFont.systemFont(ofSize: 12)]
+            attributes: [
+                .foregroundColor: NSColor.color(.icon, .interactive),
+                .font: NSFont.systemFont(ofSize: 12),
+            ]
         )
     }
 

@@ -9,6 +9,7 @@
 --commas always
 --self init-only
 --wraparguments before-first
+--wrapcollections before-first
 
 # excludes
 --exclude external,Build

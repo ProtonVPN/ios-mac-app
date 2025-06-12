@@ -59,8 +59,10 @@ class NWTCPConnectionTests: XCTestCase {
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
         urlRequest.httpMethod = "GET"
 
-        let responseHeaders = ["X-Testing-Response-Header": "Fred",
-                               "X-Testing-Other-Response-Header": "Wilma"]
+        let responseHeaders = [
+            "X-Testing-Response-Header": "Fred",
+            "X-Testing-Other-Response-Header": "Wilma",
+        ]
         let responseBody = "A smooth sea never made a skilled sailor."
         let response = RequestParsingTests.makeResponse(headers: responseHeaders, body: responseBody)
 
@@ -145,18 +147,22 @@ class NWTCPConnectionTests: XCTestCase {
 
         var numRequests = 0
 
-        let cookie1 = HTTPCookie(properties: [.name: "testing",
-                                              .value: "12345",
-                                              .version: 2,
-                                              .domain: apiUrl.host!,
-                                              .path: "/",
-                                              .maximumAge: "420"])!
-        let cookie2 = HTTPCookie(properties: [.name: "johnny",
-                                              .value: "appleseed",
-                                              .version: 2,
-                                              .domain: apiUrl.host!,
-                                              .path: "/",
-                                              .maximumAge: "\(60 * 60 * 4)"])!
+        let cookie1 = HTTPCookie(properties: [
+            .name: "testing",
+            .value: "12345",
+            .version: 2,
+            .domain: apiUrl.host!,
+            .path: "/",
+            .maximumAge: "420",
+        ])!
+        let cookie2 = HTTPCookie(properties: [
+            .name: "johnny",
+            .value: "appleseed",
+            .version: 2,
+            .domain: apiUrl.host!,
+            .path: "/",
+            .maximumAge: "\(60 * 60 * 4)",
+        ])!
         dataTaskFactory.cookieStorage.setCookies([cookie1, cookie2], for: apiUrl, mainDocumentURL: nil)
 
         stateObservingCallback = { tunnel in

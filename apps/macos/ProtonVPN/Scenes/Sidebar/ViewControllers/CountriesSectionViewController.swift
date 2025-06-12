@@ -283,9 +283,11 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func setupQuickSettings() {
-        [(viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
-         (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
-         (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2)].forEach { presenter, container, button, index in
+        [
+            (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
+            (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
+            (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
+        ].forEach { presenter, container, button, index in
             let vc = QuickSettingDetailViewController(presenter)
             vc.viewWillAppear()
             container?.addSubview(vc.view)

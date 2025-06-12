@@ -100,10 +100,12 @@ extension ServersInformationViewController: UITableViewDelegate {
         label.textColor = .weakTextColor()
 
         header.addSubview(label)
-        header.addConstraints([header.topAnchor.constraint(equalTo: label.topAnchor),
-                               header.leftAnchor.constraint(equalTo: label.leftAnchor, constant: -16),
-                               header.rightAnchor.constraint(equalTo: label.rightAnchor),
-                               header.bottomAnchor.constraint(equalTo: label.bottomAnchor)])
+        header.addConstraints([
+            header.topAnchor.constraint(equalTo: label.topAnchor),
+            header.leftAnchor.constraint(equalTo: label.leftAnchor, constant: -16),
+            header.rightAnchor.constraint(equalTo: label.rightAnchor),
+            header.bottomAnchor.constraint(equalTo: label.bottomAnchor),
+        ])
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = viewModel.sections[section].title
         return header

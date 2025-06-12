@@ -87,9 +87,11 @@
                 $protectionState |=| state.protection
                 $vpnConnectionStatus |=| state.connection
 
-                let testName = [tier.isFreeTier ? "Free" : "Paid",
-                                protectionState.shortDescription(),
-                                vpnConnectionStatus.shortDescription()].joined(separator: "-")
+                let testName = [
+                    tier.isFreeTier ? "Free" : "Paid",
+                    protectionState.shortDescription(),
+                    vpnConnectionStatus.shortDescription(),
+                ].joined(separator: "-")
 
                 assertSnapshot(of: appView, as: .image, testName: testName)
             }

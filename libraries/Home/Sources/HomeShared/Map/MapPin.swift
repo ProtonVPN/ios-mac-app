@@ -53,8 +53,10 @@ public struct MapPin: View {
     var externalGradientCircle: some View {
         Circle()
             .fill(RadialGradient(
-                colors: [mode.color,
-                         mode.color.opacity(0.01)],
+                colors: [
+                    mode.color,
+                    mode.color.opacity(0.01),
+                ],
                 center: .center,
                 startRadius: 96,
                 endRadius: 0

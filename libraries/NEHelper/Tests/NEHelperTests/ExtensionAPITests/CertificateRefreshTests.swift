@@ -62,9 +62,11 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         let callback = mockEndpoint(
             CertificateRefreshRequest.self,
-            result: .success([\.certificate: testValues.cert,
-                              \.refreshTime: testValues.refreshTime,
-                              \.validUntil: testValues.validUntil]),
+            result: .success([
+                \.certificate: testValues.cert,
+                \.refreshTime: testValues.refreshTime,
+                \.validUntil: testValues.validUntil,
+            ]),
             expectationToFulfill: expectations.certRefresh
         )
 
@@ -161,9 +163,11 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         manager.start {}
 
-        wait(for: [expectationForFirstCertRefresh,
-                   expectationForRetryCertRefresh,
-                   expectationForAuthTokenRefresh], timeout: expectationTimeout)
+        wait(for: [
+            expectationForFirstCertRefresh,
+            expectationForRetryCertRefresh,
+            expectationForAuthTokenRefresh,
+        ], timeout: expectationTimeout)
     }
 
     /// An error 422 means that the API session (not the token) has expired. The network extension can do
@@ -259,10 +263,12 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
         }
 
-        wait(for: [expectations.sessionAuth,
-                   expectations.tokenRefresh,
-                   expectations.managerRestart,
-                   expectations.thirdCertRefresh], timeout: expectationTimeout)
+        wait(for: [
+            expectations.sessionAuth,
+            expectations.tokenRefresh,
+            expectations.managerRestart,
+            expectations.thirdCertRefresh,
+        ], timeout: expectationTimeout)
     }
 
     /// If the certificate doesn't meet the refresh requirements (see `certificateDoesNeedRefreshing(features:)`),
@@ -743,10 +749,12 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
             timerFactory.runAllScheduledWork()
 
-            wait(for: [expectations.sessionAuthSuccessful,
-                       expectations.tokenRefreshSuccessful,
-                       expectations.certRefresh503NoRetryAfter,
-                       expectations.certRefresh503NoRetryScheduledWork], timeout: expectationTimeout)
+            wait(for: [
+                expectations.sessionAuthSuccessful,
+                expectations.tokenRefreshSuccessful,
+                expectations.certRefresh503NoRetryAfter,
+                expectations.certRefresh503NoRetryScheduledWork,
+            ], timeout: expectationTimeout)
 
             guard let scheduledWork = timerFactory.scheduledWork.first else {
                 XCTFail("No scheduled work item found")
@@ -762,8 +770,10 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
             timerFactory.runAllScheduledWork()
 
-            wait(for: [expectations.certRefreshSuccessful,
-                       expectations.sessionAuthSuccessfulManagerRestart], timeout: expectationTimeout)
+            wait(for: [
+                expectations.certRefreshSuccessful,
+                expectations.sessionAuthSuccessfulManagerRestart,
+            ], timeout: expectationTimeout)
         }
 
         ExtensionAPIService.retryAfterJitterRate = oldJitterRate
@@ -933,11 +943,13 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         // Sequence of operations: manager starts, then checks certificate, gets token refresh error,
         // tries to refresh token, succeeds & stores credentials, then asks successfully for second cert refresh.
-        wait(for: [expectations.managerStart,
-                   expectations.firstCertRefresh,
-                   expectations.tokenRefresh,
-                   expectations.credentialsStored,
-                   expectations.secondCertRefresh], timeout: 10)
+        wait(for: [
+            expectations.managerStart,
+            expectations.firstCertRefresh,
+            expectations.tokenRefresh,
+            expectations.credentialsStored,
+            expectations.secondCertRefresh,
+        ], timeout: 10)
 
         // The new credentials should be stored in the main app's keychain, not in the extension's
         XCTAssertEqual(keychain.credentials[.mainApp]?.accessToken, testData.updatedAccessToken)
@@ -1018,9 +1030,11 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
         }
 
-        wait(for: [expectations.firstCertRefresh,
-                   expectations.authTokenRefresh,
-                   expectations.sessionExpiredResult[0]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.firstCertRefresh,
+            expectations.authTokenRefresh,
+            expectations.sessionExpiredResult[0],
+        ], timeout: expectationTimeout)
 
         // we shouldn't hit the API at all here
         certRefreshCallback = failCallback

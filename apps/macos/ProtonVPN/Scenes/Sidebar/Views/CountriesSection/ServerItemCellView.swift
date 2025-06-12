@@ -84,9 +84,11 @@ final class ServerItemCellView: NSView {
         featuresStackView.distribution = .fill
         featuresStackView.spacing = .UI.halfMargin
         addSubview(featuresStackView, positioned: .below, relativeTo: connectBtn)
-        addConstraints([serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -.UI.halfMargin),
-                        serverInfoStackView.centerYAnchor.constraint(equalTo: featuresStackView.centerYAnchor),
-                        featuresStackView.heightAnchor.constraint(equalToConstant: .UI.iconSize)])
+        addConstraints([
+            serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -.UI.halfMargin),
+            serverInfoStackView.centerYAnchor.constraint(equalTo: featuresStackView.centerYAnchor),
+            featuresStackView.heightAnchor.constraint(equalToConstant: .UI.iconSize),
+        ])
         self.featuresStackView = featuresStackView
     }
 
