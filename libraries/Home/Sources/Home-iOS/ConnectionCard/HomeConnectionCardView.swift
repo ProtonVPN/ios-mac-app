@@ -177,7 +177,7 @@ struct HomeConnectionCardView: View {
     }
 }
 
-fileprivate extension VPNConnectionStatus {
+private extension VPNConnectionStatus {
     var connectionStatusAvailable: Bool {
         guard case .connected = self else { return false }
         return true

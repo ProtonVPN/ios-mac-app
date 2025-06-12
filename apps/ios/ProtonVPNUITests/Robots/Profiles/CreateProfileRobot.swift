@@ -11,15 +11,15 @@ import UITestsHelpers
 import Foundation
 import Strings
 
-fileprivate let profileSameName = Localizable.profileNameNeedsToBeUnique
-fileprivate let profileNameField = Localizable.enterProfileName
-fileprivate let countryField = Localizable.selectCountry
-fileprivate let countryButton = Localizable.country
-fileprivate let countriesLabel = Localizable.countries
-fileprivate let serverField = Localizable.selectServer
-fileprivate let saveProfileButton = Localizable.save
-fileprivate let secureCoreToggle = Localizable.secureCore
-fileprivate let protocolCellId = Localizable.protocol
+private let profileSameName = Localizable.profileNameNeedsToBeUnique
+private let profileNameField = Localizable.enterProfileName
+private let countryField = Localizable.selectCountry
+private let countryButton = Localizable.country
+private let countriesLabel = Localizable.countries
+private let serverField = Localizable.selectServer
+private let saveProfileButton = Localizable.save
+private let secureCoreToggle = Localizable.secureCore
+private let protocolCellId = Localizable.protocol
 
 class CreateProfileRobot: CoreElements {
     let verify = Verify()

@@ -11,16 +11,16 @@ import XCTest
 import UITestsHelpers
 import Strings
 
-fileprivate let headerTitle = Localizable.settingsTitle
-fileprivate let protocolButton = Localizable.protocol
-fileprivate let netshieldButton = Localizable.netshieldTitle
-fileprivate let killSwitchButton = Localizable.killSwitch
-fileprivate let allowLanConnectionsButton = Localizable.allowLanTitle
-fileprivate let moderateNatSwitch = Localizable.moderateNatTitle
-fileprivate let continueButton = Localizable.continue
-fileprivate let logOutButton = Localizable.logOut
-fileprivate let cancelButton = Localizable.cancel
-fileprivate let firstAppScreen = "SELECTED ENVIRONMENT"
+private let headerTitle = Localizable.settingsTitle
+private let protocolButton = Localizable.protocol
+private let netshieldButton = Localizable.netshieldTitle
+private let killSwitchButton = Localizable.killSwitch
+private let allowLanConnectionsButton = Localizable.allowLanTitle
+private let moderateNatSwitch = Localizable.moderateNatTitle
+private let continueButton = Localizable.continue
+private let logOutButton = Localizable.logOut
+private let cancelButton = Localizable.cancel
+private let firstAppScreen = "SELECTED ENVIRONMENT"
 
 class SettingsRobot: CoreElements {
     let verify = Verify()

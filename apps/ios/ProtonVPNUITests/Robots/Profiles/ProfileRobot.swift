@@ -11,15 +11,15 @@ import Foundation
 import Strings
 import UITestsHelpers
 
-fileprivate let editButton = Localizable.edit
-fileprivate let doneButton = Localizable.done
-fileprivate let addButton = "Add"
-fileprivate let deleteButton = Localizable.delete
-fileprivate let newProfileSuccessMessage = Localizable.profileCreatedSuccessfully
-fileprivate let editProfileSuccessMessage = Localizable.profileEditedSuccessfully
-fileprivate let fastestProfile = Localizable.fastest
-fileprivate let randomProfile = Localizable.random
-fileprivate let myProfiles = Localizable.myProfiles
+private let editButton = Localizable.edit
+private let doneButton = Localizable.done
+private let addButton = "Add"
+private let deleteButton = Localizable.delete
+private let newProfileSuccessMessage = Localizable.profileCreatedSuccessfully
+private let editProfileSuccessMessage = Localizable.profileEditedSuccessfully
+private let fastestProfile = Localizable.fastest
+private let randomProfile = Localizable.random
+private let myProfiles = Localizable.myProfiles
 
 class ProfileRobot: ConnectionBaseRobot {
     let verify = Verify()

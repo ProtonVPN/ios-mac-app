@@ -120,7 +120,7 @@ extension CountryListView.ItemCoordinate {
     static let fastest: Self = .init(section: 0, item: .fastest)
 }
 
-fileprivate struct CountryListButtonStyle: ButtonStyle {
+private struct CountryListButtonStyle: ButtonStyle {
     // Without this style `hoverEffect` adds colored background which we don't need
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

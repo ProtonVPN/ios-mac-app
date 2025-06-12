@@ -204,7 +204,7 @@ public struct ConnectionStatusFeature {
     }
 }
 
-fileprivate extension ProtectionState {
+private extension ProtectionState {
     var shouldAnimateChange: Bool {
         if case .protected = self {
             return true

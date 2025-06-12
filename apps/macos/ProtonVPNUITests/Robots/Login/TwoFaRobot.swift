@@ -20,9 +20,9 @@ import Foundation
 import XCTest
 import fusion
 
-fileprivate let twoFaAuthentication = "Two-factor authentication"
-fileprivate let twoFaAuthenticationTextField = "twoFactorTextField"
-fileprivate let authButton = "Authenticate"
+private let twoFaAuthentication = "Two-factor authentication"
+private let twoFaAuthenticationTextField = "twoFactorTextField"
+private let authButton = "Authenticate"
 
 class TwoFaRobot: CoreElements {
     @discardableResult

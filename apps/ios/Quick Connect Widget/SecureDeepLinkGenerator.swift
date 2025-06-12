@@ -115,7 +115,7 @@ enum SecureDeepLinkGeneratorEnvironment {
     )
 }
 
-fileprivate extension Keychain {
+private extension Keychain {
     typealias Key = CryptoService.Key
 
     func setKey(_ secKey: Key, _ key: String) throws {

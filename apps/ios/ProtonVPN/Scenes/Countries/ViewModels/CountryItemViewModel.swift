@@ -387,7 +387,7 @@ class CountryItemViewModel {
 
     private var cancellables = Set<AnyCancellable>()
 
-    fileprivate func startObserving() {
+    private func startObserving() {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
             return
@@ -401,7 +401,7 @@ class CountryItemViewModel {
             .store(in: &cancellables)
     }
 
-    @objc fileprivate func stateChanged() {
+    @objc private func stateChanged() {
         if let connectionChanged = connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
@@ -461,7 +461,7 @@ extension CountryItemViewModel: CountryViewModel {
     }
 }
 
-fileprivate extension ServerGroupInfo {
+private extension ServerGroupInfo {
     func matchesLogical(_ logical: Logical) -> Bool {
         switch self.kind {
         case let .gateway(name):

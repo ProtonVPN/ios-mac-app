@@ -142,7 +142,7 @@ internal struct LoginIntent: AppIntent {
 
 // MARK: - Private helpers
 
-fileprivate struct SharedReaderTimeoutError: Error {}
+private struct SharedReaderTimeoutError: Error {}
 
 extension SharedReader {
     /// Regularly checks when the underlying value satisfies the provided matching condition.

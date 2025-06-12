@@ -77,7 +77,7 @@ class SignUpCoordinatorTests: XCTestCase {
     }
 }
 
-fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
+private class CoordinatorFactory: SignUpCoordinator.Factory {
     var appSessionManager: AppSessionManager
     var loginService: LoginService
     var planService: PlanService
@@ -125,7 +125,7 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
     }
 }
 
-fileprivate class StoreKitStateCheckerMock: StoreKitStateChecker {
+private class StoreKitStateCheckerMock: StoreKitStateChecker {
     public var buyProcessRunning = false
     public var accountPlan: AccountPlan?
     

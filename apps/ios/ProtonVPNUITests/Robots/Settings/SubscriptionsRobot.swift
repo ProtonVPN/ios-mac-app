@@ -20,7 +20,7 @@ import Foundation
 import fusion
 import XCTest
 
-fileprivate let upgradeSubscriptionTitle = "Upgrade your plan"
+private let upgradeSubscriptionTitle = "Upgrade your plan"
 
 class SubscriptionsRobot: CoreElements {
     let verify = Verify()

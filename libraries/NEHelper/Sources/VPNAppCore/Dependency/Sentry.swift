@@ -13,7 +13,7 @@ import ProtonCoreFeatureFlags
 import Domain
 
 /// `SentryHelper` defines a `log` instance method, we need to rename `log` in this file
-fileprivate let moduleLog = VPNAppCore.log
+private let moduleLog = VPNAppCore.log
 
 public final class SentryHelper {
     public private(set) static var shared: SentryHelper?

@@ -9,15 +9,15 @@
 import fusion
 import Strings
 
-fileprivate let titleId = "SignupViewController.createAccountTitleLabel"
-fileprivate let subtitleId = "SignupViewController.createAccountDescriptionLabel"
-fileprivate let externalEmailTextFieldId = "SignupViewController.externalEmailTextField.textField"
-fileprivate let internalEmailTextFieldId = "SignupViewController.internalNameTextField.textField"
-fileprivate let nextButtonId = "SignupViewController.nextButton"
-fileprivate let signInButtonId = "SignupViewController.signinButton"
-fileprivate let protonmailErrorMessage = "Please use a non-Proton Mail email address"
-fileprivate let usernameErrorMessage = "Username already used"
-fileprivate let okButton = Localizable.ok
+private let titleId = "SignupViewController.createAccountTitleLabel"
+private let subtitleId = "SignupViewController.createAccountDescriptionLabel"
+private let externalEmailTextFieldId = "SignupViewController.externalEmailTextField.textField"
+private let internalEmailTextFieldId = "SignupViewController.internalNameTextField.textField"
+private let nextButtonId = "SignupViewController.nextButton"
+private let signInButtonId = "SignupViewController.signinButton"
+private let protonmailErrorMessage = "Please use a non-Proton Mail email address"
+private let usernameErrorMessage = "Username already used"
+private let okButton = Localizable.ok
 
 class SignupRobot: CoreElements {
     public let verify = Verify()

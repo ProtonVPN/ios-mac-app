@@ -23,7 +23,7 @@ import VPNSharedTesting
 @testable import LegacyCommon
 import Domain
 
-fileprivate enum TestFeature: String, ProvidableFeature {
+private enum TestFeature: String, ProvidableFeature {
     case on
     case off
     case freeDefault
@@ -170,10 +170,10 @@ class AppFeaturePropertyProviderTests: XCTestCase {
     }
 }
 
-fileprivate let encodedOn = try! JSONEncoder().encode(TestFeature.on)
-fileprivate let encodedOff = try! JSONEncoder().encode(TestFeature.off)
+private let encodedOn = try! JSONEncoder().encode(TestFeature.on)
+private let encodedOff = try! JSONEncoder().encode(TestFeature.off)
 
-fileprivate func mockKeychain(withUsername username: String) -> MockAuthKeychain {
+private func mockKeychain(withUsername username: String) -> MockAuthKeychain {
     let authKeychain = MockAuthKeychain()
     authKeychain.setMockUsername(username)
     return authKeychain

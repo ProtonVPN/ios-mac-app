@@ -22,13 +22,13 @@ import Strings
 import fusion
 import UITestsHelpers
 
-fileprivate let fieldUsername = "UsernameTextField"
-fileprivate let fieldPassword = "PasswordTextField"
-fileprivate let loginButton = "LoginButton"
-fileprivate let modalTitle = "Thanks for upgrading to Business/Visionary"
-fileprivate let modalSubtitle = "description1Label"
-fileprivate let loginAgainButton = "Sign in again"
-fileprivate let assignConnectionButton = "Enable VPN connections"
+private let fieldUsername = "UsernameTextField"
+private let fieldPassword = "PasswordTextField"
+private let loginButton = "LoginButton"
+private let modalTitle = "Thanks for upgrading to Business/Visionary"
+private let modalSubtitle = "description1Label"
+private let loginAgainButton = "Sign in again"
+private let assignConnectionButton = "Enable VPN connections"
 
 class LoginRobot: CoreElements {
     @discardableResult

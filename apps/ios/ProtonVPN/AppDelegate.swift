@@ -271,7 +271,7 @@ extension AppDelegate: UIApplicationDelegate {
     }
 }
 
-fileprivate extension AppDelegate {
+private extension AppDelegate {
     // MARK: - Private
 
     func handleAction(_ action: String, verified: Bool = false) -> Bool {

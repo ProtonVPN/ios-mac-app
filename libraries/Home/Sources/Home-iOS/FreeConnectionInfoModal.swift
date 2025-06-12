@@ -97,12 +97,12 @@ struct FreeConnectionInfoModal: View {
     }
 }
 
-fileprivate struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey {}
+private struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
 // MARK: - View Helpers
 
 @available(iOS 16, *)
-fileprivate struct WrappingHStack: Layout {
+private struct WrappingHStack: Layout {
     var horizontalSpacing: CGFloat = 10
     var verticalSpacing: CGFloat = 10
 

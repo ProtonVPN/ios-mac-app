@@ -478,7 +478,7 @@ extension IosAlertService: CoreAlertService {
     }
 }
 
-fileprivate extension ReconnectInfo {
+private extension ReconnectInfo {
     func servers() -> (from: (String, Image), to: (String, Image)) {
         ((fromServer.name, fromServer.image), (toServer.name, toServer.image))
     }

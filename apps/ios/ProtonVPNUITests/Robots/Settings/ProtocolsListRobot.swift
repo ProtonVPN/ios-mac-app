@@ -11,9 +11,9 @@ import XCTest
 import UITestsHelpers
 import Strings
 
-fileprivate let smartButton = Localizable.smartTitle
-fileprivate let settingsButtonId = "Settings back btn"
-fileprivate let stealthButton = Localizable.wireguardTls
+private let smartButton = Localizable.smartTitle
+private let settingsButtonId = "Settings back btn"
+private let stealthButton = Localizable.wireguardTls
 
 class ProtocolsListRobot: CoreElements {
     @discardableResult

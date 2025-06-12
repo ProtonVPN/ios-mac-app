@@ -36,8 +36,8 @@ import VPNAppCore
 
 @testable import ProtonVPN
 
-fileprivate let windowService = WindowServiceMock()
-fileprivate let uiAlertService = IosUiAlertService(windowService: windowService)
+private let windowService = WindowServiceMock()
+private let uiAlertService = IosUiAlertService(windowService: windowService)
 
 class AlertTests: XCTestCase {
     let alertService = IosAlertService(IosAlertServiceFactoryMock())
@@ -98,7 +98,7 @@ class AlertTests: XCTestCase {
     }
 }
 
-fileprivate class WindowServiceMock: WindowService {
+private class WindowServiceMock: WindowService {
     var displayCount = 0
     
     func show(viewController: UIViewController) {}
@@ -116,7 +116,7 @@ fileprivate class WindowServiceMock: WindowService {
     var topmostPresentedViewController: UIViewController?
 }
 
-fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
+private class IosAlertServiceFactoryMock: IosAlertService.Factory {
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService
     }
@@ -145,7 +145,7 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
     }
 }
 
-fileprivate class SettingsServiceMock: SettingsService {
+private class SettingsServiceMock: SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController {
         let viewModel = LogSelectionViewModel()
         return LogSelectionViewController(viewModel: viewModel, settingsService: self)
@@ -188,7 +188,7 @@ fileprivate class SettingsServiceMock: SettingsService {
     }
 }
 
-fileprivate class LogContentMock: LogContent {
+private class LogContentMock: LogContent {
     var isEmpty: Bool
 
     init(isEmpty: Bool) {

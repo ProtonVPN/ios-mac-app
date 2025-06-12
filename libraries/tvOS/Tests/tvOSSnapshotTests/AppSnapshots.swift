@@ -108,6 +108,6 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
     }
 }
 
-fileprivate extension Locale {
+private extension Locale {
     static let en_US: Self = .init(identifier: "en_US")
 }

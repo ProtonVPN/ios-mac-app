@@ -19,8 +19,8 @@
 import fusion
 import ProtonCoreTestingToolkitUITestsPaymentsUI
 
-fileprivate let titleId = "PaymentsUIViewController.tableHeaderLabel"
-fileprivate let freePlanTitle = "Free.planNameLabel"
+private let titleId = "PaymentsUIViewController.tableHeaderLabel"
+private let freePlanTitle = "Free.planNameLabel"
 
 class PaymentsRobot: CoreElements {
     let corePaymentUIRobot = PaymentsUIRobot()

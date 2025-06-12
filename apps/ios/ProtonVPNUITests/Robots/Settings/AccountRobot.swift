@@ -21,11 +21,11 @@ import fusion
 import ProtonCoreTestingToolkitUITestsPaymentsUI
 import Strings
 
-fileprivate let manageSubscriptionButton = Localizable.manageSubscription
-fileprivate let upgradeSubscriptionButton = Localizable.upgradeSubscription
-fileprivate let deleteAccountText = "Delete account"
-fileprivate let deleteButton = Localizable.delete
-fileprivate let selectedEnvHeader = "Selected environment"
+private let manageSubscriptionButton = Localizable.manageSubscription
+private let upgradeSubscriptionButton = Localizable.upgradeSubscription
+private let deleteAccountText = "Delete account"
+private let deleteButton = Localizable.delete
+private let selectedEnvHeader = "Selected environment"
 
 class AccountRobot: CoreElements {
     @discardableResult

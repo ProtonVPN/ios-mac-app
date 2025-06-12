@@ -19,10 +19,10 @@
 import Strings
 import fusion
 
-fileprivate let captchaNextButton = Localizable.modalsCommonNext
-fileprivate let humanVerificationHeader = "Human Verification"
-fileprivate let resetPuzzleButton = "Reset puzzle piece"
-fileprivate let retryButton = Localizable.retry
+private let captchaNextButton = Localizable.modalsCommonNext
+private let humanVerificationHeader = "Human Verification"
+private let resetPuzzleButton = "Reset puzzle piece"
+private let retryButton = Localizable.retry
 
 class HumanVerificationRobot: CoreElements {
     public let verify = Verify()

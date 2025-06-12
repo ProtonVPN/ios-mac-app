@@ -716,7 +716,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 }
 
-fileprivate extension VpnGateway {
+private extension VpnGateway {
     @objc func userPlanChanged(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
         let (oldTier, newTier) = (downgradeInfo.from.maxTier, downgradeInfo.to.maxTier)

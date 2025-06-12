@@ -98,13 +98,13 @@ final class LocalAgentTests: XCTestCase {
     }
 }
 
-fileprivate extension VpnAuthenticationData {
+private extension VpnAuthenticationData {
     static var mock: VpnAuthenticationData {
         VpnAuthenticationData(clientKey: VpnKeys.mock().privateKey, clientCertificate: "")
     }
 }
 
-fileprivate extension VPNConnectionFeatures {
+private extension VPNConnectionFeatures {
     static var base: Self {
         return VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .strictNAT, safeMode: false)
     }
@@ -118,7 +118,7 @@ fileprivate extension VPNConnectionFeatures {
     }
 }
 
-fileprivate extension LocalAgentConfiguration {
+private extension LocalAgentConfiguration {
     static func mocked(withFeatures features: VPNConnectionFeatures) -> Self {
         return LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
     }
@@ -129,7 +129,7 @@ fileprivate extension LocalAgentConfiguration {
     }
 }
 
-fileprivate extension PropertiesManagerProtocol {
+private extension PropertiesManagerProtocol {
     func setNetShieldStats(to enabled: Bool) {
         // Assign to `featureFlags` to trigger the notification
         var featureFlagsCopy = featureFlags

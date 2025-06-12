@@ -165,7 +165,7 @@ extension DependencyValues {
     }
 }
 
-fileprivate extension URLQueryItem {
+private extension URLQueryItem {
     static let actionQueryItem = URLQueryItem(name: "action", value: "subscribe-account")
     static let fullscreenQueryItem = URLQueryItem(name: "fullscreen", value: "off")
     static let redirectQueryItem = URLQueryItem(name: "redirect", value: "protonvpn://refresh")

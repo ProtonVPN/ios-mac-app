@@ -105,7 +105,7 @@ class TextFieldWithFocus: NSTextField {
     }
 }
 
-fileprivate extension NSEvent.ModifierFlags {
+private extension NSEvent.ModifierFlags {
     var deviceIndependentFlags: Self {
         Self(rawValue: rawValue & Self.deviceIndependentFlagsMask.rawValue)
     }

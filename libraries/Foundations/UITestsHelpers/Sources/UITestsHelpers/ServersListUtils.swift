@@ -19,7 +19,7 @@ import XCTest
 import Strings
 import Localization
 
-fileprivate let vpnLogicalsURL = "https://api.protonvpn.ch/vpn/logicals?WithTranslations"
+private let vpnLogicalsURL = "https://api.protonvpn.ch/vpn/logicals?WithTranslations"
 
 /// A utility class for managing and retrieving VPN server information.
 public enum ServersListUtils {

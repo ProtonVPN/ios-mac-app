@@ -9,9 +9,9 @@
 import fusion
 import Strings
 
-fileprivate let accountVerificationTitle = "EmailVerificationViewController.emailVerificationTitleLabel"
-fileprivate let accountVerificationTextField = "EmailVerificationViewController.verificationCodeTextField.textField"
-fileprivate let nextButtonId = Localizable.modalsCommonNext
+private let accountVerificationTitle = "EmailVerificationViewController.emailVerificationTitleLabel"
+private let accountVerificationTextField = "EmailVerificationViewController.verificationCodeTextField.textField"
+private let nextButtonId = Localizable.modalsCommonNext
 
 class AccountVerificationRobot: CoreElements {
     func enterVerificationCode(_ code: String) -> AccountVerificationRobot {

@@ -338,7 +338,7 @@ extension AppDelegate: NSApplicationDelegate {
 // MARK: - Migration
 
 extension AppDelegate {
-    fileprivate func checkMigration() {
+    private func checkMigration() {
         container.makeMigrationManager()
             .addCheck("1.7.1") { version, completion in
                 // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0

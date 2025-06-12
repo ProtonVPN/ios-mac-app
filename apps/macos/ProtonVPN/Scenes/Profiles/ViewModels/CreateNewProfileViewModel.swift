@@ -537,7 +537,7 @@ extension CreateNewProfileViewModel: CustomStyleContext {
     }
 }
 
-fileprivate struct ModelState {
+private struct ModelState {
     let profileName: String?
     let serverType: ServerType
     let serverGroups: [ServerGroupInfo]

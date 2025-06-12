@@ -24,19 +24,19 @@ import UITestsHelpers
 
 var window: XCUIElement!
 
-fileprivate let preferencesTitleId = "Preferences"
-fileprivate let generalTab = "General"
-fileprivate let connectionTab = "Connection"
-fileprivate let advancedTab = "Advanced"
-fileprivate let accountTab = "Account"
-fileprivate let modalTitle = "Allow LAN connections"
-fileprivate let autoConnectFastest = "  Fastest"
-fileprivate let notNowButton = "Not now"
-fileprivate let continueButton = "Continue"
-fileprivate let modalDescribtion = "In order to allow LAN access, Kill Switch must be turned off.\n\nContinue?"
-fileprivate let modalUpgradeButton = "ModalUpgradeButton"
-fileprivate let upsellModalTitle = "TitleLabel"
-fileprivate let modalDescription = "DescriptionLabel"
+private let preferencesTitleId = "Preferences"
+private let generalTab = "General"
+private let connectionTab = "Connection"
+private let advancedTab = "Advanced"
+private let accountTab = "Account"
+private let modalTitle = "Allow LAN connections"
+private let autoConnectFastest = "  Fastest"
+private let notNowButton = "Not now"
+private let continueButton = "Continue"
+private let modalDescribtion = "In order to allow LAN access, Kill Switch must be turned off.\n\nContinue?"
+private let modalUpgradeButton = "ModalUpgradeButton"
+private let upsellModalTitle = "TitleLabel"
+private let modalDescription = "DescriptionLabel"
 
 class SettingsRobot: CoreElements {
     func generalTabClick() -> SettingsRobot {

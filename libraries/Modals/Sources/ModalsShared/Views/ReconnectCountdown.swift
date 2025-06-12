@@ -172,17 +172,17 @@ extension TimeInterval {
     }
 }
 
-fileprivate extension Double {
+private extension Double {
     static let degreesInACircle: Self = 360
 }
 
-fileprivate extension CGPoint {
+private extension CGPoint {
     static func center(of size: CGSize) -> Self {
         .init(x: size.width / 2, y: size.height / 2)
     }
 }
 
-fileprivate extension CGSize {
+private extension CGSize {
     var minSquare: Self {
         .init(width: min(width, height), height: min(width, height))
     }
@@ -192,7 +192,7 @@ fileprivate extension CGSize {
     }
 }
 
-fileprivate extension StrokeStyle {
+private extension StrokeStyle {
     static let countdown: Self = .init(lineWidth: 10, lineCap: .square, lineJoin: .miter)
     static let checkmark: Self = .init(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
 }

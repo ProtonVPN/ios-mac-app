@@ -106,7 +106,7 @@ struct ChangeServerModal: View {
     }
 }
 
-fileprivate struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
+private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
 @available(iOS 17, *)
 #Preview("In Progress Short", traits: .sizeThatFitsLayout) {

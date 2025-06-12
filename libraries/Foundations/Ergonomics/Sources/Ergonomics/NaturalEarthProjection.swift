@@ -65,6 +65,6 @@ public enum NaturalEarthProjection {
 
 precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
 infix operator ^^ : PowerPrecedence
-fileprivate func ^^ (radix: Double, power: Int) -> Double {
+private func ^^ (radix: Double, power: Int) -> Double {
     pow(radix, Double(power))
 }

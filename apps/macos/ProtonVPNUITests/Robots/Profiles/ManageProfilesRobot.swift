@@ -21,12 +21,12 @@ import XCTest
 import fusion
 import Strings
 
-fileprivate let createProfileTitleId = "Profiles Overview"
-fileprivate let createProfileButton = "Create Profile"
-fileprivate let fastestButton = "Fastest"
-fileprivate let randomButton = "Random"
-fileprivate let editButton = "Edit"
-fileprivate let deleteButton = "Delete"
+private let createProfileTitleId = "Profiles Overview"
+private let createProfileButton = "Create Profile"
+private let fastestButton = "Fastest"
+private let randomButton = "Random"
+private let editButton = "Edit"
+private let deleteButton = "Delete"
 
 class ManageProfilesRobot: CoreElements {
     func createProfile() -> CreateProfileRobot {

@@ -18,16 +18,16 @@
 
 import XCTest
 
-fileprivate let slideOneTitle = "Be protected everywhere"
-fileprivate let slideOneDescription = "Proton VPN supports all devices, including Windows, macOS, and many others."
-fileprivate let slideTwoTitle = "Unblock streaming"
-fileprivate let slideTwoDescription = "Secure access to your favorite content from other countries — Now available on Android TV."
-fileprivate let slideThreeTitle = "Block ads and much more"
-fileprivate let slideThreeDescription = "Block malware, ads, and trackers in browser and in all apps."
-fileprivate let slideFourTitle = "Help us fight censorship"
-fileprivate let slideFifthTitle = "No logs and Swiss-based"
-fileprivate let skipButton = "SkipButton"
-fileprivate let nextButton = "Next"
+private let slideOneTitle = "Be protected everywhere"
+private let slideOneDescription = "Proton VPN supports all devices, including Windows, macOS, and many others."
+private let slideTwoTitle = "Unblock streaming"
+private let slideTwoDescription = "Secure access to your favorite content from other countries — Now available on Android TV."
+private let slideThreeTitle = "Block ads and much more"
+private let slideThreeDescription = "Block malware, ads, and trackers in browser and in all apps."
+private let slideFourTitle = "Help us fight censorship"
+private let slideFifthTitle = "No logs and Swiss-based"
+private let skipButton = "SkipButton"
+private let nextButton = "Next"
 
 class OnboardingSlidesRobot {
     let app: XCUIApplication

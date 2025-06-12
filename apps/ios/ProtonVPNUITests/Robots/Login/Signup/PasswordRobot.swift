@@ -8,10 +8,10 @@
 
 import fusion
 
-fileprivate let accountVerificationTitle = "PasswordViewController.createPasswordTitleLabel"
-fileprivate let passwordNameTextFieldId = "PasswordViewController.passwordTextField.textField"
-fileprivate let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPasswordTextField.textField"
-fileprivate let nextButtonId = "PasswordViewController.nextButton"
+private let accountVerificationTitle = "PasswordViewController.createPasswordTitleLabel"
+private let passwordNameTextFieldId = "PasswordViewController.passwordTextField.textField"
+private let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPasswordTextField.textField"
+private let nextButtonId = "PasswordViewController.nextButton"
 
 class PasswordRobot: CoreElements {
     public let verify = Verify()

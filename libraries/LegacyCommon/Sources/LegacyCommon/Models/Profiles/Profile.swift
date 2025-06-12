@@ -228,7 +228,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     }
 }
 
-fileprivate extension ConnectionProtocol {
+private extension ConnectionProtocol {
     static func from(codingValue: Int) -> ConnectionProtocol? {
         switch codingValue {
         case 0:

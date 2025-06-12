@@ -50,7 +50,7 @@ public func stateChangePredicate<Action>(
     }
 }
 
-fileprivate func caseName(of value: Any) -> String {
+private func caseName(of value: Any) -> String {
     let mirror = Mirror(reflecting: value)
     return String(describing: mirror.children.first?.label ?? "\(value)")
 }

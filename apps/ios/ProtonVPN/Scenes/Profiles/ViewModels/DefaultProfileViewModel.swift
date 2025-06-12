@@ -51,19 +51,19 @@ class FastestConnectionViewModel: DefaultProfileViewModel {
 
 class DefaultProfileViewModel {
     @Dependency(\.profileAuthorizer) var authorizer
-    fileprivate let alertService: AlertService
+    private let alertService: AlertService
 
-    fileprivate let serverOffering: ServerOffering
-    fileprivate let vpnGateway: VpnGatewayProtocol
-    fileprivate let propertiesManager: PropertiesManagerProtocol
-    fileprivate let connectionStatusService: ConnectionStatusService
-    fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
-    fileprivate let natTypePropertyProvider: NATTypePropertyProvider
-    fileprivate let safeModePropertyProvider: SafeModePropertyProvider
+    private let serverOffering: ServerOffering
+    private let vpnGateway: VpnGatewayProtocol
+    private let propertiesManager: PropertiesManagerProtocol
+    private let connectionStatusService: ConnectionStatusService
+    private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let natTypePropertyProvider: NATTypePropertyProvider
+    private let safeModePropertyProvider: SafeModePropertyProvider
 
     private let defaultAccessTier: Int
 
-    fileprivate var profile: Profile {
+    private var profile: Profile {
         switch serverOffering {
         case .random:
             return Profile(id: "st_r",
@@ -86,8 +86,8 @@ class DefaultProfileViewModel {
         }
     }
 
-    fileprivate let isRedesign: Bool
-    fileprivate let extraMargin: Bool
+    private let isRedesign: Bool
+    private let extraMargin: Bool
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
@@ -236,7 +236,7 @@ class DefaultProfileViewModel {
 
     private var cancellables = Set<AnyCancellable>()
 
-    fileprivate func startObserving() {
+    private func startObserving() {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
             return
@@ -250,7 +250,7 @@ class DefaultProfileViewModel {
             .store(in: &cancellables)
     }
 
-    @objc fileprivate func stateChanged() {
+    @objc private func stateChanged() {
         if let connectionChanged = connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()

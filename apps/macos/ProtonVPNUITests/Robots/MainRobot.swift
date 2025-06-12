@@ -22,17 +22,17 @@ import Strings
 import fusion
 import UITestsHelpers
 
-fileprivate let qcButton = Localizable.quickConnect
-fileprivate let disconnectButton = Localizable.disconnect
-fileprivate let preferencesTitle = Localizable.preferences
-fileprivate let menuItemReportAnIssue = Localizable.reportAnIssue
-fileprivate let menuItemProfiles = Localizable.overview
-fileprivate let statusTitle = Localizable.youAreNotConnected
-fileprivate let initializingConnectionTitle = Localizable.initializingConnection
-fileprivate let successfullyConnectedTitle = Localizable.successfullyConnected
-fileprivate let headerLabelField = "headerLabel"
-fileprivate let ipLabelField = "ipLabel"
-fileprivate let protocolLabelField = "protocolLabel"
+private let qcButton = Localizable.quickConnect
+private let disconnectButton = Localizable.disconnect
+private let preferencesTitle = Localizable.preferences
+private let menuItemReportAnIssue = Localizable.reportAnIssue
+private let menuItemProfiles = Localizable.overview
+private let statusTitle = Localizable.youAreNotConnected
+private let initializingConnectionTitle = Localizable.initializingConnection
+private let successfullyConnectedTitle = Localizable.successfullyConnected
+private let headerLabelField = "headerLabel"
+private let ipLabelField = "ipLabel"
+private let protocolLabelField = "protocolLabel"
 
 class MainRobot: CoreElements {
     func openProfiles() -> ManageProfilesRobot {

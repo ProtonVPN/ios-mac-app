@@ -69,7 +69,7 @@ extension View {
     }
 }
 
-fileprivate struct UpsellBanner: View {
+private struct UpsellBanner: View {
     let model: BannerModel
     let width: CGFloat
 
@@ -99,7 +99,7 @@ fileprivate struct UpsellBanner: View {
     }
 }
 
-fileprivate struct BannerModel {
+private struct BannerModel {
     let title: String
     let subtitle: String
     let image: HomeShared.ImageAsset
@@ -146,7 +146,7 @@ fileprivate struct BannerModel {
     }
 }
 
-fileprivate struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey {}
+private struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey {}
 
 #Preview {
     UpsellCarousel { _ in }

@@ -103,14 +103,14 @@ extension FreeConnectionsViewController: UICollectionViewDataSource {
 
 // MARK: - View styling
 
-fileprivate let topTitleStyle = concat(centeredTextStyle, and: {
+private let topTitleStyle = concat(centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 17, weight: .bold)
 })
 
-fileprivate let middleSubtitleStyle = concat(baseTextStyle, and: {
+private let middleSubtitleStyle = concat(baseTextStyle, and: {
     $0.font = .systemFont(ofSize: 17, weight: .bold)
 })
 
-fileprivate let bannerTextStyle = concat(baseTextStyle, and: {
+private let bannerTextStyle = concat(baseTextStyle, and: {
     $0.font = .systemFont(ofSize: 13, weight: .regular)
 })

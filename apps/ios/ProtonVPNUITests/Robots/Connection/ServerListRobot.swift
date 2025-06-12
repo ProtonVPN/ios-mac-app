@@ -9,7 +9,7 @@
 import fusion
 import UITestsHelpers
 
-fileprivate let buttonConnectDisconnect = "ic power off"
+private let buttonConnectDisconnect = "ic power off"
 
 class ServerListRobot: ConnectionBaseRobot {
     let verify = Verify()

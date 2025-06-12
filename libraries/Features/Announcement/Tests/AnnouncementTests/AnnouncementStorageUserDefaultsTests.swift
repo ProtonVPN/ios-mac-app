@@ -83,13 +83,13 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
     }
 }
 
-fileprivate extension Announcement {
+private extension Announcement {
     static func mock(id: String) -> Self {
         Self(notificationID: id, startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil)
     }
 }
 
-fileprivate class StaticKeyNameProvider: KeyNameProvider {
+private class StaticKeyNameProvider: KeyNameProvider {
     public var storageKey: String {
         return "announcements"
     }

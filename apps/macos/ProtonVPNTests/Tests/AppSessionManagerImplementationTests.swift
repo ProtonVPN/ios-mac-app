@@ -34,17 +34,17 @@ import ProtonCoreNetworking
 import Announcement
 @testable import ProtonVPN
 
-fileprivate let testData = MockTestData()
-fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
+private let testData = MockTestData()
+private func mockAuthCredentials(username: String) -> AuthCredentials {
     return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
 }
 
-fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
+private var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
-fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
-                                                                    responseCode: ApiErrorCode.subuserWithoutSessions,
-                                                                    userFacingMessage: nil,
-                                                                    underlyingError: nil)
+private let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
+                                                                responseCode: ApiErrorCode.subuserWithoutSessions,
+                                                                userFacingMessage: nil,
+                                                                underlyingError: nil)
 
 // We would like to use `TestIsolatedDatabaseTestCase` here, but Xcode fails to link `PersistenceTestSupport` correctly
 final class AppSessionManagerImplementationTests: XCTestCase {
@@ -424,9 +424,9 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 }
 
-fileprivate let propertiesManagerMock = PropertiesManagerMock()
+private let propertiesManagerMock = PropertiesManagerMock()
 
-fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
+private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.date) var date
 
     private let vpnAPIService: VpnApiService
@@ -512,7 +512,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
     func clear() {}
 }
 
-fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
+private class AppSessionManagerAlertServiceMock: CoreAlertService {
     private var alertHandlers: [(alertType: SystemAlert.Type, handler: (SystemAlert) -> Void)] = []
 
     init() {}
@@ -529,7 +529,7 @@ fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
     }
 }
 
-fileprivate extension SystemAlert {
+private extension SystemAlert {
     func triggerHandler(forFirstActionOfType type: PrimaryActionType) {
         actions.first { $0.style == type }?.handler?()
     }

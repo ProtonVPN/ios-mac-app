@@ -18,15 +18,15 @@
 
 import XCTest
 
-fileprivate let plusFeature = "TitleLabel"
-fileprivate let getPlusButton = "GetPlusButton"
-fileprivate let useFreePlanButton = "UseFreeButton"
-fileprivate let closeButton = "CloseButton"
-fileprivate let plusPurchased = "PlanPurchaseButton"
-fileprivate let congratulationsTitle = "CongratulationsTitle"
-fileprivate let congratulationsDescription = "SubtitleLabel"
-fileprivate let connectButton = "ConnectToPlusServerButton"
-fileprivate let skipButton = "SkipButton"
+private let plusFeature = "TitleLabel"
+private let getPlusButton = "GetPlusButton"
+private let useFreePlanButton = "UseFreeButton"
+private let closeButton = "CloseButton"
+private let plusPurchased = "PlanPurchaseButton"
+private let congratulationsTitle = "CongratulationsTitle"
+private let congratulationsDescription = "SubtitleLabel"
+private let connectButton = "ConnectToPlusServerButton"
+private let skipButton = "SkipButton"
 
 class OnboardingPaymentRobot {
     let app: XCUIApplication

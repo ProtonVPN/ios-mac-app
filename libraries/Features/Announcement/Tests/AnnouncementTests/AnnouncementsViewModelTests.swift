@@ -68,7 +68,7 @@ class AnnouncementsViewModelTests: XCTestCase {
     }
 }
 
-fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
+private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
     public let propertiesManager: PropertiesManagerProtocol
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
@@ -98,7 +98,7 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
     }
 }
 
-fileprivate extension Announcement {
+private extension Announcement {
     static let mock: Self = .init(
         notificationID: "1",
         startTime: Date(),

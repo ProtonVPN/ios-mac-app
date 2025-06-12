@@ -21,10 +21,10 @@ import XCTest
 import fusion
 import UITestsHelpers
 
-fileprivate let showMapButton = "Show map"
-fileprivate let hideMapButton = "Hide map"
-fileprivate let statusDisconnected = "ConnectionStatus"
-fileprivate let connectImage = "ConnectImage"
+private let showMapButton = "Show map"
+private let hideMapButton = "Hide map"
+private let statusDisconnected = "ConnectionStatus"
+private let connectImage = "ConnectImage"
 
 class MapRobot: CoreElements {
     func clickShowMap() -> MapRobot {

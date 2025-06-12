@@ -21,9 +21,9 @@ import Strings
 import fusion
 import UITestsHelpers
 
-fileprivate let searchTextField = "SearchTextField"
-fileprivate let clearSearchButton = "ClearSearchButton"
-fileprivate let serverListTableId = "ServerListTable"
+private let searchTextField = "SearchTextField"
+private let clearSearchButton = "ClearSearchButton"
+private let serverListTableId = "ServerListTable"
 
 class CountriesSectionRobot: CoreElements {
     func searchForServer(serverName: String) -> CountriesSectionRobot {

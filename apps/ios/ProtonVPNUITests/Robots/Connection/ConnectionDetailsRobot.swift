@@ -21,8 +21,8 @@ import XCTest
 import Strings
 import UITestsHelpers
 
-fileprivate let connectionDetailsTitle = Localizable.connectionDetailsTitle
-fileprivate let connectionFlagInfoId = "connection_flag_info_view"
+private let connectionDetailsTitle = Localizable.connectionDetailsTitle
+private let connectionFlagInfoId = "connection_flag_info_view"
 
 class ConnectionDetailsRobot: CoreElements {
     let verify = Verify()

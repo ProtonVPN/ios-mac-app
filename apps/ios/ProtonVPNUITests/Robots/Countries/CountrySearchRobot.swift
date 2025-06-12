@@ -20,10 +20,10 @@ import Foundation
 import fusion
 import Strings
 
-fileprivate let countrySearchInput = Localizable.searchBarPlaceholder
-fileprivate let clearSearchButton = Localizable.searchRecentClear
-fileprivate let buttonConnectDisconnect = "ic power off"
-fileprivate let clearTextButton = "Clear text"
+private let countrySearchInput = Localizable.searchBarPlaceholder
+private let clearSearchButton = Localizable.searchRecentClear
+private let buttonConnectDisconnect = "ic power off"
+private let clearTextButton = "Clear text"
 
 class CountrySearchRobot: ConnectionBaseRobot {
     let verify = Verify()

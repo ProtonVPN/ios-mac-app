@@ -203,7 +203,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
 }
 
-fileprivate extension WelcomeScreenAlert.Plan {
+private extension WelcomeScreenAlert.Plan {
     init?(info: VpnDowngradeInfo) {
         // Replace hardcoded string with a proper solution VPNAPPL-2142
         if info.to.planName == "bundle2022" {

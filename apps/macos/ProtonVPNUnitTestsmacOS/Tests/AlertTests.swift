@@ -25,11 +25,11 @@ import LegacyCommon
 import VPNShared
 @testable import ProtonVPN
 
-fileprivate let navigationService = NavigationService(DependencyContainer())
-fileprivate let windowService = WindowServiceMock()
-fileprivate let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
-fileprivate let sessionService = SessionServiceMock()
-fileprivate let telemetrySettings = TelemetrySettingsMock()
+private let navigationService = NavigationService(DependencyContainer())
+private let windowService = WindowServiceMock()
+private let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
+private let sessionService = SessionServiceMock()
+private let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
@@ -106,7 +106,7 @@ public class TelemetrySettingsMock: TelemetrySettings {
     }
 }
 
-fileprivate class WindowServiceMock: WindowService {
+private class WindowServiceMock: WindowService {
     var displayCount = 0
 
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
@@ -148,7 +148,7 @@ fileprivate class WindowServiceMock: WindowService {
     func windowWillClose(_ sender: WindowController) {}
 }
 
-fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
+private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     func makeNavigationService() -> NavigationService {
         return navigationService
     }
@@ -162,7 +162,7 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     }
 }
 
-fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
         return VpnKeychainMock()
     }
@@ -212,7 +212,7 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
     }
 }
 
-fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
+private class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector {
         return UpdateFileSelectorMock()
     }
@@ -222,7 +222,7 @@ fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, Prop
     }
 }
 
-fileprivate class AppSessionManagerMock: AppSessionManager {
+private class AppSessionManagerMock: AppSessionManager {
     var sessionStatus: SessionStatus = .established
     var loggedIn: Bool = true
     var sessionChanged: Notification.Name = Notification.Name("AppSessionManagerSessionChanged")
@@ -235,7 +235,7 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     func replyToApplicationShouldTerminate() {}
 }
 
-fileprivate class NotificationManagerMock: NotificationManagerProtocol {
+private class NotificationManagerMock: NotificationManagerProtocol {
     func displayServerGoingOnMaintenance() {}
 }
 

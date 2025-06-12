@@ -11,19 +11,19 @@ import XCTest
 import UITestsHelpers
 import Strings
 
-fileprivate let statusNotConnected = Localizable.notConnected
-fileprivate let statusConnected = Localizable.connectedTo
-fileprivate let tabQCInactive = "quick connect inactive button"
-fileprivate let tabQCActive = "quick connect active button"
-fileprivate let netshieldUpgradeButton = Localizable.upgrade
-fileprivate let getPlusButton = "GetPlusButton"
-fileprivate let notNowbutton = "UseFreeButton"
-fileprivate let connectionStatusUnprotected = Localizable.connectionStatusUnprotected
-fileprivate let disconnectButtonId = "disconnect_button"
-fileprivate let connectionStatusProtected = Localizable.connectionStatusProtected
-fileprivate let connectionInforHeaderId = "connection_info_header"
-fileprivate let netShieldStatsViewId = "net_shield_stats"
-fileprivate let locationTextId = "location_text"
+private let statusNotConnected = Localizable.notConnected
+private let statusConnected = Localizable.connectedTo
+private let tabQCInactive = "quick connect inactive button"
+private let tabQCActive = "quick connect active button"
+private let netshieldUpgradeButton = Localizable.upgrade
+private let getPlusButton = "GetPlusButton"
+private let notNowbutton = "UseFreeButton"
+private let connectionStatusUnprotected = Localizable.connectionStatusUnprotected
+private let disconnectButtonId = "disconnect_button"
+private let connectionStatusProtected = Localizable.connectionStatusProtected
+private let connectionInforHeaderId = "connection_info_header"
+private let netShieldStatsViewId = "net_shield_stats"
+private let locationTextId = "location_text"
 
 class ConnectionStatusRobot: CoreElements {
     let verify = Verify()

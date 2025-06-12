@@ -19,9 +19,9 @@
 import Strings
 import fusion
 
-fileprivate let upsellPlansListTitle = Localizable.upsellPlansListTitle
-fileprivate let upsellPlansListValidateButton = Localizable.upsellPlansListValidateButton
-fileprivate let upsellPlansListSectionHeader = Localizable.upsellPlansListSectionHeader
+private let upsellPlansListTitle = Localizable.upsellPlansListTitle
+private let upsellPlansListValidateButton = Localizable.upsellPlansListValidateButton
+private let upsellPlansListSectionHeader = Localizable.upsellPlansListSectionHeader
 
 class SubscriptionModalRobot: ModalRobot {
     public let verify = Verify()

@@ -176,7 +176,7 @@ private struct FlagShadowView: View {
     }
 }
 
-fileprivate struct SecureCoreFlagCurveView: View {
+private struct SecureCoreFlagCurveView: View {
     let curveColor: Color
 
     public let startSize: CGSize

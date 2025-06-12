@@ -10,7 +10,7 @@ import fusion
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsLogin
 
-fileprivate let verificationCode = "666666"
+private let verificationCode = "666666"
 
 class SignupTests: ProtonVPNUITests {
     override func setUp() {

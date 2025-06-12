@@ -1,7 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantExtensionACL
---disable redundantFileprivate
 --disable redundantGet
 --disable redundantInit
 --disable redundantInternal

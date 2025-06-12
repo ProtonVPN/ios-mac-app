@@ -197,7 +197,7 @@ extension ConnectionSpec {
     }
 }
 
-fileprivate extension ConnectionSpec {
+private extension ConnectionSpec {
     // Important! Use only for server selection. Only serverType and connectionType are filled in correctly.
     // If used elsewhere, please fill in other properties properly.
     var connectionRequest: ConnectionRequest {

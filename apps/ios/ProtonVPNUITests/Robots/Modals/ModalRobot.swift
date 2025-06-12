@@ -19,7 +19,7 @@
 import fusion
 import Strings
 
-fileprivate let closeButton = Localizable.close
+private let closeButton = Localizable.close
 
 class ModalRobot: CoreElements {
     @discardableResult

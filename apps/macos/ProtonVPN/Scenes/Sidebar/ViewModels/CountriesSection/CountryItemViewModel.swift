@@ -45,9 +45,9 @@ final class CountryItemViewModel {
     /// Hide feature icons in Gateway countries
     public let showFeatureIcons: Bool
 
-    fileprivate let vpnGateway: VpnGatewayProtocol
-    fileprivate let appStateManager: AppStateManager
-    fileprivate let propertiesManager: PropertiesManagerProtocol
+    private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
+    private let propertiesManager: PropertiesManagerProtocol
 
     private weak var countriesSectionViewModel: CountriesSectionViewModel?
 

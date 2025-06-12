@@ -20,11 +20,11 @@ import Foundation
 import XCTest
 import fusion
 
-fileprivate let profilesButton = "Profiles"
-fileprivate let fastestButton = "Fastest"
-fileprivate let randomButton = "Random"
-fileprivate let createProfileButton = "Create Profile"
-fileprivate let manageProfileButton = "Manage Profiles"
+private let profilesButton = "Profiles"
+private let fastestButton = "Fastest"
+private let randomButton = "Random"
+private let createProfileButton = "Create Profile"
+private let manageProfileButton = "Manage Profiles"
 
 class ProfileRobot: CoreElements {
     @discardableResult

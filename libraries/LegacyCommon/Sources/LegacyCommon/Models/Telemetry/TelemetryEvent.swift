@@ -19,7 +19,7 @@
 import Foundation
 import DictionaryCoder
 
-fileprivate let encoder = DictionaryEncoder()
+private let encoder = DictionaryEncoder()
 
 public protocol TelemetryEvent: Encodable {
     associatedtype Event: Encodable

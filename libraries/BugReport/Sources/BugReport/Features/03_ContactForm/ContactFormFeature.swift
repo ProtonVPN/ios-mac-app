@@ -209,7 +209,7 @@ struct ContactFormFeature: Reducer {
     }
 }
 
-fileprivate extension TaskResult<Bool> {
+private extension TaskResult<Bool> {
     var errorOrNil: Error? {
         if case let TaskResult.failure(error) = self {
             return error

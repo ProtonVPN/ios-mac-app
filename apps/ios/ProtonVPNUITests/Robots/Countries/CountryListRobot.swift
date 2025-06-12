@@ -9,11 +9,11 @@
 import fusion
 import Strings
 
-fileprivate let secureCoreSwitchId = "secureCoreSwitch"
-fileprivate let activateSCButton = Localizable.modalsDiscourageSecureCoreActivate
-fileprivate let countrySearchButtonId = "countrySearchButton"
-fileprivate let upgradeButtonId = "vpn subscription badge"
-fileprivate let buttonConnectDisconnect = "ic power off"
+private let secureCoreSwitchId = "secureCoreSwitch"
+private let activateSCButton = Localizable.modalsDiscourageSecureCoreActivate
+private let countrySearchButtonId = "countrySearchButton"
+private let upgradeButtonId = "vpn subscription badge"
+private let buttonConnectDisconnect = "ic power off"
 
 class CountryListRobot: ConnectionBaseRobot {
     let verify = Verify()

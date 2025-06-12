@@ -19,11 +19,11 @@
 import Foundation
 import XCTest
 
-fileprivate let onboarding = "StartButton"
-fileprivate let takeATourButton = "TakeATourButton"
-fileprivate let welcomeTitle = "WelcomeTitle"
-fileprivate let welcomeDescription = "WelcomeSubtitle"
-fileprivate let skipButton = "SkipButton"
+private let onboarding = "StartButton"
+private let takeATourButton = "TakeATourButton"
+private let welcomeTitle = "WelcomeTitle"
+private let welcomeDescription = "WelcomeSubtitle"
+private let skipButton = "SkipButton"
 
 class OnboardingMainRobot {
     let app: XCUIApplication

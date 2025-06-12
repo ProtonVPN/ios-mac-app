@@ -254,7 +254,7 @@ final class ProfileItemViewModel {
 
     private var cancellables = Set<AnyCancellable>()
 
-    fileprivate func startObserving() {
+    private func startObserving() {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
             return
@@ -268,7 +268,7 @@ final class ProfileItemViewModel {
             .store(in: &cancellables)
     }
 
-    @objc fileprivate func stateChanged() {
+    @objc private func stateChanged() {
         if let connectionChanged = connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
