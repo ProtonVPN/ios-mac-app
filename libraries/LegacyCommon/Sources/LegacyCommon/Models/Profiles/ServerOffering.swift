@@ -85,7 +85,7 @@ public enum ServerOffering: Equatable, Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let serverOffering = "serverOffering"
         static let fastest = "fastest"
         static let random = "random"

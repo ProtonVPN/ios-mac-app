@@ -127,7 +127,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let id = "id"
         static let accessTier = "accessTier"
         static let name = "name"

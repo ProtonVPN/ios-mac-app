@@ -26,7 +26,7 @@ import OrderedCollections
     import WidgetKit
 #endif
 
-public final class RecentsStorageImplementation {
+public enum RecentsStorageImplementation {
     private static let storageKeyPrefix = "RecentConnections"
 
     struct Error: Swift.Error {

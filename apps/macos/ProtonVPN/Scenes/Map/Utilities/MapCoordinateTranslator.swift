@@ -23,7 +23,7 @@
 import Cocoa
 import CoreLocation
 
-struct MapCoordinateTranslator {
+enum MapCoordinateTranslator {
     // Unfortunately there seems to be a rendering bug with pdf here (around the edges of vectors, and is inconsistent)
     static let mapImage = Asset.worldMap.image
 

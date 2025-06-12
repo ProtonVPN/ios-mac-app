@@ -36,6 +36,7 @@ extension ModelIdCheckerProtocol {
     }
 }
 
+// swiftformat:disable:next enumNamespaces
 public struct ModelIdChecker {
     /// All of the Mac models that use the T2 coprocessor chip.
     static let macT2ModelNames = [

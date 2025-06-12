@@ -161,7 +161,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let status = "status"
         static let planTitle = "planTitle"
         static let planName = "planName"

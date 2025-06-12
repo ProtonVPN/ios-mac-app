@@ -26,14 +26,14 @@ import VPNShared
 class AppConstants {
     static let bundleId = "ch.protonvpn.mac"
 
-    struct Windows {
+    enum Windows {
         static let loginWidth: CGFloat = 340
         static let loginHeight: CGFloat = 600
         static let sidebarWidth = loginWidth
         static let minimumSidebarHeight: CGFloat = 600
     }
 
-    struct UserDefaults {
+    enum UserDefaults {
         static let launchedBefore = "LaunchedBefore"
         static let rememberLogin = "RememberLogin"
         static let rememberLoginAfterUpdate = "RememberLoginAfterUpdate"
@@ -50,24 +50,24 @@ class AppConstants {
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
     }
 
-    struct FilePaths {
+    enum FilePaths {
         static let sandbox = ("~/Library/Containers/ch.protonvpn.mac/Data/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
         static let starterSandbox = ("~/Library/Containers/ch.protonvpn.ProtonVPNStarter/" as NSString).expandingTildeInPath
         static let userDefaults = ("~/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
     }
 
-    struct Filenames {
+    enum Filenames {
         static let appLogFilename = "ProtonVPN.log"
         static let openVpnLogFilename = "OpenVPN.log"
         static let wireGuardLogFilename = "WireGuard.log"
     }
 
-    struct NetworkExtensions {
+    enum NetworkExtensions {
         static let openVpn = "\(AppConstants.bundleId).OpenVPN-Extension"
         static let wireguard = "\(AppConstants.bundleId).WireGuardiOS-Extension"
     }
 
-    struct Time {
+    enum Time {
         static let recentlyActiveThreshold: TimeInterval = .minutes(10)
 
         static let maintenanceMessageTimeThreshold: TimeInterval = .hours(12)
@@ -87,7 +87,7 @@ class AppConstants {
         static let statusIconBlink: TimeInterval = .milliseconds(600)
     }
 
-    struct DeepLinking {
+    enum DeepLinking {
         static let deepLinkScheme = "protonvpn"
         static let deepLinkBaseUrl = "\(deepLinkScheme)://"
     }

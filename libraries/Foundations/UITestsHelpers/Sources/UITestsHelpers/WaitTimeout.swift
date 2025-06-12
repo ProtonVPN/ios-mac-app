@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct WaitTimeout {
+public enum WaitTimeout {
     public static let short: TimeInterval = 2.0
     public static let normal: TimeInterval = 5.0
     public static let long: TimeInterval = 10.0

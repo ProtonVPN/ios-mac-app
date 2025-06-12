@@ -74,7 +74,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let authCacheVersion = "authCacheVersion"
         static let username = "username"
         static let accessToken = "accessToken"

@@ -25,7 +25,7 @@ import MapKit
 import Theme
 
 class MapSectionViewController: NSViewController {
-    fileprivate struct AnnotationIdentifier {
+    fileprivate enum AnnotationIdentifier {
         static let country = "Country"
         static let scEntryCountry = "secureCoreEntryCountry"
         static let scExitCountry = "secureCoreExitCountry"

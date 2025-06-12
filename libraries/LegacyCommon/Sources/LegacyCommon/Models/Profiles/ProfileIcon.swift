@@ -52,7 +52,7 @@ public enum ProfileIcon: Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let profileIcon = "profileIcon"
         static let image = "image"
         static let color = "color"

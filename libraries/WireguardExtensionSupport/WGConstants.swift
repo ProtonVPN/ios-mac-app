@@ -9,7 +9,7 @@
 import Domain
 import Foundation
 
-struct WGConstants {
+enum WGConstants {
     static var keychainAccessGroup: String = "\(Self.appIdentifierPrefix)prt.ProtonVPN"
 
     static var appIdentifierPrefix: String {

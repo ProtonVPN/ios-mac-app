@@ -24,7 +24,7 @@ import Cocoa
 import Ergonomics
 
 class ProfileSectionViewController: NSViewController {
-    fileprivate struct CellIdentifier {
+    fileprivate enum CellIdentifier {
         static let profile = "Profile"
         static let footer = "Footer"
     }

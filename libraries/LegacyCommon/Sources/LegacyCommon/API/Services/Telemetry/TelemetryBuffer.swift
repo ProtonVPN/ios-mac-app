@@ -24,7 +24,7 @@ actor TelemetryBuffer {
         let localizedDescription: String
     }
 
-    struct Constants {
+    enum Constants {
         static let maxStoredEvents = 100
         static let maxStorageDuration: TimeInterval = .days(7)
         static let measurementGroup: String = "vpn.any.connection"

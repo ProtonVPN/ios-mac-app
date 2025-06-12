@@ -36,7 +36,7 @@ public enum ProfileType: Equatable, Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let profileType = "profileType"
     }
 

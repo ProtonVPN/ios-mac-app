@@ -94,7 +94,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         let localizedDescription: String
     }
 
-    private struct StorageKey {
+    private enum StorageKey {
         static let vpnCredentials = "vpnCredentials"
         static let openVpnPassword_old = "openVpnPassword"
         static let vpnServerPassword = "ProtonVPN-Server-Password"

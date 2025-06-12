@@ -85,7 +85,7 @@ extension DependencyValues {
 public final class AuthKeychain {
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
 
-    private struct StorageKey {
+    private enum StorageKey {
         static let authCredentials = "authCredentials"
 
         static let contextKeys: [AppContext: String] = [

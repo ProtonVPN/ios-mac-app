@@ -29,7 +29,7 @@ enum ProfileUtilityOperationOutcome {
     case nameInUse
 }
 
-public final class ProfileUtility {
+public enum ProfileUtility {
     public static func index(for serverType: ServerType) -> Int {
         switch serverType {
         case .standard:

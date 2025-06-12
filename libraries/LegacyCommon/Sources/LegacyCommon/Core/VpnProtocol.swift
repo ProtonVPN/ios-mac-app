@@ -40,7 +40,7 @@ extension VpnProtocol { // Authentication
 // MARK: - NSCoding (used by Profile)
 
 extension VpnProtocol {
-    private struct CoderKey {
+    private enum CoderKey {
         static let vpnProtocol = "vpnProtocol"
         static let transportProtocol = "transportProtocol"
     }
@@ -66,7 +66,7 @@ extension VpnProtocol {
 }
 
 extension OpenVpnTransport {
-    private struct CoderKey {
+    private enum CoderKey {
         static let transportProtocol = "transportProtocol"
     }
 
@@ -91,7 +91,7 @@ extension OpenVpnTransport {
 }
 
 extension WireGuardTransport {
-    private struct CoderKey {
+    private enum CoderKey {
         static let transportProtocol = "transportProtocol"
     }
 

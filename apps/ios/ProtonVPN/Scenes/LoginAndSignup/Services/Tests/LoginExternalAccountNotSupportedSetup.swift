@@ -24,7 +24,7 @@
     import OHHTTPStubs
     import OHHTTPStubsSwift
 
-    final class LoginExternalAccountNotSupportedSetup {
+    enum LoginExternalAccountNotSupportedSetup {
         static func stop() {
             HTTPStubs.removeAllStubs()
         }

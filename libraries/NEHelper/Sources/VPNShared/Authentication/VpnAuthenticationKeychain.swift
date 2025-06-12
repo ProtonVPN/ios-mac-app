@@ -28,12 +28,12 @@ import PMLogger
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     @Dependency(\.vpnKeysGenerator) var vpnKeysGenerator
 
-    private struct KeychainStorageKey {
+    private enum KeychainStorageKey {
         static let vpnKeys = "vpnKeys"
         static let vpnCertificate = "vpnCertificate"
     }
 
-    private struct DefaultsStorageKey {
+    private enum DefaultsStorageKey {
         static let vpnCertificateFeatures = "vpnCertificateFeatures"
     }
 

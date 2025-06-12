@@ -53,7 +53,7 @@ public class ServerLocation: NSObject, NSCoding, Codable {
 
     // MARK: - NSCoding
 
-    private struct CoderKey {
+    private enum CoderKey {
         static let lat = "latKey"
         static let long = "longKey"
     }

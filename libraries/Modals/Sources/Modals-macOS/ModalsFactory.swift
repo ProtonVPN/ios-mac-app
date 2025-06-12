@@ -21,7 +21,7 @@ import Foundation
 import ModalsShared
 import SwiftUI
 
-public struct ModalsFactory {
+public enum ModalsFactory {
     // MARK: Properties
 
     public static func upsellViewController(modalType: ModalType, upgradeAction: (() -> Void)?, continueAction: (() -> Void)?) -> NSViewController {
