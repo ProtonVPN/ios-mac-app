@@ -52,7 +52,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             case userCountry = "user_country"
             case daysSinceAccountCreation = "days_since_account_creation"
             case upgradedUserPlan = "upgraded_user_plan"
-            case reference = "reference"
+            case reference
         }
 
         public let modalSource: UpsellModalSource

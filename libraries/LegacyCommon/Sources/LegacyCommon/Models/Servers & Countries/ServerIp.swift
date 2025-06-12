@@ -145,7 +145,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         case domain = "domainKey"
         case status = "statusKey"
         case label = "labelKey"
-        case x25519PublicKey = "x25519PublicKey"
+        case x25519PublicKey
         case protocolEntries = "entryPerProtocol"
     }
 

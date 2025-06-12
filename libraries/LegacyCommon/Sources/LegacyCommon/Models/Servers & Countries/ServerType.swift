@@ -82,7 +82,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     // MARK: - NSCoding
 
     private enum CoderKey: String, CodingKey {
-        case serverType = "serverType"
+        case serverType
     }
 
     public init(coder aDecoder: NSCoder) {

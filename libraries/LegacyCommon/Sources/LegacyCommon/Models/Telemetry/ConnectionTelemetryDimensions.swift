@@ -108,7 +108,7 @@ public struct ConnectionDimensions: Encodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case outcome = "outcome"
+        case outcome
         case userTier = "user_tier"
         case vpnStatus = "vpn_status"
         case vpnTrigger = "vpn_trigger"
@@ -116,10 +116,10 @@ public struct ConnectionDimensions: Encodable {
         case serverFeatures = "server_features"
         case vpnCountry = "vpn_country"
         case userCountry = "user_country"
-        case `protocol` = "protocol"
-        case server = "server"
-        case port = "port"
-        case isp = "isp"
+        case `protocol`
+        case server
+        case port
+        case isp
         case modalSource = "modal_source"
     }
 

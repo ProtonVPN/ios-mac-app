@@ -255,22 +255,22 @@ public class ServerModel: NSObject, NSCoding, Codable {
     // MARK: - NSCoding
     
     private enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case domain = "domain"
-        case load = "load"
-        case entryCountryCode = "entryCountryCode"
-        case exitCountryCode = "exitCountryCode"
-        case tier = "tier"
-        case location = "location"
-        case ips = "ips"
-        case score = "score"
-        case status = "status"
+        case id
+        case name
+        case domain
+        case load
+        case entryCountryCode
+        case exitCountryCode
+        case tier
+        case location
+        case ips
+        case score
+        case status
         case feature = "features"
-        case city = "city"
-        case hostCountry = "hostCountry"
-        case translatedCity = "translatedCity"
-        case gatewayName = "gatewayName"
+        case city
+        case hostCountry
+        case translatedCity
+        case gatewayName
     }
 
     public required convenience init(coder aDecoder: NSCoder) {

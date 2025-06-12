@@ -36,7 +36,7 @@ struct ServerIpDTO: Codable {
         case domain
         case status
         case label
-        case x25519PublicKey = "x25519PublicKey"
+        case x25519PublicKey
         case protocolEntries = "entryPerProtocol"
     }
 }

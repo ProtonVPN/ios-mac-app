@@ -17,16 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 public enum OpenVpnTransport: String, Codable, CaseIterable, Sendable {
-    case tcp = "tcp"
-    case udp = "udp"
+    case tcp
+    case udp
 
     public static let defaultValue: Self = .tcp
 }
 
 public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendable {
-    case udp = "udp"
-    case tcp = "tcp"
-    case tls = "tls"
+    case udp
+    case tcp
+    case tls
 
     public static let defaultValue: Self = .udp
 }

@@ -33,7 +33,7 @@ public struct DefaultConnectionPreferenceStorage: DependencyKey {
         /// Defined here
         case defaultConnection = "DefaultConnectionPreference"
         /// Also defined in PropertiesManager.Keys
-        case smartProtocol = "smartProtocol"
+        case smartProtocol
         /// Also defined in PropertiesManager.Keys
         case vpnProtocol = "VpnProtocol"
     }

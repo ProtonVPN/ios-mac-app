@@ -168,7 +168,7 @@ extension PropertiesManagerProtocol {
 
 public final class PropertiesManager: PropertiesManagerProtocol {
     enum Keys: String, CaseIterable {
-        case isSubsequentLaunch = "isSubsequentLaunch"
+        case isSubsequentLaunch
         case autoConnect = "AutoConnect"
         case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"
         case blockUpdatePrompt = "BlockUpdatePrompt"
@@ -183,7 +183,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case quickConnectProfile = "QuickConnect_"
         case intentionallyDisconnected = "IntentionallyDisconnected"
 
-        case userRole = "userRole"
+        case userRole
         case userLocation = "UserLocation"
         case userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
         case userAccountCreationDate = "UserAccountCreationDate"
@@ -191,10 +191,10 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case lastBugReportEmail = "LastBugReportEmail"
 
         // Subscriptions
-        case servicePlans = "servicePlans"
-        case currentSubscription = "currentSubscription"
-        case defaultPlanDetails = "defaultPlanDetails"
-        case isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
+        case servicePlans
+        case currentSubscription
+        case defaultPlanDetails
+        case isIAPUpgradePlanAvailable // Old name is left for backwards compatibility
 
         // Trial
         case trialWelcomed = "TrialWelcomed"
@@ -223,12 +223,12 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case featureFlags = "FeatureFlags"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
 
-        case humanValidationFailed = "humanValidationFailed"
-        case alternativeRouting = "alternativeRouting"
-        case smartProtocol = "smartProtocol"
-        case streamingServices = "streamingServices"
-        case partnerTypes = "partnerTypes"
-        case streamingResourcesUrl = "streamingResourcesUrl"
+        case humanValidationFailed
+        case alternativeRouting
+        case smartProtocol
+        case streamingServices
+        case partnerTypes
+        case streamingResourcesUrl
 
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
