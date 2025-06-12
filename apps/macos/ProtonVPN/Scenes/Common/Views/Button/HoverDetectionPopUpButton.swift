@@ -26,8 +26,12 @@ class HoverDetectionPopUpButton: NSPopUpButton {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
-                                          owner: self, userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
     }
 

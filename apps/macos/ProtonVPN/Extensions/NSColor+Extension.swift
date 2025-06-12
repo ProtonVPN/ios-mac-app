@@ -28,9 +28,11 @@ extension NSColor {
             return self
         }
 
-        return NSColor(red: color.redComponent * 0.5,
-                       green: color.greenComponent * 0.5,
-                       blue: color.blueComponent * 0.5,
-                       alpha: color.alphaComponent)
+        return NSColor(
+            red: color.redComponent * 0.5,
+            green: color.greenComponent * 0.5,
+            blue: color.blueComponent * 0.5,
+            alpha: color.alphaComponent
+        )
     }
 }

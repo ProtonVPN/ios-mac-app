@@ -210,9 +210,11 @@ private extension WelcomeScreenAlert.Plan {
             self = .unlimited
         } else if info.to.maxTier.isPaidTier {
             @Dependency(\.serverRepository) var repository
-            self = .plus(numberOfServers: repository.roundedServerCount,
-                         numberOfDevices: DomainConstants.maxDeviceCount,
-                         numberOfCountries: repository.countryCount())
+            self = .plus(
+                numberOfServers: repository.roundedServerCount,
+                numberOfDevices: DomainConstants.maxDeviceCount,
+                numberOfCountries: repository.countryCount()
+            )
         } else if info.to.maxTier > info.from.maxTier {
             self = .fallback
         } else {

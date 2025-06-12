@@ -38,20 +38,26 @@ struct WelcomeInfoFeature {
         var model: Model {
             switch self {
             case .createAccount:
-                .init(title: "Create your Proton Account",
-                      subtitle: "Scan the QR code or go to\n",
-                      url: "https://account.protonvpn.com/pricing",
-                      displayURL: "protonvpn.com/tv")
+                .init(
+                    title: "Create your Proton Account",
+                    subtitle: "Scan the QR code or go to\n",
+                    url: "https://account.protonvpn.com/pricing",
+                    displayURL: "protonvpn.com/tv"
+                )
             case .freeUpsell:
-                .init(title: "Using Proton Free?",
-                      subtitle: "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website.",
-                      url: "https://account.protonvpn.com/pricing",
-                      displayURL: nil)
+                .init(
+                    title: "Using Proton Free?",
+                    subtitle: "Proton VPN for Apple TV is available on all paid plans. You can check and manage your subscription on our website.",
+                    url: "https://account.protonvpn.com/pricing",
+                    displayURL: nil
+                )
             case .freeUpsellAlternative:
-                .init(title: "Proton VPN for Apple TV is not available on free plans",
-                      subtitle: "",
-                      url: "",
-                      displayURL: nil)
+                .init(
+                    title: "Proton VPN for Apple TV is not available on free plans",
+                    subtitle: "",
+                    url: "",
+                    displayURL: nil
+                )
             }
         }
     }

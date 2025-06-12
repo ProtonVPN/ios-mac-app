@@ -220,31 +220,33 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
             []
         }
 
-        let task = NWTCPDataTask(provider: provider,
-                                 timerFactory: timerFactory,
-                                 request: request,
-                                 cookiesToSend: cookies,
-                                 timeoutInterval: timeoutInterval,
-                                 taskId: id,
-                                 completionHandler: { [weak self] data, response, error in
-                                     if let error {
-                                         log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
-                                     } else {
-                                         log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
-                                     }
+        let task = NWTCPDataTask(
+            provider: provider,
+            timerFactory: timerFactory,
+            request: request,
+            cookiesToSend: cookies,
+            timeoutInterval: timeoutInterval,
+            taskId: id,
+            completionHandler: { [weak self] data, response, error in
+                if let error {
+                    log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+                } else {
+                    log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+                }
 
-                                     if let response, let url = request.url {
-                                         let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
-                                         let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
-                                         self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
-                                     }
+                if let response, let url = request.url {
+                    let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
+                    self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
+                }
 
-                                     self?.tasksQueue.async {
-                                         // We're going away, but we don't care if deallocation is synchronous or not
-                                         self?.tasks.removeValue(forKey: id)
-                                     }
-                                     completionHandler(data, response, error)
-                                 })
+                self?.tasksQueue.async {
+                    // We're going away, but we don't care if deallocation is synchronous or not
+                    self?.tasks.removeValue(forKey: id)
+                }
+                completionHandler(data, response, error)
+            }
+        )
 
         // This needs to be synchronous so we don't go away immediately after returning
         tasksQueue.sync {
@@ -293,13 +295,15 @@ class NWTCPDataTask: DataTaskProtocol {
     /// The handle to the object observing state changes on the network connection.
     private var observation: ObservationHandle?
 
-    init(provider: ConnectionTunnelFactory,
-         timerFactory: TimerFactory,
-         request: URLRequest,
-         cookiesToSend: [HTTPCookie],
-         timeoutInterval: TimeInterval,
-         taskId: UUID,
-         completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
+    init(
+        provider: ConnectionTunnelFactory,
+        timerFactory: TimerFactory,
+        request: URLRequest,
+        cookiesToSend: [HTTPCookie],
+        timeoutInterval: TimeInterval,
+        taskId: UUID,
+        completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)
+    ) {
         self.provider = provider
         self.timerFactory = timerFactory
         self.request = request

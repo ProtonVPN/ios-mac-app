@@ -28,8 +28,10 @@ struct HomeView: View {
         ScrollView {
             ProtectionStatusView(store: store.scope(state: \.protectionStatus, action: \.protectionStatus))
                 .frame(width: Self.contentAllowedWidth)
-            CountryListView(store: store.scope(state: \.countryList, action: \.countryList),
-                            contentAllowedWidth: Self.contentAllowedWidth)
+            CountryListView(
+                store: store.scope(state: \.countryList, action: \.countryList),
+                contentAllowedWidth: Self.contentAllowedWidth
+            )
         }
         .scrollClipDisabled()
         .frame(width: Self.contentAllowedWidth)

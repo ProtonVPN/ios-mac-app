@@ -49,19 +49,23 @@ extension FileManagerWrapper {
         do {
             attributes = try attributesOfItem(atPath: url.path)
         } catch {
-            os_log("Failed to get attributes of file at %{public}s with error %{public}s",
-                   log: OSLog(subsystem: "PMLogger", category: "FileManager"),
-                   type: OSLogType.error,
-                   url.path,
-                   error as CVarArg)
+            os_log(
+                "Failed to get attributes of file at %{public}s with error %{public}s",
+                log: OSLog(subsystem: "PMLogger", category: "FileManager"),
+                type: OSLogType.error,
+                url.path,
+                error as CVarArg
+            )
             return nil
         }
 
         guard let date = attributes[.creationDate] as? Date else {
-            os_log("Attributes of file at %{public}s do not contain creation date",
-                   log: OSLog(subsystem: "PMLogger", category: "FileManager"),
-                   type: OSLogType.error,
-                   url.path)
+            os_log(
+                "Attributes of file at %{public}s do not contain creation date",
+                log: OSLog(subsystem: "PMLogger", category: "FileManager"),
+                type: OSLogType.error,
+                url.path
+            )
             return nil
         }
         return date

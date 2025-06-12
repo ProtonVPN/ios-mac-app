@@ -67,11 +67,13 @@ enum Keychain {
 
     static func deleteReferences(except whitelist: Set<Data>) {
         var result: CFTypeRef?
-        let ret = SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
-                                       kSecAttrService: Bundle.main.bundleIdentifier as Any,
-                                       kSecMatchLimit: kSecMatchLimitAll,
-                                       kSecReturnPersistentRef: true] as CFDictionary,
-                                      &result)
+        let ret = SecItemCopyMatching(
+            [kSecClass: kSecClassGenericPassword,
+             kSecAttrService: Bundle.main.bundleIdentifier as Any,
+             kSecMatchLimit: kSecMatchLimitAll,
+             kSecReturnPersistentRef: true] as CFDictionary,
+            &result
+        )
         if ret != errSecSuccess || result == nil {
             return
         }
@@ -84,9 +86,11 @@ enum Keychain {
     }
 
     static func verifyReference(called ref: Data) -> Bool {
-        SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
-                             kSecValuePersistentRef: ref] as CFDictionary,
-                            nil) != errSecItemNotFound
+        SecItemCopyMatching(
+            [kSecClass: kSecClassGenericPassword,
+             kSecValuePersistentRef: ref] as CFDictionary,
+            nil
+        ) != errSecItemNotFound
     }
 
     // MARK: - By name (for macOS sysex)

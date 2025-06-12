@@ -423,11 +423,13 @@ class CountriesSectionViewModel {
     }
 
     private func serverViewModel(_ server: ServerInfo) -> ServerItemViewModel {
-        ServerItemViewModel(serverModel: server,
-                            vpnGateway: vpnGateway,
-                            appStateManager: appStateManager,
-                            propertiesManager: propertiesManager,
-                            countriesSectionViewModel: self)
+        ServerItemViewModel(
+            serverModel: server,
+            vpnGateway: vpnGateway,
+            appStateManager: appStateManager,
+            propertiesManager: propertiesManager,
+            countriesSectionViewModel: self
+        )
     }
 
     @objc func updateSettings() {

@@ -35,21 +35,27 @@ import QuartzCore
             existingBorder?.removeFromSuperlayer()
             let border = CAGradientLayer()
             border.name = Self.kLayerNameGradientBorder
-            border.frame = CGRect(x: bounds.origin.x,
-                                  y: bounds.origin.y,
-                                  width: bounds.size.width + width,
-                                  height: bounds.size.height + width)
+            border.frame = CGRect(
+                x: bounds.origin.x,
+                y: bounds.origin.y,
+                width: bounds.size.width + width,
+                height: bounds.size.height + width
+            )
             border.colors = colors.map(\.cgColor)
             border.startPoint = startPoint
             border.endPoint = endPoint
 
             let mask = CAShapeLayer()
-            let maskRect = CGRect(x: bounds.origin.x + width / 2,
-                                  y: bounds.origin.y + width / 2,
-                                  width: bounds.size.width - width,
-                                  height: bounds.size.height - width)
-            mask.path = UIBezierPath(roundedRect: maskRect,
-                                     cornerRadius: cornerRadius).cgPath
+            let maskRect = CGRect(
+                x: bounds.origin.x + width / 2,
+                y: bounds.origin.y + width / 2,
+                width: bounds.size.width - width,
+                height: bounds.size.height - width
+            )
+            mask.path = UIBezierPath(
+                roundedRect: maskRect,
+                cornerRadius: cornerRadius
+            ).cgPath
             mask.fillColor = UIColor.clear.cgColor
             mask.strokeColor = UIColor.white.cgColor
             mask.lineWidth = width

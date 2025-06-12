@@ -54,12 +54,16 @@ struct WelcomeView: View {
         .padding(.horizontal, .themeSpacing16)
         .overlay(
             RoundedRectangle(cornerRadius: .themeRadius12)
-                .stroke(LinearGradient(colors: [Color(hex: 0x6E4BFF), // custom colors just for this
-                                                Color(hex: 0x547AEC),
-                                                Color(hex: 0x2FCCCF)],
-                                       startPoint: .topLeading,
-                                       endPoint: .bottomTrailing),
-                        lineWidth: 1.5)
+                .stroke(
+                    LinearGradient(
+                        colors: [Color(hex: 0x6E4BFF), // custom colors just for this
+                                 Color(hex: 0x547AEC),
+                                 Color(hex: 0x2FCCCF)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1.5
+                )
         )
 
     var titleView: some View = VStack(spacing: 24) {

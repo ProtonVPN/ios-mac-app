@@ -99,9 +99,11 @@ import VPNShared
         /// will then authenticate with the API, establish its session, and tell the app that it's ready to try again,
         /// at which point the app is welcome to do so. When the network extension returns success after being asked to refresh
         /// the certificate, the updated certificate should be available in the keychain.
-        private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures?,
-                                                          retryingForExpiredSessions: Bool = true,
-                                                          completionHandler: @escaping CertificateRefreshCompletion) {
+        private func promptExtensionForCertificateRefresh(
+            features: VPNConnectionFeatures?,
+            retryingForExpiredSessions: Bool = true,
+            completionHandler: @escaping CertificateRefreshCompletion
+        ) {
             guard let connectionProvider else {
                 log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.", category: .userCert)
                 completionHandler(.failure(ProviderMessageError.sendingError))
@@ -125,15 +127,19 @@ import VPNShared
                             category: .userCert,
                             metadata: ["certificate": "\(certificate)"]
                         )
-                        completionHandler(.success(VpnAuthenticationData(clientKey: keys.privateKey,
-                                                                         clientCertificate: certificate.certificate)))
+                        completionHandler(.success(VpnAuthenticationData(
+                            clientKey: keys.privateKey,
+                            clientCertificate: certificate.certificate
+                        )))
                         return
                     case let .error(message):
                         completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
                     case .errorSessionExpired:
-                        self?.handleSessionExpired(features: features,
-                                                   retryingForExpiredSessions: retryingForExpiredSessions,
-                                                   completionHandler: completionHandler)
+                        self?.handleSessionExpired(
+                            features: features,
+                            retryingForExpiredSessions: retryingForExpiredSessions,
+                            completionHandler: completionHandler
+                        )
                     case .errorNeedKeyRegeneration:
                         self?.authenticationStorage.deleteKeys()
                         self?.authenticationStorage.deleteCertificate()
@@ -153,9 +159,11 @@ import VPNShared
 
         /// Handle the session expiring in the network extension by forking a new API session, pushing that session selector
         /// to the provider, and then prompting the extension to once again renew its certificate.
-        private func handleSessionExpired(features: VPNConnectionFeatures?,
-                                          retryingForExpiredSessions: Bool,
-                                          completionHandler: @escaping CertificateRefreshCompletion) {
+        private func handleSessionExpired(
+            features: VPNConnectionFeatures?,
+            retryingForExpiredSessions: Bool,
+            completionHandler: @escaping CertificateRefreshCompletion
+        ) {
             pushSelectorToProvider { [weak self] pushResult in
                 if case let .failure(error) = pushResult {
                     completionHandler(.failure(error))
@@ -165,9 +173,11 @@ import VPNShared
                     completionHandler(.failure(CommonVpnError.userCredentialsExpired))
                     return
                 }
-                self?.promptExtensionForCertificateRefresh(features: features,
-                                                           retryingForExpiredSessions: false,
-                                                           completionHandler: completionHandler)
+                self?.promptExtensionForCertificateRefresh(
+                    features: features,
+                    retryingForExpiredSessions: false,
+                    completionHandler: completionHandler
+                )
             }
         }
 

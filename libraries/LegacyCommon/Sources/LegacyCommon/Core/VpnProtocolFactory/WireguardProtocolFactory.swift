@@ -30,16 +30,20 @@ open class WireguardProtocolFactory {
         NETunnelProviderManagerWrapperFactory & PropertiesManagerFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
-        self.init(bundleId: config.wireguardVpnExtensionBundleIdentifier,
-                  appGroup: config.appGroup,
-                  propertiesManager: factory.makePropertiesManager(),
-                  vpnManagerFactory: factory)
+        self.init(
+            bundleId: config.wireguardVpnExtensionBundleIdentifier,
+            appGroup: config.appGroup,
+            propertiesManager: factory.makePropertiesManager(),
+            vpnManagerFactory: factory
+        )
     }
 
-    public init(bundleId: String,
-                appGroup: String,
-                propertiesManager: PropertiesManagerProtocol,
-                vpnManagerFactory: NETunnelProviderManagerWrapperFactory) {
+    public init(
+        bundleId: String,
+        appGroup: String,
+        propertiesManager: PropertiesManagerProtocol,
+        vpnManagerFactory: NETunnelProviderManagerWrapperFactory
+    ) {
         self.bundleId = bundleId
         self.appGroup = appGroup
         self.propertiesManager = propertiesManager
@@ -129,13 +133,17 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 }
 
 public extension StoredWireguardConfig {
-    init(vpnManagerConfig: VpnManagerConfiguration,
-         wireguardConfig: WireguardConfig) {
-        self.init(wireguardConfig: wireguardConfig,
-                  clientPrivateKey: vpnManagerConfig.clientPrivateKey,
-                  serverPublicKey: vpnManagerConfig.serverPublicKey,
-                  entryServerAddress: vpnManagerConfig.entryServerAddress,
-                  ports: vpnManagerConfig.ports,
-                  timestamp: Date())
+    init(
+        vpnManagerConfig: VpnManagerConfiguration,
+        wireguardConfig: WireguardConfig
+    ) {
+        self.init(
+            wireguardConfig: wireguardConfig,
+            clientPrivateKey: vpnManagerConfig.clientPrivateKey,
+            serverPublicKey: vpnManagerConfig.serverPublicKey,
+            entryServerAddress: vpnManagerConfig.entryServerAddress,
+            ports: vpnManagerConfig.ports,
+            timestamp: Date()
+        )
     }
 }

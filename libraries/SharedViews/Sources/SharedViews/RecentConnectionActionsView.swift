@@ -34,21 +34,27 @@ struct RecentConnectionActionsView: View {
     }
 
     private var pinModel: ButtonModel {
-        .init(action: .pin,
-              image: images.pinFilled,
-              text: Localizable.actionHomePin)
+        .init(
+            action: .pin,
+            image: images.pinFilled,
+            text: Localizable.actionHomePin
+        )
     }
 
     private var unpinModel: ButtonModel {
-        .init(action: .unpin,
-              image: images.pinSlashFilled,
-              text: Localizable.actionHomeUnpin)
+        .init(
+            action: .unpin,
+            image: images.pinSlashFilled,
+            text: Localizable.actionHomeUnpin
+        )
     }
 
     private var removeModel: ButtonModel {
-        .init(action: .remove,
-              image: images.trashCrossFilled,
-              text: Localizable.actionRemove)
+        .init(
+            action: .remove,
+            image: images.trashCrossFilled,
+            text: Localizable.actionRemove
+        )
     }
 
     @ViewBuilder private var recentListItem: some View {

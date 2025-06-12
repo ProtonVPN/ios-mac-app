@@ -96,8 +96,10 @@ public final class AuthKeychain {
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
-    static let dispatchQueue = DispatchQueue(label: "ch.protonvpn.VPNShared.AuthKeychain",
-                                             attributes: .concurrent)
+    static let dispatchQueue = DispatchQueue(
+        label: "ch.protonvpn.VPNShared.AuthKeychain",
+        attributes: .concurrent
+    )
     @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue)
     public var username: String? = nil
 

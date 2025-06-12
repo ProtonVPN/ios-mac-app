@@ -72,8 +72,12 @@ class ColorPickerViewController: NSViewController {
         gridLayout.maximumNumberOfRows = rows
         gridLayout.maximumNumberOfColumns = columns
 
-        let trackingArea = NSTrackingArea(rect: collectionView.bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
-                                          owner: self, userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: collectionView.bounds,
+            options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
+            owner: self,
+            userInfo: nil
+        )
         collectionView.addTrackingArea(trackingArea)
         collectionView.collectionViewLayout = gridLayout
         collectionView.dataSource = self

@@ -106,8 +106,12 @@ class MapSectionViewController: NSViewController {
         mapSectionViewModel.contentChanged = { [weak self] change in self?.setAnnotations(change) }
         mapSectionViewModel.connectionsChanged = { [weak self] connections in self?.setConnections(connections) }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(mapShouldResize),
-                                               name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(mapShouldResize),
+            name: NSWindow.didChangeBackingPropertiesNotification,
+            object: nil
+        )
     }
 
     private func addAnnotations(_ annotations: [CountryAnnotationViewModel]) {

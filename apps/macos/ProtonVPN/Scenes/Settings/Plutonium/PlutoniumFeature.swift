@@ -163,8 +163,10 @@ extension PlutoniumFeature.State {
 }
 
 extension PlutoniumActivated {
-    mutating func apply(operation: PlutoniumFeature.State.Operation,
-                        entry: PlutoniumFeature.State.Entry) throws(PlutoniumFeature.State.ValidationError) {
+    mutating func apply(
+        operation: PlutoniumFeature.State.Operation,
+        entry: PlutoniumFeature.State.Entry
+    ) throws(PlutoniumFeature.State.ValidationError) {
         switch entry {
         case let .app(entry):
             switch operation {

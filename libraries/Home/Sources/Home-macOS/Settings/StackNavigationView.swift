@@ -28,10 +28,12 @@ struct StackNavigationView<RootContent>: View where RootContent: View {
 
     let rootView: () -> RootContent
 
-    init(currentSubview: Binding<AnyView?>,
-         subviewTitle: Binding<String>,
-         title: String,
-         @ViewBuilder rootView: @escaping () -> RootContent) {
+    init(
+        currentSubview: Binding<AnyView?>,
+        subviewTitle: Binding<String>,
+        title: String,
+        @ViewBuilder rootView: @escaping () -> RootContent
+    ) {
         _currentSubview = currentSubview
         _subviewTitle = subviewTitle
         self.title = title

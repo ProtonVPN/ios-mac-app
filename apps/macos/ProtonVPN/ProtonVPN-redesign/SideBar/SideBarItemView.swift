@@ -52,15 +52,27 @@
     struct SideBarItemView_Previews: PreviewProvider {
         static var previews: some View {
             VStack(spacing: 0) {
-                SideBarItemView(category: .home,
-                                selectedTab: .init(get: { .home },
-                                                   set: { _ in }))
-                SideBarItemView(category: .countries,
-                                selectedTab: .init(get: { .home },
-                                                   set: { _ in }))
-                SideBarItemView(category: .settings,
-                                selectedTab: .init(get: { .home },
-                                                   set: { _ in }))
+                SideBarItemView(
+                    category: .home,
+                    selectedTab: .init(
+                        get: { .home },
+                        set: { _ in }
+                    )
+                )
+                SideBarItemView(
+                    category: .countries,
+                    selectedTab: .init(
+                        get: { .home },
+                        set: { _ in }
+                    )
+                )
+                SideBarItemView(
+                    category: .settings,
+                    selectedTab: .init(
+                        get: { .home },
+                        set: { _ in }
+                    )
+                )
             }
             .previewLayout(.fixed(width: 200, height: 32 * 3))
         }

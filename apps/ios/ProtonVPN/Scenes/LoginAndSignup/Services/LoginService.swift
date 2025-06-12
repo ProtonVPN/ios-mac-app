@@ -173,15 +173,19 @@ final class CoreLoginService {
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result)
         }
-        let customization = LoginCustomizationOptions(username: nil,
-                                                      performBeforeFlow: finishFlow(),
-                                                      customErrorPresenter: self,
-                                                      initialError: initialError,
-                                                      helpDecorator: helpDecorator)
+        let customization = LoginCustomizationOptions(
+            username: nil,
+            performBeforeFlow: finishFlow(),
+            customErrorPresenter: self,
+            initialError: initialError,
+            helpDecorator: helpDecorator
+        )
         let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
-        let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(variant: variant,
-                                                                                  customization: customization,
-                                                                                  updateBlock: loginResultCompletion)
+        let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
+            variant: variant,
+            customization: customization,
+            updateBlock: loginResultCompletion
+        )
         windowService.show(viewController: welcomeViewController)
         if initialError != nil {
             loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)

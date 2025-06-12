@@ -49,8 +49,10 @@ struct ConnectionStatusUpsell: View {
 
     let sendAction: ConnectionStatusBannerFeature.ActionSender
 
-    public init(mode: ConnectionStatusBannerFeature.UpsellMode,
-                sendAction: @escaping ConnectionStatusBannerFeature.ActionSender) {
+    public init(
+        mode: ConnectionStatusBannerFeature.UpsellMode,
+        sendAction: @escaping ConnectionStatusBannerFeature.ActionSender
+    ) {
         self.mode = mode
         self.sendAction = sendAction
     }

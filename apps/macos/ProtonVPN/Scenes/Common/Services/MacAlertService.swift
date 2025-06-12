@@ -476,9 +476,11 @@ extension MacAlertService: CoreAlertService {
         case .unlimited:
             .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            .welcomePlus(numberOfServers: numberOfServers,
-                         numberOfDevices: numberOfDevices,
-                         numberOfCountries: numberOfCountries)
+            .welcomePlus(
+                numberOfServers: numberOfServers,
+                numberOfDevices: numberOfDevices,
+                numberOfCountries: numberOfCountries
+            )
         }
     }
 }

@@ -32,11 +32,15 @@ class ViewController: NSViewController {
         (.upsell(.welcomeUnlimited), "Welcome Unlimited"),
         (.upsell(.welcomeFallback), "Welcome Fallback"),
         (.whatsNew, "What's new"),
-        (.upsell(.allCountries(numberOfServers: 1300,
-                               numberOfCountries: 61)), "All countries"),
-        (.upsell(.country(countryFlag: NSImage(named: "flags_PL")!,
-                          numberOfDevices: 10,
-                          numberOfCountries: 61)), "Countries"),
+        (.upsell(.allCountries(
+            numberOfServers: 1300,
+            numberOfCountries: 61
+        )), "All countries"),
+        (.upsell(.country(
+            countryFlag: NSImage(named: "flags_PL")!,
+            numberOfDevices: 10,
+            numberOfCountries: 61
+        )), "Countries"),
         (.upsell(.secureCore), "Secure Core"),
         (.upsell(.netShield), "Net Shield"),
         (.upsell(.safeMode), "Safe Mode"),

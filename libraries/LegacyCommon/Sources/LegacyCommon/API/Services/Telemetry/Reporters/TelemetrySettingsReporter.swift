@@ -59,9 +59,11 @@ final class TelemetrySettingsReporter {
         checkAndSendHeartbeat()
 
         let nextRunTime = Date().addingTimeInterval(heartbeatInterval)
-        heartbeatTimer = timerFactory.scheduledTimer(runAt: nextRunTime,
-                                                     repeating: heartbeatInterval,
-                                                     queue: .main) { [weak self] in
+        heartbeatTimer = timerFactory.scheduledTimer(
+            runAt: nextRunTime,
+            repeating: heartbeatInterval,
+            queue: .main
+        ) { [weak self] in
             self?.checkAndSendHeartbeat()
         }
     }

@@ -92,18 +92,24 @@ public struct WhatsNewView: View {
     }
 
     private var recentsTextContentView: some View {
-        textSection(title: Localizable.modalsWhatsNewRecentsTitle,
-                    subtitle: Localizable.modalsWhatsNewRecentsSubtitle)
+        textSection(
+            title: Localizable.modalsWhatsNewRecentsTitle,
+            subtitle: Localizable.modalsWhatsNewRecentsSubtitle
+        )
     }
 
     private var gatewaysTextContentView: some View {
-        textSection(title: Localizable.modalsWhatsNewGatewaysTitle,
-                    subtitle: Localizable.modalsWhatsNewGatewaysSubtitle)
+        textSection(
+            title: Localizable.modalsWhatsNewGatewaysTitle,
+            subtitle: Localizable.modalsWhatsNewGatewaysSubtitle
+        )
     }
 
     private var widgetTextContentView: some View {
-        textSection(title: Localizable.widgetWhatsNewTitle,
-                    subtitle: Localizable.widgetWhatsNewSubtitle)
+        textSection(
+            title: Localizable.widgetWhatsNewTitle,
+            subtitle: Localizable.widgetWhatsNewSubtitle
+        )
     }
 
     @ViewBuilder

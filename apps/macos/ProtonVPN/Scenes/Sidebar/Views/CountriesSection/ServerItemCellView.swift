@@ -60,16 +60,20 @@ final class ServerItemCellView: NSView {
         maintenanceIV.layer?.borderWidth = 2.0
         maintenanceIV.image = AppTheme.Icon.wrench
             .colored(.weak)
-            .resize(newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
-                    newHeight: Int(maintenanceIV.bounds.height) - imageMargin)
+            .resize(
+                newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
+                newHeight: Int(maintenanceIV.bounds.height) - imageMargin
+            )
 
         secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
-        let trackingArea = NSTrackingArea(rect: trackingFrame,
-                                          options: [.mouseEnteredAndExited, .activeInKeyWindow],
-                                          owner: self,
-                                          userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: trackingFrame,
+            options: [.mouseEnteredAndExited, .activeInKeyWindow],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
 
         connectBtn.wantsLayer = true

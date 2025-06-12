@@ -96,8 +96,10 @@ final class AnnouncementImageViewController: NSViewController {
             /// Usually `scale` would be 0.5
             let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
 
-            let desiredSize = CGSize(width: CGFloat(source.width ?? image.size.width),
-                                     height: CGFloat(source.height ?? image.size.height)) // pixel values
+            let desiredSize = CGSize(
+                width: CGFloat(source.width ?? image.size.width),
+                height: CGFloat(source.height ?? image.size.height)
+            ) // pixel values
 
             let imageViewSize = desiredSize.fitting(NSScreen.availableSizeInPixels()) // still in pixels
 

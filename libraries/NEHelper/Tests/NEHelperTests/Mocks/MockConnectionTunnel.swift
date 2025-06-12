@@ -145,9 +145,11 @@ class MockConnectionTunnelFactory: ConnectionTunnelFactory {
     let dataReadCallback: DataReadCallback
     let dataWriteCallback: DataWriteCallback
 
-    init(stateObservingCallback: @escaping StateObservingCallback,
-         dataReadCallback: @escaping DataReadCallback,
-         dataWriteCallback: @escaping DataWriteCallback) {
+    init(
+        stateObservingCallback: @escaping StateObservingCallback,
+        dataReadCallback: @escaping DataReadCallback,
+        dataWriteCallback: @escaping DataWriteCallback
+    ) {
         self.stateObservingCallback = stateObservingCallback
         self.dataReadCallback = dataReadCallback
         self.dataWriteCallback = dataWriteCallback

@@ -53,9 +53,11 @@ extension VpnManager {
                 }
 
                 disconnectLocalAgentNoSync()
-                localAgent = LocalAgentImplementation(factory: localAgentConnectionFactory,
-                                                      propertiesManager: propertiesManager,
-                                                      netShieldPropertyProvider: netShieldPropertyProvider)
+                localAgent = LocalAgentImplementation(
+                    factory: localAgentConnectionFactory,
+                    propertiesManager: propertiesManager,
+                    netShieldPropertyProvider: netShieldPropertyProvider
+                )
                 localAgent?.delegate = self
                 localAgent?.connect(data: data, configuration: configuration)
             }
@@ -70,8 +72,12 @@ extension VpnManager {
         vpnAuthentication.loadAuthenticationData { [weak self] result in
             switch result {
             case let .failure(error):
-                log.error("Failed to initialize local agent because of missing authentication data",
-                          category: .localAgent, event: .error, metadata: ["error": .string(.init(describing: error))])
+                log.error(
+                    "Failed to initialize local agent because of missing authentication data",
+                    category: .localAgent,
+                    event: .error,
+                    metadata: ["error": .string(.init(describing: error))]
+                )
                 guard let remoteClientError = error as? AuthenticationRemoteClientError else {
                     return
                 }
@@ -110,9 +116,12 @@ extension VpnManager {
             case let .success(data):
                 completion(data)
             case let .failure(error):
-                log.error("Failed to refresh certificate in local agent",
-                          category: .localAgent, event: .error,
-                          metadata: ["error": .string(.init(describing: error))])
+                log.error(
+                    "Failed to refresh certificate in local agent",
+                    category: .localAgent,
+                    event: .error,
+                    metadata: ["error": .string(.init(describing: error))]
+                )
                 SentryHelper.shared?.log(error: error)
 
                 if let remoteClientError = error as? AuthenticationRemoteClientError {
@@ -339,9 +348,12 @@ extension VpnManager: LocalAgentDelegate {
         vpnAuthentication.refreshCertificates(features: features, completion: { [weak self] result in
             switch result {
             case let .failure(error):
-                log.error("Failed to refresh certificate in local agent after receiving features",
-                          category: .localAgent, event: .error,
-                          metadata: ["error": .string(.init(describing: error))])
+                log.error(
+                    "Failed to refresh certificate in local agent after receiving features",
+                    category: .localAgent,
+                    event: .error,
+                    metadata: ["error": .string(.init(describing: error))]
+                )
                 SentryHelper.shared?.log(error: error)
 
                 guard let remoteClientError = error as? AuthenticationRemoteClientError else {

@@ -69,10 +69,12 @@ open class ServerItemViewModelCore {
         return 1.0
     }
 
-    public init(serverModel: ServerInfo,
-                vpnGateway: VpnGatewayProtocol,
-                appStateManager: AppStateManager,
-                propertiesManager: PropertiesManagerProtocol) {
+    public init(
+        serverModel: ServerInfo,
+        vpnGateway: VpnGatewayProtocol,
+        appStateManager: AppStateManager,
+        propertiesManager: PropertiesManagerProtocol
+    ) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager

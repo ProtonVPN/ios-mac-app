@@ -140,8 +140,10 @@
         /// - Parameter userActionRequiredHandler: Called with the number of extensions that require user approval.
         ///             This callback will *not* be called if no extensions require approval.
         /// - Parameter installationFinishedHandler: Called when installation is finished, regardless of success.
-        private func submitInstallationRequests(userActionRequiredHandler: @escaping ((Int) -> Void),
-                                                installationFinishedHandler: @escaping ((InstallationState) -> Void)) {
+        private func submitInstallationRequests(
+            userActionRequiredHandler: @escaping ((Int) -> Void),
+            installationFinishedHandler: @escaping ((InstallationState) -> Void)
+        ) {
             let queue = DispatchQueue(label: "ch.protonvpn.sysext.status.\(UUID().uuidString)")
             var states: InstallationState = [:]
             var extensionsRequiringApproval = 0
@@ -198,8 +200,10 @@
         ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
         ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
         ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
-        public func checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: Bool,
-                                                              actionHandler: @escaping (SystemExtensionResult) -> Void) {
+        public func checkAndInstallOrUpdateExtensionsIfNeeded(
+            shouldStartTour: Bool,
+            actionHandler: @escaping (SystemExtensionResult) -> Void
+        ) {
             // do not check if the user is not logged in to avoid showing the installation prompt on the
             // login screen on first start
             guard userIsLoggedIn else {
@@ -312,36 +316,50 @@
             existing < newExtension || manager.propertiesManager.forceExtensionUpgrade
         }
 
-        required init(action: Action,
-                      request: OSSystemExtensionRequest,
-                      stateChange: @escaping StateChangeCallback,
-                      manager: SystemExtensionManager) {
+        required init(
+            action: Action,
+            request: OSSystemExtensionRequest,
+            stateChange: @escaping StateChangeCallback,
+            manager: SystemExtensionManager
+        ) {
             self.action = action
             self.request = request
             self.stateChangeCallback = stateChange
             self.manager = manager
         }
 
-        static func install(type: SystemExtensionType,
-                            manager: SystemExtensionManager,
-                            stateChange: @escaping StateChangeCallback) -> Self {
-            let result = Self(action: .install,
-                              request: .activationRequest(forExtensionWithIdentifier: type.rawValue,
-                                                          queue: SystemExtensionManager.requestQueue),
-                              stateChange: stateChange,
-                              manager: manager)
+        static func install(
+            type: SystemExtensionType,
+            manager: SystemExtensionManager,
+            stateChange: @escaping StateChangeCallback
+        ) -> Self {
+            let result = Self(
+                action: .install,
+                request: .activationRequest(
+                    forExtensionWithIdentifier: type.rawValue,
+                    queue: SystemExtensionManager.requestQueue
+                ),
+                stateChange: stateChange,
+                manager: manager
+            )
             result.request.delegate = result
             return result
         }
 
-        static func uninstall(type: SystemExtensionType,
-                              manager: SystemExtensionManager,
-                              stateChange: @escaping StateChangeCallback) -> Self {
-            let result = Self(action: .uninstall,
-                              request: .deactivationRequest(forExtensionWithIdentifier: type.rawValue,
-                                                            queue: SystemExtensionManager.requestQueue),
-                              stateChange: stateChange,
-                              manager: manager)
+        static func uninstall(
+            type: SystemExtensionType,
+            manager: SystemExtensionManager,
+            stateChange: @escaping StateChangeCallback
+        ) -> Self {
+            let result = Self(
+                action: .uninstall,
+                request: .deactivationRequest(
+                    forExtensionWithIdentifier: type.rawValue,
+                    queue: SystemExtensionManager.requestQueue
+                ),
+                stateChange: stateChange,
+                manager: manager
+            )
             result.request.delegate = result
             return result
         }
@@ -352,18 +370,28 @@
     }
 
     extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
-        public func request(_: OSSystemExtensionRequest,
-                            actionForReplacingExtension existing: OSSystemExtensionProperties,
-                            withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
-            assert(existing.bundleIdentifier == ext.bundleIdentifier,
-                   "Extensions have mismatched identifiers? (\(existing.bundleIdentifier) and \(ext.bundleIdentifier))")
+        public func request(
+            _: OSSystemExtensionRequest,
+            actionForReplacingExtension existing: OSSystemExtensionProperties,
+            withExtension ext: OSSystemExtensionProperties
+        ) -> OSSystemExtensionRequest.ReplacementAction {
+            assert(
+                existing.bundleIdentifier == ext.bundleIdentifier,
+                "Extensions have mismatched identifiers? (\(existing.bundleIdentifier) and \(ext.bundleIdentifier))"
+            )
 
-            let shouldReplace = shouldExtension(.init(version: existing.bundleShortVersion,
-                                                      build: existing.bundleVersion,
-                                                      bundleId: existing.bundleIdentifier),
-                                                beReplacedBy: .init(version: ext.bundleShortVersion,
-                                                                    build: ext.bundleVersion,
-                                                                    bundleId: ext.bundleIdentifier))
+            let shouldReplace = shouldExtension(
+                .init(
+                    version: existing.bundleShortVersion,
+                    build: existing.bundleVersion,
+                    bundleId: existing.bundleIdentifier
+                ),
+                beReplacedBy: .init(
+                    version: ext.bundleShortVersion,
+                    build: ext.bundleVersion,
+                    bundleId: ext.bundleIdentifier
+                )
+            )
 
             // Don't call stateChangeCallback(.cancelled) here, we do that when sysextd calls us again
             // with `request(_:didFailWithError:)`.

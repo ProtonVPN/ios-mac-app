@@ -40,8 +40,10 @@
             alertService = CoreAlertServiceDummy()
             vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .freeTier)
             sysextManager = SystemExtensionManagerMock(factory: self)
-            profileManager = ProfileManager(propertiesManager: propertiesManager,
-                                            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain()))
+            profileManager = ProfileManager(
+                propertiesManager: propertiesManager,
+                profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+            )
 
             propertiesManager.smartProtocol = true
         }
@@ -93,8 +95,10 @@
             }
 
             XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
-            XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
-                      "Should have installed WireGuard extension")
+            XCTAssert(
+                sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
+                "Should have installed WireGuard extension"
+            )
         }
 
         func testInstallingExtensionForTheFirstTimeSubmittingMultipleRequests() {
@@ -155,8 +159,10 @@
             }
 
             XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
-            XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
-                      "Should have installed WireGuard extension")
+            XCTAssert(
+                sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
+                "Should have installed WireGuard extension"
+            )
         }
 
         func testNewVersionOfExtensionGetsUpgraded() {
@@ -185,8 +191,10 @@
             }
 
             XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
-            XCTAssert(sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue && $0.version == sysextManager.mockVersions?.semanticVersion },
-                      "Should have installed WireGuard extension")
+            XCTAssert(
+                sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue && $0.version == sysextManager.mockVersions?.semanticVersion },
+                "Should have installed WireGuard extension"
+            )
         }
 
         func testUninstall() {
@@ -196,8 +204,11 @@
 
             _ = sysextManager.uninstallAll(userInitiated: true)
 
-            XCTAssertEqual(sysextManager.installedExtensions.count, 0,
-                           "Extensions should have been uninstalled")
+            XCTAssertEqual(
+                sysextManager.installedExtensions.count,
+                0,
+                "Extensions should have been uninstalled"
+            )
         }
 
         func testInstallationErrorWrongLocationForApplication() {

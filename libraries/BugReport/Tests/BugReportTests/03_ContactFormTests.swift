@@ -30,27 +30,33 @@ final class ContactFormTests: XCTestCase {
 
     func testFormAcceptsDataFromUser() async throws {
         // Short String
-        let shortStringField = InputField(label: "Short string field",
-                                          submitLabel: "Don't care",
-                                          type: .textSingleLine,
-                                          isMandatory: true,
-                                          placeholder: nil)
+        let shortStringField = InputField(
+            label: "Short string field",
+            submitLabel: "Don't care",
+            type: .textSingleLine,
+            isMandatory: true,
+            placeholder: nil
+        )
         let shortStringFormField = FormInputField(inputField: shortStringField)
 
         // Long String
-        let longStringField = InputField(label: "Long string field",
-                                         submitLabel: "Don't care here too",
-                                         type: .textMultiLine,
-                                         isMandatory: true,
-                                         placeholder: nil)
+        let longStringField = InputField(
+            label: "Long string field",
+            submitLabel: "Don't care here too",
+            type: .textMultiLine,
+            isMandatory: true,
+            placeholder: nil
+        )
         let longStringFormField = FormInputField(inputField: longStringField)
 
         // Boolean
-        let boolField = InputField(label: "Boolean field",
-                                   submitLabel: "Boolean value",
-                                   type: .switch,
-                                   isMandatory: true,
-                                   placeholder: nil)
+        let boolField = InputField(
+            label: "Boolean field",
+            submitLabel: "Boolean value",
+            type: .switch,
+            isMandatory: true,
+            placeholder: nil
+        )
         let boolFormField = FormInputField(inputField: longStringField)
 
         let store = TestStore(

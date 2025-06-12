@@ -14,12 +14,16 @@ import os.log
     /// Used by both extensions to get log data
     func getLogs(_ completionHandler: @escaping (Data?) -> Void)
     /// Used by OpenVPN extension to set connection credentials.
-    func setCredentials(username: String,
-                        password: String,
-                        completionHandler: @escaping (Bool) -> Void)
+    func setCredentials(
+        username: String,
+        password: String,
+        completionHandler: @escaping (Bool) -> Void
+    )
     /// Used by WireGuard extension to set the connection configuration, including creds.
-    func setConfigData(_ data: Data,
-                       completionHandler: @escaping (Bool) -> Void)
+    func setConfigData(
+        _ data: Data,
+        completionHandler: @escaping (Bool) -> Void
+    )
 }
 
 /// Provider -> App IPC

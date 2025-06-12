@@ -24,30 +24,36 @@ import LegacyCommon
 import UIKit
 
 extension String {
-    public func attributed(withColor color: UIColor,
-                           fontSize: CGFloat,
-                           bold: Bool = false,
-                           alignment: NSTextAlignment = .natural,
-                           lineSpacing: CGFloat? = nil,
-                           lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
+    public func attributed(
+        withColor color: UIColor,
+        fontSize: CGFloat,
+        bold: Bool = false,
+        alignment: NSTextAlignment = .natural,
+        lineSpacing: CGFloat? = nil,
+        lineBreakMode: NSLineBreakMode? = nil
+    ) -> NSAttributedString {
         let font = bold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
         return attributed(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
     }
 
-    func attributed(withColor color: UIColor,
-                    font: UIFont,
-                    alignment: NSTextAlignment = .natural,
-                    lineSpacing: CGFloat? = nil,
-                    lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
+    func attributed(
+        withColor color: UIColor,
+        font: UIFont,
+        alignment: NSTextAlignment = .natural,
+        lineSpacing: CGFloat? = nil,
+        lineBreakMode: NSLineBreakMode? = nil
+    ) -> NSAttributedString {
         let newString = NSMutableAttributedString(string: self)
         newString.addTextAttributes(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
         return newString
     }
 
-    func attributedCurrency(withNumberColor numberColor: UIColor,
-                            numberFont: UIFont,
-                            withTextColor textColor: UIColor,
-                            textFont: UIFont) -> NSAttributedString {
+    func attributedCurrency(
+        withNumberColor numberColor: UIColor,
+        numberFont: UIFont,
+        withTextColor textColor: UIColor,
+        textFont: UIFont
+    ) -> NSAttributedString {
         let newString = NSMutableAttributedString(string: self)
 
         let range = (self as NSString).range(of: self)

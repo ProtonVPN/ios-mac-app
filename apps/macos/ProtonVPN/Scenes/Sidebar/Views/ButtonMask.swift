@@ -64,11 +64,13 @@ class ButtonMask: NSView {
         do {
             let path = CGMutablePath()
             path.move(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y))
-            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
-                        radius: bounds.height / 2,
-                        startAngle: .pi / 2,
-                        endAngle: (3 * .pi) / 2,
-                        clockwise: false)
+            path.addArc(
+                center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                radius: bounds.height / 2,
+                startAngle: .pi / 2,
+                endAngle: (3 * .pi) / 2,
+                clockwise: false
+            )
             path.addLine(to: CGPoint(x: bounds.origin.x, y: bounds.origin.y))
             path.addLine(to: CGPoint(x: bounds.origin.x, y: bounds.origin.y + bounds.height))
             path.addLine(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height))
@@ -78,11 +80,13 @@ class ButtonMask: NSView {
         do {
             let path = CGMutablePath()
             path.move(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y))
-            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
-                        radius: bounds.height / 2,
-                        startAngle: .pi / 2,
-                        endAngle: (3 * .pi) / 2,
-                        clockwise: true)
+            path.addArc(
+                center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                radius: bounds.height / 2,
+                startAngle: .pi / 2,
+                endAngle: (3 * .pi) / 2,
+                clockwise: true
+            )
             path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width, y: bounds.origin.y))
             path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width, y: bounds.origin.y + bounds.height))
             path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height))
@@ -98,17 +102,21 @@ class ButtonMask: NSView {
         do {
             // borders along arcs
             let path = CGMutablePath()
-            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
-                        radius: bounds.height / 2 - 0.5,
-                        startAngle: .pi / 2,
-                        endAngle: (3 * .pi) / 2,
-                        clockwise: false)
+            path.addArc(
+                center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                radius: bounds.height / 2 - 0.5,
+                startAngle: .pi / 2,
+                endAngle: (3 * .pi) / 2,
+                clockwise: false
+            )
             path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + 0.5))
-            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
-                        radius: bounds.height / 2 - 0.5,
-                        startAngle: (3 * .pi) / 2,
-                        endAngle: .pi / 2,
-                        clockwise: false)
+            path.addArc(
+                center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                radius: bounds.height / 2 - 0.5,
+                startAngle: (3 * .pi) / 2,
+                endAngle: .pi / 2,
+                clockwise: false
+            )
             path.addLine(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height - 0.5))
             context.addPath(path)
         }

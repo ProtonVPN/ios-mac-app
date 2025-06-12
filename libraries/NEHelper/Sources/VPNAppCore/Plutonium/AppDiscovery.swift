@@ -71,9 +71,11 @@
             var apps = [PlutoniumApp]()
             for applicationsURL in applicationsURLs {
                 do {
-                    let contents = try contentsOfDirectory(at: applicationsURL,
-                                                           includingPropertiesForKeys: nil,
-                                                           options: .skipsSubdirectoryDescendants)
+                    let contents = try contentsOfDirectory(
+                        at: applicationsURL,
+                        includingPropertiesForKeys: nil,
+                        options: .skipsSubdirectoryDescendants
+                    )
                     let urls = contents
                         .compactMap(PlutoniumApp.init(url:))
                         .uniqued

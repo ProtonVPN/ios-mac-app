@@ -68,9 +68,11 @@ final class DiscourageSecureCoreViewController: NSViewController {
         titleLabel.stringValue = feature.title
         descriptionLabel.stringValue = feature.subtitle
         imageView.image = feature.artImage
-        learnMoreButton.attributedTitle = NSAttributedString(string: feature.learnMore,
-                                                             attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
-                                                                          .font: NSFont.systemFont(ofSize: 12)])
+        learnMoreButton.attributedTitle = NSAttributedString(
+            string: feature.learnMore,
+            attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
+                         .font: NSFont.systemFont(ofSize: 12)]
+        )
     }
 
     override public func viewWillAppear() {

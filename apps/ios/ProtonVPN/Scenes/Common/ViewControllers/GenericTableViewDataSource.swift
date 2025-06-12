@@ -28,10 +28,12 @@ enum TableViewCellModel {
     case pushStandard(title: String, handler: () -> Void)
     case pushKeyValue(key: String, value: String, icon: UIImage? = nil, handler: () -> Void)
     case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: () -> Void)
-    case pushAccountDetails(initials: NSAttributedString,
-                            username: NSAttributedString,
-                            plan: NSAttributedString,
-                            handler: () -> Void)
+    case pushAccountDetails(
+        initials: NSAttributedString,
+        username: NSAttributedString,
+        plan: NSAttributedString,
+        handler: () -> Void
+    )
     case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
     case imageSubtitleImage(title: String, subtitle: String, leadingImage: UIImage, trailingImage: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
@@ -45,10 +47,12 @@ enum TableViewCellModel {
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
     )
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: () -> Void)
-    case buttonWithLoadingIndicator(title: String,
-                                    accessibilityIdentifier: String?,
-                                    color: UIColor,
-                                    controller: ButtonWithLoadingIndicatorController)
+    case buttonWithLoadingIndicator(
+        title: String,
+        accessibilityIdentifier: String?,
+        color: UIColor,
+        controller: ButtonWithLoadingIndicatorController
+    )
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)
     case checkmarkStandard(title: String, checked: Bool, enabled: Bool = true, handler: () -> Bool)

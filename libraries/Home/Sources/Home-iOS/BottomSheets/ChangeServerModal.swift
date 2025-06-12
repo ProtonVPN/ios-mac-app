@@ -40,10 +40,12 @@ struct ChangeServerModal: View {
             /// though we really only need one, the `dateFinished`
             TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { _ in
                 VStack(spacing: .themeSpacing12) {
-                    ReconnectCountdown(dateFinished: dateFinished,
-                                       totalDuration: totalDuration)
-                        .padding(.top, .themeSpacing48)
-                        .padding(.bottom, .themeSpacing16)
+                    ReconnectCountdown(
+                        dateFinished: dateFinished,
+                        totalDuration: totalDuration
+                    )
+                    .padding(.top, .themeSpacing48)
+                    .padding(.bottom, .themeSpacing16)
 
                     if dateFinished > date.now {
                         Group {
@@ -74,8 +76,10 @@ struct ChangeServerModal: View {
         .padding(.horizontal, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: ChangeServerHeightPreferenceKey.self,
-                                       value: geometry.size.height)
+                Color.clear.preference(
+                    key: ChangeServerHeightPreferenceKey.self,
+                    value: geometry.size.height
+                )
             }
         }
         .onPreferenceChange(ChangeServerHeightPreferenceKey.self) { newHeight in
@@ -112,9 +116,11 @@ private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
 #Preview("In Progress Short", traits: .sizeThatFitsLayout) {
     ZStack {
         let availability: ServerChangeAuthorizer.ServerChangeAvailability
-        availability = .unavailable(until: .now + 15,
-                                    duration: 15,
-                                    exhaustedSkips: false)
+        availability = .unavailable(
+            until: .now + 15,
+            duration: 15,
+            exhaustedSkips: false
+        )
         return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
             ChangeServerFeature()
         })
@@ -126,9 +132,11 @@ private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
 #Preview("In Progress Long", traits: .sizeThatFitsLayout) {
     ZStack {
         let availability: ServerChangeAuthorizer.ServerChangeAvailability
-        availability = .unavailable(until: .now + 95,
-                                    duration: 95,
-                                    exhaustedSkips: false)
+        availability = .unavailable(
+            until: .now + 95,
+            duration: 95,
+            exhaustedSkips: false
+        )
         return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
             ChangeServerFeature()
         })

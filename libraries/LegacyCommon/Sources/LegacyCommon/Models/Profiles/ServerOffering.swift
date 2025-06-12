@@ -125,9 +125,11 @@ public enum ServerOffering: Equatable, Codable {
 
 extension ServerOffering {
     /// Check if offering can find any actually available server/protocol
-    public func supports(connectionProtocol: ConnectionProtocol,
-                         withCountryGroup grouping: ServerGroupInfo?,
-                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+    public func supports(
+        connectionProtocol: ConnectionProtocol,
+        withCountryGroup grouping: ServerGroupInfo?,
+        smartProtocolConfig: SmartProtocolConfig
+    ) -> Bool {
         switch self {
         case let .fastest(countryCode), let .random(countryCode):
             guard let grouping else {
@@ -142,8 +144,10 @@ extension ServerOffering {
             return !grouping.protocolSupport.isDisjoint(with: ProtocolSupport(vpnProtocols: supportedProtocols))
 
         case let .custom(wrapper):
-            return wrapper.server.supports(connectionProtocol: connectionProtocol,
-                                           smartProtocolConfig: smartProtocolConfig)
+            return wrapper.server.supports(
+                connectionProtocol: connectionProtocol,
+                smartProtocolConfig: smartProtocolConfig
+            )
         }
     }
 }

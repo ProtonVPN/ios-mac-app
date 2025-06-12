@@ -147,8 +147,10 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 expectations.displayAlert.fulfill()
             }
 
-            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "plus",
-                                                                               maxTier: .paidTier)
+            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
+                planName: "plus",
+                maxTier: .paidTier
+            )
 
             appSessionRefresher.loggedIn = true
             appSessionRefreshTimer.startTimers()
@@ -158,8 +160,10 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 1),
                 .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 2),
             ]
-            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "visionary",
-                                                                               maxTier: .paidTier)
+            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
+                planName: "visionary",
+                maxTier: .paidTier
+            )
             timerFactory.runRepeatingTimers()
             wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
             XCTAssertNotNil(vpnKeychain.credentials)

@@ -39,10 +39,12 @@ final class ViewController: UITableViewController {
         (.subscription, title: "Subscription"),
     ]
     let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
-        (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
-                                             numberOfDevices: 5,
-                                             fromServer: ViewController.fromServer,
-                                             toServer: ViewController.toServer), "Subscription Downgraded Reconnecting"),
+        (.subscriptionDowngradedReconnecting(
+            numberOfCountries: 63,
+            numberOfDevices: 5,
+            fromServer: ViewController.fromServer,
+            toServer: ViewController.toServer
+        ), "Subscription Downgraded Reconnecting"),
         (.subscriptionDowngraded(numberOfCountries: 63, numberOfDevices: 5), "Subscription Downgraded"),
         (.reachedDeviceLimit, "Reached Device Limit"),
         (.reachedDevicePlanLimit(planName: "Plus", numberOfDevices: 5), "Reached Device Plan Limit"),
@@ -181,9 +183,11 @@ final class ViewController: UITableViewController {
     }
 
     func pushAllCountries() {
-        let allCountries = modalsFactory.modalViewController(modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63),
-                                                             primaryAction: { self.presentedViewController?.dismiss(animated: true) },
-                                                             dismissAction: { self.presentedViewController?.dismiss(animated: true) })
+        let allCountries = modalsFactory.modalViewController(
+            modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63),
+            primaryAction: { self.presentedViewController?.dismiss(animated: true) },
+            dismissAction: { self.presentedViewController?.dismiss(animated: true) }
+        )
 
         (presentedViewController as? UINavigationController)?.pushViewController(allCountries, animated: true)
     }

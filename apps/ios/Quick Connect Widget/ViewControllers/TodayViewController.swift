@@ -74,10 +74,17 @@ final class TodayViewController: UIViewController {
         }
     }
 
-    private func updateUI(_ buttonTitle: String = "", buttonState _: ProtonButton.CustomState = .primary,
-                          ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
-                          connectionString: String = "", connectionLabelTint: UIColor = .normalTextColor(),
-                          iconTint _: UIColor = .brandColor(), animate _: Bool = false) {
+    private func updateUI(
+        _ buttonTitle: String = "",
+        buttonState _: ProtonButton.CustomState = .primary,
+        ipAddress: String? = nil,
+        country: String? = nil,
+        buttonHidden: Bool = false,
+        connectionString: String = "",
+        connectionLabelTint: UIColor = .normalTextColor(),
+        iconTint _: UIColor = .brandColor(),
+        animate _: Bool = false
+    ) {
         ipLabel.isHidden = ipAddress == nil
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden

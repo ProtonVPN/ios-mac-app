@@ -75,10 +75,12 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             }
         })
 
-        notificationTokens.append(NotificationCenter.default.addObserver(for: AppEvent.netShield.name,
-                                                                         object: nil) { [weak self] _ in
-                self?.contentChanged()
-            })
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: AppEvent.netShield.name,
+            object: nil
+        ) { [weak self] _ in
+            self?.contentChanged()
+        })
     }
 
     var netShieldViewModel: NetShieldModel {

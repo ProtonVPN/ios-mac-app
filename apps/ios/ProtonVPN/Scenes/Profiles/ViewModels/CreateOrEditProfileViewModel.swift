@@ -186,14 +186,16 @@ class CreateOrEditProfileViewModel: NSObject {
         }
 
         let profileId: String = editedProfile?.id ?? .randomString(length: Profile.idLength)
-        let profile = Profile(id: profileId,
-                              accessTier: accessTier,
-                              profileIcon: .circle(color.hexRepresentation),
-                              profileType: .user,
-                              serverType: state,
-                              serverOffering: serverOffering,
-                              name: name,
-                              connectionProtocol: selectedProtocol)
+        let profile = Profile(
+            id: profileId,
+            accessTier: accessTier,
+            profileIcon: .circle(color.hexRepresentation),
+            profileType: .user,
+            serverType: state,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: selectedProtocol
+        )
 
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
 
@@ -457,10 +459,12 @@ class CreateOrEditProfileViewModel: NSObject {
         let supportedProtocols = ConnectionProtocol.allCases
             .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0) }
 
-        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol,
-                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
-                                                        supportedProtocols: supportedProtocols,
-                                                        featureFlags: propertiesManager.featureFlags)
+        let vpnProtocolViewModel = VpnProtocolViewModel(
+            connectionProtocol: selectedProtocol,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            supportedProtocols: supportedProtocols,
+            featureFlags: propertiesManager.featureFlags
+        )
 
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, _ in
             selectedProtocol = connectionProtocol

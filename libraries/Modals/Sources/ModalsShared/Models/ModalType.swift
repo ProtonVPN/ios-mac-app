@@ -320,8 +320,10 @@ private extension ModalType {
             return .init(text: Localizable.welcomeUpgradeSubtitlePlus, boldText: [])
         case .welcomeUnlimited:
             #if os(iOS)
-                return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown,
-                             boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold])
+                return .init(
+                    text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown,
+                    boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold]
+                )
             #else
                 return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
             #endif

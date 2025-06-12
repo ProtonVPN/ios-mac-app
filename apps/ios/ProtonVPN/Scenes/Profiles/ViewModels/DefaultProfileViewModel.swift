@@ -66,23 +66,27 @@ class DefaultProfileViewModel {
     private var profile: Profile {
         switch serverOffering {
         case .random:
-            Profile(id: "st_r",
-                    accessTier: defaultAccessTier,
-                    profileIcon: .arrowsSwapRight,
-                    profileType: .system,
-                    serverType: propertiesManager.serverTypeToggle,
-                    serverOffering: serverOffering,
-                    name: Localizable.random,
-                    connectionProtocol: propertiesManager.connectionProtocol)
+            Profile(
+                id: "st_r",
+                accessTier: defaultAccessTier,
+                profileIcon: .arrowsSwapRight,
+                profileType: .system,
+                serverType: propertiesManager.serverTypeToggle,
+                serverOffering: serverOffering,
+                name: Localizable.random,
+                connectionProtocol: propertiesManager.connectionProtocol
+            )
         default:
-            Profile(id: "st_f",
-                    accessTier: defaultAccessTier,
-                    profileIcon: .bolt,
-                    profileType: .system,
-                    serverType: propertiesManager.serverTypeToggle,
-                    serverOffering: serverOffering,
-                    name: Localizable.fastest,
-                    connectionProtocol: propertiesManager.connectionProtocol)
+            Profile(
+                id: "st_f",
+                accessTier: defaultAccessTier,
+                profileIcon: .bolt,
+                profileType: .system,
+                serverType: propertiesManager.serverTypeToggle,
+                serverOffering: serverOffering,
+                name: Localizable.fastest,
+                connectionProtocol: propertiesManager.connectionProtocol
+            )
         }
     }
 

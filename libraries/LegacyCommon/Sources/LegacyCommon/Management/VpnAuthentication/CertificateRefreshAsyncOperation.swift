@@ -90,8 +90,11 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         let nsError = error as NSError
         switch nsError.code {
         case 2500 where !isConflictRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
-            log.error("Trying to recover by generating new keys and trying again",
-                      category: .userCert, event: .refreshError)
+            log.error(
+                "Trying to recover by generating new keys and trying again",
+                category: .userCert,
+                event: .refreshError
+            )
             storage.deleteKeys()
             storage.deleteCertificate()
             isConflictRetry = true

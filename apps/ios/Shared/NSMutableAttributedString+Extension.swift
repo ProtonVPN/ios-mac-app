@@ -26,11 +26,13 @@ import UIKit
 // MARK: - Text
 
 extension NSMutableAttributedString {
-    func addTextAttributes(withColor color: UIColor,
-                           font: UIFont,
-                           alignment: NSTextAlignment = .left,
-                           lineSpacing: CGFloat? = nil,
-                           lineBreakMode: NSLineBreakMode? = nil) {
+    func addTextAttributes(
+        withColor color: UIColor,
+        font: UIFont,
+        alignment: NSTextAlignment = .left,
+        lineSpacing: CGFloat? = nil,
+        lineBreakMode: NSLineBreakMode? = nil
+    ) {
         let range = (string as NSString).range(of: string)
 
         addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)

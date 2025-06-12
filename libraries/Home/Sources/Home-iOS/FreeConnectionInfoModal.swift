@@ -84,8 +84,10 @@ struct FreeConnectionInfoModal: View {
         .padding(.bottom, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: FreeConnectionHeightPreferenceKey.self,
-                                       value: geometry.size.height)
+                Color.clear.preference(
+                    key: FreeConnectionHeightPreferenceKey.self,
+                    value: geometry.size.height
+                )
             }
         }
         .onPreferenceChange(FreeConnectionHeightPreferenceKey.self) { newHeight in

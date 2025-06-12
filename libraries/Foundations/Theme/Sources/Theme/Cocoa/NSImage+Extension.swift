@@ -52,10 +52,12 @@
             let destSize = NSSize(width: w, height: h)
             let newImage = NSImage(size: destSize)
             newImage.lockFocus()
-            draw(in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
-                 from: NSRect(x: 0, y: 0, width: size.width, height: size.height),
-                 operation: NSCompositingOperation.sourceOver,
-                 fraction: CGFloat(1))
+            draw(
+                in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
+                from: NSRect(x: 0, y: 0, width: size.width, height: size.height),
+                operation: NSCompositingOperation.sourceOver,
+                fraction: CGFloat(1)
+            )
             newImage.unlockFocus()
             newImage.size = destSize
             let newResized = NSImage(data: newImage.tiffRepresentation!)!

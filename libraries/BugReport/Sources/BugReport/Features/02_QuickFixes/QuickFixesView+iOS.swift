@@ -124,9 +124,11 @@
                                 }
                             )
 
-                            Button(action: { dismiss() },
-                                   label: { Text(Localizable.br2ButtonCancel) })
-                                .buttonStyle(SecondaryButtonStyle())
+                            Button(
+                                action: { dismiss() },
+                                label: { Text(Localizable.br2ButtonCancel) }
+                            )
+                            .buttonStyle(SecondaryButtonStyle())
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 32)
@@ -154,8 +156,10 @@
             CurrentEnv.updateViewModel.updateIsAvailable = true
 
             return Group {
-                QuickFixesView(store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
-                                            reducer: { QuickFixesFeature() })
+                QuickFixesView(store: Store(
+                    initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
+                    reducer: { QuickFixesFeature() }
+                )
                 )
             }
         }

@@ -222,9 +222,11 @@ private struct RecentsView: View {
                 .foregroundStyle(Color(.text, .weak))
 
             LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
-                ForEach(Array(entry.recentServers.prefix(3).enumerated()),
-                        id: \.offset,
-                        content: recentItem)
+                ForEach(
+                    Array(entry.recentServers.prefix(3).enumerated()),
+                    id: \.offset,
+                    content: recentItem
+                )
             }
             .frame(height: Self.recentsHeight)
         }

@@ -114,17 +114,29 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
                 return
             }
 
-            log.info("User receiving T2 warning after attempting to enable Kill Switch",
-                     category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+            log.info(
+                "User receiving T2 warning after attempting to enable Kill Switch",
+                category: .connectionConnect,
+                event: .trigger,
+                metadata: ["feature": "killSwitch"]
+            )
             self.alertService.push(alert: NEKSOnT2Alert(
                 killSwitchOffHandler: {
-                    log.info("User has disabled Kill Switch after receiving T2 warning",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                    log.info(
+                        "User has disabled Kill Switch after receiving T2 warning",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "killSwitch"]
+                    )
                     dismissCallback()
                 },
                 connectAnywayHandler: {
-                    log.info("User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                    log.info(
+                        "User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "killSwitch"]
+                    )
                     connectAfterLocalNetworkWarning()
                     dismissCallback()
                 }

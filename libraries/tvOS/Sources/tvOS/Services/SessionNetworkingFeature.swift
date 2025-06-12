@@ -121,8 +121,10 @@ struct SessionNetworkingFeature: Reducer {
                 return .run { send in
                     // we have a session, now get the user tier
                     let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)
-                    _ = await (send(.userTierRetrieved(userTier, session)),
-                               send(.delegate(.displayName(userDisplayName))))
+                    _ = await (
+                        send(.userTierRetrieved(userTier, session)),
+                        send(.delegate(.displayName(userDisplayName)))
+                    )
                     // let's listen to logout events
                     for await authenticated in networkingDelegate.sessionAuthenticatedEvents where !authenticated {
                         await send(.sessionExpired)

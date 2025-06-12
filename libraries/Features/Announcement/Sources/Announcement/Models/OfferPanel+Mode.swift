@@ -39,15 +39,17 @@ public extension OfferPanel {
               let pageFooter else {
             return nil
         }
-        let panel = LegacyPanel(button: button,
-                                incentive: incentive,
-                                incentivePrice: incentivePrice,
-                                pill: pill,
-                                pictureURL: pictureURL,
-                                title: title,
-                                features: features,
-                                featuresFooter: featuresFooter,
-                                pageFooter: pageFooter)
+        let panel = LegacyPanel(
+            button: button,
+            incentive: incentive,
+            incentivePrice: incentivePrice,
+            pill: pill,
+            pictureURL: pictureURL,
+            title: title,
+            features: features,
+            featuresFooter: featuresFooter,
+            pageFooter: pageFooter
+        )
         return .legacy(panel)
     }
 

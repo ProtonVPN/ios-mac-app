@@ -144,10 +144,12 @@ public struct HomeView: View {
                                 Spacer().frame(height: mapHeight) // Leave transparent space for the map
                                     .id(topID)
                                     .background(trackScrollPosition())
-                                LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
-                                               startPoint: .top,
-                                               endPoint: .bottom)
-                                    .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.clear, Color(.background)]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                                .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
                             }
                             VStack(spacing: 0) {
                                 VStack(alignment: .leading, spacing: 0) {

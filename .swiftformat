@@ -8,6 +8,7 @@
 --allman false
 --commas always
 --self init-only
+--wraparguments before-first
 
 # excludes
 --exclude external,Build

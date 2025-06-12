@@ -22,10 +22,12 @@ import SharedViews
 
 public extension RecentsImages {
     static var coreImages: Self {
-        .init(wrenchImage: IconProvider.wrench,
-              threeDotsHorizontalImage: IconProvider.threeDotsHorizontal,
-              pinFilled: IconProvider.pinFilled,
-              pinSlashFilled: IconProvider.pinSlashFilled,
-              trashCrossFilled: IconProvider.trashCrossFilled)
+        .init(
+            wrenchImage: IconProvider.wrench,
+            threeDotsHorizontalImage: IconProvider.threeDotsHorizontal,
+            pinFilled: IconProvider.pinFilled,
+            pinSlashFilled: IconProvider.pinSlashFilled,
+            trashCrossFilled: IconProvider.trashCrossFilled
+        )
     }
 }

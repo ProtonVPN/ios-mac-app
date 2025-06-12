@@ -469,13 +469,15 @@ public class VpnGateway: VpnGatewayProtocol {
         do {
             let currentUserTier = try userTier() // accessing from the keychain for each server is very expensive
 
-            let selector = VpnServerSelector(serverType: connectionRequest.serverType,
-                                             userTier: currentUserTier,
-                                             connectionProtocol: connectionRequest.connectionProtocol,
-                                             smartProtocolConfig: propertiesManager.smartProtocolConfig,
-                                             appStateGetter: { [unowned self] in
-                                                 appStateManager.state
-                                             })
+            let selector = VpnServerSelector(
+                serverType: connectionRequest.serverType,
+                userTier: currentUserTier,
+                connectionProtocol: connectionRequest.connectionProtocol,
+                smartProtocolConfig: propertiesManager.smartProtocolConfig,
+                appStateGetter: { [unowned self] in
+                    appStateManager.state
+                }
+            )
             selector.changeActiveServerType = { [unowned self] serverType in
                 changeActiveServerType(serverType)
             }
@@ -782,13 +784,15 @@ private extension VpnGateway {
         let tier = downgradeInfo.to.maxTier
         // Beware: selector selects only non-restricted servers atm. This works now, because
         // if users plan is downgraded, he won't have restricted servers anymore (VPNAPPL-1841)
-        let selector = VpnServerSelector(serverType: .unspecified,
-                                         userTier: tier,
-                                         connectionProtocol: propertiesManager.connectionProtocol,
-                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
-                                         appStateGetter: { [unowned self] in
-                                             appStateManager.state
-                                         })
+        let selector = VpnServerSelector(
+            serverType: .unspecified,
+            userTier: tier,
+            connectionProtocol: propertiesManager.connectionProtocol,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            appStateGetter: { [unowned self] in
+                appStateManager.state
+            }
+        )
 
         let request = ConnectionRequest(
             serverType: serverTypeToggle,

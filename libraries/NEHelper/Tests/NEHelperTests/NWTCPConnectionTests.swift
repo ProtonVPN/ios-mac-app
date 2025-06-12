@@ -46,9 +46,11 @@ class NWTCPConnectionTests: XCTestCase {
         }, dataWriteCallback: { tunnel, dataWritten in
             try self.dataWriteCallback(tunnel, dataWritten)
         })
-        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: connectionTunnelFactory,
-                                                          timerFactory: TimerFactoryImplementation(),
-                                                          connectionTimeoutInterval: 1)
+        dataTaskFactory = ConnectionTunnelDataTaskFactory(
+            provider: connectionTunnelFactory,
+            timerFactory: TimerFactoryImplementation(),
+            connectionTimeoutInterval: 1
+        )
     }
 
     func testBasicConnection() {
@@ -103,8 +105,11 @@ class NWTCPConnectionTests: XCTestCase {
                 XCTFail("No response data received")
                 return
             }
-            XCTAssertEqual(responseBody.data(using: .utf8)!, data,
-                           "Response data should have been \(responseBody) but was actually \(String(data: data, encoding: .utf8) ?? "(encoding error)")")
+            XCTAssertEqual(
+                responseBody.data(using: .utf8)!,
+                data,
+                "Response data should have been \(responseBody) but was actually \(String(data: data, encoding: .utf8) ?? "(encoding error)")"
+            )
             dataTaskExpectation.fulfill()
         }
 

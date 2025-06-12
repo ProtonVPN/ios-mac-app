@@ -109,17 +109,23 @@
             let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
             return Group {
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
-                                             reducer: { ContactFormFeature() }))
-                    .previewDisplayName("Empty form")
+                ContactFormView(store: Store(
+                    initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
+                    reducer: { ContactFormFeature() }
+                ))
+                .previewDisplayName("Empty form")
 
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false),
-                                             reducer: { ContactFormFeature() }))
-                    .previewDisplayName("Short form")
+                ContactFormView(store: Store(
+                    initialState: ContactFormFeature.State(fields: formFields, isSending: false),
+                    reducer: { ContactFormFeature() }
+                ))
+                .previewDisplayName("Short form")
 
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
-                                             reducer: { ContactFormFeature() }))
-                    .previewDisplayName("Loading")
+                ContactFormView(store: Store(
+                    initialState: ContactFormFeature.State(fields: formFields, isSending: true),
+                    reducer: { ContactFormFeature() }
+                ))
+                .previewDisplayName("Loading")
             }
             .frame(width: 400)
         }

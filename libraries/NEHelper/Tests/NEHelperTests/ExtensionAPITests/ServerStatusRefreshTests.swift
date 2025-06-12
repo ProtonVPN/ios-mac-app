@@ -31,8 +31,10 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        manager = ServerStatusRefreshManager(apiService: apiService,
-                                             timerFactory: timerFactory)
+        manager = ServerStatusRefreshManager(
+            apiService: apiService,
+            timerFactory: timerFactory
+        )
         manager.delegate = self
     }
 
@@ -42,15 +44,19 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             endpointHit: XCTestExpectation(description: "API returned no change in server")
         )
 
-        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
-                                                         status: 1,
-                                                         servers: [.mock(id: "original-serverip-id", status: 1)])
+        let originalServer = ServerStatusRequest.Logical(
+            id: "logical-original-id",
+            status: 1,
+            servers: [.mock(id: "original-serverip-id", status: 1)]
+        )
         Self.currentLogicalId = originalServer.id
         Self.currentServerIpId = originalServer.servers.first!.id
 
-        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([\.original: originalServer]),
-                                            expectationToFulfill: expectations.endpointHit)
+        serverStatusCallback = mockEndpoint(
+            ServerStatusRequest.self,
+            result: .success([\.original: originalServer]),
+            expectationToFulfill: expectations.endpointHit
+        )
 
         serverDidChange = { _ in
             fatalError("Server did not change, so nothing should have happened")
@@ -73,16 +79,20 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
         )
 
-        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
-                                                         status: 0,
-                                                         servers: [.mock(id: "original-serverip-id", status: 1)])
+        let originalServer = ServerStatusRequest.Logical(
+            id: "logical-original-id",
+            status: 0,
+            servers: [.mock(id: "original-serverip-id", status: 1)]
+        )
         Self.currentLogicalId = originalServer.id
         Self.currentServerIpId = originalServer.servers.first!.id
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
-        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([\.original: originalServer]),
-                                            expectationToFulfill: expectations.endpointHit)
+        serverStatusCallback = mockEndpoint(
+            ServerStatusRequest.self,
+            result: .success([\.original: originalServer]),
+            expectationToFulfill: expectations.endpointHit
+        )
 
         serverDidChange = { newServers in
             XCTAssertEqual(newServers.count, 1)
@@ -107,17 +117,21 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
         )
 
-        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
-                                                         status: 1,
-                                                         servers: [.mock(id: "original-serverip-id", status: 0),
-                                                                   .mock(id: "new-serverip-id", status: 1)])
+        let originalServer = ServerStatusRequest.Logical(
+            id: "logical-original-id",
+            status: 1,
+            servers: [.mock(id: "original-serverip-id", status: 0),
+                      .mock(id: "new-serverip-id", status: 1)]
+        )
         Self.currentLogicalId = originalServer.id
         Self.currentServerIpId = originalServer.servers.first!.id
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
-        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([\.original: originalServer]),
-                                            expectationToFulfill: expectations.endpointHit)
+        serverStatusCallback = mockEndpoint(
+            ServerStatusRequest.self,
+            result: .success([\.original: originalServer]),
+            expectationToFulfill: expectations.endpointHit
+        )
 
         serverDidChange = { newServers in
             XCTAssertEqual(newServers.count, 1)
@@ -146,17 +160,23 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         let newIp = "123.123.123.0"
 
         Self.currentServerIpId = "original-serverip-id"
-        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
-                                                         status: 1,
-                                                         servers: [.mock(entryIp: newIp,
-                                                                         id: "different-serverip-id",
-                                                                         status: 1)])
+        let originalServer = ServerStatusRequest.Logical(
+            id: "logical-original-id",
+            status: 1,
+            servers: [.mock(
+                entryIp: newIp,
+                id: "different-serverip-id",
+                status: 1
+            )]
+        )
         Self.currentLogicalId = originalServer.id
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
-        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([\.original: originalServer]),
-                                            expectationToFulfill: expectations.endpointHit)
+        serverStatusCallback = mockEndpoint(
+            ServerStatusRequest.self,
+            result: .success([\.original: originalServer]),
+            expectationToFulfill: expectations.endpointHit
+        )
 
         serverDidChange = { newServers in
             XCTAssertEqual(newServers.count, 1)
@@ -181,17 +201,21 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             firstError: XCTestExpectation(description: "API returned wrong json"),
             secondRequestSucceed: XCTestExpectation(description: "API returned proper response on the second try")
         )
-        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .failure(ExtensionAPIServiceError.parseError(nil)),
-                                            expectationToFulfill: expectations.firstError)
+        serverStatusCallback = mockEndpoint(
+            ServerStatusRequest.self,
+            result: .failure(ExtensionAPIServiceError.parseError(nil)),
+            expectationToFulfill: expectations.firstError
+        )
 
         serverDidChange = { _ in
             fatalError("Server did not change, so nothing should have happened")
         }
 
-        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
-                                                         status: 1,
-                                                         servers: [.mock(id: "original-serverip-id", status: 1)])
+        let originalServer = ServerStatusRequest.Logical(
+            id: "logical-original-id",
+            status: 1,
+            servers: [.mock(id: "original-serverip-id", status: 1)]
+        )
         Self.currentLogicalId = originalServer.id
         Self.currentServerIpId = originalServer.servers.first!.id
 
@@ -201,9 +225,11 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             expectations.managerStarted.fulfill()
             timerFactory.runRepeatingTimers {
                 self.wait(for: [expectations.firstError], timeout: self.expectationTimeout)
-                self.serverStatusCallback = self.mockEndpoint(ServerStatusRequest.self,
-                                                              result: .success([\.original: originalServer]),
-                                                              expectationToFulfill: expectations.secondRequestSucceed)
+                self.serverStatusCallback = self.mockEndpoint(
+                    ServerStatusRequest.self,
+                    result: .success([\.original: originalServer]),
+                    expectationToFulfill: expectations.secondRequestSucceed
+                )
                 self.timerFactory.runRepeatingTimers {}
             }
         }
@@ -220,22 +246,26 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
 }
 
 extension ServerStatusRequest.Server {
-    static func mock(entryIp: String = "1.2.3.4",
-                     exitIp: String = "5.6.7.8",
-                     domain: String = "vpn.domain",
-                     id: String = "server-id-123",
-                     status: Int = 0,
-                     label: String = "label",
-                     x25519PublicKey: String? = nil,
-                     protocolEntries: PerProtocolEntries? = nil) -> ServerStatusRequest.Server {
-        ServerStatusRequest.Server(entryIp: entryIp,
-                                   exitIp: exitIp,
-                                   domain: domain,
-                                   id: id,
-                                   status: status,
-                                   label: label,
-                                   x25519PublicKey: x25519PublicKey,
-                                   protocolEntries: protocolEntries)
+    static func mock(
+        entryIp: String = "1.2.3.4",
+        exitIp: String = "5.6.7.8",
+        domain: String = "vpn.domain",
+        id: String = "server-id-123",
+        status: Int = 0,
+        label: String = "label",
+        x25519PublicKey: String? = nil,
+        protocolEntries: PerProtocolEntries? = nil
+    ) -> ServerStatusRequest.Server {
+        ServerStatusRequest.Server(
+            entryIp: entryIp,
+            exitIp: exitIp,
+            domain: domain,
+            id: id,
+            status: status,
+            label: label,
+            x25519PublicKey: x25519PublicKey,
+            protocolEntries: protocolEntries
+        )
     }
 }
 

@@ -43,9 +43,11 @@ final class AccountViewModel {
 
     var reloadNeeded: (() -> Void)?
 
-    init(vpnKeychain: VpnKeychainProtocol,
-         propertiesManager: PropertiesManagerProtocol,
-         authKeychain: AuthKeychainHandle) {
+    init(
+        vpnKeychain: VpnKeychainProtocol,
+        propertiesManager: PropertiesManagerProtocol,
+        authKeychain: AuthKeychainHandle
+    ) {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
         self.authKeychain = authKeychain

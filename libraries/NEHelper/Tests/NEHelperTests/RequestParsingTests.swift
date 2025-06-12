@@ -213,10 +213,12 @@ class RequestParsingTests: XCTestCase {
                 )
             )
         )
-        checkKeysArePascalCasedForRequest(TokenRefreshRequest(params: .init(responseType: "response",
-                                                                            grantType: "grant",
-                                                                            refreshToken: "refresh",
-                                                                            redirectURI: "example.org")))
+        checkKeysArePascalCasedForRequest(TokenRefreshRequest(params: .init(
+            responseType: "response",
+            grantType: "grant",
+            refreshToken: "refresh",
+            redirectURI: "example.org"
+        )))
     }
 
     func checkKeysArePascalCasedForRequest(_ request: some APIRequest) {

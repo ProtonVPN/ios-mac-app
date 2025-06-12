@@ -74,13 +74,16 @@ class QuickSettingButton: NSButton {
 
     override func layoutSubtreeIfNeeded() {
         if let area = trackingArea { removeTrackingArea(area) }
-        trackingArea = NSTrackingArea(rect: bounds, options: [
-            NSTrackingArea.Options.mouseEnteredAndExited,
-            NSTrackingArea.Options.mouseMoved,
-            NSTrackingArea.Options.activeInKeyWindow,
-        ],
-        owner: self,
-        userInfo: nil)
+        trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [
+                NSTrackingArea.Options.mouseEnteredAndExited,
+                NSTrackingArea.Options.mouseMoved,
+                NSTrackingArea.Options.activeInKeyWindow,
+            ],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea!)
     }
 

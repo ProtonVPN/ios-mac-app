@@ -54,11 +54,13 @@ struct SwitchInputView_Previews: PreviewProvider {
 
     static var previews: some View {
         SwitchInputView(
-            field: InputField(label: Localizable.br3LogsField,
-                              submitLabel: "logs",
-                              type: .switch,
-                              isMandatory: false,
-                              placeholder: Localizable.br3LogsDescription),
+            field: InputField(
+                label: Localizable.br3LogsField,
+                submitLabel: "logs",
+                type: .switch,
+                isMandatory: false,
+                placeholder: Localizable.br3LogsDescription
+            ),
             value: $text
         )
         .preferredColorScheme(.dark)

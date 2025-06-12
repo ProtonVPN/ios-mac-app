@@ -58,8 +58,10 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.layer?.cornerRadius = 16
         maintenanceBtn.image = AppTheme.Icon.wrench
             .colored(.weak)
-            .resize(newWidth: Int(maintenanceBtn.bounds.width) - imageMargin,
-                    newHeight: Int(maintenanceBtn.bounds.height) - imageMargin)
+            .resize(
+                newWidth: Int(maintenanceBtn.bounds.width) - imageMargin,
+                newHeight: Int(maintenanceBtn.bounds.height) - imageMargin
+            )
         maintenanceBtn.layer?.borderColor = .cgColor(.icon, .weak)
         maintenanceBtn.layer?.backgroundColor = .clear
 

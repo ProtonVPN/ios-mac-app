@@ -56,10 +56,12 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         Self.intervals.checkInterval
     }
 
-    public init(apiService: ExtensionAPIService,
-                timerFactory: TimerFactory,
-                vpnAuthenticationStorage: VpnAuthenticationStorageSync,
-                keychain _: AuthKeychainHandle) {
+    public init(
+        apiService: ExtensionAPIService,
+        timerFactory: TimerFactory,
+        vpnAuthenticationStorage: VpnAuthenticationStorageSync,
+        keychain _: AuthKeychainHandle
+    ) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
@@ -71,8 +73,10 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         operationQueue.qualityOfService = .default
         operationQueue.underlyingQueue = workQueue
 
-        super.init(timerFactory: timerFactory,
-                   workQueue: workQueue)
+        super.init(
+            timerFactory: timerFactory,
+            workQueue: workQueue
+        )
     }
 
     deinit {
@@ -94,18 +98,22 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     /// Because of this, all requests to refresh the certificate are serialized to avoid races. Calls may
     /// take a while to complete (or time out) due to network conditions, or because multiple API calls are
     /// occasionally necessary to refresh the cert (because of session management).
-    public func checkRefreshCertificateNow(features: VPNConnectionFeatures?,
-                                           userInitiated: Bool = false,
-                                           forceRefreshDueToExpiredSession: Bool = false,
-                                           completion: @escaping CertificateRefreshCompletion) {
+    public func checkRefreshCertificateNow(
+        features: VPNConnectionFeatures?,
+        userInitiated: Bool = false,
+        forceRefreshDueToExpiredSession: Bool = false,
+        completion: @escaping CertificateRefreshCompletion
+    ) {
         if operationQueue.isSuspended {
             log.error("Adding certificate refresh operation to suspended refresh manager", category: .userCert)
         }
-        operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
-                                                                     userInitiated: userInitiated,
-                                                                     forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
-                                                                     manager: self,
-                                                                     completion: completion))
+        operationQueue.addOperation(CertificateRefreshAsyncOperation(
+            features: features,
+            userInitiated: userInitiated,
+            forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
+            manager: self,
+            completion: completion
+        ))
     }
 
     /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time,
@@ -194,11 +202,13 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     /// - Note: *Do not* call this function. Call `checkRefreshCertificateNow` instead. Because of the nature
     ///         of the synchronization in the encapsulating function, it's important to always call the completion
     ///         in error cases, otherwise the operation queue will get stuck.
-    fileprivate func checkRefreshCertificateNowNoSync(features: VPNConnectionFeatures?,
-                                                      userInitiated _: Bool,
-                                                      forceRefreshDueToExpiredSession: Bool,
-                                                      asPartOf operation: CertificateRefreshAsyncOperation,
-                                                      completion: @escaping CertificateRefreshCompletion) {
+    fileprivate func checkRefreshCertificateNowNoSync(
+        features: VPNConnectionFeatures?,
+        userInitiated _: Bool,
+        forceRefreshDueToExpiredSession: Bool,
+        asPartOf operation: CertificateRefreshAsyncOperation,
+        completion: @escaping CertificateRefreshCompletion
+    ) {
         #if DEBUG
             dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
@@ -283,11 +293,13 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
     var observation: NSKeyValueObservation!
     unowned let manager: ExtensionCertificateRefreshManager
 
-    init(features: VPNConnectionFeatures?,
-         userInitiated: Bool,
-         forceRefreshDueToExpiredSession: Bool,
-         manager: ExtensionCertificateRefreshManager,
-         completion: @escaping CertificateRefreshCompletion) {
+    init(
+        features: VPNConnectionFeatures?,
+        userInitiated: Bool,
+        forceRefreshDueToExpiredSession: Bool,
+        manager: ExtensionCertificateRefreshManager,
+        completion: @escaping CertificateRefreshCompletion
+    ) {
         self.features = features
         self.isUserInitiated = userInitiated
         self.forceRefreshDueToExpiredSession = forceRefreshDueToExpiredSession
@@ -323,10 +335,12 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
         }
 
         guard !isCancelled else { return }
-        manager.checkRefreshCertificateNowNoSync(features: features,
-                                                 userInitiated: isUserInitiated,
-                                                 forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
-                                                 asPartOf: self) { result in
+        manager.checkRefreshCertificateNowNoSync(
+            features: features,
+            userInitiated: isUserInitiated,
+            forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
+            asPartOf: self
+        ) { result in
             guard !self.isCancelled else { return }
             self.observation.invalidate()
 

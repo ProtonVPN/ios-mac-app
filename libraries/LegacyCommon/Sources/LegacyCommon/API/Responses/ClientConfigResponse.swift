@@ -74,9 +74,11 @@ extension ClientConfigResponse: Decodable {
         let defaultPorts = try container.decode(DefaultPorts.self, forKey: .defaultPorts)
 
         let wireguardPorts = defaultPorts.wireGuard
-        let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?.udp,
-                                                          wireguardPorts?.tcp,
-                                                          wireguardPorts?.tls ?? wireguardPorts?.tcp)
+        let (wireguardUdp, wireguardTcp, wireguardTls) = (
+            wireguardPorts?.udp,
+            wireguardPorts?.tcp,
+            wireguardPorts?.tls ?? wireguardPorts?.tcp
+        )
 
         @Dependency(\.hermesClient) var hermesClient
         @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider

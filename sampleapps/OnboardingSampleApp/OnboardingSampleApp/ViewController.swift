@@ -38,12 +38,16 @@ final class ViewController: UIViewController {
     }
 
     private func startOnboarding() {
-        coordinator = OnboardingCoordinator(configuration: Configuration(constants: Constants(numberOfDevices: 10,
-                                                                                              numberOfServers: 1300,
-                                                                                              numberOfFreeServers: 23,
-                                                                                              numberOfFreeCountries: 3,
-                                                                                              numberOfCountries: 61),
-                                                                         telemetryEnabled: true))
+        coordinator = OnboardingCoordinator(configuration: Configuration(
+            constants: Constants(
+                numberOfDevices: 10,
+                numberOfServers: 1300,
+                numberOfFreeServers: 23,
+                numberOfFreeCountries: 3,
+                numberOfCountries: 61
+            ),
+            telemetryEnabled: true
+        ))
         coordinator.delegate = self
         let vc = coordinator.start()
         vc.modalPresentationStyle = .fullScreen

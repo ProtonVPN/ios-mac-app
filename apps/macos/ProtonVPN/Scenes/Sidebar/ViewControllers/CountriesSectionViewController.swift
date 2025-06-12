@@ -170,21 +170,25 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     func addNetShieldObservers() {
-        notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self,
-                                                                         object: nil) { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.updateBadge()
-                }
-            })
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: NetShieldStatsNotification.self,
+            object: nil
+        ) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.updateBadge()
+            }
+        })
 
-        notificationTokens.append(NotificationCenter.default.addObserver(for: AppEvent.netShield.name,
-                                                                         object: nil) { [weak self] level in
-                DispatchQueue.main.async {
-                    if (level.object as? NetShieldType) != .level2 {
-                        self?.updateStats(stats: .zero(enabled: false))
-                    }
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: AppEvent.netShield.name,
+            object: nil
+        ) { [weak self] level in
+            DispatchQueue.main.async {
+                if (level.object as? NetShieldType) != .level2 {
+                    self?.updateStats(stats: .zero(enabled: false))
                 }
-            })
+            }
+        })
     }
 
     override func viewWillAppear() {

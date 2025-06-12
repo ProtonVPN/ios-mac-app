@@ -42,10 +42,12 @@ final class ButtonWithLoadingTableViewCell: UITableViewCell {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     }
 
-    func setup(title: String,
-               accessibilityIdentifier: String?,
-               color: UIColor,
-               controller: ButtonWithLoadingIndicatorController) {
+    func setup(
+        title: String,
+        accessibilityIdentifier: String?,
+        color: UIColor,
+        controller: ButtonWithLoadingIndicatorController
+    ) {
         button.setTitle(title, for: .normal)
         button.setTitleColor(color, for: .normal)
         button.accessibilityIdentifier = accessibilityIdentifier

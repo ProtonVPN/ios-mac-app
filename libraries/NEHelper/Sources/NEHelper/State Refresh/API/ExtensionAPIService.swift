@@ -60,9 +60,11 @@ public final class ExtensionAPIService {
     /// If not empty will be added as a header to all requests
     public let atlasSecret: String
 
-    func refreshCertificate(publicKey: String,
-                            asPartOf operation: CertificateRefreshAsyncOperation,
-                            completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    func refreshCertificate(
+        publicKey: String,
+        asPartOf operation: CertificateRefreshAsyncOperation,
+        completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void
+    ) {
         if operation.isUserInitiated, userInitiatedRequestHasNotYetBeenMade {
             userInitiatedRequestHasNotYetBeenMade = false
             mainAppSessionHasExpired = false // if the app is able to send a request, it is likely logged in
@@ -74,10 +76,12 @@ public final class ExtensionAPIService {
         }
 
         // On the first try we allow refreshing API token
-        refreshCertificate(publicKey: publicKey,
-                           refreshApiTokenIfNeeded: true,
-                           asPartOf: operation,
-                           completionHandler: completionHandler)
+        refreshCertificate(
+            publicKey: publicKey,
+            refreshApiTokenIfNeeded: true,
+            asPartOf: operation,
+            completionHandler: completionHandler
+        )
     }
 
     /// Start a new session with the API service. This function should only be called by the refresh manager and the
@@ -103,13 +107,15 @@ public final class ExtensionAPIService {
                 // get from this response if the second request succeeds.
                 // Normally, these auth credentials would also contain an access token, but we'll be getting that from
                 // the request we're about to make, so we'll update & store the result in that function.
-                let incompleteCredentials = AuthCredentials(username: "",
-                                                            accessToken: "",
-                                                            refreshToken: refreshTokenResponse.refreshToken,
-                                                            sessionId: refreshTokenResponse.uid,
-                                                            userId: nil,
-                                                            scopes: [],
-                                                            mailboxPassword: "")
+                let incompleteCredentials = AuthCredentials(
+                    username: "",
+                    accessToken: "",
+                    refreshToken: refreshTokenResponse.refreshToken,
+                    sessionId: refreshTokenResponse.uid,
+                    userId: nil,
+                    scopes: [],
+                    mailboxPassword: ""
+                )
                 self?.handleTokenExpired(authCredentials: incompleteCredentials) { [weak self] result in
                     switch result {
                     case .success:
@@ -122,9 +128,11 @@ public final class ExtensionAPIService {
                 }
             case let .failure(error):
                 self?.handleRequestError(error: error, retryBlock: {
-                    self?.startSession(withSelector: selector,
-                                       sessionCookie: sessionCookie,
-                                       completionHandler: completionHandler)
+                    self?.startSession(
+                        withSelector: selector,
+                        sessionCookie: sessionCookie,
+                        completionHandler: completionHandler
+                    )
                 }, errorHandler: { unhandledError in
                     completionHandler(.failure(unhandledError))
                 })
@@ -219,9 +227,11 @@ public final class ExtensionAPIService {
 
     // MARK: - Base API request handling
 
-    private func request<R: APIRequest>(_ request: R,
-                                        headers: [(APIHeader, String?)] = [],
-                                        completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {
+    private func request<R: APIRequest>(
+        _ request: R,
+        headers: [(APIHeader, String?)] = [],
+        completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void
+    ) {
         log.info("Proceeding with request at url \(request.endpointUrl)", category: .api)
         var urlRequest = makeUrlRequest(request)
 
@@ -302,26 +312,30 @@ public final class ExtensionAPIService {
     /// - Parameter error: The error to be handled.
     /// - Parameter retryBlock: If the request can be retried, what should be run to retry the request.
     /// - Parameter errorHandler: If the error is unrecoverable, what code to run to return the error.
-    private func handleRequestError(caller: StaticString = #function,
-                                    error: ExtensionAPIServiceError,
-                                    handleTokenRefresh: Bool = true,
-                                    usingCredentialsFrom context: AppContext = .wireGuardExtension,
-                                    asPartOf operation: CertificateRefreshAsyncOperation? = nil,
-                                    retryBlock: @escaping (() -> Void),
-                                    errorHandler: @escaping ((Error) -> Void)) {
+    private func handleRequestError(
+        caller: StaticString = #function,
+        error: ExtensionAPIServiceError,
+        handleTokenRefresh: Bool = true,
+        usingCredentialsFrom context: AppContext = .wireGuardExtension,
+        asPartOf operation: CertificateRefreshAsyncOperation? = nil,
+        retryBlock: @escaping (() -> Void),
+        errorHandler: @escaping ((Error) -> Void)
+    ) {
         log.error("Encountered error while processing request in \(caller): \(error)")
 
         let retryAfterInterval: TimeInterval
 
         switch error {
         case let .requestError(response, apiError):
-            handleHttpError(response: response,
-                            apiError: apiError,
-                            handleTokenRefresh: handleTokenRefresh,
-                            usingCredentialsFrom: context,
-                            asPartOf: operation,
-                            retryBlock: retryBlock,
-                            errorHandler: errorHandler)
+            handleHttpError(
+                response: response,
+                apiError: apiError,
+                handleTokenRefresh: handleTokenRefresh,
+                usingCredentialsFrom: context,
+                asPartOf: operation,
+                retryBlock: retryBlock,
+                errorHandler: errorHandler
+            )
             return
         case .noData, .parseError:
             // This is weird. Either the API gave us a 200 OK response with no data, something has
@@ -347,13 +361,15 @@ public final class ExtensionAPIService {
     }
 
     /// Helper function for `handleRequestError`.
-    private func handleHttpError(response: HTTPURLResponse,
-                                 apiError: APIError?,
-                                 handleTokenRefresh: Bool,
-                                 usingCredentialsFrom context: AppContext,
-                                 asPartOf operation: CertificateRefreshAsyncOperation?,
-                                 retryBlock: @escaping (() -> Void),
-                                 errorHandler: @escaping ((Error) -> Void)) {
+    private func handleHttpError(
+        response: HTTPURLResponse,
+        apiError: APIError?,
+        handleTokenRefresh: Bool,
+        usingCredentialsFrom context: AppContext,
+        asPartOf operation: CertificateRefreshAsyncOperation?,
+        retryBlock: @escaping (() -> Void),
+        errorHandler: @escaping ((Error) -> Void)
+    ) {
         let retryAfter = { [weak self] (seconds: TimeInterval?) in
             guard let self else {
                 return
@@ -498,9 +514,11 @@ public final class ExtensionAPIService {
 
     // MARK: - Server status refresh
 
-    public func refreshServerStatus(logicalId: String,
-                                    refreshApiTokenIfNeeded: Bool = false,
-                                    completionHandler: @escaping (Result<ServerStatusRequest.Response, Error>) -> Void) {
+    public func refreshServerStatus(
+        logicalId: String,
+        refreshApiTokenIfNeeded: Bool = false,
+        completionHandler: @escaping (Result<ServerStatusRequest.Response, Error>) -> Void
+    ) {
         guard let (authCredentials, credentialContext) = fetchApiCredentials(allowUsingAppsCredentials: true) else {
             log.info("Can't load API credentials from keychain. Won't check server status.", category: .connection)
             sessionExpired = true
@@ -512,9 +530,11 @@ public final class ExtensionAPIService {
         let headers: [(APIHeader, String?)] = [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                                (.sessionId, authCredentials.sessionId)]
         let retryBlock: () -> Void = {
-            self.refreshServerStatus(logicalId: logicalId,
-                                     refreshApiTokenIfNeeded: false,
-                                     completionHandler: completionHandler)
+            self.refreshServerStatus(
+                logicalId: logicalId,
+                refreshApiTokenIfNeeded: false,
+                completionHandler: completionHandler
+            )
         }
         request(serverStatusRequest, headers: headers) { [weak self] result in
             switch result {
@@ -522,23 +542,27 @@ public final class ExtensionAPIService {
                 completionHandler(.success(response))
 
             case let .failure(error):
-                self?.handleRequestError(error: error,
-                                         handleTokenRefresh: refreshApiTokenIfNeeded,
-                                         usingCredentialsFrom: credentialContext,
-                                         retryBlock: retryBlock,
-                                         errorHandler: { unhandledError in
-                                             completionHandler(.failure(unhandledError))
-                                         })
+                self?.handleRequestError(
+                    error: error,
+                    handleTokenRefresh: refreshApiTokenIfNeeded,
+                    usingCredentialsFrom: credentialContext,
+                    retryBlock: retryBlock,
+                    errorHandler: { unhandledError in
+                        completionHandler(.failure(unhandledError))
+                    }
+                )
             }
         }
     }
 
     // MARK: - Certificate refresh
 
-    private func refreshCertificate(publicKey: String,
-                                    refreshApiTokenIfNeeded: Bool,
-                                    asPartOf operation: CertificateRefreshAsyncOperation,
-                                    completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    private func refreshCertificate(
+        publicKey: String,
+        refreshApiTokenIfNeeded: Bool,
+        asPartOf operation: CertificateRefreshAsyncOperation,
+        completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void
+    ) {
         guard let (authCredentials, credentialContext) = fetchApiCredentials(allowUsingAppsCredentials: !operation.isUserInitiated) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
             sessionExpired = true
@@ -565,10 +589,12 @@ public final class ExtensionAPIService {
                 return
             }
 
-            self.refreshCertificate(publicKey: publicKey,
-                                    refreshApiTokenIfNeeded: handleTokenRefreshInRetry,
-                                    asPartOf: operation,
-                                    completionHandler: completionHandler)
+            self.refreshCertificate(
+                publicKey: publicKey,
+                refreshApiTokenIfNeeded: handleTokenRefreshInRetry,
+                asPartOf: operation,
+                completionHandler: completionHandler
+            )
         }
         request(certificateRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                               (.sessionId, authCredentials.sessionId)]) { [weak self] result in
@@ -590,24 +616,28 @@ public final class ExtensionAPIService {
                     handleTokenRefreshInRetry = false
                 }
 
-                self?.handleRequestError(error: error,
-                                         handleTokenRefresh: refreshApiTokenIfNeeded,
-                                         usingCredentialsFrom: credentialContext,
-                                         asPartOf: operation,
-                                         retryBlock: { retryBlock(handleTokenRefreshInRetry) },
-                                         errorHandler: { unhandledError in
-                                             completionHandler(.failure(unhandledError))
-                                         })
+                self?.handleRequestError(
+                    error: error,
+                    handleTokenRefresh: refreshApiTokenIfNeeded,
+                    usingCredentialsFrom: credentialContext,
+                    asPartOf: operation,
+                    retryBlock: { retryBlock(handleTokenRefreshInRetry) },
+                    errorHandler: { unhandledError in
+                        completionHandler(.failure(unhandledError))
+                    }
+                )
             }
         }
     }
 
     // MARK: - API Token refresh
 
-    private func handleTokenExpired(authCredentials partialCredentials: AuthCredentials? = nil,
-                                    asPartOf operation: CertificateRefreshAsyncOperation? = nil,
-                                    usingCredentialsFrom context: AppContext = .wireGuardExtension,
-                                    completionHandler: @escaping (Result<Void, Error>) -> Void) {
+    private func handleTokenExpired(
+        authCredentials partialCredentials: AuthCredentials? = nil,
+        asPartOf operation: CertificateRefreshAsyncOperation? = nil,
+        usingCredentialsFrom context: AppContext = .wireGuardExtension,
+        completionHandler: @escaping (Result<Void, Error>) -> Void
+    ) {
         log.debug("Will try to refresh API token", category: .api)
         guard let authCredentials = partialCredentials ?? keychain.fetch(forContext: context) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .api)
@@ -642,13 +672,15 @@ public final class ExtensionAPIService {
                     completionHandler(.failure(error))
                 }
             case let .failure(error):
-                self?.handleRequestError(error: error,
-                                         usingCredentialsFrom: context,
-                                         asPartOf: operation,
-                                         retryBlock: retryBlock,
-                                         errorHandler: { unhandledError in
-                                             completionHandler(.failure(unhandledError))
-                                         })
+                self?.handleRequestError(
+                    error: error,
+                    usingCredentialsFrom: context,
+                    asPartOf: operation,
+                    retryBlock: retryBlock,
+                    errorHandler: { unhandledError in
+                        completionHandler(.failure(unhandledError))
+                    }
+                )
             }
         }
     }

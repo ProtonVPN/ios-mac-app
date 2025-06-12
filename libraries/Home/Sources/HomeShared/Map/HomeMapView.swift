@@ -61,8 +61,10 @@ public struct HomeMapView: View {
         }
 
         let scale = mapScale()
-        return .init(width: (mapBounds.midX - node.bounds().midX) * scale,
-                     height: 40 + (mapBounds.midY - node.bounds().midY) * scale) // move the map 40 points down to avoid connection status and netshield stats
+        return .init(
+            width: (mapBounds.midX - node.bounds().midX) * scale,
+            height: 40 + (mapBounds.midY - node.bounds().midY) * scale
+        ) // move the map 40 points down to avoid connection status and netshield stats
     }
 
     private func mapScale() -> CGFloat {

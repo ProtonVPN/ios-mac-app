@@ -22,8 +22,10 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
 
-        let storedConfig = StoredWireguardConfig(vpnManagerConfig: configuration,
-                                                 wireguardConfig: propertiesManager.wireguardConfig)
+        let storedConfig = StoredWireguardConfig(
+            vpnManagerConfig: configuration,
+            wireguardConfig: propertiesManager.wireguardConfig
+        )
 
         let version: StoredWireguardConfig.Version = .v1
         var configData = Data([UInt8(version.rawValue)])

@@ -109,11 +109,15 @@ struct HomeConnectionCardView: View {
             if store.showChangeServerButton {
                 switch store.serverChangeAvailability ?? .available {
                 case .available:
-                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                            changeServerAllowedDate: .distantPast)
+                    ChangeServerButtonLabel(
+                        sendAction: { _ = store.send($0) },
+                        changeServerAllowedDate: .distantPast
+                    )
                 case let .unavailable(until, _, _):
-                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                            changeServerAllowedDate: until)
+                    ChangeServerButtonLabel(
+                        sendAction: { _ = store.send($0) },
+                        changeServerAllowedDate: until
+                    )
                 }
             }
         }
@@ -273,9 +277,11 @@ private extension VPNConnectionStatus {
     }
 
     extension HomeConnectionCardFeature.State {
-        static func constant(status: VPNConnectionStatus,
-                             defaultConnection _: ConnectionSpec,
-                             userTier: Int) -> Self {
+        static func constant(
+            status: VPNConnectionStatus,
+            defaultConnection _: ConnectionSpec,
+            userTier: Int
+        ) -> Self {
             var state = HomeConnectionCardFeature.State()
             state.$userTier = .constant(userTier)
             state.$vpnConnectionStatus = .constant(status)
@@ -285,17 +291,21 @@ private extension VPNConnectionStatus {
 
     extension StoreOf<HomeConnectionCardFeature> {
         static func disconnectedStore(defaultConnection: ConnectionSpec, userTier: Int) -> Self {
-            .init(initialState: .constant(status: .disconnected,
-                                          defaultConnection: defaultConnection,
-                                          userTier: userTier)) {
+            .init(initialState: .constant(
+                status: .disconnected,
+                defaultConnection: defaultConnection,
+                userTier: userTier
+            )) {
                 HomeConnectionCardFeature()
             }
         }
 
         static func connectedStore(intentSpec: ConnectionSpec, userTier: Int) -> Self {
-            .init(initialState: .constant(status: .connected(intentSpec, nil),
-                                          defaultConnection: .defaultFastest,
-                                          userTier: userTier)) {
+            .init(initialState: .constant(
+                status: .connected(intentSpec, nil),
+                defaultConnection: .defaultFastest,
+                userTier: userTier
+            )) {
                 HomeConnectionCardFeature()
             }
         }

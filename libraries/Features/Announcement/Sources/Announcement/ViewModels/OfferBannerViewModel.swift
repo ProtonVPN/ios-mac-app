@@ -43,12 +43,14 @@ public struct OfferBannerViewModel {
     public var action: @MainActor (SessionService) async -> Void
     public var dismiss: () -> Void
 
-    public init(imageURL: URL,
-                endTime: Date,
-                showCountdown: Bool,
-                buttonURL: URL,
-                offerReference: String?,
-                dismiss: @escaping () -> Void) {
+    public init(
+        imageURL: URL,
+        endTime: Date,
+        showCountdown: Bool,
+        buttonURL: URL,
+        offerReference: String?,
+        dismiss: @escaping () -> Void
+    ) {
         self.imageURL = imageURL
         self.endTime = endTime
         self.showCountdown = showCountdown
@@ -73,10 +75,12 @@ public struct OfferBannerViewModel {
     public func createTimer(updateTimeRemaining: @escaping () -> Void) -> BackgroundTimer {
         let timeLeft = endTime.timeIntervalSinceNow
         let repeating: Double? = timeLeft < 120 ? 1 : 60
-        return ForegroundTimerFactoryImplementation().scheduledTimer(runAt: Date(),
-                                                                     repeating: repeating,
-                                                                     leeway: nil,
-                                                                     queue: .main) {
+        return ForegroundTimerFactoryImplementation().scheduledTimer(
+            runAt: Date(),
+            repeating: repeating,
+            leeway: nil,
+            queue: .main
+        ) {
             updateTimeRemaining()
         }
     }

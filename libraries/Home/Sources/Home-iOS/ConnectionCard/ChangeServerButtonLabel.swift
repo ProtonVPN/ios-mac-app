@@ -77,18 +77,24 @@ struct ChangeServerButtonStyle: ButtonStyle {
             .foregroundColor(isActive
                 ? Color(.text)
                 : Color(.text, .hint))
-            .themeBorder(style: .strong,
-                         cornerRadius: .radius8)
+            .themeBorder(
+                style: .strong,
+                cornerRadius: .radius8
+            )
     }
 }
 
 @available(iOS 17, *)
 #Preview("Change Server Button Label", traits: .sizeThatFitsLayout) {
     VStack {
-        ChangeServerButtonLabel(sendAction: { _ in },
-                                changeServerAllowedDate: Date().addingTimeInterval(60 * 60))
-        ChangeServerButtonLabel(sendAction: { _ in },
-                                changeServerAllowedDate: Date().addingTimeInterval(-1))
+        ChangeServerButtonLabel(
+            sendAction: { _ in },
+            changeServerAllowedDate: Date().addingTimeInterval(60 * 60)
+        )
+        ChangeServerButtonLabel(
+            sendAction: { _ in },
+            changeServerAllowedDate: Date().addingTimeInterval(-1)
+        )
     }
     .padding()
     .preferredColorScheme(.dark)

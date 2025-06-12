@@ -43,9 +43,11 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
         VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  vpnApiService: factory.makeVpnApiService())
+        self.init(
+            networking: factory.makeNetworking(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            vpnApiService: factory.makeVpnApiService()
+        )
     }
 
     public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, vpnApiService: VpnApiService) {

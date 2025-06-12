@@ -286,22 +286,24 @@ public class ServerModel: NSObject, NSCoding, Codable {
             }
         }
 
-        self.init(id: aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as! String,
-                  name: aDecoder.decodeObject(forKey: CodingKeys.name.rawValue) as! String,
-                  domain: aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as! String,
-                  load: aDecoder.decodeInteger(forKey: CodingKeys.load.rawValue),
-                  entryCountryCode: aDecoder.decodeObject(forKey: CodingKeys.entryCountryCode.rawValue) as! String,
-                  exitCountryCode: aDecoder.decodeObject(forKey: CodingKeys.exitCountryCode.rawValue) as! String,
-                  tier: aDecoder.decodeInteger(forKey: CodingKeys.tier.rawValue),
-                  feature: feature,
-                  city: aDecoder.decodeObject(forKey: CodingKeys.city.rawValue) as? String,
-                  ips: ips,
-                  score: aDecoder.decodeDouble(forKey: CodingKeys.score.rawValue),
-                  status: aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue),
-                  location: location,
-                  hostCountry: aDecoder.decodeObject(forKey: CodingKeys.hostCountry.rawValue) as? String,
-                  translatedCity: aDecoder.decodeObject(forKey: CodingKeys.translatedCity.rawValue) as? String,
-                  gatewayName: aDecoder.decodeObject(forKey: CodingKeys.gatewayName.rawValue) as? String)
+        self.init(
+            id: aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as! String,
+            name: aDecoder.decodeObject(forKey: CodingKeys.name.rawValue) as! String,
+            domain: aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as! String,
+            load: aDecoder.decodeInteger(forKey: CodingKeys.load.rawValue),
+            entryCountryCode: aDecoder.decodeObject(forKey: CodingKeys.entryCountryCode.rawValue) as! String,
+            exitCountryCode: aDecoder.decodeObject(forKey: CodingKeys.exitCountryCode.rawValue) as! String,
+            tier: aDecoder.decodeInteger(forKey: CodingKeys.tier.rawValue),
+            feature: feature,
+            city: aDecoder.decodeObject(forKey: CodingKeys.city.rawValue) as? String,
+            ips: ips,
+            score: aDecoder.decodeDouble(forKey: CodingKeys.score.rawValue),
+            status: aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue),
+            location: location,
+            hostCountry: aDecoder.decodeObject(forKey: CodingKeys.hostCountry.rawValue) as? String,
+            translatedCity: aDecoder.decodeObject(forKey: CodingKeys.translatedCity.rawValue) as? String,
+            gatewayName: aDecoder.decodeObject(forKey: CodingKeys.gatewayName.rawValue) as? String
+        )
     }
 
     public func encode(with _: NSCoder) {
@@ -333,22 +335,24 @@ public class ServerModel: NSObject, NSCoding, Codable {
             ServerLocation(lat: 0, long: 0)
         }
 
-        try self.init(id: container.decode(String.self, forKey: CodingKeys.id),
-                      name: container.decode(String.self, forKey: CodingKeys.name),
-                      domain: container.decode(String.self, forKey: CodingKeys.domain),
-                      load: container.decode(Int.self, forKey: CodingKeys.load),
-                      entryCountryCode: container.decode(String.self, forKey: CodingKeys.entryCountryCode),
-                      exitCountryCode: container.decode(String.self, forKey: CodingKeys.exitCountryCode),
-                      tier: container.decode(Int.self, forKey: CodingKeys.tier),
-                      feature: feature,
-                      city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
-                      ips: ips,
-                      score: container.decode(Double.self, forKey: CodingKeys.score),
-                      status: container.decode(Int.self, forKey: CodingKeys.status),
-                      location: location,
-                      hostCountry: container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
-                      translatedCity: container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
-                      gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName))
+        try self.init(
+            id: container.decode(String.self, forKey: CodingKeys.id),
+            name: container.decode(String.self, forKey: CodingKeys.name),
+            domain: container.decode(String.self, forKey: CodingKeys.domain),
+            load: container.decode(Int.self, forKey: CodingKeys.load),
+            entryCountryCode: container.decode(String.self, forKey: CodingKeys.entryCountryCode),
+            exitCountryCode: container.decode(String.self, forKey: CodingKeys.exitCountryCode),
+            tier: container.decode(Int.self, forKey: CodingKeys.tier),
+            feature: feature,
+            city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
+            ips: ips,
+            score: container.decode(Double.self, forKey: CodingKeys.score),
+            status: container.decode(Int.self, forKey: CodingKeys.status),
+            location: location,
+            hostCountry: container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
+            translatedCity: container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
+            gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
+        )
     }
 
     // MARK: - Static functions

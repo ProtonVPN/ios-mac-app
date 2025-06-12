@@ -52,9 +52,11 @@ extension ServerChangeAuthorizer: TestDependencyKey {
     }
 
     public static let previewValue = ServerChangeAuthorizer {
-        .unavailable(until: Date().addingTimeInterval(60 * 60),
-                     duration: 60 * 60 * 2,
-                     exhaustedSkips: true)
+        .unavailable(
+            until: Date().addingTimeInterval(60 * 60),
+            duration: 60 * 60 * 2,
+            exhaustedSkips: true
+        )
     } registerServerChangeAtDate: { _ in
     }
 

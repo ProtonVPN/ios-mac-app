@@ -75,10 +75,12 @@ extension URLRequest {
 }
 
 extension HTTPURLResponse {
-    private static func parseHelper(scanner: Scanner, encoding: String.Encoding) throws -> (httpVersion: String,
-                                                                                            statusCode: Int,
-                                                                                            headers: [(header: String, value: String)],
-                                                                                            body: Data?) {
+    private static func parseHelper(scanner: Scanner, encoding: String.Encoding) throws -> (
+        httpVersion: String,
+        statusCode: Int,
+        headers: [(header: String, value: String)],
+        body: Data?
+    ) {
         let parseError = HTTPError.parseError
 
         let space = CharacterSet(charactersIn: " ")
@@ -128,8 +130,10 @@ extension HTTPURLResponse {
     }
 
     /// Parse an HTTP response, returning the response object and the response body, if it exists.
-    static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (response: HTTPURLResponse?,
-                                                                                                          body: Data?) {
+    static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (
+        response: HTTPURLResponse?,
+        body: Data?
+    ) {
         let parseError = HTTPError.parseError
         guard let string = String(data: data, encoding: encoding) else {
             throw parseError
@@ -142,8 +146,10 @@ extension HTTPURLResponse {
         let headers: [(header: String, value: String)]
         let body: Data?
 
-        (httpVersion, statusCode, headers, body) = try parseHelper(scanner: scanner,
-                                                                   encoding: encoding)
+        (httpVersion, statusCode, headers, body) = try parseHelper(
+            scanner: scanner,
+            encoding: encoding
+        )
 
         // For some nonsensical reason, Foundation likes to assume that headers and their values can
         // be represented as dictionaries, despite the fact that including multiple copies of the same
@@ -167,10 +173,12 @@ extension HTTPURLResponse {
         }
         headersDict[APIHeader.setCookie.rawValue] = setCookies
 
-        let response = HTTPURLResponse(url: url,
-                                       statusCode: statusCode,
-                                       httpVersion: httpVersion as String?,
-                                       headerFields: headersDict)
+        let response = HTTPURLResponse(
+            url: url,
+            statusCode: statusCode,
+            httpVersion: httpVersion as String?,
+            headerFields: headersDict
+        )
         return (response, body)
     }
 }

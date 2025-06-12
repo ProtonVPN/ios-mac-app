@@ -157,67 +157,95 @@ public struct ConnectionFlagInfoView: View {
 
         static func sideBySide(intent: ConnectionSpec, actual: VPNConnectionActual) -> some View {
             HStack(alignment: .top, spacing: spacing) {
-                ConnectionFlagInfoView(intent: intent,
-                                       underMaintenance: false,
-                                       isPinned: true,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: intent,
+                    underMaintenance: false,
+                    isPinned: true,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
                 .frame(width: cellWidth)
 
                 Divider()
 
-                ConnectionFlagInfoView(intent: intent,
-                                       isPinned: true,
-                                       server: actual.server,
-                                       isConnected: .random())
-                    .frame(width: cellWidth)
+                ConnectionFlagInfoView(
+                    intent: intent,
+                    isPinned: true,
+                    server: actual.server,
+                    isConnected: .random()
+                )
+                .frame(width: cellWidth)
             }
             .frame(height: cellHeight)
         }
 
         static var previews: some View {
             VStack {
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                              features: []),
-                                       isPinned: true,
-                                       server: VPNConnectionActual.mock().server,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: ConnectionSpec(
+                        location: .region(code: "US"),
+                        features: []
+                    ),
+                    isPinned: true,
+                    server: VPNConnectionActual.mock().server,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                              features: []),
-                                       isPinned: false,
-                                       server: VPNConnectionActual.mock().server,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: ConnectionSpec(
+                        location: .region(code: "US"),
+                        features: []
+                    ),
+                    isPinned: false,
+                    server: VPNConnectionActual.mock().server,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                              features: [.p2p, .tor]),
-                                       isPinned: true,
-                                       server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: ConnectionSpec(
+                        location: .region(code: "US"),
+                        features: [.p2p, .tor]
+                    ),
+                    isPinned: true,
+                    server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                              features: [.p2p, .tor]),
-                                       isPinned: true,
-                                       server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: ConnectionSpec(
+                        location: .region(code: "US"),
+                        features: [.p2p, .tor]
+                    ),
+                    isPinned: true,
+                    server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
-                                                              features: []),
-                                       isPinned: true,
-                                       server: VPNConnectionActual.mock().server,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: ConnectionSpec(
+                        location: .fastest,
+                        features: []
+                    ),
+                    isPinned: true,
+                    server: VPNConnectionActual.mock().server,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
-                ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
-                                                              features: [.p2p, .tor]),
-                                       isPinned: true,
-                                       server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
-                                       isConnected: .random()) { _ in
+                ConnectionFlagInfoView(
+                    intent: ConnectionSpec(
+                        location: .fastest,
+                        features: [.p2p, .tor]
+                    ),
+                    isPinned: true,
+                    server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
+                    isConnected: .random()
+                ) { _ in
                     // NO-OP
                 }
             }

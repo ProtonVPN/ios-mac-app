@@ -39,9 +39,11 @@ final class SmartProtocolImplementation: SmartProtocol {
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let fallback: (SmartProtocolProtocol, [Int])
 
-    init(availabilityCheckerResolver: AvailabilityCheckerResolver,
-         smartProtocolConfig: SmartProtocolConfig,
-         wireguardConfig: WireguardConfig) {
+    init(
+        availabilityCheckerResolver: AvailabilityCheckerResolver,
+        smartProtocolConfig: SmartProtocolConfig,
+        wireguardConfig: WireguardConfig
+    ) {
         self.availabilityCheckerResolver = availabilityCheckerResolver
 
         var checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker] = [:]

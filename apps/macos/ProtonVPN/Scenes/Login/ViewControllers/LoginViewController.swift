@@ -504,9 +504,11 @@ final class LoginViewController: NSViewController {
                 ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
 
                 DispatchQueue.main.async { [weak self] in
-                    log.error("SSO auth failed: missing token in SSO response",
-                              category: .core,
-                              metadata: ["url": "\(callbackURL)"])
+                    log.error(
+                        "SSO auth failed: missing token in SSO response",
+                        category: .core,
+                        metadata: ["url": "\(callbackURL)"]
+                    )
 
                     self?.presentOnboardingScreen(withErrorDescription: Localizable.ssoLoginFailure)
                 }

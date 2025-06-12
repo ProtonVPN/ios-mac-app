@@ -37,15 +37,17 @@ class WarningPopupViewModel {
     let onCancel: (() -> Void)?
     let cancelTitle: String
 
-    init(image: NSImage? = AppTheme.Icon.vpnMainTransparent,
-         title: String,
-         description: String,
-         linkDescription: String?,
-         url: String?,
-         onConfirm: @escaping () -> Void,
-         confirmTitle: String = Localizable.ok,
-         onCancel: (() -> Void)?,
-         cancelTitle: String = Localizable.cancel) {
+    init(
+        image: NSImage? = AppTheme.Icon.vpnMainTransparent,
+        title: String,
+        description: String,
+        linkDescription: String?,
+        url: String?,
+        onConfirm: @escaping () -> Void,
+        confirmTitle: String = Localizable.ok,
+        onCancel: (() -> Void)?,
+        cancelTitle: String = Localizable.cancel
+    ) {
         self.image = image
         self.title = title
         self.description = description

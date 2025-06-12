@@ -21,8 +21,10 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
     private let wireguardUdpChecker: SmartProtocolAvailabilityChecker
     private let wireguardTcpChecker: SmartProtocolAvailabilityChecker
 
-    init(wireguardUdpChecker: SmartProtocolAvailabilityChecker,
-         wireguardTcpChecker: SmartProtocolAvailabilityChecker) {
+    init(
+        wireguardUdpChecker: SmartProtocolAvailabilityChecker,
+        wireguardTcpChecker: SmartProtocolAvailabilityChecker
+    ) {
         self.wireguardUdpChecker = wireguardUdpChecker
         self.wireguardTcpChecker = wireguardTcpChecker
     }

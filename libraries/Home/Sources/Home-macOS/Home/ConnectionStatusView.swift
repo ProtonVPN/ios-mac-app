@@ -96,10 +96,12 @@ struct ConnectionStatusView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack(alignment: .top) {
-                LinearGradient(colors: [gradientColor(protectionState: viewStore.protectionState).opacity(0.5), .clear],
-                               startPoint: .top,
-                               endPoint: .bottom)
-                    .frame(maxHeight: 150)
+                LinearGradient(
+                    colors: [gradientColor(protectionState: viewStore.protectionState).opacity(0.5), .clear],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(maxHeight: 150)
                 VStack(spacing: 0) {
                     titleView(protectionState: viewStore.protectionState)
                         .padding(.vertical, .themeSpacing16)
@@ -119,9 +121,13 @@ struct ConnectionStatusView: View {
                             NetShieldStatsView() // TODO: update netshield stats
                         }
                     }
-                    .background(.translucentLight,
-                                in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                     style: .continuous))
+                    .background(
+                        .translucentLight,
+                        in: RoundedRectangle(
+                            cornerRadius: .themeRadius8,
+                            style: .continuous
+                        )
+                    )
                     .padding(.horizontal, .themeSpacing16)
                 }
             }
@@ -133,18 +139,26 @@ struct ConnectionStatusView: View {
 
 struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protected(netShield: .random)),
-                                          reducer: { ConnectionStatusFeature() }))
-            .previewDisplayName("Protected")
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protectedSecureCore(netShield: .random)),
-                                          reducer: { ConnectionStatusFeature() }))
-            .previewDisplayName("ProtectedSecureCore")
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
-                                          reducer: { ConnectionStatusFeature() }))
-            .previewDisplayName("Unprotected")
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0")),
-                                          reducer: { ConnectionStatusFeature() }))
-            .background(.black)
-            .previewDisplayName("Protecting")
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .protected(netShield: .random)),
+            reducer: { ConnectionStatusFeature() }
+        ))
+        .previewDisplayName("Protected")
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .protectedSecureCore(netShield: .random)),
+            reducer: { ConnectionStatusFeature() }
+        ))
+        .previewDisplayName("ProtectedSecureCore")
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
+            reducer: { ConnectionStatusFeature() }
+        ))
+        .previewDisplayName("Unprotected")
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0")),
+            reducer: { ConnectionStatusFeature() }
+        ))
+        .background(.black)
+        .previewDisplayName("Protecting")
     }
 }

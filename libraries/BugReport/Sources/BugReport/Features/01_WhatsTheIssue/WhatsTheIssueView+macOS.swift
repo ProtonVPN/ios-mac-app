@@ -68,8 +68,10 @@
             CurrentEnv.bugReportDelegate = bugReport
 
             return Group {
-                WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                                               reducer: { WhatsTheIssueFeature() })
+                WhatsTheIssueView(store: Store(
+                    initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
+                    reducer: { WhatsTheIssueFeature() }
+                )
                 )
                 .frame(width: 400.0)
             }

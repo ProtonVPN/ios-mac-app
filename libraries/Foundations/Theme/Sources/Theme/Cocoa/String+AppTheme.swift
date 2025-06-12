@@ -66,13 +66,15 @@ import Foundation
             let mutableAttributedString = NSMutableAttributedString()
             for element in self {
                 mutableAttributedString.append(
-                    element.styled(style,
-                                   context: context,
-                                   font: font,
-                                   hover: hover,
-                                   alignment: alignment,
-                                   lineBreakMode: lineBreakMode,
-                                   textColor: textColor)
+                    element.styled(
+                        style,
+                        context: context,
+                        font: font,
+                        hover: hover,
+                        alignment: alignment,
+                        lineBreakMode: lineBreakMode,
+                        textColor: textColor
+                    )
                 )
             }
             return mutableAttributedString

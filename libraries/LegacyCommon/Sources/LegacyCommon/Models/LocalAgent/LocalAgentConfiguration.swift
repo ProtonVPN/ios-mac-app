@@ -49,12 +49,14 @@ extension LocalAgentConfiguration {
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
 
-        self.init(hostname: connectionConfiguration.serverIp.domain,
-                  netshield: netShieldPropertyProvider.netShieldType,
-                  vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
-                  bouncing: connectionConfiguration.serverIp.label,
-                  natType: natTypePropertyProvider.natType,
-                  safeMode: safeModePropertyProvider.safeMode)
+        self.init(
+            hostname: connectionConfiguration.serverIp.domain,
+            netshield: netShieldPropertyProvider.netShieldType,
+            vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
+            bouncing: connectionConfiguration.serverIp.label,
+            natType: natTypePropertyProvider.natType,
+            safeMode: safeModePropertyProvider.safeMode
+        )
     }
 }
 
@@ -68,11 +70,13 @@ extension VPNConnectionFeatures {
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
 
-        self.init(netshield: netShieldPropertyProvider.netShieldType,
-                  vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
-                  bouncing: connectionConfiguration.serverIp.label,
-                  natType: natTypePropertyProvider.natType,
-                  safeMode: safeModePropertyProvider.safeMode)
+        self.init(
+            netshield: netShieldPropertyProvider.netShieldType,
+            vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
+            bouncing: connectionConfiguration.serverIp.label,
+            natType: natTypePropertyProvider.natType,
+            safeMode: safeModePropertyProvider.safeMode
+        )
     }
 }
 

@@ -266,8 +266,10 @@ final class OneClickPayment {
             return .purchaseError(error: OneClickPurchaseError.planNotFound(planName), processingPlan: nil)
         }
         return await withCheckedContinuation {
-            payments.purchaseManager.buyPlan(plan: iAP,
-                                             finishCallback: $0.resume(returning:))
+            payments.purchaseManager.buyPlan(
+                plan: iAP,
+                finishCallback: $0.resume(returning:)
+            )
         }
     }
 }

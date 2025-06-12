@@ -74,15 +74,19 @@ public class VpnApiService {
     }
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  countryCodeProvider: factory.makeCountryCodeProvider(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            networking: factory.makeNetworking(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            countryCodeProvider: factory.makeCountryCodeProvider(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
 
-    public func vpnProperties(isDisconnected: Bool,
-                              lastKnownLocation: UserLocation?,
-                              serversAccordingToTier: Bool) async throws -> VpnProperties {
+    public func vpnProperties(
+        isDisconnected: Bool,
+        lastKnownLocation: UserLocation?,
+        serversAccordingToTier: Bool
+    ) async throws -> VpnProperties {
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
         let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
@@ -285,8 +289,10 @@ public class VpnApiService {
     }
 
     public func clientConfig(for shortenedIp: String?, completion: @escaping (Result<ClientConfig, Error>) -> Void) {
-        let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn,
-                                             ip: shortenedIp)
+        let request = VPNClientConfigRequest(
+            isAuth: vpnKeychain.userIsLoggedIn,
+            ip: shortenedIp
+        )
 
         networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {

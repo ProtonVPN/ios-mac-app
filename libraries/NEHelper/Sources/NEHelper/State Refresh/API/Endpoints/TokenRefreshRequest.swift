@@ -32,10 +32,12 @@ struct TokenRefreshRequest: APIRequest {
         let redirectURI: String
 
         public static func withRefreshToken(_ token: String) -> Self {
-            Self(responseType: "token",
-                 grantType: "refresh_token",
-                 refreshToken: token,
-                 redirectURI: "http://protonmail.ch")
+            Self(
+                responseType: "token",
+                grantType: "refresh_token",
+                refreshToken: token,
+                redirectURI: "http://protonmail.ch"
+            )
         }
     }
 

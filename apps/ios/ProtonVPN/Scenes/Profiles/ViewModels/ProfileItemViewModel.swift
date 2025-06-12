@@ -58,20 +58,24 @@ final class ProfileItemViewModel {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connected, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
 
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                                        withDefaultNATType: natTypePropertyProvider.natType,
-                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                                        trigger: .profile)
+            return activeConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         }
 
         guard case .connected = vpnConnectionStatus else {
             return false
         }
         return propertiesManager.lastConnectionIntent == ConnectionSpec(
-            connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                         withDefaultNATType: natTypePropertyProvider.natType,
-                                                         withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                         trigger: .profile)
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         )
     }
 
@@ -79,20 +83,24 @@ final class ProfileItemViewModel {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connecting, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
 
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                                        withDefaultNATType: natTypePropertyProvider.natType,
-                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                                        trigger: .profile)
+            return activeConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         }
 
         guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
             return false
         }
         return connectionSpec == ConnectionSpec(
-            connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                         withDefaultNATType: natTypePropertyProvider.natType,
-                                                         withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                         trigger: .profile)
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         )
     }
 

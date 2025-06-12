@@ -103,9 +103,11 @@ class RoundedBackgroundView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.gradientBorder(colors: colors,
-                             startPoint: .CoordinateSpace.left,
-                             endPoint: .CoordinateSpace.right,
-                             andRoundCornersWithRadius: .themeRadius12)
+        layer.gradientBorder(
+            colors: colors,
+            startPoint: .CoordinateSpace.left,
+            endPoint: .CoordinateSpace.right,
+            andRoundCornersWithRadius: .themeRadius12
+        )
     }
 }

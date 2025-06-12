@@ -37,14 +37,16 @@
 
         private let setterQueue = DispatchQueue(label: "ch.protonvpn.test.local-agent-connection.setter-queue")
 
-        init(clientCertPEM: String,
-             clientKeyPEM: String,
-             serverCAsPEM: String,
-             host: String,
-             certServerName: String,
-             client: LocalAgentNativeClientProtocol,
-             features: LocalAgentFeatures?,
-             connectivity: Bool) {
+        init(
+            clientCertPEM: String,
+            clientKeyPEM: String,
+            serverCAsPEM: String,
+            host: String,
+            certServerName: String,
+            client: LocalAgentNativeClientProtocol,
+            features: LocalAgentFeatures?,
+            connectivity: Bool
+        ) {
             self.clientCertPEM = clientCertPEM
             self.clientKeyPEM = clientKeyPEM
             self.serverCAsPEM = serverCAsPEM

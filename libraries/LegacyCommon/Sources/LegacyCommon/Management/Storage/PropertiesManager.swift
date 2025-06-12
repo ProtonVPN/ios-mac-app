@@ -564,8 +564,10 @@ public class Property<Value: Codable> {
         }
     }
 
-    init(_ key: PropertiesManager.Keys,
-         notifyChangesWith event: AppEvent? = nil) {
+    init(
+        _ key: PropertiesManager.Keys,
+        notifyChangesWith event: AppEvent? = nil
+    ) {
         self.key = key
         self.event = event
     }
@@ -613,8 +615,10 @@ public class InitializedProperty<Value: DefaultableProperty & Codable> {
         }
     }
 
-    init(_ key: PropertiesManager.Keys,
-         notifyChangesWith event: AppEvent? = nil) {
+    init(
+        _ key: PropertiesManager.Keys,
+        notifyChangesWith event: AppEvent? = nil
+    ) {
         self.key = key
         self.event = event
     }
@@ -642,8 +646,10 @@ public class BoolProperty {
         }
     }
 
-    init(_ key: PropertiesManager.Keys,
-         notifyChangesWith event: AppEvent? = nil) {
+    init(
+        _ key: PropertiesManager.Keys,
+        notifyChangesWith event: AppEvent? = nil
+    ) {
         self.key = key
         self.event = event
     }
@@ -671,8 +677,10 @@ public class StringProperty {
         }
     }
 
-    init(_ key: PropertiesManager.Keys,
-         notifyChangesWith event: AppEvent? = nil) {
+    init(
+        _ key: PropertiesManager.Keys,
+        notifyChangesWith event: AppEvent? = nil
+    ) {
         self.key = key
         self.event = event
     }
@@ -701,8 +709,10 @@ public class DateProperty {
         }
     }
 
-    init(_ key: PropertiesManager.Keys,
-         notifyChangesWith event: AppEvent? = nil) {
+    init(
+        _ key: PropertiesManager.Keys,
+        notifyChangesWith event: AppEvent? = nil
+    ) {
         self.key = key
         self.event = event
     }

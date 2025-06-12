@@ -45,11 +45,15 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     init(viewModel: SCExitCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
 
-        super.init(buttonSize: CGSize(width: viewModel.buttonWidth,
-                                      height: Self.textLineHeight * CGFloat(viewModel.servers.count + 1)),
-                   hoveredTag: .upFront,
-                   styleDelegate: viewModel,
-                   reuseIdentifier: reuseIdentifier)
+        super.init(
+            buttonSize: CGSize(
+                width: viewModel.buttonWidth,
+                height: Self.textLineHeight * CGFloat(viewModel.servers.count + 1)
+            ),
+            hoveredTag: .upFront,
+            styleDelegate: viewModel,
+            reuseIdentifier: reuseIdentifier
+        )
 
         viewModel.viewStateChange = { [weak self] in
             guard let self else {
@@ -75,9 +79,12 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             let pointInView = convert(mousePoint, from: nil)
 
             for index in 0 ..< viewModel.servers.count {
-                let itemFrame = CGRect(x: buttonFrame.origin.x,
-                                       y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
-                                       width: buttonFrame.size.width, height: Self.textLineHeight)
+                let itemFrame = CGRect(
+                    x: buttonFrame.origin.x,
+                    y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
+                    width: buttonFrame.size.width,
+                    height: Self.textLineHeight
+                )
 
                 let inFrame = itemFrame.contains(pointInView)
                 let textLine = inFrame ? viewModel.attributedConnectTitle(for: index) : viewModel.attributedServer(for: index)
@@ -113,8 +120,12 @@ class SCExitCountryAnnotationView: MapAnnotationView {
         guard hovered else { return }
         let pointInView = convert(event.locationInWindow, from: nil)
         for (index, _) in viewModel.servers.enumerated() {
-            let itemFrame = CGRect(x: buttonFrame.origin.x, y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
-                                   width: buttonFrame.size.width, height: Self.textLineHeight)
+            let itemFrame = CGRect(
+                x: buttonFrame.origin.x,
+                y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
+                width: buttonFrame.size.width,
+                height: Self.textLineHeight
+            )
             if itemFrame.contains(pointInView) {
                 viewModel.serverConnectAction(forRow: index)
             }

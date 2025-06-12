@@ -53,8 +53,13 @@ class MapAnnotationView: MKAnnotationView {
     /// omega is the offset in the circle where the multiples of theta align with the
     /// triangle's corners, in this case the "top" of the circle because the triangle
     /// is oriented upside-down.
-    private typealias CornerOffsets = (a: CGFloat, b: CGFloat, c: CGFloat,
-                                       theta: CGFloat, omega: CGFloat)
+    private typealias CornerOffsets = (
+        a: CGFloat,
+        b: CGFloat,
+        c: CGFloat,
+        theta: CGFloat,
+        omega: CGFloat
+    )
     private static let triangleCornerOffsets: CornerOffsets = {
         let cornerRadius = 1.9
         return (
@@ -81,8 +86,10 @@ class MapAnnotationView: MKAnnotationView {
 
     /// The rectangular frame around the triangle on the map.
     var triangleFrame: CGRect {
-        let origin = CGPoint(x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
-                             y: bounds.height - Self.triangleSize.height)
+        let origin = CGPoint(
+            x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
+            y: bounds.height - Self.triangleSize.height
+        )
         return CGRect(origin: origin, size: Self.triangleSize)
     }
 
@@ -143,13 +150,16 @@ class MapAnnotationView: MKAnnotationView {
 
     func addAnnotationTrackingAreas(hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
         trackingAreas.forEach { removeTrackingArea($0) }
-        let trackingArea = NSTrackingArea(rect: !hovered ? triangleFrame : bounds,
-                                          options: [
-                                              NSTrackingArea.Options.mouseEnteredAndExited,
-                                              NSTrackingArea.Options.mouseMoved,
-                                              NSTrackingArea.Options.activeInKeyWindow,
-                                          ],
-                                          owner: self, userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: !hovered ? triangleFrame : bounds,
+            options: [
+                NSTrackingArea.Options.mouseEnteredAndExited,
+                NSTrackingArea.Options.mouseMoved,
+                NSTrackingArea.Options.activeInKeyWindow,
+            ],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
 
         DispatchQueue.main.async { [weak self] in
@@ -169,43 +179,53 @@ class MapAnnotationView: MKAnnotationView {
         let r = AppTheme.ButtonConstants.cornerRadius
         let lineWidth = Self.lineWidth
         // inner button frame
-        let ibf = CGRect(x: buttonFrame.origin.x + lineWidth / 2,
-                         y: buttonFrame.origin.y + lineWidth,
-                         width: buttonFrame.size.width - lineWidth,
-                         height: buttonFrame.size.height)
+        let ibf = CGRect(
+            x: buttonFrame.origin.x + lineWidth / 2,
+            y: buttonFrame.origin.y + lineWidth,
+            width: buttonFrame.size.width - lineWidth,
+            height: buttonFrame.size.height
+        )
 
         // bottom-right border (triangle in the middle)
         path.addLine(to: CGPoint(x: ibf.maxX - r, y: ibf.maxY))
         // bottom-right corner
-        path.addArc(center: CGPoint(x: ibf.maxX - r, y: ibf.maxY - r),
-                    radius: r,
-                    startAngle: .pi / 2,
-                    endAngle: 0,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.maxX - r, y: ibf.maxY - r),
+            radius: r,
+            startAngle: .pi / 2,
+            endAngle: 0,
+            clockwise: true
+        )
         // right border
         path.addLine(to: CGPoint(x: ibf.maxX, y: ibf.minY + r))
         // top-right corner
-        path.addArc(center: CGPoint(x: ibf.maxX - r, y: ibf.minY + r),
-                    radius: r,
-                    startAngle: 0,
-                    endAngle: .pi * 3 / 2,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.maxX - r, y: ibf.minY + r),
+            radius: r,
+            startAngle: 0,
+            endAngle: .pi * 3 / 2,
+            clockwise: true
+        )
         // top border
         path.addLine(to: CGPoint(x: ibf.minX + r, y: ibf.minY))
         // top-left corner
-        path.addArc(center: CGPoint(x: ibf.minX + r, y: ibf.minY + r),
-                    radius: r,
-                    startAngle: .pi * 3 / 2,
-                    endAngle: .pi,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.minX + r, y: ibf.minY + r),
+            radius: r,
+            startAngle: .pi * 3 / 2,
+            endAngle: .pi,
+            clockwise: true
+        )
         // left border
         path.addLine(to: CGPoint(x: ibf.minX, y: ibf.maxY - r))
         // bottom-left corner
-        path.addArc(center: CGPoint(x: ibf.minX + r, y: ibf.maxY - r),
-                    radius: r,
-                    startAngle: .pi,
-                    endAngle: .pi / 2,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.minX + r, y: ibf.maxY - r),
+            radius: r,
+            startAngle: .pi,
+            endAngle: .pi / 2,
+            clockwise: true
+        )
     }
 
     // swiftlint:disable function_body_length
@@ -235,38 +255,54 @@ class MapAnnotationView: MKAnnotationView {
 
         path = CGMutablePath()
         // left side (going from top-left corner to bottom corner)
-        path.move(to: CGPoint(x: itf.x + offset.x,
-                              y: itf.y + offset.y))
-        path.addLine(to: CGPoint(x: itf.x + (itf.w - ct.b) / 2,
-                                 y: itf.y + itf.h - (3 * ct.a) / 2))
+        path.move(to: CGPoint(
+            x: itf.x + offset.x,
+            y: itf.y + offset.y
+        ))
+        path.addLine(to: CGPoint(
+            x: itf.x + (itf.w - ct.b) / 2,
+            y: itf.y + itf.h - (3 * ct.a) / 2
+        ))
         // bottom corner
-        path.addArc(center: CGPoint(x: itf.x + (itf.w / 2),
-                                    y: itf.y + itf.h - (2 * ct.a)),
-                    radius: ct.a,
-                    startAngle: ct.omega - ct.theta,
-                    endAngle: ct.omega - (2 * ct.theta),
-                    clockwise: true)
-        path.addLine(to: CGPoint(x: itf.x + itf.w - offset.x,
-                                 y: itf.y + offset.y))
+        path.addArc(
+            center: CGPoint(
+                x: itf.x + (itf.w / 2),
+                y: itf.y + itf.h - (2 * ct.a)
+            ),
+            radius: ct.a,
+            startAngle: ct.omega - ct.theta,
+            endAngle: ct.omega - (2 * ct.theta),
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(
+            x: itf.x + itf.w - offset.x,
+            y: itf.y + offset.y
+        ))
 
         if !text.isEmpty {
             drawButton()
         } else {
             // top-right corner
-            path.addArc(center: CGPoint(x: itf.x + itf.w - ct.b,
-                                        y: itf.y + ct.a),
-                        radius: ct.a,
-                        startAngle: ct.omega - (2 * ct.theta),
-                        endAngle: ct.omega,
-                        clockwise: true)
+            path.addArc(
+                center: CGPoint(
+                    x: itf.x + itf.w - ct.b,
+                    y: itf.y + ct.a
+                ),
+                radius: ct.a,
+                startAngle: ct.omega - (2 * ct.theta),
+                endAngle: ct.omega,
+                clockwise: true
+            )
             // top border
             path.addLine(to: CGPoint(x: itf.x + ct.b, y: itf.y))
             // top-left corner
-            path.addArc(center: CGPoint(x: itf.x + ct.b, y: itf.y + ct.a),
-                        radius: ct.a,
-                        startAngle: ct.omega,
-                        endAngle: ct.omega - ct.theta,
-                        clockwise: true)
+            path.addArc(
+                center: CGPoint(x: itf.x + ct.b, y: itf.y + ct.a),
+                radius: ct.a,
+                startAngle: ct.omega,
+                endAngle: ct.omega - ct.theta,
+                clockwise: true
+            )
         }
 
         // close shape (either top of triangle or last section of button)
@@ -338,10 +374,12 @@ class CountryAnnotationView: MapAnnotationView {
 
     init(viewModel: StandardCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
-        super.init(buttonSize: CGSize(width: viewModel.buttonWidth, height: Self.textLineHeight),
-                   hoveredTag: .upFront,
-                   styleDelegate: viewModel,
-                   reuseIdentifier: reuseIdentifier)
+        super.init(
+            buttonSize: CGSize(width: viewModel.buttonWidth, height: Self.textLineHeight),
+            hoveredTag: .upFront,
+            styleDelegate: viewModel,
+            reuseIdentifier: reuseIdentifier
+        )
 
         viewModel.viewStateChange = { [weak self] in
             guard let self else {

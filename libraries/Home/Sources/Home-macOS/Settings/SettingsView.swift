@@ -47,14 +47,18 @@ public struct SettingsView: View {
                 Spacer()
                 // Below is just to showcase the navigation for settings page, don't mind the hardcoded strings.
                 Button {
-                    showSubview(view: AnyView(Text("Killswitch!")),
-                                title: "Killswitch")
+                    showSubview(
+                        view: AnyView(Text("Killswitch!")),
+                        title: "Killswitch"
+                    )
                 } label: {
                     Text("Killswitch")
                 }
                 Button {
-                    showSubview(view: AnyView(Text("Protocols!")),
-                                title: "Protocols")
+                    showSubview(
+                        view: AnyView(Text("Protocols!")),
+                        title: "Protocols"
+                    )
                 } label: {
                     Text("Protocols")
                 }

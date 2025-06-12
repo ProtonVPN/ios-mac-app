@@ -69,13 +69,17 @@ struct StatsView: View {
     }
 
     func valueForegroundColor() -> Color {
-        Color(.text,
-              model.isEnabled ? .normal : .hint)
+        Color(
+            .text,
+            model.isEnabled ? .normal : .hint
+        )
     }
 
     func titleForegroundColor() -> Color {
-        Color(.text,
-              model.isEnabled ? .weak : .hint)
+        Color(
+            .text,
+            model.isEnabled ? .weak : .hint
+        )
     }
 
     func backgroundColor() -> Color {

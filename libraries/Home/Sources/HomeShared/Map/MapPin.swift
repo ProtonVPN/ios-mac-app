@@ -52,11 +52,13 @@ public struct MapPin: View {
 
     var externalGradientCircle: some View {
         Circle()
-            .fill(RadialGradient(colors: [mode.color,
-                                          mode.color.opacity(0.01)],
-                                 center: .center,
-                                 startRadius: 96,
-                                 endRadius: 0))
+            .fill(RadialGradient(
+                colors: [mode.color,
+                         mode.color.opacity(0.01)],
+                center: .center,
+                startRadius: 96,
+                endRadius: 0
+            ))
             .opacity(0.5)
             .frame(width: 96, height: 96)
             .withPhaseAnimation(reduceMotion: reduceMotion)

@@ -47,8 +47,10 @@ struct ConnectionDetailsView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         let connectedSince = store.connectedSince
                         TimelineView(PeriodicTimelineSchedule(from: connectedSince, by: 1)) { _ in
-                            Row(title: Localizable.connectionDetailsConnectedFor,
-                                contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText))
+                            Row(
+                                title: Localizable.connectionDetailsConnectedFor,
+                                contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText)
+                            )
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
@@ -194,14 +196,18 @@ struct ConnectionDetailsView: View {
 
 struct ConnectionDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetailsView(store: Store(initialState: .init(connectedSince: Date(timeIntervalSinceNow: -12345),
-                                                               country: "Lithuania",
-                                                               city: "Siauliai",
-                                                               server: "LT#5",
-                                                               serverLoad: 23,
-                                                               protocolName: "WireGuard"),
-                                           reducer: { ConnectionDetailsFeature() }))
-            .previewLayout(.sizeThatFits)
-            .preferredColorScheme(.dark)
+        ConnectionDetailsView(store: Store(
+            initialState: .init(
+                connectedSince: Date(timeIntervalSinceNow: -12345),
+                country: "Lithuania",
+                city: "Siauliai",
+                server: "LT#5",
+                serverLoad: 23,
+                protocolName: "WireGuard"
+            ),
+            reducer: { ConnectionDetailsFeature() }
+        ))
+        .previewLayout(.sizeThatFits)
+        .preferredColorScheme(.dark)
     }
 }

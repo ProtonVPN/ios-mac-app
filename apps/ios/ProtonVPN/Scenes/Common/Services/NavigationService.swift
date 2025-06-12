@@ -341,16 +341,18 @@ extension NavigationService: ProfileService {
             return nil
         }
 
-        createProfileViewController.viewModel = CreateOrEditProfileViewModel(username: username,
-                                                                             for: profile,
-                                                                             profileService: self,
-                                                                             protocolSelectionService: self,
-                                                                             alertService: alertService,
-                                                                             vpnKeychain: vpnKeychain,
-                                                                             appStateManager: appStateManager,
-                                                                             vpnGateway: vpnGateway,
-                                                                             profileManager: profileManager,
-                                                                             propertiesManager: propertiesManager)
+        createProfileViewController.viewModel = CreateOrEditProfileViewModel(
+            username: username,
+            for: profile,
+            profileService: self,
+            protocolSelectionService: self,
+            alertService: alertService,
+            vpnKeychain: vpnKeychain,
+            appStateManager: appStateManager,
+            vpnGateway: vpnGateway,
+            profileManager: profileManager,
+            propertiesManager: propertiesManager
+        )
         return createProfileViewController
     }
 

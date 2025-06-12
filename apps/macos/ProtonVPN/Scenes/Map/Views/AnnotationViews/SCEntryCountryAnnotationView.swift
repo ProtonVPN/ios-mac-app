@@ -37,8 +37,10 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     }
 
     override var triangleFrame: CGRect {
-        let origin = CGPoint(x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
-                             y: bounds.height - Self.triangleSize.height - Self.circleDiameter)
+        let origin = CGPoint(
+            x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
+            y: bounds.height - Self.triangleSize.height - Self.circleDiameter
+        )
         return CGRect(origin: origin, size: Self.triangleSize)
     }
 
@@ -56,11 +58,15 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     init(viewModel: SCEntryCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
 
-        super.init(buttonSize: CGSize(width: viewModel.buttonWidth,
-                                      height: Self.textLineHeight),
-                   hoveredTag: .middle,
-                   styleDelegate: viewModel,
-                   reuseIdentifier: reuseIdentifier)
+        super.init(
+            buttonSize: CGSize(
+                width: viewModel.buttonWidth,
+                height: Self.textLineHeight
+            ),
+            hoveredTag: .middle,
+            styleDelegate: viewModel,
+            reuseIdentifier: reuseIdentifier
+        )
 
         viewModel.viewStateChange = { [weak self] in
             guard let self else {
@@ -148,8 +154,10 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
             .idle
         }
 
-        let circleButton = SCCoreCircleButton(frame: NSRect(origin: origin, size: size),
-                                              state: circleState)
+        let circleButton = SCCoreCircleButton(
+            frame: NSRect(origin: origin, size: size),
+            state: circleState
+        )
         circleButton.target = self
         circleButton.action = #selector(circleButtonAction)
 

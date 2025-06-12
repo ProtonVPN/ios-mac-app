@@ -457,8 +457,10 @@ public final class VpnManager: VpnManagerProtocol {
 
     // MARK: - Connecting
 
-    private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
-                                   completion: @escaping () -> Void) {
+    private func prepareConnection(
+        forConfiguration configuration: VpnManagerConfiguration,
+        completion: @escaping () -> Void
+    ) {
         if state.volatileConnection {
             setState()
             return
@@ -501,9 +503,11 @@ public final class VpnManager: VpnManagerProtocol {
         }
     }
 
-    private func configureConnection(forProtocol configuration: NEVPNProtocol,
-                                     vpnManager: NEVPNManagerWrapper,
-                                     completion: @escaping () -> Void) {
+    private func configureConnection(
+        forProtocol configuration: NEVPNProtocol,
+        vpnManager: NEVPNManagerWrapper,
+        completion: @escaping () -> Void
+    ) {
         guard connectAllowed else {
             return
         }

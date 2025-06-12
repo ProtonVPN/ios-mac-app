@@ -43,9 +43,11 @@ final class LocalAgentTests: XCTestCase {
         let localAgent = withDependencies {
             $0.timerFactory = timerFactory
         } operation: {
-            LocalAgentImplementation(factory: connectionFactory,
-                                     propertiesManager: propertiesManager,
-                                     netShieldPropertyProvider: netShieldPropertyProvider)
+            LocalAgentImplementation(
+                factory: connectionFactory,
+                propertiesManager: propertiesManager,
+                netShieldPropertyProvider: netShieldPropertyProvider
+            )
         }
 
         XCTAssert(timerFactory.scheduledWork.isEmpty, "Stats timer should not be started before connecting")
@@ -69,9 +71,11 @@ final class LocalAgentTests: XCTestCase {
         let localAgent = withDependencies {
             $0.timerFactory = timerFactory
         } operation: {
-            LocalAgentImplementation(factory: connectionFactory,
-                                     propertiesManager: propertiesManager,
-                                     netShieldPropertyProvider: netShieldPropertyProvider)
+            LocalAgentImplementation(
+                factory: connectionFactory,
+                propertiesManager: propertiesManager,
+                netShieldPropertyProvider: netShieldPropertyProvider
+            )
         }
 
         localAgent.connect(data: .mock, configuration: .mocked(withFeatures: .base))
@@ -110,11 +114,13 @@ private extension VPNConnectionFeatures {
     }
 
     func withNetShieldLevel(_ level: NetShieldType) -> Self {
-        VPNConnectionFeatures(netshield: level,
-                              vpnAccelerator: vpnAccelerator,
-                              bouncing: bouncing,
-                              natType: natType,
-                              safeMode: safeMode)
+        VPNConnectionFeatures(
+            netshield: level,
+            vpnAccelerator: vpnAccelerator,
+            bouncing: bouncing,
+            natType: natType,
+            safeMode: safeMode
+        )
     }
 }
 

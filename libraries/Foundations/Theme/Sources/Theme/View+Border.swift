@@ -21,16 +21,20 @@
 
     extension View {
         private static func dashStroke(lineWidth: CGFloat) -> StrokeStyle {
-            StrokeStyle(lineWidth: lineWidth,
-                        lineCap: .square,
-                        lineJoin: .miter,
-                        dash: [.themeSpacing8])
+            StrokeStyle(
+                lineWidth: lineWidth,
+                lineCap: .square,
+                lineJoin: .miter,
+                dash: [.themeSpacing8]
+            )
         }
 
-        public func themeBorder(style: AppTheme.Style = .weak,
-                                dashed: Bool = false,
-                                lineWidth: CGFloat = 1,
-                                cornerRadius: AppTheme.CornerRadius) -> some View {
+        public func themeBorder(
+            style: AppTheme.Style = .weak,
+            dashed: Bool = false,
+            lineWidth: CGFloat = 1,
+            cornerRadius: AppTheme.CornerRadius
+        ) -> some View {
             let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
             let strokeStyle = dashed ? Self.dashStroke(lineWidth: lineWidth) : StrokeStyle(lineWidth: lineWidth)
             let stroke = rectangle

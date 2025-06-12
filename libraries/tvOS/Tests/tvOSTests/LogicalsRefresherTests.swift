@@ -78,8 +78,10 @@ final class LogicalsRefresherTests: XCTestCase {
 
         var upserted: [VPNServer] = []
 
-        let repository = ServerRepository(serverCount: { 0 },
-                                          upsertServers: { upserted = $0 })
+        let repository = ServerRepository(
+            serverCount: { 0 },
+            upsertServers: { upserted = $0 }
+        )
 
         try await withDependencies {
             $0.serverRepository = repository

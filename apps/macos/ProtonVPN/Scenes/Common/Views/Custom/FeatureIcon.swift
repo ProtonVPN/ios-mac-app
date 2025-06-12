@@ -43,13 +43,17 @@ class FeatureIcon: NSImageView {
             if image.size.height > image.size.width {
                 let desiredHeight = 0.75 * bounds.height
                 let desiredSize = CGSize(width: image.size.width / (image.size.height / desiredHeight), height: desiredHeight)
-                imageRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
-                                   size: desiredSize)
+                imageRect = CGRect(
+                    origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
+                    size: desiredSize
+                )
             } else {
                 let desiredWidth = 0.75 * bounds.width
                 let desiredSize = CGSize(width: desiredWidth, height: image.size.height / (image.size.width / desiredWidth))
-                imageRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredWidth / 2, y: bounds.height / 2 - desiredSize.height / 2),
-                                   size: desiredSize)
+                imageRect = CGRect(
+                    origin: CGPoint(x: bounds.width / 2 - desiredWidth / 2, y: bounds.height / 2 - desiredSize.height / 2),
+                    size: desiredSize
+                )
             }
             if let image = image.colored(.weak).cgImage(forProposedRect: &imageRect, context: nil, hints: nil) {
                 context.draw(image, in: imageRect)

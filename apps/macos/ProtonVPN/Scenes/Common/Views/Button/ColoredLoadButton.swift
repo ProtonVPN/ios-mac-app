@@ -58,11 +58,13 @@ class ColoredLoadButton: NSButton {
         let endAngle: CGFloat = (CGFloat(loadPortion) / 100) * (-2 * .pi) + .pi / 2
         context.setLineWidth(2.0)
         context.setStrokeColor(cgColor(.border))
-        context.addArc(center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
-                       radius: ocb.width / 2,
-                       startAngle: startAngle,
-                       endAngle: endAngle,
-                       clockwise: true)
+        context.addArc(
+            center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
+            radius: ocb.width / 2,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: true
+        )
         context.drawPath(using: .stroke)
     }
 

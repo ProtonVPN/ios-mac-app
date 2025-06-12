@@ -18,7 +18,9 @@ class ColorPickerTableViewCell: UITableViewCell {
         backgroundColor = .backgroundColor()
         collectionView.backgroundColor = .backgroundColor()
 
-        collectionView.register(ColorPickerItem.nib,
-                                forCellWithReuseIdentifier: ColorPickerItem.identifier)
+        collectionView.register(
+            ColorPickerItem.nib,
+            forCellWithReuseIdentifier: ColorPickerItem.identifier
+        )
     }
 }

@@ -17,14 +17,18 @@ class WireguardMacProtocolFactory: WireguardProtocolFactory {
 
     private let xpcConnectionsRepository: XPCConnectionsRepository
 
-    public init(bundleId: String,
-                appGroup: String,
-                factory: Factory) {
+    public init(
+        bundleId: String,
+        appGroup: String,
+        factory: Factory
+    ) {
         self.xpcConnectionsRepository = factory.makeXPCConnectionsRepository()
-        super.init(bundleId: bundleId,
-                   appGroup: appGroup,
-                   propertiesManager: factory.makePropertiesManager(),
-                   vpnManagerFactory: factory)
+        super.init(
+            bundleId: bundleId,
+            appGroup: appGroup,
+            propertiesManager: factory.makePropertiesManager(),
+            vpnManagerFactory: factory
+        )
     }
 
     override public func logs(completion: @escaping (String?) -> Void) {

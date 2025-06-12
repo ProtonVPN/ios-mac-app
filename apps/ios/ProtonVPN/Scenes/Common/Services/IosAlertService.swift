@@ -295,13 +295,17 @@ extension IosAlertService: CoreAlertService {
             }
         case is UserPlanDowngradedAlert:
             if let server {
-                viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
-                                                                numberOfDevices: DomainConstants.maxDeviceCount,
-                                                                fromServer: server.from,
-                                                                toServer: server.to)
+                viewModel = .subscriptionDowngradedReconnecting(
+                    numberOfCountries: planService.countriesCount,
+                    numberOfDevices: DomainConstants.maxDeviceCount,
+                    fromServer: server.from,
+                    toServer: server.to
+                )
             } else {
-                viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
-                                                    numberOfDevices: DomainConstants.maxDeviceCount)
+                viewModel = .subscriptionDowngraded(
+                    numberOfCountries: planService.countriesCount,
+                    numberOfDevices: DomainConstants.maxDeviceCount
+                )
             }
         case let alert as MaxSessionsAlert:
             if alert.accountTier.isFreeTier {
@@ -316,8 +320,10 @@ extension IosAlertService: CoreAlertService {
             self?.planService.presentPlanSelection()
         }
 
-        let viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel,
-                                                                           onPrimaryButtonTap: onPrimaryButtonTap)
+        let viewController = modalsFactory.userAccountUpdateViewController(
+            viewModel: viewModel,
+            onPrimaryButtonTap: onPrimaryButtonTap
+        )
         viewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: viewController)
     }

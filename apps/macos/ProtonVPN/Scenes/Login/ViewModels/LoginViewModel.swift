@@ -63,10 +63,12 @@ final class LoginViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
-    private lazy var loginService: Login = LoginService(api: apiService,
-                                                        clientApp: .vpn,
-                                                        minimumAccountType: AccountType.username,
-                                                        ssoCallbackScheme: AppConstants.DeepLinking.deepLinkScheme)
+    private lazy var loginService: Login = LoginService(
+        api: apiService,
+        clientApp: .vpn,
+        minimumAccountType: AccountType.username,
+        ssoCallbackScheme: AppConstants.DeepLinking.deepLinkScheme
+    )
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     var logInInProgress: (() -> Void)?

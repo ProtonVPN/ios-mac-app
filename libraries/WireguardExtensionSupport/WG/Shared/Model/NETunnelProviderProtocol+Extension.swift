@@ -51,8 +51,10 @@ extension NETunnelProviderProtocol {
             return nil
         }
 
-        func tunnelConfigurationFromData(_ data: Data,
-                                         called name: String?) -> TunnelConfiguration? {
+        func tunnelConfigurationFromData(
+            _ data: Data,
+            called name: String?
+        ) -> TunnelConfiguration? {
             guard let storedConfig = storedWireguardConfigurationFromData(data) else {
                 log.info("Trying old WireGuard configuration format.")
                 return tunnelConfigFromOldData(data, called: name)
@@ -99,8 +101,10 @@ extension NETunnelProviderProtocol {
 
     /// This is needed in case the user updates their app while connected, without
     /// opening it and reconnecting.
-    func tunnelConfigFromOldData(_ data: Data,
-                                 called name: String?) -> TunnelConfiguration? {
+    func tunnelConfigFromOldData(
+        _ data: Data,
+        called name: String?
+    ) -> TunnelConfiguration? {
         guard let config = String(data: data, encoding: .utf8),
               config.starts(with: "[Interface]") else {
             log.info("Stored WireGuard config is corrupted or of unknown format.")

@@ -161,12 +161,19 @@ final class iOSUpdateManager: UpdateChecker {
                 throw UpdateCheckError.noVersionFoundInJSON
             }
 
-            log.debug("Checking if app update is available",
-                      category: .appUpdate, metadata: ["current": "\(currentVersion)", "appStore": "\(appStoreVersion)"])
+            log.debug(
+                "Checking if app update is available",
+                category: .appUpdate,
+                metadata: ["current": "\(currentVersion)", "appStore": "\(appStoreVersion)"]
+            )
             return appStoreVersion.compareVersion(to: currentVersion) == .orderedDescending
         } catch {
-            log.error("Error while checking for an update",
-                      category: .appUpdate, event: .error, metadata: ["error": "\(error)"])
+            log.error(
+                "Error while checking for an update",
+                category: .appUpdate,
+                event: .error,
+                metadata: ["error": "\(error)"]
+            )
             return false
         }
     }

@@ -43,8 +43,11 @@ class ProviderMessageTests: XCTestCase {
         ]
 
         for message in messages {
-            XCTAssertEqual(try? WireguardProviderRequest.Response.decode(data: message.asData), message,
-                           "Expected \(message) to be equal after decoding")
+            XCTAssertEqual(
+                try? WireguardProviderRequest.Response.decode(data: message.asData),
+                message,
+                "Expected \(message) to be equal after decoding"
+            )
         }
     }
 
@@ -60,11 +63,13 @@ class ProviderMessageTests: XCTestCase {
             .getRuntimeTunnelConfiguration,
             .cancelRefreshes,
             .restartRefreshes,
-            .refreshCertificate(features: .init(netshield: .level1,
-                                                vpnAccelerator: true,
-                                                bouncing: "bouncing",
-                                                natType: .moderateNAT,
-                                                safeMode: true)),
+            .refreshCertificate(features: .init(
+                netshield: .level1,
+                vpnAccelerator: true,
+                bouncing: "bouncing",
+                natType: .moderateNAT,
+                safeMode: true
+            )),
             .refreshCertificate(features: nil),
             .flushLogsToFile,
             .setApiSelector("SELECTOR", withSessionCookie: cookie),
@@ -72,8 +77,11 @@ class ProviderMessageTests: XCTestCase {
         ]
 
         for message in messages {
-            XCTAssertEqual(try? WireguardProviderRequest.decode(data: message.asData), message,
-                           "Expected \(message) to be equal after decoding")
+            XCTAssertEqual(
+                try? WireguardProviderRequest.decode(data: message.asData),
+                message,
+                "Expected \(message) to be equal after decoding"
+            )
         }
     }
 }

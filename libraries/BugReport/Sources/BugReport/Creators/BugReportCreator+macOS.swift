@@ -44,8 +44,10 @@
                 ._printChanges() // Only print changes while debugging
             #endif
             let state = ReportBugFeatureMacOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
-            let store = Store(initialState: state,
-                              reducer: { reducer })
+            let store = Store(
+                initialState: state,
+                reducer: { reducer }
+            )
             let rootView = ReportBugView(store: store)
 
             let controller = NSHostingController(

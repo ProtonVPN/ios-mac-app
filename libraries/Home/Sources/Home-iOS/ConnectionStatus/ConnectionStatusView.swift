@@ -144,9 +144,13 @@ public struct ConnectionStatusView: View {
                         }
                     }
                     ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
-                        .background(.translucentLight,
-                                    in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                         style: .continuous))
+                        .background(
+                            .translucentLight,
+                            in: RoundedRectangle(
+                                cornerRadius: .themeRadius8,
+                                style: .continuous
+                            )
+                        )
                         .frame(maxWidth: Self.maxContentWidth)
                         .padding(.horizontal, .themeSpacing16)
                 }

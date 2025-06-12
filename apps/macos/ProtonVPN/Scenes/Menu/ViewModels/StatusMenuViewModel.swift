@@ -355,9 +355,11 @@ final class StatusMenuViewModel {
             self?.vpnGateway.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
         }
 
-        let viewModel = WarningPopupViewModel(title: Localizable.vpnConnectionActive,
-                                              description: Localizable.viewToggleWillCauseDisconnect,
-                                              onConfirm: confirmationClosure)
+        let viewModel = WarningPopupViewModel(
+            title: Localizable.vpnConnectionActive,
+            description: Localizable.viewToggleWillCauseDisconnect,
+            onConfirm: confirmationClosure
+        )
         disconnectWarning?(viewModel)
     }
 
@@ -368,11 +370,13 @@ final class StatusMenuViewModel {
             log.info("User accepted unsecure WiFi option", category: .net)
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
-        let viewModel = WarningPopupViewModel(title: Localizable.unsecureWifiTitle,
-                                              description: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
-                                              linkDescription: Localizable.unsecureWifiLearnMore,
-                                              url: VPNLink.unsecureWiFi.urlString,
-                                              onConfirm: confirmationClosure)
+        let viewModel = WarningPopupViewModel(
+            title: Localizable.unsecureWifiTitle,
+            description: "\(Localizable.unsecureWifi): \(wifiName). \(Localizable.unsecureWifiLearnMore)",
+            linkDescription: Localizable.unsecureWifiLearnMore,
+            url: VPNLink.unsecureWiFi.urlString,
+            onConfirm: confirmationClosure
+        )
 
         unsecureWiFiWarning?(viewModel)
     }

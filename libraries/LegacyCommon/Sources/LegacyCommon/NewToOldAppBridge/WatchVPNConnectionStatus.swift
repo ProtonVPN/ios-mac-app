@@ -39,10 +39,12 @@ extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
                 let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
 
                 return ($0.object as! AppDisplayState)
-                    .vpnConnectionStatus(appStateManager.activeConnection(),
-                                         lastPreparedServer: propertyManager.lastPreparedServer,
-                                         intent: propertyManager.lastConnectionIntent,
-                                         connectedDate: connectedDate)
+                    .vpnConnectionStatus(
+                        appStateManager.activeConnection(),
+                        lastPreparedServer: propertyManager.lastPreparedServer,
+                        intent: propertyManager.lastConnectionIntent,
+                        connectedDate: connectedDate
+                    )
             }
             .eraseToStream()
     }

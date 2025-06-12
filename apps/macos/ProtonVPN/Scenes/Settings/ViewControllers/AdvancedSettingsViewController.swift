@@ -91,18 +91,22 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private func setupUsageDataTypeItem() {
         let tooltip = Localizable.settingsMacUsageStatsTooltip
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacUsageStatsTitle,
-                                                  buttonState: viewModel.usageData,
-                                                  toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.settingsMacUsageStatsTitle,
+            buttonState: viewModel.usageData,
+            toolTip: String(tooltip)
+        )
 
         usageDataView.setupItem(model: model, delegate: self)
     }
 
     private func setupCrashReportsTypeItem() {
         let tooltip = Localizable.settingsMacCrashReportsTooltip
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacCrashReportsTitle,
-                                                  buttonState: viewModel.crashReports,
-                                                  toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.settingsMacCrashReportsTitle,
+            buttonState: viewModel.crashReports,
+            toolTip: String(tooltip)
+        )
 
         crashReportsView.setupItem(model: model, delegate: self)
     }

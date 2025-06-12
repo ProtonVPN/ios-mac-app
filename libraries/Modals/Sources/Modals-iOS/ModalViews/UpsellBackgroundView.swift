@@ -67,14 +67,18 @@ struct UpsellBackgroundView<Content>: View where Content: View {
                 ZStack {
                     let gradient = Gradient(colors: [Asset.upsellGradientTop.swiftUIColor,
                                                      Asset.upsellGradientBottom.swiftUIColor])
-                    LinearGradient(gradient: gradient,
-                                   startPoint: .top,
-                                   endPoint: .bottom)
-                        .opacity(0.4)
+                    LinearGradient(
+                        gradient: gradient,
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .opacity(0.4)
                     let fadingGradient = Gradient(colors: [.clear, Color(.background)])
-                    LinearGradient(gradient: fadingGradient,
-                                   startPoint: .top,
-                                   endPoint: .bottom)
+                    LinearGradient(
+                        gradient: fadingGradient,
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
                 }
             )
     }

@@ -85,9 +85,11 @@ final class CorePlanService: PlanService {
         CoreAlertServiceFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  alertService: factory.makeCoreAlertService(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            networking: factory.makeNetworking(),
+            alertService: factory.makeCoreAlertService(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
 
     init(networking: Networking, alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
@@ -167,10 +169,12 @@ final class CorePlanService: PlanService {
     private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
         let plusPlanNames = ["vpnplus", "vpn2022"]
         let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter { plusPlanNames.contains($0) } : ObfuscatedConstants.planNames
-        return PaymentsUI(payments: payments,
-                          clientApp: ClientApp.vpn,
-                          shownPlanNames: planNames,
-                          customization: .init(inAppTheme: { .dark }))
+        return PaymentsUI(
+            payments: payments,
+            clientApp: ClientApp.vpn,
+            shownPlanNames: planNames,
+            customization: .init(inAppTheme: { .dark })
+        )
     }
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellModalSource?) {

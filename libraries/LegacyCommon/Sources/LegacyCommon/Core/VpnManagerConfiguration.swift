@@ -127,9 +127,11 @@ public class VpnManagerConfigurationPreparer {
         PropertiesManagerFactory & VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(vpnKeychain: factory.makeVpnKeychain(),
-                  alertService: factory.makeCoreAlertService(),
-                  propertiesManager: factory.makePropertiesManager())
+        self.init(
+            vpnKeychain: factory.makeVpnKeychain(),
+            alertService: factory.makeCoreAlertService(),
+            propertiesManager: factory.makePropertiesManager()
+        )
     }
 
     public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {

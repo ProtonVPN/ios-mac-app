@@ -56,15 +56,17 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     var tunnelConnectionCreated: ((NETunnelProviderSessionMock) -> Void)?
     var statusChanged: ((NEVPNStatus) -> Void)?
 
-    var request = ConnectionRequest(serverType: .standard,
-                                    connectionType: .country("CH", .fastest),
-                                    connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                    netShieldType: .level1,
-                                    natType: .moderateNAT,
-                                    safeMode: true,
-                                    profileId: nil,
-                                    profileName: nil,
-                                    trigger: nil)
+    var request = ConnectionRequest(
+        serverType: .standard,
+        connectionType: .country("CH", .fastest),
+        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+        netShieldType: .level1,
+        natType: .moderateNAT,
+        safeMode: true,
+        profileId: nil,
+        profileName: nil,
+        trigger: nil
+    )
 
     func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {
         withDependencies { $0.serverRepository = repository } operation: {
@@ -403,8 +405,10 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             XCTFail("Protocol config is not NETunnelProviderProtocol")
             return
         }
-        XCTAssertEqual(protocolConfig.providerBundleIdentifier,
-                       MockDependencyContainer.wireguardProviderBundleId)
+        XCTAssertEqual(
+            protocolConfig.providerBundleIdentifier,
+            MockDependencyContainer.wireguardProviderBundleId
+        )
 
         currentSubcaseDescription = nil
         expectationsToFulfill = [:]

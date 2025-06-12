@@ -321,8 +321,10 @@ final class ConnectionSettingsViewModel {
         switch vpnGateway.connection {
         case .connected, .connecting:
             let config = propertiesManager.smartProtocolConfig
-            let supported = appStateManager.activeConnection()?.server.supports(connectionProtocol: .smartProtocol,
-                                                                                smartProtocolConfig: config) == true
+            let supported = appStateManager.activeConnection()?.server.supports(
+                connectionProtocol: .smartProtocol,
+                smartProtocolConfig: config
+            ) == true
 
             let alert: SystemAlert = if supported {
                 ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
@@ -332,14 +334,20 @@ final class ConnectionSettingsViewModel {
                 })
             } else {
                 ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
-                    log.info("User changed to smart protocol, even though current server doesn't support it",
-                             category: .connectionConnect, event: .trigger,
-                             metadata: ["smartProtocolConfig": "\(config)"])
+                    log.info(
+                        "User changed to smart protocol, even though current server doesn't support it",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["smartProtocolConfig": "\(config)"]
+                    )
                     self?.enableSmartProtocol(and: .disconnect, completion)
                 }, cancelHandler: {
-                    log.info("User did not change to smart protocol, since current server doesn't support it",
-                             category: .connectionConnect, event: .trigger,
-                             metadata: ["smartProtocolConfig": "\(config)"])
+                    log.info(
+                        "User did not change to smart protocol, since current server doesn't support it",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["smartProtocolConfig": "\(config)"]
+                    )
                     completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
                 })
             }
@@ -361,17 +369,29 @@ final class ConnectionSettingsViewModel {
 
                 switch then {
                 case .disconnect:
-                    log.info("Will disconnect after VPN feature change",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    log.info(
+                        "Will disconnect after VPN feature change",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
                     self?.vpnGateway.disconnect { completion(.success) }
                 case .reconnect:
-                    log.info("Connection will restart after VPN feature change",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    log.info(
+                        "Connection will restart after VPN feature change",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
                     self?.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
                     completion(.success)
                 case .doNothing:
-                    log.info("Smart protocol was enabled",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    log.info(
+                        "Smart protocol was enabled",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
                     completion(.success)
                 }
             case let .failure(error):

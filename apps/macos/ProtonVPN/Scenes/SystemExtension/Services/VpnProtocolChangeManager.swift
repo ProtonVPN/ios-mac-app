@@ -122,8 +122,11 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         let performSwitchAction = { [weak self] in
             switch then {
             case .reconnect:
-                log.info("New protocol set to \(vpnProtocol). VPN will reconnect.",
-                         category: .connectionConnect, event: .trigger)
+                log.info(
+                    "New protocol set to \(vpnProtocol). VPN will reconnect.",
+                    category: .connectionConnect,
+                    event: .trigger
+                )
                 self?.vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
             case .disconnect:
                 self?.vpnGateway.disconnect()
@@ -146,8 +149,10 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                 performSwitchAction()
                 completion(.success)
             case let .failure(error):
-                log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
-                          category: .connectionConnect)
+                log.error(
+                    "Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
+                    category: .connectionConnect
+                )
 
                 if case let .installationError(installError) = error,
                    let alert = SysexInstallingErrorAlert(error: installError) {

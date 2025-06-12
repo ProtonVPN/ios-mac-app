@@ -80,9 +80,12 @@ class ZoomButton: HoverDetectionButton {
         context.drawPath(using: .fillStroke)
 
         let margin: CGFloat = 6
-        let imageFrame = CGRect(x: margin / 2, y: margin / 2,
-                                width: bounds.width - margin,
-                                height: bounds.width - margin)
+        let imageFrame = CGRect(
+            x: margin / 2,
+            y: margin / 2,
+            width: bounds.width - margin,
+            height: bounds.width - margin
+        )
         imageView.frame = imageFrame
         imageView.needsDisplay = true
     }

@@ -47,12 +47,14 @@ public struct ConnectionDetailsFeature {
         public init(actual: VPNConnectionActual) {
             let countryCode = actual.server.logical.exitCountryCode
             let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? countryCode
-            self = .init(connectedSince: actual.connectedDate ?? .now,
-                         country: country,
-                         city: actual.server.logical.city ?? "-",
-                         server: actual.server.logical.name,
-                         serverLoad: actual.server.logical.load,
-                         protocolName: actual.vpnProtocol.localizedDescription)
+            self = .init(
+                connectedSince: actual.connectedDate ?? .now,
+                country: country,
+                city: actual.server.logical.city ?? "-",
+                server: actual.server.logical.name,
+                serverLoad: actual.server.logical.load,
+                protocolName: actual.vpnProtocol.localizedDescription
+            )
         }
     }
 

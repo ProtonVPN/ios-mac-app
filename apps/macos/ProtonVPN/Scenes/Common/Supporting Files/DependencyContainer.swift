@@ -33,9 +33,11 @@ final class DependencyContainer: Container {
     private lazy var navigationService = NavigationService(self)
 
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
-    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
-                                                                    appGroup: config.appGroup,
-                                                                    factory: self)
+    private lazy var wireguardFactory = WireguardMacProtocolFactory(
+        bundleId: config.wireguardVpnExtensionBundleIdentifier,
+        appGroup: config.appGroup,
+        factory: self
+    )
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
 
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
@@ -125,9 +127,11 @@ final class DependencyContainer: Container {
     // MARK: VpnCredentialsConfiguratorFactoryCreator
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
-                                             vpnAuthentication: makeVpnAuthentication(),
-                                             appGroup: config.appGroup)
+        MacVpnCredentialsConfiguratorFactory(
+            propertiesManager: makePropertiesManager(),
+            vpnAuthentication: makeVpnAuthentication(),
+            appGroup: config.appGroup
+        )
     }
 
     // MARK: VpnAuthentication
@@ -142,8 +146,10 @@ final class DependencyContainer: Container {
         let appLogsFolder = makeLogFileManager()
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
             .deletingLastPathComponent()
-        return MacOSLogContentProvider(appLogsFolder: appLogsFolder,
-                                       wireguardProtocolFactory: makeWireguardProtocolFactory())
+        return MacOSLogContentProvider(
+            appLogsFolder: appLogsFolder,
+            wireguardProtocolFactory: makeWireguardProtocolFactory()
+        )
     }
 
     // MARK: UpdateManagerFactory
@@ -217,8 +223,10 @@ extension DependencyContainer: AppSessionManagerFactory {
 
 extension DependencyContainer: NotificationManagerFactory {
     func makeNotificationManager() -> NotificationManagerProtocol {
-        NotificationManager(appStateManager: makeAppStateManager(),
-                            appSessionManager: makeAppSessionManager())
+        NotificationManager(
+            appStateManager: makeAppStateManager(),
+            appSessionManager: makeAppSessionManager()
+        )
     }
 }
 

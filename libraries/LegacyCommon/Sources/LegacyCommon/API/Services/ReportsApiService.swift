@@ -39,8 +39,10 @@ public class ReportsApiService {
         AuthKeychainHandleFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            networking: factory.makeNetworking(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
 
     public init(networking: Networking, authKeychain: AuthKeychainHandle) {

@@ -670,9 +670,11 @@ final class SettingsViewModel {
 
             let qrCodeInstructionsView = ScanQRCodeInstructionsView(
                 viewModel: .init(dependencies:
-                    .init(passphrase: passphrase,
-                          userEmail: email,
-                          apiService: apiService)))
+                    .init(
+                        passphrase: passphrase,
+                        userEmail: email,
+                        apiService: apiService
+                    )))
             let hostingController = ShowingNavigationBarUIHostingController(
                 rootView: AnyView(qrCodeInstructionsView)
             )
@@ -691,9 +693,11 @@ final class SettingsViewModel {
     }
 
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol,
-                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
-                                                        featureFlags: propertiesManager.featureFlags)
+        let vpnProtocolViewModel = VpnProtocolViewModel(
+            connectionProtocol: propertiesManager.connectionProtocol,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            featureFlags: propertiesManager.featureFlags
+        )
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
             switch getProtocolChangeAvailability(for: newProtocol) {
             case .immediate:
@@ -704,8 +708,11 @@ final class SettingsViewModel {
                 // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
                 // sure the user knows that the app is about to disconnect.
                 alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
-                    log.debug("Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
-                              category: .connectionDisconnect, event: .trigger)
+                    log.debug(
+                        "Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
+                        category: .connectionDisconnect,
+                        event: .trigger
+                    )
                     completion(.success( /* shouldReconnect */ false))
                 }, cancelHandler: {
                     completion(.failure(.userCancelled))
@@ -714,8 +721,11 @@ final class SettingsViewModel {
             case .withReconnect:
                 // Otherwise, reconnect normally after changing the protocol.
                 let alert = ChangeProtocolDisconnectAlert {
-                    log.debug("Reconnect requested after changing protocol to \(newProtocol)",
-                              category: .connectionDisconnect, event: .trigger)
+                    log.debug(
+                        "Reconnect requested after changing protocol to \(newProtocol)",
+                        category: .connectionDisconnect,
+                        event: .trigger
+                    )
                     completion(.success(true))
                 }
                 alert.dismiss = { completion(.failure(.userCancelled)) }

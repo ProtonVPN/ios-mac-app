@@ -47,9 +47,11 @@ struct RecentConnectionOptionsButton: View {
             }
             .help(Localizable.homeRecentsOptionsButtonHelp)
             .buttonStyle(RecentsButtonStyle())
-            .popover(isPresented: $isPresented,
-                     attachmentAnchor: .point(.bottom),
-                     arrowEdge: .bottom) {
+            .popover(
+                isPresented: $isPresented,
+                attachmentAnchor: .point(.bottom),
+                arrowEdge: .bottom
+            ) {
                 VStack(alignment: .leading, spacing: 0) {
                     OptionButton(role: .pin(isPinned: item.pinned)) {
                         isPresented = false

@@ -24,8 +24,10 @@ final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
-        let storedConfig = StoredWireguardConfig(vpnManagerConfig: configuration,
-                                                 wireguardConfig: propertiesManager.wireguardConfig)
+        let storedConfig = StoredWireguardConfig(
+            vpnManagerConfig: configuration,
+            wireguardConfig: propertiesManager.wireguardConfig
+        )
 
         do {
             var configData = Data([UInt8(version.rawValue)])

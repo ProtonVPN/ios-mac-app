@@ -156,8 +156,20 @@ extension CapturedArguments: Codable where A1: Codable, A2: Codable, A3: Codable
 extension CapturedArguments where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
     init(input _: Input) {
-        self.init(a1: .nothing, a2: .nothing, a3: .nothing, a4: .nothing, a5: .nothing, a6: .nothing,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: .nothing,
+            a2: .nothing,
+            a3: .nothing,
+            a4: .nothing,
+            a5: .nothing,
+            a6: .nothing,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -168,8 +180,20 @@ extension CapturedArguments where Input == A1, A2 == Absent, A3 == Absent, A4 ==
     public var value: A1 { a1 }
 
     init(input: Input) {
-        self.init(a1: input, a2: .nothing, a3: .nothing, a4: .nothing, a5: .nothing, a6: .nothing,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input,
+            a2: .nothing,
+            a3: .nothing,
+            a4: .nothing,
+            a5: .nothing,
+            a6: .nothing,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -182,8 +206,20 @@ extension CapturedArguments where Input == (A1, A2), A3 == Absent, A4 == Absent,
     public var second: A2 { a2 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: .nothing, a4: .nothing, a5: .nothing, a6: .nothing,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: .nothing,
+            a4: .nothing,
+            a5: .nothing,
+            a6: .nothing,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -198,8 +234,20 @@ extension CapturedArguments where Input == (A1, A2, A3), A4 == Absent, A5 == Abs
     public var third: A3 { a3 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: .nothing, a5: .nothing, a6: .nothing,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: .nothing,
+            a5: .nothing,
+            a6: .nothing,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -216,8 +264,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4), A5 == Absent, A6 ==
     public var forth: A4 { a4 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: .nothing, a6: .nothing,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: .nothing,
+            a6: .nothing,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -233,8 +293,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5), A6 == Absent, A
     public var last: A5 { a5 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: .nothing,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: .nothing,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -251,8 +323,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6), A7 == Absen
     public var last: A6 { a6 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: .nothing, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: .nothing,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -270,8 +354,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7),
     public var last: A7 { a7 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: input.6, a8: .nothing, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: input.6,
+            a8: .nothing,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -289,8 +385,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 
     public var last: A8 { a8 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: input.6, a8: input.7, a9: .nothing, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: input.6,
+            a8: input.7,
+            a9: .nothing,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -309,8 +417,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9),
     public var last: A9 { a9 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: input.6, a8: input.7, a9: input.8, a10: .nothing, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: input.6,
+            a8: input.7,
+            a9: input.8,
+            a10: .nothing,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -330,8 +450,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, 
     public var last: A10 { a10 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: input.6, a8: input.7, a9: input.8, a10: input.9, a11: .nothing, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: input.6,
+            a8: input.7,
+            a9: input.8,
+            a10: input.9,
+            a11: .nothing,
+            a12: .nothing
+        )
     }
 }
 
@@ -352,8 +484,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, 
     public var last: A11 { a11 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: input.6, a8: input.7, a9: input.8, a10: input.9, a11: input.10, a12: .nothing)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: input.6,
+            a8: input.7,
+            a9: input.8,
+            a10: input.9,
+            a11: input.10,
+            a12: .nothing
+        )
     }
 }
 
@@ -375,341 +519,561 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, 
     public var last: A12 { a12 }
 
     init(input: Input) {
-        self.init(a1: input.0, a2: input.1, a3: input.2, a4: input.3, a5: input.4, a6: input.5,
-                  a7: input.6, a8: input.7, a9: input.8, a10: input.9, a11: input.10, a12: input.11)
+        self.init(
+            a1: input.0,
+            a2: input.1,
+            a3: input.2,
+            a4: input.3,
+            a5: input.4,
+            a6: input.5,
+            a7: input.6,
+            a8: input.7,
+            a9: input.8,
+            a10: input.9,
+            a11: input.10,
+            a12: input.11
+        )
     }
 }
 
 extension ThrowingFuncStub where Input == Void, Output == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: (T) -> () throws -> Void,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () throws -> Void,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: (T) -> () throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> () throws -> Output,
-                               initialReturn: @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () throws -> Output,
+        initialReturn: @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> () throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: (T) -> (A1) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> (A1) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> (A1) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> (A1) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
@@ -1004,331 +1368,539 @@ public final class StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8
 
 extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: (T) -> () -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> () -> Output,
-                               initialReturn: @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () -> Output,
+        initialReturn: @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> () -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> () -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> () -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> () -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: (T) -> (A1) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> (A1) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> (A1) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: (T) -> (A1) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }
 
 extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
-                               initialReturn: @autoclosure @escaping () throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
+        initialReturn: @autoclosure @escaping () throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
-                               initialReturn: @escaping (Input) throws -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
+        initialReturn: @escaping (Input) throws -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
-                               initialReturn: InitialReturn<Input, Output>,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) {
+    public convenience init<T>(
+        _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
+        initialReturn: InitialReturn<Input, Output>,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) {
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(_: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
-                               function: String = #function, line: UInt = #line, file: String = #filePath) where Output == Void {
+    public convenience init<T>(
+        _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
+        function: String = #function,
+        line: UInt = #line,
+        file: String = #filePath
+    ) where Output == Void {
         self.init(function: function, line: line, file: file)
     }
 }

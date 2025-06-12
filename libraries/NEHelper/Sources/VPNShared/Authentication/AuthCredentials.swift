@@ -92,14 +92,16 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
             scopes = unarchivedScopes as? [String] ?? []
         }
 
-        self.init(version: aDecoder.decodeInteger(forKey: CoderKey.authCacheVersion),
-                  username: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.username)! as String,
-                  accessToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.accessToken)! as String,
-                  refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
-                  sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
-                  userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
-                  scopes: scopes,
-                  mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?)
+        self.init(
+            version: aDecoder.decodeInteger(forKey: CoderKey.authCacheVersion),
+            username: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.username)! as String,
+            accessToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.accessToken)! as String,
+            refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
+            sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
+            userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
+            scopes: scopes,
+            mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?
+        )
     }
 
     public func encode(with _: NSCoder) {

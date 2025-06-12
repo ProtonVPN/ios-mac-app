@@ -33,35 +33,45 @@ final class NaturalEarthProjectionTests: XCTestCase {
     static let accuracy: CGFloat = 0.00001
 
     func testZero() throws {
-        let projection = NaturalEarthProjection.projection(from: .init(latitude: 0, longitude: 0),
-                                                           in: CGSize(width: Self.rangeX, height: Self.rangeY))
+        let projection = NaturalEarthProjection.projection(
+            from: .init(latitude: 0, longitude: 0),
+            in: CGSize(width: Self.rangeX, height: Self.rangeY)
+        )
         XCTAssertEqual(projection, .init(x: 0, y: 0))
     }
 
     func testTopLat() throws {
-        let projection = NaturalEarthProjection.projection(from: CLLocationCoordinate2D(latitude: 90, longitude: 0),
-                                                           in: CGSize(width: Self.rangeX, height: Self.rangeY))
+        let projection = NaturalEarthProjection.projection(
+            from: CLLocationCoordinate2D(latitude: 90, longitude: 0),
+            in: CGSize(width: Self.rangeX, height: Self.rangeY)
+        )
         XCTAssertEqual(projection.y, Self.topY, accuracy: Self.accuracy)
         XCTAssertEqual(projection.x, 0)
     }
 
     func testBottomLat() throws {
-        let projection = NaturalEarthProjection.projection(from: CLLocationCoordinate2D(latitude: -90, longitude: 0),
-                                                           in: CGSize(width: Self.rangeX, height: Self.rangeY))
+        let projection = NaturalEarthProjection.projection(
+            from: CLLocationCoordinate2D(latitude: -90, longitude: 0),
+            in: CGSize(width: Self.rangeX, height: Self.rangeY)
+        )
         XCTAssertEqual(projection.y, Self.bottomY, accuracy: Self.accuracy)
         XCTAssertEqual(projection.x, 0)
     }
 
     func testTopLong() throws {
-        let projection = NaturalEarthProjection.projection(from: CLLocationCoordinate2D(latitude: 0, longitude: 180),
-                                                           in: CGSize(width: Self.rangeX, height: Self.rangeY))
+        let projection = NaturalEarthProjection.projection(
+            from: CLLocationCoordinate2D(latitude: 0, longitude: 180),
+            in: CGSize(width: Self.rangeX, height: Self.rangeY)
+        )
         XCTAssertEqual(projection.x, Self.topX, accuracy: Self.accuracy)
         XCTAssertEqual(projection.y, 0)
     }
 
     func testBottomLong() throws {
-        let projection = NaturalEarthProjection.projection(from: CLLocationCoordinate2D(latitude: 0, longitude: -180),
-                                                           in: CGSize(width: Self.rangeX, height: Self.rangeY))
+        let projection = NaturalEarthProjection.projection(
+            from: CLLocationCoordinate2D(latitude: 0, longitude: -180),
+            in: CGSize(width: Self.rangeX, height: Self.rangeY)
+        )
         XCTAssertEqual(projection.x, Self.bottomX, accuracy: Self.accuracy)
         XCTAssertEqual(projection.y, 0)
     }

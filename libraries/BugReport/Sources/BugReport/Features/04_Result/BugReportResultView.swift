@@ -107,13 +107,17 @@ public struct BugReportResultView: View {
 struct BugReportResultView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: nil),
-                                             reducer: { BugReportResultFeature() }))
-                .previewDisplayName("Success")
+            BugReportResultView(store: Store(
+                initialState: BugReportResultFeature.State(error: nil),
+                reducer: { BugReportResultFeature() }
+            ))
+            .previewDisplayName("Success")
 
-            BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: "Just an error"),
-                                             reducer: { BugReportResultFeature() }))
-                .previewDisplayName("Error")
+            BugReportResultView(store: Store(
+                initialState: BugReportResultFeature.State(error: "Just an error"),
+                reducer: { BugReportResultFeature() }
+            ))
+            .previewDisplayName("Error")
         }
     }
 }

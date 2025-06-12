@@ -47,9 +47,11 @@
             }
 
             let extensionVersion = mockVersions ?? bundleAppVersions
-            let extensionInfo = ExtensionInfo(version: extensionVersion.semanticVersion,
-                                              build: extensionVersion.buildVersion,
-                                              bundleId: request.request.identifier)
+            let extensionInfo = ExtensionInfo(
+                version: extensionVersion.semanticVersion,
+                build: extensionVersion.buildVersion,
+                bundleId: request.request.identifier
+            )
             // ExtensionInfo's Comparable function only matches on version info, we need to compare bundleId as well.
             let matchesExtensionInfo = { (info: ExtensionInfo) in
                 info == extensionInfo && info.bundleId == extensionInfo.bundleId

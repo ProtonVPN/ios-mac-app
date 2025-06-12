@@ -30,8 +30,10 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            WGiOSVpnCredentialsConfigurator(propertiesManager: propertiesManager,
-                                            vpnKeychain: vpnKeychain)
+            WGiOSVpnCredentialsConfigurator(
+                propertiesManager: propertiesManager,
+                vpnKeychain: vpnKeychain
+            )
         }
     }
 }

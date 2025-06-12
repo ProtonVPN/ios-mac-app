@@ -37,8 +37,10 @@ public final class ServerStatusRefreshManager: RefreshManager {
         5 * 60 // 5 minutes
     }
 
-    public init(apiService: ExtensionAPIService,
-                timerFactory: TimerFactory) {
+    public init(
+        apiService: ExtensionAPIService,
+        timerFactory: TimerFactory
+    ) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.server-status-refresh")
 
         self.apiService = apiService
@@ -59,8 +61,10 @@ public final class ServerStatusRefreshManager: RefreshManager {
             return
         }
 
-        apiService.refreshServerStatus(logicalId: currentLogicalId,
-                                       refreshApiTokenIfNeeded: true) { [unowned self] result in
+        apiService.refreshServerStatus(
+            logicalId: currentLogicalId,
+            refreshApiTokenIfNeeded: true
+        ) { [unowned self] result in
             workQueue.async { [unowned self] in
                 switch result {
                 case let .success(response):

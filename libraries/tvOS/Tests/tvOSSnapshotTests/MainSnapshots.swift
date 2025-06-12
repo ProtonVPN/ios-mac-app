@@ -52,8 +52,10 @@ final class MainFeatureSnapshotTests: TVSnapshotTestCase {
         } withDependencies: {
             $0.userLocationService = UserLocationServiceMock()
             $0.serverRepository = .empty()
-            $0.logicalsRefresher = .init(refreshLogicals: { throw "" as GenericError },
-                                         shouldRefreshLogicals: { true })
+            $0.logicalsRefresher = .init(
+                refreshLogicals: { throw "" as GenericError },
+                shouldRefreshLogicals: { true }
+            )
             $0.tunnelManager = MockTunnelManager()
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.continuousClock = TestClock()

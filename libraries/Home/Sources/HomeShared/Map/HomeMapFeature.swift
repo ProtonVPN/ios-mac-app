@@ -105,8 +105,10 @@ public struct HomeMapFeature {
                   let coordinates = coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
                 return .zero
             }
-            let location = CLLocationCoordinate2D(latitude: coordinates.latitude,
-                                                  longitude: coordinates.longitude - 10) // -10 to account for the shifted map
+            let location = CLLocationCoordinate2D(
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude - 10
+            ) // -10 to account for the shifted map
             let projection = NaturalEarthProjection.projection(from: location, in: SVGView.mapBounds.size)
 
             return .init(width: projection.x, height: -projection.y)

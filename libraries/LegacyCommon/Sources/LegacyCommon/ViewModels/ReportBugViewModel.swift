@@ -47,14 +47,16 @@ open class ReportBugViewModel {
         VpnKeychainFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
-        self.init(os: config.os,
-                  osVersion: config.osVersion,
-                  propertiesManager: factory.makePropertiesManager(),
-                  reportsApiService: factory.makeReportsApiService(),
-                  alertService: factory.makeCoreAlertService(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  logContentProvider: factory.makeLogContentProvider(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            os: config.os,
+            osVersion: config.osVersion,
+            propertiesManager: factory.makePropertiesManager(),
+            reportsApiService: factory.makeReportsApiService(),
+            alertService: factory.makeCoreAlertService(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            logContentProvider: factory.makeLogContentProvider(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
 
     public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {

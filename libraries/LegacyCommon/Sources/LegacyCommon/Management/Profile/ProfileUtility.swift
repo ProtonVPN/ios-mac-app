@@ -102,8 +102,15 @@ public enum ProfileUtility {
         let colors = ProfileConstants.profileColors
         let color = colors[.random(in: 0 ..< colors.count)]
 
-        let profile = Profile(accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))
+        let profile = Profile(
+            accessTier: accessTier,
+            profileIcon: .circle(color.hexRepresentation),
+            profileType: .user,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: .vpnProtocol(vpnProtocol)
+        )
 
         return .success(profiles + [profile])
     }

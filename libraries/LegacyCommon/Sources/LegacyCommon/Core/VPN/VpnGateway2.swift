@@ -141,13 +141,15 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         // TODO: when old code is deleted, refactor server selector to throw directly
         var notifyResolutionUnavailableCalled: (forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason)?
 
-        let selector = VpnServerSelector(serverType: type,
-                                         userTier: currentUserTier,
-                                         connectionProtocol: connectionProtocol,
-                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
-                                         appStateGetter: { [unowned self] in
-                                             appStateManager.state
-                                         })
+        let selector = VpnServerSelector(
+            serverType: type,
+            userTier: currentUserTier,
+            connectionProtocol: connectionProtocol,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            appStateGetter: { [unowned self] in
+                appStateManager.state
+            }
+        )
         selector.changeActiveServerType = { _ in }
         selector.notifyResolutionUnavailable = { forSpecificCountry, type, reason in
             notifyResolutionUnavailableCalled = (forSpecificCountry, type, reason)

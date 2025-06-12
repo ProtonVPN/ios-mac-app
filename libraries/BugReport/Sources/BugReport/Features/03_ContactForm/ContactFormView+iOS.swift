@@ -46,18 +46,30 @@
                                     if !field.hidden {
                                         switch field.inputField.type {
                                         case .textSingleLine:
-                                            SingleLineTextInputView(field: field.inputField,
-                                                                    value: Binding(get: { field.stringValue },
-                                                                                   set: { store.send(.fieldStringValueChanged(field, $0)) }))
+                                            SingleLineTextInputView(
+                                                field: field.inputField,
+                                                value: Binding(
+                                                    get: { field.stringValue },
+                                                    set: { store.send(.fieldStringValueChanged(field, $0)) }
+                                                )
+                                            )
                                         case .textMultiLine:
-                                            MultiLineTextInputView(field: field.inputField,
-                                                                   value: Binding(get: { field.stringValue },
-                                                                                  set: { store.send(.fieldStringValueChanged(field, $0)) }))
-                                                .frame(height: 155, alignment: .top)
+                                            MultiLineTextInputView(
+                                                field: field.inputField,
+                                                value: Binding(
+                                                    get: { field.stringValue },
+                                                    set: { store.send(.fieldStringValueChanged(field, $0)) }
+                                                )
+                                            )
+                                            .frame(height: 155, alignment: .top)
                                         case .switch:
-                                            SwitchInputView(field: field.inputField,
-                                                            value: Binding(get: { field.boolValue },
-                                                                           set: { store.send(.fieldBoolValueChanged(field, $0)) }))
+                                            SwitchInputView(
+                                                field: field.inputField,
+                                                value: Binding(
+                                                    get: { field.boolValue },
+                                                    set: { store.send(.fieldBoolValueChanged(field, $0)) }
+                                                )
+                                            )
                                         }
                                     }
                                 }
@@ -84,14 +96,20 @@
                             }
                         }
 
-                        NavigationLink(item: $store.resultState,
-                                       onNavigate: { _ in },
-                                       destination: { _ in
-                                           IfLetStore(store.scope(state: \.resultState,
-                                                                  action: \.resultViewAction),
-                                                      then: { store in BugReportResultView(store: store) })
-                                       },
-                                       label: { EmptyView() })
+                        NavigationLink(
+                            item: $store.resultState,
+                            onNavigate: { _ in },
+                            destination: { _ in
+                                IfLetStore(
+                                    store.scope(
+                                        state: \.resultState,
+                                        action: \.resultViewAction
+                                    ),
+                                    then: { store in BugReportResultView(store: store) }
+                                )
+                            },
+                            label: { EmptyView() }
+                        )
                     }
                     .foregroundColor(colors.textPrimary)
                     // Custom Back button
@@ -120,18 +138,26 @@
             let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
             return Group {
-                ContactFormView(store: Store(initialState: .init(fields: bugReport.model.categories[0].inputFields,
-                                                                 category: "aa"),
-                                             reducer: { ContactFormFeature() }))
-                    .previewDisplayName("Empty form")
+                ContactFormView(store: Store(
+                    initialState: .init(
+                        fields: bugReport.model.categories[0].inputFields,
+                        category: "aa"
+                    ),
+                    reducer: { ContactFormFeature() }
+                ))
+                .previewDisplayName("Empty form")
 
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: false),
-                                             reducer: { ContactFormFeature() }))
-                    .previewDisplayName("Short form")
+                ContactFormView(store: Store(
+                    initialState: ContactFormFeature.State(fields: formFields, isSending: false),
+                    reducer: { ContactFormFeature() }
+                ))
+                .previewDisplayName("Short form")
 
-                ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
-                                             reducer: { ContactFormFeature() }))
-                    .previewDisplayName("Loading")
+                ContactFormView(store: Store(
+                    initialState: ContactFormFeature.State(fields: formFields, isSending: true),
+                    reducer: { ContactFormFeature() }
+                ))
+                .previewDisplayName("Loading")
             }
         }
     }

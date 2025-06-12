@@ -47,14 +47,16 @@ public class ServerIp: NSObject, NSCoding, Codable {
             "X25519PublicKey = \(x25519PublicKey ?? "")\n"
     }
 
-    public init(id: String,
-                entryIp: String?,
-                exitIp: String,
-                domain: String,
-                status: Int,
-                label: String? = nil,
-                x25519PublicKey: String? = nil,
-                protocolEntries: PerProtocolEntries? = nil) {
+    public init(
+        id: String,
+        entryIp: String?,
+        exitIp: String,
+        domain: String,
+        status: Int,
+        label: String? = nil,
+        x25519PublicKey: String? = nil,
+        protocolEntries: PerProtocolEntries? = nil
+    ) {
         self.id = id
         self.entryIp = entryIp
         self.exitIp = exitIp
@@ -161,14 +163,16 @@ public class ServerIp: NSObject, NSCoding, Codable {
         let x25519PublicKey = aDecoder.decodeObject(forKey: CodingKeys.x25519PublicKey.rawValue) as? String
         let protocolEntries = aDecoder.decodeObject(forKey: CodingKeys.protocolEntries.rawValue) as? PerProtocolEntries
 
-        self.init(id: id,
-                  entryIp: entryIp,
-                  exitIp: exitIp,
-                  domain: domain,
-                  status: status,
-                  label: label,
-                  x25519PublicKey: x25519PublicKey,
-                  protocolEntries: protocolEntries)
+        self.init(
+            id: id,
+            entryIp: entryIp,
+            exitIp: exitIp,
+            domain: domain,
+            status: status,
+            label: label,
+            x25519PublicKey: x25519PublicKey,
+            protocolEntries: protocolEntries
+        )
     }
 
     public func encode(with _: NSCoder) {

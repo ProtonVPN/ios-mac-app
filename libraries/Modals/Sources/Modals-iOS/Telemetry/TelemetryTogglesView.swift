@@ -52,9 +52,11 @@ struct TelemetryTogglesView_Previews: PreviewProvider {
     @State static var usageStatisticsOn: Bool = true
     @State static var crashReportsOn: Bool = true
     static var previews: some View {
-        TelemetryTogglesView(usageStatisticsOn: $usageStatisticsOn,
-                             crashReportsOn: $crashReportsOn)
-            .previewLayout(.sizeThatFits)
+        TelemetryTogglesView(
+            usageStatisticsOn: $usageStatisticsOn,
+            crashReportsOn: $crashReportsOn
+        )
+        .previewLayout(.sizeThatFits)
     }
 }
 

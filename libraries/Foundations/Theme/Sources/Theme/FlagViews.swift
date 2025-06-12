@@ -128,8 +128,10 @@ public struct SimpleFlagView: View {
             .resizable()
             .cornerRadius(cornerRadius * scale)
             .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale }
-            .frame(width: startSize.width * scale,
-                   height: startSize.height * scale)
+            .frame(
+                width: startSize.width * scale,
+                height: startSize.height * scale
+            )
     }
 
     fileprivate init(regionCode: String, size: CGSize, cornerRadius: CGFloat = .themeRadius4) {
@@ -171,8 +173,10 @@ private struct FlagShadowView: View {
             path.addLine(to: .init(x: (flagSize.scBottomFlag.width - (flagSize.frame.width - flagSize.scTopFlag.width - 1)) * scale, y: 6 * scale))
         }
         .stroke(shadowColor, lineWidth: 2 * scale)
-        .frame(width: flagSize.scBottomFlag.width * scale,
-               height: flagSize.scBottomFlag.height * scale)
+        .frame(
+            width: flagSize.scBottomFlag.width * scale,
+            height: flagSize.scBottomFlag.height * scale
+        )
     }
 }
 
@@ -217,8 +221,10 @@ public struct SecureCoreFlagView: View {
                 ImageAsset(name: "Flags/\(viaRegionCode)")
                     .swiftUIImage
                     .resizable()
-                    .frame(width: flagSize.scBottomFlag.width * scale,
-                           height: flagSize.scBottomFlag.height * scale)
+                    .frame(
+                        width: flagSize.scBottomFlag.width * scale,
+                        height: flagSize.scBottomFlag.height * scale
+                    )
                     .cornerRadius(.themeRadius2½ * scale)
                     .padding([.top], (flagSize.frame.height - flagSize.scBottomFlag.height) * scale)
 
@@ -232,8 +238,10 @@ public struct SecureCoreFlagView: View {
 
             } else {
                 SecureCoreFlagCurveView(curveColor: flagCurveColor, startSize: flagSize.simpleFlag)
-                    .frame(width: flagSize.simpleFlag.width * scale,
-                           height: flagSize.simpleFlag.height * scale)
+                    .frame(
+                        width: flagSize.simpleFlag.width * scale,
+                        height: flagSize.simpleFlag.height * scale
+                    )
                     .offset(x: -3 * scale, y: 3 * scale)
 
                 SimpleFlagView(regionCode: regionCode, size: flagSize.simpleFlag)

@@ -48,12 +48,16 @@ struct CountryListFeature {
             let recommendedCountries: [CountryListItem] = CountryListFeature.recommendedCountries
                 .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
                 .map { CountryListItem(section: 0, row: 0, code: $0) }
-            self.countriesSection = .init(name: "All countries",
-                                          items: allCountries,
-                                          sectionIndex: 1)
-            self.recommendedSection = .init(name: "Recommended",
-                                            items: [.fastest] + recommendedCountries,
-                                            sectionIndex: 0)
+            self.countriesSection = .init(
+                name: "All countries",
+                items: allCountries,
+                sectionIndex: 1
+            )
+            self.recommendedSection = .init(
+                name: "Recommended",
+                items: [.fastest] + recommendedCountries,
+                sectionIndex: 0
+            )
         }
     }
 

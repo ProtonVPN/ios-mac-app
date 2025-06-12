@@ -36,10 +36,12 @@ public struct ConnectionScreenFeature {
 
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
-        public init(ipViewState: IPViewFeature.State,
-                    connectionDetailsState: ConnectionDetailsFeature.State,
-                    isSecureCore: Bool,
-                    connectionFeatures: [ConnectionSpec.Feature]) {
+        public init(
+            ipViewState: IPViewFeature.State,
+            connectionDetailsState: ConnectionDetailsFeature.State,
+            isSecureCore: Bool,
+            connectionFeatures: [ConnectionSpec.Feature]
+        ) {
             self.ipViewState = ipViewState
             self.connectionDetailsState = connectionDetailsState
             self.isSecureCore = isSecureCore

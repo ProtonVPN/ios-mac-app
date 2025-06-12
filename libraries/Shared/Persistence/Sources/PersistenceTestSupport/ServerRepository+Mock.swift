@@ -21,27 +21,35 @@ import Persistence
 
 extension ServerRepository {
     public static func empty() -> Self {
-        .init(serverCount: { 0 },
-              server: { _, _ in nil },
-              groups: { _, _ in [] })
+        .init(
+            serverCount: { 0 },
+            server: { _, _ in nil },
+            groups: { _, _ in [] }
+        )
     }
 
     public static func notEmpty() -> Self {
-        .init(serverCount: { 1 },
-              server: { _, _ in .mock },
-              groups: { _, _ in [] })
+        .init(
+            serverCount: { 1 },
+            server: { _, _ in .mock },
+            groups: { _, _ in [] }
+        )
     }
 
     public static func somePlusRecommendedCountries() -> Self {
-        .init(serverCount: { 0 },
-              server: { _, _ in nil },
-              groups: { _, _ in .recommendedCountries + .someCountries })
+        .init(
+            serverCount: { 0 },
+            server: { _, _ in nil },
+            groups: { _, _ in .recommendedCountries + .someCountries }
+        )
     }
 
     public static func emptyWithUpsert() -> Self {
-        .init(serverCount: { 0 },
-              upsertServers: { _ in },
-              groups: { _, _ in [] })
+        .init(
+            serverCount: { 0 },
+            upsertServers: { _ in },
+            groups: { _, _ in [] }
+        )
     }
 }
 
@@ -65,18 +73,20 @@ extension [ServerGroupInfo] {
 
 extension ServerGroupInfo {
     static func country(code: String) -> Self {
-        .init(kind: .country(code: code),
-              featureIntersection: .zero,
-              featureUnion: .zero,
-              minTier: 0,
-              maxTier: 0,
-              serverCount: 5,
-              cityCount: 0,
-              latitude: 0,
-              longitude: 0,
-              supportsSmartRouting: false,
-              isUnderMaintenance: false,
-              protocolSupport: .all)
+        .init(
+            kind: .country(code: code),
+            featureIntersection: .zero,
+            featureUnion: .zero,
+            minTier: 0,
+            maxTier: 0,
+            serverCount: 5,
+            cityCount: 0,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
     }
 }
 

@@ -65,12 +65,14 @@ public class MockAuthKeychain: AuthKeychainHandle {
 public extension MockAuthKeychain {
     func setMockUsername(_ username: String) {
         self.username = username
-        credentials[defaultContext] = .init(username: username,
-                                            accessToken: "",
-                                            refreshToken: "",
-                                            sessionId: "",
-                                            userId: "",
-                                            scopes: [],
-                                            mailboxPassword: "")
+        credentials[defaultContext] = .init(
+            username: username,
+            accessToken: "",
+            refreshToken: "",
+            sessionId: "",
+            userId: "",
+            scopes: [],
+            mailboxPassword: ""
+        )
     }
 }

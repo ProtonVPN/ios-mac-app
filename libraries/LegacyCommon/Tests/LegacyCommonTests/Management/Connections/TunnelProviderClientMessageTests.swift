@@ -72,8 +72,10 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         } operation: {
             mockProviderState.needNewSession = true
 
-            populateExpectations(description: "Handle session expired in WireGuard extension",
-                                 [.vpnConnection, .localAgentConnection, pushSelector, .certificateRefresh])
+            populateExpectations(
+                description: "Handle session expired in WireGuard extension",
+                [.vpnConnection, .localAgentConnection, pushSelector, .certificateRefresh]
+            )
 
             processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
@@ -91,20 +93,26 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
 
         mockProviderState.forceResponse = .errorNeedKeyRegeneration
 
-        populateExpectations(description: "Handle WireGuard extension asking app to generate new keys and reconnect",
-                             [.vpnConnection, .localAgentConnection, .vpnDisconnection,
-                              storeKeys, .vpnConnection, .certificateRefresh])
+        populateExpectations(
+            description: "Handle WireGuard extension asking app to generate new keys and reconnect",
+            [.vpnConnection, .localAgentConnection, .vpnDisconnection,
+             storeKeys, .vpnConnection, .certificateRefresh]
+        )
 
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 
-        XCTAssertNotEqual(oldKeys?.privateKey.derRepresentation,
-                          container.vpnAuthenticationStorage.keys?.privateKey.derRepresentation,
-                          "Private keys should have been regenerated")
-        XCTAssertNotEqual(oldKeys?.publicKey.derRepresentation,
-                          container.vpnAuthenticationStorage.keys?.privateKey.derRepresentation,
-                          "Public keys should have been regenerated")
+        XCTAssertNotEqual(
+            oldKeys?.privateKey.derRepresentation,
+            container.vpnAuthenticationStorage.keys?.privateKey.derRepresentation,
+            "Private keys should have been regenerated"
+        )
+        XCTAssertNotEqual(
+            oldKeys?.publicKey.derRepresentation,
+            container.vpnAuthenticationStorage.keys?.privateKey.derRepresentation,
+            "Public keys should have been regenerated"
+        )
 
         disconnectSynchronously()
     }
@@ -114,15 +122,19 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         let refreshInterval: TimeInterval = .minutes(2)
         mockProviderState.forceResponse = .errorTooManyCertRequests(retryAfter: Int(refreshInterval))
 
-        populateExpectations(description: "WireGuard extension tells app that API has asked not to refresh certs so much",
-                             [.vpnConnection, .alertDisplayed])
+        populateExpectations(
+            description: "WireGuard extension tells app that API has asked not to refresh certs so much",
+            [.vpnConnection, .alertDisplayed]
+        )
 
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
 
         awaitExpectations()
 
-        let alert = try XCTUnwrap(container.alertService.alerts.last as? TooManyCertificateRequestsAlert,
-                                  "Alert is not TooManyCertificateRequestsAlert")
+        let alert = try XCTUnwrap(
+            container.alertService.alerts.last as? TooManyCertificateRequestsAlert,
+            "Alert is not TooManyCertificateRequestsAlert"
+        )
 
         XCTAssert(alert.message?.hasSuffix("2 minutes.") == true)
 

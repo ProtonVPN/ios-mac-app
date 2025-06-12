@@ -176,10 +176,12 @@ final class SettingsAccountViewModel {
 
     private var deleteAccountSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .buttonWithLoadingIndicator(title: AccountDeletionService.defaultButtonName,
-                                        accessibilityIdentifier: "Delete account",
-                                        color: .notificationErrorColor(),
-                                        controller: controller),
+            .buttonWithLoadingIndicator(
+                title: AccountDeletionService.defaultButtonName,
+                accessibilityIdentifier: "Delete account",
+                color: .notificationErrorColor(),
+                controller: controller
+            ),
             .tooltip(text: AccountDeletionService.defaultExplanationMessage),
         ]
         return TableViewSection(title: "", cells: cells)

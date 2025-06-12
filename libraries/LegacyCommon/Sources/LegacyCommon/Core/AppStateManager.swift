@@ -150,18 +150,20 @@ public class AppStateManagerImplementation: AppStateManager {
         VpnManagerFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(vpnApiService: factory.makeVpnApiService(),
-                  vpnManager: factory.makeVpnManager(),
-                  networking: factory.makeNetworking(),
-                  alertService: factory.makeCoreAlertService(),
-                  timerFactory: factory.makeTimerFactory(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
-                  vpnAuthentication: factory.makeVpnAuthentication(),
-                  natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
-                  netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+        self.init(
+            vpnApiService: factory.makeVpnApiService(),
+            vpnManager: factory.makeVpnManager(),
+            networking: factory.makeNetworking(),
+            alertService: factory.makeCoreAlertService(),
+            timerFactory: factory.makeTimerFactory(),
+            propertiesManager: factory.makePropertiesManager(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
+            vpnAuthentication: factory.makeVpnAuthentication(),
+            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
+            netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
+        )
     }
 
     public init(
@@ -359,9 +361,11 @@ public class AppStateManagerImplementation: AppStateManager {
     private func beginTimeoutCountdown() {
         cancelTimeout()
 
-        timeoutTimer = timerFactory.scheduledTimer(runAt: Date().addingTimeInterval(30),
-                                                   leeway: .seconds(5),
-                                                   queue: .main) { [weak self] in
+        timeoutTimer = timerFactory.scheduledTimer(
+            runAt: Date().addingTimeInterval(30),
+            leeway: .seconds(5),
+            queue: .main
+        ) { [weak self] in
             self?.timeout()
         }
     }

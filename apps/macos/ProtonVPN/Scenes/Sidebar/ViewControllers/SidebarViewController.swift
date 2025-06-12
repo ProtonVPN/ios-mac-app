@@ -366,10 +366,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private func setupTabBar() {
         tabBarControllerViewContainer.pin(viewController: tabBarViewController)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleTabChanged(_:)),
-                                               name: tabBarViewController.tabChanged,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleTabChanged(_:)),
+            name: tabBarViewController.tabChanged,
+            object: nil
+        )
     }
 
     private func setViewController(forTab tab: SidebarTab) {

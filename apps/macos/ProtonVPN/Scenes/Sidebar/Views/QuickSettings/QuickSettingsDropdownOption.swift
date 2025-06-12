@@ -108,13 +108,16 @@ class QuickSettingsDropdownOption: NSView {
     }
 
     private func applyTrackingArea() {
-        let trackingArea = NSTrackingArea(rect: bounds, options: [
-            NSTrackingArea.Options.mouseEnteredAndExited,
-            NSTrackingArea.Options.mouseMoved,
-            NSTrackingArea.Options.activeInKeyWindow,
-        ],
-        owner: self,
-        userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [
+                NSTrackingArea.Options.mouseEnteredAndExited,
+                NSTrackingArea.Options.mouseMoved,
+                NSTrackingArea.Options.activeInKeyWindow,
+            ],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
     }
 

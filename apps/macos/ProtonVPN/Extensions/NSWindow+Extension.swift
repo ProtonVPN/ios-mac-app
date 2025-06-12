@@ -92,8 +92,10 @@ extension NSWindow {
         }
         let freeHeight = max(0, visibleFrame.height - size.height)
         let freeWidth = max(0, visibleFrame.width - size.width)
-        setFrameOrigin(.init(x: freeWidth / 2,
-                             y: size.height + freeHeight / 2))
+        setFrameOrigin(.init(
+            x: freeWidth / 2,
+            y: size.height + freeHeight / 2
+        ))
     }
 }
 

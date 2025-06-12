@@ -302,19 +302,23 @@ class StatusViewModel {
             connectionRequest(for: profile) == vpnGateway.lastConnectionRequest
         }
         if contains {
-            return .button(title: Localizable.deleteProfile,
-                           accessibilityIdentifier: "Delete Profile",
-                           color: .notificationErrorColor(),
-                           handler: { [deleteProfile] in
-                               deleteProfile()
-                           })
+            return .button(
+                title: Localizable.deleteProfile,
+                accessibilityIdentifier: "Delete Profile",
+                color: .notificationErrorColor(),
+                handler: { [deleteProfile] in
+                    deleteProfile()
+                }
+            )
         } else {
-            return .button(title: Localizable.saveAsProfile,
-                           accessibilityIdentifier: "Save as Profile",
-                           color: .normalTextColor(),
-                           handler: { [saveAsProfile] in
-                               saveAsProfile()
-                           })
+            return .button(
+                title: Localizable.saveAsProfile,
+                accessibilityIdentifier: "Save as Profile",
+                color: .normalTextColor(),
+                handler: { [saveAsProfile] in
+                    saveAsProfile()
+                }
+            )
         }
     }
 
@@ -353,18 +357,22 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
             log.error("Could not create profile because matching profile already exists", category: .ui)
-            messageHandler?(Localizable.profileCreatedSuccessfully,
-                            GSMessageType.success,
-                            UIConstants.messageOptions)
+            messageHandler?(
+                Localizable.profileCreatedSuccessfully,
+                GSMessageType.success,
+                UIConstants.messageOptions
+            )
             DispatchQueue.main.async { self.contentChanged?() }
             return
         }
 
         let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol ?? propertiesManager.vpnProtocol
         _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol, netShield: appStateManager.activeConnection()?.netShieldType)
-        messageHandler?(Localizable.profileCreatedSuccessfully,
-                        GSMessageType.success,
-                        UIConstants.messageOptions)
+        messageHandler?(
+            Localizable.profileCreatedSuccessfully,
+            GSMessageType.success,
+            UIConstants.messageOptions
+        )
         DispatchQueue.main.async { self.contentChanged?() }
     }
 
@@ -372,17 +380,21 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               let existingProfile = profileManager.profile(withServer: server) else {
             log.error("Could not find profile to delete", category: .ui)
-            messageHandler?(Localizable.profileDeletionFailed,
-                            GSMessageType.error,
-                            UIConstants.messageOptions)
+            messageHandler?(
+                Localizable.profileDeletionFailed,
+                GSMessageType.error,
+                UIConstants.messageOptions
+            )
             DispatchQueue.main.async { self.contentChanged?() }
             return
         }
 
         profileManager.deleteProfile(existingProfile)
-        messageHandler?(Localizable.profileDeletedSuccessfully,
-                        GSMessageType.success,
-                        UIConstants.messageOptions)
+        messageHandler?(
+            Localizable.profileDeletedSuccessfully,
+            GSMessageType.success,
+            UIConstants.messageOptions
+        )
         DispatchQueue.main.async { self.contentChanged?() }
     }
 

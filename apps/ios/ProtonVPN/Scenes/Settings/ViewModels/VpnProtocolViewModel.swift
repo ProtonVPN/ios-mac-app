@@ -32,11 +32,13 @@ final class VpnProtocolViewModel {
     private var smartProtocolConfig: SmartProtocolConfig
     private let availableProtocols: [ConnectionProtocol]
 
-    init(connectionProtocol: ConnectionProtocol,
-         smartProtocolConfig: SmartProtocolConfig,
-         supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
-         displaySmartProtocol _: Bool = true,
-         featureFlags: FeatureFlags) {
+    init(
+        connectionProtocol: ConnectionProtocol,
+        smartProtocolConfig: SmartProtocolConfig,
+        supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
+        displaySmartProtocol _: Bool = true,
+        featureFlags: FeatureFlags
+    ) {
         self.selectedProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
 
@@ -59,9 +61,11 @@ final class VpnProtocolViewModel {
                     return true
                 }
 
-                return .checkmarkStandard(title: item.localizedDescription,
-                                          checked: selectedProtocol == item,
-                                          handler: handler)
+                return .checkmarkStandard(
+                    title: item.localizedDescription,
+                    checked: selectedProtocol == item,
+                    handler: handler
+                )
             }
 
         return TableViewSection(title: "", showHeader: false, cells: cells)

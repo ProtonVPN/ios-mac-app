@@ -79,8 +79,11 @@ struct ImageAsset {
 
 extension ImageAsset.Image {
     @available(iOS 8.0, tvOS 9.0, watchOS 2.0, *)
-    @available(macOS, deprecated,
-               message: "This initializer is unsafe on macOS, please use the ImageAsset.image property")
+    @available(
+        macOS,
+        deprecated,
+        message: "This initializer is unsafe on macOS, please use the ImageAsset.image property"
+    )
     convenience init?(asset: ImageAsset) {
         #if os(iOS) || os(tvOS)
             let bundle = BundleToken.bundle

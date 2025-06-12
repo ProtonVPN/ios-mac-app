@@ -41,10 +41,12 @@ private func mockAuthCredentials(username: String) -> AuthCredentials {
 
 private var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
-private let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
-                                                                responseCode: ApiErrorCode.subuserWithoutSessions,
-                                                                userFacingMessage: nil,
-                                                                underlyingError: nil)
+private let subuserWithoutSessionsResponseError = ResponseError(
+    httpCode: HttpStatusCode.accessForbidden.rawValue,
+    responseCode: ApiErrorCode.subuserWithoutSessions,
+    userFacingMessage: nil,
+    underlyingError: nil
+)
 
 // We would like to use `TestIsolatedDatabaseTestCase` here, but Xcode fails to link `PersistenceTestSupport` correctly
 final class AppSessionManagerImplementationTests: XCTestCase {

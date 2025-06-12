@@ -53,40 +53,54 @@ public final class TroubleshootViewModel {
             AlternateRoutingTroubleshootItem(propertiesManager: propertiesManager),
 
             // No internet
-            BasicTroubleshootItem(title: Localizable.troubleshootItemNointernetTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemNointernetDescription)),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemNointernetTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemNointernetDescription)
+            ),
 
             // ISP
-            BasicTroubleshootItem(title: Localizable.troubleshootItemIspTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemIspDescription)
-                                      .add(link: Localizable.troubleshootItemIspLink1, withUrl: urlTor)),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemIspTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemIspDescription)
+                    .add(link: Localizable.troubleshootItemIspLink1, withUrl: urlTor)
+            ),
 
             // ISP
-            BasicTroubleshootItem(title: Localizable.troubleshootItemGovTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemGovDescription)
-                                      .add(link: Localizable.troubleshootItemGovLink1, withUrl: urlTor)),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemGovTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemGovDescription)
+                    .add(link: Localizable.troubleshootItemGovLink1, withUrl: urlTor)
+            ),
 
             // Antivirus
-            BasicTroubleshootItem(title: Localizable.troubleshootItemAntivirusTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemAntivirusDescription)),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemAntivirusTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemAntivirusDescription)
+            ),
 
             // Proxy / Firewall
-            BasicTroubleshootItem(title: Localizable.troubleshootItemProxyTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemProxyDescription)),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemProxyTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemProxyDescription)
+            ),
 
             // Proton status
-            BasicTroubleshootItem(title: Localizable.troubleshootItemProtonTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemProtonDescription)
-                                      .add(link: Localizable.troubleshootItemProtonLink1, withUrl: urlProtonStatus)),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemProtonTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemProtonDescription)
+                    .add(link: Localizable.troubleshootItemProtonLink1, withUrl: urlProtonStatus)
+            ),
 
             // Contact / Other
-            BasicTroubleshootItem(title: Localizable.troubleshootItemOtherTitle,
-                                  description: NSMutableAttributedString(string: Localizable.troubleshootItemOtherDescription(supportEmail))
-                                      .add(links: [
-                                          (Localizable.troubleshootItemOtherLink1, urlSupportForm),
-                                          (Localizable.troubleshootItemOtherLink2, String(format: "mailto:%@", supportEmail)),
-                                          (Localizable.troubleshootItemOtherLink3, urlTwitter),
-                                      ])),
+            BasicTroubleshootItem(
+                title: Localizable.troubleshootItemOtherTitle,
+                description: NSMutableAttributedString(string: Localizable.troubleshootItemOtherDescription(supportEmail))
+                    .add(links: [
+                        (Localizable.troubleshootItemOtherLink1, urlSupportForm),
+                        (Localizable.troubleshootItemOtherLink2, String(format: "mailto:%@", supportEmail)),
+                        (Localizable.troubleshootItemOtherLink3, urlTwitter),
+                    ])
+            ),
         ]
     }
 }

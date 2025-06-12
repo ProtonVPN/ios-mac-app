@@ -44,10 +44,12 @@ struct Provider: TimelineProvider {
     }
 
     func placeholder(in _: Context) -> ConnectWidgetEntry {
-        .init(date: .now,
-              connectionSpec: .defaultFastest,
-              protectionState: .protected,
-              recentServers: [])
+        .init(
+            date: .now,
+            connectionSpec: .defaultFastest,
+            protectionState: .protected,
+            recentServers: []
+        )
     }
 
     func getSnapshot(in _: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
@@ -75,18 +77,22 @@ struct Provider: TimelineProvider {
         let credentials: AuthCredentials? = authKeychain.fetch()
 
         guard credentials?.userId != nil else {
-            return ConnectWidgetEntry(date: .now,
-                                      connectionSpec: nil,
-                                      protectionState: .signedOut,
-                                      recentServers: [])
+            return ConnectWidgetEntry(
+                date: .now,
+                connectionSpec: nil,
+                protectionState: .signedOut,
+                recentServers: []
+            )
         }
 
         let recents = recentConnectionList()
 
-        return ConnectWidgetEntry(date: .now,
-                                  connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
-                                  protectionState: vpnConnectionStatus.protectionState,
-                                  recentServers: recents)
+        return ConnectWidgetEntry(
+            date: .now,
+            connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
+            protectionState: vpnConnectionStatus.protectionState,
+            recentServers: recents
+        )
     }
 }
 

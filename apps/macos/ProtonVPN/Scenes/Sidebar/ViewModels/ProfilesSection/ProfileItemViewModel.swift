@@ -59,11 +59,13 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         formSecondaryDescription()
     }
 
-    init(profile: Profile,
-         vpnGateway: VpnGatewayProtocol,
-         userTier: Int,
-         alertService: CoreAlertService,
-         sysexManager: SystemExtensionManager) {
+    init(
+        profile: Profile,
+        vpnGateway: VpnGatewayProtocol,
+        userTier: Int,
+        alertService: CoreAlertService,
+        sysexManager: SystemExtensionManager
+    ) {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.sysexManager = sysexManager

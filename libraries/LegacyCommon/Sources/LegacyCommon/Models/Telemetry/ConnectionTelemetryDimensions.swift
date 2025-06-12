@@ -39,19 +39,21 @@ public struct ConnectionDimensions: Encodable {
     let isp: String // max 25 char
     let isServerFree: Bool // only used for adding "free" to the serverFeatures
 
-    init(outcome: Outcome,
-         userTier: UserTier,
-         vpnStatus: VPNStatus,
-         vpnTrigger: UserInitiatedVPNChange.VPNTrigger,
-         networkType: NetworkType,
-         serverFeatures: ServerFeature,
-         vpnCountry: String,
-         userCountry: String,
-         protocol: VpnProtocol,
-         server: String,
-         port: String,
-         isp: String,
-         isServerFree: Bool) {
+    init(
+        outcome: Outcome,
+        userTier: UserTier,
+        vpnStatus: VPNStatus,
+        vpnTrigger: UserInitiatedVPNChange.VPNTrigger,
+        networkType: NetworkType,
+        serverFeatures: ServerFeature,
+        vpnCountry: String,
+        userCountry: String,
+        protocol: VpnProtocol,
+        server: String,
+        port: String,
+        isp: String,
+        isServerFree: Bool
+    ) {
         self.outcome = outcome
         self.userTier = userTier
         self.vpnStatus = vpnStatus

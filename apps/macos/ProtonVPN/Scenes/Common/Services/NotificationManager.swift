@@ -94,9 +94,11 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
 
     private func fire(_ notification: NSUserNotification) {
         NSUserNotificationCenter.default.deliver(notification)
-        NSUserNotificationCenter.default.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
-                                                 with: notification,
-                                                 afterDelay: delayBeforeDismissing)
+        NSUserNotificationCenter.default.perform(
+            #selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
+            with: notification,
+            afterDelay: delayBeforeDismissing
+        )
     }
 }
 

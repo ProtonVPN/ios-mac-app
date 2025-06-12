@@ -169,9 +169,11 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     }
 
     private func imageViewForFeature(feature: ServerFeature, iconSize: CGFloat? = 16) -> UIImageView {
-        let imageView = UIImageView(image: UIImage(named: feature.imageName,
-                                                   in: .module,
-                                                   with: nil))
+        let imageView = UIImageView(image: UIImage(
+            named: feature.imageName,
+            in: .module,
+            with: nil
+        ))
         imageView.tag = ServerCell.featureViewTag
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false

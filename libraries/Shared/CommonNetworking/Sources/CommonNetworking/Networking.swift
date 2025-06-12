@@ -159,15 +159,17 @@ public final class CoreNetworking: Networking {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        apiService.request(method: route.method,
-                           path: route.path,
-                           parameters: route.parameters,
-                           headers: route.header,
-                           authenticated: route.isAuth,
-                           authRetry: route.authRetry,
-                           customAuthCredential: route.authCredential,
-                           nonDefaultTimeout: nil,
-                           retryPolicy: route.retryPolicy) { _, result in
+        apiService.request(
+            method: route.method,
+            path: route.path,
+            parameters: route.parameters,
+            headers: route.header,
+            authenticated: route.isAuth,
+            authRetry: route.authRetry,
+            customAuthCredential: route.authCredential,
+            nonDefaultTimeout: nil,
+            retryPolicy: route.retryPolicy
+        ) { _, result in
             switch result {
             case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])

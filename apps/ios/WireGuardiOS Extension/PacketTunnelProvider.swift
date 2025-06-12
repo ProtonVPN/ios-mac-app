@@ -115,8 +115,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         dataTaskFactory = !sendThroughTunnel ?
             URLSession.shared :
-            ConnectionTunnelDataTaskFactory(provider: self,
-                                            timerFactory: timerFactory)
+            ConnectionTunnelDataTaskFactory(
+                provider: self,
+                timerFactory: timerFactory
+            )
     }
 
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
@@ -170,8 +172,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             let errorNotifier = ErrorNotifier(activationAttemptId: nil)
 
             self.currentWireguardServer = currentWireguardServer
-                .withNewServerPublicKey(server.x25519PublicKey,
-                                        andEntryServerAddress: entryIp)
+                .withNewServerPublicKey(
+                    server.x25519PublicKey,
+                    andEntryServerAddress: entryIp
+                )
 
             self.connectedLogicalId = logical.id
             self.connectedIpId = server.id
@@ -325,9 +329,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
         ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = tunnelProviderProtocol?.unleashFeatureFlagShouldForceConflictRefresh ?? false
 
-        startTunnelWithStoredConfig(errorNotifier: errorNotifier,
-                                    newVpnCertificateFeatures: nil,
-                                    completionHandler: completionHandler)
+        startTunnelWithStoredConfig(
+            errorNotifier: errorNotifier,
+            newVpnCertificateFeatures: nil,
+            completionHandler: completionHandler
+        )
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
@@ -365,8 +371,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     // swiftlint:disable:next cyclomatic_complexity function_body_length
-    func handleProviderMessage(_ message: WireguardProviderRequest,
-                               completionHandler: ((WireguardProviderRequest.Response) -> Void)?) {
+    func handleProviderMessage(
+        _ message: WireguardProviderRequest,
+        completionHandler: ((WireguardProviderRequest.Response) -> Void)?
+    ) {
         switch message {
         case .getRuntimeTunnelConfiguration:
             wg_log(.info, message: "Handle message: getRuntimeTunnelConfiguration")

@@ -39,8 +39,10 @@ public struct EnvironmentSelectorMobileView: View {
         } header: {
             Text("Selected Environment").font(.headline)
         } footer: {
-            sendActionButton(title: "Use and continue",
-                             action: .useAndContinueButtonTapped)
+            sendActionButton(
+                title: "Use and continue",
+                action: .useAndContinueButtonTapped
+            )
         }
     }
 
@@ -168,10 +170,14 @@ public struct EnvironmentSelectorMobileView: View {
             Text("Apply changes").font(.headline)
         } footer: {
             VStack {
-                sendActionButton(title: "Change and kill the app",
-                                 action: .changeAndKillAppButtonTapped)
-                sendActionButton(title: "Reset to production and kill the app",
-                                 action: .resetAndKillAppButtonTapped)
+                sendActionButton(
+                    title: "Change and kill the app",
+                    action: .changeAndKillAppButtonTapped
+                )
+                sendActionButton(
+                    title: "Reset to production and kill the app",
+                    action: .resetAndKillAppButtonTapped
+                )
             }
         }
     }

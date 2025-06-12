@@ -116,9 +116,11 @@ final class DependencyContainer: Container {
     // MARK: VpnCredentialsConfiguratorFactoryCreator
 
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
-                                             vpnKeychain: makeVpnKeychain(),
-                                             vpnAuthentication: vpnAuthentication)
+        IOSVpnCredentialsConfiguratorFactory(
+            propertiesManager: makePropertiesManager(),
+            vpnKeychain: makeVpnKeychain(),
+            vpnAuthentication: vpnAuthentication
+        )
     }
 
     // MARK: VpnAuthentication
@@ -133,9 +135,11 @@ final class DependencyContainer: Container {
         let appLogsFolder = makeLogFileManager()
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
             .deletingLastPathComponent()
-        return IOSLogContentProvider(appLogsFolder: appLogsFolder,
-                                     appGroup: DomainConstants.AppGroups.main,
-                                     wireguardProtocolFactory: wireguardFactory)
+        return IOSLogContentProvider(
+            appLogsFolder: appLogsFolder,
+            appGroup: DomainConstants.AppGroups.main,
+            wireguardProtocolFactory: wireguardFactory
+        )
     }
 
     override func makeUpdateChecker() -> UpdateChecker {

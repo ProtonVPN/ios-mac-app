@@ -96,16 +96,20 @@ class ServerItemViewModel: ServerItemViewModelCore {
             && connectedServer.id == serverModel.logical.id
     }
 
-    init(serverModel: ServerInfo,
-         vpnGateway: VpnGatewayProtocol,
-         appStateManager: AppStateManager,
-         propertiesManager: PropertiesManagerProtocol,
-         countriesSectionViewModel: CountriesSectionViewModel) {
+    init(
+        serverModel: ServerInfo,
+        vpnGateway: VpnGatewayProtocol,
+        appStateManager: AppStateManager,
+        propertiesManager: PropertiesManagerProtocol,
+        countriesSectionViewModel: CountriesSectionViewModel
+    ) {
         self.countriesSectionViewModel = countriesSectionViewModel
-        super.init(serverModel: serverModel,
-                   vpnGateway: vpnGateway,
-                   appStateManager: appStateManager,
-                   propertiesManager: propertiesManager)
+        super.init(
+            serverModel: serverModel,
+            vpnGateway: vpnGateway,
+            appStateManager: appStateManager,
+            propertiesManager: propertiesManager
+        )
     }
 
     func upgradeAction() {

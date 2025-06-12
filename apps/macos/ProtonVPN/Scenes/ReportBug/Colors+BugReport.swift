@@ -22,20 +22,22 @@ import SwiftUI
 
 extension BugReport.Colors {
     public init() {
-        self.init(primary: ColorProvider.Primary,
-                  interactive: ColorProvider.InteractionNorm,
-                  interactiveSecondary: ColorProvider.InteractionNormActive,
-                  interactiveActive: ColorProvider.InteractionNormHover,
-                  interactiveDisabled: ColorProvider.InteractionWeak,
-                  textPrimary: ColorProvider.TextNorm,
-                  textSecondary: ColorProvider.TextWeak,
-                  textAccent: ColorProvider.TextHint,
-                  background: ColorProvider.BackgroundNorm,
-                  backgroundWeak: ColorProvider.BackgroundWeak,
-                  backgroundStrong: ColorProvider.BackgroundStrong,
-                  backgroundUpdateButton: ColorProvider.InteractionWeak,
-                  separator: ColorProvider.BorderWeak,
-                  qfIcon: ColorProvider.SignalWarning,
-                  externalLinkIcon: ColorProvider.TextHint)
+        self.init(
+            primary: ColorProvider.Primary,
+            interactive: ColorProvider.InteractionNorm,
+            interactiveSecondary: ColorProvider.InteractionNormActive,
+            interactiveActive: ColorProvider.InteractionNormHover,
+            interactiveDisabled: ColorProvider.InteractionWeak,
+            textPrimary: ColorProvider.TextNorm,
+            textSecondary: ColorProvider.TextWeak,
+            textAccent: ColorProvider.TextHint,
+            background: ColorProvider.BackgroundNorm,
+            backgroundWeak: ColorProvider.BackgroundWeak,
+            backgroundStrong: ColorProvider.BackgroundStrong,
+            backgroundUpdateButton: ColorProvider.InteractionWeak,
+            separator: ColorProvider.BorderWeak,
+            qfIcon: ColorProvider.SignalWarning,
+            externalLinkIcon: ColorProvider.TextHint
+        )
     }
 }

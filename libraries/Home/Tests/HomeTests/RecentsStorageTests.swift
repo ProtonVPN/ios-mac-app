@@ -71,23 +71,29 @@ final class RecentsStorageTests: XCTestCase {
         withDependencies {
             $0.date = .constant(now)
         } operation: {
-            let one = RecentConnection(pinnedDate: nil,
-                                       underMaintenance: false,
-                                       connectionDate: now,
-                                       connection: .init(location: .region(code: "1"), features: []))
-            let two = RecentConnection(pinnedDate: now + 1,
-                                       underMaintenance: false,
-                                       connectionDate: now,
-                                       connection: .init(location: .region(code: "2"), features: []))
+            let one = RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: .init(location: .region(code: "1"), features: [])
+            )
+            let two = RecentConnection(
+                pinnedDate: now + 1,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: .init(location: .region(code: "2"), features: [])
+            )
             var recents: OrderedSet<RecentConnection> = [one, two]
 
             XCTAssertEqual(recents.sanitized(), [two, one])
 
             let threeSpec = ConnectionSpec(location: .region(code: "3"), features: [])
-            var three = RecentConnection(pinnedDate: nil,
-                                         underMaintenance: false,
-                                         connectionDate: now,
-                                         connection: threeSpec)
+            var three = RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: threeSpec
+            )
             recents.updateList(with: threeSpec)
             recents.pin(recent: three, pinnedDate: now)
             three.pinnedDate = now
@@ -98,10 +104,12 @@ final class RecentsStorageTests: XCTestCase {
     func testInitializingRecentsListWithMoreThanAllowedNumberOfConnectionsTrimsTheRecentList() {
         let now = Date()
         let array = (0 ... 9).map { element in
-            RecentConnection(pinnedDate: nil,
-                             underMaintenance: false,
-                             connectionDate: now,
-                             connection: .init(location: .region(code: "\(element)"), features: []))
+            RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: .init(location: .region(code: "\(element)"), features: [])
+            )
         }
         XCTAssertEqual(array.count, 10)
         let recents = OrderedSet(array)

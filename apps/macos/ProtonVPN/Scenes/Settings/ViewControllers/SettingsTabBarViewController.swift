@@ -50,8 +50,12 @@ final class SettingsTabBarViewController: NSViewController {
 
         setupView()
         setupComponents()
-        NotificationCenter.default.addObserver(self, selector: #selector(tabChanged(_:)),
-                                               name: viewModel.tabChanged, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(tabChanged(_:)),
+            name: viewModel.tabChanged,
+            object: nil
+        )
     }
 
     private func setupView() {

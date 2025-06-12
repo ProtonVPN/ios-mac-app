@@ -347,14 +347,18 @@ public final class ProtocolNotAvailableForServerAlert: SystemAlert {
 
     public init(confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
-            actions.append(AlertAction(title: Localizable.disconnect,
-                                       style: .destructive,
-                                       handler: confirmHandler))
+            actions.append(AlertAction(
+                title: Localizable.disconnect,
+                style: .destructive,
+                handler: confirmHandler
+            ))
         }
         let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
-        actions.append(AlertAction(title: dismissText,
-                                   style: .cancel,
-                                   handler: cancelHandler ?? dismiss))
+        actions.append(AlertAction(
+            title: dismissText,
+            style: .cancel,
+            handler: cancelHandler ?? dismiss
+        ))
     }
 }
 
@@ -368,14 +372,18 @@ public final class LocationNotAvailableAlert: SystemAlert {
     /// Switching the title and message according to the presence of profileName.
     public init(profileName: String? = nil, confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
-            actions.append(AlertAction(title: Localizable.disconnect,
-                                       style: .destructive,
-                                       handler: confirmHandler))
+            actions.append(AlertAction(
+                title: Localizable.disconnect,
+                style: .destructive,
+                handler: confirmHandler
+            ))
         }
         let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
-        actions.append(AlertAction(title: dismissText,
-                                   style: .cancel,
-                                   handler: cancelHandler ?? dismiss))
+        actions.append(AlertAction(
+            title: dismissText,
+            style: .cancel,
+            handler: cancelHandler ?? dismiss
+        ))
         self.dismiss = cancelHandler
 
         if let profileName {

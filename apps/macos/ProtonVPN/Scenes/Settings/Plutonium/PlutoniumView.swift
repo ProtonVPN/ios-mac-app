@@ -292,14 +292,18 @@ public struct PlutoniumView: View {
     private func appsList() -> some View {
         VStack {
             HStack(spacing: .themeRadius8) {
-                appsSection(title: Localizable.plutoniumAllApps,
-                            subtitle: nil,
-                            apps: store.remainingApps,
-                            operation: .add)
-                appsSection(title: appsHeaderTitle,
-                            subtitle: appsHeaderSubtitle,
-                            apps: store.activatedApps,
-                            operation: .remove)
+                appsSection(
+                    title: Localizable.plutoniumAllApps,
+                    subtitle: nil,
+                    apps: store.remainingApps,
+                    operation: .add
+                )
+                appsSection(
+                    title: appsHeaderTitle,
+                    subtitle: appsHeaderSubtitle,
+                    apps: store.activatedApps,
+                    operation: .remove
+                )
             }
             doneButton { appsSheet.toggle() }
         }
@@ -377,10 +381,12 @@ public struct PlutoniumView: View {
         .frame(width: Self.appsSectionWidth)
         .background(Color(.background, (operation == .remove && dragOver) ? [.transparent, .hovered] : [.transparent]))
         .clipRectangle(cornerRadius: .radius8)
-        .themeBorder(style: [],
-                     dashed: operation == .remove && dragOver,
-                     lineWidth: (operation == .remove && dragOver) ? 2 : 0,
-                     cornerRadius: .radius8)
+        .themeBorder(
+            style: [],
+            dashed: operation == .remove && dragOver,
+            lineWidth: (operation == .remove && dragOver) ? 2 : 0,
+            cornerRadius: .radius8
+        )
     }
 
     private func openPanelLabel() -> some View {

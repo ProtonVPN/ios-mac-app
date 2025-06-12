@@ -102,8 +102,10 @@ class TelemetryConnectionStatusReporter {
         case .disconnecting:
             throw Error(localizedDescription: "Ignoring the `disconnecting` status")
         }
-        let event = try collectDimensions(outcome: connectionOutcome(connectionStatus),
-                                          eventType: eventType)
+        let event = try collectDimensions(
+            outcome: connectionOutcome(connectionStatus),
+            eventType: eventType
+        )
         await scheduleEvent(event)
     }
 
@@ -149,9 +151,11 @@ class TelemetryConnectionStatusReporter {
         guard let eventType else {
             return
         }
-        let event = try collectDimensions(connectionState: connectionState,
-                                          connectionIntent: connection,
-                                          eventType: eventType)
+        let event = try collectDimensions(
+            connectionState: connectionState,
+            connectionIntent: connection,
+            eventType: eventType
+        )
         await scheduleEvent(event)
     }
 

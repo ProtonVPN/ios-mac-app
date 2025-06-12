@@ -107,9 +107,11 @@ extension RecentConnection {
         let last = RecentConnection.sampleData.last!
         return VStack(spacing: 0) {
             ForEach(RecentConnection.sampleData) { item in
-                RecentRowItemView(item: item,
-                                  isConnected: .random(),
-                                  sendAction: { _ in () })
+                RecentRowItemView(
+                    item: item,
+                    isConnected: .random(),
+                    sendAction: { _ in () }
+                )
             }
         }
         .padding()

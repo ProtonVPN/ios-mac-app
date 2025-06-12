@@ -46,10 +46,12 @@ final class AccountDetailsTableViewCell: UITableViewCell {
         accessibilityIdentifier = "Account Details cell"
     }
 
-    func setup(initials: NSAttributedString,
-               username: NSAttributedString,
-               plan: NSAttributedString,
-               handler: @escaping () -> Void) {
+    func setup(
+        initials: NSAttributedString,
+        username: NSAttributedString,
+        plan: NSAttributedString,
+        handler: @escaping () -> Void
+    ) {
         initialsText.attributedText = initials
         self.username.attributedText = username
         self.plan.attributedText = plan

@@ -20,10 +20,14 @@
     import Foundation
 
     extension ConnectionEvent {
-        public static let connectionMock1 = ConnectionEvent(event: .vpnConnection(timeToConnection: 123),
-                                                            dimensions: .connectionSuccessMock1)
-        public static let disconnectionMock1 = ConnectionEvent(event: .vpnDisconnection(sessionLength: 123),
-                                                               dimensions: .disconnectionSuccessMock1)
+        public static let connectionMock1 = ConnectionEvent(
+            event: .vpnConnection(timeToConnection: 123),
+            dimensions: .connectionSuccessMock1
+        )
+        public static let disconnectionMock1 = ConnectionEvent(
+            event: .vpnDisconnection(sessionLength: 123),
+            dimensions: .disconnectionSuccessMock1
+        )
     }
 
     extension ConnectionEvent.Values {

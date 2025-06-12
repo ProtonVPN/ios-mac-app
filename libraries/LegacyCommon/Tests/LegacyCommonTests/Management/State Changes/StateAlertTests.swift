@@ -133,27 +133,31 @@ class StateAlertTests: XCTestCase {
 
 extension ConnectionConfiguration {
     static var connectionConfig: ConnectionConfiguration {
-        let server = ServerModel(id: "",
-                                 name: "",
-                                 domain: "",
-                                 load: 0,
-                                 entryCountryCode: "",
-                                 exitCountryCode: "",
-                                 tier: 1,
-                                 feature: .zero,
-                                 city: nil,
-                                 ips: [ServerIp](),
-                                 score: 0.0,
-                                 status: 0,
-                                 location: ServerLocation(lat: 0, long: 0),
-                                 hostCountry: nil,
-                                 translatedCity: nil,
-                                 gatewayName: nil)
-        let serverIp = ServerIp(id: "",
-                                entryIp: "",
-                                exitIp: "",
-                                domain: "",
-                                status: 0)
+        let server = ServerModel(
+            id: "",
+            name: "",
+            domain: "",
+            load: 0,
+            entryCountryCode: "",
+            exitCountryCode: "",
+            tier: 1,
+            feature: .zero,
+            city: nil,
+            ips: [ServerIp](),
+            score: 0.0,
+            status: 0,
+            location: ServerLocation(lat: 0, long: 0),
+            hostCountry: nil,
+            translatedCity: nil,
+            gatewayName: nil
+        )
+        let serverIp = ServerIp(
+            id: "",
+            entryIp: "",
+            exitIp: "",
+            domain: "",
+            status: 0
+        )
         return ConnectionConfiguration(
             id: UUID(),
             server: server,
@@ -168,27 +172,31 @@ extension ConnectionConfiguration {
     }
 
     static var connectionConfig2: ConnectionConfiguration {
-        let server = ServerModel(id: "",
-                                 name: "",
-                                 domain: "",
-                                 load: 0,
-                                 entryCountryCode: "CZ",
-                                 exitCountryCode: "PL",
-                                 tier: 1,
-                                 feature: .zero,
-                                 city: nil,
-                                 ips: [ServerIp](),
-                                 score: 0.0,
-                                 status: 0,
-                                 location: ServerLocation(lat: 0, long: 0),
-                                 hostCountry: nil,
-                                 translatedCity: nil,
-                                 gatewayName: nil)
-        let serverIp = ServerIp(id: "",
-                                entryIp: "",
-                                exitIp: "",
-                                domain: "",
-                                status: 0)
+        let server = ServerModel(
+            id: "",
+            name: "",
+            domain: "",
+            load: 0,
+            entryCountryCode: "CZ",
+            exitCountryCode: "PL",
+            tier: 1,
+            feature: .zero,
+            city: nil,
+            ips: [ServerIp](),
+            score: 0.0,
+            status: 0,
+            location: ServerLocation(lat: 0, long: 0),
+            hostCountry: nil,
+            translatedCity: nil,
+            gatewayName: nil
+        )
+        let serverIp = ServerIp(
+            id: "",
+            entryIp: "",
+            exitIp: "",
+            domain: "",
+            status: 0
+        )
         return ConnectionConfiguration(
             id: UUID(),
             server: server,

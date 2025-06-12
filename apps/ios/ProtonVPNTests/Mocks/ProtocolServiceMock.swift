@@ -14,8 +14,10 @@ import LegacyCommon
 
 class ProtocolServiceMock: ProtocolService {
     func makeVpnProtocolViewController(viewModel _: VpnProtocolViewModel) -> VpnProtocolViewController {
-        VpnProtocolViewController(viewModel: .init(connectionProtocol: .vpnProtocol(.ike),
-                                                   smartProtocolConfig: .init(),
-                                                   featureFlags: .init()))
+        VpnProtocolViewController(viewModel: .init(
+            connectionProtocol: .vpnProtocol(.ike),
+            smartProtocolConfig: .init(),
+            featureFlags: .init()
+        ))
     }
 }

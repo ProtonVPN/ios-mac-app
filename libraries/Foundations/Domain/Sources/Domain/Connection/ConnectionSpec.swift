@@ -112,23 +112,29 @@ public extension ConnectionSpec.Location {
 }
 
 public extension ConnectionSpec.Location {
-    static let specificCity = Self.exact(.paid,
-                                         logicalID: nil,
-                                         number: nil,
-                                         subregion: "Szczebrzeszyn",
-                                         regionCode: "PL")
+    static let specificCity = Self.exact(
+        .paid,
+        logicalID: nil,
+        number: nil,
+        subregion: "Szczebrzeszyn",
+        regionCode: "PL"
+    )
 
-    static let specificCityServer = Self.exact(.paid,
-                                               logicalID: nil,
-                                               number: 456,
-                                               subregion: "Szczebrzeszyn",
-                                               regionCode: "PL")
+    static let specificCityServer = Self.exact(
+        .paid,
+        logicalID: nil,
+        number: 456,
+        subregion: "Szczebrzeszyn",
+        regionCode: "PL"
+    )
 
-    static let specificCountryServer = Self.exact(.free,
-                                                  logicalID: nil,
-                                                  number: 123,
-                                                  subregion: nil,
-                                                  regionCode: "PL")
+    static let specificCountryServer = Self.exact(
+        .free,
+        logicalID: nil,
+        number: 123,
+        subregion: nil,
+        regionCode: "PL"
+    )
 }
 
 public extension ConnectionSpec {

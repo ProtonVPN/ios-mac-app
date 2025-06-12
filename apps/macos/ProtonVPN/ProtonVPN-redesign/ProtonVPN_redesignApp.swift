@@ -69,9 +69,13 @@
                         }
                     case .notLoggedIn:
                         CaseLet(/AppReducer.State.notLoggedIn, action: AppReducer.Action.showLogin) { appStore in
-                            LoginViewControllerRepresentable(store: appStore,
-                                                             loginViewModel: LoginViewModel(factory: appDelegate.container,
-                                                                                            initialError: nil))
+                            LoginViewControllerRepresentable(
+                                store: appStore,
+                                loginViewModel: LoginViewModel(
+                                    factory: appDelegate.container,
+                                    initialError: nil
+                                )
+                            )
                         }
                         .preferredColorScheme(.dark)
                         .onAppear {

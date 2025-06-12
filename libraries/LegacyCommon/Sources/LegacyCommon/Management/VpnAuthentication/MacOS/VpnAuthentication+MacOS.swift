@@ -26,8 +26,10 @@ import VPNShared
 #if os(macOS)
     /// MacOS implementation of Certificate Refresh management
     public final class VpnAuthenticationManager: VpnAuthentication {
-        private let operationDispatchQueue = DispatchQueue(label: "ch.protonvpn.mac.async_cert_refresh",
-                                                           qos: .userInitiated)
+        private let operationDispatchQueue = DispatchQueue(
+            label: "ch.protonvpn.mac.async_cert_refresh",
+            qos: .userInitiated
+        )
         private let queue = OperationQueue()
         private let storage: VpnAuthenticationStorageSync
         private let networking: Networking
@@ -76,8 +78,10 @@ import VPNShared
                 if existingCertificate.isExpired {
                     log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
                 }
-                completion(.success(VpnAuthenticationData(clientKey: keys.privateKey,
-                                                          clientCertificate: existingCertificate.certificate)))
+                completion(.success(VpnAuthenticationData(
+                    clientKey: keys.privateKey,
+                    clientCertificate: existingCertificate.certificate
+                )))
                 return
             }
 

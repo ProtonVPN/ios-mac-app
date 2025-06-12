@@ -199,17 +199,21 @@ private extension StrokeStyle {
 
 @available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview("In Progress", traits: .sizeThatFitsLayout) {
-    ReconnectCountdown(dateFinished: Date().addingTimeInterval(15),
-                       totalDuration: 50)
-        .frame(width: 86, height: 86)
-        .padding()
+    ReconnectCountdown(
+        dateFinished: Date().addingTimeInterval(15),
+        totalDuration: 50
+    )
+    .frame(width: 86, height: 86)
+    .padding()
 }
 
 @available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview("Finished", traits: .sizeThatFitsLayout) {
-    ReconnectCountdown(dateFinished: Date(),
-                       totalDuration: 50,
-                       checkmarkAnimationDuration: 0)
-        .frame(width: 86, height: 86)
-        .padding()
+    ReconnectCountdown(
+        dateFinished: Date(),
+        totalDuration: 50,
+        checkmarkAnimationDuration: 0
+    )
+    .frame(width: 86, height: 86)
+    .padding()
 }

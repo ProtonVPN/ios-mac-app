@@ -79,8 +79,12 @@ final class ProfilesContainerViewController: NSViewController {
 
     private func setupTabBarView() {
         tabBarViewController = ProfilesTabBarViewController(tabChangedExternally: tabChanged)
-        NotificationCenter.default.addObserver(self, selector: #selector(focusTab(_:)),
-                                               name: tabBarViewController.tabChanged, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(focusTab(_:)),
+            name: tabBarViewController.tabChanged,
+            object: nil
+        )
         profilesTabBarControllerViewContainer.pin(viewController: tabBarViewController)
     }
 
@@ -110,8 +114,12 @@ final class ProfilesContainerViewController: NSViewController {
     }
 
     private func startObserving(createNewProfile viewModel: CreateNewProfileViewModel) {
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionFinished),
-                                               name: viewModel.sessionFinished, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(sessionFinished),
+            name: viewModel.sessionFinished,
+            object: nil
+        )
     }
 
     private func createNewProfile() {

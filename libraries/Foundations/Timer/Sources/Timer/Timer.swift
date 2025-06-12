@@ -29,61 +29,79 @@ public protocol TimerFactoryCreator {
 }
 
 public protocol TimerFactory {
-    func scheduledTimer(runAt nextRunTime: Date,
-                        repeating: Double?,
-                        leeway: DispatchTimeInterval?,
-                        queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer
+    func scheduledTimer(
+        runAt nextRunTime: Date,
+        repeating: Double?,
+        leeway: DispatchTimeInterval?,
+        queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) -> BackgroundTimer
 
-    func scheduleAfter(_ interval: DispatchTimeInterval,
-                       on queue: DispatchQueue,
-                       _ closure: @escaping (() -> Void))
+    func scheduleAfter(
+        _ interval: DispatchTimeInterval,
+        on queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    )
 }
 
 public extension TimerFactory {
-    func scheduledTimer(timeInterval: TimeInterval,
-                        repeats: Bool,
-                        queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer {
-        scheduledTimer(runAt: Date().addingTimeInterval(timeInterval),
-                       repeating: repeats ? timeInterval : nil,
-                       queue: queue,
-                       closure)
+    func scheduledTimer(
+        timeInterval: TimeInterval,
+        repeats: Bool,
+        queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) -> BackgroundTimer {
+        scheduledTimer(
+            runAt: Date().addingTimeInterval(timeInterval),
+            repeating: repeats ? timeInterval : nil,
+            queue: queue,
+            closure
+        )
     }
 
-    func scheduledTimer(runAt nextRunTime: Date,
-                        queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+    func scheduledTimer(
+        runAt nextRunTime: Date,
+        queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) -> BackgroundTimer {
         scheduledTimer(runAt: nextRunTime, repeating: nil, leeway: nil, queue: queue, closure)
     }
 
-    func scheduledTimer(runAt nextRunTime: Date,
-                        repeating: Double?,
-                        queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+    func scheduledTimer(
+        runAt nextRunTime: Date,
+        repeating: Double?,
+        queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) -> BackgroundTimer {
         scheduledTimer(runAt: nextRunTime, repeating: repeating, leeway: nil, queue: queue, closure)
     }
 
-    func scheduledTimer(runAt nextRunTime: Date,
-                        leeway: DispatchTimeInterval?,
-                        queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+    func scheduledTimer(
+        runAt nextRunTime: Date,
+        leeway: DispatchTimeInterval?,
+        queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) -> BackgroundTimer {
         scheduledTimer(runAt: nextRunTime, repeating: nil, leeway: leeway, queue: queue, closure)
     }
 }
 
 public class TimerFactoryImplementation: TimerFactory {
-    public func scheduledTimer(runAt nextRunTime: Date,
-                               repeating: Double?,
-                               leeway: DispatchTimeInterval?,
-                               queue: DispatchQueue,
-                               _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+    public func scheduledTimer(
+        runAt nextRunTime: Date,
+        repeating: Double?,
+        leeway: DispatchTimeInterval?,
+        queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) -> BackgroundTimer {
         BackgroundTimerImplementation(runAt: nextRunTime, repeating: repeating, leeway: leeway, queue: queue, closure)
     }
 
-    public func scheduleAfter(_ interval: DispatchTimeInterval,
-                              on queue: DispatchQueue,
-                              _ closure: @escaping (() -> Void)) {
+    public func scheduleAfter(
+        _ interval: DispatchTimeInterval,
+        on queue: DispatchQueue,
+        _ closure: @escaping (() -> Void)
+    ) {
         queue.asyncAfter(deadline: .now() + interval, execute: closure)
     }
 
@@ -109,18 +127,22 @@ public class BackgroundTimerImplementation: BackgroundTimer {
         case suspended
     }
 
-    init(runAt nextRunTime: Date,
-         repeating: Double?,
-         leeway: DispatchTimeInterval?,
-         queue: DispatchQueue,
-         _ closure: @escaping () -> Void) {
+    init(
+        runAt nextRunTime: Date,
+        repeating: Double?,
+        leeway: DispatchTimeInterval?,
+        queue: DispatchQueue,
+        _ closure: @escaping () -> Void
+    ) {
         self.closure = closure
         self.timerSource = DispatchSource.makeTimerSource(queue: queue)
 
         if let repeating {
-            timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow,
-                                 repeating: repeating,
-                                 leeway: leeway ?? Self.repeatingTimerLeeway)
+            timerSource.schedule(
+                deadline: .now() + nextRunTime.timeIntervalSinceNow,
+                repeating: repeating,
+                leeway: leeway ?? Self.repeatingTimerLeeway
+            )
         } else {
             timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow)
         }

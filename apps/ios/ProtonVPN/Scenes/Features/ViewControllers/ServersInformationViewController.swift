@@ -74,8 +74,10 @@ extension ServersInformationViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.cellIdentifier,
-                                                 for: indexPath)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: InformationTableViewCell.cellIdentifier,
+            for: indexPath
+        )
         guard let informationCell = cell as? InformationTableViewCell else {
             return cell
         }

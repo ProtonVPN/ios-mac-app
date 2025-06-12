@@ -122,10 +122,12 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
     }
 
     func makeAppSessionManager() -> AppSessionManager {
-        AppSessionManagerMock(sessionStatus: .established,
-                              loggedIn: true,
-                              sessionChanged: Notification.Name(rawValue: ""),
-                              vpnGateway: VpnGatewayMock())
+        AppSessionManagerMock(
+            sessionStatus: .established,
+            loggedIn: true,
+            sessionChanged: Notification.Name(rawValue: ""),
+            vpnGateway: VpnGatewayMock()
+        )
     }
 
     func makeWindowService() -> WindowService {
@@ -164,10 +166,12 @@ private class SettingsServiceMock: SettingsService {
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        TelemetrySettingsViewController(preferenceChangeUsageData: { _ in },
-                                        preferenceChangeCrashReports: { _ in },
-                                        usageStatisticsOn: { true },
-                                        crashReportsOn: { true })
+        TelemetrySettingsViewController(
+            preferenceChangeUsageData: { _ in },
+            preferenceChangeCrashReports: { _ in },
+            usageStatisticsOn: { true },
+            crashReportsOn: { true }
+        )
     }
 
     func makeExtensionsSettingsViewController() -> UIViewController {

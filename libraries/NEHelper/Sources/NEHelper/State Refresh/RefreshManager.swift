@@ -114,9 +114,11 @@ public class RefreshManager {
             ? Date().addingTimeInterval(min(firstRunAfter!, 0))
             : Date().addingTimeInterval(timerRefreshInterval)
 
-        timer = timerFactory.scheduledTimer(runAt: firstRunAt,
-                                            repeating: timerRefreshInterval,
-                                            queue: workQueue) { [weak self] in
+        timer = timerFactory.scheduledTimer(
+            runAt: firstRunAt,
+            repeating: timerRefreshInterval,
+            queue: workQueue
+        ) { [weak self] in
             self?.work()
         }
     }

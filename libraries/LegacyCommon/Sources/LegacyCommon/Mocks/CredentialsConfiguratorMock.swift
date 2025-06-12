@@ -34,9 +34,11 @@
             self.didConfigure = didConfigure
         }
 
-        public func prepareCredentials(for protocolConfig: NEVPNProtocol,
-                                       configuration: VpnManagerConfiguration,
-                                       completionHandler: @escaping (NEVPNProtocol) -> Void) {
+        public func prepareCredentials(
+            for protocolConfig: NEVPNProtocol,
+            configuration: VpnManagerConfiguration,
+            completionHandler: @escaping (NEVPNProtocol) -> Void
+        ) {
             assert(vpnProtocol == configuration.vpnProtocol, "Vpn protocol in configuration did not match!")
 
             didConfigure?(configuration, protocolConfig)

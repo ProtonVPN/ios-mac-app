@@ -34,16 +34,18 @@ extension OrderedSet<RecentConnection> {
     }
 
     func sanitized() -> OrderedSet<RecentConnection> {
-        OrderedSet(chunked { $0.pinned }
-            .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
-            .flatMap {
-                if $0.0 { // pinned
-                    $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
-                } else { // unpinned
-                    $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
+        OrderedSet(
+            chunked { $0.pinned }
+                .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
+                .flatMap {
+                    if $0.0 { // pinned
+                        $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
+                    } else { // unpinned
+                        $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
+                    }
                 }
-            }
-            .prefix(Self.maxConnections))
+                .prefix(Self.maxConnections)
+        )
     }
 
     public var mostRecent: RecentConnection? {

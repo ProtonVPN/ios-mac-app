@@ -46,8 +46,10 @@ public enum RecentsStorageImplementation {
             @Dependency(\.storage) var storage
             try storage.set(collection, forKey: Self.storageKey(userID))
         } catch {
-            log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
-                      category: .persistence)
+            log.error(
+                "Failed to save recent connections to storage with error: \(error.localizedDescription)",
+                category: .persistence
+            )
         }
         #if canImport(WidgetKit)
             WidgetCenter.shared.reloadAllTimelines()
@@ -63,8 +65,10 @@ public enum RecentsStorageImplementation {
             @Dependency(\.storage) var storage
             return try storage.get(OrderedSet<RecentConnection>.self, forKey: storageKey(userID)) ?? []
         } catch {
-            log.error("Failed to decode recent connections with error: \(error.localizedDescription)",
-                      category: .persistence)
+            log.error(
+                "Failed to decode recent connections with error: \(error.localizedDescription)",
+                category: .persistence
+            )
             return []
         }
     }

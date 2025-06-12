@@ -28,8 +28,10 @@ public struct LogicalsRefresher {
     public var refreshLogicals: () async throws -> Void
     public var shouldRefreshLogicals: () -> Bool
 
-    public init(refreshLogicals: @escaping () async throws -> Void = unimplemented(),
-                shouldRefreshLogicals: @escaping () -> Bool = unimplemented()) {
+    public init(
+        refreshLogicals: @escaping () async throws -> Void = unimplemented(),
+        shouldRefreshLogicals: @escaping () -> Bool = unimplemented()
+    ) {
         self.refreshLogicals = refreshLogicals
         self.shouldRefreshLogicals = shouldRefreshLogicals
     }
@@ -40,8 +42,10 @@ public struct LogicalsRefresherProvider {
     @Shared(.userLocation) var userLocation: UserLocation?
 
     var liveValue: LogicalsRefresher {
-        .init(refreshLogicals: refreshLogicals,
-              shouldRefreshLogicals: shouldRefreshLogicals)
+        .init(
+            refreshLogicals: refreshLogicals,
+            shouldRefreshLogicals: shouldRefreshLogicals
+        )
     }
 
     public func refreshLogicals() async throws {

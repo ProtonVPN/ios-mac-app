@@ -56,8 +56,12 @@ class ProfilesTabBarViewController: NSViewController {
 
         setupView()
         setupComponents()
-        NotificationCenter.default.addObserver(self, selector: #selector(tabChanged(_:)),
-                                               name: tabChangedExternally, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(tabChanged(_:)),
+            name: tabChangedExternally,
+            object: nil
+        )
     }
 
     private func setupView() {

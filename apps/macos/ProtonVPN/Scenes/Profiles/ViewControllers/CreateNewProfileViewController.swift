@@ -231,8 +231,10 @@ final class CreateNewProfileViewController: NSViewController {
 
     @objc private func cancelButtonAction() {
         if isSessionUnderway {
-            let viewModel = WarningPopupViewModel(title: Localizable.createNewProfile,
-                                                  description: Localizable.currentSelectionWillBeLost) { [weak self] in
+            let viewModel = WarningPopupViewModel(
+                title: Localizable.createNewProfile,
+                description: Localizable.currentSelectionWillBeLost
+            ) { [weak self] in
                 self?.viewModel.clearContent()
             }
             presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))

@@ -58,11 +58,13 @@ class LoadCircle: NSView {
         }
         context.setStrokeColor(.cgColor(.icon, circleStyle))
 
-        context.addArc(center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
-                       radius: ocb.width / 2,
-                       startAngle: startAngle,
-                       endAngle: endAngle,
-                       clockwise: true)
+        context.addArc(
+            center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
+            radius: ocb.width / 2,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: true
+        )
         context.drawPath(using: .stroke)
     }
 }

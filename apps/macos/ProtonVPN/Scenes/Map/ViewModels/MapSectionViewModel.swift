@@ -46,13 +46,15 @@ protocol MapSectionViewModelFactory {
 
 extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel {
-        MapSectionViewModel(appStateManager: makeAppStateManager(),
-                            propertiesManager: makePropertiesManager(),
-                            vpnGateway: makeVpnGateway(),
-                            navService: makeNavigationService(),
-                            vpnKeychain: makeVpnKeychain(),
-                            viewToggle: viewToggle,
-                            alertService: makeCoreAlertService())
+        MapSectionViewModel(
+            appStateManager: makeAppStateManager(),
+            propertiesManager: makePropertiesManager(),
+            vpnGateway: makeVpnGateway(),
+            navService: makeNavigationService(),
+            vpnKeychain: makeVpnKeychain(),
+            viewToggle: viewToggle,
+            alertService: makeCoreAlertService()
+        )
     }
 }
 
@@ -75,9 +77,15 @@ class MapSectionViewModel {
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
 
-    init(appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol,
-         vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
-         viewToggle: Notification.Name, alertService: CoreAlertService) {
+    init(
+        appStateManager: AppStateManager,
+        propertiesManager: PropertiesManagerProtocol,
+        vpnGateway: VpnGatewayProtocol,
+        navService: NavigationService,
+        vpnKeychain: VpnKeychainProtocol,
+        viewToggle: Notification.Name,
+        alertService: CoreAlertService
+    ) {
         self.appStateManager = appStateManager
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -88,8 +96,12 @@ class MapSectionViewModel {
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
         AppEvent.vpnProtocol.subscribe(self, selector: #selector(resetCurrentState))
 
-        NotificationCenter.default.addObserver(self, selector: #selector(viewToggled(_:)),
-                                               name: viewToggle, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(viewToggled(_:)),
+            name: viewToggle,
+            object: nil
+        )
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
 
         self.activeView = propertiesManager.serverTypeToggle

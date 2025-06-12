@@ -61,10 +61,12 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         WireguardProtocolFactoryCreator
 
     public convenience init(_ factory: Factory, config: Container.Config) {
-        self.init(ikeProtocolFactory: factory.makeIkeProtocolFactory(),
-                  wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  appGroup: config.appGroup)
+        self.init(
+            ikeProtocolFactory: factory.makeIkeProtocolFactory(),
+            wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
+            propertiesManager: factory.makePropertiesManager(),
+            appGroup: config.appGroup
+        )
     }
 
     public init(ikeProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, propertiesManager: PropertiesManagerProtocol, appGroup: String) {
@@ -216,9 +218,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             }
 
             guard let vpnProtocol else {
-                completion(VpnStateConfigurationInfo(state: .disconnected,
-                                                     hasConnected: propertiesManager.hasConnected,
-                                                     connection: nil))
+                completion(VpnStateConfigurationInfo(
+                    state: .disconnected,
+                    hasConnected: propertiesManager.hasConnected,
+                    connection: nil
+                ))
                 return
             }
 
@@ -234,13 +238,17 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             determineActiveVpnState(vpnProtocol: vpnProtocol) { result in
                 switch result {
                 case let .failure(error):
-                    completion(VpnStateConfigurationInfo(state: VpnState.error(error),
-                                                         hasConnected: self.propertiesManager.hasConnected,
-                                                         connection: connection))
+                    completion(VpnStateConfigurationInfo(
+                        state: VpnState.error(error),
+                        hasConnected: self.propertiesManager.hasConnected,
+                        connection: connection
+                    ))
                 case let .success((_, state)):
-                    completion(VpnStateConfigurationInfo(state: state,
-                                                         hasConnected: self.propertiesManager.hasConnected,
-                                                         connection: connection))
+                    completion(VpnStateConfigurationInfo(
+                        state: state,
+                        hasConnected: self.propertiesManager.hasConnected,
+                        connection: connection
+                    ))
                 }
             }
         }
@@ -252,9 +260,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
         log.info("Getting protocol information. \(defaulting) to IKEv2 if no provider available.")
         guard let vpnProtocol = await determineActiveVpnProtocol(defaultToIke: defaultToIke) else {
-            return VpnStateConfigurationInfo(state: .disconnected,
-                                             hasConnected: propertiesManager.hasConnected,
-                                             connection: nil)
+            return VpnStateConfigurationInfo(
+                state: .disconnected,
+                hasConnected: propertiesManager.hasConnected,
+                connection: nil
+            )
         }
 
         let connection: ConnectionConfiguration? = switch vpnProtocol {
@@ -267,13 +277,17 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         }
         do {
             let (_, state) = try await determineActiveVpnState(vpnProtocol: vpnProtocol)
-            return VpnStateConfigurationInfo(state: state,
-                                             hasConnected: propertiesManager.hasConnected,
-                                             connection: connection)
+            return VpnStateConfigurationInfo(
+                state: state,
+                hasConnected: propertiesManager.hasConnected,
+                connection: connection
+            )
         } catch {
-            return VpnStateConfigurationInfo(state: VpnState.error(error),
-                                             hasConnected: propertiesManager.hasConnected,
-                                             connection: connection)
+            return VpnStateConfigurationInfo(
+                state: VpnState.error(error),
+                hasConnected: propertiesManager.hasConnected,
+                connection: connection
+            )
         }
     }
 }

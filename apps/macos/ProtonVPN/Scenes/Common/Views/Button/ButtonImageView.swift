@@ -40,10 +40,12 @@ class HoverableButtonImageView: ButtonImageView {
     override open func awakeFromNib() {
         super.awakeFromNib()
 
-        let trackingArea = NSTrackingArea(rect: bounds,
-                                          options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
-                                          owner: self,
-                                          userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
     }
 

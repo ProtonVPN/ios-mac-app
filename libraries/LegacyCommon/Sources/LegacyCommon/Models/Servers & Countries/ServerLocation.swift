@@ -59,8 +59,10 @@ public class ServerLocation: NSObject, NSCoding, Codable {
     }
 
     public required convenience init?(coder aDecoder: NSCoder) {
-        self.init(lat: aDecoder.decodeDouble(forKey: CoderKey.lat),
-                  long: aDecoder.decodeDouble(forKey: CoderKey.long))
+        self.init(
+            lat: aDecoder.decodeDouble(forKey: CoderKey.lat),
+            long: aDecoder.decodeDouble(forKey: CoderKey.long)
+        )
     }
 
     public func encode(with _: NSCoder) {

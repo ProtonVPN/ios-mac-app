@@ -47,14 +47,16 @@ public struct ConnectionScreenView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 if let spec = store.vpnConnectionStatus.spec {
-                    ConnectionFlagInfoView(intent: spec,
-                                           isPinned: false,
-                                           server: store.vpnConnectionStatus.server,
-                                           isConnected: false,
-                                           images: .coreImages)
-                        .accessibilityIdentifier(
-                            AccessibilityIdentifiers.connectionScreenInfo
-                        )
+                    ConnectionFlagInfoView(
+                        intent: spec,
+                        isPinned: false,
+                        server: store.vpnConnectionStatus.server,
+                        isConnected: false,
+                        images: .coreImages
+                    )
+                    .accessibilityIdentifier(
+                        AccessibilityIdentifiers.connectionScreenInfo
+                    )
                 }
 
                 Spacer()
@@ -79,8 +81,10 @@ public struct ConnectionScreenView: View {
                     WithPerceptionTracking {
                         IPView(store: store.scope(state: \.ipViewState, action: \.ipViewAction))
 
-                        ConnectionDetailsView(store: store.scope(state: \.connectionDetailsState,
-                                                                 action: \.connectionDetailsAction))
+                        ConnectionDetailsView(store: store.scope(
+                            state: \.connectionDetailsState,
+                            action: \.connectionDetailsAction
+                        ))
 
                         if !store.connectionFeatures.isEmpty || store.isSecureCore {
                             Text(Localizable.connectionDetailsFeaturesTitle)

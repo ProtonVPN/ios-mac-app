@@ -120,12 +120,14 @@
                 return .success(data)
             case .streamingServices:
                 // for fetching list of streaming services & icons
-                let response = VPNStreamingResponse(code: 1000,
-                                                    resourceBaseURL: "https://protonvpn.com/resources",
-                                                    streamingServices: ["IT": [
-                                                        "1": [.init(name: "Rai", icon: "rai.jpg")],
-                                                        "2": [.init(name: "Netflix", icon: "netflix.jpg")],
-                                                    ]])
+                let response = VPNStreamingResponse(
+                    code: 1000,
+                    resourceBaseURL: "https://protonvpn.com/resources",
+                    streamingServices: ["IT": [
+                        "1": [.init(name: "Rai", icon: "rai.jpg")],
+                        "2": [.init(name: "Netflix", icon: "netflix.jpg")],
+                    ]]
+                )
                 let data = try responseEncoder.encode(response)
                 return .success(data)
             case .clientConfig:

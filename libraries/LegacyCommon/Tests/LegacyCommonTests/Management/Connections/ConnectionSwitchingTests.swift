@@ -142,15 +142,17 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
         let tunnelProviderExpectation = XCTestExpectation()
 
@@ -179,15 +181,17 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
         let stateChangedToErrorExpectation = XCTestExpectation()
         let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
@@ -260,15 +264,17 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         var currentManager: NEVPNManagerMock?
         var currentStatus: NEVPNStatus?
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .smartProtocol,
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .smartProtocol,
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
         var tunnelProviderExpectation = expectations.initialConnection
 
@@ -516,22 +522,26 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 }
             }
 
-            let request = ConnectionRequest(serverType: .standard,
-                                            connectionType: .country("CH", .fastest),
-                                            connectionProtocol: .smartProtocol,
-                                            netShieldType: .level1,
-                                            natType: .moderateNAT,
-                                            safeMode: true,
-                                            profileId: nil,
-                                            profileName: nil,
-                                            trigger: .country)
+            let request = ConnectionRequest(
+                serverType: .standard,
+                connectionType: .country("CH", .fastest),
+                connectionProtocol: .smartProtocol,
+                netShieldType: .level1,
+                natType: .moderateNAT,
+                safeMode: true,
+                profileId: nil,
+                profileName: nil,
+                trigger: .country
+            )
 
             // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
             container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
                 .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
             container.authKeychain.setMockUsername("user")
-            let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                           maxTier: .freeTier)
+            let freeCreds = VpnKeychainMock.vpnCredentials(
+                planName: "free",
+                maxTier: .freeTier
+            )
             container.networkingDelegate.apiCredentials = freeCreds
 
             await retrieveAndSetVpnProperties()
@@ -654,19 +664,23 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
-        var (nConnections,
-             nDisconnections,
-             nAppStateConnectTransitions) = (0, 0, 0)
+        var (
+            nConnections,
+            nDisconnections,
+            nAppStateConnectTransitions
+        ) = (0, 0, 0)
 
         var observedStates: [AppState] = []
         let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
@@ -731,8 +745,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(plusCreds.planName, "plus")
         XCTAssertEqual(plusCreds.maxTier, .paidTier)
 
-        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                       maxTier: .freeTier)
+        let freeCreds = VpnKeychainMock.vpnCredentials(
+            planName: "free",
+            maxTier: .freeTier
+        )
         container.networkingDelegate.apiCredentials = freeCreds
 
         let downgrade: VpnDowngradeInfo = (plusCreds, freeCreds)
@@ -856,10 +872,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        var (nConnections,
-             nDisconnections,
-             nServerSaves,
-             nAppStateConnectTransitions) = (0, 0, 0, 0)
+        var (
+            nConnections,
+            nDisconnections,
+            nServerSaves,
+            nAppStateConnectTransitions
+        ) = (0, 0, 0, 0)
 
         var storedServers: [ServerModel] = []
         repositoryWrapper.didStoreServers = { newServers in

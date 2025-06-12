@@ -29,15 +29,17 @@ public struct SettingsDimensions: Encodable {
     let firstHermesAddressFamily: HermesAddressFamily
     let isSystemHermesEnabled: SystemHermesEnabled
 
-    init(defaultConnectionType: DefaultConnectionType,
-         appIcon: AppIcon,
-         userTier: UserTier,
-         widgetCount: WidgetCount?,
-         firstWidgetSize: WidgetSize?,
-         isIPv6Enabled: IsIPv6Enabled,
-         hermesCount: HermesCount,
-         firstHermesAddressFamily: HermesAddressFamily,
-         isSystemHermesEnabled: SystemHermesEnabled) {
+    init(
+        defaultConnectionType: DefaultConnectionType,
+        appIcon: AppIcon,
+        userTier: UserTier,
+        widgetCount: WidgetCount?,
+        firstWidgetSize: WidgetSize?,
+        isIPv6Enabled: IsIPv6Enabled,
+        hermesCount: HermesCount,
+        firstHermesAddressFamily: HermesAddressFamily,
+        isSystemHermesEnabled: SystemHermesEnabled
+    ) {
         self.defaultConnectionType = defaultConnectionType
         self.appIcon = appIcon
         self.userTier = userTier

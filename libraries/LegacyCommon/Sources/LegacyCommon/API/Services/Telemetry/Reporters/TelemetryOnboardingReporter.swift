@@ -42,9 +42,13 @@ class TelemetryOnboardingReporter {
         }
         let cached = try? vpnKeychain.fetchCached()
         let planName = cached?.planName ?? "free"
-        let event = OnboardingEvent(event: event,
-                                    dimensions: .init(userCountry: propertiesManager.userLocation?.country ?? "",
-                                                      userPlan: planName))
+        let event = OnboardingEvent(
+            event: event,
+            dimensions: .init(
+                userCountry: propertiesManager.userLocation?.country ?? "",
+                userPlan: planName
+            )
+        )
         try await telemetryEventScheduler.report(event: event)
     }
 }

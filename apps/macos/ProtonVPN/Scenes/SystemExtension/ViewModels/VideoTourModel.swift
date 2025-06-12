@@ -55,8 +55,10 @@ class VideoTourModel {
     lazy var player = {
         let playerItem = AVPlayerItem(asset: urlAsset)
         let player = AVQueuePlayer(playerItem: playerItem)
-        videoLooper = AVPlayerLooper(player: player,
-                                     templateItem: playerItem)
+        videoLooper = AVPlayerLooper(
+            player: player,
+            templateItem: playerItem
+        )
         return player
     }()
 

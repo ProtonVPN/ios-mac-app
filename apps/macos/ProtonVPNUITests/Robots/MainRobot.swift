@@ -175,9 +175,11 @@ class MainRobot: CoreElements {
         }
 
         @discardableResult
-        func checkConnectionCardIsConnected(with expectedProtocol: ConnectionProtocol,
-                                            to connectedCountry: String? = nil,
-                                            userType: UserType? = nil) -> MainRobot {
+        func checkConnectionCardIsConnected(
+            with expectedProtocol: ConnectionProtocol,
+            to connectedCountry: String? = nil,
+            userType: UserType? = nil
+        ) -> MainRobot {
             // verify Disconnect button appears
             checkDisconnectButtonAppears()
 
@@ -286,8 +288,10 @@ class MainRobot: CoreElements {
 
             if let expectedValue = value {
                 // validate headerLabel has exact value
-                XCTAssertTrue(actualHeaderLabelValue.contains(expectedValue),
-                              "headerLabel textfield does not contain expected value: \(expectedValue), actual value: \(actualHeaderLabelValue)")
+                XCTAssertTrue(
+                    actualHeaderLabelValue.contains(expectedValue),
+                    "headerLabel textfield does not contain expected value: \(expectedValue), actual value: \(actualHeaderLabelValue)"
+                )
             } else {
                 // validate headerLabel is not empty
                 XCTAssertTrue(!actualHeaderLabelValue.isEmpty, "headerLabel textfield shold not be empty")

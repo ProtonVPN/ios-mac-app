@@ -111,9 +111,13 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         imageAttachment.image = IconProvider.chevronRight
             .colored(.color(.text))
             .resizeWhilePreservingRatio(newHeight: .themeSpacing16)
-        imageAttachment.bounds = .init(origin: .init(x: 0, y: -2),
-                                       size: .init(width: .themeSpacing16,
-                                                   height: .themeSpacing16))
+        imageAttachment.bounds = .init(
+            origin: .init(x: 0, y: -2),
+            size: .init(
+                width: .themeSpacing16,
+                height: .themeSpacing16
+            )
+        )
         let imageAttachmentString = NSAttributedString(attachment: imageAttachment)
 
         let text: String = if isOn {

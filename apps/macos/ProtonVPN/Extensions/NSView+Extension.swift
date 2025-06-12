@@ -39,71 +39,87 @@ extension NSView {
     func pin(viewController: NSViewController) {
         addSubview(viewController.view)
 
-        NSLayoutConstraint(item: viewController.view,
-                           attribute: NSLayoutConstraint.Attribute.top,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.top,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: viewController.view,
+            attribute: NSLayoutConstraint.Attribute.top,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.top,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
 
-        NSLayoutConstraint(item: viewController.view,
-                           attribute: NSLayoutConstraint.Attribute.trailing,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.trailing,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: viewController.view,
+            attribute: NSLayoutConstraint.Attribute.trailing,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.trailing,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
 
-        NSLayoutConstraint(item: viewController.view,
-                           attribute: NSLayoutConstraint.Attribute.bottom,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.bottom,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: viewController.view,
+            attribute: NSLayoutConstraint.Attribute.bottom,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.bottom,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
 
-        NSLayoutConstraint(item: viewController.view,
-                           attribute: NSLayoutConstraint.Attribute.leading,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.leading,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: viewController.view,
+            attribute: NSLayoutConstraint.Attribute.leading,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.leading,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
     }
 
     func pinTo(view: NSView) {
-        NSLayoutConstraint(item: view,
-                           attribute: NSLayoutConstraint.Attribute.top,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.top,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutConstraint.Attribute.top,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.top,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
 
-        NSLayoutConstraint(item: view,
-                           attribute: NSLayoutConstraint.Attribute.trailing,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.trailing,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutConstraint.Attribute.trailing,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.trailing,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
 
-        NSLayoutConstraint(item: view,
-                           attribute: NSLayoutConstraint.Attribute.bottom,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.bottom,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutConstraint.Attribute.bottom,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.bottom,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
 
-        NSLayoutConstraint(item: view,
-                           attribute: NSLayoutConstraint.Attribute.leading,
-                           relatedBy: NSLayoutConstraint.Relation.equal,
-                           toItem: self,
-                           attribute: NSLayoutConstraint.Attribute.leading,
-                           multiplier: 1.0,
-                           constant: 0.0).isActive = true
+        NSLayoutConstraint(
+            item: view,
+            attribute: NSLayoutConstraint.Attribute.leading,
+            relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: self,
+            attribute: NSLayoutConstraint.Attribute.leading,
+            multiplier: 1.0,
+            constant: 0.0
+        ).isActive = true
     }
 
     func fillVertically(withViews views: [NSView]) {
