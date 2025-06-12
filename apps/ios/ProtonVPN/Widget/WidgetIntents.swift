@@ -44,7 +44,8 @@ struct ConnectToVPNIntent: AppIntent {
 
     private static let timeOut = 20 // 20 Seconds
 
-    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+    @Parameter(title: "Recent Connection Index")
+    var recentIndex: Int?
 
     init() {
         self.recentIndex = nil

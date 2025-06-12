@@ -337,13 +337,17 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @BoolProperty(.isSubsequentLaunch) public var isSubsequentLaunch: Bool
 
     // Use to do first time connecting stuff if needed
-    @BoolProperty(.connectOnDemand, notifyChangesWith: .hasConnected) public var hasConnected: Bool
+    @BoolProperty(.connectOnDemand, notifyChangesWith: .hasConnected)
+    public var hasConnected: Bool
 
-    @Property(.lastIkeConnection, notifyChangesWith: .activeConnectionChanged) public var lastIkeConnection: ConnectionConfiguration?
+    @Property(.lastIkeConnection, notifyChangesWith: .activeConnectionChanged)
+    public var lastIkeConnection: ConnectionConfiguration?
 
-    @Property(.lastOpenVpnConnection, notifyChangesWith: .activeConnectionChanged) public var lastOpenVpnConnection: ConnectionConfiguration?
+    @Property(.lastOpenVpnConnection, notifyChangesWith: .activeConnectionChanged)
+    public var lastOpenVpnConnection: ConnectionConfiguration?
 
-    @Property(.lastWireguardConnection, notifyChangesWith: .activeConnectionChanged) public var lastWireguardConnection: ConnectionConfiguration?
+    @Property(.lastWireguardConnection, notifyChangesWith: .activeConnectionChanged)
+    public var lastWireguardConnection: ConnectionConfiguration?
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
@@ -375,7 +379,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     /// Distinguishes if kill switch should be disabled
     @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
 
-    @Property(.userLocation, notifyChangesWith: .userIp) public var userLocation: UserLocation?
+    @Property(.userLocation, notifyChangesWith: .userIp)
+    public var userLocation: UserLocation?
 
     @BoolProperty(.userDataDisclaimerAgreed) public var userDataDisclaimerAgreed: Bool
     @BoolProperty(.trialWelcomed) public var trialWelcomed: Bool
@@ -399,7 +404,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         @StringProperty(.connectedServerNameDoNotUse) public var connectedServerNameDoNotUse: String?
     #endif
 
-    @InitializedProperty(.vpnProtocol, notifyChangesWith: .vpnProtocol) public var vpnProtocol: VpnProtocol
+    @InitializedProperty(.vpnProtocol, notifyChangesWith: .vpnProtocol)
+    public var vpnProtocol: VpnProtocol
 
     @StringProperty(.lastAppVersion) private var _lastAppVersion: String?
     public var lastAppVersion: String {
@@ -409,7 +415,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @DateProperty(.userAccountCreationDate) public var userAccountCreationDate
 
-    @InitializedProperty(.featureFlags, notifyChangesWith: .featureFlags) public var featureFlags: FeatureFlags
+    @InitializedProperty(.featureFlags, notifyChangesWith: .featureFlags)
+    public var featureFlags: FeatureFlags
 
     public var maintenanceServerRefreshIntereval: Int {
         get {
@@ -428,7 +435,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.showWhatsNewModal) public var showWhatsNewModal: Bool
 
-    @BoolProperty(.killSwitch, notifyChangesWith: .killSwitch) public var killSwitch: Bool
+    @BoolProperty(.killSwitch, notifyChangesWith: .killSwitch)
+    public var killSwitch: Bool
 
     @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
 
@@ -442,7 +450,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    @BoolProperty(.smartProtocol, notifyChangesWith: .smartProtocol) public var smartProtocol: Bool
+    @BoolProperty(.smartProtocol, notifyChangesWith: .smartProtocol)
+    public var smartProtocol: Bool
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
     @InitializedProperty(.userRole) public var userRole: UserRole

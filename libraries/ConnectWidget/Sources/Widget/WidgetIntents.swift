@@ -37,7 +37,8 @@ public struct ConnectToVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
     public static var openAppWhenRun: Bool = true
 
-    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+    @Parameter(title: "Recent Connection Index")
+    var recentIndex: Int?
 
     public init() {
         self.recentIndex = nil

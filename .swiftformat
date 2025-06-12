@@ -14,6 +14,7 @@
 --typeattributes prev-line
 --storedvarattrs same-line
 --computedvarattrs prev-line
+--complexattrs prev-line
 
 # excludes
 --exclude external,Build

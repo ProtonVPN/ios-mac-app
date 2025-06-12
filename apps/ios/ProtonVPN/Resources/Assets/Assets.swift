@@ -50,7 +50,8 @@ final class ColorAsset {
         typealias Color = UIColor
     #endif
 
-    @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *) private(set) lazy var color: Color = {
+    @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
+    private(set) lazy var color: Color = {
         guard let color = Color(asset: self) else {
             fatalError("Unable to load color asset named \(name).")
         }
@@ -69,7 +70,8 @@ final class ColorAsset {
     #endif
 
     #if canImport(SwiftUI)
-        @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *) private(set) lazy var swiftUIColor: SwiftUI.Color = .init(asset: self)
+        @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+        private(set) lazy var swiftUIColor: SwiftUI.Color = .init(asset: self)
     #endif
 
     fileprivate init(name: String) {
