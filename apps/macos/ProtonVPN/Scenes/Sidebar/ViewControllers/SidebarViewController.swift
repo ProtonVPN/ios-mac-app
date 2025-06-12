@@ -165,7 +165,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         view.window?.applySidebarAppearance()
         configureExpandButton()
         
-        if let overlayViewModel = overlayViewModel, !appStateManager.state.isConnected {
+        if let overlayViewModel, !appStateManager.state.isConnected {
             showLoadingOverlay(with: overlayViewModel)
         } else {
             overlayViewModel = nil
@@ -264,7 +264,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         if show {
             removeConnectingOverlay()
             let cancellation: (() -> Void) = { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -295,14 +295,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         
         overlayViewModel = nil
         
-        if let overlayWindowController = overlayWindowController, let overlayWindow = overlayWindowController.window, let viewController = overlayWindowController.contentViewController as? ConnectingViewController {
+        if let overlayWindowController, let overlayWindow = overlayWindowController.window, let viewController = overlayWindowController.contentViewController as? ConnectingViewController {
             connectionOverlay.stopBlurAnimation()
             viewController.stopAnimatingFade()
             
             if animated {
                 if !connectionOverlay.isHidden {
                     connectionOverlay.removeBlur(over: 0.5) { [weak self] in
-                        guard let self = self else {
+                        guard let self else {
                             return
                         }
 
@@ -327,7 +327,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     
     @objc private func occlusionStateChanged(_ notification: Notification) {
         if NSApp.occlusionState.contains(.visible) {
-            if case AppState.connecting(_) = appStateManager.state, let overlayViewModel = overlayViewModel {
+            if case AppState.connecting(_) = appStateManager.state, let overlayViewModel {
                 showLoadingOverlay(with: overlayViewModel)
             }
         } else if !connectionOverlay.isHidden {
@@ -339,7 +339,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     private func resizeOverlayWindow() {
-        guard let overlayWindowController = overlayWindowController,
+        guard let overlayWindowController,
               let window = view.window,
               let contentView = window.contentView else { return }
         
@@ -381,7 +381,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         case .profiles:
             profileSectionViewController
         }
-        if let activeController = activeController {
+        if let activeController {
             activeControllerViewContainer.willRemoveSubview(activeController.view)
             activeController.view.removeFromSuperview()
             activeController.removeFromParent()
@@ -423,7 +423,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         case .connected:
             let delta = 3.0 as TimeInterval
             fadeOutOverlayTask = DispatchWorkItem { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 

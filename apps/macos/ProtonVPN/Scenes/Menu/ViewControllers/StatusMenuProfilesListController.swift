@@ -50,7 +50,7 @@ class StatusMenuProfilesListController: WindowController {
     }
     
     private func setupWindow() {
-        guard let window = window else { return }
+        guard let window else { return }
         
         window.styleMask = .borderless
         window.backgroundColor = NSColor.clear

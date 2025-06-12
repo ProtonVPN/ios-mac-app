@@ -43,7 +43,7 @@ public final class VPNLoadsRequest: Request {
     }
 
     public var header: [String: Any] {
-        if let ip = ip {
+        if let ip {
             return ["x-pm-netzone": ip]
         }
 

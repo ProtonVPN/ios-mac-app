@@ -80,11 +80,11 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     }
 
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
-        if requirement == .status, let vpnManager = vpnManager {
+        if requirement == .status, let vpnManager {
             completion(vpnManager, nil)
         } else {
             vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
-                if let manager = manager {
+                if let manager {
                     self.vpnManager = manager
                 }
                 completion(manager, error)
@@ -93,7 +93,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     }
 
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
-        if requirement == .status, let vpnManager = vpnManager {
+        if requirement == .status, let vpnManager {
             return vpnManager
         } else {
             let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId)
@@ -113,7 +113,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     /// Tries to flush logs to a logfile. Call handler with true if flush succeeded or false otherwise.
     public func flushLogs(responseHandler: @escaping (_ success: Bool) -> Void) {
         vpnProviderManager(for: .status) { manager, error in
-            guard let manager = manager, let connection = manager.vpnConnection as? NETunnelProviderSessionWrapper else {
+            guard let manager, let connection = manager.vpnConnection as? NETunnelProviderSessionWrapper else {
                 responseHandler(false)
                 return
             }

@@ -41,7 +41,7 @@ final class SettingsAccountViewController: UIViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         viewModel.reloadNeeded = { [weak self] in
-            guard let self = self, self.isViewLoaded else {
+            guard let self, self.isViewLoaded else {
                 return
             }
 

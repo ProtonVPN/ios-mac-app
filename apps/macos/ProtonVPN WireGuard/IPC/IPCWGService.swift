@@ -50,7 +50,7 @@ extension IPCWGService { // ProviderCommunication
         if Logger.global == nil {
             Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
         }
-        guard let logViewHelper = logViewHelper else {
+        guard let logViewHelper else {
             completionHandler(nil)
             return
         }

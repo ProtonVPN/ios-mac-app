@@ -52,7 +52,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
 
         let settings = createNetworkSettings()
         setTunnelNetworkSettings(settings) { error in
-            if let error = error {
+            if let error {
                 log.error("Failed to set tunnel network settings: \(error)")
             } else {
                 log.info("Successfully set tunnel network settings.")

@@ -292,7 +292,7 @@ public final class MaintenanceAlert: SystemAlert {
 
     /// If `forSpecificCountry` is set, switches between country and servers texts, if it's nil, uses one text
     public init(forSpecificCountry: Bool?) {
-        if let forSpecificCountry = forSpecificCountry {
+        if let forSpecificCountry {
             title = forSpecificCountry ? Localizable.allServersInCountryUnderMaintenance : Localizable.allServersUnderMaintenance
         } else {
             title = Localizable.serverUnderMaintenance
@@ -763,7 +763,7 @@ public final class TooManyCertificateRequestsAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(retryAfter: TimeInterval? = nil) {
-        guard let retryAfter = retryAfter else {
+        guard let retryAfter else {
             message = Localizable.vpnauthTooManyCertsDescription
             return
         }

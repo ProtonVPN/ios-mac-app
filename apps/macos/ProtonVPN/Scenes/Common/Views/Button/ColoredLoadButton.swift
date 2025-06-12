@@ -42,7 +42,7 @@ class ColoredLoadButton: NSButton {
     }
     
     override func draw(_ dirtyRect: NSRect) {
-        guard let context = NSGraphicsContext.current?.cgContext, let load = load else { return }
+        guard let context = NSGraphicsContext.current?.cgContext, let load else { return }
 
         // inner circle
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
@@ -83,7 +83,7 @@ extension ColoredLoadButton: CustomStyleContext {
         case .icon:
             return .hint
         case .border:
-            guard let load = load else { return .normal }
+            guard let load else { return .normal }
             
             if load < 76 {
                 return .success

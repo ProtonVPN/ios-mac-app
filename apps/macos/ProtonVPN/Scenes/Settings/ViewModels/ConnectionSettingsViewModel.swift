@@ -139,23 +139,23 @@ final class ConnectionSettingsViewModel {
 
     var autoConnect: (enabled: Bool, profileId: String?)? {
         get {
-            guard let username = username else { return nil }
+            guard let username else { return nil }
             return propertiesManager.getAutoConnect(for: username)
         }
         set {
-            guard let newValue = newValue else { return }
-            guard let username = username else { return }
+            guard let newValue else { return }
+            guard let username else { return }
             propertiesManager.setAutoConnect(for: username, enabled: newValue.enabled, profileId: newValue.profileId)
         }
     }
 
     var quickConnect: String? {
         get {
-            guard let username = username else { return nil }
+            guard let username else { return nil }
             return propertiesManager.getQuickConnect(for: username)
         }
         set {
-            guard let username = username else { return }
+            guard let username else { return }
             propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
         }
     }
@@ -163,7 +163,7 @@ final class ConnectionSettingsViewModel {
     // MARK: - Current Index
 
     var autoConnectProfileIndex: Int {
-        guard let autoConnect = autoConnect, autoConnect.enabled else { return 0 }
+        guard let autoConnect, autoConnect.enabled else { return 0 }
 
         guard let profileId = autoConnect.profileId else { return 1 }
         let index = availableProfiles.firstIndex {
@@ -290,13 +290,13 @@ final class ConnectionSettingsViewModel {
 
             // Show IKEv2 deprecation warning
             self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
                 self.confirmEnableSmartProtocol(completion)
             }, continueHandler: { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")

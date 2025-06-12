@@ -64,7 +64,7 @@ final class ConnectionBarViewModel {
 
     private func updateDisplayState(with displayState: AppDisplayState) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

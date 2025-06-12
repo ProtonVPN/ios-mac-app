@@ -276,7 +276,7 @@ final class HeaderViewModel {
         statistics = nil
 
         statistics = NetworkStatistics(with: 1.0) { [weak self] (bitrate) in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

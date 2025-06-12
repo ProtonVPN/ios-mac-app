@@ -245,7 +245,7 @@ final class NavigationService {
     }
 
     private func setupTabs() {
-        guard let tabBarController = tabBarController else { return }
+        guard let tabBarController else { return }
 
         tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
 

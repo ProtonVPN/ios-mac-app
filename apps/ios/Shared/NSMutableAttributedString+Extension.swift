@@ -39,10 +39,10 @@ extension NSMutableAttributedString {
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
-        if let lineBreakMode = lineBreakMode {
+        if let lineBreakMode {
             paragraphStyle.lineBreakMode = lineBreakMode
         }
-        if let lineSpacing = lineSpacing {
+        if let lineSpacing {
             paragraphStyle.lineSpacing = lineSpacing
         }
         self.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)

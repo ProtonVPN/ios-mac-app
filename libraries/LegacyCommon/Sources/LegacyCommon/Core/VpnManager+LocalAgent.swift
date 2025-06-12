@@ -372,7 +372,7 @@ extension VpnManager: LocalAgentDelegate {
 
     private func didReceiveFeature(safeMode: Bool?) {
         // ignore nil value received from the Local Agent and also nil value from the provider because it means the feature is not enabled and values should not be used
-        guard let currentSafeMode = safeModePropertyProvider.safeMode, let safeMode = safeMode, currentSafeMode != safeMode else {
+        guard let currentSafeMode = safeModePropertyProvider.safeMode, let safeMode, currentSafeMode != safeMode else {
             return
         }
 

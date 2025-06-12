@@ -101,7 +101,7 @@
                 return true
             }
 
-            guard let info = info else {
+            guard let info else {
                 log.assertionFailure("Attempted to approve a request that wasn't in pending requests")
                 return
             }

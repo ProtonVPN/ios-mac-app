@@ -46,7 +46,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     }
 
     public func getKeys() -> VpnKeys {
-        if let keys = keys {
+        if let keys {
             return keys
         }
 

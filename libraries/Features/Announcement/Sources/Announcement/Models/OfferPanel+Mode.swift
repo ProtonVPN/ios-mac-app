@@ -25,18 +25,18 @@ public extension OfferPanel {
     }
 
     func panelMode() -> Mode? {
-        if let fullScreenImage = fullScreenImage {
+        if let fullScreenImage {
             let panel = ImagePanel(fullScreenImage: fullScreenImage, button: button)
             return .image(panel)
         }
-        guard let incentive = incentive,
-              let incentivePrice = incentivePrice,
-              let pill = pill,
-              let pictureURL = pictureURL,
-              let title = title,
-              let features = features,
-              let featuresFooter = featuresFooter,
-              let pageFooter = pageFooter else {
+        guard let incentive,
+              let incentivePrice,
+              let pill,
+              let pictureURL,
+              let title,
+              let features,
+              let featuresFooter,
+              let pageFooter else {
             return nil
         }
         let panel = LegacyPanel(button: button,

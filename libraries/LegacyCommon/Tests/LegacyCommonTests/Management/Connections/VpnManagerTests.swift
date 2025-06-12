@@ -90,7 +90,7 @@ class VpnManagerTests: BaseConnectionTestCase {
                 return
             }
 
-            guard let tunnelManager = tunnelManager else {
+            guard let tunnelManager else {
                 XCTFail("No tunnelManager created yet")
                 return
             }

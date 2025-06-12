@@ -63,7 +63,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
                    reuseIdentifier: reuseIdentifier)
 
         viewModel.viewStateChange = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -122,7 +122,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     }
 
     private func recycleContainerView() {
-        if let containerView = containerView {
+        if let containerView {
             containerView.removeFromSuperview()
         }
 
@@ -135,7 +135,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     }
 
     private func positionCircleButton() {
-        guard let containerView = containerView else {
+        guard let containerView else {
             return
         }
 

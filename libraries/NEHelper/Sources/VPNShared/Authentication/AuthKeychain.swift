@@ -190,7 +190,7 @@ extension AuthKeychain: AuthKeychainHandle {
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         var key = defaultStorageKey
-        if let context = context, let contextKey = storageKey(forContext: context) {
+        if let context, let contextKey = storageKey(forContext: context) {
             key = contextKey
         }
 

@@ -74,7 +74,7 @@ public enum WireguardProviderRequest: ProviderRequest {
         case let .refreshCertificate(features):
             let encoder = JSONEncoder()
             var featuresData: Data?
-            if let features = features, let encodedFeatures = try? encoder.encode(features) {
+            if let features, let encodedFeatures = try? encoder.encode(features) {
                 featuresData = encodedFeatures
             }
             return datagram(.refreshCertificate) + (featuresData ?? Data())
@@ -173,7 +173,7 @@ public enum WireguardProviderRequest: ProviderRequest {
                 return datagram(.needKeyRegen)
             case let .errorTooManyCertRequests(retryAfter):
                 var data = datagram(.tooManyCertRequests)
-                if let retryAfter = retryAfter {
+                if let retryAfter {
                     let intData = withUnsafeBytes(of: retryAfter) { bufPtr -> Data? in
                         guard let ptr = bufPtr.baseAddress else { return nil }
                         return Data(bytes: ptr, count: MemoryLayout<Int>.size)
@@ -252,7 +252,7 @@ private extension HTTPCookiePropertyKey {
 
 private extension HTTPCookie {
     var asDict: JSONDictionary? {
-        guard let properties = properties else { return nil }
+        guard let properties else { return nil }
 
         let dict: JSONDictionary = properties.reduce(into: [:], { partialResult, kvPair in
             if kvPair.key.hasDateRepresentation, let date = kvPair.value as? Date {

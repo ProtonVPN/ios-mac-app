@@ -34,14 +34,14 @@ class CustomOverlayView: NSView {
 
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
-        if let clicked = clicked {
+        if let clicked {
             clicked()
         }
     }
 
     override func scrollWheel(with event: NSEvent) {
         super.scrollWheel(with: event)
-        if let clicked = clicked {
+        if let clicked {
             clicked()
         }
     }

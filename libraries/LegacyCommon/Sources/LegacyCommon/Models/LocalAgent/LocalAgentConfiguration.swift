@@ -43,7 +43,7 @@ extension LocalAgentConfiguration {
     }
 
     init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
-        guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
+        guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
@@ -62,7 +62,7 @@ extension LocalAgentConfiguration {
 
 extension VPNConnectionFeatures {
     init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
-        guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
+        guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 

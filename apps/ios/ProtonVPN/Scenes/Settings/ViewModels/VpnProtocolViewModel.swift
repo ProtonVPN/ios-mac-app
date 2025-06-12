@@ -68,7 +68,7 @@ final class VpnProtocolViewModel {
     }
 
     private func confirmNewConnectionProtocol(_ connectionProtocol: ConnectionProtocol) {
-        guard let protocolChangeConfirmation = protocolChangeConfirmation else {
+        guard let protocolChangeConfirmation else {
             switchConnectionProtocol(to: connectionProtocol, reconnect: true)
             return
         }

@@ -29,7 +29,7 @@ final class PlaceholderItemView: UIView {
 
     var item: PlaceholderItem? {
         didSet {
-            guard let item = item else {
+            guard let item else {
                 return
             }
 

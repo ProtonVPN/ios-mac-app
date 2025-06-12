@@ -62,7 +62,7 @@ final class CertificateRequest: Request {
         ] as [String: Any]
 
         // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times
-        if let features = features {
+        if let features {
             params["Features"] = features.asDict
         }
 

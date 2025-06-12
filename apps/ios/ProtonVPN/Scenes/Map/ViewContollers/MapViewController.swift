@@ -93,7 +93,7 @@ final class MapViewController: UIViewController {
         scrollView.maximumZoomScale = 1.25
         scrollView.delegate = self
         
-        if let viewModel = viewModel {
+        if let viewModel {
             let gestureRecognizer = UITapGestureRecognizer(target: viewModel, action: #selector(viewModel.mapTapped))
             mapView.addGestureRecognizer(gestureRecognizer)
         }
@@ -112,7 +112,7 @@ final class MapViewController: UIViewController {
         secureCoreBar.backgroundColor = .backgroundColor()
         secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = Localizable.useSecureCore
-        if let viewModel = viewModel {
+        if let viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
@@ -120,7 +120,7 @@ final class MapViewController: UIViewController {
             let toOn = self?.viewModel?.secureCoreOn == true
             self?.viewModel?.toggleState(toOn: !toOn) { [weak self] succeeded in
                 DispatchQueue.main.async {
-                    guard let self = self else {
+                    guard let self else {
                         return
                     }
 
@@ -136,7 +136,7 @@ final class MapViewController: UIViewController {
     }
     
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
@@ -296,7 +296,7 @@ final class MapViewController: UIViewController {
     }
     
     private func contentChanged() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         removeAnnotations()

@@ -410,7 +410,7 @@ class StatusViewModel {
     }
 
     private func updateTimeCell() {
-        guard let timeCellIndexPath = timeCellIndexPath else { return } // No time cell in the view
+        guard let timeCellIndexPath else { return } // No time cell in the view
         rowsUpdated?([timeCellIndexPath: timeCell])
     }
 

@@ -120,7 +120,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
-        if let newVpnCertificateFeatures = newVpnCertificateFeatures {
+        if let newVpnCertificateFeatures {
             log.debug("Connection restarted with another server. Will regenerate certificate.")
             certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { result in
                 log.info("New certificate (after reconnection) result: \(result)", category: .userCert)
@@ -181,7 +181,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             let newVpnCertificateFeatures = currentFeatures?.copyWithChanged(bouncing: server.label)
 
             self.startTunnelWithStoredConfig(errorNotifier: errorNotifier, newVpnCertificateFeatures: newVpnCertificateFeatures) { error in
-                if let error = error {
+                if let error {
                     log.error("Error restarting tunnel \(error)", category: .connection)
                 }
 
@@ -234,7 +234,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
-            guard let adapterError = adapterError else {
+            guard let adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
@@ -340,7 +340,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 self.adapter.stop { error in
                     ErrorNotifier.removeLastErrorFile()
 
-                    if let error = error {
+                    if let error {
                         wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
                     }
                     self.flushLogsToFile()
@@ -370,7 +370,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         case .getRuntimeTunnelConfiguration:
             wg_log(.info, message: "Handle message: getRuntimeTunnelConfiguration")
             adapter.getRuntimeConfiguration { settings in
-                if let settings = settings, let data = settings.data(using: .utf8) {
+                if let settings, let data = settings.data(using: .utf8) {
                     completionHandler?(.ok(data: data))
                 }
                 completionHandler?(.error(message: "Could not retrieve tunnel configuration."))
@@ -402,7 +402,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
                     case let .tooManyCertRequests(retryAfter):
-                        if let retryAfter = retryAfter {
+                        if let retryAfter {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
                         } else {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: nil))

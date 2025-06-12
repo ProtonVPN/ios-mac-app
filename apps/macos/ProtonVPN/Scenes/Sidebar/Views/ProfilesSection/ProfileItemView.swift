@@ -42,7 +42,7 @@ class ProfileItemView: NSView {
         if newSuperview != nil {
             trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
             addTrackingArea(trackingArea!)
-        } else if let trackingArea = trackingArea {
+        } else if let trackingArea {
             removeTrackingArea(trackingArea)
         }
     }

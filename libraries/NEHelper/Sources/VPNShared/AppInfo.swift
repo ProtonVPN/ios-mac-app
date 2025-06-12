@@ -91,7 +91,7 @@ extension AppInfo {
 
     private var osVersionAndModelString: String {
         var modelString: String = ""
-        if let modelName = modelName {
+        if let modelName {
             modelString = "; \(modelName)"
         }
 
@@ -125,7 +125,7 @@ public class AppInfoImplementation: AppInfo {
         processName = processInfo.processName
         osVersion = processInfo.operatingSystemVersion
 
-        if let modelName = modelName {
+        if let modelName {
             self.modelName = modelName
         } else {
             #if canImport(UIKit)

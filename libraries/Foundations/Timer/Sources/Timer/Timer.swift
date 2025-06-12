@@ -117,7 +117,7 @@ public class BackgroundTimerImplementation: BackgroundTimer {
         self.closure = closure
         timerSource = DispatchSource.makeTimerSource(queue: queue)
 
-        if let repeating = repeating {
+        if let repeating {
             timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow,
                                  repeating: repeating,
                                  leeway: leeway ?? Self.repeatingTimerLeeway)

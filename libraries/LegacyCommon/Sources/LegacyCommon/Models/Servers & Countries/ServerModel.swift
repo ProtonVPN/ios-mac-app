@@ -124,7 +124,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
 
     public var isVirtual: Bool {
-        if let hostCountry = hostCountry, !hostCountry.isEmpty {
+        if let hostCountry, !hostCountry.isEmpty {
             return true
         }
 

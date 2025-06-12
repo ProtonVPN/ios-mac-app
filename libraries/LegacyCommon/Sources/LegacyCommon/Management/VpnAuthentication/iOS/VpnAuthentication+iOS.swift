@@ -102,7 +102,7 @@ import CommonNetworking
         private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures?,
                                                           retryingForExpiredSessions: Bool = true,
                                                           completionHandler: @escaping CertificateRefreshCompletion) {
-            guard let connectionProvider = connectionProvider else {
+            guard let connectionProvider else {
                 log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.", category: .userCert)
                 completionHandler(.failure(ProviderMessageError.sendingError))
                 return
@@ -139,7 +139,7 @@ import CommonNetworking
                         self?.authenticationStorage.deleteCertificate()
                         completionHandler(.failure(AuthenticationRemoteClientError.needNewKeys))
                     case let .errorTooManyCertRequests(retryAfter):
-                        if let retryAfter = retryAfter {
+                        if let retryAfter {
                             completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: TimeInterval(retryAfter))))
                         } else {
                             completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
@@ -226,7 +226,7 @@ import CommonNetworking
         }
 
         private func syncStorageManipulationWithExtension(closure: @escaping (() -> Void), finished: (() -> Void)? = nil) {
-            guard let connectionProvider = connectionProvider else {
+            guard let connectionProvider else {
                 closure()
                 return
             }

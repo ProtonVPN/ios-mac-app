@@ -107,11 +107,11 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
                                                   connectivity,
                                                   &error)
 
-        if let error = error {
+        if let error {
             throw error
         }
 
-        guard let result = result else {
+        guard let result else {
             log.assertionFailure("LocalAgentNewAgentConnection should have returned error")
             throw LocalAgentError.serverError
         }
@@ -317,7 +317,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
     }
 
     func didChangeState(state: LocalAgentState?) {
-        guard let state = state else {
+        guard let state else {
             return
         }
 

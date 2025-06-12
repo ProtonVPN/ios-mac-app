@@ -43,7 +43,7 @@ extension NETunnelProviderProtocol {
                 log.info("Loading config directly from keychain")
                 return tunnelConfigurationFromData(data, called: name)
             }
-            if let passwordReference = passwordReference,
+            if let passwordReference,
                let data = Keychain.openReference(called: passwordReference) {
                 log.info("Loading config from keychain by reference")
                 return tunnelConfigurationFromData(data, called: name)
@@ -66,7 +66,7 @@ extension NETunnelProviderProtocol {
     func keychainConfigData() -> Data? {
         log.info("Loading config from keychain by reference")
 
-        guard let passwordReference = passwordReference,
+        guard let passwordReference,
               let data = Keychain.openReference(called: passwordReference) else {
             return nil
         }

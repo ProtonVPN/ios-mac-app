@@ -36,7 +36,7 @@ class StatusMenuCountryViewItem: NSCollectionViewItem {
     }
 
     @IBAction func selected(_ sender: Any) {
-        if let viewModel = viewModel {
+        if let viewModel {
             viewModel.connect()
         }
     }

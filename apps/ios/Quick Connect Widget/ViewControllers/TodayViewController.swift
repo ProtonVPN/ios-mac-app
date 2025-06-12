@@ -109,7 +109,7 @@ extension TodayViewController: TodayViewModelDelegate {
         case .blank:
             updateUI(buttonHidden: true, iconTint: .backgroundColor())
         case let .connected(server, entryCountry: entryCountry, country: country):
-            let connectionString: String = if let entryCountry = entryCountry {
+            let connectionString: String = if let entryCountry {
                 "\(Localizable.connected) \(Localizable.via) \(entryCountry)"
             } else {
                 Localizable.connected

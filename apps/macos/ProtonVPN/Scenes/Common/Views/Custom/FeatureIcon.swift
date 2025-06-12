@@ -38,7 +38,7 @@ class FeatureIcon: NSImageView {
         context.drawPath(using: .stroke)
 
         // draw image
-        if let image = image {
+        if let image {
             var imageRect: CGRect
             if image.size.height > image.size.width {
                 let desiredHeight = 0.75 * bounds.height

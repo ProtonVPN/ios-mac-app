@@ -272,7 +272,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func confirmAndDisconnectActiveSession() async throws {
         try await withCheckedThrowingContinuation { continuation in
             let alert = ActiveSessionWarningAlert(confirmHandler: { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 

@@ -106,8 +106,8 @@ class CreateOrEditProfileViewModel: NSObject {
             self.colorPickerViewModel = ColorPickerViewModel()
         }
 
-        if let profile = profile,
-           let username = username,
+        if let profile,
+           let username,
            let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
            let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
             self.isDefaultProfile = profile == quickConnectProfile
@@ -155,7 +155,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         // If not connected to current profile, just save it
-        guard !self.appStateManager.state.isSafeToEnd, let editedProfile = editedProfile, self.propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
+        guard !self.appStateManager.state.isSafeToEnd, let editedProfile, self.propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
             self.finishSaveProfile(completion: completion)
             return
         }
@@ -203,7 +203,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
 
-        guard let username = username else {
+        guard let username else {
             messageHandler?(Localizable.vpnstatusNotLoggedin, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return

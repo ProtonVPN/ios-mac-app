@@ -60,7 +60,7 @@ import VPNShared
 
             // then delete evertyhing
             clearEverything { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 

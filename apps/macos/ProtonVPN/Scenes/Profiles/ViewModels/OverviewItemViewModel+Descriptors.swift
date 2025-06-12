@@ -73,7 +73,7 @@ extension OverviewItemViewModel {
     }
     
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
-        guard let countryCode = countryCode else {
+        guard let countryCode else {
             return description.styled(font: .themeFont(.heading4), alignment: .left)
         }
         

@@ -85,7 +85,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
         
         if migrationVersion > lastAppVersion {
             block( self.propertiesManager.lastAppVersion ) { error in
-                if let error = error {
+                if let error {
                     completion(error)
                     return
                 }

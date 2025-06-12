@@ -261,7 +261,7 @@ public final class CoreNetworking: Networking {
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
         let task = URLSession.shared.dataTask(with: route) { data, response, error in
-            if let error = error {
+            if let error {
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(method)"])
                 completion(.failure(error))
                 return
@@ -269,7 +269,7 @@ public final class CoreNetworking: Networking {
 
             log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
-            if let data = data, let string = String(data: data, encoding: .utf8) {
+            if let data, let string = String(data: data, encoding: .utf8) {
                 completion(.success(string))
                 return
             }

@@ -134,7 +134,7 @@ final class StatusMenuWindowController: WindowController {
     private func showWindow(_ sender: Any?, relativeTo frame: CGRect) {
         super.showWindow(sender)
         
-        guard let window = window else { return }
+        guard let window else { return }
         
         let height: CGFloat = 436 // positions countries so that 3.5 rows are showing
         let width: CGFloat = 300
@@ -154,7 +154,7 @@ final class StatusMenuWindowController: WindowController {
     }
     
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
 
@@ -192,7 +192,7 @@ extension NSStatusBarButton {
 
 extension NSEvent {
     func isStatusItemClicked(event: NSEvent) -> NSStatusItem? {
-        guard let window = window else { return nil }
+        guard let window else { return nil }
         guard window.className.hasPrefix("NSStatusBar"), window.className.hasSuffix("Window") else { return nil }
         guard event.eventNumber != 1337 else { return nil } // Bartender app event (avoid Bartender events from being misinterpreted as clicks on our app icon)
         return window.value(forKey: "statusItem") as? NSStatusItem

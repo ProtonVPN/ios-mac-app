@@ -95,7 +95,7 @@ final class ProfilesContainerViewController: NSViewController {
     }
     
     private func set(viewController: NSViewController) {
-        if let activeController = activeController {
+        if let activeController {
             activeControllerViewContainer.willRemoveSubview(activeController.view)
             activeController.view.removeFromSuperview()
             activeController.removeFromParent()

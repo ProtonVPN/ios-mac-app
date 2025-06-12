@@ -32,12 +32,12 @@ extension NSAttributedString {
     }
 
     static func imageAttachment(image: NSImage?, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
-        guard var image = image else {
+        guard var image else {
             log.error("Could not obtain image for text attachment.", category: .ui)
             return nil
         }
 
-        if let color = color {
+        if let color {
             image = image.colored(color)
         }
 

@@ -71,7 +71,7 @@
         }
 
         public func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
-            if let pingCallback = pingCallback {
+            if let pingCallback {
                 completion(pingCallback(server, port))
                 return
             }
@@ -80,7 +80,7 @@
         }
 
         public func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-            if let availabilityCallback = availabilityCallback {
+            if let availabilityCallback {
                 completion(availabilityCallback(server))
                 return
             }

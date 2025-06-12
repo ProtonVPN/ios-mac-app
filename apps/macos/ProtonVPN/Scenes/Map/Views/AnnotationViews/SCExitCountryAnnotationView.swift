@@ -52,7 +52,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
                    reuseIdentifier: reuseIdentifier)
 
         viewModel.viewStateChange = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -70,7 +70,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
         var text: [NSAttributedString] = []
         if hovered {
             // server titles
-            guard let window = window else { return }
+            guard let window else { return }
             let mousePoint = window.mouseLocationOutsideOfEventStream
             let pointInView = self.convert(mousePoint, from: nil)
 

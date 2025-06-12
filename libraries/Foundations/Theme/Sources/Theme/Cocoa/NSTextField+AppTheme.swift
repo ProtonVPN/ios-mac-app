@@ -29,7 +29,7 @@ import Foundation
             self.font = font
             self.alignment = alignment
 
-            if let placeholder = placeholder {
+            if let placeholder {
                 self.placeholderAttributedString = placeholder.styled(.hint, font: font, alignment: alignment)
             }
         }

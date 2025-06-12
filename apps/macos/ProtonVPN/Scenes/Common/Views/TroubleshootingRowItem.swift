@@ -39,7 +39,7 @@ final class TroubleshootingRowItem: NSTableRowView {
 
     var item: TroubleshootItem? {
         didSet {
-            guard let item = item else {
+            guard let item else {
                 return
             }
 

@@ -38,11 +38,11 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         var result = [String: Any]()
         result[CodingKeys.netshield.rawValue] = netshield.rawValue
         result[CodingKeys.vpnAccelerator.rawValue] = vpnAccelerator
-        if let bouncing = bouncing {
+        if let bouncing {
             result[CodingKeys.bouncing.rawValue] = bouncing
         }
         result[CodingKeys.natType.rawValue] = natType.flag
-        if let safeMode = safeMode {
+        if let safeMode {
             result[CodingKeys.safeMode.rawValue] = safeMode
         }
         return result

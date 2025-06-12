@@ -113,7 +113,7 @@ public final class ProfileUtility {
             return .nameInUse
         }
         
-        if let index = index, index >= 0, index <= profiles.count {
+        if let index, index >= 0, index <= profiles.count {
             var updatedProfiles = profiles
             updatedProfiles.insert(profile, at: index)
             return .success(updatedProfiles)

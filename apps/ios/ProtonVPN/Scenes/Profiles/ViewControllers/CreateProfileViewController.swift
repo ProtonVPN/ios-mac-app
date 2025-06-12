@@ -84,7 +84,7 @@ class CreateProfileViewController: UITableViewController {
     }
     
     private func updateTableView() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
@@ -96,7 +96,7 @@ class CreateProfileViewController: UITableViewController {
     }
     
     @objc private func saveTapped() {
-        guard let viewModel = viewModel else {
+        guard let viewModel else {
             self.navigationController?.popViewController(animated: true)
             return
         }

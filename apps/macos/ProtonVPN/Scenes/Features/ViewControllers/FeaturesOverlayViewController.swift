@@ -69,7 +69,7 @@ final class FeaturesOverlayViewController: OverlayViewController {
     }
 
     private func addSectionTitle(sectionTitle: String?) {
-        guard let sectionTitle = sectionTitle else { return }
+        guard let sectionTitle else { return }
         let attributedString = sectionTitle.styled(.hint, font: .themeFont(.small), alignment: .natural)
         let titleTextField = NSTextField(labelWithAttributedString: attributedString)
         featuresStackView.addArrangedSubview(titleTextField)

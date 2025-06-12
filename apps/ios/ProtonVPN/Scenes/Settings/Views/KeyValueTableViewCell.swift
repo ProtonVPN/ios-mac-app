@@ -31,7 +31,7 @@ class KeyValueTableViewCell: UITableViewCell {
     
     var viewModel: [String: String]? {
         didSet {
-            if let viewModel = viewModel {
+            if let viewModel {
                 keyLabel.text = viewModel.first?.key
                 valueLabel.text = viewModel.first?.value
             }

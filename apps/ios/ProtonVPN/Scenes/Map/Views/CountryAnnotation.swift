@@ -138,7 +138,7 @@ class CountryAnnotation: AnnotationView {
         self.iconView.tintColor = self.viewModel.connectIconTint
         
         let animationClosure = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             

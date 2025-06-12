@@ -49,7 +49,7 @@
                 throw KeychainMockError.fetchError
             }
 
-            guard let credentials = credentials else {
+            guard let credentials else {
                 throw KeychainMockError.fetchError
             }
 
@@ -72,7 +72,7 @@
             let newCredentials = vpnCredentials
             let oldCredentials = credentials
 
-            if let oldCredentials = oldCredentials {
+            if let oldCredentials {
                 if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
                     let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
                     NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)

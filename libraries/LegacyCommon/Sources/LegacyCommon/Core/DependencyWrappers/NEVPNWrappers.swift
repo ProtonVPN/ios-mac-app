@@ -57,11 +57,11 @@ public protocol NETunnelProviderManagerWrapperFactory {
 extension NETunnelProviderManagerWrapperFactory {
     func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
         loadManagersFromPreferences { (managers, error) in
-            if let error = error {
+            if let error {
                 completionHandler(nil, error)
                 return
             }
-            guard let managers = managers else {
+            guard let managers else {
                 completionHandler(nil, CommonVpnError.vpnManagerUnavailable)
                 return
             }

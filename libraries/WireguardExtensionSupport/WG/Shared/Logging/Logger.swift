@@ -36,7 +36,7 @@ public class Logger {
         if Logger.global != nil {
             return
         }
-        guard let filePath = filePath else {
+        guard let filePath else {
             os_log("Unable to determine log destination path. Log will not be saved to file.", log: OSLog.default, type: .error)
             return
         }

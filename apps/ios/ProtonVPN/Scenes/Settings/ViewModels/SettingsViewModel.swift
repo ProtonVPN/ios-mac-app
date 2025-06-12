@@ -121,7 +121,7 @@ final class SettingsViewModel {
         sections.append(securitySection)
         sections.append(advancedSection)
 
-        if let connectionSection = connectionSection {
+        if let connectionSection {
             sections.append(connectionSection)
         }
 
@@ -651,7 +651,7 @@ final class SettingsViewModel {
     }
 
     private func pushSettingsAccountViewController() {
-        guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
+        guard let pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
         }
         pushHandler(accountViewController)
@@ -659,7 +659,7 @@ final class SettingsViewModel {
 
     private func pushSignInToAnotherDeviceViewController() {
         Task { @MainActor in
-            guard let pushHandler = pushHandler else {
+            guard let pushHandler else {
                 return
             }
 
@@ -684,7 +684,7 @@ final class SettingsViewModel {
 
     private func pushAccountRecoveryViewController() {
         assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
-        guard let pushHandler = pushHandler else { return }
+        guard let pushHandler else { return }
         let accountRecoveryViewController = settingsService.makeAccountRecoveryViewController()
         pushHandler(accountRecoveryViewController)
     }

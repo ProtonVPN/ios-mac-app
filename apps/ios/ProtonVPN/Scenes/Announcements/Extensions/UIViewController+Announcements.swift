@@ -70,7 +70,7 @@ extension UIViewController {
         }
 
         if navigationItem.rightBarButtonItems?.contains(where: { $0 is BadgedBarButtonItem }) == false {
-            if let iconUrl = iconUrl {
+            if let iconUrl {
                 let downloader = ImageDownloader()
                 let urlRequest = URLRequest(url: iconUrl)
 

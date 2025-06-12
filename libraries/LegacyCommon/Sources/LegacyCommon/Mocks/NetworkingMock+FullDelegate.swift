@@ -84,7 +84,7 @@
                     return .failure(apiCredentialsResponseError)
                 }
                 // for fetching client credentials
-                guard let apiCredentials = apiCredentials else {
+                guard let apiCredentials else {
                     return .failure(ResponseError(
                         httpCode: HttpStatusCode.badRequest.rawValue,
                         responseCode: 2000,

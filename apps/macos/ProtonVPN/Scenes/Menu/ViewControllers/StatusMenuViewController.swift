@@ -109,7 +109,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         
         if let visualEffectView = view as? ClickDetectingVisualEffectView {
             visualEffectView.clickAction = { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -248,7 +248,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     private func contentChanged() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             

@@ -51,7 +51,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
     // MARK: - Private
 
     private func setupIcon() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         
         switch viewModel.icon {
         case let .image(image):
@@ -72,7 +72,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
     }
     
     private func setupLabels() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         
         label.attributedStringValue = viewModel.name
         secondaryLabel.attributedStringValue = viewModel.secondaryDescription
@@ -92,7 +92,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
         ])
 
         button.stateChanged = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

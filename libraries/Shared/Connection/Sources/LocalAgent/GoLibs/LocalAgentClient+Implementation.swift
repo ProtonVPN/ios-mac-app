@@ -46,7 +46,7 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
     }
 
     func onState(_ state: String?) {
-        guard let state = state else {
+        guard let state else {
             CoreConnection.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }

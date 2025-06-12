@@ -71,7 +71,7 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
         vpnManager.loadFromPreferences { loadError in
-            if let loadError = loadError {
+            if let loadError {
                 completion(nil, loadError)
                 return
             }

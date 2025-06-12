@@ -45,7 +45,7 @@ class WarningView: NSStackView {
     }
 
     func setMessage(_ message: String?, warningType: WarningType = .error) {
-        guard let message = message else {
+        guard let message else {
             isHidden = true
             return
         }

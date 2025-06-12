@@ -81,7 +81,7 @@ final class StatusViewController: UIViewController {
     }
     
     private func updateTableView() {
-        guard let viewModel = viewModel, let tableView = tableView else {
+        guard let viewModel, let tableView else {
             return
         }
         

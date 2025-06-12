@@ -240,7 +240,7 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.secureCoreToggle = serverType == .secureCore
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -250,7 +250,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func autoConnect() {
         appStateManager.isOnDemandEnabled { [weak self] enabled in
-            guard let self = self, !enabled else {
+            guard let self, !enabled else {
                 return
             }
 
@@ -692,7 +692,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func postConnectionInformation() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

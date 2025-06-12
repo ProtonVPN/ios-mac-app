@@ -359,7 +359,7 @@ class CreateNewProfileViewModel {
 
         if connectionProtocol == .vpnProtocol(.ike), userInitiated {
             self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol for a new profile.")
@@ -626,7 +626,7 @@ extension ModelState {
     }
 
     var selectedGroup: ServerGroupInfo? {
-        guard let countryIndex = countryIndex, countryIndex >= 0, countryIndex < serverGroups.count else {
+        guard let countryIndex, countryIndex >= 0, countryIndex < serverGroups.count else {
             return nil
         }
         return serverGroups[countryIndex]

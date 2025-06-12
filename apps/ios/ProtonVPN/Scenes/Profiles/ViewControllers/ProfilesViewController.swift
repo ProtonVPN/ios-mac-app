@@ -91,7 +91,7 @@ final class ProfilesViewController: UIViewController {
     }
     
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
@@ -190,7 +190,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: Localizable.delete) { [weak self] ( _, _, completionHandler) in
-            guard let self = self else {
+            guard let self else {
                 completionHandler(false)
                 return
             }

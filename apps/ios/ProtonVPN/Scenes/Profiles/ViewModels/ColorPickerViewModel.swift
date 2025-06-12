@@ -104,7 +104,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func select(color newColor: UIColor?) {
-        guard let newColor = newColor else {
+        guard let newColor else {
             selectRandom()
             return
         }

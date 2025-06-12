@@ -30,7 +30,7 @@ class BannerViewCell: UITableViewCell {
 
     var viewModel: BannerViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
+            guard let viewModel else { return }
             leftImageView.image = viewModel.leftIcon.image
             label.text = viewModel.text
         }

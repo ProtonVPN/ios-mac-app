@@ -127,7 +127,7 @@
                 })
             }
 
-            guard let timeout = timeout else {
+            guard let timeout else {
                 group.wait()
                 return .success
             }

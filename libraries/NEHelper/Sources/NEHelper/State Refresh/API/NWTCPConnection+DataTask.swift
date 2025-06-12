@@ -227,13 +227,13 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
                                  timeoutInterval: timeoutInterval,
                                  taskId: id,
                                  completionHandler: { [weak self] data, response, error in
-                                     if let error = error {
+                                     if let error {
                                          log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
                                      } else {
                                          log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
                                      }
 
-                                     if let response = response, let url = request.url {
+                                     if let response, let url = request.url {
                                          let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
                                          let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
                                          self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
@@ -346,7 +346,7 @@ class NWTCPDataTask: DataTaskProtocol {
         // sending the request if we reach a success condition (which will then call the completion handler with
         // the server's response data, assuming it is well-formed).
         let resolveRequest = { [weak self] (result: Result<(), Error>) in
-            guard let self = self else {
+            guard let self else {
                 log.warning("NWTCPConnection resolveRequest with released self called", category: .net)
                 return
             }
@@ -379,7 +379,7 @@ class NWTCPDataTask: DataTaskProtocol {
         // Look for changes in the NWTCPConnection's state, adding a timeout if we stay waiting in
         // `.connecting` or `.waiting` for too long.
         self.observation = connection?.observeStateChange { [weak self, taskId] state in
-            guard let self = self else {
+            guard let self else {
                 log.warning("NWTCPConnection observeStateChange with released self called: \(state)", category: .net, metadata: ["id": "\(taskId)"])
                 return
             }

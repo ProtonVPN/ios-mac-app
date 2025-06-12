@@ -99,7 +99,7 @@ class NWTCPConnectionTests: XCTestCase {
             XCTAssertNil(error, "Unexpected response error")
             XCTAssertEqual((response as! HTTPURLResponse).statusCode, 200, "Http response error code should be 200")
 
-            guard let data = data else {
+            guard let data else {
                 XCTFail("No response data received")
                 return
             }

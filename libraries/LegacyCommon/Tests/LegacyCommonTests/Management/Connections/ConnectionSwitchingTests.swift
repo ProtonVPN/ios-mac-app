@@ -749,7 +749,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(nDisconnections, 1)
         container.alertService.alerts.removeAll()
 
-        guard let downgradedAlert = downgradedAlert, let reconnectInfo = downgradedAlert.reconnectInfo else {
+        guard let downgradedAlert, let reconnectInfo = downgradedAlert.reconnectInfo else {
             XCTFail("Downgraded alert not found or reconnect info not found in downgraded alert")
             return
         }

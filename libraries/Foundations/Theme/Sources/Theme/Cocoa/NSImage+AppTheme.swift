@@ -28,14 +28,14 @@ import Foundation
 
         func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default, centeredVerticallyForFont font: NSFont? = nil) -> NSAttributedString {
             var resultingImage = self
-            if let style = style {
+            if let style {
                 resultingImage = self.colored(context: context, style)
             }
             resultingImage = resultingImage.resize(size)
 
             let attachment = NSTextAttachment()
             attachment.image = resultingImage
-            if let font = font {
+            if let font {
                 let imageY = (font.capHeight - resultingImage.size.height).rounded(.toNearestOrEven) / 2
                 attachment.bounds = CGRect(origin: CGPoint(x: 0, y: imageY), size: resultingImage.size)
             }

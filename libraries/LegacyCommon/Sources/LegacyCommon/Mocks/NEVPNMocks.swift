@@ -180,12 +180,12 @@
         }
 
         public func startVPNTunnel() throws {
-            if let tunnelStartError = tunnelStartError {
+            if let tunnelStartError {
                 throw tunnelStartError
             }
 
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -195,7 +195,7 @@
             }
 
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -217,7 +217,7 @@
             guard !debounce else { return }
 
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -228,7 +228,7 @@
             }
 
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -245,7 +245,7 @@
         public func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws {
             let response = providerMessageSent?(messageData)
 
-            if let responseHandler = responseHandler {
+            if let responseHandler {
                 responseHandler(response)
             }
         }

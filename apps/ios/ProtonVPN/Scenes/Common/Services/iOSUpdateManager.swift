@@ -156,7 +156,7 @@ final class iOSUpdateManager: UpdateChecker {
 
         do {
             let appInfo = try await fetchInfoFromAppStore()
-            guard let currentVersion = currentVersion,
+            guard let currentVersion,
                   let appStoreVersion = appInfo[UpdateCheckCodingKeys.version.stringValue] as? String else {
                 throw UpdateCheckError.noVersionFoundInJSON
             }

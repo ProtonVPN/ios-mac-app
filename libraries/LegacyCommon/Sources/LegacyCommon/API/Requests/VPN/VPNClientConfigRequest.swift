@@ -31,7 +31,7 @@ final class VPNClientConfigRequest: Request {
     }
 
     var header: [String: Any] {
-        guard let ip = ip else {
+        guard let ip else {
             return [:]
         }
 

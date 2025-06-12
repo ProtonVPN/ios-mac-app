@@ -68,7 +68,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
 
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socket) { adapterError in
-            guard let adapterError = adapterError else {
+            guard let adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
@@ -114,7 +114,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         adapter.stop { error in
             ErrorNotifier.removeLastErrorFile()
 
-            if let error = error {
+            if let error {
                 wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
             }
             completionHandler()
@@ -131,10 +131,10 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         wg_log(.info, message: "Handle App Message size: \(messageData.count)")
 
-        if let completionHandler = completionHandler, messageData.count == 1, messageData[0] == 0 {
+        if let completionHandler, messageData.count == 1, messageData[0] == 0 {
             adapter.getRuntimeConfiguration { settings in
                 var data: Data?
-                if let settings = settings {
+                if let settings {
                     data = settings.data(using: .utf8)!
                 }
                 completionHandler(data)

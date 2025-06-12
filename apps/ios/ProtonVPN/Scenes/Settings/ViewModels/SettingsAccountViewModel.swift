@@ -209,7 +209,7 @@ final class SettingsAccountViewModel {
         }
         
         alertService.push(alert: AccountDeletionWarningAlert { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             switch self.appStateManager.state {
             case .connecting:
                 self.appStateManager.cancelConnectionAttempt { [weak self] in

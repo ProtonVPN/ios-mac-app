@@ -50,7 +50,7 @@ class ConnectionOverlay: NSView {
         blurReductionCompletion = completion
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
@@ -97,7 +97,7 @@ class ConnectionOverlay: NSView {
     }
     
     @objc private func reduceBlur() {
-        guard let blurReduction = blurReduction else { return }
+        guard let blurReduction else { return }
         
         if (blurRadius - blurReduction) > 0.0 {
             blurRadius -= blurReduction
@@ -110,7 +110,7 @@ class ConnectionOverlay: NSView {
         blurRadius = fullBlurRadius
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             

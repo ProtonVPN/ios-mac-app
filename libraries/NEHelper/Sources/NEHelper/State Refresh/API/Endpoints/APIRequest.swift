@@ -122,7 +122,7 @@ extension HTTPURLResponse {
             let kvPair = self.allHeaderFields.first { (key, _) in
                 (key as? String)?.lowercased() == header.rawValue.lowercased()
             }
-            guard let kvPair = kvPair else {
+            guard let kvPair else {
                 return nil
             }
             return kvPair.value as? String

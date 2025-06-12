@@ -31,7 +31,7 @@ class LoadCircle: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard let context = NSGraphicsContext.current?.cgContext, let load = load else {
+        guard let context = NSGraphicsContext.current?.cgContext, let load else {
             return
         }
 

@@ -51,7 +51,7 @@ public final class SearchCoordinator {
     }
 
     public func reload(data: [CountryViewModel], mode: SearchMode) {
-        guard let searchViewController = searchViewController else {
+        guard let searchViewController else {
             return
         }
 

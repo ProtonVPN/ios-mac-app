@@ -91,19 +91,19 @@ class HoverDetectionButtonAdvanced: NSButton {
 
     private func updateHoveredState(with event: NSEvent?) {
         let newHovered = mouseInside(with: event)
-        if let newHovered = newHovered, newHovered != isHovered {
+        if let newHovered, newHovered != isHovered {
             isHovered = newHovered
         }
     }
     
     private func mouseInside(with event: NSEvent?) -> Bool? {
-        if let event = event {
+        if let event {
             // hit test before hovering incase a view is obscuring this one already
             guard let hitView = window?.contentView?.hitTest(event.locationInWindow) else { return nil }
             
             return hitView === self
         } else {
-            guard let window = window else { return nil }
+            guard let window else { return nil }
             
             let mouseInWindow = window.mouseLocationOutsideOfEventStream
             let mouseInView = convert(mouseInWindow, from: nil)

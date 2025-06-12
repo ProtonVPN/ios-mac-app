@@ -105,7 +105,7 @@ public final class Review {
 
     private func checkConditions() {
         // all the conditions require the users plan to be in the eligible list
-        guard let plan = plan, configuration.eligiblePlans.contains(plan) else {
+        guard let plan, configuration.eligiblePlans.contains(plan) else {
             return
         }
 

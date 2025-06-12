@@ -88,7 +88,7 @@ public final class FileLogHandler: ParentLogHandler {
     }
     
     private func closeFile() throws {
-        guard let fileHandle = fileHandle else {
+        guard let fileHandle else {
             return
         }
         try fileHandle.synchronize()

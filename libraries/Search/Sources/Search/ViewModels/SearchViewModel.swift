@@ -73,7 +73,7 @@ final class SearchViewModel {
         }
 
         let filter = { (name: String?) -> Bool in
-            guard let name = name else {
+            guard let name else {
                 return false
             }
 

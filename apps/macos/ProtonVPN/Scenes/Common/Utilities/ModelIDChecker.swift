@@ -29,7 +29,7 @@ protocol ModelIdCheckerFactory {
 
 extension ModelIdCheckerProtocol {
     var isT2Mac: Bool {
-        guard let modelId = modelId else {
+        guard let modelId else {
             return false
         }
         return ModelIdChecker.macT2ModelNames.contains(modelId)

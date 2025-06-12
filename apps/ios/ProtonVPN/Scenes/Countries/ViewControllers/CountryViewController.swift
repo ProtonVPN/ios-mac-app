@@ -50,7 +50,7 @@ final class CountryViewController: UIViewController {
     }
     
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
@@ -67,7 +67,7 @@ final class CountryViewController: UIViewController {
     }
 
     private func displayStreamingServices() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         let services = viewModel.streamingServices
         let countryName = viewModel.countryName
         let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager )

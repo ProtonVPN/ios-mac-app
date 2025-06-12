@@ -277,7 +277,7 @@ class WindowServiceImplementation: WindowService {
     }
     
     func bringWindowsToForeground() -> Bool {
-        guard let mainWindowController = mainWindowController else {
+        guard let mainWindowController else {
             return false
         }
         
@@ -347,7 +347,7 @@ class WindowServiceImplementation: WindowService {
 
 extension WindowServiceImplementation: WindowControllerDelegate {
     func windowCloseRequested(_ sender: WindowController) {
-        if let mainWindowController = mainWindowController, sender == mainWindowController {
+        if let mainWindowController, sender == mainWindowController {
             closeActiveWindows()
             mainWindowController.close()
             NSApp.setActivationPolicy(.accessory)

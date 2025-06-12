@@ -80,7 +80,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         }
 
         let performConnection = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

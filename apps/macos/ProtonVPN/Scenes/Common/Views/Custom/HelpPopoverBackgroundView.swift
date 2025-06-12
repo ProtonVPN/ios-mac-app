@@ -25,7 +25,7 @@ import Ergonomics
 
 class HelpPopoverBackgroundView: NSView {
     override func viewDidMoveToSuperview() {
-        guard let superview = superview else {
+        guard let superview else {
             return
         }
 

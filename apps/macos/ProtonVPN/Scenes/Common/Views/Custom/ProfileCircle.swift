@@ -30,7 +30,7 @@ class ProfileCircle: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        guard let context = NSGraphicsContext.current?.cgContext, let profileColor = profileColor else {
+        guard let context = NSGraphicsContext.current?.cgContext, let profileColor else {
             return
         }
 

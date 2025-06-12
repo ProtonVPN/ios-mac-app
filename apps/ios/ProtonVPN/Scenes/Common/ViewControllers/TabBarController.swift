@@ -128,7 +128,7 @@ extension TabBarController: UITabBarControllerDelegate {
         
         if viewController is ProtonQCViewController {
             return false
-        } else if let viewModel = viewModel, viewController == viewControllers?.last { // settings
+        } else if let viewModel, viewController == viewControllers?.last { // settings
             return viewModel.settingShouldBeSelected()
         } else {
             return true

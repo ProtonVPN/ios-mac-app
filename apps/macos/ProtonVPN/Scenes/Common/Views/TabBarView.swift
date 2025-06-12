@@ -45,22 +45,22 @@ class TabBarView: NSView {
             return
         }
         
-        guard let tabCount = tabCount, tabCount >= 1 else {
+        guard let tabCount, tabCount >= 1 else {
             log.error("Tab count not properly set in tab bar view", category: .ui)
             return
         }
         
-        guard let focusedTabIndex = focusedTabIndex, focusedTabIndex >= 0, focusedTabIndex < tabCount else {
+        guard let focusedTabIndex, focusedTabIndex >= 0, focusedTabIndex < tabCount else {
             log.error("Focused tab index not properly set in tab bar view", category: .ui)
             return
         }
         
-        guard let tabWidth = tabWidth, tabWidth >= minimumTabWidth else {
+        guard let tabWidth, tabWidth >= minimumTabWidth else {
             log.error("Tab width property does not satisfy necessary requirements", category: .ui)
             return
         }
         
-        guard let tabHeight = tabHeight, tabHeight >= minimumTabHeight else {
+        guard let tabHeight, tabHeight >= minimumTabHeight else {
             log.error("Tab height property does not satisfy necessary requirements", category: .ui)
             return
         }

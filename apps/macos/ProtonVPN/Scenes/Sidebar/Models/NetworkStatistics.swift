@@ -58,7 +58,7 @@ class NetworkStatistics {
     }
     
     @objc private func updateBitrate() {
-        guard let updateWithBitrate = updateWithBitrate else { return }
+        guard let updateWithBitrate else { return }
         
         let latestTraffic = self.getTrafficStatistics()
         

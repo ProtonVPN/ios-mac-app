@@ -194,7 +194,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
-            guard let adapterError = adapterError else {
+            guard let adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
@@ -230,7 +230,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     }
 
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
-        if let newVpnCertificateFeatures = newVpnCertificateFeatures {
+        if let newVpnCertificateFeatures {
             wg_log(.debug, message: "Connection restarted with another server. Will regenerate certificate.")
 
             certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { [weak self] result in
@@ -313,7 +313,7 @@ private extension WireGuardPacketTunnelProvider {
         switch message {
         case .getRuntimeTunnelConfiguration:
             adapter.getRuntimeConfiguration { settings in
-                if let settings = settings, let data = settings.data(using: .utf8) {
+                if let settings, let data = settings.data(using: .utf8) {
                     completionHandler?(.ok(data: data))
                 } else {
                     completionHandler?(.error(message: "Could not retrieve tunnel configuration."))
@@ -343,7 +343,7 @@ private extension WireGuardPacketTunnelProvider {
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
                     case let .tooManyCertRequests(retryAfter):
-                        if let retryAfter = retryAfter {
+                        if let retryAfter {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
                         } else {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: nil))

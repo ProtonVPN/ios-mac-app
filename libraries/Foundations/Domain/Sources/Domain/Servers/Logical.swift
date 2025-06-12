@@ -85,7 +85,7 @@ public struct Logical: Codable, Equatable, Sendable {
     }
 
     public var isVirtual: Bool {
-        if let hostCountry = hostCountry, !hostCountry.isEmpty {
+        if let hostCountry, !hostCountry.isEmpty {
             return true
         }
         return false

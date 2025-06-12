@@ -63,7 +63,7 @@ public final class TimerFactoryMock: TimerFactory {
             }
         }
 
-        guard let done = done else { return }
+        guard let done else { return }
 
         group.notify(queue: .main, execute: done)
     }

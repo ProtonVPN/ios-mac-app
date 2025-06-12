@@ -207,7 +207,7 @@ final class HeaderViewController: NSViewController {
     }
 
     @objc func setupAnnouncements() {
-        guard let viewModel = viewModel else {
+        guard let viewModel else {
             announcementsButton.isHidden = true
             return
         }

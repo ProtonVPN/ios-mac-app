@@ -85,7 +85,7 @@ class CreateProfileRobot: CoreElements {
     private func chooseServer(_ serverName: String?) -> CreateProfileRobot {
         tapServerField()
         staticText(Localizable.server).checkExists()
-        if let serverName = serverName {
+        if let serverName {
             staticText()
                 .containsLabel(serverName)
                 .checkExists(message: "Server \(serverName) not found").tap()

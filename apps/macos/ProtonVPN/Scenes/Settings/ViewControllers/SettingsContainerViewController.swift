@@ -78,7 +78,7 @@ final class SettingsContainerViewController: NSViewController {
     }
     
     private func set(viewController: NSViewController) {
-        if let activeViewController = activeViewController {
+        if let activeViewController {
             activeControllerViewContainer.willRemoveSubview(activeViewController.view)
             activeViewController.view.removeFromSuperview()
             activeViewController.removeFromParent()

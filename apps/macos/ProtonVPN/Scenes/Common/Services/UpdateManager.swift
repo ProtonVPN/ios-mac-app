@@ -240,7 +240,7 @@ extension UpdateManager: UpdateChecker {
 
     func isUpdateAvailable() async -> Bool {
         guard let item = newestAppCastItemThatSupportsThisOS,
-              let currentBuild = currentBuild else {
+              let currentBuild else {
             return false
         }
 

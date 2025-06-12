@@ -39,7 +39,7 @@ final class SettingsWindowController: WindowController {
     }
 
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
         window.title = Localizable.preferences

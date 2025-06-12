@@ -125,7 +125,7 @@ extension LocalAgentFeatures {
     }
 
     func with(bouncing: String?) -> LocalAgentFeatures {
-        if let bouncing = bouncing {
+        if let bouncing {
             set(.bouncing, value: bouncing)
         }
         return self
@@ -137,7 +137,7 @@ extension LocalAgentFeatures {
     }
 
     func with(safeMode: Bool?) -> LocalAgentFeatures {
-        if let safeMode = safeMode {
+        if let safeMode {
             set(.safeMode, value: safeMode)
         }
         return self

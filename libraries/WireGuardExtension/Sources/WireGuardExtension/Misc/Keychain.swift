@@ -22,7 +22,7 @@ enum Keychain {
 
     static func makeReference(containing value: String, called name: String, previouslyReferencedBy oldRef: Data? = nil) -> Data? {
         var ret: OSStatus
-        guard let bundleIdentifier = bundleIdentifier else {
+        guard let bundleIdentifier else {
             wg_log(.error, staticMessage: "Unable to determine bundle identifier")
             return nil
         }
@@ -52,7 +52,7 @@ enum Keychain {
             wg_log(.error, message: "Unable to add config to keychain: \(ret)")
             return nil
         }
-        if let oldRef = oldRef {
+        if let oldRef {
             deleteReference(called: oldRef)
         }
         return ref as? Data
@@ -165,7 +165,7 @@ enum Keychain {
         query[kSecAttrAccount] = "ProtonVPN WG"
         query[kSecClass as CFString] = kSecClassGenericPassword
 
-        if let bundleIdentifier = bundleIdentifier {
+        if let bundleIdentifier {
             query[kSecAttrService as CFString] = bundleIdentifier
         }
 

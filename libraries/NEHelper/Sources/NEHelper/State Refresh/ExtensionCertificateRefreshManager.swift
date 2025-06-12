@@ -158,7 +158,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             return true
         }
 
-        if let features = features {
+        if let features {
             // and we're also able to retrieve the features stored from the last request...
             guard let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures() else {
                 log.info("Could not find stored certificate features, refreshing.", category: .userCert)

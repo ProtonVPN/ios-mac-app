@@ -39,7 +39,7 @@ class AboutWindowController: WindowController {
     }
     
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
         

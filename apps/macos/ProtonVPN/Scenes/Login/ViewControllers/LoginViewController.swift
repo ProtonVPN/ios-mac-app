@@ -380,7 +380,7 @@ final class LoginViewController: NSViewController {
     private func handleLoginFailure(_ errorMessage: String?, _ errorCode: Int? = nil) {
         if viewModel.isTwoFactorStep {
             presentTwoFactorScreen(withErrorDescription: errorMessage)
-        } else if let errorCode = errorCode, errorCode == ProtonCoreServices.APIErrorCode.switchToSSOError {
+        } else if let errorCode, errorCode == ProtonCoreServices.APIErrorCode.switchToSSOError {
             signInWithSSOButtonAction()
             presentOnboardingScreen(withErrorDescription: errorMessage, warningType: .info)
         } else {
@@ -484,11 +484,11 @@ final class LoginViewController: NSViewController {
 
     private func startWebAuthenticationSession(_ authURL: URL) {
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "protonvpn") { callbackURL, error in
-            guard error == nil, let callbackURL = callbackURL else { 
+            guard error == nil, let callbackURL else { 
                 DispatchQueue.main.async { [weak self] in
                     ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
 
-                    if let error = error {
+                    if let error {
                         log.error("SSO auth failed with error: \(error)", category: .core)
                     } else {
                         log.error("SSO auth failed: missing callbackURL", category: .core)

@@ -43,7 +43,7 @@ import Foundation
             newString.addAttribute(NSAttributedString.Key.font, value: font, range: range)
             newString.addAttribute(NSAttributedString.Key.backgroundColor, value: NSColor.clear, range: range)
 
-            if let lineBreakMode = lineBreakMode {
+            if let lineBreakMode {
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineBreakMode = lineBreakMode
                 newString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)

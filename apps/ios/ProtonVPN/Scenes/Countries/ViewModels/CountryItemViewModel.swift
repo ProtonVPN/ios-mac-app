@@ -402,7 +402,7 @@ class CountryItemViewModel {
     }
 
     @objc private func stateChanged() {
-        if let connectionChanged = connectionChanged {
+        if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
             }

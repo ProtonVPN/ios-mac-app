@@ -112,7 +112,7 @@ class ProtonButton: UIButton {
     }
     
     private func showSpinning() {
-        guard let activityIndicator = activityIndicator else {
+        guard let activityIndicator else {
             return
         }
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

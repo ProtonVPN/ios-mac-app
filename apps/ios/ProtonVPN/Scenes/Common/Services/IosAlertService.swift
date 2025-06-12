@@ -288,13 +288,13 @@ extension IosAlertService: CoreAlertService {
         let viewModel: UserAccountUpdateViewModel
         switch alert {
         case is UserBecameDelinquentAlert:
-            if let server = server {
+            if let server {
                 viewModel = .pendingInvoicesReconnecting(fromServer: server.from, toServer: server.to)
             } else {
                 viewModel = .pendingInvoices
             }
         case is UserPlanDowngradedAlert:
-            if let server = server {
+            if let server {
                 viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
                                                                 numberOfDevices: DomainConstants.maxDeviceCount,
                                                                 fromServer: server.from,

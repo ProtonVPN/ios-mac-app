@@ -274,7 +274,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     public func setAutoConnect(for username: String, enabled: Bool, profileId: String?) {
         storage.setValue(enabled, forKey: Keys.autoConnect.rawValue)
-        if let profileId = profileId {
+        if let profileId {
             storage.setValue(profileId, forKey: Keys.autoConnectProfile.rawValue + username)
         }
     }

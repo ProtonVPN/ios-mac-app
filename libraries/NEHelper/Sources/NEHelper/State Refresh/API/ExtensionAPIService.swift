@@ -91,7 +91,7 @@ public final class ExtensionAPIService {
             return
         }
 
-        if let sessionCookie = sessionCookie {
+        if let sessionCookie {
             dataTaskFactory.cookieStorage.setCookies([sessionCookie], for: URL(string: apiUrl), mainDocumentURL: nil)
         }
 
@@ -175,7 +175,7 @@ public final class ExtensionAPIService {
     private func jitter(forRetryAfterInterval retryAfter: TimeInterval? = nil) -> TimeInterval {
         let jitterMax: UInt32
 
-        if let retryAfter = retryAfter {
+        if let retryAfter {
             guard Self.retryAfterJitterRate > 0 else {
                 return 0
             }
@@ -231,7 +231,7 @@ public final class ExtensionAPIService {
 
         let task = dataTaskFactory.dataTask(urlRequest) { [weak self] data, response, error in
             self?.requestQueue.async {
-                if let error = error {
+                if let error {
                     log.info("Network error: \(error)")
                     completion(.failure(.networkError(error)))
                     return
@@ -247,7 +247,7 @@ public final class ExtensionAPIService {
                     log.error("Endpoint /\(request.endpointUrl) received error: \(response.statusCode)")
 
                     var apiError: APIError?
-                    if let data = data, let error = APIError.decode(errorResponse: data) {
+                    if let data, let error = APIError.decode(errorResponse: data) {
                         apiError = error
                     }
 
@@ -255,7 +255,7 @@ public final class ExtensionAPIService {
                     return
                 }
 
-                guard let data = data else {
+                guard let data else {
                     log.info("Response error: received response, but no data.")
                     completion(.failure(.noData))
                     return
@@ -355,7 +355,7 @@ public final class ExtensionAPIService {
                                  retryBlock: @escaping (() -> Void),
                                  errorHandler: @escaping ((Error) -> Void)) {
         let retryAfter = { [weak self] (seconds: TimeInterval?) in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -422,7 +422,7 @@ public final class ExtensionAPIService {
 
             retryAfter(retryAfterInterval)
         case .conflict:
-            guard let apiError = apiError, apiError.knownErrorCode == .alreadyExists else {
+            guard let apiError, apiError.knownErrorCode == .alreadyExists else {
                 log.error("Received conflict error: \(apiError?.description ?? "(unknown)")")
                 retryAfter(nil)
                 break
@@ -431,7 +431,7 @@ public final class ExtensionAPIService {
             errorHandler(CertificateRefreshError.needNewKeys)
         case .badRequest:
             let badRequestError: Error
-            if let apiError = apiError {
+            if let apiError {
                 badRequestError = apiError
 
                 if apiError.knownErrorCode == .invalidAuthToken {
@@ -669,7 +669,7 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
                 HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
             }
 
-            if let apiError = apiError {
+            if let apiError {
                 requestErrorString = (requestErrorString?.appending(" ") ?? "")
                     .appending("(\(apiError.description))")
             }
@@ -678,7 +678,7 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
             return "No data received"
         case let .parseError(error):
             var parseErrorString: String?
-            if let error = error {
+            if let error {
                 parseErrorString = String(describing: error)
             }
             return "Parse error: \(parseErrorString ?? "(unknown)")"

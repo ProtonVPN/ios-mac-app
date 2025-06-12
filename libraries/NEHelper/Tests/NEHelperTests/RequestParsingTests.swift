@@ -68,7 +68,7 @@ class RequestParsingTests: XCTestCase {
 
             let (httpResponse, body) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
 
-            guard let httpResponse = httpResponse, let body = body else {
+            guard let httpResponse, let body else {
                 XCTFail("No response or body received.")
                 return
             }
@@ -89,7 +89,7 @@ class RequestParsingTests: XCTestCase {
             let response = Self.makeResponse(preamble: "HTTP/1.1 420 Enhance Your Calm", headers: headers, body: nil)
             let (httpResponse, body) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
 
-            guard let httpResponse = httpResponse else {
+            guard let httpResponse else {
                 XCTFail("No response received.")
                 return
             }

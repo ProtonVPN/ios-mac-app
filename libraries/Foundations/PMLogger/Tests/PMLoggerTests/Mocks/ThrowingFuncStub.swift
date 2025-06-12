@@ -52,7 +52,7 @@ public final class ThrowingStubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6
     public var failOnBeingCalledUnexpectedly = false
 
     private lazy var implementation: (UInt, Input) throws -> Output = { [unowned self] _, input in
-        guard let initialReturn = initialReturn else {
+        guard let initialReturn else {
             XCTFail("initial return was not provided: \(self.description)")
             fatalError()
         }
@@ -953,7 +953,7 @@ public final class StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8
     public var failOnBeingCalledUnexpectedly = false
 
     private lazy var implementation: (UInt, Input) -> Output = { [unowned self] _, input in
-        guard let initialReturn = initialReturn else {
+        guard let initialReturn else {
             XCTFail("initial return was not provided: \(self.description)")
             fatalError()
         }

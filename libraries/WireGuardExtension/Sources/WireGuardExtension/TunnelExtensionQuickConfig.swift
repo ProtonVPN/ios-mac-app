@@ -116,7 +116,7 @@ extension TunnelConfiguration {
             throw ParseError.multiplePeersWithSamePublicKey
         }
 
-        if let interfaceConfiguration = interfaceConfiguration {
+        if let interfaceConfiguration {
             self.init(name: name, interface: interfaceConfiguration, peers: peerConfigurations)
         } else {
             throw ParseError.noInterface

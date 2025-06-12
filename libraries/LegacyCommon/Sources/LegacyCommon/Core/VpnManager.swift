@@ -92,7 +92,7 @@ public final class VpnManager: VpnManagerProtocol {
     @Dependency(\.timerFactory) var timerFactory
 
     var currentVpnProtocolFactory: VpnProtocolFactory? {
-        guard let currentVpnProtocol = currentVpnProtocol else {
+        guard let currentVpnProtocol else {
             return nil
         }
 
@@ -272,13 +272,13 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             handler(false)
             return
         }
 
         currentVpnProtocolFactory.vpnProviderManager(for: .status) { vpnManager, _ in
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 handler(false)
                 return
             }
@@ -309,7 +309,7 @@ public final class VpnManager: VpnManagerProtocol {
         executeDisconnectionRequestWhenReady { [weak self] in
             self?.connectAllowed = false
             self?.connectionQueue.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
@@ -342,13 +342,13 @@ public final class VpnManager: VpnManagerProtocol {
 
     @available(*, deprecated, renamed: "connectedDate()")
     private func connectedDate(completion: @escaping (Date?) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             completion(nil)
             return
         }
 
         currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 completion(nil)
                 return
             }
@@ -358,7 +358,7 @@ public final class VpnManager: VpnManagerProtocol {
                 return
             }
 
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 completion(nil)
                 return
             }
@@ -413,7 +413,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(vpnAccelerator: Bool) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change vpn accelerator via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -422,7 +422,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(netShieldType: NetShieldType) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change netshield via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -433,7 +433,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(natType: NATType) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change NAT type via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -444,7 +444,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(safeMode: Bool) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change Safe Mode via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -466,22 +466,22 @@ public final class VpnManager: VpnManagerProtocol {
 
         disconnectLocalAgent()
 
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             return
         }
 
         log.info("Creating connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if let error = error {
+            if let error {
                 self.setState(withError: error)
                 return
             }
 
-            guard let vpnManager = vpnManager else { return }
+            guard let vpnManager else { return }
 
             do {
                 let protocolConfiguration = try currentVpnProtocolFactory
@@ -528,11 +528,11 @@ public final class VpnManager: VpnManagerProtocol {
 
         let saveToPreferences = {
             vpnManager.saveToPreferences { [weak self] saveError in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
-                if let saveError = saveError {
+                if let saveError {
                     self.setState(withError: saveError)
                     return
                 }
@@ -552,22 +552,21 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     private func startConnection(requestId: UUID, originalIntent: ConnectionRequestType?, completion: @escaping () -> Void) {
-        guard connectAllowed, let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard connectAllowed, let currentVpnProtocolFactory else {
             return
         }
 
         log.info("Loading connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if let error = error {
+            if let error {
                 self.setState(withError: error)
                 return
             }
-
-            guard let vpnManager = vpnManager else { return }
+            guard let vpnManager else { return }
             guard self.connectAllowed else { return }
 
             tokens.removeAll()
@@ -649,21 +648,21 @@ public final class VpnManager: VpnManagerProtocol {
     // MARK: - Connect on demand
 
     private func setOnDemand(_ enabled: Bool, completion: @escaping (NEVPNManagerWrapper) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             return
         }
 
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if let error = error {
+            if let error {
                 self.setState(withError: error)
                 return
             }
 
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 self.setState(withError: CommonVpnError.vpnManagerUnavailable)
                 return
             }
@@ -673,11 +672,11 @@ public final class VpnManager: VpnManagerProtocol {
             log.info("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)", category: .connectionConnect)
 
             vpnManager.saveToPreferences { [weak self] error in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
-                if let error = error {
+                if let error {
                     self.setState(withError: error)
                     return
                 }
@@ -688,7 +687,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     private func setState(withError error: Error? = nil) {
-        if let error = error {
+        if let error {
             log.error("VPN error: \(error)", category: .connection)
             state = .error(error)
             disconnectCompletion?()
@@ -702,7 +701,7 @@ public final class VpnManager: VpnManagerProtocol {
         }
 
         vpnStateConfiguration.determineActiveVpnState(vpnProtocol: vpnProtocol) { [weak self] result in
-            guard let self = self, !self.quickReconnection else {
+            guard let self, !self.quickReconnection else {
                 return
             }
 
@@ -823,7 +822,7 @@ public final class VpnManager: VpnManagerProtocol {
         let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
         log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
         vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -885,12 +884,12 @@ public final class VpnManager: VpnManagerProtocol {
 
     private func removeConfiguration(_ protocolFactory: VpnProtocolFactory, completionHandler: ((Error?) -> Void)?) {
         protocolFactory.vpnProviderManager(for: .configuration) { vpnManager, error in
-            if let error = error {
+            if let error {
                 log.error("Error loading VPN Manager for removal: \(error)", category: .ui, metadata: ["factory": "\(protocolFactory)"])
                 completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }

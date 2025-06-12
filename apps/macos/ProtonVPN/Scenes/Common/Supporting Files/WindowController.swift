@@ -55,7 +55,7 @@ class WindowController: NSWindowController {
     // MARK: - Private functions
 
     private func configureEventMonitor() {
-        guard let monitorsKeyEvents = monitorsKeyEvents else {
+        guard let monitorsKeyEvents else {
             return
         }
         
@@ -64,7 +64,7 @@ class WindowController: NSWindowController {
     
     private func addEventMonitor() {
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            guard let self = self else {
+            guard let self else {
                 return nil
             }
             
@@ -85,7 +85,7 @@ class WindowController: NSWindowController {
     }
     
     private func removeEventMonitor() {
-        guard let eventMonitor = eventMonitor else {
+        guard let eventMonitor else {
             return
         }
         
@@ -97,7 +97,7 @@ class WindowController: NSWindowController {
 
 extension WindowController: NSWindowDelegate {
     func windowShouldClose(_ sender: NSWindow) -> Bool {
-        if let delegate = delegate {
+        if let delegate {
             delegate.windowCloseRequested(self)
             return false
         } else {

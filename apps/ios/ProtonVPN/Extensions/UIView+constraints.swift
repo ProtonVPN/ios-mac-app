@@ -35,16 +35,16 @@ extension UIView {
     func add(subView: UIView, withTopMargin topMargin: CGFloat? = nil, rightMargin: CGFloat? = nil, bottomMargin: CGFloat? = nil, leftMargin: CGFloat? = nil) {
         self.addSubview(subView)
 
-        if let topMargin = topMargin {
+        if let topMargin {
             subView.topAnchor.constraint(equalTo: self.topAnchor, constant: topMargin).isActive = true
         }
-        if let bottomMargin = bottomMargin {
+        if let bottomMargin {
             subView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: bottomMargin).isActive = true
         }
-        if let leftMargin = leftMargin {
+        if let leftMargin {
             subView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: leftMargin).isActive = true
         }
-        if let rightMargin = rightMargin {
+        if let rightMargin {
             subView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: rightMargin).isActive = true
         }
     }

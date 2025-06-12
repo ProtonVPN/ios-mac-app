@@ -108,10 +108,10 @@ public extension Logging.Logger {
     private func getMeta(_ originalMetadata: @escaping () -> Metadata?, category: Logger.Category? = nil, event: Logger.Event? = nil) -> (() -> Metadata?) {
         return {
             var res: Metadata = originalMetadata() ?? Metadata()
-            if let category = category {
+            if let category {
                 res[MetaKey.category.rawValue] = .string(category.rawValue)
             }
-            if let event = event {
+            if let event {
                 res[MetaKey.event.rawValue] = .string(event.rawValue)
             }
             return res

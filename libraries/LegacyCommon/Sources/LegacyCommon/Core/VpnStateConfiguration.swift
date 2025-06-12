@@ -117,8 +117,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             dispatchGroup.enter()
             self.getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] manager, error in
                 defer { dispatchGroup.leave() }
-                guard let self = self, let manager = manager else {
-                    guard let error = error else { return }
+                guard let self, let manager else {
+                    guard let error else { return }
 
                     log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedDescription)\" is active: \"\(String(describing: error))\"", category: .connection)
                     return
@@ -187,11 +187,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
 
     public func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void)) {
         getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
                 return
             }
-            guard let self = self, let vpnManager = vpnManager else {
+            guard let self, let vpnManager else {
                 return
             }
 
@@ -211,11 +211,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
         log.info("Getting protocol information. \(defaulting) to IKEv2 if no provider available.")
         determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            guard let vpnProtocol = vpnProtocol else {
+            guard let vpnProtocol else {
                 completion(VpnStateConfigurationInfo(state: .disconnected,
                                                      hasConnected: self.propertiesManager.hasConnected,
                                                      connection: nil))

@@ -58,7 +58,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
 
     func startMonitoring() {
         reachability = try? Reachability()
-        guard let reachability = reachability else { return }
+        guard let reachability else { return }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
         do {
             try reachability.startNotifier()

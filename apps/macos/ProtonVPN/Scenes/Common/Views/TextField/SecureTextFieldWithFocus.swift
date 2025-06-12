@@ -39,7 +39,7 @@ class SecureTextFieldWithFocus: NSSecureTextField {
     }
     
     override func becomeFirstResponder() -> Bool {
-        if let focusDelegate = focusDelegate {
+        if let focusDelegate {
             guard focusDelegate.shouldBecomeFirstResponder else {
                 return false
             }

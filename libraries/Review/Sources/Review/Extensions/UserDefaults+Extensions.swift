@@ -28,7 +28,7 @@ extension UserDefaults {
     }
 
     func set(_ value: Date?, forKey defaultName: String) {
-        guard let value = value else {
+        guard let value else {
             removeObject(forKey: defaultName)
             return
         }

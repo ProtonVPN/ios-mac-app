@@ -30,7 +30,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         defer { didAttemptLogin?() }
 
-        if let loginError = loginError {
+        if let loginError {
             completion(.failure(loginError))
             return
         }

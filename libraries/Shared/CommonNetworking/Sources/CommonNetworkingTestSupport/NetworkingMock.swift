@@ -62,7 +62,7 @@
         func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
             if let requestCallback {
                 completion(requestCallback(route))
-            } else if let delegate = delegate {
+            } else if let delegate {
                 completion(delegate.handleMockNetworkingRequest(route))
             } else {
                 completion(.success(try! JSONEncoder().encode(["key": "value"])))

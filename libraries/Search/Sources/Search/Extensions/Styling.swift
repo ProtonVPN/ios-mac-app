@@ -92,7 +92,7 @@ let lineSeparatorStyle: (UIView, NSLayoutConstraint) -> Void = {
 }
 
 let highlightMatches = { (label: UILabel, string: String?, searchText: String?) in
-    guard let searchText = searchText, !searchText.isEmpty, let string = string, !string.isEmpty else {
+    guard let searchText, !searchText.isEmpty, let string, !string.isEmpty else {
         label.text = string
         return
     }

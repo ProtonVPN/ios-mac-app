@@ -269,7 +269,7 @@ final class ProfileItemViewModel {
     }
 
     @objc private func stateChanged() {
-        if let connectionChanged = connectionChanged {
+        if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
             }
@@ -307,7 +307,7 @@ final class ProfileItemViewModel {
     }
 
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
-        guard let countryCode = countryCode else {
+        guard let countryCode else {
             return description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
 

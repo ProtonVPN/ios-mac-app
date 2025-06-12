@@ -76,7 +76,7 @@ class MapSectionViewController: NSViewController {
     
     private func setupMapView() {
         mapHeaderViewController.headerClicked = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             
@@ -96,7 +96,7 @@ class MapSectionViewController: NSViewController {
         setConnections(mapSectionViewModel.connections)
         
         mapView.didZoom = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             

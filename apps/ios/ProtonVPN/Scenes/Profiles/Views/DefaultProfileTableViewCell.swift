@@ -31,7 +31,7 @@ final class DefaultProfileTableViewCell: UITableViewCell {
 
     var viewModel: DefaultProfileViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
+            guard let viewModel else { return }
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
@@ -69,7 +69,7 @@ final class DefaultProfileTableViewCell: UITableViewCell {
     }
 
     private func stateChanged() {
-        guard let viewModel = viewModel else {
+        guard let viewModel else {
             return
         }
         if let icon = viewModel.imageInPlaceOfConnectIcon {

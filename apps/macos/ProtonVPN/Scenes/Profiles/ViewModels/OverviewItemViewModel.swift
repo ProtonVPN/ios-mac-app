@@ -101,10 +101,10 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     }
 
     func deleteAction() {
-        guard let delegate = delegate else { return }
+        guard let delegate else { return }
 
         let warningViewModel = WarningPopupViewModel(title: Localizable.deleteProfileHeader, description: Localizable.deleteProfileWarning) { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

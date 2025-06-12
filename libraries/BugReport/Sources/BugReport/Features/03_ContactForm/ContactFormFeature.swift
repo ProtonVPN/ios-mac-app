@@ -110,7 +110,7 @@ struct ContactFormFeature: Reducer {
         }
 
         private static func categoryFormInputField(_ category: String?) -> FormInputField? {
-            guard let category = category else {
+            guard let category else {
                 return nil
             }
             let inputField = InputField(

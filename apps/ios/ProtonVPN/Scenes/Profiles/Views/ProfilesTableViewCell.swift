@@ -34,7 +34,7 @@ final class ProfilesTableViewCell: UITableViewCell {
     
     var viewModel: ProfileItemViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
+            guard let viewModel else { return }
             switch viewModel.icon {
             case let .image(name):
                 profileImage.image = name
@@ -99,7 +99,7 @@ final class ProfilesTableViewCell: UITableViewCell {
     }
     
     private func renderConnectButton() {
-        guard let viewModel = viewModel else {
+        guard let viewModel else {
             return
         }
         if let icon = viewModel.imageInPlaceOfConnectIcon {

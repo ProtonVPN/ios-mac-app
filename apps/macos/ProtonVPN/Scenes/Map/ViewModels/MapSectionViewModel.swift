@@ -131,7 +131,7 @@ class MapSectionViewModel {
         connections = connections(forView: activeView)
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -148,7 +148,7 @@ class MapSectionViewModel {
         connections = connections(forView: activeView)
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -316,7 +316,7 @@ class MapSectionViewModel {
         
         var connections = [ConnectionViewModel]()
         
-        if let connectedAnnotation = connectedAnnotation {
+        if let connectedAnnotation {
             if let exitAnnotation = connectedAnnotation as? SCExitCountryAnnotationViewModel {
                 for annotation in annotations {
                     if let annotation = annotation as? SCEntryCountryAnnotationViewModel,
@@ -327,7 +327,7 @@ class MapSectionViewModel {
                 }
             }
         }
-        if let selectedAnnotation = selectedAnnotation {
+        if let selectedAnnotation {
             if let entryAnnotation = selectedAnnotation as? SCEntryCountryAnnotationViewModel {
                 connections.append(ConnectionViewModel(.proposed, fromHomeTo: entryAnnotation))
                 

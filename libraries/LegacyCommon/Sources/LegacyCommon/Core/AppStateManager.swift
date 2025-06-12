@@ -248,7 +248,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
-        guard let reachability = reachability else { return }
+        guard let reachability else { return }
         if case AppState.aborted = state { return }
         
         if reachability.connection == .unavailable {
@@ -415,7 +415,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func setupReachability() {
-        guard let reachability = reachability else {
+        guard let reachability else {
             return
         }
         
@@ -494,7 +494,7 @@ public class AppStateManagerImplementation: AppStateManager {
             #endif
 
             serviceChecker?.stop()
-            if let alertService = alertService {
+            if let alertService {
                 serviceChecker = ServiceChecker(networking: networking, alertService: alertService)
             }
             attemptingConnection = false
@@ -555,7 +555,7 @@ public class AppStateManagerImplementation: AppStateManager {
             let rSessionCount = try? await vpnApiService.sessionsCount().sessionCount
             let rVpnCredentials = try? await vpnApiService.clientCredentials()
             await MainActor.run { [weak self] in
-                guard let self = self, self.state.isDisconnected else {
+                guard let self, self.state.isDisconnected else {
                     return
                 }
 
@@ -607,7 +607,7 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func vpnStuck() {
         vpnManager.removeConfigurations(completionHandler: { [weak self] error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 

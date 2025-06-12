@@ -146,7 +146,7 @@ extension NSView {
         let nibName = identifierString
         
         if Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: &nibObjects) {
-            guard let nibObjects = nibObjects else { return nil }
+            guard let nibObjects else { return nil }
             let viewObjects = nibObjects.filter { $0 is T }
             
             if !viewObjects.isEmpty {

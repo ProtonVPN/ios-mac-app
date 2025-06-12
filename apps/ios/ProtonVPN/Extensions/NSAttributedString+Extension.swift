@@ -41,13 +41,13 @@ extension NSAttributedString {
 
     static func imageAttachment(image: UIImage, baselineOffset: CGFloat? = nil, size: CGSize? = nil) -> NSAttributedString {
         let attachment = NSTextAttachment()
-        if let size = size {
+        if let size {
             attachment.bounds = CGRect(origin: .zero, size: size)
         }
 
         attachment.image = image
         let string = NSMutableAttributedString(attachment: attachment)
-        if let baselineOffset = baselineOffset {
+        if let baselineOffset {
             // swiftlint:disable:next legacy_constructor
             string.addAttribute(NSAttributedString.Key.baselineOffset, value: baselineOffset, range: NSMakeRange(0, string.length))
         }

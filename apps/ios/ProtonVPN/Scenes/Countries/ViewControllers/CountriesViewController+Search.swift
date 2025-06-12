@@ -38,7 +38,7 @@ extension CountriesViewController: SearchCoordinatorDelegate {
     }
 
     @objc func showSearch() {
-        guard let navigationController = navigationController else {
+        guard let navigationController else {
             return
         }
 

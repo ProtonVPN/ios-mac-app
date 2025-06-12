@@ -102,7 +102,7 @@ extension StoredWireguardConfig {
     public func asWireguardConfiguration() -> String {
         var output = "[Interface]\n"
 
-        if let clientPrivateKey = clientPrivateKey {
+        if let clientPrivateKey {
             output.append("PrivateKey = \(clientPrivateKey)\n")
         }
         output.append("Address = \(wireguardConfig.address)\n")
@@ -110,7 +110,7 @@ extension StoredWireguardConfig {
         output.append("DNS = \(wireguardConfig.dnsServers?.joined(separator: ",") ?? "10.2.0.1")\n")
 
         output.append("\n[Peer]\n")
-        if let serverPublicKey = serverPublicKey {
+        if let serverPublicKey {
             output.append("PublicKey = \(serverPublicKey)\n")
         }
         output.append("AllowedIPs = \(wireguardConfig.allowedIPs)\n")

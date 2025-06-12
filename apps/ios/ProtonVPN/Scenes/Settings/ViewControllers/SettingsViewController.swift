@@ -43,7 +43,7 @@ final class SettingsViewController: UIViewController {
                 pushViewController(viewController)
             }
             viewModel?.reloadNeeded = { [weak self] in
-                guard let self = self, self.isViewLoaded else {
+                guard let self, self.isViewLoaded else {
                     return
                 }
 
@@ -94,7 +94,7 @@ final class SettingsViewController: UIViewController {
     }
 
     private func setupTableView() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
 
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
@@ -114,7 +114,7 @@ final class SettingsViewController: UIViewController {
     }
 
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }

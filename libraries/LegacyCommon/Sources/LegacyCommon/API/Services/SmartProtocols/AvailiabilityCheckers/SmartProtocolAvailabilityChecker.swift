@@ -147,7 +147,7 @@ extension SharedLibraryUDPAvailabilityChecker {
             var ret: ObjCBool = false
             let result = VpnPingPingSyncWithError(entryIp, port, key, Int(timeout * 1000), &ret, &error)
 
-            if let error = error {
+            if let error {
                 log.error("\(protocolName) NOT available for \(entryIp) on port \(port) (Error: \(error))", category: .connectionConnect, event: .scan)
                 completion(false)
                 return

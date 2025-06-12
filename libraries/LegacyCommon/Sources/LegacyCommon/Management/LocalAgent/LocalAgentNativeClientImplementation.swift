@@ -38,7 +38,7 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
     weak var delegate: LocalAgentNativeClientImplementationDelegate?
 
     func log(_ text: String?) {
-        guard let text = text else {
+        guard let text else {
             return
         }
 
@@ -51,7 +51,7 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
     }
 
     func onState(_ state: String?) {
-        guard let state = state else {
+        guard let state else {
             LegacyCommon.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }
