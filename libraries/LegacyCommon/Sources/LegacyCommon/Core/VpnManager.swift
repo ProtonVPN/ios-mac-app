@@ -564,8 +564,12 @@ public final class VpnManager: VpnManagerProtocol {
                 self.setState(withError: error)
                 return
             }
+
             guard let vpnManager = vpnManager else { return }
             guard self.connectAllowed else { return }
+
+            tokens.removeAll()
+
             do {
                 log.info("Starting VPN tunnel", category: .connectionConnect)
 
@@ -578,10 +582,22 @@ public final class VpnManager: VpnManagerProtocol {
                 if let originalIntent {
                     tokens[requestId] = notificationCenter.addObserver(
                         for: .NEVPNStatusDidChange,
-                        object: nil,
+                        object: vpnManager.vpnConnection, // subscribe only to events regarding the current connection
                         handler: { [weak self] notification in
-                            guard let connection = notification.object as? NEVPNConnectionWrapper,
-                                  connection.status != .connecting else {
+                            guard let connection = notification.object as? NEVPNConnectionWrapper else {
+                                log.assertionFailure("Connection object missing from notification", category: .connection)
+                                return
+                            }
+                            log.debug("Server change observer received status", category: .connection, metadata: [
+                                "requestId": "\(requestId)",
+                                "connection": "\(connection)",
+                                "status": "\(connection.status)"
+                            ])
+                            guard connection.status != .connecting else {
+                                return
+                            }
+
+                            guard connection.status == .connected, let date = connection.connectedDate else {
                                 return
                             }
 
@@ -589,9 +605,6 @@ public final class VpnManager: VpnManagerProtocol {
                                 self?.tokens.removeValue(forKey: requestId)
                             }
 
-                            guard connection.status == .connected, let date = connection.connectedDate else {
-                                return
-                            }
                             if originalIntent == .random {
                                 @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
                                 serverChangeAuthorizer.registerServerChange(connectedAt: date)
