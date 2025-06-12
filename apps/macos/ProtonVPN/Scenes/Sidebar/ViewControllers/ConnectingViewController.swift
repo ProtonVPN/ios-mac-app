@@ -153,7 +153,8 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
     private var clickHandlers = [() -> Void]()
 
-    @IBAction private func buttonClicked(_ sender: NSButton) {
+    @IBAction
+    private func buttonClicked(_ sender: NSButton) {
         let index = sender.tag
         guard index >= 0, index < clickHandlers.count else {
             return

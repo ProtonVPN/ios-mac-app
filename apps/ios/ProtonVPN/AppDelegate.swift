@@ -328,7 +328,8 @@ private extension AppDelegate {
         return true
     }
 
-    @objc func stateDidUpdate() {
+    @objc
+    func stateDidUpdate() {
         switch appStateManager.state {
         case .connected:
             NotificationCenter.default.removeObserver(self)

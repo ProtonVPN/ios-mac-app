@@ -55,7 +55,8 @@ final class RecentSearchesHeaderView: UIView {
 
     // MARK: Actions
 
-    @objc private func clearPressed() {
+    @objc
+    private func clearPressed() {
         delegate?.userDidRequestClear()
     }
 }

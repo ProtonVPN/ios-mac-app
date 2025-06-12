@@ -91,7 +91,8 @@ final class SettingsContainerViewController: NSViewController {
         activeViewController = viewController
     }
 
-    @objc private func tabChanged(_ notification: Notification) {
+    @objc
+    private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? SettingsTab {
             switch tab {
             case .general:

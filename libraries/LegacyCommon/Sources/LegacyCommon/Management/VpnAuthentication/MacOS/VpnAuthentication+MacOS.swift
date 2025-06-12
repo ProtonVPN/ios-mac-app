@@ -54,7 +54,8 @@ import VPNShared
             events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
         }
 
-        @objc private func userDowngradedPlanOrBecameDelinquent(_: NSNotification) {
+        @objc
+        private func userDowngradedPlanOrBecameDelinquent(_: NSNotification) {
             log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
 
             // certificate refresh requests might be in progress so first cancel all fo them

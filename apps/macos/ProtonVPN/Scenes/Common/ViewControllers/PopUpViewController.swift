@@ -134,12 +134,14 @@ class PopUpViewController: NSViewController {
         confirmButton.action = #selector(confirmButtonAction)
     }
 
-    @objc private func cancelButtonAction() {
+    @objc
+    private func cancelButtonAction() {
         viewModel.cancel()
         dismiss(nil)
     }
 
-    @objc private func confirmButtonAction() {
+    @objc
+    private func confirmButtonAction() {
         viewModel.confirm()
         dismiss(nil)
     }

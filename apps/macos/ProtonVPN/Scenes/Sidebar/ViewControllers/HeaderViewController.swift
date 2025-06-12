@@ -187,11 +187,13 @@ final class HeaderViewController: NSViewController {
         changeServerView.isHidden = !shouldShowChangeServer
     }
 
-    @objc private func quickConnectButtonAction() {
+    @objc
+    private func quickConnectButtonAction() {
         viewModel.quickConnectAction()
     }
 
-    @objc private func changeServerButtonAction() {
+    @objc
+    private func changeServerButtonAction() {
         viewModel.changeServerAction()
     }
 
@@ -206,7 +208,8 @@ final class HeaderViewController: NSViewController {
         badgeView.isHidden = true
     }
 
-    @objc func setupAnnouncements() {
+    @objc
+    func setupAnnouncements() {
         guard let viewModel else {
             announcementsButton.isHidden = true
             return
@@ -252,7 +255,8 @@ final class HeaderViewController: NSViewController {
         }
     }
 
-    @IBAction private func announcementsButtonTapped(_: Any) {
+    @IBAction
+    private func announcementsButtonTapped(_: Any) {
         announcementsButtonPressed?()
     }
 }

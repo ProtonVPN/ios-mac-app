@@ -115,7 +115,8 @@ class ProfilesSectionViewModel {
 
     // MARK: - Private functions
 
-    @objc private func profilesChanged() {
+    @objc
+    private func profilesChanged() {
         contentChanged?()
     }
 }

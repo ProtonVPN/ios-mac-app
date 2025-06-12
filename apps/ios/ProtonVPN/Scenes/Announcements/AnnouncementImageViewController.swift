@@ -133,7 +133,8 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
     var getUpgradePlanSessionTask: Task<Void, Never>?
 
-    @IBAction private func actionButtonTapped(_: Any) {
+    @IBAction
+    private func actionButtonTapped(_: Any) {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             cancelled?()
@@ -164,7 +165,8 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         }
     }
 
-    @IBAction private func closeButtonTapped(_: Any) {
+    @IBAction
+    private func closeButtonTapped(_: Any) {
         getUpgradePlanSessionTask?.cancel()
         cancelled?()
     }

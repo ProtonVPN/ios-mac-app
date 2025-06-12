@@ -72,7 +72,8 @@ class AboutViewController: NSViewController {
         updateManager.stateUpdated = nil
     }
 
-    @IBAction func acknowledgementsPressed(_: Any) {
+    @IBAction
+    func acknowledgementsPressed(_: Any) {
         navigationService.openAcknowledgements()
     }
 

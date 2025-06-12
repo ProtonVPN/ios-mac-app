@@ -186,7 +186,8 @@ class CountryAnnotation: AnnotationView {
         }
     }
 
-    @objc private func tapped() {
+    @objc
+    private func tapped() {
         viewModel.tapped()
     }
 }

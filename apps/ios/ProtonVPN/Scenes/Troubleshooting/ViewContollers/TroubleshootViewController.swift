@@ -72,7 +72,8 @@ class TroubleshootViewController: UIViewController {
 
     // MARK: User actions
 
-    @IBAction func closeButtonTapped(_: Any) {
+    @IBAction
+    func closeButtonTapped(_: Any) {
         viewModel.cancel()
     }
 }

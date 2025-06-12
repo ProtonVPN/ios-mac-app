@@ -193,15 +193,18 @@ final class ServerItemCellView: NSView {
         loadIcon.isHidden = isUnderMaintenance
     }
 
-    @IBAction private func didTapConnectBtn(_: Any) {
+    @IBAction
+    private func didTapConnectBtn(_: Any) {
         viewModel.connectAction()
     }
 
-    @IBAction private func didTapUpgradeBtn(_: Any) {
+    @IBAction
+    private func didTapUpgradeBtn(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @objc private func didTapStreaming(_: Any) {
+    @objc
+    private func didTapStreaming(_: Any) {
         delegate?.userDidRequestStreamingInfo(server: viewModel)
     }
 

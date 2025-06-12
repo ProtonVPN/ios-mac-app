@@ -45,7 +45,8 @@ final class ConfirmationToggleSwitch: UISwitch {
         button.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
     }
 
-    @objc private func switchTapped(sender _: UIButton) {
+    @objc
+    private func switchTapped(sender _: UIButton) {
         tapped?()
     }
 }

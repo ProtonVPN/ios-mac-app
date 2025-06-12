@@ -54,7 +54,8 @@ final class ConnectionBarViewModel {
         updateDisplayState(with: appStateManager.displayState)
     }
 
-    @objc private func updateDisplayState(_ notification: Notification) {
+    @objc
+    private func updateDisplayState(_ notification: Notification) {
         guard let displayState = notification.object as? AppDisplayState else {
             return
         }
@@ -79,7 +80,8 @@ final class ConnectionBarViewModel {
         updateState(with: appStateManager.state)
     }
 
-    @objc private func updateState(_ notification: Notification) {
+    @objc
+    private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
@@ -109,7 +111,8 @@ final class ConnectionBarViewModel {
         RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
     }
 
-    @objc private func timerFired() {
+    @objc
+    private func timerFired() {
         DispatchQueue.main.async { [weak self] in
             self?.updateConnected?()
         }

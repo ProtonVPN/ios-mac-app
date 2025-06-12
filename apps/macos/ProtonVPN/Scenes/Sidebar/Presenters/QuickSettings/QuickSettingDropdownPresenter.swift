@@ -92,13 +92,15 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         }
     }
 
-    @objc private func vpnPlanChanged() {
+    @objc
+    private func vpnPlanChanged() {
         viewController?.reloadOptions()
     }
 
     // MARK: - Actions
 
-    @objc private func didTapLearnMore() {
+    @objc
+    private func didTapLearnMore() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(learnLink)
     }
@@ -108,7 +110,8 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         return UpsellAlert()
     }
 
-    @objc func presentUpsellAlert() {
+    @objc
+    func presentUpsellAlert() {
         alertService.push(alert: alert)
     }
 

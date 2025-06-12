@@ -33,7 +33,8 @@ import Dependencies
 final class WireGuardConfiguratorTests: XCTestCase {
     /// The user's private key is required to complete tunnel configuration.
     /// Let's test that if keys aren't found in the keychain, they are generated.
-    @MainActor func testGeneratesKeysIfMissing() async throws {
+    @MainActor
+    func testGeneratesKeysIfMissing() async throws {
         let configurator = ManagerConfigurator.wireGuardConfigurator
         let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
         var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: true, isEnabled: false)

@@ -161,7 +161,8 @@ public class DoHVPN: DoH, ServerConfig {
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    @objc private func stateChanged(notification: Notification) {
+    @objc
+    private func stateChanged(notification: Notification) {
         isConnected = isAppStateNotificationConnected(notification)
     }
 

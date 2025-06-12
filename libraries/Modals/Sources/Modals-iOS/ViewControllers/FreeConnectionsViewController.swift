@@ -76,11 +76,13 @@ class FreeConnectionsViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func bannerButtonTapped(_: Any) {
+    @IBAction
+    private func bannerButtonTapped(_: Any) {
         onBannerPress?()
     }
 
-    @IBAction private func closeButtonTapped(_: Any) {
+    @IBAction
+    private func closeButtonTapped(_: Any) {
         dismiss(animated: true)
     }
 }

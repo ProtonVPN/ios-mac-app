@@ -88,12 +88,14 @@ class ExpandableContentPopupViewController: NSViewController {
 
     // MARK: - Private
 
-    @objc private func didPressActionBtn() {
+    @objc
+    private func didPressActionBtn() {
         if animating { return }
         viewModel.action()
     }
 
-    @objc private func expandBtnTap() {
+    @objc
+    private func expandBtnTap() {
         if animating { return }
         animating = true
         expanded = !expanded

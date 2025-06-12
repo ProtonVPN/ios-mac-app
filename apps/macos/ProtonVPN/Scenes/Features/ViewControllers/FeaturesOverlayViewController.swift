@@ -77,7 +77,8 @@ final class FeaturesOverlayViewController: OverlayViewController {
 
     // MARK: - Actions
 
-    @IBAction func didTapDismissBtn(_: Any) {
+    @IBAction
+    func didTapDismissBtn(_: Any) {
         dismiss(self)
     }
 }

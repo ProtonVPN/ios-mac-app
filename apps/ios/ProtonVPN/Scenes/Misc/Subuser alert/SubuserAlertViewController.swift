@@ -81,12 +81,14 @@ class SubuserAlertViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func assignConnectionsTapped() {
+    @IBAction
+    private func assignConnectionsTapped() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.assignVPNConnections)
     }
 
-    @IBAction private func loginTapped() {
+    @IBAction
+    private func loginTapped() {
         dismiss(animated: true, completion: {})
     }
 }

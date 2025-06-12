@@ -87,7 +87,8 @@ final class TabBarController: UITabBarController {
         disconnectedQuickConnect()
     }
 
-    @objc private func quickConnectTapped(_: UIButton) {
+    @objc
+    private func quickConnectTapped(_: UIButton) {
         viewModel?.quickConnectTapped()
     }
 }

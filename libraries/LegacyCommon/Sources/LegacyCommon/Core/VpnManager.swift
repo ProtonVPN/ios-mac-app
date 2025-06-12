@@ -882,7 +882,8 @@ public final class VpnManager: VpnManagerProtocol {
         }
     }
 
-    @objc private func vpnStatusChanged() {
+    @objc
+    private func vpnStatusChanged() {
         setState()
     }
 

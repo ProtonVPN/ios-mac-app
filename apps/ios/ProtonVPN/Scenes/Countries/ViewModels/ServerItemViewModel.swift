@@ -202,7 +202,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
         }
     }
 
-    @objc fileprivate func stateChanged() {
+    @objc
+    fileprivate func stateChanged() {
         if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()

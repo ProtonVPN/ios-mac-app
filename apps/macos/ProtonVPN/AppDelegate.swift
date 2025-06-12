@@ -176,7 +176,8 @@ extension AppDelegate: NSApplicationDelegate {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
 
-    @objc private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent _: NSAppleEventDescriptor) {
+    @objc
+    private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent _: NSAppleEventDescriptor) {
         guard let url = event.paramDescriptor(forKeyword: keyDirectObject)?.stringValue, url.starts(with: "protonvpn://refresh") else {
             log.debug("App activated with invalid url", category: .app)
             return

@@ -258,7 +258,8 @@ final class SettingsAccountViewModel {
         }
     }
 
-    @objc private func reload() {
+    @objc
+    private func reload() {
         reloadNeeded?()
     }
 }

@@ -56,7 +56,8 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         infoBtn.tintColor = .iconNorm()
     }
 
-    @IBAction private func didTapInfoBtn(_: Any) {
+    @IBAction
+    private func didTapInfoBtn(_: Any) {
         callback?()
     }
 }

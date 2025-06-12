@@ -419,7 +419,8 @@ final class LoginViewController: NSViewController {
         loadingView.animate(false)
     }
 
-    @objc private func togglePasswordField() {
+    @objc
+    private func togglePasswordField() {
         if secureTextEntry {
             passwordTextField.stringValue = passwordSecureTextField.stringValue
         } else {
@@ -432,11 +433,13 @@ final class LoginViewController: NSViewController {
         passwordRevealButton.setAccessibilityValue(secureTextEntry ? Localizable.hide : Localizable.show)
     }
 
-    @objc private func loginButtonAction() {
+    @objc
+    private func loginButtonAction() {
         attemptLogin()
     }
 
-    @objc private func signInWithSSOButtonAction() {
+    @objc
+    private func signInWithSSOButtonAction() {
         switch signInVariant {
         case .protonSignin:
             signInVariant = .ssoSignin
@@ -465,11 +468,13 @@ final class LoginViewController: NSViewController {
         enableLoginButtonBasedOnTextFieldsState()
     }
 
-    @objc private func createAccountButtonAction() {
+    @objc
+    private func createAccountButtonAction() {
         viewModel.createAccountAction()
     }
 
-    @objc private func needHelpButtonAction() {
+    @objc
+    private func needHelpButtonAction() {
         guard helpPopover == nil else { return }
 
         helpPopover = NSPopover()

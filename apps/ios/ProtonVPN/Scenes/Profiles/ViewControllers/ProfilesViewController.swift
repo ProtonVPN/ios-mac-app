@@ -118,11 +118,13 @@ final class ProfilesViewController: UIViewController {
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(contentChanged))
     }
 
-    @objc private func contentChanged() {
+    @objc
+    private func contentChanged() {
         reloadProfiles()
     }
 
-    @objc private func createProfile() {
+    @objc
+    private func createProfile() {
         guard viewModel?.canUseProfiles == true else {
             viewModel?.showProfilesUpsellAlert()
             return

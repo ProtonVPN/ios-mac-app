@@ -67,7 +67,8 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
         }
     }
 
-    @objc func reachabilityChanged(note: Notification) {
+    @objc
+    func reachabilityChanged(note: Notification) {
         let reachability = note.object as! Reachability
         guard let interfaces = wifiClient.interfaces() else { return }
 

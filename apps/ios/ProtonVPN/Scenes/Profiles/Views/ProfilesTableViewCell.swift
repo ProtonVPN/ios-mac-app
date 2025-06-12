@@ -88,7 +88,8 @@ final class ProfilesTableViewCell: UITableViewCell {
         }
     }
 
-    @IBAction func connect(_: Any) {
+    @IBAction
+    func connect(_: Any) {
         viewModel?.connectAction()
     }
 

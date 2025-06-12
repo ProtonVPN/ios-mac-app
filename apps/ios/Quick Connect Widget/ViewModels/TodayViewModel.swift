@@ -101,7 +101,8 @@ final class TodayViewModel {
 
     // MARK: - Utils
 
-    @objc private func connectionChanged(completion: (() -> Void)? = nil) {
+    @objc
+    private func connectionChanged(completion: (() -> Void)? = nil) {
         if let reachability, reachability.connection == .unavailable {
             delegate?.didChangeState(state: .unreachable)
             completion?()

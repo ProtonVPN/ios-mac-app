@@ -130,17 +130,20 @@ class OverviewItemView: NSTableRowView {
         }
     }
 
-    @objc private func connectButtonAction(_: Any) {
+    @objc
+    private func connectButtonAction(_: Any) {
         viewModel.connectAction {
             window?.close()
         }
     }
 
-    @objc private func editButtonAction(_: Any) {
+    @objc
+    private func editButtonAction(_: Any) {
         viewModel.editAction()
     }
 
-    @objc private func deleteButtonAction(_: Any) {
+    @objc
+    private func deleteButtonAction(_: Any) {
         viewModel.deleteAction()
     }
 

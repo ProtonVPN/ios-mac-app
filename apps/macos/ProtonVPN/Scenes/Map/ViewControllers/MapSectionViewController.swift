@@ -147,13 +147,15 @@ class MapSectionViewController: NSViewController {
         mapView.removeAnnotations(annotations)
     }
 
-    @objc private func zoom(_ button: ZoomButton) {
+    @objc
+    private func zoom(_ button: ZoomButton) {
         let zoomInterval = (mapView.maxZoom - mapView.minZoom) / (zoomLevels - 1)
         let nextInterval = (mapView.zoom + (button == zoomView.zoomInButton ? zoomInterval : -zoomInterval))
         mapView.zoom(to: nextInterval)
     }
 
-    @objc private func mapShouldResize() {
+    @objc
+    private func mapShouldResize() {
         mapView.resize()
     }
 

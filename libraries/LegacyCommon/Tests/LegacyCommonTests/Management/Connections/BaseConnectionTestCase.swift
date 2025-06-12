@@ -134,7 +134,8 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         container = nil
     }
 
-    @objc func handleNEVPNEvent(_ notification: Notification) {
+    @objc
+    func handleNEVPNEvent(_ notification: Notification) {
         switch notification.name {
         case NEVPNConnectionMock.tunnelStateChangeNotification:
             guard let status = notification.object as? NEVPNStatus else {

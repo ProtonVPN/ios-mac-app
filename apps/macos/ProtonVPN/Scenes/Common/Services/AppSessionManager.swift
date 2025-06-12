@@ -445,7 +445,8 @@ private extension WireguardConfig {
 }
 
 extension AppSessionManagerImplementation {
-    @objc private func updateWiregardConfig(_: Notification) {
+    @objc
+    private func updateWiregardConfig(_: Notification) {
         propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
     }
 }

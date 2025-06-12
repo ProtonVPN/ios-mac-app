@@ -92,7 +92,8 @@ final class SearchViewController: UIViewController {
         )
     }
 
-    @objc private func keyboardWillShow(notification: NSNotification) {
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
         guard viewIfLoaded?.window != nil else {
             return
         }
@@ -102,7 +103,8 @@ final class SearchViewController: UIViewController {
         }
     }
 
-    @objc private func keyboardWillHide(notification: NSNotification) {
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
         guard viewIfLoaded?.window != nil else {
             return
         }

@@ -61,7 +61,8 @@ class StatusMenuProfilesListViewModel {
         StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
     }
 
-    @objc private func profilesChanged() {
+    @objc
+    private func profilesChanged() {
         contentChanged?()
     }
 }

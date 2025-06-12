@@ -127,7 +127,8 @@ class ConnectionBarViewController: UIViewController {
         view.setNeedsDisplay()
     }
 
-    @objc private func handleTap() {
+    @objc
+    private func handleTap() {
         connectionStatusService.presentStatusViewController()
     }
 }

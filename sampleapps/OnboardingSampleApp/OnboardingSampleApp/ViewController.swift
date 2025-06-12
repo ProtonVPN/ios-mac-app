@@ -33,7 +33,8 @@ final class ViewController: UIViewController {
         startAButton.accessibilityIdentifier = "StartButton"
     }
 
-    @IBAction private func startATapped(_: Any) {
+    @IBAction
+    private func startATapped(_: Any) {
         startOnboarding()
     }
 

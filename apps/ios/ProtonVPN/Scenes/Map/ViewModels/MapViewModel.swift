@@ -119,7 +119,8 @@ class MapViewModel: SecureCoreToggleHandler {
         addObservers()
     }
 
-    @objc func mapTapped() {
+    @objc
+    func mapTapped() {
         for annotation in countryExitAnnotations {
             annotation.deselect()
         }
@@ -261,20 +262,23 @@ class MapViewModel: SecureCoreToggleHandler {
         connectionChanged()
     }
 
-    @objc private func activeServerTypeSet() {
+    @objc
+    private func activeServerTypeSet() {
         guard propertiesManager.serverTypeToggle != activeView else { return }
 
         resetCurrentState()
     }
 
-    @objc private func resetCurrentState() {
+    @objc
+    private func resetCurrentState() {
         executeOnUIThread {
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)
             self.contentChanged?()
         }
     }
 
-    @objc private func connectionChanged() {
+    @objc
+    private func connectionChanged() {
         if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
             // draw connection line
             if let entryCountry = secureCoreEntryAnnotations.first(where: { element -> Bool in element.countryCode == activeServer.entryCountryCode }),

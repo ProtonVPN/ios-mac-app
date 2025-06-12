@@ -55,7 +55,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @objc func terminate() {
+    @objc
+    func terminate() {
         NSApp.terminate(nil)
     }
 }

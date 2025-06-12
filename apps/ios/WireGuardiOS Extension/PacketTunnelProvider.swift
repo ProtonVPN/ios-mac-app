@@ -513,7 +513,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             }
         }
 
-        @objc private func checkConnectivity() {
+        @objc
+        private func checkConnectivity() {
             let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
             if timeDiff > 60 * 3 {
                 log.error("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")

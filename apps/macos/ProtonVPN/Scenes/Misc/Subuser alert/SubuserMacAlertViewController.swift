@@ -91,12 +91,14 @@ final class SubuserMacAlertViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction private func assignConnectionsTapped(_: NSButton) {
+    @IBAction
+    private func assignConnectionsTapped(_: NSButton) {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.assignVPNConnections)
     }
 
-    @IBAction func loginTapped(_: NSButton) {
+    @IBAction
+    func loginTapped(_: NSButton) {
         view.window?.close()
     }
 }

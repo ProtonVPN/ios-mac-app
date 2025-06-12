@@ -117,7 +117,8 @@ final class AnnouncementImageViewController: NSViewController {
         }
     }
 
-    @IBAction private func didTapActionButton(_: Any) {
+    @IBAction
+    private func didTapActionButton(_: Any) {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             return

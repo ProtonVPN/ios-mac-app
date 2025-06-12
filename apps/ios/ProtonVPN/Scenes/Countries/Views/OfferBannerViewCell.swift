@@ -48,7 +48,8 @@ class OfferBannerViewCell: UITableViewCell {
 
     var timer: BackgroundTimer?
 
-    @IBAction func dismissButtonTapped(_: UIButton) {
+    @IBAction
+    func dismissButtonTapped(_: UIButton) {
         timer?.invalidate()
         viewModel?.dismiss()
     }

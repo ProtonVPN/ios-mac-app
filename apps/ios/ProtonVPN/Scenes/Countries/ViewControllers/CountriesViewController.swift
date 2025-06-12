@@ -143,7 +143,8 @@ final class CountriesViewController: UIViewController {
         navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
 
-    @objc private func displayServicesInfo() {
+    @objc
+    private func displayServicesInfo() {
         let viewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
         let vc = ServersFeaturesInformationVC(viewModel)
         vc.modalPresentationStyle = .overFullScreen

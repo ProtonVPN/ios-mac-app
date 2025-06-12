@@ -94,23 +94,28 @@ final class SettingsTabBarViewController: NSViewController {
         advancedButon.isFocused = viewModel.activeTab == .advanced
     }
 
-    @objc private func generalButtonAction() {
+    @objc
+    private func generalButtonAction() {
         viewModel.generalAction()
     }
 
-    @objc private func connectionButtonAction() {
+    @objc
+    private func connectionButtonAction() {
         viewModel.connectionAction()
     }
 
-    @objc private func accountButtonAction() {
+    @objc
+    private func accountButtonAction() {
         viewModel.accountAction()
     }
 
-    @objc private func advancedButtonAction() {
+    @objc
+    private func advancedButtonAction() {
         viewModel.advancedAction()
     }
 
-    @objc private func tabChanged(_ notification: Notification) {
+    @objc
+    private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? SettingsTab {
             tabBarView.focusedTabIndex = tab.rawValue
             generalButton.isFocused = tab == .general

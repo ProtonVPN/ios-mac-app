@@ -59,7 +59,8 @@ class ServersInformationViewController: UIViewController {
         titleLabel.textColor = .normalTextColor()
     }
 
-    @IBAction func didTapDismiss(_: Any) {
+    @IBAction
+    func didTapDismiss(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }

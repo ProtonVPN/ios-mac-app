@@ -72,7 +72,8 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
 
     // MARK: - Actions
 
-    @IBAction func didTapDismiss(_ sender: Any) {
+    @IBAction
+    func didTapDismiss(_ sender: Any) {
         dismiss(sender)
     }
 }

@@ -91,11 +91,13 @@ class CreateProfileViewController: UITableViewController {
         tableView.delegate = genericDataSource
     }
 
-    @objc private func handleTap(_: UIGestureRecognizer) {
+    @objc
+    private func handleTap(_: UIGestureRecognizer) {
         view.endEditing(true)
     }
 
-    @objc private func saveTapped() {
+    @objc
+    private func saveTapped() {
         guard let viewModel else {
             navigationController?.popViewController(animated: true)
             return

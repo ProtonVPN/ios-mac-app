@@ -75,7 +75,8 @@ class WarningView: NSStackView {
         warningIcon.image = AppTheme.Icon.exclamationCircleFilled
     }
 
-    @objc private func keychainHelpAction() {
+    @objc
+    private func keychainHelpAction() {
         helpDelegate?.keychainHelpAction()
     }
 }

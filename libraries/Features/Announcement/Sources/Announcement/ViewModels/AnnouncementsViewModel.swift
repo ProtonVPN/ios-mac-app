@@ -131,7 +131,8 @@ public class AnnouncementsViewModel {
         items = announcementManager.fetchCurrentAnnouncementsFromStorage()
     }
 
-    @objc func dataChanged() {
+    @objc
+    func dataChanged() {
         fillItems()
         refreshView?()
     }

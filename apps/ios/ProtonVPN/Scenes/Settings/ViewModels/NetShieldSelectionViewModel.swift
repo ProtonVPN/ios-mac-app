@@ -141,7 +141,8 @@ final class NetShieldSelectionViewModel {
         }
     }
 
-    @objc private func reload() {
+    @objc
+    private func reload() {
         onDataChange?()
     }
 }

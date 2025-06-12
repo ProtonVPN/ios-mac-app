@@ -30,7 +30,8 @@
     @testable import LocalAgent
 
     final class LocalAgentFeatureTests: XCTestCase {
-        @MainActor func testReceivesStateUpdateWhenConnectionIsEstablished() async {
+        @MainActor
+        func testReceivesStateUpdateWhenConnectionIsEstablished() async {
             let mockClock = TestClock()
 
             let server = ServerEndpoint(id: "serverID", entryIp: "", exitIp: "", domain: "", status: 1, label: "1", x25519PublicKey: nil, protocolEntries: nil)
@@ -119,7 +120,8 @@
             await store.send(.stopAllObservations)
         }
 
-        @MainActor func testFetchesNetShieldStatsWhenConnectedOnDidBecomeActive() async {
+        @MainActor
+        func testFetchesNetShieldStatsWhenConnectedOnDidBecomeActive() async {
             let featuresWithNetShieldStatsEnabled = VPNConnectionFeatures(
                 netshield: .level2,
                 vpnAccelerator: true,

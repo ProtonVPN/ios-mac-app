@@ -465,7 +465,8 @@ public class AppStateManagerImplementation: AppStateManager {
         handleVpnStateChange(newState)
     }
 
-    @objc private func killSwitchChanged() {
+    @objc
+    private func killSwitchChanged() {
         if state.isConnected {
             propertiesManager.intentionallyDisconnected = true
             vpnManager.setOnDemand(propertiesManager.hasConnected)

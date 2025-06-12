@@ -109,7 +109,8 @@ class OverviewViewController: NSViewController {
         profileListTableView.insertRows(at: newIndices, withAnimation: [])
     }
 
-    @objc private func createNewProfileButtonAction() {
+    @objc
+    private func createNewProfileButtonAction() {
         viewModel.createNewProfileAction()
     }
 }

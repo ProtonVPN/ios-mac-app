@@ -219,7 +219,8 @@ final class AdvancedSettingsViewModel {
         propertiesManager.alternativeRouting = enabled
     }
 
-    @objc private func settingsChanged() {
+    @objc
+    private func settingsChanged() {
         reloadNeeded?()
     }
 }

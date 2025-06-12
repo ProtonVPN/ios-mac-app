@@ -88,12 +88,14 @@ class WarningPopupViewController: NSViewController {
         continueButton.action = #selector(continueButtonAction)
     }
 
-    @objc private func cancelButtonAction() {
+    @objc
+    private func cancelButtonAction() {
         viewModel.onCancel?()
         dismiss(nil)
     }
 
-    @objc private func continueButtonAction() {
+    @objc
+    private func continueButtonAction() {
         viewModel.onConfirm()
         dismiss(nil)
     }

@@ -164,7 +164,8 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
         containerView.addSubview(circleButton)
     }
 
-    @objc private func circleButtonAction() {
+    @objc
+    private func circleButtonAction() {
         viewModel.toggleState()
     }
 }

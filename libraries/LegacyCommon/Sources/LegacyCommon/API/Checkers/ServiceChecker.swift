@@ -66,7 +66,8 @@ class ServiceChecker {
         timer = nil
     }
 
-    @objc private func checkServices() {
+    @objc
+    private func checkServices() {
         trafficCheckerQueue.async { [weak self] in
             guard let self else {
                 return

@@ -31,7 +31,8 @@
             case large
         }
 
-        @MainActor static func widgetLayout(size: WidgetSize) -> PreviewTrait<T> {
+        @MainActor
+        static func widgetLayout(size: WidgetSize) -> PreviewTrait<T> {
             switch size {
             case .small:
                 .fixedLayout(width: 158, height: 158)

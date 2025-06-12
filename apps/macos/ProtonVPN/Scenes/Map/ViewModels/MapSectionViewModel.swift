@@ -111,7 +111,8 @@ class MapSectionViewModel {
 
     // MARK: - Private functions
 
-    @objc private func appStateChanged(_ notification: Notification) {
+    @objc
+    private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
@@ -128,11 +129,13 @@ class MapSectionViewModel {
         updateConnections()
     }
 
-    @objc private func viewToggled(_: Notification) {
+    @objc
+    private func viewToggled(_: Notification) {
         setView(propertiesManager.serverTypeToggle)
     }
 
-    @objc private func resetCurrentState() {
+    @objc
+    private func resetCurrentState() {
         executeOnUIThread {
             self.setView(self.activeView)
             self.updateConnections()

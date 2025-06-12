@@ -62,7 +62,8 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(tryRefreshing))
     }
 
-    @objc public func tryRefreshing() {
+    @objc
+    public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
            Date().timeIntervalSince(lastRefresh) < refreshInterval {
             return
@@ -108,7 +109,8 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         announcementStorage.clear()
     }
 
-    @objc func featureFlagsChanged(_ notification: NSNotification) {
+    @objc
+    func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? LegacyCommon.FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {
             tryRefreshing()

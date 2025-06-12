@@ -70,11 +70,13 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
     }
 
-    @IBAction private func updateSwitchChanged() {
+    @IBAction
+    private func updateSwitchChanged() {
         bugReportDelegate?.updateAvailable = updateSwitch.isOn
     }
 
-    @IBAction private func openBugReport() {
+    @IBAction
+    private func openBugReport() {
         let bugReportCreator = iOSBugReportCreator()
         if let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors) {
             present(viewController, animated: true, completion: nil)

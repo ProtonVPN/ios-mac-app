@@ -325,7 +325,8 @@ final class StatusMenuViewModel {
         events.subscribe(self, selector: #selector(handleDataChange))
     }
 
-    @objc private func serverChangeTimerFired() {
+    @objc
+    private func serverChangeTimerFired() {
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         if case .available = viewState {
             serverChangeTimer?.invalidate()
@@ -429,12 +430,14 @@ final class StatusMenuViewModel {
         profileManager = nil
     }
 
-    @objc private func handleVpnChange() {
+    @objc
+    private func handleVpnChange() {
         serverType = propertiesManager.serverTypeToggle
         contentChanged?()
     }
 
-    @objc private func handlePlanChange() {
+    @objc
+    private func handlePlanChange() {
         do {
             let tier = try vpnKeychain.fetchCached().maxTier
 
@@ -452,7 +455,8 @@ final class StatusMenuViewModel {
         }
     }
 
-    @objc private func handleDataChange() {
+    @objc
+    private func handleDataChange() {
         DispatchQueue.main.async { [weak self] in
             self?.updateCountryList()
         }

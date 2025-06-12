@@ -705,7 +705,8 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
 
-    @objc private func appStateChanged(_ notification: Notification) {
+    @objc
+    private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
@@ -713,13 +714,15 @@ public class VpnGateway: VpnGatewayProtocol {
         postConnectionInformation()
     }
 
-    @objc private func reconnectOnNotification(_: Notification) {
+    @objc
+    private func reconnectOnNotification(_: Notification) {
         connect(with: lastConnectionRequest)
     }
 }
 
 private extension VpnGateway {
-    @objc func userPlanChanged(_ notification: Notification) {
+    @objc
+    func userPlanChanged(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
         let (oldTier, newTier) = (downgradeInfo.from.maxTier, downgradeInfo.to.maxTier)
 
@@ -751,7 +754,8 @@ private extension VpnGateway {
         alertService?.push(alert: alert)
     }
 
-    @objc func userBecameDelinquent(_ notification: Notification) {
+    @objc
+    func userBecameDelinquent(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
 
         var oldServer: ServerModel?

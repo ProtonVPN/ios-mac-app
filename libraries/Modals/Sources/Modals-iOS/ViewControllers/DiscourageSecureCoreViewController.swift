@@ -76,21 +76,25 @@ final class DiscourageSecureCoreViewController: UIViewController {
         cancelButton.setTitle(feature.cancel, for: .normal)
     }
 
-    @IBAction private func learnMoreButtonTapped(_: UIButton) {
+    @IBAction
+    private func learnMoreButtonTapped(_: UIButton) {
         onLearnMore?()
     }
 
-    @IBAction private func dontShowAgainSwitchToggled(_ sender: UISwitch) {
+    @IBAction
+    private func dontShowAgainSwitchToggled(_ sender: UISwitch) {
         onDontShowAgain?(sender.isOn)
     }
 
-    @IBAction private func activateButtonTapped(_: UIButton) {
+    @IBAction
+    private func activateButtonTapped(_: UIButton) {
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.onActivate?()
         })
     }
 
-    @IBAction private func cancelButtonTapped(_: UIButton) {
+    @IBAction
+    private func cancelButtonTapped(_: UIButton) {
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.onCancel?()
         })

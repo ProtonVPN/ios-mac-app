@@ -116,7 +116,8 @@ class WelcomeViewController: NSViewController {
         }
     }
 
-    @objc func learnMoreClicked() {
+    @objc
+    func learnMoreClicked() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.learnMoreTelemetry)
     }
@@ -126,7 +127,8 @@ class WelcomeViewController: NSViewController {
         view.window?.applyInfoAppearance()
     }
 
-    @IBAction func cancel(_: Any) {
+    @IBAction
+    func cancel(_: Any) {
         dismiss(nil)
     }
 }

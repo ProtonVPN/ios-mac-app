@@ -159,13 +159,15 @@ class UserAccountUpdateViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func didTapPrimaryAction(_: Any) {
+    @IBAction
+    private func didTapPrimaryAction(_: Any) {
         dismiss(animated: true, completion: { [weak self] in
             self?.onPrimaryButtonTap?()
         })
     }
 
-    @IBAction private func didTapSecondAction(_: Any) {
+    @IBAction
+    private func didTapSecondAction(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }

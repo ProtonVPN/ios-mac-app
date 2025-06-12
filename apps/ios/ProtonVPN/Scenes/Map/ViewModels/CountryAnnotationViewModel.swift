@@ -226,7 +226,8 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         return country.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
     }
 
-    @objc fileprivate func stateChanged() {
+    @objc
+    fileprivate func stateChanged() {
         if let connectionChanged = buttonStateChanged {
             DispatchQueue.main.async {
                 connectionChanged()

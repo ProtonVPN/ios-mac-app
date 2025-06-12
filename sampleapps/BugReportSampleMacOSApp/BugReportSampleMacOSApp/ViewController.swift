@@ -80,14 +80,16 @@ class ViewController: NSViewController {
         return try! decoder.decode(BugReportModel.self, from: data)
     }
 
-    @IBAction func buttonClicked(_: Any) {
+    @IBAction
+    func buttonClicked(_: Any) {
         let bugReportCreator = MacOSBugReportCreator()
         let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors)
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.showWindow(self)
     }
 
-    @IBAction private func updateSwitchChanged(_: Any) {
+    @IBAction
+    private func updateSwitchChanged(_: Any) {
         bugReportDelegate?.updateAvailable = updateSwitch.state == .on
     }
 }

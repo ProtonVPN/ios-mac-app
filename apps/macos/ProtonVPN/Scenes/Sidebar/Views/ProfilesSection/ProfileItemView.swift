@@ -106,7 +106,8 @@ class ProfileItemView: NSView {
         connectButton.action = #selector(connectButtonAction)
     }
 
-    @objc private func connectButtonAction() {
+    @objc
+    private func connectButtonAction() {
         viewModel.connectAction()
     }
 

@@ -61,11 +61,13 @@ class ProfilesMenuController: NSObject {
         createNewProfileItem.action = #selector(createNewProfileItemAction)
     }
 
-    @objc private func overviewItemAction() {
+    @objc
+    private func overviewItemAction() {
         viewModel.overviewAction()
     }
 
-    @objc private func createNewProfileItemAction() {
+    @objc
+    private func createNewProfileItemAction() {
         viewModel.createNewProfileAction()
     }
 

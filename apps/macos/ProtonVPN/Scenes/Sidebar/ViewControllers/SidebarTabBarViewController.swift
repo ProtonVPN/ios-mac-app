@@ -76,13 +76,15 @@ class SidebarTabBarViewController: NSViewController {
         NotificationCenter.default.post(name: tabChanged, object: activeTab!)
     }
 
-    @objc private func countriesTabAction(_: NSButton) {
+    @objc
+    private func countriesTabAction(_: NSButton) {
         if activeTab != .countries {
             activeTab = .countries
         }
     }
 
-    @objc private func profilesTabAction(_: NSButton) {
+    @objc
+    private func profilesTabAction(_: NSButton) {
         if activeTab != .profiles {
             activeTab = .profiles
         }

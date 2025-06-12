@@ -27,7 +27,8 @@ import ProtonCoreUIFoundations
 import UIKit
 
 extension UIViewController {
-    @objc func setupAnnouncements() {
+    @objc
+    func setupAnnouncements() {
         Task {
             await setupAnnouncementsAsync()
         }
@@ -98,7 +99,8 @@ extension UIViewController {
         button?.showBadge = AnnouncementButtonViewModel.shared.hasUnreadAnnouncements
     }
 
-    @IBAction func announcementsButtonTapped() {
+    @IBAction
+    func announcementsButtonTapped() {
         let viewModel = AnnouncementButtonViewModel.shared
         viewModel?.showAnnouncement()
     }

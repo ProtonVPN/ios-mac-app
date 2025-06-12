@@ -545,7 +545,8 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
 // MARK: - Review
 
 extension AppSessionManagerImplementation {
-    @objc private func updateState(_ notification: Notification) {
+    @objc
+    private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }

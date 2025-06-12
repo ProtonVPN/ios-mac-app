@@ -213,7 +213,8 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
     // MARK: - Actions
 
-    @objc private func autoConnectItemSelected() {
+    @objc
+    private func autoConnectItemSelected() {
         do {
             try viewModel.setAutoConnect(autoConnectView.indexOfSelectedItem())
         } catch {
@@ -221,7 +222,8 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
     }
 
-    @objc private func quickConnectItemSelected() {
+    @objc
+    private func quickConnectItemSelected() {
         do {
             try viewModel.setQuickConnect(quickConnectView.indexOfSelectedItem())
         } catch {
@@ -229,7 +231,8 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
     }
 
-    @objc private func protocolItemSelected() {
+    @objc
+    private func protocolItemSelected() {
         guard let protocolItem = viewModel.protocolItem(for: protocolView.indexOfSelectedItem()) else {
             return
         }

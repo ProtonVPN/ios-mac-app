@@ -105,7 +105,8 @@ final class UpdateManager: NSObject {
         self.updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
     }
 
-    @objc private func earlyAccessChanged(_ notification: NSNotification) {
+    @objc
+    private func earlyAccessChanged(_ notification: NSNotification) {
         turnOnEarlyAccess((notification.object as? Bool) ?? false)
     }
 

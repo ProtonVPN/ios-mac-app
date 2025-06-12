@@ -57,7 +57,8 @@ class NetworkStatistics {
         timer.invalidate()
     }
 
-    @objc private func updateBitrate() {
+    @objc
+    private func updateBitrate() {
         guard let updateWithBitrate else { return }
 
         let latestTraffic = getTrafficStatistics()

@@ -98,7 +98,8 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Actions
 
-    @IBAction private func connectTapped(_: Any) {
+    @IBAction
+    private func connectTapped(_: Any) {
         viewModel?.connectAction()
     }
 

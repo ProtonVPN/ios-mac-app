@@ -97,7 +97,8 @@ public final class UpsellViewController: NSViewController {
         descriptionLabel.setAccessibilityIdentifier("DescriptionLabel")
     }
 
-    @objc func setupText() {
+    @objc
+    func setupText() {
         guard let modalType else { return }
         if modalType.showUpgradeButton == false {
             switch modalType {
@@ -171,7 +172,8 @@ public final class UpsellViewController: NSViewController {
         view.window?.applyUpsellModalAppearance()
     }
 
-    @IBAction private func upgrade(_: Any) {
+    @IBAction
+    private func upgrade(_: Any) {
         if modalType?.showUpgradeButton == false {
             continueAction?()
         } else {

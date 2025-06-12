@@ -61,7 +61,8 @@ final class TodayViewController: UIViewController {
         viewModel.update()
     }
 
-    @IBAction private func didTapConnectButton(_: Any) {
+    @IBAction
+    private func didTapConnectButton(_: Any) {
         viewModel.connect()
     }
 

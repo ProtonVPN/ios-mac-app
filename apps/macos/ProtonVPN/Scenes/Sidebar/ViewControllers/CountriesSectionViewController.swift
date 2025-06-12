@@ -308,11 +308,13 @@ final class CountriesSectionViewController: NSViewController {
         viewModel.updateSettings()
     }
 
-    @objc private func scrolled(_: Notification) {
+    @objc
+    private func scrolled(_: Notification) {
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
     }
 
-    @objc private func clearSearch() {
+    @objc
+    private func clearSearch() {
         if searchTextField.stringValue.isEmpty { return }
         searchTextField.stringValue = ""
         clearSearchBtn.isHidden = true

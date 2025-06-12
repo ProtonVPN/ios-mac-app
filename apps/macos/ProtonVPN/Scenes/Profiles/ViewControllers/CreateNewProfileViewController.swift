@@ -209,27 +209,33 @@ final class CreateNewProfileViewController: NSViewController {
         }
     }
 
-    @objc private func typeSelected() {
+    @objc
+    private func typeSelected() {
         typeList.selectedViewModel?.handler()
     }
 
-    @objc private func countrySelected() {
+    @objc
+    private func countrySelected() {
         countryList.selectedViewModel?.handler()
     }
 
-    @objc private func serverSelected() {
+    @objc
+    private func serverSelected() {
         serverList.selectedViewModel?.handler()
     }
 
-    @objc private func protocolSelected() {
+    @objc
+    private func protocolSelected() {
         protocolList.selectedViewModel?.handler()
     }
 
-    @objc private func tourCancelled() {
+    @objc
+    private func tourCancelled() {
         viewModel.sysexTourCancelled?()
     }
 
-    @objc private func cancelButtonAction() {
+    @objc
+    private func cancelButtonAction() {
         if isSessionUnderway {
             let viewModel = WarningPopupViewModel(
                 title: Localizable.createNewProfile,
@@ -243,7 +249,8 @@ final class CreateNewProfileViewController: NSViewController {
         viewModel.clearContent()
     }
 
-    @objc private func saveButtonAction() {
+    @objc
+    private func saveButtonAction() {
         viewModel.profileName = nameTextField.stringValue
         viewModel.save()
     }
@@ -306,7 +313,8 @@ final class CreateNewProfileViewController: NSViewController {
         }
     }
 
-    @objc private func clearContent() {
+    @objc
+    private func clearContent() {
         nameTextField.stringValue = ""
         warningLabel.isHidden = true
         warningLabelHorizontalLine.isHidden = true

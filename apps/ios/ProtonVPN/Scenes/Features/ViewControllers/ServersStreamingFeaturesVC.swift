@@ -69,7 +69,8 @@ class ServersStreamingFeaturesVC: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func didTapDismiss(_: Any) {
+    @IBAction
+    private func didTapDismiss(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }

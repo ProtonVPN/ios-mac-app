@@ -146,7 +146,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         }
     }
 
-    @objc private func didTapHermesView(_: Any?) {
+    @objc
+    private func didTapHermesView(_: Any?) {
         if hermesChildWindowController != nil {
             hermesChildWindowController?.window?.makeKeyAndOrderFront(self)
         } else {

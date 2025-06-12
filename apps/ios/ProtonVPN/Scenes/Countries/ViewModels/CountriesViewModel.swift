@@ -322,12 +322,14 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
 
-    @objc private func activeServerTypeSet() {
+    @objc
+    private func activeServerTypeSet() {
         guard propertiesManager.serverTypeToggle != activeView else { return }
         reloadContent()
     }
 
-    @objc private func reloadContent() {
+    @objc
+    private func reloadContent() {
         executeOnUIThread {
             self.refreshTier()
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)

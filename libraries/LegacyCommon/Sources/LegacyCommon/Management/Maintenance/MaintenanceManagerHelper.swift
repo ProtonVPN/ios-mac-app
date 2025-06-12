@@ -49,7 +49,8 @@ public class MaintenanceManagerHelper {
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
     }
 
-    @objc func featureFlagsChanged() {
+    @objc
+    func featureFlagsChanged() {
         startMaintenanceManager()
     }
 

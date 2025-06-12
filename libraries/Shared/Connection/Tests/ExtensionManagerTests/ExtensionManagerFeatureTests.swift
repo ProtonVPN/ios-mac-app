@@ -110,7 +110,8 @@
             await store.send(.stopObservingStateChanges)
         }
 
-        @MainActor func testDisconnectsWhenVPNConfigurationPermissionDenied() async {
+        @MainActor
+        func testDisconnectsWhenVPNConfigurationPermissionDenied() async {
             let mockClock = TestClock()
             let mockManager = MockTunnelManager()
             mockManager.connection = VPNSessionMock(

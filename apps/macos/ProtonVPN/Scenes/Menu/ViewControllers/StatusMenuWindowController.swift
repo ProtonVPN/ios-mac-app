@@ -277,7 +277,8 @@ class StatusBarIconBlinker {
         statusItem.button?.image = statusIcon.image
     }
 
-    @objc func fireTimer() {
+    @objc
+    func fireTimer() {
         if statusItem.button?.image == emptyImage {
             statusItem.button?.image = statusIcon.image
         } else {

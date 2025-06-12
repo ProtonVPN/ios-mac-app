@@ -86,13 +86,15 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
         stateChanged()
     }
 
-    @IBAction private func connectButtonTap(_: Any) {
+    @IBAction
+    private func connectButtonTap(_: Any) {
         connect()
     }
 
     // MARK: Setup
 
-    @IBAction private func rowTapped(_: Any, forEvent _: UIEvent) {
+    @IBAction
+    private func rowTapped(_: Any, forEvent _: UIEvent) {
         connect()
     }
 

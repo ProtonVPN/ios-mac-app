@@ -82,15 +82,18 @@ final class DiscourageSecureCoreViewController: NSViewController {
         view.window?.applyUpsellModalAppearance()
     }
 
-    @IBAction private func learnMoreButtonTapped(_: Any) {
+    @IBAction
+    private func learnMoreButtonTapped(_: Any) {
         onLearnMore?()
     }
 
-    @IBAction func dontShowAgainSwitchToggled(_ sender: NSButton) {
+    @IBAction
+    func dontShowAgainSwitchToggled(_ sender: NSButton) {
         onDontShowAgain?(sender.state == .on)
     }
 
-    @IBAction private func activateButtonTapped(_: Any) {
+    @IBAction
+    private func activateButtonTapped(_: Any) {
         onActivate?()
         dismiss(nil)
     }

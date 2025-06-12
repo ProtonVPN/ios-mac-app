@@ -52,19 +52,23 @@ class HelpPopoverViewController: NSViewController {
         reportBugButton.title = Localizable.reportBug
     }
 
-    @IBAction func resetAction(_: Any) {
+    @IBAction
+    func resetAction(_: Any) {
         viewModel.resetAction()
     }
 
-    @IBAction func forgotAction(_: Any) {
+    @IBAction
+    func forgotAction(_: Any) {
         viewModel.forgotAction()
     }
 
-    @IBAction func commonIssuesAction(_: Any) {
+    @IBAction
+    func commonIssuesAction(_: Any) {
         viewModel.commonIssuesAction()
     }
 
-    @IBAction func reportBugAction(_: Any) {
+    @IBAction
+    func reportBugAction(_: Any) {
         viewModel.reportBugAction()
     }
 }

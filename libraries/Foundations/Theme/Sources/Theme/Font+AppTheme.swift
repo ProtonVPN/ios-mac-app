@@ -123,7 +123,8 @@ public extension Text {
 }
 
 public extension View {
-    @inlinable func font(_ typography: AppTheme.Typography = .default) -> some View {
+    @inlinable
+    func font(_ typography: AppTheme.Typography = .default) -> some View {
         font(.themeFont(typography))
     }
 }

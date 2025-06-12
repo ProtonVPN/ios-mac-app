@@ -44,7 +44,8 @@ class StatusMenuProfileViewItem: NSTableRowView {
         setupAvailability()
     }
 
-    @IBAction func selected(_: Any) {
+    @IBAction
+    func selected(_: Any) {
         viewModel?.connectAction()
     }
 

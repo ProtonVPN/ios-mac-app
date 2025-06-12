@@ -159,13 +159,15 @@ public class BackgroundTimerImplementation: BackgroundTimer {
         resume()
     }
 
-    @objc func suspend() {
+    @objc
+    func suspend() {
         guard case .resumed = state else { return }
         timerSource.suspend()
         state = .suspended
     }
 
-    @objc func resume() {
+    @objc
+    func resume() {
         guard case .suspended = state else { return }
         timerSource.resume()
         state = .resumed

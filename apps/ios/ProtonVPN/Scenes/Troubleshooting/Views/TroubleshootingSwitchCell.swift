@@ -43,7 +43,8 @@ class TroubleshootingSwitchCell: TroubleshootingCell {
         toggleSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
     }
 
-    @objc private func switchChanged() {
+    @objc
+    private func switchChanged() {
         isOnChanged?(toggleSwitch.isOn)
     }
 }

@@ -40,7 +40,8 @@ class QuickSettingsDropdownOption: NSView {
     private var state: State = .blocked(business: false)
     private var isHovered: Bool = false
 
-    @IBAction func didTapActionBtn(_: Any) {
+    @IBAction
+    func didTapActionBtn(_: Any) {
         action?()
     }
 

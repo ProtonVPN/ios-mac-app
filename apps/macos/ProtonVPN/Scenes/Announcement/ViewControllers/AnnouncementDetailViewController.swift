@@ -114,7 +114,8 @@ final class AnnouncementDetailViewController: NSViewController {
         pillView.layer?.cornerRadius = pillView.frame.height / 2
     }
 
-    @IBAction private func didTapActionButton(_: Any) {
+    @IBAction
+    private func didTapActionButton(_: Any) {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(data.button.url)
     }

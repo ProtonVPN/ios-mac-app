@@ -102,7 +102,8 @@ final class AppFeatureTests: XCTestCase {
         }
     }
 
-    @MainActor func testUpsellDismissedWhenUpsellFlowCompleted() async {
+    @MainActor
+    func testUpsellDismissedWhenUpsellFlowCompleted() async {
         let state = AppFeature.State(
             welcome: .init(destination: .upsell(.loaded(planOptions: [], purchaseInProgress: true))),
             networking: .authenticated(.auth(uid: "userid"))

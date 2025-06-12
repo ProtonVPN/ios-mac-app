@@ -88,7 +88,8 @@ struct DefaultConnectionSheet: View {
         }
     }
 
-    @ViewBuilder private func section(
+    @ViewBuilder
+    private func section(
         title: @escaping () -> some View,
         content: @escaping () -> some View
     ) -> some View {
@@ -96,7 +97,8 @@ struct DefaultConnectionSheet: View {
         content()
     }
 
-    @ViewBuilder private func sectionHeader(title: () -> some View) -> some View {
+    @ViewBuilder
+    private func sectionHeader(title: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
             title()

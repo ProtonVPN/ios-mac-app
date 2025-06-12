@@ -176,7 +176,8 @@ struct TunnelKeychainImplementation {
         }
     }
 
-    @discardableResult private func clearPassword(forKey key: String) throws -> Bool {
+    @discardableResult
+    private func clearPassword(forKey key: String) throws -> Bool {
         let query = formBaseQuery(forKey: key)
         let result = KeychainEnvironment.secItemDelete(query as CFDictionary)
 

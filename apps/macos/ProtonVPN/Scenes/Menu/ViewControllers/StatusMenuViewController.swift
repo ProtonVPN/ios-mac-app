@@ -273,7 +273,8 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         changeServerView.state = .from(state: viewModel.canChangeServer)
     }
 
-    @objc private func countriesScrolled() {
+    @objc
+    private func countriesScrolled() {
         for item in countryCollection.visibleItems() {
             if let countryItem = item as? StatusMenuCountryViewItem {
                 countryItem.button.updateTrackingAreas()
@@ -294,15 +295,18 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
     }
 
-    @IBAction func connect(_: Any) {
+    @IBAction
+    func connect(_: Any) {
         viewModel.quickConnectAction()
     }
 
-    @IBAction func cancelConnection(_: Any) {
+    @IBAction
+    func cancelConnection(_: Any) {
         viewModel.disconnectAction()
     }
 
-    @IBAction func toggleProfilesList(_: Any) {
+    @IBAction
+    func toggleProfilesList(_: Any) {
         if profilesWindowController == nil {
             profilesWindowController = StatusMenuProfilesListController(windowNibName: NSNib.Name("StatusMenuProfilesList"), viewModel: viewModel.profileListViewModel)
         }
@@ -316,15 +320,18 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         }
     }
 
-    @IBAction func upgrade(_: Any) {
+    @IBAction
+    func upgrade(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @IBAction func quit(_: Any) {
+    @IBAction
+    func quit(_: Any) {
         viewModel.quitApplicationAction()
     }
 
-    @IBAction func showProtonVPN(_: Any) {
+    @IBAction
+    func showProtonVPN(_: Any) {
         viewModel.showApplicationAction()
     }
 }

@@ -47,7 +47,8 @@ final class OverviewViewModel {
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
 
-    @objc private func profilesChanged() {
+    @objc
+    private func profilesChanged() {
         contentChanged?()
     }
 

@@ -103,18 +103,21 @@ final class TwoFactorView: NSView {
         return twoFactorTextField.becomeFirstResponder()
     }
 
-    @objc func twoFactorButtonAction() {
+    @objc
+    func twoFactorButtonAction() {
         delegate?.twoFactorButtonAction(code: twoFactorTextField.stringValue)
     }
 
-    @objc func switchTwoFactorModeAction() {
+    @objc
+    func switchTwoFactorModeAction() {
         twoFactorModeButton.title = isRecoveryCodeMode ? Localizable.useTwoFactorCode : Localizable.useRecoveryCode
         twoFactorTextField.placeholderString = isRecoveryCodeMode ? Localizable.recoveryCode : Localizable.twoFactorCode
 
         isRecoveryCodeMode.toggle()
     }
 
-    @objc func backAction() {
+    @objc
+    func backAction() {
         delegate?.backAction()
     }
 }

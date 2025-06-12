@@ -207,7 +207,8 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         stateChanged()
     }
 
-    @IBAction private func rowTapped(_ button: UIButton, forEvent event: UIEvent) {
+    @IBAction
+    private func rowTapped(_ button: UIButton, forEvent event: UIEvent) {
         guard let touch = event.touches(for: button)?.first else {
             connect()
             return
@@ -235,7 +236,8 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             .contains(touch.location(in: self)) ?? false
     }
 
-    @IBAction private func connectButtonTap(_: Any) {
+    @IBAction
+    private func connectButtonTap(_: Any) {
         connect()
     }
 

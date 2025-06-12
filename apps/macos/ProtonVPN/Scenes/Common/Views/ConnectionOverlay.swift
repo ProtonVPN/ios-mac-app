@@ -96,7 +96,8 @@ class ConnectionOverlay: NSView {
         }
     }
 
-    @objc private func reduceBlur() {
+    @objc
+    private func reduceBlur() {
         guard let blurReduction else { return }
 
         if (blurRadius - blurReduction) > 0.0 {
@@ -104,7 +105,8 @@ class ConnectionOverlay: NSView {
         }
     }
 
-    @objc private func stopAnimating() {
+    @objc
+    private func stopAnimating() {
         blurReductionTimer?.invalidate()
         stopAnimatingTimer?.invalidate()
         blurRadius = fullBlurRadius

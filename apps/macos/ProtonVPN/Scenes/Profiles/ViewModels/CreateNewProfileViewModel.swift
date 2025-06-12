@@ -428,7 +428,8 @@ class CreateNewProfileViewModel {
 
     // MARK: Populate fields from an existing profile, or save it to the profile manager
 
-    @objc private func editProfile(_ notification: Notification) {
+    @objc
+    private func editProfile(_ notification: Notification) {
         if let profile = notification.object as? Profile {
             prefillInfo(for: profile)
         }

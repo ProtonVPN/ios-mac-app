@@ -317,7 +317,8 @@ class CountriesSectionViewModel {
         propertiesManager.connectionProtocol
     }
 
-    @objc private func reloadDataOnChange() {
+    @objc
+    private func reloadDataOnChange() {
         executeOnUIThread {
             self.expandedCountries = []
             self.servers = [:]
@@ -338,7 +339,8 @@ class CountriesSectionViewModel {
         notificationCenter.post(name: contentSwitch, object: nil)
     }
 
-    @objc private func vpnConnectionChanged() {
+    @objc
+    private func vpnConnectionChanged() {
         if secureCoreState != propertiesManager.secureCoreToggle {
             secureCoreState = propertiesManager.secureCoreToggle
             updateSecureCoreState()
@@ -432,7 +434,8 @@ class CountriesSectionViewModel {
         )
     }
 
-    @objc func updateSettings() {
+    @objc
+    func updateSettings() {
         delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
             netshield: netShieldPropertyProvider.netShieldType,

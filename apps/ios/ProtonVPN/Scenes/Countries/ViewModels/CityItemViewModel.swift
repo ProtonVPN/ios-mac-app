@@ -141,7 +141,8 @@ final class CityItemViewModel: CityViewModel {
 
     // MARK: - Private functions
 
-    @objc private func stateChanged() {
+    @objc
+    private func stateChanged() {
         DispatchQueue.main.async { [weak self] in
             self?.connectionChanged?()
         }

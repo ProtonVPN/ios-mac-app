@@ -125,7 +125,8 @@ final class AccountViewController: NSViewController {
         }
     }
 
-    @objc private func manageSubscriptionButtonAction() {
+    @objc
+    private func manageSubscriptionButtonAction() {
         viewModel.manageSubscriptionAction()
     }
 }

@@ -42,11 +42,13 @@ final class ViewController: UIViewController {
         modeSegmentedControl.addTarget(self, action: #selector(modeChanged), for: .valueChanged)
     }
 
-    @IBAction private func searchTapped(_: Any) {
+    @IBAction
+    private func searchTapped(_: Any) {
         coordinator.start(navigationController: navigationController!, data: createData(), mode: createMode())
     }
 
-    @objc private func modeChanged() {
+    @objc
+    private func modeChanged() {
         userTierSegmentedControl.isEnabled = modeSegmentedControl.selectedSegmentIndex == 0
     }
 

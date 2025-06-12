@@ -39,7 +39,8 @@
         /// Verifies that a connection can be queued up if the feature is in the disconnecting state and the user
         /// attempts to connect somewhere, as well as both internal and external state changes as expected.
         /// e.g. during reconnection, external state transitions to `.connecting`, skipping `.disconnected`.
-        @MainActor func testStartingConnectionWhileDisconnecting() async {
+        @MainActor
+        func testStartingConnectionWhileDisconnecting() async {
             let mockVPNSession = VPNSessionMock(status: .disconnecting, connectedDate: nil, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockClock = TestClock()
@@ -175,7 +176,8 @@
         /// Verifies that a connection can be queued up if the feature is in the connected state already, as well as
         /// both internal and external state changes as expected.
         /// e.g. during reconnection, external state transitions to `.connecting`, skipping `.disconnected`.
-        @MainActor func testStartingConnectionWhileConnectedResultsInReconnection() async {
+        @MainActor
+        func testStartingConnectionWhileConnectedResultsInReconnection() async {
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
             let portSelectionExpectation = XCTestExpectation(description: "Port selector should be invoked")
@@ -275,7 +277,8 @@
             await store.receive(stateChange(to: \.connected))
         }
 
-        @MainActor func testDisconnectDuringPreparationCancelsConnection() async {
+        @MainActor
+        func testDisconnectDuringPreparationCancelsConnection() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -315,7 +318,8 @@
         /// Upon finishing preparation, if we find that the core connection state is not disconnected, the tunnel has
         /// likely been started externally, and we cannot guarantee that the feature is ready to handle the connection
         /// attempt, so it should be disconnected with an error.
-        @MainActor func testExternalConnectionDuringPreparationHandledByDisconnectingWithError() async {
+        @MainActor
+        func testExternalConnectionDuringPreparationHandledByDisconnectingWithError() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -360,7 +364,8 @@
             }
         }
 
-        @MainActor func testFeatureDelaysInternalDisconnectWhenStartingTunnelUntilTunnelStartSucceeds() async {
+        @MainActor
+        func testFeatureDelaysInternalDisconnectWhenStartingTunnelUntilTunnelStartSucceeds() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
             store.exhaustivity = .off
@@ -427,7 +432,8 @@
             await store.send(.stopObserving)
         }
 
-        @MainActor func testConnectionStateResolvesToDisconnected() async {
+        @MainActor
+        func testConnectionStateResolvesToDisconnected() async {
             let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockAgent = LocalAgentMock(state: .disconnected)
@@ -445,7 +451,8 @@
             await store.receive(stateChange(to: \.disconnected))
         }
 
-        @MainActor func testConnectionStateResolvesToConnected() async {
+        @MainActor
+        func testConnectionStateResolvesToConnected() async {
             let now = Date.now
             let tomorrow = now.addingTimeInterval(.days(1))
             let mockClock = TestClock()
@@ -482,7 +489,8 @@
             await store.receive(stateChange(to: \.connected))
         }
 
-        @MainActor func testFeatureSendsDelegateActionWhenPreparationFails() async {
+        @MainActor
+        func testFeatureSendsDelegateActionWhenPreparationFails() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -510,7 +518,8 @@
             await store.receive(\.delegate.connectionFailed.preparation)
         }
 
-        @MainActor func testFeatureSendsDelegateActionWhenAuthorizerThrows() async {
+        @MainActor
+        func testFeatureSendsDelegateActionWhenAuthorizerThrows() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -537,7 +546,8 @@
             }
         }
 
-        @MainActor func testFeatureSendsDelegateActionWhenTunnelStartFails() async {
+        @MainActor
+        func testFeatureSendsDelegateActionWhenTunnelStartFails() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -566,7 +576,8 @@
             await store.send(.stopObserving)
         }
 
-        @MainActor func testFeatureSendsDelegateActionWhenCertAuthFails() async {
+        @MainActor
+        func testFeatureSendsDelegateActionWhenCertAuthFails() async {
             let environment = ConnectionEnvironment.disconnected(certificateState: .expired)
             let store = environment.createConnectionTestStore()
 
@@ -589,7 +600,8 @@
             await store.receive(\.delegate.connectionFailed.certAuth.ipc)
         }
 
-        @MainActor func testFeatureSendsDelegateActionWhenLocalAgentConnectionCreationFails() async {
+        @MainActor
+        func testFeatureSendsDelegateActionWhenLocalAgentConnectionCreationFails() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -612,7 +624,8 @@
             await store.receive(\.delegate.connectionFailed.agent.failedToEstablishConnection)
         }
 
-        @MainActor func testFeatureSendsDelegateActionWhenConnectionTimesOut() async {
+        @MainActor
+        func testFeatureSendsDelegateActionWhenConnectionTimesOut() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -635,7 +648,8 @@
             await store.receive(stateChange(to: \.disconnected))
         }
 
-        @MainActor func testFeatureCancelsFirstPreparationWhenSecondConnectionRequested() async {
+        @MainActor
+        func testFeatureCancelsFirstPreparationWhenSecondConnectionRequested() async {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -678,7 +692,8 @@
         }
 
         /// Tests that after failing to connect, the next successful connection attempt transitions through all expected states.
-        @MainActor func testFeatureStateTransitionsOnSecondConnectionAfterFirstFailedConnection() async throws {
+        @MainActor
+        func testFeatureStateTransitionsOnSecondConnectionAfterFirstFailedConnection() async throws {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 
@@ -723,7 +738,8 @@
             await store.receive(stateChange(to: \.connected))
         }
 
-        @MainActor func testConnectionTimesOutIfNeverUnjailedByRestrictedServer() async throws {
+        @MainActor
+        func testConnectionTimesOutIfNeverUnjailedByRestrictedServer() async throws {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
             environment.localAgent.connectionResult = .init(state: .hardJailed, error: .restrictedServer)
@@ -750,7 +766,8 @@
             await store.receive(stateChange(to: \.disconnected))
         }
 
-        @MainActor func testConnectionSucceedsOnceUnjailedByRestrictedServer() async throws {
+        @MainActor
+        func testConnectionSucceedsOnceUnjailedByRestrictedServer() async throws {
             let environment = ConnectionEnvironment.disconnected()
             let store = environment.createConnectionTestStore()
 

@@ -309,11 +309,13 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    @objc private func settingsChanged() {
+    @objc
+    private func settingsChanged() {
         reloadNeeded?()
     }
 
-    @objc private func tourCancelled() {
+    @objc
+    private func tourCancelled() {
         reloadNeeded?()
     }
 

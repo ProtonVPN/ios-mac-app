@@ -92,7 +92,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         )
     }
 
-    @objc public func refreshData() {
+    @objc
+    public func refreshData() {
         attemptSilentLogIn { [weak self] result in
             switch result {
             case .success:
@@ -121,7 +122,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         }
     }
 
-    @objc public func refreshServerLoads() {
+    @objc
+    public func refreshServerLoads() {
         guard loggedIn else { return }
 
         let lastKnownIp = (propertiesManager.userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
@@ -137,7 +139,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         }
     }
 
-    @objc public func refreshAccount() {
+    @objc
+    public func refreshAccount() {
         Task { @MainActor in
             do {
                 let credentials = try await self.vpnApiService.clientCredentials()
@@ -148,7 +151,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         }
     }
 
-    @objc public func refreshStreamingServices() {
+    @objc
+    public func refreshStreamingServices() {
         guard loggedIn else { return }
 
         Task { [weak self] in

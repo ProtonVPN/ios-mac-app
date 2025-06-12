@@ -78,7 +78,8 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
 
     private var expectationNotificationFired: XCTestExpectation!
 
-    @objc func notificationFired() {
+    @objc
+    func notificationFired() {
         expectationNotificationFired.fulfill()
     }
 }

@@ -58,7 +58,8 @@ class MapHeaderViewModel {
         return false
     }
 
-    @objc private func vpnConnectionChanged() {
+    @objc
+    private func vpnConnectionChanged() {
         contentChanged?()
     }
 }

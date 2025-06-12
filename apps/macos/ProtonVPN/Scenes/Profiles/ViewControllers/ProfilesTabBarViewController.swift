@@ -97,19 +97,22 @@ class ProfilesTabBarViewController: NSViewController {
         }
     }
 
-    @objc private func overviewButtonAction() {
+    @objc
+    private func overviewButtonAction() {
         if activeTab != .overview {
             new(tab: .overview)
         }
     }
 
-    @objc private func createNewProfileButtonAction() {
+    @objc
+    private func createNewProfileButtonAction() {
         if activeTab != .createNewProfile {
             new(tab: .createNewProfile)
         }
     }
 
-    @objc private func tabChanged(_ notification: Notification) {
+    @objc
+    private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? ProfilesTab {
             new(tab: tab, externalSource: true)
         }

@@ -140,7 +140,8 @@ public final class ProfileManager {
         return ProfileManagerOperationOutcome(outcome: result)
     }
 
-    @discardableResult public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
+    @discardableResult
+    public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
         case let .success(updatedProfiles):
@@ -159,14 +160,16 @@ public final class ProfileManager {
 
     // MARK: - Private functions
 
-    @objc private func profilesChanged(_ notification: Notification) {
+    @objc
+    private func profilesChanged(_ notification: Notification) {
         if let newProfiles = notification.object as? [Profile] {
             customProfiles = newProfiles
             AppEvent.profileContentChanged.post(customProfiles)
         }
     }
 
-    @objc private func serversChanged(_ notification: Notification) {
+    @objc
+    private func serversChanged(_ notification: Notification) {
         if let newServers = notification.object as? [ServerModel] {
             servers = newServers
             AppEvent.profileContentChanged.post(customProfiles)

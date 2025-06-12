@@ -88,27 +88,33 @@ class ProtonVpnMenuController: NSObject {
         logOutItem.isEnabled = viewModel.isLogOutEnabled
     }
 
-    @objc private func aboutItemAction() {
+    @objc
+    private func aboutItemAction() {
         viewModel.openAboutAction()
     }
 
-    @objc private func checkForUpdatesAction() {
+    @objc
+    private func checkForUpdatesAction() {
         viewModel.checkForUpdatesAction()
     }
 
-    @objc private func preferencesItemAction() {
+    @objc
+    private func preferencesItemAction() {
         viewModel.openPreferencesAction()
     }
 
-    @objc private func logOutItemAction() {
+    @objc
+    private func logOutItemAction() {
         viewModel.logOutAction()
     }
 
-    @objc private func showAllItemAction() {
+    @objc
+    private func showAllItemAction() {
         viewModel.showAllAction()
     }
 
-    @objc private func quitItemAction() {
+    @objc
+    private func quitItemAction() {
         viewModel.quitAction()
     }
 }

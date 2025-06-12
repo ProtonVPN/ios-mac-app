@@ -123,7 +123,8 @@ class StatusMenuWindowModel {
         AppEvent.connectionStateChanged.unsubscribe(self)
     }
 
-    @objc private func handleChange() {
+    @objc
+    private func handleChange() {
         contentChanged?()
     }
 }

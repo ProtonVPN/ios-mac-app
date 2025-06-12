@@ -323,7 +323,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    @objc private func occlusionStateChanged(_: Notification) {
+    @objc
+    private func occlusionStateChanged(_: Notification) {
         if NSApp.occlusionState.contains(.visible) {
             if case AppState.connecting = appStateManager.state, let overlayViewModel {
                 showLoadingOverlay(with: overlayViewModel)
@@ -390,7 +391,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         activeControllerViewContainer.pin(viewController: activeController)
     }
 
-    @objc private func expandButtonAction(_: NSButton) {
+    @objc
+    private func expandButtonAction(_: NSButton) {
         @Dependency(\.defaultsProvider) var provider
         let savedMapWidth = CGFloat(provider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
         let mapContainerWidth: CGFloat = savedMapWidth > expandButtonWidth ? savedMapWidth : 600
@@ -413,7 +415,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    @objc private func appStateChanged() {
+    @objc
+    private func appStateChanged() {
         switch appStateManager.state {
         case .preparingConnection, .connecting:
             fadeOutOverlayTask?.cancel()
@@ -445,7 +448,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    @objc private func handleTabChanged(_ notification: Notification) {
+    @objc
+    private func handleTabChanged(_ notification: Notification) {
         if let tab = notification.object as? SidebarTab {
             setViewController(forTab: tab)
         }

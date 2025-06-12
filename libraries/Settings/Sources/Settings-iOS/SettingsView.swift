@@ -259,7 +259,8 @@ public struct SettingsView: View {
         }
     }
 
-    @ViewBuilder private func featureDestinations(viewStore _: DestinationViewStore) -> some View {
+    @ViewBuilder
+    private func featureDestinations(viewStore _: DestinationViewStore) -> some View {
         destination(case: /.netShield) {
             NetShieldSettingsView(store: store.scope(state: \.netShield, action: SettingsFeature.Action.netShield))
         }
@@ -268,13 +269,15 @@ public struct SettingsView: View {
         }
     }
 
-    @ViewBuilder private func connectionDestinations(viewStore _: DestinationViewStore) -> some View {
+    @ViewBuilder
+    private func connectionDestinations(viewStore _: DestinationViewStore) -> some View {
         destination(case: /.protocol) {
             ProtocolSettingsView(store: store.scope(state: \.protocol, action: SettingsFeature.Action.protocol))
         }
     }
 
-    @ViewBuilder private func generalDestinations(viewStore _: DestinationViewStore) -> some View {
+    @ViewBuilder
+    private func generalDestinations(viewStore _: DestinationViewStore) -> some View {
         destination(case: /.theme) {
             ThemeSettingsView(store: store.scope(state: \.theme, action: SettingsFeature.Action.theme))
         }

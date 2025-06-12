@@ -133,12 +133,14 @@ final class ProfilesContainerViewController: NSViewController {
         NotificationCenter.default.post(name: editProfile, object: profile)
     }
 
-    @objc private func sessionFinished() {
+    @objc
+    private func sessionFinished() {
         set(viewController: overviewVC)
         NotificationCenter.default.post(name: tabChanged, object: ProfilesTab.overview)
     }
 
-    @objc private func focusTab(_ notification: Notification) {
+    @objc
+    private func focusTab(_ notification: Notification) {
         if let tab = notification.object as? ProfilesTab {
             switch tab {
             case .overview:

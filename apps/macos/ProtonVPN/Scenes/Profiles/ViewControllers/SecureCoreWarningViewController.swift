@@ -76,14 +76,16 @@ final class SecureCoreWarningViewController: NSViewController {
         learnMoreButton.action = #selector(learnMoreButtonAction)
     }
 
-    @objc private func upgradeButtonAction() {
+    @objc
+    private func upgradeButtonAction() {
         Task {
             await viewModel.upgradeButtonPressed()
         }
         dismiss(nil)
     }
 
-    @objc private func learnMoreButtonAction() {
+    @objc
+    private func learnMoreButtonAction() {
         viewModel.learnMoreButtonPressed()
         dismiss(nil)
     }

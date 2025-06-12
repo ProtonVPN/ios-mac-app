@@ -38,7 +38,8 @@ final class SwitchTableViewCell: UITableViewCell {
         }
     }
 
-    @objc private func didTapSwitch() {
+    @objc
+    private func didTapSwitch() {
         switchValueChangedHandler?(switchButton.isOn)
     }
 }

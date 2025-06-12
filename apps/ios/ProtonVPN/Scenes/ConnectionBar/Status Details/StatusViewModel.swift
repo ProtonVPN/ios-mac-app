@@ -406,7 +406,8 @@ class StatusViewModel {
         }
     }
 
-    @objc private func serverChangeTimerFired() {
+    @objc
+    private func serverChangeTimerFired() {
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         if case .available = viewState {
             serverChangeTimer?.invalidate()
@@ -417,7 +418,8 @@ class StatusViewModel {
         updateServerChangeCell()
     }
 
-    @objc private func timerFired() {
+    @objc
+    private func timerFired() {
         updateTimeCell()
     }
 

@@ -276,7 +276,8 @@ final class ProfileItemViewModel {
             .store(in: &cancellables)
     }
 
-    @objc private func stateChanged() {
+    @objc
+    private func stateChanged() {
         if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()

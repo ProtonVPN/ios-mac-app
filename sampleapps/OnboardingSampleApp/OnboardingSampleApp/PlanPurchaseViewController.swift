@@ -30,7 +30,8 @@ final class PlanPurchaseViewController: UIViewController {
         planPurchasedButton.accessibilityIdentifier = "PlanPurchaseButton"
     }
 
-    @IBAction private func planPurchasedTapped(_: Any) {
+    @IBAction
+    private func planPurchasedTapped(_: Any) {
         completion?(.planPurchased)
     }
 }

@@ -146,18 +146,21 @@ final class CountryItemCellView: NSView {
 
     // MARK: - Actions
 
-    @IBAction private func didTapExpandBtn(_: Any) {
+    @IBAction
+    private func didTapExpandBtn(_: Any) {
         if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
         viewModel.changeCellState()
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         setupAccessibilityCustomActions()
     }
 
-    @IBAction private func didTapUpgradeBtn(_: Any) {
+    @IBAction
+    private func didTapUpgradeBtn(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @IBAction func didTapConnectBtn(_: Any) {
+    @IBAction
+    func didTapConnectBtn(_: Any) {
         viewModel.connectAction()
     }
 

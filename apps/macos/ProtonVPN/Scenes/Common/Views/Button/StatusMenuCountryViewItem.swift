@@ -35,7 +35,8 @@ class StatusMenuCountryViewItem: NSCollectionViewItem {
         countryCodeLabel.attributedStringValue = viewModel.description
     }
 
-    @IBAction func selected(_: Any) {
+    @IBAction
+    func selected(_: Any) {
         if let viewModel {
             viewModel.connect()
         }

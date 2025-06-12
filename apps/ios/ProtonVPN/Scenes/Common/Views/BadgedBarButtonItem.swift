@@ -58,7 +58,8 @@ final class BadgedBarButtonItem: UIBarButtonItem {
         customView = button
     }
 
-    @objc private func buttonPressed() {
+    @objc
+    private func buttonPressed() {
         onTouchUpInside?()
     }
 }

@@ -66,7 +66,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func vpnKeysCell(keys: KeychainDebugFeature.State.AuthKeychainData.Keys?) -> some View {
+    @ViewBuilder
+    private func vpnKeysCell(keys: KeychainDebugFeature.State.AuthKeychainData.Keys?) -> some View {
         if let keys {
             VStack(alignment: .leading) {
                 HStack {
@@ -94,7 +95,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func certificateCell(certificate: KeychainDebugFeature.State.AuthKeychainData.Certificate?) -> some View {
+    @ViewBuilder
+    private func certificateCell(certificate: KeychainDebugFeature.State.AuthKeychainData.Certificate?) -> some View {
         if let certificate {
             VStack(alignment: .leading) {
                 Text("Certificate")
@@ -118,7 +120,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func featuresCell(features: VPNConnectionFeatures?) -> some View {
+    @ViewBuilder
+    private func featuresCell(features: VPNConnectionFeatures?) -> some View {
         if let features {
             VStack(alignment: .leading) {
                 Text("Certificate Features")
@@ -135,7 +138,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func cell(title: String, value: String) -> some View {
+    @ViewBuilder
+    private func cell(title: String, value: String) -> some View {
         Text(title)
             .styled(.disabled)
         copyableText(value)

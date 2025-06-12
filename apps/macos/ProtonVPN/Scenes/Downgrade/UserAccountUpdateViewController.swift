@@ -169,7 +169,8 @@ class UserAccountUpdateViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction func didTapPrimaryAction(_: Any) {
+    @IBAction
+    func didTapPrimaryAction(_: Any) {
         alert.actions.first?.handler?()
 
         Task {
@@ -184,7 +185,8 @@ class UserAccountUpdateViewController: NSViewController {
         dismiss(nil)
     }
 
-    @IBAction func didTapSecondAction(_: Any) {
+    @IBAction
+    func didTapSecondAction(_: Any) {
         alert.actions.last?.handler?()
         dismissCompletion?()
         dismiss(nil)

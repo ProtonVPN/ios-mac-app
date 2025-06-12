@@ -103,11 +103,13 @@ final class AnnouncementDetailViewController: AnnouncementViewController {
         }
     }
 
-    @IBAction private func actionButtonTapped(_: Any) {
+    @IBAction
+    private func actionButtonTapped(_: Any) {
         urlRequested?(data.button.url)
     }
 
-    @IBAction private func closeButtonTapped(_: Any) {
+    @IBAction
+    private func closeButtonTapped(_: Any) {
         cancelled?()
     }
 }

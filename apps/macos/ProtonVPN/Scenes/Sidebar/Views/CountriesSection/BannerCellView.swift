@@ -69,7 +69,8 @@ final class BannerCellView: NSView {
 
     // MARK: - Actions
 
-    @IBAction private func didTap(_: Any) {
+    @IBAction
+    private func didTap(_: Any) {
         viewModel.action()
     }
 

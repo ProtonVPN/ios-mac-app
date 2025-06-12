@@ -39,7 +39,8 @@ class ButtonTableViewCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    @IBAction func buttonTapped(_: Any) {
+    @IBAction
+    func buttonTapped(_: Any) {
         if let handler = completionHandler {
             handler()
         }

@@ -37,7 +37,8 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder func makeBody() -> some View {
+    @ViewBuilder
+    func makeBody() -> some View {
         if let error = store.error {
             errorBody(error: error)
         } else {
@@ -45,7 +46,8 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder func successBody() -> some View {
+    @ViewBuilder
+    func successBody() -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
             VStack {
@@ -69,7 +71,8 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder func errorBody(error: String) -> some View {
+    @ViewBuilder
+    func errorBody(error: String) -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
 

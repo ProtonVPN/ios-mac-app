@@ -172,7 +172,8 @@ final class HeaderViewModel {
         vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
     }
 
-    @objc private func timerTicked() {
+    @objc
+    private func timerTicked() {
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         delegate?.changeServerStateUpdated(to: viewState)
         changeServerStateUpdated?(viewState)
@@ -241,7 +242,8 @@ final class HeaderViewModel {
         )
     }
 
-    @objc private func vpnConnectionChanged() {
+    @objc
+    private func vpnConnectionChanged() {
         guard isVisible else {
             return
         }
@@ -256,7 +258,8 @@ final class HeaderViewModel {
         contentChanged?()
     }
 
-    @objc private func contentChangedNotification() {
+    @objc
+    private func contentChangedNotification() {
         executeOnUIThread {
             self.contentChanged?()
         }

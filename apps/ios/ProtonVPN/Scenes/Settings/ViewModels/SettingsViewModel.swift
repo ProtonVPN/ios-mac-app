@@ -172,7 +172,8 @@ final class SettingsViewModel {
         reloadEvents.subscribe(self, selector: #selector(reload))
     }
 
-    @objc private func sessionChanged(_ notification: Notification) {
+    @objc
+    private func sessionChanged(_ notification: Notification) {
         if appSessionManager.sessionStatus == .established, let vpnGateway = notification.object as? VpnGatewayProtocol {
             sessionEstablished(vpnGateway: vpnGateway)
         } else {
@@ -204,7 +205,8 @@ final class SettingsViewModel {
         profileManager = nil
     }
 
-    @objc private func reload() {
+    @objc
+    private func reload() {
         reloadNeeded?()
     }
 

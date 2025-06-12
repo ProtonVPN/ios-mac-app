@@ -109,7 +109,8 @@ final class FreeConnectionsViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction private func bannerTapped(_: Any) {
+    @IBAction
+    private func bannerTapped(_: Any) {
         onBannerPress?()
     }
 }

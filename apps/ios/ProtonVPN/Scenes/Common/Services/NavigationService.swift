@@ -226,7 +226,8 @@ final class NavigationService {
         tabBarController?.present(ModalsFactory().whatsNewViewController(variant: variant), animated: true)
     }
 
-    @objc private func sessionChanged(_ notification: Notification) {
+    @objc
+    private func sessionChanged(_ notification: Notification) {
         guard appSessionManager.sessionStatus == .notEstablished else {
             return
         }
@@ -234,7 +235,8 @@ final class NavigationService {
         presentWelcome(initialError: reasonForSessionChange)
     }
 
-    @objc private func refreshVpnManager(_: Notification) {
+    @objc
+    private func refreshVpnManager(_: Notification) {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
             Task { @MainActor in
                 await self.vpnManager.refreshManagers()

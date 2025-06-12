@@ -37,7 +37,8 @@ extension CountriesViewController: SearchCoordinatorDelegate {
         coordinator?.reload(data: viewModel.searchData, mode: searchMode)
     }
 
-    @objc func showSearch() {
+    @objc
+    func showSearch() {
         guard let navigationController else {
             return
         }

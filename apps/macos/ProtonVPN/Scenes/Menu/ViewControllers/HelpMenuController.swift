@@ -81,28 +81,34 @@ class HelpMenuController: NSObject {
         helpItem.action = #selector(helpItemAction)
     }
 
-    @objc private func reportAnIssueItemAction() {
+    @objc
+    private func reportAnIssueItemAction() {
         viewModel.openReportBug()
     }
 
-    @objc private func logsAction() {
+    @objc
+    private func logsAction() {
         viewModel.openLogsFolderAction()
     }
 
-    @objc private func openWGLogsAction() {
+    @objc
+    private func openWGLogsAction() {
         viewModel.openWGVpnLogsFolderAction()
     }
 
-    @objc private func systemExtensionTutorialAction() {
+    @objc
+    private func systemExtensionTutorialAction() {
         viewModel.systemExtensionTutorialAction()
     }
 
-    @objc private func helpItemAction() {
+    @objc
+    private func helpItemAction() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.support)
     }
 
-    @objc private func clearApplicationDataItemAction() {
+    @objc
+    private func clearApplicationDataItemAction() {
         viewModel.selectClearApplicationData()
     }
 }
