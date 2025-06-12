@@ -37,11 +37,9 @@ extension AnnouncementClient: DependencyKey {
     }()
 
     #if DEBUG
-        public static var testValue: AnnouncementClient = {
-            AnnouncementClient {
-                AnnouncementResponse(notifications: [])
-            }
-        }()
+        public static var testValue: AnnouncementClient = AnnouncementClient {
+            AnnouncementResponse(notifications: [])
+        }
     #endif
 }
 

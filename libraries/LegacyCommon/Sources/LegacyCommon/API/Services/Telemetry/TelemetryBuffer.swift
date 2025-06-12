@@ -138,10 +138,8 @@ actor TelemetryBuffer {
         }
     }
 
-    lazy var fileUrl: URL = {
-        FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-            .appendingPathComponent(bufferType.rawValue, isDirectory: false)
-    }()
+    lazy var fileUrl: URL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+        .appendingPathComponent(bufferType.rawValue, isDirectory: false)
 }
 
 extension TelemetryBuffer {

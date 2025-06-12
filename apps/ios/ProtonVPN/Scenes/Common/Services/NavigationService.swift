@@ -158,13 +158,9 @@ final class NavigationService {
 
     lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
-    private lazy var connectionBarViewController = { 
-        return makeConnectionBarViewController()
-    }()
+    private lazy var connectionBarViewController = makeConnectionBarViewController()
 
-    private lazy var tabBarController = {
-        return makeTabBarController()
-    }()
+    private lazy var tabBarController = makeTabBarController()
 
     var vpnGateway: VpnGatewayProtocol {
         return appSessionManager.vpnGateway

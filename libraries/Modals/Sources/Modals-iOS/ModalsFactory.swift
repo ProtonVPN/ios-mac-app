@@ -8,17 +8,11 @@ public final class ModalsFactory {
 
     // MARK: Properties
 
-    private lazy var discourageStoryboard: UIStoryboard = {
-        UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
-    }()
+    private lazy var discourageStoryboard: UIStoryboard = UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
 
-    private lazy var userAccountUpdateStoryboard: UIStoryboard = {
-        UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
-    }()
+    private lazy var userAccountUpdateStoryboard: UIStoryboard = UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
 
-    private lazy var freeConnectionsViewStoryboard: UIStoryboard = {
-        UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
-    }()
+    private lazy var freeConnectionsViewStoryboard: UIStoryboard = UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
 
     public func whatsNewViewController(variant: WhatsNewView.PlanVariant) -> UIViewController {
         WhatsNewView(variant: variant).hostingController()

@@ -45,11 +45,9 @@ struct CountryListFeature {
                     return group.item(index: index, section: 1)
                 }
 
-            let recommendedCountries: [CountryListItem] = {
-                CountryListFeature.recommendedCountries
-                    .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
-                    .map { CountryListItem(section: 0, row: 0, code: $0) }
-            }()
+            let recommendedCountries: [CountryListItem] = CountryListFeature.recommendedCountries
+                .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
+                .map { CountryListItem(section: 0, row: 0, code: $0) }
             countriesSection = .init(name: "All countries",
                                      items: allCountries,
                                      sectionIndex: 1)

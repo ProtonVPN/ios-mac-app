@@ -75,9 +75,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & ProfileManagerFactory
     public var factory: Factory!
     
-    private lazy var tabBarViewController: SidebarTabBarViewController = {
-        return SidebarTabBarViewController()
-    }()
+    private lazy var tabBarViewController: SidebarTabBarViewController = SidebarTabBarViewController()
     
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
         let viewModel = factory.makeCountriesSectionViewModel()
@@ -108,13 +106,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         return MapHeaderViewModel(vpnGateway: self.vpnGateway, appStateManager: self.appStateManager)
     }()
     
-    private lazy var mapSectionViewModel: MapSectionViewModel = {
-        return factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
-    }()
+    private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
 
-    private lazy var announcementsViewModel: AnnouncementsViewModel = {
-        return factory.makeAnnouncementsViewModel()
-    }()
+    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     
     // MARK: Functions
 

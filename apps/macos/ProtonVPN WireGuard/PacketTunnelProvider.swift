@@ -32,11 +32,9 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
-    private lazy var adapter: WireGuardAdapter = {
-        return WireGuardAdapter(with: self) { logLevel, message in
-            wg_log(.info, message: message)
-        }
-    }()
+    private lazy var adapter: WireGuardAdapter = WireGuardAdapter(with: self) { logLevel, message in
+        wg_log(.info, message: message)
+    }
 
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this cyclomatic_complexity function_body_length
         let activationAttemptId = options?["activationAttemptId"] as? String

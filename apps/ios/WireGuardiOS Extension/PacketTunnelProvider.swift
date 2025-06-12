@@ -142,11 +142,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
     }
 
-    private lazy var adapter: WireGuardAdapter = {
-        return WireGuardAdapter(with: self) { logLevel, message in
-            wg_log(.info, message: message)
-        }
-    }()
+    private lazy var adapter: WireGuardAdapter = WireGuardAdapter(with: self) { logLevel, message in
+        wg_log(.info, message: message)
+    }
 
     func restartTunnel(with logical: ServerStatusRequest.Logical) {
         log.info("Restarting tunnel with new logical server: \(logical.id)", category: .connection)

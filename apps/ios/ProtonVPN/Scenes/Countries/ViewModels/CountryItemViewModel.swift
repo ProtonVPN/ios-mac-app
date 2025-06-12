@@ -223,13 +223,9 @@ class CountryItemViewModel {
         return 1.0
     }
 
-    private lazy var freeServerViewModels: [ServerItemViewModel] = {
-        return serverViewModels(for: servers.filter(\.logical.tier.isFreeTier))
-    }()
+    private lazy var freeServerViewModels: [ServerItemViewModel] = serverViewModels(for: servers.filter(\.logical.tier.isFreeTier))
 
-    private lazy var plusServerViewModels: [ServerItemViewModel] = {
-        return serverViewModels(for: servers.filter(\.logical.tier.isPaidTier))
-    }()
+    private lazy var plusServerViewModels: [ServerItemViewModel] = serverViewModels(for: servers.filter(\.logical.tier.isPaidTier))
 
     private func serverViewModels(for servers: [ServerInfo]) -> [ServerItemViewModel] {
         return servers.map { (serverInfo) -> ServerItemViewModel in

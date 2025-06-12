@@ -49,11 +49,11 @@
         }()
 
         public lazy var alertService = CoreAlertServiceDummy()
-        lazy var appSessionRefresher = { withDependencies {
+        lazy var appSessionRefresher = withDependencies {
             $0.serverRepository = self.serverRepository
         } operation: {
             AppSessionRefresherMock(factory: MockFactory(container: self))
-        } }()
+        }
 
         lazy var appSessionRefreshTimer = {
             let result = AppSessionRefreshTimerImplementation(
@@ -162,7 +162,7 @@
 
         public lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
 
-        public lazy var vpnGateway = { withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
+        public lazy var vpnGateway = withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
             vpnApiService: vpnApiService,
             appStateManager: appStateManager,
             alertService: alertService,
@@ -174,7 +174,7 @@
             propertiesManager: propertiesManager,
             profileManager: profileManager,
             availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
-        ) } }()
+        ) }
 
         public init() {}
     }

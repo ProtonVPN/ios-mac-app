@@ -43,7 +43,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
-    public private(set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
+    public private(set) lazy var isNetShieldStatsEnabled = factory.makePropertiesManager().featureFlags.netShieldStats
     var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
 

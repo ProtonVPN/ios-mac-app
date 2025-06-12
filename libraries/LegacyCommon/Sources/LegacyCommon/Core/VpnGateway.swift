@@ -572,7 +572,6 @@ public class VpnGateway: VpnGatewayProtocol {
         case let .failure(error):
             // Ignore failures as this is a non-critical call
             log.error("Failed to refresh server information", category: .api, metadata: ["error": "\(error)"])
-            break
         }
     }
 

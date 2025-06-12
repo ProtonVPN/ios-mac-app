@@ -115,12 +115,10 @@ final class ConnectionSettingsViewModel {
 
     // MARK: - Available protocols and Profiles
 
-    lazy var availableConnectionProtocols: [ConnectionProtocol] = {
-        ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
-            .appending(selectedProtocol) // Edge case - user's protocol has been deprecated. Show it as disabled
-            .uniqued
-            .sorted(by: ConnectionProtocol.uiSort)
-    }()
+    lazy var availableConnectionProtocols: [ConnectionProtocol] = ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
+        .appending(selectedProtocol) // Edge case - user's protocol has been deprecated. Show it as disabled
+        .uniqued
+        .sorted(by: ConnectionProtocol.uiSort)
 
     var availableProfiles: [Profile] {
         guard profileAuthorizer.canUseProfiles else {

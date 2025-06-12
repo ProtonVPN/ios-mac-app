@@ -34,9 +34,7 @@ final class iOSUpdateManager: UpdateChecker {
         return url
     }()
 
-    private lazy var currentVersion: String? = {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-    }()
+    private lazy var currentVersion: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     enum UpdateCheckCodingKeys: String, CodingKey {
         case results

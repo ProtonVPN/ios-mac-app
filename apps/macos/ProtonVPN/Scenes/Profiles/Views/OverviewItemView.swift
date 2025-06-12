@@ -44,13 +44,9 @@ class OverviewItemView: NSTableRowView {
         return NSAccessibilityCustomAction(name: connectActionName, target: self, selector: #selector(connectButtonAction(_:)))
     }()
 
-    private lazy var accessibilityEditAction: NSAccessibilityCustomAction = {
-        NSAccessibilityCustomAction(name: Localizable.edit, target: self, selector: #selector(editButtonAction(_:)))
-    }()
+    private lazy var accessibilityEditAction: NSAccessibilityCustomAction = NSAccessibilityCustomAction(name: Localizable.edit, target: self, selector: #selector(editButtonAction(_:)))
 
-    private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = {
-        NSAccessibilityCustomAction(name: Localizable.delete, target: self, selector: #selector(deleteButtonAction(_:)))
-    }()
+    private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = NSAccessibilityCustomAction(name: Localizable.delete, target: self, selector: #selector(deleteButtonAction(_:)))
 
     func updateView(withModel viewModel: OverviewItemViewModel) {
         self.viewModel = viewModel

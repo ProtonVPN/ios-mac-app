@@ -47,36 +47,32 @@ struct WelcomeView: View {
         }
     }
 
-    var availableView: some View = {
-        Text("Available with Proton VPN Plus", comment: "Badge title on the login page")
-            .font(.caption)
-            .foregroundColor(Color(.text))
-            .padding(.vertical, .themeSpacing8)
-            .padding(.horizontal, .themeSpacing16)
-            .overlay(
-                RoundedRectangle(cornerRadius: .themeRadius12)
-                    .stroke(LinearGradient(colors: [Color(hex: 0x6E4BFF), // custom colors just for this
-                                                    Color(hex: 0x547AEC),
-                                                    Color(hex: 0x2FCCCF)],
-                                           startPoint: .topLeading,
-                                           endPoint: .bottomTrailing),
-                            lineWidth: 1.5)
-            )
-    }()
+    var availableView: some View = Text("Available with Proton VPN Plus", comment: "Badge title on the login page")
+        .font(.caption)
+        .foregroundColor(Color(.text))
+        .padding(.vertical, .themeSpacing8)
+        .padding(.horizontal, .themeSpacing16)
+        .overlay(
+            RoundedRectangle(cornerRadius: .themeRadius12)
+                .stroke(LinearGradient(colors: [Color(hex: 0x6E4BFF), // custom colors just for this
+                                                Color(hex: 0x547AEC),
+                                                Color(hex: 0x2FCCCF)],
+                                       startPoint: .topLeading,
+                                       endPoint: .bottomTrailing),
+                        lineWidth: 1.5)
+        )
 
-    var titleView: some View = {
-        VStack(spacing: 24) {
-            Text("Watch without being watched.", comment: "Subtitle on the login page")
-                .fontWeight(.bold)
-                .font(.title2)
+    var titleView: some View = VStack(spacing: 24) {
+        Text("Watch without being watched.", comment: "Subtitle on the login page")
+            .fontWeight(.bold)
+            .font(.title2)
 
-            Text("Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties.", comment: "Subtitle on the login page")
-                .font(.body)
-                .foregroundStyle(Color(.text, .weak))
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: 880)
-    }()
+        Text("Proton VPN's strict no-log policy is certified by an external audit. We'll never track you online, log your IP address or share your information with third parties.", comment: "Subtitle on the login page")
+            .font(.body)
+            .foregroundStyle(Color(.text, .weak))
+            .multilineTextAlignment(.center)
+    }
+    .frame(maxWidth: 880)
 
     var buttonsView: some View {
         HStack(spacing: .themeSpacing48) {

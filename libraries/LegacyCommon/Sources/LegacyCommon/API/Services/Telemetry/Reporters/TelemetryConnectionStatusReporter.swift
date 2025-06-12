@@ -52,9 +52,7 @@ class TelemetryConnectionStatusReporter {
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?
 
-    private lazy var previousConnectionConfiguration: ConnectionConfiguration? = {
-        appStateManager.activeConnection()
-    }()
+    private lazy var previousConnectionConfiguration: ConnectionConfiguration? = appStateManager.activeConnection()
 
     private let timer: TelemetryTimer
 

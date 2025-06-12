@@ -60,9 +60,7 @@ final class DependencyContainer: Container {
         return result
     }()
 
-    private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationRemoteClient(self)
-    }()
+    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationRemoteClient(self)
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService(), authKeychain: makeAuthKeychainHandle())

@@ -170,8 +170,8 @@ class AppFeaturePropertyProviderTests: XCTestCase {
     }
 }
 
-fileprivate let encodedOn = { try! JSONEncoder().encode(TestFeature.on) }()
-fileprivate let encodedOff = { try! JSONEncoder().encode(TestFeature.off) }()
+fileprivate let encodedOn = try! JSONEncoder().encode(TestFeature.on)
+fileprivate let encodedOff = try! JSONEncoder().encode(TestFeature.off)
 
 fileprivate func mockKeychain(withUsername username: String) -> MockAuthKeychain {
     let authKeychain = MockAuthKeychain()

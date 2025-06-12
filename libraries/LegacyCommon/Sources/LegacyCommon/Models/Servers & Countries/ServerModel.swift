@@ -74,14 +74,10 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return ips.count > 1
     }
     
-    public lazy var isFree: Bool = {
-        tier == 0
-    }()
+    public lazy var isFree: Bool = tier == 0
 
     /// The server name, split into the name prefix and sequence number (if it exists).
-    public lazy var serverNameComponents: ServerNameComponents = {
-        .init(name: name)
-    }()
+    public lazy var serverNameComponents: ServerNameComponents = .init(name: name)
     
     public var isSecureCore: Bool {
         return self.feature.contains(.secureCore)

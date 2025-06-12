@@ -45,9 +45,7 @@ public enum DomainConstants {
 }
 
 public extension UserDefaults {
-    static let domainUserDefaults: UserDefaults = {
-        .init(suiteName: DomainConstants.AppGroups.main)!
-    }()
+    static let domainUserDefaults: UserDefaults = .init(suiteName: DomainConstants.AppGroups.main)!
 }
 
 public enum VPNLink: String, CaseIterable {

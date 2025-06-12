@@ -54,15 +54,13 @@ extension DependencyValues {
 
 extension VPNConnectionFeatures {
     @usableFromInline
-    static let unimplementedFeatures: VPNConnectionFeatures = {
-        VPNConnectionFeatures(
-            netshield: .off,
-            vpnAccelerator: false,
-            bouncing: nil, // This is set to the target server's `label` property during connection
-            natType: .moderateNAT,
-            safeMode: false
-        )
-    }()
+    static let unimplementedFeatures: VPNConnectionFeatures = VPNConnectionFeatures(
+        netshield: .off,
+        vpnAccelerator: false,
+        bouncing: nil, // This is set to the target server's `label` property during connection
+        natType: .moderateNAT,
+        safeMode: false
+    )
 }
 
 extension TunnelFeatures {

@@ -84,8 +84,8 @@ class StatusViewModel {
 
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
-    private lazy var isNetShieldEnabled: Bool = { featureFlags[\.netShield] }()
-    private lazy var isNetShieldStatsEnabled: Bool = { featureFlags[\.netShieldStats] }()
+    private lazy var isNetShieldEnabled: Bool = featureFlags[\.netShield]
+    private lazy var isNetShieldStatsEnabled: Bool = featureFlags[\.netShieldStats]
     @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials

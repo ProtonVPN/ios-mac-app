@@ -36,9 +36,7 @@ final class DependencyContainer: Container {
     private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
                                                                     appGroup: config.appGroup,
                                                                     factory: self)
-    private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationManager(self)
-    }()
+    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
 
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)

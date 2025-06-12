@@ -43,9 +43,7 @@ public enum AnnouncementStorageKey: DependencyKey {
 }
 
 public enum AnnouncementRefresherKey: DependencyKey {
-    public static let liveValue: any AnnouncementRefresher = {
-        AnnouncementRefresherImplementation()
-    }()
+    public static let liveValue: any AnnouncementRefresher = AnnouncementRefresherImplementation()
 }
 
 #if DEBUG

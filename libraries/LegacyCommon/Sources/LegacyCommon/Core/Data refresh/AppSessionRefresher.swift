@@ -105,7 +105,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                         log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
                     }
                 }
-                break
             case let .failure(error):
                 log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 

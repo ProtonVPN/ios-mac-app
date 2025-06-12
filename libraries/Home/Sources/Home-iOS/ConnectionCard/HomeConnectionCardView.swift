@@ -89,7 +89,6 @@ struct HomeConnectionCardView: View {
                     store.send(.delegate(.disconnect))
                 case .resolving:
                     store.send(.delegate(.disconnect))
-                    break
                 }
             }
         } label: {

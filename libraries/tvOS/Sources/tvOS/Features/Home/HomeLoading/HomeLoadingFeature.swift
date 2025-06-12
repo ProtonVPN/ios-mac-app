@@ -52,7 +52,6 @@ struct HomeLoadingFeature {
                 switch result {
                 case .success:
                     state = .loaded(.init())
-                    break
                 case .failure:
                     state = .loadingFailed
                     return .run { send in
