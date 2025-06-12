@@ -435,7 +435,8 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     }
 
     /// Used to provide more information about what stage of the connection process we reached before timing out.
-    @CasePathable public enum ConnectionStage: Equatable, Sendable {
+    @CasePathable
+    public enum ConnectionStage: Equatable, Sendable {
         /// We have failed to start the network extension process, or the the extension failed to transition to the
         /// `connected` state.
         case tunnelStartingAndConnecting

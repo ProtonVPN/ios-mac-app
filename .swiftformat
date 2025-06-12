@@ -11,6 +11,7 @@
 --wraparguments before-first
 --wrapcollections before-first
 --funcattributes prev-line
+--typeattributes prev-line
 
 # excludes
 --exclude external,Build

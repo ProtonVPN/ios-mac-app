@@ -10,7 +10,8 @@ import Foundation
 import os.log
 
 /// App -> Provider IPC
-@objc protocol ProviderCommunication {
+@objc
+protocol ProviderCommunication {
     /// Used by both extensions to get log data
     func getLogs(_ completionHandler: @escaping (Data?) -> Void)
     /// Used by OpenVPN extension to set connection credentials.
@@ -27,4 +28,5 @@ import os.log
 }
 
 /// Provider -> App IPC
-@objc protocol AppCommunication {}
+@objc
+protocol AppCommunication {}

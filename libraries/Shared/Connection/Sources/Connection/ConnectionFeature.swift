@@ -389,7 +389,8 @@ public enum ConnectionState: Equatable, Sendable {
     case connecting(Intent)
     case connected(ServerConnectionIntent, Server, Date, ConnectionDetailsMessage?)
 
-    @CasePathable public enum Intent: Equatable, Sendable {
+    @CasePathable
+    public enum Intent: Equatable, Sendable {
         case unresolved(ConnectionPreparationIntent)
         case resolved(ServerConnectionIntent, Server)
     }
