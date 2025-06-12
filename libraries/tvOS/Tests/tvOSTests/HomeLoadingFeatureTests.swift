@@ -62,7 +62,8 @@ final class HomeLoadingFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
             $0.logicalsRefresher = LogicalsRefresher(
                 refreshLogicals: { throw "" as GenericError },
-                shouldRefreshLogicals: { true })
+                shouldRefreshLogicals: { true }
+            )
             $0.date = .constant(.distantFuture)
             $0.continuousClock = clock
             $0.logicalsClient.fetchLogicals = { _, _ in throw "" as GenericError }
@@ -85,7 +86,8 @@ final class HomeLoadingFeatureTests: XCTestCase {
             $0.serverRepository = .notEmpty()
             $0.logicalsRefresher = LogicalsRefresher(
                 refreshLogicals: {},
-                shouldRefreshLogicals: { false })
+                shouldRefreshLogicals: { false }
+            )
         }
         await store.send(.loadingViewOnAppear)
         await store.receive(\.finishedLoading) {

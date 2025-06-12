@@ -193,7 +193,8 @@ struct MultiLineTextInputView_Previews: PreviewProvider {
                 submitLabel: "",
                 type: .textSingleLine,
                 isMandatory: true,
-                placeholder: "Lorem ipsum dolor sit amet, consectetur adipiscing"),
+                placeholder: "Lorem ipsum dolor sit amet, consectetur adipiscing"
+            ),
             value: $text
         )
         .preferredColorScheme(.dark)

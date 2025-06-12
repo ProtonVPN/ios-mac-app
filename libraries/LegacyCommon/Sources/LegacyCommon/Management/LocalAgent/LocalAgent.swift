@@ -302,7 +302,8 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
             trackersCount: statistics.netShield.trackersBlocked ?? 0,
             adsCount: statistics.netShield.adsBlocked ?? 0,
             dataSaved: UInt64(statistics.netShield.bytesSaved),
-            enabled: true)
+            enabled: true
+        )
 
         lastReceivedStats = stats
         netShieldStatsChanged(to: stats)

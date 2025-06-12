@@ -247,7 +247,7 @@ public struct SettingsView: View {
     ) -> some View {
         WithViewStore(store, observe: { $0.destination }) { viewStore in
             NavigationLink(
-//                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
+                //                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
 //                case: `case`,
                 item: viewStore.binding(get: { $0 }, send: .dismissDestination),
                 onNavigate: { _ in },

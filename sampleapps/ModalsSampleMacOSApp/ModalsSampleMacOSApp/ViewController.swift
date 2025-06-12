@@ -48,12 +48,14 @@ class ViewController: NSViewController {
         (.upsell(.cantSkip(
             before: Date().addingTimeInterval(10),
             duration: 10,
-            longSkip: false)
+            longSkip: false
+        )
         ), "Server Roulette"),
         (.upsell(.cantSkip(
             before: Date().addingTimeInterval(10),
             duration: 10,
-            longSkip: true)
+            longSkip: true
+        )
         ), "Server Roulette (Too many skips)"),
         (.freeConnections([
             ("Japan", NSImage(named: "flags_JP")!),

@@ -301,8 +301,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   location: location,
                   hostCountry: aDecoder.decodeObject(forKey: CodingKeys.hostCountry.rawValue) as? String,
                   translatedCity: aDecoder.decodeObject(forKey: CodingKeys.translatedCity.rawValue) as? String,
-                  gatewayName: aDecoder.decodeObject(forKey: CodingKeys.gatewayName.rawValue) as? String
-        )
+                  gatewayName: aDecoder.decodeObject(forKey: CodingKeys.gatewayName.rawValue) as? String)
     }
 
     public func encode(with aCoder: NSCoder) {
@@ -349,8 +348,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
                       location: location,
                       hostCountry: container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
                       translatedCity: container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
-                      gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
-        )
+                      gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName))
     }
 
     // MARK: - Static functions

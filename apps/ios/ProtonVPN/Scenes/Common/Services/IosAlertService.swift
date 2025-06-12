@@ -332,7 +332,8 @@ extension IosAlertService: CoreAlertService {
             .welcomePlus(
                 numberOfServers: numberOfServers,
                 numberOfDevices: numberOfDevices,
-                numberOfCountries: numberOfCountries)
+                numberOfCountries: numberOfCountries
+            )
         }
         let viewController = modalsFactory.modalViewController(modalType: modalType, primaryAction: { [weak self] in
             self?.windowService.dismissModal(nil)

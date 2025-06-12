@@ -14,7 +14,8 @@ let package = Package(
     products: [
         .library(
             name: "NetShield",
-            targets: ["NetShield"]),
+            targets: ["NetShield"]
+        ),
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),

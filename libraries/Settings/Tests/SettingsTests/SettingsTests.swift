@@ -48,7 +48,8 @@ final class SettingsTests: XCTestCase {
                 netShield: .on,
                 killSwitch: .on,
                 protocol: .init(protocol: .smartProtocol, reconnectionAlert: nil),
-                theme: .auto),
+                theme: .auto
+            ),
             reducer: SettingsFeature()
         )
 

@@ -13,7 +13,8 @@ let package = Package(
     products: [
         .library(
             name: "ConnectionInventory",
-            targets: ["ConnectionInventory"]),
+            targets: ["ConnectionInventory"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections", .upToNextMajor(from: "1.1.4")),

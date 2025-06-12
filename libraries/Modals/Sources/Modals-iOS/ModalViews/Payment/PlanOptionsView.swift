@@ -140,7 +140,8 @@ import CombineSchedulers
         },
         validate: { _ in
             try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
-        })
+        }
+    )
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
 

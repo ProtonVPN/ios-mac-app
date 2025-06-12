@@ -37,7 +37,8 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
     func upsell(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(
             welcome: .init(destination: .upsell(.loading)),
-            networking: .authenticated(.auth(uid: "")))
+            networking: .authenticated(.auth(uid: ""))
+        )
         ) {
             AppFeature()
         } withDependencies: {

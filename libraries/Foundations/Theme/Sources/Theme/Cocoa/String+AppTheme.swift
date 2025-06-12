@@ -72,8 +72,7 @@ import Foundation
                                    hover: hover,
                                    alignment: alignment,
                                    lineBreakMode: lineBreakMode,
-                                   textColor: textColor
-                    )
+                                   textColor: textColor)
                 )
             }
             return mutableAttributedString

@@ -241,7 +241,8 @@ class CreateNewProfileViewModel {
                     // so we do it here, only for the selected object.
                     if let vpnServer = self?.serverRepository.getFirstServer(
                         filteredBy: [.logicalID(server.logical.id)],
-                        orderedBy: .fastest) {
+                        orderedBy: .fastest
+                    ) {
                         let serverModel = ServerModel(server: vpnServer)
                         let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
                         self?.update(serverOffering: offering)

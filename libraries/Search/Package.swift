@@ -10,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "Search",
-            targets: ["Search"]),
+            targets: ["Search"]
+        ),
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
@@ -38,7 +39,8 @@ let package = Package(
                 .process("Cells/UpsellCell.xib"),
                 .process("Cells/CityCell.xib"),
                 .process("Assets.xcassets"),
-            ]),
+            ]
+        ),
         .testTarget(
             name: "SearchTests",
             dependencies: [

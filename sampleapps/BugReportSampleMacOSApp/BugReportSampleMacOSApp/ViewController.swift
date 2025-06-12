@@ -58,7 +58,8 @@ class ViewController: NSViewController {
                     print("updateAppCallback")
                     self.statusTextField.stringValue = "Update"
                 }
-            })
+            }
+        )
     }
 
     override var representedObject: Any? {

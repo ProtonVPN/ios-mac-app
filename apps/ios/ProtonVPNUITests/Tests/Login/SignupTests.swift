@@ -52,7 +52,8 @@ class SignupTests: ProtonVPNUITests {
                 password: randomPassword,
                 userEmail: randomEmail,
                 verificationCode: verificationCode,
-                retRobot: CreatingAccountRobot.self)
+                retRobot: CreatingAccountRobot.self
+            )
 
         verifyOnboardingScreen(for: randomUsername)
     }

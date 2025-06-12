@@ -86,10 +86,9 @@ public struct DebugConfigurationFeature {
 
             if !atlasSecretFetchURLString.isEmpty {
                 return (.normal, """
-                    Tap 'Fetch' to refresh atlas secret from
-                    \(atlasSecretFetchURLString).
-                    """
-                )
+                Tap 'Fetch' to refresh atlas secret from
+                \(atlasSecretFetchURLString).
+                """)
             }
 
             if atlasSecret.hasPrefix("https://") {

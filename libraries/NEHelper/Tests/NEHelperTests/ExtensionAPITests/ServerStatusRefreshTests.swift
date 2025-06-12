@@ -227,8 +227,7 @@ extension ServerStatusRequest.Server {
                      status: Int = 0,
                      label: String = "label",
                      x25519PublicKey: String? = nil,
-                     protocolEntries: PerProtocolEntries? = nil
-    ) -> ServerStatusRequest.Server {
+                     protocolEntries: PerProtocolEntries? = nil) -> ServerStatusRequest.Server {
         ServerStatusRequest.Server(entryIp: entryIp,
                                    exitIp: exitIp,
                                    domain: domain,
@@ -236,8 +235,7 @@ extension ServerStatusRequest.Server {
                                    status: status,
                                    label: label,
                                    x25519PublicKey: x25519PublicKey,
-                                   protocolEntries: protocolEntries
-        )
+                                   protocolEntries: protocolEntries)
     }
 }
 

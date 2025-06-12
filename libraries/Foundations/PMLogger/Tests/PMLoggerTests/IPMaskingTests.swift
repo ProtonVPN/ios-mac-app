@@ -28,7 +28,8 @@ final class IPMaskingTests: XCTestCase {
         XCTAssertEqual("1.2.3.255".maskIPv4, "1.2.*.*")
         XCTAssertEqual(
             "This is a long and interesting string that contains not only IP address like 1.2.3.255, but some other text and maybe even more IP addresses like these: 127.0.0.1, 10.10.0.1".maskIPv4,
-            "This is a long and interesting string that contains not only IP address like 1.2.*.*, but some other text and maybe even more IP addresses like these: 127.0.*.*, 10.10.*.*")
+            "This is a long and interesting string that contains not only IP address like 1.2.*.*, but some other text and maybe even more IP addresses like these: 127.0.*.*, 10.10.*.*"
+        )
 
         XCTAssertEqual("Just a string with some numbers like 1 2 3 4".maskIPv4, "Just a string with some numbers like 1 2 3 4")
     }
@@ -52,7 +53,8 @@ final class IPMaskingTests: XCTestCase {
 
         XCTAssertEqual(
             "This is a long and interesting string that contains not only IP address like \(ipv6Addresses[0]), but some other text and maybe even more IP addresses like these: \(ipv6Addresses[1]), \(ipv6Addresses[2])".maskIPv6,
-            "This is a long and interesting string that contains not only IP address like ip:v6:removed, but some other text and maybe even more IP addresses like these: ip:v6:removed, ip:v6:removed")
+            "This is a long and interesting string that contains not only IP address like ip:v6:removed, but some other text and maybe even more IP addresses like these: ip:v6:removed, ip:v6:removed"
+        )
 
         XCTAssertEqual("Just a string with some numbers like 1 2 3 4".maskIPv6, "Just a string with some numbers like 1 2 3 4")
     }

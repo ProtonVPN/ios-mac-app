@@ -9,10 +9,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Timer",
-            targets: ["Timer"]),
+            targets: ["Timer"]
+        ),
         .library(
             name: "TimerMock",
-            targets: ["TimerMock"]),
+            targets: ["TimerMock"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -24,15 +26,19 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Timer",
-            dependencies: []),
+            dependencies: []
+        ),
         .target(
             name: "TimerMock",
-            dependencies: ["Timer"]),
+            dependencies: ["Timer"]
+        ),
         .testTarget(
             name: "TimerTests",
-            dependencies: ["Timer", .product(name: "Atomics", package: "swift-atomics")]),
+            dependencies: ["Timer", .product(name: "Atomics", package: "swift-atomics")]
+        ),
         .testTarget(
             name: "TimerMockTests",
-            dependencies: ["Timer", "TimerMock"]),
+            dependencies: ["Timer", "TimerMock"]
+        ),
     ]
 )

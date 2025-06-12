@@ -12,7 +12,8 @@ let package = Package(
     products: [
         .library(
             name: "PMLogger",
-            targets: ["PMLogger"]),
+            targets: ["PMLogger"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
@@ -26,6 +27,7 @@ let package = Package(
         ),
         .testTarget(
             name: "PMLoggerTests",
-            dependencies: ["PMLogger"]),
+            dependencies: ["PMLogger"]
+        ),
     ]
 )

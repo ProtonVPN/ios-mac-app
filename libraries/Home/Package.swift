@@ -13,7 +13,8 @@ let package = Package(
     products: [
         .library(
             name: "Home",
-            targets: ["Home"]),
+            targets: ["Home"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),

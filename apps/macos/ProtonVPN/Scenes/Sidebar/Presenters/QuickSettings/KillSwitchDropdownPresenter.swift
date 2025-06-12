@@ -127,7 +127,8 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
                              category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                     connectAfterLocalNetworkWarning()
                     dismissCallback()
-                })
+                }
+            )
             )
         })
     }

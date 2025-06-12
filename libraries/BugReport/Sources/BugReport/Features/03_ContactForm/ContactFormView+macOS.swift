@@ -53,8 +53,10 @@
                                             set: {
                                                 guard $0 != field.stringValue else { return }
                                                 store.send(.fieldStringValueChanged(field, $0))
-                                            }))
-                                            .frame(height: 155, alignment: .top)
+                                            }
+                                        )
+                                    )
+                                    .frame(height: 155, alignment: .top)
                                 case .switch:
                                     SwitchInputView(
                                         field: field.inputField,

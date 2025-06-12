@@ -14,7 +14,8 @@ let package = Package(
     products: [
         .library(
             name: "ConnectionDetails",
-            targets: ["ConnectionDetails"]),
+            targets: ["ConnectionDetails"]
+        ),
     ],
     dependencies: [
         // Local

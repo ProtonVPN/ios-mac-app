@@ -239,7 +239,8 @@ final class SettingsAccountViewModel {
                 case let .failure(error):
                     self?.handleAccountDeletionFailure(error)
                 }
-            })
+            }
+        )
     }
 
     private func handleAccountDeletionSuccess() {

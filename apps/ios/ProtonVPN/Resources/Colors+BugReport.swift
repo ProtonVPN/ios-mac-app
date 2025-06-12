@@ -35,7 +35,6 @@ extension BugReport.Colors {
                   backgroundUpdateButton: Color(.weakInteractionColor()),
                   separator: Color(.normalSeparatorColor()),
                   qfIcon: Color(.notificationWarningColor()),
-                  externalLinkIcon: Color(.iconHint())
-        )
+                  externalLinkIcon: Color(.iconHint()))
     }
 }

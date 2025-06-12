@@ -280,7 +280,8 @@ private extension ModalType {
         case .secureCore:
             return .init(
                 text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellSecureCoreSubtitle,
-                boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold])
+                boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold]
+            )
         case let .allCountries(numberOfServers, numberOfCountries):
             let text = legacy ?
                 Localizable.modalsUpsellFeaturesSubtitle :
@@ -363,7 +364,8 @@ private extension ModalType {
                 .higherSpeed,
                 .streaming,
                 .multipleDevices(numberOfDevices),
-                .moneyGuarantee]
+                .moneyGuarantee,
+            ]
         case .safeMode:
             []
         case .moderateNAT:

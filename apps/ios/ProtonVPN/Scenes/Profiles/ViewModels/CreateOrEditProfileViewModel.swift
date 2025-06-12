@@ -417,7 +417,8 @@ class CreateOrEditProfileViewModel: NSObject {
             if let serverInfo = selectedObject as? ServerInfo,
                let vpnServer = serverRepository.getFirstServer(
                    filteredBy: [.logicalID(serverInfo.logical.id)],
-                   orderedBy: .fastest) {
+                   orderedBy: .fastest
+               ) {
                 let serverModel = ServerModel(server: vpnServer)
                 selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
             }
@@ -479,16 +480,18 @@ extension CreateOrEditProfileViewModel {
             [
                 SelectionSection(
                     title: Localizable.countriesFree.uppercased(),
-                    cells: rows.filter { ($0.object as! ServerGroupInfo).minTier <= userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroupInfo).minTier <= userTier }
+                ),
                 SelectionSection(
                     title: Localizable.countriesPremium.uppercased(),
-                    cells: rows.filter { ($0.object as! ServerGroupInfo).minTier > userTier }),
+                    cells: rows.filter { ($0.object as! ServerGroupInfo).minTier > userTier }
+                ),
             ]
         } else {
             [SelectionSection(
                 title: nil,
-                cells: rows),
-            ]
+                cells: rows
+            )]
         }
 
         var selectedIndex: IndexPath?
@@ -573,7 +576,8 @@ extension CreateOrEditProfileViewModel {
                         title: serverDescriptor(for: server),
                         object: server
                     )
-                })
+                }
+            )
             )
         }
 

@@ -14,10 +14,12 @@ let package = Package(
     products: [
         .library(
             name: "Modals",
-            targets: ["Modals"]),
+            targets: ["Modals"]
+        ),
         .library(
             name: "ModalsServices",
-            targets: ["ModalsServices"]),
+            targets: ["ModalsServices"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),

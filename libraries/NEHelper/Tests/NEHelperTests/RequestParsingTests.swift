@@ -207,7 +207,8 @@ class RequestParsingTests: XCTestCase {
                         vpnAccelerator: true,
                         bouncing: "bouncing",
                         natType: .moderateNAT,
-                        safeMode: true),
+                        safeMode: true
+                    ),
                     renew: true
                 )
             )

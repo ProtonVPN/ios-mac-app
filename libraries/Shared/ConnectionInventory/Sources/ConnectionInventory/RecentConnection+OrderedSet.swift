@@ -43,8 +43,7 @@ extension OrderedSet<RecentConnection> {
                     $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
                 }
             }
-            .prefix(Self.maxConnections)
-        )
+            .prefix(Self.maxConnections))
     }
 
     public var mostRecent: RecentConnection? {

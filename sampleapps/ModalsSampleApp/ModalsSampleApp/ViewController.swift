@@ -36,7 +36,8 @@ final class ViewController: UITableViewController {
         (.profiles, "Profiles"),
         (.cantSkip(before: Date().addingTimeInterval(10), totalDuration: 10, longSkip: false), "Server Roulette"),
         (.cantSkip(before: Date().addingTimeInterval(15), totalDuration: 15, longSkip: true), "Server Roulette (Too many skips)"),
-        (.subscription, title: "Subscription")]
+        (.subscription, title: "Subscription"),
+    ]
     let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
         (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
                                              numberOfDevices: 5,
@@ -46,7 +47,8 @@ final class ViewController: UITableViewController {
         (.reachedDeviceLimit, "Reached Device Limit"),
         (.reachedDevicePlanLimit(planName: "Plus", numberOfDevices: 5), "Reached Device Plan Limit"),
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
-        (.pendingInvoices, "Pending Invoices")]
+        (.pendingInvoices, "Pending Invoices"),
+    ]
 
     static let fromServer = ("US-CA#63", UIImage(named: "flags_US")!)
     static let toServer = ("US-CA#78", UIImage(named: "flags_US")!)

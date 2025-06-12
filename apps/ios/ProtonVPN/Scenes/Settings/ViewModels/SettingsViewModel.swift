@@ -474,7 +474,8 @@ final class SettingsViewModel {
                 text: NSMutableAttributedString(
                     attributedString: Localizable.nonStandardPortsExplanation.attributed(
                         withColor: UIColor.weakTextColor(),
-                        fontSize: 13))
+                        fontSize: 13
+                    ))
                     .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
             ),
         ]

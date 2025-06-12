@@ -102,8 +102,10 @@ struct ContactFormFeature: Reducer {
                     submitLabel: logsFieldName,
                     type: .switch,
                     isMandatory: false,
-                    placeholder: Localizable.br3LogsDescription),
-                boolValue: true)
+                    placeholder: Localizable.br3LogsDescription
+                ),
+                boolValue: true
+            )
             )
 
             self.fields = formFields

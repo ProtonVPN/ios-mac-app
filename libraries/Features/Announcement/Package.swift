@@ -13,7 +13,8 @@ let package = Package(
     products: [
         .library(
             name: "Announcement",
-            targets: ["Announcement"]),
+            targets: ["Announcement"]
+        ),
     ],
     dependencies: [
         .package(path: "../../Foundations/Strings"),
@@ -47,7 +48,8 @@ let package = Package(
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "SDWebImage", package: "SDWebImage"),
-            ]),
+            ]
+        ),
         .testTarget(
             name: "AnnouncementTests",
             dependencies: [

@@ -192,7 +192,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             properties = try await vpnApiService.vpnProperties(
                 isDisconnected: appState.isDisconnected,
                 lastKnownLocation: propertiesManager.userLocation,
-                serversAccordingToTier: shouldRefreshServers)
+                serversAccordingToTier: shouldRefreshServers
+            )
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
 

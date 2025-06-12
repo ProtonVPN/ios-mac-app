@@ -71,7 +71,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         vpnKeychain: vpnKeychain,
         alertService: AlertServiceEmptyStub(),
-        propertiesManager: propertiesManager)
+        propertiesManager: propertiesManager
+    )
 
     var appStateManager: AppStateManager {
         AppStateManagerImplementation(
@@ -196,7 +197,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 appStateManager: appStateManager,
                 vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                 profileManager: profileManager,
-                propertiesManager: propertiesManager)
+                propertiesManager: propertiesManager
+            )
         }
 
         let tableViewCellTitle: String = switch dataSetType {

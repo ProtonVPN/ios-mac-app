@@ -100,8 +100,7 @@
 
             return Group {
                 WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                                               reducer: { WhatsTheIssueFeature() }
-                    )
+                                               reducer: { WhatsTheIssueFeature() })
                 )
             }
         }

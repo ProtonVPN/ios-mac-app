@@ -47,7 +47,8 @@ let package = Package(
             ],
             resources: [
                 .process("Resources/Assets.xcassets"),
-            ]),
+            ]
+        ),
         .target(
             name: "tvOSTestSupport",
             dependencies: ["tvOS"]

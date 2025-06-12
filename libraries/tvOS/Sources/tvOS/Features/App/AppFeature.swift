@@ -118,7 +118,8 @@ struct AppFeature {
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
                         }
-                    }]
+                    },
+                ]
                 if case .unauthenticated = state.networking {
                     effects.insert(.send(.networking(.startAcquiringSession)), at: 0)
                 }

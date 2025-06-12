@@ -140,7 +140,8 @@ final class OneClickPayment {
             }, notNow: { [weak self] in
                 notNowHandler?()
                 self?.completionHandler()
-            })
+            }
+        )
         plansClientValue = client
         return client
     }

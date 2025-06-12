@@ -86,8 +86,7 @@ struct Provider: TimelineProvider {
         return ConnectWidgetEntry(date: .now,
                                   connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
                                   protectionState: vpnConnectionStatus.protectionState,
-                                  recentServers: recents
-        )
+                                  recentServers: recents)
     }
 }
 

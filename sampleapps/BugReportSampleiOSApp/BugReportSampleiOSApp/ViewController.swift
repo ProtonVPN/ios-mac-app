@@ -62,7 +62,8 @@ class ViewController: UIViewController {
                     self.updateSwitchChanged()
                     self.statusLabel.text = "Update"
                 }
-            })
+            }
+        )
     }
 
     override func viewDidAppear(_ animated: Bool) {

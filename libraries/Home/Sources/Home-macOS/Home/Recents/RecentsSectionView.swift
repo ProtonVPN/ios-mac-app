@@ -78,8 +78,7 @@ struct HomeRecentsSectionView_Previews: PreviewProvider {
             ],
             connectionStatus: .init(protectionState: .protected(netShield: .random)),
             vpnConnectionStatus: .disconnected),
-            reducer: { HomeFeature() }
-        )
+            reducer: { HomeFeature() })
         WithViewStore(store, observe: { $0 }) { store in
             RecentsSectionView(
                 items: store.remainingConnections,

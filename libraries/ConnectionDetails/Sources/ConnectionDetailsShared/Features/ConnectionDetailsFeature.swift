@@ -52,8 +52,7 @@ public struct ConnectionDetailsFeature {
                          city: actual.server.logical.city ?? "-",
                          server: actual.server.logical.name,
                          serverLoad: actual.server.logical.load,
-                         protocolName: actual.vpnProtocol.localizedDescription
-            )
+                         protocolName: actual.vpnProtocol.localizedDescription)
         }
     }
 

@@ -87,8 +87,10 @@ struct AnnouncementBannerView: View {
                             LinearGradient(
                                 colors: colors,
                                 startPoint: .leading,
-                                endPoint: .trailing),
-                            lineWidth: 1)
+                                endPoint: .trailing
+                            ),
+                            lineWidth: 1
+                        )
                 )
                 .cornerRadius(.themeRadius8)
             }

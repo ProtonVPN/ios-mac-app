@@ -47,8 +47,7 @@ extension String {
     func attributedCurrency(withNumberColor numberColor: UIColor,
                             numberFont: UIFont,
                             withTextColor textColor: UIColor,
-                            textFont: UIFont
-    ) -> NSAttributedString {
+                            textFont: UIFont) -> NSAttributedString {
         let newString = NSMutableAttributedString(string: self)
 
         let range = (self as NSString).range(of: self)

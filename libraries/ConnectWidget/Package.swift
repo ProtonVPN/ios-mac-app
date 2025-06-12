@@ -13,7 +13,8 @@ let package = Package(
     products: [
         .library(
             name: "ConnectWidget",
-            targets: ["ConnectWidget"]),
+            targets: ["ConnectWidget"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
@@ -37,7 +38,8 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-            ]),
+            ]
+        ),
         .testTarget(
             name: "ConnectWidgetTests",
             dependencies: ["ConnectWidget"]

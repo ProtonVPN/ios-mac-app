@@ -230,7 +230,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         errorNotifier: ErrorNotifier,
         newVpnCertificateFeatures: VPNConnectionFeatures?,
         transport: WireGuardTransport?,
-        completionHandler: @escaping (Error?) -> Void) {
+        completionHandler: @escaping (Error?) -> Void
+    ) {
         let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in

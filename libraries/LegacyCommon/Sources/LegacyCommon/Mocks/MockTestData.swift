@@ -56,8 +56,7 @@
                                          location: ServerLocation(lat: 46.33, long: 6.5),
                                          hostCountry: "Switzerland",
                                          translatedCity: "Not The Eyes",
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         /// free server with relatively low latency score and not under maintenance.
         public var server2 = ServerModel(id: "efgh",
@@ -77,8 +76,7 @@
                                          location: ServerLocation(lat: 46.25, long: 6.16),
                                          hostCountry: "Switzerland",
                                          translatedCity: "Anatomy",
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         /// same server as server 2, but placed under maintenance.
         public var server2UnderMaintenance = ServerModel(
@@ -120,8 +118,7 @@
                                          location: .init(lat: 47.22, long: 8.32),
                                          hostCountry: "Switzerland",
                                          translatedCity: nil,
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         /// plus server with IP override for Stealth protocol.
         public var server4 = ServerModel(id: "mnop",
@@ -144,8 +141,7 @@
                                          location: .init(lat: 47.22, long: 8.32),
                                          hostCountry: "Switzerland",
                                          translatedCity: nil,
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         /// plus server with IP and port override for Stealth protocol.
         public var server5 = ServerModel(id: "qrst",
@@ -169,8 +165,7 @@
                                          location: .init(lat: 47.22, long: 8.32),
                                          hostCountry: "Switzerland",
                                          translatedCity: nil,
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         /// plus server which supports Stealth protocol only.
         public var server6 = ServerModel(id: "uvwx",
@@ -193,8 +188,7 @@
                                          location: .init(lat: 47.22, long: 8.32),
                                          hostCountry: "Switzerland",
                                          translatedCity: nil,
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         /// plus server which supports all the features.
         func server7(id: String = "yzab") -> ServerModel {
@@ -218,8 +212,7 @@
                   location: .init(lat: 47.22, long: 8.32),
                   hostCountry: "Switzerland",
                   translatedCity: nil,
-                  gatewayName: nil
-            )
+                  gatewayName: nil)
         }
 
         /// plus server which supports WireGuard protocol and OpenVPN UDP only.
@@ -242,15 +235,13 @@
                                                      protocolEntries: [
                                                          .wireGuard(.udp): .init(ipv4: "10.0.1.1", ports: nil),
                                                          .openVpn(.udp): .init(ipv4: nil, ports: [1234, 5678]),
-                                                     ]),
-                                         ],
+                                                     ])],
                                          score: 10,
                                          status: 1,
                                          location: .init(lat: 47.22, long: 8.32),
                                          hostCountry: "Switzerland",
                                          translatedCity: nil,
-                                         gatewayName: nil
-        )
+                                         gatewayName: nil)
 
         public var defaultClientConfig = ClientConfig(
             featureFlags: .allEnabled,

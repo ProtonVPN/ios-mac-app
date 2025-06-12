@@ -36,7 +36,6 @@ extension BugReport.Colors {
                   backgroundUpdateButton: ColorProvider.InteractionWeak,
                   separator: ColorProvider.BorderWeak,
                   qfIcon: ColorProvider.SignalWarning,
-                  externalLinkIcon: ColorProvider.TextHint
-        )
+                  externalLinkIcon: ColorProvider.TextHint)
     }
 }

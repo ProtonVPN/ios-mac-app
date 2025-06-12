@@ -8,11 +8,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)],
+        .macOS(.v13),
+    ],
     products: [
         .library(
             name: "BugReport",
-            targets: ["BugReport"]),
+            targets: ["BugReport"]
+        ),
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
@@ -44,6 +46,7 @@ let package = Package(
             ],
             resources: [
                 .process("example1.json"),
-            ]),
+            ]
+        ),
     ]
 )

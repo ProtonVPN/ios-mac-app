@@ -62,9 +62,11 @@ struct SingleLineTextInputView_Previews: PreviewProvider {
                 submitLabel: "",
                 type: .textSingleLine,
                 isMandatory: true,
-                placeholder: "User name (email address)"),
-            value: $text)
+                placeholder: "User name (email address)"
+            ),
+            value: $text
+        )
 
-            .preferredColorScheme(.dark)
+        .preferredColorScheme(.dark)
     }
 }

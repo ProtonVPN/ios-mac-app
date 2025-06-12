@@ -128,7 +128,8 @@ public class TelemetryServiceImplementation: TelemetryService {
             modalSource: _modalSource,
             newPlanName: newPlanName,
             offerReference: offerReference,
-            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off)
+            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off
+        )
     }
 
     public func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws {

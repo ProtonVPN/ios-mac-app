@@ -191,7 +191,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                             result: .success([
                                                 \.accessToken: testValues.accessToken,
                                                 \.refreshToken: testValues.refreshToken,
-                                                \.expiresIn: Double(testValues.expiresIn)]),
+                                                \.expiresIn: Double(testValues.expiresIn),
+                                            ]),
                                             expectationToFulfill: expectations.tokenRefresh)
 
         sessionAuthCallback = mockEndpoint(SessionAuthRequest.self,
@@ -230,7 +231,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                            result: .success([
                                                \.certificate: testValues.cert,
                                                \.refreshTime: testValues.refreshTime,
-                                               \.validUntil: testValues.validUntil]),
+                                               \.validUntil: testValues.validUntil,
+                                           ]),
                                            expectationToFulfill: expectations.thirdCertRefresh)
 
         manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in

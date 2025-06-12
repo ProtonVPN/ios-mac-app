@@ -95,7 +95,8 @@ public struct PlutoniumView: View {
                 return false
             }, set: {
                 store.send(.toggleModeClicked($0))
-            })
+            }
+        )
     }
 
     private var configView: some View {
@@ -138,7 +139,8 @@ public struct PlutoniumView: View {
                 store.feature.mode
             }, set: {
                 store.send(.modeSelectionClicked($0))
-            })
+            }
+        )
     }
 
     private var modesSelector: some View {

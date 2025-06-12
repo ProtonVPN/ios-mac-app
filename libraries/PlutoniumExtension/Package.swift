@@ -11,7 +11,8 @@ let package = Package(
     products: [
         .library(
             name: "PlutoniumExtension",
-            targets: ["PlutoniumExtension"]),
+            targets: ["PlutoniumExtension"]
+        ),
     ],
     dependencies: [
         .package(path: "../Foundations/PMLogger"),
@@ -25,7 +26,8 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
-            ]),
+            ]
+        ),
         .testTarget(
             name: "PlutoniumExtensionTests",
             dependencies: ["PlutoniumExtension"]

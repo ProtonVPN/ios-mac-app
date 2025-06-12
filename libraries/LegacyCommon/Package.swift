@@ -139,7 +139,7 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ],
             plugins: [
-//                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
+                //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]
         ),
         /*

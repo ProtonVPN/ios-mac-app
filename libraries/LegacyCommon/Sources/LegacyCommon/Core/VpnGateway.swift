@@ -799,7 +799,8 @@ private extension VpnGateway {
             safeMode: safeModePropertyProvider.safeMode,
             profileId: nil,
             profileName: nil,
-            trigger: nil)
+            trigger: nil
+        )
 
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request

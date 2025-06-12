@@ -79,7 +79,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
             serverTierChecker: serverTierChecker,
             availabilityCheckerResolver: availabilityCheckerResolver,
             smartProtocolConfig: smartProtocolConfig,
-            wireguardConfig: wireguardConfig)
+            wireguardConfig: wireguardConfig
+        )
         let connectionProtocol: ConnectionProtocol = propertiesManager.smartProtocol
             ? .smartProtocol
             : .vpnProtocol(propertiesManager.vpnProtocol)

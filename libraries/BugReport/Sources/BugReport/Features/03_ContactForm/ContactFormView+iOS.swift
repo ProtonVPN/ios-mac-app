@@ -89,8 +89,7 @@
                                        destination: { _ in
                                            IfLetStore(store.scope(state: \.resultState,
                                                                   action: \.resultViewAction),
-                                                      then: { store in BugReportResultView(store: store) }
-                                           )
+                                                      then: { store in BugReportResultView(store: store) })
                                        },
                                        label: { EmptyView() })
                     }

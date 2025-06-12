@@ -28,7 +28,8 @@ public func dispatch_after_delay(_ delay: TimeInterval, queue: DispatchQueue, bl
 
 public func delay(_ delay: Double, closure: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(
-        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure
+    )
 }
 
 public func NSLocalizedString(_ key: String) -> String {
