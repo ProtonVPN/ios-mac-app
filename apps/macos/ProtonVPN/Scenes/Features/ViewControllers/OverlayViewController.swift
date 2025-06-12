@@ -26,7 +26,7 @@ enum KeyCode: UInt16, CaseIterable {
         guard case .keyDown = event.type else {
             return false
         }
-        return Self.allCases.map(\.rawValue).contains(event.keyCode)
+        return allCases.map(\.rawValue).contains(event.keyCode)
     }
 }
 

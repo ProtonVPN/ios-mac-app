@@ -34,7 +34,7 @@ public final class RecentsStorageImplementation {
     }
 
     static func storageKey(_ userID: String) -> String {
-        Self.storageKeyPrefix + userID
+        storageKeyPrefix + userID
     }
 
     public static func saveToStorage(collection: OrderedSet<RecentConnection>) {

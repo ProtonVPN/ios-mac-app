@@ -166,8 +166,8 @@ extension NotificationCenter {
 
 extension TypedNotification {
     static func data<T>(from notification: Notification) -> T? {
-        guard let data = notification.userInfo?[Self.dataKey] else {
-            reportIssue("Expected object of type \(T.self) stored under key: \(Self.dataKey), got nil")
+        guard let data = notification.userInfo?[dataKey] else {
+            reportIssue("Expected object of type \(T.self) stored under key: \(dataKey), got nil")
             return nil
         }
         guard let data = data as? T else {

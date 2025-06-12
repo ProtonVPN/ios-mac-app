@@ -160,7 +160,7 @@ extension NetShieldType: PaidAppFeature {
             return .failure(.featureDisabled)
         }
 
-        if Self.level1.isUserTierTooLow(userTier) {
+        if level1.isUserTierTooLow(userTier) {
             return .failure(.requiresUpgrade)
         }
 

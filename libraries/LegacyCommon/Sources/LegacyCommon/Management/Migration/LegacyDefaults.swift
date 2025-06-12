@@ -28,13 +28,13 @@ public enum LegacyDefaultsMigration {
         }
 
         private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
-            if !specifiedDefaults.bool(forKey: Self.migrationKey) {
+            if !specifiedDefaults.bool(forKey: migrationKey) {
                 // Move any compatible data from old defaults to the new one
                 for (key, value) in standardDefaults.dictionaryRepresentation() {
                     specifiedDefaults.set(value, forKey: key)
                 }
 
-                specifiedDefaults.setValue(true, forKey: Self.migrationKey)
+                specifiedDefaults.setValue(true, forKey: migrationKey)
                 specifiedDefaults.synchronize()
             }
         }

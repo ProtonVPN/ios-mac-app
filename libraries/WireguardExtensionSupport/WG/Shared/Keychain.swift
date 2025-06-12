@@ -113,13 +113,13 @@ class Keychain {
     }
 
     static func saveWgConfig(_ data: Data) -> Bool {
-        if let oldData = Self.loadWgConfig() {
+        if let oldData = loadWgConfig() {
             if oldData == data {
                 wg_log(.debug, message: "New value is the same as the old (\(data.hashValue)). Will not write to keychain.")
                 return true
             } else {
                 wg_log(.debug, staticMessage: "Old value found in the keychain. Will delete it.")
-                Self.deleteWgConfig()
+                deleteWgConfig()
             }
         } else {
             wg_log(.debug, staticMessage: "No config in the keychain. Will write new.")
