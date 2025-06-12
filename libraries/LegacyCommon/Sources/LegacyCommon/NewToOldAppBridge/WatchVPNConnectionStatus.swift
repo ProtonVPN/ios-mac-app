@@ -120,9 +120,9 @@ extension ConnectionConfiguration {
 
         return VPNConnectionActual(
             connectedDate: connectedDate,
-            vpnProtocol: self.vpnProtocol,
-            natType: self.natType,
-            safeMode: self.safeMode,
+            vpnProtocol: vpnProtocol,
+            natType: natType,
+            safeMode: safeMode,
             server: serverWithOnlyActiveEndpoint
         )
     }

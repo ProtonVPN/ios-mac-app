@@ -37,7 +37,7 @@ class ExpandCellButton: HoverDetectionButton {
 
     private func configureButton() {
         wantsLayer = true
-        contentTintColor = self.color(.icon)
+        contentTintColor = color(.icon)
         DarkAppearance {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)

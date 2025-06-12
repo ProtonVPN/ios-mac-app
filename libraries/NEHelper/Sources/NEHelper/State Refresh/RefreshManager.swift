@@ -84,10 +84,10 @@ public class RefreshManager {
                 completion()
                 return
             }
-            log.debug("Timer for \(self) resumed. Next run planned in \(self.nextRunTime?.timeIntervalSinceNow ?? self.timerRefreshInterval) seconds", category: .connection)
+            log.debug("Timer for \(self) resumed. Next run planned in \(nextRunTime?.timeIntervalSinceNow ?? timerRefreshInterval) seconds", category: .connection)
 
-            self.state = .running
-            self.startTimer(firstRunAfter: self.nextRunTime?.timeIntervalSinceNow)
+            state = .running
+            startTimer(firstRunAfter: nextRunTime?.timeIntervalSinceNow)
             completion()
         }
     }
@@ -128,6 +128,6 @@ public class RefreshManager {
             dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        self.timer = nil
+        timer = nil
     }
 }

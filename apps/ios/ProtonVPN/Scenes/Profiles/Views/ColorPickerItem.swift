@@ -34,7 +34,7 @@ final class ColorPickerItem: UICollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            if self.isSelected {
+            if isSelected {
                 backgroundColor = .normalTextColor()
             } else {
                 backgroundColor = .clear

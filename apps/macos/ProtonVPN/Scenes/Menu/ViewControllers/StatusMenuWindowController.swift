@@ -87,7 +87,7 @@ final class StatusMenuWindowController: WindowController {
             }
         }
         
-        self.eventsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { [weak self] event in
+        eventsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { [weak self] event in
             switch event.type {
             case .leftMouseDown:
                 if event.isStatusItemClicked(event: event) == self?.statusItem {

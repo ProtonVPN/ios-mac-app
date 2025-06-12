@@ -57,10 +57,10 @@ final class OnboardingModuleService {
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
-        self.windowService = factory.makeWindowService()
-        self.planService = factory.makePlanService()
-        self.alertService = factory.makeCoreAlertService()
-        self.modalsFactory = ModalsFactory()
+        windowService = factory.makeWindowService()
+        planService = factory.makePlanService()
+        alertService = factory.makeCoreAlertService()
+        modalsFactory = ModalsFactory()
     }
 }
 
@@ -113,7 +113,7 @@ extension OnboardingModuleService: OnboardingService {
             )
         } catch {
             log.error("Encountered payments error: \(error)")
-            self.windowService.dismissModal {
+            windowService.dismissModal {
                 self.onboardingCoordinatorDidFinish()
             }
             return

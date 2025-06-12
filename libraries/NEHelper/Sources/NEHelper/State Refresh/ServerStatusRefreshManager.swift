@@ -72,7 +72,7 @@ public final class ServerStatusRefreshManager: RefreshManager {
 
                     if response.original.underMaintenance {
                         log.info("Server \(response.original.id) is in maintenance. Will reconnect to alternative server.", category: .connection)
-                        self.delegate?.reconnect(toAnyOf: response.alternatives)
+                        delegate?.reconnect(toAnyOf: response.alternatives)
                     } else if let server = response.original.servers.first(where: { $0.id == currentServerId }) {
                         guard server.underMaintenance else {
                             log.info("Server \(currentServerId) is still live. No reconnection needed.", category: .connection)
@@ -80,10 +80,10 @@ public final class ServerStatusRefreshManager: RefreshManager {
                         }
 
                         log.info("Server ID \(currentServerId) in logical \(currentLogicalId) is in maintenance. Will reconnect to logical.", category: .connection)
-                        self.delegate?.reconnect(toAnyOf: [response.original])
+                        delegate?.reconnect(toAnyOf: [response.original])
                     } else {
                         log.info("Server ID \(currentServerId) in logical \(currentLogicalId) has disappeared. Will reconnect to logical.", category: .connection)
-                        self.delegate?.reconnect(toAnyOf: [response.original])
+                        delegate?.reconnect(toAnyOf: [response.original])
                     }
                 case let .failure(error):
                     log.error("Couldn't refresh server state: \(error)", category: .connection)

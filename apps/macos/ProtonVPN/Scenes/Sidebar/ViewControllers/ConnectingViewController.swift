@@ -48,7 +48,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         
         self.viewModel.delegate = self
         
-        self.view.setAccessibilityModal(true)
+        view.setAccessibilityModal(true)
     }
     
     override func viewDidLoad() {
@@ -74,7 +74,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
                 return
             }
 
-            self.stopAnimatingFade()
+            stopAnimatingFade()
         })
     }
     

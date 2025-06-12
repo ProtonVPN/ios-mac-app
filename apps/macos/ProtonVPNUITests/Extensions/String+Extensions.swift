@@ -25,7 +25,7 @@ extension String {
 
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
-            let range = NSRange(location: 0, length: self.count)
+            let range = NSRange(location: 0, length: count)
 
             // Replace the matched pattern with an empty string
             let trimmedString = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "")

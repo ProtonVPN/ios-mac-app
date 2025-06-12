@@ -38,13 +38,13 @@ public struct Colors {
     let iconWeak: UIColor
 
     public init() {
-        self.background = .color(.background)
-        self.text = .color(.text)
-        self.brand = .color(.background, .interactive)
-        self.weakText = .color(.text, .weak)
-        self.separator = .color(.border)
-        self.secondaryBackground = .color(.background, .weak)
-        self.iconWeak = .color(.icon, .weak)
+        background = .color(.background)
+        text = .color(.text)
+        brand = .color(.background, .interactive)
+        weakText = .color(.text, .weak)
+        separator = .color(.border)
+        secondaryBackground = .color(.background, .weak)
+        iconWeak = .color(.icon, .weak)
     }
 }
 

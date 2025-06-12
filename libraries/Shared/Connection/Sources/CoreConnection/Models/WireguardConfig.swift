@@ -52,7 +52,7 @@ public struct WireguardConfig: Codable, Equatable {
         self.defaultUdpPorts = defaultUdpPorts.unwrappedOr(defaultValue: [51820])
         self.defaultTcpPorts = defaultTcpPorts.unwrappedOr(defaultValue: [443])
         self.defaultTlsPorts = defaultTlsPorts.unwrappedOr(defaultValue: [443])
-        self.dnsServers = dns
+        dnsServers = dns
     }
 
     public init() {

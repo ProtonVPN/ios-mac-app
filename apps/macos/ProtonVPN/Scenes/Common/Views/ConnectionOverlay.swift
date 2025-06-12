@@ -54,8 +54,8 @@ class ConnectionOverlay: NSView {
                 return
             }
             
-            self.blurReductionTimer = Timer.scheduledTimer(timeInterval: 1 / 60, target: self, selector: #selector(self.reduceBlur), userInfo: nil, repeats: true)
-            self.stopAnimatingTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(self.stopAnimating), userInfo: nil, repeats: false)
+            blurReductionTimer = Timer.scheduledTimer(timeInterval: 1 / 60, target: self, selector: #selector(reduceBlur), userInfo: nil, repeats: true)
+            stopAnimatingTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(stopAnimating), userInfo: nil, repeats: false)
         }
     }
     
@@ -114,8 +114,8 @@ class ConnectionOverlay: NSView {
                 return
             }
             
-            self.blurReductionCompletion?()
-            self.blurReductionCompletion = nil
+            blurReductionCompletion?()
+            blurReductionCompletion = nil
         }
     }
 }

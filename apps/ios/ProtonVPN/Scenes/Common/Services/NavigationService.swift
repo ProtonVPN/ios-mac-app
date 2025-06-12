@@ -195,10 +195,10 @@ final class NavigationService {
     }
 
     func switchTab(index: Int) {
-        guard index >= 0, index < self.tabBarController?.viewControllers?.count ?? 0 else {
+        guard index >= 0, index < tabBarController?.viewControllers?.count ?? 0 else {
             return
         }
-        self.tabBarController?.selectedIndex = index
+        tabBarController?.selectedIndex = index
     }
 
     private func presentMainInterface() {
@@ -454,7 +454,7 @@ extension NavigationService: SettingsService {
             userInfo: userInfo
         ) { [weak self] authCredential, userInfo in
             guard let self else { return }
-            self.processPasswordChange(authCredential: authCredential, userInfo: userInfo)
+            processPasswordChange(authCredential: authCredential, userInfo: userInfo)
         }
     }
 
@@ -466,9 +466,9 @@ extension NavigationService: SettingsService {
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {
         do {
             try authKeychain.store(AuthCredentials(.init(authCredential)))
-            self.propertiesManager.userInfo = userInfo
-            self.windowService.popStackToRoot()
-            self.windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
+            propertiesManager.userInfo = userInfo
+            windowService.popStackToRoot()
+            windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)
         } catch {
             log.error("Could not update stored credentials", category: .app)
             appSessionManager.logOut(force: true, reason: "Could not update stored credentials")
@@ -485,7 +485,7 @@ extension NavigationService: ProtocolService {
 extension NavigationService: ConnectionStatusService {
     func makeConnectionBarViewController() -> ConnectionBarViewController? {
         if let connectionBarViewController =
-            self.commonStoryboard.instantiateViewController(withIdentifier:
+            commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: ConnectionBarViewController.self)) as? ConnectionBarViewController {
             connectionBarViewController.viewModel = ConnectionBarViewModel(appStateManager: appStateManager)
             connectionBarViewController.connectionStatusService = self
@@ -497,7 +497,7 @@ extension NavigationService: ConnectionStatusService {
 
     func makeStatusViewController() -> StatusViewController? {
         if let statusViewController =
-            self.commonStoryboard.instantiateViewController(withIdentifier:
+            commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
             statusViewController.viewModel = StatusViewModel(factory: factory)
             return statusViewController
@@ -512,7 +512,7 @@ extension NavigationService: ConnectionStatusService {
             guard let viewController = makeStatusViewController() else {
                 return
             }
-            self.windowService.addToStack(viewController, checkForDuplicates: true)
+            windowService.addToStack(viewController, checkForDuplicates: true)
         }
     }    
 }
@@ -524,7 +524,7 @@ extension NavigationService {
         guard FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature) else { return }
 
         let viewController = makeAccountRecoveryViewController()
-        self.windowService.addToStack(viewController, checkForDuplicates: true)
+        windowService.addToStack(viewController, checkForDuplicates: true)
     }
 }
 

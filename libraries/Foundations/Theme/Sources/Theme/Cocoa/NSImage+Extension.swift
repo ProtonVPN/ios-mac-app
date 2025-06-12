@@ -52,10 +52,10 @@
             let destSize = NSSize(width: w, height: h)
             let newImage = NSImage(size: destSize)
             newImage.lockFocus()
-            self.draw(in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
-                      from: NSRect(x: 0, y: 0, width: self.size.width, height: self.size.height),
-                      operation: NSCompositingOperation.sourceOver,
-                      fraction: CGFloat(1))
+            draw(in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
+                 from: NSRect(x: 0, y: 0, width: size.width, height: size.height),
+                 operation: NSCompositingOperation.sourceOver,
+                 fraction: CGFloat(1))
             newImage.unlockFocus()
             newImage.size = destSize
             let newResized = NSImage(data: newImage.tiffRepresentation!)!
@@ -98,7 +98,7 @@
 
     public extension NSImage {
         var cgImage: CGImage? {
-            var rect = NSRect(origin: CGPoint(x: 0, y: 0), size: self.size)
+            var rect = NSRect(origin: CGPoint(x: 0, y: 0), size: size)
             return self.cgImage(forProposedRect: &rect, context: NSGraphicsContext.current, hints: nil)
         }
     }

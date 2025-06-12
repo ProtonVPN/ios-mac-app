@@ -105,11 +105,11 @@ struct AnnouncementBannerView: View {
         .task {
             @Dependency(\.imagePrefetcher) var imagePrefetcher
             if await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString) {
-                self.showBanner = true
+                showBanner = true
                 return
             }
             await imagePrefetcher.prefetchURLs([model.imageURL])
-            self.showBanner = await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString)
+            showBanner = await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString)
         }
     }
 }

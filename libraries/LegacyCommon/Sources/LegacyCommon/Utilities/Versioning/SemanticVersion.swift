@@ -63,8 +63,8 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     /// Important: not all comparison rules are imlemented. Only basis pre-release versions check is done.
     /// For the list of supported variants please check tests.
     public func compare(to other: SemanticVersion) -> ComparisonResult {
-        for i in 0 ..< self.versionComponents.count {
-            let thisVersion = self.versionComponents[i]
+        for i in 0 ..< versionComponents.count {
+            let thisVersion = versionComponents[i]
             let otherVersion = other.versionComponents[i]
             
             guard thisVersion != otherVersion else {
@@ -74,7 +74,7 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
             return thisVersion < otherVersion ? .orderedAscending : .orderedDescending
         }
         
-        let preReleaseOrder = self.comparePreRelease(to: other)
+        let preReleaseOrder = comparePreRelease(to: other)
         guard preReleaseOrder == .orderedSame else {
             return preReleaseOrder
         }
@@ -83,18 +83,18 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     }
     
     private func comparePreRelease(to other: SemanticVersion) -> ComparisonResult {
-        if self.releaseComponents.count > other.releaseComponents.count {
+        if releaseComponents.count > other.releaseComponents.count {
             return .orderedAscending
-        } else if self.releaseComponents.count < other.releaseComponents.count {
+        } else if releaseComponents.count < other.releaseComponents.count {
             return .orderedDescending
         }
         
-        guard self.releaseComponents.count > 1 else {
+        guard releaseComponents.count > 1 else {
             return .orderedSame
         }
         
-        for i in 1 ..< self.releaseComponents.count {
-            let thisPreRelease = self.releaseComponents[i]
+        for i in 1 ..< releaseComponents.count {
+            let thisPreRelease = releaseComponents[i]
             let otherPreRelease = other.releaseComponents[i]
             
             guard thisPreRelease != otherPreRelease else {

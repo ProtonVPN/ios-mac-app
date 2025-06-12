@@ -26,8 +26,8 @@ class WhiteHoverLinkButton: NSButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Setup tracking area
-        let trackingArea = NSTrackingArea(rect: self.bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
-        self.addTrackingArea(trackingArea)
+        let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
+        addTrackingArea(trackingArea)
     }
 
     override func mouseEntered(with event: NSEvent) {

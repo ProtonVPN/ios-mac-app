@@ -87,7 +87,7 @@ final class ProfilesViewController: UIViewController {
     }
     
     private func renderEditButton() {
-        navigationItem.leftBarButtonItem = self.tableView(tableView, numberOfRowsInSection: 2) > 0 ? self.editButtonItem : nil
+        navigationItem.leftBarButtonItem = tableView(tableView, numberOfRowsInSection: 2) > 0 ? editButtonItem : nil
     }
     
     private func setupConnectionBar() {
@@ -129,7 +129,7 @@ final class ProfilesViewController: UIViewController {
         }
         if let vc = viewModel?.makeCreateProfileViewController() as? CreateProfileViewController {
             vc.profilesViewControllerDelegate = self
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
@@ -176,7 +176,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == 1 { // custom profiles
             if let vc = viewModel?.makeEditProfileViewController(for: indexPath.row) as? CreateProfileViewController {
                 vc.profilesViewControllerDelegate = self
-                self.navigationController?.pushViewController(vc, animated: true)
+                navigationController?.pushViewController(vc, animated: true)
             }
         }
     }
@@ -196,7 +196,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
             }
 
             tableView.beginUpdates()
-            self.viewModel?.deleteProfile(for: indexPath.row)
+            viewModel?.deleteProfile(for: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
 
@@ -218,10 +218,10 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     private func renderEditing(_ editing: Bool) {
         if editing, !tableView.isEditing {
             tableView.setEditing(true, animated: true)
-            self.editButtonItem.title = Localizable.done
+            editButtonItem.title = Localizable.done
         } else {
             tableView.setEditing(false, animated: true)
-            self.editButtonItem.title = Localizable.edit
+            editButtonItem.title = Localizable.edit
             renderEditButton()
         }
     }

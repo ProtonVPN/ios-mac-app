@@ -95,23 +95,23 @@ public struct ConnectionRequest: Identifiable {
     }
 
     public func withChanged(serverType: ServerType) -> ConnectionRequest {
-        ConnectionRequest(serverType: serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(natType: NATType) -> ConnectionRequest {
-        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(safeMode: Bool) -> ConnectionRequest {
-        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     private enum Keys: CodingKey {

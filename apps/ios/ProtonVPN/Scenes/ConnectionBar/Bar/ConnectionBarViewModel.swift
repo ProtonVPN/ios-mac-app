@@ -43,8 +43,8 @@ final class ConnectionBarViewModel {
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState(_:)))
         AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(updateDisplayState(_:)))
 
-        self.updateDisplayState(with: appStateManager.displayState)
-        self.updateState(with: appStateManager.state)
+        updateDisplayState(with: appStateManager.displayState)
+        updateState(with: appStateManager.state)
     }
 
     /// Should only be called from the UI thread, since it accesses the `appStateManager` directly and
@@ -68,7 +68,7 @@ final class ConnectionBarViewModel {
                 return
             }
 
-            self.onAppDisplayStateChanged?(displayState)
+            onAppDisplayStateChanged?(displayState)
         }
     }
 
@@ -94,18 +94,18 @@ final class ConnectionBarViewModel {
 
         switch state {
         case .connected:
-            if !self.timer.isValid {
-                self.runTimer()
+            if !timer.isValid {
+                runTimer()
             }
         case .preparingConnection, .connecting:
-            self.timer.invalidate()
+            timer.invalidate()
         default:
-            self.timer.invalidate()
+            timer.invalidate()
         }
     }
 
     private func runTimer() {
-        timer = Timer(fireAt: Date(), interval: 1, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
+        timer = Timer(fireAt: Date(), interval: 1, target: self, selector: #selector(timerFired), userInfo: nil, repeats: true)
         RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
     }
 

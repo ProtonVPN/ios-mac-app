@@ -77,7 +77,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         awaitExpectations()
 
         XCTAssertEqual(manager?.protocolConfiguration?.serverAddress,
-                       self.testData.server4.ips.first?.protocolEntries?[.wireGuard(.tls)]??.ipv4)
+                       testData.server4.ips.first?.protocolEntries?[.wireGuard(.tls)]??.ipv4)
     }
 
     func testConnectingWithIpAndPortOverride() {

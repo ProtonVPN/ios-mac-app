@@ -284,7 +284,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func netShieldStatsChanged(to stats: NetShieldModel) {
-        self.delegate?.netShieldStatsChanged(to: stats)
+        delegate?.netShieldStatsChanged(to: stats)
         NotificationCenter.default.post(NetShieldStatsNotification(data: stats), object: self)
     }
 }

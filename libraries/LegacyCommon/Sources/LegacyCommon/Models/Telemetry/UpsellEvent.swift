@@ -69,15 +69,15 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
 
         public func encode(to encoder: Encoder) throws {
             var container: KeyedEncodingContainer<UpsellEvent.Dimensions.CodingKeys> = encoder.container(keyedBy: UpsellEvent.Dimensions.CodingKeys.self)
-            try container.encode(self.modalSource, forKey: .modalSource)
-            try container.encode(self.userPlan, forKey: .userPlan)
-            try container.encode(self.vpnStatus, forKey: .vpnStatus)
-            try container.encode(self.userCountry, forKey: .userCountry)
-            try container.encodeIfPresent(self.upgradedUserPlan, forKey: .upgradedUserPlan)
-            try container.encodeIfPresent(self.reference, forKey: .reference)
+            try container.encode(modalSource, forKey: .modalSource)
+            try container.encode(userPlan, forKey: .userPlan)
+            try container.encode(vpnStatus, forKey: .vpnStatus)
+            try container.encode(userCountry, forKey: .userCountry)
+            try container.encodeIfPresent(upgradedUserPlan, forKey: .upgradedUserPlan)
+            try container.encodeIfPresent(reference, forKey: .reference)
 
             // Custom encoded values:
-            try container.encode(self.daysSinceAccountCreationEncodedValue, forKey: .daysSinceAccountCreation)
+            try container.encode(daysSinceAccountCreationEncodedValue, forKey: .daysSinceAccountCreation)
         }
     }
 

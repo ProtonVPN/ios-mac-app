@@ -60,19 +60,19 @@ class NetworkStatistics {
     @objc private func updateBitrate() {
         guard let updateWithBitrate else { return }
         
-        let latestTraffic = self.getTrafficStatistics()
+        let latestTraffic = getTrafficStatistics()
         
         // usage can overflow
-        let bitrate = Bitrate(download: UInt32(TimeInterval(latestTraffic.downloadCount >= self.traffic.downloadCount
-                ? latestTraffic.downloadCount - self.traffic.downloadCount
+        let bitrate = Bitrate(download: UInt32(TimeInterval(latestTraffic.downloadCount >= traffic.downloadCount
+                ? latestTraffic.downloadCount - traffic.downloadCount
                 : latestTraffic.downloadCount)
             / timeInterval),
-        upload: UInt32(TimeInterval(latestTraffic.uploadCount >= self.traffic.uploadCount
-                ? latestTraffic.uploadCount - self.traffic.uploadCount
+        upload: UInt32(TimeInterval(latestTraffic.uploadCount >= traffic.uploadCount
+                ? latestTraffic.uploadCount - traffic.uploadCount
                 : latestTraffic.uploadCount)
             / timeInterval))
         
-        self.traffic = latestTraffic
+        traffic = latestTraffic
         
         updateWithBitrate(bitrate)
     }

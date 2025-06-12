@@ -28,7 +28,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     private var connectedIpId: String?
 
     var tunnelProviderProtocol: NETunnelProviderProtocol? {
-        self.protocolConfiguration as? NETunnelProviderProtocol
+        protocolConfiguration as? NETunnelProviderProtocol
     }
 
     public var transport: WireGuardTransport? {
@@ -47,30 +47,30 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
     override public init() {
         AppContext.default = .wireGuardExtension
-        self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
-        self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
+        vpnAuthenticationStorage = VpnAuthenticationKeychain()
+        appInfo = AppInfoImplementation(context: .wireGuardExtension)
 
-        self.timerFactory = TimerFactoryImplementation()
+        timerFactory = TimerFactoryImplementation()
 
         let keychainHandle = AuthKeychain.default
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
             keychain: keychainHandle,
-            appInfo: self.appInfo,
+            appInfo: appInfo,
             atlasSecret: Self.atlasSecret
         )
 
-        self.certificateRefreshManager = ExtensionCertificateRefreshManager(
+        certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory,
-            vpnAuthenticationStorage: self.vpnAuthenticationStorage,
+            vpnAuthenticationStorage: vpnAuthenticationStorage,
             keychain: keychainHandle
         )
 
         super.init()
 
-        self.dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
+        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
         apiService.delegate = self
         setupLogging()
     }
@@ -362,7 +362,7 @@ private extension WireGuardPacketTunnelProvider {
                 completionHandler?(.ok(data: nil))
             }
         case .getCurrentLogicalAndServerId:
-            let response = "\(self.connectedLogicalId ?? "");\(self.connectedIpId ?? "")"
+            let response = "\(connectedLogicalId ?? "");\(connectedIpId ?? "")"
             wg_log(.info, message: "Result: \(response))")
             completionHandler?(.ok(data: response.data(using: .utf8)))
         }

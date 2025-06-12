@@ -139,7 +139,7 @@ public enum AppEvent: String {
 
     private static let notificationSuffix: String = "VPNAppNotification"
     public var name: Notification.Name {
-        .init(self.rawValue + Self.notificationSuffix) // Make sure we de-unique from other common names
+        .init(rawValue + Self.notificationSuffix) // Make sure we de-unique from other common names
     }
 
     public var publisher: NotificationCenter.Publisher {

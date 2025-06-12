@@ -53,11 +53,11 @@ public final class ThrowingStubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6
 
     private lazy var implementation: (UInt, Input) throws -> Output = { [unowned self] _, input in
         guard let initialReturn else {
-            XCTFail("initial return was not provided: \(self.description)")
+            XCTFail("initial return was not provided: \(description)")
             fatalError()
         }
-        if self.failOnBeingCalledUnexpectedly {
-            XCTFail("this method should not be called but was: \(self.description)")
+        if failOnBeingCalledUnexpectedly {
+            XCTFail("this method should not be called but was: \(description)")
             return try initialReturn.closure(input)
         }
         return try initialReturn.closure(input)
@@ -132,18 +132,18 @@ public struct CapturedArguments<Input, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, 
     private let argument12: A12
 
     private init(a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7, a8: A8, a9: A9, a10: A10, a11: A11, a12: A12) {
-        self.argument1 = a1
-        self.argument2 = a2
-        self.argument3 = a3
-        self.argument4 = a4
-        self.argument5 = a5
-        self.argument6 = a6
-        self.argument7 = a7
-        self.argument8 = a8
-        self.argument9 = a9
-        self.argument10 = a10
-        self.argument11 = a11
-        self.argument12 = a12
+        argument1 = a1
+        argument2 = a2
+        argument3 = a3
+        argument4 = a4
+        argument5 = a5
+        argument6 = a6
+        argument7 = a7
+        argument8 = a8
+        argument9 = a9
+        argument10 = a10
+        argument11 = a11
+        argument12 = a12
     }
 }
 
@@ -954,11 +954,11 @@ public final class StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8
 
     private lazy var implementation: (UInt, Input) -> Output = { [unowned self] _, input in
         guard let initialReturn else {
-            XCTFail("initial return was not provided: \(self.description)")
+            XCTFail("initial return was not provided: \(description)")
             fatalError()
         }
-        if self.failOnBeingCalledUnexpectedly {
-            XCTFail("this method should not be called but was: \(self.description)")
+        if failOnBeingCalledUnexpectedly {
+            XCTFail("this method should not be called but was: \(description)")
             return try! initialReturn.closure(input)
         }
         return try! initialReturn.closure(input)
@@ -1546,7 +1546,7 @@ public final class Atomic<A> {
     private let serialAccessQueue = DispatchQueue(label: "ch.proton.atomic_queue")
     private var internalValue: A
     public init(_ value: A) {
-        self.internalValue = value
+        internalValue = value
     }
 
     public var value: A { serialAccessQueue.sync { self.internalValue } }

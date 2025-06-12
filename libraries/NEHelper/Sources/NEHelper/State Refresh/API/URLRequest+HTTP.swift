@@ -48,7 +48,7 @@ extension URLRequest {
         }
 
         try addToRequest("\(method) \(path) HTTP/1.0\r\n")
-        if let url = self.url, let host = url.host {
+        if let url, let host = url.host {
             try addToRequest("Host: \(host)\r\n")
         }
 

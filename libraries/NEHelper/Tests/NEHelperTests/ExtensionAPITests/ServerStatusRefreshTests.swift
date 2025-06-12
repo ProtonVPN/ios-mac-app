@@ -31,9 +31,9 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        self.manager = ServerStatusRefreshManager(apiService: apiService,
-                                                  timerFactory: timerFactory)
-        self.manager.delegate = self
+        manager = ServerStatusRefreshManager(apiService: apiService,
+                                             timerFactory: timerFactory)
+        manager.delegate = self
     }
 
     func testServerStatusNotUnderMaintenance() {

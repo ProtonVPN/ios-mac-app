@@ -87,7 +87,7 @@
                                 protectionState.shortDescription(),
                                 vpnConnectionStatus.shortDescription()].joined(separator: "-")
 
-                self.assertSnapshot(of: appView, as: .image, testName: testName)
+                assertSnapshot(of: appView, as: .image, testName: testName)
             }
         }
 

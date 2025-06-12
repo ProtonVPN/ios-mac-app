@@ -58,8 +58,8 @@ extension NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(self)
         for str in strings {
-            guard let range = self.string.range(of: str) else { continue }
-            let nsRange = NSRange(range, in: self.string)
+            guard let range = string.range(of: str) else { continue }
+            let nsRange = NSRange(range, in: string)
             mutableAttributedString.addAttributes(attrs, range: nsRange)
         }
         return mutableAttributedString

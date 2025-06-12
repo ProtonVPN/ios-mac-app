@@ -50,7 +50,7 @@ struct ConnectionConfiguration {
     }
 
     init(server: ServerEndpoint, features: VPNConnectionFeatures) {
-        self.hostname = server.domain
+        hostname = server.domain
         self.features = features.copyWithChanged(bouncing: server.label)
     }
 }

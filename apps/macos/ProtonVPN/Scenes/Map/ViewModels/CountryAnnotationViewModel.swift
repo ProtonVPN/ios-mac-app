@@ -77,20 +77,20 @@ class CountryAnnotationViewModel: CustomStyleContext {
     }
 
     var attributedConnect: NSAttributedString {
-        self.style(Localizable.connect, font: .themeFont(bold: true))
+        style(Localizable.connect, font: .themeFont(bold: true))
     }
 
     var attributedUpgrade: NSAttributedString {
-        self.style(Localizable.upgrade, font: .themeFont(bold: true))
+        style(Localizable.upgrade, font: .themeFont(bold: true))
     }
 
     var attributedDisconnect: NSAttributedString {
-        self.style(Localizable.disconnect, font: .themeFont(bold: true))
+        style(Localizable.disconnect, font: .themeFont(bold: true))
     }
     
     var attributedCountry: NSAttributedString {
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
-        return self.style(countryName, font: .themeFont(bold: true))
+        return style(countryName, font: .themeFont(bold: true))
     }
     
     var buttonWidth: CGFloat {
@@ -112,9 +112,9 @@ class CountryAnnotationViewModel: CustomStyleContext {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
         if userTier.isFreeTier {
-            self.available = false
+            available = false
         } else {
-            self.available = minTier <= userTier
+            available = minTier <= userTier
         }
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
@@ -122,7 +122,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
     init(appStateManager: AppStateManager, countryCode: String, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
-        self.available = true
+        available = true
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
     
@@ -296,7 +296,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
         self.exitCountryCodes = exitCountryCodes
-        self.country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+        country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         super.init(appStateManager: appStateManager, countryCode: countryCode, coordinate: coordinate)
     }
     

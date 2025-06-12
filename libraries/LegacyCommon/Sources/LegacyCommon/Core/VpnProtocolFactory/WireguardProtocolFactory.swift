@@ -83,7 +83,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         if requirement == .status, let vpnManager {
             completion(vpnManager, nil)
         } else {
-            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
+            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: bundleId) { manager, error in
                 if let manager {
                     self.vpnManager = manager
                 }
@@ -96,7 +96,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         if requirement == .status, let vpnManager {
             return vpnManager
         } else {
-            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId)
+            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: bundleId)
             self.vpnManager = vpnManager
             return vpnManager
         }

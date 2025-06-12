@@ -65,7 +65,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     private func setNonTransientState(state: AppState) {
         switch state {
         case .connected, .disconnected, .aborted, .error:
-            self.nonTransientState = state
+            nonTransientState = state
         default:
             break
         }

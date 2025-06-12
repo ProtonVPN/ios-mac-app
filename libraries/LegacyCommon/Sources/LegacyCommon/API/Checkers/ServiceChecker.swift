@@ -72,9 +72,9 @@ class ServiceChecker {
                 return
             }
 
-            if !self.p2pShown {
-                self.p2pBlocked()
-                self.trafficForwarded()
+            if !p2pShown {
+                p2pBlocked()
+                trafficForwarded()
             }
         }
     }
@@ -133,6 +133,6 @@ class ServiceChecker {
         }
 
         alertService.push(alert: P2pForwardedAlert())
-        self.p2pShown = true
+        p2pShown = true
     }
 }

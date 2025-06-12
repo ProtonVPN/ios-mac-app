@@ -181,7 +181,7 @@ extension VPNServerFilter.ServerTierFilter: CustomStringConvertible {
 
 extension VPNServerFilter.ServerFeatureFilter: CustomStringConvertible {
     public var description: String {
-        "|requires:[\(self.required)],excludes:[\(self.excluded)]"
+        "|requires:[\(required)],excludes:[\(excluded)]"
     }
 }
 

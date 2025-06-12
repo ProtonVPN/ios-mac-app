@@ -83,12 +83,12 @@ class IosUiAlertService: UIAlertService {
             }))
         }
         
-        alertController.dismissCompletion = self.dismissCompletion(alert)
+        alertController.dismissCompletion = dismissCompletion(alert)
         alert.dismiss = {
             alertController.dismiss(animated: true, completion: nil)
         }
         
-        self.windowService.present(modal: alertController)
+        windowService.present(modal: alertController)
     }
 }
 

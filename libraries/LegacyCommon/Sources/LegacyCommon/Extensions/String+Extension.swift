@@ -23,7 +23,7 @@ import Foundation
 
 public extension String {
     func contains(_ string: String) -> Bool {
-        self.range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
+        range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
     }
     
     func matches(for regex: String) -> [String] {
@@ -43,14 +43,14 @@ public extension String {
     }
     
     func preg_replace_none_regex(_ partten: String, replaceto: String) -> String {
-        self.replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
+        replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
     }
     
     func preg_replace(_ partten: String, replaceto: String) -> String {
         let options: NSRegularExpression.Options = [.caseInsensitive, .dotMatchesLineSeparators]
         do {
             let regex = try NSRegularExpression(pattern: partten, options: options)
-            let replacedString = regex.stringByReplacingMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: self.count), withTemplate: replaceto)
+            let replacedString = regex.stringByReplacingMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: count), withTemplate: replaceto)
             if !replacedString.isEmpty {
                 return replacedString
             }
@@ -76,7 +76,7 @@ public extension String {
     }
     
     func encodeBase64() -> String {
-        let utf8str = self.data(using: String.Encoding.utf8)
+        let utf8str = data(using: String.Encoding.utf8)
         let base64Encoded = utf8str!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         return base64Encoded
     }

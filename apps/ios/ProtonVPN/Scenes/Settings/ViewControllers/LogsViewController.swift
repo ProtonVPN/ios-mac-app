@@ -72,7 +72,7 @@ class LogsViewController: UIViewController {
 
     @objc private func share(_ item: UIBarButtonItem) {
         let file = FileManager.default.temporaryDirectory.appendingPathComponent("\(viewModel.title).log")
-        guard (try? self.textView.text.write(to: file, atomically: true, encoding: .utf8)) != nil else {
+        guard (try? textView.text.write(to: file, atomically: true, encoding: .utf8)) != nil else {
             return
         }
         fileToDelete = file // Save file so it can be deleted before closing this VC.

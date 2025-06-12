@@ -43,34 +43,34 @@ extension ConnectionDetailsMessage {
     /// just log instead of throwing, as otherwise we may not show
     init(details: LocalAgentConnectionDetails) throws {
         if !details.serverIpv4.isEmpty, let ipv4 = IPv4Address(details.serverIpv4) {
-            self.exitIp = ipv4
+            exitIp = ipv4
         } else if !details.serverIpv6.isEmpty, let ipv6 = IPv6Address(details.serverIpv6) {
-            self.exitIp = ipv6
+            exitIp = ipv6
         } else {
             throw LocalAgentMessageDecodingError.missingRequiredValue(key: "exitIP")
         }
 
         if !details.deviceCountry.isEmpty {
-            self.deviceCountry = details.deviceCountry
+            deviceCountry = details.deviceCountry
         } else {
             log.debug("deviceCountry field is missing from LocalAgentConnectionDetails", category: .localAgent)
-            self.deviceCountry = nil
+            deviceCountry = nil
         }
 
         guard !details.deviceIp.isEmpty else {
             log.debug("deviceIP field is missing from LocalAgentConnectionDetails", category: .localAgent)
-            self.deviceIp = nil
+            deviceIp = nil
             return
         }
 
         if let ipv4 = IPv4Address(details.deviceIp) {
-            self.deviceIp = ipv4
+            deviceIp = ipv4
         } else if let ipv6 = IPv6Address(details.deviceIp) {
-            self.deviceIp = ipv6
+            deviceIp = ipv6
         } else {
             // We may end up logging this error. But since deviceIP is not a valid IP, it should be ok to log.
             log.debug("Failed to decode device IP in LocalAgentConnectionDetails", category: .localAgent, metadata: ["value": "\(details.deviceIp)"])
-            self.deviceIp = nil
+            deviceIp = nil
         }
     }
 }

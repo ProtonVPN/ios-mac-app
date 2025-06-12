@@ -111,10 +111,10 @@ private extension VPNConnectionFeatures {
 
     func withNetShieldLevel(_ level: NetShieldType) -> Self {
         VPNConnectionFeatures(netshield: level,
-                              vpnAccelerator: self.vpnAccelerator,
-                              bouncing: self.bouncing,
-                              natType: self.natType,
-                              safeMode: self.safeMode)
+                              vpnAccelerator: vpnAccelerator,
+                              bouncing: bouncing,
+                              natType: natType,
+                              safeMode: safeMode)
     }
 }
 

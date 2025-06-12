@@ -88,7 +88,7 @@ public struct ServerRepository: DependencyKey {
 /// Public interface with labels
 extension ServerRepository {
     public var isEmpty: Bool {
-        self.serverCount() == 0
+        serverCount() == 0
     }
 
     public func upsert(servers: [VPNServer]) -> Void {

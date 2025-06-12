@@ -58,7 +58,7 @@ class AppConstants {
 
 extension String {
     var asMainAppBundleIdentifier: String {
-        var result = self.replacingOccurrences(of: ".widget", with: "")
+        var result = replacingOccurrences(of: ".widget", with: "")
         result = result.replacingOccurrences(of: ".Siri-Shortcut-Handler", with: "")
         result = result.replacingOccurrences(of: ".OpenVPN-Extension", with: "")
         result = result.replacingOccurrences(of: ".WireGuardiOS-Extension", with: "")

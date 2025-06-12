@@ -132,7 +132,7 @@ struct ConnectionDetailsView: View {
         init(title: String, contentType: ContentType, accessory: Accessory = .none) {
             self.title = title
             self.accessory = accessory
-            self.content = contentType
+            content = contentType
         }
 
         var body: some View {
@@ -146,14 +146,14 @@ struct ConnectionDetailsView: View {
         private var rowView: some View {
             if standardTypeSize {
                 HStack(alignment: .top) {
-                    self.titleView
+                    titleView
                     Spacer()
-                    self.valueView
+                    valueView
                 }
             } else {
                 VStack(alignment: .leading) {
-                    self.titleView
-                    self.valueView
+                    titleView
+                    valueView
                 }
             }
         }

@@ -93,8 +93,8 @@ final class ConnectionSettingsViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        self.sysexPending = true
-        self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
+        sysexPending = true
+        selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
         selectedProtocol = propertiesManager.connectionProtocol
 
         let settingsChangedEvents: [AppEvent] = [
@@ -268,7 +268,7 @@ final class ConnectionSettingsViewModel {
         sysexPending = true
         switch connectionProtocol {
         case .smartProtocol:
-            self.confirmEnableSmartProtocol(completion)
+            confirmEnableSmartProtocol(completion)
         case let .vpnProtocol(transportProtocol):
             let changeCompletionHandler: (Result<(), Error>) -> Void = { [weak self] result in
                 self?.sysexPending = false
@@ -280,7 +280,7 @@ final class ConnectionSettingsViewModel {
             }
 
             guard transportProtocol == .ike else {
-                self.vpnProtocolChangeManager.change(
+                vpnProtocolChangeManager.change(
                     toProtocol: transportProtocol,
                     userInitiated: true,
                     completion: changeCompletionHandler
@@ -289,18 +289,18 @@ final class ConnectionSettingsViewModel {
             }
 
             // Show IKEv2 deprecation warning
-            self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+            alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
                 guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
-                self.confirmEnableSmartProtocol(completion)
+                confirmEnableSmartProtocol(completion)
             }, continueHandler: { [weak self] in
                 guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")
-                self.vpnProtocolChangeManager.change(
+                vpnProtocolChangeManager.change(
                     toProtocol: transportProtocol,
                     userInitiated: true,
                     completion: changeCompletionHandler
@@ -389,12 +389,12 @@ final class ConnectionSettingsViewModel {
     }
 
     private func checkSysexOrResetProtocol(_ protocol: ConnectionProtocol) {
-        self.sysexPending = true
+        sysexPending = true
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }
-            self.sysexPending = false
+            sysexPending = false
             if case let .failure(error) = result {
-                self.selectedProtocol = .vpnProtocol(.ike)
+                selectedProtocol = .vpnProtocol(.ike)
             }
         }
     }
@@ -441,12 +441,12 @@ final class ConnectionSettingsViewModel {
                 completion(false)
             }
 
-            self.alertService.push(alert: alert)
+            alertService.push(alert: alert)
             return
         }
 
         guard isConnected else {
-            self.featurePropertyProvider.setValue(newValue)
+            featurePropertyProvider.setValue(newValue)
             completion(true)
             return
         }

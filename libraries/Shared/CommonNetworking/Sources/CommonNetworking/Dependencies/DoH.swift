@@ -132,7 +132,7 @@ public class DoHVPN: DoH, ServerConfig {
         isConnected: Bool,
         isAppStateNotificationConnected: @escaping (Notification) -> Bool
     ) {
-        self.customApiHost = apiHost
+        customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
         self.atlasSecret = atlasSecret

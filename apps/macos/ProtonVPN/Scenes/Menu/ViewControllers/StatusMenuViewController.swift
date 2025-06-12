@@ -113,12 +113,12 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                     return
                 }
 
-                guard let window = self.view.window, let profilesWindow = self.profilesWindowController?.window else {
+                guard let window = view.window, let profilesWindow = profilesWindowController?.window else {
                     return
                 }
                 
                 if let contains = window.childWindows?.contains(profilesWindow), contains {
-                    self.hideProfilesList()
+                    hideProfilesList()
                 }
             }
         }
@@ -235,7 +235,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                 upgradeView.isHidden = true
             }
 
-            self.setupHeaderButtons()
+            setupHeaderButtons()
         } else {
             dynamicContentView.isHidden = true
             loadingViewContainer.isHidden = true
@@ -252,25 +252,25 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                 return
             }
             
-            self.connectionLabel.attributedStringValue = self.viewModel.connectionLabel
-            self.ipLabel.attributedStringValue = self.viewModel.ipAddress
+            connectionLabel.attributedStringValue = viewModel.connectionLabel
+            ipLabel.attributedStringValue = viewModel.ipAddress
 
-            self.updateViewLayout()
+            updateViewLayout()
             setupHeaderButtons(with: .from(state: viewModel.canChangeServer))
 
-            self.secureCoreSwitch.setState(self.viewModel.serverType == .secureCore ? .on : .off)
+            secureCoreSwitch.setState(viewModel.serverType == .secureCore ? .on : .off)
             
-            self.countryCollection.reloadData()
+            countryCollection.reloadData()
         }
     }
 
     private func setupHeaderButtons(with state: ServerChangeViewState? = nil) {
-        profileDropDown.isHidden = !self.viewModel.shouldShowProfileDropdown
-        changeServerView.isHidden = !self.viewModel.shouldShowChangeServer
+        profileDropDown.isHidden = !viewModel.shouldShowProfileDropdown
+        changeServerView.isHidden = !viewModel.shouldShowChangeServer
 
-        self.connectButton.isConnected = self.viewModel.isConnected
-        self.profileDropDown.isConnected = self.viewModel.isConnected
-        self.changeServerView.state = .from(state: viewModel.canChangeServer)
+        connectButton.isConnected = viewModel.isConnected
+        profileDropDown.isConnected = viewModel.isConnected
+        changeServerView.state = .from(state: viewModel.canChangeServer)
     }
     
     @objc private func countriesScrolled() {
@@ -304,7 +304,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     @IBAction func toggleProfilesList(_ sender: Any) {
         if profilesWindowController == nil {
-            self.profilesWindowController = StatusMenuProfilesListController(windowNibName: NSNib.Name("StatusMenuProfilesList"), viewModel: viewModel.profileListViewModel)
+            profilesWindowController = StatusMenuProfilesListController(windowNibName: NSNib.Name("StatusMenuProfilesList"), viewModel: viewModel.profileListViewModel)
         }
         
         guard let window = view.window, let profilesWindow = profilesWindowController?.window else { return }

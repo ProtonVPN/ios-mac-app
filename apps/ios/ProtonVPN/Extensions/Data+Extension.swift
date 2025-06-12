@@ -24,15 +24,15 @@ import Foundation
 
 extension Data {
     func stringFromToken() -> String {
-        let tokenChars = (self as NSData).bytes.bindMemory(to: CChar.self, capacity: self.count)
+        let tokenChars = (self as NSData).bytes.bindMemory(to: CChar.self, capacity: count)
         var tokenString = ""
-        for i in 0 ..< self.count {
+        for i in 0 ..< count {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         return tokenString
     }
 
     func encodeBase64() -> String {
-        self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }
 }

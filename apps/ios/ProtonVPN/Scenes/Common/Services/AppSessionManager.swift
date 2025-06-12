@@ -165,7 +165,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func loadDataWithoutFetching() -> Bool {
-        if isServerRepositoryEmpty || self.propertiesManager.userLocation?.ip == nil {
+        if isServerRepositoryEmpty || propertiesManager.userLocation?.ip == nil {
             return false
         }
 
@@ -181,7 +181,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func canPreviewApp() -> Bool {
-        !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
+        !isServerRepositoryEmpty && propertiesManager.userLocation?.ip != nil
     }
 
     func loadDataWithoutLogin() async throws {
@@ -213,7 +213,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = shouldRefreshServers && properties.vpnCredentials.maxTier.isFreeTier
             assert(isFreeTierRequest == isFreeTier)
-            self.serverManager.update(
+            serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
@@ -292,7 +292,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
                 let isFreeTierRequest = shouldRefreshServersAccordingToTier && credentials.maxTier.isFreeTier
                 assert(isFreeTierRequest == isFreeTier)
-                self.serverManager.update(
+                serverManager.update(
                     servers: servers.map { VPNServer(legacyModel: $0) },
                     freeServersOnly: isFreeTierRequest,
                     lastModifiedAt: lastModified
@@ -391,8 +391,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         refreshUserInfoTask = Task { [weak self] in
             guard let self else { return }
             do {
-                let user = try await self.vpnApiService.userInfo()
-                self.propertiesManager.userAccountRecovery = user.accountRecovery
+                let user = try await vpnApiService.userInfo()
+                propertiesManager.userAccountRecovery = user.accountRecovery
                 await MainActor.run {
                     AppEvent.sessionManagerDataReloaded.post()
                 }
@@ -439,8 +439,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     }
                 }
                 return
-            } else if self.appStateManager.state.isConnected {
-                self.appStateManager.disconnect { logOutRoutine() }
+            } else if appStateManager.state.isConnected {
+                appStateManager.disconnect { logOutRoutine() }
                 return
             }
 

@@ -23,14 +23,14 @@ import Foundation
 
     public extension NSTextField {
         func style(placeholder: String? = nil, font: NSFont = .themeFont(), alignment: NSTextAlignment = .left) {
-            self.textColor = self.color(.text)
-            self.backgroundColor = self.color(.background)
+            textColor = color(.text)
+            backgroundColor = color(.background)
 
             self.font = font
             self.alignment = alignment
 
             if let placeholder {
-                self.placeholderAttributedString = placeholder.styled(.hint, font: font, alignment: alignment)
+                placeholderAttributedString = placeholder.styled(.hint, font: font, alignment: alignment)
             }
         }
     }

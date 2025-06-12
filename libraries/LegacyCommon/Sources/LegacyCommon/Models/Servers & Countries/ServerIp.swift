@@ -67,14 +67,14 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
 
     public init(dic: JSONDictionary) throws {
-        self.id = try dic.stringOrThrow(key: "ID")
-        self.exitIp = try dic.stringOrThrow(key: "ExitIP")
-        self.domain = try dic.stringOrThrow(key: "Domain")
-        self.status = try dic.intOrThrow(key: "Status")
-        self.entryIp = dic.string("EntryIP")
-        self.label = dic.string("Label")
-        self.x25519PublicKey = dic["X25519PublicKey"] as? String
-        self.protocolEntries = PerProtocolEntries(dic: dic)
+        id = try dic.stringOrThrow(key: "ID")
+        exitIp = try dic.stringOrThrow(key: "ExitIP")
+        domain = try dic.stringOrThrow(key: "Domain")
+        status = try dic.intOrThrow(key: "Status")
+        entryIp = dic.string("EntryIP")
+        label = dic.string("Label")
+        x25519PublicKey = dic["X25519PublicKey"] as? String
+        protocolEntries = PerProtocolEntries(dic: dic)
         super.init()
     }
 

@@ -476,8 +476,8 @@ class StatusViewModel {
 
     @MainActor
     private func updateConnectionDate() async {
-        self.connectedDate = await (appStateManager.connectedDate()) ?? Date()
-        self.updateTimeCell()
+        connectedDate = await (appStateManager.connectedDate()) ?? Date()
+        updateTimeCell()
     }
 
     // MARK: - NetShield
@@ -536,14 +536,14 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
 
         cells.append(.attributedKeyValue(key: Localizable.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: Localizable.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-            guard let self, self.userIsEligibleForNetshield else { return }
-            self.alertService.push(alert: NetShieldUpsellAlert())
+            guard let self, userIsEligibleForNetshield else { return }
+            alertService.push(alert: NetShieldUpsellAlert())
         }))
 
         for type in [NetShieldType.level1, NetShieldType.level2] {
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
-                guard let self, self.userIsEligibleForNetshield else { return }
-                self.alertService.push(alert: NetShieldUpsellAlert())
+                guard let self, userIsEligibleForNetshield else { return }
+                alertService.push(alert: NetShieldUpsellAlert())
             }))
         }
 

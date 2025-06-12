@@ -29,7 +29,7 @@ public class TelemetrySettingsViewController: UIViewController {
         crashReportsOn: @escaping () -> Bool,
         title: String? = nil
     ) {
-        self.telemetryView = TelemetryTogglesView(
+        telemetryView = TelemetryTogglesView(
             usageStatisticsOn: .init(
                 get: { usageStatisticsOn() },
                 set: { preferenceChangeUsageData($0) }

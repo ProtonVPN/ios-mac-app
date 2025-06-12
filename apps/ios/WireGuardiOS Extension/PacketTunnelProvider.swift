@@ -36,7 +36,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     private var connectedIpId: String?
 
     var tunnelProviderProtocol: NETunnelProviderProtocol? {
-        guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
+        guard let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
             return nil
         }
 
@@ -63,13 +63,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         setupLogging()
         wg_log(.info, message: "PacketTunnelProvider init (processID: \(ProcessInfo().processIdentifier))")
 
-        self.timerFactory = TimerFactoryImplementation()
+        timerFactory = TimerFactoryImplementation()
 
         killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
             wg_log(.info, message: "Kill Switch configuration changed.")
-            self.setDataTaskFactoryAccordingToKillSwitchSettings()
+            setDataTaskFactoryAccordingToKillSwitchSettings()
         }
-        self.setDataTaskFactory(sendThroughTunnel: true)
+        setDataTaskFactory(sendThroughTunnel: true)
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
@@ -102,7 +102,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     /// if the user is using KillSwitch (i.e., `includeAllNetworks`). Ironically, the best thing for
     /// this is to *not* send API requests through the VPN if the user has opted for KillSwitch.
     private func setDataTaskFactoryAccordingToKillSwitchSettings() {
-        guard !self.protocolConfiguration.includeAllNetworks else {
+        guard !protocolConfiguration.includeAllNetworks else {
             setDataTaskFactory(sendThroughTunnel: false)
             return
         }
@@ -131,7 +131,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         }
 
         #if CHECK_CONNECTIVITY
-            self.startTestingConnectivity()
+            startTestingConnectivity()
         #endif
 
         guard let connectedLogicalId, let connectedIpId else {
@@ -332,11 +332,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
         #if CHECK_CONNECTIVITY
-            self.stopTestingConnectivity()
+            stopTestingConnectivity()
         #endif
 
         certificateRefreshManager.stop { [unowned self] in
-            self.serverStatusRefreshManager.stop {
+            serverStatusRefreshManager.stop {
                 self.adapter.stop { error in
                     ErrorNotifier.removeLastErrorFile()
 
@@ -423,7 +423,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 completionHandler?(.ok(data: nil))
             }
         case .getCurrentLogicalAndServerId:
-            let response = "\(self.connectedLogicalId ?? "");\(self.connectedIpId ?? "")"
+            let response = "\(connectedLogicalId ?? "");\(connectedIpId ?? "")"
             wg_log(.info, message: "Handle message: getCurrentLogicalAndServerId (result: \(response))")
             completionHandler?(.ok(data: response.data(using: .utf8)))
         }
@@ -433,7 +433,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         log.info("sleep()")
 
         #if CHECK_CONNECTIVITY
-            self.stopTestingConnectivity()
+            stopTestingConnectivity()
         #endif
 
         certificateRefreshManager.suspend {
@@ -447,7 +447,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         log.info("wake()")
 
         #if CHECK_CONNECTIVITY
-            self.startTestingConnectivity()
+            startTestingConnectivity()
         #endif
 
         certificateRefreshManager.resume {}
@@ -538,7 +538,7 @@ extension PacketTunnelProvider: ServerStatusRefreshDelegate {
             log.error("Was told to reconnect, but alternatives were empty", category: .connection)
             return
         }
-        self.restartTunnel(with: newServer)
+        restartTunnel(with: newServer)
     }
 }
 

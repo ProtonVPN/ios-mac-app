@@ -95,7 +95,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
             @Dependency(\.announcementClient) var announcementClient
 
             let announcements = try await announcementClient.fetchAnnouncements()
-            self.announcementStorage.store(announcements.notifications)
+            announcementStorage.store(announcements.notifications)
         } catch {
             log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
         }

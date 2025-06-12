@@ -48,7 +48,7 @@ class ColoredLoadButton: NSButton {
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(self.cgColor(.icon))
+        context.setStrokeColor(cgColor(.icon))
         context.drawPath(using: .stroke)
         
         // outer circle segment
@@ -57,7 +57,7 @@ class ColoredLoadButton: NSButton {
         let loadPortion = load > 15 ? load : 15
         let endAngle: CGFloat = (CGFloat(loadPortion) / 100) * (-2 * .pi) + .pi / 2
         context.setLineWidth(2.0)
-        context.setStrokeColor(self.cgColor(.border))
+        context.setStrokeColor(cgColor(.border))
         context.addArc(center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
                        radius: ocb.width / 2,
                        startAngle: startAngle,

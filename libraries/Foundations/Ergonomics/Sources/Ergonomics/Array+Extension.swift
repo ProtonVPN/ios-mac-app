@@ -22,7 +22,7 @@ extension Array {
     /// Accepts optional closure for filtering. If `nil` is given, return the same array unfiltered.
     public func filter(_ isIncluded: ((Element) throws -> Bool)?) rethrows -> [Element] {
         guard let isIncluded else { return self }
-        return try self.filter { try isIncluded($0) }
+        return try filter { try isIncluded($0) }
     }
 }
 

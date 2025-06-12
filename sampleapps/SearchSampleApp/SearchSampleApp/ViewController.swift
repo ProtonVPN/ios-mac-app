@@ -43,7 +43,7 @@ final class ViewController: UIViewController {
     }
 
     @IBAction private func searchTapped(_ sender: Any) {
-        coordinator.start(navigationController: self.navigationController!, data: createData(), mode: createMode())
+        coordinator.start(navigationController: navigationController!, data: createData(), mode: createMode())
     }
 
     @objc private func modeChanged() {

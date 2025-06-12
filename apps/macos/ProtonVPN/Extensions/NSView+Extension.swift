@@ -110,7 +110,7 @@ extension NSView {
         var lastView: NSView?
         for view in views {
             view.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview(view)
+            addSubview(view)
             
             if lastView == nil { // first row
                 NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0.0).isActive = true

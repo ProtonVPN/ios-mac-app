@@ -108,7 +108,7 @@ private extension VPNConnectionStatus {
         case .resolving, .disconnected, .disconnecting:
             nil
         case .connecting, .connected:
-            self.spec
+            spec
         }
     }
 }

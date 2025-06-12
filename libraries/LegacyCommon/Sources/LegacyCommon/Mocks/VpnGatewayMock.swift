@@ -36,8 +36,8 @@
         public static var needsReconnectNotification: Notification.Name = Notification.Name("")
 
         public init(userTier: Int? = nil) {
-            self.connection = .disconnected
-            self.activeServerType = .unspecified
+            connection = .disconnected
+            activeServerType = .unspecified
             _userTier = userTier
         }
 
@@ -67,7 +67,7 @@
         }
     
         public func changeActiveServerType(_ serverType: ServerType) {
-            self.activeServerType = serverType
+            activeServerType = serverType
         }
     
         public func autoConnect() {}

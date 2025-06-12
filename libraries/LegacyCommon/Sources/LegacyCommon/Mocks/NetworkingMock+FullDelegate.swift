@@ -137,7 +137,7 @@
                     return .failure(POSIXError(.EINVAL))
                 }
 
-                let servers = self.apiServerLoads.map(\.asDict)
+                let servers = apiServerLoads.map(\.asDict)
                 let data = try JSONSerialization.data(withJSONObject: [
                     "LogicalServers": servers
                 ])

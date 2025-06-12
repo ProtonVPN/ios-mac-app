@@ -54,17 +54,17 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         ServerTierCheckerFactory
 
     init(_ factory: Factory) {
-        self.appStateManager = factory.makeAppStateManager()
-        self.propertiesManager = factory.makePropertiesManager()
-        self.serverTierChecker = factory.makeServerTierChecker()
-        self.availabilityCheckerResolverFactory = factory
-        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-        self.natTypePropertyProvider = factory.makeNATTypePropertyProvider()
-        self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
+        appStateManager = factory.makeAppStateManager()
+        propertiesManager = factory.makePropertiesManager()
+        serverTierChecker = factory.makeServerTierChecker()
+        availabilityCheckerResolverFactory = factory
+        netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+        natTypePropertyProvider = factory.makeNATTypePropertyProvider()
+        safeModePropertyProvider = factory.makeSafeModePropertyProvider()
     }
 
     public func connect(withIntent intent: ConnectionSpec) async throws {
-        let wireguardConfig = self.propertiesManager.wireguardConfig
+        let wireguardConfig = propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(
             wireguardConfig: wireguardConfig
         )
@@ -75,8 +75,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
                 .configWithWireGuard(tcpEnabled: false, tlsEnabled: false)
         }
         let connectionPreparer = VpnConnectionPreparer(
-            appStateManager: self.appStateManager,
-            serverTierChecker: self.serverTierChecker,
+            appStateManager: appStateManager,
+            serverTierChecker: serverTierChecker,
             availabilityCheckerResolver: availabilityCheckerResolver,
             smartProtocolConfig: smartProtocolConfig,
             wireguardConfig: wireguardConfig)
@@ -145,7 +145,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
                                          connectionProtocol: connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in
-                                             self.appStateManager.state
+                                             appStateManager.state
                                          })
         selector.changeActiveServerType = { _ in }
         selector.notifyResolutionUnavailable = { forSpecificCountry, type, reason in
@@ -202,8 +202,8 @@ private extension ConnectionSpec {
     // If used elsewhere, please fill in other properties properly.
     var connectionRequest: ConnectionRequest {
         ConnectionRequest(
-            serverType: self.serverType,
-            connectionType: self.connectionRequestType,
+            serverType: serverType,
+            connectionType: connectionRequestType,
             connectionProtocol: .smartProtocol, // This is NOT used in server selection
             netShieldType: .off,
             natType: .default,
@@ -215,7 +215,7 @@ private extension ConnectionSpec {
     }
 
     var connectionRequestType: ConnectionRequestType {
-        switch self.location {
+        switch location {
         case .fastest:
             return .fastest
 

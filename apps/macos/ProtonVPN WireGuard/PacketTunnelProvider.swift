@@ -43,7 +43,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         setupLogging()
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
 
-        guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
+        guard let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             wg_log(.info, message: "Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")

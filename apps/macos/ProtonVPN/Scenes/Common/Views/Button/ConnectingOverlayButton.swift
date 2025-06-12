@@ -65,7 +65,7 @@ class ConnectingOverlayButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)
         }
-        attributedTitle = self.style(title, font: .themeFont(.heading4))
+        attributedTitle = style(title, font: .themeFont(.heading4))
     }
 }
 

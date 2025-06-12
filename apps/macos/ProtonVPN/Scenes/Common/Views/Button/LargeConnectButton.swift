@@ -51,7 +51,7 @@ class LargeConnectButton: HoverDetectionButton {
         }
 
         let title: String = isConnected ? Localizable.disconnect : Localizable.quickConnect
-        attributedTitle = self.style(title, font: .themeFont(.heading4))
+        attributedTitle = style(title, font: .themeFont(.heading4))
     }
 }
 

@@ -46,7 +46,7 @@ final class CityViewModelMock: CityViewModel {
     init(cityName: String, countryName: String = "", translatedCityName: String? = nil) {
         self.cityName = cityName
         self.countryName = countryName
-        self.textColor = .white
+        textColor = .white
         self.translatedCityName = translatedCityName
     }
 }

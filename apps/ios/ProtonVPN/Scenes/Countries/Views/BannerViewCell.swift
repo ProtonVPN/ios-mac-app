@@ -38,7 +38,7 @@ class BannerViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = .backgroundColor()
+        backgroundColor = .backgroundColor()
         label.textColor = .normalTextColor()
         label.font = .systemFont(ofSize: 13)
 

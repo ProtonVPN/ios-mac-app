@@ -100,7 +100,7 @@ final class UpsellFeatureTests: XCTestCase {
     func testRespondsToBackgroundTransaction() async {
         let error = GenericError("Payment Failed")
         let clock = TestClock()
-        let initialState = UpsellFeature.State.loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+        let initialState = UpsellFeature.State.loaded(planOptions: [monthlyPlan], purchaseInProgress: false)
         let networking = VPNNetworkingMock(userTierResult: .success(2))
 
         let store = TestStore(initialState: initialState) {

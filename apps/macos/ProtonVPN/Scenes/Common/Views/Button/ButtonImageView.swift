@@ -44,7 +44,7 @@ class HoverableButtonImageView: ButtonImageView {
                                           options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
                                           owner: self,
                                           userInfo: nil)
-        self.addTrackingArea(trackingArea)
+        addTrackingArea(trackingArea)
     }
 
     override func resetCursorRects() {

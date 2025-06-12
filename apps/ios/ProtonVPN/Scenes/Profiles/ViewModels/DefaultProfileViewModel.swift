@@ -198,7 +198,7 @@ class DefaultProfileViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.defaultAccessTier = .paidTier
+        defaultAccessTier = .paidTier
         self.isRedesign = isRedesign
         self.extraMargin = extraMargin
         startObserving()

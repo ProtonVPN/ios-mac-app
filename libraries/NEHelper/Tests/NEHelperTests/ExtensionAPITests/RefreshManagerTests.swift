@@ -74,7 +74,7 @@ final class RefreshManagerTests: XCTestCase {
 private class TestRefreshManager: RefreshManager {
     init(timerFactory: TimerFactory, workQueue: DispatchQueue, interval: TimeInterval, workCallback: @escaping (() -> Void)) {
         self.workCallback = workCallback
-        self._interval = interval
+        _interval = interval
         super.init(timerFactory: timerFactory, workQueue: workQueue)
     }
 

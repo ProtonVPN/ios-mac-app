@@ -39,7 +39,7 @@ struct ModalView: View {
         onFeatureUpdate: ((Feature) -> Void)? = nil
     ) {
         self.modalType = modalType
-        self.modalModel = modalType.modalModel()
+        modalModel = modalType.modalModel()
         self.primaryAction = primaryAction
         self.dismissAction = dismissAction
         self.onFeatureUpdate = onFeatureUpdate

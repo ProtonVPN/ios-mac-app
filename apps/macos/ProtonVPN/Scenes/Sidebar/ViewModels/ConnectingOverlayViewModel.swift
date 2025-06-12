@@ -82,7 +82,7 @@ class ConnectingOverlayViewModel {
     
     init(factory: Factory, cancellation: @escaping () -> Void) {
         self.factory = factory
-        self.appState = factory.makeAppStateManager().state
+        appState = factory.makeAppStateManager().state
         self.cancellation = cancellation
         
         loadingView = LoadingAnimationView(frame: CGRect.zero)
@@ -287,7 +287,7 @@ class ConnectingOverlayViewModel {
     }
     
     private func disableKillSwitch() {
-        self.propertiesManager.killSwitch = false
+        propertiesManager.killSwitch = false
     }
     
     private func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
@@ -304,7 +304,7 @@ class ConnectingOverlayViewModel {
     @objc private func appStateChanged(_ notification: Notification) {
         let state = appStateManager.state
 
-        let oldState = self.appState
+        let oldState = appState
         if case AppState.connected = oldState {
             // let overlay fade out
             return

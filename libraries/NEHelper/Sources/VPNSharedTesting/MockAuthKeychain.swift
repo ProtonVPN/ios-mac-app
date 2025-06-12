@@ -32,7 +32,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
     var credentialsWereCleared: (() -> Void)?
 
     public init(context: AppContext = .default) {
-        self.defaultContext = context
+        defaultContext = context
     }
 
     var credentials: [AppContext: AuthCredentials] = [:]
@@ -51,13 +51,13 @@ public class MockAuthKeychain: AuthKeychainHandle {
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         let context = context ?? defaultContext
-        self.username = credentials.username
+        username = credentials.username
         self.credentials[context] = credentials
         credentialsWereStored?()
     }
 
     public func clear() {
-        self.credentials = [:]
+        credentials = [:]
         credentialsWereCleared?()
     }
 }
@@ -65,12 +65,12 @@ public class MockAuthKeychain: AuthKeychainHandle {
 public extension MockAuthKeychain {
     func setMockUsername(_ username: String) {
         self.username = username
-        self.credentials[defaultContext] = .init(username: username,
-                                                 accessToken: "",
-                                                 refreshToken: "",
-                                                 sessionId: "",
-                                                 userId: "",
-                                                 scopes: [],
-                                                 mailboxPassword: "")
+        credentials[defaultContext] = .init(username: username,
+                                            accessToken: "",
+                                            refreshToken: "",
+                                            sessionId: "",
+                                            userId: "",
+                                            scopes: [],
+                                            mailboxPassword: "")
     }
 }

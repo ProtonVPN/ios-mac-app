@@ -65,7 +65,7 @@ import VPNShared
                 }
 
                 // and get new certificates
-                self.queue.addOperation(CertificateRefreshAsyncOperation(storage: self.storage, networking: self.networking))
+                queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking))
             }
         }
 
@@ -82,7 +82,7 @@ import VPNShared
             }
 
             // certificate is missing or no longer valid, refresh it and use
-            self.refreshCertificates(features: features, completion: completion)
+            refreshCertificates(features: features, completion: completion)
         }
 
         public func clearEverything(completion: @escaping (() -> Void)) {

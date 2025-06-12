@@ -38,7 +38,7 @@ struct RecentConnectionOptionsButton: View {
     var body: some View {
         VStack {
             Button {
-                self.isPresented.toggle()
+                isPresented.toggle()
             } label: {
                 IconProvider.threeDotsVertical
                     .resizable()

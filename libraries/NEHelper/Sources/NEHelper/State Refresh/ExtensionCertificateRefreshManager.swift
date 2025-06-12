@@ -289,7 +289,7 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
          manager: ExtensionCertificateRefreshManager,
          completion: @escaping CertificateRefreshCompletion) {
         self.features = features
-        self.isUserInitiated = userInitiated
+        isUserInitiated = userInitiated
         self.forceRefreshDueToExpiredSession = forceRefreshDueToExpiredSession
         self.manager = manager
         self.completion = completion

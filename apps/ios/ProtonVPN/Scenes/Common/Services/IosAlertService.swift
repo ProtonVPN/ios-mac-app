@@ -319,7 +319,7 @@ extension IosAlertService: CoreAlertService {
         let viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel,
                                                                            onPrimaryButtonTap: onPrimaryButtonTap)
         viewController.modalPresentationStyle = .overFullScreen
-        self.windowService.present(modal: viewController)
+        windowService.present(modal: viewController)
     }
 
     private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
@@ -416,7 +416,7 @@ extension IosAlertService: CoreAlertService {
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
-        self.uiAlertService.displayAlert(alert)
+        uiAlertService.displayAlert(alert)
     }
 
     private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {

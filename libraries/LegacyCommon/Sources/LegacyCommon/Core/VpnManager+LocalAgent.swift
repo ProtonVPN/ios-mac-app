@@ -36,7 +36,7 @@ private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-age
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
-        guard let vpnProtocol = self.currentVpnProtocol else {
+        guard let vpnProtocol = currentVpnProtocol else {
             log.error("Skipping local agent connection, current protocol is nil!", category: .localAgent)
             return
         }
@@ -47,17 +47,17 @@ extension VpnManager {
 
         let connect = { (data: VpnAuthenticationData) in
             localAgentQueue.sync { [unowned self] in
-                guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, safeModePropertyProvider: self.safeModePropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
+                guard let configuration = LocalAgentConfiguration(propertiesManager: propertiesManager, natTypePropertyProvider: natTypePropertyProvider, netShieldPropertyProvider: netShieldPropertyProvider, safeModePropertyProvider: safeModePropertyProvider, vpnProtocol: currentVpnProtocol) else {
                     log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                     return
                 }
 
-                self.disconnectLocalAgentNoSync()
-                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory,
-                                                           propertiesManager: self.propertiesManager,
-                                                           netShieldPropertyProvider: self.netShieldPropertyProvider)
-                self.localAgent?.delegate = self
-                self.localAgent?.connect(data: data, configuration: configuration)
+                disconnectLocalAgentNoSync()
+                localAgent = LocalAgentImplementation(factory: localAgentConnectionFactory,
+                                                      propertiesManager: propertiesManager,
+                                                      netShieldPropertyProvider: netShieldPropertyProvider)
+                localAgent?.delegate = self
+                localAgent?.connect(data: data, configuration: configuration)
             }
         }
 
@@ -362,7 +362,7 @@ extension VpnManager: LocalAgentDelegate {
 
     func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage) {
         if let exitIp = details.exitIp {
-            self.updateActiveConnection(exitIp: String(describing: exitIp))
+            updateActiveConnection(exitIp: String(describing: exitIp))
         }
     }
 

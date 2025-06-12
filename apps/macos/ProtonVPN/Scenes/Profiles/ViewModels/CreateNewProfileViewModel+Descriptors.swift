@@ -67,7 +67,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: self.color(.text)
+                    .foregroundColor: color(.text)
                 ]
             )
         } else {
@@ -128,7 +128,7 @@ extension CreateNewProfileViewModel {
             attributes: [
                 .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: self.color(.text)
+                .foregroundColor: color(.text)
             ]
         )
         let entryCountryFlag = flagString(entryCountryCode)
@@ -137,7 +137,7 @@ extension CreateNewProfileViewModel {
             attributes: [
                 .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: self.color(.text)
+                .foregroundColor: color(.text)
             ]
         )
         return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
@@ -152,7 +152,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: self.color(.text)
+                    .foregroundColor: color(.text)
                 ]
             )
         } else {
@@ -161,7 +161,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: self.color(.text)
+                    .foregroundColor: color(.text)
                 ]
             )
         }
@@ -169,13 +169,13 @@ extension CreateNewProfileViewModel {
     }
 
     func defaultServerDescriptor(image: NSImage, name: String) -> NSAttributedString {
-        let imageAttributedString = self.colorImage(image).asAttachment(size: .profileIconSize)
+        let imageAttributedString = colorImage(image).asAttachment(size: .profileIconSize)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [
                 .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: self.color(.text)
+                .foregroundColor: color(.text)
             ]
         )
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)

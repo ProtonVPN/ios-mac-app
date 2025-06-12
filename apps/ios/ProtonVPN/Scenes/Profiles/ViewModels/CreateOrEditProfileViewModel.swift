@@ -89,28 +89,28 @@ class CreateOrEditProfileViewModel: NSObject {
 
     init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.username = username
-        self.editedProfile = profile
+        editedProfile = profile
         self.profileService = profileService
-        self.protocolService = protocolSelectionService
+        protocolService = protocolSelectionService
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
-        self.selectedProtocol = propertiesManager.connectionProtocol
+        selectedProtocol = propertiesManager.connectionProtocol
 
         if case let .circle(color) = profile?.profileIcon {
-            self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
+            colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
         } else {
-            self.colorPickerViewModel = ColorPickerViewModel()
+            colorPickerViewModel = ColorPickerViewModel()
         }
 
         if let profile,
            let username,
            let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
            let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
-            self.isDefaultProfile = profile == quickConnectProfile
+            isDefaultProfile = profile == quickConnectProfile
         }
         
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
@@ -155,14 +155,14 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         // If not connected to current profile, just save it
-        guard !self.appStateManager.state.isSafeToEnd, let editedProfile, self.propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
-            self.finishSaveProfile(completion: completion)
+        guard !appStateManager.state.isSafeToEnd, let editedProfile, propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
+            finishSaveProfile(completion: completion)
             return
         }
         
         // Here you can ask user if he wants to continue/reconnect/etc.
         
-        self.finishSaveProfile(completion: completion)
+        finishSaveProfile(completion: completion)
     }
     
     private func finishSaveProfile(completion: @escaping (Bool) -> Void) {
@@ -235,7 +235,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var secureCoreCell: TableViewCellModel {
         TableViewCellModel.upsellableToggle(
             title: Localizable.featureSecureCore,
-            state: { [unowned self] in .available(enabled: self.state == .secureCore, interactive: true) },
+            state: { [unowned self] in .available(enabled: state == .secureCore, interactive: true) },
             upsell: { [weak self] in self?.alertService.push(alert: SecureCoreUpsellAlert()) },
             handler: { [weak self] _, callback in
                 self?.toggleState(completion: { [weak self] on in
@@ -281,7 +281,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var quickConnectCell: TableViewCellModel {
         TableViewCellModel.upsellableToggle(
             title: Localizable.makeDefaultProfile,
-            state: { [unowned self] in .available(enabled: self.isDefaultProfile, interactive: true) },
+            state: { [unowned self] in .available(enabled: isDefaultProfile, interactive: true) },
             upsell: {
                 // No Upsell: free users cannot be shown this UI since only paid users are allowed to create or edit profiles
             },
@@ -319,9 +319,9 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
         
-        self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
-        self.name = profile.name
-        self.state = profile.serverType == .secureCore ? .secureCore : .standard
+        colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
+        name = profile.name
+        state = profile.serverType == .secureCore ? .secureCore : .standard
         
         selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
@@ -373,7 +373,7 @@ class CreateOrEditProfileViewModel: NSObject {
 
         return selectedServerOffering.supports(
             connectionProtocol: connectionProtocol,
-            withCountryGroup: self.countryGroup,
+            withCountryGroup: countryGroup,
             smartProtocolConfig: propertiesManager.smartProtocolConfig
         )
     }
@@ -419,7 +419,7 @@ class CreateOrEditProfileViewModel: NSObject {
                    filteredBy: [.logicalID(serverInfo.logical.id)],
                    orderedBy: .fastest) {
                 let serverModel = ServerModel(server: vpnServer)
-                self.selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
+                selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
             }
 
             // Default profiles are given as prepared ServerOffering objects
@@ -427,28 +427,28 @@ class CreateOrEditProfileViewModel: NSObject {
                 self.selectedServerOffering = selectedServerOffering
             }
 
-            self.resetProtocolIfNotSupportedBySelectedServerOffering()
+            resetProtocolIfNotSupportedBySelectedServerOffering()
         }
         
         pushHandler?(selectionViewController)
     }
 
     private func resetProtocolIfNotSupportedBySelectedServerOffering() {
-        guard !self.selectedServerOfferingSupports(connectionProtocol: self.selectedProtocol) else {
+        guard !selectedServerOfferingSupports(connectionProtocol: selectedProtocol) else {
             return
         }
 
-        let preferredProtocol = self.propertiesManager.connectionProtocol
-        if self.selectedProtocol != preferredProtocol,
-           self.selectedServerOfferingSupports(connectionProtocol: preferredProtocol) {
-            self.selectedProtocol = preferredProtocol
+        let preferredProtocol = propertiesManager.connectionProtocol
+        if selectedProtocol != preferredProtocol,
+           selectedServerOfferingSupports(connectionProtocol: preferredProtocol) {
+            selectedProtocol = preferredProtocol
         } else if let firstSupportedProtocol = ConnectionProtocol.allCases.first(where: {
             self.selectedServerOfferingSupports(connectionProtocol: $0)
         }) {
-            self.selectedProtocol = firstSupportedProtocol
+            selectedProtocol = firstSupportedProtocol
         } else {
             log.assertionFailure("A server exists that doesn't support any connection protocols.")
-            self.selectedProtocol = .smartProtocol
+            selectedProtocol = .smartProtocol
         }
     }
     
@@ -462,8 +462,8 @@ class CreateOrEditProfileViewModel: NSObject {
                                                         featureFlags: propertiesManager.featureFlags)
 
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, _ in
-            self.selectedProtocol = connectionProtocol
-            self.saveButtonEnabled = true
+            selectedProtocol = connectionProtocol
+            saveButtonEnabled = true
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }

@@ -21,6 +21,6 @@ final class TokenStorage: PaymentTokenStorage {
     }
 
     func clear() {
-        self.token = nil
+        token = nil
     }
 }

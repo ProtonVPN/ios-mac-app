@@ -28,16 +28,16 @@ public struct ConnectionConfiguration: Codable, Identifiable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.server = try container.decode(ServerModel.self, forKey: CodingKeys.server)
-        self.serverIp = try container.decode(ServerIp.self, forKey: CodingKeys.serverIp)
-        self.vpnProtocol = try container.decode(VpnProtocol.self, forKey: CodingKeys.vpnProtocol)
-        self.netShieldType = try container.decode(NetShieldType.self, forKey: CodingKeys.netShieldType)
-        self.ports = try container.decode([Int].self, forKey: CodingKeys.ports)
-        self.safeMode = try container.decodeIfPresent(Bool.self, forKey: CodingKeys.safeMode)
+        server = try container.decode(ServerModel.self, forKey: CodingKeys.server)
+        serverIp = try container.decode(ServerIp.self, forKey: CodingKeys.serverIp)
+        vpnProtocol = try container.decode(VpnProtocol.self, forKey: CodingKeys.vpnProtocol)
+        netShieldType = try container.decode(NetShieldType.self, forKey: CodingKeys.netShieldType)
+        ports = try container.decode([Int].self, forKey: CodingKeys.ports)
+        safeMode = try container.decodeIfPresent(Bool.self, forKey: CodingKeys.safeMode)
         // This can be missing from JSON if config was saved with older app version. Set it to default in that case.
-        self.id = try (container.decodeIfPresent(UUID.self, forKey: CodingKeys.id)) ?? UUID()
-        self.natType = try container.decodeIfPresent(NATType.self, forKey: .natType) ?? NATType.default
-        self.intent = try container.decodeIfPresent(ConnectionRequestType.self, forKey: CodingKeys.intent)
+        id = try (container.decodeIfPresent(UUID.self, forKey: CodingKeys.id)) ?? UUID()
+        natType = try container.decodeIfPresent(NATType.self, forKey: .natType) ?? NATType.default
+        intent = try container.decodeIfPresent(ConnectionRequestType.self, forKey: CodingKeys.intent)
     }
 
     public init(

@@ -24,9 +24,9 @@ extension XCUIElement {
      */
     @discardableResult
     func tapAndClearText() -> XCUIElement {
-        if let stringValue = self.value as? String {
+        if let stringValue = value as? String {
             // tap at the right corner of the input
-            let lowerRightCorner = self.coordinate(
+            let lowerRightCorner = coordinate(
                 withNormalizedOffset: CGVector(dx: 0.9, dy: 0.9)
             )
             lowerRightCorner.tap()
@@ -35,9 +35,9 @@ extension XCUIElement {
                 repeating: XCUIKeyboardKey.delete.rawValue,
                 count: stringValue.count
             )
-            self.typeText(delete)
+            typeText(delete)
         } else {
-            self.tap()
+            tap()
         }
         return self
     }

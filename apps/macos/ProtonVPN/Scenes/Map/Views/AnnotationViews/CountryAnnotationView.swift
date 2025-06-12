@@ -111,7 +111,7 @@ class MapAnnotationView: MKAnnotationView {
     }
 
     init(buttonSize: CGSize, hoveredTag: ForegroundOrder, styleDelegate: CustomStyleContext, reuseIdentifier: String?) {
-        self.buttonFrame = CGRect(origin: .zero, size: buttonSize)
+        buttonFrame = CGRect(origin: .zero, size: buttonSize)
         self.hoveredTag = hoveredTag
         self.styleDelegate = styleDelegate
 
@@ -154,10 +154,10 @@ class MapAnnotationView: MKAnnotationView {
 
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            if let window = self.window {
+            if let window {
                 let mousePoint = window.mouseLocationOutsideOfEventStream
-                let pointInView = self.convert(mousePoint, from: nil)
-                if !self.bounds.contains(pointInView), hovered {
+                let pointInView = convert(mousePoint, from: nil)
+                if !bounds.contains(pointInView), hovered {
                     stateUpdateCallback(false)
                 }
             }
@@ -348,8 +348,8 @@ class CountryAnnotationView: MapAnnotationView {
                 return
             }
 
-            self.setupAnnotationView()
-            self.needsDisplay = true
+            setupAnnotationView()
+            needsDisplay = true
         }
 
         setupAnnotationView()

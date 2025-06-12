@@ -74,7 +74,7 @@ private struct UpsellBanner: View {
     let width: CGFloat
 
     init(_ type: BannerType, width: CGFloat) {
-        self.model = BannerModel(type: type)
+        model = BannerModel(type: type)
         self.width = max(126, min(300, width))
     }
 

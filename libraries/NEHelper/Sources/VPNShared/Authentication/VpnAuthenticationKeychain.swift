@@ -59,7 +59,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
 
     public func getKeys() -> VpnKeys {
         let keys: VpnKeys
-        if let existingKeys = self.getStoredKeys() {
+        if let existingKeys = getStoredKeys() {
             log.info("Using existing vpn authentication keys", category: .userCert)
             keys = existingKeys
         } else {
@@ -68,7 +68,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
             // `LegacyCommon.CoreVPNKeysGenerator`.
             keys = try! vpnKeysGenerator.generateKeys()
             log.info("Storing new VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
-            self.store(keys: keys)
+            store(keys: keys)
         }
 
         return keys

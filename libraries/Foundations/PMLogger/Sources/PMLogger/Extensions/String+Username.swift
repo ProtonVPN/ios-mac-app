@@ -20,6 +20,6 @@ import Foundation
 
 extension String {
     public var redactingUsername: String {
-        self.replacingOccurrences(of: NSUserName(), with: "<redacted>")
+        replacingOccurrences(of: NSUserName(), with: "<redacted>")
     }
 }

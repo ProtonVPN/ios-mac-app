@@ -312,8 +312,8 @@ class CreateNewProfileViewModel {
         let propertiesManager = factory.makePropertiesManager()
         self.propertiesManager = propertiesManager
 
-        self.state = ModelState.default // initialize all stored properties so we can use createStartingState
-        self.state = self.createStartingState()
+        state = ModelState.default // initialize all stored properties so we can use createStartingState
+        state = createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
         checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)
@@ -358,12 +358,12 @@ class CreateNewProfileViewModel {
         state = state.updating(connectionProtocol: connectionProtocol)
 
         if connectionProtocol == .vpnProtocol(.ike), userInitiated {
-            self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+            alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
                 guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol for a new profile.")
-                self.update(connectionProtocol: .smartProtocol)
+                update(connectionProtocol: .smartProtocol)
             }, continueHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
             }))
@@ -390,8 +390,8 @@ class CreateNewProfileViewModel {
 
         let resetProtocol = { [weak self] in
             guard let `self` else { return }
-            self.state = self.state.updating(connectionProtocol: .vpnProtocol(.ike))
-            self.protocolPending?(false)
+            state = state.updating(connectionProtocol: .vpnProtocol(.ike))
+            protocolPending?(false)
         }
 
         protocolPending?(true)
@@ -401,7 +401,7 @@ class CreateNewProfileViewModel {
             DispatchQueue.main.async { [weak self] in
                 guard let `self` else { return }
 
-                self.protocolPending?(false)
+                protocolPending?(false)
 
                 if let error = result.error {
                     log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
@@ -564,12 +564,12 @@ extension ModelState {
         // Re-select country/gateway if it's still there after ServerType change
         let countryIndex = newTypeGrouping.firstIndex { $0.kind == selectedCountryGroup?.kind }
 
-        return ModelState(profileName: self.profileName,
+        return ModelState(profileName: profileName,
                           serverType: serverType,
                           serverGroups: newTypeGrouping,
                           countryIndex: self.countryIndex,
-                          serverOffering: self.serverOffering,
-                          connectionProtocol: self.connectionProtocol)
+                          serverOffering: serverOffering,
+                          connectionProtocol: connectionProtocol)
             .updating(countryIndex: countryIndex,
                       selectedCountryGroup: selectedCountryGroup,
                       smartProtocolConfig: smartProtocolConfig)
@@ -583,12 +583,12 @@ extension ModelState {
             serverOffering = nil
         }
 
-        return ModelState(profileName: self.profileName,
-                          serverType: self.serverType,
-                          serverGroups: self.serverGroups,
+        return ModelState(profileName: profileName,
+                          serverType: serverType,
+                          serverGroups: serverGroups,
                           countryIndex: countryIndex,
                           serverOffering: self.serverOffering,
-                          connectionProtocol: self.connectionProtocol)
+                          connectionProtocol: connectionProtocol)
             .updating(serverOffering: serverOffering,
                       selectedCountryGroup: selectedCountryGroup,
                       smartProtocolConfig: smartProtocolConfig)
@@ -607,21 +607,21 @@ extension ModelState {
             connectionProtocol = nil
         }
 
-        return ModelState(profileName: self.profileName,
-                          serverType: self.serverType,
-                          serverGroups: self.serverGroups,
-                          countryIndex: self.countryIndex,
+        return ModelState(profileName: profileName,
+                          serverType: serverType,
+                          serverGroups: serverGroups,
+                          countryIndex: countryIndex,
                           serverOffering: serverOffering,
                           connectionProtocol: self.connectionProtocol)
             .updating(connectionProtocol: connectionProtocol)
     }
 
     func updating(connectionProtocol: ConnectionProtocol?) -> Self {
-        Self(profileName: self.profileName,
-             serverType: self.serverType,
-             serverGroups: self.serverGroups,
-             countryIndex: self.countryIndex,
-             serverOffering: self.serverOffering,
+        Self(profileName: profileName,
+             serverType: serverType,
+             serverGroups: serverGroups,
+             countryIndex: countryIndex,
+             serverOffering: serverOffering,
              connectionProtocol: connectionProtocol)
     }
 

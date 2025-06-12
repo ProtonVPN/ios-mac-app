@@ -23,7 +23,7 @@ public class MemoryStorage: Storage {
     public var storage: [String: Any]
 
     public init(initialValue: [String: Any] = [:]) {
-        self.storage = initialValue
+        storage = initialValue
     }
 
     public func get<T: Decodable>(_ type: T.Type, forKey key: String) throws -> T? {

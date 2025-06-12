@@ -103,7 +103,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
                     self.button.layer?.backgroundColor = .cgColor(.background, [.transparent])
                 }
             }
-            self.button.needsDisplay = true
+            button.needsDisplay = true
         }
     }
     

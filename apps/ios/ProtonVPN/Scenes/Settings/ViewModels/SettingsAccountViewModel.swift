@@ -145,7 +145,7 @@ final class SettingsAccountViewModel {
                     if userSettings.password.mode != .singlePassword {
                         mode = .loginPassword
                     }
-                    if let viewController = self.navigationService.makePasswordChangeViewController(mode: mode) {
+                    if let viewController = navigationService.makePasswordChangeViewController(mode: mode) {
                         pushHandler(viewController)
                     }
                 }
@@ -210,13 +210,13 @@ final class SettingsAccountViewModel {
         
         alertService.push(alert: AccountDeletionWarningAlert { [weak self] in
             guard let self else { return }
-            switch self.appStateManager.state {
+            switch appStateManager.state {
             case .connecting:
-                self.appStateManager.cancelConnectionAttempt { [weak self] in
+                appStateManager.cancelConnectionAttempt { [weak self] in
                     self?.proceedWithAccountDeletion(viewController: viewController)
                 }
             default:
-                self.appStateManager.disconnect { [weak self] in
+                appStateManager.disconnect { [weak self] in
                     self?.proceedWithAccountDeletion(viewController: viewController)
                 }
             }

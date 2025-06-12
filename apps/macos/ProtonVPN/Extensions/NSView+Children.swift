@@ -25,6 +25,6 @@ import Cocoa
 extension NSView {
     func searchSubview<T: NSView>( _ subiewType: T.Type, callback: (T) -> Void ) {
         if let foundView = self as? T { callback(foundView) }
-        self.subviews.forEach { $0.searchSubview(subiewType, callback: callback) }
+        subviews.forEach { $0.searchSubview(subiewType, callback: callback) }
     }
 }

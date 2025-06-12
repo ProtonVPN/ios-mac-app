@@ -115,7 +115,7 @@ extension AppDelegate: NSApplicationDelegate {
         // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
         signal(SIGPIPE, SIG_IGN)
 
-        self.checkMigration()
+        checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
             self.setupDebugHelpers()
@@ -321,7 +321,7 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     private func setupLogsForApp() {
-        let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+        let logFile = container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
 
         let fileLogHandler = FileLogHandler(logFile)
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
@@ -365,7 +365,7 @@ extension AppDelegate {
     }
 
     private func reconnectWhenPossible() {
-        var appStateManager = self.container.makeAppStateManager()
+        var appStateManager = container.makeAppStateManager()
 
         appStateManager.onVpnStateChanged = { newState in
             if newState != .invalid {
@@ -419,7 +419,7 @@ extension AppDelegate {
                     try await FeatureFlagsRepository.shared.fetchFlags()
                 }
 
-                let isTelemetryEnabled = self.telemetrySettings.telemetryCrashReports
+                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
 
                 if isTelemetryEnabled {
                     enableExternalLogging()

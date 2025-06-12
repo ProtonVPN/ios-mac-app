@@ -38,7 +38,7 @@ struct CountryListView: View {
 
     init(store: StoreOf<CountryListFeature>, contentAllowedWidth: Double) {
         self.store = store
-        self.columns = Self.columns(availableWidth: contentAllowedWidth)
+        columns = Self.columns(availableWidth: contentAllowedWidth)
     }
 
     private static func columns(availableWidth: Double) -> [GridItem] {
@@ -66,7 +66,7 @@ struct CountryListView: View {
                     .opacity(focusedIndex?.section == 1 ? 1 : Self.unfocusedOpacity)
             }
         }
-        .bind($store.focusedIndex, to: self.$focusedIndex)
+        .bind($store.focusedIndex, to: $focusedIndex)
     }
 
     @ViewBuilder
@@ -111,7 +111,7 @@ struct CountryListView: View {
         init(section: Int, item: CountryListItem) {
             self.section = section
             self.item = item
-            self.row = item.row
+            row = item.row
         }
     }
 }

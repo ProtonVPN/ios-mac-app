@@ -38,7 +38,7 @@ class ServerTierChecker {
     
     func serverRequiresUpgrade(_ server: ServerModel) -> Bool? {
         do {
-            let userTier = try self.userTier()
+            let userTier = try userTier()
             if server.tier > userTier {
                 notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .upgrade(server.tier))
                 return true

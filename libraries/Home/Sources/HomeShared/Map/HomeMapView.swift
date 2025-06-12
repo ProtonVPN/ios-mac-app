@@ -36,7 +36,7 @@ public struct HomeMapView: View {
         self.store = store
         self.availableHeight = availableHeight
         self.availableWidth = availableWidth
-        self.mapBounds = SVGView.mapBounds
+        mapBounds = SVGView.mapBounds
     }
 
     public var body: some View {

@@ -49,7 +49,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     }
 
     public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?) {
-        self.cacheVersion = version ?? Self.VERSION
+        cacheVersion = version ?? Self.VERSION
         self.username = username
         self.accessToken = accessToken
         self.refreshToken = refreshToken
@@ -61,7 +61,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     }
 
     public init(username: String, dic: JSONDictionary) throws {
-        self.cacheVersion = Self.VERSION
+        cacheVersion = Self.VERSION
         self.username = username
         accessToken = try dic.stringOrThrow(key: "AccessToken")
         refreshToken = try dic.stringOrThrow(key: "RefreshToken")
@@ -110,13 +110,13 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.cacheVersion = try container.decode(Int.self, forKey: .cacheVersion)
-        self.username = try container.decode(String.self, forKey: .username)
-        self.accessToken = try container.decode(String.self, forKey: .accessToken)
-        self.refreshToken = try container.decode(String.self, forKey: .refreshToken)
-        self.sessionId = try container.decode(String.self, forKey: .sessionId)
-        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
-        self.scopes = try container.decode([String].self, forKey: .scopes)
-        self.mailboxPassword = try container.decodeIfPresent(String.self, forKey: .mailboxPassword) ?? ""
+        cacheVersion = try container.decode(Int.self, forKey: .cacheVersion)
+        username = try container.decode(String.self, forKey: .username)
+        accessToken = try container.decode(String.self, forKey: .accessToken)
+        refreshToken = try container.decode(String.self, forKey: .refreshToken)
+        sessionId = try container.decode(String.self, forKey: .sessionId)
+        userId = try container.decodeIfPresent(String.self, forKey: .userId)
+        scopes = try container.decode([String].self, forKey: .scopes)
+        mailboxPassword = try container.decodeIfPresent(String.self, forKey: .mailboxPassword) ?? ""
     }
 }

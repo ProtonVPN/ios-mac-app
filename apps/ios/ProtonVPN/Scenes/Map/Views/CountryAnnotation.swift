@@ -77,12 +77,12 @@ class CountryAnnotation: AnnotationView {
     
     init(frame: CGRect, viewModel: AnnotationViewModel) {
         self.viewModel = viewModel
-        self.flagView = UIImageView(image: viewModel.flag)
-        self.flagBoarderView = UIButton(type: .custom)
-        self.flagOverlayView = UIView()
-        self.iconView = UIImageView(image: nil)
-        self.countryLabel = UILabel(frame: CGRect.zero)
-        self.flagContainerView = UIView()
+        flagView = UIImageView(image: viewModel.flag)
+        flagBoarderView = UIButton(type: .custom)
+        flagOverlayView = UIView()
+        iconView = UIImageView(image: nil)
+        countryLabel = UILabel(frame: CGRect.zero)
+        flagContainerView = UIView()
         
         super.init(frame: frame)
         
@@ -132,37 +132,37 @@ class CountryAnnotation: AnnotationView {
         let outerCircleFrame = CGRect(x: 0.5 * (bounds.width - outerCircleDiameter), y: bounds.height - viewModel.labelHeight - viewModel.pinHeight, width: outerCircleDiameter, height: outerCircleDiameter)
         let innerCircleFrame = CGRect(x: 0.5 * (bounds.width - innerCircleDiameter), y: outerCircleFrame.minY + 0.75 * viewModel.outlineWidth, width: innerCircleDiameter, height: innerCircleDiameter)
         
-        self.flagBoarderView.layer.borderColor = self.viewModel.outlineColor.cgColor
+        flagBoarderView.layer.borderColor = viewModel.outlineColor.cgColor
         
-        self.iconView.image = self.viewModel.connectIcon
-        self.iconView.tintColor = self.viewModel.connectIconTint
+        iconView.image = viewModel.connectIcon
+        iconView.tintColor = viewModel.connectIconTint
         
         let animationClosure = { [weak self] in
             guard let self else {
                 return
             }
             
-            self.flagContainerView.frame = innerCircleFrame
-            self.flagContainerView.layer.cornerRadius = innerCircleDiameter * 0.5
+            flagContainerView.frame = innerCircleFrame
+            flagContainerView.layer.cornerRadius = innerCircleDiameter * 0.5
 
-            let flagViewNewHeight = self.flagContainerView.frame.height * 1.5
-            self.flagView.frame = CGRect(x: 0, y: flagViewNewHeight / -6.0, width: self.flagContainerView.frame.width, height: flagViewNewHeight)
+            let flagViewNewHeight = flagContainerView.frame.height * 1.5
+            flagView.frame = CGRect(x: 0, y: flagViewNewHeight / -6.0, width: flagContainerView.frame.width, height: flagViewNewHeight)
             
-            self.flagOverlayView.frame = innerCircleFrame
-            self.flagOverlayView.layer.cornerRadius = innerCircleDiameter * 0.5
-            self.flagOverlayView.backgroundColor = self.viewModel.flagOverlayColor
+            flagOverlayView.frame = innerCircleFrame
+            flagOverlayView.layer.cornerRadius = innerCircleDiameter * 0.5
+            flagOverlayView.backgroundColor = viewModel.flagOverlayColor
             
-            self.flagBoarderView.frame = outerCircleFrame
-            self.flagBoarderView.layer.borderWidth = self.viewModel.outlineWidth
-            self.flagBoarderView.layer.cornerRadius = outerCircleDiameter * 0.5
-            self.flagBoarderView.backgroundColor = .clear
+            flagBoarderView.frame = outerCircleFrame
+            flagBoarderView.layer.borderWidth = viewModel.outlineWidth
+            flagBoarderView.layer.cornerRadius = outerCircleDiameter * 0.5
+            flagBoarderView.backgroundColor = .clear
             
-            self.iconView.frame = innerCircleFrame
+            iconView.frame = innerCircleFrame
             
-            self.countryLabel.frame = CGRect(x: 0, y: self.bounds.height - self.viewModel.labelHeight, width: self.bounds.size.width, height: self.viewModel.labelHeight)
-            self.countryLabel.layer.cornerRadius = self.viewModel.labelHeight * 0.5
-            self.countryLabel.backgroundColor = self.viewModel.labelColor
-            self.countryLabel.alpha = self.viewModel.hideLabel ? 0 : 1
+            countryLabel.frame = CGRect(x: 0, y: bounds.height - viewModel.labelHeight, width: bounds.size.width, height: viewModel.labelHeight)
+            countryLabel.layer.cornerRadius = viewModel.labelHeight * 0.5
+            countryLabel.backgroundColor = viewModel.labelColor
+            countryLabel.alpha = viewModel.hideLabel ? 0 : 1
         }
         
         if shown {

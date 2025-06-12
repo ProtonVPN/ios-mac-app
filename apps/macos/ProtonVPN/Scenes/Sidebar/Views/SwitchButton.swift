@@ -141,7 +141,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
     
     func registerDelegate(_ delegate: SwitchButtonDelegate) {
         self.delegate = delegate
-        self.setState(currentButtonState, animated: false)
+        setState(currentButtonState, animated: false)
     }
     
     func setState(_ state: ButtonState, animated: Bool = false) {
@@ -160,10 +160,10 @@ class SwitchButton: NSView, CAAnimationDelegate {
         switch currentButtonState {
         case .on:
             innerView?.animator().frame.origin = NSPoint(x: 0, y: 0)
-            innerView?.animateBackgroundColor(self.cgColor(.background), delegate: self)
+            innerView?.animateBackgroundColor(cgColor(.background), delegate: self)
         case .off:
             innerView?.animator().frame.origin = NSPoint(x: -1 * (Int(buttonWidth - knobSize) - knobPadding * 2), y: 0)
-            innerView?.animateBackgroundColor(self.cgColor(.background), delegate: self)
+            innerView?.animateBackgroundColor(cgColor(.background), delegate: self)
         }
     }
     
@@ -177,7 +177,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
     }
     
     @objc func buttonClicked(_ button: NSButton) {
-        guard let delegate = self.delegate, enabled else {
+        guard let delegate, enabled else {
             return
         }
         

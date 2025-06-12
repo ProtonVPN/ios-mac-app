@@ -167,7 +167,7 @@ public struct EnvironmentSelectorDesktopView: View {
     }
 
     init(store: StoreOf<DebugConfigurationFeature>) {
-        self._store = .constant(store)
+        _store = .constant(store)
     }
 
     public init(continueHandler: @escaping () -> Void) {

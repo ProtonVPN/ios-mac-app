@@ -215,7 +215,7 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
 
         let state = appStateManager.state
-        self.connection = ConnectionStatus.forAppState(state)
+        connection = ConnectionStatus.forAppState(state)
         /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
         /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
         postConnectionInformation()
@@ -244,7 +244,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            AppEvent.activeServerTypeChanged.post(self.connection)
+            AppEvent.activeServerTypeChanged.post(connection)
         }
     }
 
@@ -254,20 +254,20 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
 
-            guard let profile = self.profileManager.autoConnectProfile else {
-                self.quickConnect(trigger: .auto)
+            guard let profile = profileManager.autoConnectProfile else {
+                quickConnect(trigger: .auto)
                 return
             }
 
             // Check whether the user is allowed to use profiles at all
             guard profileAuthorizer.canUseProfiles else {
                 // If we're not allowed to use profiles, fallback to fastest. We don't want to upsell here
-                self.quickConnect(trigger: .auto)
+                quickConnect(trigger: .auto)
                 return
             }
 
             // If the tier of the profile is too high, connection will be interrupted later by ServerTierChecker
-            self.connectTo(profile: profile)
+            connectTo(profile: profile)
         }
     }
 
@@ -467,20 +467,20 @@ public class VpnGateway: VpnGatewayProtocol {
 
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         do {
-            let currentUserTier = try self.userTier() // accessing from the keychain for each server is very expensive
+            let currentUserTier = try userTier() // accessing from the keychain for each server is very expensive
 
             let selector = VpnServerSelector(serverType: connectionRequest.serverType,
                                              userTier: currentUserTier,
                                              connectionProtocol: connectionRequest.connectionProtocol,
                                              smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                              appStateGetter: { [unowned self] in
-                                                 self.appStateManager.state
+                                                 appStateManager.state
                                              })
             selector.changeActiveServerType = { [unowned self] serverType in
-                self.changeActiveServerType(serverType)
+                changeActiveServerType(serverType)
             }
             selector.notifyResolutionUnavailable = { [unowned self] forSpecificCountry, type, reason in
-                self.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
+                notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
             }
 
             let selected = selector.selectServer(connectionRequest: connectionRequest)
@@ -527,8 +527,8 @@ public class VpnGateway: VpnGatewayProtocol {
 
                 let refreshFreeTierInfo = (try? vpnKeychain.fetchCached().maxTier.isFreeTier) ?? false
 
-                self.vpnApiService.refreshServerInfo(
-                    ifIpHasChangedFrom: self.propertiesManager.userLocation?.ip,
+                vpnApiService.refreshServerInfo(
+                    ifIpHasChangedFrom: propertiesManager.userLocation?.ip,
                     freeTier: refreshFreeTierInfo
                 ) { [weak self] result in
                     dependencies.yield {
@@ -551,11 +551,11 @@ public class VpnGateway: VpnGatewayProtocol {
                 break
             }
             if let userLocation = properties.location {
-                self.propertiesManager.userLocation = userLocation
+                propertiesManager.userLocation = userLocation
             }
             if let services = properties.streamingServices {
-                self.propertiesManager.streamingServices = services.streamingServices
-                self.propertiesManager.streamingResourcesUrl = services.resourceBaseURL
+                propertiesManager.streamingServices = services.streamingServices
+                propertiesManager.streamingResourcesUrl = services.resourceBaseURL
             }
 
             if case let .modified(modifiedAt, servers, isFreeTier) = properties.serverInfo {
@@ -566,7 +566,7 @@ public class VpnGateway: VpnGatewayProtocol {
                     freeServersOnly: isFreeTier,
                     lastModifiedAt: modifiedAt
                 )
-                self.profileManager.refreshProfiles()
+                profileManager.refreshProfiles()
             }
 
         case let .failure(error):
@@ -681,7 +681,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 .configWithWireGuard(udpEnabled: false, tcpEnabled: false, tlsEnabled: false)
         }
         if parameters.newKillSwitch != killSwitch {
-            self.propertiesManager.killSwitch = parameters.newKillSwitch
+            propertiesManager.killSwitch = parameters.newKillSwitch
         }
         if connectionProtocol != parameters.newProtocol {
             connectionProtocol = parameters.newProtocol
@@ -697,8 +697,8 @@ public class VpnGateway: VpnGatewayProtocol {
             }
 
             AppEvent.connectionStateChanged.post(
-                self.connection,
-                userInfo: [AppState.appStateKey: self.appStateManager.state]
+                connection,
+                userInfo: [AppState.appStateKey: appStateManager.state]
             )
         }
     }
@@ -753,13 +753,13 @@ private extension VpnGateway {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
 
         var oldServer: ServerModel?
-        if case .connected = self.connection,
-           let server = self.appStateManager.activeConnection()?.server,
+        if case .connected = connection,
+           let server = appStateManager.activeConnection()?.server,
            server.tier > downgradeInfo.to.maxTier {
             oldServer = server
         }
 
-        self.disconnect {
+        disconnect {
             Task { [oldServer] in
                 do {
                     let credentials = try await self.vpnApiService.clientCredentials()
@@ -787,7 +787,7 @@ private extension VpnGateway {
                                          connectionProtocol: propertiesManager.connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in
-                                             self.appStateManager.state
+                                             appStateManager.state
                                          })
 
         let request = ConnectionRequest(
@@ -803,7 +803,7 @@ private extension VpnGateway {
 
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
-        self.gatherParametersAndConnect(
+        gatherParametersAndConnect(
             requestId: request.id,
             with: request.connectionProtocol,
             server: toServer,

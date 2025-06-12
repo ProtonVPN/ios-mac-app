@@ -50,9 +50,9 @@ final class AccountDetailsTableViewCell: UITableViewCell {
                username: NSAttributedString,
                plan: NSAttributedString,
                handler: @escaping () -> Void) {
-        self.initialsText.attributedText = initials
+        initialsText.attributedText = initials
         self.username.attributedText = username
         self.plan.attributedText = plan
-        self.completionHandler = handler
+        completionHandler = handler
     }
 }

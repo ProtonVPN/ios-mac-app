@@ -139,7 +139,7 @@ class TabBarView: NSView {
     }
     
     private func isFocused(tabIndex index: Int) -> Bool {
-        switch self.userInterfaceLayoutDirection {
+        switch userInterfaceLayoutDirection {
         case .leftToRight:
             return focusedTabIndex == index
         case .rightToLeft:

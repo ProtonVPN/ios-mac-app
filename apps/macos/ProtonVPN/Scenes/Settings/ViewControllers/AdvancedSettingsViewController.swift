@@ -147,10 +147,10 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
             hermesChildWindowController?.window?.makeKeyAndOrderFront(self)
         } else {
             let controller = HermesWindowController(viewModel: viewModel.hermesViewModel)
-            controller.window?.centerWindow(in: self.view.window?.screen)
+            controller.window?.centerWindow(in: view.window?.screen)
             controller.showWindow(self)
             controller.delegate = self
-            self.hermesChildWindowController = controller
+            hermesChildWindowController = controller
         }
     }
 

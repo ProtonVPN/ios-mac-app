@@ -33,11 +33,11 @@ public struct Partner: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.description = try container.decode(String.self, forKey: .description)
+        name = try container.decode(String.self, forKey: .name)
+        description = try container.decode(String.self, forKey: .description)
         let iconString = try? container.decode(String.self, forKey: .iconURL)
-        self.iconURL = URL(string: iconString ?? "")
-        self.logicalIDs = try container.decode([String].self, forKey: .logicalIDs)
+        iconURL = URL(string: iconString ?? "")
+        logicalIDs = try container.decode([String].self, forKey: .logicalIDs)
     }
 }
 

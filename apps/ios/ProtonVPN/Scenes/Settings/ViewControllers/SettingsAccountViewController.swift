@@ -30,9 +30,9 @@ final class SettingsAccountViewController: UIViewController {
 
     init(viewModel: SettingsAccountViewModel, connectionBar: ConnectionBarViewController) {
         self.viewModel = viewModel
-        self.tableView = UITableView()
-        self.genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
-        self.connectionBarContainerView = UIView()
+        tableView = UITableView()
+        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
+        connectionBarContainerView = UIView()
         self.connectionBar = connectionBar
         super.init(nibName: nil, bundle: nil)
 
@@ -41,11 +41,11 @@ final class SettingsAccountViewController: UIViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         viewModel.reloadNeeded = { [weak self] in
-            guard let self, self.isViewLoaded else {
+            guard let self, isViewLoaded else {
                 return
             }
 
-            self.tableView.reloadData()
+            tableView.reloadData()
         }
     }
 

@@ -37,7 +37,7 @@ public struct SettingsView: View {
             currentSubview = view
         }
         if view != nil {
-            self.subviewTitle = title
+            subviewTitle = title
         }
     }
 

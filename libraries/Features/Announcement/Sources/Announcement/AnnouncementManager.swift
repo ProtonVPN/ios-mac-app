@@ -174,7 +174,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         }
 
         public func store(_ objects: [Announcement]) {
-            self.announcements = objects
+            announcements = objects
             AppEvent.announcementStorageContent.post(objects)
         }
 
@@ -187,11 +187,11 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
 private extension Date {
     /// Check if this date represnt time in future
     var isFuture: Bool {
-        self.timeIntervalSinceNow > 0
+        timeIntervalSinceNow > 0
     }
 
     /// Check if this date represnt time in future
     var isPast: Bool {
-        self.timeIntervalSinceNow < 0
+        timeIntervalSinceNow < 0
     }
 }

@@ -51,7 +51,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     public required init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String) {
         self.propertiesManager = propertiesManager
         // swiftlint:disable force_try
-        self.currentVersion = try! SemanticVersion(currentAppVersion) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
+        currentVersion = try! SemanticVersion(currentAppVersion) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
         // swiftlint:enable force_try
         super.init()
     }
@@ -59,7 +59,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     /// Add a migration step where the version specified has to be GREATER than the previous version in order to be executed
     /// Usually when adding a new check will be added specifying the new version to update
     public func addCheck(_ version: String, block: @escaping MigrationBlock) -> MigrationManagerProtocol {
-        self.migrationBlocks.append( ( version, block ) )
+        migrationBlocks.append( ( version, block ) )
         return self
     }
     
@@ -79,12 +79,12 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
         
         // swiftlint:disable force_try
         let migrationVersion = try! SemanticVersion(migrationBlocks[step].0) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
-        let lastAppVersion = try! SemanticVersion(self.propertiesManager.lastAppVersion) // If no last version is set 0.0.0 is returned, so no crash here
+        let lastAppVersion = try! SemanticVersion(propertiesManager.lastAppVersion) // If no last version is set 0.0.0 is returned, so no crash here
         // swiftlint:enable force_try
         let block = migrationBlocks[step].1
         
         if migrationVersion > lastAppVersion {
-            block( self.propertiesManager.lastAppVersion ) { error in
+            block( propertiesManager.lastAppVersion ) { error in
                 if let error {
                     completion(error)
                     return
@@ -93,7 +93,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
                 self.migrate(completion, step: step + 1)
             }
         } else {
-            self.migrate(completion, step: step + 1)
+            migrate(completion, step: step + 1)
         }
     }
 }

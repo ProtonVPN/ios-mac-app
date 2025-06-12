@@ -117,8 +117,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
         statusAlias: TableAlias,
         overrideAlias: TableAlias
     ) -> QueryInterfaceRequest<Endpoint> {
-        self
-            .annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
+        annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.city]).forKey("cityCount"))
@@ -134,8 +133,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
     }
 
     func groupingByServerType(logicalAlias: TableAlias) -> QueryInterfaceRequest<GroupInfoResult> {
-        self
-            .group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
+        group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
             .asRequest(of: GroupInfoResult.self)
     }
 }

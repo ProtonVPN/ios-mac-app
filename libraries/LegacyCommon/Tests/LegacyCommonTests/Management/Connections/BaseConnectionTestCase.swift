@@ -136,19 +136,19 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
             guard let status = notification.object as? NEVPNStatus else {
                 break
             }
-            self.statusChanged?(status)
+            statusChanged?(status)
             return
         case NEVPNConnectionMock.connectionCreatedNotification:
             if let tunnelConnection = notification.object as? NETunnelProviderSessionMock {
                 if let config = tunnelConnection.vpnManager.protocolConfiguration as? NETunnelProviderProtocol,
                    config.providerBundleIdentifier == MockDependencyContainer.wireguardProviderBundleId || config.providerBundleIdentifier == MockDependencyContainer.openvpnProviderBundleId {
-                    tunnelConnection.providerMessageSent = self.handleProviderMessage(messageData:)
+                    tunnelConnection.providerMessageSent = handleProviderMessage(messageData:)
                 }
 
-                self.tunnelConnectionCreated?(tunnelConnection)
+                tunnelConnectionCreated?(tunnelConnection)
                 return
             } else if let connection = notification.object as? NEVPNConnectionMock {
-                self.connectionCreated?(connection)
+                connectionCreated?(connection)
                 return
             } else {
                 break
@@ -157,7 +157,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
             guard let tunnelManager = notification.object as? NETunnelProviderManagerMock else {
                 break
             }
-            self.tunnelManagerCreated?(tunnelManager)
+            tunnelManagerCreated?(tunnelManager)
             return
         default:
             XCTFail("Unexpected notification \(notification.name)")
@@ -276,19 +276,19 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         shouldNotDisconnect = false
 
         container.localAgentConnectionFactory.connectionWasCreated = { [unowned self] connection in
-            self.localAgentConnection = connection
+            localAgentConnection = connection
 
-            self.fulfillExpectationCategory(.localAgentConnection)
+            fulfillExpectationCategory(.localAgentConnection)
         }
 
         didRequestCertRefresh = { [unowned self] features in
-            self.certRefreshFeatures = features
+            certRefreshFeatures = features
 
-            self.fulfillExpectationCategory(.certificateRefresh)
+            fulfillExpectationCategory(.certificateRefresh)
         }
 
         tunnelManagerCreated = { [unowned self] vpnManager in
-            self.manager = vpnManager
+            manager = vpnManager
         }
 
         statusChanged = { [unowned self] vpnStatus in
@@ -296,23 +296,23 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             if vpnStatus == .connected {
                 expectationCategory = .vpnConnection
             } else if vpnStatus == .disconnected {
-                XCTAssertFalse(shouldNotDisconnect, "Did not expect to disconnect from VPN \(self.inThisCase)")
+                XCTAssertFalse(shouldNotDisconnect, "Did not expect to disconnect from VPN \(inThisCase)")
                 expectationCategory = .vpnDisconnection
             } else {
                 return
             }
 
-            self.fulfillExpectationCategory(expectationCategory)
+            fulfillExpectationCategory(expectationCategory)
         }
 
         container.alertService.alertAdded = { [unowned self] alert in
-            self.fulfillExpectationCategory(.alertDisplayed)
+            fulfillExpectationCategory(.alertDisplayed)
         }
     }
 
     func fulfillExpectationCategory(_ category: ExpectationCategory) {
         guard let expectation = expectationsToFulfill[category]?.popLast() else {
-            XCTFail("Did not expect \(category) \(self.inThisCase)")
+            XCTFail("Did not expect \(category) \(inThisCase)")
             return
         }
 
@@ -321,13 +321,13 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
 
     func laState(_ state: String?) {
         localAgentEventQueue.async { [unowned self] in
-            self.localAgentConnection?.client.onState(state)
+            localAgentConnection?.client.onState(state)
         }
     }
 
     func laError(_ code: Int, _ description: String?) {
         localAgentEventQueue.async { [unowned self] in
-            self.localAgentConnection?.client.onError(code, description: description)
+            localAgentConnection?.client.onError(code, description: description)
         }
     }
 
@@ -399,7 +399,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
         awaitExpectations()
 
-        guard let protocolConfig = self.manager?.protocolConfiguration as? NETunnelProviderProtocol else {
+        guard let protocolConfig = manager?.protocolConfiguration as? NETunnelProviderProtocol else {
             XCTFail("Protocol config is not NETunnelProviderProtocol")
             return
         }

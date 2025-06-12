@@ -31,11 +31,11 @@ extension NSMutableAttributedString {
                            alignment: NSTextAlignment = .left,
                            lineSpacing: CGFloat? = nil,
                            lineBreakMode: NSLineBreakMode? = nil) {
-        let range = (self.string as NSString).range(of: self.string)
+        let range = (string as NSString).range(of: string)
 
-        self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
-        self.addAttribute(NSAttributedString.Key.font, value: font, range: range)
-        self.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
+        addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+        addAttribute(NSAttributedString.Key.font, value: font, range: range)
+        addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
@@ -45,6 +45,6 @@ extension NSMutableAttributedString {
         if let lineSpacing {
             paragraphStyle.lineSpacing = lineSpacing
         }
-        self.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
     }
 }

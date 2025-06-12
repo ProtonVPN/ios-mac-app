@@ -60,8 +60,8 @@ class StatusBarAppConnectButton: LargeDropdownButton {
 
         let lw: CGFloat = 2
         let ib: CGRect
-        context.setStrokeColor(self.cgColor(.border))
-        context.setFillColor(self.cgColor(.background))
+        context.setStrokeColor(cgColor(.border))
+        context.setFillColor(cgColor(.background))
 
         if isConnected {
             ib = NSRect(x: bounds.origin.x + lw/2, y: bounds.origin.y + lw/2, width: bounds.width - lw, height: bounds.height - lw)
@@ -77,7 +77,7 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         context.addPath(path)
         context.drawPath(using: .fillStroke)
 
-        let buttonTitle = self.style(isConnected ? Localizable.disconnect : Localizable.quickConnect, font: .themeFont(.heading4))
+        let buttonTitle = style(isConnected ? Localizable.disconnect : Localizable.quickConnect, font: .themeFont(.heading4))
         let textHeight = buttonTitle.size().height
         buttonTitle.draw(in: CGRect(
             x: 0,
@@ -130,8 +130,8 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
 
         let lw: CGFloat = 2
         let ib: CGRect
-        context.setStrokeColor(self.cgColor(.border))
-        context.setFillColor(self.cgColor(.background))
+        context.setStrokeColor(cgColor(.border))
+        context.setFillColor(cgColor(.background))
         if isConnected {
             ib = NSRect(x: bounds.origin.x - lw/2 + buttonMargin, y: bounds.origin.y + lw/2, width: bounds.width - lw/2 - buttonMargin, height: bounds.height - lw)
         } else {
@@ -144,7 +144,7 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         path.addRoundedRectangle(ib, cornerRadius: AppTheme.ButtonConstants.cornerRadius)
 
         let ah: CGFloat = dropDownExpanded ? -4 : 4 // arrowHeight
-        let borderMargin: CGFloat = self.customStyle(context: .border) == .transparent ? 0 : 2
+        let borderMargin: CGFloat = customStyle(context: .border) == .transparent ? 0 : 2
         let midX: CGFloat = bounds.midX - borderMargin + buttonMargin/2
         let arrow = CGMutablePath()
         arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah/2))

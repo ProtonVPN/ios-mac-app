@@ -85,8 +85,8 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             }
 
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
-            log.debug("Will connect to profile: \(self.profile.logDescription)", category: .connectionConnect, event: .trigger)
-            self.vpnGateway.connectTo(profile: self.profile)
+            log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(profile: profile)
         }
 
         guard profile.connectionProtocol.requiresSystemExtension else {

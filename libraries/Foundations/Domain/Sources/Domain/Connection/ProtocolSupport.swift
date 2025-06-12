@@ -40,14 +40,14 @@ public struct ProtocolSupport: OptionSet, Codable, CaseIterable, CustomStringCon
     }
 
     public init(vpnProtocols: [VpnProtocol]) {
-        self.rawValue = vpnProtocols.reduce(.zero) { result, nextValue in
+        rawValue = vpnProtocols.reduce(.zero) { result, nextValue in
             result + ProtocolSupport(bitPosition: nextValue.protocolSupportBitPosition)
         }.rawValue
     }
 
     public var description: String {
         var elements: [VpnProtocol] = []
-        for supportedProtocol in Self.allCases where self.contains(supportedProtocol) {
+        for supportedProtocol in Self.allCases where contains(supportedProtocol) {
             guard let element = VpnProtocol(element: supportedProtocol) else { continue }
             elements.append(element)
         }
@@ -93,6 +93,6 @@ extension VpnProtocol {
     }
 
     public var protocolSupport: ProtocolSupport {
-        ProtocolSupport(bitPosition: self.protocolSupportBitPosition)
+        ProtocolSupport(bitPosition: protocolSupportBitPosition)
     }
 }

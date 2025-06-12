@@ -41,7 +41,7 @@ class LoadingAnimationView: NSView {
         clipToBounds()
         gifView = GIFView(frame: frame, pngDirectoryString: Self.loadingAnimationSubdirectory)
         gifView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(gifView)
+        addSubview(gifView)
 
         NSLayoutConstraint.activate([
             gifView.centerXAnchor.constraint(equalTo: centerXAnchor),

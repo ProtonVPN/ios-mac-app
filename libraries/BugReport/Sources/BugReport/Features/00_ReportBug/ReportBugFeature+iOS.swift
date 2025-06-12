@@ -53,7 +53,7 @@
             WithPerceptionTracking {
                 NavigationView {
                     WhatsTheIssueView(
-                        store: self.store.scope(
+                        store: store.scope(
                             state: \.whatsTheIssueState,
                             action: \.whatsTheIssueAction
                         )

@@ -70,12 +70,12 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private func refreshCertificate() async {
         do {
             try await appSessionManager.refreshVpnAuthCertificate()
-            self.lastRetryInterval = 10
+            lastRetryInterval = 10
             // Planning next refresh happens in `certificateStored()`
         } catch {
-            let delay = self.nextRetryBackoff()
+            let delay = nextRetryBackoff()
             log.error("Failed to refresh certificate through API: \(error). Will retry in \(delay) seconds.", category: .userCert)
-            self.startTimer(at: Date().addingTimeInterval(delay))
+            startTimer(at: Date().addingTimeInterval(delay))
         }
     }
 

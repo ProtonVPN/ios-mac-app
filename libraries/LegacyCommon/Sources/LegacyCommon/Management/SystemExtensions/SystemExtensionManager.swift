@@ -246,7 +246,7 @@
                     }
                 })
 
-                self.alertService.push(alert: tour)
+                alertService.push(alert: tour)
             }, installationFinishedHandler: { installationResults in
                 let result = self.reduce(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
                 log.debug("Finished installation with result: \(result)", category: .sysex)
@@ -318,7 +318,7 @@
                       manager: SystemExtensionManager) {
             self.action = action
             self.request = request
-            self.stateChangeCallback = stateChange
+            stateChangeCallback = stateChange
             self.manager = manager
         }
 

@@ -56,7 +56,7 @@ class TabBarViewModel {
         self.sessionManager = sessionManager
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
-        self.connectionStatusService = navigationService
+        connectionStatusService = navigationService
 
         startObserving()
     }

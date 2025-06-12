@@ -110,7 +110,7 @@ class MapViewModel: SecureCoreToggleHandler {
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
         
-        self.secureCoreConnections = []
+        secureCoreConnections = []
         
         setStateOf(type: propertiesManager.serverTypeToggle)
         
@@ -205,21 +205,21 @@ class MapViewModel: SecureCoreToggleHandler {
         }
 
         annotationViewModel.countryTapped = { [unowned self] tappedAnnotationViewModel in
-            for annotation in self.countryExitAnnotations {
+            for annotation in countryExitAnnotations {
                 if annotation !== tappedAnnotationViewModel {
                     annotation.deselect()
                 }
             }
 
-            for annotation in self.secureCoreEntryAnnotations {
-                if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
+            for annotation in secureCoreEntryAnnotations {
+                if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
                     annotation.highlight(true)
                 } else {
                     annotation.highlight(false)
                 }
             }
 
-            self.reorderAnnotations?()
+            reorderAnnotations?()
         }
 
         return annotationViewModel

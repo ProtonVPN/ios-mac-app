@@ -29,7 +29,7 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
     }
 
     init(section: Int, row: Int, code: String) {
-        self.id = "\(section)" + code
+        id = "\(section)" + code
         self.section = section
         self.row = row
         self.code = code

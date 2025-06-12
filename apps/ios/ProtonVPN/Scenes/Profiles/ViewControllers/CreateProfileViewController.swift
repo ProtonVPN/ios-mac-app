@@ -65,14 +65,14 @@ class CreateProfileViewController: UITableViewController {
     // MARK: - Private functions
 
     private func setupView() {
-        self.title = Localizable.createNewProfile
+        title = Localizable.createNewProfile
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localizable.save, style: .plain, target: self, action: #selector(saveTapped))
         renderSaveButton()
         
         // for dismissing keyboard after name is entered
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(tap)
     }
     
     private func setupTableView() {
@@ -97,7 +97,7 @@ class CreateProfileViewController: UITableViewController {
     
     @objc private func saveTapped() {
         guard let viewModel else {
-            self.navigationController?.popViewController(animated: true)
+            navigationController?.popViewController(animated: true)
             return
         }
         

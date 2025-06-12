@@ -35,8 +35,8 @@ public struct RecentsImages {
         pinSlashFilled: Image = Image(systemName: "pin.slash.fill"),
         trashCrossFilled: Image = Image(systemName: "trash.fill")
     ) {
-        self.wrench = wrenchImage
-        self.threeDotsHorizontal = threeDotsHorizontalImage
+        wrench = wrenchImage
+        threeDotsHorizontal = threeDotsHorizontalImage
         self.pinFilled = pinFilled
         self.pinSlashFilled = pinSlashFilled
         self.trashCrossFilled = trashCrossFilled

@@ -112,14 +112,14 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
 
 extension HTTPURLResponse {
     var apiHttpErrorCode: APIHTTPErrorCode? {
-        APIHTTPErrorCode(rawValue: self.statusCode)
+        APIHTTPErrorCode(rawValue: statusCode)
     }
 
     func value(forApiHeader header: APIHeader) -> String? {
         if #available(iOSApplicationExtension 13.0, *) {
             return value(forHTTPHeaderField: header.rawValue)
         } else {
-            let kvPair = self.allHeaderFields.first { key, _ in
+            let kvPair = allHeaderFields.first { key, _ in
                 (key as? String)?.lowercased() == header.rawValue.lowercased()
             }
             guard let kvPair else {

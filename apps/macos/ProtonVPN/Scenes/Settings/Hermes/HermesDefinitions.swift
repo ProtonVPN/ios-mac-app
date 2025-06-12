@@ -29,10 +29,10 @@ class ExplicitlySizedHostingController: NSViewController {
     private let hostingViewController: NSViewController
 
     init<Content: ExplicitlySizedView>(rootView: Content) {
-        self.hostingViewController = NSHostingController(rootView: rootView)
-        self.viewSize = Content.viewSize
+        hostingViewController = NSHostingController(rootView: rootView)
+        viewSize = Content.viewSize
         super.init(nibName: nil, bundle: nil)
-        addChild(self.hostingViewController)
+        addChild(hostingViewController)
         view = hostingViewController.view
     }
 

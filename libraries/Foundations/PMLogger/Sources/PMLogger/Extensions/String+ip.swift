@@ -21,8 +21,7 @@ import Foundation
 extension String {
     /// Search for IPs and return string with IPs masked
     public var maskIPs: String {
-        self
-            .maskIPv4
+        maskIPv4
             .maskIPv6
     }
 
@@ -33,7 +32,7 @@ extension String {
             return self
         }
         if 0 < regexp.replaceMatches(in: result,
-                                     range: NSRange(location: 0, length: self.count),
+                                     range: NSRange(location: 0, length: count),
                                      withTemplate: "$1.$2.*.*") {
             return String(result)
         } else {
@@ -48,7 +47,7 @@ extension String {
             return self
         }
         if 0 < regexp.replaceMatches(in: result,
-                                     range: NSRange(location: 0, length: self.count),
+                                     range: NSRange(location: 0, length: count),
                                      withTemplate: "ip:v6:removed") {
             return String(result)
         } else {

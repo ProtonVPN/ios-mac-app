@@ -148,7 +148,7 @@ final class UpdateManager: NSObject {
         guard let items = appcast?.items else {
             return nil
         }
-        let currentVersion = self.currentVersion
+        let currentVersion = currentVersion
         for item in items where item.displayVersionString.elementsEqual(currentVersion ?? "wrong-string") {
             return item
         }

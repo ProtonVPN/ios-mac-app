@@ -280,7 +280,7 @@ final class HeaderViewModel {
                 return
             }
 
-            self.delegate?.bitrateUpdated(with: self.formBitrateLabel(with: bitrate))
+            delegate?.bitrateUpdated(with: formBitrateLabel(with: bitrate))
         }
     }
 

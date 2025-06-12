@@ -56,7 +56,7 @@ public class CountryCodeProviderImplementation: CountryCodeProvider {
             }
         }
 
-        self.countryCodes = result
+        countryCodes = result
             .appending(Array(Self.carrierIsoCountryCodes))
             .uniqued
     }

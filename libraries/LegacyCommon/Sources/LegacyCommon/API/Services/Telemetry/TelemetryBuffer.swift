@@ -150,15 +150,15 @@ extension TelemetryBuffer {
 
         init(_ data: Data, id: UUID) {
             self.id = id
-            self.timeStamp = Date().timeIntervalSince1970
+            timeStamp = Date().timeIntervalSince1970
             self.data = data
         }
 
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.id = try container.decode(UUID.self, forKey: .id)
-            self.timeStamp = try container.decode(TimeInterval.self, forKey: .timeStamp)
-            self.data = try container.decode(Data.self, forKey: .data)
+            id = try container.decode(UUID.self, forKey: .id)
+            timeStamp = try container.decode(TimeInterval.self, forKey: .timeStamp)
+            data = try container.decode(Data.self, forKey: .data)
         }
 
         func encode(to encoder: Encoder) throws {

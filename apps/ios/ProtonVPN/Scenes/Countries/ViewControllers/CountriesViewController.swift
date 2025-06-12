@@ -166,7 +166,7 @@ final class CountriesViewController: UIViewController {
             return
         }
 
-        self.navigationController?.pushViewController(countryViewController, animated: true)
+        navigationController?.pushViewController(countryViewController, animated: true)
     }
 }
 

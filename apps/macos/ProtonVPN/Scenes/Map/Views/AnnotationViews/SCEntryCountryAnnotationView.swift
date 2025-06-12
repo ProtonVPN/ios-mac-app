@@ -67,8 +67,8 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
                 return
             }
 
-            self.setupAnnotationView()
-            self.needsDisplay = true
+            setupAnnotationView()
+            needsDisplay = true
         }
 
         setupAnnotationView()

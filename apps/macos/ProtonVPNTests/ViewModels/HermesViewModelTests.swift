@@ -29,7 +29,7 @@ private final class HermesTestContainer: MockDependencyContainer {
     let netShieldPropertyProvider: NetShieldPropertyProviderMock
 
     override init() {
-        self.netShieldPropertyProvider = NetShieldPropertyProviderMock()
+        netShieldPropertyProvider = NetShieldPropertyProviderMock()
         super.init()
     }
 }

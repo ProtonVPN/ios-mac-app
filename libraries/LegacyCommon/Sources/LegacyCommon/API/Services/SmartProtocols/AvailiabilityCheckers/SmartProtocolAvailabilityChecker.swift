@@ -90,13 +90,13 @@ extension SmartProtocolAvailabilityChecker {
 
         DispatchQueue.global().async { [unowned self] in
             let group = DispatchGroup()
-            let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(self.protocolName)")
+            let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(protocolName)")
             var portAlreadyFound = false // Prevents several calls to completion closure
 
             let ports = server.protocolEntries?.overridePorts(using: vpnProtocol) ?? defaultPorts
             for port in ports.shuffled() {
                 group.enter()
-                self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { success in
+                ping(protocolName: protocolName, server: server, port: port, timeout: timeout) { success in
                     defer { group.leave() }
 
                     let go = lockQueue.sync { () -> Bool in

@@ -81,7 +81,7 @@ import CommonNetworking
             }
 
             // certificate is missing or no longer valid, refresh it and use
-            self.refreshCertificates(features: features, completion: { result in
+            refreshCertificates(features: features, completion: { result in
                 switch result {
                 case .success:
                     log.info("Refreshed certificate", category: .userCert)

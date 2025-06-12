@@ -33,10 +33,10 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     override func setUp() async throws {
         try await super.setUp()
 
-        self.manager = ExtensionCertificateRefreshManager(apiService: apiService,
-                                                          timerFactory: timerFactory,
-                                                          vpnAuthenticationStorage: authenticationStorage,
-                                                          keychain: keychain)
+        manager = ExtensionCertificateRefreshManager(apiService: apiService,
+                                                     timerFactory: timerFactory,
+                                                     vpnAuthenticationStorage: authenticationStorage,
+                                                     keychain: keychain)
     }
 
     /// We have to use this because the VPNConnectionFeatures in the request parameters has a decode function that is
@@ -95,7 +95,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
 
-        guard let cert = self.authenticationStorage.getStoredCertificate() else {
+        guard let cert = authenticationStorage.getStoredCertificate() else {
             XCTFail("No certificate stored")
             return
         }
@@ -677,7 +677,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                 XCTFail("Shouldn't add any timers here")
             }
 
-            self.timerFactory.workWasScheduled = {
+            timerFactory.workWasScheduled = {
                 expectations.certRefresh503NoRetryScheduledWork.fulfill()
             }
 
@@ -700,7 +700,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         do {
             certRefreshCallback = successfulCertRefresh
 
-            self.timerFactory.runAllScheduledWork()
+            timerFactory.runAllScheduledWork()
 
             wait(for: [expectations.certRefreshSuccessful,
                        expectations.sessionAuthSuccessfulManagerRestart], timeout: expectationTimeout)

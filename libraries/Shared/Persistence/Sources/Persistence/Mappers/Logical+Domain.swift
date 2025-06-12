@@ -26,7 +26,7 @@ extension VPNServer {
     }
 
     var logicalRecord: Persistence.Logical {
-        let serverNameComponents = self.serverNameComponents
+        let serverNameComponents = serverNameComponents
 
         return .init(
             id: logical.id,

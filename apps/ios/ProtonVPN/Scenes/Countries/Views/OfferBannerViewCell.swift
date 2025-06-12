@@ -55,7 +55,7 @@ class OfferBannerViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = .color(.background)
+        backgroundColor = .color(.background)
         timeRemainingLabel.textColor = .color(.text, .weak)
         timeRemainingLabel.font = .systemFont(ofSize: 13)
 
@@ -68,7 +68,7 @@ class OfferBannerViewCell: UITableViewCell {
         timer = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
 
         if let image = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
-            self.offerImageView.image = image
+            offerImageView.image = image
             return
         }
         SDWebImageDownloader.shared.downloadImage(with: viewModel.imageURL) { [weak self] image, _, _, _ in

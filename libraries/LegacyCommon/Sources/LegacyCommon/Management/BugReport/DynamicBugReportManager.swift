@@ -34,10 +34,10 @@ public class DynamicBugReportManager {
     public var model: BugReportModel = .mock
     public var prefilledEmail: String {
         get {
-            self.propertiesManager.reportBugEmail ?? ""
+            propertiesManager.reportBugEmail ?? ""
         }
         set {
-            self.propertiesManager.reportBugEmail = newValue
+            propertiesManager.reportBugEmail = newValue
         }
     }
 

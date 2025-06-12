@@ -41,7 +41,7 @@
         let appReducer: StoreOf<AppReducer>
 
         init() {
-            self.appReducer = .init(initialState: .loading, reducer: {
+            appReducer = .init(initialState: .loading, reducer: {
                 AppReducer()
                     .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                     ._printChanges()
@@ -117,7 +117,7 @@
 
     extension Scene {
         func appCommands(appDelegate: AppDelegate, store: StoreOf<AppReducer>) -> some Scene {
-            self.commands {
+            commands {
                 CommandGroup(after: .appInfo) {
                     Button("Check for updates") {
                         appDelegate.navigationService.checkForUpdates()
@@ -176,23 +176,23 @@
         func makeNSView(context: Context) -> NSView {
             let view = NSView()
             DispatchQueue.main.async {
-                self.window = view.window
+                window = view.window
                 configureForWindowType()
             }
             return view
         }
 
         func configureForWindowType() {
-            self.window?.title = "Proton VPN"
-            self.window?.centerWindowOnScreen()
+            window?.title = "Proton VPN"
+            window?.centerWindowOnScreen()
             switch windowType {
             case .app:
-                self.window?.isOpaque = false
-                self.window?.setContentSize(.init(width: 780, height: 580)) // default size for the app window
-                self.window?.backgroundColor = .clear
+                window?.isOpaque = false
+                window?.setContentSize(.init(width: 780, height: 580)) // default size for the app window
+                window?.backgroundColor = .clear
             case .login:
-                self.window?.setContentSize(.init(width: 1, height: 1)) // content size managed by autolayout, we just want to force the minimal size
-                self.window?.backgroundColor = .color(.background)
+                window?.setContentSize(.init(width: 1, height: 1)) // content size managed by autolayout, we just want to force the minimal size
+                window?.backgroundColor = .color(.background)
             }
         }
 

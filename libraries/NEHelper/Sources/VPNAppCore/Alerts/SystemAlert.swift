@@ -72,8 +72,8 @@ public final class DomainErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(alert: Domain.Alert) {
-        self.title = String(localized: alert.title)
-        self.message = String(localized: alert.message)
+        title = String(localized: alert.title)
+        message = String(localized: alert.message)
     }
 }
 
@@ -407,7 +407,7 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(enableSmartProtocolHandler: @escaping (() -> Void)) {
-        self.enableSmartProtocol = enableSmartProtocolHandler
+        enableSmartProtocol = enableSmartProtocolHandler
 
         actions.append(AlertAction(
             title: Localizable.alertProtocolDeprecatedEnableSmart,
@@ -807,7 +807,7 @@ public final class ConnectingWithBadLANAlert: SystemAlert {
         killSwitchOnHandler: @escaping () -> Void,
         connectAnywayHandler: @escaping () -> Void
     ) {
-        self.message = Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+        message = Localizable.promptKillSwitchDueToBadInterfaceIpRange(
             badInterfaceName ?? "Unknown Interface",
             badIpAndPrefix ?? "Unknown Subnet"
         )
@@ -841,9 +841,9 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
             platform = "Unrecognized"
         #endif
 
-        self.title = Localizable.operatingSystemOutOfDateAlertTitle
-        self.message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
-        self.actions = [
+        title = Localizable.operatingSystemOutOfDateAlertTitle
+        message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
+        actions = [
             .init(title: Localizable.gotIt, style: .confirmative, handler: nil)
         ]
     }
@@ -907,7 +907,7 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
                 Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
             }
 
-            self.message = Localizable.sysexErrorDescription(subcase)
+            message = Localizable.sysexErrorDescription(subcase)
 
             actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
         }
@@ -923,7 +923,7 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
 
         public init(cancelHandler: @escaping() -> Void) {
             self.cancelHandler = cancelHandler
-            self.dismiss = cancelHandler
+            dismiss = cancelHandler
         }
     }
 #endif

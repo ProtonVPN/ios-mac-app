@@ -67,7 +67,7 @@
             }
 
             sysextManager.requestRequiresUserApproval = { [unowned self] request in
-                self.sysextManager.approve(request: request)
+                sysextManager.approve(request: request)
                 approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
             }
 

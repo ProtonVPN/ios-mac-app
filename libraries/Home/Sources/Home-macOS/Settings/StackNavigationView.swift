@@ -32,8 +32,8 @@ struct StackNavigationView<RootContent>: View where RootContent: View {
          subviewTitle: Binding<String>,
          title: String,
          @ViewBuilder rootView: @escaping () -> RootContent) {
-        self._currentSubview = currentSubview
-        self._subviewTitle = subviewTitle
+        _currentSubview = currentSubview
+        _subviewTitle = subviewTitle
         self.title = title
         self.rootView = rootView
     }

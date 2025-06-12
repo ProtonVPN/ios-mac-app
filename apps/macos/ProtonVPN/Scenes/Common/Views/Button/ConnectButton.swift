@@ -77,7 +77,7 @@ class ConnectButton: ResizingTextButton {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)
         }
-        self.image = nil
+        image = nil
         attributedTitle = text.styled(font: .themeFont(.small))
     }
 

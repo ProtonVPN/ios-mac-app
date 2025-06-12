@@ -36,7 +36,7 @@ public protocol NEVPNManagerWrapper: AnyObject {
 
 extension NEVPNManager: NEVPNManagerWrapper {
     public var vpnConnection: NEVPNConnectionWrapper {
-        self.connection
+        connection
     }
 }
 
@@ -78,7 +78,7 @@ extension NETunnelProviderManagerWrapperFactory {
         let managers = try await loadManagersFromPreferences()
         return managers.first(where: { manager -> Bool in
             return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-        }) ?? self.makeNewManager()
+        }) ?? makeNewManager()
     }
 }
 
@@ -109,7 +109,7 @@ public protocol NEVPNConnectionWrapper {
 
 extension NEVPNConnection: NEVPNConnectionWrapper {
     public var vpnManager: NEVPNManagerWrapper {
-        self.manager
+        manager
     }
 }
 

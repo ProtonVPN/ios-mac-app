@@ -31,8 +31,8 @@ class RecoveryRobot: CoreElements {
     }
 
     func insertRecoveryEmail(_ email: String) -> RecoveryRobot {
-        _ = self.coreRecoveryRobot
-            .self.insertRecoveryEmail(email: email)
+        _ = coreRecoveryRobot
+            .insertRecoveryEmail(email: email)
         return RecoveryRobot()
     }
 

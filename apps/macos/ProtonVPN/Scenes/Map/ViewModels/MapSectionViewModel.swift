@@ -135,7 +135,7 @@ class MapSectionViewModel {
                 return
             }
 
-            self.connectionsChanged?(self.connections)
+            connectionsChanged?(connections)
         }
     }
     
@@ -152,7 +152,7 @@ class MapSectionViewModel {
                 return
             }
 
-            self.contentChanged?(contentChange)
+            contentChanged?(contentChange)
         }
     }
     

@@ -92,8 +92,8 @@ class HelpMenuViewModel {
 
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
-            self.vpnManager.disconnect { [self] in
-                self.clearAllDataAndTerminate()
+            vpnManager.disconnect { [self] in
+                clearAllDataAndTerminate()
             }
         })
     }
@@ -104,20 +104,20 @@ class HelpMenuViewModel {
     }
 
     private func clearAllDataAndTerminate() {
-        self.vpnManager.disconnect {}
+        vpnManager.disconnect {}
 
         AppEvent.clearingApplicationData.post()
 
-        if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
+        if systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
             log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
         }
 
         // keychain
-        self.vpnKeychain.clear()
-        self.authKeychain.clear()
+        vpnKeychain.clear()
+        authKeychain.clear()
 
-        self.vpnAuthenticationStorage.deleteCertificate()
-        self.vpnAuthenticationStorage.deleteKeys()
+        vpnAuthenticationStorage.deleteCertificate()
+        vpnAuthenticationStorage.deleteKeys()
 
         // app data
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
@@ -144,7 +144,7 @@ class HelpMenuViewModel {
         nukeServerDatabase()
 
         // vpn profile
-        self.vpnManager.removeConfigurations { _ in
+        vpnManager.removeConfigurations { _ in
             // quit app
             DispatchQueue.main.async {
                 NSApplication.shared.terminate(self)

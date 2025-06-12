@@ -232,7 +232,7 @@ public struct HomeView: View {
                 )
         }
         .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
-            self.connectionViewHeight = viewHeight
+            connectionViewHeight = viewHeight
         }
     }
 }

@@ -20,7 +20,7 @@ class WireguardMacProtocolFactory: WireguardProtocolFactory {
     public init(bundleId: String,
                 appGroup: String,
                 factory: Factory) {
-        self.xpcConnectionsRepository = factory.makeXPCConnectionsRepository()
+        xpcConnectionsRepository = factory.makeXPCConnectionsRepository()
         super.init(bundleId: bundleId,
                    appGroup: appGroup,
                    propertiesManager: factory.makePropertiesManager(),

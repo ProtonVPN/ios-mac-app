@@ -79,23 +79,23 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public lazy var serverNameComponents: ServerNameComponents = .init(name: name)
     
     public var isSecureCore: Bool {
-        self.feature.contains(.secureCore)
+        feature.contains(.secureCore)
     }
     
     public var hasSecureCore: Bool {
-        self.feature.rawValue > 0
+        feature.rawValue > 0
     }
     
     public var supportsP2P: Bool {
-        self.feature.contains(.p2p)
+        feature.contains(.p2p)
     }
 
     public var supportsTor: Bool {
-        self.feature.contains(.tor)
+        feature.contains(.tor)
     }
 
     public var supportsStreaming: Bool {
-        self.feature.contains(.streaming)
+        feature.contains(.streaming)
     }
     
     public var underMaintenance: Bool {
@@ -107,19 +107,19 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public var entryCountry: String {
-        LocalizationUtility.default.countryName(forCode: self.entryCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
     }
     
     public var exitCountry: String {
-        LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
     
     public var country: String {
-        LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
     
     public var countryCode: String {
-        self.exitCountryCode
+        exitCountryCode
     }
 
     public var isVirtual: Bool {
@@ -174,9 +174,9 @@ public class ServerModel: NSObject, NSCoding, Codable {
         tier = try dic.intOrThrow(key: "Tier") // "Tier": 2
         score = try dic.doubleOrThrow(key: "Score") // "Score": 1
         status = try dic.intOrThrow(key: "Status") // "Status": 1,
-        self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
+        feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
         city = dic.string("City") // "City": "Zurich"
-        self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
+        location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
         hostCountry = dic.string("HostCountry")
         translatedCity = (dic["Translations"] as? AnyObject)?["City"] as? String
         ips = try dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) }
@@ -223,7 +223,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         let query = searchQuery.lowercased()
         
         if isSecureCore {
-            return self.entryCountry.lowercased().contains(query)
+            return entryCountry.lowercased().contains(query)
         }
         
         if name.lowercased().contains(query) {
@@ -234,11 +234,11 @@ public class ServerModel: NSObject, NSCoding, Codable {
             return true
         }
         
-        if let city = self.city, city.lowercased().contains(query) {
+        if let city, city.lowercased().contains(query) {
             return true
         }
 
-        if let translatedCity = self.translatedCity, translatedCity.lowercased().contains(query) {
+        if let translatedCity, translatedCity.lowercased().contains(query) {
             return true
         }
         

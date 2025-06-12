@@ -89,7 +89,7 @@ public struct ConnectionStatusFeature {
             switch action {
             case .startLocationMasking:
                 return .run { send in
-                    for await _ in self.clock.timer(interval: Self.maskTickTimerDuration) {
+                    for await _ in clock.timer(interval: Self.maskTickTimerDuration) {
                         await send(.maskLocationTick)
                     }
                 }

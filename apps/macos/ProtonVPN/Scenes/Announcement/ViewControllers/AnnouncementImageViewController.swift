@@ -91,8 +91,8 @@ final class AnnouncementImageViewController: NSViewController {
                 log.warning("Couldn't retrieve image from URL: \(imageURL)")
                 return
             }
-            self.progressIndicator.stopAnimation(nil)
-            self.actionButton.isHidden = false
+            progressIndicator.stopAnimation(nil)
+            actionButton.isHidden = false
             /// Usually `scale` would be 0.5
             let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
 
@@ -102,10 +102,10 @@ final class AnnouncementImageViewController: NSViewController {
             let imageViewSize = desiredSize.fitting(NSScreen.availableSizeInPixels()) // still in pixels
 
             // multiply by scale to get point values
-            self.imageViewWidth.constant = imageViewSize.width * scale
-            self.imageViewHeight.constant = imageViewSize.height * scale
+            imageViewWidth.constant = imageViewSize.width * scale
+            imageViewHeight.constant = imageViewSize.height * scale
 
-            self.didPresentOffer()
+            didPresentOffer()
         }
     }
 

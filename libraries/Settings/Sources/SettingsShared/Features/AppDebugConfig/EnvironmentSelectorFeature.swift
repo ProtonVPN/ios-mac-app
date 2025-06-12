@@ -118,7 +118,7 @@ public struct DebugConfigurationFeature {
             overrides: [FeatureOverride]
         ) {
             self.apiEndpoint = apiEndpoint
-            self.newApiEndpointURLString = apiEndpoint
+            newApiEndpointURLString = apiEndpoint
             self.atlasSecret = atlasSecret
             self.atlasSecretFetchURLString = atlasSecretFetchURLString
             self.overrides = overrides
@@ -127,11 +127,11 @@ public struct DebugConfigurationFeature {
         public init() {
             @Dependency(\.settingsStorage) var settingsStorage
             let settings = settingsStorage.getEnvironment()
-            self.apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
-            self.newApiEndpointURLString = self.apiEndpoint
-            self.atlasSecret = settings.atlasSecret
-            self.atlasSecretFetchURLString = settings.atlasSecretFetchURLString
-            self.overrides = settings.featureFlagOverrides
+            apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
+            newApiEndpointURLString = apiEndpoint
+            atlasSecret = settings.atlasSecret
+            atlasSecretFetchURLString = settings.atlasSecretFetchURLString
+            overrides = settings.featureFlagOverrides
                 .sorted(by: { $0.key < $1.key })
                 .enumerated()
                 .reduce(into: Array(), { partialResult, element in

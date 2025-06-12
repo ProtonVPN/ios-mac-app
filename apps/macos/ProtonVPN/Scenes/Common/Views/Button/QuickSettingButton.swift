@@ -73,7 +73,7 @@ class QuickSettingButton: NSButton {
     }
 
     override func layoutSubtreeIfNeeded() {
-        if let area = self.trackingArea { removeTrackingArea(area) }
+        if let area = trackingArea { removeTrackingArea(area) }
         trackingArea = NSTrackingArea(rect: bounds, options: [
             NSTrackingArea.Options.mouseEnteredAndExited,
             NSTrackingArea.Options.mouseMoved,
@@ -127,7 +127,7 @@ extension QuickSettingButton: CustomStyleContext {
 
         let hover: AppTheme.Style = hovered ? .hovered : []
 
-        switch self.currentStyle {
+        switch currentStyle {
         case .disabled:
             if hovered {
                 return [.transparent, .active, .hovered]

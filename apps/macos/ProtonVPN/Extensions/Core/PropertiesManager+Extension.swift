@@ -71,7 +71,7 @@ extension PropertiesManagerProtocol {
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.startOnBoot)
-            self.setLoginItem(enabled: newValue)
+            setLoginItem(enabled: newValue)
         }
     }
 
@@ -94,8 +94,8 @@ extension PropertiesManagerProtocol {
     }
 
     func restoreStartOnBootStatus() {
-        let enabled = self.startOnBoot
-        self.setLoginItem(enabled: enabled)
+        let enabled = startOnBoot
+        setLoginItem(enabled: enabled)
     }
 
     // MARK: - Private

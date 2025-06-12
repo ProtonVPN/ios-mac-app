@@ -82,7 +82,7 @@ final class CoreLoginService {
     weak var delegate: LoginServiceDelegate?
 
     init(factory: Factory) {
-        self.doh = Dependency(\.dohConfiguration).wrappedValue
+        doh = Dependency(\.dohConfiguration).wrappedValue
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
         windowService = factory.makeWindowService()

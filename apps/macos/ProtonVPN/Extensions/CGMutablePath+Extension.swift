@@ -21,31 +21,31 @@ import CoreGraphics
 
 extension CGMutablePath {
     func addRoundedRectangle(_ rect: CGRect, cornerRadius: CGFloat) {
-        self.move(to: CGPoint(x: rect.minX, y: rect.minY + cornerRadius))
-        self.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - cornerRadius))
-        self.addArc(center: CGPoint(x: rect.minX + cornerRadius,
-                                    y: rect.maxY - cornerRadius),
-                    radius: cornerRadius,
-                    startAngle: .pi, endAngle: .pi / 2,
-                    clockwise: true)
-        self.addLine(to: CGPoint(x: rect.maxX - cornerRadius, y: rect.maxY))
-        self.addArc(center: CGPoint(x: rect.maxX - cornerRadius,
-                                    y: rect.maxY - cornerRadius),
-                    radius: cornerRadius,
-                    startAngle: .pi / 2, endAngle: 0,
-                    clockwise: true)
-        self.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + cornerRadius))
-        self.addArc(center: CGPoint(x: rect.maxX - cornerRadius,
-                                    y: rect.minY + cornerRadius),
-                    radius: cornerRadius,
-                    startAngle: 0, endAngle: .pi * 3 / 2,
-                    clockwise: true)
-        self.addLine(to: CGPoint(x: rect.minX + cornerRadius, y: rect.minY))
-        self.addArc(center: CGPoint(x: rect.minX + cornerRadius,
-                                    y: rect.minY + cornerRadius),
-                    radius: cornerRadius,
-                    startAngle: .pi * 3 / 2, endAngle: .pi,
-                    clockwise: true)
-        self.closeSubpath()
+        move(to: CGPoint(x: rect.minX, y: rect.minY + cornerRadius))
+        addLine(to: CGPoint(x: rect.minX, y: rect.maxY - cornerRadius))
+        addArc(center: CGPoint(x: rect.minX + cornerRadius,
+                               y: rect.maxY - cornerRadius),
+               radius: cornerRadius,
+               startAngle: .pi, endAngle: .pi / 2,
+               clockwise: true)
+        addLine(to: CGPoint(x: rect.maxX - cornerRadius, y: rect.maxY))
+        addArc(center: CGPoint(x: rect.maxX - cornerRadius,
+                               y: rect.maxY - cornerRadius),
+               radius: cornerRadius,
+               startAngle: .pi / 2, endAngle: 0,
+               clockwise: true)
+        addLine(to: CGPoint(x: rect.maxX, y: rect.minY + cornerRadius))
+        addArc(center: CGPoint(x: rect.maxX - cornerRadius,
+                               y: rect.minY + cornerRadius),
+               radius: cornerRadius,
+               startAngle: 0, endAngle: .pi * 3 / 2,
+               clockwise: true)
+        addLine(to: CGPoint(x: rect.minX + cornerRadius, y: rect.minY))
+        addArc(center: CGPoint(x: rect.minX + cornerRadius,
+                               y: rect.minY + cornerRadius),
+               radius: cornerRadius,
+               startAngle: .pi * 3 / 2, endAngle: .pi,
+               clockwise: true)
+        closeSubpath()
     }
 }

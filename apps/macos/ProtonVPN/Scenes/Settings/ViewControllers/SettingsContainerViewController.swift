@@ -33,7 +33,7 @@ final class SettingsContainerViewController: NSViewController {
     private var activeViewController: NSViewController?
     
     private lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
-        return GeneralSettingsViewController(viewModel: self.viewModel.generalSettingsViewModel)
+        return GeneralSettingsViewController(viewModel: viewModel.generalSettingsViewModel)
     }()
     
     private lazy var connectionViewController: ConnectionSettingsViewController = { [unowned self] in
@@ -54,7 +54,7 @@ final class SettingsContainerViewController: NSViewController {
     required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
-        self.accountViewController = AccountViewController(accountViewModel: accountViewModel)
+        accountViewController = AccountViewController(accountViewModel: accountViewModel)
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
     

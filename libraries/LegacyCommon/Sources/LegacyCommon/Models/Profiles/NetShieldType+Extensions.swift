@@ -54,7 +54,7 @@ extension NetShieldType {
     }
 
     public func isUserTierTooLow(_ userTier: Int) -> Bool {
-        userTier < self.lowestTier
+        userTier < lowestTier
     }
 
     public var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {

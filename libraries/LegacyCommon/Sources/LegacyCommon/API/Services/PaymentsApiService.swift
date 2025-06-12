@@ -91,11 +91,11 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
             guard let self else { return }
             // check if the plan is upgraded already
             do {
-                let credentials = try await self.vpnApiService.clientCredentials()
+                let credentials = try await vpnApiService.clientCredentials()
                 // the plan is still not upgraded, try again
                 if credentials.planName == originalPlan {
                     log.debug("The plan is not yet upgraded after applying promo code, trying again", category: .app)
-                    self.checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
+                    checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
                 } else { // the plan has been upgraded
                     log.debug("The plan is upgraded after applying promo code", category: .app)
                     completion(.planUpgraded)

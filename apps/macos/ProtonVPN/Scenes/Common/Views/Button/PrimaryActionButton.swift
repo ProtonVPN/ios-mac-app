@@ -64,7 +64,7 @@ class PrimaryActionButton: HoverDetectionButton {
     }
 
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 
     override var intrinsicContentSize: NSSize {

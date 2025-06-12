@@ -37,7 +37,7 @@ class ProfilesTabBarView: NSView {
     private var transform: NSAffineTransform = NSAffineTransform()
     
     private func prepareTransformation() {
-        switch self.userInterfaceLayoutDirection {
+        switch userInterfaceLayoutDirection {
         case .leftToRight:
             transform = NSAffineTransform()
         case .rightToLeft:

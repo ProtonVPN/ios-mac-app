@@ -45,7 +45,7 @@ class LogFilesTemporaryStorage {
         for source in logSources {
             dispatchGroup.enter()
 
-            let contentProvider = self.logContentProvider.getLogData(for: source)
+            let contentProvider = logContentProvider.getLogData(for: source)
             contentProvider.loadContent { content in
                 guard !content.isEmpty else {
                     dispatchGroup.leave()
@@ -87,7 +87,7 @@ class LogFilesTemporaryStorage {
     /// Deletes temp log files after upload is done
     public func deleteTempLogs() {
         for file in savedFiles {
-            try? self.fileManager.removeItem(at: file)
+            try? fileManager.removeItem(at: file)
         }
         savedFiles.removeAll()
     }

@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     @IBAction private func openBugReport() {
         let bugReportCreator = iOSBugReportCreator()
         if let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors) {
-            self.present(viewController, animated: true, completion: nil)
+            present(viewController, animated: true, completion: nil)
         }
     }
     

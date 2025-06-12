@@ -52,7 +52,7 @@
             state: LocalAgentState,
             connectionErrorToThrow: LAConnectionCreationError? = nil
         ) {
-            self.streamTuple = AsyncStream<LocalAgentEvent>.makeStream()
+            streamTuple = AsyncStream<LocalAgentEvent>.makeStream()
 
             self.state = state
             self.connectionErrorToThrow = connectionErrorToThrow
@@ -96,7 +96,7 @@
             // assigning to state already yields the value - no need to yield here
 
             case let .features(features):
-                self.netShieldType = features.netshield
+                netShieldType = features.netshield
                 streamTuple?.continuation.yield(event)
 
             default:

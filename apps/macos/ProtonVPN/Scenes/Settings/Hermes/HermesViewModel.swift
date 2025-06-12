@@ -75,13 +75,13 @@ final class HermesViewModel {
         @Dependency(\.hermesClient) var hermesClient
         let hermesIsEnabled = hermesClient.isEnabled()
         let resolvers = hermesClient.activeHermesResolvers()
-        self._isEnabled = hermesIsEnabled
-        self._activeHermesResolvers = hermesClient.activeHermesResolvers()
-        self.alertService = factory.makeCoreAlertService()
-        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-        self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
-        self.vpnGateway = factory.makeVpnGateway()
-        self.initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
+        _isEnabled = hermesIsEnabled
+        _activeHermesResolvers = hermesClient.activeHermesResolvers()
+        alertService = factory.makeCoreAlertService()
+        netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+        vpnStateConfiguration = factory.makeVpnStateConfiguration()
+        vpnGateway = factory.makeVpnGateway()
+        initialState = .init(enabled: hermesIsEnabled.wrappedValue, resolvers: resolvers.wrappedValue)
     }
 
     func hermesWindowWillClose(completion: (() -> Void)? = nil) {

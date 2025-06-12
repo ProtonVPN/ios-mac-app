@@ -60,7 +60,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
 
     public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, completion: BoolCallback?, failure: ErrorCallback?) {
         if !repeats || timeInterval <= 0 {
-            self.checkServer(completion, failure: failure)
+            checkServer(completion, failure: failure)
             return
         }
 

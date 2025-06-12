@@ -56,8 +56,8 @@ final class CountriesSectionViewController: NSViewController {
         case banner = "BannerCellView"
         case offerBanner = "OfferBannerView"
 
-        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(self.rawValue) }
-        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil) }
+        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(rawValue) }
+        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil) }
     }
 
     enum QuickSettingType {

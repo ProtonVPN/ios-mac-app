@@ -216,7 +216,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             expectations.ikeTunnelStarted.fulfill()
         }
 
-        self.container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ikeConfig) {
+        container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ikeConfig) {
             expectations.vpnManagerIkeConnect.fulfill()
         }
 

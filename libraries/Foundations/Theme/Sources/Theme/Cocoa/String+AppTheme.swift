@@ -98,7 +98,7 @@ import Foundation
 
     public extension CustomStyleContext {
         func style(_ text: String, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
-            text.styled(self.customStyle(context: context), context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode)
+            text.styled(customStyle(context: context), context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode)
         }
     }
 #endif

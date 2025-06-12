@@ -23,13 +23,13 @@ import Foundation
 
     public extension NSImage {
         func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {
-            self.colored(.color(context, style))
+            colored(.color(context, style))
         }
 
         func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default, centeredVerticallyForFont font: NSFont? = nil) -> NSAttributedString {
             var resultingImage = self
             if let style {
-                resultingImage = self.colored(context: context, style)
+                resultingImage = colored(context: context, style)
             }
             resultingImage = resultingImage.resize(size)
 
@@ -46,9 +46,9 @@ import Foundation
         func resize(_ newSize: AppTheme.IconSize) -> NSImage {
             switch newSize {
             case let .square(size):
-                self.resize(newWidth: Int(size), newHeight: Int(size))
+                resize(newWidth: Int(size), newHeight: Int(size))
             case let .rect(width, height):
-                self.resize(newWidth: Int(width), newHeight: Int(height))
+                resize(newWidth: Int(width), newHeight: Int(height))
             case .default:
                 self
             }
@@ -57,7 +57,7 @@ import Foundation
 
     public extension CustomStyleContext {
         func colorImage(_ image: NSImage, context: AppTheme.Context = .icon) -> NSImage {
-            image.colored(context: context, self.customStyle(context: context))
+            image.colored(context: context, customStyle(context: context))
         }
     }
 

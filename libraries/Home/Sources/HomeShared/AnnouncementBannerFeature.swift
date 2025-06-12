@@ -50,10 +50,10 @@ public struct AnnouncementBannerFeature {
                 }
                 self.buttonURL = buttonURL
                 self.imageURL = imageURL
-                self.offerReference = announcement.reference
-                self.endTime = announcement.endTime
-                self.showCountdown = panel.showCountdown ?? false
-                self.notificationID = announcement.notificationID
+                offerReference = announcement.reference
+                endTime = announcement.endTime
+                showCountdown = panel.showCountdown ?? false
+                notificationID = announcement.notificationID
             }
         }
     }

@@ -80,12 +80,12 @@ final class LoginViewController: NSViewController {
             let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
                 guard let `self` = self else { return }
 
-                _ = self.environmentSelectionView.resignFirstResponder()
-                self.environmentSelectionView.removeFromSuperview()
+                _ = environmentSelectionView.resignFirstResponder()
+                environmentSelectionView.removeFromSuperview()
 
-                self.onboardingView.becomeFirstResponder()
+                onboardingView.becomeFirstResponder()
 
-                self.presentOnboardingScreen(withErrorDescription: nil)
+                presentOnboardingScreen(withErrorDescription: nil)
             }
 
             let hostingView = NSHostingView(rootView: environmentsView)

@@ -26,13 +26,13 @@ public class KeychainActor {
     private let keychain: KeychainAccess.Keychain
 
     public init(accessGroup: String) {
-        self.keychain =
+        keychain =
             .init(service: KeychainConstants.appKeychain, accessGroup: accessGroup)
                 .accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
     public init() {
-        self.keychain =
+        keychain =
             .init(service: KeychainConstants.appKeychain)
                 .accessibility(.afterFirstUnlockThisDeviceOnly)
     }

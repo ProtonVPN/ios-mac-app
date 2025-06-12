@@ -60,7 +60,7 @@ class SelectionViewController: UIViewController {
     }
     
     func setupView() {
-        self.title = dataSet.dataTitle
+        title = dataSet.dataTitle
     }
     
     func setupTableView() {
@@ -137,6 +137,6 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }

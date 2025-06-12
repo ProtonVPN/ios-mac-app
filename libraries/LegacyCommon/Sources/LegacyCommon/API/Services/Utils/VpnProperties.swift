@@ -45,17 +45,17 @@ public struct VpnProperties {
         addresses: [Address]?
     ) {
         self.serverInfo = serverInfo
-        self.streamingResponse = streamingServices
+        streamingResponse = streamingServices
         self.vpnCredentials = vpnCredentials
         self.location = location
         self.clientConfig = clientConfig
-        self.userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
-        self.userAccountRecovery = user?.accountRecovery
-        self.userInfo = Self.buildUserInfo(user: user, addresses: addresses)
+        userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
+        userAccountRecovery = user?.accountRecovery
+        userInfo = Self.buildUserInfo(user: user, addresses: addresses)
         if let createTime = user?.createTime {
-            self.userCreateTime = Date(timeIntervalSince1970: createTime)
+            userCreateTime = Date(timeIntervalSince1970: createTime)
         } else {
-            self.userCreateTime = nil
+            userCreateTime = nil
         }
     }
 

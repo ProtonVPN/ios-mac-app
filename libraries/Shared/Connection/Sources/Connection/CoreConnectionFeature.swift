@@ -62,9 +62,9 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             localAgentState: LocalAgentFeature.State = .disconnected(nil),
             shouldDisconnectWhenAllowed: Bool = false
         ) {
-            self.tunnel = tunnelState
-            self.certAuth = certAuthState
-            self.localAgent = localAgentState
+            tunnel = tunnelState
+            certAuth = certAuthState
+            localAgent = localAgentState
             self.shouldDisconnectWhenAllowed = shouldDisconnectWhenAllowed
         }
     }

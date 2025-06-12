@@ -87,8 +87,8 @@
                         NavigationLink(item: $store.resultState,
                                        onNavigate: { _ in },
                                        destination: { _ in
-                                           IfLetStore(self.store.scope(state: \.resultState,
-                                                                       action: \.resultViewAction),
+                                           IfLetStore(store.scope(state: \.resultState,
+                                                                  action: \.resultViewAction),
                                                       then: { store in BugReportResultView(store: store) }
                                            )
                                        },
@@ -98,7 +98,7 @@
                     // Custom Back button
                     .navigationBarBackButtonHidden(true)
                     .navigationBarItems(leading: Button(action: {
-                        self.dismiss()
+                        dismiss()
                     }, label: {
                         Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                     }))

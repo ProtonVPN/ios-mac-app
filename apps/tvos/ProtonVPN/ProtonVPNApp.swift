@@ -33,7 +33,7 @@ struct ProtonVPNApp: App {
     var body: some Scene {
         WindowGroup {
             AppView()
-                .onAppear { self.startup() }
+                .onAppear { startup() }
         }
     }
 }

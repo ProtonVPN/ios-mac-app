@@ -94,7 +94,7 @@ final class CountryItemViewModel: CountryViewModel {
 
         let servers = [ServerTier.free, ServerTier.plus].flatMap({ servers[$0] ?? [] })
         let groups = Dictionary(grouping: servers, by: { $0.city })
-        self.cities = groups.map({
+        cities = groups.map({
             CityItemViewModel(cityName: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
         }).sorted(by: { $0.cityName < $1.cityName })
     }
@@ -181,9 +181,9 @@ final class ServerItemViewModel: ServerViewModel {
         self.entryCountryName = entryCountryName
 
         if entryCountryName != nil {
-            self.entryCountryFlag = UIImage(named: "it-plain")
+            entryCountryFlag = UIImage(named: "it-plain")
         } else {
-            self.entryCountryFlag = nil
+            entryCountryFlag = nil
         }
     }
 }

@@ -25,8 +25,8 @@ class HoverDetectionButton: NSButton {
 
     override var intrinsicContentSize: NSSize {
         var size = super.intrinsicContentSize
-        size.width += self.horizontalPadding
-        size.height += self.verticalPadding
+        size.width += horizontalPadding
+        size.height += verticalPadding
         return size
     }
 

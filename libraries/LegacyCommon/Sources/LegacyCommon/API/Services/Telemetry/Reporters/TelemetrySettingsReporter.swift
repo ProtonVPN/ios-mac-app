@@ -46,10 +46,10 @@ final class TelemetrySettingsReporter {
     // MARK: - Initialization
 
     init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
-        self.vpnKeychain = factory.makeVpnKeychain()
+        vpnKeychain = factory.makeVpnKeychain()
 
         self.telemetryEventScheduler = telemetryEventScheduler
-        self.timerFactory = factory.makeTimerFactory()
+        timerFactory = factory.makeTimerFactory()
     }
 
     // MARK: - Public Interface
@@ -59,9 +59,9 @@ final class TelemetrySettingsReporter {
         checkAndSendHeartbeat()
 
         let nextRunTime = Date().addingTimeInterval(heartbeatInterval)
-        self.heartbeatTimer = timerFactory.scheduledTimer(runAt: nextRunTime,
-                                                          repeating: heartbeatInterval,
-                                                          queue: .main) { [weak self] in
+        heartbeatTimer = timerFactory.scheduledTimer(runAt: nextRunTime,
+                                                     repeating: heartbeatInterval,
+                                                     queue: .main) { [weak self] in
             self?.checkAndSendHeartbeat()
         }
     }

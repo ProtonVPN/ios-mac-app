@@ -48,7 +48,7 @@ class StatusMenuCountryItemViewModel {
     }
 
     init(countryGroup: ServerGroupInfo, type: ServerType, vpnGateway: VpnGatewayProtocol) {
-        self.serverGroup = countryGroup
+        serverGroup = countryGroup
         self.type = type
         self.vpnGateway = vpnGateway
     }

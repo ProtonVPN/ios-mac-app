@@ -30,11 +30,11 @@ public struct ActionLogger<Action>: Sendable {
     private let _logAction: @Sendable (_ receivedAction: Action) -> Void
 
     public init(logAction: @escaping @Sendable (_ receivedAction: Action) -> Void) {
-        self._logAction = logAction
+        _logAction = logAction
     }
 
     public func logAction(receivedAction: Action) {
-        self._logAction(receivedAction)
+        _logAction(receivedAction)
     }
 }
 
@@ -51,7 +51,7 @@ public struct LogActionReducer<Base: Reducer>: Reducer {
         into state: inout Base.State, action: Base.Action
     ) -> Effect<Base.Action> {
         logger.logAction(receivedAction: action)
-        return self.base.reduce(into: &state, action: action)
+        return base.reduce(into: &state, action: action)
     }
 }
 

@@ -25,15 +25,15 @@
 
     extension NSFont {
         func with(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
-            let descriptor = self.fontDescriptor.withSymbolicTraits(
-                NSFontDescriptor.SymbolicTraits(traits).union(self.fontDescriptor.symbolicTraits)
+            let descriptor = fontDescriptor.withSymbolicTraits(
+                NSFontDescriptor.SymbolicTraits(traits).union(fontDescriptor.symbolicTraits)
             )
             return NSFont(descriptor: descriptor, size: 0) ?? self
         }
 
         func without(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
-            let descriptor = self.fontDescriptor.withSymbolicTraits(
-                self.fontDescriptor.symbolicTraits.subtracting(NSFontDescriptor.SymbolicTraits(traits))
+            let descriptor = fontDescriptor.withSymbolicTraits(
+                fontDescriptor.symbolicTraits.subtracting(NSFontDescriptor.SymbolicTraits(traits))
             )
             return NSFont(descriptor: descriptor, size: 0) ?? self
         }

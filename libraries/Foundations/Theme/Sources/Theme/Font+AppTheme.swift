@@ -118,12 +118,12 @@ public extension Font {
 
 public extension Text {
     func themeFont(_ typography: AppTheme.Typography = .default) -> Text {
-        self.font(.themeFont(typography))
+        font(.themeFont(typography))
     }
 }
 
 public extension View {
     @inlinable func font(_ typography: AppTheme.Typography = .default) -> some View {
-        self.font(.themeFont(typography))
+        font(.themeFont(typography))
     }
 }

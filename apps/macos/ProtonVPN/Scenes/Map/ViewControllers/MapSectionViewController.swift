@@ -80,7 +80,7 @@ class MapSectionViewController: NSViewController {
                 return
             }
             
-            self.mapView.zoomOutAndCenter()
+            mapView.zoomOutAndCenter()
         }
         
         zoomView.zoomLevels = zoomLevels
@@ -100,7 +100,7 @@ class MapSectionViewController: NSViewController {
                 return
             }
             
-            self.zoomView.zoom = (((self.mapView.zoom - self.mapView.minZoom) / (self.mapView.maxZoom - self.mapView.minZoom)) * (self.zoomLevels - 1)).rounded(.toNearestOrAwayFromZero)
+            zoomView.zoom = (((mapView.zoom - mapView.minZoom) / (mapView.maxZoom - mapView.minZoom)) * (zoomLevels - 1)).rounded(.toNearestOrAwayFromZero)
         }
         
         mapSectionViewModel.contentChanged = { [weak self] change in self?.setAnnotations(change) }

@@ -62,21 +62,21 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.status = try container.decode(Int.self, forKey: .status)
-        self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
-        self.planName = (try? container.decodeIfPresent(String.self, forKey: .planName)) ?? "free"
-        self.maxConnect = try container.decode(Int.self, forKey: .maxConnect)
-        self.maxTier = try container.decode(Int.self, forKey: .maxTier)
-        self.services = try container.decode(Int.self, forKey: .services)
-        self.groupId = try container.decode(String.self, forKey: .groupId)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.password = try container.decode(String.self, forKey: .password)
-        self.delinquent = try container.decode(Int.self, forKey: .delinquent)
-        self.credit = try container.decode(Int.self, forKey: .credit)
-        self.currency = try container.decode(String.self, forKey: .currency)
-        self.hasPaymentMethod = try container.decode(Bool.self, forKey: .hasPaymentMethod)
-        self.subscribed = try container.decodeIfPresent(Int.self, forKey: .subscribed)
-        self.businessEvents = try container.decode(Bool.self, forKey: .businessEvents)
+        status = try container.decode(Int.self, forKey: .status)
+        planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
+        planName = (try? container.decodeIfPresent(String.self, forKey: .planName)) ?? "free"
+        maxConnect = try container.decode(Int.self, forKey: .maxConnect)
+        maxTier = try container.decode(Int.self, forKey: .maxTier)
+        services = try container.decode(Int.self, forKey: .services)
+        groupId = try container.decode(String.self, forKey: .groupId)
+        name = try container.decode(String.self, forKey: .name)
+        password = try container.decode(String.self, forKey: .password)
+        delinquent = try container.decode(Int.self, forKey: .delinquent)
+        credit = try container.decode(Int.self, forKey: .credit)
+        currency = try container.decode(String.self, forKey: .currency)
+        hasPaymentMethod = try container.decode(Bool.self, forKey: .hasPaymentMethod)
+        subscribed = try container.decodeIfPresent(Int.self, forKey: .subscribed)
+        businessEvents = try container.decode(Bool.self, forKey: .businessEvents)
     }
 
     public init(

@@ -36,7 +36,7 @@
         ) {
             self.title = title
             self.subtitle = subtitle
-            self.toggleIsOn = initialState
+            toggleIsOn = initialState
             self.onToggleUpdate = onToggleUpdate
         }
 

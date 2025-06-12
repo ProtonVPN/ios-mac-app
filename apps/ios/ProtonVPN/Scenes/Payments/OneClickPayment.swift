@@ -132,7 +132,7 @@ final class OneClickPayment {
         let client = PlansClient(
             retrievePlans: { [weak self] in
                 guard let self else { throw OneClickPurchaseError.presentingScreenDismissed }
-                return try await self.planOptions(with: plansDataSource)
+                return try await planOptions(with: plansDataSource)
             },
             validate: { @MainActor [weak self] in
                 validationHandler?()
@@ -172,8 +172,8 @@ final class OneClickPayment {
             await redirectToWebPurchase()
             return
         }
-        let result = await self.buyPlan(planOption: selectedPlan)
-        await self.buyPlanResultHandler(result)
+        let result = await buyPlan(planOption: selectedPlan)
+        await buyPlanResultHandler(result)
     }
 
     @MainActor

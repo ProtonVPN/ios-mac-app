@@ -197,7 +197,7 @@ extension String {
         let regex = try? NSRegularExpression(pattern: ipAddressPattern, options: [])
         
         // Check if the string matches the pattern
-        let range = NSRange(location: 0, length: self.count)
+        let range = NSRange(location: 0, length: count)
         let match = regex?.firstMatch(in: self, options: [], range: range)
         
         // Return true if a match is found

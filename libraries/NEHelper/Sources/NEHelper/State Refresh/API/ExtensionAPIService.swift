@@ -315,13 +315,13 @@ public final class ExtensionAPIService {
 
         switch error {
         case let .requestError(response, apiError):
-            self.handleHttpError(response: response,
-                                 apiError: apiError,
-                                 handleTokenRefresh: handleTokenRefresh,
-                                 usingCredentialsFrom: context,
-                                 asPartOf: operation,
-                                 retryBlock: retryBlock,
-                                 errorHandler: errorHandler)
+            handleHttpError(response: response,
+                            apiError: apiError,
+                            handleTokenRefresh: handleTokenRefresh,
+                            usingCredentialsFrom: context,
+                            asPartOf: operation,
+                            retryBlock: retryBlock,
+                            errorHandler: errorHandler)
             return
         case .noData, .parseError:
             // This is weird. Either the API gave us a 200 OK response with no data, something has
@@ -359,10 +359,10 @@ public final class ExtensionAPIService {
                 return
             }
 
-            let seconds = Int(seconds ?? Self.intervals.defaultRetryInterval + self.jitter())
+            let seconds = Int(seconds ?? Self.intervals.defaultRetryInterval + jitter())
             log.info("Will retry request in \(seconds) seconds.")
 
-            self.timerFactory.scheduleAfter(.seconds(seconds), on: self.requestQueue) {
+            timerFactory.scheduleAfter(.seconds(seconds), on: requestQueue) {
                 guard operation?.isCancelled != true else {
                     errorHandler(CertificateRefreshError.cancelled)
                     return
@@ -624,7 +624,7 @@ public final class ExtensionAPIService {
                 return
             }
 
-            self.handleTokenExpired(
+            handleTokenExpired(
                 authCredentials: partialCredentials,
                 asPartOf: operation,
                 usingCredentialsFrom: context,

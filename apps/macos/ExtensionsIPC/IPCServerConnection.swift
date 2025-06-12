@@ -33,7 +33,7 @@ class XPCBaseService: NSObject {
 
     init(withExtension machServiceName: String, logger: @escaping (String) -> Void) {
         self.machServiceName = machServiceName
-        self.log = logger
+        log = logger
     }
 
     func startListener() {
@@ -70,19 +70,19 @@ extension XPCBaseService: NSXPCListenerDelegate {
             let matches = try CodeSignatureComparitor.codeSignatureMatches(auditToken: auditToken)
             #if DEBUG
                 if !matches {
-                    self.log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
+                    log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
                 }
             #else
                 guard matches else {
-                    self.log("Refusing XPC connection with pid \(pid): code signature does not match")
+                    log("Refusing XPC connection with pid \(pid): code signature does not match")
                     return false
                 }
             #endif
         } catch {
-            self.log("Code signing error occurred while verifying pid \(pid): \(String(describing: error))")
+            log("Code signing error occurred while verifying pid \(pid): \(String(describing: error))")
 
             #if !DEBUG
-                self.log("Rejecting XPC connection.")
+                log("Rejecting XPC connection.")
                 return false
             #endif
         }
@@ -104,9 +104,9 @@ extension XPCBaseService: NSXPCListenerDelegate {
             self.currentConnection = nil
         }
 
-        if self.currentConnection != nil {
-            self.currentConnection?.invalidate()
-            self.currentConnection = nil
+        if currentConnection != nil {
+            currentConnection?.invalidate()
+            currentConnection = nil
         }
 
         currentConnection = newConnection

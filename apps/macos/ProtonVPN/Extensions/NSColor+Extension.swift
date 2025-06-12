@@ -24,7 +24,7 @@ import Cocoa
 
 extension NSColor {
     var highlightedColor: NSColor {
-        guard let color = self.usingColorSpace(NSColorSpace.deviceRGB) else {
+        guard let color = usingColorSpace(NSColorSpace.deviceRGB) else {
             return self
         }
 

@@ -25,6 +25,6 @@ import XCTest
 extension XCTestExpectation {
     convenience init(description: String, inverted: Bool) {
         self.init(description: description)
-        self.isInverted = inverted
+        isInverted = inverted
     }
 }

@@ -142,8 +142,8 @@ extension NetworkInterface {
 
 private extension Range {
     func isSuperSet(of other: Range<Bound>) -> Bool {
-        self.lowerBound <= other.lowerBound &&
-            other.upperBound <= self.upperBound
+        lowerBound <= other.lowerBound &&
+            other.upperBound <= upperBound
     }
 }
 

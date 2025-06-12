@@ -109,7 +109,7 @@ final class SettingsViewModel {
         }
 
         if isAccountRecoveryEnabled {
-            self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
+            accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
         }
         startObserving()
     }
@@ -282,7 +282,7 @@ final class SettingsViewModel {
 
         cells.append(.upsellableToggle(
             title: Localizable.killSwitch,
-            state: { [unowned self] in .available(enabled: self.propertiesManager.killSwitch, interactive: true) },
+            state: { [unowned self] in .available(enabled: propertiesManager.killSwitch, interactive: true) },
             upsell: {
                 // No Upsell: Kill Switch is a free feature
             },
@@ -324,7 +324,7 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.vpnAcceleratorTitle,
-                state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
+                state: { [unowned self] in displayState(for: VPNAccelerator.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
                 handler: { toggleOn, callback in
                     self.getFeatureChangeAvailability(for: .agent(.vpnAccelerator(toggleOn))) { featureChangeAvailability in
@@ -365,9 +365,9 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.allowLanTitle,
-                state: { [unowned self] in self.displayState(for: ExcludeLocalNetworks.self) },
+                state: { [unowned self] in displayState(for: ExcludeLocalNetworks.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: CustomizationUpsellAlert()) },
-                handler: self.switchLANCallback()
+                handler: switchLANCallback()
             ),
             .tooltip(text: Localizable.allowLanInfo)
         ]
@@ -377,7 +377,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: self.natTypePropertyProvider.natType == .moderateNAT, interactive: true)
+            return .available(enabled: natTypePropertyProvider.natType == .moderateNAT, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -389,7 +389,7 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.moderateNatTitle,
-                state: { [unowned self] in self.moderateNATState },
+                state: { [unowned self] in moderateNATState },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
                 handler: { [weak self] toggleOn, callback in
                     let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
@@ -430,7 +430,7 @@ final class SettingsViewModel {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: SafeModeFeature.self)
         switch canUse() {
         case .success:
-            return .available(enabled: self.safeModePropertyProvider.safeMode == false, interactive: true)
+            return .available(enabled: safeModePropertyProvider.safeMode == false, interactive: true)
         case .failure(.requiresUpgrade):
             return .upsell
         case .failure(.featureDisabled):
@@ -444,13 +444,13 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.nonStandardPortsTitle,
-                state: { [unowned self] in self.safeModeState },
+                state: { [unowned self] in safeModeState },
                 upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
                 handler: { [unowned self] toggleOn, callback in
-                    let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
+                    let currentSafeMode = safeModePropertyProvider.safeMode ?? true
                     let newSafeMode = !currentSafeMode
 
-                    self.vpnStateConfiguration.getInfo { info in
+                    vpnStateConfiguration.getInfo { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
                             self.safeModePropertyProvider.safeMode = newSafeMode
@@ -484,11 +484,11 @@ final class SettingsViewModel {
         [
             .upsellableToggle(
                 title: Localizable.troubleshootItemAltTitle,
-                state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
+                state: { [unowned self] in .available(enabled: propertiesManager.alternativeRouting, interactive: true) },
                 upsell: {}, // No Upsell: Alternative Routing is a free feature
                 handler: { [unowned self] toggleOn, callback in
-                    self.propertiesManager.alternativeRouting.toggle()
-                    callback(self.propertiesManager.alternativeRouting)
+                    propertiesManager.alternativeRouting.toggle()
+                    callback(propertiesManager.alternativeRouting)
                 }
             ),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString))
@@ -694,7 +694,7 @@ final class SettingsViewModel {
                                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                                         featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
-            switch self.getProtocolChangeAvailability(for: newProtocol) {
+            switch getProtocolChangeAvailability(for: newProtocol) {
             case .immediate:
                 completion(.success(true))
                 return
@@ -702,7 +702,7 @@ final class SettingsViewModel {
             case .protocolUnavailable:
                 // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
                 // sure the user knows that the app is about to disconnect.
-                self.alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
+                alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
                     log.debug("Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
                               category: .connectionDisconnect, event: .trigger)
                     completion(.success(/* shouldReconnect */ false))
@@ -718,17 +718,17 @@ final class SettingsViewModel {
                     completion(.success(true))
                 }
                 alert.dismiss = { completion(.failure(.userCancelled)) }
-                self.alertService.push(alert: alert)
+                alertService.push(alert: alert)
             }
         }
 
         vpnProtocolViewModel.protocolChanged = { [self] newProtocol, shouldReconnect in
             switch newProtocol {
             case .smartProtocol:
-                self.propertiesManager.smartProtocol = true
+                propertiesManager.smartProtocol = true
             case let .vpnProtocol(vpnProtocol):
-                self.propertiesManager.smartProtocol = false
-                self.propertiesManager.vpnProtocol = vpnProtocol
+                propertiesManager.smartProtocol = false
+                propertiesManager.vpnProtocol = vpnProtocol
             }
 
             switch getProtocolChangeAvailability(for: newProtocol) {
@@ -736,13 +736,13 @@ final class SettingsViewModel {
                 break // we're not connected, so nothing needs to be done
 
             case .protocolUnavailable:
-                self.requestDisconnect()
+                requestDisconnect()
 
             case .withReconnect:
                 if shouldReconnect {
-                    self.reconnect(with: .connectionProtocol(newProtocol))
+                    reconnect(with: .connectionProtocol(newProtocol))
                 } else {
-                    self.requestDisconnect()
+                    requestDisconnect()
                 }
             }
         }
@@ -933,6 +933,6 @@ final class SettingsViewModel {
 class ShowingNavigationBarUIHostingController: UIHostingController<AnyView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }

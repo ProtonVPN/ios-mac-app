@@ -87,6 +87,6 @@ class SubuserAlertViewController: UIViewController {
     }
 
     @IBAction private func loginTapped() {
-        self.dismiss(animated: true, completion: {})
+        dismiss(animated: true, completion: {})
     }
 }

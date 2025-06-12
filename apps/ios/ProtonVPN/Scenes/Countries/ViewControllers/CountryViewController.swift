@@ -46,7 +46,7 @@ final class CountryViewController: UIViewController {
     
     private func setupView() {
         view.layer.backgroundColor = UIColor.secondaryBackgroundColor().cgColor
-        self.title = viewModel?.countryName
+        title = viewModel?.countryName
     }
     
     private func setupConnectionBar() {

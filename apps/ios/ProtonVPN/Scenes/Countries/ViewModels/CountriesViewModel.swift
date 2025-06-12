@@ -316,9 +316,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
         switch type {
         case .standard, .p2p, .tor, .unspecified:
-            self.state = .standard(groups)
+            state = .standard(groups)
         case .secureCore:
-            self.state = .secureCore(groups)
+            state = .secureCore(groups)
         }
     }
 

@@ -66,10 +66,10 @@
         }
 
         public func setSavedConfiguration(_ prefs: SavedPreferences) {
-            self.protocolConfiguration = prefs.protocolConfiguration
-            self.onDemandRules = prefs.onDemandRules
-            self.isOnDemandEnabled = prefs.isOnDemandEnabled
-            self.isEnabled = prefs.isEnabled
+            protocolConfiguration = prefs.protocolConfiguration
+            onDemandRules = prefs.onDemandRules
+            isOnDemandEnabled = prefs.isOnDemandEnabled
+            isEnabled = prefs.isEnabled
         }
 
         public func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
@@ -92,10 +92,10 @@
 
     extension NEVPNManagerMock.SavedPreferences {
         public init(_ manager: NEVPNManagerWrapper) {
-            self.isOnDemandEnabled = manager.isOnDemandEnabled
-            self.isEnabled = manager.isEnabled
-            self.onDemandRules = manager.onDemandRules
-            self.protocolConfiguration = manager.protocolConfiguration
+            isOnDemandEnabled = manager.isOnDemandEnabled
+            isEnabled = manager.isEnabled
+            onDemandRules = manager.onDemandRules
+            protocolConfiguration = manager.protocolConfiguration
         }
     }
 
@@ -106,12 +106,12 @@
 
         public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
             Self.queue.async { [unowned self] in
-                completionHandler(self.tunnelProvidersInPreferences.values.map { $0 }, nil)
+                completionHandler(tunnelProvidersInPreferences.values.map { $0 }, nil)
             }
         }
 
         public func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
-            self.tunnelProvidersInPreferences.values.map { $0 }
+            tunnelProvidersInPreferences.values.map { $0 }
         }
 
         public func makeNewManager() -> NETunnelProviderManagerWrapper {
@@ -127,35 +127,35 @@
         public weak var factory: NETunnelProviderManagerFactoryMock?
 
         public init(factory: NETunnelProviderManagerFactoryMock?) {
-            self.uuid = UUID()
+            uuid = UUID()
             self.factory = factory
         }
 
         override public func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
             NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
                 let prefs = NEVPNManagerMock.SavedPreferences(self)
-                self.factory?.tunnelProvidersInPreferences[uuid] = self
-                self.factory?.tunnelProviderPreferencesData[self.uuid] = prefs
+                factory?.tunnelProvidersInPreferences[uuid] = self
+                factory?.tunnelProviderPreferencesData[uuid] = prefs
                 completionHandler?(nil)
             }
         }
 
         override public func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
             NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
-                guard let prefs = self.factory?.tunnelProviderPreferencesData[self.uuid] else {
+                guard let prefs = factory?.tunnelProviderPreferencesData[uuid] else {
                     completionHandler(nil)
                     return
                 }
 
-                self.setSavedConfiguration(prefs)
+                setSavedConfiguration(prefs)
                 completionHandler(nil)
             }
         }
 
         override public func removeFromPreferences(completionHandler: ((Error?) -> Void)?) {
             NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
-                self.factory?.tunnelProvidersInPreferences[self.uuid] = nil
-                self.factory?.tunnelProviderPreferencesData[self.uuid] = nil
+                factory?.tunnelProvidersInPreferences[uuid] = nil
+                factory?.tunnelProviderPreferencesData[uuid] = nil
                 completionHandler?(nil)
             }
         }
@@ -175,8 +175,8 @@
 
         public init(vpnManager: NEVPNManagerWrapper) {
             self.vpnManager = vpnManager
-            self.status = .invalid
-            self.connectedDate = nil
+            status = .invalid
+            connectedDate = nil
         }
 
         public func startVPNTunnel() throws {
@@ -189,7 +189,7 @@
                     return
                 }
 
-                self.queue.sync { self.status = .connecting }
+                queue.sync { self.status = .connecting }
                 NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
                 NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.connecting)
             }
@@ -199,8 +199,8 @@
                     return
                 }
 
-                self.queue.sync { self.status = .connected }
-                self.connectedDate = Date()
+                queue.sync { self.status = .connected }
+                connectedDate = Date()
 
                 NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
                 NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.connected)
@@ -208,7 +208,7 @@
         }
 
         public func stopVPNTunnel() {
-            let debounce = self.queue.sync { () -> Bool in
+            let debounce = queue.sync { () -> Bool in
                 guard self.status != .disconnecting, self.status != .disconnected else {
                     return true
                 }
@@ -221,8 +221,8 @@
                     return
                 }
 
-                self.connectedDate = nil
-                self.queue.sync { self.status = .disconnecting }
+                connectedDate = nil
+                queue.sync { self.status = .disconnecting }
                 NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
                 NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.disconnecting)
             }
@@ -232,7 +232,7 @@
                     return
                 }
 
-                self.queue.sync { self.status = .disconnected }
+                queue.sync { self.status = .disconnected }
                 NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: self, userInfo: nil)
                 NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.disconnected)
             }

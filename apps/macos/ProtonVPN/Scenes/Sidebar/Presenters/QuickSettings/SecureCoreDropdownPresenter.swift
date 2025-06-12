@@ -53,7 +53,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        [self.secureCoreOff, self.secureCoreOn]
+        [secureCoreOff, secureCoreOn]
     }
     
     override func viewDidLoad() {

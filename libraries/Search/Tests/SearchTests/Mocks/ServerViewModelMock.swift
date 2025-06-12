@@ -82,7 +82,7 @@ final class ServerViewModelMock: ServerViewModel {
         self.isUsersTierTooLow = isUsersTierTooLow
         self.entryCountryName = entryCountryName
         self.translatedCity = translatedCity
-        self.textColor = .white
+        textColor = .white
         self.isPartnerServer = isPartnerServer
     }
 }

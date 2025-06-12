@@ -124,7 +124,7 @@
                                 }
                             )
 
-                            Button(action: { self.dismiss() },
+                            Button(action: { dismiss() },
                                    label: { Text(Localizable.br2ButtonCancel) })
                                 .buttonStyle(SecondaryButtonStyle())
                         }
@@ -135,7 +135,7 @@
                     // Custom Back button
                     .navigationBarBackButtonHidden(true)
                     .navigationBarItems(leading: Button(action: {
-                        self.dismiss()
+                        dismiss()
                     }, label: {
                         Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                     }))

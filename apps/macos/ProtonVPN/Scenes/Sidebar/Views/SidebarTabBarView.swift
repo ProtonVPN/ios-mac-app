@@ -31,7 +31,7 @@ class SidebarTabBarView: NSView {
     }
     
     private func isFocused(tabIndex index: SidebarTab) -> Bool {
-        switch self.userInterfaceLayoutDirection {
+        switch userInterfaceLayoutDirection {
         case .leftToRight:
             return activeTab == index
         case .rightToLeft:

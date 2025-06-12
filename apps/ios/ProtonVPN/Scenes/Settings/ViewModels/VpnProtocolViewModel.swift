@@ -37,11 +37,11 @@ final class VpnProtocolViewModel {
          supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
          displaySmartProtocol: Bool = true,
          featureFlags: FeatureFlags) {
-        self.selectedProtocol = connectionProtocol
+        selectedProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
 
         let wireguardTLSProtocols = [.tcp, .udp].map { ConnectionProtocol.vpnProtocol(.wireGuard($0)) }
-        self.availableProtocols = supportedProtocols
+        availableProtocols = supportedProtocols
             .removing(wireguardTLSProtocols, if: !featureFlags.wireGuardTls)
             .filter { !$0.isDeprecated }
     }
@@ -55,7 +55,7 @@ final class VpnProtocolViewModel {
             .sorted(by: ConnectionProtocol.uiSort)
             .map { item in
                 let handler = { [unowned self] in
-                    self.confirmNewConnectionProtocol(item)
+                    confirmNewConnectionProtocol(item)
                     return true
                 }
 
@@ -86,9 +86,9 @@ final class VpnProtocolViewModel {
     }
 
     private func switchConnectionProtocol(to connectionProtocol: ConnectionProtocol, reconnect: Bool) {
-        self.selectedProtocol = connectionProtocol
-        self.protocolChanged?(connectionProtocol, reconnect)
-        self.contentChanged?()
-        self.selectionFinished?()
+        selectedProtocol = connectionProtocol
+        protocolChanged?(connectionProtocol, reconnect)
+        contentChanged?()
+        selectionFinished?()
     }
 }

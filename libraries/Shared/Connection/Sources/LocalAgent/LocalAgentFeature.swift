@@ -422,7 +422,7 @@ public extension Effect {
         operation: @escaping @Sendable @MainActor (_ send: Send<Action>) async throws -> Void,
         catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
     ) -> Self {
-        self.run(
+        run(
             operation: { send in
                 @Dependency(\.continuousClock) var clock
                 for await _ in clock.timer(interval: interval, tolerance: tolerance) {

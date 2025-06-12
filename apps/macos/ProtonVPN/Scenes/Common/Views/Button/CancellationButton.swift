@@ -67,7 +67,7 @@ class CancellationButton: HoverDetectionButton {
     }
 
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 }
 

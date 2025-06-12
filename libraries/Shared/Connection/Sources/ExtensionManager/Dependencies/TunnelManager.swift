@@ -62,7 +62,7 @@ final class PacketTunnelManager: TunnelManager {
     private func loadManager() async throws -> TunnelProviderManager {
         let bundleID = bundleID.bundleIdentifierForTarget()
         let manager = try await managerFactory.loadManager(forProviderBundleID: bundleID)
-        self.cachedLoadedManager = manager
+        cachedLoadedManager = manager
         return manager
     }
 

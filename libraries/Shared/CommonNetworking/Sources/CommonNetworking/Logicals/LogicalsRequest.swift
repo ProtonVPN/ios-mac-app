@@ -49,9 +49,9 @@ public struct LogicalsRequest: ConditionalRequest {
 
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.timestampedLogicals) {
             let lastModifiedIMFString = lastModified ?? DateFormatter.imf.string(from: Date(timeIntervalSince1970: 0))
-            self.condition = .ifModifiedSince(date: lastModifiedIMFString)
+            condition = .ifModifiedSince(date: lastModifiedIMFString)
         } else {
-            self.condition = nil
+            condition = nil
         }
     }
 

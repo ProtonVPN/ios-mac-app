@@ -102,9 +102,9 @@ class QuickSettingsDropdownOption: NSView {
     private func applyState() {
         setBackground()
         if let image = optionIconIV.image {
-            optionIconIV.image = self.colorImage(image)
+            optionIconIV.image = colorImage(image)
         }
-        titleLabel.attributedStringValue = self.style(titleLabel.stringValue, alignment: .left)
+        titleLabel.attributedStringValue = style(titleLabel.stringValue, alignment: .left)
     }
 
     private func applyTrackingArea() {
@@ -124,12 +124,12 @@ class QuickSettingsDropdownOption: NSView {
     }
 
     override func mouseEntered(with event: NSEvent) {
-        self.isHovered = true
+        isHovered = true
         setBackground()
     }
 
     override func mouseExited(with event: NSEvent) {
-        self.isHovered = false
+        isHovered = false
         setBackground()
     }
 
@@ -163,14 +163,14 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
 
         switch context {
         case .background:
-            switch self.state {
+            switch state {
             case .blocked:
                 return .transparent
             default:
                 return .transparent + (isHovered ? .hovered : [])
             }
         case .border:
-            switch self.state {
+            switch state {
             case .blocked:
                 return .transparent
             case .unselected:
@@ -179,7 +179,7 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
                 return [.interactive, .hint] + hover
             }
         case .text, .icon:
-            switch self.state {
+            switch state {
             case .blocked:
                 return [.interactive, .weak]
             case .unselected:

@@ -81,7 +81,7 @@ extension ServerEndpoint {
     }
 
     public var supportedProtocols: ProtocolSupport {
-        if self.protocolEntries == nil {
+        if protocolEntries == nil {
             return .all
         }
 

@@ -160,7 +160,7 @@ public class VpnManagerConfigurationPreparer {
                 ipId: connectionConfig.serverIp.id,
                 entryServerAddress: entryServer,
                 exitServerAddress: exitServer,
-                username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
+                username: vpnCredentials.name + extraConfiguration(with: connectionConfig),
                 password: vpnCredentials.password,
                 passwordReference: passwordRef,
                 clientPrivateKey: clientPrivateKey?.base64X25519Representation,

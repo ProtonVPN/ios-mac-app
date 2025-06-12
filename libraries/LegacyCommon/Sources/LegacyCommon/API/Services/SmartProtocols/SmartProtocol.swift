@@ -77,9 +77,9 @@ final class SmartProtocolImplementation: SmartProtocol {
             self.fallback = fallback
         } else {
             #if os(macOS)
-                self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
+                fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
             #else
-                self.fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
+                fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
             #endif
         }
 

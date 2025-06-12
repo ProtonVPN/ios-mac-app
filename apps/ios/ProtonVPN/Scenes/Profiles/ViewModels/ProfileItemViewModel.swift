@@ -162,15 +162,15 @@ final class ProfileItemViewModel {
 
         switch profile.serverOffering {
         case let .custom(serverWrapper):
-            self.lowestServerTier = serverWrapper.server.tier // add unit tests
-            self.underMaintenance = serverWrapper.server.underMaintenance
+            lowestServerTier = serverWrapper.server.tier // add unit tests
+            underMaintenance = serverWrapper.server.underMaintenance
 
         case let .fastest(countryCode): fallthrough
 
         case let .random(countryCode):
             guard let code = countryCode else {
-                self.lowestServerTier = 0
-                self.underMaintenance = false
+                lowestServerTier = 0
+                underMaintenance = false
                 break
             }
 
@@ -193,8 +193,8 @@ final class ProfileItemViewModel {
                 allServersUnderMaintenance = groupInfo.isUnderMaintenance
             }
 
-            self.lowestServerTier = minTier
-            self.underMaintenance = allServersUnderMaintenance
+            lowestServerTier = minTier
+            underMaintenance = allServersUnderMaintenance
         }
 
         startObserving()

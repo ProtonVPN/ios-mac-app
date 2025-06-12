@@ -24,35 +24,32 @@ import ProtonCoreUIFoundations
 
 public extension View {
     func settingsTabItem() -> some View {
-        self
-            .tabItem {
-                Label {
-                    Text(Localizable.settingsTab)
-                } icon: {
-                    IconProvider.cogWheel
-                }
+        tabItem {
+            Label {
+                Text(Localizable.settingsTab)
+            } icon: {
+                IconProvider.cogWheel
             }
+        }
     }
 
     func countriesTabItem() -> some View {
-        self
-            .tabItem {
-                Label {
-                    Text(Localizable.countriesTab)
-                } icon: {
-                    IconProvider.earth
-                }
+        tabItem {
+            Label {
+                Text(Localizable.countriesTab)
+            } icon: {
+                IconProvider.earth
             }
+        }
     }
 
     func homeTabItem() -> some View {
-        self
-            .tabItem {
-                Label {
-                    Text(Localizable.homeTab)
-                } icon: {
-                    IconProvider.houseFilled
-                }
+        tabItem {
+            Label {
+                Text(Localizable.homeTab)
+            } icon: {
+                IconProvider.houseFilled
             }
+        }
     }
 }

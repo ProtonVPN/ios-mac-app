@@ -34,7 +34,7 @@ struct ClearButton: ViewModifier {
             content
             if !text.isEmpty {
                 Button {
-                    self.text = ""
+                    text = ""
                 } label: {
                     IconProvider.crossCircleFilled.swiftUIImage
                         .resizable()

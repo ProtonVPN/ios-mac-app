@@ -30,7 +30,7 @@ class StreamOptionCVItem: NSCollectionViewItem {
         
     public var viewModel: StreamOptionCVItemViewModelProtocol? {
         didSet {
-            guard let viewModel = self.viewModel else { return }
+            guard let viewModel else { return }
             
             serviceLbl.stringValue = viewModel.serviceName
             serviceIV.isHidden = true

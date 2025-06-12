@@ -88,7 +88,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         vpnManager.state = .connecting(serverDescriptor)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.connecting = state {} else {
             XCTFail("App state should be 'connecting' but it's \(state.description)")
         }
@@ -105,7 +105,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func successfullyConnect() {
         vpnManager.state = .connected(serverDescriptor)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.connected = state {} else {
             XCTFail("App state should be 'connected' but it's \(state.description)")
         }
@@ -117,7 +117,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         appStateManager.disconnect()
         vpnManager.state = .disconnecting(serverDescriptor)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.disconnecting = state {} else {
             XCTFail("App state should be 'disconnecting' but it's \(state.description)")
         }
@@ -128,7 +128,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func successfullyDisconnect() {
         vpnManager.state = .disconnected
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.disconnected = state {} else {
             XCTFail("App state should be 'disconnected' but it's \(state.description)")
         }
@@ -140,7 +140,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         appStateManager.disconnect()
         vpnManager.state = .disconnecting(serverDescriptor)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.preparingConnection = state {} else {
             XCTFail("App state should be 'preparingConnection' but it's \(state.description)")
         }
@@ -151,7 +151,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func startImplicitDisconnectingAsPartOfConnect() {
         vpnManager.state = .disconnecting(serverDescriptor)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.connecting = state {} else {
             XCTFail("App state should be 'connecting' but it's \(state.description)")
         }
@@ -162,7 +162,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func successfullyDisconnectAsPartOfConnect() {
         vpnManager.state = .disconnected
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.preparingConnection = state {} else {
             XCTFail("App state should be 'preparingConnection' but it's \(state.description)")
         }
@@ -173,7 +173,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func userInitatedCancel() {
         appStateManager.cancelConnectionAttempt()
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case let AppState.aborted(userInitiated) = state {
             XCTAssert(userInitiated)
         } else { XCTFail("Wrong state") }
@@ -184,7 +184,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func initialError() {
         vpnManager.state = .error(Self.emptyError)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.disconnected = state {} else {
             XCTFail("App state should be 'disconnected' but it's \(state.description)")
         }
@@ -195,7 +195,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     func subsequentError() {
         vpnManager.state = .error(Self.emptyError)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.error = state {} else {
             XCTFail("App state should be 'error' but it's \(state.description)")
         }
@@ -289,7 +289,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         vpnManager.state = .connecting(serverDescriptor)
         vpnManager.state = .reasserting(serverDescriptor)
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.connecting = state {} else {
             XCTFail("State should be 'connecting' but is actually \(state.description)")
         }
@@ -317,7 +317,7 @@ class AppStateManagerImplementationTests: XCTestCase {
             )
         )
 
-        let state = self.appStateManager.state
+        let state = appStateManager.state
         if case AppState.error = state {} else {
             XCTFail("App state should be 'error' but it's \(state.description)")
         }

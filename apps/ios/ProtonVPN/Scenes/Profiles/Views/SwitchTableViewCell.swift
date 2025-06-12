@@ -36,7 +36,7 @@ final class SwitchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.isSelected = false
+        isSelected = false
 
         backgroundColor = .secondaryBackgroundColor()
         label.textColor = .normalTextColor()
@@ -56,7 +56,7 @@ final class SwitchTableViewCell: UITableViewCell {
         }
 
         switchControl.tapped = { [unowned self] in
-            self.toggled?(!self.switchControl.isOn, update)
+            toggled?(!switchControl.isOn, update)
         }
     }
 

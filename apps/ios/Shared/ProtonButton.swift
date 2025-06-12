@@ -116,17 +116,17 @@ class ProtonButton: UIButton {
             return
         }
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(activityIndicator)
+        addSubview(activityIndicator)
         centerActivityIndicatorInButton()
         activityIndicator.startAnimating()
     }
     
     private func centerActivityIndicatorInButton() {
         let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: activityIndicator, attribute: .leading, multiplier: 1, constant: -17)
-        self.addConstraint(xCenterConstraint)
+        addConstraint(xCenterConstraint)
         
         let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerY, relatedBy: .equal, toItem: activityIndicator, attribute: .centerY, multiplier: 1, constant: 0)
-        self.addConstraint(yCenterConstraint)
+        addConstraint(yCenterConstraint)
     }
     
     // MARK: - Style

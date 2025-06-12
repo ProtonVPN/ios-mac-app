@@ -107,7 +107,7 @@ class MapHeaderBackground: NSView {
         path.addLine(to: start)
         
         context.addPath(path)
-        context.setFillColor(self.cgColor(.background))
+        context.setFillColor(cgColor(.background))
         context.drawPath(using: .fill)
         
         outter = CGMutablePath()
@@ -126,7 +126,7 @@ class MapHeaderBackground: NSView {
         inner.addEllipse(in: circleRect)
         
         context.addPath(inner)
-        context.setFillColor(self.cgColor(.icon))
+        context.setFillColor(cgColor(.icon))
         context.drawPath(using: .fill)
     }
 }

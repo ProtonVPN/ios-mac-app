@@ -24,7 +24,7 @@ public struct ServerNameComponents {
         let nameArray = name.split(separator: "#")
         guard nameArray.count == 2 else {
             self.name = name
-            self.sequence = nil
+            sequence = nil
             return
         }
         let serverName = String(nameArray[0])
@@ -35,6 +35,6 @@ public struct ServerNameComponents {
             return
         }
         self.name = serverName
-        self.sequence = serverNumber
+        sequence = serverNumber
     }
 }

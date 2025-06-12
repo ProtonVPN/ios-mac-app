@@ -81,14 +81,14 @@ public struct HomeFeature {
         public var destination: Destination.State?
 
         public init() {
-            self.connectionStatus = .init(isUsingConnectionPackage: HomeFeature.shouldUseConnectionFeature)
-            self.connectionCard = .init()
-            self.sharedProperties = .init()
-            self.recents = .init()
-            self.map = .init()
-            self.connection = .initialState
-            self.announcementBanner = .noBanner
-            self.whatsNewChecker = .init()
+            connectionStatus = .init(isUsingConnectionPackage: HomeFeature.shouldUseConnectionFeature)
+            connectionCard = .init()
+            sharedProperties = .init()
+            recents = .init()
+            map = .init()
+            connection = .initialState
+            announcementBanner = .noBanner
+            whatsNewChecker = .init()
         }
     }
 

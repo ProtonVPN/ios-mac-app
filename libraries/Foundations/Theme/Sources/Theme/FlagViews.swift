@@ -134,16 +134,16 @@ public struct SimpleFlagView: View {
 
     fileprivate init(regionCode: String, size: CGSize, cornerRadius: CGFloat = .themeRadius4) {
         self.regionCode = regionCode
-        self.startSize = size
+        startSize = size
         self.cornerRadius = cornerRadius
-        self.folder = "Flags/"
+        folder = "Flags/"
     }
 
     public init(regionCode: String, flagSize: FlagSizes) {
         self.regionCode = regionCode
-        self.startSize = flagSize.simpleFlag
-        self.cornerRadius = flagSize.cornerRadius
-        self.folder = flagSize.folder
+        startSize = flagSize.simpleFlag
+        cornerRadius = flagSize.cornerRadius
+        folder = flagSize.folder
     }
 
     public init(flag: Flag, flagSize: FlagSizes) {

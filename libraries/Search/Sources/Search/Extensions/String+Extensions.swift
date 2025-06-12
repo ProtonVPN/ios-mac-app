@@ -26,7 +26,7 @@ extension String {
     func findStartingRanges(of substring: String) -> [NSRange] {
         let substring = substring.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let parts = self.components(separatedBy: CharacterSet.whitespacesAndNewlines)
+        let parts = components(separatedBy: CharacterSet.whitespacesAndNewlines)
         var ranges: [NSRange] = []
         var count = 0
         for part in parts {
@@ -37,7 +37,7 @@ extension String {
             count = count + part.count + 1
         }
 
-        if ranges.isEmpty, self.normalized.starts(with: substring.normalized) {
+        if ranges.isEmpty, normalized.starts(with: substring.normalized) {
             ranges.append(NSRange(location: 0, length: substring.count))
         }
 

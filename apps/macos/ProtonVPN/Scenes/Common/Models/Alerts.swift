@@ -77,8 +77,8 @@ public class IkeDeprecatedAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(enableSmartProtocolHandler: @escaping () -> Void, continueHandler: @escaping () -> Void) {
-        self.enableSmartProtocol = enableSmartProtocolHandler
-        self.dismiss = continueHandler
+        enableSmartProtocol = enableSmartProtocolHandler
+        dismiss = continueHandler
 
         actions.append(AlertAction(title: confirmTitle, style: .confirmative, handler: enableSmartProtocolHandler))
         actions.append(AlertAction(title: dismissTitle, style: .secondary, handler: continueHandler))

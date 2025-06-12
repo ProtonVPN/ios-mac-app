@@ -35,7 +35,7 @@ class OnboardingSlidesRobot {
 
     init(app: XCUIApplication) {
         self.app = app
-        self.verify = Verify(app: app)
+        verify = Verify(app: app)
     }
 
     func nextOnboardingScreen() -> OnboardingSlidesRobot {

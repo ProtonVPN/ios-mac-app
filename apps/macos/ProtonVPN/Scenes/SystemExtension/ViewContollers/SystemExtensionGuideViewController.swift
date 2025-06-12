@@ -57,7 +57,7 @@ class SystemExtensionGuideViewController: NSViewController {
 
     func allExtensionsInstalled() {
         finishedTour = true
-        self.view.window?.close()
+        view.window?.close()
     }
 
     func userWillCloseWindow() {
@@ -73,7 +73,7 @@ extension SystemExtensionGuideViewController: WindowControllerDelegate {
     }
 
     func windowWillClose(_ sender: WindowController) {
-        self.userWillCloseWindow()
+        userWillCloseWindow()
         windowService?.windowWillClose(sender)
     }
 }

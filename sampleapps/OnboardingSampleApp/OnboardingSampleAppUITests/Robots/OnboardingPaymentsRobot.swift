@@ -34,7 +34,7 @@ class OnboardingPaymentRobot {
 
     init(app: XCUIApplication) {
         self.app = app
-        self.verify = Verify(app: app)
+        verify = Verify(app: app)
     }
 
     func getPlus() -> OnboardingPaymentRobot {

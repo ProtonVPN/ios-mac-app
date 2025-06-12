@@ -144,8 +144,7 @@ extension LocalAgentFeatures {
     }
 
     func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
-        self
-            .with(netshield: configuration.features.netshield)
+        with(netshield: configuration.features.netshield)
             .with(vpnAccelerator: configuration.features.vpnAccelerator)
             .with(bouncing: configuration.features.bouncing)
             .with(natType: configuration.features.natType)

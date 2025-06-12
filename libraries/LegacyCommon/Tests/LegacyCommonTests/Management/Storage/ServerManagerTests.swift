@@ -97,7 +97,7 @@ final class ServerManagerTests: XCTestCase {
         let metadataExpectation = XCTestExpectation(description: "Expected last modified metadata to be updated")
         metadataExpectation.expectedFulfillmentCount = 1
 
-        self.metadataCallback = { key, value in
+        metadataCallback = { key, value in
             XCTAssertEqual(key, .lastModifiedFree)
             XCTAssertEqual(value, lastModified)
             metadataExpectation.fulfill()
@@ -109,7 +109,7 @@ final class ServerManagerTests: XCTestCase {
     }
 
     func testDoesNotOverwriteLastModifiedValueWhenNil() {
-        self.metadataCallback = { _, _ in XCTFail("Metadata should not be cleared when the new last modified value is nil") }
+        metadataCallback = { _, _ in XCTFail("Metadata should not be cleared when the new last modified value is nil") }
 
         performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: nil)
     }

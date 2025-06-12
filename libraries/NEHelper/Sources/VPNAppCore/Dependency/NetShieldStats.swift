@@ -64,7 +64,7 @@ actor NetShieldStatsProviderImplementation {
 
     private func startObserving() async {
         for await value in NotificationCenter.default.notifications(NetShieldStatsNotification.self) {
-            self.stats = value
+            stats = value
         }
     }
 }

@@ -25,7 +25,7 @@ import VPNShared
 
 extension LocalAgentFeatures {   
     var vpnFeatures: VPNConnectionFeatures? {
-        guard let netshield = self.netshield, let vpnAccelerator = self.vpnAccelerator, let natType = self.natType, let safeMode = self.safeMode else {
+        guard let netshield, let vpnAccelerator, let natType, let safeMode else {
             return nil
         }
         return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)

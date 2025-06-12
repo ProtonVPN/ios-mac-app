@@ -108,7 +108,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
                 return
             }
 
-            self.profileManager.deleteProfile(self.profile)
+            profileManager.deleteProfile(profile)
         }
         delegate.showDeleteWarning(warningViewModel)
     }

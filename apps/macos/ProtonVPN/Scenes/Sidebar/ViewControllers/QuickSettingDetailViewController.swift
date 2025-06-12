@@ -178,15 +178,15 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             return view!
         }
 
-        self.upgradeTopConstraint.isActive = needsUpgrade
-        self.upgradeBottomConstraint.isActive = needsUpgrade
+        upgradeTopConstraint.isActive = needsUpgrade
+        upgradeBottomConstraint.isActive = needsUpgrade
 
-        self.noteTopConstraint.isActive = self.dropdownNote.attributedStringValue.length > 0
+        noteTopConstraint.isActive = dropdownNote.attributedStringValue.length > 0
 
-        self.dropdownUpgradeButton.isHidden = !needsUpgrade
-        self.dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
-        self.dropdownOptionsView.fillVertically(withViews: views)
-        self.dropdownOptionsView.wantsLayer = true
-        self.dropdownOptionsView.layer?.masksToBounds = false
+        dropdownUpgradeButton.isHidden = !needsUpgrade
+        dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
+        dropdownOptionsView.fillVertically(withViews: views)
+        dropdownOptionsView.wantsLayer = true
+        dropdownOptionsView.layer?.masksToBounds = false
     }
 }

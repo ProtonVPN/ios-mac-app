@@ -38,7 +38,7 @@ final class XPCServiceUser {
 
     init(withExtension machServiceName: String, logger: @escaping (String) -> Void) {
         self.machServiceName = machServiceName
-        self.log = logger
+        log = logger
     }
 
     func getLogs(completionHandler: @escaping (Data?) -> Void) {
@@ -47,7 +47,7 @@ final class XPCServiceUser {
             self.currentConnection = nil
             completionHandler(nil)
         }) as? ProviderCommunication else {
-            self.log("Failed to create a remote object proxy for the provider: \(machServiceName)")
+            log("Failed to create a remote object proxy for the provider: \(machServiceName)")
             completionHandler(nil)
             return
         }
@@ -61,7 +61,7 @@ final class XPCServiceUser {
             self.currentConnection = nil
             completionHandler(false)
         }) as? ProviderCommunication else {
-            self.log("Failed to get remote object proxy: \(machServiceName)")
+            log("Failed to get remote object proxy: \(machServiceName)")
             completionHandler(false)
             return
         }
@@ -75,7 +75,7 @@ final class XPCServiceUser {
             self.currentConnection = nil
             completionHandler(false)
         }) as? ProviderCommunication else {
-            self.log("Failed to get remote object proxy: \(machServiceName)")
+            log("Failed to get remote object proxy: \(machServiceName)")
             completionHandler(false)
             return
         }

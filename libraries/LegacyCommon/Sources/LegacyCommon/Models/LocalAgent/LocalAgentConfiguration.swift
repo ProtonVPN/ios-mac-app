@@ -33,7 +33,7 @@ public struct LocalAgentConfiguration {
 
     init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
         self.hostname = hostname
-        self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
+        features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
     }
 }
 
@@ -82,11 +82,11 @@ private extension PropertiesManagerProtocol {
     func currentConnectionConfiguration(for vpnProtocol: VpnProtocol) -> ConnectionConfiguration? {
         let configuration: ConnectionConfiguration? = switch vpnProtocol {
         case .ike:
-            self.lastIkeConnection
+            lastIkeConnection
         case .openVpn:
-            self.lastOpenVpnConnection
+            lastOpenVpnConnection
         case .wireGuard:
-            self.lastWireguardConnection
+            lastWireguardConnection
         }
         return configuration
     }

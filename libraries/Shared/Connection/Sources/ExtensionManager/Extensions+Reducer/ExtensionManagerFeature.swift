@@ -70,12 +70,12 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .startObservingStateChanges:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
-                    let status = try await self.tunnelManager.status
+                    let status = try await tunnelManager.status
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
                     // TODO: make sure we are only subscribed to state changes for the active tunnel
-                    for await status in try await self.tunnelManager.statusStream {
+                    for await status in try await tunnelManager.statusStream {
                         await send(.tunnelStatusChanged(status))
                     }
                 }

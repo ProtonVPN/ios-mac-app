@@ -130,7 +130,7 @@ public class BackgroundTimerImplementation: BackgroundTimer {
         timerSource.setEventHandler { [weak self] in
             guard let self else { return }
             if let repeating {
-                self.nextTime = self.currentDate().addingTimeInterval(repeating)
+                nextTime = currentDate().addingTimeInterval(repeating)
             }
             self.closure()
         }

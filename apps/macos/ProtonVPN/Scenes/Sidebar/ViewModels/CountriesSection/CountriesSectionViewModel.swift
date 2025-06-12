@@ -165,15 +165,15 @@ class CountriesSectionViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        self.vpnGateway = factory.makeVpnGateway()
-        self.vpnKeychain = factory.makeVpnKeychain()
-        self.appStateManager = factory.makeAppStateManager()
-        self.alertService = factory.makeCoreAlertService()
-        self.propertiesManager = factory.makePropertiesManager()
-        self.secureCoreState = self.propertiesManager.secureCoreToggle
-        self.sysexManager = factory.makeSystemExtensionManager()
+        vpnGateway = factory.makeVpnGateway()
+        vpnKeychain = factory.makeVpnKeychain()
+        appStateManager = factory.makeAppStateManager()
+        alertService = factory.makeCoreAlertService()
+        propertiesManager = factory.makePropertiesManager()
+        secureCoreState = propertiesManager.secureCoreToggle
+        sysexManager = factory.makeSystemExtensionManager()
         if case .connected = appStateManager.state {
-            self.connectedServer = appStateManager.activeConnection()?.server
+            connectedServer = appStateManager.activeConnection()?.server
         }
 
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
@@ -235,7 +235,7 @@ class CountriesSectionViewModel {
 
         let countryCells = countryServers.map { CellModel.server(self.serverViewModel($0)) }
 
-        self.servers[cacheID] = countryCells
+        servers[cacheID] = countryCells
 
         return countryCells
     }
@@ -332,11 +332,11 @@ class CountriesSectionViewModel {
         expandedCountries = []
         updateState()
         let contentChange = ContentChange(reset: true)
-        self.contentChanged?(contentChange)
-        self.secureCoreChange?(propertiesManager.secureCoreToggle)
-        self.updateSettings()
+        contentChanged?(contentChange)
+        secureCoreChange?(propertiesManager.secureCoreToggle)
+        updateSettings()
 
-        notificationCenter.post(name: self.contentSwitch, object: nil)
+        notificationCenter.post(name: contentSwitch, object: nil)
     }
 
     @objc private func vpnConnectionChanged() {
@@ -346,9 +346,9 @@ class CountriesSectionViewModel {
         }
 
         if case .disconnected = appStateManager.state {
-            guard let currentServer = self.connectedServer else { return }
+            guard let currentServer = connectedServer else { return }
             reloadData([currentServer])
-            self.connectedServer = nil
+            connectedServer = nil
             return
         }
 
@@ -373,7 +373,7 @@ class CountriesSectionViewModel {
                 nil
             }
         }
-        self.contentChanged?(ContentChange(reload: IndexSet(indexes)))
+        contentChanged?(ContentChange(reload: IndexSet(indexes)))
     }
 
     private var totalRowCount: Int {
@@ -396,7 +396,7 @@ class CountriesSectionViewModel {
     }
 
     private func insertServers(_ index: Int, countryCode: String, serversFilter: ((ServerModel) -> Bool)?) -> Int {
-        guard let cells = self.servers[countryCode] else { return 0 }
+        guard let cells = servers[countryCode] else { return 0 }
         data.insert(contentsOf: cells, at: index)
         return cells.count
     }
@@ -432,7 +432,7 @@ class CountriesSectionViewModel {
     }
 
     @objc func updateSettings() {
-        self.delegate?.updateQuickSettings(
+        delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
             netshield: netShieldPropertyProvider.netShieldType,
             killSwitch: propertiesManager.killSwitch
@@ -546,11 +546,11 @@ class CountriesSectionViewModel {
         CountryItemViewModel(
             id: group.serverOfferingID,
             serversGroup: group,
-            vpnGateway: self.vpnGateway,
-            appStateManager: self.appStateManager,
+            vpnGateway: vpnGateway,
+            appStateManager: appStateManager,
             countriesSectionViewModel: self,
-            propertiesManager: self.propertiesManager,
-            userTier: self.userTier,
+            propertiesManager: propertiesManager,
+            userTier: userTier,
             isOpened: false,
             displaySeparator: displaySeparator,
             showCountryConnectButton: showCountryConnectButton,

@@ -46,9 +46,9 @@ final class ButtonWithLoadingTableViewCell: UITableViewCell {
                accessibilityIdentifier: String?,
                color: UIColor,
                controller: ButtonWithLoadingIndicatorController) {
-        self.button.setTitle(title, for: .normal)
-        self.button.setTitleColor(color, for: .normal)
-        self.button.accessibilityIdentifier = accessibilityIdentifier
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(color, for: .normal)
+        button.accessibilityIdentifier = accessibilityIdentifier
         self.controller = controller
     }
     

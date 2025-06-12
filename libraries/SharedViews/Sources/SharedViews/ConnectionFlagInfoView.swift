@@ -76,9 +76,9 @@ public struct ConnectionFlagInfoView: View {
             server: server,
             withServerNumber: withServerNumber
         )
-        self.textHeaderString = infoBuilder.textHeader
-        self.subheaderModel = infoBuilder.subheader
-        self.resolvedLocation = infoBuilder.resolvedLocation
+        textHeaderString = infoBuilder.textHeader
+        subheaderModel = infoBuilder.subheader
+        resolvedLocation = infoBuilder.resolvedLocation
     }
 
     public var body: some View {
@@ -112,7 +112,7 @@ public struct ConnectionFlagInfoView: View {
                         .foregroundStyle(Color(.icon))
                         .frame(.square(.themeSpacing64))
                 })
-                .sheet(isPresented: self.$showDetail) {
+                .sheet(isPresented: $showDetail) {
                     RecentConnectionActionsView(intent: intent, isPinned: isPinned, images: images) { action in
                         showDetail = false
                         detailAction(action)

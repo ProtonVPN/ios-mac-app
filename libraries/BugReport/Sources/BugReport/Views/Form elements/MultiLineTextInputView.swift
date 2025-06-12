@@ -90,7 +90,7 @@ struct MultiLineTextInputView: View {
             }
 
             func textViewDidChange(_ textView: UITextView) {
-                self.text.wrappedValue = textView.text
+                text.wrappedValue = textView.text
             }
         }
     }
@@ -160,22 +160,22 @@ struct MultiLineTextInputView: View {
             func textDidBeginEditing(_ notification: Notification) {
                 guard let textView = notification.object as? NSTextView else { return }
 
-                self.text.wrappedValue = textView.string
-                self.selectedRanges = textView.selectedRanges
+                text.wrappedValue = textView.string
+                selectedRanges = textView.selectedRanges
             }
 
             func textDidChange(_ notification: Notification) {
                 guard let textView = notification.object as? NSTextView else { return }
 
-                self.text.wrappedValue = textView.string
-                self.selectedRanges = textView.selectedRanges
+                text.wrappedValue = textView.string
+                selectedRanges = textView.selectedRanges
             }
 
             func textDidEndEditing(_ notification: Notification) {
                 guard let textView = notification.object as? NSTextView else { return }
 
-                self.text.wrappedValue = textView.string
-                self.selectedRanges = textView.selectedRanges
+                text.wrappedValue = textView.string
+                selectedRanges = textView.selectedRanges
             }
         }
     }

@@ -342,7 +342,7 @@ class CountryItemViewModel {
 
     func titleFor(section: Int) -> String {
         let tier = serverViewModels[section].tier
-        return DomainConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
+        return DomainConstants.serverTierName(forTier: tier) + " (\(serversCount(for: section)))"
     }
 
     func isServerPlusOrAbove( for section: Int) -> Bool {
@@ -463,11 +463,11 @@ extension CountryItemViewModel: CountryViewModel {
 
 private extension ServerGroupInfo {
     func matchesLogical(_ logical: Logical) -> Bool {
-        switch self.kind {
+        switch kind {
         case let .gateway(name):
             return logical.kind == .gateway(name: name)
         case let .country(code) where code == logical.exitCountryCode:
-            if self.featureIntersection == .secureCore {
+            if featureIntersection == .secureCore {
                 guard case .secureCore = logical.kind else {
                     return false
                 }

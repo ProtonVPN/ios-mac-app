@@ -55,9 +55,9 @@ struct ClientConfigResponse {
 
             init(from decoder: any Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                self.udp = try container.decodeIfPresent([Int].self, forKey: .udp) ?? []
-                self.tcp = try container.decodeIfPresent([Int].self, forKey: .tcp) ?? []
-                self.tls = try container.decodeIfPresent([Int].self, forKey: .tls) ?? []
+                udp = try container.decodeIfPresent([Int].self, forKey: .udp) ?? []
+                tcp = try container.decodeIfPresent([Int].self, forKey: .tcp) ?? []
+                tls = try container.decodeIfPresent([Int].self, forKey: .tls) ?? []
             }
         }
 

@@ -43,7 +43,7 @@ class SCCoreCircleButton: HoverDetectionButtonAdvanced {
     }
     
     required init(frame frameRect: NSRect, state: ButtonState) {
-        self.viewState = state
+        viewState = state
         super.init(frame: frameRect)
         
         isBordered = false
@@ -60,8 +60,8 @@ class SCCoreCircleButton: HoverDetectionButtonAdvanced {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
-        context.setStrokeColor(stateColor(for: self.color(.icon)))
-        context.setFillColor(stateColor(for: self.color(.background)))
+        context.setStrokeColor(stateColor(for: color(.icon)))
+        context.setFillColor(stateColor(for: color(.background)))
         
         let lineWidth: CGFloat = 2.0
         let innerFrame = CGRect(x: lineWidth / 2, y: lineWidth / 2, width: bounds.width - lineWidth, height: bounds.height - lineWidth)

@@ -184,11 +184,11 @@ import Ergonomics
 
     public extension CustomStyleContext {
         func color(_ context: AppTheme.Context) -> UIColor {
-            .color(context, self.customStyle(context: context))
+            .color(context, customStyle(context: context))
         }
 
         func cgColor(_ context: AppTheme.Context) -> CGColor {
-            .cgColor(context, self.customStyle(context: context))
+            .cgColor(context, customStyle(context: context))
         }
     }
 #endif

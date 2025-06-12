@@ -29,7 +29,7 @@ public class Logger {
     }
 
     func writeLog(to targetFile: String) -> Bool {
-        write_log_to_file(targetFile, self.log) == 0
+        write_log_to_file(targetFile, log) == 0
     }
 
     static func configureGlobal(tagged tag: String, withFilePath filePath: String?) {

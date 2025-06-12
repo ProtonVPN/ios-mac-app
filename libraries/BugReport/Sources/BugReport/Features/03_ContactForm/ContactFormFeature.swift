@@ -130,7 +130,7 @@ struct ContactFormFeature: Reducer {
 
         func makeResult() -> BugReportResult {
             let find = { (submitLabel: String) -> FormInputField? in
-                return self.fields.first(where: { $0.inputField.submitLabel == submitLabel })
+                return fields.first(where: { $0.inputField.submitLabel == submitLabel })
             }
 
             let email = find(emailFieldName)?.stringValue ?? ""

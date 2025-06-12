@@ -76,11 +76,11 @@ public struct Logical: Codable, Equatable, Sendable {
         self.longitude = longitude
 
         if feature.contains(.secureCore) {
-            self.kind = .secureCore(entryCountryCode: entryCountryCode)
+            kind = .secureCore(entryCountryCode: entryCountryCode)
         } else if let gatewayName {
-            self.kind = .gateway(name: gatewayName)
+            kind = .gateway(name: gatewayName)
         } else {
-            self.kind = .country
+            kind = .country
         }
     }
 

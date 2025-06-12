@@ -56,8 +56,8 @@ class SCExitCountryAnnotationView: MapAnnotationView {
                 return
             }
 
-            self.setupAnnotationView()
-            self.needsDisplay = true
+            setupAnnotationView()
+            needsDisplay = true
         }
 
         setupAnnotationView()
@@ -72,7 +72,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             // server titles
             guard let window else { return }
             let mousePoint = window.mouseLocationOutsideOfEventStream
-            let pointInView = self.convert(mousePoint, from: nil)
+            let pointInView = convert(mousePoint, from: nil)
 
             for index in 0..<viewModel.servers.count {
                 let itemFrame = CGRect(x: buttonFrame.origin.x,

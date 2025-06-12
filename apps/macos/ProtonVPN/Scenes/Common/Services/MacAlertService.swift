@@ -86,8 +86,8 @@ public final class NEKSOnT2Alert: SystemAlert {
     public let connectAnywayAction: AlertAction
 
     public init(killSwitchOffHandler: @escaping () -> Void, connectAnywayHandler: @escaping () -> Void) {
-        self.killSwitchOffAction = AlertAction(title: Localizable.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
-        self.connectAnywayAction = AlertAction(title: Localizable.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
+        killSwitchOffAction = AlertAction(title: Localizable.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
+        connectAnywayAction = AlertAction(title: Localizable.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
     }
 }
 
@@ -326,7 +326,7 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: SysexEnabledAlert) {
         @Dependency(\.defaultsProvider) var provider
         guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
-              let credentials = try? self.vpnKeychain.fetchCached()
+              let credentials = try? vpnKeychain.fetchCached()
         else {
             return
         }
@@ -377,11 +377,11 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: VpnServerOnMaintenanceAlert) {
-        guard self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
+        guard lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
             return
         }
-        self.notificationManager.displayServerGoingOnMaintenance()
-        self.lastTimeCheckMaintenance = Date()
+        notificationManager.displayServerGoingOnMaintenance()
+        lastTimeCheckMaintenance = Date()
     }
 
     private func show(_ alert: ConnectionTroubleshootingAlert) {

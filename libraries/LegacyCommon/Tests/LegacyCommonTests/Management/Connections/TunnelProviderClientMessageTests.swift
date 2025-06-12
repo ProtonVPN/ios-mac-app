@@ -45,13 +45,13 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
 
             container.vpnAuthenticationStorage.keys = VpnKeys.mock()
             container.vpnAuthenticationStorage.keysStored = { [unowned self] _ in
-                self.fulfillExpectationCategory(self.storeKeys)
+                fulfillExpectationCategory(storeKeys)
             }
 
             didPushNewSessionSelector = { [unowned self] selector in
                 XCTAssertEqual(selector, "SELECTOR")
 
-                self.fulfillExpectationCategory(self.pushSelector)
+                fulfillExpectationCategory(pushSelector)
             }
         #endif
     }

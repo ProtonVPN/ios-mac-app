@@ -88,7 +88,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         delegate: AppSessionRefreshTimerDelegate?
     ) {
         self.factory = factory
-        self.timerFactory = factory.makeTimerFactory()
+        timerFactory = factory.makeTimerFactory()
         self.refreshIntervals = refreshIntervals
         self.delegate = delegate
     }

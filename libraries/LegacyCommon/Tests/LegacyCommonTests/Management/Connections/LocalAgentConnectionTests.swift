@@ -40,7 +40,7 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
     }
 
     func simpleErrorCase(_ code: Int) -> (() -> Void) {
-        { [unowned self] in self.laError(code, nil) }
+        { [unowned self] in laError(code, nil) }
     }
 
     override func invokeTest() {
@@ -128,8 +128,8 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             (subcaseDescription("user bad behavior"),
              simpleErrorCase(laConsts.errorCodeUserBadBehavior), [.vpnDisconnection]),
             (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in
-                self.mockProviderState.forceResponse = .error(message: "Internal server error")
-                self.laError(self.laConsts.errorCodeCertificateExpired, nil)
+                mockProviderState.forceResponse = .error(message: "Internal server error")
+                laError(laConsts.errorCodeCertificateExpired, nil)
             }, [.vpnDisconnection, .alertDisplayed])
         ]
 
@@ -154,7 +154,7 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
 
         let featuresStored: ExpectationCategory = .custom(name: "stored features")
         container.vpnAuthenticationStorage.certAndFeaturesStored = { [unowned self] _ in
-            self.fulfillExpectationCategory(featuresStored)
+            fulfillExpectationCategory(featuresStored)
         }
 
         populateExpectations(description: "Local agent receiving features and refreshing certificate", [featuresStored, .certificateRefresh])

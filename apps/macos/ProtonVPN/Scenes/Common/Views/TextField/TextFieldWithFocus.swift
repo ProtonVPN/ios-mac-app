@@ -111,6 +111,6 @@ private extension NSEvent.ModifierFlags {
     }
 
     func plus(_ another: Self) -> Self {
-        Self(rawValue: self.rawValue | another.rawValue)
+        Self(rawValue: rawValue | another.rawValue)
     }
 }

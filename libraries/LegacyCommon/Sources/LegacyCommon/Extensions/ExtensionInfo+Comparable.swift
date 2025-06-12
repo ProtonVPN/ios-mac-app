@@ -45,7 +45,7 @@ extension ExtensionInfo: Equatable, Comparable {
             return versionComparison
         }
 
-        let thisBuildComponents = self.build.split(separator: ".")
+        let thisBuildComponents = build.split(separator: ".")
         let otherBuildComponents = other.build.split(separator: ".")
 
         guard thisBuildComponents.count == otherBuildComponents.count else {

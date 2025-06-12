@@ -55,7 +55,7 @@ final class BadgedBarButtonItem: UIBarButtonItem {
         badgeView.layer.cornerRadius = badgeView.frame.width / 2
         button.addSubview(badgeView)
         
-        self.customView = button
+        customView = button
     }
     
     @objc private func buttonPressed() {

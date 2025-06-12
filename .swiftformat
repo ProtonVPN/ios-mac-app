@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantSelf
 --disable redundantStaticSelf
 --disable redundantType
 --disable redundantTypedThrows

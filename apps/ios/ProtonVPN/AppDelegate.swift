@@ -261,7 +261,7 @@ extension AppDelegate: UIApplicationDelegate {
     }
 
     private func setupLogsForApp() {
-        let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+        let logFile = container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
 
         let fileLogHandler = FileLogHandler(logFile)
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
@@ -400,7 +400,7 @@ extension AppDelegate {
                 Task { [self] in
                     do {
                         try await FeatureFlagsRepository.shared.fetchFlags()
-                        self.registerForPushNotificationsIfNeeded()
+                        registerForPushNotificationsIfNeeded()
                     } catch {
                         log.error("Could not retrieve feature flags: \(error)", category: .core, event: .error)
                     }
@@ -409,7 +409,7 @@ extension AppDelegate {
                 TelemetryService.shared.setApiService(apiService: apiService)
                 TelemetryService.shared.setTelemetryEnabled(telemetrySettings.telemetryUsageData)
 
-                let isTelemetryEnabled = self.telemetrySettings.telemetryCrashReports
+                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
 
                 if isTelemetryEnabled {
                     enableExternalLogging()

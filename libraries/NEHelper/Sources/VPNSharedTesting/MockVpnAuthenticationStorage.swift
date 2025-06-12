@@ -51,7 +51,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
         }
 
         let newKeys = VpnKeys.mock()
-        self.store(keys: newKeys)
+        store(keys: newKeys)
         return newKeys
     }
 
@@ -73,14 +73,14 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     }
 
     public func store(_ certificate: VpnCertificateWithFeatures) {
-        self.cert = certificate.certificate
-        self.features = certificate.features
+        cert = certificate.certificate
+        features = certificate.features
         delegate?.certificateStored(certificate.certificate)
         certAndFeaturesStored?(certificate)
     }
 
     public func store(_ certificate: VpnCertificate) {
-        self.cert = certificate
+        cert = certificate
         delegate?.certificateStored(certificate)
     }
 

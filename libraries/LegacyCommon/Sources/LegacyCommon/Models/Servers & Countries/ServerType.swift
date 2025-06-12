@@ -104,7 +104,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CoderKey.self)
-        try container.encode(self.rawValue, forKey: .serverType)
+        try container.encode(rawValue, forKey: .serverType)
     }
 }
 

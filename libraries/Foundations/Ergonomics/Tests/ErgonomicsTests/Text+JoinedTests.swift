@@ -53,7 +53,7 @@ private struct MockText: Joinable, Equatable {
     }
 
     func joined(to other: MockText, with separator: MockText) -> MockText {
-        let joinedContents = self.content + separator.content + other.content
+        let joinedContents = content + separator.content + other.content
         return MockText(joinedContents)
     }
 }

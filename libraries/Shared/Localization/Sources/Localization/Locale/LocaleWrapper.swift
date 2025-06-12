@@ -52,7 +52,7 @@ extension Locale: LocaleWrapper {
         if #available(iOS 16, macOS 13, tvOS 16, *) {
             self.language.region?.identifier
         } else {
-            self.regionCode
+            regionCode
         }
     }
 

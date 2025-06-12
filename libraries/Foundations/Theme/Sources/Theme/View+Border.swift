@@ -36,14 +36,13 @@
             let stroke = rectangle
                 .stroke(Color(.border, style), style: strokeStyle)
                 .padding(dashed ? 1 : 0)
-            return self
-                .clipShape(rectangle)
+            return clipShape(rectangle)
                 .overlay(stroke)
         }
 
         public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
             let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
-            return self.clipShape(rectangle)
+            return clipShape(rectangle)
         }
 
         public func frame(_ size: AppTheme.IconSize) -> some View {

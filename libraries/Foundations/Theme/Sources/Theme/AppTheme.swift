@@ -164,7 +164,7 @@ public enum AppTheme {
         case large
 
         public func imageName(countryCode: String) -> String {
-            countryCode.lowercased() + "-\(self.rawValue)"
+            countryCode.lowercased() + "-\(rawValue)"
         }
     }
 }

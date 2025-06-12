@@ -47,11 +47,11 @@ class ClearCancellationButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 }
 

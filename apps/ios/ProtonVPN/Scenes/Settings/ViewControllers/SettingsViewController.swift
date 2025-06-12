@@ -43,12 +43,12 @@ final class SettingsViewController: UIViewController {
                 pushViewController(viewController)
             }
             viewModel?.reloadNeeded = { [weak self] in
-                guard let self, self.isViewLoaded else {
+                guard let self, isViewLoaded else {
                     return
                 }
 
-                self.setupTableView()
-                self.tableView.reloadData()
+                setupTableView()
+                tableView.reloadData()
             }
         }
     }
@@ -84,7 +84,7 @@ final class SettingsViewController: UIViewController {
         tableView.reloadData()
 
         /// This is required by QR Login. One of the views in the QR Login flow hides the navigation bar and we need to make sure it is visible when we pop back to the root view controller.
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
     private func setupView() {

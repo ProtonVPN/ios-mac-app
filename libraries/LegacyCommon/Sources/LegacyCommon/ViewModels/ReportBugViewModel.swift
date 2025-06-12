@@ -134,7 +134,7 @@ open class ReportBugViewModel {
         }
 
         guard logsEnabled else {
-            self.bug.files = []
+            bug.files = []
             send(report: bug, completion: completion)
             return
         }

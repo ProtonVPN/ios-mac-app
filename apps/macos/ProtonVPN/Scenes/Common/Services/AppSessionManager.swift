@@ -97,7 +97,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
-        self.propertiesManager.restoreStartOnBootStatus()
+        propertiesManager.restoreStartOnBootStatus()
 
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
@@ -148,7 +148,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if sessionStatus == .notEstablished {
             sessionStatus = .established
             propertiesManager.hasConnected = true
-            post(notification: SessionChanged(data: .established(gateway: self.factory.makeVpnGateway())))
+            post(notification: SessionChanged(data: .established(gateway: factory.makeVpnGateway())))
         }
 
         appSessionRefreshTimer.startTimers()
@@ -178,7 +178,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = await shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
             assert(isFreeTierRequest == isFreeTier)
-            self.serverManager.update(
+            serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
@@ -276,8 +276,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                     return
                 }
 
-                if self.appStateManager.state.isConnected {
-                    self.appStateManager.disconnect { continuation.resume() }
+                if appStateManager.state.isConnected {
+                    appStateManager.disconnect { continuation.resume() }
                     return
                 }
 

@@ -53,7 +53,7 @@ class MainMeasurements: ProtonVPNUITests {
     }
 
     func testLoginSLI() {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
@@ -70,7 +70,7 @@ class MainMeasurements: ProtonVPNUITests {
     }
 
     func testConnectionSLI() {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
@@ -93,7 +93,7 @@ class MainMeasurements: ProtonVPNUITests {
     }
 
     func testConnectionToSpecificServer() async throws {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())

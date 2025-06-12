@@ -46,7 +46,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         guard case .enabled = feature else {
             log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")
             completionHandler(PlutoniumError.featureDisabled)
-            self.stopProxy(with: .none, completionHandler: {})
+            stopProxy(with: .none, completionHandler: {})
             return
         }
 
